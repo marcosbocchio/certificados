@@ -16,7 +16,8 @@ class CreateEspesorTubosTable extends Migration
         Schema::create('espesor_tubos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('diametro','5');
-            $table->float('espesor','8','2');
+            $table->float('distancia_fuente_peliculas','6','2');
+            $table->float('espesor','6','2');
             $table->timestamps();
         });
     }
