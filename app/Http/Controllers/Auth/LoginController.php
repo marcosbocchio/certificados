@@ -20,14 +20,7 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    //  protected $redirectTo = '/home';
-
-    /**
+    /*
      * Create a new controller instance.
      *
      * @return void
@@ -42,11 +35,9 @@ class LoginController extends Controller
 
         $User = auth()->user();
 
-        if($User->hasRole('Administrador')){
+        /* Si tiene el permiso "Navegar operador" es Administrador u operador */
 
-              return '/area/enod';
-
-        }elseif($User->hasPermissionTo('Navegar operador')){
+        if($User->hasPermissionTo('Navegar operador')){
 
             return '/area/enod';
 
@@ -54,8 +45,5 @@ class LoginController extends Controller
 
             return '/area/cliente';
         }
-
-  }
-
-
+      }
 }

@@ -56,9 +56,9 @@ desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class="hold-transition skin-blue sidebar-boxed">
-@include('layouts.clientes.partials.header')
-@include('layouts.clientes.partials.content-header')
+<body class="hold-transition skin-red sidebar-boxed">
+@include('layouts.enod.partials.header')
+@include('layouts.enod.partials.content-header')
 
 
         <!-- Main content -->
@@ -70,7 +70,7 @@ desired effect
 
         <!-- /.content -->
 
-@include('layouts.clientes.partials.footer')
+@include('layouts.enod.partials.footer')
 
 <!-- REQUIRED JS SCRIPTS -->
 

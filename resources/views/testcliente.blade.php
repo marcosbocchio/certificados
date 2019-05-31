@@ -1,4 +1,4 @@
-@extends('layouts.enod.master')
+@extends('layouts.clientes.master')
 
 @section('contenido')
 

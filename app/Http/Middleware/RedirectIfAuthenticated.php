@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Traits\HasRoles;
 
 class RedirectIfAuthenticated
 {
@@ -18,7 +19,11 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->check()) {
-            return redirect('/home');
+
+          $EsOperador = auth()->user()->hasPermissionTo('Navegar operador');
+          $View = $EsOperador ? '/area/enod' : '/area/cliente' ;
+          return redirect($View);
+
         }
 
         return $next($request);

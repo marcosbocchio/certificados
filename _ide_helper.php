@@ -3,7 +3,7 @@
 
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.8.19 on 2019-05-29 20:17:31.
+ * Generated for Laravel 5.8.19 on 2019-05-30 19:48:40.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -14543,81 +14543,6 @@ namespace Illuminate\Support {
  
 }
 
-namespace Caffeinated\Shinobi\Facades { 
-
-    /**
-     * 
-     *
-     */ 
-    class Shinobi {
-        
-        /**
-         * Fetch an instance of the Role model.
-         *
-         * @return \Caffeinated\Shinobi\Role 
-         * @static 
-         */ 
-        public static function role()
-        {
-                        /** @var \Caffeinated\Shinobi\Shinobi $instance */
-                        return $instance->role();
-        }
-        
-        /**
-         * Fetch an instance of the Permission model.
-         *
-         * @return \Caffeinated\Shinobi\Permission 
-         * @static 
-         */ 
-        public static function permission()
-        {
-                        /** @var \Caffeinated\Shinobi\Shinobi $instance */
-                        return $instance->permission();
-        }
-        
-        /**
-         * Assign roles to a user.
-         *
-         * @param string|array $roles
-         * @return \Caffeinated\Shinobi\Tactic\AssignRoleTo 
-         * @static 
-         */ 
-        public static function assign($roles)
-        {
-                        /** @var \Caffeinated\Shinobi\Shinobi $instance */
-                        return $instance->assign($roles);
-        }
-        
-        /**
-         * Give permissions to a user or role
-         *
-         * @param string|array $permissions
-         * @return \Caffeinated\Shinobi\Tactic\GivePermissionTo 
-         * @static 
-         */ 
-        public static function give($permissions)
-        {
-                        /** @var \Caffeinated\Shinobi\Shinobi $instance */
-                        return $instance->give($permissions);
-        }
-        
-        /**
-         * Revoke permissions from a user or role
-         *
-         * @param string|array $permissions
-         * @return \Caffeinated\Shinobi\Tactic\RevokePermissionFrom 
-         * @static 
-         */ 
-        public static function revoke($permissions)
-        {
-                        /** @var \Caffeinated\Shinobi\Shinobi $instance */
-                        return $instance->revoke($permissions);
-        }
-         
-    }
- 
-}
-
 
 namespace  { 
 
@@ -17270,8 +17195,6 @@ namespace  {
     class Validator extends \Illuminate\Support\Facades\Validator {}
 
     class View extends \Illuminate\Support\Facades\View {}
-
-    class Shinobi extends \Caffeinated\Shinobi\Facades\Shinobi {}
  
 }
 
