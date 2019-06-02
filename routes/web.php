@@ -22,3 +22,5 @@ Route::group(['middleware' => ['permission:Navegar cliente']], function () {
 Route::group(['middleware' => ['permission:Navegar operador']], function () {
   Route::get('/area/enod', 'dashboardOperadoresController@index')->name('testoperador');
 });
+
+Route::get('area/enod/users', 'UserController@index');

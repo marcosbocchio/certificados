@@ -7,15 +7,15 @@ use App\Repositories\User\UserRepository;
 
 class UserController extends Controller
 {
-    protected $userRepository;
+    Protected $users;
 
     public function __construct(UserRepository $userRepository)
     {
-      $this->$userRepository = $userRepository;
+      $this->users = $userRepository;
     }
 
-    public function index(){
-
-      return this->getModel()->getAll();
+    public function index()
+    {
+      return $this->users->getAll();
     }
 }

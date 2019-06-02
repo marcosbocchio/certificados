@@ -1,14 +1,16 @@
 <?php
 
 namespace App\Repositories\User;
-use App\BaseRepository;
+use App\Repositories\BaseRepository;
+use App\User;
 
-class UserRepository extend BaseRepository
+
+class UserRepository extends BaseRepository
 {
 
   public function getModel()
   {
-    return new User();
+    return new User;
   }
 
 }
