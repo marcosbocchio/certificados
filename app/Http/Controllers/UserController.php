@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Repositories\User\UserRepository;
+use App\User;
 
 class UserController extends Controller
 {
@@ -16,6 +17,16 @@ class UserController extends Controller
 
     public function index()
     {
-      return $this->users->getAll();
+
+    $registros = User::get();
+    return $registros;
+
+    }
+
+    public function store(Request $request){
+
+
+     $this->users->create($request) ;
+
     }
 }
