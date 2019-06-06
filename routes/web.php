@@ -28,7 +28,7 @@ Route::get('area/enod/usuarios', function(){
   return view('usuarios');
 });
 
-Route::get('area/enod/users', 'UserController@index');
+//Route::get('area/enod/users', 'UserController@index');
 //Route::resource('users','UserController');
 
  //Route::get('test','TestController@index');

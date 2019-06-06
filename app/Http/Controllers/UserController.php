@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Repositories\User\UserRepository;
-use App\User;
+//use App\User;
 
 class UserController extends Controller
 {
@@ -17,9 +17,7 @@ class UserController extends Controller
 
     public function index()
     {
-
-    $registros = User::get();
-    return $registros;
+         return  $this->users->getAll();
 
     }
 
@@ -28,5 +26,10 @@ class UserController extends Controller
 
      $this->users->create($request) ;
 
+    }
+
+    public function destroy($id){
+
+      $this->users->delete($id);
     }
 }
