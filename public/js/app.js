@@ -1799,12 +1799,13 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       if (false) {} else {
-        axios.defaults.baseURL = "http://certificados.test";
+        axios.defaults.baseURL = "http://localhost:8000";
       }
 
       var url = 'api/users/' + id;
       axios["delete"](url).then(function (response) {
-        app.getRegistros();
+        _this.$emit('close-modal');
+
         $('#delete-registro').modal('hide');
         toastr.success('Eliminado correctamente');
       })["catch"](function (error) {
@@ -1935,7 +1936,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     this.getRegistros();
-    $('#modal-test').modal('show');
   },
   data: function data() {
     return {
@@ -1953,10 +1953,11 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       if (false) {} else {
-        axios__WEBPACK_IMPORTED_MODULE_0___default.a.defaults.baseURL = "http://certificados.test";
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.defaults.baseURL = "http://localhost:8000";
       }
 
       var urlRegistros = 'api/users';
+      console.log(axios__WEBPACK_IMPORTED_MODULE_0___default.a.defaults.baseURL);
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(urlRegistros).then(function (response) {
         _this.registros = response.data;
       });
@@ -30952,7 +30953,10 @@ var render = function() {
           )
         ]),
         _vm._v(" "),
-        _c("delete-registro", { attrs: { fillRegistro: _vm.fillRegistro } }),
+        _c("delete-registro", {
+          attrs: { fillRegistro: _vm.fillRegistro },
+          on: { "close-modal": _vm.getRegistros }
+        }),
         _vm._v(" "),
         _c("h4", [_vm._v("El registro es : " + _vm._s(_vm.fillRegistro.id))])
       ],
@@ -43511,7 +43515,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/vagrant/code/certificados/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/js/app.js */"./resources/js/app.js");
 
 
 /***/ })

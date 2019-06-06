@@ -23,7 +23,7 @@
                 </tr>
                 </tbody>
             </table>
-            <delete-registro :fillRegistro="fillRegistro"></delete-registro>
+            <delete-registro :fillRegistro="fillRegistro" @close-modal="getRegistros"></delete-registro>
             <h4>El registro es : {{ fillRegistro.id}}</h4>
         </div>
         <div class="col-sm-8">
@@ -43,7 +43,6 @@ import toastr from 'toastr'
 
       created : function(){
         this.getRegistros();
-        $('#modal-test').modal('show');
 
       },
       data () { return {
@@ -64,6 +63,7 @@ import toastr from 'toastr'
               }
 
                 var urlRegistros = 'api/users';
+                console.log(axios.defaults.baseURL);
                 axios.get(urlRegistros).then(response =>{
                     this.registros = response.data
                 });

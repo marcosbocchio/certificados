@@ -38,7 +38,7 @@ export default {
 
       var url = 'api/users/' + id;
       axios.delete(url).then(response =>{
-        app.getRegistros();
+        this.$emit('close-modal');
         $('#delete-registro').modal('hide');
         toastr.success('Eliminado correctamente');
       }).catch(error => {
