@@ -1799,7 +1799,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       if (false) {} else {
-        axios.defaults.baseURL = "http://certificados.test";
+        axios.defaults.baseURL = Object({"MIX_API_URL_DEV":"http://certificados.test","MIX_API_URL_PRO":"http://certificados.com.ar","MIX_PUSHER_APP_CLUSTER":"mt1","MIX_PUSHER_APP_KEY":"","NODE_ENV":"development"}).MIX_API_URL;
       }
 
       var url = 'api/users/' + id;
@@ -1928,6 +1928,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    url: {
+      type: String,
+      required: true,
+      defaults: 'https://certificados.com.ar'
+    }
+  },
   created: function created() {
     this.getRegistros();
   },
@@ -1946,10 +1953,7 @@ __webpack_require__.r(__webpack_exports__);
     getRegistros: function getRegistros() {
       var _this = this;
 
-      if (false) {} else {
-        axios.defaults.baseURL = "http://certificados.test";
-      }
-
+      axios.defaults.baseURL = this.url;
       var urlRegistros = 'api/users';
       console.log(axios.defaults.baseURL);
       axios.get(urlRegistros).then(function (response) {
@@ -43183,7 +43187,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 Vue.component('modal-test', __webpack_require__(/*! ./components/usuarios/modal-test.vue */ "./resources/js/components/usuarios/modal-test.vue")["default"]);
 Vue.component('hello', __webpack_require__(/*! ./components/usuarios/hello.vue */ "./resources/js/components/usuarios/hello.vue")["default"]);
 Vue.component('delete-registro', __webpack_require__(/*! ./components/usuarios/delete.vue */ "./resources/js/components/usuarios/delete.vue")["default"]);
-Vue.component('abm', __webpack_require__(/*! ./components/usuarios/usuarios.vue */ "./resources/js/components/usuarios/usuarios.vue")["default"]);
+Vue.component('abm-maestro', __webpack_require__(/*! ./components/usuarios/usuarios.vue */ "./resources/js/components/usuarios/usuarios.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -43192,7 +43196,20 @@ Vue.component('abm', __webpack_require__(/*! ./components/usuarios/usuarios.vue 
  */
 
 var app = new Vue({
-  el: '#abm'
+  el: '#app',
+  data: {
+    baseURL: ""
+  },
+  created: function created() {
+    this.setBaseUrl();
+  },
+  methods: {
+    setBaseUrl: function setBaseUrl() {
+      if (false) {} else {
+        this.baseURL = "http://certificados.test";
+      }
+    }
+  }
 });
 
 /***/ }),

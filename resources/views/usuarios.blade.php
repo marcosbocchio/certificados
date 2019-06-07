@@ -2,9 +2,9 @@
 
 @section('contenido')
 
-<div id="abm" class="row">
+<div id="app" class="row">
 
-   <abm></abm>
+   <abm-maestro :url="baseURL"></abm-maestro>
 
 </div>
 @endsection

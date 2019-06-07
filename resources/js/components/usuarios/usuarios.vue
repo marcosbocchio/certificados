@@ -40,10 +40,20 @@
 
     export default {
 
+      props : {
+        url : {
+          type : String,
+          required : true,
+          defaults : 'https://certificados.com.ar'        
+        }
+      },
+
       created : function(){
+        
         this.getRegistros();
 
       },
+
       data () { return {
         newregistro:'',
         fillRegistro: {'id':'','name':''},
@@ -51,16 +61,13 @@
         registros: []
         }
       },
+
       methods: {
 
             getRegistros : function(){
 
-              if ( process.env.NODE_ENV == 'production' ) {
-                   axios.defaults.baseURL = 'https://certificados.com.ar';
-              } else {
-                   axios.defaults.baseURL = process.env.MIX_API_URL;
-              }
-
+            
+                axios.defaults.baseURL = this.url ;
                 var urlRegistros = 'api/users';
                 console.log(axios.defaults.baseURL);
                 axios.get(urlRegistros).then(response =>{

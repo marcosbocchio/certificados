@@ -42,7 +42,7 @@ window.Vue = require('vue');
 Vue.component('modal-test', require('./components/usuarios/modal-test.vue').default);
 Vue.component('hello', require('./components/usuarios/hello.vue').default);
 Vue.component('delete-registro', require('./components/usuarios/delete.vue').default);
-Vue.component('abm', require('./components/usuarios/usuarios.vue').default);
+Vue.component('abm-maestro', require('./components/usuarios/usuarios.vue').default);
 
 
 /**
@@ -53,5 +53,30 @@ Vue.component('abm', require('./components/usuarios/usuarios.vue').default);
  */
 
 const app = new Vue({
-    el: '#abm',
+    el: '#app',
+   
+    data : {
+
+        baseURL : "",
+    },
+
+    created : function(){
+
+       this.setBaseUrl()
+
+    },
+
+    methods : { 
+
+            setBaseUrl : function() {
+
+                if ( process.env.NODE_ENV == 'production' ) {
+                    this.baseURL = process.env.MIX_API_URL_PRO;
+               } else {
+                    this.baseURL = process.env.MIX_API_URL_DEV;
+               }
+
+            }    
+        
+    }
 });
