@@ -7,8 +7,6 @@
 
 require('./bootstrap');
 
-Command: toastr["success"]("I do not think that means what you think it means.")
-
 toastr.options = {
   "closeButton": false,
   "debug": false,

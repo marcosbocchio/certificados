@@ -43152,8 +43152,6 @@ module.exports = function(module) {
  */
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
-Command: toastr["success"]("I do not think that means what you think it means.");
-
 toastr.options = {
   "closeButton": false,
   "debug": false,
