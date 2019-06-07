@@ -23,7 +23,7 @@
                 </tr>
                 </tbody>
             </table>
-            <delete-registro :fillRegistro="fillRegistro" @close-modal="getRegistros"></delete-registro>
+            <delete-registro :fillRegistro="fillRegistro" :url="url" @close-modal="getRegistros"></delete-registro>
             <h4>El registro es : {{ fillRegistro.id}}</h4>
         </div>
         <div class="col-sm-8">
@@ -37,7 +37,6 @@
 <script>
 
 
-
     export default {
 
       props : {
@@ -49,7 +48,7 @@
       },
 
       created : function(){
-        
+
         this.getRegistros();
 
       },

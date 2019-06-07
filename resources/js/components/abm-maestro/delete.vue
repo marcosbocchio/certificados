@@ -29,16 +29,16 @@
 export default {
   props: {
       fillRegistro: {'id':'','registro':''},
+      url : {
+          type : String,
+          required : true,
+          defaults : 'https://certificados.com.ar'        
+        }
   },
   methods:{
   dropRegistro :function(id){
 
-      if ( process.env.NODE_ENV == 'production' ) {
-           axios.defaults.baseURL = 'https://certificados.com.ar';
-      } else {
-           axios.defaults.baseURL = process.env.MIX_API_URL;
-      }
-
+      axios.defaults.baseURL = this.url;     
       var url = 'api/users/' + id;
       axios.delete(url).then(response =>{
         this.$emit('close-modal');
