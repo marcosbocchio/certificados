@@ -1,5 +1,5 @@
 <template>
-      <thead>
+            <thead>
                 <tr>
                     <th>ID</th>
                     <th>Usuario</th>
@@ -19,4 +19,9 @@
                     </td>
                 </tr>
                 </tbody>
+                
 </template>
+
+export default { 
+
+}

@@ -39,10 +39,10 @@ window.Vue = require('vue');
 
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
-Vue.component('modal-test', require('./components/abm-maestro/modal-test.vue').default);
-Vue.component('hello', require('./components/abm-maestro//hello.vue').default);
+
 Vue.component('delete-registro', require('./components/abm-maestro//delete.vue').default);
-Vue.component('abm-maestro', require('./components/abm-maestro//abm-maestro.vue').default);
+Vue.component('abm-maestro', require('./components/abm-maestro/abm-maestro.vue').default);
+Vue.component('tabla-users', require('./components/abm-maestro/usuarios/tabla-users.vue').default);
 
 
 /**
@@ -57,13 +57,15 @@ const app = new Vue({
     el: '#app',
    
     data : {
+        baseURL : "",     
+       
+    }, 
 
-        baseURL : "",
-    },
 
     created : function(){
 
        this.setBaseUrl()
+       
 
     },
 
@@ -78,6 +80,6 @@ const app = new Vue({
                }
 
             }    
-        
+          
     }
 });

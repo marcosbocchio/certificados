@@ -38,13 +38,18 @@
 
 
     export default {
-
+      name: 'abm-maestro',  
       props : {
-        url : {
-          type : String,
-          required : true,
-          defaults : 'https://certificados.com.ar'        
-        }
+          url : {
+            type : String,
+            required : true,
+            default : 'https://certificados.com.ar'        
+          },
+          modelo : {
+            type : String,
+            required : true,
+            default : ''             
+          }
       },
 
       created : function(){
@@ -53,7 +58,7 @@
 
       },
 
-      data () { return {
+      data () { return {       
         newregistro:'',
         fillRegistro: {'id':'','name':''},
         errors:[],
