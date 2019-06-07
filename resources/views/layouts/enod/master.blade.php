@@ -16,6 +16,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{asset('font-awesome/css/font-awesome.min.css')}}">
     <!-- Ionicons -->
+    <link href="{{ asset('css/toastr.css') }}" rel="stylesheet">
+
 
     <link href="https://unpkg.com/ionicons@4.5.5/dist/css/ionicons.min.css" rel="stylesheet">
 

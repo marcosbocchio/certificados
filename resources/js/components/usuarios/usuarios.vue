@@ -36,8 +36,7 @@
 
 <script>
 
-import axios from 'axios'
-import toastr from 'toastr'
+
 
     export default {
 

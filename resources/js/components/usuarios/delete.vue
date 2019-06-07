@@ -23,6 +23,9 @@
 </template>
 
 <script>
+
+
+
 export default {
   props: {
       fillRegistro: {'id':'','registro':''},

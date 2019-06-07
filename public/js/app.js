@@ -1799,7 +1799,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       if (false) {} else {
-        axios.defaults.baseURL = "http://localhost:8000";
+        axios.defaults.baseURL = "http://certificados.test";
       }
 
       var url = 'api/users/' + id;
@@ -1891,10 +1891,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! toastr */ "./node_modules/toastr/toastr.js");
-/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(toastr__WEBPACK_IMPORTED_MODULE_1__);
 //
 //
 //
@@ -1931,8 +1927,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     this.getRegistros();
@@ -1953,12 +1947,12 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       if (false) {} else {
-        axios__WEBPACK_IMPORTED_MODULE_0___default.a.defaults.baseURL = "http://localhost:8000";
+        axios.defaults.baseURL = "http://certificados.test";
       }
 
       var urlRegistros = 'api/users';
-      console.log(axios__WEBPACK_IMPORTED_MODULE_0___default.a.defaults.baseURL);
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(urlRegistros).then(function (response) {
+      console.log(axios.defaults.baseURL);
+      axios.get(urlRegistros).then(function (response) {
         _this.registros = response.data;
       });
     },
@@ -43201,6 +43195,7 @@ window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
  */
 
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+window.toastr = __webpack_require__(/*! toastr */ "./node_modules/toastr/toastr.js");
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /**
 *
@@ -43508,14 +43503,38 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/sass/app.scss":
+/*!*********************************!*\
+  !*** ./resources/sass/app.scss ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ "./resources/sass/toastr.scss":
+/*!************************************!*\
+  !*** ./resources/sass/toastr.scss ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ 0:
-/*!***********************************!*\
-  !*** multi ./resources/js/app.js ***!
-  \***********************************/
+/*!******************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/sass/app.scss ./resources/sass/toastr.scss ***!
+  \******************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/js/app.js */"./resources/js/app.js");
+__webpack_require__(/*! C:\Users\bocch\code\certificados\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! C:\Users\bocch\code\certificados\resources\sass\app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! C:\Users\bocch\code\certificados\resources\sass\toastr.scss */"./resources/sass/toastr.scss");
 
 
 /***/ })
