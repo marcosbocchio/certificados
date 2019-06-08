@@ -1779,8 +1779,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'abm-maestro',
   props: {
@@ -2008,8 +2006,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
 //
 //
 //
@@ -30782,18 +30778,11 @@ var render = function() {
           [_vm._v("Nuevo")]
         ),
         _vm._v(" "),
-        _c(
-          "table",
-          { staticClass: "table table-hover table-striped" },
-          [
-            _c(_vm.setTablaComponente, {
-              tag: "component",
-              attrs: { registros: _vm.registros },
-              on: { confirmarDelete: _vm.confirmDeleteRegistro }
-            })
-          ],
-          1
-        ),
+        _c(_vm.setTablaComponente, {
+          tag: "component",
+          attrs: { registros: _vm.registros },
+          on: { confirmarDelete: _vm.confirmDeleteRegistro }
+        }),
         _vm._v(" "),
         _c("delete-registro", {
           attrs: {
@@ -30810,7 +30799,7 @@ var render = function() {
     ),
     _vm._v(" "),
     _c("div", { staticClass: "col-sm-8" }, [
-      _c("pre", [_vm._v("\t\t\t" + _vm._s(_vm.$data) + "\n\t\t")])
+      _c("pre", [_vm._v("        " + _vm._s(_vm.$data) + "\n      ")])
     ])
   ])
 }
@@ -30934,13 +30923,13 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("table", { staticClass: "table table-hover table-striped" }, [
     _vm._m(0),
     _vm._v(" "),
     _c(
       "tbody",
       _vm._l(_vm.registros, function(registro) {
-        return _c("tr", [
+        return _c("tr", { key: registro.id }, [
           _c("td", { attrs: { width: "10px" } }, [_vm._v(_vm._s(registro.id))]),
           _vm._v(" "),
           _c("td", [_vm._v(_vm._s(registro.codigo))]),
@@ -31144,13 +31133,13 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("table", { staticClass: "table table-hover table-striped" }, [
     _vm._m(0),
     _vm._v(" "),
     _c(
       "tbody",
       _vm._l(_vm.registros, function(registro) {
-        return _c("tr", [
+        return _c("tr", { key: registro.id }, [
           _c("td", { attrs: { width: "10px" } }, [_vm._v(_vm._s(registro.id))]),
           _vm._v(" "),
           _c("td", [_vm._v(_vm._s(registro.codigo))]),
@@ -43438,7 +43427,7 @@ Vue.mixin({
   methods: {
     setBaseUrl: function setBaseUrl() {
       if (false) {} else {
-        this.url = "http://certificados.test/api";
+        this.url = "http://localhost:8000/api";
       }
     }
   }
@@ -43859,8 +43848,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\bocch\code\certificados\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\bocch\code\certificados\resources\sass\toastr.scss */"./resources/sass/toastr.scss");
+__webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/sass/toastr.scss */"./resources/sass/toastr.scss");
 
 
 /***/ })

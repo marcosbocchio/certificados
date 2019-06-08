@@ -1,19 +1,17 @@
 <template>
-    <div>
-        <div class="col-sm-8">
-           <a href="#" class="btn btn-primary pull-right" data-toggle="modal" data-target="#nuevo-users">Nuevo</a>
-           <table class="table table-hover table-striped">
-               <component :is= setTablaComponente :registros="registros"  @confirmarDelete="confirmDeleteRegistro"/>             
-            </table>
-            <delete-registro :datoDelete="datoDelete" :fillRegistro="fillRegistro" @close-modal="getRegistros" :modelo="modelo"></delete-registro>  
-            <component :is= setModalNuevoComponente />      
-        </div>
-        <div class="col-sm-8">
-		<pre>
-			{{ $data }}
-		</pre>
-        </div>
+<div>
+    <div class="col-sm-8">
+        <a href="#" class="btn btn-primary pull-right" data-toggle="modal" data-target="#nuevo-users">Nuevo</a>
+        <component :is= setTablaComponente :registros="registros"  @confirmarDelete="confirmDeleteRegistro"/>               
+        <delete-registro :datoDelete="datoDelete" :fillRegistro="fillRegistro" @close-modal="getRegistros" :modelo="modelo"></delete-registro>  
+        <component :is= setModalNuevoComponente />      
     </div>
+    <div class="col-sm-8">
+      <pre>
+        {{ $data }}
+      </pre>
+    </div>
+</div> 
 </template>
 
 <script>
