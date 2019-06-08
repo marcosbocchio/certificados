@@ -41,7 +41,9 @@ export default {
         $('#delete-registro').modal('hide');
         toastr.success('Eliminado correctamente');
       }).catch(error => {
-        this.errors = error.response
+        this.errors = error.response.data
+        toastr.success(this.errors);
+        console.log('hubo un error');
       });
     },
   }

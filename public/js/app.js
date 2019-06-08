@@ -1909,7 +1909,9 @@ __webpack_require__.r(__webpack_exports__);
         $('#delete-registro').modal('hide');
         toastr.success('Eliminado correctamente');
       })["catch"](function (error) {
-        _this.errors = error.response;
+        _this.errors = error.response.data;
+        toastr.success(_this.errors);
+        console.log('hubo un error');
       });
     }
   }
