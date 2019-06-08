@@ -23,9 +23,6 @@
 </template>
 
 <script>
-
-
-
 export default {
   props: {
       fillRegistro: {'id':'','registro':''},
@@ -49,8 +46,6 @@ export default {
         this.errors = error.response
       });
     },
-
-  
   }
 }
 </script>

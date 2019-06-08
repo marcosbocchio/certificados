@@ -20,17 +20,15 @@
     </tbody>
   </table>
 </template>
+
 <script>
-export default {
+  export default {
 
-      props : {
-          registros : {
-            type : Array,
-            required : true
-          }         
-
-        }
-      
-        
+    props : {
+      registros : {
+        type : Array,
+        required : true
+      }         
+    }      
   }
 </script>
