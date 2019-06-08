@@ -4,7 +4,7 @@
 
 <div id="app" class="row">
 
-   <abm-maestro :url="baseURL" modelo= "users" ></abm-maestro>
+   <abm-maestro modelo= "users" ></abm-maestro>
 
 </div>
 @endsection

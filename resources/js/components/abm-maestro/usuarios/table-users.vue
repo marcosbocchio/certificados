@@ -1,5 +1,6 @@
 <template>
-            <thead>
+<div>
+                <thead>
                 <tr>
                     <th>ID</th>
                     <th>Usuario</th>
@@ -15,13 +16,24 @@
                     <td>{{ registro.name }}</td>
                     <td>{{ registro.email }}</td>
                     <td><a href="#" class="btn btn-warning btn-sm" title="Editar" v-on:click.prevent="editKeep(registro)"><span class="fa fa-edit"></span></a>
-                        <a href="#" class="btn btn-danger btn-sm" title="Eliminar "v-on:click.prevent="confirmDeleteRegistro(registro)"><span class="fa fa-trash"></span></a>
+                        <a href="#" class="btn btn-danger btn-sm" title="Eliminar " v-on:click.prevent="$emit('confirmarDelete',registro,registro.name)"><span class="fa fa-trash"></span></a>
                     </td>
                 </tr>
                 </tbody>
-                
+
+</div>    
+      
 </template>
 
-export default { 
+<script>
+export default {
 
-}
+      props : {
+          registros : {
+            type : Array,
+            required : true        
+          }    
+        }
+  }
+</script>
+

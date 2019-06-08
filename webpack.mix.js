@@ -17,5 +17,5 @@ mix.js([
 
   ], 'public/js')
 
-.sass('resources/sass/app.scss', 'public/css')
-.sass('resources/sass/toastr.scss', 'public/css');
+.sass('resources/sass/toastr.scss', 'public/css')
+mix.options({ extractVueStyles: true });

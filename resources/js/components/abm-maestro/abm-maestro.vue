@@ -2,29 +2,9 @@
     <div>
         <div class="col-sm-12">
             <table class="table table-hover table-striped">
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Usuario</th>
-                    <th>Nombre</th>
-                    <th>Email</th>
-                    <th colspan="2">&nbsp;</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="registro in registros">
-                    <td width="10px">{{ registro.id }}</td>
-                    <td>{{ registro.codigo }}</td>
-                    <td>{{ registro.name }}</td>
-                    <td>{{ registro.email }}</td>
-                    <td><a href="#" class="btn btn-warning btn-sm" title="Editar" v-on:click.prevent="editKeep(registro)"><span class="fa fa-edit"></span></a>
-                        <a href="#" class="btn btn-danger btn-sm" title="Eliminar "v-on:click.prevent="confirmDeleteRegistro(registro)"><span class="fa fa-trash"></span></a>
-                    </td>
-                </tr>
-                </tbody>
+               <component :is= setComponente :registros="registros"  @confirmarDelete="confirmDeleteRegistro"/>             
             </table>
-            <delete-registro :fillRegistro="fillRegistro" :url="url" @close-modal="getRegistros"></delete-registro>
-            <h4>El registro es : {{ fillRegistro.id}}</h4>
+            <delete-registro :datoDelete="datoDelete" :fillRegistro="fillRegistro" @close-modal="getRegistros" :modelo="modelo"></delete-registro>         
         </div>
         <div class="col-sm-8">
 		<pre>
@@ -36,19 +16,13 @@
 
 <script>
 
-
     export default {
-      name: 'abm-maestro',  
-      props : {
-          url : {
-            type : String,
-            required : true,
-            default : 'https://certificados.com.ar'        
-          },
+      name: 'abm-maestro',
+      props : {         
           modelo : {
             type : String,
             required : true,
-            default : ''             
+            default : ''
           }
       },
 
@@ -58,30 +32,36 @@
 
       },
 
-      data () { return {       
+      data () { return {
         newregistro:'',
         fillRegistro: {'id':'','name':''},
         errors:[],
-        registros: []
+        registros: [], 
+        datoDelete: '',       
         }
-      },
+      },     
+      computed :{
+
+         setComponente : function(){
+
+             return 'table-' + this.modelo ;
+         }
+     },
 
       methods: {
 
             getRegistros : function(){
 
-            
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'api/users';
-                console.log(axios.defaults.baseURL);
+                var urlRegistros = this.modelo;                 
                 axios.get(urlRegistros).then(response =>{
                     this.registros = response.data
                 });
               },
 
-            confirmDeleteRegistro: function(registro){
+            confirmDeleteRegistro: function(registro,dato){            
               this.fillRegistro.id = registro.id;
-              this.fillRegistro.name = registro.name;
+              this.datoDelete = dato;
              $('#delete-registro').modal('show');
           }
       }

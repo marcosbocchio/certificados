@@ -42,7 +42,9 @@ window.Vue = require('vue');
 
 Vue.component('delete-registro', require('./components/abm-maestro//delete.vue').default);
 Vue.component('abm-maestro', require('./components/abm-maestro/abm-maestro.vue').default);
-Vue.component('tabla-users', require('./components/abm-maestro/usuarios/tabla-users.vue').default);
+Vue.component('table-users', require('./components/abm-maestro/usuarios/table-users.vue').default);
+Vue.component('table-materiales', require('./components/abm-maestro/materiales/table-materiales.vue').default);
+
 
 
 /**
@@ -52,34 +54,35 @@ Vue.component('tabla-users', require('./components/abm-maestro/usuarios/tabla-us
  *
  */
 
+Vue.mixin({
 
-const app = new Vue({
-    el: '#app',
+    data : function() {
+        return {
+        url:''
+    }
+},
    
-    data : {
-        baseURL : "",     
-       
-    }, 
-
-
-    created : function(){
-
-       this.setBaseUrl()
-       
-
+    created : function (){
+        this.setBaseUrl();
     },
-
     methods : { 
 
-            setBaseUrl : function() {
+        setBaseUrl : function() {
 
-                if ( process.env.NODE_ENV == 'production' ) {
-                    this.baseURL = process.env.MIX_API_URL_PRO;
-               } else {
-                    this.baseURL = process.env.MIX_API_URL_DEV;
-               }
+            if ( process.env.NODE_ENV == 'production' ) {
+                this.url = process.env.MIX_API_URL_PRO;
+           } else {
+                this.url = process.env.MIX_API_URL_DEV;
+           }
 
-            }    
-          
+        }    
+      
     }
+  })
+
+
+
+const app = new Vue({
+    el: '#app',   
+   
 });

@@ -23,8 +23,7 @@ class UserController extends Controller
 
     public function callView()
     {   
-        $User = auth()->user()->name;
-     //   dd($User);
+        $User = auth()->user()->name;      
         return view('usuarios',compact('User','modelo'));
 
     }

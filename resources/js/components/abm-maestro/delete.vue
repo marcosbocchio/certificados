@@ -10,7 +10,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <p>Está seguro de eliminar el registro " {{ fillRegistro.name }} " ?</p>
+            <p>Está seguro de eliminar el registro " {{ this.datoDelete }} " ?</p>
           </div>
           <div class="modal-footer">
             <input type="submit" class="btn btn-primary" value="Aceptar">
@@ -29,18 +29,19 @@
 export default {
   props: {
       fillRegistro: {'id':'','registro':''},
-      url : {
-          type : String,
-          required : true,
-          defaults : 'https://certificados.com.ar'        
-        }
+      datoDelete : '',
+      modelo : {
+            type : String,
+            required : true,
+            default : ''
+          }
   },
   methods:{
   dropRegistro :function(id){
 
       axios.defaults.baseURL = this.url;     
-      var url = 'api/users/' + id;
-      axios.delete(url).then(response =>{
+      var url = this.modelo + '/' + id;
+      axios.delete(url).then(response =>{       
         this.$emit('close-modal');
         $('#delete-registro').modal('hide');
         toastr.success('Eliminado correctamente');
@@ -48,6 +49,8 @@ export default {
         this.errors = error.response
       });
     },
+
+  
   }
 }
 </script>
