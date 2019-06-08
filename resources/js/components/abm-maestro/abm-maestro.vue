@@ -4,7 +4,7 @@
         <a href="#" class="btn btn-primary pull-right" data-toggle="modal" data-target="#nuevo-users">Nuevo</a>
         <component :is= setTablaComponente :registros="registros"  @confirmarDelete="confirmDeleteRegistro"/>               
         <delete-registro :datoDelete="datoDelete" :fillRegistro="fillRegistro" @close-modal="getRegistros" :modelo="modelo"></delete-registro>  
-        <component :is= setModalNuevoComponente />      
+        <component :is= setNuevoComponente />      
     </div>
     <div class="col-sm-8">
       <pre>
@@ -50,7 +50,7 @@
 
              return 'table-' + this.modelo ;
          },
-         setModalNuevoComponente : function(){
+         setNuevoComponente : function(){
 
              return 'nuevo-' + this.modelo ;
          }

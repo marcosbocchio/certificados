@@ -1809,7 +1809,7 @@ __webpack_require__.r(__webpack_exports__);
     setTablaComponente: function setTablaComponente() {
       return 'table-' + this.modelo;
     },
-    setModalNuevoComponente: function setModalNuevoComponente() {
+    setNuevoComponente: function setNuevoComponente() {
       return 'nuevo-' + this.modelo;
     }
   },
@@ -30793,7 +30793,7 @@ var render = function() {
           on: { "close-modal": _vm.getRegistros }
         }),
         _vm._v(" "),
-        _c(_vm.setModalNuevoComponente, { tag: "component" })
+        _c(_vm.setNuevoComponente, { tag: "component" })
       ],
       1
     ),
