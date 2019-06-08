@@ -40,10 +40,12 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
-Vue.component('delete-registro', require('./components/abm-maestro//delete.vue').default);
+
 Vue.component('abm-maestro', require('./components/abm-maestro/abm-maestro.vue').default);
 Vue.component('table-users', require('./components/abm-maestro/usuarios/table-users.vue').default);
+Vue.component('nuevo-users', require('./components/abm-maestro/usuarios/nuevo-users.vue').default);
 Vue.component('table-materiales', require('./components/abm-maestro/materiales/table-materiales.vue').default);
+Vue.component('delete-registro', require('./components/abm-maestro//delete.vue').default);
 
 
 

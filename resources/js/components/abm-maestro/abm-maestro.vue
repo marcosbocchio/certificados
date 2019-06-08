@@ -1,10 +1,12 @@
 <template>
     <div>
-        <div class="col-sm-12">
-            <table class="table table-hover table-striped">
-               <component :is= setComponente :registros="registros"  @confirmarDelete="confirmDeleteRegistro"/>             
+        <div class="col-sm-8">
+           <a href="#" class="btn btn-primary pull-right" data-toggle="modal" data-target="#nuevo-users">Nuevo</a>
+           <table class="table table-hover table-striped">
+               <component :is= setTablaComponente :registros="registros"  @confirmarDelete="confirmDeleteRegistro"/>             
             </table>
-            <delete-registro :datoDelete="datoDelete" :fillRegistro="fillRegistro" @close-modal="getRegistros" :modelo="modelo"></delete-registro>         
+            <delete-registro :datoDelete="datoDelete" :fillRegistro="fillRegistro" @close-modal="getRegistros" :modelo="modelo"></delete-registro>  
+            <component :is= setModalNuevoComponente />      
         </div>
         <div class="col-sm-8">
 		<pre>
@@ -31,6 +33,10 @@
         this.getRegistros();
 
       },
+      mounted () {
+
+      //  $('#nuevo-user').modal('show');
+      },
 
       data () { return {
         newregistro:'',
@@ -42,9 +48,13 @@
       },     
       computed :{
 
-         setComponente : function(){
+         setTablaComponente : function(){
 
              return 'table-' + this.modelo ;
+         },
+         setModalNuevoComponente : function(){
+
+             return 'nuevo-' + this.modelo ;
          }
      },
 
@@ -56,6 +66,21 @@
                 var urlRegistros = this.modelo;                 
                 axios.get(urlRegistros).then(response =>{
                     this.registros = response.data
+                });
+              },
+            Nuevo: function(){
+               axios.defaults.baseURL = this.url ;
+               var urlRegistros = this.modelo;
+              axios.post(urlRegistros, {
+                registro: this.newregistro
+              }).then(response => {
+                this.getRegistros();
+                this.newregistro='';
+                this.errors=[];
+                $('#nuevo-users').modal('hide');
+                toastr.success('Nueva tarea creada con éxito');
+                }).catch(error => {
+                  this.errors = error.response.data
                 });
               },
 
