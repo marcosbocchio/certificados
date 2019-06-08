@@ -4,17 +4,15 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Advertencia</h5>
-            <button type="button" class="close" data-dismiss="modal" >
-              <span>&times;</span>
-            </button>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Advertencia</h4>
           </div>
           <div class="modal-body">
             <p>Está seguro de eliminar el registro " {{ this.datoDelete }} " ?</p>
           </div>
           <div class="modal-footer">
             <input type="submit" class="btn btn-primary" value="Aceptar">
-            <button type="button" class="btn btn-secondary" name="button" data-dismiss="modal" >Cancelar</button>
+            <button type="button" class="btn btn-default" name="button" data-dismiss="modal" >Cancelar</button>
           </div>
         </div>
       </div>

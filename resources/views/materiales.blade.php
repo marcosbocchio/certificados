@@ -2,7 +2,7 @@
 
 @section('contenido')
 
-<div id="app" class="row">
+<div id="app">
 
    <abm-maestro  modelo= "materiales" ></abm-maestro>
 

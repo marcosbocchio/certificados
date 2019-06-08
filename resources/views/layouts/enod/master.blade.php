@@ -65,12 +65,13 @@ desired effect
 @include('layouts.enod.partials.header')
 @include('layouts.enod.partials.content-header')
 
-
         <!-- Main content -->
         <section class="content container-fluid">
+          
 
-            @yield('contenido')
+                @yield('contenido')
 
+           
         </section>
 
         <!-- /.content -->

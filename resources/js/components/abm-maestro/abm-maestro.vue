@@ -1,7 +1,9 @@
 <template>
 <div>
-    <div class="col-sm-8">
+    <div class="col-sm-10">
         <a href="#" class="btn btn-primary pull-right" data-toggle="modal" data-target="#nuevo-users">Nuevo</a>
+    </div>
+    <div class="col-sm-10">
         <component :is= setTablaComponente :registros="registros"  @confirmarDelete="confirmDeleteRegistro"/>               
         <delete-registro :datoDelete="datoDelete" :fillRegistro="fillRegistro" @close-modal="getRegistros" :modelo="modelo"></delete-registro>  
         <component :is= setNuevoComponente />      
