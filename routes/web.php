@@ -21,10 +21,11 @@ Route::group(['middleware' => ['permission:Navegar cliente']], function () {
 
 Route::group(['middleware' => ['permission:Navegar operador']], function () {
   Route::get('/area/enod', 'dashboardOperadoresController@index')->name('testoperador');
+  Route::get('area/enod/usuarios', 'UserController@callView');
+  Route::get('area/enod/materiales', 'MaterialesController@callView');
 });
 
-Route::get('area/enod/usuarios', 'UserController@callView');
-Route::get('area/enod/materiales', 'MaterialesController@callView');
+
 
 //Route::get('area/enod/users', 'UserController@index');
 //Route::resource('users','UserController');
