@@ -6,7 +6,7 @@
     <div class="col-sm-10">
         <component :is= setTablaComponente :registros="registros"  @confirmarDelete="confirmDeleteRegistro"/>               
         <delete-registro :datoDelete="datoDelete" :fillRegistro="fillRegistro" @close-modal="getRegistros" :modelo="modelo"></delete-registro>  
-        <component :is= setNuevoComponente />      
+        <component :is= setNuevoComponente @Nuevo="nuevoRegistro"/>      
     </div>
     <div class="col-sm-8">
       <pre>
@@ -39,7 +39,6 @@
       },
 
       data () { return {
-        newregistro:'',
         fillRegistro: {'id':'','name':''},
         errors:[],
         registros: [], 
@@ -68,17 +67,19 @@
                     this.registros = response.data
                 });
               },
-            Nuevo: function(){
+            nuevoRegistro: function(newRegistro){
                axios.defaults.baseURL = this.url ;
                var urlRegistros = this.modelo;
               axios.post(urlRegistros, {
-                registro: this.newregistro
+                'name'     : newRegistro.name,
+                'codigo'   :newRegistro.codigo,
+                'email'    :newRegistro.email,
+                'password' :newRegistro.password
               }).then(response => {
                 this.getRegistros();
-                this.newregistro='';
                 this.errors=[];
                 $('#nuevo-users').modal('hide');
-                toastr.success('Nueva tarea creada con éxito');
+                toastr.success('Nuevo registro creado con éxito');
                 }).catch(error => {
                   this.errors = error.response.data
                 });

@@ -1797,7 +1797,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      newregistro: '',
       fillRegistro: {
         'id': '',
         'name': ''
@@ -1825,20 +1824,22 @@ __webpack_require__.r(__webpack_exports__);
         _this.registros = response.data;
       });
     },
-    Nuevo: function Nuevo() {
+    nuevoRegistro: function nuevoRegistro(newRegistro) {
       var _this2 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = this.modelo;
       axios.post(urlRegistros, {
-        registro: this.newregistro
+        'name': newRegistro.name,
+        'codigo': newRegistro.codigo,
+        'email': newRegistro.email,
+        'password': newRegistro.password
       }).then(function (response) {
         _this2.getRegistros();
 
-        _this2.newregistro = '';
         _this2.errors = [];
         $('#nuevo-users').modal('hide');
-        toastr.success('Nueva tarea creada con éxito');
+        toastr.success('Nuevo registro creado con éxito');
       })["catch"](function (error) {
         _this2.errors = error.response.data;
       });
@@ -2037,7 +2038,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      newRegistro: {
+        'codigo': '',
+        'name': '',
+        'email': '',
+        'password': ''
+      }
+    };
+  }
+});
 
 /***/ }),
 
@@ -30831,7 +30848,10 @@ var render = function() {
           on: { "close-modal": _vm.getRegistros }
         }),
         _vm._v(" "),
-        _c(_vm.setNuevoComponente, { tag: "component" })
+        _c(_vm.setNuevoComponente, {
+          tag: "component",
+          on: { Nuevo: _vm.nuevoRegistro }
+        })
       ],
       1
     ),
@@ -31213,7 +31233,7 @@ var render = function() {
       on: {
         submit: function($event) {
           $event.preventDefault()
-          return _vm.Nuevo($event)
+          return _vm.$emit("Nuevo", _vm.newRegistro)
         }
       }
     },
@@ -31223,47 +31243,118 @@ var render = function() {
           _c("div", { staticClass: "modal-content" }, [
             _vm._m(0),
             _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "modal-body" },
-              [
-                _c("label", { attrs: { for: "usuario" } }, [_vm._v("Usuario")]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.newkeep,
-                      expression: "newkeep"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: {
-                    type: "text",
-                    name: "usuario",
-                    value: "",
-                    required: ""
-                  },
-                  domProps: { value: _vm.newkeep },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.newkeep = $event.target.value
-                    }
+            _c("div", { staticClass: "modal-body" }, [
+              _c("label", { attrs: { for: "usuario" } }, [_vm._v("Usuario")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.newRegistro.codigo,
+                    expression: "newRegistro.codigo"
                   }
-                }),
-                _vm._v(" "),
-                _vm._l(_vm.errors, function(error) {
-                  return _c("span", { staticClass: "text-danger" }, [
-                    _vm._v(_vm._s(error))
-                  ])
-                })
-              ],
-              2
-            ),
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  name: "usuario",
+                  value: "",
+                  required: ""
+                },
+                domProps: { value: _vm.newRegistro.codigo },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.newRegistro, "codigo", $event.target.value)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "name" } }, [_vm._v("Nombre")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.newRegistro.name,
+                    expression: "newRegistro.name"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  name: "nombre",
+                  value: "",
+                  required: ""
+                },
+                domProps: { value: _vm.newRegistro.name },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.newRegistro, "name", $event.target.value)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "usuario" } }, [_vm._v("email")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.newRegistro.email,
+                    expression: "newRegistro.email"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", name: "email", value: "", required: "" },
+                domProps: { value: _vm.newRegistro.email },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.newRegistro, "email", $event.target.value)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "password" } }, [_vm._v("password")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.newRegistro.password,
+                    expression: "newRegistro.password"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  name: "password",
+                  value: "",
+                  required: ""
+                },
+                domProps: { value: _vm.newRegistro.password },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.newRegistro, "password", $event.target.value)
+                  }
+                }
+              })
+            ]),
             _vm._v(" "),
             _vm._m(1)
           ])

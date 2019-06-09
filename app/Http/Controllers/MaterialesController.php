@@ -32,7 +32,7 @@ class MaterialesController extends Controller
     public function store(Request $request){
 
 
-     $this->users->create($request) ;
+     $this->materiales->create($request) ;
 
     }
 
