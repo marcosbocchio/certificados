@@ -62,8 +62,12 @@ desired effect
 |---------------------------------------------------------|
 -->
 <body class="hold-transition skin-red sidebar-boxed">
+
 @include('layouts.enod.partials.header')
 @include('layouts.enod.partials.content-header')
+@include('layouts.enod.partials.sidebar-menu')
+
+
 
         <!-- Main content -->
         <section class="content container-fluid">

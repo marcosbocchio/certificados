@@ -11,7 +11,7 @@
 |
 */
 
-Route::redirect('/', '/login',301);
+Route::redirect('/', '/login',301)->name('login');
 
 Auth::routes();
 
