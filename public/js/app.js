@@ -1906,11 +1906,13 @@ __webpack_require__.r(__webpack_exports__);
       axios["delete"](url).then(function (response) {
         _this.$emit('close-modal');
 
-        $('#delete-registro').modal('hide');
         toastr.success('Eliminado correctamente');
       })["catch"](function (error) {
-        _this.errors = error.response;
+        _this.errors = error.response.data;
+        toastr.error("No se pudo eliminar el registro seleccionado.", "Error al eliminar :");
+        console.log('hubo un error');
       });
+      $('#delete-registro').modal('hide');
     }
   }
 });
