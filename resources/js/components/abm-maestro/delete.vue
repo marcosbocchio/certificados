@@ -38,13 +38,13 @@ export default {
       var url = this.modelo + '/' + id;
       axios.delete(url).then(response =>{       
         this.$emit('close-modal');
-        $('#delete-registro').modal('hide');
         toastr.success('Eliminado correctamente');
       }).catch(error => {
         this.errors = error.response.data
-        toastr.success(this.errors);
+        toastr.error("No se pudo eliminar el registro seleccionado.", "Error al eliminar :");
         console.log('hubo un error');
       });
+      $('#delete-registro').modal('hide');
     },
   }
 }
