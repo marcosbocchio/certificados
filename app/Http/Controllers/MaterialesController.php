@@ -31,7 +31,7 @@ class MaterialesController extends Controller
 
     public function store(Request $request){
 
-      $this->materiales->create($request->reg) ;      
+      $this->materiales->create($request->registro) ;      
 
     }
 
