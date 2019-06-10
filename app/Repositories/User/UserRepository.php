@@ -20,6 +20,7 @@ class UserRepository extends BaseRepository
     
 
         $User = $this->getModel();
+     
         $User->name = $data['name'];
         $User->email = $data['email'];
         $User->codigo = $data['codigo'];

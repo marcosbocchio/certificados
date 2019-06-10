@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Repositories\Materiales\MaterialesRepository;
-
+use App\Materiales;
 use App\User;
 
 class MaterialesController extends Controller
@@ -31,8 +31,7 @@ class MaterialesController extends Controller
 
     public function store(Request $request){
 
-
-      $this->materiales->create($request->all()) ;      
+      $this->materiales->create($request->reg) ;      
 
     }
 

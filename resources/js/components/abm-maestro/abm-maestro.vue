@@ -75,10 +75,9 @@
                 axios.defaults.baseURL = this.url ;
                 var urlRegistros = this.modelo;  
                 this.obj = newRegistro;                           
-                axios.post(urlRegistros, {
-                
-                  'descripcion'    :newRegistro.descripcion,
-                  'codigo'  :newRegistro.codigo,              
+                axios.post(urlRegistros, {           
+                 
+                 registro : newRegistro
 
                 }).then(response => {
                   this.getRegistros();
@@ -89,7 +88,7 @@
                   
                 }).catch(error => {
                     toastr.error("No se pudo crear el registo.", "Error:");
-                     console.log(response);
+                     console.log(error.response);
                     this.errors = error.response.data
                 });
 

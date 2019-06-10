@@ -1832,8 +1832,7 @@ __webpack_require__.r(__webpack_exports__);
       var urlRegistros = this.modelo;
       this.obj = newRegistro;
       axios.post(urlRegistros, {
-        'descripcion': newRegistro.descripcion,
-        'codigo': newRegistro.codigo
+        registro: newRegistro
       }).then(function (response) {
         _this2.getRegistros();
 
@@ -1843,7 +1842,7 @@ __webpack_require__.r(__webpack_exports__);
         toastr.success('Nuevo registro creado con éxito');
       })["catch"](function (error) {
         toastr.error("No se pudo crear el registo.", "Error:");
-        console.log(response);
+        console.log(error.response);
         _this2.errors = error.response.data;
       });
     },

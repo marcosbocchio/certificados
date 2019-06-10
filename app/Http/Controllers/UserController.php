@@ -30,8 +30,8 @@ class UserController extends Controller
     }
 
     public function store(Request $request){    
-
-        $this->users->create($request->all()) ;      
+        
+        $this->users->create($request->registro) ;      
     
     }
 
