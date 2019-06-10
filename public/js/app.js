@@ -1830,10 +1830,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.defaults.baseURL = this.url;
       var urlRegistros = this.modelo;
       axios.post(urlRegistros, {
-        'name': newRegistro.name,
-        'codigo': newRegistro.codigo,
-        'email': newRegistro.email,
-        'password': newRegistro.password
+        registro: newRegistro
       }).then(function (response) {
         _this2.getRegistros();
 
@@ -1841,6 +1838,8 @@ __webpack_require__.r(__webpack_exports__);
         $('#nuevo-users').modal('hide');
         toastr.success('Nuevo registro creado con éxito');
       })["catch"](function (error) {
+        toastr.error("No se pudo crear el registo.", "Error:");
+        console.log('hubo un error');
         _this2.errors = error.response.data;
       });
     },

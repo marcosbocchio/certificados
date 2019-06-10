@@ -42,7 +42,7 @@
         fillRegistro: {'id':'','name':''},
         errors:[],
         registros: [], 
-        datoDelete: '',       
+        datoDelete: '',      
         }
       },     
       computed :{
@@ -67,22 +67,27 @@
                     this.registros = response.data
                 });
               },
+
             nuevoRegistro: function(newRegistro){
-               axios.defaults.baseURL = this.url ;
-               var urlRegistros = this.modelo;
-              axios.post(urlRegistros, {
-                'name'     : newRegistro.name,
-                'codigo'   :newRegistro.codigo,
-                'email'    :newRegistro.email,
-                'password' :newRegistro.password
-              }).then(response => {
-                this.getRegistros();
-                this.errors=[];
-                $('#nuevo-users').modal('hide');
-                toastr.success('Nuevo registro creado con éxito');
+
+                axios.defaults.baseURL = this.url ;
+                var urlRegistros = this.modelo;             
+                axios.post(urlRegistros, {
+
+                  registro : newRegistro
+
+                }).then(response => {
+                  this.getRegistros();
+                  this.errors=[];
+                  $('#nuevo-users').modal('hide');               
+                  toastr.success('Nuevo registro creado con éxito');
+                  
                 }).catch(error => {
-                  this.errors = error.response.data
+                    toastr.error("No se pudo crear el registo.", "Error:");
+                    console.log('hubo un error');
+                    this.errors = error.response.data
                 });
+
               },
 
             confirmDeleteRegistro: function(registro,dato){            

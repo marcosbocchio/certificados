@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Repositories\User\UserRepository;
+use Illuminate\Support\Facades\DB;
 use App\User;
 
 class UserController extends Controller
@@ -28,11 +29,10 @@ class UserController extends Controller
 
     }
 
-    public function store(Request $request){
+    public function store(Request $request){    
 
-
-      $this->users->create($request) ;
-
+        $this->users->create($request->all()) ;      
+    
     }
 
     public function destroy($id){

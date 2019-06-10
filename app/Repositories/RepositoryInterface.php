@@ -8,7 +8,7 @@ interface RepositoryInterface
 
   public function getAll();
 
-  public function create(object $data);
+  public function create(array $data);
 
   public function update(array $data, $id);
 
