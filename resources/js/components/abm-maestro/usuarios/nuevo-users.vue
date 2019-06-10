@@ -1,6 +1,6 @@
 <template>
     <form v-on:submit.prevent="$emit('Nuevo',newRegistro)" method="post">
-    <div class="modal fade" id="nuevo-users">
+    <div class="modal fade" id="nuevo">
         <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

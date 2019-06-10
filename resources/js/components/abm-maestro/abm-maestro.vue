@@ -1,7 +1,7 @@
 <template>
 <div>
     <div class="col-sm-10">
-        <a href="#" class="btn btn-primary pull-right" data-toggle="modal" data-target="#nuevo-users">Nuevo</a>
+        <a href="#" class="btn btn-primary pull-right" data-toggle="modal" data-target="#nuevo">Nuevo</a>
     </div>
     <div class="col-sm-10">
         <component :is= setTablaComponente :registros="registros"  @confirmarDelete="confirmDeleteRegistro"/>               
@@ -42,7 +42,9 @@
         fillRegistro: {'id':'','name':''},
         errors:[],
         registros: [], 
-        datoDelete: '',      
+        datoDelete: '',    
+        obj :'',
+   
         }
       },     
       computed :{
@@ -62,29 +64,32 @@
             getRegistros : function(){
 
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = this.modelo;                 
+                var urlRegistros = this.modelo;    
                 axios.get(urlRegistros).then(response =>{
-                    this.registros = response.data
+                this.registros = response.data
                 });
               },
 
             nuevoRegistro: function(newRegistro){
 
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = this.modelo;             
+                var urlRegistros = this.modelo;  
+                this.obj = newRegistro;                           
                 axios.post(urlRegistros, {
-
-                  registro : newRegistro
+                
+                  'descripcion'    :newRegistro.descripcion,
+                  'codigo'  :newRegistro.codigo,              
 
                 }).then(response => {
                   this.getRegistros();
                   this.errors=[];
-                  $('#nuevo-users').modal('hide');               
+                   console.log(response);
+                  $('#nuevo').modal('hide');               
                   toastr.success('Nuevo registro creado con éxito');
                   
                 }).catch(error => {
                     toastr.error("No se pudo crear el registo.", "Error:");
-                    console.log('hubo un error');
+                     console.log(response);
                     this.errors = error.response.data
                 });
 

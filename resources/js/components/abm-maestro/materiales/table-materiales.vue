@@ -1,4 +1,4 @@
-<template>
+<template>  
   <div class="table-responsive">
     <table class="table table-hover table-striped">
       <thead>
@@ -23,7 +23,7 @@
         </tr>
       </tbody>
     </table>
-  </div>
+  </div>  
 </template>
 
 <script>
