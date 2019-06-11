@@ -25,6 +25,7 @@
     },
     "dependencies": {
         "font-awesome": "^4.7.0",
+        "laravel-vue-pagination": "^2.3.0",
         "toastr": "^2.1.4"
     }
 }
