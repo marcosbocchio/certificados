@@ -29,9 +29,18 @@ class UserController extends Controller
 
     }
 
-    public function store(Request $request){    
-        
-        $this->users->create($request->registro) ;      
+    public function store(Request $request){ 
+      
+    $request->validate([
+
+      'codigo'  => 'required |unique:users',
+      'name' => 'required',
+      'email'  =>'required|unique:users|email',
+      'password' =>'required|Min:8'
+    
+    ]);
+     
+    $this->users->create($request->all()) ;      
     
     }
 

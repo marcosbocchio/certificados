@@ -6,7 +6,7 @@
     <div class="col-sm-10">
         <component :is= setTablaComponente :registros="registros"  @confirmarDelete="confirmDeleteRegistro"/>               
         <delete-registro :datoDelete="datoDelete" :fillRegistro="fillRegistro" @close-modal="getRegistros" :modelo="modelo"></delete-registro>  
-        <component :is= setNuevoComponente @Nuevo="nuevoRegistro"/>      
+        <component :is= setNuevoComponente @store="getRegistros"/>      
     </div>
     <div class="col-sm-8">
       <pre>
@@ -70,30 +70,7 @@
                 });
               },
 
-            nuevoRegistro: function(newRegistro){
-
-                axios.defaults.baseURL = this.url ;
-                var urlRegistros = this.modelo;  
-                this.obj = newRegistro;                           
-                axios.post(urlRegistros, {           
-                 
-                 registro : newRegistro
-
-                }).then(response => {
-                  this.getRegistros();
-                  this.errors=[];
-                   console.log(response);
-                  $('#nuevo').modal('hide');               
-                  toastr.success('Nuevo registro creado con éxito');
-                  
-                }).catch(error => {
-                    toastr.error("No se pudo crear el registo.", "Error:");
-                     console.log(error.response);
-                    this.errors = error.response.data
-                });
-
-              },
-
+          
             confirmDeleteRegistro: function(registro,dato){            
               this.fillRegistro.id = registro.id;
               this.datoDelete = dato;

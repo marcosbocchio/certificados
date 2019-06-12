@@ -17,10 +17,10 @@ class UserRepository extends BaseRepository
 
   public function create(Array $data){
 
-    
 
         $User = $this->getModel();
-     
+        
+        
         $User->name = $data['name'];
         $User->email = $data['email'];
         $User->codigo = $data['codigo'];
