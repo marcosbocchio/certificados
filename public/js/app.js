@@ -1933,16 +1933,40 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       newRegistro: {
         'codigo': '',
         'descripcion': ''
-      }
+      },
+      errors: {}
     };
+  },
+  methods: {
+    storeRegistro: function storeRegistro() {
+      var _this = this;
+
+      axios.defaults.baseURL = this.url;
+      var urlRegistros = 'materiales';
+      axios.post(urlRegistros, {
+        'codigo': this.newRegistro.codigo,
+        'descripcion': this.newRegistro.descripcion
+      }).then(function (response) {
+        _this.$emit('store');
+
+        _this.errors = [];
+        $('#nuevo').modal('hide');
+        toastr.success('Nuevo registro creado con éxito');
+      })["catch"](function (error) {
+        toastr.error("No se pudo crear el registo.", "Error:");
+        _this.errors = error.response.data.errors;
+        $.each(_this.errors, function (key, value) {
+          toastr.error(value, key);
+          console.log(key + ": " + value);
+        });
+      });
+    }
   }
 });
 
@@ -1957,8 +1981,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
 //
 //
 //
@@ -2035,7 +2057,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2066,6 +2087,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.errors = [];
         $('#nuevo').modal('hide');
         toastr.success('Nuevo registro creado con éxito');
+        _this.newRegistro = {};
       })["catch"](function (error) {
         toastr.error("No se pudo crear el registo.", "Error:");
         _this.errors = error.response.data.errors;
@@ -32400,7 +32422,7 @@ var render = function() {
       on: {
         submit: function($event) {
           $event.preventDefault()
-          return _vm.$emit("Nuevo", _vm.newRegistro)
+          return _vm.storeRegistro($event)
         }
       }
     },
@@ -32411,36 +32433,6 @@ var render = function() {
             _vm._m(0),
             _vm._v(" "),
             _c("div", { staticClass: "modal-body" }, [
-              _c("label", { attrs: { for: "codigo" } }, [_vm._v("Código")]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.newRegistro.codigo,
-                    expression: "newRegistro.codigo"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: {
-                  type: "text",
-                  name: "codigo",
-                  value: "",
-                  maxlength: "10",
-                  required: ""
-                },
-                domProps: { value: _vm.newRegistro.codigo },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.newRegistro, "codigo", $event.target.value)
-                  }
-                }
-              }),
-              _vm._v(" "),
               _c("label", { attrs: { for: "name" } }, [_vm._v("descripción")]),
               _vm._v(" "),
               _c("input", {
@@ -32453,13 +32445,7 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
-                attrs: {
-                  type: "text",
-                  name: "descripcion",
-                  maxlength: "100",
-                  value: "",
-                  required: ""
-                },
+                attrs: { type: "text", name: "descripcion", value: "" },
                 domProps: { value: _vm.newRegistro.descripcion },
                 on: {
                   input: function($event) {
@@ -32555,8 +32541,6 @@ var render = function() {
               _vm._v(_vm._s(registro.id))
             ]),
             _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(registro.codigo))]),
-            _vm._v(" "),
             _c("td", [_vm._v(_vm._s(registro.descripcion))]),
             _vm._v(" "),
             _c("td", { attrs: { width: "10px" } }, [
@@ -32612,8 +32596,6 @@ var staticRenderFns = [
       _c("tr", [
         _c("th", [_vm._v("ID")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Codigo")]),
-        _vm._v(" "),
         _c("th", [_vm._v("Descripcion")]),
         _vm._v(" "),
         _c("th", { attrs: { colspan: "2" } }, [_vm._v(" ")])
@@ -32659,116 +32641,103 @@ var render = function() {
           _c("div", { staticClass: "modal-content" }, [
             _vm._m(0),
             _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "modal-body" },
-              [
-                _c("label", { attrs: { for: "usuario" } }, [_vm._v("Usuario")]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.newRegistro.codigo,
-                      expression: "newRegistro.codigo"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "text", name: "usuario", value: "" },
-                  domProps: { value: _vm.newRegistro.codigo },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.newRegistro, "codigo", $event.target.value)
-                    }
+            _c("div", { staticClass: "modal-body" }, [
+              _c("label", { attrs: { for: "usuario" } }, [_vm._v("Usuario")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.newRegistro.codigo,
+                    expression: "newRegistro.codigo"
                   }
-                }),
-                _vm._v(" "),
-                _c("label", { attrs: { for: "name" } }, [_vm._v("Nombre")]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.newRegistro.name,
-                      expression: "newRegistro.name"
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", name: "usuario", value: "" },
+                domProps: { value: _vm.newRegistro.codigo },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
                     }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "text", name: "nombre", value: "" },
-                  domProps: { value: _vm.newRegistro.name },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.newRegistro, "name", $event.target.value)
-                    }
+                    _vm.$set(_vm.newRegistro, "codigo", $event.target.value)
                   }
-                }),
-                _vm._v(" "),
-                _c("label", { attrs: { for: "usuario" } }, [_vm._v("email")]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.newRegistro.email,
-                      expression: "newRegistro.email"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "text", name: "email", value: "" },
-                  domProps: { value: _vm.newRegistro.email },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.newRegistro, "email", $event.target.value)
-                    }
+                }
+              }),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "name" } }, [_vm._v("Nombre")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.newRegistro.name,
+                    expression: "newRegistro.name"
                   }
-                }),
-                _vm._v(" "),
-                _c("label", { attrs: { for: "password" } }, [
-                  _vm._v("password")
-                ]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.newRegistro.password,
-                      expression: "newRegistro.password"
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", name: "nombre", value: "" },
+                domProps: { value: _vm.newRegistro.name },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
                     }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "text", name: "password", value: "" },
-                  domProps: { value: _vm.newRegistro.password },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.newRegistro, "password", $event.target.value)
-                    }
+                    _vm.$set(_vm.newRegistro, "name", $event.target.value)
                   }
-                }),
-                _vm._v(" "),
-                _vm._l(_vm.errors, function(error) {
-                  return _c("span", { staticClass: "text-danger" }, [
-                    _vm._v(" " + _vm._s(error))
-                  ])
-                })
-              ],
-              2
-            ),
+                }
+              }),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "usuario" } }, [_vm._v("email")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.newRegistro.email,
+                    expression: "newRegistro.email"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", name: "email", value: "" },
+                domProps: { value: _vm.newRegistro.email },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.newRegistro, "email", $event.target.value)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "password" } }, [_vm._v("password")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.newRegistro.password,
+                    expression: "newRegistro.password"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", name: "password", value: "" },
+                domProps: { value: _vm.newRegistro.password },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.newRegistro, "password", $event.target.value)
+                  }
+                }
+              })
+            ]),
             _vm._v(" "),
             _vm._m(1)
           ])

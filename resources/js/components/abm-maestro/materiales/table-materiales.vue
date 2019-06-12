@@ -4,7 +4,6 @@
       <thead>
         <tr>
           <th>ID</th>
-          <th>Codigo</th>
           <th>Descripcion</th>
           <th colspan="2">&nbsp;</th>
         </tr>
@@ -12,7 +11,6 @@
       <tbody>
         <tr v-for="registro in registros" :key="registro.id">
           <td width="10px">{{ registro.id }}</td>
-          <td>{{ registro.codigo }}</td>
           <td>{{ registro.descripcion }}</td>
           <td width="10px">
             <a href="#" class="btn btn-warning btn-sm" title="Editar" v-on:click.prevent="editKeep(registro)"><span class="fa fa-edit"></span></a>  

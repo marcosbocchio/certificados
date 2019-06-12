@@ -9,14 +9,13 @@
             </div>
             <div class="modal-body">
                 <label for="usuario">Usuario</label>
-                <input type="text" name="usuario" class="form-control" v-model="newRegistro.codigo" value="" >
+                <input type="text" name="usuario" class="form-control" v-model="newRegistro.codigo" value="">
                 <label for="name">Nombre</label>
-                <input type="text" name="nombre" class="form-control" v-model="newRegistro.name" value=""  >
+                <input type="text" name="nombre" class="form-control" v-model="newRegistro.name" value="">
                 <label for="usuario">email</label>
-                <input type="text" name="email" class="form-control" v-model="newRegistro.email" value=""  >
+                <input type="text" name="email" class="form-control" v-model="newRegistro.email" value="">
                 <label for="password">password</label>
-                <input type="text" name="password" class="form-control" v-model="newRegistro.password" value=""  >
-                 <span v-for="error in errors" class="text-danger"> {{ error }}</span>
+                <input type="text" name="password" class="form-control" v-model="newRegistro.password" value="">
             </div>
            
             <div class="modal-footer">
@@ -65,13 +64,14 @@ methods: {
                   this.errors=[];
                   $('#nuevo').modal('hide');               
                   toastr.success('Nuevo registro creado con éxito');
+                  this.newRegistro={}
                   
                 }).catch(error => {
                     toastr.error("No se pudo crear el registo.", "Error:");
                     this.errors = error.response.data.errors;
                     $.each( this.errors, function( key, value ) {
-                    toastr.error(value,key);
-                    console.log( key + ": " + value );
+                        toastr.error(value,key);
+                        console.log( key + ": " + value );
                     });
 
                 });

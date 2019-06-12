@@ -31,7 +31,13 @@ class MaterialesController extends Controller
 
     public function store(Request $request){
 
-      $this->materiales->create($request->registro) ;      
+      $request->validate([
+
+        'descripcion'  => 'required |unique:materiales'
+      
+      ]);
+
+      $this->materiales->create($request->all()) ;      
 
     }
 
