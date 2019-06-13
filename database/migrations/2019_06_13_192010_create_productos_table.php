@@ -19,6 +19,8 @@ class CreateProductosTable extends Migration
             $table->string('descripcion',100)->nullable();
             $table->timestamps();
         });
+
+        DB::statement("ALTER TABLE `Productos` comment 'aca se van a crear los productos identificando las unidades de medida, para que cuando se seleccionen en la OT, automaticamente muestre las medidas, UNICAMENTE de esa unidad de medida'");
     }
 
     /**
