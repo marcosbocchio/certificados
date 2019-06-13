@@ -21,6 +21,7 @@
 </template>
 
 <script>
+ import {mapState} from 'vuex'
 export default {
   props: {
       fillRegistro: {'id':'','registro':''},
@@ -30,6 +31,10 @@ export default {
             required : true,
             default : ''
           }
+  },
+  computed :{
+    
+         ...mapState(['url'])
   },
   methods:{
   dropRegistro :function(id){

@@ -1,7 +1,7 @@
 <template>
 <div>
     <div class="col-sm-10">
-        <a href="#" class="btn btn-primary pull-right" data-toggle="modal" data-target="#nuevo">Nuevo</a>
+        <a href="#" class="btn btn-primary pull-right" v-on:click.prevent="openNuevoRegisto()" >Nuevo</a>
     </div>
     <div class="col-sm-10">
         <component :is= setTablaComponente :registros="registros"  @confirmarDelete="confirmDeleteRegistro"/>               
@@ -17,7 +17,8 @@
 </template>
 
 <script>
-
+  import {mapState} from 'vuex'
+  import { eventNewRegistro } from '../event-bus';
     export default {
       name: 'abm-maestro',
       props : {         
@@ -56,10 +57,16 @@
          setNuevoComponente : function(){
 
              return 'nuevo-' + this.modelo ;
-         }
+         },
+         ...mapState(['url'])
      },
 
       methods: {
+
+           openNuevoRegisto : function(){
+
+             eventNewRegistro.$emit('open');
+           }, 
 
             getRegistros : function(){
 

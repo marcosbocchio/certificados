@@ -2,33 +2,36 @@
     <form v-on:submit.prevent="storeRegistro" method="post">
     <div class="modal fade" id="nuevo">
         <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Crear</h4>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Crear</h4>
+                </div>
+                <div class="modal-body">
+                    <label for="usuario">Usuario</label>
+                    <input type="text" name="usuario" class="form-control" v-model="newRegistro.codigo" value="">
+                    <label for="name">Nombre</label>
+                    <input type="text" name="nombre" class="form-control" v-model="newRegistro.name" value="">
+                    <label for="usuario">email</label>
+                    <input type="text" name="email" class="form-control" v-model="newRegistro.email" value="">
+                    <label for="password">password</label>
+                    <input type="text" name="password" class="form-control" v-model="newRegistro.password" value="">
+                </div>
+            
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-primary" value="Guardar">
+                    <button type="button" class="btn btn-default" name="button" data-dismiss="modal" >Cancelar</button>
+                </div>
             </div>
-            <div class="modal-body">
-                <label for="usuario">Usuario</label>
-                <input type="text" name="usuario" class="form-control" v-model="newRegistro.codigo" value="">
-                <label for="name">Nombre</label>
-                <input type="text" name="nombre" class="form-control" v-model="newRegistro.name" value="">
-                <label for="usuario">email</label>
-                <input type="text" name="email" class="form-control" v-model="newRegistro.email" value="">
-                <label for="password">password</label>
-                <input type="text" name="password" class="form-control" v-model="newRegistro.password" value="">
-            </div>
-           
-            <div class="modal-footer">
-            <input type="submit" class="btn btn-primary" value="Guardar">
-            <button type="button" class="btn btn-default" name="button" data-dismiss="modal" >Cancelar</button>
-            </div>
-        </div>
         </div>
     </div>
     </form>
 </template>
 
 <script>
+ import {mapState} from 'vuex'
+ import { eventNewRegistro } from '../../event-bus';
+
 export default {
 
     data() { return {
@@ -40,13 +43,30 @@ export default {
             'password' : ''
          },
         errors:{},
-        request : [] 
-      
+        request : [],
+        x:''
          }
     
     },
-methods: {
-    storeRegistro: function(){
+ created: function () {
+    eventNewRegistro.$on('open', this.openModal)
+  
+    },
+    computed :{
+    
+         ...mapState(['url'])
+    },
+ 
+   
+    methods: {
+           openModal : function(){
+
+                this.newRegistro={};
+                $('#nuevo').modal('show');  
+                this.x='entro en el modal de new user';
+            },
+
+            storeRegistro: function(){
 
                 axios.defaults.baseURL = this.url ;
                 var urlRegistros = 'users';  

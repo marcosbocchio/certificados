@@ -59,35 +59,20 @@ Vue.component('delete-registro', require('./components/abm-maestro//delete.vue')
  *
  */
 
-Vue.mixin({
+import Vuex from 'vuex' 
 
-    data : function() {
-        return {
-        url:''
+const store = new Vuex.Store({
+state: {
+        url:process.env.NODE_ENV == 'production' ? 
+        process.env.MIX_API_URL_PRO :
+        process.env.MIX_API_URL_DEV,
     }
-},
-   
-    created : function (){
-        this.setBaseUrl();
-    },
-    methods : { 
 
-        setBaseUrl : function() {
+})
 
-            if ( process.env.NODE_ENV == 'production' ) {
-                this.url = process.env.MIX_API_URL_PRO;
-           } else {
-                this.url = process.env.MIX_API_URL_DEV;
-           }
-
-        }    
-      
-    }
-  })
-
-
-
+export const eventNewRegistro = new Vue();
 const app = new Vue({
     el: '#app',   
-   
+    store,
+
 });
