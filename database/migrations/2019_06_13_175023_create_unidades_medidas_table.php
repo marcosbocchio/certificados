@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProvinciasTable extends Migration
+class CreateUnidadesMedidasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,14 @@ class CreateProvinciasTable extends Migration
      */
     public function up()
     {
-        Schema::create('Provincias', function (Blueprint $table) {
+        Schema::create('Unidades_medidas', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('provincia','45');
+            $table->string('codigo',10);
+            $table->string('descripcion',100)->nullable();
             $table->timestamps();
         });
+
+        DB::statement("ALTER TABLE `Unidades_medidas` comment 'posibles unidades de medidas para cualquier producto : cm, pulgada, litro,hora,etc'");
     }
 
     /**
@@ -27,6 +30,6 @@ class CreateProvinciasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('provincias');
+        Schema::dropIfExists('unidades_medidas');
     }
 }

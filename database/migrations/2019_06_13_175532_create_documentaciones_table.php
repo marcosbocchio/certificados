@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProvinciasTable extends Migration
+class CreateDocumentacionesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,13 @@ class CreateProvinciasTable extends Migration
      */
     public function up()
     {
-        Schema::create('Provincias', function (Blueprint $table) {
+        Schema::create('Documentaciones', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('provincia','45');
+            $table->char('tipo',1)
+            ->comment('I = Institucional
+            P = Procedimientos propios de ENOD
+            U = Usuario');
+            $table->string('titulo',45)->comment('Es como se va a ver en en sistema');
             $table->timestamps();
         });
     }
@@ -27,6 +31,6 @@ class CreateProvinciasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('provincias');
+        Schema::dropIfExists('documentaciones');
     }
 }

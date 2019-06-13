@@ -13,7 +13,7 @@ class AddForeingKeyPartidosTable extends Migration
      */
     public function up()
     {
-        Schema::table('partidos', function (Blueprint $table) {
+        Schema::table('Partidos', function (Blueprint $table) {
             $table->bigInteger('provincia_id')
                   ->unsigned()
                   ->after('partido');
@@ -31,7 +31,7 @@ class AddForeingKeyPartidosTable extends Migration
      */
     public function down()
     {
-        Schema::table('partidos', function (Blueprint $table) {
+        Schema::table('Partidos', function (Blueprint $table) {
           $table->dropForeign(['provincia_id']);
           $table->dropColumn('provincia_id');
         });

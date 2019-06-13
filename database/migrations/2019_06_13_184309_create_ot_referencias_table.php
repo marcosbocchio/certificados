@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProvinciasTable extends Migration
+class CreateOtReferenciasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,14 @@ class CreateProvinciasTable extends Migration
      */
     public function up()
     {
-        Schema::create('Provincias', function (Blueprint $table) {
+        Schema::create('OT_referencias', function (Blueprint $table) {
+
             $table->bigIncrements('id');
-            $table->string('provincia','45');
+            $table->string('descripcion',500)->nullable();
+            $table->string('path1')->nullable();
+            $table->string('path2')->nullable();
+            $table->string('path3')->nullable();
+            $table->string('path4')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +32,6 @@ class CreateProvinciasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('provincias');
+        Schema::dropIfExists('ot_referencias');
     }
 }

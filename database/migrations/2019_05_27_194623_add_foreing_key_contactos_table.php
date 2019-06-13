@@ -13,7 +13,7 @@ class AddForeingKeyContactosTable extends Migration
      */
     public function up()
     {
-        Schema::table('contactos', function (Blueprint $table) {
+        Schema::table('Contactos', function (Blueprint $table) {
           $table->bigInteger('cliente_id')
                  ->unsigned()
                  ->after('id');
@@ -30,7 +30,7 @@ class AddForeingKeyContactosTable extends Migration
      */
     public function down()
     {
-        Schema::table('contactos', function (Blueprint $table) {
+        Schema::table('Contactos', function (Blueprint $table) {
           $table->dropForeign(['cliente_id']);
           $table->dropColumn('cliente_id');
         });

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePeliculasTable extends Migration
+class CreateTecnicaDistanciasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreatePeliculasTable extends Migration
      */
     public function up()
     {
-        Schema::create('peliculas', function (Blueprint $table) {
+        Schema::create('Tecnica_distancias', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('codigo','10');
-            $table->string('descripcion','100')->nullable();
+            $table->float('distancia_fuente_peliculas','6','2');
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ class CreatePeliculasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('peliculas');
+        Schema::dropIfExists('tecnica_distancias');
     }
 }

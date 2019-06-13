@@ -31,7 +31,7 @@ class AddForeingKeyUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('Users', function (Blueprint $table) {
               $table->dropForeign(['cliente_id']);
               $table->dropColumn('cliente_id');
         });

@@ -13,9 +13,9 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('Users', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('codigo','10')->default('null');
+            $table->string('codigo','10')->default('null')->comment('Este sería el username con el que hace login un usuario');
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
+        DB::statement("ALTER TABLE `Users` comment 'Tabla de usuarios'");
     }
 
     /**

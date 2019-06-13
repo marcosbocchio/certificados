@@ -13,7 +13,7 @@ class CreateFocosTable extends Migration
      */
     public function up()
     {
-        Schema::create('focos', function (Blueprint $table) {
+        Schema::create('Focos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('codigo','10');
             $table->string('descripcion','100')->nullable();

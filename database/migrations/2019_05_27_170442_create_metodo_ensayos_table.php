@@ -13,7 +13,7 @@ class CreateMetodoEnsayosTable extends Migration
      */
     public function up()
     {
-        Schema::create('metodo_ensayos', function (Blueprint $table) {
+        Schema::create('Metodo_ensayos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('metodo','4');
             $table->string('descripcion','100');
