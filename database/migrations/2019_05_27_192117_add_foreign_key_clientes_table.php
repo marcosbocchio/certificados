@@ -15,7 +15,8 @@ class AddForeignKeyClientesTable extends Migration
     {
         Schema::table('Clientes', function (Blueprint $table) {
             $table->bigInteger('partido_id')
-                  ->unsigned();
+                  ->unsigned()
+                  ->after('cp');
             $table->foreign('partido_id')
                   ->references('id')
                   ->on('partidos');

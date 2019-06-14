@@ -18,7 +18,9 @@ class AddForeignUsuariosDocumentacionesTable extends Migration
             $table->bigInteger('user_id')
                    ->unsigned()
                    ->nullable()
+                   ->comment('si es NULL, es un documento Institucional')
                    ->after('id');
+
             $table->foreign('user_id')
                    ->references('id')
                    ->on('users');

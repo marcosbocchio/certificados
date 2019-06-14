@@ -19,7 +19,7 @@ class AddForeignKeyProcedimentosPropiosTable extends Migration
             $table->foreign('documentaciones_id')
                    ->references('id')
                    ->on('documentaciones');
-      });
+        });
     }
 
     /**
