@@ -19,6 +19,9 @@ class CreateServiciosTable extends Migration
             $table->string('descripcion',100)->nullable();
             $table->timestamps();
         });
+
+        DB::statement("ALTER TABLE `Servicios` comment 'aca se van a crear los serviciios identificando las unidades de medida.
+        Seguramente lo tengamos en cuenta a la hora de armar el parte diario'");
     }
 
     /**

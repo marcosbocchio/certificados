@@ -19,6 +19,7 @@ class CreateOtServicios extends Migration
             $table->integer('cant_max_placas')->nullable();
             $table->timestamps();
         });
+        
     }
 
     /**
