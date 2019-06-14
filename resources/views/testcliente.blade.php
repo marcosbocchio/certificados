@@ -2,6 +2,6 @@
 
 @section('contenido')
 
-  <h2>este es el contenido del cliente {{ $User->name }}</h2>
+  <h2>este es el contenido del cliente {{ $user }}</h2>
 
 @Endsection

@@ -24,8 +24,8 @@ class UserController extends Controller
 
     public function callView()
     {   
-        $User = auth()->user()->name;      
-        return view('usuarios',compact('User','modelo'));
+        $user = auth()->user()->name;      
+        return view('usuarios',compact('user','modelo'));
 
     }
 

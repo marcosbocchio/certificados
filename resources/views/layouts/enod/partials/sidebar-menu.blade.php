@@ -41,13 +41,19 @@
             <li><a href="layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>
           </ul>
         </li>
-        <li class="active">
-          <a href="widgets.html">
-            <i class="fa fa-th"></i> <span>Widgets</span>
+        <li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-th"></i> <span>ABMs</span>
             <span class="pull-right-container">
-              <small class="label pull-right bg-green">new</small>
+              <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ route('usuarios') }}"><i class="fa fa-circle-o"></i>Usuarios</a></li>
+            <li><a href="{{ route('materiales')}}"><i class="fa fa-circle-o"></i>Materiales</a></li>
+          </ul>
+          </li> 
         </li>
         <li class="treeview">
           <a href="#">

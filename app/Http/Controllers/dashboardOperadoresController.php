@@ -24,7 +24,8 @@ class dashboardOperadoresController extends Controller
      */
      public function index(Request $Request )
      {
-         $User = $Request->user();
-         return view('testoperador',compact('User'));
+         $user = $Request->user()->name;
+         $title = 'Area Enod' ;
+         return view('testoperador',compact('user','title'));
      }
 }

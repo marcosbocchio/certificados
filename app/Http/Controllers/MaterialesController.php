@@ -24,8 +24,8 @@ class MaterialesController extends Controller
 
     public function callView()
     {   
-        $User = auth()->user()->name;      
-        return view('materiales',compact('User'));
+        $user = auth()->user()->name;      
+        return view('materiales',compact('user'));
 
     }
 
