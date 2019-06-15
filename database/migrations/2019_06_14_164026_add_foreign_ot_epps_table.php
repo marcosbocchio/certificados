@@ -13,23 +13,23 @@ class AddForeignOtEppsTable extends Migration
      */
     public function up()
     {
-        Schema::table('OT_EPPs', function (Blueprint $table) {
+        Schema::table('ot_epps', function (Blueprint $table) {
 
-            $table->bigInteger('OT_id')
+            $table->bigInteger('ot_id')
                    ->unsigned()
                    ->after('id');
                    
-            $table->foreign('OT_id')
+            $table->foreign('ot_id')
                    ->references('id')
                    ->on('ots');
             
-            $table->bigInteger('EPP_id')
+            $table->bigInteger('epp_id')
                    ->unsigned()
-                   ->after('OT_id');
+                   ->after('ot_id');
                    
-            $table->foreign('EPP_id')
+            $table->foreign('epp_id')
                    ->references('id')
-                   ->on('EPPs');
+                   ->on('epps');
 
         });
     }
@@ -41,13 +41,13 @@ class AddForeignOtEppsTable extends Migration
      */
     public function down()
     {
-        Schema::table('OT_EPPs', function (Blueprint $table) {
+        Schema::table('ot_epps', function (Blueprint $table) {
 
-            $table->dropForeign(['OT_id']);
-            $table->dropColumn('OT_id');
+            $table->dropForeign(['ot_id']);
+            $table->dropColumn('ot_id');
 
-            $table->dropForeign(['EPP_id']);
-            $table->dropColumn('EPP_id');
+            $table->dropForeign(['epp_id']);
+            $table->dropColumn('epp_id');
 
         });
     }

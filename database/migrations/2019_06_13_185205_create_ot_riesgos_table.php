@@ -13,7 +13,7 @@ class CreateOtRiesgosTable extends Migration
      */
     public function up()
     {
-        Schema::create('OT_riesgos', function (Blueprint $table) {
+        Schema::create('ot_riesgos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
         });

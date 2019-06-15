@@ -13,7 +13,7 @@ class CreateOtProcedimientosPropiosTable extends Migration
      */
     public function up()
     {
-        Schema::create('OT_procedimientos_propios', function (Blueprint $table) {
+        Schema::create('ot_procedimientos_propios', function (Blueprint $table) {
             $table->bigIncrements('id');
             
             $table->timestamps();

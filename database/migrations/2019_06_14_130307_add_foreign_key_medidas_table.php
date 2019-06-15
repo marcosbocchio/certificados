@@ -13,7 +13,7 @@ class AddForeignKeyMedidasTable extends Migration
      */
     public function up()
     {
-        Schema::table('Medidas', function (Blueprint $table) {
+        Schema::table('medidas', function (Blueprint $table) {
             $table->bigInteger('unidades_medida_id')
                    ->unsigned()
                    ->after('descripcion');
@@ -30,7 +30,7 @@ class AddForeignKeyMedidasTable extends Migration
      */
     public function down()
     {
-        Schema::table('Medidas', function (Blueprint $table) {
+        Schema::table('medidas', function (Blueprint $table) {
             $table->dropForeign(['unidades_medida_id']);
             $table->dropColumn('unidades_medida_id');
         });

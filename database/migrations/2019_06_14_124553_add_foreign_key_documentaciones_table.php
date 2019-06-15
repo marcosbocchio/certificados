@@ -13,7 +13,7 @@ class AddForeignKeyDocumentacionesTable extends Migration
      */
     public function up()
     {
-        Schema::table('Documentaciones', function (Blueprint $table) {
+        Schema::table('documentaciones', function (Blueprint $table) {
             $table->bigInteger('metodo_ensayo_id')
                    ->unsigned()
                    ->nullable();
@@ -30,7 +30,7 @@ class AddForeignKeyDocumentacionesTable extends Migration
      */
     public function down()
     {
-        Schema::table('Documentaciones', function (Blueprint $table) {
+        Schema::table('documentaciones', function (Blueprint $table) {
             $table->dropForeign(['metodo_ensayo_id']);
             $table->dropColumn('metodo_ensayo_id');
       });

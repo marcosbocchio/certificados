@@ -13,7 +13,7 @@ class CreateOtsTable extends Migration
      */
     public function up()
     {
-        Schema::create('OTs', function (Blueprint $table) {
+        Schema::create('ots', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->datetime('fecha_hora');
             $table->integer('numero');

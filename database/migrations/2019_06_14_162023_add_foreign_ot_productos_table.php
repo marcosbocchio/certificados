@@ -13,19 +13,19 @@ class AddForeignOtProductosTable extends Migration
      */
     public function up()
     {
-        Schema::table('OT_productos', function (Blueprint $table) {
+        Schema::table('ot_productos', function (Blueprint $table) {
 
-            $table->bigInteger('OT_id')
+            $table->bigInteger('ot_id')
                    ->unsigned()
                    ->after('id');
                    
-            $table->foreign('OT_id')
+            $table->foreign('ot_id')
                    ->references('id')
                    ->on('ots');
             
             $table->bigInteger('producto_id')
                    ->unsigned()
-                   ->after('OT_id');
+                   ->after('ot_id');
                    
             $table->foreign('producto_id')
                    ->references('id')
@@ -39,14 +39,14 @@ class AddForeignOtProductosTable extends Migration
                    ->references('id')
                    ->on('medidas');
             
-            $table->bigInteger('OT_referencia_id')
+            $table->bigInteger('ot_referencia_id')
                    ->unsigned()
                    ->nullable()
                    ->after('cantidad');
                    
-            $table->foreign('OT_referencia_id')
+            $table->foreign('ot_referencia_id')
                    ->references('id')
-                   ->on('OT_referencias');
+                   ->on('ot_referencias');
 
         });
     }
@@ -58,10 +58,10 @@ class AddForeignOtProductosTable extends Migration
      */
     public function down()
     {
-        Schema::table('OT_productos', function (Blueprint $table) {
+        Schema::table('ot_productos', function (Blueprint $table) {
 
-            $table->dropForeign(['OT_id']);
-            $table->dropColumn('OT_id');
+            $table->dropForeign(['ot_id']);
+            $table->dropColumn('ot_id');
 
             $table->dropForeign(['producto_id']);
             $table->dropColumn('producto_id');
@@ -69,8 +69,8 @@ class AddForeignOtProductosTable extends Migration
             $table->dropForeign(['medida_id']);
             $table->dropColumn('medida_id');
 
-            $table->dropForeign(['OT_referencia_id']);
-            $table->dropColumn('OT_referencia_id');
+            $table->dropForeign(['ot_referencia_id']);
+            $table->dropColumn('ot_referencia_id');
         }); 
     }
 }

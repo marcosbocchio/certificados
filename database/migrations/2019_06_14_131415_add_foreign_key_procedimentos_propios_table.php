@@ -13,7 +13,7 @@ class AddForeignKeyProcedimentosPropiosTable extends Migration
      */
     public function up()
     {
-        Schema::table('Procedimientos_propios', function (Blueprint $table) {
+        Schema::table('procedimientos_propios', function (Blueprint $table) {
             $table->bigInteger('documentaciones_id')
                    ->unsigned();
             $table->foreign('documentaciones_id')
@@ -29,7 +29,7 @@ class AddForeignKeyProcedimentosPropiosTable extends Migration
      */
     public function down()
     {
-        Schema::table('Procedimientos_propios', function (Blueprint $table) {
+        Schema::table('procedimientos_propios', function (Blueprint $table) {
             $table->dropForeign(['documentaciones_id']);
             $table->dropColumn('documentaciones_id');
         });

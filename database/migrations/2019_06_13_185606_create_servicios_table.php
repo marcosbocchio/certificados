@@ -13,14 +13,14 @@ class CreateServiciosTable extends Migration
      */
     public function up()
     {
-        Schema::create('Servicios', function (Blueprint $table) {
+        Schema::create('servicios', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('codigo',10);
             $table->string('descripcion',100)->nullable();
             $table->timestamps();
         });
 
-        DB::statement("ALTER TABLE `Servicios` comment 'aca se van a crear los serviciios identificando las unidades de medida.
+        DB::statement("ALTER TABLE `servicios` comment 'aca se van a crear los serviciios identificando las unidades de medida.
         Seguramente lo tengamos en cuenta a la hora de armar el parte diario'");
     }
 

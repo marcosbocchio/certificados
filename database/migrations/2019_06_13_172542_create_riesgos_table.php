@@ -13,7 +13,7 @@ class CreateRiesgosTable extends Migration
      */
     public function up()
     {
-        Schema::create('Riesgos', function (Blueprint $table) {
+        Schema::create('riesgos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('codigo');
             $table->string('descripcion')->nullable();

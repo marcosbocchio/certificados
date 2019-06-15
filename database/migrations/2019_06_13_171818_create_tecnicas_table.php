@@ -13,7 +13,7 @@ class CreateTecnicasTable extends Migration
      */
     public function up()
     {
-        Schema::create('Tecnicas', function (Blueprint $table) {
+        Schema::create('tecnicas', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('descripcion',45);
             $table->string('path_grafico');

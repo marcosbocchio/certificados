@@ -13,7 +13,7 @@ class CreateUsuarioDocumentacionesTable extends Migration
      */
     public function up()
     {
-        Schema::create('Usuario_documentaciones', function (Blueprint $table) {
+        Schema::create('usuario_documentaciones', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('path');
             $table->dateTime('fecha_caducidad');

@@ -13,19 +13,19 @@ class AddForeignOtRiesgosTable extends Migration
      */
     public function up()
     {
-        Schema::table('OT_riesgos', function (Blueprint $table) {
+        Schema::table('ot_riesgos', function (Blueprint $table) {
 
-            $table->bigInteger('OT_id')
+            $table->bigInteger('ot_id')
                    ->unsigned()
                    ->after('id');
                    
-            $table->foreign('OT_id')
+            $table->foreign('ot_id')
                    ->references('id')
                    ->on('ots');
             
             $table->bigInteger('riesgo_id')
                    ->unsigned()
-                   ->after('OT_id');
+                   ->after('ot_id');
                    
             $table->foreign('riesgo_id')
                    ->references('id')
@@ -41,10 +41,10 @@ class AddForeignOtRiesgosTable extends Migration
      */
     public function down()
     {
-        Schema::table('OT_riesgos', function (Blueprint $table) {
+        Schema::table('ot_riesgos', function (Blueprint $table) {
 
-            $table->dropForeign(['OT_id']);
-            $table->dropColumn('OT_id');
+            $table->dropForeign(['ot_id']);
+            $table->dropColumn('ot_id');
 
             $table->dropForeign(['riesgo_id']);
             $table->dropColumn('riesgo_id');

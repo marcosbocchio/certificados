@@ -13,7 +13,7 @@ class CreateOtCalidadPlacasTable extends Migration
      */
     public function up()
     {
-        Schema::create('OT_calidad_placas', function (Blueprint $table) {
+        Schema::create('ot_calidad_placas', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
         });

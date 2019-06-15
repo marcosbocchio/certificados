@@ -13,7 +13,7 @@ class AddForeignProductosTable extends Migration
      */
     public function up()
     {
-        Schema::table('Productos', function (Blueprint $table) {
+        Schema::table('productos', function (Blueprint $table) {
 
             $table->bigInteger('unidades_medida_id')
                    ->unsigned()
@@ -33,7 +33,7 @@ class AddForeignProductosTable extends Migration
      */
     public function down()
     {
-        Schema::table('Productos', function (Blueprint $table) {
+        Schema::table('productos', function (Blueprint $table) {
 
             $table->dropForeign(['unidades_medida_id']);
             $table->dropColumn('unidades_medida_id');

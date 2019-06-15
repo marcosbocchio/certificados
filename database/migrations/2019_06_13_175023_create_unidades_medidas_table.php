@@ -13,14 +13,14 @@ class CreateUnidadesMedidasTable extends Migration
      */
     public function up()
     {
-        Schema::create('Unidades_medidas', function (Blueprint $table) {
+        Schema::create('unidades_medidas', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('codigo',10);
             $table->string('descripcion',100)->nullable();
             $table->timestamps();
         });
 
-        DB::statement("ALTER TABLE `Unidades_medidas` comment 'posibles unidades de medidas para cualquier producto : cm, pulgada, litro,hora,etc'");
+        DB::statement("ALTER TABLE `unidades_medidas` comment 'posibles unidades de medidas para cualquier producto : cm, pulgada, litro,hora,etc'");
     }
 
     /**

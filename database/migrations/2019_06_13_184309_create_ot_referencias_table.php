@@ -13,7 +13,7 @@ class CreateOtReferenciasTable extends Migration
      */
     public function up()
     {
-        Schema::create('OT_referencias', function (Blueprint $table) {
+        Schema::create('ot_referencias', function (Blueprint $table) {
 
             $table->bigIncrements('id');
             $table->string('descripcion',500)->nullable();

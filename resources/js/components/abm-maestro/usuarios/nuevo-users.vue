@@ -31,9 +31,7 @@
 <script>
  import {mapState} from 'vuex'
  import { eventNewRegistro } from '../../event-bus';
-
 export default {
-
     data() { return {
     
         newRegistro : {
@@ -60,14 +58,11 @@ export default {
    
     methods: {
            openModal : function(){
-
                 this.newRegistro={};
                 $('#nuevo').modal('show');  
                 this.x='entro en el modal de new user';
             },
-
             storeRegistro: function(){
-
                 axios.defaults.baseURL = this.url ;
                 var urlRegistros = 'users';  
                          
@@ -78,7 +73,6 @@ export default {
                 'email'     : this.newRegistro.email,
                 'password'  : this.newRegistro.password
                   
-
                 }).then(response => {
                   this.$emit('store');
                   this.errors=[];
@@ -93,9 +87,7 @@ export default {
                         toastr.error(value,key);
                         console.log( key + ": " + value );
                     });
-
                 });
-
               }
 }
     

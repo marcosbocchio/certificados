@@ -13,7 +13,7 @@ class CreatePartidosTable extends Migration
      */
     public function up()
     {
-        Schema::create('Partidos', function (Blueprint $table) {
+        Schema::create('partidos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('partido','45');
             $table->timestamps();

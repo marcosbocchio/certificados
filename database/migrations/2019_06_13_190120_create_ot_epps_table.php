@@ -13,7 +13,7 @@ class CreateOtEppsTable extends Migration
      */
     public function up()
     {
-        Schema::create('OT_EPPs', function (Blueprint $table) {
+        Schema::create('ot_epps', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
         });

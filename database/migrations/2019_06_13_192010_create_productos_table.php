@@ -13,14 +13,14 @@ class CreateProductosTable extends Migration
      */
     public function up()
     {
-        Schema::create('Productos', function (Blueprint $table) {
+        Schema::create('productos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('codigo',10);
             $table->string('descripcion',100)->nullable();
             $table->timestamps();
         });
 
-        DB::statement("ALTER TABLE `Productos` comment 'aca se van a crear los productos identificando las unidades de medida, para que cuando se seleccionen en la OT, automaticamente muestre las medidas, UNICAMENTE de esa unidad de medida'");
+        DB::statement("ALTER TABLE `productos` comment 'aca se van a crear los productos identificando las unidades de medida, para que cuando se seleccionen en la OT, automaticamente muestre las medidas, UNICAMENTE de esa unidad de medida'");
     }
 
     /**

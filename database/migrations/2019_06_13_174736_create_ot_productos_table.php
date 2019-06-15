@@ -13,7 +13,7 @@ class CreateOtProductosTable extends Migration
      */
     public function up()
     {
-        Schema::create('OT_productos', function (Blueprint $table) {
+        Schema::create('ot_productos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('cantidad');
             $table->timestamps();

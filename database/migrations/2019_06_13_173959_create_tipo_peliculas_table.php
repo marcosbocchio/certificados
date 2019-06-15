@@ -13,14 +13,14 @@ class CreateTipoPeliculasTable extends Migration
      */
     public function up()
     {
-        Schema::create('Tipo_peliculas', function (Blueprint $table) {
+        Schema::create('tipo_peliculas', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('fabricante',10);
             $table->string('codigo',10);
             $table->string('descripcion',100)->nullable();
             $table->timestamps();
         });
-        DB::statement("ALTER TABLE `Tipo_peliculas` comment 'SIN ABM
+        DB::statement("ALTER TABLE `tipo_peliculas` comment 'SIN ABM
 
         AGFA D3
         AGFA D4

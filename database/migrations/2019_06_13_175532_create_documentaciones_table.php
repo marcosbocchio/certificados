@@ -13,7 +13,7 @@ class CreateDocumentacionesTable extends Migration
      */
     public function up()
     {
-        Schema::create('Documentaciones', function (Blueprint $table) {
+        Schema::create('documentaciones', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->char('tipo',1)
             ->comment('I = Institucional

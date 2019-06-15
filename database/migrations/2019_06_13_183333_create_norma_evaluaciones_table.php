@@ -13,14 +13,14 @@ class CreateNormaEvaluacionesTable extends Migration
      */
     public function up()
     {
-        Schema::create('Norma_evaluaciones', function (Blueprint $table) {
+        Schema::create('norma_evaluaciones', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('codigo',10);
             $table->string('descripcion',100)->nullable();
             $table->timestamps();
         });
 
-        DB::statement("ALTER TABLE `Norma_evaluaciones` comment 'no ABM'");
+        DB::statement("ALTER TABLE `norma_evaluaciones` comment 'no ABM'");
     }
 
     /**

@@ -13,7 +13,7 @@ class AddForeignUsuariosDocumentacionesTable extends Migration
      */
     public function up()
     {
-        Schema::table('Usuario_documentaciones', function (Blueprint $table) {
+        Schema::table('usuario_documentaciones', function (Blueprint $table) {
 
             $table->bigInteger('user_id')
                    ->unsigned()
@@ -43,10 +43,14 @@ class AddForeignUsuariosDocumentacionesTable extends Migration
      */
     public function down()
     {
+        Schema::table('usuario_documentaciones', function (Blueprint $table) {
+
         $table->dropForeign(['user_id']);
         $table->dropColumn('user_id');
 
         $table->dropForeign(['documentaciones_id']);
         $table->dropColumn('documentaciones_id');
+
+        });
     }
 }

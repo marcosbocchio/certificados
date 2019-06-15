@@ -13,19 +13,19 @@ class AddForeignOtServiciosTable extends Migration
      */
     public function up()
     {
-        Schema::table('OT_servicios', function (Blueprint $table) {
+        Schema::table('ot_servicios', function (Blueprint $table) {
 
-            $table->bigInteger('OT_id')
+            $table->bigInteger('ot_id')
                    ->unsigned()
                    ->after('id');
                    
-            $table->foreign('OT_id')
+            $table->foreign('ot_id')
                    ->references('id')
                    ->on('ots');
 
             $table->bigInteger('servicio_id')
                    ->unsigned()
-                   ->after('OT_id');
+                   ->after('ot_id');
                    
             $table->foreign('servicio_id')
                    ->references('id')
@@ -49,14 +49,14 @@ class AddForeignOtServiciosTable extends Migration
                    ->references('id')
                    ->on('norma_evaluaciones');
             
-            $table->bigInteger('OT_referencia_id')
+            $table->bigInteger('ot_referencia_id')
                    ->unsigned()
                    ->nullable()
                    ->after('norma_evaluacion_id');
                    
-            $table->foreign('OT_referencia_id')
+            $table->foreign('ot_referencia_id')
                    ->references('id')
-                   ->on('OT_referencias');
+                   ->on('ot_referencias');
 
         });
     }
@@ -68,10 +68,10 @@ class AddForeignOtServiciosTable extends Migration
      */
     public function down()
     {
-        Schema::table('OT_servicios', function (Blueprint $table) {
+        Schema::table('ot_servicios', function (Blueprint $table) {
 
-            $table->dropForeign(['OT_id']);
-            $table->dropColumn('OT_id');
+            $table->dropForeign(['ot_id']);
+            $table->dropColumn('ot_id');
 
             $table->dropForeign(['servicio_id']);
             $table->dropColumn('servicio_id');
@@ -82,8 +82,8 @@ class AddForeignOtServiciosTable extends Migration
             $table->dropForeign(['norma_evaluacion_id']);
             $table->dropColumn('norma_evaluacion_id');
 
-            $table->dropForeign(['OT_referencia_id']);
-            $table->dropColumn('OT_referencia_id');
+            $table->dropForeign(['ot_referencia_id']);
+            $table->dropColumn('ot_referencia_id');
 
         }); 
     }

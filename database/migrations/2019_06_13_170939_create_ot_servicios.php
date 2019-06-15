@@ -13,7 +13,7 @@ class CreateOtServicios extends Migration
      */
     public function up()
     {
-        Schema::create('OT_servicios', function (Blueprint $table) {
+        Schema::create('ot_servicios', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('cantidad');
             $table->integer('cant_max_placas')->nullable();

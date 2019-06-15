@@ -13,7 +13,7 @@ class AddForeignOtsTable extends Migration
      */
     public function up()
     {
-        Schema::table('OTs', function (Blueprint $table) {
+        Schema::table('ots', function (Blueprint $table) {
 
             $table->bigInteger('cliente_id')
                    ->unsigned()
@@ -58,7 +58,7 @@ class AddForeignOtsTable extends Migration
      */
     public function down()
     {
-        Schema::table('OTs', function (Blueprint $table) {
+        Schema::table('ots', function (Blueprint $table) {
 
             $table->dropForeign(['cliente_id']);
             $table->dropColumn('cliente_id');

@@ -13,7 +13,7 @@ class AddForeignKeyServiciosTable extends Migration
      */
     public function up()
     {
-        Schema::table('Servicios', function (Blueprint $table) {
+        Schema::table('servicios', function (Blueprint $table) {
 
             $table->bigInteger('unidades_medida_id')
                    ->unsigned()
@@ -40,7 +40,7 @@ class AddForeignKeyServiciosTable extends Migration
      */
     public function down()
     {
-        Schema::table('Servicios', function (Blueprint $table) {
+        Schema::table('servicios', function (Blueprint $table) {
 
             $table->dropForeign(['unidades_medida_id']);
             $table->dropColumn('unidades_medida_id');

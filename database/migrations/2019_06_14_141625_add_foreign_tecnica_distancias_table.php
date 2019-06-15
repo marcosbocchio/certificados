@@ -13,7 +13,7 @@ class AddForeignTecnicaDistanciasTable extends Migration
      */
     public function up()
     {
-        Schema::table('Tecnica_distancias', function (Blueprint $table) {
+        Schema::table('tecnica_distancias', function (Blueprint $table) {
 
             $table->bigInteger('tecnica_id')
                    ->unsigned()
@@ -33,7 +33,7 @@ class AddForeignTecnicaDistanciasTable extends Migration
      */
     public function down()
     {
-        Schema::table('Tecnicas_distancias', function (Blueprint $table) {
+        Schema::table('tecnicas_distancias', function (Blueprint $table) {
 
             $table->dropForeign(['tecnica_id']);
             $table->dropColumn('tecnica_id');

@@ -13,7 +13,7 @@ class CreateOtProcedimientosClientesTable extends Migration
      */
     public function up()
     {
-        Schema::create('OT_procedimientos_clientes', function (Blueprint $table) {
+        Schema::create('ot_procedimientos_clientes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('titulo',45);
             $table->string('path');

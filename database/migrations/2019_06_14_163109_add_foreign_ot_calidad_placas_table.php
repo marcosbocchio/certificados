@@ -13,19 +13,19 @@ class AddForeignOtCalidadPlacasTable extends Migration
      */
     public function up()
     {
-        Schema::table('OT_calidad_placas', function (Blueprint $table) {
+        Schema::table('ot_calidad_placas', function (Blueprint $table) {
 
-            $table->bigInteger('OT_id')
+            $table->bigInteger('ot_id')
                    ->unsigned()
                    ->after('id');
                    
-            $table->foreign('OT_id')
+            $table->foreign('ot_id')
                    ->references('id')
                    ->on('ots');
             
             $table->bigInteger('tipo_pelicula_id')
                    ->unsigned()
-                   ->after('OT_id');
+                   ->after('ot_id');
                    
             $table->foreign('tipo_pelicula_id')
                    ->references('id')
@@ -41,10 +41,10 @@ class AddForeignOtCalidadPlacasTable extends Migration
      */
     public function down()
     {
-        Schema::table('OT_calidad_placas', function (Blueprint $table) {
+        Schema::table('ot_calidad_placas', function (Blueprint $table) {
 
-            $table->dropForeign(['OT_id']);
-            $table->dropColumn('OT_id');
+            $table->dropForeign(['ot_id']);
+            $table->dropColumn('ot_id');
 
             $table->dropForeign(['tipo_pelicula_id']);
             $table->dropColumn('tipo_pelicula_id');

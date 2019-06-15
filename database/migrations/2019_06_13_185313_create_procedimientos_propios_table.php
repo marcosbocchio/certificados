@@ -13,7 +13,7 @@ class CreateProcedimientosPropiosTable extends Migration
      */
     public function up()
     {
-        Schema::create('Procedimientos_propios', function (Blueprint $table) {
+        Schema::create('procedimientos_propios', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('path');
             $table->string('descripcion')->nullable();
