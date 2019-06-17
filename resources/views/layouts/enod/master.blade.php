@@ -61,7 +61,7 @@ desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class="hold-transition skin-red sidebar-boxed">
+<body class="sidebar-mini skin-black-light">
 
 @include('layouts.enod.partials.header')
 @include('layouts.enod.partials.content-header')
@@ -70,12 +70,14 @@ desired effect
 
 
         <!-- Main content -->
-        <section class="content container-fluid">
-          
+        <section class="content">
+           <div class="row">
+               
 
-                @yield('contenido')
-
-           
+                        @yield('contenido')
+                        
+                
+           </div>
         </section>
 
         <!-- /.content -->

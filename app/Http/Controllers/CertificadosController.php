@@ -13,6 +13,8 @@ class CertificadosController extends Controller
      */
     public function index()
     {
+        $user = auth()->user()->name;
+        return view('certificados.index', compact('user'));
         
     }
 
