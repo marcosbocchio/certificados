@@ -16,5 +16,8 @@ class DatabaseSeeder extends Seeder
         $this->call(EspesorTubosTableSeeder::class);
         $this->call(MaterialesTableSeeder::class);
 
+        factory('App\Clientes', 50)->create();
+
+
     }
 }

@@ -46992,7 +46992,7 @@ Vue.component('certificados', __webpack_require__(/*! ./components/certificados/
 
 var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {
-    url:  false ? undefined : "http://certificados.test/api"
+    url:  false ? undefined : "http://localhost:8000/api"
   }
 });
 var eventNewRegistro = new Vue();
@@ -47568,8 +47568,8 @@ var eventNewRegistro = new vue__WEBPACK_IMPORTED_MODULE_0___default.a();
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\bocch\code\certificados\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\bocch\code\certificados\resources\sass\toastr.scss */"./resources/sass/toastr.scss");
+__webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/sass/toastr.scss */"./resources/sass/toastr.scss");
 
 
 /***/ })
