@@ -7,16 +7,9 @@
             <input type="text" class="form-control" id="proyecto" placeholder="Nombre proyecto">
           </div>
           <div class="form-group">
-                <label>Minimal</label>
-                <select class="form-control select2" style="width: 100%;">
-                  <option selected="selected">YPF</option>
-                  <option>GAS DEL ESTADO</option>
-                  <option>SHELL</option>
-                  <option>OTEBRECH</option>
-                  <option>ESSO</option>
-                  <option>AXION</option>
-                  <option>PETROGAS</option>
-                </select>
+                <label>Cliente</label>
+                 <v-select label="nombre_fantasia" :options="clientes" ></v-select>
+               
             </div>
         
         <!-- /.box-body -->
@@ -29,3 +22,45 @@
   </div>
 </div>
 </template>
+
+<script>
+import {mapState} from 'vuex'
+
+
+export default {
+    
+    data() { return {
+
+          clientes:[],
+          options: [
+              'foo',
+              'bar',
+              'baz'
+            ]
+
+          }
+    },
+    created : function(){
+
+        this.getRegistros();
+
+      },
+      computed :{
+
+        ...mapState(['url'])
+     },
+
+    methods :{
+
+      getRegistros : function(){
+
+                axios.defaults.baseURL = this.url ;
+                var urlRegistros = 'clientes';    
+                axios.get(urlRegistros).then(response =>{
+                this.clientes = response.data
+                });
+              },
+
+    }
+}
+</script>

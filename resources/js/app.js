@@ -42,6 +42,7 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 Vue.component('pagination', require('laravel-vue-pagination'));
+Vue.component('v-select', vSelect)
 
 Vue.component('abm-maestro', require('./components/abm-maestro/abm-maestro.vue').default);
 Vue.component('table-users', require('./components/abm-maestro/usuarios/table-users.vue').default);
@@ -59,8 +60,11 @@ Vue.component('certificados', require('./components/certificados/certificados.vu
  * or customize the JavaScript scaffolding to fit your unique needs.
  *
  */
+import 'vue-select/dist/vue-select.css';
+
 
 import Vuex from 'vuex' 
+import vSelect from 'vue-select'
 
 const store = new Vuex.Store({
 state: {

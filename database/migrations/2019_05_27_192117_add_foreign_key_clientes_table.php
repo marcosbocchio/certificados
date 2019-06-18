@@ -14,12 +14,12 @@ class AddForeignKeyClientesTable extends Migration
     public function up()
     {
         Schema::table('clientes', function (Blueprint $table) {
-            $table->bigInteger('partido_id')
+            $table->bigInteger('localidad_id')
                   ->unsigned()
                   ->after('cp');
-            $table->foreign('partido_id')
+            $table->foreign('localidad_id')
                   ->references('id')
-                  ->on('partidos');
+                  ->on('localidades');
         });
     }
 
@@ -31,8 +31,8 @@ class AddForeignKeyClientesTable extends Migration
     public function down()
     {
         Schema::table('clientes', function (Blueprint $table) {
-             $table->dropForeign(['partido_id']);
-             $table->dropColumn('partido_id');
+             $table->dropForeign(['localidad_id']);
+             $table->dropColumn('localidad_id');
         });
     }
 }
