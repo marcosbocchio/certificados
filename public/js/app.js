@@ -2244,6 +2244,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -33642,25 +33663,31 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "col-md-6" }, [
+  return _c("div", { staticClass: "col-md-12" }, [
     _c("div", { staticClass: "box box-primary" }, [
-      _c("div", { staticClass: "box-body" }, [
-        _vm._m(0),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "form-group" },
-          [
-            _c("label", [_vm._v("Cliente")]),
+      _c("form", { attrs: { role: "form" } }, [
+        _c("div", { staticClass: "box-body" }, [
+          _c("div", { staticClass: "col-md-6" }, [
+            _vm._m(0),
             _vm._v(" "),
-            _c("v-select", {
-              attrs: { label: "nombre_fantasia", options: _vm.clientes }
-            })
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _vm._m(1)
+            _c(
+              "div",
+              { staticClass: "form-group" },
+              [
+                _c("label", [_vm._v("Cliente")]),
+                _vm._v(" "),
+                _c("v-select", {
+                  attrs: { label: "nombre_fantasia", options: _vm.clientes }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _vm._m(1)
+          ]),
+          _vm._v(" "),
+          _vm._m(2)
+        ])
       ])
     ])
   ])
@@ -33675,7 +33702,7 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("input", {
         staticClass: "form-control",
-        attrs: { type: "text", id: "proyecto", placeholder: "Nombre proyecto" }
+        attrs: { type: "text", id: "proyecto", placeholder: "Nombre" }
       })
     ])
   },
@@ -33689,6 +33716,36 @@ var staticRenderFns = [
         { staticClass: "btn btn-primary", attrs: { type: "submit" } },
         [_vm._v("Submit")]
       )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-6" }, [
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { attrs: { for: "fecha" } }, [_vm._v("Fecha/Hora")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "input-group date" }, [
+          _c("div", { staticClass: "input-group-addon" }, [
+            _c("i", { staticClass: "fa fa-calendar" })
+          ]),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "form-control pull-right",
+            attrs: { type: "text", id: "datepicker" }
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { attrs: { for: "ot" } }, [_vm._v("OT Nº")]),
+        _vm._v(" "),
+        _c("input", {
+          staticClass: "form-control",
+          attrs: { type: "text", id: "ot", placeholder: "Número OT" }
+        })
+      ])
     ])
   }
 ]
