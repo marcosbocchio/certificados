@@ -70,7 +70,7 @@
         <div class="col-md-6">
           <div class="form-group">
             <label>Localidad</label>
-            <v-select v-model="localidad[0]" label="localidad" :options="localidades" @input="sync()"></v-select>   
+            <v-select v-model="localidad" label="localidad" :options="localidades" @input="sync()"></v-select>   
           </div>
         </div>
         <div class="col-md-6">
@@ -80,7 +80,12 @@
                 <div class="input-group-addon">
                   <i class="fa fa-search"></i>
                 </div>
-                <input type="text" name="search" class="form-control" id="search" placeholder="">
+                <gmap-autocomplete class="form-control"
+                 @place_changed="setPlace"
+                 :select-first-on-enter="true">
+                  >
+              </gmap-autocomplete>
+               
              </div>
           </div>
         </div>
@@ -141,8 +146,8 @@ export default {
     data() { return {
          markers: [{
             position: {
-              lat: -31.8846751,
-              lng: -60.4103223
+              lat: '',
+              lng: ''
             }}
           ],
           mapCenter: {
@@ -155,11 +160,11 @@ export default {
           },
           clientes:[],
           localidades:[],
-          localidad: [{
+          localidad: {
             
-            lat : -31.8846751,
-            lon : -60.4103223
-          }],
+            lat : -34.603684400000011,
+            lon : -58.381559100000004
+          },
           provincias:[],
           provincia: ''
           
@@ -198,6 +203,7 @@ export default {
               },
       getLocalidades : function(){
                 this.localidades=[];
+                this.localidad ='';
                 axios.defaults.baseURL = this.url ;
                 var urlRegistros = 'localidades/' + this.provincia.id;    
                 axios.get(urlRegistros).then(response =>{
@@ -206,18 +212,28 @@ export default {
               },
 
       updateCenter(latLng) {
-                this.localidad = {
-                  lat: latLng.lat(),
-                  lon: latLng.lng(),
-                }
+
+                this.localidad.lat = latLng.lat() ;
+                this.localidad.lon = latLng.lng() ;
+                
               },
       sync () {
               
-                this.mapCenter.lat = parseFloat(this.localidad[0].lat);
-                this.mapCenter.lng = parseFloat(this.localidad[0].lon);
-                this.markers[0].position.lat =parseFloat(this.localidad[0].lat);
-                this.markers[0].position.lng = parseFloat(this.localidad[0].lon);
-              }
+                this.mapCenter.lat = parseFloat(this.localidad.lat);
+                this.mapCenter.lng = parseFloat(this.localidad.lon);
+                this.markers[0].position.lat =parseFloat(this.localidad.lat);
+                this.markers[0].position.lng = parseFloat(this.localidad.lon);
+              },
+              
+      setPlace(place) {
+       
+                            
+                this.localidad.lat = place.geometry.location.lat();
+                this.localidad.lon = place.geometry.location.lng();
+                this.sync();
+      
+      }
+      
 
     }
 }

@@ -2353,14 +2353,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       markers: [{
         position: {
-          lat: -31.8846751,
-          lng: -60.4103223
+          lat: '',
+          lng: ''
         }
       }],
       mapCenter: {
@@ -2373,10 +2378,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       },
       clientes: [],
       localidades: [],
-      localidad: [{
-        lat: -31.8846751,
-        lon: -60.4103223
-      }],
+      localidad: {
+        lat: -34.603684400000011,
+        lon: -58.381559100000004
+      },
       provincias: [],
       provincia: ''
     };
@@ -2410,6 +2415,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this3 = this;
 
       this.localidades = [];
+      this.localidad = '';
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'localidades/' + this.provincia.id;
       axios.get(urlRegistros).then(function (response) {
@@ -2417,16 +2423,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     updateCenter: function updateCenter(latLng) {
-      this.localidad = {
-        lat: latLng.lat(),
-        lon: latLng.lng()
-      };
+      this.localidad.lat = latLng.lat();
+      this.localidad.lon = latLng.lng();
     },
     sync: function sync() {
-      this.mapCenter.lat = parseFloat(this.localidad[0].lat);
-      this.mapCenter.lng = parseFloat(this.localidad[0].lon);
-      this.markers[0].position.lat = parseFloat(this.localidad[0].lat);
-      this.markers[0].position.lng = parseFloat(this.localidad[0].lon);
+      this.mapCenter.lat = parseFloat(this.localidad.lat);
+      this.mapCenter.lng = parseFloat(this.localidad.lon);
+      this.markers[0].position.lat = parseFloat(this.localidad.lat);
+      this.markers[0].position.lng = parseFloat(this.localidad.lon);
+    },
+    setPlace: function setPlace(place) {
+      this.localidad.lat = place.geometry.location.lat();
+      this.localidad.lon = place.geometry.location.lng();
+      this.sync();
     }
   }
 });
@@ -34272,11 +34281,11 @@ var render = function() {
                     }
                   },
                   model: {
-                    value: _vm.localidad[0],
+                    value: _vm.localidad,
                     callback: function($$v) {
-                      _vm.$set(_vm.localidad, 0, $$v)
+                      _vm.localidad = $$v
                     },
-                    expression: "localidad[0]"
+                    expression: "localidad"
                   }
                 })
               ],
@@ -34284,7 +34293,32 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _vm._m(5),
+          _c("div", { staticClass: "col-md-6" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "search" } }, [
+                _vm._v("Buscar Ubicación")
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "input-group" },
+                [
+                  _vm._m(5),
+                  _vm._v(" "),
+                  _c(
+                    "gmap-autocomplete",
+                    {
+                      staticClass: "form-control",
+                      attrs: { "select-first-on-enter": true },
+                      on: { place_changed: _vm.setPlace }
+                    },
+                    [_vm._v("\n                  >\n              ")]
+                  )
+                ],
+                1
+              )
+            ])
+          ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-md-3" }, [
             _c("div", { staticClass: "form-group" }, [
@@ -34501,26 +34535,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-6" }, [
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", { attrs: { for: "search" } }, [_vm._v("Buscar Ubicación")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "input-group" }, [
-          _c("div", { staticClass: "input-group-addon" }, [
-            _c("i", { staticClass: "fa fa-search" })
-          ]),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form-control",
-            attrs: {
-              type: "text",
-              name: "search",
-              id: "search",
-              placeholder: ""
-            }
-          })
-        ])
-      ])
+    return _c("div", { staticClass: "input-group-addon" }, [
+      _c("i", { staticClass: "fa fa-search" })
     ])
   }
 ]
@@ -50383,7 +50399,7 @@ Vue.use(VueGoogleMaps, {
 
 var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {
-    url:  false ? undefined : "http://localhost:8000/api"
+    url:  false ? undefined : "http://certificados.test/api"
   }
 });
 var eventNewRegistro = new Vue();
@@ -50977,8 +50993,8 @@ var eventNewRegistro = new vue__WEBPACK_IMPORTED_MODULE_0___default.a();
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/sass/toastr.scss */"./resources/sass/toastr.scss");
+__webpack_require__(/*! C:\Users\bocch\code\certificados\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\bocch\code\certificados\resources\sass\toastr.scss */"./resources/sass/toastr.scss");
 
 
 /***/ })
