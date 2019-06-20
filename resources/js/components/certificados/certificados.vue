@@ -41,8 +41,8 @@
                 <!-- /.form group -->
           </div>
          
-        
         </div>
+        
         <div class="col-md-3">
           <div class="form-group">
             <label for="ot">OT Nº</label>
@@ -70,7 +70,18 @@
         <div class="col-md-6">
           <div class="form-group">
             <label>Localidad</label>
-            <v-select v-model="localidad" label="localidad" :options="localidades" @input="sync()"></v-select>   
+            <v-select v-model="localidad[0]" label="localidad" :options="localidades" @input="sync()"></v-select>   
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+              <label for="search">Buscar Ubicación</label>
+             <div class="input-group">
+                <div class="input-group-addon">
+                  <i class="fa fa-search"></i>
+                </div>
+                <input type="text" name="search" class="form-control" id="search" placeholder="">
+             </div>
           </div>
         </div>
         <div class="col-md-3">
@@ -144,10 +155,11 @@ export default {
           },
           clientes:[],
           localidades:[],
-          localidad: {
+          localidad: [{
+            
             lat : -31.8846751,
             lon : -60.4103223
-          },
+          }],
           provincias:[],
           provincia: ''
           
@@ -201,10 +213,10 @@ export default {
               },
       sync () {
               
-                this.mapCenter.lat = parseFloat(this.localidad.lat);
-                this.mapCenter.lng = parseFloat(this.localidad.lon);
-                this.markers[0].position.lat =parseFloat(this.localidad.lat);
-                this.markers[0].position.lng = parseFloat(this.localidad.lon);
+                this.mapCenter.lat = parseFloat(this.localidad[0].lat);
+                this.mapCenter.lng = parseFloat(this.localidad[0].lon);
+                this.markers[0].position.lat =parseFloat(this.localidad[0].lat);
+                this.markers[0].position.lng = parseFloat(this.localidad[0].lon);
               }
 
     }

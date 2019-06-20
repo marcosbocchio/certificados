@@ -2342,6 +2342,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2362,10 +2373,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       },
       clientes: [],
       localidades: [],
-      localidad: {
+      localidad: [{
         lat: -31.8846751,
         lon: -60.4103223
-      },
+      }],
       provincias: [],
       provincia: ''
     };
@@ -2412,10 +2423,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       };
     },
     sync: function sync() {
-      this.mapCenter.lat = parseFloat(this.localidad.lat);
-      this.mapCenter.lng = parseFloat(this.localidad.lon);
-      this.markers[0].position.lat = parseFloat(this.localidad.lat);
-      this.markers[0].position.lng = parseFloat(this.localidad.lon);
+      this.mapCenter.lat = parseFloat(this.localidad[0].lat);
+      this.mapCenter.lng = parseFloat(this.localidad[0].lon);
+      this.markers[0].position.lat = parseFloat(this.localidad[0].lat);
+      this.markers[0].position.lng = parseFloat(this.localidad[0].lon);
     }
   }
 });
@@ -34261,17 +34272,19 @@ var render = function() {
                     }
                   },
                   model: {
-                    value: _vm.localidad,
+                    value: _vm.localidad[0],
                     callback: function($$v) {
-                      _vm.localidad = $$v
+                      _vm.$set(_vm.localidad, 0, $$v)
                     },
-                    expression: "localidad"
+                    expression: "localidad[0]"
                   }
                 })
               ],
               1
             )
           ]),
+          _vm._v(" "),
+          _vm._m(5),
           _vm._v(" "),
           _c("div", { staticClass: "col-md-3" }, [
             _c("div", { staticClass: "form-group" }, [
@@ -34481,6 +34494,32 @@ var staticRenderFns = [
           staticClass: "form-control",
           attrs: { type: "text", id: "lugar_ensayo", placeholder: "" }
         })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-6" }, [
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { attrs: { for: "search" } }, [_vm._v("Buscar Ubicación")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "input-group" }, [
+          _c("div", { staticClass: "input-group-addon" }, [
+            _c("i", { staticClass: "fa fa-search" })
+          ]),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "form-control",
+            attrs: {
+              type: "text",
+              name: "search",
+              id: "search",
+              placeholder: ""
+            }
+          })
+        ])
       ])
     ])
   }
@@ -50344,7 +50383,7 @@ Vue.use(VueGoogleMaps, {
 
 var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {
-    url:  false ? undefined : "http://certificados.test/api"
+    url:  false ? undefined : "http://localhost:8000/api"
   }
 });
 var eventNewRegistro = new Vue();
@@ -50938,8 +50977,8 @@ var eventNewRegistro = new vue__WEBPACK_IMPORTED_MODULE_0___default.a();
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\bocch\code\certificados\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\bocch\code\certificados\resources\sass\toastr.scss */"./resources/sass/toastr.scss");
+__webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/sass/toastr.scss */"./resources/sass/toastr.scss");
 
 
 /***/ })
