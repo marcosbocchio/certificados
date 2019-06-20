@@ -61,13 +61,14 @@ Vue.component('certificados', require('./components/certificados/certificados.vu
  *
  */
 import 'vue-select/dist/vue-select.css';
-import * as VueGoogleMaps from 'vue2-google-maps'
-import {GmapMarker} from 'vue2-google-maps/src/components/marker'
+
+const VueGoogleMaps = require('vue2-google-maps');
 
 Vue.use(VueGoogleMaps, {
   load: {
     key: 'AIzaSyAjnyOfVeT0QoN9rOws7-xAE8tR8ndyVD8',
-    libraries: 'places', // This is required if you use the Autocomplete plugin
+    libraries: 'places', 
+    // This is required if you use the Autocomplete plugin
     // OR: libraries: 'places,drawing'
     // OR: libraries: 'places,drawing,visualization'
     // (as you require)
@@ -83,14 +84,15 @@ Vue.use(VueGoogleMaps, {
     // autobindAllEvents: false,
 
     //// If you want to manually install components, e.g.
-    // import {GmapMarker} from 'vue2-google-maps/src/components/marker'
-    //// Vue.component('GmapMarker', GmapMarker)
-    //// then disable the following:
-    // installComponents: true,
+    // import {GmapMarker} from 'vue2-google-maps/src/components/marker';
+   //  Vue.component('GmapMarker', GmapMarker);
+    ////then disable the following:
+     installComponents: true,
 })
 
 import Vuex from 'vuex' 
 import vSelect from 'vue-select'
+
 
 const store = new Vuex.Store({
 state: {

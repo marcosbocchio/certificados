@@ -2333,14 +2333,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      reportedMapCenter: {
-        lat: -31.8846751,
-        lng: -60.4103223
-      },
+      markers: [{
+        position: {
+          lat: -31.8846751,
+          lng: -60.4103223
+        }
+      }],
       mapCenter: {
         lat: '',
         lng: ''
@@ -2393,12 +2403,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this3.localidades = response.data;
       });
     },
-    cambiarGeo: function cambiarGeo() {
-      this.reportedMapCenter.lat = this.localidad.lat;
-      this.reportedMapCenter.lng = this.localidad.lon; //  alert('se ejecuta sync');
-
-      this.sync();
-    },
     updateCenter: function updateCenter(latLng) {
       this.localidad = {
         lat: latLng.lat(),
@@ -2406,8 +2410,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       };
     },
     sync: function sync() {
-      this.mapCenter.lat = this.localidad.lat;
-      this.mapCenter.lng = this.localidad.lon;
+      this.mapCenter.lat = parseFloat(this.localidad.lat);
+      this.mapCenter.lng = parseFloat(this.localidad.lon);
     }
   }
 });
@@ -34249,7 +34253,7 @@ var render = function() {
                   attrs: { label: "localidad", options: _vm.localidades },
                   on: {
                     input: function($event) {
-                      return _vm.cambiarGeo()
+                      return _vm.sync()
                     }
                   },
                   model: {
@@ -34341,12 +34345,31 @@ var render = function() {
             "div",
             { staticClass: "col-md-12" },
             [
-              _c("gmap-map", {
-                ref: "map",
-                staticClass: "map-container",
-                attrs: { center: _vm.mapCenter, zoom: 12 },
-                on: { center_changed: _vm.updateCenter, idle: _vm.sync }
-              })
+              _c(
+                "gmap-map",
+                {
+                  ref: "map",
+                  staticClass: "map-container",
+                  attrs: { center: _vm.mapCenter, zoom: 12 },
+                  on: { center_changed: _vm.updateCenter, idle: _vm.sync }
+                },
+                _vm._l(_vm.markers, function(m, index) {
+                  return _c("GmapMarker", {
+                    key: index,
+                    attrs: {
+                      position: m.position,
+                      clickable: true,
+                      draggable: true
+                    },
+                    on: {
+                      click: function($event) {
+                        _vm.center = m.position
+                      }
+                    }
+                  })
+                }),
+                1
+              )
             ],
             1
           )
@@ -49109,520 +49132,6 @@ exports.default = function (input) {
 
 /***/ }),
 
-/***/ "./node_modules/vue2-google-maps/src/components/mapElementFactory.js":
-/*!***************************************************************************!*\
-  !*** ./node_modules/vue2-google-maps/src/components/mapElementFactory.js ***!
-  \***************************************************************************/
-/*! exports provided: default, mappedPropsToVueProps */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mappedPropsToVueProps", function() { return mappedPropsToVueProps; });
-/* harmony import */ var _utils_bindEvents_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/bindEvents.js */ "./node_modules/vue2-google-maps/src/utils/bindEvents.js");
-/* harmony import */ var _utils_bindProps_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/bindProps.js */ "./node_modules/vue2-google-maps/src/utils/bindProps.js");
-/* harmony import */ var _mapElementMixin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./mapElementMixin */ "./node_modules/vue2-google-maps/src/components/mapElementMixin.js");
-
-
-
-
-/**
- *
- * @param {Object} options
- * @param {Object} options.mappedProps - Definitions of props
- * @param {Object} options.mappedProps.PROP.type - Value type
- * @param {Boolean} options.mappedProps.PROP.twoWay
- *  - Whether the prop has a corresponding PROP_changed
- *   event
- * @param {Boolean} options.mappedProps.PROP.noBind
- *  - If true, do not apply the default bindProps / bindEvents.
- * However it will still be added to the list of component props
- * @param {Object} options.props - Regular Vue-style props.
- *  Note: must be in the Object form because it will be
- *  merged with the `mappedProps`
- *
- * @param {Object} options.events - Google Maps API events
- *  that are not bound to a corresponding prop
- * @param {String} options.name - e.g. `polyline`
- * @param {=> String} options.ctr - constructor, e.g.
- *  `google.maps.Polyline`. However, since this is not
- *  generally available during library load, this becomes
- *  a function instead, e.g. () => google.maps.Polyline
- *  which will be called only after the API has been loaded
- * @param {(MappedProps, OtherVueProps) => Array} options.ctrArgs -
- *   If the constructor in `ctr` needs to be called with
- *   arguments other than a single `options` object, e.g. for
- *   GroundOverlay, we call `new GroundOverlay(url, bounds, options)`
- *   then pass in a function that returns the argument list as an array
- *
- * Otherwise, the constructor will be called with an `options` object,
- *   with property and values merged from:
- *
- *   1. the `options` property, if any
- *   2. a `map` property with the Google Maps
- *   3. all the properties passed to the component in `mappedProps`
- * @param {Object => Any} options.beforeCreate -
- *  Hook to modify the options passed to the initializer
- * @param {(options.ctr, Object) => Any} options.afterCreate -
- *  Hook called when
- *
- */
-/* harmony default export */ __webpack_exports__["default"] = (function (options) {
-  const {
-    mappedProps,
-    name,
-    ctr,
-    ctrArgs,
-    events,
-    beforeCreate,
-    afterCreate,
-    props,
-    ...rest
-  } = options
-
-  const promiseName = `$${name}Promise`
-  const instanceName = `$${name}Object`
-
-  assert(!(rest.props instanceof Array), '`props` should be an object, not Array')
-
-  return {
-    ...(typeof GENERATE_DOC !== 'undefined' ? {$vgmOptions: options} : {}),
-    mixins: [_mapElementMixin__WEBPACK_IMPORTED_MODULE_2__["default"]],
-    props: {
-      ...props,
-      ...mappedPropsToVueProps(mappedProps),
-    },
-    render () { return '' },
-    provide () {
-      const promise = this.$mapPromise.then((map) => {
-        // Infowindow needs this to be immediately available
-        this.$map = map
-
-        // Initialize the maps with the given options
-        const options = {
-          ...this.options,
-          map,
-          ...Object(_utils_bindProps_js__WEBPACK_IMPORTED_MODULE_1__["getPropsValues"])(this, mappedProps)
-        }
-        delete options.options // delete the extra options
-
-        if (beforeCreate) {
-          const result = beforeCreate.bind(this)(options)
-
-          if (result instanceof Promise) {
-            return result.then(() => ({options}))
-          }
-        }
-        return {options}
-      }).then(({options}) => {
-        const ConstructorObject = ctr()
-        // https://stackoverflow.com/questions/1606797/use-of-apply-with-new-operator-is-this-possible
-        this[instanceName] = ctrArgs
-          ? new (Function.prototype.bind.call(
-            ConstructorObject,
-            null,
-            ...ctrArgs(options, Object(_utils_bindProps_js__WEBPACK_IMPORTED_MODULE_1__["getPropsValues"])(this, props || {}))
-          ))()
-          : new ConstructorObject(options)
-
-        Object(_utils_bindProps_js__WEBPACK_IMPORTED_MODULE_1__["bindProps"])(this, this[instanceName], mappedProps)
-        Object(_utils_bindEvents_js__WEBPACK_IMPORTED_MODULE_0__["default"])(this, this[instanceName], events)
-
-        if (afterCreate) {
-          afterCreate.bind(this)(this[instanceName])
-        }
-        return this[instanceName]
-      })
-      this[promiseName] = promise
-      return {[promiseName]: promise}
-    },
-    destroyed () {
-      // Note: not all Google Maps components support maps
-      if (this[instanceName] && this[instanceName].setMap) {
-        this[instanceName].setMap(null)
-      }
-    },
-    ...rest
-  }
-});
-
-function assert (v, message) {
-  if (!v) throw new Error(message)
-}
-
-/**
- * Strips out the extraneous properties we have in our
- * props definitions
- * @param {Object} props
- */
-function mappedPropsToVueProps (mappedProps) {
-  return Object.entries(mappedProps)
-    .map(([key, prop]) => {
-      const value = {}
-
-      if ('type' in prop) value.type = prop.type
-      if ('default' in prop) value.default = prop.default
-      if ('required' in prop) value.required = prop.required
-
-      return [key, value]
-    })
-    .reduce((acc, [key, val]) => {
-      acc[key] = val
-      return acc
-    }, {})
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/vue2-google-maps/src/components/mapElementMixin.js":
-/*!*************************************************************************!*\
-  !*** ./node_modules/vue2-google-maps/src/components/mapElementMixin.js ***!
-  \*************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/**
- * @class MapElementMixin
- *
- * Extends components to include the following fields:
- *
- * @property $map        The Google map (valid only after the promise returns)
- *
- *
- * */
-/* harmony default export */ __webpack_exports__["default"] = ({
-  inject: {
-    '$mapPromise': { default: 'abcdef' }
-  },
-
-  provide () {
-    // Note: although this mixin is not "providing" anything,
-    // components' expect the `$map` property to be present on the component.
-    // In order for that to happen, this mixin must intercept the $mapPromise
-    // .then(() =>) first before its component does so.
-    //
-    // Since a provide() on a mixin is executed before a provide() on the
-    // component, putting this code in provide() ensures that the $map is
-    // already set by the time the
-    // component's provide() is called.
-    this.$mapPromise.then((map) => {
-      this.$map = map
-    })
-
-    return {}
-  },
-});
-
-
-/***/ }),
-
-/***/ "./node_modules/vue2-google-maps/src/components/marker.js":
-/*!****************************************************************!*\
-  !*** ./node_modules/vue2-google-maps/src/components/marker.js ***!
-  \****************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _mapElementFactory_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./mapElementFactory.js */ "./node_modules/vue2-google-maps/src/components/mapElementFactory.js");
-
-
-const props = {
-  animation: {
-    twoWay: true,
-    type: Number
-  },
-  attribution: {
-    type: Object,
-  },
-  clickable: {
-    type: Boolean,
-    twoWay: true,
-    default: true
-  },
-  cursor: {
-    type: String,
-    twoWay: true
-  },
-  draggable: {
-    type: Boolean,
-    twoWay: true,
-    default: false
-  },
-  icon: {
-    twoWay: true
-  },
-  label: {
-  },
-  opacity: {
-    type: Number,
-    default: 1
-  },
-  options: {
-    type: Object
-  },
-  place: {
-    type: Object
-  },
-  position: {
-    type: Object,
-    twoWay: true,
-  },
-  shape: {
-    type: Object,
-    twoWay: true
-  },
-  title: {
-    type: String,
-    twoWay: true
-  },
-  zIndex: {
-    type: Number,
-    twoWay: true
-  },
-  visible: {
-    twoWay: true,
-    default: true,
-  },
-}
-
-const events = [
-  'click',
-  'rightclick',
-  'dblclick',
-  'drag',
-  'dragstart',
-  'dragend',
-  'mouseup',
-  'mousedown',
-  'mouseover',
-  'mouseout'
-]
-
-/**
- * @class Marker
- *
- * Marker class with extra support for
- *
- * - Embedded info windows
- * - Clustered markers
- *
- * Support for clustered markers is for backward-compatability
- * reasons. Otherwise we should use a cluster-marker mixin or
- * subclass.
- */
-/* harmony default export */ __webpack_exports__["default"] = (Object(_mapElementFactory_js__WEBPACK_IMPORTED_MODULE_0__["default"])({
-  mappedProps: props,
-  events,
-  name: 'marker',
-  ctr: () => google.maps.Marker,
-
-  inject: {
-    '$clusterPromise': {
-      default: null,
-    },
-  },
-
-  render (h) {
-    if (!this.$slots.default || this.$slots.default.length === 0) {
-      return ''
-    } else if (this.$slots.default.length === 1) { // So that infowindows can have a marker parent
-      return this.$slots.default[0]
-    } else {
-      return h(
-        'div',
-        this.$slots.default
-      )
-    }
-  },
-
-  destroyed () {
-    if (!this.$markerObject) { return }
-
-    if (this.$clusterObject) {
-      // Repaint will be performed in `updated()` of cluster
-      this.$clusterObject.removeMarker(this.$markerObject, true)
-    } else {
-      this.$markerObject.setMap(null)
-    }
-  },
-
-  beforeCreate (options) {
-    if (this.$clusterPromise) {
-      options.map = null
-    }
-
-    return this.$clusterPromise
-  },
-
-  afterCreate (inst) {
-    if (this.$clusterPromise) {
-      this.$clusterPromise.then((co) => {
-        co.addMarker(inst)
-        this.$clusterObject = co
-      })
-    }
-  },
-}));
-
-
-/***/ }),
-
-/***/ "./node_modules/vue2-google-maps/src/utils/WatchPrimitiveProperties.js":
-/*!*****************************************************************************!*\
-  !*** ./node_modules/vue2-google-maps/src/utils/WatchPrimitiveProperties.js ***!
-  \*****************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return WatchPrimitiveProperties; });
-/**
- * Watch the individual properties of a PoD object, instead of the object
- * per se. This is different from a deep watch where both the reference
- * and the individual values are watched.
- *
- * In effect, it throttles the multiple $watch to execute at most once per tick.
- */
-function WatchPrimitiveProperties (vueInst, propertiesToTrack, handler, immediate = false) {
-  let isHandled = false
-
-  function requestHandle () {
-    if (!isHandled) {
-      isHandled = true
-      vueInst.$nextTick(() => {
-        isHandled = false
-        handler()
-      })
-    }
-  }
-
-  for (let prop of propertiesToTrack) {
-    vueInst.$watch(prop, requestHandle, {immediate})
-  }
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/vue2-google-maps/src/utils/bindEvents.js":
-/*!***************************************************************!*\
-  !*** ./node_modules/vue2-google-maps/src/utils/bindEvents.js ***!
-  \***************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ((vueInst, googleMapsInst, events) => {
-  for (let eventName of events) {
-    if (vueInst.$gmapOptions.autobindAllEvents ||
-        vueInst.$listeners[eventName]) {
-      googleMapsInst.addListener(eventName, (ev) => {
-        vueInst.$emit(eventName, ev)
-      })
-    }
-  }
-});
-
-
-/***/ }),
-
-/***/ "./node_modules/vue2-google-maps/src/utils/bindProps.js":
-/*!**************************************************************!*\
-  !*** ./node_modules/vue2-google-maps/src/utils/bindProps.js ***!
-  \**************************************************************/
-/*! exports provided: getPropsValues, bindProps */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getPropsValues", function() { return getPropsValues; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "bindProps", function() { return bindProps; });
-/* harmony import */ var _utils_WatchPrimitiveProperties__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/WatchPrimitiveProperties */ "./node_modules/vue2-google-maps/src/utils/WatchPrimitiveProperties.js");
-
-
-function capitalizeFirstLetter (string) {
-  return string.charAt(0).toUpperCase() + string.slice(1)
-}
-
-function getPropsValues (vueInst, props) {
-  return Object.keys(props)
-    .reduce(
-      (acc, prop) => {
-        if (vueInst[prop] !== undefined) {
-          acc[prop] = vueInst[prop]
-        }
-        return acc
-      },
-      {}
-    )
-}
-
-/**
-  * Binds the properties defined in props to the google maps instance.
-  * If the prop is an Object type, and we wish to track the properties
-  * of the object (e.g. the lat and lng of a LatLng), then we do a deep
-  * watch. For deep watch, we also prevent the _changed event from being
-  * emitted if the data source was external.
-  */
-function bindProps (vueInst, googleMapsInst, props, options) {
-  for (let attribute in props) {
-    let {twoWay, type, trackProperties, noBind} = props[attribute]
-
-    if (noBind) continue
-
-    const setMethodName = 'set' + capitalizeFirstLetter(attribute)
-    const getMethodName = 'get' + capitalizeFirstLetter(attribute)
-    const eventName = attribute.toLowerCase() + '_changed'
-    const initialValue = vueInst[attribute]
-
-    if (typeof googleMapsInst[setMethodName] === 'undefined') {
-      throw new Error(`${setMethodName} is not a method of (the Maps object corresponding to) ${vueInst.$options._componentTag}`)
-    }
-
-    // We need to avoid an endless
-    // propChanged -> event emitted -> propChanged -> event emitted loop
-    // although this may really be the user's responsibility
-    if (type !== Object || !trackProperties) {
-      // Track the object deeply
-      vueInst.$watch(attribute, () => {
-        const attributeValue = vueInst[attribute]
-
-        googleMapsInst[setMethodName](attributeValue)
-      }, {
-        immediate: typeof initialValue !== 'undefined',
-        deep: type === Object
-      })
-    } else {
-      Object(_utils_WatchPrimitiveProperties__WEBPACK_IMPORTED_MODULE_0__["default"])(
-        vueInst,
-        trackProperties.map(prop => `${attribute}.${prop}`),
-        () => {
-          googleMapsInst[setMethodName](vueInst[attribute])
-        },
-        vueInst[attribute] !== undefined
-      )
-    }
-
-    if (twoWay &&
-        (vueInst.$gmapOptions.autobindAllEvents ||
-        vueInst.$listeners[eventName])) {
-      googleMapsInst.addListener(eventName, (ev) => { // eslint-disable-line no-unused-vars
-        vueInst.$emit(eventName, googleMapsInst[getMethodName]())
-      })
-    }
-  }
-}
-
-
-/***/ }),
-
 /***/ "./node_modules/vuex/dist/vuex.esm.js":
 /*!********************************************!*\
   !*** ./node_modules/vuex/dist/vuex.esm.js ***!
@@ -50744,12 +50253,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "eventNewRegistro", function() { return eventNewRegistro; });
 /* harmony import */ var vue_select_dist_vue_select_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-select/dist/vue-select.css */ "./node_modules/vue-select/dist/vue-select.css");
 /* harmony import */ var vue_select_dist_vue_select_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_select_dist_vue_select_css__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vue2_google_maps__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue2-google-maps */ "./node_modules/vue2-google-maps/dist/main.js");
-/* harmony import */ var vue2_google_maps__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue2_google_maps__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var vue2_google_maps_src_components_marker__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue2-google-maps/src/components/marker */ "./node_modules/vue2-google-maps/src/components/marker.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-select */ "./node_modules/vue-select/dist/vue-select.js");
-/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vue_select__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-select */ "./node_modules/vue-select/dist/vue-select.js");
+/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_select__WEBPACK_IMPORTED_MODULE_2__);
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -50786,7 +50292,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 Vue.component('pagination', __webpack_require__(/*! laravel-vue-pagination */ "./node_modules/laravel-vue-pagination/dist/laravel-vue-pagination.common.js"));
-Vue.component('v-select', vue_select__WEBPACK_IMPORTED_MODULE_4___default.a);
+Vue.component('v-select', vue_select__WEBPACK_IMPORTED_MODULE_2___default.a);
 Vue.component('abm-maestro', __webpack_require__(/*! ./components/abm-maestro/abm-maestro.vue */ "./resources/js/components/abm-maestro/abm-maestro.vue")["default"]);
 Vue.component('table-users', __webpack_require__(/*! ./components/abm-maestro/usuarios/table-users.vue */ "./resources/js/components/abm-maestro/usuarios/table-users.vue")["default"]);
 Vue.component('nuevo-users', __webpack_require__(/*! ./components/abm-maestro/usuarios/nuevo-users.vue */ "./resources/js/components/abm-maestro/usuarios/nuevo-users.vue")["default"]);
@@ -50803,8 +50309,9 @@ Vue.component('certificados', __webpack_require__(/*! ./components/certificados/
 
 
 
+var VueGoogleMaps = __webpack_require__(/*! vue2-google-maps */ "./node_modules/vue2-google-maps/dist/main.js");
 
-Vue.use(vue2_google_maps__WEBPACK_IMPORTED_MODULE_1__, {
+Vue.use(VueGoogleMaps, {
   load: {
     key: 'AIzaSyAjnyOfVeT0QoN9rOws7-xAE8tR8ndyVD8',
     libraries: 'places' // This is required if you use the Autocomplete plugin
@@ -50814,21 +50321,21 @@ Vue.use(vue2_google_maps__WEBPACK_IMPORTED_MODULE_1__, {
     //// If you want to set the version, you can do so:
     // v: '3.26',
 
-  } //// If you intend to programmatically custom event listener code
+  },
+  //// If you intend to programmatically custom event listener code
   //// (e.g. `this.$refs.gmap.$on('zoom_changed', someFunc)`)
   //// instead of going through Vue templates (e.g. `<GmapMap @zoom_changed="someFunc">`)
   //// you might need to turn this on.
   // autobindAllEvents: false,
   //// If you want to manually install components, e.g.
-  // import {GmapMarker} from 'vue2-google-maps/src/components/marker'
-  //// Vue.component('GmapMarker', GmapMarker)
-  //// then disable the following:
-  // installComponents: true,
-
+  // import {GmapMarker} from 'vue2-google-maps/src/components/marker';
+  //  Vue.component('GmapMarker', GmapMarker);
+  ////then disable the following:
+  installComponents: true
 });
 
 
-var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
+var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {
     url:  false ? undefined : "http://localhost:8000/api"
   }

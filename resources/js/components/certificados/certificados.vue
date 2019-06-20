@@ -70,7 +70,7 @@
         <div class="col-md-6">
           <div class="form-group">
             <label>Localidad</label>
-            <v-select v-model="localidad" label="localidad" :options="localidades" @input="cambiarGeo()"></v-select>   
+            <v-select v-model="localidad" label="localidad" :options="localidades" @input="sync()"></v-select>   
           </div>
         </div>
         <div class="col-md-3">
@@ -101,8 +101,16 @@
               @center_changed="updateCenter"
               @idle="sync"
               class="map-container">
-
+              <GmapMarker
+                :key="index"
+                v-for="(m, index) in markers"
+                :position="m.position"
+                :clickable="true"
+                :draggable="true"
+                @click="center=m.position"
+              />
           </gmap-map>
+       
         </div>
       </div>
       </form>
@@ -119,10 +127,12 @@ import {mapState} from 'vuex'
 export default {
     
     data() { return {
-          reportedMapCenter: {
-            lat: -31.8846751,
-            lng: -60.4103223
-          },
+         markers: [{
+            position: {
+              lat: -31.8846751,
+              lng: -60.4103223
+            }}
+          ],
           mapCenter: {
             lat: '',
             lng: ''
@@ -181,14 +191,7 @@ export default {
                 this.localidades = response.data
                 });
               },
-      cambiarGeo : function () {
 
-              this.reportedMapCenter.lat = this.localidad.lat ;
-              this.reportedMapCenter.lng = this.localidad.lon;
-            //  alert('se ejecuta sync');
-              this.sync();
-            
-       },
       updateCenter(latLng) {
                 this.localidad = {
                   lat: latLng.lat(),
@@ -197,8 +200,8 @@ export default {
               },
       sync () {
               
-                this.mapCenter.lat = this.localidad.lat;
-                this.mapCenter.lng = this.localidad.lon;
+                this.mapCenter.lat = parseFloat(this.localidad.lat);
+                this.mapCenter.lng = parseFloat(this.localidad.lon);
               }
 
     }
