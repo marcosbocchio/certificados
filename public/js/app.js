@@ -2341,6 +2341,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2397,6 +2398,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     getLocalidades: function getLocalidades() {
       var _this3 = this;
 
+      this.localidades = [];
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'localidades/' + this.provincia.id;
       axios.get(urlRegistros).then(function (response) {
@@ -2412,6 +2414,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     sync: function sync() {
       this.mapCenter.lat = parseFloat(this.localidad.lat);
       this.mapCenter.lng = parseFloat(this.localidad.lon);
+      this.markers[0].position.lat = parseFloat(this.localidad.lat);
+      this.markers[0].position.lng = parseFloat(this.localidad.lon);
     }
   }
 });
@@ -34364,6 +34368,9 @@ var render = function() {
                     on: {
                       click: function($event) {
                         _vm.center = m.position
+                      },
+                      drag: function($event) {
+                        return _vm.updateCenter($event.latLng)
                       }
                     }
                   })
@@ -50337,7 +50344,7 @@ Vue.use(VueGoogleMaps, {
 
 var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {
-    url:  false ? undefined : "http://localhost:8000/api"
+    url:  false ? undefined : "http://certificados.test/api"
   }
 });
 var eventNewRegistro = new Vue();
@@ -50931,8 +50938,8 @@ var eventNewRegistro = new vue__WEBPACK_IMPORTED_MODULE_0___default.a();
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/sass/toastr.scss */"./resources/sass/toastr.scss");
+__webpack_require__(/*! C:\Users\bocch\code\certificados\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\bocch\code\certificados\resources\sass\toastr.scss */"./resources/sass/toastr.scss");
 
 
 /***/ })

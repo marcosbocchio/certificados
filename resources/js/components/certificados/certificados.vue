@@ -108,6 +108,7 @@
                 :clickable="true"
                 :draggable="true"
                 @click="center=m.position"
+                @drag="updateCenter($event.latLng)"
               />
           </gmap-map>
        
@@ -184,7 +185,7 @@ export default {
                 });
               },
       getLocalidades : function(){
-       
+                this.localidades=[];
                 axios.defaults.baseURL = this.url ;
                 var urlRegistros = 'localidades/' + this.provincia.id;    
                 axios.get(urlRegistros).then(response =>{
@@ -202,6 +203,8 @@ export default {
               
                 this.mapCenter.lat = parseFloat(this.localidad.lat);
                 this.mapCenter.lng = parseFloat(this.localidad.lon);
+                this.markers[0].position.lat =parseFloat(this.localidad.lat);
+                this.markers[0].position.lng = parseFloat(this.localidad.lon);
               }
 
     }
