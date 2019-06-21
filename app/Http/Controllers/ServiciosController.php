@@ -3,17 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Repositories\Localidades\LocalidadesRepository;
-use App\Localidades;
+use App\Repositories\Servicios\ServiciosRepository;
+use App\Servicios;
 use App\User;
 
-class LocalidadesController extends Controller
-{   
-    Protected $localidades;
+class ServiciosController extends Controller
+{
 
-    public function __construct(LocalidadesRepository $localidadesRepository)
+    Protected $servicios;
+
+    public function __construct(ServiciosRepository $serviciosRepository)
     {
-      $this->localidades = $localidadesRepository;
+      $this->servicios = $serviciosRepository;
     }
     /**
      * Display a listing of the resource.
@@ -22,8 +23,7 @@ class LocalidadesController extends Controller
      */
     public function index()
     {
-        return  $this->localidades->getAll();
-
+        return  $this->servicios->getAll();
     }
 
     /**
@@ -55,8 +55,7 @@ class LocalidadesController extends Controller
      */
     public function show($id)
     {
-      return  $this->localidades->getLocalidades($id);
-
+        //
     }
 
     /**

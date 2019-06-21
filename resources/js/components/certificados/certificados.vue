@@ -139,7 +139,19 @@
                 @drag="updateCenter($event.latLng)"
               />
           </gmap-map>
-       
+        </div>
+        <div class="col-md-12">
+          <div class="form-group" v-for="(inputsServicio,k) in inputsServicios" :key="k">
+              <v-select label="descripcion" :options="servicios" ></v-select>
+              <div class="form-group">
+                <label for="metodo_de_ensayo">Metodo de ensayo</label>
+                    <v-select label="codigo" :options="metodo_ensayos" ></v-select>
+                </div>   
+              <span>
+                  <i class="fa fa-minus-circle" @click="removeServicio(k)" v-show="k || ( !k && inputsServicios.length > 1)"></i>
+                  <i class="fa fa-plus-circle" @click="addServicio(k)" v-show="k == inputsServicios.length-1"></i>
+              </span>
+          </div>
         </div>
       </div>
       </form>
@@ -182,18 +194,25 @@ export default {
             lon : -58.381559100000004
           },
           provincias:[],
-          provincia: ''
+          provincia: '',
+          servicios:[],
+          inputsServicios: [
+            {
+                servicios:[]
+            },
+        ],
+        metodos_ensayos :[],
+        
           
           }
     },
     created : function(){
 
         this.getClientes();
-     //   this.getContactos();
         this.getProvincias();
+        this.getServicios();
+        this.getMetodos_ensayos();
         this.sync();
-       
-
       },
     computed :{
 
@@ -236,6 +255,22 @@ export default {
                 this.localidades = response.data
                 });
               },
+       getServicios : function(){
+             
+                axios.defaults.baseURL = this.url ;
+                var urlRegistros = 'servicios';    
+                axios.get(urlRegistros).then(response =>{
+                this.servicios = response.data
+                });
+              },
+       getMetodos_ensayos: function(){
+             
+                axios.defaults.baseURL = this.url ;
+                var urlRegistros = 'metodo_ensayos';    
+                axios.get(urlRegistros).then(response =>{
+                this.metodos_ensayos = response.data
+                });
+              },
 
       updateCenter(latLng) {
 
@@ -258,9 +293,14 @@ export default {
                 this.localidad.lon = place.geometry.location.lng();
                 this.sync();
       
-      }
-      
-
+             },
+      addServicio(index) {
+            this.inputsServicios.push({ servicios :[] });
+        },
+      removeServicio(index) {
+            this.inputsServicios.splice(index, 1);
+        }
+    
     }
 }
 </script>

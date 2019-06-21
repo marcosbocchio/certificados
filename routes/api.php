@@ -23,6 +23,7 @@ Route::resource('clientes', 'ClientesController');
 Route::resource('provincias', 'ProvinciasController');
 Route::resource('localidades', 'LocalidadesController');
 Route::resource('contactos', 'ContactosController');
+Route::resource('servicios', 'ServiciosController');
 
 
 

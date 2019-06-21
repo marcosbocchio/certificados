@@ -2370,6 +2370,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2399,13 +2411,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         lon: -58.381559100000004
       },
       provincias: [],
-      provincia: ''
+      provincia: '',
+      servicios: [],
+      inputsServicios: [{
+        servicios: []
+      }],
+      metodos_ensayos: []
     };
   },
   created: function created() {
-    this.getClientes(); //   this.getContactos();
-
+    this.getClientes();
     this.getProvincias();
+    this.getServicios();
+    this.getMetodos_ensayos();
     this.sync();
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['url'])),
@@ -2450,6 +2468,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this4.localidades = response.data;
       });
     },
+    getServicios: function getServicios() {
+      var _this5 = this;
+
+      axios.defaults.baseURL = this.url;
+      var urlRegistros = 'servicios';
+      axios.get(urlRegistros).then(function (response) {
+        _this5.servicios = response.data;
+      });
+    },
+    getMetodos_ensayos: function getMetodos_ensayos() {
+      var _this6 = this;
+
+      axios.defaults.baseURL = this.url;
+      var urlRegistros = 'metodo_ensayos';
+      axios.get(urlRegistros).then(function (response) {
+        _this6.metodos_ensayos = response.data;
+      });
+    },
     updateCenter: function updateCenter(latLng) {
       this.localidad.lat = latLng.lat();
       this.localidad.lon = latLng.lng();
@@ -2464,6 +2500,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.localidad.lat = place.geometry.location.lat();
       this.localidad.lon = place.geometry.location.lng();
       this.sync();
+    },
+    addServicio: function addServicio(index) {
+      this.inputsServicios.push({
+        servicios: []
+      });
+    },
+    removeServicio: function removeServicio(index) {
+      this.inputsServicios.splice(index, 1);
     }
   }
 });
@@ -34518,6 +34562,75 @@ var render = function() {
               )
             ],
             1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "col-md-12" },
+            _vm._l(_vm.inputsServicios, function(inputsServicio, k) {
+              return _c(
+                "div",
+                { key: k, staticClass: "form-group" },
+                [
+                  _c("v-select", {
+                    attrs: { label: "descripcion", options: _vm.servicios }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "form-group" },
+                    [
+                      _c("label", { attrs: { for: "metodo_de_ensayo" } }, [
+                        _vm._v("Metodo de ensayo")
+                      ]),
+                      _vm._v(" "),
+                      _c("v-select", {
+                        attrs: { label: "codigo", options: _vm.metodo_ensayos }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("span", [
+                    _c("i", {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: k || (!k && _vm.inputsServicios.length > 1),
+                          expression: "k || ( !k && inputsServicios.length > 1)"
+                        }
+                      ],
+                      staticClass: "fa fa-minus-circle",
+                      on: {
+                        click: function($event) {
+                          return _vm.removeServicio(k)
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("i", {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: k == _vm.inputsServicios.length - 1,
+                          expression: "k == inputsServicios.length-1"
+                        }
+                      ],
+                      staticClass: "fa fa-plus-circle",
+                      on: {
+                        click: function($event) {
+                          return _vm.addServicio(k)
+                        }
+                      }
+                    })
+                  ])
+                ],
+                1
+              )
+            }),
+            0
           )
         ])
       ])
