@@ -63,6 +63,18 @@
         </div>
         <div class="col-md-6">
           <div class="form-group">
+                  <label>Contacto 1</label>
+                  <v-select name="contacto_1" label="nombre" :options="contactos" ></v-select>   
+            </div>
+        </div>
+         <div class="col-md-6">
+          <div class="form-group">
+                  <label>Contacto 2</label>
+                  <v-select name="contacto_2" label="nombre" :options="contactos" ></v-select>   
+            </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
             <label>Provincia</label>
             <v-select v-model="provincia" label="provincia" :options="provincias" @input="getLocalidades()"></v-select>   
           </div>
@@ -159,6 +171,7 @@ export default {
             heading: 0,
           },
           clientes:[],
+          contactos:[],
           localidades:[],
           localidad: {
             
@@ -173,6 +186,7 @@ export default {
     created : function(){
 
         this.getClientes();
+        this.getContactos();
         this.getProvincias();
         this.sync();
        
@@ -191,6 +205,14 @@ export default {
                 var urlRegistros = 'clientes';    
                 axios.get(urlRegistros).then(response =>{
                 this.clientes = response.data
+                });
+              },
+      getContactos : function(){
+
+                axios.defaults.baseURL = this.url ;
+                var urlRegistros = 'contactos';    
+                axios.get(urlRegistros).then(response =>{
+                this.contactos = response.data
                 });
               },
       getProvincias : function(){

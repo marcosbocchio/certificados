@@ -2358,6 +2358,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2377,6 +2389,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         heading: 0
       },
       clientes: [],
+      contactos: [],
       localidades: [],
       localidad: {
         lat: -34.603684400000011,
@@ -2388,6 +2401,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   created: function created() {
     this.getClientes();
+    this.getContactos();
     this.getProvincias();
     this.sync();
   },
@@ -2402,24 +2416,33 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this.clientes = response.data;
       });
     },
-    getProvincias: function getProvincias() {
+    getContactos: function getContactos() {
       var _this2 = this;
+
+      axios.defaults.baseURL = this.url;
+      var urlRegistros = 'contactos';
+      axios.get(urlRegistros).then(function (response) {
+        _this2.contactos = response.data;
+      });
+    },
+    getProvincias: function getProvincias() {
+      var _this3 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'provincias';
       axios.get(urlRegistros).then(function (response) {
-        _this2.provincias = response.data;
+        _this3.provincias = response.data;
       });
     },
     getLocalidades: function getLocalidades() {
-      var _this3 = this;
+      var _this4 = this;
 
       this.localidades = [];
       this.localidad = '';
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'localidades/' + this.provincia.id;
       axios.get(urlRegistros).then(function (response) {
-        _this3.localidades = response.data;
+        _this4.localidades = response.data;
       });
     },
     updateCenter: function updateCenter(latLng) {
@@ -34238,6 +34261,44 @@ var render = function() {
           _vm._m(3),
           _vm._v(" "),
           _vm._m(4),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-6" }, [
+            _c(
+              "div",
+              { staticClass: "form-group" },
+              [
+                _c("label", [_vm._v("Contacto 1")]),
+                _vm._v(" "),
+                _c("v-select", {
+                  attrs: {
+                    name: "contacto_1",
+                    label: "nombre",
+                    options: _vm.contactos
+                  }
+                })
+              ],
+              1
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-6" }, [
+            _c(
+              "div",
+              { staticClass: "form-group" },
+              [
+                _c("label", [_vm._v("Contacto 2")]),
+                _vm._v(" "),
+                _c("v-select", {
+                  attrs: {
+                    name: "contacto_2",
+                    label: "nombre",
+                    options: _vm.contactos
+                  }
+                })
+              ],
+              1
+            )
+          ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-md-6" }, [
             _c(
