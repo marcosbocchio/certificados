@@ -11,7 +11,7 @@
             </div>
             <div class="form-group">
                   <label>Cliente</label>
-                  <v-select label="nombre_fantasia" :options="clientes" ></v-select>   
+                  <v-select v-model="cliente" label="nombre_fantasia" :options="clientes" @input="getContactos()"></v-select>   
             </div>
 
           <!-- /.box-body -->
@@ -64,13 +64,13 @@
         <div class="col-md-6">
           <div class="form-group">
                   <label>Contacto 1</label>
-                  <v-select name="contacto_1" label="nombre" :options="contactos" ></v-select>   
+                  <v-select v-model="contacto1" name="contacto_1" label="nombre" :options="contactos" ></v-select>   
             </div>
         </div>
          <div class="col-md-6">
           <div class="form-group">
                   <label>Contacto 2</label>
-                  <v-select name="contacto_2" label="nombre" :options="contactos" ></v-select>   
+                  <v-select v-model="contacto2" name="contacto_2" label="nombre" :options="contactos" ></v-select>   
             </div>
         </div>
         <div class="col-md-6">
@@ -171,7 +171,10 @@ export default {
             heading: 0,
           },
           clientes:[],
+          cliente:'',
           contactos:[],
+          contacto1:'',
+          contacto2:'',
           localidades:[],
           localidad: {
             
@@ -186,7 +189,7 @@ export default {
     created : function(){
 
         this.getClientes();
-        this.getContactos();
+     //   this.getContactos();
         this.getProvincias();
         this.sync();
        
@@ -208,9 +211,10 @@ export default {
                 });
               },
       getContactos : function(){
-
+                this.contacto1 = '';
+                this.contacto2 = '';
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'contactos';    
+                var urlRegistros = 'contactos/' + this.cliente.id;    
                 axios.get(urlRegistros).then(response =>{
                 this.contactos = response.data
                 });

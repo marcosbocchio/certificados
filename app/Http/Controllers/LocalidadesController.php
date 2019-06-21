@@ -55,8 +55,10 @@ class LocalidadesController extends Controller
      */
     public function show($id)
     {
-       return  $this->localidades->getLocalidades($id);
-      
+      return  $this->localidades->getLocalidades($id);
+
+     
+
 
     }
 

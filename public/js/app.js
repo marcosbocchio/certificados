@@ -2389,7 +2389,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         heading: 0
       },
       clientes: [],
+      cliente: '',
       contactos: [],
+      contacto1: '',
+      contacto2: '',
       localidades: [],
       localidad: {
         lat: -34.603684400000011,
@@ -2400,8 +2403,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   created: function created() {
-    this.getClientes();
-    this.getContactos();
+    this.getClientes(); //   this.getContactos();
+
     this.getProvincias();
     this.sync();
   },
@@ -2419,8 +2422,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     getContactos: function getContactos() {
       var _this2 = this;
 
+      this.contacto1 = '';
+      this.contacto2 = '';
       axios.defaults.baseURL = this.url;
-      var urlRegistros = 'contactos';
+      var urlRegistros = 'contactos/' + this.cliente.id;
       axios.get(urlRegistros).then(function (response) {
         _this2.contactos = response.data;
       });
@@ -34247,7 +34252,19 @@ var render = function() {
                 _c("label", [_vm._v("Cliente")]),
                 _vm._v(" "),
                 _c("v-select", {
-                  attrs: { label: "nombre_fantasia", options: _vm.clientes }
+                  attrs: { label: "nombre_fantasia", options: _vm.clientes },
+                  on: {
+                    input: function($event) {
+                      return _vm.getContactos()
+                    }
+                  },
+                  model: {
+                    value: _vm.cliente,
+                    callback: function($$v) {
+                      _vm.cliente = $$v
+                    },
+                    expression: "cliente"
+                  }
                 })
               ],
               1
@@ -34274,6 +34291,13 @@ var render = function() {
                     name: "contacto_1",
                     label: "nombre",
                     options: _vm.contactos
+                  },
+                  model: {
+                    value: _vm.contacto1,
+                    callback: function($$v) {
+                      _vm.contacto1 = $$v
+                    },
+                    expression: "contacto1"
                   }
                 })
               ],
@@ -34293,6 +34317,13 @@ var render = function() {
                     name: "contacto_2",
                     label: "nombre",
                     options: _vm.contactos
+                  },
+                  model: {
+                    value: _vm.contacto2,
+                    callback: function($$v) {
+                      _vm.contacto2 = $$v
+                    },
+                    expression: "contacto2"
                   }
                 })
               ],
@@ -50460,7 +50491,7 @@ Vue.use(VueGoogleMaps, {
 
 var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {
-    url:  false ? undefined : "http://certificados.test/api"
+    url:  false ? undefined : "http://localhost:8000/api"
   }
 });
 var eventNewRegistro = new Vue();
@@ -51054,8 +51085,8 @@ var eventNewRegistro = new vue__WEBPACK_IMPORTED_MODULE_0___default.a();
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\bocch\code\certificados\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\bocch\code\certificados\resources\sass\toastr.scss */"./resources/sass/toastr.scss");
+__webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/sass/toastr.scss */"./resources/sass/toastr.scss");
 
 
 /***/ })

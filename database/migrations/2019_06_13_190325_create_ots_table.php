@@ -21,7 +21,8 @@ class CreateOtsTable extends Migration
             $table->integer('obra');
             $table->integer('presupuesto');
             $table->string('lugar',200);
-            $table->string('ubicacion_geo')->nullable();
+            $table->string('lat',100)->nullable();
+            $table->string('lon',100)->nullable();
             $table->string('observaciones')->nullable();
             $table->enum('estado',['CARGANDO','EN PROGRESO','TERMINADA']);
             $table->timestamps();

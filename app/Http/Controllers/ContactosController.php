@@ -55,7 +55,11 @@ class ContactosController extends Controller
      */
     public function show($id)
     {
-        //
+
+     return  $this->contactos->getContactos($id);
+
+
+        
     }
 
     /**
@@ -66,7 +70,6 @@ class ContactosController extends Controller
      */
     public function edit($id)
     {
-        //
     }
 
     /**

@@ -18,7 +18,6 @@ class LocalidadesRepository extends BaseRepository
     $Localidades = $this->getModel();
 
     return $Localidades->where('provincia_id',$id)->get();
-    //    return $Localidades->getModel()->all();
 
   }
 

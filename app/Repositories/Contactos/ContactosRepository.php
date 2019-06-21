@@ -13,4 +13,12 @@ class ContactosRepository extends BaseRepository
     return new Contactos;
   }
 
+  public function getContactos($id){
+
+    $Contactos = $this->getModel();
+
+    return $Contactos->where('cliente_id',$id)->get();
+
+  }
+
 }
