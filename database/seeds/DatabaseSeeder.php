@@ -15,8 +15,13 @@ class DatabaseSeeder extends Seeder
         $this->call(UsersTableSeeder::class);
         $this->call(EspesorTubosTableSeeder::class);
         $this->call(MaterialesTableSeeder::class);
+        $this->call(MetodoEnsayoTableSeeder::class);
+        $this->call(UnidadesMedidasTableSeeder::class);
+        $this->call(ClientesTableSeeder::class);
+        $this->call(ContactosTableSeeder::class);
 
-        factory('App\Clientes', 50)->create();
+
+       // factory('App\Clientes', 50)->create();
 
 
     }
