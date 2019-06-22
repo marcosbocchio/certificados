@@ -2416,14 +2416,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       inputsServicios: [{
         servicios: []
       }],
-      metodos_ensayos: []
+      metodo_ensayos: []
     };
   },
   created: function created() {
     this.getClientes();
     this.getProvincias();
     this.getServicios();
-    this.getMetodos_ensayos();
+    this.getMetodosEnsayos();
     this.sync();
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['url'])),
@@ -2477,13 +2477,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this5.servicios = response.data;
       });
     },
-    getMetodos_ensayos: function getMetodos_ensayos() {
+    getMetodosEnsayos: function getMetodosEnsayos() {
       var _this6 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'metodo_ensayos';
       axios.get(urlRegistros).then(function (response) {
-        _this6.metodos_ensayos = response.data;
+        _this6.metodo_ensayos = response.data;
       });
     },
     updateCenter: function updateCenter(latLng) {
@@ -34585,7 +34585,10 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("v-select", {
-                        attrs: { label: "codigo", options: _vm.metodo_ensayos }
+                        attrs: {
+                          label: "descripcion",
+                          options: _vm.metodo_ensayos
+                        }
                       })
                     ],
                     1

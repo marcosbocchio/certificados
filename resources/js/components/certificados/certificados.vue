@@ -143,9 +143,9 @@
         <div class="col-md-12">
           <div class="form-group" v-for="(inputsServicio,k) in inputsServicios" :key="k">
               <v-select label="descripcion" :options="servicios" ></v-select>
-              <div class="form-group">
-                <label for="metodo_de_ensayo">Metodo de ensayo</label>
-                    <v-select label="codigo" :options="metodo_ensayos" ></v-select>
+                <div class="form-group">
+                  <label for="metodo_de_ensayo">Metodo de ensayo</label>
+                      <v-select label="descripcion" :options="metodo_ensayos"></v-select>
                 </div>   
               <span>
                   <i class="fa fa-minus-circle" @click="removeServicio(k)" v-show="k || ( !k && inputsServicios.length > 1)"></i>
@@ -201,7 +201,7 @@ export default {
                 servicios:[]
             },
         ],
-        metodos_ensayos :[],
+           metodo_ensayos :[],
         
           
           }
@@ -211,7 +211,7 @@ export default {
         this.getClientes();
         this.getProvincias();
         this.getServicios();
-        this.getMetodos_ensayos();
+        this.getMetodosEnsayos();
         this.sync();
       },
     computed :{
@@ -263,14 +263,15 @@ export default {
                 this.servicios = response.data
                 });
               },
-       getMetodos_ensayos: function(){
+       getMetodosEnsayos: function(){
              
                 axios.defaults.baseURL = this.url ;
                 var urlRegistros = 'metodo_ensayos';    
                 axios.get(urlRegistros).then(response =>{
-                this.metodos_ensayos = response.data
+                this.metodo_ensayos = response.data
                 });
               },
+              
 
       updateCenter(latLng) {
 

@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(UnidadesMedidasTableSeeder::class);
         $this->call(ClientesTableSeeder::class);
         $this->call(ContactosTableSeeder::class);
+        $this->call(ServiciosTableSeeder::class);
 
 
        // factory('App\Clientes', 50)->create();

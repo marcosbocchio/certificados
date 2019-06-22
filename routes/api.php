@@ -24,6 +24,7 @@ Route::resource('provincias', 'ProvinciasController');
 Route::resource('localidades', 'LocalidadesController');
 Route::resource('contactos', 'ContactosController');
 Route::resource('servicios', 'ServiciosController');
+Route::resource('metodo_ensayos', 'MetodoEnsayosController');
 
 
 
