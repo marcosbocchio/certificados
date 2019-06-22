@@ -25,6 +25,9 @@ Route::resource('localidades', 'LocalidadesController');
 Route::resource('contactos', 'ContactosController');
 Route::resource('servicios', 'ServiciosController');
 Route::resource('metodo_ensayos', 'MetodoEnsayosController');
+Route::resource('norma_ensayos', 'NormaEnsayosController');
+Route::resource('norma_evaluaciones', 'NormaEvaluacionesController');
+Route::resource('certificados', 'CertificadosController');
 
 
 

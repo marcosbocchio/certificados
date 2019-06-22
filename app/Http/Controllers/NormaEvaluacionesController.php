@@ -3,17 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Repositories\Certificados\CertificadosRepository;
-use App\Certificados;
+use App\Repositories\NormaEvaluaciones\NormaEvaluacionesRepository;
+use App\NormaEvaluaciones;
 use App\User;
 
-class CertificadosController extends Controller
+class NormaEvaluacionesController extends Controller
 {
-    Protected $certificado;
+    Protected $normaEvaluacion;
 
-    public function __construct(CertificadosRepository $certificadoRepository)
+    public function __construct(NormaEvaluacionesRepository $normaEvaluacionesRepository)
     {
-      $this->certificado = $certificadoRepository;
+      $this->normaEvaluacion = $normaEvaluacionesRepository;
     }
     /**
      * Display a listing of the resource.
@@ -22,9 +22,7 @@ class CertificadosController extends Controller
      */
     public function index()
     {
-        $user = auth()->user()->name;
-        return view('certificados.index', compact('user'));
-        
+        return  $this->normaEvaluacion->getAll();
     }
 
     /**
@@ -45,7 +43,7 @@ class CertificadosController extends Controller
      */
     public function store(Request $request)
     {
-        dd('entro aca');
+        //
     }
 
     /**

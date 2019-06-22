@@ -1,13 +1,13 @@
 <template>
 <div class="col-md-12">
-  <div class="box box-primary">
-    <form role="form">
+    <form @submit.prevent="submit"  method="post">
+      <div class="box box-primary">
       <div class="box-body">
 
         <div class="col-md-6">
             <div class="form-group">
               <label for="proyecto">Proyecto</label>
-              <input type="text" class="form-control" id="proyecto" placeholder="">
+              <input type="text" v-model="proyecto" class="form-control" id="proyecto" placeholder="">
             </div>
             <div class="form-group">
                   <label>Cliente</label>
@@ -104,22 +104,22 @@
         <div class="col-md-3">
           <div class="form-group">
             <label for="latitud">Latitud</label>
-             <input type="number" 
+             <input type="text" 
              class="form-control" id="latitud"
              v-model.number.lazy="localidad.lat"
              @change="sync"
-             step="0.00001"
+             
              />
           </div>
         </div>
         <div class="col-md-3">
           <div class="form-group">
             <label for="longitud">Longitud</label>
-             <input type="number" 
+             <input type="text" 
              class="form-control" id="longitud"
              v-model.number.lazy="localidad.lon"
              @change="sync"
-             step="0.00001"
+           
              />
           </div>
         </div>
@@ -142,10 +142,19 @@
         </div>
         <div class="col-md-12">
           <div class="form-group" v-for="(inputsServicio,k) in inputsServicios" :key="k">
-              <v-select label="descripcion" :options="servicios" ></v-select>
+              <label for="servicio">Servicio</label>
+              <v-select v-model="inputsServicio.servicios" label="descripcion" :options="servicios" ></v-select>
                 <div class="form-group">
-                  <label for="metodo_de_ensayo">Metodo de ensayo</label>
-                      <v-select label="descripcion" :options="metodo_ensayos"></v-select>
+                  <label for="metodo_ensayo">Metodo de ensayo</label>
+                  <v-select v-model="inputsServicio.metodo_ensayos" label="descripcion" :options="metodo_ensayos"></v-select>
+                </div>
+                <div class="form-group">
+                  <label for="norma_ensayo">Norma ensayo</label>
+                  <v-select  v-model="inputsServicio.norma_ensayos" label="descripcion" :options="norma_ensayos"></v-select>
+                </div>
+                <div class="form-group">
+                  <label for="norma_evaluaciones">Norma evaluación</label>
+                  <v-select  v-model="inputsServicio.norma_evaluaciones" label="descripcion" :options="norma_evaluaciones"></v-select>
                 </div>   
               <span>
                   <i class="fa fa-minus-circle" @click="removeServicio(k)" v-show="k || ( !k && inputsServicios.length > 1)"></i>
@@ -153,10 +162,12 @@
               </span>
           </div>
         </div>
+          <button type="submit" class="btn btn-primary">Guardar</button>      </div>
       </div>
-      </form>
     
-    </div>
+    </form>
+    
+    
   </div>
 
 </template>
@@ -182,6 +193,7 @@ export default {
             pitch: 0,
             heading: 0,
           },
+          proyecto:'',
           clientes:[],
           cliente:'',
           contactos:[],
@@ -198,11 +210,14 @@ export default {
           servicios:[],
           inputsServicios: [
             {
-                servicios:[]
+                servicios:[],
+                metodo_ensayos :[]
             },
         ],
            metodo_ensayos :[],
-        
+           norma_ensayos :[],
+           norma_evaluaciones :[],
+          fields: {},
           
           }
     },
@@ -212,6 +227,8 @@ export default {
         this.getProvincias();
         this.getServicios();
         this.getMetodosEnsayos();
+        this.getNormaEnsayos();
+        this.getNormaEvaluaciones();
         this.sync();
       },
     computed :{
@@ -271,6 +288,22 @@ export default {
                 this.metodo_ensayos = response.data
                 });
               },
+        getNormaEnsayos: function(){
+             
+                axios.defaults.baseURL = this.url ;
+                var urlRegistros = 'norma_ensayos';    
+                axios.get(urlRegistros).then(response =>{
+                this.norma_ensayos = response.data
+                });
+              },
+        getNormaEvaluaciones: function(){
+             
+                axios.defaults.baseURL = this.url ;
+                var urlRegistros = 'norma_evaluaciones';    
+                axios.get(urlRegistros).then(response =>{
+                this.norma_evaluaciones = response.data
+                });
+              },
               
 
       updateCenter(latLng) {
@@ -300,8 +333,27 @@ export default {
         },
       removeServicio(index) {
             this.inputsServicios.splice(index, 1);
+        },
+
+      submit() {
+
+      this.errors =[];
+      var urlRegistros = 'certificados';
+      axios.post(urlRegistros,{
+
+         'cliente' : this.cliente.id,
+        
+
+      }
+      
+      ).then(response => {
+        alert('Message sent!');
+      }).catch(error => {
+        if (error.response.status === 422) {
+          this.errors = error.response.data.errors || {};
         }
-    
+      });
+    },
     }
 }
 </script>

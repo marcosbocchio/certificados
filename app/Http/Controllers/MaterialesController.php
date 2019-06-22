@@ -7,6 +7,7 @@ use App\Repositories\Materiales\MaterialesRepository;
 use App\Materiales;
 use App\User;
 
+
 class MaterialesController extends Controller
 {
     Protected $materiales;
