@@ -1,7 +1,7 @@
 <template>
-<div class="col-md-12">
-    <form @submit.prevent="submit"  method="post">
-      <div class="box box-primary">
+ <div class="col-md-12">
+  <form @submit.prevent="submit"  method="post">
+    <div class="box box-primary">
       <div class="box-body">
 
         <div class="col-md-6">
@@ -17,7 +17,7 @@
           <!-- /.box-body -->
         </div>
         
-        <div class="col-md-4">
+        <div class="col-md-3">
           <div class="form-group">
             <label for="fecha">Fecha</label>
               <div class="input-group date">
@@ -25,11 +25,10 @@
                     <i class="fa fa-calendar"></i>
                   </div>
                      <Datepicker v-model="fecha" :input-class="'form-control pull-right'" :language="es"></Datepicker>   
-              
               </div>
           </div>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
           <div class="bootstrap-timepicker">
                 <div class="form-group">
                   <label>Hora</label>
@@ -39,15 +38,10 @@
                       <i class="fa fa-clock-o"></i>
                     </div>
                     <timeselector v-model="hora" :pickerStyle="form-control"></timeselector>
-                  
                   </div>
-                  <!-- /.input group -->
                 </div>
-                <!-- /.form group -->
+            </div>
           </div>
-         
-        </div>
-        
         <div class="col-md-3">
           <div class="form-group">
             <label for="ot">OT Nº</label>
@@ -64,6 +58,17 @@
           <div class="form-group">
             <label for="lugar_ensayo">Lugar de ensayo</label>
             <input type="text" class="form-control" id="lugar_ensayo" placeholder="">
+          </div>
+        </div>
+         <div class="col-md-3">
+          <div class="form-group">
+            <label for="fecha">Fecha estima de ensayo</label>
+              <div class="input-group date">
+                  <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                     <Datepicker v-model="fecha_ensayo" :input-class="'form-control pull-right'" :language="es"></Datepicker>   
+              </div>
           </div>
         </div>
         <div class="col-md-6">
@@ -90,91 +95,85 @@
             <v-select v-model="localidad" label="localidad" :options="localidades" @input="sync()"></v-select>   
           </div>
         </div>
-        <div class="col-md-6">
-          <div class="form-group">
-              <label for="search">Buscar Ubicación</label>
-             <div class="input-group">
-                <div class="input-group-addon">
-                  <i class="fa fa-search"></i>
-                </div>
-                <gmap-autocomplete class="form-control"
-                 @place_changed="setPlace"
-                 :select-first-on-enter="true">
-                  >
-              </gmap-autocomplete>
-               
-             </div>
+         <div class="col-md-6">
+            <div class="form-group">
+                <label for="search">Buscar Ubicación</label>
+              <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="fa fa-search"></i>
+                  </div>
+                  <gmap-autocomplete class="form-control"
+                  @place_changed="setPlace"
+                  :select-first-on-enter="true">
+                    >
+                </gmap-autocomplete>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="col-md-3">
-          <div class="form-group">
-            <label for="latitud">Latitud</label>
-             <input type="text" 
-             class="form-control" id="latitud"
-             v-model.number.lazy="localidad.lat"
-             @change="sync"
-             
-             />
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="form-group">
-            <label for="longitud">Longitud</label>
-             <input type="text" 
-             class="form-control" id="longitud"
-             v-model.number.lazy="localidad.lon"
-             @change="sync"
-           
-             />
-          </div>
-        </div>
-        <div class="col-md-12">
-            <gmap-map :center="mapCenter" :zoom="12"
-              ref="map"
-              @center_changed="updateCenter"
-              @idle="sync"
-              class="map-container">
-              <GmapMarker
-                :key="index"
-                v-for="(m, index) in markers"
-                :position="m.position"
-                :clickable="true"
-                :draggable="true"
-                @click="center=m.position"
-                @drag="updateCenter($event.latLng)"
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="latitud">Latitud</label>
+              <input type="text" 
+              class="form-control" id="latitud"
+              v-model.number.lazy="localidad.lat"
+              @change="sync"
               />
-          </gmap-map>
-        </div>
-        <div class="col-md-12">
-          <div class="form-group" v-for="(inputsServicio,k) in inputsServicios" :key="k">
-              <label for="servicio">Servicio</label>
-              <v-select v-model="inputsServicio.servicios" label="descripcion" :options="servicios" ></v-select>
-                <div class="form-group">
-                  <label for="metodo_ensayo">Metodo de ensayo</label>
-                  <v-select v-model="inputsServicio.metodo_ensayos" label="descripcion" :options="metodo_ensayos"></v-select>
-                </div>
-                <div class="form-group">
-                  <label for="norma_ensayo">Norma ensayo</label>
-                  <v-select  v-model="inputsServicio.norma_ensayos" label="descripcion" :options="norma_ensayos"></v-select>
-                </div>
-                <div class="form-group">
-                  <label for="norma_evaluaciones">Norma evaluación</label>
-                  <v-select  v-model="inputsServicio.norma_evaluaciones" label="descripcion" :options="norma_evaluaciones"></v-select>
-                </div>   
-              <span>
-                  <i class="fa fa-minus-circle" @click="removeServicio(k)" v-show="k || ( !k && inputsServicios.length > 1)"></i>
-                  <i class="fa fa-plus-circle" @click="addServicio(k)" v-show="k == inputsServicios.length-1"></i>
-              </span>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="longitud">Longitud</label>
+              <input type="text" 
+              class="form-control" id="longitud"
+              v-model.number.lazy="localidad.lon"
+              @change="sync"
+            
+              />
+            </div>
+          </div>
+          <div class="col-md-12">
+            <gmap-map :center="mapCenter" :zoom="12"
+                ref="map"
+                @center_changed="updateCenter"
+                @idle="sync"
+                class="map-container">
+                <GmapMarker
+                  :key="index"
+                  v-for="(m, index) in markers"
+                  :position="m.position"
+                  :clickable="true"
+                  :draggable="true"
+                  @click="center=m.position"
+                  @drag="updateCenter($event.latLng)"
+                />
+            </gmap-map>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group" v-for="(inputsServicio,k) in inputsServicios" :key="k">
+                <label for="servicio">Servicio</label>
+                <v-select v-model="inputsServicio.servicios" label="descripcion" :options="servicios" ></v-select>
+                  <div class="form-group">
+                    <label for="metodo_ensayo">Metodo de ensayo</label>
+                    <v-select v-model="inputsServicio.metodo_ensayos" label="descripcion" :options="metodo_ensayos"></v-select>
+                  </div>
+                  <div class="form-group">
+                    <label for="norma_ensayo">Norma ensayo</label>
+                    <v-select  v-model="inputsServicio.norma_ensayos" label="descripcion" :options="norma_ensayos"></v-select>
+                  </div>
+                  <div class="form-group">
+                    <label for="norma_evaluaciones">Norma evaluación</label>
+                    <v-select  v-model="inputsServicio.norma_evaluaciones" label="descripcion" :options="norma_evaluaciones"></v-select>
+                  </div>   
+                <span>
+                    <i class="fa fa-minus-circle" @click="removeServicio(k)" v-show="k || ( !k && inputsServicios.length > 1)"></i>
+                    <i class="fa fa-plus-circle" @click="addServicio(k)" v-show="k == inputsServicios.length-1"></i>
+                </span>
+            </div>
           </div>
         </div>
-          </div>
       </div>
-    
     </form>
-    
-    
   </div>
-
 </template>
 
 <script>
@@ -213,6 +212,7 @@ export default {
           },
           proyecto:'',
           fecha:'',
+          fecha_ensayo:'',
           hora: null,
           clientes:[],
           cliente:'',

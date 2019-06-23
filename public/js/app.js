@@ -2401,7 +2401,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 
 
 
@@ -2431,6 +2430,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       },
       proyecto: '',
       fecha: '',
+      fecha_ensayo: '',
       hora: null,
       clientes: [],
       cliente: '',
@@ -34434,7 +34434,7 @@ var render = function() {
               )
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-md-4" }, [
+            _c("div", { staticClass: "col-md-3" }, [
               _c("div", { staticClass: "form-group" }, [
                 _c("label", { attrs: { for: "fecha" } }, [_vm._v("Fecha")]),
                 _vm._v(" "),
@@ -34463,7 +34463,7 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-md-2" }, [
+            _c("div", { staticClass: "col-md-3" }, [
               _c("div", { staticClass: "bootstrap-timepicker" }, [
                 _c("div", { staticClass: "form-group" }, [
                   _c("label", [_vm._v("Hora")]),
@@ -34496,6 +34496,37 @@ var render = function() {
             _vm._m(3),
             _vm._v(" "),
             _vm._m(4),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-3" }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "fecha" } }, [
+                  _vm._v("Fecha estima de ensayo")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "input-group date" },
+                  [
+                    _vm._m(5),
+                    _vm._v(" "),
+                    _c("Datepicker", {
+                      attrs: {
+                        "input-class": "form-control pull-right",
+                        language: _vm.es
+                      },
+                      model: {
+                        value: _vm.fecha_ensayo,
+                        callback: function($$v) {
+                          _vm.fecha_ensayo = $$v
+                        },
+                        expression: "fecha_ensayo"
+                      }
+                    })
+                  ],
+                  1
+                )
+              ])
+            ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-md-6" }, [
               _c(
@@ -34613,7 +34644,7 @@ var render = function() {
                   "div",
                   { staticClass: "input-group" },
                   [
-                    _vm._m(5),
+                    _vm._m(6),
                     _vm._v(" "),
                     _c(
                       "gmap-autocomplete",
@@ -34622,7 +34653,7 @@ var render = function() {
                         attrs: { "select-first-on-enter": true },
                         on: { place_changed: _vm.setPlace }
                       },
-                      [_vm._v("\n                  >\n              ")]
+                      [_vm._v("\n                   >\n               ")]
                     )
                   ],
                   1
@@ -34952,6 +34983,14 @@ var staticRenderFns = [
           attrs: { type: "text", id: "lugar_ensayo", placeholder: "" }
         })
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-addon" }, [
+      _c("i", { staticClass: "fa fa-calendar" })
     ])
   },
   function() {
