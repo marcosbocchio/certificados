@@ -37,7 +37,7 @@
                     <div class="input-group-addon">
                       <i class="fa fa-clock-o"></i>
                     </div>
-                    <timeselector v-model="hora" :pickerStyle="form-control"></timeselector>
+                    <timeselector v-model="hora"></timeselector>
                   </div>
                 </div>
             </div>
@@ -45,13 +45,13 @@
         <div class="col-md-3">
           <div class="form-group">
             <label for="ot">OT Nº</label>
-            <input type="text" class="form-control" id="ot" placeholder="">
+            <input v-model="ot" type="text" class="form-control" id="ot" placeholder="">
           </div>
         </div>
         <div class="col-md-3">
           <div class="form-group">
             <label for="fts">FTS Nº</label>
-            <input type="text" class="form-control" id="fts" placeholder="">
+            <input v-model="fts" type="text" class="form-control" id="fts" placeholder="">
           </div>
         </div>
         <div class="col-md-6">
@@ -81,7 +81,7 @@
           <div class="form-group">
                   <label>Contacto 2</label>
                   <v-select v-model="contacto2" name="contacto_2" label="nombre" :options="contactos" ></v-select>   
-            </div>
+          </div>
         </div>
         <div class="col-md-6">
           <div class="form-group">
@@ -164,12 +164,17 @@
                     <label for="norma_evaluaciones">Norma evaluación</label>
                     <v-select  v-model="inputsServicio.norma_evaluaciones" label="descripcion" :options="norma_evaluaciones"></v-select>
                   </div>   
+                  <div class="form-group">
+                    <label for="cantidad_placas">Cantidad de placas</label>
+                     <input v-model="inputsServicio.cantidad_placas" type="text" class="form-control" id="cantidad_placas" placeholder="">
+                  </div>
                 <span>
                     <i class="fa fa-minus-circle" @click="removeServicio(k)" v-show="k || ( !k && inputsServicios.length > 1)"></i>
                     <i class="fa fa-plus-circle" @click="addServicio(k)" v-show="k == inputsServicios.length-1"></i>
                 </span>
             </div>
           </div>
+          <button class="btn btn-primary" type="submit" @click.prevent="submit">Guardar</button>
         </div>
       </div>
     </form>
@@ -216,6 +221,8 @@ export default {
           hora: null,
           clientes:[],
           cliente:'',
+          ot:'',
+          fts:'',
           contactos:[],
           contacto1:'',
           contacto2:'',
@@ -231,7 +238,10 @@ export default {
           inputsServicios: [
             {
                 servicios:[],
-                metodo_ensayos :[]
+                metodo_ensayos :[],
+                norma_ensayos :[],
+                norma_evaluaciones:[],
+                cantidad_placas:[],
             },
         ],
            metodo_ensayos :[],
@@ -371,10 +381,20 @@ export default {
       var urlRegistros = 'certificados';
       axios.post(urlRegistros,{
 
-         'cliente' : this.cliente.id,
-         'proyecto': this.proyecto,
-         'fecha'   : this.fecha,
-         'hora'    : this.hora,
+         'cliente'       : this.cliente.id,
+         'proyecto'      : this.proyecto,
+         'fecha'         : this.fecha,
+         'hora'          : this.hora,
+         'ot'            : this.ot,
+         'fts'           : this.fts,
+         'contacto1'     : this.contacto1.id,
+         'contacto2'     : this.contacto2.id,
+         'provincia'     : this.provincia.id,
+         'localidad'     : this.localidad.id,
+         'fecha_ensayo'  : this.fecha_ensayo,
+         'latitud'       : this.localidad.lat,
+         'longitud'      : this.localidad.lon,
+         'servicios'     : this.inputsServicios
 
         
 
@@ -407,6 +427,12 @@ export default {
     font-size: 14px;
     background-color: #fff;
     border: 1px solid #ccc;
+  }
+
+ .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+
+    background-color: #fff;
+  
   }
 
 </style>

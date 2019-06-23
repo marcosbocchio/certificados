@@ -2401,6 +2401,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -2434,6 +2439,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       hora: null,
       clientes: [],
       cliente: '',
+      ot: '',
+      fts: '',
       contactos: [],
       contacto1: '',
       contacto2: '',
@@ -2447,7 +2454,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       servicios: [],
       inputsServicios: [{
         servicios: [],
-        metodo_ensayos: []
+        metodo_ensayos: [],
+        norma_ensayos: [],
+        norma_evaluaciones: [],
+        cantidad_placas: []
       }],
       metodo_ensayos: [],
       norma_ensayos: [],
@@ -2581,7 +2591,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         'cliente': this.cliente.id,
         'proyecto': this.proyecto,
         'fecha': this.fecha,
-        'hora': this.hora
+        'hora': this.hora,
+        'ot': this.ot,
+        'fts': this.fts,
+        'contacto1': this.contacto1.id,
+        'contacto2': this.contacto2.id,
+        'provincia': this.provincia.id,
+        'localidad': this.localidad.id,
+        'fecha_ensayo': this.fecha_ensayo,
+        'latitud': this.localidad.lat,
+        'longitud': this.localidad.lon,
+        'servicios': this.inputsServicios
       }).then(function (response) {
         _this9.response = response;
         alert('Message sent!');
@@ -2665,7 +2685,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.map-container {\n    width: 100%;\n    height: 500px;\n    display: inline-block;\n}\n.vtimeselector__input {\n    width: 100%;\n    box-sizing: border-box;\n    padding: 6px 12px;\n    height: 34px;\n    font-size: 14px;\n    background-color: #fff;\n    border: 1px solid #ccc;\n}\n\n", ""]);
+exports.push([module.i, "\n.map-container {\n    width: 100%;\n    height: 500px;\n    display: inline-block;\n}\n.vtimeselector__input {\n    width: 100%;\n    box-sizing: border-box;\n    padding: 6px 12px;\n    height: 34px;\n    font-size: 14px;\n    background-color: #fff;\n    border: 1px solid #ccc;\n}\n.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {\n\n    background-color: #fff;\n}\n\n", ""]);
 
 // exports
 
@@ -34475,7 +34495,6 @@ var render = function() {
                       _vm._m(1),
                       _vm._v(" "),
                       _c("timeselector", {
-                        attrs: { pickerStyle: _vm.form - _vm.control },
                         model: {
                           value: _vm.hora,
                           callback: function($$v) {
@@ -34491,11 +34510,63 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
+            _c("div", { staticClass: "col-md-3" }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "ot" } }, [_vm._v("OT Nº")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.ot,
+                      expression: "ot"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text", id: "ot", placeholder: "" },
+                  domProps: { value: _vm.ot },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.ot = $event.target.value
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-3" }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "fts" } }, [_vm._v("FTS Nº")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.fts,
+                      expression: "fts"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text", id: "fts", placeholder: "" },
+                  domProps: { value: _vm.fts },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.fts = $event.target.value
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
             _vm._m(2),
-            _vm._v(" "),
-            _vm._m(3),
-            _vm._v(" "),
-            _vm._m(4),
             _vm._v(" "),
             _c("div", { staticClass: "col-md-3" }, [
               _c("div", { staticClass: "form-group" }, [
@@ -34507,7 +34578,7 @@ var render = function() {
                   "div",
                   { staticClass: "input-group date" },
                   [
-                    _vm._m(5),
+                    _vm._m(3),
                     _vm._v(" "),
                     _c("Datepicker", {
                       attrs: {
@@ -34644,7 +34715,7 @@ var render = function() {
                   "div",
                   { staticClass: "input-group" },
                   [
-                    _vm._m(6),
+                    _vm._m(4),
                     _vm._v(" "),
                     _c(
                       "gmap-autocomplete",
@@ -34873,6 +34944,42 @@ var render = function() {
                       1
                     ),
                     _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "cantidad_placas" } }, [
+                        _vm._v("Cantidad de placas")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: inputsServicio.cantidad_placas,
+                            expression: "inputsServicio.cantidad_placas"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          id: "cantidad_placas",
+                          placeholder: ""
+                        },
+                        domProps: { value: inputsServicio.cantidad_placas },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              inputsServicio,
+                              "cantidad_placas",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
                     _c("span", [
                       _c("i", {
                         directives: [
@@ -34914,6 +35021,21 @@ var render = function() {
                 )
               }),
               0
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary",
+                attrs: { type: "submit" },
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    return _vm.submit($event)
+                  }
+                }
+              },
+              [_vm._v("Guardar")]
             )
           ])
         ])
@@ -34936,36 +35058,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "input-group-addon" }, [
       _c("i", { staticClass: "fa fa-clock-o" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-3" }, [
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", { attrs: { for: "ot" } }, [_vm._v("OT Nº")]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control",
-          attrs: { type: "text", id: "ot", placeholder: "" }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-3" }, [
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", { attrs: { for: "fts" } }, [_vm._v("FTS Nº")]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control",
-          attrs: { type: "text", id: "fts", placeholder: "" }
-        })
-      ])
     ])
   },
   function() {
