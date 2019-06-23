@@ -45,7 +45,7 @@ class CertificadosController extends Controller
      */
     public function store(Request $request)
     {
-        dd('entro aca');
+        return $request;
     }
 
     /**

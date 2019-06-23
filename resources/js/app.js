@@ -42,7 +42,8 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 Vue.component('pagination', require('laravel-vue-pagination'));
-Vue.component('v-select', vSelect)
+Vue.component('v-select', vSelect);
+
 
 Vue.component('abm-maestro', require('./components/abm-maestro/abm-maestro.vue').default);
 Vue.component('table-users', require('./components/abm-maestro/usuarios/table-users.vue').default);
@@ -93,7 +94,6 @@ Vue.use(VueGoogleMaps, {
 import Vuex from 'vuex' 
 import vSelect from 'vue-select'
 
-
 const store = new Vuex.Store({
 state: {
         url:process.env.NODE_ENV == 'production' ? 
@@ -104,8 +104,11 @@ state: {
 })
 
 export const eventNewRegistro = new Vue();
+
+
 const app = new Vue({
     el: '#app',   
     store,
-
+    
+    
 });

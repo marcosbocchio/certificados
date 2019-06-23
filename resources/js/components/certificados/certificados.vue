@@ -16,16 +16,20 @@
 
           <!-- /.box-body -->
         </div>
-        <div class="col-md-6">
+        
+        <div class="col-md-4">
           <div class="form-group">
             <label for="fecha">Fecha</label>
               <div class="input-group date">
                   <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                   </div>
-                  <input type="text" class="form-control pull-right" id="datepicker">
+                     <Datepicker v-model="fecha" :input-class="'form-control pull-right'" :language="es"></Datepicker>   
+              
               </div>
           </div>
+        </div>
+        <div class="col-md-2">
           <div class="bootstrap-timepicker">
                 <div class="form-group">
                   <label>Hora</label>
@@ -34,7 +38,8 @@
                     <div class="input-group-addon">
                       <i class="fa fa-clock-o"></i>
                     </div>
-                    <input type="text" class="form-control timepicker">
+                    <timeselector v-model="hora" :pickerStyle="form-control"></timeselector>
+                  
                   </div>
                   <!-- /.input group -->
                 </div>
@@ -162,7 +167,7 @@
               </span>
           </div>
         </div>
-          <button type="submit" class="btn btn-primary">Guardar</button>      </div>
+          </div>
       </div>
     
     </form>
@@ -175,10 +180,23 @@
 <script>
 
 import {mapState} from 'vuex'
+import Datepicker from 'vuejs-datepicker';
+import {en, es} from 'vuejs-datepicker/dist/locale'
+import Timeselector from 'vue-timeselector';
+
+
 
 export default {
+
+  components: {
+      Datepicker,
+      Timeselector 
+  },
     
     data() { return {
+         
+         en: en,
+         es: es,
          markers: [{
             position: {
               lat: '',
@@ -194,6 +212,8 @@ export default {
             heading: 0,
           },
           proyecto:'',
+          fecha:'',
+          hora: null,
           clientes:[],
           cliente:'',
           contactos:[],
@@ -217,7 +237,7 @@ export default {
            metodo_ensayos :[],
            norma_ensayos :[],
            norma_evaluaciones :[],
-          fields: {},
+           response: {},
           
           }
     },
@@ -231,6 +251,16 @@ export default {
         this.getNormaEvaluaciones();
         this.sync();
       },
+    mounted : function(){
+
+       $('#datepicker').datepicker({
+           autoclose: true
+        }),
+
+       $('.timepicker').timepicker({
+      showInputs: false
+    })
+    },
     computed :{
 
         ...mapState(['url'])
@@ -342,11 +372,16 @@ export default {
       axios.post(urlRegistros,{
 
          'cliente' : this.cliente.id,
+         'proyecto': this.proyecto,
+         'fecha'   : this.fecha,
+         'hora'    : this.hora,
+
         
 
       }
       
       ).then(response => {
+        this.response = response
         alert('Message sent!');
       }).catch(error => {
         if (error.response.status === 422) {
@@ -363,4 +398,15 @@ export default {
     height: 500px;
     display: inline-block;
   }
+
+ .vtimeselector__input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 6px 12px;
+    height: 34px;
+    font-size: 14px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+  }
+
 </style>

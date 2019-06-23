@@ -33,7 +33,7 @@
 
 
 
-
+/*
 
     //Date picker
     $('#datepicker').datepicker({
@@ -44,7 +44,7 @@
       showInputs: false
     })
    
-
+*/
     </script>
 
 @endsection
