@@ -20,9 +20,13 @@ class DatabaseSeeder extends Seeder
         $this->call(ClientesTableSeeder::class);
         $this->call(ContactosTableSeeder::class);
         $this->call(ServiciosTableSeeder::class);
+        $this->call(NormaEnsayosTableSeeder::class);
+        $this->call(NormaEvaluacionesTableSeeder::class);
 
 
-       // factory('App\Clientes', 50)->create();
+
+
+        factory('App\Clientes', 2500)->create();
 
 
     }

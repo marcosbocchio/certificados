@@ -2406,6 +2406,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2457,7 +2475,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         metodo_ensayos: [],
         norma_ensayos: [],
         norma_evaluaciones: [],
-        cantidad_placas: []
+        cantidad_placas: [],
+        cantidad_servicios: []
       }],
       metodo_ensayos: [],
       norma_ensayos: [],
@@ -34398,506 +34417,503 @@ var render = function() {
       },
       [
         _c("div", { staticClass: "box box-primary" }, [
-          _c("div", { staticClass: "box-body" }, [
-            _c("div", { staticClass: "col-md-6" }, [
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "proyecto" } }, [
-                  _vm._v("Proyecto")
-                ]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.proyecto,
-                      expression: "proyecto"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "text", id: "proyecto", placeholder: "" },
-                  domProps: { value: _vm.proyecto },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.proyecto = $event.target.value
-                    }
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "form-group" },
-                [
-                  _c("label", [_vm._v("Cliente")]),
+          _c(
+            "div",
+            { staticClass: "box-body" },
+            [
+              _c("div", { staticClass: "col-md-6" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "proyecto" } }, [
+                    _vm._v("Proyecto")
+                  ]),
                   _vm._v(" "),
-                  _c("v-select", {
-                    attrs: { label: "nombre_fantasia", options: _vm.clientes },
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.proyecto,
+                        expression: "proyecto"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", id: "proyecto", placeholder: "" },
+                    domProps: { value: _vm.proyecto },
                     on: {
                       input: function($event) {
-                        return _vm.getContactos()
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.proyecto = $event.target.value
                       }
-                    },
-                    model: {
-                      value: _vm.cliente,
-                      callback: function($$v) {
-                        _vm.cliente = $$v
-                      },
-                      expression: "cliente"
                     }
                   })
-                ],
-                1
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-3" }, [
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "fecha" } }, [_vm._v("Fecha")]),
+                ]),
                 _vm._v(" "),
                 _c(
                   "div",
-                  { staticClass: "input-group date" },
+                  { staticClass: "form-group" },
                   [
-                    _vm._m(0),
+                    _c("label", [_vm._v("Cliente")]),
                     _vm._v(" "),
-                    _c("Datepicker", {
+                    _c("v-select", {
                       attrs: {
-                        "input-class": "form-control pull-right",
-                        language: _vm.es
+                        label: "nombre_fantasia",
+                        options: _vm.clientes
+                      },
+                      on: {
+                        input: function($event) {
+                          return _vm.getContactos()
+                        }
                       },
                       model: {
-                        value: _vm.fecha,
+                        value: _vm.cliente,
                         callback: function($$v) {
-                          _vm.fecha = $$v
+                          _vm.cliente = $$v
                         },
-                        expression: "fecha"
+                        expression: "cliente"
                       }
                     })
                   ],
                   1
                 )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-3" }, [
-              _c("div", { staticClass: "bootstrap-timepicker" }, [
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-3" }, [
                 _c("div", { staticClass: "form-group" }, [
-                  _c("label", [_vm._v("Hora")]),
+                  _c("label", { attrs: { for: "fecha" } }, [_vm._v("Fecha")]),
                   _vm._v(" "),
                   _c(
                     "div",
-                    { staticClass: "input-group" },
+                    { staticClass: "input-group date" },
                     [
-                      _vm._m(1),
+                      _vm._m(0),
                       _vm._v(" "),
-                      _c("timeselector", {
+                      _c("Datepicker", {
+                        attrs: {
+                          "input-class": "form-control pull-right",
+                          language: _vm.es
+                        },
                         model: {
-                          value: _vm.hora,
+                          value: _vm.fecha,
                           callback: function($$v) {
-                            _vm.hora = $$v
+                            _vm.fecha = $$v
                           },
-                          expression: "hora"
+                          expression: "fecha"
                         }
                       })
                     ],
                     1
                   )
                 ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-3" }, [
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "ot" } }, [_vm._v("OT Nº")]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.ot,
-                      expression: "ot"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "text", id: "ot", placeholder: "" },
-                  domProps: { value: _vm.ot },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.ot = $event.target.value
-                    }
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-3" }, [
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "fts" } }, [_vm._v("FTS Nº")]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.fts,
-                      expression: "fts"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "text", id: "fts", placeholder: "" },
-                  domProps: { value: _vm.fts },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.fts = $event.target.value
-                    }
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _vm._m(2),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-3" }, [
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "fecha" } }, [
-                  _vm._v("Fecha estima de ensayo")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "input-group date" },
-                  [
-                    _vm._m(3),
-                    _vm._v(" "),
-                    _c("Datepicker", {
-                      attrs: {
-                        "input-class": "form-control pull-right",
-                        language: _vm.es
-                      },
-                      model: {
-                        value: _vm.fecha_ensayo,
-                        callback: function($$v) {
-                          _vm.fecha_ensayo = $$v
-                        },
-                        expression: "fecha_ensayo"
-                      }
-                    })
-                  ],
-                  1
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-6" }, [
-              _c(
-                "div",
-                { staticClass: "form-group" },
-                [
-                  _c("label", [_vm._v("Contacto 1")]),
-                  _vm._v(" "),
-                  _c("v-select", {
-                    attrs: {
-                      name: "contacto_1",
-                      label: "nombre",
-                      options: _vm.contactos
-                    },
-                    model: {
-                      value: _vm.contacto1,
-                      callback: function($$v) {
-                        _vm.contacto1 = $$v
-                      },
-                      expression: "contacto1"
-                    }
-                  })
-                ],
-                1
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-6" }, [
-              _c(
-                "div",
-                { staticClass: "form-group" },
-                [
-                  _c("label", [_vm._v("Contacto 2")]),
-                  _vm._v(" "),
-                  _c("v-select", {
-                    attrs: {
-                      name: "contacto_2",
-                      label: "nombre",
-                      options: _vm.contactos
-                    },
-                    model: {
-                      value: _vm.contacto2,
-                      callback: function($$v) {
-                        _vm.contacto2 = $$v
-                      },
-                      expression: "contacto2"
-                    }
-                  })
-                ],
-                1
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-6" }, [
-              _c(
-                "div",
-                { staticClass: "form-group" },
-                [
-                  _c("label", [_vm._v("Provincia")]),
-                  _vm._v(" "),
-                  _c("v-select", {
-                    attrs: { label: "provincia", options: _vm.provincias },
-                    on: {
-                      input: function($event) {
-                        return _vm.getLocalidades()
-                      }
-                    },
-                    model: {
-                      value: _vm.provincia,
-                      callback: function($$v) {
-                        _vm.provincia = $$v
-                      },
-                      expression: "provincia"
-                    }
-                  })
-                ],
-                1
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-6" }, [
-              _c(
-                "div",
-                { staticClass: "form-group" },
-                [
-                  _c("label", [_vm._v("Localidad")]),
-                  _vm._v(" "),
-                  _c("v-select", {
-                    attrs: { label: "localidad", options: _vm.localidades },
-                    on: {
-                      input: function($event) {
-                        return _vm.sync()
-                      }
-                    },
-                    model: {
-                      value: _vm.localidad,
-                      callback: function($$v) {
-                        _vm.localidad = $$v
-                      },
-                      expression: "localidad"
-                    }
-                  })
-                ],
-                1
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-6" }, [
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "search" } }, [
-                  _vm._v("Buscar Ubicación")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "input-group" },
-                  [
-                    _vm._m(4),
-                    _vm._v(" "),
-                    _c(
-                      "gmap-autocomplete",
-                      {
-                        staticClass: "form-control",
-                        attrs: { "select-first-on-enter": true },
-                        on: { place_changed: _vm.setPlace }
-                      },
-                      [_vm._v("\n                   >\n               ")]
-                    )
-                  ],
-                  1
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-3" }, [
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "latitud" } }, [_vm._v("Latitud")]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model.number.lazy",
-                      value: _vm.localidad.lat,
-                      expression: "localidad.lat",
-                      modifiers: { number: true, lazy: true }
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "text", id: "latitud" },
-                  domProps: { value: _vm.localidad.lat },
-                  on: {
-                    change: [
-                      function($event) {
-                        _vm.$set(
-                          _vm.localidad,
-                          "lat",
-                          _vm._n($event.target.value)
-                        )
-                      },
-                      _vm.sync
-                    ],
-                    blur: function($event) {
-                      return _vm.$forceUpdate()
-                    }
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-3" }, [
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "longitud" } }, [
-                  _vm._v("Longitud")
-                ]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model.number.lazy",
-                      value: _vm.localidad.lon,
-                      expression: "localidad.lon",
-                      modifiers: { number: true, lazy: true }
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "text", id: "longitud" },
-                  domProps: { value: _vm.localidad.lon },
-                  on: {
-                    change: [
-                      function($event) {
-                        _vm.$set(
-                          _vm.localidad,
-                          "lon",
-                          _vm._n($event.target.value)
-                        )
-                      },
-                      _vm.sync
-                    ],
-                    blur: function($event) {
-                      return _vm.$forceUpdate()
-                    }
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "col-md-12" },
-              [
-                _c(
-                  "gmap-map",
-                  {
-                    ref: "map",
-                    staticClass: "map-container",
-                    attrs: { center: _vm.mapCenter, zoom: 12 },
-                    on: { center_changed: _vm.updateCenter, idle: _vm.sync }
-                  },
-                  _vm._l(_vm.markers, function(m, index) {
-                    return _c("GmapMarker", {
-                      key: index,
-                      attrs: {
-                        position: m.position,
-                        clickable: true,
-                        draggable: true
-                      },
-                      on: {
-                        click: function($event) {
-                          _vm.center = m.position
-                        },
-                        drag: function($event) {
-                          return _vm.updateCenter($event.latLng)
-                        }
-                      }
-                    })
-                  }),
-                  1
-                )
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "col-md-12" },
-              _vm._l(_vm.inputsServicios, function(inputsServicio, k) {
-                return _c(
-                  "div",
-                  { key: k, staticClass: "form-group" },
-                  [
-                    _c("label", { attrs: { for: "servicio" } }, [
-                      _vm._v("Servicio")
-                    ]),
-                    _vm._v(" "),
-                    _c("v-select", {
-                      attrs: { label: "descripcion", options: _vm.servicios },
-                      model: {
-                        value: inputsServicio.servicios,
-                        callback: function($$v) {
-                          _vm.$set(inputsServicio, "servicios", $$v)
-                        },
-                        expression: "inputsServicio.servicios"
-                      }
-                    }),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-3" }, [
+                _c("div", { staticClass: "bootstrap-timepicker" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", [_vm._v("Hora")]),
                     _vm._v(" "),
                     _c(
                       "div",
-                      { staticClass: "form-group" },
+                      { staticClass: "input-group" },
                       [
-                        _c("label", { attrs: { for: "metodo_ensayo" } }, [
-                          _vm._v("Metodo de ensayo")
-                        ]),
+                        _vm._m(1),
                         _vm._v(" "),
-                        _c("v-select", {
-                          attrs: {
-                            label: "descripcion",
-                            options: _vm.metodo_ensayos
-                          },
+                        _c("timeselector", {
                           model: {
-                            value: inputsServicio.metodo_ensayos,
+                            value: _vm.hora,
                             callback: function($$v) {
-                              _vm.$set(inputsServicio, "metodo_ensayos", $$v)
+                              _vm.hora = $$v
                             },
-                            expression: "inputsServicio.metodo_ensayos"
+                            expression: "hora"
                           }
                         })
                       ],
                       1
-                    ),
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-3" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "ot" } }, [_vm._v("OT Nº")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.ot,
+                        expression: "ot"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", id: "ot", placeholder: "" },
+                    domProps: { value: _vm.ot },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.ot = $event.target.value
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-3" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "fts" } }, [_vm._v("FTS Nº")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.fts,
+                        expression: "fts"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", id: "fts", placeholder: "" },
+                    domProps: { value: _vm.fts },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.fts = $event.target.value
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _vm._m(2),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-3" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "fecha" } }, [
+                    _vm._v("Fecha estima de ensayo")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "input-group date" },
+                    [
+                      _vm._m(3),
+                      _vm._v(" "),
+                      _c("Datepicker", {
+                        attrs: {
+                          "input-class": "form-control pull-right",
+                          language: _vm.es
+                        },
+                        model: {
+                          value: _vm.fecha_ensayo,
+                          callback: function($$v) {
+                            _vm.fecha_ensayo = $$v
+                          },
+                          expression: "fecha_ensayo"
+                        }
+                      })
+                    ],
+                    1
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-6" }, [
+                _c(
+                  "div",
+                  { staticClass: "form-group" },
+                  [
+                    _c("label", [_vm._v("Contacto 1")]),
                     _vm._v(" "),
+                    _c("v-select", {
+                      attrs: {
+                        name: "contacto_1",
+                        label: "nombre",
+                        options: _vm.contactos
+                      },
+                      model: {
+                        value: _vm.contacto1,
+                        callback: function($$v) {
+                          _vm.contacto1 = $$v
+                        },
+                        expression: "contacto1"
+                      }
+                    })
+                  ],
+                  1
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-6" }, [
+                _c(
+                  "div",
+                  { staticClass: "form-group" },
+                  [
+                    _c("label", [_vm._v("Contacto 2")]),
+                    _vm._v(" "),
+                    _c("v-select", {
+                      attrs: {
+                        name: "contacto_2",
+                        label: "nombre",
+                        options: _vm.contactos
+                      },
+                      model: {
+                        value: _vm.contacto2,
+                        callback: function($$v) {
+                          _vm.contacto2 = $$v
+                        },
+                        expression: "contacto2"
+                      }
+                    })
+                  ],
+                  1
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-6" }, [
+                _c(
+                  "div",
+                  { staticClass: "form-group" },
+                  [
+                    _c("label", [_vm._v("Provincia")]),
+                    _vm._v(" "),
+                    _c("v-select", {
+                      attrs: { label: "provincia", options: _vm.provincias },
+                      on: {
+                        input: function($event) {
+                          return _vm.getLocalidades()
+                        }
+                      },
+                      model: {
+                        value: _vm.provincia,
+                        callback: function($$v) {
+                          _vm.provincia = $$v
+                        },
+                        expression: "provincia"
+                      }
+                    })
+                  ],
+                  1
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-6" }, [
+                _c(
+                  "div",
+                  { staticClass: "form-group" },
+                  [
+                    _c("label", [_vm._v("Localidad")]),
+                    _vm._v(" "),
+                    _c("v-select", {
+                      attrs: { label: "localidad", options: _vm.localidades },
+                      on: {
+                        input: function($event) {
+                          return _vm.sync()
+                        }
+                      },
+                      model: {
+                        value: _vm.localidad,
+                        callback: function($$v) {
+                          _vm.localidad = $$v
+                        },
+                        expression: "localidad"
+                      }
+                    })
+                  ],
+                  1
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-6" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "search" } }, [
+                    _vm._v("Buscar Ubicación")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "input-group" },
+                    [
+                      _vm._m(4),
+                      _vm._v(" "),
+                      _c(
+                        "gmap-autocomplete",
+                        {
+                          staticClass: "form-control",
+                          attrs: { "select-first-on-enter": true },
+                          on: { place_changed: _vm.setPlace }
+                        },
+                        [_vm._v("\n                   >\n               ")]
+                      )
+                    ],
+                    1
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-3" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "latitud" } }, [
+                    _vm._v("Latitud")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model.number.lazy",
+                        value: _vm.localidad.lat,
+                        expression: "localidad.lat",
+                        modifiers: { number: true, lazy: true }
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", id: "latitud" },
+                    domProps: { value: _vm.localidad.lat },
+                    on: {
+                      change: [
+                        function($event) {
+                          _vm.$set(
+                            _vm.localidad,
+                            "lat",
+                            _vm._n($event.target.value)
+                          )
+                        },
+                        _vm.sync
+                      ],
+                      blur: function($event) {
+                        return _vm.$forceUpdate()
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-3" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "longitud" } }, [
+                    _vm._v("Longitud")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model.number.lazy",
+                        value: _vm.localidad.lon,
+                        expression: "localidad.lon",
+                        modifiers: { number: true, lazy: true }
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", id: "longitud" },
+                    domProps: { value: _vm.localidad.lon },
+                    on: {
+                      change: [
+                        function($event) {
+                          _vm.$set(
+                            _vm.localidad,
+                            "lon",
+                            _vm._n($event.target.value)
+                          )
+                        },
+                        _vm.sync
+                      ],
+                      blur: function($event) {
+                        return _vm.$forceUpdate()
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "col-md-12" },
+                [
+                  _c(
+                    "gmap-map",
+                    {
+                      ref: "map",
+                      staticClass: "map-container",
+                      attrs: { center: _vm.mapCenter, zoom: 12 },
+                      on: { center_changed: _vm.updateCenter, idle: _vm.sync }
+                    },
+                    _vm._l(_vm.markers, function(m, index) {
+                      return _c("GmapMarker", {
+                        key: index,
+                        attrs: {
+                          position: m.position,
+                          clickable: true,
+                          draggable: true
+                        },
+                        on: {
+                          click: function($event) {
+                            _vm.center = m.position
+                          },
+                          drag: function($event) {
+                            return _vm.updateCenter($event.latLng)
+                          }
+                        }
+                      })
+                    }),
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-4" }, [_vm._v("Sevicios")]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-2" }, [_vm._v("Norma Ensayo")]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-2" }, [
+                _vm._v("Norma Evaluación")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-1" }, [
+                _vm._v("Cantidad Placas")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-1" }, [_vm._v("Cantidad Serv")]),
+              _vm._v(" "),
+              _vm._l(_vm.inputsServicios, function(inputsServicio, k) {
+                return _c("div", { key: k }, [
+                  _c("div", { staticClass: "col-md-4" }, [
                     _c(
                       "div",
                       { staticClass: "form-group" },
                       [
-                        _c("label", { attrs: { for: "norma_ensayo" } }, [
-                          _vm._v("Norma ensayo")
-                        ]),
-                        _vm._v(" "),
+                        _c("v-select", {
+                          attrs: {
+                            label: "descripcion",
+                            options: _vm.servicios,
+                            id: "servicios"
+                          },
+                          model: {
+                            value: inputsServicio.servicios,
+                            callback: function($$v) {
+                              _vm.$set(inputsServicio, "servicios", $$v)
+                            },
+                            expression: "inputsServicio.servicios"
+                          }
+                        })
+                      ],
+                      1
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-2" }, [
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
                         _c("v-select", {
                           attrs: {
                             label: "descripcion",
@@ -34913,16 +34929,14 @@ var render = function() {
                         })
                       ],
                       1
-                    ),
-                    _vm._v(" "),
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-2" }, [
                     _c(
                       "div",
                       { staticClass: "form-group" },
                       [
-                        _c("label", { attrs: { for: "norma_evaluaciones" } }, [
-                          _vm._v("Norma evaluación")
-                        ]),
-                        _vm._v(" "),
                         _c("v-select", {
                           attrs: {
                             label: "descripcion",
@@ -34942,13 +34956,11 @@ var render = function() {
                         })
                       ],
                       1
-                    ),
-                    _vm._v(" "),
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-1" }, [
                     _c("div", { staticClass: "form-group" }, [
-                      _c("label", { attrs: { for: "cantidad_placas" } }, [
-                        _vm._v("Cantidad de placas")
-                      ]),
-                      _vm._v(" "),
                       _c("input", {
                         directives: [
                           {
@@ -34978,8 +34990,44 @@ var render = function() {
                           }
                         }
                       })
-                    ]),
-                    _vm._v(" "),
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-1" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: inputsServicio.cantidad_servicios,
+                            expression: "inputsServicio.cantidad_servicios"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          id: "cantidad_servicios",
+                          placeholder: ""
+                        },
+                        domProps: { value: inputsServicio.cantidad_servicios },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              inputsServicio,
+                              "cantidad_servicios",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-1" }, [
                     _c("span", [
                       _c("i", {
                         directives: [
@@ -35016,29 +35064,30 @@ var render = function() {
                         }
                       })
                     ])
-                  ],
-                  1
-                )
-              }),
-              0
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary",
-                attrs: { type: "submit" },
-                on: {
-                  click: function($event) {
-                    $event.preventDefault()
-                    return _vm.submit($event)
-                  }
-                }
-              },
-              [_vm._v("Guardar")]
-            )
-          ])
-        ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-1" })
+                ])
+              })
+            ],
+            2
+          )
+        ]),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-primary",
+            attrs: { type: "submit" },
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                return _vm.submit($event)
+              }
+            }
+          },
+          [_vm._v("Guardar")]
+        )
       ]
     )
   ])

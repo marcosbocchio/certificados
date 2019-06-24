@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Metodo_ensayos;
+use App\MetodoEnsayos;
 
 class MetodoEnsayoTableSeeder extends Seeder
 {
@@ -12,12 +12,12 @@ class MetodoEnsayoTableSeeder extends Seeder
      */
     public function run()
     {
-        Metodo_ensayos::create([
+        MetodoEnsayos::create([
             'metodo'            =>'RI',
             'descripcion'       =>'Descripción metodo de ensayo RI',          
         ]);
 
-        Metodo_ensayos::create([
+        MetodoEnsayos::create([
             'metodo'            =>'EA',
             'descripcion'       =>'Descripción metodo de ensayo EA',          
         ]);

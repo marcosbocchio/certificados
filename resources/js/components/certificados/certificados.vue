@@ -148,35 +148,53 @@
                 />
             </gmap-map>
           </div>
-          <div class="col-md-12">
-            <div class="form-group" v-for="(inputsServicio,k) in inputsServicios" :key="k">
-                <label for="servicio">Servicio</label>
-                <v-select v-model="inputsServicio.servicios" label="descripcion" :options="servicios" ></v-select>
+            <div class="col-md-4">Sevicios</div>
+            <div class="col-md-2">Norma Ensayo</div>
+            <div class="col-md-2">Norma Evaluación</div>
+            <div class="col-md-1">Cantidad Placas</div>
+            <div class="col-md-1">Cantidad Serv</div>
+
+            <div v-for="(inputsServicio,k) in inputsServicios" :key="k">
+             
+                <div class="col-md-4">
                   <div class="form-group">
-                    <label for="metodo_ensayo">Metodo de ensayo</label>
-                    <v-select v-model="inputsServicio.metodo_ensayos" label="descripcion" :options="metodo_ensayos"></v-select>
-                  </div>
-                  <div class="form-group">
-                    <label for="norma_ensayo">Norma ensayo</label>
+                        <v-select v-model="inputsServicio.servicios" label="descripcion" :options="servicios" id="servicios"></v-select>
+                  </div>  
+                </div>  
+                <div class="col-md-2">
+                  <div class="form-group">                 
                     <v-select  v-model="inputsServicio.norma_ensayos" label="descripcion" :options="norma_ensayos"></v-select>
                   </div>
-                  <div class="form-group">
-                    <label for="norma_evaluaciones">Norma evaluación</label>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">                    
                     <v-select  v-model="inputsServicio.norma_evaluaciones" label="descripcion" :options="norma_evaluaciones"></v-select>
                   </div>   
-                  <div class="form-group">
-                    <label for="cantidad_placas">Cantidad de placas</label>
+                </div> 
+                <div class="col-md-1">
+                  <div class="form-group">                  
                      <input v-model="inputsServicio.cantidad_placas" type="text" class="form-control" id="cantidad_placas" placeholder="">
                   </div>
-                <span>
-                    <i class="fa fa-minus-circle" @click="removeServicio(k)" v-show="k || ( !k && inputsServicios.length > 1)"></i>
-                    <i class="fa fa-plus-circle" @click="addServicio(k)" v-show="k == inputsServicios.length-1"></i>
-                </span>
+                </div>
+                <div class="col-md-1">
+                  <div class="form-group">                  
+                     <input v-model="inputsServicio.cantidad_servicios" type="text" class="form-control" id="cantidad_servicios" placeholder="">
+                  </div>
+                </div>   
+                 <div class="col-md-1"> 
+                  <span>
+                      <i class="fa fa-minus-circle" @click="removeServicio(k)" v-show="k || ( !k && inputsServicios.length > 1)"></i>
+                      <i class="fa fa-plus-circle" @click="addServicio(k)" v-show="k == inputsServicios.length-1"></i>
+                  </span>
+                 </div>
+                 <div class="col-md-1"> 
+                 </div>  
             </div>
-          </div>
-          <button class="btn btn-primary" type="submit" @click.prevent="submit">Guardar</button>
+        
+          
         </div>
       </div>
+      <button class="btn btn-primary" type="submit" @click.prevent="submit">Guardar</button>
     </form>
   </div>
 </template>
@@ -242,6 +260,7 @@ export default {
                 norma_ensayos :[],
                 norma_evaluaciones:[],
                 cantidad_placas:[],
+                cantidad_servicios:[],
             },
         ],
            metodo_ensayos :[],
