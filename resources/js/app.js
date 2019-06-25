@@ -53,7 +53,7 @@ Vue.component('nuevo-materiales', require('./components/abm-maestro/materiales/n
 Vue.component('delete-registro', require('./components/abm-maestro//delete.vue').default);
 
 
-Vue.component('certificados', require('./components/certificados/certificados.vue').default);
+Vue.component('ots', require('./components/ots/ots.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

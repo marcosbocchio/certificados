@@ -3,18 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Repositories\Certificados\CertificadosRepository;
-use App\Certificados;
+use App\Repositories\OtServicios\OtServiciosRepository;
+use App\OtServicios;
 use App\User;
 
-class CertificadosController extends Controller
+class OtServiciosController extends Controller
 {
-    Protected $certificado;
+    Protected $otservicios;
 
-    public function __construct(CertificadosRepository $certificadoRepository)
+    public function __construct(ProvinciasRepository $otserviciosRepository)
     {
-      $this->certificado = $certificadoRepository;
+  
+       $this->otservicios = $otserviciosRepository;
+
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -22,9 +25,7 @@ class CertificadosController extends Controller
      */
     public function index()
     {
-        $user = auth()->user()->name;
-        return view('certificados.index', compact('user'));
-        
+        //
     }
 
     /**
@@ -45,7 +46,7 @@ class CertificadosController extends Controller
      */
     public function store(Request $request)
     {
-        return $request;
+        //
     }
 
     /**

@@ -13,7 +13,8 @@
  
  <div id="app">
 
-  <certificados></certificados>
+
+  <ots :otdata="{{$ot}}" :clientedata="{{$cliente}}" :ot_serviciosdata="{{$ot_servicios}}" acciondata="{{$accion}}"></ots>
 
  </div>
 

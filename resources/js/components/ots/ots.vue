@@ -3,7 +3,6 @@
   <form @submit.prevent="submit"  method="post">
     <div class="box box-primary">
       <div class="box-body">
-
         <div class="col-md-6">
             <div class="form-group">
               <label for="proyecto">Proyecto</label>
@@ -148,49 +147,76 @@
                 />
             </gmap-map>
           </div>
-            <div class="col-md-4">Sevicios</div>
-            <div class="col-md-2">Norma Ensayo</div>
-            <div class="col-md-2">Norma Evaluación</div>
-            <div class="col-md-1">Cantidad Placas</div>
-            <div class="col-md-1">Cantidad Serv</div>
+           
 
-            <div v-for="(inputsServicio,k) in inputsServicios" :key="k">
+            <div >
              
-                <div class="col-md-4">
+                <div class="col-md-6">
                   <div class="form-group">
-                        <v-select v-model="inputsServicio.servicios" label="descripcion" :options="servicios" id="servicios"></v-select>
+                      <label>Servicios</label>
+                      <v-select v-model="servicio" label="descripcion" :options="servicios" id="servicios"></v-select>
                   </div>  
                 </div>  
-                <div class="col-md-2">
-                  <div class="form-group">                 
-                    <v-select  v-model="inputsServicio.norma_ensayos" label="descripcion" :options="norma_ensayos"></v-select>
+                <div class="col-md-6">
+                  <div class="form-group">  
+                     <label>Norma Ensayos</label>               
+                    <v-select v-model="norma_ensayo" label="descripcion" :options="norma_ensayos"></v-select>
                   </div>
                 </div>
-                <div class="col-md-2">
-                  <div class="form-group">                    
-                    <v-select  v-model="inputsServicio.norma_evaluaciones" label="descripcion" :options="norma_evaluaciones"></v-select>
+                <div class="col-md-6">
+                  <div class="form-group"> 
+                     <label>Norma Evaluación</label>                   
+                    <v-select v-model="norma_evaluacion" label="descripcion" :options="norma_evaluaciones"></v-select>
                   </div>   
                 </div> 
-                <div class="col-md-1">
-                  <div class="form-group">                  
-                     <input v-model="inputsServicio.cantidad_placas" type="text" class="form-control" id="cantidad_placas" placeholder="">
+                <div class="col-md-3">
+                  <div class="form-group">
+                     <label>Cant. Placas</label>                  
+                     <input  v-model="cantidad_placas" type="text" class="form-control" id="cantidad_placas" placeholder="">
                   </div>
                 </div>
-                <div class="col-md-1">
-                  <div class="form-group">                  
-                     <input v-model="inputsServicio.cantidad_servicios" type="text" class="form-control" id="cantidad_servicios" placeholder="">
+                <div class="col-md-3">
+                  <div class="form-group"> 
+                     <label>Cant.</label>                 
+                     <input v-model="cantidad_servicios" type="text" class="form-control" id="cantidad_servicios" placeholder="">
                   </div>
                 </div>   
                  <div class="col-md-1"> 
+                   <div class="form-group">                    
                   <span>
-                      <i class="fa fa-minus-circle" @click="removeServicio(k)" v-show="k || ( !k && inputsServicios.length > 1)"></i>
-                      <i class="fa fa-plus-circle" @click="addServicio(k)" v-show="k == inputsServicios.length-1"></i>
+                      <i class="fa fa-plus-circle" @click="addServicio()"></i>
                   </span>
+                   </div>
                  </div>
                  <div class="col-md-1"> 
                  </div>  
             </div>
-        
+            <div class="col-md-12">
+              <div class="table-responsive">
+                <table class="table table-hover table-striped">
+                  <thead>
+                    <tr>
+                      <th>Servicio</th>
+                      <th>Norma Ensayo</th>
+                      <th>Norma Evaluacion</th>
+                      <th>Cant Placas</th>
+                      <th>Cant Serv</th>
+                      <th colspan="2">&nbsp;</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(inputsServicio,k) in inputsServicios" :key="k">
+                      <td> {{ inputsServicio.servicio}}</td>
+                      <td> {{ inputsServicio.norma_ensayo}}</td>
+                      <td> {{ inputsServicio.norma_evaluacion}}</td>
+                      <td> {{ inputsServicio.cantidad_placas}}</td>
+                      <td> {{ inputsServicio.cantidad_servicios}}</td>
+                      <td> <i class="fa fa-minus-circle" @click="removeServicio(k)" ></i></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>    
           
         </div>
       </div>
@@ -214,6 +240,10 @@ export default {
       Datepicker,
       Timeselector 
   },
+   props:
+     ['otdata','clientedata','ot_serviciosdata','acciondata']
+   
+   ,
     
     data() { return {
          
@@ -225,6 +255,7 @@ export default {
               lng: ''
             }}
           ],
+          accion:'',
           mapCenter: {
             lat: '',
             lng: ''
@@ -234,7 +265,7 @@ export default {
             heading: 0,
           },
           proyecto:'',
-          fecha:'',
+          fecha:'',        
           fecha_ensayo:'',
           hora: null,
           clientes:[],
@@ -253,31 +284,28 @@ export default {
           provincias:[],
           provincia: '',
           servicios:[],
-          inputsServicios: [
-            {
-                servicios:[],
-                metodo_ensayos :[],
-                norma_ensayos :[],
-                norma_evaluaciones:[],
-                cantidad_placas:[],
-                cantidad_servicios:[],
-            },
-        ],
-           metodo_ensayos :[],
-           norma_ensayos :[],
-           norma_evaluaciones :[],
+          norma_ensayos :[],
+          norma_evaluaciones :[],
+          inputsServicios: [],
+
+           servicio:'',        
+           norma_ensayo :'',
+           norma_evaluacion :'',
            response: {},
+           cantidad_placas:'',
+           cantidad_servicios:'1',
           
           }
     },
     created : function(){
-
+        
         this.getClientes();
         this.getProvincias();
         this.getServicios();
         this.getMetodosEnsayos();
         this.getNormaEnsayos();
         this.getNormaEvaluaciones();
+        this.setOt();
         this.sync();
       },
     mounted : function(){
@@ -296,6 +324,21 @@ export default {
      },
 
     methods :{
+
+      setOt : function(){
+
+              if(this.acciondata == "edit"){               
+
+                this.proyecto        = this.otdata.proyecto,
+                this.fecha           = this.otdata.fecha_hora,
+                this.cliente         = this.clientedata, 
+                this.localidad.lat   = this.otdata.lat,
+                this.localidad.lon   = this.otdata.lon,
+                this.inputsServicios = this.ot_serviciosdata,
+                this.accion          = this.acciondata
+          
+               }
+              },
 
       getClientes : function(){
 
@@ -388,7 +431,19 @@ export default {
       
              },
       addServicio(index) {
-            this.inputsServicios.push({ servicios :[] });
+            this.inputsServicios.push({ 
+                servicio:this.servicio.descripcion,            
+                norma_ensayo : this.norma_ensayo.descripcion,
+                norma_evaluacion :this.norma_evaluacion.descripcion,
+                cantidad_placas:this.cantidad_placas,
+                cantidad_servicios:this.cantidad_servicios,
+                 });
+            this.servicio='',        
+            this.norma_ensayo ='',
+            this.norma_evaluacion ='',           
+            this.cantidad_placas='',
+            this.cantidad_servicios='1'
+
         },
       removeServicio(index) {
             this.inputsServicios.splice(index, 1);

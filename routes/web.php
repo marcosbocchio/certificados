@@ -26,7 +26,8 @@ Route::group(['middleware' => ['permission:Navegar operador']], function () {
   Route::get('/area/enod','dashboardOperadoresController@index')->name('testoperador');
   Route::get('area/enod/usuarios', 'UserController@callView')->name('usuarios');
   Route::get('area/enod/materiales', 'MaterialesController@callView')->name('materiales');
-  Route::get('area/enod/certificados','CertificadosController@index')->name('certificados');
+  Route::get('area/enod/ots','OtsController@index')->name('Ots');
+  Route::get('area/enod/ots/{id}/edit','OtsController@Edit')->name('Ots.edit');
 
 });
 
