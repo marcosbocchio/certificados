@@ -28,7 +28,6 @@ toastr.options = {
 
 
 window.Vue = require('vue');
-Vue.use(require('vue-moment'));
 
 
 /**

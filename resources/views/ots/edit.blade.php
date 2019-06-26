@@ -21,6 +21,8 @@
       acciondata="{{$accion}}"
       :otcontacto1data="{{$ot_contacto1}}"
       :otcontacto2data="{{$ot_contacto2}}"
+      :ot_eppsdata="{{$ot_epps}}"
+      :ot_riesgosdata="{{$ot_epps}}"
        ></ots>
 
  </div>

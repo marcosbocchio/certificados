@@ -8,6 +8,8 @@ use Illuminate\Support\Collection as Collection;
 use App\Ots;
 use App\Clientes;
 use App\Contactos;
+use App\Epps;
+use App\Riegos;
 use Illuminate\Support\Facades\DB;
 use App\OtServicios;
 use App\User;
@@ -85,6 +87,7 @@ class OtsController extends Controller
         
       
         $ot_servicios = DB::select('select 
+                                    servicios.id as id,
                                     servicios.descripcion as servicio,
                                     norma_ensayos.descripcion as norma_ensayo,
                                     norma_evaluaciones.descripcion as norma_evaluacion,
@@ -102,6 +105,7 @@ class OtsController extends Controller
                                     ot_servicios.ot_id=ots.id and
                                     ots.id=:id',['id' => $ot->id ]);
         $ot_productos = DB::select('select 
+                                    productos.id as id,
                                     productos.descripcion as producto,
                                     medidas.descripcion as medida,
                                     ot_productos.cantidad as cantidad
@@ -116,15 +120,38 @@ class OtsController extends Controller
                                     inner join ots on
                                     ot_productos.ot_id=ots.id and
                                     ots.id=:id',['id' => $ot->id ]);
+        $ot_epps = DB::select('select epps.id,
+                                    epps.descripcion 
+                                    from epps
+                                    inner join ot_epps on
+                                    epps.id = ot_epps.epp_id
+                                    inner join ots on
+                                    ot_epps.ot_id = ots.id
+                                    Where 
+                                    ots.id =:id',['id' => $ot->id ]);
+        $ot_riesgos = DB::select('select 
+                                    riesgos.id,
+                                    riesgos.descripcion
+                                    from riesgos
+                                    inner join ot_riesgos on
+                                    riesgos.id = ot_riesgos.riesgo_id
+                                    inner join ots on
+                                    ot_riesgos.ot_id = ots.id
+                                    Where 
+                                    ots.id =:id',['id' => $ot->id ]);
       
         $ot_servicios = Collection::make($ot_servicios);
         $ot_productos = Collection::make($ot_productos);
+        $ot_epps = Collection::make($ot_epps);
+        $ot_riesgos = Collection::make($ot_riesgos);
         $ot_contacto1 = Contactos::find($ot->contacto1_id);
         $ot_contacto2 = Contactos::find($ot->contacto2_id);
+
+        
         if ($ot_contacto2 == null)
                 $ot_contacto2 = new Contactos();
 
-        return view('ots.edit',compact('ot','cliente','user','ot_servicios','ot_productos','accion','ot_contacto1','ot_contacto2','header_titulo','header_descripcion'));
+        return view('ots.edit',compact('ot','cliente','user','ot_servicios','ot_productos','ot_epps','ot_riesgos','accion','ot_contacto1','ot_contacto2','header_titulo','header_descripcion'));
     }
 
     /**

@@ -4,118 +4,122 @@
     <div class="box box-danger">
       <div class="box-body">
         <div class="col-md-6">
-            <div class="form-group">
-              <label for="proyecto">Proyecto</label>
-              <input type="text" v-model="proyecto" class="form-control" id="proyecto" placeholder="">
-            </div>
-            <div class="form-group">
-                  <label>Cliente</label>
-                  <v-select v-model="cliente" label="nombre_fantasia" :options="clientes" @input="getContactos()"></v-select>   
-            </div>
-
-          <!-- /.box-body -->
-        </div>
-        
-        <div class="col-md-3">
           <div class="form-group">
-            <label for="fecha">Fecha</label>
-              <div class="input-group date">
-                  <div class="input-group-addon">
-                    <i class="fa fa-calendar"></i>
-                  </div>
-                     <Datepicker v-model="fecha" :input-class="'form-control pull-right'" :language="es"></Datepicker>   
-              </div>
+            <label for="proyecto">Proyecto</label>
+            <input type="text" v-model="proyecto" class="form-control" id="proyecto" placeholder="">
           </div>
         </div>
-        <div class="col-md-3">
-          <div class="bootstrap-timepicker">
-                <div class="form-group">
-                  <label>Hora</label>
-
-                  <div class="input-group">
-                    <div class="input-group-addon">
-                      <i class="fa fa-clock-o"></i>
-                    </div>
-                    <timeselector v-model="hora"></timeselector>
-                  </div>
-                </div>
-            </div>
-          </div>
+      </div>
+    </div>
+    
+    <div class="box box-danger">
+      <div class="box-body">
         <div class="col-md-3">
           <div class="form-group">
             <label for="ot">OT Nº</label>
             <input v-model="ot" type="number" class="form-control" id="ot" placeholder="">
           </div>
         </div>
-        <div class="col-md-3">
-          <div class="form-group">
-            <label for="fts">FTS Nº</label>
-            <input v-model="fts" type="number" class="form-control" id="fts" placeholder="">
-          </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <label for="fts">FTS Nº</label>
+          <input v-model="fts" type="number" class="form-control" id="fts" placeholder="">
         </div>
-        <div class="col-md-6">
-          <div class="form-group">
-            <label for="lugar_ensayo">Lugar de ensayo</label>
-            <input v-model="lugar_ensayo" type="text" class="form-control" id="lugar_ensayo" placeholder="">
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <label for="fecha">Fecha</label>
+            <div class="input-group date">
+                <div class="input-group-addon">
+                  <i class="fa fa-calendar"></i>
+                </div>
+                    <Datepicker v-model="fecha" :input-class="'form-control pull-right'" :language="es"></Datepicker>   
+            </div>
+        </div>
+      </div>
+       <div class="col-md-3">
+        <div class="bootstrap-timepicker">
+              <div class="form-group">
+                <label>Hora</label>
+
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="fa fa-clock-o"></i>
+                  </div>
+                  <timeselector v-model="hora"></timeselector>
+                </div>
+              </div>
           </div>
+        </div> 
+        <div class="col-md-6">                       
+          <div class="form-group">
+              <label>Cliente</label>
+              <v-select v-model="cliente" label="nombre_fantasia" :options="clientes" @input="getContactos()"></v-select>   
+          </div>      
         </div>
         <div class="col-md-3">
           <div class="form-group">
             <label for="fts">Obra Nº</label>
             <input v-model="obra" type="number" class="form-control" id="obra" placeholder="">
           </div>
-        </div>
-         <div class="col-md-3">
+        </div>        
+        <div class="col-md-3">
           <div class="form-group">
             <label for="fecha">Fecha estima de ensayo</label>
               <div class="input-group date">
-                  <div class="input-group-addon">
-                    <i class="fa fa-calendar"></i>
-                  </div>
-                     <Datepicker v-model="fecha_ensayo" :input-class="'form-control pull-right'" :language="es"></Datepicker>   
+                <div class="input-group-addon">
+                  <i class="fa fa-calendar"></i>
+                </div>
+                <Datepicker v-model="fecha_ensayo" :input-class="'form-control pull-right'" :language="es"></Datepicker>   
               </div>
           </div>
         </div>
         <div class="col-md-6">
           <div class="form-group">
-                  <label>Contacto 1</label>
-                  <v-select v-model="contacto1" name="contacto_1" label="nombre" :options="contactos" ></v-select>   
+              <label>Contacto 1</label>
+              <v-select v-model="contacto1" name="contacto_1" label="nombre" :options="contactos" ></v-select>   
             </div>
         </div>
-         <div class="col-md-6">
+        <div class="col-md-6">
           <div class="form-group">
-                  <label>Contacto 2</label>
-                  <v-select v-model="contacto2" name="contacto_2" label="nombre" :options="contactos" ></v-select>   
+              <label>Contacto 2</label>
+              <v-select v-model="contacto2" name="contacto_2" label="nombre" :options="contactos" ></v-select>   
           </div>
         </div>
+      </div>
+    </div>
+    <div class="box box-danger">
+      <div class="box-body">
         <div class="col-md-6">
+          <div class="form-group">
+            <label for="lugar_ensayo">Lugar de ensayo</label>
+            <input v-model="lugar_ensayo" type="text" class="form-control" id="lugar_ensayo" placeholder="">
+          </div>        
           <div class="form-group">
             <label>Provincia</label>
             <v-select v-model="provincia" label="provincia" :options="provincias" @input="getLocalidades()"></v-select>   
           </div>
-        </div>
-        <div class="col-md-6">
           <div class="form-group">
             <label>Localidad</label>
             <v-select v-model="localidad" label="localidad" :options="localidades" @input="sync()"></v-select>   
           </div>
-        </div>
-         <div class="col-md-6">
-            <div class="form-group">
-                <label for="search">Buscar Ubicación</label>
-              <div class="input-group">
-                  <div class="input-group-addon">
-                    <i class="fa fa-search"></i>
-                  </div>
-                  <gmap-autocomplete class="form-control"
-                  @place_changed="setPlace"
-                  :select-first-on-enter="true">
-                    >
-                </gmap-autocomplete>
-              </div>
+          <div class="form-group">
+            <label for="search">Buscar Ubicación</label>
+            <div class="input-group">
+                <div class="input-group-addon">
+                  <i class="fa fa-search"></i>
+                </div>
+                <gmap-autocomplete class="form-control"
+                @place_changed="setPlace"
+                :select-first-on-enter="true">
+                  >
+              </gmap-autocomplete>
             </div>
           </div>
-          <div class="col-md-3">
+        </div>        
+        
+       
+          <div class="col-md-3 hidden">
             <div class="form-group">
               <label for="latitud">Latitud</label>
               <input type="text" 
@@ -125,129 +129,133 @@
               />
             </div>
           </div>
-          <div class="col-md-3">
+          <div class="col-md-3 hidden">
             <div class="form-group">
               <label for="longitud">Longitud</label>
               <input type="text" 
               class="form-control" id="longitud"
               v-model.number.lazy="localidad.lon"
-              @change="sync"
-            
+              @change="sync"            
               />
             </div>
           </div>
-          <div class="col-md-12">
-            <gmap-map :center="mapCenter" :zoom="12"
-                ref="map"
-                @center_changed="updateCenter"
-                @idle="sync"
-                class="map-container">
-                <GmapMarker
-                  :key="index"
-                  v-for="(m, index) in markers"
-                  :position="m.position"
-                  :clickable="true"
-                  :draggable="true"
-                  @click="center=m.position"
-                  @drag="updateCenter($event.latLng)"
-                />
-            </gmap-map>
-          </div>
-           
-
-            
+        <div class="col-md-6">
+          <gmap-map :center="mapCenter" :zoom="12"
+              ref="map"
+              @center_changed="updateCenter"
+              @idle="sync"
+              class="map-container">
+              <GmapMarker
+                :key="index"
+                v-for="(m, index) in markers"
+                :position="m.position"
+                :clickable="true"
+                :draggable="true"
+                @click="center=m.position"
+                @drag="updateCenter($event.latLng)"
+              />
+          </gmap-map>
+        </div>
+      </div>
+    </div>
+    <div class="box box-danger">
+      <div class="box-body">       
              
-                <div class="col-md-6">
-                  <div class="form-group">
-                      <label>Servicios</label>
-                      <v-select v-model="servicio" label="descripcion" :options="servicios" id="servicios"></v-select>
-                  </div>  
-                </div>  
-                <div class="col-md-6">
-                  <div class="form-group">  
-                     <label>Norma Ensayos</label>               
-                    <v-select v-model="norma_ensayo" label="descripcion" :options="norma_ensayos"></v-select>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group"> 
-                     <label>Norma Evaluación</label>                   
-                    <v-select v-model="norma_evaluacion" label="descripcion" :options="norma_evaluaciones"></v-select>
-                  </div>   
-                </div> 
-                <div class="col-md-3">
-                  <div class="form-group">
-                     <label>Cant. Placas</label>                  
-                     <input  v-model="cantidad_placas" type="number" class="form-control" id="cantidad_placas" placeholder="">
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="form-group"> 
-                     <label>Cant.</label>                 
-                     <input v-model="cantidad_servicios" type="number" class="form-control" id="cantidad_servicios" placeholder="">
-                  </div>
-                </div>   
-                <div class="col-md-1"> 
-                   <div class="form-group">                    
-                  <span>
-                      <i class="fa fa-plus-circle" @click="addServicio()"></i>
-                  </span>
-                   </div>
-                </div>
-                
-               
-            <div class="col-md-12">
-              <div class="table-responsive">
-                <table class="table table-hover table-striped">
-                  <thead>
-                    <tr>
-                      <th>Servicio</th>
-                      <th>Norma Ensayo</th>
-                      <th>Norma Evaluacion</th>
-                      <th>Cant Placas</th>
-                      <th>Cant Serv</th>
-                      <th colspan="2">&nbsp;</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr v-for="(inputsServicio,k) in inputsServicios" :key="k">
-                      <td> {{ inputsServicio.servicio}}</td>
-                      <td> {{ inputsServicio.norma_ensayo}}</td>
-                      <td> {{ inputsServicio.norma_evaluacion}}</td>
-                      <td> {{ inputsServicio.cantidad_placas}}</td>
-                      <td> {{ inputsServicio.cantidad_servicios}}</td>
-                      <td> <i class="fa fa-minus-circle" @click="removeServicio(k)" ></i></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>   
-
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>Productos</label>
-                    <v-select v-model="producto" label="descripcion" :options="productos" id="productos" @input="getMedidasProducto()"></v-select>
-                </div>  
-              </div>  
-              <div class="col-md-3">
-                <div class="form-group">  
-                  <label>Medidas</label>               
-                  <v-select v-model="medida" label="descripcion" :options="medidas"></v-select>
-                </div>
-              </div> 
-              <div class="col-md-3">
-                <div class="form-group"> 
-                    <label>Cant.</label>                 
-                    <input v-model="cantidad_productos" type="number" class="form-control" id="cantidad_productos" placeholder="">
-                </div>
-              </div>  
-              <div class="col-md-1"> 
-                   <div class="form-group">                    
-                  <span>
-                      <i class="fa fa-plus-circle" @click="addProducto()"></i>
-                  </span>
-                   </div>
-                </div> 
+        <div class="col-md-6">
+          <div class="form-group">
+              <label>Servicios</label>
+              <v-select v-model="servicio" label="descripcion" :options="servicios" id="servicios"></v-select>
+          </div>  
+        </div>  
+        <div class="col-md-6">
+          <div class="form-group">  
+              <label>Norma Ensayos</label>               
+            <v-select v-model="norma_ensayo" label="descripcion" :options="norma_ensayos"></v-select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group"> 
+              <label>Norma Evaluación</label>                   
+            <v-select v-model="norma_evaluacion" label="descripcion" :options="norma_evaluaciones"></v-select>
+          </div>   
+        </div> 
+        <div class="col-md-3">
+          <div class="form-group">
+              <label>Cant. Placas</label>                  
+              <input  v-model="cantidad_placas" type="number" class="form-control" id="cantidad_placas" placeholder="">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group"> 
+              <label>Cant.</label>                 
+              <input v-model="cantidad_servicios" type="number" class="form-control" id="cantidad_servicios" placeholder="">
+          </div>
+        </div>   
+        <div class="col-md-1"> 
+            <div class="form-group">                    
+          <span>
+              <i class="fa fa-plus-circle" @click="addServicio()"></i>
+          </span>
+            </div>
+        </div>
+        <div v-show="inputsServicios.length">
+          <div class="col-md-12">
+            <div class="table-responsive">
+              <table class="table table-hover table-striped">
+                <thead>
+                  <tr>
+                    <th>Servicio</th>
+                    <th>Norma Ensayo</th>
+                    <th>Norma Evaluacion</th>
+                    <th>Cant Placas</th>
+                    <th>Cant Serv</th>
+                    <th colspan="2">&nbsp;</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(inputsServicio,k) in inputsServicios" :key="k">
+                    <td> {{ inputsServicio.servicio}}</td>
+                    <td> {{ inputsServicio.norma_ensayo}}</td>
+                    <td> {{ inputsServicio.norma_evaluacion}}</td>
+                    <td> {{ inputsServicio.cantidad_placas}}</td>
+                    <td> {{ inputsServicio.cantidad_servicios}}</td>
+                    <td> <i class="fa fa-minus-circle" @click="removeServicio(k)" ></i></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>   
+      </div>
+    </div>          
+    <div class="box box-danger">
+      <div class="box-body">
+        <div class="col-md-6">
+          <div class="form-group">
+              <label>Productos</label>
+              <v-select v-model="producto" label="descripcion" :options="productos" id="productos" @input="getMedidasProducto()"></v-select>
+            </div>  
+          </div>  
+          <div class="col-md-3">
+            <div class="form-group">  
+              <label>Medidas</label>               
+              <v-select v-model="medida" label="descripcion" :options="medidas"></v-select>
+            </div>
+          </div> 
+          <div class="col-md-3">
+            <div class="form-group"> 
+                <label>Cant.</label>                 
+                <input v-model="cantidad_productos" type="number" class="form-control" id="cantidad_productos" placeholder="">
+            </div>
+          </div>  
+          <div class="col-md-1"> 
+            <div class="form-group">                    
+              <span>
+                  <i class="fa fa-plus-circle" @click="addProducto()"></i>
+              </span>
+            </div>
+          </div> 
+          <div v-show="inputsProductos.length">
             <div class="col-md-12">
               <div class="table-responsive">
                 <table class="table table-hover table-striped">
@@ -269,10 +277,83 @@
                   </tbody>
                 </table>
               </div>
-            </div>  
-          
+            </div>
+          </div>            
+      </div>
+    </div>
+    <div class="box box-danger">
+      <div class="box-body">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Elementos de seguridad</label>
+            <v-select v-model="epp" label="descripcion" :options="epps" id="epps"></v-select>
+          </div> 
+         
+            <div class="form-group">                    
+              <span>
+                  <i class="fa fa-plus-circle" @click="addEpp()"></i>
+              </span>
+            </div>
+          <div v-show="inputsEpps.length">           
+              <div class="table-responsive">
+                <table class="table table-hover table-striped">
+                  <thead>
+                    <tr>
+                      <th>EPPS</th>                                   
+                      <th colspan="2">&nbsp;</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(inputsEpp,k) in inputsEpps" :key="k">
+                      <td> {{ inputsEpp.descripcion}}</td>                                  
+                      <td> <i class="fa fa-minus-circle" @click="removeEpp(k)" ></i></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>            
+          </div> 
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Riesgos</label>
+            <v-select v-model="riesgo" label="descripcion" :options="riesgos" id="riesgos"></v-select>
+          </div> 
+         
+            <div class="form-group">                    
+              <span>
+                  <i class="fa fa-plus-circle" @click="addRiesgo()"></i>
+              </span>
+            </div>
+          <div v-show="inputsRiesgos.length">           
+              <div class="table-responsive">
+                <table class="table table-hover table-striped">
+                  <thead>
+                    <tr>
+                      <th>Riesgos</th>                                   
+                      <th colspan="2">&nbsp;</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(inputsRiesgo,k) in inputsRiesgos" :key="k">
+                      <td> {{ inputsRiesgo.descripcion}}</td>                                  
+                      <td> <i class="fa fa-minus-circle" @click="removeRiesgo(k)" ></i></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>            
+          </div>
         </div>
       </div>
+    </div>
+    <div class="box box-danger">
+      <div class="box-body">
+        <div class="form-group">
+          <label>Observaciones</label>
+          <textarea class="form-control noresize" rows="3" placeholder="" maxlength="250"></textarea>
+        </div>
+      </div>
+    </div>
+        
       <button class="btn btn-primary" type="submit" @click.prevent="submit">Guardar</button>
     </form>
   </div>
@@ -284,7 +365,6 @@ import {mapState} from 'vuex'
 import Datepicker from 'vuejs-datepicker';
 import {en, es} from 'vuejs-datepicker/dist/locale'
 import Timeselector from 'vue-timeselector';
-import moment from 'moment'
 
 
 
@@ -308,6 +388,14 @@ export default {
        required : false
      },
      ot_productosdata : {
+       type : Array,
+       required : false
+     },
+     ot_eppsdata : {
+       type : Array,
+       required : false
+     },
+     ot_riesgosdata : {
        type : Array,
        required : false
      },
@@ -369,9 +457,13 @@ export default {
           },
           provincias:[],
           provincia: '',
+
           servicios:[],
           norma_ensayos :[],
           norma_evaluaciones :[],
+          servicio:'',        
+          norma_ensayo :'',
+          norma_evaluacion :'',
           inputsServicios: [],
 
           productos :[],
@@ -381,12 +473,19 @@ export default {
           cantidad_productos:'1',
           inputsProductos: [],
 
-          servicio:'',        
-          norma_ensayo :'',
-          norma_evaluacion :'',
+          epps:[],
+          epp:'',
+          inputsEpps:[],
+
+          riesgos:[],
+          riesgo:'',
+          inputsRiesgos:[],
+         
           response: {},
           cantidad_placas:'',
           cantidad_servicios:'1',
+
+
           t:'',
           d:'' 
           }
@@ -397,6 +496,8 @@ export default {
         this.getProvincias();
         this.getServicios();
         this.getProductos();
+        this.getEpps();
+        this.getRiesgos();
         this.getMetodosEnsayos();
         this.getNormaEnsayos();
         this.getNormaEvaluaciones();
@@ -443,6 +544,8 @@ export default {
                 this.localidad.lon   = this.otdata.lon;
                 this.inputsServicios = this.ot_serviciosdata;
                 this.inputsProductos = this.ot_productosdata;
+                this.inputsRiesgos = this.ot_riesgosdata;
+                this.inputsEpps = this.ot_eppsdata;
                 this.accion          = this.acciondata
           
                }
@@ -508,6 +611,22 @@ export default {
                 this.productos = response.data
                 });
               },
+        getEpps : function(){
+             
+                axios.defaults.baseURL = this.url ;
+                var urlRegistros = 'epps';    
+                axios.get(urlRegistros).then(response =>{
+                this.epps = response.data
+                });
+              },
+        getRiesgos : function(){
+             
+                axios.defaults.baseURL = this.url ;
+                var urlRegistros = 'riesgos';    
+                axios.get(urlRegistros).then(response =>{
+                this.riesgos = response.data
+                });
+              },
        getMetodosEnsayos: function(){
              
                 axios.defaults.baseURL = this.url ;
@@ -558,6 +677,7 @@ export default {
              },
       addServicio(index) {
             this.inputsServicios.push({ 
+                id:this.servicio.id,
                 servicio:this.servicio.descripcion,            
                 norma_ensayo : this.norma_ensayo.descripcion,
                 norma_evaluacion :this.norma_evaluacion.descripcion,
@@ -573,6 +693,7 @@ export default {
         },
       addProducto(index) {
             this.inputsProductos.push({ 
+                id:this.producto.id,
                 producto:this.producto.descripcion,            
                 medida : this.medida.descripcion,              
                 cantidad_productos:this.cantidad_productos,
@@ -582,11 +703,33 @@ export default {
             this.cantidad_productos='1'
 
         },
+      addEpp(index) {
+            this.inputsEpps.push({ 
+                descripcion:this.epp.descripcion,
+                id:this.epp.id        
+                 });
+            this.epp=''          
+
+        },
+      addRiesgo(index) {
+            this.inputsRiesgos.push({ 
+                 descripcion:this.riesgo.descripcion,
+                 id:this.riesgo.id        
+                 });
+            this.riesgo=''          
+
+        },
       removeServicio(index) {
             this.inputsServicios.splice(index, 1);
         },
       removeProducto(index) {
             this.inputsProductos.splice(index, 1);
+        },
+      removeEpp(index) {
+            this.inputsEpps.splice(index, 1);
+        },
+      removeRiesgo(index) {
+            this.inputsRiesgos.splice(index, 1);
         },
 
       submit() {
@@ -609,7 +752,10 @@ export default {
          'fecha_ensayo'  : this.fecha_ensayo,
          'latitud'       : this.localidad.lat,
          'longitud'      : this.localidad.lon,
-         'servicios'     : this.inputsServicios
+         'servicios'     : this.inputsServicios,
+         'productos'     : this.inputsProductos,
+         'epps'          : this.inputsEpps,
+         'riesgos'       : this.inputsRiesgos
 
         
 
@@ -630,7 +776,7 @@ export default {
 <style>
 .map-container {
     width: 100%;
-    height: 500px;
+    height: 350px;
     display: inline-block;
   }
 

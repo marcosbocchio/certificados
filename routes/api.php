@@ -31,6 +31,9 @@ Route::resource('ots', 'OtsController');
 Route::resource('ot_servicios', 'OtServiciosController');
 Route::resource('productos', 'ProductosController');
 Route::resource('medidas', 'MedidasController');
+Route::resource('epps', 'EppsController');
+Route::resource('riesgos', 'RiesgosController');
+Route::resource('ot_riesgos', 'OtRiesgosController');
 
 
 
