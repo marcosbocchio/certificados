@@ -1,7 +1,7 @@
 <template>
  <div class="col-md-12">
   <form @submit.prevent="submit"  method="post">
-    <div class="box box-primary">
+    <div class="box box-danger">
       <div class="box-body">
         <div class="col-md-6">
             <div class="form-group">
@@ -44,19 +44,25 @@
         <div class="col-md-3">
           <div class="form-group">
             <label for="ot">OT Nº</label>
-            <input v-model="ot" type="text" class="form-control" id="ot" placeholder="">
+            <input v-model="ot" type="number" class="form-control" id="ot" placeholder="">
           </div>
         </div>
         <div class="col-md-3">
           <div class="form-group">
             <label for="fts">FTS Nº</label>
-            <input v-model="fts" type="text" class="form-control" id="fts" placeholder="">
+            <input v-model="fts" type="number" class="form-control" id="fts" placeholder="">
           </div>
         </div>
         <div class="col-md-6">
           <div class="form-group">
             <label for="lugar_ensayo">Lugar de ensayo</label>
-            <input type="text" class="form-control" id="lugar_ensayo" placeholder="">
+            <input v-model="lugar_ensayo" type="text" class="form-control" id="lugar_ensayo" placeholder="">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="fts">Obra Nº</label>
+            <input v-model="obra" type="number" class="form-control" id="obra" placeholder="">
           </div>
         </div>
          <div class="col-md-3">
@@ -149,7 +155,7 @@
           </div>
            
 
-            <div >
+            
              
                 <div class="col-md-6">
                   <div class="form-group">
@@ -172,25 +178,24 @@
                 <div class="col-md-3">
                   <div class="form-group">
                      <label>Cant. Placas</label>                  
-                     <input  v-model="cantidad_placas" type="text" class="form-control" id="cantidad_placas" placeholder="">
+                     <input  v-model="cantidad_placas" type="number" class="form-control" id="cantidad_placas" placeholder="">
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="form-group"> 
                      <label>Cant.</label>                 
-                     <input v-model="cantidad_servicios" type="text" class="form-control" id="cantidad_servicios" placeholder="">
+                     <input v-model="cantidad_servicios" type="number" class="form-control" id="cantidad_servicios" placeholder="">
                   </div>
                 </div>   
-                 <div class="col-md-1"> 
+                <div class="col-md-1"> 
                    <div class="form-group">                    
                   <span>
                       <i class="fa fa-plus-circle" @click="addServicio()"></i>
                   </span>
                    </div>
-                 </div>
-                 <div class="col-md-1"> 
-                 </div>  
-            </div>
+                </div>
+                
+               
             <div class="col-md-12">
               <div class="table-responsive">
                 <table class="table table-hover table-striped">
@@ -216,7 +221,55 @@
                   </tbody>
                 </table>
               </div>
-            </div>    
+            </div>   
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Productos</label>
+                    <v-select v-model="producto" label="descripcion" :options="productos" id="productos" @input="getMedidasProducto()"></v-select>
+                </div>  
+              </div>  
+              <div class="col-md-3">
+                <div class="form-group">  
+                  <label>Medidas</label>               
+                  <v-select v-model="medida" label="descripcion" :options="medidas"></v-select>
+                </div>
+              </div> 
+              <div class="col-md-3">
+                <div class="form-group"> 
+                    <label>Cant.</label>                 
+                    <input v-model="cantidad_productos" type="number" class="form-control" id="cantidad_productos" placeholder="">
+                </div>
+              </div>  
+              <div class="col-md-1"> 
+                   <div class="form-group">                    
+                  <span>
+                      <i class="fa fa-plus-circle" @click="addProducto()"></i>
+                  </span>
+                   </div>
+                </div> 
+            <div class="col-md-12">
+              <div class="table-responsive">
+                <table class="table table-hover table-striped">
+                  <thead>
+                    <tr>
+                      <th>Productos</th>
+                      <th>Medidas</th>
+                      <th>cant</th>                    
+                      <th colspan="2">&nbsp;</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(inputsProducto,k) in inputsProductos" :key="k">
+                      <td> {{ inputsProducto.producto}}</td>
+                      <td> {{ inputsProducto.medida}}</td>  
+                      <td> {{ inputsProducto.cantidad_productos}}</td>                  
+                      <td> <i class="fa fa-minus-circle" @click="removeProducto(k)" ></i></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>  
           
         </div>
       </div>
@@ -231,6 +284,7 @@ import {mapState} from 'vuex'
 import Datepicker from 'vuejs-datepicker';
 import {en, es} from 'vuejs-datepicker/dist/locale'
 import Timeselector from 'vue-timeselector';
+import moment from 'moment'
 
 
 
@@ -240,10 +294,40 @@ export default {
       Datepicker,
       Timeselector 
   },
-   props:
-     ['otdata','clientedata','ot_serviciosdata','acciondata']
+   props: {
+     otdata : {
+       type : Object,
+       required : false
+     },
+     clientedata : {
+       type : Object,
+       required : false
+     },
+     ot_serviciosdata : {
+       type : Array,
+       required : false
+     },
+     ot_productosdata : {
+       type : Array,
+       required : false
+     },
+     otcontacto1data : {
+       type : Object,
+       required : false
+     },
+     otcontacto2data : {
+       type : [ Object, Array ],
+       required : false,
+      
+     },
+    
+     acciondata : {
+       type : String,
+       required :true
+     }
    
-   ,
+   },
+     
     
     data() { return {
          
@@ -267,11 +351,13 @@ export default {
           proyecto:'',
           fecha:'',        
           fecha_ensayo:'',
-          hora: null,
+          hora: '',
           clientes:[],
           cliente:'',
           ot:'',
           fts:'',
+          lugar_ensayo:'',
+          obra:'',
           contactos:[],
           contacto1:'',
           contacto2:'',
@@ -288,13 +374,21 @@ export default {
           norma_evaluaciones :[],
           inputsServicios: [],
 
-           servicio:'',        
-           norma_ensayo :'',
-           norma_evaluacion :'',
-           response: {},
-           cantidad_placas:'',
-           cantidad_servicios:'1',
-          
+          productos :[],
+          producto :'',
+          medidas:[],
+          medida:'',
+          cantidad_productos:'1',
+          inputsProductos: [],
+
+          servicio:'',        
+          norma_ensayo :'',
+          norma_evaluacion :'',
+          response: {},
+          cantidad_placas:'',
+          cantidad_servicios:'1',
+          t:'',
+          d:'' 
           }
     },
     created : function(){
@@ -302,6 +396,7 @@ export default {
         this.getClientes();
         this.getProvincias();
         this.getServicios();
+        this.getProductos();
         this.getMetodosEnsayos();
         this.getNormaEnsayos();
         this.getNormaEvaluaciones();
@@ -329,15 +424,30 @@ export default {
 
               if(this.acciondata == "edit"){               
 
-                this.proyecto        = this.otdata.proyecto,
-                this.fecha           = this.otdata.fecha_hora,
-                this.cliente         = this.clientedata, 
-                this.localidad.lat   = this.otdata.lat,
-                this.localidad.lon   = this.otdata.lon,
-                this.inputsServicios = this.ot_serviciosdata,
+                this.proyecto        = this.otdata.proyecto;
+                this.fecha           = this.otdata.fecha_hora;
+                this.t = this.otdata.fecha_hora.split(/[- :]/);
+                this.d = new Date(Date.UTC(this.t[0], this.t[1]-1, this.t[2], this.t[3], this.t[4], this.t[5]));
+                this.hora            = this.d;
+                this.cliente         = this.clientedata;
+                this.ot              = this.otdata.numero;
+                this.fts             = this.otdata.presupuesto;
+                this.obra            = this.otdata.obra;
+                this.fecha_ensayo    = this.otdata.fecha_estimada_ensayo;
+                this.contacto1       = this.otcontacto1data;
+                if(this.otcontacto2data != null)
+                     this.contacto2       = this.otcontacto2data;
+
+                this.lugar_ensayo    = this.otdata.lugar;
+                this.localidad.lat   = this.otdata.lat;
+                this.localidad.lon   = this.otdata.lon;
+                this.inputsServicios = this.ot_serviciosdata;
+                this.inputsProductos = this.ot_productosdata;
                 this.accion          = this.acciondata
           
                }
+              console.log(new Date);
+
               },
 
       getClientes : function(){
@@ -355,6 +465,14 @@ export default {
                 var urlRegistros = 'contactos/' + this.cliente.id;    
                 axios.get(urlRegistros).then(response =>{
                 this.contactos = response.data
+                });
+              },
+      getMedidasProducto : function(){
+                this.medida = '';               
+                axios.defaults.baseURL = this.url ;
+                var urlRegistros = 'medidas/' + this.producto.unidades_medida_id;    
+                axios.get(urlRegistros).then(response =>{
+                this.medidas = response.data
                 });
               },
       getProvincias : function(){
@@ -380,6 +498,14 @@ export default {
                 var urlRegistros = 'servicios';    
                 axios.get(urlRegistros).then(response =>{
                 this.servicios = response.data
+                });
+              },
+        getProductos : function(){
+             
+                axios.defaults.baseURL = this.url ;
+                var urlRegistros = 'productos';    
+                axios.get(urlRegistros).then(response =>{
+                this.productos = response.data
                 });
               },
        getMetodosEnsayos: function(){
@@ -445,14 +571,28 @@ export default {
             this.cantidad_servicios='1'
 
         },
+      addProducto(index) {
+            this.inputsProductos.push({ 
+                producto:this.producto.descripcion,            
+                medida : this.medida.descripcion,              
+                cantidad_productos:this.cantidad_productos,
+                 });
+            this.producto='',        
+            this.unidad_medida ='',       
+            this.cantidad_productos='1'
+
+        },
       removeServicio(index) {
             this.inputsServicios.splice(index, 1);
+        },
+      removeProducto(index) {
+            this.inputsProductos.splice(index, 1);
         },
 
       submit() {
 
       this.errors =[];
-      var urlRegistros = 'certificados';
+      var urlRegistros = 'ots';
       axios.post(urlRegistros,{
 
          'cliente'       : this.cliente.id,
@@ -461,6 +601,7 @@ export default {
          'hora'          : this.hora,
          'ot'            : this.ot,
          'fts'           : this.fts,
+         'obra'          : this.obra,
          'contacto1'     : this.contacto1.id,
          'contacto2'     : this.contacto2.id,
          'provincia'     : this.provincia.id,

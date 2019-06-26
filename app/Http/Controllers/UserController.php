@@ -24,8 +24,10 @@ class UserController extends Controller
 
     public function callView()
     {   
-        $user = auth()->user()->name;      
-        return view('usuarios',compact('user','modelo'));
+        $user = auth()->user()->name; 
+        $header_titulo = "Usuarios";
+        $header_descripcion ="Alta | Baja | Modificación";  
+        return view('usuarios',compact('user','modelo','header_titulo','header_descripcion'));
 
     }
 

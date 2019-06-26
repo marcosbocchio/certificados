@@ -61,7 +61,7 @@ desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class="sidebar-mini skin-black-light">
+<body class="sidebar-mini skin-yellow">
 
 @include('layouts.enod.partials.header')
 @include('layouts.enod.partials.content-header')

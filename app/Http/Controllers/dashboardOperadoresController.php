@@ -26,6 +26,8 @@ class dashboardOperadoresController extends Controller
      {
          $user = $Request->user()->name;
          $title = 'Area Enod' ;
-         return view('testoperador',compact('user','title'));
+         $header_titulo = "Dashboard";
+         $header_descripcion ="Control panel";     
+         return view('testoperador',compact('user','title','header_titulo','header_descripcion'));
      }
 }

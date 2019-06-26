@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ServiciosTableSeeder::class);
         $this->call(NormaEnsayosTableSeeder::class);
         $this->call(NormaEvaluacionesTableSeeder::class);
+        $this->call(ProductoTableSeeder::class);
 
 
 

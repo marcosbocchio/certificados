@@ -29,6 +29,8 @@ Route::resource('norma_ensayos', 'NormaEnsayosController');
 Route::resource('norma_evaluaciones', 'NormaEvaluacionesController');
 Route::resource('ots', 'OtsController');
 Route::resource('ot_servicios', 'OtServiciosController');
+Route::resource('productos', 'ProductosController');
+Route::resource('medidas', 'MedidasController');
 
 
 

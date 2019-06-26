@@ -7,6 +7,7 @@ use App\Repositories\Ots\OtsRepository;
 use Illuminate\Support\Collection as Collection;
 use App\Ots;
 use App\Clientes;
+use App\Contactos;
 use Illuminate\Support\Facades\DB;
 use App\OtServicios;
 use App\User;
@@ -28,10 +29,10 @@ class OtsController extends Controller
     {
         $accion = 'create';      
         $user = auth()->user()->name;
-        $ot = new Ots(); 
-        $cliente = new Clientes();
-        $ot_servicios = new OtServicios();
-        return view('ots.index', compact('user','ot','cliente','ot_servicios','accion'));
+        $header_titulo = "Orden de trabajo";
+        $header_descripcion ="Crear";      
+     //   dd($ot_contacto2);
+        return view('ots.index', compact('user','accion','header_titulo','header_descripcion'));
         
     }
 
@@ -75,6 +76,8 @@ class OtsController extends Controller
      */
     public function edit($id)
     {   
+        $header_titulo = "Orden de trabajo";
+        $header_descripcion ="Editar";      
         $accion = 'edit';      
         $user = auth()->user()->name;
         $ot = $this->ot->find($id);
@@ -98,9 +101,30 @@ class OtsController extends Controller
                                     inner join ots on
                                     ot_servicios.ot_id=ots.id and
                                     ots.id=:id',['id' => $ot->id ]);
+        $ot_productos = DB::select('select 
+                                    productos.descripcion as producto,
+                                    medidas.descripcion as medida,
+                                    ot_productos.cantidad as cantidad
+                                    
+                                    from ot_productos
+                                    inner join productos on 
+                                    productos.id = ot_productos.producto_id
+                                    inner join unidades_medidas on
+                                    productos.unidades_medida_id = unidades_medidas.id
+                                    inner join medidas on
+                                    unidades_medidas.id = medidas.id
+                                    inner join ots on
+                                    ot_productos.ot_id=ots.id and
+                                    ots.id=:id',['id' => $ot->id ]);
       
-        $ot_servicios = Collection::make($ot_servicios);      
-        return view('ots.index',compact('ot','cliente','user','ot_servicios','accion'));
+        $ot_servicios = Collection::make($ot_servicios);
+        $ot_productos = Collection::make($ot_productos);
+        $ot_contacto1 = Contactos::find($ot->contacto1_id);
+        $ot_contacto2 = Contactos::find($ot->contacto2_id);
+        if ($ot_contacto2 == null)
+                $ot_contacto2 = new Contactos();
+
+        return view('ots.edit',compact('ot','cliente','user','ot_servicios','ot_productos','accion','ot_contacto1','ot_contacto2','header_titulo','header_descripcion'));
     }
 
     /**

@@ -25,8 +25,10 @@ class MaterialesController extends Controller
 
     public function callView()
     {   
-        $user = auth()->user()->name;      
-        return view('materiales',compact('user'));
+        $user = auth()->user()->name;
+        $header_titulo = "Materiales";
+        $header_descripcion ="Alta | Baja | Modificación";      
+        return view('materiales',compact('user','header_titulo','header_descripcion'));
 
     }
 

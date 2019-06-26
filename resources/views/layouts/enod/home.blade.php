@@ -55,7 +55,7 @@ desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class="hold-transition skin-blue sidebar-boxed">
+<body class="hold-transition skin-yellow sidebar-boxed">
 <div class="wrapper">
 
   <!-- Main Header -->

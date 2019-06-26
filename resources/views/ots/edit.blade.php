@@ -14,7 +14,14 @@
  <div id="app">
 
 
-  <ots  acciondata="{{$accion}}" ></ots>
+  <ots :otdata="{{$ot}}" 
+      :clientedata="{{$cliente}}" 
+      :ot_serviciosdata="{{$ot_servicios}}" 
+      :ot_productosdata="{{$ot_productos}}"
+      acciondata="{{$accion}}"
+      :otcontacto1data="{{$ot_contacto1}}"
+      :otcontacto2data="{{$ot_contacto2}}"
+       ></ots>
 
  </div>
 
@@ -49,4 +56,3 @@
     </script>
 
 @endsection
-
