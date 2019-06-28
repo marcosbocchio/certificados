@@ -9,14 +9,16 @@ class StorageController extends Controller
 {
     public function save(Request $request){
 
-       // Verificamos si hay un file con nombre avatar
-      if ($request->hasFile('image')) {
-        // Si es así , almacenamos en la carpeta public/avatars
-        // esta estará dentro de public/defaults/
-        $url = $request->image->store('imagenes');
-        
-        return "llego la imagen";
-    }
-      return "Noo Llego una imagen";
+    
+      if ($request->hasFile('image')){
+
+        $path = $request->image->store('referencias-image');
+        return $path;
+      }
+      else
+      {
+        return "Seleccione un archivos";
+      } 
+     
     }
 }

@@ -3110,6 +3110,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3118,9 +3120,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   data: function data() {
     return {
-      selectedFile: null,
+      selectedFile1: null,
+      selectedFile2: null,
+      selectedFile3: null,
+      selectedFile4: null,
       errors: {},
-      observaciones: ''
+      observaciones: '',
+      path1: '',
+      path2: '',
+      path3: '',
+      path4: ''
     };
   },
   created: function created() {
@@ -3133,17 +3142,61 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       $('#nuevo').modal('show');
     },
     storeRegistro: function storeRegistro() {
-      this.$emit('setReferencia', this.observaciones);
+      this.$emit('setReferencia', this.observaciones, this.path1, this.path2, this.path3, this.path4);
     },
-    onFileSelected: function onFileSelected(event) {
-      this.selectedFile = event.target.files[0];
+    onFileSelected: function onFileSelected(event, index) {
+      switch (index) {
+        case 1:
+          this.selectedFile1 = revent.target.files[0];
+          break;
+
+        case 2:
+          this.selectedFile2 = event.target.files[0];
+          break;
+
+        case 3:
+          this.selectedFile3 = event.target.files[0];
+          break;
+
+        case 4:
+          this.selectedFile4 = event.target.files[0];
+          break;
+      }
     },
-    onUpload: function onUpload(event) {
+    onUpload: function onUpload(event, path) {
+      var _this = this;
+
+      var settings = {
+        headers: {
+          'content-type': 'multipart/form-data'
+        }
+      };
       var fd = new FormData();
       fd.append('image', this.selectedFile);
       axios.defaults.baseURL = this.url;
       var url = 'storage/create';
-      axios.put(url, fd).then(function (response) {
+      axios.post(url, fd, settings).then(function (response) {
+        switch (path) {
+          case 1:
+            _this.path1 = response.data;
+            break;
+
+          case 2:
+            _this.path2 = response.data;
+            break;
+
+          case 3:
+            _this.path3 = response.data;
+            break;
+
+          case 4:
+            _this.path4 = response.data;
+            break;
+        }
+
+        path = response.data;
+        console.log(path);
+      })["catch"](function (response) {
         console.log(response);
       });
     }
@@ -36283,7 +36336,11 @@ var render = function() {
             _c("input", {
               staticClass: "form-control",
               attrs: { type: "file", name: "file" },
-              on: { change: _vm.onFileSelected }
+              on: {
+                change: function($event) {
+                  return _vm.onFileSelected("1")
+                }
+              }
             }),
             _vm._v(" "),
             _c(
@@ -36292,7 +36349,7 @@ var render = function() {
                 on: {
                   click: function($event) {
                     $event.preventDefault()
-                    return _vm.onUpload($event)
+                    return _vm.onUpload("1")
                   }
                 }
               },
@@ -36301,9 +36358,63 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _vm._m(1),
+        _c("div", { staticClass: "modal-body" }, [
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", [_vm._v("Imagen 2")]),
+            _vm._v(" "),
+            _c("input", {
+              staticClass: "form-control",
+              attrs: { type: "file", name: "file" },
+              on: {
+                change: function($event) {
+                  return _vm.onFileSelected("2")
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    return _vm.onUpload("2")
+                  }
+                }
+              },
+              [_vm._v("upload")]
+            )
+          ])
+        ]),
         _vm._v(" "),
-        _vm._m(2),
+        _c("div", { staticClass: "modal-body" }, [
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", [_vm._v("Imagen 3")]),
+            _vm._v(" "),
+            _c("input", {
+              staticClass: "form-control",
+              attrs: { type: "file", name: "file" },
+              on: {
+                change: function($event) {
+                  return _vm.onFileSelected("3")
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    return _vm.onUpload("3")
+                  }
+                }
+              },
+              [_vm._v("upload")]
+            )
+          ])
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "modal-body" }, [
           _c("div", { staticClass: "form-group" }, [
@@ -36311,10 +36422,26 @@ var render = function() {
             _vm._v(" "),
             _c("input", {
               staticClass: "form-control",
-              attrs: { type: "file", name: "file" }
+              attrs: { type: "file", name: "file" },
+              on: {
+                change: function($event) {
+                  return _vm.onFileSelected("4")
+                }
+              }
             }),
             _vm._v(" "),
-            _c("button", { on: { click: _vm.onUpload } }, [_vm._v("upload")])
+            _c(
+              "button",
+              {
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    return _vm.onUpload("4")
+                  }
+                }
+              },
+              [_vm._v("upload")]
+            )
           ])
         ]),
         _vm._v(" "),
@@ -36363,36 +36490,6 @@ var staticRenderFns = [
       ),
       _vm._v(" "),
       _c("h4", { staticClass: "modal-title" }, [_vm._v("Referencia")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-body" }, [
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", [_vm._v("Imagen 2")]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control",
-          attrs: { type: "file", name: "file" }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-body" }, [
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", [_vm._v("Imagen 3")]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control",
-          attrs: { type: "file", name: "file" }
-        })
-      ])
     ])
   }
 ]
@@ -53823,7 +53920,7 @@ Vue.use(VueGoogleMaps, {
 
 var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {
-    url:  false ? undefined : "http://certificados.test/api"
+    url:  false ? undefined : "http://localhost:8000/api"
   }
 });
 var eventNewRegistro = new Vue();
@@ -54486,8 +54583,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\bocch\code\certificados\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\bocch\code\certificados\resources\sass\toastr.scss */"./resources/sass/toastr.scss");
+__webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/sass/toastr.scss */"./resources/sass/toastr.scss");
 
 
 /***/ })
