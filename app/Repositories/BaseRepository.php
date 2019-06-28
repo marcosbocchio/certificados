@@ -29,7 +29,6 @@ abstract class BaseRepository implements RepositoryInterface {
   }
 
 
-
   public function delete($id){
 
    $registro = $this->getModel()->findOrFail($id);

@@ -39,14 +39,32 @@ class AddForeignOtsTable extends Migration
             $table->foreign('contacto2_id')
                    ->references('id')
                    ->on('contactos');
+              
+            $table->bigInteger('contacto3_id')
+                   ->unsigned()
+                   ->nullable()
+                   ->after('contacto2_id');
+                   
+            $table->foreign('contacto3_id')
+                   ->references('id')
+                   ->on('contactos');
+       
+            $table->bigInteger('localidad_id')
+                   ->unsigned()
+                   ->after('contacto3_id');
+                   
+            $table->foreign('localidad_id')
+                   ->references('id')
+                   ->on('localidades');      
 
             $table->bigInteger('user_id')
                    ->unsigned()
-                   ->after('contacto2_id');
+                   ->after('localidad_id');              
                    
             $table->foreign('user_id')
                    ->references('id')
                    ->on('users');
+              
 
         });
     }
@@ -68,6 +86,9 @@ class AddForeignOtsTable extends Migration
 
             $table->dropForeign(['contacto2_id']);
             $table->dropColumn('contacto2_id');
+
+            $table->dropForeign(['contacto3_id']);
+            $table->dropColumn('contacto3_id');
 
             $table->dropForeign(['user_id']);
             $table->dropColumn('user_id');

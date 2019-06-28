@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Riesgos;
 
 class OtRiesgosController extends Controller
 {
@@ -13,7 +14,7 @@ class OtRiesgosController extends Controller
      */
     public function index()
     {
-        //
+      
     }
 
     /**

@@ -10,8 +10,7 @@
           </div>
         </div>
       </div>
-    </div>
-    
+    </div>    
     <div class="box box-danger">
       <div class="box-body">
         <div class="col-md-3">
@@ -84,6 +83,12 @@
           <div class="form-group">
               <label>Contacto 2</label>
               <v-select v-model="contacto2" name="contacto_2" label="nombre" :options="contactos" ></v-select>   
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+              <label>Contacto 3</label>
+              <v-select v-model="contacto3" name="contacto_3" label="nombre" :options="contactos" ></v-select>   
           </div>
         </div>
       </div>
@@ -349,7 +354,7 @@
       <div class="box-body">
         <div class="form-group">
           <label>Observaciones</label>
-          <textarea class="form-control noresize" rows="3" placeholder="" maxlength="250"></textarea>
+          <textarea v-model="observaciones" class="form-control noresize" rows="3" placeholder="" maxlength="250"></textarea>
         </div>
       </div>
     </div>
@@ -408,6 +413,21 @@ export default {
        required : false,
       
      },
+     ot_provinciasdata : {
+       type : [ Object, Array ],
+       required : false,
+      
+     },
+     ot_localidaddata : {
+       type : [ Object, Array ],
+       required : false,
+      
+     },
+      otcontacto3data : {
+       type : [ Object, Array ],
+       required : false,
+      
+     },
     
      acciondata : {
        type : String,
@@ -449,6 +469,8 @@ export default {
           contactos:[],
           contacto1:'',
           contacto2:'',
+          contacto3:'',
+          observaciones:'',
           localidades:[],
           localidad: {
             
@@ -503,6 +525,7 @@ export default {
         this.getNormaEvaluaciones();
         this.setOt();
         this.sync();
+        this.accion = this.acciondata;
       },
     mounted : function(){
 
@@ -523,6 +546,7 @@ export default {
 
       setOt : function(){
 
+
               if(this.acciondata == "edit"){               
 
                 this.proyecto        = this.otdata.proyecto;
@@ -533,20 +557,24 @@ export default {
                 this.cliente         = this.clientedata;
                 this.ot              = this.otdata.numero;
                 this.fts             = this.otdata.presupuesto;
+                this.provincia       = this.ot_provinciasdata; 
+                this.localidad       = this.ot_localidaddata; 
                 this.obra            = this.otdata.obra;
+                this.observaciones   = this.otdata.observaciones;
                 this.fecha_ensayo    = this.otdata.fecha_estimada_ensayo;
                 this.contacto1       = this.otcontacto1data;
                 if(this.otcontacto2data != null)
                      this.contacto2       = this.otcontacto2data;
+                if(this.otcontacto3data != null)
+                     this.contacto3       = this.otcontacto3data;
 
                 this.lugar_ensayo    = this.otdata.lugar;
                 this.localidad.lat   = this.otdata.lat;
                 this.localidad.lon   = this.otdata.lon;
                 this.inputsServicios = this.ot_serviciosdata;
                 this.inputsProductos = this.ot_productosdata;
-                this.inputsRiesgos = this.ot_riesgosdata;
-                this.inputsEpps = this.ot_eppsdata;
-                this.accion          = this.acciondata
+                this.inputsRiesgos   = this.ot_riesgosdata;
+                this.inputsEpps      = this.ot_eppsdata;                
           
                }
               console.log(new Date);
@@ -564,6 +592,7 @@ export default {
       getContactos : function(){
                 this.contacto1 = '';
                 this.contacto2 = '';
+                this.contacto3 = '';
                 axios.defaults.baseURL = this.url ;
                 var urlRegistros = 'contactos/' + this.cliente.id;    
                 axios.get(urlRegistros).then(response =>{
@@ -680,7 +709,9 @@ export default {
                 id:this.servicio.id,
                 servicio:this.servicio.descripcion,            
                 norma_ensayo : this.norma_ensayo.descripcion,
+                norma_ensayo_id : this.norma_ensayo.id,
                 norma_evaluacion :this.norma_evaluacion.descripcion,
+                norma_evaluacion_id :this.norma_evaluacion.id,
                 cantidad_placas:this.cantidad_placas,
                 cantidad_servicios:this.cantidad_servicios,
                  });
@@ -695,11 +726,13 @@ export default {
             this.inputsProductos.push({ 
                 id:this.producto.id,
                 producto:this.producto.descripcion,            
-                medida : this.medida.descripcion,              
+                medida : this.medida.descripcion,  
+                medida_id :this.medida.id,
+                unidad_medida_id :this.producto.unidades_medida_id,            
                 cantidad_productos:this.cantidad_productos,
                  });
             this.producto='',        
-            this.unidad_medida ='',       
+            this.medida ='',       
             this.cantidad_productos='1'
 
         },
@@ -734,41 +767,82 @@ export default {
 
       submit() {
 
-      this.errors =[];
-      var urlRegistros = 'ots';
-      axios.post(urlRegistros,{
+        if(this.accion == 'create'){
+            this.errors =[];
+            var urlRegistros = 'ots';
+            axios.post(urlRegistros,{
 
-         'cliente'       : this.cliente.id,
-         'proyecto'      : this.proyecto,
-         'fecha'         : this.fecha,
-         'hora'          : this.hora,
-         'ot'            : this.ot,
-         'fts'           : this.fts,
-         'obra'          : this.obra,
-         'contacto1'     : this.contacto1.id,
-         'contacto2'     : this.contacto2.id,
-         'provincia'     : this.provincia.id,
-         'localidad'     : this.localidad.id,
-         'fecha_ensayo'  : this.fecha_ensayo,
-         'latitud'       : this.localidad.lat,
-         'longitud'      : this.localidad.lon,
-         'servicios'     : this.inputsServicios,
-         'productos'     : this.inputsProductos,
-         'epps'          : this.inputsEpps,
-         'riesgos'       : this.inputsRiesgos
+              'cliente'       : this.cliente.id,
+              'proyecto'      : this.proyecto,
+              'fecha'         : this.fecha,
+              'hora'          : this.hora,
+              'ot'            : this.ot,
+              'fts'           : this.fts,
+              'obra'          : this.obra,
+              'contacto1'     : this.contacto1.id,
+              'contacto2'     : this.contacto2.id,
+              'contacto3'     : this.contacto3.id,
+              'provincia'     : this.provincia.id,
+              'localidad'     : this.localidad.id,
+              'fecha_ensayo'  : this.fecha_ensayo,
+              'lugar_ensayo'  : this.lugar_ensayo,
+              'lat'           : this.localidad.lat,
+              'lon'           : this.localidad.lon,
+              'observaciones' : this.observaciones,
+              'servicios'     : this.inputsServicios,
+              'productos'     : this.inputsProductos,
+              'epps'          : this.inputsEpps,
+              'riesgos'       : this.inputsRiesgos
+          }         
+      
+        ).then(response => {
+          this.response = response
+          alert('OT creada!');
+        }).catch(error => {
+          if (error.response.status === 422) {
+            this.errors = error.response.data.errors || {};
+          }
+        });
+      }
+      else if (this.accion =='edit')
+      {
+        alert('va a editar');
+        this.errors =[];
+        var urlRegistros = 'ots/' + this.otdata.id ;
+        axios.put(urlRegistros, {
 
-        
-
+              'cliente'       : this.cliente.id,
+              'proyecto'      : this.proyecto,
+              'fecha'         : this.fecha,
+              'hora'          : this.hora,
+              'ot'            : this.ot,
+              'fts'           : this.fts,
+              'obra'          : this.obra,
+              'contacto1'     : this.contacto1.id,
+              'contacto2'     : this.contacto2.id,
+              'contacto3'     : this.contacto3.id,
+              'provincia'     : this.provincia.id,
+              'localidad'     : this.localidad.id,
+              'fecha_ensayo'  : this.fecha_ensayo,
+              'lugar_ensayo'  : this.lugar_ensayo,
+              'lat'           : this.localidad.lat,
+              'lon'           : this.localidad.lon,
+              'observaciones' : this.observaciones,
+              'servicios'     : this.inputsServicios,
+              'productos'     : this.inputsProductos,
+              'epps'          : this.inputsEpps,
+              'riesgos'       : this.inputsRiesgos
+          }         
+          ).then(response => {
+          this.response = response
+          alert('OT Editada!');
+          }).catch(error => {
+            if (error.response.status === 422) {
+              this.errors = error.response.data.errors || {};
+            }
+          });
       }
       
-      ).then(response => {
-        this.response = response
-        alert('Message sent!');
-      }).catch(error => {
-        if (error.response.status === 422) {
-          this.errors = error.response.data.errors || {};
-        }
-      });
     },
     }
 }

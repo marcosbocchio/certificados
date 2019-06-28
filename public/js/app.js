@@ -2593,6 +2593,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -2635,6 +2640,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       type: [Object, Array],
       required: false
     },
+    ot_provinciasdata: {
+      type: [Object, Array],
+      required: false
+    },
+    ot_localidaddata: {
+      type: [Object, Array],
+      required: false
+    },
+    otcontacto3data: {
+      type: [Object, Array],
+      required: false
+    },
     acciondata: {
       type: String,
       required: true
@@ -2672,6 +2689,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       contactos: [],
       contacto1: '',
       contacto2: '',
+      contacto3: '',
+      observaciones: '',
       localidades: [],
       localidad: {
         lat: -34.603684400000011,
@@ -2717,6 +2736,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.getNormaEvaluaciones();
     this.setOt();
     this.sync();
+    this.accion = this.acciondata;
   },
   mounted: function mounted() {
     $('#datepicker').datepicker({
@@ -2737,10 +2757,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.cliente = this.clientedata;
         this.ot = this.otdata.numero;
         this.fts = this.otdata.presupuesto;
+        this.provincia = this.ot_provinciasdata;
+        this.localidad = this.ot_localidaddata;
         this.obra = this.otdata.obra;
+        this.observaciones = this.otdata.observaciones;
         this.fecha_ensayo = this.otdata.fecha_estimada_ensayo;
         this.contacto1 = this.otcontacto1data;
         if (this.otcontacto2data != null) this.contacto2 = this.otcontacto2data;
+        if (this.otcontacto3data != null) this.contacto3 = this.otcontacto3data;
         this.lugar_ensayo = this.otdata.lugar;
         this.localidad.lat = this.otdata.lat;
         this.localidad.lon = this.otdata.lon;
@@ -2748,7 +2772,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.inputsProductos = this.ot_productosdata;
         this.inputsRiesgos = this.ot_riesgosdata;
         this.inputsEpps = this.ot_eppsdata;
-        this.accion = this.acciondata;
       }
 
       console.log(new Date());
@@ -2767,6 +2790,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.contacto1 = '';
       this.contacto2 = '';
+      this.contacto3 = '';
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'contactos/' + this.cliente.id;
       axios.get(urlRegistros).then(function (response) {
@@ -2886,7 +2910,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         id: this.servicio.id,
         servicio: this.servicio.descripcion,
         norma_ensayo: this.norma_ensayo.descripcion,
+        norma_ensayo_id: this.norma_ensayo.id,
         norma_evaluacion: this.norma_evaluacion.descripcion,
+        norma_evaluacion_id: this.norma_evaluacion.id,
         cantidad_placas: this.cantidad_placas,
         cantidad_servicios: this.cantidad_servicios
       });
@@ -2897,9 +2923,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         id: this.producto.id,
         producto: this.producto.descripcion,
         medida: this.medida.descripcion,
+        medida_id: this.medida.id,
+        unidad_medida_id: this.producto.unidades_medida_id,
         cantidad_productos: this.cantidad_productos
       });
-      this.producto = '', this.unidad_medida = '', this.cantidad_productos = '1';
+      this.producto = '', this.medida = '', this.cantidad_productos = '1';
     },
     addEpp: function addEpp(index) {
       this.inputsEpps.push({
@@ -2930,35 +2958,74 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     submit: function submit() {
       var _this13 = this;
 
-      this.errors = [];
-      var urlRegistros = 'ots';
-      axios.post(urlRegistros, {
-        'cliente': this.cliente.id,
-        'proyecto': this.proyecto,
-        'fecha': this.fecha,
-        'hora': this.hora,
-        'ot': this.ot,
-        'fts': this.fts,
-        'obra': this.obra,
-        'contacto1': this.contacto1.id,
-        'contacto2': this.contacto2.id,
-        'provincia': this.provincia.id,
-        'localidad': this.localidad.id,
-        'fecha_ensayo': this.fecha_ensayo,
-        'latitud': this.localidad.lat,
-        'longitud': this.localidad.lon,
-        'servicios': this.inputsServicios,
-        'productos': this.inputsProductos,
-        'epps': this.inputsEpps,
-        'riesgos': this.inputsRiesgos
-      }).then(function (response) {
-        _this13.response = response;
-        alert('Message sent!');
-      })["catch"](function (error) {
-        if (error.response.status === 422) {
-          _this13.errors = error.response.data.errors || {};
-        }
-      });
+      if (this.accion == 'create') {
+        this.errors = [];
+        var urlRegistros = 'ots';
+        axios.post(urlRegistros, {
+          'cliente': this.cliente.id,
+          'proyecto': this.proyecto,
+          'fecha': this.fecha,
+          'hora': this.hora,
+          'ot': this.ot,
+          'fts': this.fts,
+          'obra': this.obra,
+          'contacto1': this.contacto1.id,
+          'contacto2': this.contacto2.id,
+          'contacto3': this.contacto3.id,
+          'provincia': this.provincia.id,
+          'localidad': this.localidad.id,
+          'fecha_ensayo': this.fecha_ensayo,
+          'lugar_ensayo': this.lugar_ensayo,
+          'lat': this.localidad.lat,
+          'lon': this.localidad.lon,
+          'observaciones': this.observaciones,
+          'servicios': this.inputsServicios,
+          'productos': this.inputsProductos,
+          'epps': this.inputsEpps,
+          'riesgos': this.inputsRiesgos
+        }).then(function (response) {
+          _this13.response = response;
+          alert('OT creada!');
+        })["catch"](function (error) {
+          if (error.response.status === 422) {
+            _this13.errors = error.response.data.errors || {};
+          }
+        });
+      } else if (this.accion == 'edit') {
+        alert('va a editar');
+        this.errors = [];
+        var urlRegistros = 'ots/' + this.otdata.id;
+        axios.put(urlRegistros, {
+          'cliente': this.cliente.id,
+          'proyecto': this.proyecto,
+          'fecha': this.fecha,
+          'hora': this.hora,
+          'ot': this.ot,
+          'fts': this.fts,
+          'obra': this.obra,
+          'contacto1': this.contacto1.id,
+          'contacto2': this.contacto2.id,
+          'contacto3': this.contacto3.id,
+          'provincia': this.provincia.id,
+          'localidad': this.localidad.id,
+          'fecha_ensayo': this.fecha_ensayo,
+          'lugar_ensayo': this.lugar_ensayo,
+          'lat': this.localidad.lat,
+          'lon': this.localidad.lon,
+          'observaciones': this.observaciones,
+          'servicios': this.inputsServicios,
+          'productos': this.inputsProductos,
+          'epps': this.inputsEpps,
+          'riesgos': this.inputsRiesgos
+        }).then(function (response) {
+          _this13.response = response;
+          alert('OT Editada!');
+        })["catch"](function (error) {
+          if (error.response.status === 422) {
+            _this13.errors = error.response.data.errors || {};
+          }
+        });
+      }
     }
   }
 });
@@ -35038,6 +35105,32 @@ var render = function() {
                 ],
                 1
               )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-6" }, [
+              _c(
+                "div",
+                { staticClass: "form-group" },
+                [
+                  _c("label", [_vm._v("Contacto 3")]),
+                  _vm._v(" "),
+                  _c("v-select", {
+                    attrs: {
+                      name: "contacto_3",
+                      label: "nombre",
+                      options: _vm.contactos
+                    },
+                    model: {
+                      value: _vm.contacto3,
+                      callback: function($$v) {
+                        _vm.contacto3 = $$v
+                      },
+                      expression: "contacto3"
+                    }
+                  })
+                ],
+                1
+              )
             ])
           ])
         ]),
@@ -35841,7 +35934,35 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _vm._m(8),
+        _c("div", { staticClass: "box box-danger" }, [
+          _c("div", { staticClass: "box-body" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", [_vm._v("Observaciones")]),
+              _vm._v(" "),
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.observaciones,
+                    expression: "observaciones"
+                  }
+                ],
+                staticClass: "form-control noresize",
+                attrs: { rows: "3", placeholder: "", maxlength: "250" },
+                domProps: { value: _vm.observaciones },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.observaciones = $event.target.value
+                  }
+                }
+              })
+            ])
+          ])
+        ]),
         _vm._v(" "),
         _c(
           "button",
@@ -35951,23 +36072,6 @@ var staticRenderFns = [
         _c("th", [_vm._v("Riesgos")]),
         _vm._v(" "),
         _c("th", { attrs: { colspan: "2" } }, [_vm._v(" ")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "box box-danger" }, [
-      _c("div", { staticClass: "box-body" }, [
-        _c("div", { staticClass: "form-group" }, [
-          _c("label", [_vm._v("Observaciones")]),
-          _vm._v(" "),
-          _c("textarea", {
-            staticClass: "form-control noresize",
-            attrs: { rows: "3", placeholder: "", maxlength: "250" }
-          })
-        ])
       ])
     ])
   }

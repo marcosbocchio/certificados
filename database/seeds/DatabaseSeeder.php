@@ -23,11 +23,15 @@ class DatabaseSeeder extends Seeder
         $this->call(NormaEnsayosTableSeeder::class);
         $this->call(NormaEvaluacionesTableSeeder::class);
         $this->call(ProductoTableSeeder::class);
+        $this->call(EppsTableSeeder::class);
+        $this->call(RiesgosTableSeeder::class);
+        $this->call(MedidasTableSeeder::class);
 
 
 
 
-        factory('App\Clientes', 2500)->create();
+
+       // factory('App\Clientes', 2500)->create();
 
 
     }

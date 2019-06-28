@@ -17,5 +17,17 @@ class ProductoTableSeeder extends Seeder
             'descripcion'         =>'Placa revelada e informada por Costura',   
             'unidades_medida_id'  =>'2'     
         ]);
+
+        Productos::create([
+            'codigo'              =>'gel 1',
+            'descripcion'         =>'Gel',   
+            'unidades_medida_id'  =>'3'     
+        ]);
+
+        Productos::create([
+            'codigo'              =>'soga 1',
+            'descripcion'         =>'Sogas',   
+            'unidades_medida_id'  =>'1'     
+        ]);
     }
 }

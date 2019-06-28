@@ -2,7 +2,15 @@
 
 namespace App\Repositories\Ots;
 use App\Repositories\BaseRepository;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Ots;
+use Auth;
+use App\User;
+use App\OtServicios;
+Use App\OtProductos;
+Use App\OtEpps;
+Use App\OtRiesgos;
 
 
 class OtsRepository extends BaseRepository
@@ -12,5 +20,147 @@ class OtsRepository extends BaseRepository
   {
     return new Ots;
   }
+
+  public function store(Request $request)
+  {
+
+    $ot = $this->getModel();
+    $servicios = $request->servicios;
+    $productos = $request->productos;
+    $epps      = $request->epps;
+    $riesgos   = $request->riesgos;
+
+    DB::beginTransaction();
+        try {
+    
+          $this->setOt($request, $ot);    
+          $this->setServicios($servicios,$ot);
+          $this->setProductos($productos,$ot);
+          $this->setEpps($epps,$ot);
+          $this->setRiesgos($riesgos,$ot);
+
+        DB::commit();
+
+        } catch (\Exception $ex) {
+          DB::rollback();
+          return response()->json(['error' => $ex->getMessage()], 500);
+          }
+
+
+  }
+
+  public function updateOt($request, $id)
+  {
+
+        $ot = $this->getModel()->find($id);
+        $servicios = $request->servicios;
+        $productos = $request->productos;
+        $epps      = $request->epps;
+        $riesgos   = $request->riesgos;
+        
+
+        $this->setOt($request, $ot);    
+        OtServicios::where('ot_id',$ot->id)->delete();
+        $this->setServicios($servicios,$ot);
+        OtProductos::where('ot_id',$ot->id)->delete();
+        $this->setProductos($productos,$ot);
+        OtEpps::where('ot_id',$ot->id)->delete();
+        $this->setEpps($epps,$ot);
+        OtRiesgos::where('ot_id',$ot->id)->delete();
+        $this->setRiesgos($riesgos,$ot);
+
+    
+
+  }
+
+
+  public function SetOt($request ,$ot){
+
+    $user_id = null;
+    $fecha_hora = date('Y-m-d',strtotime($request->fecha)) .' ' . date('H:i:s',strtotime($request->hora)) ;
+    $fecha_estimada_ensayo =  date('Y-m-d',strtotime($request->fecha_ensayo));
+
+    $ot->proyecto         = $request->proyecto;
+    $ot->cliente_id       = $request->cliente;
+    $ot->obra             = $request->obra;
+    $ot->fecha_hora       = $fecha_hora;
+    $ot->numero           = $request->ot;
+    $ot->presupuesto      = $request->fts;
+    $ot->lugar            = $request->lugar_ensayo;
+    $ot->localidad_id     = $request->localidad;
+    $ot->lat              = $request->lat;
+    $ot->lon              = $request->lon;
+    $ot->contacto1_id     = $request->contacto1;
+    $ot->contacto2_id     = $request->contacto2;
+    $ot->contacto3_id     = $request->contacto3;
+    $ot->observaciones    = $request->observaciones;
+    $ot->fecha_estimada_ensayo = $fecha_estimada_ensayo;
+    $ot->user_id          = $user_id;
+    $ot->estado      = 'CARGANDO';
+    $ot->save();     
+  }
+
+  public function SetServicios($servicios,Ots $ot){    
+
+    foreach ($servicios as $servicio) {     
+
+      $ot_servicios                       = new OtServicios;
+      $ot_servicios->ot_id                = $ot->id;
+      $ot_servicios->servicio_id          = $servicio['id'];
+      $ot_servicios->norma_ensayo_id      = $servicio['norma_ensayo_id'];
+      $ot_servicios->norma_evaluacion_id  = $servicio['norma_evaluacion_id'];
+      $ot_servicios->cantidad             = $servicio['cantidad_servicios'];
+      $ot_servicios->cant_max_placas      = $servicio['cantidad_placas'];
+      $ot_servicios->save();
+      
+      }
+
+  }
+
+  public function SetProductos($productos,Ots $ot){
+  
+
+    foreach ($productos as $producto ) {
+      
+      $ot_productos                       = new OtProductos;
+      $ot_productos->ot_id                = $ot->id;
+      $ot_productos->producto_id          = $producto['id'];
+      $ot_productos->medida_id            = $producto['medida_id'];
+      $ot_productos->cantidad             = $producto['cantidad_productos'];
+      $ot_productos->save();
+     
+
+     }
+
+  }
+
+  public function SetEpps($epps,Ots $ot){
+
+
+    foreach ($epps as $epp ) {
+
+      $ot_epps                            = new OtEpps;
+      $ot_epps->ot_id                     = $ot->id;
+      $ot_epps->epp_id                    = $epp['id'];
+      $ot_epps->save();
+
+    }
+
+  }
+
+  public function SetRiesgos($riesgos,Ots $ot){
+
+  
+      foreach ($riesgos as $riesgo ) {
+
+        $ot_riesgos                         = new OtRiesgos;
+        $ot_riesgos->ot_id                  = $ot->id;
+        $ot_riesgos->riesgo_id              = $riesgo['id'];
+        $ot_riesgos->save();
+        
+      }
+
+  }
+
 
 }
