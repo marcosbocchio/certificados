@@ -210,6 +210,7 @@
                 <thead>
                   <tr>
                     <th>Servicio</th>
+                    <th>Ref</th>
                     <th>Norma Ensayo</th>
                     <th>Norma Evaluacion</th>
                     <th>Cant Placas</th>
@@ -220,6 +221,7 @@
                 <tbody>
                   <tr v-for="(inputsServicio,k) in inputsServicios" :key="k">
                     <td> {{ inputsServicio.servicio}}</td>
+                    <td> <span :class="{existe : inputsServicio.observaciones }" class="fa fa-file-archive-o" @click="OpenReferencias(k)" ></span></td>      
                     <td> {{ inputsServicio.norma_ensayo}}</td>
                     <td> {{ inputsServicio.norma_evaluacion}}</td>
                     <td> {{ inputsServicio.cantidad_placas}}</td>
@@ -267,16 +269,16 @@
                   <thead>
                     <tr>
                       <th>Productos</th>
-                      <th>Medidas</th>
+                      <th>Medidas</th>                     
                       <th>cant</th>                    
                       <th colspan="2">&nbsp;</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr v-for="(inputsProducto,k) in inputsProductos" :key="k">
-                      <td> {{ inputsProducto.producto}}</td>
+                      <td> {{ inputsProducto.producto}}</td>                     
                       <td> {{ inputsProducto.medida}}</td>  
-                      <td> {{ inputsProducto.cantidad_productos}}</td>                  
+                      <td> {{ inputsProducto.cantidad_productos}}</td>                                  
                       <td> <i class="fa fa-minus-circle" @click="removeProducto(k)" ></i></td>
                     </tr>
                   </tbody>
@@ -357,11 +359,11 @@
           <textarea v-model="observaciones" class="form-control noresize" rows="3" placeholder="" maxlength="250"></textarea>
         </div>
       </div>
-    </div>
-        
+      <create-referencias :index="index_referencias" @setReferencia="AddReferencia"></create-referencias>
+    </div>        
       <button class="btn btn-primary" type="submit" @click.prevent="submit">Guardar</button>
     </form>
-  </div>
+  </div>  
 </template>
 
 <script>
@@ -507,6 +509,7 @@ export default {
           cantidad_placas:'',
           cantidad_servicios:'1',
 
+          index_referencias:'',
 
           t:'',
           d:'' 
@@ -714,6 +717,7 @@ export default {
                 norma_evaluacion_id :this.norma_evaluacion.id,
                 cantidad_placas:this.cantidad_placas,
                 cantidad_servicios:this.cantidad_servicios,
+                observaciones : '',
                  });
             this.servicio='',        
             this.norma_ensayo ='',
@@ -764,6 +768,18 @@ export default {
       removeRiesgo(index) {
             this.inputsRiesgos.splice(index, 1);
         },
+      OpenReferencias(index){
+
+          this.index_referencias = index ;
+          $('#nuevo').modal('show');
+      },
+
+      AddReferencia(Ref){
+      
+           this.inputsServicios[this.index_referencias].observaciones = Ref;
+           $('#nuevo').modal('hide');     
+      },
+
 
       submit() {
 
@@ -867,7 +883,13 @@ export default {
  .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
 
     background-color: #fff;
-  
+   
+  }
+
+  .existe {
+
+    color: blue ;
+
   }
 
 </style>

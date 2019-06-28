@@ -95,7 +95,9 @@ class OtsController extends Controller
                                     norma_evaluaciones.descripcion as norma_evaluacion,
                                     norma_evaluaciones.id as norma_evaluacion_id,
                                     ot_servicios.cantidad as cantidad_servicios,
-                                    ot_servicios.cant_max_placas as cantidad_placas
+                                    ot_servicios.cant_max_placas as cantidad_placas,
+                                    null as observaciones
+                                
                                     
                                     from ot_servicios
                                     inner join servicios on 
