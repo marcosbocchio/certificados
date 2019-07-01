@@ -41,13 +41,13 @@ export default {
             'password' : ''
          },
         errors:{},
-        request : [],
-        x:''
+        request : []
          }
     
     },
  created: function () {
-    eventNewRegistro.$on('open', this.openModal)
+     
+    eventSetReferencia.$on('open', this.openModal)
   
     },
     computed :{
@@ -59,8 +59,7 @@ export default {
     methods: {
            openModal : function(){
                 this.newRegistro={};
-                $('#nuevo').modal('show');  
-                this.x='entro en el modal de new user';
+                $('#nuevo').modal('show');               
             },
             storeRegistro: function(){
                 axios.defaults.baseURL = this.url ;

@@ -2115,19 +2115,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         'password': ''
       },
       errors: {},
-      request: [],
-      x: ''
+      request: []
     };
   },
   created: function created() {
-    _event_bus__WEBPACK_IMPORTED_MODULE_1__["eventNewRegistro"].$on('open', this.openModal);
+    eventSetReferencia.$on('open', this.openModal);
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['url'])),
   methods: {
     openModal: function openModal() {
       this.newRegistro = {};
       $('#nuevo').modal('show');
-      this.x = 'entro en el modal de new user';
     },
     storeRegistro: function storeRegistro() {
       var _this = this;
@@ -2228,6 +2226,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuejs_datepicker_dist_locale__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuejs-datepicker/dist/locale */ "./node_modules/vuejs-datepicker/dist/locale/index.js");
 /* harmony import */ var vue_timeselector__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-timeselector */ "./node_modules/vue-timeselector/dist/VueTimeSelector.js");
 /* harmony import */ var vue_timeselector__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_timeselector__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _event_bus__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../event-bus */ "./resources/js/components/event-bus.js");
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -2600,6 +2599,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -2723,6 +2729,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       cantidad_placas: '',
       cantidad_servicios: '1',
       index_referencias: '',
+      tabla: '',
+      inputs: {},
       t: '',
       d: ''
     };
@@ -2918,7 +2926,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         norma_evaluacion_id: this.norma_evaluacion.id,
         cantidad_placas: this.cantidad_placas,
         cantidad_servicios: this.cantidad_servicios,
-        observaciones: ''
+        observaciones: '',
+        path1: '',
+        path2: '',
+        path3: '',
+        path4: ''
       });
       this.servicio = '', this.norma_ensayo = '', this.norma_evaluacion = '', this.cantidad_placas = '', this.cantidad_servicios = '1';
     },
@@ -2959,12 +2971,32 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     removeRiesgo: function removeRiesgo(index) {
       this.inputsRiesgos.splice(index, 1);
     },
-    OpenReferencias: function OpenReferencias(index) {
+    OpenReferencias: function OpenReferencias(event, index, tabla, inputsReferencia) {
       this.index_referencias = index;
-      $('#nuevo').modal('show');
+      this.tabla = tabla;
+      this.inputs = inputsReferencia;
+      console.log(inputsReferencia);
+      _event_bus__WEBPACK_IMPORTED_MODULE_4__["eventSetReferencia"].$emit('open');
     },
     AddReferencia: function AddReferencia(Ref) {
-      this.inputsServicios[this.index_referencias].observaciones = Ref;
+      console.log(Ref.tabla);
+
+      if (Ref.tabla == 'servicios') {
+        this.inputsServicios[this.index_referencias].observaciones = Ref.observaciones;
+        this.inputsServicios[this.index_referencias].path1 = Ref.path1;
+        this.inputsServicios[this.index_referencias].path2 = Ref.path2;
+        this.inputsServicios[this.index_referencias].path3 = Ref.path3;
+        this.inputsServicios[this.index_referencias].path4 = Ref.path4;
+      }
+
+      if (Ref.tabla == 'productos') {
+        this.inputsProductos[this.index_referencias].observaciones = Ref.observaciones;
+        this.inputsProductos[this.index_referencias].path1 = Ref.path1;
+        this.inputsProductos[this.index_referencias].path2 = Ref.path2;
+        this.inputsProductos[this.index_referencias].path3 = Ref.path3;
+        this.inputsProductos[this.index_referencias].path4 = Ref.path4;
+      }
+
       $('#nuevo').modal('hide');
     },
     submit: function submit() {
@@ -3112,11 +3144,55 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    index: ''
+    inputsData: {
+      type: Object,
+      required: true
+    },
+    index: '',
+    tabla: {
+      type: String,
+      required: true
+    }
   },
   data: function data() {
     return {
@@ -3125,45 +3201,73 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       selectedFile3: null,
       selectedFile4: null,
       errors: {},
-      observaciones: '',
-      path1: '',
-      path2: '',
-      path3: '',
-      path4: ''
+      path_empty: 'https://via.placeholder.com/304x236.png',
+      referencia: {
+        tabla: '',
+        observaciones: '',
+        path1: '',
+        path2: '',
+        path3: '',
+        path4: ''
+      }
     };
   },
   created: function created() {
-    _event_bus__WEBPACK_IMPORTED_MODULE_1__["eventNewRegistro"].$on('open', this.openModal);
-  },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['url'])),
-  methods: {
-    openModal: function openModal() {
-      this.newRegistro = {};
+    _event_bus__WEBPACK_IMPORTED_MODULE_1__["eventSetReferencia"].$on('open', function () {
+      setTimeout(function () {}, 2000);
+      console.log(this.path_empty);
+      console.log(this.inputsData);
+      this.setReferencia();
       $('#nuevo').modal('show');
+    }.bind(this));
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['url', 'AppUrl'])),
+  methods: {
+    setReferencia: function setReferencia() {
+      console.log('entro a setReferencia..');
+      console.log(this.inputsData);
+      console.log('la tabla es:' + this.tabla);
+      this.referencia.observaciones = this.inputsData.observaciones;
+      if (this.inputsData.path1 != null) this.referencia.path1 = this.inputsData.path1;else this.referencia.path1 = this.path_empty;
+      if (this.inputsData.path2 != null) this.referencia.path2 = this.inputsData.path2;else this.referencia.path2 = this.path_empty;
+      if (this.inputsData.path3 != null) this.referencia.path3 = this.inputsData.path3;else this.referencia.path3 = this.path_empty;
+      if (this.inputsData.path4 != null) this.referencia.path4 = this.inputsData.path4;else this.referencia.path4 = this.path_empty;
     },
     storeRegistro: function storeRegistro() {
-      this.$emit('setReferencia', this.observaciones, this.path1, this.path2, this.path3, this.path4);
+      this.inputsData.tabla = this.tabla;
+      var Ref = this.inputsData;
+      this.$emit('setReferencia', Ref);
+      this.referencia.tabla = '';
+      this.referencia.observaciones = '';
+      this.referencia.path1 = '';
+      this.referencia.path2 = '';
+      this.referencia.path3 = '';
+      this.referencia.path4 = '';
     },
-    onFileSelected: function onFileSelected(event, index) {
-      switch (index) {
-        case 1:
-          this.selectedFile1 = revent.target.files[0];
+    onFileSelected: function onFileSelected(event, imagen) {
+      switch (imagen) {
+        case 'imagen1':
+          this.selectedFile1 = event.target.files[0];
+          this.onUpload('1');
           break;
 
-        case 2:
+        case 'imagen2':
           this.selectedFile2 = event.target.files[0];
+          this.onUpload('2');
           break;
 
-        case 3:
+        case 'imagen3':
           this.selectedFile3 = event.target.files[0];
+          this.onUpload('3');
           break;
 
-        case 4:
+        case 'imagen4':
           this.selectedFile4 = event.target.files[0];
+          this.onUpload('4');
           break;
       }
     },
-    onUpload: function onUpload(event, path) {
+    onUpload: function onUpload(path) {
       var _this = this;
 
       var settings = {
@@ -3172,25 +3276,46 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       };
       var fd = new FormData();
-      fd.append('image', this.selectedFile);
+      console.log(path);
+      console.log(this.selectedFile1);
+
+      switch (path) {
+        case '1':
+          fd.append('image', this.selectedFile1);
+          break;
+
+        case '2':
+          fd.append('image', this.selectedFile2);
+          break;
+
+        case '3':
+          fd.append('image', this.selectedFile3);
+          break;
+
+        case '4':
+          fd.append('image', this.selectedFile4);
+          break;
+      }
+
       axios.defaults.baseURL = this.url;
       var url = 'storage/create';
+      console.log(fd);
       axios.post(url, fd, settings).then(function (response) {
         switch (path) {
-          case 1:
-            _this.path1 = response.data;
+          case '1':
+            _this.inputsData.path1 = _this.AppUrl + '/' + response.data;
             break;
 
-          case 2:
-            _this.path2 = response.data;
+          case '2':
+            _this.inputsData.path2 = _this.AppUrl + '/' + response.data;
             break;
 
-          case 3:
-            _this.path3 = response.data;
+          case '3':
+            _this.inputsData.path3 = _this.AppUrl + '/' + response.data;
             break;
 
-          case 4:
-            _this.path4 = response.data;
+          case '4':
+            _this.inputsData.path4 = _this.AppUrl + '/' + response.data;
             break;
         }
 
@@ -35604,7 +35729,7 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "col-md-3" }, [
               _c("div", { staticClass: "form-group" }, [
-                _c("label", [_vm._v("Cant. Placas")]),
+                _c("label", [_vm._v("Max N° Placas")]),
                 _vm._v(" "),
                 _c("input", {
                   directives: [
@@ -35717,11 +35842,21 @@ var render = function() {
                                 _c("span", {
                                   staticClass: "fa fa-file-archive-o",
                                   class: {
-                                    existe: inputsServicio.observaciones
+                                    existe:
+                                      inputsServicio.observaciones ||
+                                      _vm.inputsServicios.path1 ||
+                                      _vm.inputsServicios.path2 ||
+                                      _vm.inputsServicios.path3 ||
+                                      _vm.inputsServicios.path4
                                   },
                                   on: {
                                     click: function($event) {
-                                      return _vm.OpenReferencias(k)
+                                      return _vm.OpenReferencias(
+                                        $event,
+                                        k,
+                                        "servicios",
+                                        inputsServicio
+                                      )
                                     }
                                   }
                                 })
@@ -35907,6 +36042,25 @@ var render = function() {
                             return _c("tr", { key: k }, [
                               _c("td", [
                                 _vm._v(" " + _vm._s(inputsProducto.producto))
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _c("span", {
+                                  staticClass: "fa fa-file-archive-o",
+                                  class: {
+                                    existe: inputsProducto.observaciones
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.OpenReferencias(
+                                        $event,
+                                        k,
+                                        "productos",
+                                        inputsProducto
+                                      )
+                                    }
+                                  }
+                                })
                               ]),
                               _vm._v(" "),
                               _c("td", [
@@ -36154,7 +36308,11 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("create-referencias", {
-              attrs: { index: _vm.index_referencias },
+              attrs: {
+                index: _vm.index_referencias,
+                tabla: _vm.tabla,
+                inputsData: _vm.inputs
+              },
               on: { setReferencia: _vm.AddReferencia }
             })
           ],
@@ -36242,6 +36400,8 @@ var staticRenderFns = [
       _c("tr", [
         _c("th", [_vm._v("Productos")]),
         _vm._v(" "),
+        _c("th", [_vm._v("Ref")]),
+        _vm._v(" "),
         _c("th", [_vm._v("Medidas")]),
         _vm._v(" "),
         _c("th", [_vm._v("cant")]),
@@ -36297,9 +36457,23 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "modal fade", attrs: { id: "nuevo" } }, [
-    _c("div", { staticClass: "modal-dialog" }, [
+    _c("div", { staticClass: "modal-dialog modal-lg" }, [
       _c("div", { staticClass: "modal-content" }, [
-        _vm._m(0),
+        _c("div", { staticClass: "modal-header" }, [
+          _c(
+            "button",
+            {
+              staticClass: "close",
+              attrs: { type: "button", "data-dismiss": "modal" }
+            },
+            [_vm._v("×")]
+          ),
+          _vm._v(" "),
+          _c("h3", { staticClass: "modal-title" }, [
+            _vm._v(" Referencias "),
+            _c("small", [_vm._v(_vm._s(_vm.tabla))])
+          ])
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "modal-body" }, [
           _c("div", { staticClass: "form-group" }, [
@@ -36310,138 +36484,231 @@ var render = function() {
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.observaciones,
-                  expression: "observaciones"
+                  value: _vm.inputsData.observaciones,
+                  expression: "inputsData.observaciones"
                 }
               ],
               staticClass: "form-control noresize",
               attrs: { rows: "3", placeholder: "", maxlength: "250" },
-              domProps: { value: _vm.observaciones },
+              domProps: { value: _vm.inputsData.observaciones },
               on: {
                 input: function($event) {
                   if ($event.target.composing) {
                     return
                   }
-                  _vm.observaciones = $event.target.value
+                  _vm.$set(_vm.inputsData, "observaciones", $event.target.value)
                 }
               }
             })
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "modal-body" }, [
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", [_vm._v("Imagen 1")]),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-6" }, [
+            _vm.inputsData.path1 == null
+              ? _c("div", [
+                  _c("img", {
+                    staticClass: "margin",
+                    attrs: {
+                      src: _vm.path_empty,
+                      alt: "...",
+                      width: "304",
+                      height: "236"
+                    }
+                  })
+                ])
+              : _c("div", [
+                  _c("img", {
+                    staticClass: "margin",
+                    attrs: {
+                      src: _vm.inputsData.path1,
+                      alt: "...",
+                      width: "304",
+                      height: "236"
+                    }
+                  })
+                ]),
             _vm._v(" "),
-            _c("input", {
-              staticClass: "form-control",
-              attrs: { type: "file", name: "file" },
-              on: {
-                change: function($event) {
-                  return _vm.onFileSelected("1")
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
+            _c("div", { staticClass: "form-group" }, [
+              _c("input", {
+                staticClass: "form-control",
+                attrs: { type: "file", id: "inputFile1", name: "file" },
                 on: {
-                  click: function($event) {
-                    $event.preventDefault()
-                    return _vm.onUpload("1")
+                  change: function($event) {
+                    return _vm.onFileSelected($event, "imagen1")
                   }
                 }
-              },
-              [_vm._v("upload")]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "modal-body" }, [
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", [_vm._v("Imagen 2")]),
+              }),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "hide",
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.onUpload($event, "1")
+                    }
+                  }
+                },
+                [_vm._v("upload")]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-6" }, [
+            _vm.inputsData.path2 == null
+              ? _c("div", [
+                  _c("img", {
+                    staticClass: "margin",
+                    attrs: {
+                      src: _vm.path_empty,
+                      alt: "...",
+                      width: "304",
+                      height: "236"
+                    }
+                  })
+                ])
+              : _c("div", [
+                  _c("img", {
+                    staticClass: "margin",
+                    attrs: {
+                      src: _vm.inputsData.path2,
+                      alt: "...",
+                      width: "304",
+                      height: "236"
+                    }
+                  })
+                ]),
             _vm._v(" "),
-            _c("input", {
-              staticClass: "form-control",
-              attrs: { type: "file", name: "file" },
-              on: {
-                change: function($event) {
-                  return _vm.onFileSelected("2")
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
+            _c("div", { staticClass: "form-group" }, [
+              _c("input", {
+                staticClass: "form-control",
+                attrs: { type: "file", id: "inputFile2", name: "file" },
                 on: {
-                  click: function($event) {
-                    $event.preventDefault()
-                    return _vm.onUpload("2")
+                  change: function($event) {
+                    return _vm.onFileSelected($event, "imagen2")
                   }
                 }
-              },
-              [_vm._v("upload")]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "modal-body" }, [
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", [_vm._v("Imagen 3")]),
+              }),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "hide",
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.onUpload($event, "2")
+                    }
+                  }
+                },
+                [_vm._v("upload")]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-6" }, [
+            _vm._v("\n                    <"),
+            _vm.inputsData.path3 == null
+              ? _c("div", [
+                  _c("img", {
+                    staticClass: "margin",
+                    attrs: {
+                      src: _vm.path_empty,
+                      alt: "...",
+                      width: "304",
+                      height: "236"
+                    }
+                  })
+                ])
+              : _c("div", [
+                  _c("img", {
+                    staticClass: "margin",
+                    attrs: {
+                      src: _vm.inputsData.path3,
+                      alt: "...",
+                      width: "304",
+                      height: "236"
+                    }
+                  })
+                ]),
             _vm._v(" "),
-            _c("input", {
-              staticClass: "form-control",
-              attrs: { type: "file", name: "file" },
-              on: {
-                change: function($event) {
-                  return _vm.onFileSelected("3")
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
+            _c("div", { staticClass: "form-group" }, [
+              _c("input", {
+                staticClass: "form-control",
+                attrs: { type: "file", id: "inputFile3", name: "file" },
                 on: {
-                  click: function($event) {
-                    $event.preventDefault()
-                    return _vm.onUpload("3")
+                  change: function($event) {
+                    return _vm.onFileSelected($event, "imagen3")
                   }
                 }
-              },
-              [_vm._v("upload")]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "modal-body" }, [
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", [_vm._v("Imagen 4")]),
+              }),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "hide",
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.onUpload($event, "3")
+                    }
+                  }
+                },
+                [_vm._v("upload")]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-6" }, [
+            _vm.inputsData.path4 == null
+              ? _c("div", [
+                  _c("img", {
+                    staticClass: "margin",
+                    attrs: {
+                      src: _vm.path_empty,
+                      alt: "...",
+                      width: "304",
+                      height: "236"
+                    }
+                  })
+                ])
+              : _c("div", [
+                  _c("img", {
+                    staticClass: "margin",
+                    attrs: {
+                      src: _vm.inputsData.path4,
+                      alt: "...",
+                      width: "304",
+                      height: "236"
+                    }
+                  })
+                ]),
             _vm._v(" "),
-            _c("input", {
-              staticClass: "form-control",
-              attrs: { type: "file", name: "file" },
-              on: {
-                change: function($event) {
-                  return _vm.onFileSelected("4")
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
+            _c("div", { staticClass: "form-group" }, [
+              _c("input", {
+                staticClass: "form-control",
+                attrs: { type: "file", id: "inputFile4", name: "file" },
                 on: {
-                  click: function($event) {
-                    $event.preventDefault()
-                    return _vm.onUpload("4")
+                  change: function($event) {
+                    return _vm.onFileSelected($event, "imagen4")
                   }
                 }
-              },
-              [_vm._v("upload")]
-            )
+              }),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "hide",
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.onUpload($event, "4")
+                    }
+                  }
+                },
+                [_vm._v("upload")]
+              )
+            ])
           ])
         ]),
         _vm._v(" "),
@@ -36474,25 +36741,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c(
-        "button",
-        {
-          staticClass: "close",
-          attrs: { type: "button", "data-dismiss": "modal" }
-        },
-        [_vm._v("×")]
-      ),
-      _vm._v(" "),
-      _c("h4", { staticClass: "modal-title" }, [_vm._v("Referencia")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -53827,12 +54076,13 @@ module.exports = function(module) {
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
   \*****************************/
-/*! exports provided: eventNewRegistro */
+/*! exports provided: eventNewRegistro, eventSetReferencia */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "eventNewRegistro", function() { return eventNewRegistro; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "eventSetReferencia", function() { return eventSetReferencia; });
 /* harmony import */ var vue_select_dist_vue_select_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-select/dist/vue-select.css */ "./node_modules/vue-select/dist/vue-select.css");
 /* harmony import */ var vue_select_dist_vue_select_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_select_dist_vue_select_css__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
@@ -53896,7 +54146,7 @@ var VueGoogleMaps = __webpack_require__(/*! vue2-google-maps */ "./node_modules/
 
 Vue.use(VueGoogleMaps, {
   load: {
-    key: 'AIzaSyAjnyOfVeT0QoN9rOws7-xAE8tR8ndyVD8',
+    //  key: 'AIzaSyAjnyOfVeT0QoN9rOws7-xAE8tR8ndyVD8',
     libraries: 'places' // This is required if you use the Autocomplete plugin
     // OR: libraries: 'places,drawing'
     // OR: libraries: 'places,drawing,visualization'
@@ -53920,10 +54170,12 @@ Vue.use(VueGoogleMaps, {
 
 var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {
-    url:  false ? undefined : "http://localhost:8000/api"
+    url:  false ? undefined : "http://certificados.test/api",
+    AppUrl:  false ? undefined : "http://certificados.test"
   }
 });
 var eventNewRegistro = new Vue();
+var eventSetReferencia = new Vue();
 var app = new Vue({
   el: '#app',
   store: store
@@ -54396,16 +54648,18 @@ __webpack_require__.r(__webpack_exports__);
 /*!**********************************************!*\
   !*** ./resources/js/components/event-bus.js ***!
   \**********************************************/
-/*! exports provided: eventNewRegistro */
+/*! exports provided: eventNewRegistro, eventSetReferencia */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "eventNewRegistro", function() { return eventNewRegistro; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "eventSetReferencia", function() { return eventSetReferencia; });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 
 var eventNewRegistro = new vue__WEBPACK_IMPORTED_MODULE_0___default.a();
+var eventSetReferencia = new vue__WEBPACK_IMPORTED_MODULE_0___default.a();
 
 /***/ }),
 
@@ -54583,8 +54837,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/sass/toastr.scss */"./resources/sass/toastr.scss");
+__webpack_require__(/*! C:\Users\bocch\code\certificados\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\bocch\code\certificados\resources\sass\toastr.scss */"./resources/sass/toastr.scss");
 
 
 /***/ })

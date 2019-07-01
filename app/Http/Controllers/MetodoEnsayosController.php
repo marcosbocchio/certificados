@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection as Collection;
 use App\Repositories\MetodoEnsayos\MetodoEnsayosRepository;
 use App\MetodoEnsayos;
 use App\User;
@@ -30,6 +32,30 @@ class MetodoEnsayosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function otMetodosEnsayo($id){
+
+        $metodo_ensayos = DB::select('select metodo_ensayos.metodo from 
+
+                                            servicios 
+                                            inner join ot_servicios on
+                                            ot_servicios.servicio_id = servicios.id
+                                            inner join metodo_ensayos on
+                                            metodo_ensayos.id = servicios.metodo_ensayo_id
+                                            inner join ots on
+                                            ots.id = ot_servicios.ot_id
+                                            where
+                                            ots.id = :id
+                                            
+                                            group by 
+                                            metodo_ensayos.metodo',['id' => $id ]);
+
+        $metodo_ensayos = Collection::make($metodo_ensayos);
+
+        return $metodo_ensayos;
+    } 
+
+
     public function create()
     {
         //
@@ -56,6 +82,8 @@ class MetodoEnsayosController extends Controller
     {
         //
     }
+
+    
 
     /**
      * Show the form for editing the specified resource.

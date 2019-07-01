@@ -96,12 +96,17 @@ class OtsController extends Controller
                                     norma_evaluaciones.id as norma_evaluacion_id,
                                     ot_servicios.cantidad as cantidad_servicios,
                                     ot_servicios.cant_max_placas as cantidad_placas,
-                                    null as observaciones
-                                
+                                    ot_referencias.descripcion as observaciones,
+                                    ot_referencias.path1 as path1,
+                                    ot_referencias.path2 as path2,
+                                    ot_referencias.path3 as path3,
+                                    ot_referencias.path4 as path4
                                     
                                     from ot_servicios
                                     inner join servicios on 
                                     servicios.id = ot_servicios.servicio_id
+                                    left join ot_referencias on
+                                    ot_referencias.id = ot_servicios.ot_referencia_id
                                     inner join norma_ensayos on
                                     norma_ensayos.id = ot_servicios.norma_ensayo_id
                                     inner join norma_evaluaciones on
@@ -116,11 +121,18 @@ class OtsController extends Controller
                                     medidas.id as medida_id,
                                     productos.unidades_medida_id as unidad_medida_id,
                                     unidades_medidas.codigo as unidad_medida_codigo,
-                                    ot_productos.cantidad as cantidad_productos
+                                    ot_productos.cantidad as cantidad_productos,
+                                    ot_referencias.descripcion as observaciones,
+                                    ot_referencias.path1 as path1,
+                                    ot_referencias.path2 as path2,
+                                    ot_referencias.path3 as path3,
+                                    ot_referencias.path4 as path4
                                     
                                     from productos
                                     inner join ot_productos on
                                     ot_productos.producto_id = productos.id
+                                    left join ot_referencias on
+                                    ot_referencias.id = ot_productos.ot_referencia_id
                                     inner join medidas on
                                     medidas.id = ot_productos.medida_id
                                     inner join unidades_medidas on

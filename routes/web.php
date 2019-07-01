@@ -31,12 +31,15 @@ Route::group(['middleware' => ['permission:Navegar operador']], function () {
 
 });
 
+Route::get('/pdf/ot/{id}','PdfOtController@imprimir')->name('pdfot');
+
 
 
 //Route::get('area/enod/users', 'UserController@index');
 //Route::resource('users','UserController');
 
  //Route::get('test','TestController@index');
+
  Route::get('test', function () {
   return Auth::id();
 }); 

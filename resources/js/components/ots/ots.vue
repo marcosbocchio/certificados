@@ -186,7 +186,7 @@
         </div> 
         <div class="col-md-3">
           <div class="form-group">
-              <label>Cant. Placas</label>                  
+              <label>Max N° Placas</label>                  
               <input  v-model="cantidad_placas" type="number" class="form-control" id="cantidad_placas" placeholder="">
           </div>
         </div>
@@ -221,7 +221,11 @@
                 <tbody>
                   <tr v-for="(inputsServicio,k) in inputsServicios" :key="k">
                     <td> {{ inputsServicio.servicio}}</td>
-                    <td> <span :class="{existe : inputsServicio.observaciones }" class="fa fa-file-archive-o" @click="OpenReferencias(k)" ></span></td>      
+                    <td> <span :class="{existe : inputsServicio.observaciones || 
+                    inputsServicios.path1 || 
+                    inputsServicios.path2 || 
+                    inputsServicios.path3 || 
+                    inputsServicios.path4  }" class="fa fa-file-archive-o" @click="OpenReferencias($event,k,'servicios',inputsServicio)" ></span></td>      
                     <td> {{ inputsServicio.norma_ensayo}}</td>
                     <td> {{ inputsServicio.norma_evaluacion}}</td>
                     <td> {{ inputsServicio.cantidad_placas}}</td>
@@ -269,6 +273,7 @@
                   <thead>
                     <tr>
                       <th>Productos</th>
+                      <th>Ref</th>
                       <th>Medidas</th>                     
                       <th>cant</th>                    
                       <th colspan="2">&nbsp;</th>
@@ -276,7 +281,8 @@
                   </thead>
                   <tbody>
                     <tr v-for="(inputsProducto,k) in inputsProductos" :key="k">
-                      <td> {{ inputsProducto.producto}}</td>                     
+                      <td> {{ inputsProducto.producto}}</td>
+                      <td> <span :class="{existe : inputsProducto.observaciones }" class="fa fa-file-archive-o" @click="OpenReferencias($event,k,'productos',inputsProducto)" ></span></td>                       
                       <td> {{ inputsProducto.medida}}</td>  
                       <td> {{ inputsProducto.cantidad_productos}}</td>                                  
                       <td> <i class="fa fa-minus-circle" @click="removeProducto(k)" ></i></td>
@@ -359,7 +365,7 @@
           <textarea v-model="observaciones" class="form-control noresize" rows="3" placeholder="" maxlength="250"></textarea>
         </div>
       </div>
-      <create-referencias :index="index_referencias" @setReferencia="AddReferencia"></create-referencias>
+      <create-referencias :index="index_referencias" :tabla="tabla" :inputsData="inputs" @setReferencia="AddReferencia"></create-referencias>
     </div>        
       <button class="btn btn-primary" type="submit" @click.prevent="submit">Guardar</button>
     </form>
@@ -372,7 +378,7 @@ import {mapState} from 'vuex'
 import Datepicker from 'vuejs-datepicker';
 import {en, es} from 'vuejs-datepicker/dist/locale'
 import Timeselector from 'vue-timeselector';
-
+import { eventSetReferencia } from '../event-bus';
 
 
 export default {
@@ -510,6 +516,8 @@ export default {
           cantidad_servicios:'1',
 
           index_referencias:'',
+          tabla:'',
+          inputs:{},
 
           t:'',
           d:'' 
@@ -718,6 +726,10 @@ export default {
                 cantidad_placas:this.cantidad_placas,
                 cantidad_servicios:this.cantidad_servicios,
                 observaciones : '',
+                path1:'',
+                path2:'',
+                path3:'',
+                path4:''
                  });
             this.servicio='',        
             this.norma_ensayo ='',
@@ -768,15 +780,35 @@ export default {
       removeRiesgo(index) {
             this.inputsRiesgos.splice(index, 1);
         },
-      OpenReferencias(index){
+      OpenReferencias(event,index,tabla,inputsReferencia){
 
           this.index_referencias = index ;
-          $('#nuevo').modal('show');
+          this.tabla = tabla;
+          this.inputs = inputsReferencia ;
+          console.log(inputsReferencia);
+          eventSetReferencia.$emit('open');
       },
 
       AddReferencia(Ref){
+
+        console.log(Ref.tabla);
+
+          if (Ref.tabla =='servicios'){
+           this.inputsServicios[this.index_referencias].observaciones = Ref.observaciones;
+           this.inputsServicios[this.index_referencias].path1 = Ref.path1;
+           this.inputsServicios[this.index_referencias].path2 = Ref.path2;
+           this.inputsServicios[this.index_referencias].path3 = Ref.path3;
+           this.inputsServicios[this.index_referencias].path4 = Ref.path4;
+          }
+          if (Ref.tabla =='productos'){
+           this.inputsProductos[this.index_referencias].observaciones = Ref.observaciones;
+           this.inputsProductos[this.index_referencias].path1 = Ref.path1;
+           this.inputsProductos[this.index_referencias].path2 = Ref.path2;
+           this.inputsProductos[this.index_referencias].path3 = Ref.path3;
+           this.inputsProductos[this.index_referencias].path4 = Ref.path4;
+          }          
       
-           this.inputsServicios[this.index_referencias].observaciones = Ref;
+        
            $('#nuevo').modal('hide');     
       },
 

@@ -69,7 +69,7 @@ const VueGoogleMaps = require('vue2-google-maps');
 
 Vue.use(VueGoogleMaps, {
   load: {
-    key: 'AIzaSyAjnyOfVeT0QoN9rOws7-xAE8tR8ndyVD8',
+  //  key: 'AIzaSyAjnyOfVeT0QoN9rOws7-xAE8tR8ndyVD8',
     libraries: 'places', 
     // This is required if you use the Autocomplete plugin
     // OR: libraries: 'places,drawing'
@@ -101,11 +101,16 @@ state: {
         url:process.env.NODE_ENV == 'production' ? 
         process.env.MIX_API_URL_PRO :
         process.env.MIX_API_URL_DEV,
+
+        AppUrl:process.env.NODE_ENV == 'production' ? 
+        process.env.MIX_URL_PRO :
+        process.env.MIX_URL_DEV,
     }
 
 })
 
 export const eventNewRegistro = new Vue();
+export const eventSetReferencia = new Vue();
 
 
 const app = new Vue({

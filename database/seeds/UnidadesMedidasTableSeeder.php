@@ -17,12 +17,12 @@ class UnidadesMedidasTableSeeder extends Seeder
         ]);
 
         Unidades_medidas::create([
-            'codigo'            =>'Pulgada',
+            'codigo'            =>'"Pulgadas"',
             'descripcion'       =>'Descripción para la unidad de medida pulgada',          
         ]);
 
         Unidades_medidas::create([
-            'codigo'            =>'Litro',
+            'codigo'            =>'Lts',
             'descripcion'       =>'Descripción para la unidad de medida Litro',          
         ]);
     }

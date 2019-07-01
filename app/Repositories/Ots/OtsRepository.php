@@ -11,6 +11,7 @@ use App\OtServicios;
 Use App\OtProductos;
 Use App\OtEpps;
 Use App\OtRiesgos;
+use App\OtReferencias;
 
 
 class OtsRepository extends BaseRepository
@@ -57,19 +58,27 @@ class OtsRepository extends BaseRepository
         $productos = $request->productos;
         $epps      = $request->epps;
         $riesgos   = $request->riesgos;
+
+        DB::beginTransaction();
+        try {
         
 
-        $this->setOt($request, $ot);    
-        OtServicios::where('ot_id',$ot->id)->delete();
-        $this->setServicios($servicios,$ot);
-        OtProductos::where('ot_id',$ot->id)->delete();
-        $this->setProductos($productos,$ot);
-        OtEpps::where('ot_id',$ot->id)->delete();
-        $this->setEpps($epps,$ot);
-        OtRiesgos::where('ot_id',$ot->id)->delete();
-        $this->setRiesgos($riesgos,$ot);
+          $this->setOt($request, $ot);    
+          OtServicios::where('ot_id',$ot->id)->delete();
+          $this->setServicios($servicios,$ot);
+          OtProductos::where('ot_id',$ot->id)->delete();
+          $this->setProductos($productos,$ot);
+          OtEpps::where('ot_id',$ot->id)->delete();
+          $this->setEpps($epps,$ot);
+          OtRiesgos::where('ot_id',$ot->id)->delete();
+          $this->setRiesgos($riesgos,$ot);
 
-    
+        DB::commit();
+
+        } catch (\Exception $ex) {
+          DB::rollback();
+          return response()->json(['error' => $ex->getMessage()], 500);
+          }    
 
   }
 
@@ -102,7 +111,10 @@ class OtsRepository extends BaseRepository
 
   public function SetServicios($servicios,Ots $ot){    
 
-    foreach ($servicios as $servicio) {     
+    foreach ($servicios as $servicio) {  
+      
+     $referencia_id = $this->setReferencia($servicio);
+    // $referencia_id = null;
 
       $ot_servicios                       = new OtServicios;
       $ot_servicios->ot_id                = $ot->id;
@@ -111,9 +123,35 @@ class OtsRepository extends BaseRepository
       $ot_servicios->norma_evaluacion_id  = $servicio['norma_evaluacion_id'];
       $ot_servicios->cantidad             = $servicio['cantidad_servicios'];
       $ot_servicios->cant_max_placas      = $servicio['cantidad_placas'];
+      $ot_servicios->ot_referencia_id       = $referencia_id;
       $ot_servicios->save();
       
       }
+
+  }
+
+
+  public function setReferencia($servicio){
+ 
+    if (($servicio['observaciones'])||
+        ($servicio['path1']) ||
+        ($servicio['path2']) ||
+        ($servicio['path3']) ||
+        ($servicio['path4'])){
+
+          $ot_referencias                     = new OtReferencias;
+          $ot_referencias->descripcion        = $servicio['observaciones'];
+          $ot_referencias->path1              = $servicio['path1'];
+          $ot_referencias->path2              = $servicio['path2'];
+          $ot_referencias->path3              = $servicio['path3'];
+          $ot_referencias->path4              = $servicio['path4'];
+          $ot_referencias->save();
+
+          return $ot_referencias->id;
+       }
+       else{
+          return null;
+       }
 
   }
 

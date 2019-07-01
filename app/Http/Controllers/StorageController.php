@@ -12,12 +12,14 @@ class StorageController extends Controller
     
       if ($request->hasFile('image')){
 
-        $path = $request->image->store('referencias-image');
+       // $path = $request->image->store('referencias-image');
+          $path = Storage::disk('public')->put('referencias-image',$request->file('image'));  
+    
         return $path;
       }
       else
       {
-        return "Seleccione un archivos";
+        return "Seleccione un archivo";
       } 
      
     }
