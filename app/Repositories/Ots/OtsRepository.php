@@ -12,6 +12,7 @@ Use App\OtProductos;
 Use App\OtEpps;
 Use App\OtRiesgos;
 use App\OtReferencias;
+use App\OtCalidadPlacas;
 
 
 class OtsRepository extends BaseRepository
@@ -28,24 +29,20 @@ class OtsRepository extends BaseRepository
     $ot = $this->getModel();
     $servicios = $request->servicios;
     $productos = $request->productos;
+    $tipo_peliculas = $request->tipo_peliculas;
     $epps      = $request->epps;
     $riesgos   = $request->riesgos;
 
-    DB::beginTransaction();
-        try {
+  
     
           $this->setOt($request, $ot);    
           $this->setServicios($servicios,$ot);
+          $this->setTipoPeliculas($tipo_peliculas,$ot);
           $this->setProductos($productos,$ot);
           $this->setEpps($epps,$ot);
           $this->setRiesgos($riesgos,$ot);
 
-        DB::commit();
-
-        } catch (\Exception $ex) {
-          DB::rollback();
-          return response()->json(['error' => $ex->getMessage()], 500);
-          }
+      
 
 
   }
@@ -55,30 +52,37 @@ class OtsRepository extends BaseRepository
 
         $ot = $this->getModel()->find($id);
         $servicios = $request->servicios;
+        $tipo_peliculas = $request->tipo_peliculas;
         $productos = $request->productos;
         $epps      = $request->epps;
         $riesgos   = $request->riesgos;
 
-        DB::beginTransaction();
-        try {
+       
         
 
-          $this->setOt($request, $ot);    
+         
+
+          $this->setOt($request, $ot);   
+
+          OtCalidadPlacas::where('ot_id',$ot->id)->delete();
+          $this->SetTipoPeliculas($tipo_peliculas,$ot);          
+
           OtServicios::where('ot_id',$ot->id)->delete();
           $this->setServicios($servicios,$ot);
+
+         
           OtProductos::where('ot_id',$ot->id)->delete();
           $this->setProductos($productos,$ot);
+          
           OtEpps::where('ot_id',$ot->id)->delete();
           $this->setEpps($epps,$ot);
+          
           OtRiesgos::where('ot_id',$ot->id)->delete();
           $this->setRiesgos($riesgos,$ot);
 
-        DB::commit();
+     
 
-        } catch (\Exception $ex) {
-          DB::rollback();
-          return response()->json(['error' => $ex->getMessage()], 500);
-          }    
+       
 
   }
 
@@ -114,7 +118,7 @@ class OtsRepository extends BaseRepository
     foreach ($servicios as $servicio) {  
       
      $referencia_id = $this->setReferencia($servicio);
-    // $referencia_id = null;
+    
 
       $ot_servicios                       = new OtServicios;
       $ot_servicios->ot_id                = $ot->id;
@@ -159,12 +163,15 @@ class OtsRepository extends BaseRepository
   
 
     foreach ($productos as $producto ) {
+
+      $referencia_id = $this->setReferencia($producto);
       
       $ot_productos                       = new OtProductos;
       $ot_productos->ot_id                = $ot->id;
       $ot_productos->producto_id          = $producto['id'];
       $ot_productos->medida_id            = $producto['medida_id'];
       $ot_productos->cantidad             = $producto['cantidad_productos'];
+      $ot_productos->ot_referencia_id     = $referencia_id;
       $ot_productos->save();
      
 
@@ -199,6 +206,21 @@ class OtsRepository extends BaseRepository
       }
 
   }
+
+  public function SetTipoPeliculas($tipo_peliculas,Ots $ot){
+
+  
+    foreach ($tipo_peliculas as $tipo_pelicula ) {
+
+      $ot_tipo_placas                     = new OtCalidadPlacas;
+      $ot_tipo_placas->ot_id              = $ot->id;
+      $ot_tipo_placas->tipo_pelicula_id  = $tipo_pelicula['id'];     
+
+      $ot_tipo_placas->save();
+      
+    }
+
+}
 
 
 }

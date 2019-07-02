@@ -2605,6 +2605,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2633,6 +2646,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       required: false
     },
     ot_eppsdata: {
+      type: Array,
+      required: false
+    },
+    ot_calidad_placasdata: {
       type: Array,
       required: false
     },
@@ -2713,12 +2730,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       norma_ensayo: '',
       norma_evaluacion: '',
       inputsServicios: [],
+      peliculas_selected: [],
+      tipo_peliculas: [],
+      Ri: false,
+      ri_id: '',
       productos: [],
       producto: '',
       medidas: [],
       medida: '',
       cantidad_productos: '1',
       inputsProductos: [],
+      metodo_ensayos: [],
+      var_metodo: '',
       epps: [],
       epp: '',
       inputsEpps: [],
@@ -2739,6 +2762,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.getClientes();
     this.getProvincias();
     this.getServicios();
+    this.getTipoPeliculas();
     this.getProductos();
     this.getEpps();
     this.getRiesgos();
@@ -2757,6 +2781,34 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     });
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['url'])),
+  watch: {
+    metodo_ensayos: function metodo_ensayos(metodo_ensayo) {
+      metodo_ensayo.forEach(function (metodo) {
+        if (metodo.metodo == 'RI') {
+          this.ri_id = metodo.id;
+        }
+      }.bind(this));
+    },
+    inputsServicios: {
+      handler: function handler(servicios, oldservicios) {
+        console.log('-----');
+        var existeRi = false;
+        servicios.forEach(function (servicio) {
+          console.log(servicio.metodo);
+
+          if (servicio.metodo == 'RI') {
+            existeRi = true;
+          }
+        }.bind(this));
+        this.Ri = existeRi;
+
+        if (this.Ri == false) {
+          this.peliculas_selected = [];
+        }
+      },
+      deep: true
+    }
+  },
   methods: {
     setOt: function setOt() {
       if (this.acciondata == "edit") {
@@ -2780,6 +2832,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.localidad.lat = this.otdata.lat;
         this.localidad.lon = this.otdata.lon;
         this.inputsServicios = this.ot_serviciosdata;
+        this.peliculas_selected = this.ot_calidad_placasdata;
         this.inputsProductos = this.ot_productosdata;
         this.inputsRiesgos = this.ot_riesgosdata;
         this.inputsEpps = this.ot_eppsdata;
@@ -2847,58 +2900,67 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this6.servicios = response.data;
       });
     },
-    getProductos: function getProductos() {
+    getTipoPeliculas: function getTipoPeliculas() {
       var _this7 = this;
+
+      axios.defaults.baseURL = this.url;
+      var urlRegistros = 'tipo_peliculas';
+      axios.get(urlRegistros).then(function (response) {
+        _this7.tipo_peliculas = response.data;
+      });
+    },
+    getProductos: function getProductos() {
+      var _this8 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'productos';
       axios.get(urlRegistros).then(function (response) {
-        _this7.productos = response.data;
+        _this8.productos = response.data;
       });
     },
     getEpps: function getEpps() {
-      var _this8 = this;
+      var _this9 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'epps';
       axios.get(urlRegistros).then(function (response) {
-        _this8.epps = response.data;
+        _this9.epps = response.data;
       });
     },
     getRiesgos: function getRiesgos() {
-      var _this9 = this;
+      var _this10 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'riesgos';
       axios.get(urlRegistros).then(function (response) {
-        _this9.riesgos = response.data;
+        _this10.riesgos = response.data;
       });
     },
     getMetodosEnsayos: function getMetodosEnsayos() {
-      var _this10 = this;
+      var _this11 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'metodo_ensayos';
       axios.get(urlRegistros).then(function (response) {
-        _this10.metodo_ensayos = response.data;
+        _this11.metodo_ensayos = response.data;
       });
     },
     getNormaEnsayos: function getNormaEnsayos() {
-      var _this11 = this;
+      var _this12 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'norma_ensayos';
       axios.get(urlRegistros).then(function (response) {
-        _this11.norma_ensayos = response.data;
+        _this12.norma_ensayos = response.data;
       });
     },
     getNormaEvaluaciones: function getNormaEvaluaciones() {
-      var _this12 = this;
+      var _this13 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'norma_evaluaciones';
       axios.get(urlRegistros).then(function (response) {
-        _this12.norma_evaluaciones = response.data;
+        _this13.norma_evaluaciones = response.data;
       });
     },
     updateCenter: function updateCenter(latLng) {
@@ -2916,7 +2978,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.localidad.lon = place.geometry.location.lng();
       this.sync();
     },
+    getMetodo: function getMetodo($id) {
+      this.metodo_ensayos.forEach(function (metodo) {
+        console.log(metodo.id + ' ' + $id + ' ' + metodo.metodo);
+
+        if (metodo.id == $id) {
+          this.var_metodo = metodo.metodo;
+        }
+      }.bind(this));
+    },
     addServicio: function addServicio(index) {
+      this.getMetodo(this.servicio.metodo_ensayo_id);
       this.inputsServicios.push({
         id: this.servicio.id,
         servicio: this.servicio.descripcion,
@@ -2926,11 +2998,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         norma_evaluacion_id: this.norma_evaluacion.id,
         cantidad_placas: this.cantidad_placas,
         cantidad_servicios: this.cantidad_servicios,
+        metodo: this.var_metodo,
         observaciones: '',
-        path1: '',
-        path2: '',
-        path3: '',
-        path4: ''
+        path1: null,
+        path2: null,
+        path3: null,
+        path4: null
       });
       this.servicio = '', this.norma_ensayo = '', this.norma_evaluacion = '', this.cantidad_placas = '', this.cantidad_servicios = '1';
     },
@@ -2941,7 +3014,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         medida: this.medida.descripcion,
         medida_id: this.medida.id,
         unidad_medida_id: this.producto.unidades_medida_id,
-        cantidad_productos: this.cantidad_productos
+        cantidad_productos: this.cantidad_productos,
+        observaciones: '',
+        path1: null,
+        path2: null,
+        path3: null,
+        path4: null
       });
       this.producto = '', this.medida = '', this.cantidad_productos = '1';
     },
@@ -2979,8 +3057,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       _event_bus__WEBPACK_IMPORTED_MODULE_4__["eventSetReferencia"].$emit('open');
     },
     AddReferencia: function AddReferencia(Ref) {
-      console.log(Ref.tabla);
-
       if (Ref.tabla == 'servicios') {
         this.inputsServicios[this.index_referencias].observaciones = Ref.observaciones;
         this.inputsServicios[this.index_referencias].path1 = Ref.path1;
@@ -3000,7 +3076,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       $('#nuevo').modal('hide');
     },
     submit: function submit() {
-      var _this13 = this;
+      var _this14 = this;
 
       if (this.accion == 'create') {
         this.errors = [];
@@ -3020,6 +3096,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           'localidad': this.localidad.id,
           'fecha_ensayo': this.fecha_ensayo,
           'lugar_ensayo': this.lugar_ensayo,
+          'tipo_peliculas': this.peliculas_selected,
           'lat': this.localidad.lat,
           'lon': this.localidad.lon,
           'observaciones': this.observaciones,
@@ -3028,15 +3105,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           'epps': this.inputsEpps,
           'riesgos': this.inputsRiesgos
         }).then(function (response) {
-          _this13.response = response;
-          alert('OT creada!');
+          _this14.response = response;
+          toastr.success('OT N° ' + _this14.ot + ' fue creada con éxito ');
         })["catch"](function (error) {
           if (error.response.status === 422) {
-            _this13.errors = error.response.data.errors || {};
+            _this14.errors = error.response.data.errors || {};
           }
         });
       } else if (this.accion == 'edit') {
-        alert('va a editar');
         this.errors = [];
         var urlRegistros = 'ots/' + this.otdata.id;
         axios.put(urlRegistros, {
@@ -3054,6 +3130,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           'localidad': this.localidad.id,
           'fecha_ensayo': this.fecha_ensayo,
           'lugar_ensayo': this.lugar_ensayo,
+          'tipo_peliculas': this.peliculas_selected,
           'lat': this.localidad.lat,
           'lon': this.localidad.lon,
           'observaciones': this.observaciones,
@@ -3062,11 +3139,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           'epps': this.inputsEpps,
           'riesgos': this.inputsRiesgos
         }).then(function (response) {
-          _this13.response = response;
-          alert('OT Editada!');
+          _this14.response = response;
+          toastr.success('OT N° ' + _this14.ot + ' fue editada con éxito ');
         })["catch"](function (error) {
           if (error.response.status === 422) {
-            _this13.errors = error.response.data.errors || {};
+            _this14.errors = error.response.data.errors || {};
           }
         });
       }
@@ -3214,7 +3291,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   created: function created() {
     _event_bus__WEBPACK_IMPORTED_MODULE_1__["eventSetReferencia"].$on('open', function () {
-      setTimeout(function () {}, 2000);
       console.log(this.path_empty);
       console.log(this.inputsData);
       this.setReferencia();
@@ -3224,9 +3300,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['url', 'AppUrl'])),
   methods: {
     setReferencia: function setReferencia() {
-      console.log('entro a setReferencia..');
-      console.log(this.inputsData);
-      console.log('la tabla es:' + this.tabla);
       this.referencia.observaciones = this.inputsData.observaciones;
       if (this.inputsData.path1 != null) this.referencia.path1 = this.inputsData.path1;else this.referencia.path1 = this.path_empty;
       if (this.inputsData.path2 != null) this.referencia.path2 = this.inputsData.path2;else this.referencia.path2 = this.path_empty;
@@ -3276,8 +3349,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       };
       var fd = new FormData();
-      console.log(path);
-      console.log(this.selectedFile1);
 
       switch (path) {
         case '1':
@@ -35910,6 +35981,51 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.Ri,
+                expression: "Ri"
+              }
+            ]
+          },
+          [
+            _c("div", { staticClass: "box box-danger" }, [
+              _c("div", { staticClass: "box-body" }, [
+                _c("div", { staticClass: "col-md-6" }, [
+                  _c(
+                    "div",
+                    { staticClass: "form-group" },
+                    [
+                      _c("label", [_vm._v("Calidad de placas")]),
+                      _vm._v(" "),
+                      _c("v-select", {
+                        attrs: {
+                          multiple: "",
+                          label: "codigo",
+                          options: _vm.tipo_peliculas
+                        },
+                        model: {
+                          value: _vm.peliculas_selected,
+                          callback: function($$v) {
+                            _vm.peliculas_selected = $$v
+                          },
+                          expression: "peliculas_selected"
+                        }
+                      })
+                    ],
+                    1
+                  )
+                ])
+              ])
+            ])
+          ]
+        ),
+        _vm._v(" "),
         _c("div", { staticClass: "box box-danger" }, [
           _c("div", { staticClass: "box-body" }, [
             _c("div", { staticClass: "col-md-6" }, [
@@ -36607,7 +36723,6 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-md-6" }, [
-            _vm._v("\n                    <"),
             _vm.inputsData.path3 == null
               ? _c("div", [
                   _c("img", {
@@ -54105,7 +54220,7 @@ toastr.options = {
   "onclick": null,
   "showDuration": "300",
   "hideDuration": "1000",
-  "timeOut": "5000",
+  "timeOut": "10000",
   "extendedTimeOut": "1000",
   "showEasing": "swing",
   "hideEasing": "linear",
@@ -54146,7 +54261,7 @@ var VueGoogleMaps = __webpack_require__(/*! vue2-google-maps */ "./node_modules/
 
 Vue.use(VueGoogleMaps, {
   load: {
-    //  key: 'AIzaSyAjnyOfVeT0QoN9rOws7-xAE8tR8ndyVD8',
+    key: 'AIzaSyAjnyOfVeT0QoN9rOws7-xAE8tR8ndyVD8',
     libraries: 'places' // This is required if you use the Autocomplete plugin
     // OR: libraries: 'places,drawing'
     // OR: libraries: 'places,drawing,visualization'

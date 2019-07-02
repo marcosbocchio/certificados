@@ -87,11 +87,12 @@ class OtsController extends Controller
         $cliente = Clientes::find($ot->cliente_id);
         
       
-        $ot_servicios = DB::select('select 
+        $ot_servicios = DB::select('select
                                     servicios.id as id,
                                     servicios.descripcion as servicio,
                                     norma_ensayos.descripcion as norma_ensayo,
                                     norma_ensayos.id as norma_ensayo_id,
+                                    metodo_ensayos.metodo as metodo,
                                     norma_evaluaciones.descripcion as norma_evaluacion,
                                     norma_evaluaciones.id as norma_evaluacion_id,
                                     ot_servicios.cantidad as cantidad_servicios,
@@ -111,8 +112,11 @@ class OtsController extends Controller
                                     norma_ensayos.id = ot_servicios.norma_ensayo_id
                                     inner join norma_evaluaciones on
                                     norma_evaluaciones.id = ot_servicios.norma_evaluacion_id
+                                    inner join metodo_ensayos on
+                                    servicios.metodo_ensayo_id = metodo_ensayos.id
                                     inner join ots on
-                                    ot_servicios.ot_id=ots.id and
+                                    ot_servicios.ot_id=ots.id 
+                                    where
                                     ots.id=:id',['id' => $ot->id ]);
         $ot_productos = DB::select('select 
                                     productos.id as id,
@@ -160,8 +164,27 @@ class OtsController extends Controller
                                     ot_riesgos.ot_id = ots.id
                                     Where 
                                     ots.id =:id',['id' => $ot->id ]);
+
+        $ot_calidad_placas = DB::select('select 
+
+                                        tipo_peliculas.id,
+                                        tipo_peliculas.codigo ,
+                                        tipo_peliculas.descripcion,
+                                        tipo_peliculas.fabricante                                      
+
+                                        
+                                        from ot_calidad_placas
+                                        inner join tipo_peliculas on
+                                        tipo_peliculas.id =ot_calidad_placas.tipo_pelicula_id
+                                        inner join ots on
+                                        ots.id = ot_calidad_placas.ot_id	
+                                        Where 
+                                        ots.id =:id',['id' => $ot->id ]);
+
+        
       
         $ot_servicios = Collection::make($ot_servicios);
+        $ot_calidad_placas = Collection::make($ot_calidad_placas);
         $ot_productos = Collection::make($ot_productos);
         $ot_epps = Collection::make($ot_epps);
         $ot_riesgos = Collection::make($ot_riesgos);
@@ -178,7 +201,22 @@ class OtsController extends Controller
         if ($ot_contacto3 == null)
                 $ot_contacto3 = new Contactos();
 
-        return view('ots.edit',compact('ot','cliente','user','ot_servicios','ot_productos','ot_epps','ot_riesgos','accion','ot_contacto1','ot_contacto2','ot_contacto3','ot_provincia','ot_localidad','header_titulo','header_descripcion'));
+        return view('ots.edit',compact('ot',
+                                        'cliente',
+                                        'user',
+                                        'ot_servicios',
+                                        'ot_calidad_placas',
+                                        'ot_productos',
+                                        'ot_epps',
+                                        'ot_riesgos',
+                                        'accion',
+                                        'ot_contacto1',
+                                        'ot_contacto2',
+                                        'ot_contacto3',
+                                        'ot_provincia',
+                                        'ot_localidad',
+                                        'header_titulo',
+                                        'header_descripcion'));
     }
 
     /**

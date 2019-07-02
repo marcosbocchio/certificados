@@ -180,7 +180,7 @@
         </div>
         <div class="col-md-6">
           <div class="form-group"> 
-              <label>Norma Evaluación</label>                   
+             <label>Norma Evaluación</label>                   
             <v-select v-model="norma_evaluacion" label="descripcion" :options="norma_evaluaciones"></v-select>
           </div>   
         </div> 
@@ -238,7 +238,20 @@
           </div>
         </div>   
       </div>
-    </div>          
+    </div>
+    <div v-show ="Ri">
+      <div class="box box-danger">
+        <div class="box-body">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Calidad de placas</label>                   
+              <v-select multiple  v-model="peliculas_selected" label="codigo" :options="tipo_peliculas"></v-select>
+            </div>    
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="box box-danger">
       <div class="box-body">
         <div class="col-md-6">
@@ -408,6 +421,11 @@ export default {
        type : Array,
        required : false
      },
+     ot_calidad_placasdata : {
+       type : Array,
+       required : false
+     },
+     
      ot_riesgosdata : {
        type : Array,
        required : false
@@ -496,12 +514,20 @@ export default {
           norma_evaluacion :'',
           inputsServicios: [],
 
+          peliculas_selected:[],
+          tipo_peliculas:[],
+          Ri : false, 
+          ri_id :'',
+
           productos :[],
           producto :'',
           medidas:[],
           medida:'',
           cantidad_productos:'1',
           inputsProductos: [],
+
+          metodo_ensayos:[],
+          var_metodo:'',
 
           epps:[],
           epp:'',
@@ -528,17 +554,19 @@ export default {
         this.getClientes();
         this.getProvincias();
         this.getServicios();
+        this.getTipoPeliculas();
         this.getProductos();
         this.getEpps();
         this.getRiesgos();
-        this.getMetodosEnsayos();
+        this.getMetodosEnsayos();        
         this.getNormaEnsayos();
         this.getNormaEvaluaciones();
-        this.setOt();
+        this.setOt();        
         this.sync();
         this.accion = this.acciondata;
       },
     mounted : function(){
+      
 
        $('#datepicker').datepicker({
            autoclose: true
@@ -553,6 +581,39 @@ export default {
         ...mapState(['url'])
      },
 
+     watch : {
+
+       metodo_ensayos: function(metodo_ensayo) {
+        
+         metodo_ensayo.forEach(function(metodo){
+              if(metodo.metodo == 'RI'){               
+                 this.ri_id = metodo.id
+              }
+            }.bind(this));  
+       },
+
+       inputsServicios : {
+         
+         handler : function(servicios,oldservicios) {
+        
+          console.log('-----');
+          let existeRi = false;
+          servicios.forEach(function(servicio) {
+
+              console.log(servicio.metodo);         
+              
+              if(servicio.metodo == 'RI'){                 
+                  existeRi = true; 
+              } 
+          }.bind(this));           
+           this.Ri = existeRi;
+           if(this.Ri == false){
+              this.peliculas_selected=[]
+           }     
+         },
+         deep:true
+       }
+     },
     methods :{
 
       setOt : function(){
@@ -583,6 +644,7 @@ export default {
                 this.localidad.lat   = this.otdata.lat;
                 this.localidad.lon   = this.otdata.lon;
                 this.inputsServicios = this.ot_serviciosdata;
+                this.peliculas_selected = this.ot_calidad_placasdata
                 this.inputsProductos = this.ot_productosdata;
                 this.inputsRiesgos   = this.ot_riesgosdata;
                 this.inputsEpps      = this.ot_eppsdata;                
@@ -641,6 +703,14 @@ export default {
                 var urlRegistros = 'servicios';    
                 axios.get(urlRegistros).then(response =>{
                 this.servicios = response.data
+                });
+              },
+        getTipoPeliculas : function(){
+             
+                axios.defaults.baseURL = this.url ;
+                var urlRegistros = 'tipo_peliculas';    
+                axios.get(urlRegistros).then(response =>{
+                this.tipo_peliculas = response.data
                 });
               },
         getProductos : function(){
@@ -715,7 +785,20 @@ export default {
                 this.sync();
       
              },
-      addServicio(index) {
+      getMetodo : function($id){
+
+            this.metodo_ensayos.forEach( function(metodo) {
+                  console.log(metodo.id + ' ' + $id + ' '+ metodo.metodo );                 
+                
+                 if(metodo.id == $id){
+                    this.var_metodo = metodo.metodo;
+                 }
+            }.bind(this));
+      },
+      addServicio(index) {            
+
+            this.getMetodo(this.servicio.metodo_ensayo_id);        
+           
             this.inputsServicios.push({ 
                 id:this.servicio.id,
                 servicio:this.servicio.descripcion,            
@@ -725,11 +808,12 @@ export default {
                 norma_evaluacion_id :this.norma_evaluacion.id,
                 cantidad_placas:this.cantidad_placas,
                 cantidad_servicios:this.cantidad_servicios,
-                observaciones : '',
-                path1:'',
-                path2:'',
-                path3:'',
-                path4:''
+                metodo : this.var_metodo,
+                observaciones : '',                
+                path1:null,
+                path2:null,
+                path3:null,
+                path4:null
                  });
             this.servicio='',        
             this.norma_ensayo ='',
@@ -737,7 +821,8 @@ export default {
             this.cantidad_placas='',
             this.cantidad_servicios='1'
 
-        },
+        },     
+
       addProducto(index) {
             this.inputsProductos.push({ 
                 id:this.producto.id,
@@ -746,6 +831,11 @@ export default {
                 medida_id :this.medida.id,
                 unidad_medida_id :this.producto.unidades_medida_id,            
                 cantidad_productos:this.cantidad_productos,
+                observaciones : '',                
+                path1:null,
+                path2:null,
+                path3:null,
+                path4:null
                  });
             this.producto='',        
             this.medida ='',       
@@ -768,6 +858,8 @@ export default {
             this.riesgo=''          
 
         },
+
+      
       removeServicio(index) {
             this.inputsServicios.splice(index, 1);
         },
@@ -789,9 +881,7 @@ export default {
           eventSetReferencia.$emit('open');
       },
 
-      AddReferencia(Ref){
-
-        console.log(Ref.tabla);
+      AddReferencia(Ref){      
 
           if (Ref.tabla =='servicios'){
            this.inputsServicios[this.index_referencias].observaciones = Ref.observaciones;
@@ -834,6 +924,7 @@ export default {
               'localidad'     : this.localidad.id,
               'fecha_ensayo'  : this.fecha_ensayo,
               'lugar_ensayo'  : this.lugar_ensayo,
+              'tipo_peliculas': this.peliculas_selected,
               'lat'           : this.localidad.lat,
               'lon'           : this.localidad.lon,
               'observaciones' : this.observaciones,
@@ -845,7 +936,7 @@ export default {
       
         ).then(response => {
           this.response = response
-          alert('OT creada!');
+          toastr.success('OT N° ' + this.ot + ' fue creada con éxito ');
         }).catch(error => {
           if (error.response.status === 422) {
             this.errors = error.response.data.errors || {};
@@ -853,8 +944,7 @@ export default {
         });
       }
       else if (this.accion =='edit')
-      {
-        alert('va a editar');
+      {      
         this.errors =[];
         var urlRegistros = 'ots/' + this.otdata.id ;
         axios.put(urlRegistros, {
@@ -873,6 +963,7 @@ export default {
               'localidad'     : this.localidad.id,
               'fecha_ensayo'  : this.fecha_ensayo,
               'lugar_ensayo'  : this.lugar_ensayo,
+              'tipo_peliculas': this.peliculas_selected,
               'lat'           : this.localidad.lat,
               'lon'           : this.localidad.lon,
               'observaciones' : this.observaciones,
@@ -883,7 +974,7 @@ export default {
           }         
           ).then(response => {
           this.response = response
-          alert('OT Editada!');
+         toastr.success('OT N° ' + this.ot + ' fue editada con éxito ');
           }).catch(error => {
             if (error.response.status === 422) {
               this.errors = error.response.data.errors || {};

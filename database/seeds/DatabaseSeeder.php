@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
         $this->call(EppsTableSeeder::class);
         $this->call(RiesgosTableSeeder::class);
         $this->call(MedidasTableSeeder::class);
+        $this->call(TipoPeliculasTableSeeder::class);
 
 
 

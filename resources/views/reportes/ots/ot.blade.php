@@ -25,7 +25,7 @@ td b,td span {
   </head>
   <body>
 
-    <table width="100%" class="bordered" style="margin-top: 40px;">
+    <table style="text-align: center" class="bordered">
       <tbody>
         <tr> 
           <td class="bordered">
@@ -73,7 +73,8 @@ td b,td span {
                     <td style="width:150px" > &nbsp;</td>
                     <td style="font-size: 13px;  width:250px" ><b>Provincia: </b>{{$provincia->provincia}}</td>
                   </tr>
-                  <tr>
+                  <tr>                     
+                     
                       <td style="font-size: 13px; width:300px" ><b>Contacto 1: </b>{{$contacto1->nombre}} - {{$contacto1->cargo}}</td>
                       <td style="font-size: 13px; width:150px" ><b>Tel: </b>{{$contacto1->tel}}</td>
                       <td style="font-size: 13px; width:250px" ><b>Email: </b>{{$contacto1->email}} </td>
@@ -116,7 +117,7 @@ td b,td span {
             </td>
         </tr>
         <tr>
-            <td class="bordered" style="height: 550px;vertical-align: top;">
+            <td style="height: 415px;vertical-align: top;">
               <table>
                   <tbody>
                       <tr>
@@ -151,29 +152,66 @@ td b,td span {
                   </tbody>
                 </table>   
                 
-              </td>
+              </td>             
               
           </tr>
-          <tr>
-            <td class="bordered">
+          <tr >
+            <td>
               <table class="bordered" style="margin: 0px 7px 0px 7px">
-                  <tbody>
-                    <tr style="vertical-align: bottom">
-                        <td style="font-size: 13px;">
-                          <p style="margin: 5px 20px 5px 20px;"> <strong>Observaciones:</strong> {{$ot->observaciones}}</p>
-                        </td>             
-                    </tr>
-                  </tbody>
-                </table>   
-              </td>
-            </tr>    
+                <tbody>
+                  <tr style="vertical-align: bottom " >
+                      <td style="font-size: 13px; width: 696px;">
+                        <p style="margin: 5px 10px 5px 10px;"> <strong>Observaciones:</strong> {{$ot->observaciones}}</p>
+                      </td>             
+                  </tr>
+                </tbody>
+              </table>   
+            </td>
+          </tr>
+          <tr>
+            <td  style="width: 500px; padding: 5px 0px 5px 0px">
+              <table >
+                <tbody>
+                  <tr>                     
+                    <td style="font-size: 13px; width:500px" ><b>Elementos de Seguridad: </b>
+                      @foreach ( $ot_epps as $ot_epp )
+                          @if (!$loop->first)
+                             <span>,</span> 
+                          @endif
+                        {{$ot_epp->descripcion}}
+                      @endforeach
+                    </td>                                                   
+                  </tr>
+                  <tr>
+                      <td style="font-size: 13px; width:500px" ><b>Riesgos: </b>
+                        @foreach ( $ot_riesgos as $ot_riesgo )
+                            @if (!$loop->first)
+                               <span>,</span> 
+                            @endif
+                          {{$ot_riesgo->descripcion}}
+                        @endforeach
+                      </td>       
+                  </tr>
+                </tbody>
+              </table>   
+            </td>
+          </tr>
+          <tr >
+            <td  class="bordered">
+              <table>
+                <tbody>
+                  <tr style="padding: 15px 0px 15px 0px">
+                      <td style="font-size: 13px; width: 500px; padding: 20px 0px 20px 0px"><b>Responsable OT: </b>Pablo Martín Bocchio</td>      
+                      <td style="font-size: 13px; width: 200px; padding: 20px 0px 20px 0px"><b>Firma: </b></td>        
+                  </tr>
+                  
+                </tbody>
+              </table>   
+            </td>
+          </tr>   
+        
       </tbody>
-    </table>  
-
-   
-
-
-    
+    </table>   
 
   </body>
 </html>

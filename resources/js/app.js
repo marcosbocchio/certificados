@@ -18,7 +18,7 @@ toastr.options = {
   "onclick": null,
   "showDuration": "300",
   "hideDuration": "1000",
-  "timeOut": "5000",
+  "timeOut": "10000",
   "extendedTimeOut": "1000",
   "showEasing": "swing",
   "hideEasing": "linear",
@@ -69,7 +69,7 @@ const VueGoogleMaps = require('vue2-google-maps');
 
 Vue.use(VueGoogleMaps, {
   load: {
-  //  key: 'AIzaSyAjnyOfVeT0QoN9rOws7-xAE8tR8ndyVD8',
+    key: 'AIzaSyAjnyOfVeT0QoN9rOws7-xAE8tR8ndyVD8',
     libraries: 'places', 
     // This is required if you use the Autocomplete plugin
     // OR: libraries: 'places,drawing'

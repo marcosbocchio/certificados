@@ -45,7 +45,7 @@
                     </div>    
                 
                     <div class="col-md-6">
-                        <<div v-if="inputsData.path3 == null">
+                        <div v-if="inputsData.path3 == null">
                             <img :src="path_empty" class="margin" alt="..." width="304" height="236">
                         </div>    
                         <div v-else>
@@ -132,7 +132,7 @@ export default {
       
       eventSetReferencia.$on('open', function(){
 
-          setTimeout(function(){},2000);
+      
           console.log(this.path_empty);
           console.log(this.inputsData);
           this.setReferencia();
@@ -151,11 +151,7 @@ export default {
     methods: {          
          
  
-            setReferencia : function(){
-
-                console.log('entro a setReferencia..');                
-                console.log(this.inputsData);
-                console.log('la tabla es:' + this.tabla);
+            setReferencia : function(){           
 
                 this.referencia.observaciones = this.inputsData.observaciones;
 
@@ -225,9 +221,7 @@ export default {
             onUpload(path) {
               let settings = { headers: { 'content-type': 'multipart/form-data' } }
                const fd = new FormData();
-
-               console.log(path);
-               console.log(this.selectedFile1);
+               
                switch (path) {
                        case '1':
                            fd.append('image',this.selectedFile1);  

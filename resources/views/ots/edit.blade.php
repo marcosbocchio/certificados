@@ -17,6 +17,7 @@
   <ots :otdata="{{$ot}}" 
       :clientedata="{{$cliente}}" 
       :ot_serviciosdata="{{$ot_servicios}}" 
+      :ot_calidad_placasdata="{{$ot_calidad_placas}}"
       :ot_productosdata="{{$ot_productos}}"
       acciondata="{{$accion}}"
       :otcontacto1data="{{$ot_contacto1}}"

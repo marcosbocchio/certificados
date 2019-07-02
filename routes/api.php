@@ -26,6 +26,7 @@ Route::resource('provincias', 'ProvinciasController');
 Route::resource('localidades', 'LocalidadesController');
 Route::resource('contactos', 'ContactosController');
 Route::resource('servicios', 'ServiciosController');
+Route::resource('tipo_peliculas', 'TipoPeliculasController');
 Route::resource('metodo_ensayos', 'MetodoEnsayosController');
 Route::resource('norma_ensayos', 'NormaEnsayosController');
 Route::resource('norma_evaluaciones', 'NormaEvaluacionesController');
@@ -37,6 +38,7 @@ Route::resource('epps', 'EppsController');
 Route::resource('riesgos', 'RiesgosController');
 Route::resource('ot_riesgos', 'OtRiesgosController');
 Route::post('storage/create', 'StorageController@save');
+
 
 
 
