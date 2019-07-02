@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title></title>
 
-    <style>
+ <style>
 .bordered {
     border-color: #000000;
     border-style: solid;
@@ -18,14 +18,13 @@ td {
 
 td b,td span {
   margin-left: 10px;
-}
-
- 
+} 
 </style>
+
   </head>
   <body>
 
-    <table style="text-align: center" class="bordered">
+    <table style="text-align: center" class="bordered" width="100%">
       <tbody>
         <tr> 
           <td class="bordered">
@@ -102,14 +101,26 @@ td b,td span {
                           @foreach ( $metodos_ensayos as $metodo )
 
                               @if (!$loop->first)
-                                 <span>,</span> 
+                                ,
                               @endif 
 
                               {{ $metodo->metodo }} 
+
                            @endforeach
                         
                         </td>
-                        <td style="font-size: 13px; width:200px" ><b>Calidad de Placa: </b>D4 </td>
+                        <td style="font-size: 13px; width:200px" ><b>Calidad de Placa: </b>
+                            @foreach ($ot_calidad_placas as $ot_calidad_placa)
+                              
+                                @if (!$loop->first)
+                                  ,
+                                @endif 
+
+                                {{ $ot_calidad_placa->codigo  }}
+
+                            @endforeach
+                        
+                        </td>
                         <td style="font-size: 13px; width:250px" ><b>Fecha Estimada ensayo: </b>{{ date('d-m-Y', strtotime($ot->fecha_estimada_ensayo)) }} </td>
                     </tr>
                 </tbody>
@@ -130,7 +141,11 @@ td b,td span {
                       @foreach ( $ot_servicios as $ot_servicio )
                       <tr> 
                         <td style="font-size: 13px; width:500px;" >
-                          <span>  {{ $ot_servicio->servicio }} </span> <br>
+                          @if ($ot_servicio->ot_referencia_id)
+                              <span>  <a href="{{ route('ServiciosReferencias',$ot_servicio->ot_referencia_id)}}">{{ $ot_servicio->servicio }}</a></span> <br>                              
+                          @else
+                             <span>  {{ $ot_servicio->servicio }} </span> <br>
+                          @endif
                           <span style="margin-left: 30px; font-size:12px; ">Norma de ensayo:</span><span style="font-size: 9px;color:#808080;">{{$ot_servicio->norma_ensayo}}</span> <br>
                           <span style="margin-left: 30px; font-size:12px;">Norma de evaluación:</span><span style="font-size: 9px;color:#808080;">{{$ot_servicio->norma_evaluacion}}</span>
                         </td>
@@ -142,7 +157,11 @@ td b,td span {
                       @foreach ( $ot_productos as $ot_producto )
                       <tr> 
                         <td style="font-size: 13px; width:500px;" >
-                          <span>  {{ $ot_producto->producto }} {{ $ot_producto->medida }} {{ $ot_producto->unidad_medida_codigo }} </span>   
+                          @if ($ot_producto->ot_referencia_id)
+                            <span>  <a href="{{ route('ProductosReferencias',$ot_producto->ot_referencia_id)}}">{{ $ot_producto->producto }} {{ $ot_producto->medida }} {{ $ot_producto->unidad_medida_codigo }}</a></span> <br>
+                          @else
+                            <span>  {{ $ot_producto->producto }} {{ $ot_producto->medida }} {{ $ot_producto->unidad_medida_codigo }} </span>  
+                          @endif 
                         </td>
                         <td style="font-size: 13px; width:80px;text-align: center;" >{{$ot_producto->cantidad_productos}}</td>
                         <td style="font-size: 13px; width:80px;text-align: center;" >Unidad</td>
@@ -176,7 +195,7 @@ td b,td span {
                     <td style="font-size: 13px; width:500px" ><b>Elementos de Seguridad: </b>
                       @foreach ( $ot_epps as $ot_epp )
                           @if (!$loop->first)
-                             <span>,</span> 
+                            ,
                           @endif
                         {{$ot_epp->descripcion}}
                       @endforeach
@@ -186,7 +205,7 @@ td b,td span {
                       <td style="font-size: 13px; width:500px" ><b>Riesgos: </b>
                         @foreach ( $ot_riesgos as $ot_riesgo )
                             @if (!$loop->first)
-                               <span>,</span> 
+                               ,
                             @endif
                           {{$ot_riesgo->descripcion}}
                         @endforeach

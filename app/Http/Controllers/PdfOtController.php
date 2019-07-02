@@ -35,6 +35,7 @@ class PdfOtController extends Controller
         $ot_productos = (new OtProductosController)->show($ot->id);
         $ot_epps = (new OtEppsController)->show($ot->id);
         $ot_riesgos = (new OtRiesgosController)->show($ot->id);
+        $ot_calidad_placas = (new OtCalidadPlacasController)->show($ot->id);
 
        // dd($metodos_ensayo);
        // dd($ot); 
@@ -45,9 +46,11 @@ class PdfOtController extends Controller
        // dd($ot_epps);
        // dd($ot_riesgos);
        // dd($geo);
+       // dd($ot_calidad_placas);
 
         $pdf = \PDF::loadView('reportes.ots.ot',compact('ot',
                                                         'cliente',
+                                                        'ot_calidad_placas',
                                                         'ot_servicios',
                                                         'ot_productos',
                                                         'ot_epps',

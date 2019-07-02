@@ -31,7 +31,7 @@ Route::group(['middleware' => ['permission:Navegar operador']], function () {
 
 });
 
-Route::get('/pdf/ot/{id}','PdfOtController@imprimir')->name('pdfot');
+
 
 
 

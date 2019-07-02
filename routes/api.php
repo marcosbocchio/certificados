@@ -40,5 +40,7 @@ Route::resource('ot_riesgos', 'OtRiesgosController');
 Route::post('storage/create', 'StorageController@save');
 
 
-
+Route::get('/pdf/ot/{id}','PdfOtController@imprimir')->name('pdfot');
+Route::get('/pdf/servicios/referencias/{id}','PdfServiciosReferenciasController@imprimir')->name('ServiciosReferencias');
+Route::get('/pdf/productos/referencias/{id}','PdfProductosReferenciasController@imprimir')->name('ProductosReferencias');
 

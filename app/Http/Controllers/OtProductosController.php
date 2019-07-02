@@ -50,12 +50,14 @@ class OtProductosController extends Controller
     {
         $ot_productos = DB::select('select 
                                     productos.id as id,
+                                    ots.id as ot_id,
                                     productos.descripcion as producto,
                                     medidas.descripcion as medida,
                                     medidas.id as medida_id,
                                     productos.unidades_medida_id as unidad_medida_id,
                                     unidades_medidas.codigo as unidad_medida_codigo,
                                     ot_productos.cantidad as cantidad_productos,
+                                    ot_productos.ot_referencia_id as ot_referencia_id,
                                     ot_referencias.descripcion as observaciones,
                                     ot_referencias.path1 as path1,
                                     ot_referencias.path2 as path2,

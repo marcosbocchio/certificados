@@ -54,6 +54,7 @@ class OtServiciosController extends Controller
     {
         $ot_servicios = DB::select('select 
                                     servicios.id as id,
+                                    ots.id as ot_id,
                                     servicios.descripcion as servicio,
                                     norma_ensayos.descripcion as norma_ensayo,
                                     norma_ensayos.id as norma_ensayo_id,
@@ -61,6 +62,7 @@ class OtServiciosController extends Controller
                                     norma_evaluaciones.id as norma_evaluacion_id,
                                     ot_servicios.cantidad as cantidad_servicios,
                                     ot_servicios.cant_max_placas as cantidad_placas,
+                                    ot_servicios.ot_referencia_id as ot_referencia_id,
                                     ot_referencias.descripcion as observaciones,
                                     ot_referencias.path1 as path1,
                                     ot_referencias.path2 as path2,

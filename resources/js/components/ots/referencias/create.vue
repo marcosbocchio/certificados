@@ -26,8 +26,7 @@
                             <input type="file" class="form-control" id="inputFile1" name="file" @change="onFileSelected($event,'imagen1')">
                             <button class="hide"  @click.prevent="onUpload($event,'1')" >upload</button>
                         </div>                                              
-                    </div>   
-
+                    </div>
                     
 
                     <div class="col-md-6">             
@@ -81,8 +80,7 @@
             </div>
         </div>         
     </div>       
-</template>
-                 
+</template>     
                      
                 
             
