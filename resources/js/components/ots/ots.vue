@@ -64,7 +64,7 @@
         </div>        
         <div class="col-md-3">
           <div class="form-group">
-            <label for="fecha">Fecha estima de ensayo</label>
+            <label for="fecha">Fecha estimada de ensayo</label>
               <div class="input-group date">
                 <div class="input-group-addon">
                   <i class="fa fa-calendar"></i>
@@ -121,29 +121,28 @@
               </gmap-autocomplete>
             </div>
           </div>
-        </div>        
-        
+          <div class="form-group">
+            <label for="latitud">Latitud</label>
+            <input type="text" 
+            class="form-control" id="latitud"
+            v-model.number.lazy="localidad.lat"
+            @change="sync"
+            />
+          </div>
        
-          <div class="col-md-3 hidden">
-            <div class="form-group">
-              <label for="latitud">Latitud</label>
-              <input type="text" 
-              class="form-control" id="latitud"
-              v-model.number.lazy="localidad.lat"
-              @change="sync"
-              />
-            </div>
+        
+          <div class="form-group">
+            <label for="longitud">Longitud</label>
+            <input type="text" 
+            class="form-control" id="longitud"
+            v-model.number.lazy="localidad.lon"
+            @change="sync"            
+            />
           </div>
-          <div class="col-md-3 hidden">
-            <div class="form-group">
-              <label for="longitud">Longitud</label>
-              <input type="text" 
-              class="form-control" id="longitud"
-              v-model.number.lazy="localidad.lon"
-              @change="sync"            
-              />
-            </div>
-          </div>
+        </div>        
+       
+         
+       
         <div class="col-md-6">
           <gmap-map :center="mapCenter" :zoom="12"
               ref="map"
@@ -221,11 +220,11 @@
                 <tbody>
                   <tr v-for="(inputsServicio,k) in inputsServicios" :key="k">
                     <td> {{ inputsServicio.servicio}}</td>
-                    <td> <span :class="{existe : inputsServicio.observaciones || 
-                    inputsServicios.path1 || 
-                    inputsServicios.path2 || 
-                    inputsServicios.path3 || 
-                    inputsServicios.path4  }" class="fa fa-file-archive-o" @click="OpenReferencias($event,k,'servicios',inputsServicio)" ></span></td>      
+                    <td> <span :class="{existe : (inputsServicio.observaciones || 
+                    inputsServicio.path1 || 
+                    inputsServicio.path2 || 
+                    inputsServicio.path3 || 
+                    inputsServicio.path4)  }" class="fa fa-file-archive-o" @click="OpenReferencias($event,k,'servicios',inputsServicio)" ></span></td>      
                     <td> {{ inputsServicio.norma_ensayo}}</td>
                     <td> {{ inputsServicio.norma_evaluacion}}</td>
                     <td> {{ inputsServicio.cantidad_placas}}</td>
@@ -244,8 +243,15 @@
         <div class="box-body">
           <div class="col-md-6">
             <div class="form-group">
-              <label>Calidad de placas</label>                   
-              <v-select multiple  v-model="peliculas_selected" label="codigo" :options="tipo_peliculas"></v-select>
+              <label>Calidad de placas</label> 
+
+              <v-select multiple v-model="peliculas_selected" :options="tipo_peliculas" label="codigo">
+              <template slot="option" slot-scope="option">
+                 <span class="upSelect">{{ option.codigo }}</span> <br> 
+                  <span class="downSelect"> {{ option.fabricante }} </span>
+              </template>
+
+            </v-select>
             </div>    
           </div>
         </div>
@@ -262,8 +268,15 @@
           </div>  
           <div class="col-md-3">
             <div class="form-group">  
-              <label>Medidas</label>               
-              <v-select v-model="medida" label="descripcion" :options="medidas"></v-select>
+              <label>Medidas</label>           
+
+              <v-select v-model="medida" :options="medidas" label="descripcion">
+              <template slot="option" slot-scope="option">
+                 <span class="upSelect">{{ option.descripcion }} </span> 
+                  <span class="downSelect">   {{ option.codigo }} </span>
+              </template>
+              </v-select>
+
             </div>
           </div> 
           <div class="col-md-3">
@@ -295,8 +308,13 @@
                   <tbody>
                     <tr v-for="(inputsProducto,k) in inputsProductos" :key="k">
                       <td> {{ inputsProducto.producto}}</td>
-                      <td> <span :class="{existe : inputsProducto.observaciones }" class="fa fa-file-archive-o" @click="OpenReferencias($event,k,'productos',inputsProducto)" ></span></td>                       
-                      <td> {{ inputsProducto.medida}}</td>  
+                      <td> <span :class="{ existe : (inputsProducto.observaciones ||
+                                          inputsProducto.path1 ||
+                                          inputsProducto.path2 ||
+                                          inputsProducto.path3 ||
+                                          inputsProducto.path4 )                      
+                      }" class="fa fa-file-archive-o" @click="OpenReferencias($event,k,'productos',inputsProducto)" ></span></td>                       
+                      <td> {{ inputsProducto.medida}}&nbsp; &nbsp; {{inputsProducto.unidad_medida_codigo }}</td>  
                       <td> {{ inputsProducto.cantidad_productos}}</td>                                  
                       <td> <i class="fa fa-minus-circle" @click="removeProducto(k)" ></i></td>
                     </tr>
@@ -398,7 +416,7 @@ export default {
 
   components: {
       Datepicker,
-      Timeselector 
+      Timeselector
   },
    props: {
      otdata : {
@@ -831,6 +849,7 @@ export default {
                 medida_id :this.medida.id,
                 unidad_medida_id :this.producto.unidades_medida_id,            
                 cantidad_productos:this.cantidad_productos,
+                unidad_medida_codigo : this.medida.codigo,
                 observaciones : '',                
                 path1:null,
                 path2:null,
@@ -989,7 +1008,7 @@ export default {
 <style>
 .map-container {
     width: 100%;
-    height: 350px;
+    height: 425px;
     display: inline-block;
   }
 
@@ -1014,5 +1033,15 @@ export default {
     color: blue ;
 
   }
+
+.downSelect {
+ font-style: oblique;
+ font-size: 12px;
+  }
+
+.upSelect {
+  font-weight: bold;
+  font-size: 14;
+}
 
 </style>

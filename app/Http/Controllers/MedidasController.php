@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Repositories\Medidas\MedidasRepository;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection as Collection;
+
 use App\Medidas;
 use App\Productos;
 
@@ -57,7 +60,20 @@ class MedidasController extends Controller
     {   
         
         
-        return  $this->medidas->getMedidasProducto($id);
+        $medidas = DB::select('select 
+                            medidas.descripcion,
+                            medidas.id,
+                            unidades_medidas.codigo 
+                            from
+                            medidas
+                            inner join unidades_medidas on
+                            unidades_medidas.id = medidas.unidades_medida_id
+                            where
+                            medidas.unidades_medida_id =:id',['id' => $id ]);
+
+        $medidas = Collection::make($medidas);
+
+        return $medidas;
     }
 
     /**

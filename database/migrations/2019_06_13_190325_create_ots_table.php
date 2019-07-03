@@ -18,7 +18,7 @@ class CreateOtsTable extends Migration
             $table->datetime('fecha_hora');
             $table->integer('numero');
             $table->string('proyecto',50);
-            $table->integer('obra');
+            $table->integer('obra')->nullable();
             $table->integer('presupuesto');
             $table->string('lugar',200);
             $table->string('lat',100)->nullable();

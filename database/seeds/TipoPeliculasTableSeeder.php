@@ -10,7 +10,14 @@ class TipoPeliculasTableSeeder extends Seeder
      * @return void
      */
     public function run()
+
     {
+        TipoPeliculas::create([
+            'fabricante'    =>'AGFA',
+            'codigo'        =>'D2',
+            'descripcion'   =>'null'           
+        ]);
+
         TipoPeliculas::create([
             'fabricante'    =>'AGFA',
             'codigo'        =>'D3',
@@ -31,7 +38,19 @@ class TipoPeliculasTableSeeder extends Seeder
 
         TipoPeliculas::create([
             'fabricante'    =>'AGFA',
+            'codigo'        =>'D6',
+            'descripcion'   =>'null'           
+        ]);
+
+        TipoPeliculas::create([
+            'fabricante'    =>'AGFA',
             'codigo'        =>'D7',
+            'descripcion'   =>'null'           
+        ]);
+
+        TipoPeliculas::create([
+            'fabricante'    =>'AGFA',
+            'codigo'        =>'D8',
             'descripcion'   =>'null'           
         ]);
 

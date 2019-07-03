@@ -45,6 +45,16 @@ window.Vue = require('vue');
 Vue.component('pagination', require('laravel-vue-pagination'));
 Vue.component('v-select', vSelect);
 
+/*
+vSelect.props.components.default = () => ({
+  Deselect: {
+    render: createElement => createElement('span', '❌'),
+  },
+  OpenIndicator: {
+    render: createElement => createElement('span', '🔽'),
+  },
+});
+*/
 
 Vue.component('abm-maestro', require('./components/abm-maestro/abm-maestro.vue').default);
 Vue.component('table-users', require('./components/abm-maestro/usuarios/table-users.vue').default);

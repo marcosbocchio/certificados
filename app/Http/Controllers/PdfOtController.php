@@ -26,7 +26,8 @@ class PdfOtController extends Controller
         $cliente = Clientes::find($ot->cliente_id);   
         $localidad = Localidades::find($ot->localidad_id);
         $provincia = Provincias::find($localidad->provincia_id); 
-        $geo = 'https://www.google.com.ar/maps/@'.$ot->lat.','.$ot->lon;
+        $geo = 'https://www.google.com/maps/search/?api=1&query='.$ot->lat.','.$ot->lon;
+      
         
         $MetodoEnsayosRepository = new MetodoEnsayosRepository();
         $metodos_ensayos = (new MetodoEnsayosController($MetodoEnsayosRepository))->otMetodosEnsayo($ot->id);

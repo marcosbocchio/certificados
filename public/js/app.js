@@ -2618,6 +2618,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3015,6 +3033,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         medida_id: this.medida.id,
         unidad_medida_id: this.producto.unidades_medida_id,
         cantidad_productos: this.cantidad_productos,
+        unidad_medida_codigo: this.medida.codigo,
         observaciones: '',
         path1: null,
         path2: null,
@@ -3468,7 +3487,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.map-container {\n    width: 100%;\n    height: 350px;\n    display: inline-block;\n}\n.vtimeselector__input {\n    width: 100%;\n    box-sizing: border-box;\n    padding: 6px 12px;\n    height: 34px;\n    font-size: 14px;\n    background-color: #fff;\n    border: 1px solid #ccc;\n}\n.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {\n\n    background-color: #fff;\n}\n.existe {\n\n    color: blue ;\n}\n\n", ""]);
+exports.push([module.i, "\n.map-container {\n    width: 100%;\n    height: 425px;\n    display: inline-block;\n}\n.vtimeselector__input {\n    width: 100%;\n    box-sizing: border-box;\n    padding: 6px 12px;\n    height: 34px;\n    font-size: 14px;\n    background-color: #fff;\n    border: 1px solid #ccc;\n}\n.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {\n\n    background-color: #fff;\n}\n.existe {\n\n    color: blue ;\n}\n.downSelect {\n font-style: oblique;\n font-size: 12px;\n}\n.upSelect {\n  font-weight: bold;\n  font-size: 14;\n}\n\n", ""]);
 
 // exports
 
@@ -35394,7 +35413,7 @@ var render = function() {
             _c("div", { staticClass: "col-md-3" }, [
               _c("div", { staticClass: "form-group" }, [
                 _c("label", { attrs: { for: "fecha" } }, [
-                  _vm._v("Fecha estima de ensayo")
+                  _vm._v("Fecha estimada de ensayo")
                 ]),
                 _vm._v(" "),
                 _c(
@@ -35606,10 +35625,8 @@ var render = function() {
                   ],
                   1
                 )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-3 hidden" }, [
+              ]),
+              _vm._v(" "),
               _c("div", { staticClass: "form-group" }, [
                 _c("label", { attrs: { for: "latitud" } }, [_vm._v("Latitud")]),
                 _vm._v(" "),
@@ -35642,10 +35659,8 @@ var render = function() {
                     }
                   }
                 })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-3 hidden" }, [
+              ]),
+              _vm._v(" "),
               _c("div", { staticClass: "form-group" }, [
                 _c("label", { attrs: { for: "longitud" } }, [
                   _vm._v("Longitud")
@@ -35913,10 +35928,10 @@ var render = function() {
                                   class: {
                                     existe:
                                       inputsServicio.observaciones ||
-                                      _vm.inputsServicios.path1 ||
-                                      _vm.inputsServicios.path2 ||
-                                      _vm.inputsServicios.path3 ||
-                                      _vm.inputsServicios.path4
+                                      inputsServicio.path1 ||
+                                      inputsServicio.path2 ||
+                                      inputsServicio.path3 ||
+                                      inputsServicio.path4
                                   },
                                   on: {
                                     click: function($event) {
@@ -36004,9 +36019,27 @@ var render = function() {
                       _c("v-select", {
                         attrs: {
                           multiple: "",
-                          label: "codigo",
-                          options: _vm.tipo_peliculas
+                          options: _vm.tipo_peliculas,
+                          label: "codigo"
                         },
+                        scopedSlots: _vm._u([
+                          {
+                            key: "option",
+                            fn: function(option) {
+                              return [
+                                _c("span", { staticClass: "upSelect" }, [
+                                  _vm._v(_vm._s(option.codigo))
+                                ]),
+                                _vm._v(" "),
+                                _c("br"),
+                                _vm._v(" "),
+                                _c("span", { staticClass: "downSelect" }, [
+                                  _vm._v(" " + _vm._s(option.fabricante) + " ")
+                                ])
+                              ]
+                            }
+                          }
+                        ]),
                         model: {
                           value: _vm.peliculas_selected,
                           callback: function($$v) {
@@ -36065,7 +36098,23 @@ var render = function() {
                   _c("label", [_vm._v("Medidas")]),
                   _vm._v(" "),
                   _c("v-select", {
-                    attrs: { label: "descripcion", options: _vm.medidas },
+                    attrs: { options: _vm.medidas, label: "descripcion" },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "option",
+                        fn: function(option) {
+                          return [
+                            _c("span", { staticClass: "upSelect" }, [
+                              _vm._v(_vm._s(option.descripcion) + " ")
+                            ]),
+                            _vm._v(" "),
+                            _c("span", { staticClass: "downSelect" }, [
+                              _vm._v("   " + _vm._s(option.codigo) + " ")
+                            ])
+                          ]
+                        }
+                      }
+                    ]),
                     model: {
                       value: _vm.medida,
                       callback: function($$v) {
@@ -36162,7 +36211,12 @@ var render = function() {
                                 _c("span", {
                                   staticClass: "fa fa-file-archive-o",
                                   class: {
-                                    existe: inputsProducto.observaciones
+                                    existe:
+                                      inputsProducto.observaciones ||
+                                      inputsProducto.path1 ||
+                                      inputsProducto.path2 ||
+                                      inputsProducto.path3 ||
+                                      inputsProducto.path4
                                   },
                                   on: {
                                     click: function($event) {
@@ -36178,7 +36232,12 @@ var render = function() {
                               ]),
                               _vm._v(" "),
                               _c("td", [
-                                _vm._v(" " + _vm._s(inputsProducto.medida))
+                                _vm._v(
+                                  " " +
+                                    _vm._s(inputsProducto.medida) +
+                                    "    " +
+                                    _vm._s(inputsProducto.unidad_medida_codigo)
+                                )
                               ]),
                               _vm._v(" "),
                               _c("td", [
@@ -54238,6 +54297,17 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 
 Vue.component('pagination', __webpack_require__(/*! laravel-vue-pagination */ "./node_modules/laravel-vue-pagination/dist/laravel-vue-pagination.common.js"));
 Vue.component('v-select', vue_select__WEBPACK_IMPORTED_MODULE_2___default.a);
+/*
+vSelect.props.components.default = () => ({
+  Deselect: {
+    render: createElement => createElement('span', '❌'),
+  },
+  OpenIndicator: {
+    render: createElement => createElement('span', '🔽'),
+  },
+});
+*/
+
 Vue.component('abm-maestro', __webpack_require__(/*! ./components/abm-maestro/abm-maestro.vue */ "./resources/js/components/abm-maestro/abm-maestro.vue")["default"]);
 Vue.component('table-users', __webpack_require__(/*! ./components/abm-maestro/usuarios/table-users.vue */ "./resources/js/components/abm-maestro/usuarios/table-users.vue")["default"]);
 Vue.component('nuevo-users', __webpack_require__(/*! ./components/abm-maestro/usuarios/nuevo-users.vue */ "./resources/js/components/abm-maestro/usuarios/nuevo-users.vue")["default"]);
