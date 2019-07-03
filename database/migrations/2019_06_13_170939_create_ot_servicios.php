@@ -17,6 +17,7 @@ class CreateOtServicios extends Migration
             $table->bigIncrements('id');
             $table->integer('cantidad');
             $table->integer('cant_max_placas')->nullable();
+            $table->boolean('procedimiento_sn')->default(0);
             $table->timestamps();
         });
         

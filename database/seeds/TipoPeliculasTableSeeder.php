@@ -15,79 +15,109 @@ class TipoPeliculasTableSeeder extends Seeder
         TipoPeliculas::create([
             'fabricante'    =>'AGFA',
             'codigo'        =>'D2',
-            'descripcion'   =>'null'           
+            'descripcion'   =>''           
         ]);
 
         TipoPeliculas::create([
             'fabricante'    =>'AGFA',
             'codigo'        =>'D3',
-            'descripcion'   =>'null'           
+            'descripcion'   =>''           
         ]);
 
         TipoPeliculas::create([
             'fabricante'    =>'AGFA',
             'codigo'        =>'D4',
-            'descripcion'   =>'null'           
+            'descripcion'   =>''           
         ]);
 
         TipoPeliculas::create([
             'fabricante'    =>'AGFA',
             'codigo'        =>'D5',
-            'descripcion'   =>'null'           
-        ]);
-
-        TipoPeliculas::create([
-            'fabricante'    =>'AGFA',
-            'codigo'        =>'D6',
-            'descripcion'   =>'null'           
-        ]);
+            'descripcion'   =>''           
+        ]);      
 
         TipoPeliculas::create([
             'fabricante'    =>'AGFA',
             'codigo'        =>'D7',
-            'descripcion'   =>'null'           
+            'descripcion'   =>''           
         ]);
 
         TipoPeliculas::create([
             'fabricante'    =>'AGFA',
             'codigo'        =>'D8',
-            'descripcion'   =>'null'           
+            'descripcion'   =>''           
         ]);
 
         TipoPeliculas::create([
             'fabricante'    =>'KODAK',
-            'codigo'        =>'AT100',
-            'descripcion'   =>'null'           
+            'codigo'        =>'DR50',
+            'descripcion'   =>''           
+        ]);
+
+        TipoPeliculas::create([
+            'fabricante'    =>'KODAK',
+            'codigo'        =>'M100',
+            'descripcion'   =>''           
+        ]);
+
+        TipoPeliculas::create([
+            'fabricante'    =>'KODAK',
+            'codigo'        =>'MX125',
+            'descripcion'   =>''           
+        ]);
+
+        TipoPeliculas::create([
+            'fabricante'    =>'KODAK',
+            'codigo'        =>'T200',
+            'descripcion'   =>''           
         ]);
 
         TipoPeliculas::create([
             'fabricante'    =>'KODAK',
             'codigo'        =>'AA400',
-            'descripcion'   =>'null'           
+            'descripcion'   =>''           
         ]);
 
         TipoPeliculas::create([
             'fabricante'    =>'KODAK',
-            'codigo'        =>'AXXX',
-            'descripcion'   =>'null'           
+            'codigo'        =>'CX',
+            'descripcion'   =>''           
         ]);
 
         TipoPeliculas::create([
             'fabricante'    =>'FOMADUK',
-            'codigo'        =>'R1',
-            'descripcion'   =>'null'           
+            'codigo'        =>'R2',
+            'descripcion'   =>''           
         ]);
 
         TipoPeliculas::create([
             'fabricante'    =>'FOMADUK ',
-            'codigo'        =>'R2',
-            'descripcion'   =>'null'           
+            'codigo'        =>'R3',
+            'descripcion'   =>''           
         ]);
 
         TipoPeliculas::create([
             'fabricante'    =>'FOMADUK',
-            'codigo'        =>'RX',
-            'descripcion'   =>'null'           
+            'codigo'        =>'R4',
+            'descripcion'   =>''           
+        ]);
+
+        TipoPeliculas::create([
+            'fabricante'    =>'FOMADUK',
+            'codigo'        =>'R5',
+            'descripcion'   =>''           
+        ]);
+
+        TipoPeliculas::create([
+            'fabricante'    =>'FOMADUK',
+            'codigo'        =>'R7',
+            'descripcion'   =>''           
+        ]);
+
+        TipoPeliculas::create([
+            'fabricante'    =>'FOMADUK',
+            'codigo'        =>'R8',
+            'descripcion'   =>''           
         ]);
     }
 }

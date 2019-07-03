@@ -17,7 +17,7 @@ class UnidadesMedidasTableSeeder extends Seeder
         ]);
 
         Unidades_medidas::create([
-            'codigo'            =>'"Pulgadas"',
+            'codigo'            =>'"',
             'descripcion'       =>'Descripción para la unidad de medida pulgada',          
         ]);
 

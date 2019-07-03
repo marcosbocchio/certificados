@@ -58,10 +58,12 @@ class OtServiciosController extends Controller
                                     servicios.descripcion as servicio,
                                     norma_ensayos.descripcion as norma_ensayo,
                                     norma_ensayos.id as norma_ensayo_id,
+                                    metodo_ensayos.metodo as metodo,
                                     norma_evaluaciones.descripcion as norma_evaluacion,
                                     norma_evaluaciones.id as norma_evaluacion_id,
                                     ot_servicios.cantidad as cantidad_servicios,
                                     ot_servicios.cant_max_placas as cantidad_placas,
+                                    ot_servicios.procedimiento_sn as procedimiento_sn,
                                     ot_servicios.ot_referencia_id as ot_referencia_id,
                                     ot_referencias.descripcion as observaciones,
                                     ot_referencias.path1 as path1,
@@ -78,9 +80,12 @@ class OtServiciosController extends Controller
                                     norma_ensayos.id = ot_servicios.norma_ensayo_id
                                     inner join norma_evaluaciones on
                                     norma_evaluaciones.id = ot_servicios.norma_evaluacion_id
+                                    inner join metodo_ensayos on
+                                    servicios.metodo_ensayo_id = metodo_ensayos.id
                                     inner join ots on
                                     ot_servicios.ot_id=ots.id and
                                     ots.id=:id',['id' => $id ]);
+                                    
 
         $ot_servicios = Collection::make($ot_servicios);
 

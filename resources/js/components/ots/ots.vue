@@ -208,10 +208,11 @@
               <table class="table table-hover table-striped">
                 <thead>
                   <tr>
-                    <th>Servicio</th>
+                    <th style="width: 500px" >Servicio</th>
                     <th>Ref</th>
                     <th>Norma Ensayo</th>
                     <th>Norma Evaluacion</th>
+                    <th>Proc.</th>
                     <th>Cant Placas</th>
                     <th>Cant Serv</th>
                     <th colspan="2">&nbsp;</th>
@@ -227,6 +228,9 @@
                     inputsServicio.path4)  }" class="fa fa-file-archive-o" @click="OpenReferencias($event,k,'servicios',inputsServicio)" ></span></td>      
                     <td> {{ inputsServicio.norma_ensayo}}</td>
                     <td> {{ inputsServicio.norma_evaluacion}}</td>
+                    <td>  
+                      <input type="checkbox" id="checkbox" v-model="inputsServicios[k].procedimiento_sn">                     
+                    </td>
                     <td> {{ inputsServicio.cantidad_placas}}</td>
                     <td> {{ inputsServicio.cantidad_servicios}}</td>
                     <td> <i class="fa fa-minus-circle" @click="removeServicio(k)" ></i></td>
@@ -298,7 +302,7 @@
                 <table class="table table-hover table-striped">
                   <thead>
                     <tr>
-                      <th>Productos</th>
+                      <th style="width: 500px">Productos</th>
                       <th>Ref</th>
                       <th>Medidas</th>                     
                       <th>cant</th>                    
@@ -397,7 +401,7 @@
         </div>
       </div>
       <create-referencias :index="index_referencias" :tabla="tabla" :inputsData="inputs" @setReferencia="AddReferencia"></create-referencias>
-    </div>        
+    </div>
       <button class="btn btn-primary" type="submit" @click.prevent="submit">Guardar</button>
     </form>
   </div>  
@@ -662,13 +666,13 @@ export default {
                 this.localidad.lat   = this.otdata.lat;
                 this.localidad.lon   = this.otdata.lon;
                 this.inputsServicios = this.ot_serviciosdata;
-                this.peliculas_selected = this.ot_calidad_placasdata
+                this.peliculas_selected = this.ot_calidad_placasdata;
                 this.inputsProductos = this.ot_productosdata;
                 this.inputsRiesgos   = this.ot_riesgosdata;
                 this.inputsEpps      = this.ot_eppsdata;                
           
                }
-              console.log(new Date);
+              console.log(this.ot_productosdata);
 
               },
 
@@ -827,6 +831,7 @@ export default {
                 cantidad_placas:this.cantidad_placas,
                 cantidad_servicios:this.cantidad_servicios,
                 metodo : this.var_metodo,
+                procedimiento_sn : false ,
                 observaciones : '',                
                 path1:null,
                 path2:null,

@@ -49,8 +49,11 @@ class OtCalidadPlacasController extends Controller
     public function show($id)
     {
         $ot_calidad_placas = DB::select('select 
-                                        tipo_peliculas.fabricante, 
-                                        tipo_peliculas.codigo
+        
+                                        tipo_peliculas.id,
+                                        tipo_peliculas.codigo ,
+                                        tipo_peliculas.descripcion,
+                                        tipo_peliculas.fabricante 
                                         
                                         from tipo_peliculas
                                         inner join ot_calidad_placas on

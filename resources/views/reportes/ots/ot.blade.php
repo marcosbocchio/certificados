@@ -146,6 +146,9 @@ td b,td span {
                           @else
                              <span>  {{ $ot_servicio->servicio }} </span> <br>
                           @endif
+                          @if ($ot_servicio->procedimiento_sn)
+                              <span style="margin-left: 30px; font-size:12px; ">Requiere Procedimiento</span><br>
+                          @endif
                           <span style="margin-left: 30px; font-size:12px; ">Norma de ensayo:</span><span style="font-size: 9px;color:#808080;">{{$ot_servicio->norma_ensayo}}</span> <br>
                           <span style="margin-left: 30px; font-size:12px;">Norma de evaluación:</span><span style="font-size: 9px;color:#808080;">{{$ot_servicio->norma_evaluacion}}</span>
                         </td>

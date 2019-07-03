@@ -2636,6 +2636,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -2856,7 +2860,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.inputsEpps = this.ot_eppsdata;
       }
 
-      console.log(new Date());
+      console.log(this.ot_productosdata);
     },
     getClientes: function getClientes() {
       var _this = this;
@@ -3017,6 +3021,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         cantidad_placas: this.cantidad_placas,
         cantidad_servicios: this.cantidad_servicios,
         metodo: this.var_metodo,
+        procedimiento_sn: false,
         observaciones: '',
         path1: null,
         path2: null,
@@ -35959,6 +35964,69 @@ var render = function() {
                               ]),
                               _vm._v(" "),
                               _c("td", [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value:
+                                        _vm.inputsServicios[k].procedimiento_sn,
+                                      expression:
+                                        "inputsServicios[k].procedimiento_sn"
+                                    }
+                                  ],
+                                  attrs: { type: "checkbox", id: "checkbox" },
+                                  domProps: {
+                                    checked: Array.isArray(
+                                      _vm.inputsServicios[k].procedimiento_sn
+                                    )
+                                      ? _vm._i(
+                                          _vm.inputsServicios[k]
+                                            .procedimiento_sn,
+                                          null
+                                        ) > -1
+                                      : _vm.inputsServicios[k].procedimiento_sn
+                                  },
+                                  on: {
+                                    change: function($event) {
+                                      var $$a =
+                                          _vm.inputsServicios[k]
+                                            .procedimiento_sn,
+                                        $$el = $event.target,
+                                        $$c = $$el.checked ? true : false
+                                      if (Array.isArray($$a)) {
+                                        var $$v = null,
+                                          $$i = _vm._i($$a, $$v)
+                                        if ($$el.checked) {
+                                          $$i < 0 &&
+                                            _vm.$set(
+                                              _vm.inputsServicios[k],
+                                              "procedimiento_sn",
+                                              $$a.concat([$$v])
+                                            )
+                                        } else {
+                                          $$i > -1 &&
+                                            _vm.$set(
+                                              _vm.inputsServicios[k],
+                                              "procedimiento_sn",
+                                              $$a
+                                                .slice(0, $$i)
+                                                .concat($$a.slice($$i + 1))
+                                            )
+                                        }
+                                      } else {
+                                        _vm.$set(
+                                          _vm.inputsServicios[k],
+                                          "procedimiento_sn",
+                                          $$c
+                                        )
+                                      }
+                                    }
+                                  }
+                                })
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
                                 _vm._v(
                                   " " + _vm._s(inputsServicio.cantidad_placas)
                                 )
@@ -36549,13 +36617,15 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
-        _c("th", [_vm._v("Servicio")]),
+        _c("th", { staticStyle: { width: "500px" } }, [_vm._v("Servicio")]),
         _vm._v(" "),
         _c("th", [_vm._v("Ref")]),
         _vm._v(" "),
         _c("th", [_vm._v("Norma Ensayo")]),
         _vm._v(" "),
         _c("th", [_vm._v("Norma Evaluacion")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Proc.")]),
         _vm._v(" "),
         _c("th", [_vm._v("Cant Placas")]),
         _vm._v(" "),
@@ -36571,7 +36641,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
-        _c("th", [_vm._v("Productos")]),
+        _c("th", { staticStyle: { width: "500px" } }, [_vm._v("Productos")]),
         _vm._v(" "),
         _c("th", [_vm._v("Ref")]),
         _vm._v(" "),
