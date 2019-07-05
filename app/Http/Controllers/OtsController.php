@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
+use App\Http\Requests\OtsRequest;
 use App\Repositories\Ots\OtsRepository;
 use Illuminate\Support\Collection as Collection;
 use App\Ots;
@@ -55,7 +55,7 @@ class OtsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(OtsRequest $request)
     {       
         return $this->ot->store($request);
     }
@@ -104,8 +104,7 @@ class OtsController extends Controller
         $ot_contacto3 = Contactos::find($ot->contacto3_id);
         
         $ot_localidad = Localidades::find($ot->localidad_id);
-        $ot_provincia = Provincias::find($ot_localidad->provincia_id);
-       
+        $ot_provincia = Provincias::find($ot_localidad->provincia_id);       
      
         
         if ($ot_contacto2 == null)
@@ -138,8 +137,10 @@ class OtsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(OtsRequest $request, $id)
     {
+       
+        
         return $this->ot->updateOt($request,$id);
     }
 

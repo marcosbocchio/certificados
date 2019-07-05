@@ -74,7 +74,7 @@ export default {
                 
                 
             }).catch(error => {
-                toastr.error("No se pudo crear el registo.", "Error:");
+               
                 this.errors = error.response.data.errors;
 
                 $.each( this.errors, function( key, value ) {

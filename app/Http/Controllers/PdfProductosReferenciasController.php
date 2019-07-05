@@ -17,14 +17,16 @@ class PdfProductosReferenciasController extends Controller
         $ot = Ots::find($ot_modelos->ot_id);   
         $cliente = Clientes::find($ot->cliente_id);
         $modelo = Productos::find($ot_modelos->producto_id);
-        $ot_referencia = OtReferencias::find($id);       
+        $ot_referencia = OtReferencias::find($id);
+        $tabla = 'Producto';       
       
 
         $pdf = \PDF::loadView('reportes.ots.referencias',compact('ot',
                                                                 'cliente',
                                                                 'modelo',
                                                                 'ot_modelo',
-                                                                'ot_referencia'
+                                                                'ot_referencia',
+                                                                'tabla'
                                                                ));
         return $pdf->stream();
         

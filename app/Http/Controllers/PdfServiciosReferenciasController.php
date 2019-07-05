@@ -18,6 +18,7 @@ class PdfServiciosReferenciasController extends Controller
         $cliente = Clientes::find($ot->cliente_id);
         $modelo = Servicios::find($ot_modelos->servicio_id);
         $ot_referencia = OtReferencias::find($id);
+        $tabla = 'Servicio';
 
       
 
@@ -28,7 +29,8 @@ class PdfServiciosReferenciasController extends Controller
                                                                 'cliente',
                                                                 'modelo',
                                                                 'ot_modelos',
-                                                                'ot_referencia'
+                                                                'ot_referencia',
+                                                                'tabla'
                                                                ));
         return $pdf->stream();
         

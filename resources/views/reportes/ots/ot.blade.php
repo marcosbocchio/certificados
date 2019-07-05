@@ -72,21 +72,21 @@ td b,td span {
                     <td style="width:150px" > &nbsp;</td>
                     <td style="font-size: 13px;  width:250px" ><b>Provincia: </b>{{$provincia->provincia}}</td>
                   </tr>
-                  <tr>                     
+                  <tr>                
                      
                       <td style="font-size: 13px; width:300px" ><b>Contacto 1: </b>{{$contacto1->nombre}} - {{$contacto1->cargo}}</td>
                       <td style="font-size: 13px; width:150px" ><b>Tel: </b>{{$contacto1->tel}}</td>
                       <td style="font-size: 13px; width:250px" ><b>Email: </b>{{$contacto1->email}} </td>
                   </tr>
                   <tr>
-                      <td style="font-size: 13px; width:300px" ><b>Contacto 2: </b>{{$contacto2->nombre}} - {{$contacto2->cargo}}</td>
-                      <td style="font-size: 13px; width:150px" ><b>Tel: </b>{{$contacto2->tel}}</td>
-                      <td style="font-size: 13px; width:250px" ><b>Email: </b>{{$contacto2->email}} </td>
+                      <td style="font-size: 13px; width:300px" ><b>Contacto 2: </b>{{$contacto2->nombre ?? ''}} - {{$contacto2->cargo ?? ''}}</td>
+                      <td style="font-size: 13px; width:150px" ><b>Tel: </b>{{$contacto2->tel ?? ''}}</td>
+                      <td style="font-size: 13px; width:250px" ><b>Email: </b>{{$contacto2->email ?? ''}} </td>
                   </tr>
                   <tr>
-                      <td style="font-size: 13px; width:300px" ><b>Contacto 3: </b>{{$contacto3->nombre}} - {{$contacto3->cargo}}</td>
-                      <td style="font-size: 13px; width:150px" ><b>Tel: </b>{{$contacto3->tel}}</td>
-                      <td style="font-size: 13px; width:250px" ><b>Email: </b>{{$contacto3->email}} </td>
+                      <td style="font-size: 13px; width:300px" ><b>Contacto 3: </b> {{ $contacto3->nombre ?? ''}} - {{$contacto3->cargo ?? ''}}</td>                      
+                      <td style="font-size: 13px; width:150px" ><b>Tel: </b>{{$contacto3->tel ?? ''}}</td>
+                      <td style="font-size: 13px; width:250px" ><b>Email: </b>{{$contacto3->email ?? ''}} </td>
                   </tr>
                 </tbody>
               </table>   
@@ -137,33 +137,40 @@ td b,td span {
                           <td style="font-size: 13px; width:80px;text-align: center;" ><b>Unidad </b></td>
                       </tr>
                                           
-                            
+                         
+                     
                       @foreach ( $ot_servicios as $ot_servicio )
                       <tr> 
+                        
                         <td style="font-size: 13px; width:500px;" >
-                          @if ($ot_servicio->ot_referencia_id)
-                              <span>  <a href="{{ route('ServiciosReferencias',$ot_servicio->ot_referencia_id)}}">{{ $ot_servicio->servicio }}</a></span> <br>                              
-                          @else
-                             <span>  {{ $ot_servicio->servicio }} </span> <br>
-                          @endif
-                          @if ($ot_servicio->procedimiento_sn)
-                              <span style="margin-left: 30px; font-size:12px; ">Requiere Procedimiento</span><br>
-                          @endif
-                          <span style="margin-left: 30px; font-size:12px; ">Norma de ensayo:</span><span style="font-size: 9px;color:#808080;">{{$ot_servicio->norma_ensayo}}</span> <br>
-                          <span style="margin-left: 30px; font-size:12px;">Norma de evaluación:</span><span style="font-size: 9px;color:#808080;">{{$ot_servicio->norma_evaluacion}}</span>
-                        </td>
-                        <td style="font-size: 13px; width:80px;text-align: center;" >{{$ot_servicio->cantidad_servicios}}</td>
-                        <td style="font-size: 13px; width:80px;text-align: center;" >Días</td>
-                      </tr>  
+                          
+                            @if ($ot_servicio->ot_referencia_id)
+                              <li style="margin-left: 20px;"> <a href="{{ route('ServiciosReferencias',$ot_servicio->ot_referencia_id)}}">{{ $ot_servicio->servicio }}</a></li>                               
+                            @else
+                              <li style="margin-left: 20px;"> {{ $ot_servicio->servicio }} </li> 
+                            @endif
+                            @if ($ot_servicio->procedimiento_sn)
+                                <span style="margin-left: 30px; font-size:12px; ">Requiere Procedimiento</span><br>
+                            @endif
+                            <span style="margin-left: 30px; font-size:12px; ">Norma de ensayo:</span><span style="font-size: 9px;color:#808080;">{{$ot_servicio->norma_ensayo}}</span> <br>
+                            <span style="margin-left: 30px; font-size:12px;">Norma de evaluación:</span><span style="font-size: 9px;color:#808080;">{{$ot_servicio->norma_evaluacion}}</span>
+                          
+                          </td>
+                          <td style="font-size: 13px; width:80px;text-align: center;" >{{$ot_servicio->cantidad_servicios}}</td>
+                          <td style="font-size: 13px; width:80px;text-align: center;" >Días</td>
+                        
+                      
                       @endforeach
+                    </ul>
+                    
 
                       @foreach ( $ot_productos as $ot_producto )
                       <tr> 
                         <td style="font-size: 13px; width:500px;" >
                           @if ($ot_producto->ot_referencia_id)
-                            <span>  <a href="{{ route('ProductosReferencias',$ot_producto->ot_referencia_id)}}">{{ $ot_producto->producto }} {{ $ot_producto->medida }} {{ $ot_producto->unidad_medida_codigo }}</a></span> <br>
+                          <li style="margin-left: 20px;"><a href="{{ route('ProductosReferencias',$ot_producto->ot_referencia_id)}}">{{ $ot_producto->producto }} {{ $ot_producto->medida }} {{ $ot_producto->unidad_medida_codigo }}</a></li> <br>
                           @else
-                            <span>  {{ $ot_producto->producto }} {{ $ot_producto->medida }} {{ $ot_producto->unidad_medida_codigo }} </span>  
+                          <li style="margin-left: 20px;">  {{ $ot_producto->producto }} {{ $ot_producto->medida }} {{ $ot_producto->unidad_medida_codigo }} </li> </span>  
                           @endif 
                         </td>
                         <td style="font-size: 13px; width:80px;text-align: center;" >{{$ot_producto->cantidad_productos}}</td>

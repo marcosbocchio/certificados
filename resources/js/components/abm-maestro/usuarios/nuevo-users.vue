@@ -76,7 +76,6 @@ export default {
                   this.$emit('store');
                   this.errors=[];
                   $('#nuevo').modal('hide');               
-                  toastr.success('Nuevo registro creado con éxito');
                   this.newRegistro={}
                   
                 }).catch(error => {

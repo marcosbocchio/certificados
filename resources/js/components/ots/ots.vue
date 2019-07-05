@@ -76,19 +76,19 @@
         <div class="col-md-6">
           <div class="form-group">
               <label>Contacto 1</label>
-              <v-select v-model="contacto1" name="contacto_1" label="nombre" :options="contactos" ></v-select>   
+              <v-select v-model="contacto1" name="contacto_1" label="nombre" :options="contactos"></v-select>   
             </div>
         </div>
         <div class="col-md-6">
           <div class="form-group">
               <label>Contacto 2</label>
-              <v-select v-model="contacto2" name="contacto_2" label="nombre" :options="contactos" ></v-select>   
+              <v-select v-model="contacto2" name="contacto_2" label="nombre" :options="contactos"></v-select>   
           </div>
         </div>
         <div class="col-md-6">
           <div class="form-group">
               <label>Contacto 3</label>
-              <v-select v-model="contacto3" name="contacto_3" label="nombre" :options="contactos" ></v-select>   
+              <v-select v-model="contacto3" name="contacto_3" label="nombre" :options="contactos"></v-select>   
           </div>
         </div>
       </div>
@@ -487,6 +487,7 @@ export default {
     
     data() { return {
          
+        errors:[],
          en: en,
          es: es,
          markers: [{
@@ -503,21 +504,23 @@ export default {
           pov: {
             pitch: 0,
             heading: 0,
-          },
+          },        
           proyecto:'',
           fecha:'',        
           fecha_ensayo:'',
           hora: '',
           clientes:[],
-          cliente:'',
+          cliente: {
+            id: null
+          },
           ot:'',
           fts:'',
           lugar_ensayo:'',
           obra:'',
           contactos:[],
-          contacto1:'',
-          contacto2:'',
-          contacto3:'',
+          contacto1:[] ,
+          contacto2:[] ,
+          contacto3:[] ,
           observaciones:'',
           localidades:[],
           localidad: {
@@ -636,26 +639,29 @@ export default {
          deep:true
        }
      },
+   
     methods :{
 
       setOt : function(){
 
 
-              if(this.acciondata == "edit"){               
+              if(this.acciondata == "edit"){ 
 
+                this.id              = this.otdata.id,
                 this.proyecto        = this.otdata.proyecto;
                 this.fecha           = this.otdata.fecha_hora;
                 this.t = this.otdata.fecha_hora.split(/[- :]/);
                 this.d = new Date(Date.UTC(this.t[0], this.t[1]-1, this.t[2], this.t[3], this.t[4], this.t[5]));
                 this.hora            = this.d;
                 this.cliente         = this.clientedata;
+                this.getContactos();
                 this.ot              = this.otdata.numero;
                 this.fts             = this.otdata.presupuesto;
                 this.provincia       = this.ot_provinciasdata; 
                 this.localidad       = this.ot_localidaddata; 
                 this.obra            = this.otdata.obra;
                 this.observaciones   = this.otdata.observaciones;
-                this.fecha_ensayo    = this.otdata.fecha_estimada_ensayo;
+                this.fecha_ensayo    = this.otdata.fecha_estimada_ensayo;               
                 this.contacto1       = this.otcontacto1data;
                 if(this.otcontacto2data != null)
                      this.contacto2       = this.otcontacto2data;
@@ -674,7 +680,7 @@ export default {
                }
               console.log(this.ot_productosdata);
 
-              },
+              },      
 
       getClientes : function(){
 
@@ -792,11 +798,15 @@ export default {
                 
               },
       sync () {
+
+             
               
                 this.mapCenter.lat = parseFloat(this.localidad.lat);
                 this.mapCenter.lng = parseFloat(this.localidad.lon);
                 this.markers[0].position.lat =parseFloat(this.localidad.lat);
                 this.markers[0].position.lng = parseFloat(this.localidad.lon);
+              
+            
               },
               
       setPlace(place) {
@@ -962,17 +972,25 @@ export default {
           this.response = response
           toastr.success('OT N° ' + this.ot + ' fue creada con éxito ');
         }).catch(error => {
-          if (error.response.status === 422) {
-            this.errors = error.response.data.errors || {};
-          }
-        });
+               
+               this.errors = error.response.data.errors;
+
+               $.each( this.errors, function( key, value ) {
+                   toastr.error(value);
+                   console.log( key + ": " + value );
+               });
+
+           });
       }
       else if (this.accion =='edit')
       {      
+
+        
         this.errors =[];
         var urlRegistros = 'ots/' + this.otdata.id ;
         axios.put(urlRegistros, {
 
+              'id'            : this.otdata.id,
               'cliente'       : this.cliente.id,
               'proyecto'      : this.proyecto,
               'fecha'         : this.fecha,
@@ -980,11 +998,11 @@ export default {
               'ot'            : this.ot,
               'fts'           : this.fts,
               'obra'          : this.obra,
-              'contacto1'     : this.contacto1.id,
-              'contacto2'     : this.contacto2.id,
-              'contacto3'     : this.contacto3.id,
-              'provincia'     : this.provincia.id,
-              'localidad'     : this.localidad.id,
+              'contacto1'     : (this.contacto1 ? this.contacto1.id : null ),
+              'contacto2'     : (this.contacto2 ? this.contacto2.id : null ),
+              'contacto3'     : (this.contacto3 ? this.contacto3.id : null ),
+              'provincia'     : (this.provincia ? this.provincia.id : null),
+              'localidad'     : (this.localidad ? this.localidad.id : null),
               'fecha_ensayo'  : this.fecha_ensayo,
               'lugar_ensayo'  : this.lugar_ensayo,
               'tipo_peliculas': this.peliculas_selected,
@@ -999,11 +1017,17 @@ export default {
           ).then(response => {
           this.response = response
          toastr.success('OT N° ' + this.ot + ' fue editada con éxito ');
-          }).catch(error => {
-            if (error.response.status === 422) {
-              this.errors = error.response.data.errors || {};
-            }
-          });
+        }).catch(error => {         
+           this.errors = error.response.data.errors;
+                console.log(error);
+               $.each( this.errors, function( key, value ) {
+                   toastr.error(value);
+                   console.log( key + ": " + value );
+               });
+
+           });
+
+          
       }
       
     },

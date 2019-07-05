@@ -23,6 +23,10 @@ class PdfOtController extends Controller
         $contacto1 = Contactos ::find($ot->contacto1_id);
         $contacto2 = Contactos ::find($ot->contacto2_id);
         $contacto3 = Contactos ::find($ot->contacto3_id);
+
+        
+
+      //   dd($contacto3);
         $cliente = Clientes::find($ot->cliente_id);   
         $localidad = Localidades::find($ot->localidad_id);
         $provincia = Provincias::find($localidad->provincia_id); 

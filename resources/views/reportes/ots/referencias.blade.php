@@ -58,42 +58,50 @@ td b,td span {
                      <table>
                          <tbody>
                              <tr>
-                                <td style="font-size: 13px;" >{{$modelo->descripcion}}</td>  
+                                <td style="font-size: 13px;" > <b>{{ $tabla }}: </b>  {{$modelo->descripcion}}</td>  
                              </tr>
                          </tbody>
                      </table>
                  </td>
+             </tr>
+             <tr>
+                 <td>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td style="font-size: 15px;">
+                                    <p><strong>Observaciones: </strong>{{$ot_referencia->descripcion}}</p> 
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                 </td>
+             </tr>
+             <tr>
+                 <td>                     
+                    <table>    
+                        <tbody>
+                            <tr>
+                                <td style="text-align: center; width: 360px;height: 300px">
+                                    <img src="{{ $ot_referencia->path1 }}" alt="" style="height: 174; width: 255;">
+                                </td>
+                                <td style="text-align: center; width: 360px;height: 300px">
+                                        <img src="{{ $ot_referencia->path2 }}" alt="" style="height: 174; width: 255;">
+                                </td>
+                            </tr>
+                            <tr>
+                                    <td style="text-align: center; width: 360px;height: 300px">
+                                            <img src="{{ $ot_referencia->path3 }}" alt="" style="height: 174; width: 255;">
+                                </td>
+                                <td style="text-align: center; width: 360px;height: 300px">
+                                        <img src="{{ $ot_referencia->path4 }}" alt="" style="height: 174; width: 255;">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                 </td>
              </tr>        
         </tbody>
-     </table>
-     <table>
-         <tbody>
-             <tr>
-                 <td style="font-size: 15px;">
-                    <p><strong>Observaciones: </strong>{{$ot_referencia->descripcion}}</p> 
-                 </td>
-             </tr>
-         </tbody>
-     </table>
-     <table>
-         <tbody>
-             <tr>
-                 <td style="text-align: center; width: 360px;height: 300px">
-                    <img src="{{ $ot_referencia->path1 }}" alt="" style="height: 174; width: 255;">
-                 </td>
-                 <td style="text-align: center; width: 360px;height: 300px">
-                        <img src="{{ $ot_referencia->path2 }}" alt="" style="height: 174; width: 255;">
-                 </td>
-             </tr>
-             <tr>
-                    <td style="text-align: center; width: 360px;height: 300px">
-                            <img src="{{ $ot_referencia->path3 }}" alt="" style="height: 174; width: 255;">
-                 </td>
-                 <td style="text-align: center; width: 360px;height: 300px">
-                        <img src="{{ $ot_referencia->path4 }}" alt="" style="height: 174; width: 255;">
-                 </td>
-             </tr>
-         </tbody>
-     </table>
+    </table>
   </body>
 </html>

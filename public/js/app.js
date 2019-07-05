@@ -1995,7 +1995,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         $('#nuevo').modal('hide');
         toastr.success('Nuevo registro creado con éxito');
       })["catch"](function (error) {
-        toastr.error("No se pudo crear el registo.", "Error:");
         _this.errors = error.response.data.errors;
         $.each(_this.errors, function (key, value) {
           toastr.error(value, key);
@@ -2142,7 +2141,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         _this.errors = [];
         $('#nuevo').modal('hide');
-        toastr.success('Nuevo registro creado con éxito');
         _this.newRegistro = {};
       })["catch"](function (error) {
         toastr.error("No se pudo crear el registo.", "Error:");
@@ -2706,6 +2704,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   data: function data() {
     return {
+      errors: [],
       en: vuejs_datepicker_dist_locale__WEBPACK_IMPORTED_MODULE_2__["en"],
       es: vuejs_datepicker_dist_locale__WEBPACK_IMPORTED_MODULE_2__["es"],
       markers: [{
@@ -2728,15 +2727,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       fecha_ensayo: '',
       hora: '',
       clientes: [],
-      cliente: '',
+      cliente: {
+        id: null
+      },
       ot: '',
       fts: '',
       lugar_ensayo: '',
       obra: '',
       contactos: [],
-      contacto1: '',
-      contacto2: '',
-      contacto3: '',
+      contacto1: [],
+      contacto2: [],
+      contacto3: [],
       observaciones: '',
       localidades: [],
       localidad: {
@@ -2834,12 +2835,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   methods: {
     setOt: function setOt() {
       if (this.acciondata == "edit") {
-        this.proyecto = this.otdata.proyecto;
+        this.id = this.otdata.id, this.proyecto = this.otdata.proyecto;
         this.fecha = this.otdata.fecha_hora;
         this.t = this.otdata.fecha_hora.split(/[- :]/);
         this.d = new Date(Date.UTC(this.t[0], this.t[1] - 1, this.t[2], this.t[3], this.t[4], this.t[5]));
         this.hora = this.d;
         this.cliente = this.clientedata;
+        this.getContactos();
         this.ot = this.otdata.numero;
         this.fts = this.otdata.presupuesto;
         this.provincia = this.ot_provinciasdata;
@@ -3132,14 +3134,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _this14.response = response;
           toastr.success('OT N° ' + _this14.ot + ' fue creada con éxito ');
         })["catch"](function (error) {
-          if (error.response.status === 422) {
-            _this14.errors = error.response.data.errors || {};
-          }
+          _this14.errors = error.response.data.errors;
+          $.each(_this14.errors, function (key, value) {
+            toastr.error(value);
+            console.log(key + ": " + value);
+          });
         });
       } else if (this.accion == 'edit') {
         this.errors = [];
         var urlRegistros = 'ots/' + this.otdata.id;
         axios.put(urlRegistros, {
+          'id': this.otdata.id,
           'cliente': this.cliente.id,
           'proyecto': this.proyecto,
           'fecha': this.fecha,
@@ -3147,11 +3152,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           'ot': this.ot,
           'fts': this.fts,
           'obra': this.obra,
-          'contacto1': this.contacto1.id,
-          'contacto2': this.contacto2.id,
-          'contacto3': this.contacto3.id,
-          'provincia': this.provincia.id,
-          'localidad': this.localidad.id,
+          'contacto1': this.contacto1 ? this.contacto1.id : null,
+          'contacto2': this.contacto2 ? this.contacto2.id : null,
+          'contacto3': this.contacto3 ? this.contacto3.id : null,
+          'provincia': this.provincia ? this.provincia.id : null,
+          'localidad': this.localidad ? this.localidad.id : null,
           'fecha_ensayo': this.fecha_ensayo,
           'lugar_ensayo': this.lugar_ensayo,
           'tipo_peliculas': this.peliculas_selected,
@@ -3166,9 +3171,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _this14.response = response;
           toastr.success('OT N° ' + _this14.ot + ' fue editada con éxito ');
         })["catch"](function (error) {
-          if (error.response.status === 422) {
-            _this14.errors = error.response.data.errors || {};
-          }
+          _this14.errors = error.response.data.errors;
+          console.log(error);
+          $.each(_this14.errors, function (key, value) {
+            toastr.error(value);
+            console.log(key + ": " + value);
+          });
         });
       }
     }

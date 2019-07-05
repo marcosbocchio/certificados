@@ -23,7 +23,7 @@ class OtsRepository extends BaseRepository
     return new Ots;
   }
 
-  public function store(Request $request)
+  public function store( $request)
   {
 
     $ot = $this->getModel();
@@ -32,22 +32,21 @@ class OtsRepository extends BaseRepository
     $tipo_peliculas = $request->tipo_peliculas;
     $epps      = $request->epps;
     $riesgos   = $request->riesgos;
-
   
     
-          $this->setOt($request, $ot);    
-          $this->setServicios($servicios,$ot);
-          $this->setTipoPeliculas($tipo_peliculas,$ot);
-          $this->setProductos($productos,$ot);
-          $this->setEpps($epps,$ot);
-          $this->setRiesgos($riesgos,$ot);
+    $this->setOt($request, $ot);    
+    $this->setServicios($servicios,$ot);
+    $this->setTipoPeliculas($tipo_peliculas,$ot);
+    $this->setProductos($productos,$ot);
+    $this->setEpps($epps,$ot);
+    $this->setRiesgos($riesgos,$ot);
 
       
 
 
   }
 
-  public function updateOt($request, $id)
+  public function updateOt( $request, $id)
   {
 
         $ot = $this->getModel()->find($id);
@@ -55,30 +54,27 @@ class OtsRepository extends BaseRepository
         $tipo_peliculas = $request->tipo_peliculas;
         $productos = $request->productos;
         $epps      = $request->epps;
-        $riesgos   = $request->riesgos;
+        $riesgos   = $request->riesgos;       
 
-       
+         
+
+        $this->setOt($request, $ot);   
+
+        OtCalidadPlacas::where('ot_id',$ot->id)->delete();
+        $this->SetTipoPeliculas($tipo_peliculas,$ot);          
+
+        OtServicios::where('ot_id',$ot->id)->delete();
+        $this->setServicios($servicios,$ot);
+
         
-
-         
-
-          $this->setOt($request, $ot);   
-
-          OtCalidadPlacas::where('ot_id',$ot->id)->delete();
-          $this->SetTipoPeliculas($tipo_peliculas,$ot);          
-
-          OtServicios::where('ot_id',$ot->id)->delete();
-          $this->setServicios($servicios,$ot);
-
-         
-          OtProductos::where('ot_id',$ot->id)->delete();
-          $this->setProductos($productos,$ot);
-          
-          OtEpps::where('ot_id',$ot->id)->delete();
-          $this->setEpps($epps,$ot);
-          
-          OtRiesgos::where('ot_id',$ot->id)->delete();
-          $this->setRiesgos($riesgos,$ot);
+        OtProductos::where('ot_id',$ot->id)->delete();
+        $this->setProductos($productos,$ot);
+        
+        OtEpps::where('ot_id',$ot->id)->delete();
+        $this->setEpps($epps,$ot);
+        
+        OtRiesgos::where('ot_id',$ot->id)->delete();
+        $this->setRiesgos($riesgos,$ot);
 
      
 

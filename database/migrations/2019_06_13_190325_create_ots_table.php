@@ -16,10 +16,10 @@ class CreateOtsTable extends Migration
         Schema::create('ots', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->datetime('fecha_hora');
-            $table->integer('numero');
+            $table->integer('numero')->unique();
             $table->string('proyecto',50);
             $table->integer('obra')->nullable();
-            $table->integer('presupuesto');
+            $table->integer('presupuesto')->unique();
             $table->string('lugar',200);
             $table->string('lat',100)->nullable();
             $table->string('lon',100)->nullable();
