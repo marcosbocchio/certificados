@@ -21,7 +21,7 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt('12345678'),
         ]);
 
-        $administrador->assignRole('Administrador');
+        $administrador->assignRole('Super Admin');
 
 
         // Usuario con el rol operador
@@ -33,7 +33,7 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt('12345678'),
         ]);
 
-        $operador->assignRole('Operador');
+        $operador->assignRole('Admin');
 
         // Usuario con el rol Cliente
 
@@ -52,7 +52,7 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt('12345678'),
         ]);
 
-        $cliente->givePermissionTo('Navegar cliente');
+        $cliente->assignRole('Operador');
 
         $cliente = User::create([
             'name'     => 'Karem' ,

@@ -2638,6 +2638,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 
@@ -36568,6 +36570,10 @@ var render = function() {
           1
         ),
         _vm._v(" "),
+        _vm.Laravel.user.can["clientes.edit"]
+          ? _c("h1", [_vm._v("You have permission to manage users")])
+          : _vm._e(),
+        _vm._v(" "),
         _c(
           "button",
           {
@@ -54394,6 +54400,7 @@ Vue.component('nuevo-materiales', __webpack_require__(/*! ./components/abm-maest
 Vue.component('delete-registro', __webpack_require__(/*! ./components/abm-maestro//delete.vue */ "./resources/js/components/abm-maestro/delete.vue")["default"]);
 Vue.component('ots', __webpack_require__(/*! ./components/ots/ots.vue */ "./resources/js/components/ots/ots.vue")["default"]);
 Vue.component('create-referencias', __webpack_require__(/*! ./components/ots/referencias/create.vue */ "./resources/js/components/ots/referencias/create.vue")["default"]);
+Vue.prototype.Laravel = window.Laravel;
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

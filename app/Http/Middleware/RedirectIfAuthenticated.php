@@ -19,9 +19,12 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->check()) {
-
-          $EsOperador = auth()->user()->hasPermissionTo('Navegar operador');
-          $View = $EsOperador ? '/area/enod' : '/area/cliente' ;
+          
+          if (auth()->user()->hasAnyRole(['Super Admin','Admin','Operador']))         
+             $View = '/area/enod';
+          else
+          $View = '/area/cliente' ;
+          
           return redirect($View);
 
         }

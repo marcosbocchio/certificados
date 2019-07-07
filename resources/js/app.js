@@ -67,6 +67,10 @@ Vue.component('delete-registro', require('./components/abm-maestro//delete.vue')
 Vue.component('ots', require('./components/ots/ots.vue').default);
 Vue.component('create-referencias', require('./components/ots/referencias/create.vue').default);
 
+Vue.prototype.Laravel = window.Laravel;
+
+
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

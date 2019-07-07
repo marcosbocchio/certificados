@@ -402,7 +402,9 @@
       </div>
       <create-referencias :index="index_referencias" :tabla="tabla" :inputsData="inputs" @setReferencia="AddReferencia"></create-referencias>
     </div>
-      <button class="btn btn-primary" type="submit" @click.prevent="submit">Guardar</button>
+
+      <h1 v-if="Laravel.user.can['clientes.edit']">You have permission to manage users</h1>
+         <button class="btn btn-primary" type="submit" @click.prevent="submit">Guardar</button>   
     </form>
   </div>  
 </template>

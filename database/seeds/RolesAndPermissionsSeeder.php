@@ -24,10 +24,13 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'clientes.edit']);
         Permission::create(['name' => 'cliente.destroy']);
         Permission::create(['name' => 'cliente.store']);
+        Permission::create(['name' => 'ots.store']);
+        Permission::create(['name' => 'ots.edit']);
 
-        // creo roles y se los asigno a un permiso creado
+        // creo roles y se los asigno a un permiso creado        
+        $role = Role::create(['name' => 'Super Admin']);
 
-        $role = Role::create(['name' => 'Administrador']);
+        $role = Role::create(['name' => 'Admin']);
         $role->givePermissionTo(Permission::all());
 
         $role = Role::create(['name' => 'Cliente']);
