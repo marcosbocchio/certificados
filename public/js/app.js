@@ -3018,10 +3018,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.inputsServicios.push({
         id: this.servicio.id,
         servicio: this.servicio.descripcion,
-        norma_ensayo: this.norma_ensayo.descripcion,
-        norma_ensayo_id: this.norma_ensayo.id,
-        norma_evaluacion: this.norma_evaluacion.descripcion,
-        norma_evaluacion_id: this.norma_evaluacion.id,
+        norma_ensayo: this.norma_ensayo ? this.norma_ensayo.descripcion : null,
+        norma_ensayo_id: this.norma_ensayo ? this.norma_ensayo.id : null,
+        norma_evaluacion: this.norma_evaluacion ? this.norma_evaluacion.descripcion : null,
+        norma_evaluacion_id: this.norma_evaluacion ? this.norma_evaluacion.id : null,
         cantidad_placas: this.cantidad_placas,
         cantidad_servicios: this.cantidad_servicios,
         metodo: this.var_metodo,
@@ -54438,8 +54438,8 @@ Vue.use(VueGoogleMaps, {
 
 var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {
-    url:  false ? undefined : "http://certificados.test/api",
-    AppUrl:  false ? undefined : "http://certificados.test"
+    url:  false ? undefined : "http://localhost:8000/api",
+    AppUrl:  false ? undefined : Object({"MIX_API_URL_DEV":"http://localhost:8000/api","MIX_API_URL_PRO":"http://certificados.com.ar/api","MIX_PUSHER_APP_KEY":"","MIX_PUSHER_APP_CLUSTER":"mt1","NODE_ENV":"development"}).MIX_URL_DEV
   }
 });
 var eventNewRegistro = new Vue();
@@ -55105,8 +55105,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\bocch\code\certificados\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\bocch\code\certificados\resources\sass\toastr.scss */"./resources/sass/toastr.scss");
+__webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/sass/toastr.scss */"./resources/sass/toastr.scss");
 
 
 /***/ })

@@ -76,9 +76,9 @@ class OtServiciosController extends Controller
                                     servicios.id = ot_servicios.servicio_id
                                     left join ot_referencias on
                                     ot_referencias.id = ot_servicios.ot_referencia_id
-                                    inner join norma_ensayos on
+                                    left join norma_ensayos on
                                     norma_ensayos.id = ot_servicios.norma_ensayo_id
-                                    inner join norma_evaluaciones on
+                                    left join norma_evaluaciones on
                                     norma_evaluaciones.id = ot_servicios.norma_evaluacion_id
                                     inner join metodo_ensayos on
                                     servicios.metodo_ensayo_id = metodo_ensayos.id
