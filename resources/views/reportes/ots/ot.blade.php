@@ -37,7 +37,7 @@ td b,td span {
                  <td style="font-size: 13px;" colspan="2"><b>CLIENTE: </b>{{$cliente->nombre_fantasia}}</td>
                 
                   <td rowspan="3" style="text-align: right;">
-                      <img src="{{ asset('img/logo-enod-web.jpg')}}" alt="" style="height: 60px; margin-right: 25px;">
+                      <img src="{{ public_path('img/logo-enod-web.jpg')}}" alt="" style="height: 60px; margin-right: 25px;">
                   </td>               
                              
                </tr>
@@ -62,7 +62,7 @@ td b,td span {
                     <td style="font-size: 13px; width:300px" ><b>Lugar de ensayo: </b>{{$ot->lugar}}</td>
                     <td style="text-align: left; width:150px">
                       <a href="{{ $geo }}" target="_blank" >
-                        <img src="{{ asset('img/mark-google-maps.jpg')}}" alt="" style="height: 20px;">
+                        <img src="{{ public_path('img/mark-google-maps.jpg')}}" alt="" style="height: 20px;">
                       </a>  
                     </td>
                     <td style="font-size: 13px;  width:250px" ><b>Horario: </b>{{ date('H:i', strtotime($ot->fecha_hora)) }}</td>    
