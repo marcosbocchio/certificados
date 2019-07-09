@@ -35112,7 +35112,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "box box-danger" }, [
+  return _c("div", { staticClass: "box box-danger top-buffer" }, [
     _c("div", { staticClass: "box-body" }, [
       _c("div", { staticClass: "table-responsive" }, [
         _c("table", { staticClass: "table table-hover table-striped" }, [
