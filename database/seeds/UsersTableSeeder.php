@@ -19,6 +19,7 @@ class UsersTableSeeder extends Seeder
             'name'     => 'Marcos Alejandro Bocchio' ,
             'email'    => 'marcosbocchio@gmail.com',
             'password' => bcrypt('12345678'),
+            'api_token' => Str::random(60),
         ]);
 
         $administrador->assignRole('Super Admin');
@@ -31,6 +32,7 @@ class UsersTableSeeder extends Seeder
             'name'     => 'Pablo Martin Bocchio' ,
             'email'    => 'pablobocchio@hotmail.com',
             'password' => bcrypt('12345678'),
+            'api_token' => Str::random(60),
         ]);
 
         $operador->assignRole('Admin');
@@ -42,6 +44,7 @@ class UsersTableSeeder extends Seeder
             'name'     => 'Sofia Ailín Battafarano' ,
             'email'    => 'sofia_battafarano@hotmail.com',
             'password' => bcrypt('12345678'),
+            'api_token' => Str::random(60),
         ]);
 
         $cliente->assignRole('Cliente');
@@ -50,6 +53,7 @@ class UsersTableSeeder extends Seeder
             'name'     => 'julian' ,
             'email'    => 'julian@hotmail.com',
             'password' => bcrypt('12345678'),
+            'api_token' => Str::random(60),
         ]);
 
         $cliente->assignRole('Operador');
@@ -58,6 +62,7 @@ class UsersTableSeeder extends Seeder
             'name'     => 'Karem' ,
             'email'    => 'karem@hotmail.com',
             'password' => bcrypt('12345678'),
+            'api_token' => Str::random(60),
         ]);
 
         $cliente->givePermissionTo('Navegar cliente');
@@ -66,6 +71,7 @@ class UsersTableSeeder extends Seeder
             'name'     => 'Lautaro' ,
             'email'    => 'lautaro@hotmail.com',
             'password' => bcrypt('12345678'),
+            'api_token' => Str::random(60),
         ]);
 
         $cliente->givePermissionTo('Navegar cliente');
@@ -74,6 +80,7 @@ class UsersTableSeeder extends Seeder
             'name'     => 'Oscar' ,
             'email'    => 'oscar@hotmail.com',
             'password' => bcrypt('12345678'),
+            'api_token' => Str::random(60),
         ]);
 
         $cliente->givePermissionTo('Navegar cliente');
@@ -82,6 +89,7 @@ class UsersTableSeeder extends Seeder
             'name'     => 'Marianella' ,
             'email'    => 'Marianella@hotmail.com',
             'password' => bcrypt('12345678'),
+            'api_token' => Str::random(60),
         ]);
 
         $cliente->givePermissionTo('Navegar cliente');

@@ -687,7 +687,8 @@ export default {
       getClientes : function(){
 
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'clientes';    
+                
+                var urlRegistros = 'clientes' + '?api_token=' + Laravel.user.api_token;             
                 axios.get(urlRegistros).then(response =>{
                 this.clientes = response.data
                 });
@@ -697,7 +698,7 @@ export default {
                 this.contacto2 = '';
                 this.contacto3 = '';
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'contactos/' + this.cliente.id;    
+                var urlRegistros = 'contactos/' + this.cliente.id + '?api_token=' + Laravel.user.api_token;    
                 axios.get(urlRegistros).then(response =>{
                 this.contactos = response.data
                 });
@@ -705,7 +706,7 @@ export default {
       getMedidasProducto : function(){
                 this.medida = '';               
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'medidas/' + this.producto.unidades_medida_id;    
+                var urlRegistros = 'medidas/' + this.producto.unidades_medida_id + '?api_token=' + Laravel.user.api_token;         
                 axios.get(urlRegistros).then(response =>{
                 this.medidas = response.data
                 });
@@ -713,7 +714,7 @@ export default {
       getProvincias : function(){
 
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'provincias';    
+                var urlRegistros = 'provincias' + '?api_token=' + Laravel.user.api_token;        
                 axios.get(urlRegistros).then(response =>{
                 this.provincias = response.data
                 });
@@ -722,7 +723,7 @@ export default {
                 this.localidades=[];
                 this.localidad ='';
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'localidades/' + this.provincia.id;    
+                var urlRegistros = 'localidades/' + this.provincia.id + '?api_token=' + Laravel.user.api_token;        
                 axios.get(urlRegistros).then(response =>{
                 this.localidades = response.data
                 });
@@ -730,7 +731,7 @@ export default {
        getServicios : function(){
              
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'servicios';    
+                var urlRegistros = 'servicios' + '?api_token=' + Laravel.user.api_token;        
                 axios.get(urlRegistros).then(response =>{
                 this.servicios = response.data
                 });
@@ -738,7 +739,7 @@ export default {
         getTipoPeliculas : function(){
              
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'tipo_peliculas';    
+                var urlRegistros = 'tipo_peliculas' + '?api_token=' + Laravel.user.api_token;          
                 axios.get(urlRegistros).then(response =>{
                 this.tipo_peliculas = response.data
                 });
@@ -746,7 +747,7 @@ export default {
         getProductos : function(){
              
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'productos';    
+                var urlRegistros = 'productos' + '?api_token=' + Laravel.user.api_token;        
                 axios.get(urlRegistros).then(response =>{
                 this.productos = response.data
                 });
@@ -754,7 +755,7 @@ export default {
         getEpps : function(){
              
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'epps';    
+                var urlRegistros = 'epps' + '?api_token=' + Laravel.user.api_token;        
                 axios.get(urlRegistros).then(response =>{
                 this.epps = response.data
                 });
@@ -762,7 +763,7 @@ export default {
         getRiesgos : function(){
              
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'riesgos';    
+                var urlRegistros = 'riesgos' + '?api_token=' + Laravel.user.api_token;        
                 axios.get(urlRegistros).then(response =>{
                 this.riesgos = response.data
                 });
@@ -770,7 +771,7 @@ export default {
        getMetodosEnsayos: function(){
              
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'metodo_ensayos';    
+                var urlRegistros = 'metodo_ensayos' + '?api_token=' + Laravel.user.api_token;        
                 axios.get(urlRegistros).then(response =>{
                 this.metodo_ensayos = response.data
                 });
@@ -778,7 +779,7 @@ export default {
         getNormaEnsayos: function(){
              
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'norma_ensayos';    
+                var urlRegistros = 'norma_ensayos' + '?api_token=' + Laravel.user.api_token;        
                 axios.get(urlRegistros).then(response =>{
                 this.norma_ensayos = response.data
                 });
@@ -786,7 +787,7 @@ export default {
         getNormaEvaluaciones: function(){
              
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'norma_evaluaciones';    
+                var urlRegistros = 'norma_evaluaciones' + '?api_token=' + Laravel.user.api_token;        
                 axios.get(urlRegistros).then(response =>{
                 this.norma_evaluaciones = response.data
                 });
@@ -939,13 +940,19 @@ export default {
       },
 
 
-      submit() {
+      submit()
+       {        
+         
 
         if(this.accion == 'create'){
             this.errors =[];
-            var urlRegistros = 'ots';
-            axios.post(urlRegistros,{
-
+         
+            var urlRegistros = 'ots' ;      
+            axios({
+              method: 'post',
+              url : urlRegistros,    
+              data : {
+            
               'cliente'       : this.cliente.id,
               'proyecto'      : this.proyecto,
               'fecha'         : this.fecha,
@@ -968,15 +975,18 @@ export default {
               'productos'     : this.inputsProductos,
               'epps'          : this.inputsEpps,
               'riesgos'       : this.inputsRiesgos
-          }         
+          }}
+          
       
         ).then(response => {
-          this.response = response
+          this.response = response.data
           toastr.success('OT N° ' + this.ot + ' fue creada con éxito ');
+          console.log(response.data);
         }).catch(error => {
                
                this.errors = error.response.data.errors;
-
+                console.log(error.response);
+                console.log('hola'); 
                $.each( this.errors, function( key, value ) {
                    toastr.error(value);
                    console.log( key + ": " + value );
@@ -985,11 +995,11 @@ export default {
            });
       }
       else if (this.accion =='edit')
-      {      
+      { 
 
         
         this.errors =[];
-        var urlRegistros = 'ots/' + this.otdata.id ;
+        var urlRegistros = 'ots/' + this.otdata.id + '?api_token=' + Laravel.user.api_token;        
         axios.put(urlRegistros, {
 
               'id'            : this.otdata.id,
@@ -1021,7 +1031,7 @@ export default {
          toastr.success('OT N° ' + this.ot + ' fue editada con éxito ');
         }).catch(error => {         
            this.errors = error.response.data.errors;
-                console.log(error);
+               
                $.each( this.errors, function( key, value ) {
                    toastr.error(value);
                    console.log( key + ": " + value );

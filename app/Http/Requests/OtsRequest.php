@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Http\Requests;
-
 use Illuminate\Foundation\Http\FormRequest;
+
 
 class OtsRequest extends FormRequest
 {
@@ -23,8 +23,7 @@ class OtsRequest extends FormRequest
      */
     public function rules()
     {       
-      //  $ot_servicios = ['servicios' => $request->all()];     
-        
+             
      
 
          return [
@@ -67,7 +66,9 @@ class OtsRequest extends FormRequest
         'productos.*.cantidad_productos'      => 'cant.'  
 
 
-    ];
+         ];
     }
+
+  
 
 }

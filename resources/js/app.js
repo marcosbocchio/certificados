@@ -127,6 +127,8 @@ export const eventNewRegistro = new Vue();
 export const eventSetReferencia = new Vue();
 
 
+
+
 const app = new Vue({
     el: '#app',   
     store,

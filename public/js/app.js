@@ -2870,7 +2870,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this = this;
 
       axios.defaults.baseURL = this.url;
-      var urlRegistros = 'clientes';
+      var urlRegistros = 'clientes' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         _this.clientes = response.data;
       });
@@ -2882,7 +2882,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.contacto2 = '';
       this.contacto3 = '';
       axios.defaults.baseURL = this.url;
-      var urlRegistros = 'contactos/' + this.cliente.id;
+      var urlRegistros = 'contactos/' + this.cliente.id + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         _this2.contactos = response.data;
       });
@@ -2892,7 +2892,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.medida = '';
       axios.defaults.baseURL = this.url;
-      var urlRegistros = 'medidas/' + this.producto.unidades_medida_id;
+      var urlRegistros = 'medidas/' + this.producto.unidades_medida_id + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         _this3.medidas = response.data;
       });
@@ -2901,7 +2901,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this4 = this;
 
       axios.defaults.baseURL = this.url;
-      var urlRegistros = 'provincias';
+      var urlRegistros = 'provincias' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         _this4.provincias = response.data;
       });
@@ -2912,7 +2912,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.localidades = [];
       this.localidad = '';
       axios.defaults.baseURL = this.url;
-      var urlRegistros = 'localidades/' + this.provincia.id;
+      var urlRegistros = 'localidades/' + this.provincia.id + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         _this5.localidades = response.data;
       });
@@ -2921,7 +2921,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this6 = this;
 
       axios.defaults.baseURL = this.url;
-      var urlRegistros = 'servicios';
+      var urlRegistros = 'servicios' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         _this6.servicios = response.data;
       });
@@ -2930,7 +2930,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this7 = this;
 
       axios.defaults.baseURL = this.url;
-      var urlRegistros = 'tipo_peliculas';
+      var urlRegistros = 'tipo_peliculas' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         _this7.tipo_peliculas = response.data;
       });
@@ -2939,7 +2939,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this8 = this;
 
       axios.defaults.baseURL = this.url;
-      var urlRegistros = 'productos';
+      var urlRegistros = 'productos' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         _this8.productos = response.data;
       });
@@ -2948,7 +2948,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this9 = this;
 
       axios.defaults.baseURL = this.url;
-      var urlRegistros = 'epps';
+      var urlRegistros = 'epps' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         _this9.epps = response.data;
       });
@@ -2957,7 +2957,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this10 = this;
 
       axios.defaults.baseURL = this.url;
-      var urlRegistros = 'riesgos';
+      var urlRegistros = 'riesgos' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         _this10.riesgos = response.data;
       });
@@ -2966,7 +2966,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this11 = this;
 
       axios.defaults.baseURL = this.url;
-      var urlRegistros = 'metodo_ensayos';
+      var urlRegistros = 'metodo_ensayos' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         _this11.metodo_ensayos = response.data;
       });
@@ -2975,7 +2975,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this12 = this;
 
       axios.defaults.baseURL = this.url;
-      var urlRegistros = 'norma_ensayos';
+      var urlRegistros = 'norma_ensayos' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         _this12.norma_ensayos = response.data;
       });
@@ -2984,7 +2984,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this13 = this;
 
       axios.defaults.baseURL = this.url;
-      var urlRegistros = 'norma_evaluaciones';
+      var urlRegistros = 'norma_evaluaciones' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         _this13.norma_evaluaciones = response.data;
       });
@@ -3109,34 +3109,41 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       if (this.accion == 'create') {
         this.errors = [];
         var urlRegistros = 'ots';
-        axios.post(urlRegistros, {
-          'cliente': this.cliente.id,
-          'proyecto': this.proyecto,
-          'fecha': this.fecha,
-          'hora': this.hora,
-          'ot': this.ot,
-          'fts': this.fts,
-          'obra': this.obra,
-          'contacto1': this.contacto1.id,
-          'contacto2': this.contacto2.id,
-          'contacto3': this.contacto3.id,
-          'provincia': this.provincia.id,
-          'localidad': this.localidad.id,
-          'fecha_ensayo': this.fecha_ensayo,
-          'lugar_ensayo': this.lugar_ensayo,
-          'tipo_peliculas': this.peliculas_selected,
-          'lat': this.localidad.lat,
-          'lon': this.localidad.lon,
-          'observaciones': this.observaciones,
-          'servicios': this.inputsServicios,
-          'productos': this.inputsProductos,
-          'epps': this.inputsEpps,
-          'riesgos': this.inputsRiesgos
+        axios({
+          method: 'post',
+          url: urlRegistros,
+          data: {
+            'cliente': this.cliente.id,
+            'proyecto': this.proyecto,
+            'fecha': this.fecha,
+            'hora': this.hora,
+            'ot': this.ot,
+            'fts': this.fts,
+            'obra': this.obra,
+            'contacto1': this.contacto1.id,
+            'contacto2': this.contacto2.id,
+            'contacto3': this.contacto3.id,
+            'provincia': this.provincia.id,
+            'localidad': this.localidad.id,
+            'fecha_ensayo': this.fecha_ensayo,
+            'lugar_ensayo': this.lugar_ensayo,
+            'tipo_peliculas': this.peliculas_selected,
+            'lat': this.localidad.lat,
+            'lon': this.localidad.lon,
+            'observaciones': this.observaciones,
+            'servicios': this.inputsServicios,
+            'productos': this.inputsProductos,
+            'epps': this.inputsEpps,
+            'riesgos': this.inputsRiesgos
+          }
         }).then(function (response) {
-          _this14.response = response;
+          _this14.response = response.data;
           toastr.success('OT N° ' + _this14.ot + ' fue creada con éxito ');
+          console.log(response.data);
         })["catch"](function (error) {
           _this14.errors = error.response.data.errors;
+          console.log(error.response);
+          console.log('hola');
           $.each(_this14.errors, function (key, value) {
             toastr.error(value);
             console.log(key + ": " + value);
@@ -3144,7 +3151,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         });
       } else if (this.accion == 'edit') {
         this.errors = [];
-        var urlRegistros = 'ots/' + this.otdata.id;
+        var urlRegistros = 'ots/' + this.otdata.id + '?api_token=' + Laravel.user.api_token;
         axios.put(urlRegistros, {
           'id': this.otdata.id,
           'cliente': this.cliente.id,
@@ -3174,7 +3181,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           toastr.success('OT N° ' + _this14.ot + ' fue editada con éxito ');
         })["catch"](function (error) {
           _this14.errors = error.response.data.errors;
-          console.log(error);
           $.each(_this14.errors, function (key, value) {
             toastr.error(value);
             console.log(key + ": " + value);
@@ -54438,8 +54444,8 @@ Vue.use(VueGoogleMaps, {
 
 var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {
-    url:  false ? undefined : "http://localhost:8000/api",
-    AppUrl:  false ? undefined : Object({"MIX_API_URL_DEV":"http://localhost:8000/api","MIX_API_URL_PRO":"http://certificados.com.ar/api","MIX_PUSHER_APP_KEY":"","MIX_PUSHER_APP_CLUSTER":"mt1","NODE_ENV":"development"}).MIX_URL_DEV
+    url:  false ? undefined : "http://certificados.test/api",
+    AppUrl:  false ? undefined : "http://certificados.test"
   }
 });
 var eventNewRegistro = new Vue();
@@ -54481,6 +54487,12 @@ if (token) {
   window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
 } else {
   console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+}
+
+var api_token = document.head.querySelector('meta[name="api-token"]');
+
+if (api_token) {
+  window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + api_token.content;
 }
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
@@ -55105,8 +55117,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/sass/toastr.scss */"./resources/sass/toastr.scss");
+__webpack_require__(/*! C:\Users\bocch\code\certificados\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\bocch\code\certificados\resources\sass\toastr.scss */"./resources/sass/toastr.scss");
 
 
 /***/ })

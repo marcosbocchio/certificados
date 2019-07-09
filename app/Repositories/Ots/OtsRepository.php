@@ -26,6 +26,8 @@ class OtsRepository extends BaseRepository
   public function store( $request)
   {
 
+   
+
     $ot = $this->getModel();
     $servicios = $request->servicios;
     $productos = $request->productos;
@@ -86,6 +88,12 @@ class OtsRepository extends BaseRepository
   public function SetOt($request ,$ot){
 
     $user_id = null;
+    
+    if (Auth::check())
+    {
+         $user_id = $userId = Auth::id();    
+    }
+
     $fecha_hora = date('Y-m-d',strtotime($request->fecha)) .' ' . date('H:i:s',strtotime($request->hora)) ;
     $fecha_estimada_ensayo =  date('Y-m-d',strtotime($request->fecha_ensayo));
 
