@@ -2118,7 +2118,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   created: function created() {
-    eventSetReferencia.$on('open', this.openModal);
+    _event_bus__WEBPACK_IMPORTED_MODULE_1__["eventNewRegistro"].$on('open', this.openModal);
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['url'])),
   methods: {
@@ -3151,31 +3151,35 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         });
       } else if (this.accion == 'edit') {
         this.errors = [];
-        var urlRegistros = 'ots/' + this.otdata.id + '?api_token=' + Laravel.user.api_token;
-        axios.put(urlRegistros, {
-          'id': this.otdata.id,
-          'cliente': this.cliente.id,
-          'proyecto': this.proyecto,
-          'fecha': this.fecha,
-          'hora': this.hora,
-          'ot': this.ot,
-          'fts': this.fts,
-          'obra': this.obra,
-          'contacto1': this.contacto1 ? this.contacto1.id : null,
-          'contacto2': this.contacto2 ? this.contacto2.id : null,
-          'contacto3': this.contacto3 ? this.contacto3.id : null,
-          'provincia': this.provincia ? this.provincia.id : null,
-          'localidad': this.localidad ? this.localidad.id : null,
-          'fecha_ensayo': this.fecha_ensayo,
-          'lugar_ensayo': this.lugar_ensayo,
-          'tipo_peliculas': this.peliculas_selected,
-          'lat': this.localidad.lat,
-          'lon': this.localidad.lon,
-          'observaciones': this.observaciones,
-          'servicios': this.inputsServicios,
-          'productos': this.inputsProductos,
-          'epps': this.inputsEpps,
-          'riesgos': this.inputsRiesgos
+        var urlRegistros = 'ots/' + this.otdata.id;
+        axios({
+          method: 'put',
+          url: urlRegistros,
+          data: {
+            'id': this.otdata.id,
+            'cliente': this.cliente.id,
+            'proyecto': this.proyecto,
+            'fecha': this.fecha,
+            'hora': this.hora,
+            'ot': this.ot,
+            'fts': this.fts,
+            'obra': this.obra,
+            'contacto1': this.contacto1 ? this.contacto1.id : null,
+            'contacto2': this.contacto2 ? this.contacto2.id : null,
+            'contacto3': this.contacto3 ? this.contacto3.id : null,
+            'provincia': this.provincia ? this.provincia.id : null,
+            'localidad': this.localidad ? this.localidad.id : null,
+            'fecha_ensayo': this.fecha_ensayo,
+            'lugar_ensayo': this.lugar_ensayo,
+            'tipo_peliculas': this.peliculas_selected,
+            'lat': this.localidad.lat,
+            'lon': this.localidad.lon,
+            'observaciones': this.observaciones,
+            'servicios': this.inputsServicios,
+            'productos': this.inputsProductos,
+            'epps': this.inputsEpps,
+            'riesgos': this.inputsRiesgos
+          }
         }).then(function (response) {
           _this14.response = response;
           toastr.success('OT N° ' + _this14.ot + ' fue editada con éxito ');
@@ -54444,8 +54448,8 @@ Vue.use(VueGoogleMaps, {
 
 var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {
-    url:  false ? undefined : "http://certificados.test/api",
-    AppUrl:  false ? undefined : "http://certificados.test"
+    url:  false ? undefined : "http://localhost:8000/api",
+    AppUrl:  false ? undefined : "http://localhost:8000"
   }
 });
 var eventNewRegistro = new Vue();
@@ -55117,8 +55121,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\bocch\code\certificados\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\bocch\code\certificados\resources\sass\toastr.scss */"./resources/sass/toastr.scss");
+__webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/sass/toastr.scss */"./resources/sass/toastr.scss");
 
 
 /***/ })

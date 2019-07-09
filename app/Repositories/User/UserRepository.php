@@ -5,8 +5,6 @@ use App\Repositories\BaseRepository;
 use Illuminate\Support\Facades\DB;
 use App\User;
 
-
-
 class UserRepository extends BaseRepository
 {
 
@@ -25,6 +23,7 @@ class UserRepository extends BaseRepository
         $User->email = $data['email'];
         $User->codigo = $data['codigo'];
         $User->password = bcrypt($data['password']);
+        $User->api_token = str_random(60);
         $User->save();
 
         $User->assignRole('Operador');

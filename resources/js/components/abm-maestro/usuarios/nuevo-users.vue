@@ -47,7 +47,7 @@ export default {
     },
  created: function () {
      
-    eventSetReferencia.$on('open', this.openModal)
+    eventNewRegistro.$on('open', this.openModal)
   
     },
     computed :{

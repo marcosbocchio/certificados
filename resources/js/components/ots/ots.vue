@@ -999,8 +999,11 @@ export default {
 
         
         this.errors =[];
-        var urlRegistros = 'ots/' + this.otdata.id + '?api_token=' + Laravel.user.api_token;        
-        axios.put(urlRegistros, {
+        var urlRegistros = 'ots/' + this.otdata.id;        
+        axios({
+              method: 'put',
+              url : urlRegistros , 
+              data : {
 
               'id'            : this.otdata.id,
               'cliente'       : this.cliente.id,
@@ -1025,6 +1028,7 @@ export default {
               'productos'     : this.inputsProductos,
               'epps'          : this.inputsEpps,
               'riesgos'       : this.inputsRiesgos
+            }
           }         
           ).then(response => {
           this.response = response
