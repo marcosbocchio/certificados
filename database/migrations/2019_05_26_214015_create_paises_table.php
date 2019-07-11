@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
+
 class CreatePaisesTable extends Migration
 {
     /**
@@ -18,6 +19,10 @@ class CreatePaisesTable extends Migration
             $table->string('pais');
             $table->timestamps();
         });
+
+        DB::statement("Insert into `paises` (`id`,`pais`) values (1,'Argentina')
+                ON DUPLICATE KEY UPDATE pais = VALUES(pais)
+                ;");
     }
 
     /**
