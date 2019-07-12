@@ -23,13 +23,13 @@ class AddForeignOtProcedimientosPropiosTable extends Migration
                    ->references('id')
                    ->on('ots');
             
-            $table->bigInteger('procedimientos_propio_id')
+            $table->bigInteger('documentacion_id')
                    ->unsigned()
                    ->after('ot_id');
                    
-            $table->foreign('procedimientos_propio_id')
+            $table->foreign('documentacion_id')
                    ->references('id')
-                   ->on('procedimientos_propios');
+                   ->on('documentaciones');
 
         });
     }
@@ -46,8 +46,8 @@ class AddForeignOtProcedimientosPropiosTable extends Migration
             $table->dropForeign(['ot_id']);
             $table->dropColumn('ot_id');
 
-            $table->dropForeign(['procedimientos_propio_id']);
-            $table->dropColumn('procedimientos_propio_id');
+            $table->dropForeign(['documentacion_id']);
+            $table->dropColumn('documentacion_id');
 
         }); 
     }

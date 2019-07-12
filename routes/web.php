@@ -29,6 +29,10 @@ Route::group(['middleware' => ['permission:Navegar operador']], function () {
   Route::get('area/enod/ots','OtsController@index')->name('ots.create')->middleware('auth');
   Route::get('area/enod/ots/{id}/edit','OtsController@Edit')->name('ots.edit');
 
+
+  Route::get('area/enod/documentaciones','DocumentacionesController@callView')->name('documentaciones');
+
+
 });
 
 

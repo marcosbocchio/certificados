@@ -15,7 +15,6 @@ class CreateUsuarioDocumentacionesTable extends Migration
     {
         Schema::create('usuario_documentaciones', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('path');
             $table->dateTime('fecha_caducidad');
             $table->timestamps();
         });

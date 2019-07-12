@@ -47,9 +47,10 @@
           <ul class="treeview-menu">
             <li><a href="{{ route('usuarios') }}"><i class="fa fa-circle-o"></i>Usuarios</a></li>
             <li><a href="{{ route('materiales')}}"><i class="fa fa-circle-o"></i>Materiales</a></li>
+            <li><a href="{{ route('documentaciones')}}"><i class="fa fa-circle-o"></i>Documentaciones</a></li>
           </ul>
-          </li> 
-        </li>       
+        </li> 
+         
         <li class="treeview">
           <a href="#">
             <i class="fa fa-edit"></i> <span>Forms</span>

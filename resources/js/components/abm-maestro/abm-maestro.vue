@@ -73,7 +73,7 @@
             getRegistros : function(){
 
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = this.modelo;    
+                var urlRegistros = this.modelo;   
                 axios.get(urlRegistros).then(response =>{
                 this.registros = response.data
                 });

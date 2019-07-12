@@ -14,23 +14,29 @@ class AddForeignUsuariosDocumentacionesTable extends Migration
     public function up()
     {
         Schema::table('usuario_documentaciones', function (Blueprint $table) {
-
+            
             $table->bigInteger('user_id')
                    ->unsigned()
-                   ->nullable()
-                   ->comment('si es NULL, es un documento Institucional')
                    ->after('id');
 
             $table->foreign('user_id')
                    ->references('id')
                    ->on('users');
             
-            $table->bigInteger('documentaciones_id')
+            $table->bigInteger('documentacion_id')
                    ->unsigned()
                    ->after('user_id');
-            $table->foreign('documentaciones_id')
+            $table->foreign('documentacion_id')
                    ->references('id')
-                   ->on('documentaciones');
+                   ->on('documentaciones'); 
+
+            $table->bigInteger('metodo_ensayo_id')
+                   ->unsigned()
+                   ->nullable()
+                   ->after('documentacion_id');
+            $table->foreign('metodo_ensayo_id')
+                   ->references('id')
+                   ->on('metodo_ensayos');
 
             
         });
@@ -50,6 +56,9 @@ class AddForeignUsuariosDocumentacionesTable extends Migration
 
         $table->dropForeign(['documentaciones_id']);
         $table->dropColumn('documentaciones_id');
+
+        $table->dropForeign(['metodo_ensayo_id']);
+        $table->dropColumn('metodo_ensayo_id');
 
         });
     }

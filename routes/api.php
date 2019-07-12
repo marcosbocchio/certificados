@@ -42,6 +42,10 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('riesgos', 'RiesgosController');
     Route::resource('ot_riesgos', 'OtRiesgosController');
     Route::post('storage/create', 'StorageController@save');
+
+    Route::resource('documentaciones', 'DocumentacionesController');
+
+
 });
 
 

@@ -20,6 +20,8 @@ class CreateDocumentacionesTable extends Migration
             P = Procedimientos propios de ENOD
             U = Usuario');
             $table->string('titulo',45)->comment('Es como se va a ver en en sistema');
+            $table->string('descripcion')->nullable();
+            $table->string('path');
             $table->timestamps();
         });
     }

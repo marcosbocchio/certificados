@@ -31,7 +31,6 @@ class DatabaseSeeder extends Seeder
 
 
 
-
        // factory('App\Clientes', 2500)->create();
 
 
