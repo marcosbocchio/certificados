@@ -115,7 +115,9 @@ import Vuex from 'vuex'
 import vSelect from 'vue-select'
 
 const store = new Vuex.Store({
+  
 state: {
+        
         url:process.env.NODE_ENV == 'production' ? 
         process.env.MIX_API_URL_PRO :
         process.env.MIX_API_URL_DEV,
