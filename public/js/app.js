@@ -2943,6 +2943,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   created: function created() {
     this.getClientes();
+    console.log("http://localhost:8000/api");
     this.getProvincias();
     this.getServicios();
     this.getTipoPeliculas();

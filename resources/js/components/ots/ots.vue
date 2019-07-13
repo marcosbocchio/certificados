@@ -579,6 +579,7 @@ export default {
     created : function(){
         
         this.getClientes();
+        console.log(process.env.MIX_API_URL_DEV);
         this.getProvincias();
         this.getServicios();
         this.getTipoPeliculas();
