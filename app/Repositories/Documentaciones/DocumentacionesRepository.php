@@ -13,6 +13,10 @@ class DocumentacionesRepository extends BaseRepository
     return new Documentaciones;
   }
 
- 
+  public function store( $request)
+  {
+    
+
+  }
 
 }

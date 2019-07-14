@@ -41,7 +41,8 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('epps', 'EppsController');
     Route::resource('riesgos', 'RiesgosController');
     Route::resource('ot_riesgos', 'OtRiesgosController');
-    Route::post('storage/create', 'StorageController@save');
+    Route::post('storage/referencia', 'StorageController@saveReferencia');
+    Route::post('storage/documento', 'StorageController@saveDocumento');
 
     Route::resource('documentaciones', 'DocumentacionesController');
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\DocumentacionesRequest;
 use App\Repositories\Documentaciones\DocumentacionesRepository;
 use App\Documentaciones;
 
@@ -50,9 +51,11 @@ class DocumentacionesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(DocumentacionesRequest $request)
     {
-        //
+        
+        return $this->documentaciones->store($request);
+
     }
 
     /**

@@ -1,5 +1,5 @@
 <template>  
-<div class="box box-danger">
+<div class="box box-danger top-buffer">
   <div class="box-body">
     <div class="table-responsive">
       <table class="table table-hover table-striped">
@@ -8,7 +8,7 @@
             <th>Tipo</th>
             <th>Título</th>
             <th>Descripción</th>
-            <th colspan="2">&nbsp;</th>
+            <th colspan="2">Acción</th>
           </tr>
         </thead>
         <tbody>

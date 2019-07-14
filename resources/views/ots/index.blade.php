@@ -39,21 +39,7 @@
 
     <script>
 
-
-
-/*
-
-    //Date picker
-    $('#datepicker').datepicker({
-      autoclose: true
-    })
-
-    $('.timepicker').timepicker({
-      showInputs: false
-    })
-   
-*/
-    </script>
+</script>
 
 @endsection
 

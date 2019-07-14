@@ -1931,7 +1931,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var _event_bus__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../event-bus */ "./resources/js/components/event-bus.js");
+/* harmony import */ var vuejs_datepicker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuejs-datepicker */ "./node_modules/vuejs-datepicker/dist/vuejs-datepicker.esm.js");
+/* harmony import */ var vuejs_datepicker_dist_locale__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuejs-datepicker/dist/locale */ "./node_modules/vuejs-datepicker/dist/locale/index.js");
+/* harmony import */ var _event_bus__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../event-bus */ "./resources/js/components/event-bus.js");
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -1967,32 +1969,74 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    Datepicker: vuejs_datepicker__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
   data: function data() {
     return {
       newRegistro: {
-        'tipo': '',
-        'titulo': '',
-        'descripcion': '',
-        'path': ''
+        titulo: '',
+        descripcion: '',
+        path: '',
+        fecha_caducidad: ''
       },
-      tipo_documento: [{
+      en: vuejs_datepicker_dist_locale__WEBPACK_IMPORTED_MODULE_2__["en"],
+      es: vuejs_datepicker_dist_locale__WEBPACK_IMPORTED_MODULE_2__["es"],
+      tipo_documento: {
+        tipo: '',
+        descripcion: ''
+      },
+      tipo_documentos: [{
         tipo: 'I',
-        descripcion: 'Documentos Institucionales Enod'
+        descripcion: 'Institucionales'
       }, {
         tipo: 'P',
-        descripcion: 'Documentos Procedimientos Propios Enod'
+        descripcion: 'Procedimientos'
       }, {
         tipo: 'U',
-        descripcion: 'Documentos Usuarios Enod'
+        descripcion: 'Usuarios'
       }],
-      errors: {}
+      errors: {},
+      metodo_ensayos: [],
+      metodo_ensayo: {},
+      usuario: {},
+      usuarios: [],
+      selectedFile: null
     };
   },
   created: function created() {
-    _event_bus__WEBPACK_IMPORTED_MODULE_1__["eventNewRegistro"].$on('open', this.openModal);
+    _event_bus__WEBPACK_IMPORTED_MODULE_3__["eventNewRegistro"].$on('open', this.openModal), this.getMetodosEnsayos();
+    this.getUsuarios();
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['url'])),
   methods: {
@@ -2000,23 +2044,69 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.newRegistro = {};
       $('#nuevo').modal('show');
     },
-    storeRegistro: function storeRegistro() {
+    getMetodosEnsayos: function getMetodosEnsayos() {
       var _this = this;
 
       axios.defaults.baseURL = this.url;
-      var urlRegistros = 'materiales';
-      axios.post(urlRegistros, {
-        'codigo': this.newRegistro.codigo,
-        'descripcion': this.newRegistro.descripcion
-      }).then(function (response) {
-        _this.$emit('store');
+      var urlRegistros = 'metodo_ensayos' + '?api_token=' + Laravel.user.api_token;
+      axios.get(urlRegistros).then(function (response) {
+        _this.metodo_ensayos = response.data;
+      });
+    },
+    getUsuarios: function getUsuarios() {
+      var _this2 = this;
 
-        _this.errors = [];
+      axios.defaults.baseURL = this.url;
+      var urlRegistros = 'users' + '?api_token=' + Laravel.user.api_token;
+      axios.get(urlRegistros).then(function (response) {
+        _this2.usuarios = response.data;
+      });
+    },
+    onFileSelected: function onFileSelected(event) {
+      this.selectedFile = event.target.files[0];
+      this.onUpload();
+    },
+    onUpload: function onUpload() {
+      var _this3 = this;
+
+      var settings = {
+        headers: {
+          'content-type': 'multipart/form-data'
+        }
+      };
+      var fd = new FormData();
+      fd.append('documento', this.selectedFile);
+      axios.defaults.baseURL = this.url;
+      var url = 'storage/documento';
+      console.log(fd);
+      axios.post(url, fd, settings).then(function (response) {
+        _this3.newRegistro.path = response.data;
+      })["catch"](function (response) {
+        console.log(response);
+      });
+    },
+    storeRegistro: function storeRegistro() {
+      var _this4 = this;
+
+      axios.defaults.baseURL = this.url;
+      var urlRegistros = 'documentaciones';
+      axios.post(urlRegistros, {
+        'tipo': this.tipo_documento.tipo,
+        'titulo': this.newRegistro.titulo,
+        'descripcion': this.newRegistro.descripcion,
+        'usuario_id': this.usuario.id,
+        'metodo_ensayo_id': this.metodo_ensayo.id,
+        'fecha_caducidad': this.newRegistro.fecha_caducidad,
+        'path': this.newRegistro.path
+      }).then(function (response) {
+        _this4.$emit('store');
+
+        _this4.errors = [];
         $('#nuevo').modal('hide');
         toastr.success('Nuevo registro creado con éxito');
       })["catch"](function (error) {
-        _this.errors = error.response.data.errors;
-        $.each(_this.errors, function (key, value) {
+        _this4.errors = error.response.data.errors;
+        $.each(_this4.errors, function (key, value) {
           toastr.error(value, key);
           console.log(key + ": " + value);
         });
@@ -2299,6 +2389,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         _this.errors = [];
         $('#nuevo').modal('hide');
+        toastr.success('Nuevo usuario creado con éxito');
         _this.newRegistro = {};
       })["catch"](function (error) {
         toastr.error("No se pudo crear el registo.", "Error:");
@@ -2943,7 +3034,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   created: function created() {
     this.getClientes();
-    console.log("http://localhost:8000/api");
+    console.log("http://certificados.test/api");
     this.getProvincias();
     this.getServicios();
     this.getTipoPeliculas();
@@ -3570,7 +3661,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       axios.defaults.baseURL = this.url;
-      var url = 'storage/create';
+      var url = 'storage/referencia';
       console.log(fd);
       axios.post(url, fd, settings).then(function (response) {
         switch (path) {
@@ -34893,74 +34984,200 @@ var render = function() {
           _c("div", { staticClass: "modal-content" }, [
             _vm._m(0),
             _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "form-group" },
-              [
-                _c("label", [_vm._v("Tipo Documentos")]),
+            _c("div", { staticClass: "modal-body" }, [
+              _c(
+                "div",
+                { staticClass: "form-group" },
+                [
+                  _c("label", [_vm._v("Tipo Documentos")]),
+                  _vm._v(" "),
+                  _c("v-select", {
+                    attrs: {
+                      label: "descripcion",
+                      options: _vm.tipo_documentos
+                    },
+                    model: {
+                      value: _vm.tipo_documento,
+                      callback: function($$v) {
+                        _vm.tipo_documento = $$v
+                      },
+                      expression: "tipo_documento"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "name" } }, [_vm._v("Título")]),
                 _vm._v(" "),
-                _c("v-select", { attrs: { options: _vm.tipo_documentos } })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "modal-body" }, [
-              _c("label", { attrs: { for: "name" } }, [_vm._v("Título")]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.newRegistro.titulo,
-                    expression: "newRegistro.titulo"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { type: "text", name: "titulo", value: "" },
-                domProps: { value: _vm.newRegistro.titulo },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.newRegistro.titulo,
+                      expression: "newRegistro.titulo"
                     }
-                    _vm.$set(_vm.newRegistro, "titulo", $event.target.value)
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text", name: "titulo", value: "" },
+                  domProps: { value: _vm.newRegistro.titulo },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.newRegistro, "titulo", $event.target.value)
+                    }
                   }
-                }
-              })
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "name" } }, [
+                  _vm._v("Descripción")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.newRegistro.descripcion,
+                      expression: "newRegistro.descripcion"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text", name: "descripcion", value: "" },
+                  domProps: { value: _vm.newRegistro.descripcion },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.newRegistro,
+                        "descripcion",
+                        $event.target.value
+                      )
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _vm.tipo_documento.tipo == "U"
+                ? _c("div", [
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("label", { attrs: { for: "name" } }, [
+                          _vm._v("Usuario")
+                        ]),
+                        _vm._v(" "),
+                        _c("v-select", {
+                          attrs: { label: "name", options: _vm.usuarios },
+                          model: {
+                            value: _vm.usuario,
+                            callback: function($$v) {
+                              _vm.usuario = $$v
+                            },
+                            expression: "usuario"
+                          }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("label", { attrs: { for: "name" } }, [
+                          _vm._v("Método de Ensayo")
+                        ]),
+                        _vm._v(" "),
+                        _c("v-select", {
+                          attrs: {
+                            label: "metodo",
+                            options: _vm.metodo_ensayos
+                          },
+                          model: {
+                            value: _vm.newRegistro.metodo_ensayo,
+                            callback: function($$v) {
+                              _vm.$set(_vm.newRegistro, "metodo_ensayo", $$v)
+                            },
+                            expression: "newRegistro.metodo_ensayo"
+                          }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "fecha" } }, [
+                        _vm._v("Fecha")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "input-group date" },
+                        [
+                          _vm._m(1),
+                          _vm._v(" "),
+                          _c("Datepicker", {
+                            attrs: {
+                              "input-class": "form-control pull-right",
+                              language: _vm.es
+                            },
+                            model: {
+                              value: _vm.newRegistro.fecha_caducidad,
+                              callback: function($$v) {
+                                _vm.$set(
+                                  _vm.newRegistro,
+                                  "fecha_caducidad",
+                                  $$v
+                                )
+                              },
+                              expression: "newRegistro.fecha_caducidad"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ])
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("input", {
+                  staticClass: "form-control",
+                  attrs: { type: "file", id: "inputFile", name: "file" },
+                  on: {
+                    change: function($event) {
+                      return _vm.onFileSelected($event)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "hide",
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.onUpload($event)
+                      }
+                    }
+                  },
+                  [_vm._v("upload")]
+                )
+              ])
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "modal-body" }, [
-              _c("label", { attrs: { for: "name" } }, [_vm._v("Descripción")]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.newRegistro.descripcion,
-                    expression: "newRegistro.descripcion"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { type: "text", name: "descripcion", value: "" },
-                domProps: { value: _vm.newRegistro.descripcion },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(
-                      _vm.newRegistro,
-                      "descripcion",
-                      $event.target.value
-                    )
-                  }
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _vm._m(1)
+            _vm._m(2)
           ])
         ])
       ])
@@ -34983,6 +35200,14 @@ var staticRenderFns = [
       ),
       _vm._v(" "),
       _c("h4", { staticClass: "modal-title" }, [_vm._v("Crear")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-addon" }, [
+      _c("i", { staticClass: "fa fa-calendar" })
     ])
   },
   function() {
@@ -35027,7 +35252,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "box box-danger" }, [
+  return _c("div", { staticClass: "box box-danger top-buffer" }, [
     _c("div", { staticClass: "box-body" }, [
       _c("div", { staticClass: "table-responsive" }, [
         _c("table", { staticClass: "table table-hover table-striped" }, [
@@ -35102,7 +35327,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Descripción")]),
         _vm._v(" "),
-        _c("th", { attrs: { colspan: "2" } }, [_vm._v(" ")])
+        _c("th", { attrs: { colspan: "2" } }, [_vm._v("Acción")])
       ])
     ])
   }
@@ -35242,7 +35467,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "box box-danger" }, [
+  return _c("div", { staticClass: "box box-danger top-buffer" }, [
     _c("div", { staticClass: "box-body" }, [
       _c("div", { staticClass: "table-responsive" }, [
         _c("table", { staticClass: "table table-hover table-striped" }, [
@@ -54861,8 +55086,8 @@ Vue.use(VueGoogleMaps, {
 
 var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {
-    url:  false ? undefined : "http://localhost:8000/api",
-    AppUrl:  false ? undefined : "http://localhost:8000"
+    url:  false ? undefined : "http://certificados.test/api",
+    AppUrl:  false ? undefined : "http://certificados.test"
   }
 });
 var eventNewRegistro = new Vue();
@@ -55672,8 +55897,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/sass/toastr.scss */"./resources/sass/toastr.scss");
+__webpack_require__(/*! C:\Users\bocch\code\certificados\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\bocch\code\certificados\resources\sass\toastr.scss */"./resources/sass/toastr.scss");
 
 
 /***/ })

@@ -75,7 +75,8 @@ export default {
                 }).then(response => {
                   this.$emit('store');
                   this.errors=[];
-                  $('#nuevo').modal('hide');               
+                  $('#nuevo').modal('hide');
+                  toastr.success('Nuevo usuario creado con éxito');               
                   this.newRegistro={}
                   
                 }).catch(error => {

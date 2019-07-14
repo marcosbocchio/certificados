@@ -236,7 +236,7 @@ export default {
                    }
               
                axios.defaults.baseURL = this.url;     
-               var url = 'storage/create';
+               var url = 'storage/referencia';
                console.log(fd);
                axios.post(url,fd,settings)
                .then (response => {
