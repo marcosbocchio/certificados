@@ -8,13 +8,8 @@
           <component :is= setTablaComponente :registros="registros"  @confirmarDelete="confirmDeleteRegistro"/>               
           <delete-registro :datoDelete="datoDelete" :fillRegistro="fillRegistro" @close-modal="getRegistros" :modelo="modelo"></delete-registro>  
           <component :is= setNuevoComponente @store="getRegistros"/>      
-      </div>
-  
-    <div class="col-sm-8">
-      <pre>
-        {{ $data }}
-      </pre>
-    </div>
+      </div> 
+
 </div> 
 </template>
 

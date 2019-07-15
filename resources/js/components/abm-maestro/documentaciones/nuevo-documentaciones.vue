@@ -27,7 +27,7 @@
                             </div>
                             <div class="form-group">
                                <label for="name">Método de Ensayo</label>
-                               <v-select v-model="newRegistro.metodo_ensayo" label="metodo" :options="metodo_ensayos"></v-select>
+                               <v-select v-model="metodo_ensayo" label="metodo" :options="metodo_ensayos"></v-select>
                             </div>
                             <div class="form-group">
                             <label for="fecha">Fecha</label>
@@ -41,7 +41,7 @@
                          </div>
                          <div class="form-group">                           
                             <input type="file" class="form-control" id="inputFile" name="file" @change="onFileSelected($event)">
-                            <button class="hide" @click.prevent="onUpload($event)" >upload</button>
+                            <button class="hide" @click.prevent="onUpload()" >upload</button>
                         </div>                
                     </div>
                     <div class="modal-footer">
@@ -146,13 +146,12 @@ export default {
               },
 
         onFileSelected(event) {
-
+            console.log('entro en onFileSelect')   ; 
             this.selectedFile = event.target.files[0];
-            this.onUpload();      
-
-               
+            this.onUpload();               
         },
         onUpload() {
+              console.log('entro en onupload')   ;
               let settings = { headers: { 'content-type': 'multipart/form-data' } }
                const fd = new FormData();
                
@@ -191,8 +190,7 @@ export default {
                 this.$emit('store');
                 this.errors=[];
                 $('#nuevo').modal('hide');               
-                toastr.success('Nuevo registro creado con éxito');
-                
+                toastr.success('Nuevo registro creado con éxito');                
                 
             }).catch(error => {
                

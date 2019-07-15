@@ -100,6 +100,6 @@ class DocumentacionesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->documentaciones->delete($id);
     }
 }

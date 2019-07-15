@@ -1784,11 +1784,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2063,12 +2058,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     onFileSelected: function onFileSelected(event) {
+      console.log('entro en onFileSelect');
       this.selectedFile = event.target.files[0];
       this.onUpload();
     },
     onUpload: function onUpload() {
       var _this3 = this;
 
+      console.log('entro en onupload');
       var settings = {
         headers: {
           'content-type': 'multipart/form-data'
@@ -34840,11 +34837,7 @@ var render = function() {
         })
       ],
       1
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "col-sm-8" }, [
-      _c("pre", [_vm._v("        " + _vm._s(_vm.$data) + "\n      ")])
-    ])
+    )
   ])
 }
 var staticRenderFns = []
@@ -35104,11 +35097,11 @@ var render = function() {
                             options: _vm.metodo_ensayos
                           },
                           model: {
-                            value: _vm.newRegistro.metodo_ensayo,
+                            value: _vm.metodo_ensayo,
                             callback: function($$v) {
-                              _vm.$set(_vm.newRegistro, "metodo_ensayo", $$v)
+                              _vm.metodo_ensayo = $$v
                             },
-                            expression: "newRegistro.metodo_ensayo"
+                            expression: "metodo_ensayo"
                           }
                         })
                       ],
@@ -35168,7 +35161,7 @@ var render = function() {
                     on: {
                       click: function($event) {
                         $event.preventDefault()
-                        return _vm.onUpload($event)
+                        return _vm.onUpload()
                       }
                     }
                   },
@@ -37215,10 +37208,6 @@ var render = function() {
           ],
           1
         ),
-        _vm._v(" "),
-        _vm.Laravel.user.can["clientes.edit"]
-          ? _c("h1", [_vm._v("You have permission to manage users")])
-          : _vm._e(),
         _vm._v(" "),
         _c(
           "button",
