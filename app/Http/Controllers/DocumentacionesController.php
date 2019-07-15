@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\DocumentacionesRequest;
 use App\Repositories\Documentaciones\DocumentacionesRepository;
 use App\Documentaciones;
+use App\UsuarioDocumentaciones;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -123,7 +124,14 @@ class DocumentacionesController extends Controller
      */
     public function destroy($id)
     {   
-       
-        $this->documentaciones->delete($id);
+        $documento = $this->documentaciones->find($id);    
+        
+        $usuarioDocumento = new UsuarioDocumentaciones;
+    
+        $usuarioDocumento->where('documentacion_id',$id)->delete();
+  
+      
+        $documento->delete();
+
     }
 }

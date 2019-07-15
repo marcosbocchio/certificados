@@ -48,6 +48,7 @@ class UserController extends Controller
 
     public function destroy($id){
 
-      $this->users->delete($id);
+      $user = $this->users->find($id);    
+      $user->delete();
     }
 }

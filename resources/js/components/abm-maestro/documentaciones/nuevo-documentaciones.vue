@@ -195,7 +195,7 @@ export default {
             }).catch(error => {
                
                 this.errors = error.response.data.errors;
-
+               
                 $.each( this.errors, function( key, value ) {
                     toastr.error(value,key);
                     console.log( key + ": " + value );

@@ -18,12 +18,9 @@ Auth::routes();
 
 Route::get('documentos/{id}', function ($id){
 
-  $document = Documentaciones::findOrFail($id); 
-
+  $document = Documentaciones::findOrFail($id);
   $path = storage_path('app/'. $document->path);
-
   return response()->file($path);
-
 
 })->name('documentos');
 

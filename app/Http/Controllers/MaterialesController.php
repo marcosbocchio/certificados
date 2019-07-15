@@ -46,6 +46,7 @@ class MaterialesController extends Controller
 
     public function destroy($id){
 
-      $this->materiales->delete($id);
+      $material = $this->materiales->find($id);    
+      $material->delete();
     }
 }

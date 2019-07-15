@@ -49,8 +49,7 @@
             <li><a href="{{ route('materiales')}}"><i class="fa fa-circle-o"></i>Materiales</a></li>
             <li><a href="{{ route('documentaciones')}}"><i class="fa fa-circle-o"></i>Documentaciones</a></li>
           </ul>
-        </li> 
-
+        </li>
 
         <li class="treeview">
           <a href="#">
@@ -68,8 +67,7 @@
                 <li><a href="{{ route('documentos',$documento->id)  }}" target='_blank' ><i class="fa fa-file-pdf-o"></i> {{ $documento->titulo }}</a></li>
 
                 @endif
-            @endforeach
-     
+            @endforeach     
             
           </ul>
         </li> 

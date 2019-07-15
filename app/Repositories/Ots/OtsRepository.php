@@ -78,9 +78,7 @@ class OtsRepository extends BaseRepository
         OtRiesgos::where('ot_id',$ot->id)->delete();
         $this->setRiesgos($riesgos,$ot);
 
-     
-
-       
+        
 
   }
 

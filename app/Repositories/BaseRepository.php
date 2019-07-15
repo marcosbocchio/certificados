@@ -28,12 +28,12 @@ abstract class BaseRepository implements RepositoryInterface {
     $this->getModel()->find($id)->update->all();
   }
 
-
+/*
   public function delete($id){
 
    $registro = $this->getModel()->findOrFail($id);
    $registro->delete();
 
   }
-
+*/
 }

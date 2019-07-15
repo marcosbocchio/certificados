@@ -49,6 +49,7 @@ export default {
         this.errors = error.response.data
         toastr.error("No se pudo eliminar el registro seleccionado.", "Error al eliminar :");
         console.log('hubo un error');
+         console.log(error);
       });
       $('#delete-registro').modal('hide');
     },
