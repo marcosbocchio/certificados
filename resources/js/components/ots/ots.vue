@@ -139,9 +139,7 @@
             @change="sync"            
             />
           </div>
-        </div>        
-       
-         
+        </div>         
        
         <div class="col-md-6">
           <gmap-map :center="mapCenter" :zoom="12"
