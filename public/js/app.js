@@ -1904,6 +1904,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this.$emit('close-modal');
 
         toastr.success('Eliminado correctamente');
+        console.log(response);
       })["catch"](function (error) {
         _this.errors = error.response.data;
         toastr.error("No se pudo eliminar el registro seleccionado.", "Error al eliminar :");
@@ -2123,6 +2124,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -35255,7 +35265,11 @@ var render = function() {
             "tbody",
             _vm._l(_vm.registros, function(registro) {
               return _c("tr", { key: registro.id }, [
-                _c("td", [_vm._v(_vm._s(registro.tipo))]),
+                registro.tipo == "U"
+                  ? _c("div", [_c("td", [_vm._v("USUARIOS")])])
+                  : registro.tipo == "P"
+                  ? _c("div", [_c("td", [_vm._v("PROCEDIMIENTOS")])])
+                  : _c("div", [_c("td", [_vm._v("INSTITUCIONAL")])]),
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(registro.titulo))]),
                 _vm._v(" "),

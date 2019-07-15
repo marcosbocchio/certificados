@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 use App\Http\Requests\DocumentacionesRequest;
 use App\Repositories\Documentaciones\DocumentacionesRepository;
 use App\Documentaciones;
+use Illuminate\Support\Facades\Storage;
+
+
+
+
 
 class DocumentacionesController extends Controller
 {
@@ -69,6 +74,24 @@ class DocumentacionesController extends Controller
         //
     }
 
+    public function openPdf($id)
+    {
+        $document = Documentaciones::findOrFail($id);
+
+        $path = $document->path;
+       
+        $pdfContent = Storage::get($path);
+        $type       = Storage::mimeType($path);
+        $fileName   = Storage::name($path);      
+
+       
+      
+        return Storage::response($pdfContent, 200, [
+            'Content-Type'        => $type,
+            'Content-Disposition' => 'inline; filename="'.$fileName.'"'
+          ]);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -99,7 +122,8 @@ class DocumentacionesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
+    {   
+       
         $this->documentaciones->delete($id);
     }
 }

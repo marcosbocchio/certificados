@@ -44,6 +44,7 @@ export default {
       axios.delete(url).then(response =>{       
         this.$emit('close-modal');
         toastr.success('Eliminado correctamente');
+        console.log(response);
       }).catch(error => {
         this.errors = error.response.data
         toastr.error("No se pudo eliminar el registro seleccionado.", "Error al eliminar :");

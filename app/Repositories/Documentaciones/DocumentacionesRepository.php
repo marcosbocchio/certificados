@@ -52,14 +52,16 @@ class DocumentacionesRepository extends BaseRepository
 
   public function delete($id){
 
+   
     $documento = $this->getModel();    
     $usuarioDocumento = new UsuarioDocumentaciones;
 
     $usuarioDocumento->where('documentacion_id',$id);
     $usuarioDocumento->delete();
 
+    
     $documento->find($id); 
-    $documento->detele();
+    $documento->delete();
 
 
   }

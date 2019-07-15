@@ -23,7 +23,7 @@ class RedirectIfAuthenticated
           if (auth()->user()->hasAnyRole(['Super Admin','Admin','Operador']))         
              $View = '/area/enod';
           else
-          $View = '/area/cliente' ;
+            $View = '/area/cliente' ;
           
           return redirect($View);
 

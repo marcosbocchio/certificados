@@ -50,6 +50,29 @@
             <li><a href="{{ route('documentaciones')}}"><i class="fa fa-circle-o"></i>Documentaciones</a></li>
           </ul>
         </li> 
+
+
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-book"></i> <span>Institucionales</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+
+            @foreach ( $documentos as $documento )
+
+                @if ($documento->tipo == 'I')
+
+                <li><a href="{{ route('documentos',$documento->id)  }}" target='_blank' ><i class="fa fa-file-pdf-o"></i> {{ $documento->titulo }}</a></li>
+
+                @endif
+            @endforeach
+     
+            
+          </ul>
+        </li> 
          
         <li class="treeview">
           <a href="#">

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Documentaciones;
 
 class dashboardOperadoresController extends Controller
 {
@@ -23,11 +24,12 @@ class dashboardOperadoresController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
      public function index(Request $Request )
-     {
+     {        
+       
          $user = $Request->user()->name;
          $title = 'Area Enod' ;
          $header_titulo = "Dashboard";
          $header_descripcion ="Control panel";     
-         return view('testoperador',compact('user','title','header_titulo','header_descripcion'));
+         return view('testoperador',compact('user','title','header_titulo','header_descripcion','documentos'));
      }
 }

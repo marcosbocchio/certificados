@@ -13,7 +13,16 @@
         </thead>
         <tbody>
           <tr v-for="registro in registros" :key="registro.id">
-            <td>{{registro.tipo}}</td>
+            <div v-if="registro.tipo == 'U'">
+                <td>USUARIOS</td>
+            </div>
+            <div v-else-if="registro.tipo == 'P'">
+              <td>PROCEDIMIENTOS</td>
+            </div>
+            <div v-else>
+              <td>INSTITUCIONAL</td>
+            </div>
+           
             <td>{{ registro.titulo}}</td>
             <td>{{ registro.descripcion }}</td>
             <td width="10px">

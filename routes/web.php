@@ -1,5 +1,6 @@
 <?php
 
+use App\Documentaciones;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,6 +16,17 @@ Route::redirect('/', '/login',301)->name('login');
 
 Auth::routes();
 
+Route::get('documentos/{id}', function ($id){
+
+  $document = Documentaciones::findOrFail($id); 
+
+  $path = storage_path('app/'. $document->path);
+
+  return response()->file($path);
+
+
+})->name('documentos');
+
 Route::group(['middleware' => ['permission:Navegar cliente']], function () {
 
   Route::get('/area/cliente', 'dashboardClientesController@index')->name('testcliente');
@@ -28,7 +40,6 @@ Route::group(['middleware' => ['permission:Navegar operador']], function () {
   Route::get('area/enod/materiales', 'MaterialesController@callView')->name('materiales');
   Route::get('area/enod/ots','OtsController@index')->name('ots.create')->middleware('auth');
   Route::get('area/enod/ots/{id}/edit','OtsController@Edit')->name('ots.edit');
-
 
   Route::get('area/enod/documentaciones','DocumentacionesController@callView')->name('documentaciones');
 
