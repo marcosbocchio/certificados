@@ -625,7 +625,6 @@ export default {
           console.log('-----');
           let existeRi = false;
           servicios.forEach(function(servicio) {
-
               console.log(servicio.metodo);         
               
               if(servicio.metodo == 'RI'){                 

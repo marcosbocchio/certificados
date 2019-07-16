@@ -65,6 +65,7 @@ Vue.component('delete-registro', require('./components/abm-maestro//delete.vue')
 
 Vue.component('table-documentaciones', require('./components/abm-maestro/documentaciones/table-documentaciones.vue').default);
 Vue.component('nuevo-documentaciones', require('./components/abm-maestro/documentaciones/nuevo-documentaciones.vue').default);
+Vue.component('editar-documentaciones', require('./components/abm-maestro/documentaciones/editar-documentaciones.vue').default);
 
 
 
@@ -131,9 +132,7 @@ state: {
 
 export const eventNewRegistro = new Vue();
 export const eventSetReferencia = new Vue();
-
-
-
+export const eventEditRegistro = new Vue();
 
 const app = new Vue({
     el: '#app',   

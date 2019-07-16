@@ -64,7 +64,7 @@
 
                 @if ($documento->tipo == 'I')
 
-                <li><a href="{{ route('documentos',$documento->id)  }}" target='_blank' ><i class="fa fa-file-pdf-o"></i> {{ $documento->titulo }}</a></li>
+                <li><a href="{{ route('institucionales',$documento->id)  }}" target='_blank' ><i class="fa fa-file-pdf-o"></i> {{ $documento->titulo }}</a></li>
 
                 @endif
             @endforeach     

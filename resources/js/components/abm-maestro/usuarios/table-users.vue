@@ -5,8 +5,7 @@
       <table class="table table-hover table-striped">
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Usuario</th>
+            <th>ID</th>           
             <th>Nombre</th>
             <th>Email</th>
             <th colspan="2">&nbsp;</th>
@@ -14,8 +13,7 @@
         </thead>
         <tbody>
           <tr v-for="registro in registros" :key="registro.id">
-            <td width="10px">{{ registro.id }}</td>
-            <td>{{ registro.codigo }}</td>
+            <td width="10px">{{ registro.id }}</td>            
             <td>{{ registro.name }}</td>
             <td>{{ registro.email }}</td>
             <td width="10px">

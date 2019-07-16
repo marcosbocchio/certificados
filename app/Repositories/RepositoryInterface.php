@@ -12,7 +12,5 @@ interface RepositoryInterface
 
   public function update(array $data, $id);
 
-
-
   public function find($id);
 }

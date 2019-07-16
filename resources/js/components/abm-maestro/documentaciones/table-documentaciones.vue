@@ -26,10 +26,10 @@
             <td>{{ registro.titulo}}</td>
             <td>{{ registro.descripcion }}</td>
             <td width="10px">
-              <a href="#" class="btn btn-warning btn-sm" title="Editar" v-on:click.prevent="editKeep(registro)"><span class="fa fa-edit"></span></a>  
+              <a href="#" class="btn btn-warning btn-sm" title="Editar" v-on:click.prevent="$emit('editRegistroEvent',registro.id)"><span class="fa fa-edit"></span></a>  
             </td>
             <td width="10px">
-              <a href="#" class="btn btn-danger btn-sm" title="Eliminar" v-on:click.prevent="$emit('confirmarDelete',registro,registro.descripcion)"><span class="fa fa-trash"></span></a>
+              <a href="#" class="btn btn-danger btn-sm" title="Eliminar" v-on:click.prevent="$emit('confirmarDelete',registro,registro.titulo)"><span class="fa fa-trash"></span></a>
             </td>
           </tr>
         </tbody>

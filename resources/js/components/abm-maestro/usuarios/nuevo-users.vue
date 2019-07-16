@@ -7,9 +7,7 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Crear</h4>
                 </div>
-                <div class="modal-body">
-                    <label for="usuario">Usuario</label>
-                    <input type="text" name="usuario" class="form-control" v-model="newRegistro.codigo" value="">
+                <div class="modal-body">                 
                     <label for="name">Nombre</label>
                     <input type="text" name="nombre" class="form-control" v-model="newRegistro.name" value="">
                     <label for="usuario">email</label>
@@ -34,8 +32,7 @@
 export default {
     data() { return {
     
-        newRegistro : {
-            'codigo': '',
+        newRegistro : {           
             'name'  : '',
             'email' : '',
             'password' : ''
@@ -67,8 +64,7 @@ export default {
                          
                 axios.post(urlRegistros, {   
                     
-                'name'      : this.newRegistro.name,
-                'codigo'    : this.newRegistro.codigo,
+                'name'      : this.newRegistro.name,                
                 'email'     : this.newRegistro.email,
                 'password'  : this.newRegistro.password
                   

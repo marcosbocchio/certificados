@@ -16,13 +16,10 @@ Route::redirect('/', '/login',301)->name('login');
 
 Auth::routes();
 
-Route::get('documentos/{id}', function ($id){
 
-  $document = Documentaciones::findOrFail($id);
-  $path = storage_path('app/'. $document->path);
-  return response()->file($path);
-
-})->name('documentos');
+Route::get('institucionales/{id}','DocumentacionesController@institucionales')
+->middleware('auth')
+->name('institucionales');
 
 Route::group(['middleware' => ['permission:Navegar cliente']], function () {
 

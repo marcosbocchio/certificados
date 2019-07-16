@@ -1,13 +1,14 @@
 <template>
 <div>
     <div class="col-sm-10">
-        <a href="#" class="btn btn-primary pull-right" v-on:click.prevent="openNuevoRegisto()" >Nuevo</a>
+        <a href="#" class="btn btn-primary pull-right" v-on:click.prevent="openNuevoRegistro()" >Nuevo</a>
     </div>
     
       <div class="col-sm-10">
-          <component :is= setTablaComponente :registros="registros"  @confirmarDelete="confirmDeleteRegistro"/>               
+          <component :is= setTablaComponente :registros="registros"  @confirmarDelete="confirmDeleteRegistro" @editRegistroEvent="editRegistro"/>               
           <delete-registro :datoDelete="datoDelete" :fillRegistro="fillRegistro" @close-modal="getRegistros" :modelo="modelo"></delete-registro>  
-          <component :is= setNuevoComponente @store="getRegistros"/>      
+          <component :is= setNuevoComponente @store="getRegistros"/>
+          <component :is= setEditarComponente :registro_id="registro_id" @store="getRegistros"/>      
       </div> 
 
 </div> 
@@ -15,7 +16,7 @@
 
 <script>
   import {mapState} from 'vuex'
-  import { eventNewRegistro } from '../event-bus';
+  import { eventNewRegistro, eventEditRegistro } from '../event-bus';
     export default {
       name: 'abm-maestro',
       props : {         
@@ -42,6 +43,7 @@
         registros: [], 
         datoDelete: '',    
         obj :'',
+        registro_id: ''
    
         }
       },     
@@ -55,12 +57,17 @@
 
              return 'nuevo-' + this.modelo ;
          },
+         setEditarComponente : function(){
+
+             return 'editar-' + this.modelo ;
+         },
+         
          ...mapState(['url'])
      },
 
       methods: {
 
-           openNuevoRegisto : function(){
+           openNuevoRegistro : function(){
 
              eventNewRegistro.$emit('open');
            }, 
@@ -73,11 +80,18 @@
                 this.registros = response.data
                 });
               },
+            
+            editRegistro : function(registro_id){
+
+                this.registro_id = registro_id;
+                eventEditRegistro.$emit('edit');             
+                    
+            },
 
           
             confirmDeleteRegistro: function(registro,dato){            
               this.fillRegistro.id = registro.id;
-              this.datoDelete = dato;
+              this.datoDelete = dato;             
              $('#delete-registro').modal('show');
           }
       }

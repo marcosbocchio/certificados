@@ -8,6 +8,8 @@ use App\Repositories\Documentaciones\DocumentacionesRepository;
 use App\Documentaciones;
 use App\UsuarioDocumentaciones;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection as Collection;
 
 
 
@@ -72,25 +74,35 @@ class DocumentacionesController extends Controller
      */
     public function show($id)
     {
-        //
+        $documentacion = DB::select('select   
+                                    documentaciones.id as id,
+                                    documentaciones.tipo as tipo,
+                                    documentaciones.titulo as titulo,
+                                    documentaciones.descripcion as descripcion,
+                                    documentaciones.path as path,
+                                    usuario_documentaciones.user_id as user_id,
+                                    usuario_documentaciones.metodo_ensayo_id as metodo_ensayo_id,
+                                    usuario_documentaciones.fecha_caducidad as fecha_caducidad
+                                    
+                                    from
+                                    documentaciones left join usuario_documentaciones on
+                                    usuario_documentaciones.documentacion_id = documentaciones.id
+                                    where
+                                    documentaciones.id=:id',['id' => $id ]);
+
+        $documentacion = Collection::make($documentacion);
+
+        return $documentacion;
     }
 
-    public function openPdf($id)
+    public function institucionales($id)
     {
-        $document = Documentaciones::findOrFail($id);
+        $document = Documentaciones::where('id' , $id)
+                                     ->where('tipo','I')
+                                     ->firstOrFail();
+        $path = storage_path('app/'. $document->path);
+        return response()->file($path);
 
-        $path = $document->path;
-       
-        $pdfContent = Storage::get($path);
-        $type       = Storage::mimeType($path);
-        $fileName   = Storage::name($path);      
-
-       
-      
-        return Storage::response($pdfContent, 200, [
-            'Content-Type'        => $type,
-            'Content-Disposition' => 'inline; filename="'.$fileName.'"'
-          ]);
     }
 
     /**

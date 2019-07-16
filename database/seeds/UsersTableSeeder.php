@@ -14,8 +14,7 @@ class UsersTableSeeder extends Seeder
     {
         // Usuario con el rol administrador
 
-        $administrador = User::create([
-            'codigo'  => 'Aco80',
+        $administrador = User::create([          
             'name'     => 'Marcos Alejandro Bocchio' ,
             'email'    => 'marcosbocchio@gmail.com',
             'password' => bcrypt('12345678'),
@@ -27,8 +26,7 @@ class UsersTableSeeder extends Seeder
 
         // Usuario con el rol operador
 
-        $operador = User::create([
-            'codigo'  => 'Ruso74',
+        $operador = User::create([           
             'name'     => 'Pablo Martin Bocchio' ,
             'email'    => 'pablobocchio@hotmail.com',
             'password' => bcrypt('12345678'),
@@ -39,8 +37,7 @@ class UsersTableSeeder extends Seeder
 
         // Usuario con el rol Cliente
 
-        $cliente = User::create([
-            'codigo'  => 'Sofita',
+        $cliente = User::create([         
             'name'     => 'Sofia Ailín Battafarano' ,
             'email'    => 'sofia_battafarano@hotmail.com',
             'password' => bcrypt('12345678'),

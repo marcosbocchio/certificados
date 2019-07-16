@@ -20,8 +20,7 @@ class UserRepository extends BaseRepository
         
         
         $User->name = $data['name'];
-        $User->email = $data['email'];
-        $User->codigo = $data['codigo'];
+        $User->email = $data['email'];     
         $User->password = bcrypt($data['password']);
         $User->api_token = str_random(60);
         $User->save();
