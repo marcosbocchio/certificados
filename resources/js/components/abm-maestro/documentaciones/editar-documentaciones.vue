@@ -125,7 +125,21 @@ import { eventEditRegistro } from '../../event-bus';
         registro_id :{
             handler : function(){               
                 
-                this.getDocumentacion();                          
+                 this.getDocumentacion();   
+                    
+                 this.$nextTick(function () {
+                   
+                    this.tipo_documentos.forEach(function(tipo_doc) {
+        
+                            console.log(tipo_doc.tipo);
+                            if (tipo_doc.tipo == this.documentacion.tipo){
+                                this.tipo_documento.tipo = tipo_doc.tipo;
+                                this.tipo_documento.descripcion = tipo_doc.descripcion;
+                            }
+                          }
+                        )  
+
+                })                    
                
             },
         }
@@ -152,18 +166,8 @@ import { eventEditRegistro } from '../../event-bus';
             axios.get(urlRegistros).then(response =>{
                 
             this.documentacion = response.data[0];
-            this.tipo_documentos.forEach(function(tipo_doc) {
-
-                    console.log(tipo_doc.tipo);
-                    if (tipo_doc.tipo == this.documentacion.tipo){
-                        this.tipo_documento.tipo = tipo_doc.tipo;
-                        this.tipo_documento.descripcion = tipo_doc.descripcion;
-                    }
-                  }
-                )  
-            });
-
-         
+               
+            });   
             
         },
         

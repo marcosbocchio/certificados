@@ -23,6 +23,17 @@ class OtsRepository extends BaseRepository
     return new Ots;
   }
 
+
+  public function getAll(){
+
+   // return $this->getModel()->all();
+   $ot = ots::with('cliente')->get();
+
+
+   return $ot;
+
+  }
+
   public function store( $request)
   {
 

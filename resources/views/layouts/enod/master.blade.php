@@ -19,10 +19,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{asset('adminlte/bower_components/font-awesome/css/font-awesome.min.css')}}">
     <!-- Ionicons -->
+    <link  rel="stylesheet" href="{{asset('adminlte/bower_components/Ionicons/css/ionicons.min.css')}}">
+
+    <!-- message -->
     <link href="{{ asset('css/toastr.css') }}" rel="stylesheet">
 
 
-    <link href="https://unpkg.com/ionicons@4.5.5/dist/css/ionicons.min.css" rel="stylesheet">
 
     <!-- Theme style -->
     <link rel="stylesheet" href="{{asset('css/AdminLTE.min.css')}}">
@@ -79,7 +81,7 @@ desired effect
            <div class="row">
                
 
-                        @yield('contenido')
+            @yield('contenido')
                         
                 
            </div>

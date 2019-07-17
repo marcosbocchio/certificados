@@ -405,6 +405,7 @@
          <button class="btn btn-primary" type="submit" @click.prevent="submit">Guardar</button>   
     </form>
   </div>  
+
 </template>
 
 <script>
@@ -599,7 +600,7 @@ export default {
         }),
 
        $('.timepicker').timepicker({
-      showInputs: false
+          showInputs: false
     })
     },
     computed :{

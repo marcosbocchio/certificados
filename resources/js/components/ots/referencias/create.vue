@@ -1,4 +1,5 @@
 <template>   
+<div class="row">
     <div class="modal fade" id="nuevo">
         <div class="modal-dialog modal-lg">
 
@@ -79,7 +80,8 @@
         
             </div>
         </div>         
-    </div>       
+    </div>
+</div>       
 </template>     
                      
                 

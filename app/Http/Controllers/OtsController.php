@@ -31,14 +31,9 @@ class OtsController extends Controller
      */
     public function index()
     {
-        $accion = 'create';      
-        $user = auth()->user()->name;
-        $header_titulo = "Orden de trabajo";
-        $header_descripcion ="Crear";  
-        return view('ots.index', compact('user','accion','header_titulo','header_descripcion'));
-        
+        return $this->ot->getAll();
     }
-
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -46,7 +41,12 @@ class OtsController extends Controller
      */
     public function create()
     {
-        //
+        
+        $accion = 'create';      
+        $user = auth()->user()->name;
+        $header_titulo = "Orden de trabajo";
+        $header_descripcion ="Crear";  
+        return view('ots.index', compact('user','accion','header_titulo','header_descripcion'));
     }
 
     /**
