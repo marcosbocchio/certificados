@@ -116,7 +116,8 @@
                                     <td> {{ot.proyecto}}</td>         
                                     <td> {{ot.fecha_hora}}</td>         
                                     <td> {{ot.estado}}</td>                                
-                                    <td> <a :href="AppUrl + '/area/enod/ots/' + ot.id + '/edit' "   class="btn btn-warning btn-sm" title="Editar"><span class="fa fa-edit"></span></a></td>
+                                    <td width="10px"> <a :href="AppUrl + '/area/enod/ots/' + ot.id + '/edit' "   class="btn btn-warning btn-sm" title="Editar"><span class="fa fa-edit"></span></a></td>
+                                    <td width="10px"> <a :href="AppUrl + '/api/pdf/ot/' + ot.id " target="_blank"  class="btn btn-default btn-sm" title="pdf"><span class="fa fa-file-pdf-o"></span></a></td>
                                 </tr>
                         </tbody>
                         </table>

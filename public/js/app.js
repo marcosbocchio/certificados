@@ -2790,6 +2790,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -36517,7 +36518,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("td", [_vm._v(" " + _vm._s(ot.estado))]),
                     _vm._v(" "),
-                    _c("td", [
+                    _c("td", { attrs: { width: "10px" } }, [
                       _c(
                         "a",
                         {
@@ -36529,6 +36530,21 @@ var render = function() {
                           }
                         },
                         [_c("span", { staticClass: "fa fa-edit" })]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { attrs: { width: "10px" } }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "btn btn-default btn-sm",
+                          attrs: {
+                            href: _vm.AppUrl + "/api/pdf/ot/" + ot.id,
+                            target: "_blank",
+                            title: "pdf"
+                          }
+                        },
+                        [_c("span", { staticClass: "fa fa-file-pdf-o" })]
                       )
                     ])
                   ])
