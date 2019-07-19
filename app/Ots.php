@@ -13,6 +13,8 @@ class Ots extends Model
         return $this->belongsTo('App\Clientes');
     }
 
+  
+
  
 
 }

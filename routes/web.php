@@ -21,6 +21,10 @@ Route::get('institucionales/{id}','DocumentacionesController@institucionales')
 ->middleware('auth')
 ->name('institucionales');
 
+Route::get('operadores/ot/{id}','OtOperariosController@index')
+->middleware('auth')
+->name('otOperadores');
+
 Route::group(['middleware' => ['permission:Navegar cliente']], function () {
 
   Route::get('/area/cliente', 'dashboardClientesController@index')->name('dashboardC');
@@ -39,6 +43,7 @@ Route::group(['middleware' => ['permission:Navegar operador']], function () {
 
 });
 
+Route::get('documentaciones/operador/{id}', 'DocumentacionesController@operarios')->middleware('auth');
 
 
 

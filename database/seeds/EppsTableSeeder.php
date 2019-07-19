@@ -19,7 +19,7 @@ class EppsTableSeeder extends Seeder
 
         Epps::create([
             'codigo'              =>'2',
-            'descripcion'         =>'Botines de seguridd'     
+            'descripcion'         =>'Botines de seguridad'     
         ]);
 
         Epps::create([

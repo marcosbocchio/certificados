@@ -45,11 +45,15 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::post('storage/documento', 'StorageController@saveDocumento');
 
     Route::resource('documentaciones', 'DocumentacionesController');
+    Route::get('documentaciones/ot_operarios/{ot_id}/{user_id}', 'DocumentacionesController@getDocOtOperarios');
 
+    Route::resource('ot_operarios', 'OtOperariosController');
+    Route::get('ot-operarios/users', 'OtOperariosController@users');
+    Route::get('ot_operarios/users/{ot_id}/total', 'OtOperariosController@OtOperadoresTotal');
+   
 
+   
 });
-
-
 
 
 Route::get('/pdf/ot/{id}','PdfOtController@imprimir')->name('pdfot');

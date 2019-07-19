@@ -1,17 +1,18 @@
 <template>
 <div>  
+  <div class="row">
         <div class="col-lg-4 col-xs-6">
           <!-- small box -->
           <div class="small-box bg-aqua">
             <div class="inner">
-              <h3>150</h3>
+              <h3>{{ CantOperadores }}</h3>
 
-              <p>Operarios</p>
+              <p>Operadores</p>
             </div>
             <div class="icon">
               <i class="ion ion-person-add"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a :href="AppUrl + '/operadores/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-down"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -90,8 +91,7 @@
           </div>
         </div>
         <!-- ./col -->
-    
-  
+    </div>  
         <div class="col-md-12">
             <div class="box box-primary top-buffer">
                <div class="box-body">
@@ -109,7 +109,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="ot in ots" :key="ot.id">
+                                <tr v-for="ot in ots" :key="ot.id" @click="selectOt(ot.id)">
                                     <td> {{ot.numero}}</td>     
                                     <td> {{ot.obra}}</td>         
                                     <td> {{ot.cliente.nombre_fantasia}}</td>         
@@ -136,7 +136,9 @@ export default {
 
     data() { return {
 
-        ots :[]
+        ots :[],
+        ot_id_selected : '',
+        CantOperadores :'0'
 
         }
 
@@ -145,8 +147,16 @@ export default {
     computed :{
 
         ...mapState(['url','AppUrl'])
+        
      },
     
+     watch: {
+ 
+      ot_id_selected: function (ContarOperadores) {      
+      this.ContarOperadores();
+    }
+  },
+
     created : function() {
 
        this.getOts();
@@ -161,7 +171,25 @@ export default {
             this.ots = response.data
             });
 
-        }
+        },
+
+         selectOt : function(id){
+
+            this.ot_id_selected = id;
+
+         },
+
+         ContarOperadores : function (){
+
+            axios.defaults.baseURL = this.url ;                
+            var urlRegistros = 'ot_operarios/users/' + this.ot_id_selected +'/total' + '?api_token=' + Laravel.user.api_token;             
+            axios.get(urlRegistros).then(response =>{
+            this.CantOperadores = response.data
+            });
+
+         }
+
+         
 
 
     }

@@ -1,4 +1,5 @@
 <template>
+<div class="row">
  <div class="col-md-12">
   <form @submit.prevent="submit"  method="post">
     <div class="box box-danger">
@@ -405,7 +406,7 @@
          <button class="btn btn-primary" type="submit" @click.prevent="submit">Guardar</button>   
     </form>
   </div>  
-
+</div>
 </template>
 
 <script>
@@ -894,7 +895,6 @@ export default {
             this.riesgo=''          
 
         },
-
       
       removeServicio(index) {
             this.inputsServicios.splice(index, 1);

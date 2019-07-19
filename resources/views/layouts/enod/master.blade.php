@@ -78,13 +78,13 @@ desired effect
 
         <!-- Main content -->
         <section class="content">
-           <div class="row">
+        
                
 
             @yield('contenido')
                         
                 
-           </div>
+        
         </section>
 
         <!-- /.content -->

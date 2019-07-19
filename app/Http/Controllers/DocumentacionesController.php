@@ -105,6 +105,49 @@ class DocumentacionesController extends Controller
 
     }
 
+    public function operarios($id)
+    {
+       
+        $document = Documentaciones::where('id' , $id)
+                                     ->where('tipo','U')
+                                     ->firstOrFail();   
+
+        $path = storage_path('app/'. $document->path);    
+        return response()->file($path);
+       
+    }
+
+    public function getDocOtOperarios($ot_id,$user_id){
+
+                        $documentacion = DB::select('select 
+                        documentaciones.id,
+                        documentaciones.tipo,
+                        documentaciones.descripcion,
+                        documentaciones.titulo as titulo,
+                        documentaciones.path,
+                        usuario_documentaciones.user_id,
+                        usuario_documentaciones.metodo_ensayo_id,
+                        usuario_documentaciones.fecha_caducidad,
+                        users.name 
+                        
+                        from usuario_documentaciones
+                        inner join documentaciones on
+                        documentaciones.id = usuario_documentaciones.documentacion_id
+                        inner join users on
+                        users.id = usuario_documentaciones.user_id
+                        inner join ot_operarios on
+                        ot_operarios.user_id = users.id 
+                        where 
+                        ot_operarios.ot_id =:ot_id and
+                        ot_operarios.user_id=:user_id',['user_id' => $user_id, 'ot_id' =>$ot_id]);
+
+        $documentacion = Collection::make($documentacion);
+
+        return $documentacion;
+
+
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
