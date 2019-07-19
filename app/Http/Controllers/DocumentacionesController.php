@@ -138,6 +138,11 @@ class DocumentacionesController extends Controller
                         inner join ot_operarios on
                         ot_operarios.user_id = users.id 
                         where 
+                        (usuario_documentaciones.metodo_ensayo_id is null or usuario_documentaciones.metodo_ensayo_id in (Select servicios.metodo_ensayo_id from servicios
+                        inner join ot_servicios on 
+                        ot_servicios.servicio_id = servicios.id                          
+                        where
+                        ot_servicios.ot_id = ot_operarios.ot_id )) and
                         ot_operarios.ot_id =:ot_id and
                         ot_operarios.user_id=:user_id',['user_id' => $user_id, 'ot_id' =>$ot_id]);
 
