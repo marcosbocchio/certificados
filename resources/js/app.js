@@ -67,12 +67,22 @@ Vue.component('table-documentaciones', require('./components/abm-maestro/documen
 Vue.component('nuevo-documentaciones', require('./components/abm-maestro/documentaciones/nuevo-documentaciones.vue').default);
 Vue.component('editar-documentaciones', require('./components/abm-maestro/documentaciones/editar-documentaciones.vue').default);
 
+Vue.component('abm-doc', require('./components/documentaciones/abm-doc.vue').default);
+
 Vue.component('dashboard-enod', require('./components/dashboard/dashboard-enod').default);
 Vue.component('ot-operarios', require('./components/operarios/ot-operarios').default);
 
 
 Vue.component('ots', require('./components/ots/ots.vue').default);
 Vue.component('create-referencias', require('./components/ots/referencias/create.vue').default);
+
+
+
+  /* Infomres    */
+  Vue.component('informe-ri', require('./components/informes/informe-ri.vue').default);
+
+
+
 
 Vue.prototype.Laravel = window.Laravel;
 

@@ -31,7 +31,24 @@ class DocumentacionesController extends Controller
      */
     public function index()
     {
-        return  $this->documentaciones->getAll();
+        $documentaciones = DB::select('select   
+                                documentaciones.id as id,
+                                documentaciones.tipo as tipo,
+                                documentaciones.titulo as titulo,
+                                documentaciones.descripcion as descripcion,
+                                documentaciones.path as path,
+                                usuario_documentaciones.user_id as user_id,
+                                usuario_documentaciones.metodo_ensayo_id as metodo_ensayo_id,
+                                usuario_documentaciones.fecha_caducidad as fecha_caducidad
+                                
+                                from
+                                documentaciones left join usuario_documentaciones on
+                                usuario_documentaciones.documentacion_id = documentaciones.id
+                              ');
+
+        $documentaciones = Collection::make($documentaciones);
+
+        return $documentaciones;
     }
 
     public function callView()
@@ -98,7 +115,7 @@ class DocumentacionesController extends Controller
     public function institucionales($id)
     {
         $document = Documentaciones::where('id' , $id)
-                                     ->where('tipo','I')
+                                     ->where('tipo','INSTITUCIONAL')
                                      ->firstOrFail();
         $path = storage_path('app/'. $document->path);
         return response()->file($path);
@@ -109,7 +126,7 @@ class DocumentacionesController extends Controller
     {
        
         $document = Documentaciones::where('id' , $id)
-                                     ->where('tipo','U')
+                                     ->where('tipo','USUARIO')
                                      ->firstOrFail();   
 
         $path = storage_path('app/'. $document->path);    
@@ -149,7 +166,6 @@ class DocumentacionesController extends Controller
         $documentacion = Collection::make($documentacion);
 
         return $documentacion;
-
 
     }
 

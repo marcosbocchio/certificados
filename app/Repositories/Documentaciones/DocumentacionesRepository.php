@@ -20,7 +20,7 @@ class DocumentacionesRepository extends BaseRepository
 
     $documento = $this->getModel();
 
-    if ($request->tipo == 'U'){
+    if ($request->tipo == 'USUARIO'){
 
       $fecha_caducidad =  date('Y-m-d',strtotime($request->fecha_caducidad));
       

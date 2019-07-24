@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEspesorTubosTable extends Migration
+class CreateProcedimientosInformesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateEspesorTubosTable extends Migration
      */
     public function up()
     {
-        Schema::create('espesor_tubos', function (Blueprint $table) {
+        Schema::create('procedimientos_informes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('diametro','5');
-            $table->float('distancia_fuente_peliculas','6','2');
-            $table->float('espesor','6','2');
+            $table->string('codigo',10);
+            $table->string('descripcion',100);            
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateEspesorTubosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('espesor_tubos');
+        Schema::dropIfExists('procedimientos_informes');
     }
 }

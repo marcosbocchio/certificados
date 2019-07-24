@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTecnicasTable extends Migration
+class CreateDiametrosEspesorTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateTecnicasTable extends Migration
      */
     public function up()
     {
-        Schema::create('tecnicas', function (Blueprint $table) {
+        Schema::create('diametros_espesor', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('codigo',5);
-            $table->string('descripcion',45);
-            $table->string('path_grafico');
+            $table->string('diametro','5');           
+            $table->decimal('espesor','6','2');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateTecnicasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tecnicas');
+        Schema::dropIfExists('diametros_espesor');
     }
 }

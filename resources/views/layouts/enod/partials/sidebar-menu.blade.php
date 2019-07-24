@@ -52,7 +52,7 @@
 
             @foreach ( $documentos as $documento )
 
-                @if ($documento->tipo == 'I')
+                @if ($documento->tipo == 'INSTITUCIONAL')
 
                 <li><a href="{{ route('institucionales',$documento->id)  }}" target='_blank' ><i class="fa fa-file-pdf-o"></i> {{ $documento->titulo }}</a></li>
 

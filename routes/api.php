@@ -41,6 +41,11 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('epps', 'EppsController');
     Route::resource('riesgos', 'RiesgosController');
     Route::resource('ot_riesgos', 'OtRiesgosController');
+    Route::resource('diametros_espesor', 'DiametrosEspesorController');
+    
+    Route::get('procedimientos_informes/{metodo}', 'ProcedimientosInformesController@ProcedimientosMetodo');
+
+
     Route::post('storage/referencia', 'StorageController@saveReferencia');
     Route::post('storage/documento', 'StorageController@saveDocumento');
 

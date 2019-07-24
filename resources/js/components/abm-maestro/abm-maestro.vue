@@ -38,7 +38,7 @@
       },
 
       data () { return {
-        fillRegistro: {'id':'','name':''},
+        fillRegistro: {},
         errors:[],
         registros: [], 
         datoDelete: '',    
@@ -63,7 +63,7 @@
          },
          
          ...mapState(['url'])
-     },
+     },  
 
       methods: {
 

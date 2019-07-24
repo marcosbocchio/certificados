@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-
+ 
 class CreateDocumentacionesTable extends Migration
 {
     /**
@@ -15,9 +15,9 @@ class CreateDocumentacionesTable extends Migration
     {
         Schema::create('documentaciones', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->char('tipo',1)
+            $table->enum('tipo',['INSTITUCIONAL','PROCEDIMIENTO','USUARIO'])
             ->comment('I = Institucional
-            P = Procedimientos propios de ENOD
+            P = Procedimientos 
             U = Usuario');
             $table->string('titulo',45)->comment('Es como se va a ver en en sistema');
             $table->string('descripcion')->nullable();

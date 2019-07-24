@@ -23,7 +23,7 @@ class DocumentacionesRequest extends FormRequest
     public function rules()
     {   
       
-       if ( $this->tipo == 'U'){ 
+       if ( $this->tipo == 'USUARIO'){ 
         return [
             'tipo' =>'required',
             'titulo' =>'required | max:45',

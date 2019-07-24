@@ -84,8 +84,8 @@ class OtsController extends Controller
         $accion = 'edit';      
         $user = auth()->user()->name;
         $ot = $this->ot->find($id);
-        $cliente = Clientes::find($ot->cliente_id);
-        
+        $cliente = Clientes::find($ot->cliente_id);        
+     
       
         $ot_servicios = (new OtServiciosController)->show($ot->id);
         $ot_productos = (new OtProductosController)->show($ot->id);

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTecnicasTable extends Migration
+class CreateTipoSoldadurasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateTecnicasTable extends Migration
      */
     public function up()
     {
-        Schema::create('tecnicas', function (Blueprint $table) {
+        Schema::create('tipo_soldaduras', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('codigo',5);
-            $table->string('descripcion',45);
-            $table->string('path_grafico');
+            $table->string('codigo',10);
+            $table->string('descripcion',100);    
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateTecnicasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tecnicas');
+        Schema::dropIfExists('tipo_soldaduras');
     }
 }

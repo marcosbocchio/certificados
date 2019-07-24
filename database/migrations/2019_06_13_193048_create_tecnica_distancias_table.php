@@ -15,6 +15,7 @@ class CreateTecnicaDistanciasTable extends Migration
     {
         Schema::create('tecnica_distancias', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('diametro',5);
             $table->float('distancia_fuente_peliculas','6','2');
             $table->timestamps();
         });

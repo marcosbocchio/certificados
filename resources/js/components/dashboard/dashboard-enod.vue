@@ -12,7 +12,7 @@
             <div class="icon">
               <i class="ion ion-person-add"></i>
             </div>
-            <a :href="AppUrl + '/operadores/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-down"></i></a>
+            <a :href="AppUrl + '/operadores/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->

@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(RolesAndPermissionsSeeder::class);
         $this->call(UsersTableSeeder::class);
-        $this->call(EspesorTubosTableSeeder::class);
+        $this->call(DiametrosEspesorTableSeeder::class);
         $this->call(MaterialesTableSeeder::class);
         $this->call(MetodoEnsayoTableSeeder::class);
         $this->call(UnidadesMedidasTableSeeder::class);
@@ -27,6 +27,8 @@ class DatabaseSeeder extends Seeder
         $this->call(RiesgosTableSeeder::class);
         $this->call(MedidasTableSeeder::class);
         $this->call(TipoPeliculasTableSeeder::class);
+        $this->call(ProcedimientosInformeTable::class);
+        
 
 
 
