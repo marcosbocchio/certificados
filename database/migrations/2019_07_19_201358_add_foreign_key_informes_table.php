@@ -39,6 +39,14 @@ class AddForeignKeyInformesTable extends Migration
                    ->references('id')
                    ->on('users');
 
+            $table->bigInteger('ejecutor_ensayo_id')
+                   ->unsigned()
+                   ->after('user_id');
+                   
+            $table->foreign('ejecutor_ensayo_id')
+                   ->references('id')
+                   ->on('users');
+
         });
     }
 
@@ -59,6 +67,9 @@ class AddForeignKeyInformesTable extends Migration
 
             $table->dropForeign(['user_id']);
             $table->dropColumn('user_id');
+
+            $table->dropForeign(['ejecutor_ensayo_id']);
+            $table->dropColumn('ejecutor_ensayo_id');
 
         });
     }

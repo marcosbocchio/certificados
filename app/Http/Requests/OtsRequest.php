@@ -44,8 +44,8 @@ class OtsRequest extends FormRequest
             'observaciones'            => 'Max:255',         
             'servicios.*.cantidad_servicios' => 'required|integer|Min:1',          
             'servicios.*.cantidad_placas'    => 'nullable|integer|Min:1',
-            'productos.*.cantidad_productos'   =>'required|integer|Min:1',   
-            'productos.*.medida'            =>'required',
+            'productos.*.cantidad_productos'  =>'required|integer|Min:1',   
+            'productos.*.medida'              =>'required',
                 
         ];     
 

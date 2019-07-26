@@ -24,7 +24,7 @@ Route::middleware('auth:api')->get('/clientes','ClientesController@index');
 Route::group(['middleware' => 'auth:api'], function()
 {
     Route::resource('clientes', 'ClientesController');
-    Route::resource('users', 'UserController');
+    Route::resource('users', 'UserController');    
     Route::resource('materiales', 'MaterialesController');
     Route::resource('provincias', 'ProvinciasController');
     Route::resource('localidades', 'LocalidadesController');
@@ -41,7 +41,18 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('epps', 'EppsController');
     Route::resource('riesgos', 'RiesgosController');
     Route::resource('ot_riesgos', 'OtRiesgosController');
-    Route::resource('diametros_espesor', 'DiametrosEspesorController');
+    Route::resource('fuentes', 'FuentesController');
+    Route::resource('equipos', 'EquiposController');
+    Route::resource('icis', 'IcisController');
+    Route::resource('tecnicas', 'TecnicasController');
+
+  
+    
+    Route::get('equipos/metodo/{metodo}', 'EquiposController@EquiposMetodo');
+
+    
+    Route::get('diametros', 'DiametrosEspesorController@getDiametros');
+    Route::get('espesor/{id}', 'DiametrosEspesorController@getEspesor');
     
     Route::get('procedimientos_informes/{metodo}', 'ProcedimientosInformesController@ProcedimientosMetodo');
 
@@ -54,9 +65,12 @@ Route::group(['middleware' => 'auth:api'], function()
 
     Route::resource('ot_operarios', 'OtOperariosController');
     Route::get('ot-operarios/users', 'OtOperariosController@users');
+    Route::get('ot-operarios/ejecutor_ensayo/{ot_id}', 'OtOperariosController@getOperadoresOt');
     Route::get('ot_operarios/users/{ot_id}/total', 'OtOperariosController@OtOperadoresTotal');
    
-
+    /*  informes */ 
+    Route::resource('informes_ri', 'InformesRiController');
+    
    
 });
 
@@ -64,4 +78,7 @@ Route::group(['middleware' => 'auth:api'], function()
 Route::get('/pdf/ot/{id}','PdfOtController@imprimir')->name('pdfot');
 Route::get('/pdf/servicios/referencias/{id}','PdfServiciosReferenciasController@imprimir')->name('ServiciosReferencias');
 Route::get('/pdf/productos/referencias/{id}','PdfProductosReferenciasController@imprimir')->name('ProductosReferencias');
+
+Route::get('/pdf/informe/{id}','PdfInformesController@index')->name('pdfInformes');
+Route::get('/pdf/informe/ri/{informe}','PdfInformesRiController@inprimir')->name('pdfInformeRi');
 

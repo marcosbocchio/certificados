@@ -23,7 +23,7 @@ class CreateInformesRiTable extends Migration
             $table->float('pos_pos')->nullable();
             $table->string('lado',7);
             $table->float('distancia_fuente_pelicula');
-            $table->string('precedimiento_soldadura',45)->nullable();
+            $table->string('procedimiento_soldadura',45)->nullable();
             $table->string('eps',30)->nullable();
             $table->string('pqr',30)->nullable();
             $table->string('actividad',30)->nullable();

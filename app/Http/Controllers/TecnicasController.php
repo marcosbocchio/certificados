@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\DiametrosEspesor;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Collection as Collection;
+use App\Tecnicas;
 
-class DiametrosEspesorController extends Controller
+class TecnicasController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +14,7 @@ class DiametrosEspesorController extends Controller
      */
     public function index()
     {
-        return DiametrosEspesor::all();
+        return Tecnicas::all();
     }
 
     /**
@@ -84,27 +82,4 @@ class DiametrosEspesorController extends Controller
     {
         //
     }
-
-    public function getDiametros(){
-
-
-        return DB::table('diametros_view')->get();
-
-
-    }
-
-    public function getEspesor($diametro){
-
-
-       
-
-        $espedores =DB::select('call EspesoresDiametro(?)',array($diametro));
-
-        return $espedores ;
-
-        
-
-
-    }
-
 }

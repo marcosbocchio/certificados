@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\User;
 use App\OtOperarios;
+use Illuminate\Support\Collection as Collection;
 
 class OtOperariosController extends Controller
 {
@@ -21,8 +22,6 @@ class OtOperariosController extends Controller
         $accion = 'edit';      
         $user = auth()->user()->name;
 
-        
-        //$ot_operarios = OtOperarios::where('ot_id',$id)->with('user')->get();   
         $users_ot_operarios = DB::table('users')
                                   ->join('ot_operarios','users.id','=','ot_operarios.user_id')
                                   ->join('ots','ot_operarios.ot_id','=','ots.id')  
@@ -36,6 +35,20 @@ class OtOperariosController extends Controller
                                         'user',                                       
                                         'header_titulo',
                                         'header_descripcion'));
+
+    }
+
+    public function getOperadoresOt($ot_id){
+
+       
+        $users_ot_operarios = DB::table('users')
+                                  ->join('ot_operarios','users.id','=','ot_operarios.user_id')
+                                  ->join('ots','ot_operarios.ot_id','=','ots.id')  
+                                  ->where('ots.id',$ot_id)
+                                  ->select('users.*')
+                                  ->get();
+                               
+        return $users_ot_operarios;
 
     }
 

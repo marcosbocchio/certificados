@@ -351,6 +351,11 @@ class DiametrosEspesorTableSeeder extends Seeder
           'espesor'                          =>'16.15',
       ]);
 
+      DiametrosEspesor::create([
+        'diametro'                         =>'CHAPA',     
+        'espesor'                          =>'0',
+    ]);
+
 
 
     }

@@ -4,9 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Ots;
+use App\Repositories\InformesRi\InformesRiRepository;
+use App\Http\Requests\InformeRiRequest;
 
 class InformesRiController extends Controller
 {
+    Protected $informesRi;
+
+    public function __construct(InformesRiRepository $informesRiRepository)
+    {
+      $this->informesRi = $informesRiRepository;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -25,7 +33,7 @@ class InformesRiController extends Controller
     public function create($ot_id)
     {
         $metodo = 'RI';
-        $accion = 'create';      
+      //  $editmode = false;      
         $user = auth()->user()->name;
         $header_titulo = "Informe ";
         $header_descripcion ="RI";  
@@ -34,8 +42,7 @@ class InformesRiController extends Controller
 
         return view('informes.ri.index', compact('ot',
                                                  'metodo',
-                                                 'user',
-                                                 'accion',
+                                                 'user',                                              
                                                  'header_titulo',
                                                  'header_descripcion'));
     }
@@ -46,9 +53,9 @@ class InformesRiController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(InformeRiRequest $request)
     {
-        //
+        return $this->informesRi->store($request);
     }
 
     /**

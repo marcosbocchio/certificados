@@ -3,21 +3,32 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\DiametrosEspesor;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Collection as Collection;
+use App\Informe;
+use App\MetodoEnsayos;
 
-class DiametrosEspesorController extends Controller
+class PdfInformesController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        return DiametrosEspesor::all();
+       
+        $informe = Informe::findOrFail($id)->first();
+        $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id)->first();
+
+        switch ($metodo_ensayo->metodo) {
+            case 'RI':
+                 return redirect()->route('pdfInformeRi',array('id' => $informe->id));
+                break;           
+        } 
+
+        
+
     }
+   
 
     /**
      * Show the form for creating a new resource.
@@ -84,27 +95,4 @@ class DiametrosEspesorController extends Controller
     {
         //
     }
-
-    public function getDiametros(){
-
-
-        return DB::table('diametros_view')->get();
-
-
-    }
-
-    public function getEspesor($diametro){
-
-
-       
-
-        $espedores =DB::select('call EspesoresDiametro(?)',array($diametro));
-
-        return $espedores ;
-
-        
-
-
-    }
-
 }

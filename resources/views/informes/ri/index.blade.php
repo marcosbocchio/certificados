@@ -14,11 +14,10 @@
 
    
 
-  <informe-ri 
-     
-     acciondata="{{$accion}}"
-     metodo="{{$metodo}}"
-    :otdata     ="{{$ot}}"
+  <informe-ri      
+   
+      metodo="{{$metodo}}"
+     :otdata="{{$ot}}"
     
   ></informe-ri>
 

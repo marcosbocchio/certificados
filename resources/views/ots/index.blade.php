@@ -14,7 +14,7 @@
  <div id="app">
 
 
-  <ots  :acciondata="{{$accion}}" ></ots>
+  <ots  acciondata="{{$accion}}" ></ots>
 
  </div>
 

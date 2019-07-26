@@ -28,10 +28,11 @@ class DatabaseSeeder extends Seeder
         $this->call(MedidasTableSeeder::class);
         $this->call(TipoPeliculasTableSeeder::class);
         $this->call(ProcedimientosInformeTable::class);
+        $this->call(TecnicasTable::class);
+        $this->call(FuentesTable::class);     
+
+      
         
-
-
-
 
        // factory('App\Clientes', 2500)->create();
 
