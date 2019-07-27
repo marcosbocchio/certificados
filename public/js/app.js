@@ -3315,18 +3315,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -3358,9 +3346,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       // Formulario 
       fecha: '',
       numero_inf: '',
-      ext_numero_inf: '',
+      prefijo: '',
       formato: '',
-      ieg: '',
       componente: '',
       plano_isom: '',
       procedimiento: {},
@@ -3387,7 +3374,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       pqr: '',
       exposicion: '',
       actividad: '',
-      contratista: '',
       ejecutor_ensayo: '',
       // fin Formulario 
       procedimientos: [],
@@ -3423,7 +3409,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this = this;
 
       axios.defaults.baseURL = this.url;
-      var urlRegistros = 'procedimientos_informes/' + this.metodo + '?api_token=' + Laravel.user.api_token;
+      var urlRegistros = 'procedimientos_informes/' + this.otdata.id + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         _this.procedimientos = response.data;
       });
@@ -3523,11 +3509,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this12 = this;
 
       axios.defaults.baseURL = this.url;
-      var urlRegistros = 'ot-operarios/ejecutor_ensayo/' + this.otdata.numero + '?api_token=' + Laravel.user.api_token;
+      var urlRegistros = 'ot-operarios/ejecutor_ensayo/' + this.otdata.id + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         _this12.ejecutor_ensayos = response.data;
-      })["catch"](function (error) {
-        console.log(error);
       });
     },
     Store: function Store() {
@@ -3541,12 +3525,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         url: urlRegistros,
         data: {
           'ot': this.otdata,
+          'ejecutor_ensayo': this.ejecutor_ensayo,
           'metodo_ensayo': this.metodo,
           'fecha': this.fecha,
           'numero_inf': this.numero_inf,
-          'ext_numero_inf': this.ext_numero_inf,
+          'prefijo': this.prefijo,
           'gasoducto_sn': gasoducto_sn,
-          'ieg': this.ieg,
           'componente': this.componente,
           'plano_isom': this.plano_isom,
           'procedimiento': this.procedimiento,
@@ -3572,8 +3556,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           'eps': this.eps,
           'pqr': this.pqr,
           'actividad': this.actividad,
-          'exposicion': this.exposicion,
-          'contratista': this.contratista
+          'exposicion': this.exposicion
         }
       }).then(function (response) {
         _this13.response = response.data;
@@ -39908,6 +39891,36 @@ var render = function() {
               [
                 _c("div", { staticClass: "col-md-2" }, [
                   _c("div", { staticClass: "form-group" }, [
+                    _c("label", { attrs: { for: "prefijo" } }, [
+                      _vm._v("Prefijo")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.prefijo,
+                          expression: "prefijo"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "text", id: "prefijo" },
+                      domProps: { value: _vm.prefijo },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.prefijo = $event.target.value
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-1" }, [
+                  _c("div", { staticClass: "form-group" }, [
                     _c("label", { attrs: { for: "numero_inf" } }, [
                       _vm._v("Informe N°")
                     ]),
@@ -39930,36 +39943,6 @@ var render = function() {
                             return
                           }
                           _vm.numero_inf = $event.target.value
-                        }
-                      }
-                    })
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-1" }, [
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "ext_numero_inf" } }, [
-                      _vm._v("Ext")
-                    ]),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.ext_numero_inf,
-                          expression: "ext_numero_inf"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: { type: "text", id: "ext_numero_inf" },
-                      domProps: { value: _vm.ext_numero_inf },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.ext_numero_inf = $event.target.value
                         }
                       }
                     })
@@ -40052,7 +40035,7 @@ var render = function() {
                       _c("label", [_vm._v("Procedimiento Radiográfico")]),
                       _vm._v(" "),
                       _c("v-select", {
-                        attrs: { label: "codigo", options: _vm.procedimientos },
+                        attrs: { label: "titulo", options: _vm.procedimientos },
                         model: {
                           value: _vm.procedimiento,
                           callback: function($$v) {
@@ -40086,34 +40069,6 @@ var render = function() {
                     ],
                     1
                   )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-2" }, [
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "ieg" } }, [_vm._v("Ieg")]),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.ieg,
-                          expression: "ieg"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: { type: "text", id: "ieg" },
-                      domProps: { value: _vm.ieg },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.ieg = $event.target.value
-                        }
-                      }
-                    })
-                  ])
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-2" }, [
@@ -40744,36 +40699,6 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-3" }, [
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "contratista" } }, [
-                      _vm._v("Contratista")
-                    ]),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.contratista,
-                          expression: "contratista"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: { type: "text", id: "contratista" },
-                      domProps: { value: _vm.contratista },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.contratista = $event.target.value
-                        }
-                      }
-                    })
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-3" }, [
                   _c(
                     "div",
                     { staticClass: "form-group" },
@@ -40783,10 +40708,7 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("v-select", {
-                        attrs: {
-                          label: "descripcion",
-                          options: _vm.ejecutor_ensayos
-                        },
+                        attrs: { label: "name", options: _vm.ejecutor_ensayos },
                         model: {
                           value: _vm.ejecutor_ensayo,
                           callback: function($$v) {

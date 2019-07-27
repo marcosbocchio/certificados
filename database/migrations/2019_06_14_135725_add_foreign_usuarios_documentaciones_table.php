@@ -26,17 +26,10 @@ class AddForeignUsuariosDocumentacionesTable extends Migration
             $table->bigInteger('documentacion_id')
                    ->unsigned()
                    ->after('user_id');
+                   
             $table->foreign('documentacion_id')
                    ->references('id')
-                   ->on('documentaciones'); 
-
-            $table->bigInteger('metodo_ensayo_id')
-                   ->unsigned()
-                   ->nullable()
-                   ->after('documentacion_id');
-            $table->foreign('metodo_ensayo_id')
-                   ->references('id')
-                   ->on('metodo_ensayos');
+                   ->on('documentaciones');         
 
             
         });
@@ -55,10 +48,7 @@ class AddForeignUsuariosDocumentacionesTable extends Migration
         $table->dropColumn('user_id');
 
         $table->dropForeign(['documentaciones_id']);
-        $table->dropColumn('documentaciones_id');
-
-        $table->dropForeign(['metodo_ensayo_id']);
-        $table->dropColumn('metodo_ensayo_id');
+        $table->dropColumn('documentaciones_id');     
 
         });
     }

@@ -25,7 +25,7 @@ class InformeRiRequest extends FormRequest
     {
         return [
 
-            'numero_inf' =>'required | integer| max:3 |digits_between:1,3',
+            'numero_inf' =>'required | integer| digits_between:1,3',
         ];
 
     }

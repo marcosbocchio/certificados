@@ -51,12 +51,7 @@
         <tr>
                 <td class="bordered">
                   <table>
-                      <tbody>
-                        <tr>
-                          <td style="font-size: 13px; width:300px" ><b>Contratista: </b>{{$informe->contratista}}</td>
-                          <td style="font-size: 13px;  width:200px" ><b>Ieg : </b>{{$informe->ieg}}</td>    
-                          <td style="font-size: 13px;  width:200px" ><b></b></td>    
-                        </tr>
+                      <tbody>                 
                         <tr>
                           <td style="font-size: 13px; width:300px" ><b>Proc. Soldadura: </b>{{$informe_ri->procedimiento_soldadura}}</td>
                           <td style="font-size: 13px;  width:200px" ><b>Eps: </b>{{$informe_ri->eps}}</td>
@@ -70,7 +65,7 @@
                         </tr>
                         <tr>
                             <td style="font-size: 13px;  width:300px" ><b>Norma Evaluación: </b>{{$norma_evaluacion->descripcion}}</td>                            
-                            <td style="font-size: 13px; width:200px" colspan="2" ><b>Proc. Radiografía: </b>{{$procedimiento_inf->descripcion}} </td>
+                            <td style="font-size: 13px; width:200px" colspan="2" ><b>Proc. RI: </b>{{$procedimiento_inf->descripcion}} </td>
                         </tr>
                         <tr>
                             <td style="font-size: 13px; width:200px" ><b>Norma Ensayo: </b>{{$norma_ensayo->descripcion}}</td>                
@@ -107,7 +102,7 @@
                         </tr>
                         <tr>
                             <td style="font-size: 13px; width:300px" ><b>N° Exp. : </b>{{$informe_ri->exposicion}}</td>
-                            <td style="font-size: 13px;  width:200px" ><b>Ejecutor Ensayo : </b>Pablo Bocchio</td>                             
+                            <td style="font-size: 13px;  width:200px" ><b>Ejecutor Ensayo : </b>{{$ejecutor_ensayo->name}}</td>                             
                         </tr>
                       </tbody>
                     </table>   

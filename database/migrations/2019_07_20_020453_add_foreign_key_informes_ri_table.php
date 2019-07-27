@@ -21,44 +21,12 @@ class AddForeignKeyInformesRiTable extends Migration
                    
             $table->foreign('informe_id')
                    ->references('id')
-                   ->on('informes');
-            
-            $table->bigInteger('procedimiento_informe_id')
-                    ->unsigned()
-                    ->after('gasoducto_sn');
-                   
-            $table->foreign('procedimiento_informe_id')
-                   ->references('id')
-                   ->on('procedimientos_informes');
-            
-            $table->bigInteger('material_id')
-                   ->unsigned()
-                   ->after('procedimiento_informe_id');
-                   
-            $table->foreign('material_id')
-                   ->references('id')
-                   ->on('materiales');
+                   ->on('informes');                       
 
-            $table->bigInteger('diametro_espesor_id')
-                   ->unsigned()
-                   ->nullable()
-                   ->after('material_id');
-                   
-            $table->foreign('diametro_espesor_id')
-                   ->references('id')
-                   ->on('diametros_espesor');
-
-            $table->bigInteger('equipo_id')
-                    ->unsigned()
-                    ->after('espesor_chapa');
-                   
-            $table->foreign('equipo_id')
-                   ->references('id')
-                   ->on('equipos');
             
             $table->bigInteger('fuente_id')
                    ->unsigned()
-                   ->after('equipo_id');
+                   ->after('informe_id');
                    
             $table->foreign('fuente_id')
                    ->references('id')
@@ -66,7 +34,7 @@ class AddForeignKeyInformesRiTable extends Migration
 
             $table->bigInteger('tipo_pelicula_id')
                    ->unsigned()
-                   ->after('foco');
+                   ->after('fuente_id');
                    
             $table->foreign('tipo_pelicula_id')
                    ->references('id')
@@ -74,35 +42,11 @@ class AddForeignKeyInformesRiTable extends Migration
             
             $table->bigInteger('ici_id')
                    ->unsigned()
-                   ->after('pos_pos');
+                   ->after('tipo_pelicula_id');
                    
             $table->foreign('ici_id')
                    ->references('id')
-                   ->on('icis');
-
-            $table->bigInteger('norma_evaluacion_id')
-                   ->unsigned()
-                   ->after('distancia_fuente_pelicula');
-                   
-            $table->foreign('norma_evaluacion_id')
-                   ->references('id')
-                   ->on('norma_evaluaciones');
-        
-            $table->bigInteger('norma_ensayo_id')
-                   ->unsigned()
-                   ->after('norma_evaluacion_id');
-                   
-            $table->foreign('norma_ensayo_id')
-                   ->references('id')
-                   ->on('norma_ensayos');
-
-            $table->bigInteger('tecnica_id')
-                   ->unsigned()
-                   ->after('norma_ensayo_id');
-                   
-            $table->foreign('tecnica_id')
-                   ->references('id')
-                   ->on('tecnicas');
+                   ->on('icis');          
 
                    
 
@@ -121,35 +65,14 @@ class AddForeignKeyInformesRiTable extends Migration
             $table->dropForeign(['informe_id']);
             $table->dropColumn('informe_id');
 
-            $table->dropForeign(['procedimiento_informe_id']);
-            $table->dropColumn('procedimiento_informe_id');
-
-            $table->dropForeign(['material_id']);
-            $table->dropColumn('material_id');
-
-            $table->dropForeign(['diametro_espesor_id']);
-            $table->dropColumn('diametro_espesor_id');
-
-            $table->dropForeign(['equipo_id']);
-            $table->dropColumn('equipo_id');
-
-            $table->dropForeign(['fuente_id']);
-            $table->dropColumn('fuente_id');
-
             $table->dropForeign(['tipo_pelicula_id']);
             $table->dropColumn('tipo_pelicula_id');
 
             $table->dropForeign(['ici_id']);
             $table->dropColumn('ici_id');
 
-            $table->dropForeign(['norma_evaluacion_id']);
-            $table->dropColumn('norma_evaluacion_id');
-
-            $table->dropForeign(['norma_ensayo_id']);
-            $table->dropColumn('norma_ensayo_id');
-
-            $table->dropForeign(['tecnica_id']);
-            $table->dropColumn('tecnica_id');
+            $table->dropForeign(['fuente_id']);
+            $table->dropColumn('fuente_id');
 
         }); 
     }

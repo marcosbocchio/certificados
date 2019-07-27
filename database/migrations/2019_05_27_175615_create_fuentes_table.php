@@ -15,9 +15,8 @@ class CreateFuentesTable extends Migration
     {
         Schema::create('fuentes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('codigo','10');
-            $table->string('descripcion','100')->nullable();
-            $table->string('fabricante','20');
+            $table->string('codigo','20');
+            $table->string('descripcion','100')->nullable();       
             $table->timestamps();
         });
     }

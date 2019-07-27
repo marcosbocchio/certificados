@@ -54,7 +54,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('diametros', 'DiametrosEspesorController@getDiametros');
     Route::get('espesor/{id}', 'DiametrosEspesorController@getEspesor');
     
-    Route::get('procedimientos_informes/{metodo}', 'ProcedimientosInformesController@ProcedimientosMetodo');
+    Route::get('procedimientos_informes/{metodo}', 'DocumentacionesController@ProcedimientosMetodo');
 
 
     Route::post('storage/referencia', 'StorageController@saveReferencia');

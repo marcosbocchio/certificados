@@ -169,6 +169,16 @@ class DocumentacionesController extends Controller
 
     }
 
+    public function ProcedimientosMetodo($ot_id)
+    {
+        return DB::table('ot_procedimientos_propios')
+        ->join('ots','ots.id','=','ot_procedimientos_propios.ot_id')
+        ->join('documentaciones','documentaciones.id','=','ot_procedimientos_propios.documentacion_id')         
+        ->where('ots.id','=',$ot_id)
+        ->select('documentaciones.*')
+        ->get();
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

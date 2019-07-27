@@ -14,16 +14,16 @@
                </div>
                <div class="box box-danger">
                   <div class="box-body">
-                      <div class="col-md-2">
+                        <div class="col-md-2">
+                            <div class="form-group" >
+                                <label for="prefijo">Prefijo</label>
+                                <input type="text" v-model="prefijo" class="form-control" id="prefijo">
+                            </div>                            
+                        </div>
+                      <div class="col-md-1">
                             <div class="form-group" >
                                 <label for="numero_inf">Informe N°</label>
                                 <input type="number" v-model="numero_inf" class="form-control" id="numero_inf">
-                            </div>                            
-                        </div>
-                        <div class="col-md-1">
-                            <div class="form-group" >
-                                <label for="ext_numero_inf">Ext</label>
-                                <input type="text" v-model="ext_numero_inf" class="form-control" id="ext_numero_inf">
                             </div>                            
                         </div>
                         <div class="col-md-3">
@@ -52,7 +52,7 @@
                         <div class="col-md-3">                       
                             <div class="form-group">
                                 <label>Procedimiento Radiográfico</label>
-                                <v-select v-model="procedimiento" label="codigo" :options="procedimientos"></v-select>   
+                                <v-select v-model="procedimiento" label="titulo" :options="procedimientos"></v-select>   
                             </div>      
                         </div>
                         <div class="col-md-3">                       
@@ -60,13 +60,7 @@
                                 <label>Material</label>
                                 <v-select v-model="material" label="codigo" :options="materiales"></v-select>   
                             </div>      
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group" >
-                                <label for="ieg">Ieg</label>
-                                <input  type="text" v-model="ieg" class="form-control" id="ieg">
-                            </div>                            
-                        </div>
+                        </div>                      
                         <div class="col-md-2">
                             <div class="form-group" >
                                 <label for="componente">Componente</label>
@@ -207,17 +201,11 @@
                                 <label for="eps">Exposición</label>
                                 <input type="number" v-model="exposicion" class="form-control" id="exposicion">
                             </div>         
-                        </div>
-                        <div class="col-md-3">                       
-                            <div class="form-group" >
-                                <label for="contratista">Contratista</label>
-                                <input type="text" v-model="contratista" class="form-control" id="contratista">
-                            </div>         
-                        </div>
+                        </div>                       
                         <div class="col-md-3">                       
                             <div class="form-group" >
                                 <label for="ejecutor_ensayo">Ejecutor Ensayo</label>
-                                 <v-select v-model="ejecutor_ensayo" label="descripcion" :options="ejecutor_ensayos"></v-select>   
+                                 <v-select v-model="ejecutor_ensayo" label="name" :options="ejecutor_ensayos"></v-select>   
                             </div>         
                         </div>                                          
                   </div>
@@ -271,9 +259,8 @@ export default {
 
             fecha:'',
             numero_inf:'',
-            ext_numero_inf:'',
-            formato :'',
-            ieg:'',
+            prefijo:'',
+            formato :'',          
             componente:'',
             plano_isom:'',
             procedimiento:{},           
@@ -299,8 +286,7 @@ export default {
             eps:'',
             pqr:'',
             exposicion:'',      
-            actividad:'',
-            contratista:'',  
+            actividad:'',          
             ejecutor_ensayo:'',  
 
            // fin Formulario 
@@ -349,7 +335,7 @@ export default {
         getProcedimientos : function(){
 
             axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'procedimientos_informes/' + this.metodo + '?api_token=' + Laravel.user.api_token;         
+                var urlRegistros = 'procedimientos_informes/' + this.otdata.id + '?api_token=' + Laravel.user.api_token;         
                 axios.get(urlRegistros).then(response =>{
                 this.procedimientos = response.data
                 });
@@ -457,13 +443,10 @@ export default {
         getEjecutorEnsayo: function(){
              
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'ot-operarios/ejecutor_ensayo/' + this.otdata.numero + '?api_token=' + Laravel.user.api_token;        
+                var urlRegistros = 'ot-operarios/ejecutor_ensayo/' + this.otdata.id + '?api_token=' + Laravel.user.api_token;        
                 axios.get(urlRegistros).then(response =>{
                 this.ejecutor_ensayos = response.data
-                }).catch(error => {
-                  
-                  console.log(error);
-              });
+                });
               },
 
         Store : function(){
@@ -477,13 +460,13 @@ export default {
               url : urlRegistros,    
               data : {
                 
-                'ot'            : this.otdata,
-                'metodo_ensayo' : this.metodo,  
+                'ot'              : this.otdata,
+                'ejecutor_ensayo' : this.ejecutor_ensayo,  
+                'metodo_ensayo'   : this.metodo,  
                 'fecha':          this.fecha,
                 'numero_inf':     this.numero_inf,
-                'ext_numero_inf': this.ext_numero_inf,
-                'gasoducto_sn' :  gasoducto_sn,
-                'ieg':            this.ieg,
+                'prefijo'        :this.prefijo,
+                'gasoducto_sn' :  gasoducto_sn,               
                 'componente' :    this.componente,
                 'plano_isom' :    this.plano_isom,
                 'procedimiento' : this.procedimiento,           
@@ -509,8 +492,7 @@ export default {
                 'eps':this.eps,
                 'pqr':this.pqr,
                 'actividad' : this.actividad,
-                'exposicion': this.exposicion,
-                'contratista' : this.contratista,
+                'exposicion': this.exposicion,               
           }}
           
       

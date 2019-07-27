@@ -27,13 +27,12 @@ class DatabaseSeeder extends Seeder
         $this->call(RiesgosTableSeeder::class);
         $this->call(MedidasTableSeeder::class);
         $this->call(TipoPeliculasTableSeeder::class);
-        $this->call(ProcedimientosInformeTable::class);
         $this->call(TecnicasTable::class);
         $this->call(FuentesTable::class);     
-
-      
+        $this->call(IcisTable::class);      
+        $this->call(EquiposTableSeeder::class);     
         
-
+      
        // factory('App\Clientes', 2500)->create();
 
 

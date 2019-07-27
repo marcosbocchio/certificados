@@ -17,11 +17,13 @@ class CreateInformesTable extends Migration
             $table->bigIncrements('id');
             $table->datetime('fecha');
             $table->integer('numero');
-            $table->string('ext_numero',1)->nullable();
-            $table->string('ieg',10)->nullable();
-            $table->string('contratista',30);
+            $table->string('prefijo',10)->nullable();  
+            $table->decimal('espesor_chapa','6','2')->nullable();     
             $table->string('componente',20);
+            $table->string('procedimiento_soldadura',45)->nullable();
             $table->string('plano_isom',10);
+            $table->string('eps',30)->nullable();
+            $table->string('pqr',30)->nullable();
             $table->string('observaciones')->nullable();
             $table->timestamps();
         });

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddForeignKeyProcedimientosInformesTable extends Migration
+class AddForeignDocumentacionesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,18 @@ class AddForeignKeyProcedimientosInformesTable extends Migration
      */
     public function up()
     {
-        Schema::table('procedimientos_informes', function (Blueprint $table) {
+    
+        Schema::table('documentaciones', function (Blueprint $table) {
 
             $table->bigInteger('metodo_ensayo_id')
-                   ->unsigned()
-                   ->after('descripcion');
-                   
+                ->unsigned()
+                ->nullable()                   
+                ->after('id');
+                
             $table->foreign('metodo_ensayo_id')
-                   ->references('id')
-                   ->on('metodo_ensayos');      
-         
-
+                    ->references('id')
+                    ->on('metodo_ensayos');
+           
         });
     }
 
@@ -34,7 +35,7 @@ class AddForeignKeyProcedimientosInformesTable extends Migration
      */
     public function down()
     {
-        Schema::table('procedimientos_informes', function (Blueprint $table) {
+        Schema::table('documentaciones', function (Blueprint $table) {
 
             $table->dropForeign(['metodo_ensayo_id']);
             $table->dropColumn('metodo_ensayo_id');

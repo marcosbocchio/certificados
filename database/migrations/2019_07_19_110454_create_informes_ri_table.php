@@ -15,17 +15,13 @@ class CreateInformesRiTable extends Migration
     {
         Schema::create('informes_ri', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->boolean('gasoducto_sn');
-            $table->decimal('espesor_chapa','6','2')->nullable();
+            $table->boolean('gasoducto_sn');            
             $table->string('foco',10);
             $table->string('pantalla',2);
             $table->float('pos_ant')->nullable();
             $table->float('pos_pos')->nullable();
             $table->string('lado',7);
-            $table->float('distancia_fuente_pelicula');
-            $table->string('procedimiento_soldadura',45)->nullable();
-            $table->string('eps',30)->nullable();
-            $table->string('pqr',30)->nullable();
+            $table->float('distancia_fuente_pelicula');           
             $table->string('actividad',30)->nullable();
             $table->integer('exposicion');
             $table->timestamps();

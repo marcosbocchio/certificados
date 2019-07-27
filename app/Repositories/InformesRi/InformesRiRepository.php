@@ -34,19 +34,46 @@ class InformesRiRepository extends BaseRepository
          $user_id = $userId = Auth::id();    
     }
    
-
+    //revisar esto 
     
     $informe->ot_id  = $request->ot['id'];
+    $informe->procedimiento_informe_id = $request->procedimiento['id'];
+
+    if ($request->diametro =='CHAPA'){
+
+      $diametro_espesor = DiametrosEspesor::where('diametro',$request->diametro)                                 
+                                          ->first(); 
+
+      $informe->diametro_espesor_id = $diametro_espesor['id'];
+      $informe->espesor_chapa       = $request->espesor_chapa;
+
+    }else{
+
+      $diametro_espesor = DiametrosEspesor::where('diametro',$request->diametro) 
+                                          ->where('espesor',$request->espesor)
+                                          ->first();
+
+      $informe->diametro_espesor_id = $diametro_espesor['id'];
+
+    } 
+
+    $informe->equipo_id = $request->equipo['id'];
     $informe->metodo_ensayo_id  = 1;
+    $informe->norma_evaluacion_id = $request->norma_evaluacion['id'];
+    $informe->norma_ensayo_id = $request->norma_ensayo['id'];
+    $informe->tecnica_id = $request->tecnica['id'];
+    $informe->user_id = $user_id;
+    $informe->ejecutor_ensayo_id = $request->ejecutor_ensayo['id'];
+    $informe->material_id = $request->material['id'];
     $informe->fecha = date('Y-m-d',strtotime($request->fecha));
     $informe->numero = $request->numero_inf;
-    $informe->ext_numero = $request->ext_numero_inf;
-    $informe->contratista = $request->contratista;
-    $informe->ieg = $request->ieg;
+    $informe->prefijo = $request->prefijo;  
     $informe->componente = $request->componente;
+    $informe->procedimiento_soldadura = $request->procedimiento_soldadura;
     $informe->plano_isom = $request->plano_isom;
+    $informe->eps = $request->eps;
+    $informe->pqr = $request->pqr;
     $informe->observaciones = $request->observaciones;
-    $informe->user_id = $user_id;
     $informe->save();
     
 
@@ -59,48 +86,18 @@ class InformesRiRepository extends BaseRepository
 
     $informeRi  = new InformesRi;
     $informeRi->informe_id = $informe->id;
-    $informeRi->gasoducto_sn = $request->gasoducto_sn;
-    $informeRi->procedimiento_informe_id = $request->procedimiento['id'];
-    $informeRi->material_id = $request->material['id'];   
-    
-    if ($request->diametro =='CHAPA'){
-
-      $diametro_espesor = DiametrosEspesor::where('diametro',$request->diametro)                                         
-                                          ->first(); 
-
-      $informeRi->diametro_espesor_id = $diametro_espesor['id'];
-      $informeRi->espesor_chapa       = $request->espesor_chapa;
-
-    }else{
-
-      $diametro_espesor = DiametrosEspesor::where('diametro',$request->diametro) 
-                                          ->where('espesor',$request->espesor)
-                                          ->first();
-
-      $informeRi->diametro_espesor_id = $diametro_espesor['id'];
-
-
-
-    }
-    
-    $informeRi->equipo_id = $request->equipo['id'];
     $informeRi->fuente_id = $request->fuente['id'];
-    $informeRi->foco = $request->foco;
     $informeRi->tipo_pelicula_id = $request->tipo_pelicula['id'];
+    $informeRi->ici_id  = $request->ici['id'];
+    $informeRi->gasoducto_sn = $request->gasoducto_sn;
+    $informeRi->foco = $request->foco;
     $informeRi->pantalla = $request->pantalla;
     $informeRi->pos_ant = $request->pos_ant;
     $informeRi->pos_pos = $request->pos_pos;
-    $informeRi->ici_id  = $request->ici['id'];
     $informeRi->lado    = $request->lado;
     $informeRi->distancia_fuente_pelicula = $request->distancia_fuente_pelicula;
-    $informeRi->norma_evaluacion_id = $request->norma_evaluacion['id'];
-    $informeRi->norma_ensayo_id = $request->norma_ensayo['id'];
-    $informeRi->tecnica_id = $request->tecnica['id'];
-    $informeRi->procedimiento_soldadura = $request->procedimiento_soldadura;
-    $informeRi->eps = $request->eps;
-    $informeRi->pqr = $request->pqr;
     $informeRi->actividad = $request->actividad;
-    $informeRi->exposicion = $request->exposicion;
+    $informeRi->exposicion = $request->exposicion;   
 
     $informeRi->save();
 

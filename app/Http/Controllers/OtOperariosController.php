@@ -22,12 +22,7 @@ class OtOperariosController extends Controller
         $accion = 'edit';      
         $user = auth()->user()->name;
 
-        $users_ot_operarios = DB::table('users')
-                                  ->join('ot_operarios','users.id','=','ot_operarios.user_id')
-                                  ->join('ots','ot_operarios.ot_id','=','ots.id')  
-                                  ->where('ots.id',$id)
-                                  ->select('users.*')
-                                  ->get();
+        $users_ot_operarios = $this->getOperadoresOt($id);
  
 
         return view('ot-operarios.index',compact('id',

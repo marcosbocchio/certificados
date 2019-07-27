@@ -13,27 +13,22 @@ class FuentesTable extends Seeder
     public function run()
     {
         Fuentes::create([
-            'codigo'              =>'SE 75',
-            'descripcion'         =>'Fuente SE 75',
-            'fabricante'          =>'POLYTEC'       
+            'codigo'              =>'SE 75 - POLYTEC',            
+             
         ]);
 
         Fuentes::create([
-            'codigo'              =>'IR 192',
-            'descripcion'         =>'CaFuente IR 192',
-            'fabricante'          =>'POLYTEC'       
+            'codigo'              =>'IR 192 - POLYTEC',          
+           
         ]);
 
         Fuentes::create([
-            'codigo'              =>'SE 75',
-            'descripcion'         =>'Fuente SE 75',
-            'fabricante'          =>'QSA GLOBAL'       
+            'codigo'              =>'SE 75 - QSA GLOBAL',               
         ]);
 
         Fuentes::create([
-            'codigo'              =>'IR 192',
-            'descripcion'         =>'CaFuente IR 192',
-            'fabricante'          =>'QSA GLOBAL'       
+            'codigo'              =>'IR 192 - QSA GLOBAL',
+                         
         ]);
     }
 }
