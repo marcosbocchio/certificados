@@ -15,7 +15,7 @@
                                 <label for="proyecto">Proyecto</label>
                                 <input type="text" v-model="otdata.proyecto" class="form-control" id="proyecto" disabled>
                             </div>                            
-                        </div>
+                        </div>                        
                         <div class="col-md-6">
                             <div class="form-group" >
                                 <label for="obra">Obra N°</label>
@@ -32,33 +32,15 @@
                </div>
                <div class="box box-danger">
                   <div class="box-body">
-                        <div class="col-md-2">
-                            <div class="form-group" >
-                                <label for="prefijo">Prefijo</label>
-                                <input type="text" v-model="prefijo" class="form-control" id="prefijo">
-                            </div>                            
-                        </div>
-                      <div class="col-md-1">
-                            <div class="form-group" >
-                                <label for="numero_inf">Informe N°</label>
-                                <input type="number" v-model="numero_inf" class="form-control" id="numero_inf">
-                            </div>                            
-                        </div>
                         <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="formato">Formato</label>
                                 <v-select v-model="formato" :options="['PLANTA', 'GASODUCTO']"></v-select>
                             </div>                            
                         </div>
-                        <div class="col-md-3">                       
-                            <div class="form-group">
-                                <label>Norma Evaluación</label>
-                                <v-select v-model="norma_evaluacion" label="descripcion" :options="norma_evaluaciones"></v-select>   
-                            </div>      
-                        </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                            <label for="fecha">Fecha</label>
+                                 <label for="fecha">Fecha</label>
                                 <div class="input-group date">
                                     <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
@@ -67,30 +49,39 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3">                       
-                            <div class="form-group">
-                                <label>Procedimiento Radiográfico</label>
-                                <v-select v-model="procedimiento" label="titulo" :options="procedimientos"></v-select>   
-                            </div>      
-                        </div>
-                        <div class="col-md-3">                       
-                            <div class="form-group">
-                                <label>Material</label>
-                                <v-select v-model="material" label="codigo" :options="materiales"></v-select>   
-                            </div>      
-                        </div>                      
+                         <div class="clearfix"></div>
                         <div class="col-md-2">
+                            <div class="form-group" >
+                                <label for="prefijo">Prefijo</label>
+                                <input type="text" v-model="prefijo" class="form-control" id="prefijo">
+                            </div>                            
+                        </div>
+                         <div class="col-md-1">
+                            <div class="form-group" >
+                                <label for="numero_inf">Informe N°</label>
+                                <input type="number" v-model="numero_inf" class="form-control" id="numero_inf">
+                            </div>                            
+                        </div>
+                        <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="componente">Componente</label>
                                 <input type="text" v-model="componente" class="form-control" id="componente">
                             </div>                            
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-3">                       
+                            <div class="form-group">
+                                <label for="materiales">Material</label>
+                                <v-select v-model="material" label="codigo" :options="materiales" id="materiales"></v-select>   
+                            </div>      
+                        </div>                      
+                        
+                        <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="plano_isom">Plano / Isom</label>
                                 <input type="text" v-model="plano_isom" class="form-control" id="plano_isom">
                             </div>                            
                         </div>
+
                         <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="Diametro">Diametro</label>
@@ -98,120 +89,25 @@
                             </div>                            
                         </div>
 
-                        <template v-if="diametro.diametro == 'CHAPA' " >
-                            <div class="col-md-3">                             
-                                <label for="espesor_chapa">Espesor Chapa</label>
-                                <input  type="text" class="form-control" v-model="espesor_chapa"  id="espesor_chapa">                              
-                            </div>
-                        </template>                       
-                        <template v-else>
-                            <div class="col-md-3">
-                                <div class="form-group" >
-                                   <label>Espesor</label>
-                                   <v-select v-model="espesor" label="espesor" :options="espesores"></v-select>   
-                                </div>                            
-                            </div>
-                        </template>
+                        <div class="col-md-3">
+                            <div class="form-group" >
+                                <label>Espesor</label>
+                                <v-select v-model="espesor" label="espesor" :options="espesores" :disabled="isChapa"></v-select>   
+                            </div>                            
+                        </div>
+                      
+                        <div class="col-md-3">                             
+                            <label for="espesor_chapa">Espesor Chapa</label>
+                            <input  type="text" class="form-control" v-model="espesor_chapa"  id="espesor_chapa" :disabled="!isChapa" >                              
+                        </div>
 
                         <div class="col-md-3">
-                            <div class="form-group" >
-                                <label for="equipos">Equipo</label>
-                                <v-select v-model="equipo" label="codigo" :options="equipos" @input="resetInputsEquipos()"></v-select>  
-                            </div>                            
-                        </div>
-                        <template v-if="equipo.codigo == 'RX'">
-                            <div class="col-md-1">    
-                                <div class="form-group" >                   
-                                    <label for="kv">Kv</label>
-                                    <input  type="number" class="form-control" v-model="kv"  id="kv">     
-                                </div>                         
-                            </div>
-                            <div class="col-md-1">  
-                                <div class="form-group" >                        
-                                    <label for="ma">mA</label>
-                                    <input  type="number" class="form-control" v-model="ma"  id="ma"> 
-                                </div>                             
-                            </div>
-                        </template>   
-                        <template v-else> 
-                            <div class="col-md-3">
-                                <div class="form-group" >
-                                    <label for="fuente">Fuente</label>
-                                    <v-select v-model="fuente" label="codigo" :options="fuentes"></v-select>   
-                                </div>                            
-                            </div>
-                         </template>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Calidad de placas</label>
-                                    <v-select  v-model="tipo_pelicula" :options="tipo_peliculas" label="codigo">
-                                    <template slot="option" slot-scope="option">
-                                        <span class="upSelect">{{ option.codigo }}</span> <br> 
-                                        <span class="downSelect"> {{ option.fabricante }} </span>
-                                    </template>
-                                      </v-select>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group" >
-                                <label for="foco">Foco</label>
-                                <input type="text" v-model="foco" class="form-control" id="foco">
-                            </div>                            
-                        </div>      
-                        <div class="col-md-2">
-                            <div class="form-group" >
-                                <label for="distancia_fuente_pelicula">Dist. Fuente</label>
-                                <input type="text" v-model="distancia_fuente_pelicula" class="form-control" id="distancia_fuente_pelicula">
-                            </div>                            
-                        </div>  
-                        <div class="col-md-2">
-                            <div class="form-group" >
-                                <label for="pantalla">Pantalla</label>
-                                <input type="text" v-model="pantalla" class="form-control" id="pantalla" disabled>
-                            </div>                            
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group" >
-                                <label for="pos_pos">lado</label>
-                                <input type="text" v-model="lado" class="form-control" id="lado">
-                            </div>                            
-                        </div>
-                       <div class="col-md-2">
-                            <div class="form-group" >
-                                <label for="ici">Ici</label>
-                                <v-select v-model="ici" label="codigo" :options="icis"></v-select>   
-                            </div>                            
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group" >
-                                <label for="pos_ant">Ant</label>
-                                <input type="number" v-model="pos_ant" class="form-control" id="pos_ant">
-                            </div>                            
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group" >
-                                <label for="pos_pos">Pos</label>
-                                <input type="number" v-model="pos_pos" class="form-control" id="pos_pos">
-                            </div>                            
-                        </div>
-                        <div class="col-md-6">
                             <div class="form-group" >
                                 <label for="procedimientos_soldadura">Procedimiento Soldadura</label>
                                 <input type="text" v-model="procedimiento_soldadura" class="form-control" id="procedimientos_soldadura">
                             </div>                            
                         </div>  
-                        <div class="col-md-3">                       
-                            <div class="form-group">
-                                <label>Norma Ensayo</label>
-                                <v-select v-model="norma_ensayo" label="descripcion" :options="norma_ensayos"></v-select>   
-                            </div>      
-                        </div>
-                        <div class="col-md-3">                       
-                            <div class="form-group">
-                                <label>Técnica</label>
-                                <v-select v-model="tecnica" label="descripcion" :options="tecnicas" @input="getTecnicasGraficos()"></v-select>   
-                            </div>      
-                        </div>
+
                         <div class="col-md-3">                       
                             <div class="form-group" >
                                 <label for="eps">EPS</label>
@@ -224,24 +120,145 @@
                                 <input type="text" v-model="pqr" class="form-control" id="pqr">
                             </div>         
                         </div>  
-                        <div class="col-md-3">                       
+
+                        <div class="col-md-2">
                             <div class="form-group" >
-                                <label for="eps">Actividad</label>
-                                <input type="text" v-model="actividad" class="form-control" id="actividad">
-                            </div>         
-                        </div>       
-                        <div class="col-md-2">                       
-                            <div class="form-group" >
-                                <label for="eps">Exposición</label>
-                                <input type="number" v-model="exposicion" class="form-control" id="exposicion">
-                            </div>         
-                        </div>                       
-                        <div class="col-md-3">                       
-                            <div class="form-group" >
-                                <label for="ejecutor_ensayo">Ejecutor Ensayo</label>
-                                 <v-select v-model="ejecutor_ensayo" label="name" :options="ejecutor_ensayos"></v-select>   
-                            </div>         
-                        </div>                                          
+                                <label for="equipos">Equipo</label>
+                                <v-select v-model="equipo" label="codigo" :options="equipos" @input="resetInputsEquipos()"></v-select>  
+                            </div>                            
+                        </div>
+                       
+                            <div class="col-md-2">    
+                                <div class="form-group" >                   
+                                    <label for="kv">Kv</label>
+                                    <input  type="number" class="form-control" v-model="kv" :disabled="!isRX"  id="kv">     
+                                </div>                         
+                            </div>
+                            <div class="col-md-2">  
+                                <div class="form-group" >                        
+                                    <label for="ma">mA</label>
+                                    <input  type="number" class="form-control" v-model="ma"  :disabled="!isRX" id="ma"> 
+                                </div>                             
+                            </div>
+                       
+                      
+                            <div class="col-md-3">
+                                <div class="form-group" >
+                                    <label for="fuente">Fuente</label>
+                                    <v-select v-model="fuente" label="codigo" :options="fuentes" :disabled="isRX"></v-select>   
+                                </div>                            
+                            </div>
+
+                             <div class="col-md-3">
+                                <div class="form-group" >
+                                    <label for="foco">Foco</label>
+                                    <input type="text" v-model="foco" class="form-control" id="foco">
+                                </div>                            
+                            </div> 
+
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>Calidad de placas</label>
+                                        <v-select  v-model="tipo_pelicula" :options="tipo_peliculas" label="codigo">
+                                            <template slot="option" slot-scope="option">
+                                                <span class="upSelect">{{ option.codigo }}</span> <br> 
+                                                <span class="downSelect"> {{ option.fabricante }} </span>
+                                            </template>
+                                        </v-select>
+                                </div>
+                            </div>
+                            
+                             <div class="col-md-1">
+                                <div class="form-group" >
+                                    <label for="pantalla">Pantalla</label>
+                                    <input type="text" v-model="pantalla" class="form-control" id="pantalla" disabled>
+                                </div>                            
+                            </div>
+                            
+                             <div class="col-md-1">
+                                <div class="form-group" >
+                                    <label for="pos_ant">Ant</label>
+                                    <input type="number" v-model="pos_ant" class="form-control" id="pos_ant">
+                                </div>                            
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group" >
+                                    <label for="pos_pos">Pos</label>
+                                    <input type="number" v-model="pos_pos" class="form-control" id="pos_pos">
+                                </div>                            
+                            </div>
+
+                             <div class="col-md-1">
+                                <div class="form-group" >
+                                    <label for="pos_pos">lado</label>
+                                    <input type="text" v-model="lado" class="form-control" id="lado">
+                                </div>                            
+                            </div>
+
+                            <div class="col-md-3">                       
+                                <div class="form-group">
+                                    <label for="procRadio">Procedimiento Radiográfico</label>
+                                    <v-select v-model="procedimiento" label="titulo" :options="procedimientos" id="procRadio"></v-select>   
+                                </div>      
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group" >
+                                    <label for="ici">Ici</label>
+                                    <v-select v-model="ici" label="codigo" :options="icis"></v-select>   
+                                </div>                            
+                            </div>
+                          
+                            <div class="col-md-3">                       
+                                <div class="form-group">
+                                    <label>Norma Evaluación</label>
+                                    <v-select v-model="norma_evaluacion" label="descripcion" :options="norma_evaluaciones"></v-select>   
+                                </div>      
+                            </div>
+                            
+                            <div class="col-md-3">                       
+                                <div class="form-group">
+                                    <label>Norma Ensayo</label>
+                                    <v-select v-model="norma_ensayo" label="descripcion" :options="norma_ensayos"></v-select>   
+                                </div>      
+                            </div>
+
+                            <div class="col-md-1">                       
+                                <div class="form-group" >
+                                    <label for="eps">Actividad</label>
+                                    <input type="text" v-model="actividad" class="form-control" id="actividad">
+                                </div>         
+                            </div>       
+                            <div class="col-md-1">                       
+                                <div class="form-group" >
+                                    <label for="eps">Exposición</label>
+                                    <input type="number" v-model="exposicion" class="form-control" id="exposicion">
+                                </div>         
+                            </div>                                            
+                        
+                            
+                            <div class="col-md-1">
+                                <div class="form-group" >
+                                    <label for="distancia_fuente_pelicula">Dist. Fuente</label>
+                                    <input type="text" v-model="distancia_fuente_pelicula" class="form-control" id="distancia_fuente_pelicula">
+                                </div>                            
+                            </div>  
+
+                            <div class="col-md-3">                       
+                                <div class="form-group" >
+                                    <label for="ejecutor_ensayo">Ejecutor Ensayo</label>
+                                    <v-select v-model="ejecutor_ensayo" label="name" :options="ejecutor_ensayos"></v-select>   
+                                </div>         
+                            </div>                       
+                        
+                            <div class="col-md-3">                       
+                                <div class="form-group">
+                                    <label>Técnica</label>
+                                    <v-select v-model="tecnica" label="descripcion" :options="tecnicas" @input="getTecnicasGraficos()"></v-select>   
+                                </div>      
+                            </div>                       
+                                             
+                                                               
                   </div>
                </div>
                   <button class="btn btn-primary" type="submit">Guardar</button>   
@@ -325,10 +342,12 @@ export default {
             tecnicas_grafico :'',
             kv:'',
             ma:'', 
-
+           
            // fin Formulario 
 
             cliente :'',
+            isRX:false,
+            isChapa:false,
 
              procedimientos:[],
              materiales:[],
@@ -363,11 +382,25 @@ export default {
         this.getEjecutorEnsayo();
        
     },   
-   
+    
+    watch : {
+
+        equipo : function(val){
+
+            this.isRX = val.codigo =='RX' ? true : false;
+                
+        },
+        diametro : function(val){
+
+            this.isChapa = val.diametro =='CHAPA' ? true : false;
+                
+        }
+    },
 
     computed :{
 
         ...mapState(['url']),
+        
        
      },
 
@@ -599,3 +632,8 @@ export default {
 }
 </script>
 
+<style scoped>
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+     background-color: #eee;
+}
+</style>
