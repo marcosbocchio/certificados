@@ -20,7 +20,7 @@ class CreateInformesTable extends Migration
             $table->string('prefijo',10)->nullable();  
             $table->decimal('espesor_chapa','6','2')->nullable();     
             $table->string('componente',20);
-            $table->string('procedimiento_soldadura',45)->nullable();
+            $table->string('procedimiento_soldadura',20)->nullable();
             $table->string('plano_isom',10);
             $table->string('eps',30)->nullable();
             $table->string('pqr',30)->nullable();

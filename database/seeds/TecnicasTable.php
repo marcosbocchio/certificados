@@ -14,20 +14,17 @@ class TecnicasTable extends Seeder
     {
         Tecnicas::create([
             'codigo'        =>'SWE/SWV',          
-            'descripcion'   =>'Simple Pared/Simple Imagen',
-            'path_grafico'  =>'img/tecnicas/captura1.jpg'           
+            'descripcion'   =>'Simple Pared/Simple Imagen',                  
         ]);
 
         Tecnicas::create([
             'codigo'        =>'DWE/SWV',          
-            'descripcion'   =>'Doble Pared/Simple Imagen',
-            'path_grafico'  =>'img/tecnicas/captura3.jpg'           
+            'descripcion'   =>'Doble Pared/Simple Imagen',                   
         ]);
 
         Tecnicas::create([
             'codigo'        =>'DWE/DWV',          
-            'descripcion'   =>'Doble Pared/Doble Imagen',  
-            'path_grafico'  =>'img/tecnicas/captura7.jpg'           
+            'descripcion'   =>'Doble Pared/Doble Imagen',             
         ]);
     }
 }

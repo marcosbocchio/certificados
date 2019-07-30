@@ -3,22 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\ProcedimientosInforme;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Collection as Collection;
+use App\TecnicasGraficos;
 
-
-class ProcedimientosInformesController extends Controller
+class TecnicasGraficosController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-       
-                    
+       return $Tecnica_graficos = TecnicasGraficos::where('tecnica_id',$id)->get();
     }
 
     /**
@@ -48,13 +44,9 @@ class ProcedimientosInformesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function ProcedimientosMetodo($metodo)
+    public function show($id)
     {
-        return DB::table('procedimientos_informes')
-        ->join('metodo_ensayos','procedimientos_informes.metodo_ensayo_id','=','metodo_ensayos.id')
-        ->where('metodo_ensayos.metodo','=',$metodo)
-        ->select('procedimientos_informes.*')
-        ->get();
+        //
     }
 
     /**

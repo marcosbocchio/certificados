@@ -26,7 +26,7 @@ class ClientesController extends Controller
     {
         return  $this->clientes->getAll();
     }
-
+  
     /**
      * Show the form for creating a new resource.
      *
@@ -56,7 +56,7 @@ class ClientesController extends Controller
      */
     public function show($id)
     {
-        //
+        return Clientes::find($id);
     }
 
     /**

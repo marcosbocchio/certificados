@@ -6,10 +6,28 @@
                   <div class="box-body"> 
                       <div class="col-md-6">
                             <div class="form-group" >
-                                <label for="ot">Orden de Trabajo N°</label>
-                                <input type="number" v-model="otdata.numero" class="form-control" id="ot" disabled>
+                                <label for="cliente">Cliente</label>
+                                <input type="text" v-model="cliente.nombre_fantasia" class="form-control" id="cliente" disabled>
                             </div>                            
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group" >
+                                <label for="proyecto">Proyecto</label>
+                                <input type="text" v-model="otdata.proyecto" class="form-control" id="proyecto" disabled>
+                            </div>                            
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group" >
+                                <label for="obra">Obra N°</label>
+                                <input type="number" v-model="otdata.obra" class="form-control" id="obra" disabled>
+                            </div>                            
+                        </div>
+                        <div class="col-md-6">
+                                <div class="form-group" >
+                                    <label for="ot">Orden de Trabajo N°</label>
+                                    <input type="number" v-model="otdata.numero" class="form-control" id="ot" disabled>
+                                </div>                            
+                            </div>
                   </div>
                </div>
                <div class="box box-danger">
@@ -98,15 +116,31 @@
                         <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="equipos">Equipo</label>
-                                <v-select v-model="equipo" label="codigo" :options="equipos"></v-select>  
+                                <v-select v-model="equipo" label="codigo" :options="equipos" @input="resetInputsEquipos()"></v-select>  
                             </div>                            
                         </div>
-                        <div class="col-md-3">
-                            <div class="form-group" >
-                                <label for="fuente">Fuente</label>
-                                <v-select v-model="fuente" label="codigo" :options="fuentes"></v-select>   
-                            </div>                            
-                        </div>
+                        <template v-if="equipo.codigo == 'RX'">
+                            <div class="col-md-1">    
+                                <div class="form-group" >                   
+                                    <label for="kv">Kv</label>
+                                    <input  type="number" class="form-control" v-model="kv"  id="kv">     
+                                </div>                         
+                            </div>
+                            <div class="col-md-1">  
+                                <div class="form-group" >                        
+                                    <label for="ma">mA</label>
+                                    <input  type="number" class="form-control" v-model="ma"  id="ma"> 
+                                </div>                             
+                            </div>
+                        </template>   
+                        <template v-else> 
+                            <div class="col-md-3">
+                                <div class="form-group" >
+                                    <label for="fuente">Fuente</label>
+                                    <v-select v-model="fuente" label="codigo" :options="fuentes"></v-select>   
+                                </div>                            
+                            </div>
+                         </template>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Calidad de placas</label>
@@ -175,7 +209,7 @@
                         <div class="col-md-3">                       
                             <div class="form-group">
                                 <label>Técnica</label>
-                                <v-select v-model="tecnica" label="descripcion" :options="tecnicas"></v-select>   
+                                <v-select v-model="tecnica" label="descripcion" :options="tecnicas" @input="getTecnicasGraficos()"></v-select>   
                             </div>      
                         </div>
                         <div class="col-md-3">                       
@@ -287,9 +321,14 @@ export default {
             pqr:'',
             exposicion:'',      
             actividad:'',          
-            ejecutor_ensayo:'',  
+            ejecutor_ensayo:'',
+            tecnicas_grafico :'',
+            kv:'',
+            ma:'', 
 
            // fin Formulario 
+
+            cliente :'',
 
              procedimientos:[],
              materiales:[],
@@ -303,12 +342,14 @@ export default {
              norma_ensayos:[],
              tecnicas:[],
              ejecutor_ensayos :[],
+             tecnicas_graficos :[]
 
 
     }},
 
     created : function(){      
-
+        
+        this.getCliente();
         this.getProcedimientos();
         this.getMateriales();
         this.getDiametros();
@@ -319,7 +360,7 @@ export default {
         this.getIcis();
         this.getNormaEnsayos();
         this.getTecnicas();
-        this.getEjecutorEnsayo();     
+        this.getEjecutorEnsayo();
        
     },   
    
@@ -332,10 +373,19 @@ export default {
 
     methods : {
 
+        getCliente : function(){
+
+            axios.defaults.baseURL = this.url ;
+                var urlRegistros = 'clientes/' + this.otdata.cliente_id + '?api_token=' + Laravel.user.api_token;         
+                axios.get(urlRegistros).then(response =>{
+                this.cliente = response.data
+                });
+        },
+
         getProcedimientos : function(){
 
             axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'procedimientos_informes/' + this.otdata.id + '?api_token=' + Laravel.user.api_token;         
+                var urlRegistros = 'procedimientos_informes/ot/' + this.otdata.id + '/metodo/' + this.metodo + '?api_token=' + Laravel.user.api_token;         
                 axios.get(urlRegistros).then(response =>{
                 this.procedimientos = response.data
                 });
@@ -440,6 +490,17 @@ export default {
                 this.tecnicas = response.data
                 });
               },
+
+        getTecnicasGraficos: function(){
+             
+                axios.defaults.baseURL = this.url ;
+                var urlRegistros = 'tecnicas_graficos/'+ this.tecnica.id + '?api_token=' + Laravel.user.api_token;     
+                console.log(urlRegistros);   
+                axios.get(urlRegistros).then(response =>{
+                this.tecnicas_graficos = response.data
+                });
+              },
+
         getEjecutorEnsayo: function(){
              
                 axios.defaults.baseURL = this.url ;
@@ -448,6 +509,13 @@ export default {
                 this.ejecutor_ensayos = response.data
                 });
               },
+        resetInputsEquipos : function() {
+
+                this.fuente = '' ;
+                this.kv = '',
+                this.ma = ''
+
+        },
 
         Store : function(){
          
@@ -474,8 +542,10 @@ export default {
                 'material':       this.material,
                 'diametro':       this.diametro.diametro,
                 'espesor':        this.espesor.espesor,
-                'espesor_chapa':  this.espesor_chapa, 
-                'equipo'       :  this.equipo,
+                'espesor_chapa' :  this.espesor_chapa, 
+                'equipo'        :  this.equipo,
+                'kv'            : this.kv,
+                'ma'            : this.ma,
                 'fuente'       :  this.fuente ,
                 'foco':           this.foco,
                 'tipo_pelicula' : this.tipo_pelicula,
@@ -489,6 +559,7 @@ export default {
                 'ici': this.ici,
                 'norma_ensayo': this.norma_ensayo,
                 'tecnica':this.tecnica,
+                'tecnicas_grafico' : this.tecnica_grafico,
                 'eps':this.eps,
                 'pqr':this.pqr,
                 'actividad' : this.actividad,

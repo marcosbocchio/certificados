@@ -23,7 +23,7 @@ Route::middleware('auth:api')->get('/clientes','ClientesController@index');
 
 Route::group(['middleware' => 'auth:api'], function()
 {
-    Route::resource('clientes', 'ClientesController');
+    Route::resource('clientes', 'ClientesController'); 
     Route::resource('users', 'UserController');    
     Route::resource('materiales', 'MaterialesController');
     Route::resource('provincias', 'ProvinciasController');
@@ -45,7 +45,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('equipos', 'EquiposController');
     Route::resource('icis', 'IcisController');
     Route::resource('tecnicas', 'TecnicasController');
-
+    Route::get('tecnicas_graficos/{id}', 'TecnicasGraficosController@index');
   
     
     Route::get('equipos/metodo/{metodo}', 'EquiposController@EquiposMetodo');
@@ -54,7 +54,11 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('diametros', 'DiametrosEspesorController@getDiametros');
     Route::get('espesor/{id}', 'DiametrosEspesorController@getEspesor');
     
-    Route::get('procedimientos_informes/{metodo}', 'DocumentacionesController@ProcedimientosMetodo');
+    Route::get('procedimientos_informes/ot/{id_ot}/metodo/{metodo}', 'DocumentacionesController@ProcedimientosMetodo');
+
+  
+
+
 
 
     Route::post('storage/referencia', 'StorageController@saveReferencia');

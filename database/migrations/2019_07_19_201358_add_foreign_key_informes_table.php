@@ -102,7 +102,8 @@ class AddForeignKeyInformesTable extends Migration
                    
             $table->foreign('material_id')
                    ->references('id')
-                   ->on('materiales');
+                   ->on('materiales');              
+            
 
         });
     }
@@ -148,6 +149,8 @@ class AddForeignKeyInformesTable extends Migration
 
             $table->dropForeign(['equipo_id']);
             $table->dropColumn('equipo_id');
+
+          
 
         });
     }

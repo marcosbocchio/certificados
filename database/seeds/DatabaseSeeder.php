@@ -31,8 +31,9 @@ class DatabaseSeeder extends Seeder
         $this->call(FuentesTable::class);     
         $this->call(IcisTable::class);      
         $this->call(EquiposTableSeeder::class);     
+        $this->call(TecnicasGraficoSeeder::class);    
         
-      
+       
        // factory('App\Clientes', 2500)->create();
 
 

@@ -19,6 +19,7 @@ use App\Icis;
 use App\Tecnicas;
 use App\EjecutorEnsayo;
 use App\User;
+use App\TecnicasGraficos;
 
 class PdfInformesRiController extends Controller
 {
@@ -34,15 +35,17 @@ class PdfInformesRiController extends Controller
         $norma_evaluacion = NormaEvaluaciones::findOrFail($informe->norma_evaluacion_id); 
         $procedimiento_inf = Documentaciones::findOrFail($informe->procedimiento_informe_id);
         $equipo = Equipos::findOrFail($informe->equipo_id);
-        $fuente = Fuentes::findOrFail($informe_ri->fuente_id);
+        $fuente = Fuentes::find($informe_ri->fuente_id);
         $tipo_pelicula = TipoPeliculas::findOrFail($informe_ri->tipo_pelicula_id);
         $diametro_espesor = DiametrosEspesor::findOrFail($informe->diametro_espesor_id);
         $ici = Icis::findOrFail($informe_ri->ici_id);
         $tecnica = Tecnicas::findOrFail($informe->tecnica_id);
         $ejecutor_ensayo = User::findOrFail($informe->ejecutor_ensayo_id);
-
-    
-        $pdf = \PDF::loadView('reportes.informes.ri',compact('ot',
+        $tecnicas_grafico = TecnicasGraficos::where('tecnica_id',$tecnica->id)->first();  
+        
+      
+        
+        $pdf = \PDF::loadView('reportes.informes.ri-test',compact('ot',
                                                              'norma_ensayo',
                                                              'norma_evaluacion',
                                                              'procedimiento_inf',
@@ -56,7 +59,8 @@ class PdfInformesRiController extends Controller
                                                              'cliente',
                                                              'informe',
                                                              'informe_ri',
-                                                             'material'));
+                                                             'material',
+                                                             'tecnicas_grafico'));
         
         return $pdf->stream();
     }

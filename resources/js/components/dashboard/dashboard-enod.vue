@@ -52,7 +52,7 @@
             <div class="inner">
               <h3>65</h3>
 
-              <p>Requerimientos</p>
+              <p>Informes</p>
             </div>
             <div class="icon">
               <i class="ion ion-pie-graph"></i>
@@ -67,7 +67,7 @@
             <div class="inner">
               <h3>65</h3>
 
-              <p>Informes/Partes</p>
+              <p>Partes Diarios</p>
             </div>
             <div class="icon">
               <i class="fa fa-file-pdf-o"></i>

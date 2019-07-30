@@ -17,33 +17,37 @@
 
 <body>
     
-<table style="text-align: center" class="bordered" width="100%">
+<table style="text-align: center" width="100%">
     <tbody>
         <tr>
-          <td class="bordered">
+          <td>
                 <table width="100%">
                     <tbody>
                         <tr>
-                            <td style="font-size: 18px; height: 30px; text-align: center" colspan="3"><b>INFORME RADIOGRAFÍA INDUSTRIAL</b></td>
-                        </tr>
-                        <tr>
-                            <td style="font-size: 13px;" colspan="2"><b>CLIENTE: </b>{{$cliente->nombre_fantasia}}</td>
-                            <td rowspan="4" style="text-align: right; width:240px" >
+                            <td rowspan="3" style="text-align: right; width:233px" class="bordered">
                                 <img src="{{ public_path('img/logo-enod-web.jpg')}}" alt="" style="height: 60px; margin-right: 25px;">
                             </td>   
+                            <td style="font-size: 18px; height: 30px; text-align: center;width:233px" rowspan="3" class="bordered"><b>INFORME RADIOGRAFÍA INDUSTRIAL</b></td>
+                            <td style="font-size: 13px;" ><b>INFORME N°: </b>{{$informe->numero}}</td>                      
                         </tr>
+
                         <tr>
-                            <td style="font-size: 13px;" ><b>INFORME N°: </b>{{$informe->numero}}</td>
-                            <td style="font-size: 13px;"><b>FECHA: </b>{{ date('d-m-Y', strtotime($ot->fecha_hora)) }}</td>    
-                        </tr>                          
+                            <td style="font-size: 13px;"><b>FECHA: </b>{{ date('d-m-Y', strtotime($ot->fecha_hora)) }}</td>
+                        </tr>
+
+                        <tr>
+                            <td style="font-size: 13px;"><b>PÁGINA </b> 1 <b> de </b>1</td>            
+                        </tr>   
+                    <!--                       
                         <tr>
                             <td style="font-size: 13px;"><b>PROYECTO:</b>{{$ot->proyecto}}</td>
                             <td style="font-size: 13px;"><b>OBRA: </b>{{$ot->obra}}</td>
                         </tr>                  
                         <tr>
+                            <td style="font-size: 13px;" colspan="2"><b>CLIENTE: </b>{{$cliente->nombre_fantasia}}</td>
                             <td style="font-size: 13px;"><b>OT N°: </b>{{$ot->numero}}</td>
-                            <td style="font-size: 13px;"><b>PÁGINA </b> 1 <b> de </b>1</td>            
                         </tr>
+                    -->    
                     </tbody>
                 </table>          
             </td>

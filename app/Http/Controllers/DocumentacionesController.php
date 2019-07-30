@@ -169,12 +169,14 @@ class DocumentacionesController extends Controller
 
     }
 
-    public function ProcedimientosMetodo($ot_id)
+    public function ProcedimientosMetodo($ot_id,$metodo)
     {
         return DB::table('ot_procedimientos_propios')
         ->join('ots','ots.id','=','ot_procedimientos_propios.ot_id')
-        ->join('documentaciones','documentaciones.id','=','ot_procedimientos_propios.documentacion_id')         
+        ->join('documentaciones','documentaciones.id','=','ot_procedimientos_propios.documentacion_id')      
+        ->join('metodo_ensayos','metodo_ensayos.id','=','documentaciones.metodo_ensayo_id')   
         ->where('ots.id','=',$ot_id)
+        ->where('metodo_ensayos.metodo','=',$metodo)
         ->select('documentaciones.*')
         ->get();
     }

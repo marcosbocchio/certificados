@@ -26,6 +26,7 @@ class AddForeignKeyInformesRiTable extends Migration
             
             $table->bigInteger('fuente_id')
                    ->unsigned()
+                   ->nullable()
                    ->after('informe_id');
                    
             $table->foreign('fuente_id')
@@ -46,8 +47,17 @@ class AddForeignKeyInformesRiTable extends Migration
                    
             $table->foreign('ici_id')
                    ->references('id')
-                   ->on('icis');          
-
+                   ->on('icis');  
+                   
+            $table->bigInteger('tecnicas_grafico_id')
+                   ->unsigned()
+                   ->after('ici_id');
+                   
+            $table->foreign('tecnicas_grafico_id')
+                   ->references('id')
+                   ->on('tecnicas_graficos');     
+            
+              
                    
 
         });
@@ -73,6 +83,9 @@ class AddForeignKeyInformesRiTable extends Migration
 
             $table->dropForeign(['fuente_id']);
             $table->dropColumn('fuente_id');
+
+            $table->dropForeign(['tecnicas_grafico_id']);
+            $table->dropColumn('tecnicas_grafico_id');
 
         }); 
     }

@@ -3315,6 +3315,40 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3375,7 +3409,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       exposicion: '',
       actividad: '',
       ejecutor_ensayo: '',
+      tecnicas_grafico: '',
+      kv: '',
+      ma: '',
       // fin Formulario 
+      cliente: '',
       procedimientos: [],
       materiales: [],
       diametros: [],
@@ -3387,10 +3425,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       icis: [],
       norma_ensayos: [],
       tecnicas: [],
-      ejecutor_ensayos: []
+      ejecutor_ensayos: [],
+      tecnicas_graficos: []
     };
   },
   created: function created() {
+    this.getCliente();
     this.getProcedimientos();
     this.getMateriales();
     this.getDiametros();
@@ -3405,117 +3445,140 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])(['url'])),
   methods: {
-    getProcedimientos: function getProcedimientos() {
+    getCliente: function getCliente() {
       var _this = this;
 
       axios.defaults.baseURL = this.url;
-      var urlRegistros = 'procedimientos_informes/' + this.otdata.id + '?api_token=' + Laravel.user.api_token;
+      var urlRegistros = 'clientes/' + this.otdata.cliente_id + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this.procedimientos = response.data;
+        _this.cliente = response.data;
+      });
+    },
+    getProcedimientos: function getProcedimientos() {
+      var _this2 = this;
+
+      axios.defaults.baseURL = this.url;
+      var urlRegistros = 'procedimientos_informes/ot/' + this.otdata.id + '/metodo/' + this.metodo + '?api_token=' + Laravel.user.api_token;
+      axios.get(urlRegistros).then(function (response) {
+        _this2.procedimientos = response.data;
       });
     },
     getMateriales: function getMateriales() {
-      var _this2 = this;
+      var _this3 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'materiales' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this2.materiales = response.data;
+        _this3.materiales = response.data;
       });
     },
     getDiametros: function getDiametros() {
-      var _this3 = this;
+      var _this4 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'diametros' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this3.diametros = response.data;
+        _this4.diametros = response.data;
       });
     },
     getEspesores: function getEspesores() {
-      var _this4 = this;
+      var _this5 = this;
 
       this.espesor = '';
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'espesor/' + this.diametro.diametro_code + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this4.espesores = response.data;
+        _this5.espesores = response.data;
       });
     },
     getEquipos: function getEquipos() {
-      var _this5 = this;
+      var _this6 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'equipos/metodo/' + this.metodo + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this5.equipos = response.data;
+        _this6.equipos = response.data;
       });
     },
     getFuentes: function getFuentes() {
-      var _this6 = this;
+      var _this7 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'fuentes' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this6.fuentes = response.data;
+        _this7.fuentes = response.data;
       });
     },
     getTipoPeliculas: function getTipoPeliculas() {
-      var _this7 = this;
+      var _this8 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'tipo_peliculas' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this7.tipo_peliculas = response.data;
+        _this8.tipo_peliculas = response.data;
       });
     },
     getNormaEvaluaciones: function getNormaEvaluaciones() {
-      var _this8 = this;
+      var _this9 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'norma_evaluaciones' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this8.norma_evaluaciones = response.data;
+        _this9.norma_evaluaciones = response.data;
       });
     },
     getIcis: function getIcis() {
-      var _this9 = this;
+      var _this10 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'icis' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this9.icis = response.data;
+        _this10.icis = response.data;
       });
     },
     getNormaEnsayos: function getNormaEnsayos() {
-      var _this10 = this;
+      var _this11 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'norma_ensayos' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this10.norma_ensayos = response.data;
+        _this11.norma_ensayos = response.data;
       });
     },
     getTecnicas: function getTecnicas() {
-      var _this11 = this;
+      var _this12 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'tecnicas' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this11.tecnicas = response.data;
+        _this12.tecnicas = response.data;
+      });
+    },
+    getTecnicasGraficos: function getTecnicasGraficos() {
+      var _this13 = this;
+
+      axios.defaults.baseURL = this.url;
+      var urlRegistros = 'tecnicas_graficos/' + this.tecnica.id + '?api_token=' + Laravel.user.api_token;
+      console.log(urlRegistros);
+      axios.get(urlRegistros).then(function (response) {
+        _this13.tecnicas_graficos = response.data;
       });
     },
     getEjecutorEnsayo: function getEjecutorEnsayo() {
-      var _this12 = this;
+      var _this14 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'ot-operarios/ejecutor_ensayo/' + this.otdata.id + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this12.ejecutor_ensayos = response.data;
+        _this14.ejecutor_ensayos = response.data;
       });
     },
+    resetInputsEquipos: function resetInputsEquipos() {
+      this.fuente = '';
+      this.kv = '', this.ma = '';
+    },
     Store: function Store() {
-      var _this13 = this;
+      var _this15 = this;
 
       this.errors = [];
       var gasoducto_sn = this.formato == 'GASODUCTO' ? true : false;
@@ -3540,6 +3603,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           'espesor': this.espesor.espesor,
           'espesor_chapa': this.espesor_chapa,
           'equipo': this.equipo,
+          'kv': this.kv,
+          'ma': this.ma,
           'fuente': this.fuente,
           'foco': this.foco,
           'tipo_pelicula': this.tipo_pelicula,
@@ -3553,20 +3618,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           'ici': this.ici,
           'norma_ensayo': this.norma_ensayo,
           'tecnica': this.tecnica,
+          'tecnicas_grafico': this.tecnica_grafico,
           'eps': this.eps,
           'pqr': this.pqr,
           'actividad': this.actividad,
           'exposicion': this.exposicion
         }
       }).then(function (response) {
-        _this13.response = response.data;
-        toastr.success('informe N°' + _this13.numero_inf + ' fue creado con éxito ');
+        _this15.response = response.data;
+        toastr.success('informe N°' + _this15.numero_inf + ' fue creado con éxito ');
         console.log(response);
       })["catch"](function (error) {
-        _this13.errors = error.response.data.errors;
+        _this15.errors = error.response.data.errors;
         console.log(error.response);
         console.log('hola');
-        $.each(_this13.errors, function (key, value) {
+        $.each(_this15.errors, function (key, value) {
           toastr.error(value);
           console.log(key + ": " + value);
         });
@@ -39407,7 +39473,7 @@ var staticRenderFns = [
         _c("div", { staticClass: "inner" }, [
           _c("h3", [_vm._v("65")]),
           _vm._v(" "),
-          _c("p", [_vm._v("Requerimientos")])
+          _c("p", [_vm._v("Informes")])
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "icon" }, [
@@ -39430,7 +39496,7 @@ var staticRenderFns = [
         _c("div", { staticClass: "inner" }, [
           _c("h3", [_vm._v("65")]),
           _vm._v(" "),
-          _c("p", [_vm._v("Informes/Partes")])
+          _c("p", [_vm._v("Partes Diarios")])
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "icon" }, [
@@ -39854,6 +39920,98 @@ var render = function() {
             _c("div", { staticClass: "box-body" }, [
               _c("div", { staticClass: "col-md-6" }, [
                 _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "cliente" } }, [
+                    _vm._v("Cliente")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.cliente.nombre_fantasia,
+                        expression: "cliente.nombre_fantasia"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", id: "cliente", disabled: "" },
+                    domProps: { value: _vm.cliente.nombre_fantasia },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.cliente,
+                          "nombre_fantasia",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-6" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "proyecto" } }, [
+                    _vm._v("Proyecto")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.otdata.proyecto,
+                        expression: "otdata.proyecto"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", id: "proyecto", disabled: "" },
+                    domProps: { value: _vm.otdata.proyecto },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.otdata, "proyecto", $event.target.value)
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-6" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "obra" } }, [_vm._v("Obra N°")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.otdata.obra,
+                        expression: "otdata.obra"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "number", id: "obra", disabled: "" },
+                    domProps: { value: _vm.otdata.obra },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.otdata, "obra", $event.target.value)
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-6" }, [
+                _c("div", { staticClass: "form-group" }, [
                   _c("label", { attrs: { for: "ot" } }, [
                     _vm._v("Orden de Trabajo N°")
                   ]),
@@ -40228,6 +40386,11 @@ var render = function() {
                       _vm._v(" "),
                       _c("v-select", {
                         attrs: { label: "codigo", options: _vm.equipos },
+                        on: {
+                          input: function($event) {
+                            return _vm.resetInputsEquipos()
+                          }
+                        },
                         model: {
                           value: _vm.equipo,
                           callback: function($$v) {
@@ -40241,29 +40404,89 @@ var render = function() {
                   )
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-md-3" }, [
-                  _c(
-                    "div",
-                    { staticClass: "form-group" },
-                    [
-                      _c("label", { attrs: { for: "fuente" } }, [
-                        _vm._v("Fuente")
+                _vm.equipo.codigo == "RX"
+                  ? [
+                      _c("div", { staticClass: "col-md-1" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", { attrs: { for: "kv" } }, [_vm._v("Kv")]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.kv,
+                                expression: "kv"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { type: "number", id: "kv" },
+                            domProps: { value: _vm.kv },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.kv = $event.target.value
+                              }
+                            }
+                          })
+                        ])
                       ]),
                       _vm._v(" "),
-                      _c("v-select", {
-                        attrs: { label: "codigo", options: _vm.fuentes },
-                        model: {
-                          value: _vm.fuente,
-                          callback: function($$v) {
-                            _vm.fuente = $$v
-                          },
-                          expression: "fuente"
-                        }
-                      })
+                      _c("div", { staticClass: "col-md-1" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", { attrs: { for: "ma" } }, [_vm._v("mA")]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.ma,
+                                expression: "ma"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { type: "number", id: "ma" },
+                            domProps: { value: _vm.ma },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.ma = $event.target.value
+                              }
+                            }
+                          })
+                        ])
+                      ])
+                    ]
+                  : [
+                      _c("div", { staticClass: "col-md-3" }, [
+                        _c(
+                          "div",
+                          { staticClass: "form-group" },
+                          [
+                            _c("label", { attrs: { for: "fuente" } }, [
+                              _vm._v("Fuente")
+                            ]),
+                            _vm._v(" "),
+                            _c("v-select", {
+                              attrs: { label: "codigo", options: _vm.fuentes },
+                              model: {
+                                value: _vm.fuente,
+                                callback: function($$v) {
+                                  _vm.fuente = $$v
+                                },
+                                expression: "fuente"
+                              }
+                            })
+                          ],
+                          1
+                        )
+                      ])
                     ],
-                    1
-                  )
-                ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-3" }, [
                   _c(
@@ -40569,6 +40792,11 @@ var render = function() {
                       _vm._v(" "),
                       _c("v-select", {
                         attrs: { label: "descripcion", options: _vm.tecnicas },
+                        on: {
+                          input: function($event) {
+                            return _vm.getTecnicasGraficos()
+                          }
+                        },
                         model: {
                           value: _vm.tecnica,
                           callback: function($$v) {
