@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Tecnicas;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Collection as Collection;
+use App\DefectosRi;
 
-class TecnicasController extends Controller
+class DefectosRiController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,21 +14,18 @@ class TecnicasController extends Controller
      */
     public function index()
     {
-      //  return Tecnicas::with(['Graficos'])->get();
+        //
+    }
 
-      $tecnicas = DB::select(' select
-                                tecnicas.id,
-                                tecnicas.codigo,
-                                tecnicas.descripcion,
-                                CONCAT("/",path) as path,                                
-                                tecnicas_graficos.id as grafico_id
-                                
-                                from tecnicas
-                                inner join tecnicas_graficos on
-                                tecnicas.id = tecnicas_graficos.tecnica_id');
+    public function DefectosPlanta(){
 
-     $tecnicas = Collection::make($tecnicas);                                
-     return $tecnicas;
+        return DefectosRi::where('planta_sn',1)->get();
+
+    }
+
+    public function DefectosGasoducto(){
+        
+        return DefectosRi::where('gasoducto_sn',1)->get();
     }
 
     /**

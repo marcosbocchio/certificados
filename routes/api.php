@@ -46,9 +46,12 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('icis', 'IcisController');
     Route::resource('tecnicas', 'TecnicasController');
     Route::get('tecnicas_graficos/{id}', 'TecnicasGraficosController@index');
-  
+    Route::get('soldadores/cliente/{id}','SoldadoresController@SoldadoresCliente');
     
     Route::get('equipos/metodo/{metodo}', 'EquiposController@EquiposMetodo');
+
+    Route::get('defectos_ri/planta', 'DefectosRiController@DefectosPlanta');
+    Route::get('defectos_ri/gasoducto', 'DefectosRiController@DefectosGasoducto');
 
     
     Route::get('diametros', 'DiametrosEspesorController@getDiametros');

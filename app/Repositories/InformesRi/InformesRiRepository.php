@@ -98,6 +98,7 @@ class InformesRiRepository extends BaseRepository
     $informeRi->pos_pos = $request->pos_pos;
     $informeRi->lado    = $request->lado;
     $informeRi->distancia_fuente_pelicula = $request->distancia_fuente_pelicula;
+    $informeRi->tecnicas_grafico_id = $request->tecnica['grafico_id'];
     $informeRi->actividad = $request->actividad;
     $informeRi->exposicion = $request->exposicion;   
 

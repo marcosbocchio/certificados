@@ -41,7 +41,7 @@ class PdfInformesRiController extends Controller
         $ici = Icis::findOrFail($informe_ri->ici_id);
         $tecnica = Tecnicas::findOrFail($informe->tecnica_id);
         $ejecutor_ensayo = User::findOrFail($informe->ejecutor_ensayo_id);
-        $tecnicas_grafico = TecnicasGraficos::where('tecnica_id',$tecnica->id)->first();  
+        $tecnicas_grafico = TecnicasGraficos::findOrFail($informe_ri->tecnicas_grafico_id);
         
       
         

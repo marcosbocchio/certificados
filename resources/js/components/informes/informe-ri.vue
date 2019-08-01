@@ -34,7 +34,7 @@
                   <div class="box-body">
                         <div class="col-md-3">
                             <div class="form-group" >
-                                <label for="formato">Formato</label>
+                                <label for="formato">Tipo informe RI</label>
                                 <v-select v-model="formato" :options="['PLANTA', 'GASODUCTO']"></v-select>
                             </div>                            
                         </div>
@@ -49,8 +49,7 @@
                                 </div>
                             </div>
                         </div>
-                         <div class="clearfix"></div>
-                        <div class="col-md-2">
+                        <div class="col-md-2 col-md-offset-3">
                             <div class="form-group" >
                                 <label for="prefijo">Prefijo</label>
                                 <input type="text" v-model="prefijo" class="form-control" id="prefijo">
@@ -88,20 +87,20 @@
                                 <v-select v-model="diametro" label="diametro" :options="diametros" @input="getEspesores()"></v-select>   
                             </div>                            
                         </div>
-
-                        <div class="col-md-3">
+                        <div class="clearfix"></div>
+                        <div class="col-md-1">
                             <div class="form-group" >
                                 <label>Espesor</label>
                                 <v-select v-model="espesor" label="espesor" :options="espesores" :disabled="isChapa"></v-select>   
                             </div>                            
                         </div>
                       
-                        <div class="col-md-3">                             
+                        <div class="col-md-1">                             
                             <label for="espesor_chapa">Espesor Chapa</label>
                             <input  type="text" class="form-control" v-model="espesor_chapa"  id="espesor_chapa" :disabled="!isChapa" >                              
                         </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-3 col-md-offset-1">
                             <div class="form-group" >
                                 <label for="procedimientos_soldadura">Procedimiento Soldadura</label>
                                 <input type="text" v-model="procedimiento_soldadura" class="form-control" id="procedimientos_soldadura">
@@ -201,14 +200,14 @@
                                     <v-select v-model="procedimiento" label="titulo" :options="procedimientos" id="procRadio"></v-select>   
                                 </div>      
                             </div>
-
                             <div class="col-md-3">
                                 <div class="form-group" >
                                     <label for="ici">Ici</label>
                                     <v-select v-model="ici" label="codigo" :options="icis"></v-select>   
                                 </div>                            
                             </div>
-                          
+                            
+                            <div class="clearfix"></div>
                             <div class="col-md-3">                       
                                 <div class="form-group">
                                     <label>Norma Evaluación</label>
@@ -250,17 +249,159 @@
                                     <v-select v-model="ejecutor_ensayo" label="name" :options="ejecutor_ensayos"></v-select>   
                                 </div>         
                             </div>                       
-                        
+                            <div class="clearfix"></div>
                             <div class="col-md-3">                       
                                 <div class="form-group">
                                     <label>Técnica</label>
-                                    <v-select v-model="tecnica" label="descripcion" :options="tecnicas" @input="getTecnicasGraficos()"></v-select>   
+                                     
+                                    <v-select v-model="tecnica" label="grafico_id" :options="tecnicas">  
+                                        <template slot="option" slot-scope="option">
+                                            <img :src="option.path" width="80" height="73" />  
+                                           <span style="margin-left: 5px"> {{option.descripcion}} </span>                                     
+                                        </template> 
+                                   </v-select>
                                 </div>      
                             </div>                       
                                              
                                                                
                   </div>
                </div>
+
+               <!-- Detalle RI Planta -->
+               <div class="box box-danger">
+                <div class="box-body">
+                    
+                    <div class="col-md-2">                       
+                         <div class="form-group" >
+                        
+                            <label for="junta">Junta</label>
+                            <input type="text" v-model="junta" class="form-control" id="junta">
+                        </div>         
+                    </div>       
+                    <div class="col-md-3">
+                        <div class="form-group" >
+                            <label>Cunio 1</label>           
+                            <v-select v-model="soldador1" :options="soldadores" label="nombre">
+                                <template slot="option" slot-scope="option">
+                                    <span class="upSelect">{{ option.nombre }} </span> <br> 
+                                    <span class="downSelect">   {{ option.codigo }} </span>
+                                </template>
+                            </v-select>                
+                       </div>
+                    </div> 
+                    <div class="col-md-3">
+                        <div class="form-group" >        
+                            <label>Cunio 2</label>           
+                            <v-select v-model="soldador2" :options="soldadores" label="nombre">
+                                <template slot="option" slot-scope="option">
+                                    <span class="upSelect">{{ option.nombre }} </span> <br> 
+                                    <span class="downSelect">   {{ option.codigo }} </span>
+                                </template>
+                            </v-select>                
+                        </div>    
+                    </div>      
+                    <div class="col-md-2">                       
+                        <div class="form-group" >
+                        
+                            <label for="posicion">Posición</label>
+                            <input type="text" v-model="posicion" class="form-control" id="posicion">
+                        </div>         
+                    </div>
+                    <div class="col-md-2">                       
+                        <div class="form-group" >
+                        
+                            <label for="defectoObs">observación</label>
+                            <input type="text" v-model="defectoObs" class="form-control" id="defectoObs">
+                        </div>         
+                    </div>                                         
+                    <div class="col-md-1"> 
+                        <div class="form-group">                    
+                          <span>
+                              <i class="fa fa-plus-circle" @click="addJuntaDefectosPlanta()"></i>
+                          </span>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-12">
+
+                        <div class="table-responsive">
+                            <table class="table table-hover table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>JUNTA</th>
+                                        <th>CUNIO 1</th>
+                                        <th>CUNIO 2</th>
+                                        <th>POS</th>  
+                                        <th>ACEPTABLE</th>    
+                                        <th>OBS</th>                                                    
+                                                                       
+                                        <th colspan="2">&nbsp;</th>
+                                    </tr>
+                                </thead>                         
+                                <tbody>
+                                    <tr v-for="(inputsJuntaDefectosPlanta,k) in inputsJuntasDefectosPlanta" :key="k" @click="selectPosicion(inputsJuntaDefectosPlanta)">
+                                        <td>{{ inputsJuntaDefectosPlanta.junta }}</td>
+                                        <td>{{ inputsJuntaDefectosPlanta.soldador1.nombre }} </td>
+                                        <td>{{ inputsJuntaDefectosPlanta.soldador2.nombre }} </td>   
+                                        <td>{{ inputsJuntaDefectosPlanta.posicion }} </td>   
+                                        <td> <input type="checkbox" id="checkbox" v-model="inputsJuntasDefectosPlanta[k].aceptable_sn">  </td>                                 
+                                        <td>{{ inputsJuntaDefectosPlanta.observacion }}</td>
+                                       
+                                        <td> <i class="fa fa-minus-circle" @click="removeJuntaDefectosPlanta(k)" ></i> </td>          
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                       </div>
+                    </div>
+                   </div>
+
+                    <div class="box box-danger">
+                      <div class="box-body">                        
+                        <div class="col-md-3">                          
+                           <div class="form-group" >
+                                <label>Defectos</label>           
+                                <v-select v-model="defectoRiPlanta" :options="defectosRiPlanta" label="descripcion">
+                                    <template slot="option" slot-scope="option">
+                                        <span class="upSelect">{{ option.descripcion }} </span> <br> 
+                                        <span class="downSelect">{{ option.codigo }} </span>
+                                    </template>
+                                </v-select>                
+                            </div>   
+                        </div>  
+                        <div class="col-md-1"> 
+                        <div class="form-group">                    
+                            <span>
+                                <i class="fa fa-plus-circle" @click="addDefectoPosicionPlanta()"></i>
+                            </span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-hover table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>CÓDIGO</th>                                                                                  
+                                            <th>DESCRIPCIÓN</th>                                                                 
+                                            <th colspan="2">&nbsp;</th>
+                                        </tr>
+                                    </thead>                         
+                                    <tbody>
+                                        <tr v-for="(inputsDefectosPosicionPlanta,k) in inputsDefectosPosicionesPlanta" :key="k">
+                                            <td>{{ inputsDefectosPosicionPlanta.codigo }}</td>    
+                                            <td>{{ inputsDefectosPosicionPlanta.descripcion }}</td>             
+                                        
+                                            <td> <i class="fa fa-minus-circle" @click="removeDefectoPosicionPlanta(k)" ></i> </td>          
+
+                                        </tr>
+                                    </tbody>
+                                 </table>
+                                </div>
+                           </div>
+                      </div>
+                    </div>                    
+               
                   <button class="btn btn-primary" type="submit">Guardar</button>   
            </form>    
        </div>
@@ -306,7 +447,7 @@ export default {
             en: en,
             es: es,          
 
-           // Formulario 
+           // Formulario encabezado
 
             fecha:'',
             numero_inf:'',
@@ -343,7 +484,18 @@ export default {
             kv:'',
             ma:'', 
            
-           // fin Formulario 
+           // Fin Formulario encabezado
+
+           // Formulario detalle
+            junta:'',
+            soldador1:'',
+            soldador2:'',
+            posicion:'',         
+            defectoObs:'',
+            defectoRiPlanta:'',
+            defectoRiGasoducto:'',
+
+            //Fin Formulario detalle
 
             cliente :'',
             isRX:false,
@@ -361,7 +513,16 @@ export default {
              norma_ensayos:[],
              tecnicas:[],
              ejecutor_ensayos :[],
-             tecnicas_graficos :[]
+             tecnicas_graficos :[],
+
+            
+             soldadores:[],
+             posiciones:[],
+             defectosRiPlanta:[],
+             defectosRiGasoducto:[],
+             inputsJuntasDefectosPlanta:[],
+             inputsDefectosPosicionesPlanta:[],
+             
 
 
     }},
@@ -380,6 +541,9 @@ export default {
         this.getNormaEnsayos();
         this.getTecnicas();
         this.getEjecutorEnsayo();
+        this.getSoldadores();
+        this.getDefectosRiPlanta();
+        this.getDefectosRiGasoducto();
        
     },   
     
@@ -399,7 +563,7 @@ export default {
 
     computed :{
 
-        ...mapState(['url']),
+        ...mapState(['url','AppUrl']),
         
        
      },
@@ -542,12 +706,77 @@ export default {
                 this.ejecutor_ensayos = response.data
                 });
               },
+
         resetInputsEquipos : function() {
 
                 this.fuente = '' ;
                 this.kv = '',
                 this.ma = ''
 
+        },
+
+        //detalle
+
+        getSoldadores : function(){
+
+                axios.defaults.baseURL = this.url ;
+                var urlRegistros = 'soldadores/cliente/' + this.otdata.cliente_id + '?api_token=' + Laravel.user.api_token;        
+                axios.get(urlRegistros).then(response =>{
+                this.soldadores = response.data
+                });
+             
+        },
+
+        getDefectosRiPlanta : function(){
+
+                axios.defaults.baseURL = this.url ;
+                var urlRegistros = 'defectos_ri/planta/' + '?api_token=' + Laravel.user.api_token;        
+                axios.get(urlRegistros).then(response =>{
+                this.defectosRiPlanta = response.data
+                });
+             
+        },
+        getDefectosRiGasoducto : function(){
+
+                axios.defaults.baseURL = this.url ;
+                var urlRegistros = 'defectos_ri/gasoducto/' + '?api_token=' + Laravel.user.api_token;        
+                axios.get(urlRegistros).then(response =>{
+                this.defectosRiGasoducto = response.data
+                });
+             
+        },
+
+        addJuntaDefectosPlanta (index) {
+
+       
+
+            this.inputsJuntasDefectosPlanta.push({ 
+                junta: this.junta,
+                soldador1: this.soldador1,
+                soldador2: this.soldador2,     
+                posicion :this.posicion, 
+                aceptable_sn : false ,
+                observacion : this.observacion,
+                           
+                 });                  
+
+        },
+
+        removeJuntaDefectosPlanta(index) {
+            this.inputsJuntasDefectosPlanta.splice(index, 1);
+        },
+
+        addDefectoPosicionPlanta (index) {
+            this.inputsDefectosPosicionesPlanta.push({ 
+                codigo: this.defectoRiPlanta.codigo,
+                descripcion: this.defectoRiPlanta.descripcion,
+                    
+                 });                  
+
+        },
+
+        removeDefectoPosicionPlanta(index) {
+            this.inputsDefectosPosicionesPlanta.splice(index, 1);
         },
 
         Store : function(){
@@ -635,5 +864,8 @@ export default {
 <style scoped>
 .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
      background-color: #eee;
+}
+.checkbox-inline {
+    margin-left: 0px;
 }
 </style>
