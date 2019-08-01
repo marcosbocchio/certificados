@@ -3507,6 +3507,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3579,6 +3587,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       defectoObs: '',
       defectoRiPlanta: '',
       defectoRiGasoducto: '',
+      indexPosPlanta: 0,
       //Fin Formulario detalle
       cliente: '',
       isRX: false,
@@ -3601,7 +3610,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       defectosRiPlanta: [],
       defectosRiGasoducto: [],
       inputsJuntasDefectosPlanta: [],
-      inputsDefectosPosicionesPlanta: []
+      inputsDefectosPosicionesPlanta: [{
+        defectosPosicion: []
+      }]
     };
   },
   created: function created() {
@@ -3791,27 +3802,68 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this17.defectosRiGasoducto = response.data;
       });
     },
-    addJuntaDefectosPlanta: function addJuntaDefectosPlanta(index) {
+    selectPosPlanta: function selectPosPlanta(index) {
+      this.indexPosPlanta = index;
+    },
+    addJuntaDefectosPlanta: function addJuntaDefectosPlanta(posicion) {
+      console.log(posicion);
       this.inputsJuntasDefectosPlanta.push({
         junta: this.junta,
         soldador1: this.soldador1,
         soldador2: this.soldador2,
-        posicion: this.posicion,
+        posicion: typeof posicion !== 'undefined' ? posicion : this.posicion,
         aceptable_sn: false,
-        observacion: this.observacion
+        observacion: this.observacion,
+        defectosPosicion: []
       });
+      this.inputsDefectosPosicionesPlanta = JSON.parse(JSON.stringify(this.inputsJuntasDefectosPlanta));
     },
     removeJuntaDefectosPlanta: function removeJuntaDefectosPlanta(index) {
+      if (this.inputsJuntasDefectosPlanta.length == 1) {
+        this.inputsDefectosPosicionesPlanta = [{
+          defectosPosicion: []
+        }];
+      }
+
       this.inputsJuntasDefectosPlanta.splice(index, 1);
+      this.inputsDefectosPosicionesPlanta = JSON.parse(JSON.stringify(this.inputsJuntasDefectosPlanta));
+      this.indexPosPlanta = 0;
     },
     addDefectoPosicionPlanta: function addDefectoPosicionPlanta(index) {
-      this.inputsDefectosPosicionesPlanta.push({
+      this.inputsDefectosPosicionesPlanta = JSON.parse(JSON.stringify(this.inputsJuntasDefectosPlanta));
+      this.inputsDefectosPosicionesPlanta[this.indexPosPlanta].defectosPosicion.push({
         codigo: this.defectoRiPlanta.codigo,
         descripcion: this.defectoRiPlanta.descripcion
       });
+      this.inputsJuntasDefectosPlanta = JSON.parse(JSON.stringify(this.inputsDefectosPosicionesPlanta));
     },
     removeDefectoPosicionPlanta: function removeDefectoPosicionPlanta(index) {
-      this.inputsDefectosPosicionesPlanta.splice(index, 1);
+      this.inputsDefectosPosicionesPlanta[this.indexPosPlanta].defectosPosicion.splice(index, 1);
+      this.inputsJuntasDefectosPlanta = JSON.parse(JSON.stringify(this.inputsDefectosPosicionesPlanta));
+    },
+    insertarClonacion: function insertarClonacion(posicion) {
+      this.addJuntaDefectosPlanta(posicion);
+    },
+    ClonarPosPlanta: function ClonarPosPlanta() {
+      console.log("entro en clonar");
+
+      if (this.inputsJuntasDefectosPlanta.length > 0) {
+        var inputsJuntasDefectosPlantaReverse = JSON.parse(JSON.stringify(this.inputsJuntasDefectosPlanta));
+        var x = inputsJuntasDefectosPlantaReverse.length - 1;
+        var juntaAux = inputsJuntasDefectosPlantaReverse[x].junta;
+        var posicionJunta = [];
+        console.log(juntaAux);
+        console.log(inputsJuntasDefectosPlantaReverse.length);
+
+        while (x >= 0 && juntaAux == inputsJuntasDefectosPlantaReverse[x].junta) {
+          posicionJunta.unshift(inputsJuntasDefectosPlantaReverse[x].posicion);
+          x = x - 1;
+        }
+
+        posicionJunta.forEach(function (pos) {
+          this.addJuntaDefectosPlanta(pos);
+        }.bind(this));
+      }
     },
     Store: function Store() {
       var _this18 = this;
@@ -41265,114 +41317,108 @@ var render = function() {
           _c("div", { staticClass: "box box-danger" }, [
             _c("div", { staticClass: "box-body" }, [
               _c("div", { staticClass: "col-md-2" }, [
-                _c("div", { staticClass: "form-group" }, [
-                  _c("label", { attrs: { for: "junta" } }, [_vm._v("Junta")]),
+                _c("label", { attrs: { for: "junta" } }, [_vm._v("Junta")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.junta,
+                      expression: "junta"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text", id: "junta" },
+                  domProps: { value: _vm.junta },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.junta = $event.target.value
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "col-md-3" },
+                [
+                  _c("label", [_vm._v("Cunio 1")]),
                   _vm._v(" "),
-                  _c("input", {
-                    directives: [
+                  _c("v-select", {
+                    attrs: { options: _vm.soldadores, label: "nombre" },
+                    scopedSlots: _vm._u([
                       {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.junta,
-                        expression: "junta"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { type: "text", id: "junta" },
-                    domProps: { value: _vm.junta },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
+                        key: "option",
+                        fn: function(option) {
+                          return [
+                            _c("span", { staticClass: "upSelect" }, [
+                              _vm._v(_vm._s(option.nombre) + " ")
+                            ]),
+                            _vm._v(" "),
+                            _c("br"),
+                            _vm._v(" "),
+                            _c("span", { staticClass: "downSelect" }, [
+                              _vm._v("   " + _vm._s(option.codigo) + " ")
+                            ])
+                          ]
                         }
-                        _vm.junta = $event.target.value
                       }
+                    ]),
+                    model: {
+                      value: _vm.soldador1,
+                      callback: function($$v) {
+                        _vm.soldador1 = $$v
+                      },
+                      expression: "soldador1"
                     }
                   })
-                ])
-              ]),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "col-md-3" },
+                [
+                  _c("label", [_vm._v("Cunio 2")]),
+                  _vm._v(" "),
+                  _c("v-select", {
+                    attrs: { options: _vm.soldadores, label: "nombre" },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "option",
+                        fn: function(option) {
+                          return [
+                            _c("span", { staticClass: "upSelect" }, [
+                              _vm._v(_vm._s(option.nombre) + " ")
+                            ]),
+                            _vm._v(" "),
+                            _c("br"),
+                            _vm._v(" "),
+                            _c("span", { staticClass: "downSelect" }, [
+                              _vm._v("   " + _vm._s(option.codigo) + " ")
+                            ])
+                          ]
+                        }
+                      }
+                    ]),
+                    model: {
+                      value: _vm.soldador2,
+                      callback: function($$v) {
+                        _vm.soldador2 = $$v
+                      },
+                      expression: "soldador2"
+                    }
+                  })
+                ],
+                1
+              ),
               _vm._v(" "),
               _c("div", { staticClass: "col-md-3" }, [
-                _c(
-                  "div",
-                  { staticClass: "form-group" },
-                  [
-                    _c("label", [_vm._v("Cunio 1")]),
-                    _vm._v(" "),
-                    _c("v-select", {
-                      attrs: { options: _vm.soldadores, label: "nombre" },
-                      scopedSlots: _vm._u([
-                        {
-                          key: "option",
-                          fn: function(option) {
-                            return [
-                              _c("span", { staticClass: "upSelect" }, [
-                                _vm._v(_vm._s(option.nombre) + " ")
-                              ]),
-                              _vm._v(" "),
-                              _c("br"),
-                              _vm._v(" "),
-                              _c("span", { staticClass: "downSelect" }, [
-                                _vm._v("   " + _vm._s(option.codigo) + " ")
-                              ])
-                            ]
-                          }
-                        }
-                      ]),
-                      model: {
-                        value: _vm.soldador1,
-                        callback: function($$v) {
-                          _vm.soldador1 = $$v
-                        },
-                        expression: "soldador1"
-                      }
-                    })
-                  ],
-                  1
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-3" }, [
-                _c(
-                  "div",
-                  { staticClass: "form-group" },
-                  [
-                    _c("label", [_vm._v("Cunio 2")]),
-                    _vm._v(" "),
-                    _c("v-select", {
-                      attrs: { options: _vm.soldadores, label: "nombre" },
-                      scopedSlots: _vm._u([
-                        {
-                          key: "option",
-                          fn: function(option) {
-                            return [
-                              _c("span", { staticClass: "upSelect" }, [
-                                _vm._v(_vm._s(option.nombre) + " ")
-                              ]),
-                              _vm._v(" "),
-                              _c("br"),
-                              _vm._v(" "),
-                              _c("span", { staticClass: "downSelect" }, [
-                                _vm._v("   " + _vm._s(option.codigo) + " ")
-                              ])
-                            ]
-                          }
-                        }
-                      ]),
-                      model: {
-                        value: _vm.soldador2,
-                        callback: function($$v) {
-                          _vm.soldador2 = $$v
-                        },
-                        expression: "soldador2"
-                      }
-                    })
-                  ],
-                  1
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-2" }, [
                 _c("div", { staticClass: "form-group" }, [
                   _c("label", { attrs: { for: "posicion" } }, [
                     _vm._v("Posición")
@@ -41404,46 +41450,32 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "col-md-2" }, [
                 _c("div", { staticClass: "form-group" }, [
-                  _c("label", { attrs: { for: "defectoObs" } }, [
-                    _vm._v("observación")
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.defectoObs,
-                        expression: "defectoObs"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { type: "text", id: "defectoObs" },
-                    domProps: { value: _vm.defectoObs },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary btn-xs",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.ClonarPosPlanta()
                         }
-                        _vm.defectoObs = $event.target.value
                       }
-                    }
-                  })
+                    },
+                    [_vm._v("Clonar Pos")]
+                  )
                 ])
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "col-md-1" }, [
-                _c("div", { staticClass: "form-group" }, [
-                  _c("span", [
-                    _c("i", {
-                      staticClass: "fa fa-plus-circle",
-                      on: {
-                        click: function($event) {
-                          return _vm.addJuntaDefectosPlanta()
-                        }
+                _c("span", [
+                  _c("i", {
+                    staticClass: "fa fa-plus-circle",
+                    on: {
+                      click: function($event) {
+                        return _vm.addJuntaDefectosPlanta()
                       }
-                    })
-                  ])
+                    }
+                  })
                 ])
               ]),
               _vm._v(" "),
@@ -41467,9 +41499,7 @@ var render = function() {
                               key: k,
                               on: {
                                 click: function($event) {
-                                  return _vm.selectPosicion(
-                                    inputsJuntaDefectosPlanta
-                                  )
+                                  return _vm.selectPosPlanta(k)
                                 }
                               }
                             },
@@ -41568,9 +41598,37 @@ var render = function() {
                               ]),
                               _vm._v(" "),
                               _c("td", [
-                                _vm._v(
-                                  _vm._s(inputsJuntaDefectosPlanta.observacion)
-                                )
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value:
+                                        _vm.inputsJuntasDefectosPlanta[k]
+                                          .observacion,
+                                      expression:
+                                        "inputsJuntasDefectosPlanta[k].observacion"
+                                    }
+                                  ],
+                                  attrs: { type: "text" },
+                                  domProps: {
+                                    value:
+                                      _vm.inputsJuntasDefectosPlanta[k]
+                                        .observacion
+                                  },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.inputsJuntasDefectosPlanta[k],
+                                        "observacion",
+                                        $event.target.value
+                                      )
+                                    }
+                                  }
+                                })
                               ]),
                               _vm._v(" "),
                               _c("td", [
@@ -41596,108 +41654,129 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "box box-danger" }, [
-            _c("div", { staticClass: "box-body" }, [
-              _c("div", { staticClass: "col-md-3" }, [
-                _c(
-                  "div",
-                  { staticClass: "form-group" },
-                  [
-                    _c("label", [_vm._v("Defectos")]),
-                    _vm._v(" "),
-                    _c("v-select", {
-                      attrs: {
-                        options: _vm.defectosRiPlanta,
-                        label: "descripcion"
-                      },
-                      scopedSlots: _vm._u([
-                        {
-                          key: "option",
-                          fn: function(option) {
-                            return [
-                              _c("span", { staticClass: "upSelect" }, [
-                                _vm._v(_vm._s(option.descripcion) + " ")
-                              ]),
-                              _vm._v(" "),
-                              _c("br"),
-                              _vm._v(" "),
-                              _c("span", { staticClass: "downSelect" }, [
-                                _vm._v(_vm._s(option.codigo) + " ")
-                              ])
-                            ]
+            _c("div", { staticClass: "box-header with-border" }, [
+              _vm.inputsJuntasDefectosPlanta.length > 0
+                ? _c("div", [
+                    _c("h3", { staticClass: "box-title" }, [
+                      _vm._v(
+                        "DEFECTOS POSICIÓN: Junta  " +
+                          _vm._s(
+                            _vm.inputsJuntasDefectosPlanta[_vm.indexPosPlanta]
+                              .junta
+                          ) +
+                          " / Posición  " +
+                          _vm._s(
+                            _vm.inputsJuntasDefectosPlanta[_vm.indexPosPlanta]
+                              .posicion
+                          )
+                      )
+                    ])
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c("div", { staticClass: "box-body" }, [
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c(
+                    "div",
+                    { staticClass: "form-group" },
+                    [
+                      _c("label", [_vm._v("Defectos")]),
+                      _vm._v(" "),
+                      _c("v-select", {
+                        attrs: {
+                          options: _vm.defectosRiPlanta,
+                          label: "descripcion"
+                        },
+                        scopedSlots: _vm._u([
+                          {
+                            key: "option",
+                            fn: function(option) {
+                              return [
+                                _c("span", { staticClass: "upSelect" }, [
+                                  _vm._v(_vm._s(option.descripcion) + " ")
+                                ]),
+                                _vm._v(" "),
+                                _c("br"),
+                                _vm._v(" "),
+                                _c("span", { staticClass: "downSelect" }, [
+                                  _vm._v(_vm._s(option.codigo) + " ")
+                                ])
+                              ]
+                            }
+                          }
+                        ]),
+                        model: {
+                          value: _vm.defectoRiPlanta,
+                          callback: function($$v) {
+                            _vm.defectoRiPlanta = $$v
+                          },
+                          expression: "defectoRiPlanta"
+                        }
+                      })
+                    ],
+                    1
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-1" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("span", [
+                      _c("i", {
+                        staticClass: "fa fa-plus-circle",
+                        on: {
+                          click: function($event) {
+                            return _vm.addDefectoPosicionPlanta()
                           }
                         }
-                      ]),
-                      model: {
-                        value: _vm.defectoRiPlanta,
-                        callback: function($$v) {
-                          _vm.defectoRiPlanta = $$v
-                        },
-                        expression: "defectoRiPlanta"
-                      }
-                    })
-                  ],
-                  1
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-1" }, [
-                _c("div", { staticClass: "form-group" }, [
-                  _c("span", [
-                    _c("i", {
-                      staticClass: "fa fa-plus-circle",
-                      on: {
-                        click: function($event) {
-                          return _vm.addDefectoPosicionPlanta()
-                        }
-                      }
-                    })
+                      })
+                    ])
                   ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-12" }, [
-                _c("div", { staticClass: "table-responsive" }, [
-                  _c(
-                    "table",
-                    { staticClass: "table table-hover table-striped" },
-                    [
-                      _vm._m(2),
-                      _vm._v(" "),
-                      _c(
-                        "tbody",
-                        _vm._l(_vm.inputsDefectosPosicionesPlanta, function(
-                          inputsDefectosPosicionPlanta,
-                          k
-                        ) {
-                          return _c("tr", { key: k }, [
-                            _c("td", [
-                              _vm._v(
-                                _vm._s(inputsDefectosPosicionPlanta.codigo)
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("td", [
-                              _vm._v(
-                                _vm._s(inputsDefectosPosicionPlanta.descripcion)
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("td", [
-                              _c("i", {
-                                staticClass: "fa fa-minus-circle",
-                                on: {
-                                  click: function($event) {
-                                    return _vm.removeDefectoPosicionPlanta(k)
-                                  }
-                                }
-                              })
-                            ])
-                          ])
-                        }),
-                        0
-                      )
-                    ]
-                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-12" }, [
+                  _c("div", { staticClass: "table-responsive" }, [
+                    _c(
+                      "table",
+                      { staticClass: "table table-hover table-striped" },
+                      [
+                        _vm._m(2),
+                        _vm._v(" "),
+                        _c(
+                          "tbody",
+                          _vm._l(
+                            _vm.inputsDefectosPosicionesPlanta[
+                              _vm.indexPosPlanta
+                            ].defectosPosicion,
+                            function(defectoPosicion, k) {
+                              return _c("tr", { key: k }, [
+                                _c("td", [
+                                  _vm._v(_vm._s(defectoPosicion.codigo))
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _vm._v(_vm._s(defectoPosicion.descripcion))
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _c("i", {
+                                    staticClass: "fa fa-minus-circle",
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.removeDefectoPosicionPlanta(
+                                          k
+                                        )
+                                      }
+                                    }
+                                  })
+                                ])
+                              ])
+                            }
+                          ),
+                          0
+                        )
+                      ]
+                    )
+                  ])
                 ])
               ])
             ])

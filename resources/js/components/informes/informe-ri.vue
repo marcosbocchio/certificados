@@ -270,16 +270,16 @@
                <!-- Detalle RI Planta -->
                <div class="box box-danger">
                 <div class="box-body">
-                    
+                  
                     <div class="col-md-2">                       
-                         <div class="form-group" >
+                         
                         
                             <label for="junta">Junta</label>
                             <input type="text" v-model="junta" class="form-control" id="junta">
-                        </div>         
+                      
                     </div>       
                     <div class="col-md-3">
-                        <div class="form-group" >
+                        
                             <label>Cunio 1</label>           
                             <v-select v-model="soldador1" :options="soldadores" label="nombre">
                                 <template slot="option" slot-scope="option">
@@ -287,10 +287,10 @@
                                     <span class="downSelect">   {{ option.codigo }} </span>
                                 </template>
                             </v-select>                
-                       </div>
+                      
                     </div> 
                     <div class="col-md-3">
-                        <div class="form-group" >        
+                         
                             <label>Cunio 2</label>           
                             <v-select v-model="soldador2" :options="soldadores" label="nombre">
                                 <template slot="option" slot-scope="option">
@@ -298,28 +298,29 @@
                                     <span class="downSelect">   {{ option.codigo }} </span>
                                 </template>
                             </v-select>                
-                        </div>    
+                      
                     </div>      
-                    <div class="col-md-2">                       
-                        <div class="form-group" >
-                        
+                        <div class="col-md-3">                       
+                          <div class="form-group" >
+                            
                             <label for="posicion">Posición</label>
+
                             <input type="text" v-model="posicion" class="form-control" id="posicion">
-                        </div>         
-                    </div>
-                    <div class="col-md-2">                       
-                        <div class="form-group" >
-                        
-                            <label for="defectoObs">observación</label>
-                            <input type="text" v-model="defectoObs" class="form-control" id="defectoObs">
-                        </div>         
-                    </div>                                         
+                           
+                             </div>     
+                        </div>       
+                        <div class="col-md-2"> 
+                            <div class="form-group" >
+                               <button type="button" class="btn btn-primary btn-xs" @click="ClonarPosPlanta()">Clonar Pos</button>
+                            </div> 
+                        </div>  
+                                                             
                     <div class="col-md-1"> 
-                        <div class="form-group">                    
+                                 
                           <span>
                               <i class="fa fa-plus-circle" @click="addJuntaDefectosPlanta()"></i>
                           </span>
-                        </div>
+                       
                     </div>
                     
                     <div class="col-md-12">
@@ -339,13 +340,13 @@
                                     </tr>
                                 </thead>                         
                                 <tbody>
-                                    <tr v-for="(inputsJuntaDefectosPlanta,k) in inputsJuntasDefectosPlanta" :key="k" @click="selectPosicion(inputsJuntaDefectosPlanta)">
+                                    <tr v-for="(inputsJuntaDefectosPlanta,k) in inputsJuntasDefectosPlanta" :key="k" @click="selectPosPlanta(k)">
                                         <td>{{ inputsJuntaDefectosPlanta.junta }}</td>
                                         <td>{{ inputsJuntaDefectosPlanta.soldador1.nombre }} </td>
                                         <td>{{ inputsJuntaDefectosPlanta.soldador2.nombre }} </td>   
                                         <td>{{ inputsJuntaDefectosPlanta.posicion }} </td>   
                                         <td> <input type="checkbox" id="checkbox" v-model="inputsJuntasDefectosPlanta[k].aceptable_sn">  </td>                                 
-                                        <td>{{ inputsJuntaDefectosPlanta.observacion }}</td>
+                                        <td><input type="text" v-model="inputsJuntasDefectosPlanta[k].observacion"></td>
                                        
                                         <td> <i class="fa fa-minus-circle" @click="removeJuntaDefectosPlanta(k)" ></i> </td>          
 
@@ -358,7 +359,12 @@
                    </div>
 
                     <div class="box box-danger">
-                      <div class="box-body">                        
+                       <div class="box-header with-border">
+                           <div v-if="inputsJuntasDefectosPlanta.length > 0">
+                              <h3 class="box-title">DEFECTOS POSICIÓN: Junta  {{ inputsJuntasDefectosPlanta[indexPosPlanta].junta}} / Posición  {{ inputsJuntasDefectosPlanta[indexPosPlanta].posicion}}</h3>  
+                           </div>
+                      <div class="box-body"> 
+                                                   
                         <div class="col-md-3">                          
                            <div class="form-group" >
                                 <label>Defectos</label>           
@@ -370,6 +376,7 @@
                                 </v-select>                
                             </div>   
                         </div>  
+                          
                         <div class="col-md-1"> 
                         <div class="form-group">                    
                             <span>
@@ -388,9 +395,9 @@
                                         </tr>
                                     </thead>                         
                                     <tbody>
-                                        <tr v-for="(inputsDefectosPosicionPlanta,k) in inputsDefectosPosicionesPlanta" :key="k">
-                                            <td>{{ inputsDefectosPosicionPlanta.codigo }}</td>    
-                                            <td>{{ inputsDefectosPosicionPlanta.descripcion }}</td>             
+                                        <tr v-for="(defectoPosicion,k) in inputsDefectosPosicionesPlanta[indexPosPlanta].defectosPosicion" :key="k">
+                                            <td>{{ defectoPosicion.codigo }}</td>    
+                                            <td>{{ defectoPosicion.descripcion }}</td>             
                                         
                                             <td> <i class="fa fa-minus-circle" @click="removeDefectoPosicionPlanta(k)" ></i> </td>          
 
@@ -399,6 +406,7 @@
                                  </table>
                                 </div>
                            </div>
+                       </div>
                       </div>
                     </div>                    
                
@@ -494,6 +502,7 @@ export default {
             defectoObs:'',
             defectoRiPlanta:'',
             defectoRiGasoducto:'',
+            indexPosPlanta:0,
 
             //Fin Formulario detalle
 
@@ -520,8 +529,8 @@ export default {
              posiciones:[],
              defectosRiPlanta:[],
              defectosRiGasoducto:[],
-             inputsJuntasDefectosPlanta:[],
-             inputsDefectosPosicionesPlanta:[],
+             inputsJuntasDefectosPlanta:[]  ,
+             inputsDefectosPosicionesPlanta:[ { defectosPosicion : []}],
              
 
 
@@ -746,37 +755,81 @@ export default {
              
         },
 
-        addJuntaDefectosPlanta (index) {
+        selectPosPlanta :function(index){
 
-       
+            this.indexPosPlanta = index ;
+        },
+
+        addJuntaDefectosPlanta (posicion) { 
+            
+            console.log(posicion);
 
             this.inputsJuntasDefectosPlanta.push({ 
                 junta: this.junta,
                 soldador1: this.soldador1,
                 soldador2: this.soldador2,     
-                posicion :this.posicion, 
+                posicion : (typeof(posicion) !== 'undefined') ? posicion : this.posicion, 
                 aceptable_sn : false ,
                 observacion : this.observacion,
-                           
+                defectosPosicion : []           
                  });                  
 
+            this.inputsDefectosPosicionesPlanta = JSON.parse(JSON.stringify(this.inputsJuntasDefectosPlanta)) ;
         },
 
         removeJuntaDefectosPlanta(index) {
+
+            if (this.inputsJuntasDefectosPlanta.length == 1){
+                this.inputsDefectosPosicionesPlanta = [ { defectosPosicion : []}]
+            }
             this.inputsJuntasDefectosPlanta.splice(index, 1);
+            this.inputsDefectosPosicionesPlanta = JSON.parse(JSON.stringify(this.inputsJuntasDefectosPlanta)) ;
+            this.indexPosPlanta = 0;
         },
 
         addDefectoPosicionPlanta (index) {
-            this.inputsDefectosPosicionesPlanta.push({ 
-                codigo: this.defectoRiPlanta.codigo,
-                descripcion: this.defectoRiPlanta.descripcion,
-                    
-                 });                  
+            this.inputsDefectosPosicionesPlanta = JSON.parse(JSON.stringify(this.inputsJuntasDefectosPlanta)) ;
 
+            this.inputsDefectosPosicionesPlanta[this.indexPosPlanta].defectosPosicion.push({ 
+                codigo: this.defectoRiPlanta.codigo,
+                descripcion: this.defectoRiPlanta.descripcion,                    
+                 });                  
+            this.inputsJuntasDefectosPlanta = JSON.parse(JSON.stringify(this.inputsDefectosPosicionesPlanta)) ;
         },
 
         removeDefectoPosicionPlanta(index) {
-            this.inputsDefectosPosicionesPlanta.splice(index, 1);
+            this.inputsDefectosPosicionesPlanta[this.indexPosPlanta].defectosPosicion.splice(index, 1);
+             this.inputsJuntasDefectosPlanta = JSON.parse(JSON.stringify(this.inputsDefectosPosicionesPlanta)) ;
+        },
+
+        insertarClonacion : function (posicion){
+
+           this.addJuntaDefectosPlanta(posicion);
+        },
+
+        ClonarPosPlanta : function(){
+            console.log("entro en clonar");
+
+            if(this.inputsJuntasDefectosPlanta.length > 0){
+
+                let inputsJuntasDefectosPlantaReverse =  JSON.parse(JSON.stringify(this.inputsJuntasDefectosPlanta));         
+                let x = inputsJuntasDefectosPlantaReverse.length-1;
+                let juntaAux = inputsJuntasDefectosPlantaReverse[x].junta;
+                let posicionJunta =[];
+
+                console.log(juntaAux);
+                console.log(inputsJuntasDefectosPlantaReverse.length);
+                while (  (x >= 0)  && (juntaAux == inputsJuntasDefectosPlantaReverse[x].junta)) {     
+
+                    posicionJunta.unshift(inputsJuntasDefectosPlantaReverse[x].posicion);                    
+                    x = x - 1;
+                }
+
+                posicionJunta.forEach(function(pos) {
+
+                    this.addJuntaDefectosPlanta(pos);       
+                }.bind(this));
+            }
         },
 
         Store : function(){
