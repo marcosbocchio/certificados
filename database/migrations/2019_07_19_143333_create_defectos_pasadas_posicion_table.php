@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDefectosPosicionTable extends Migration
+class CreateDefectosPasadasPosicionTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreateDefectosPosicionTable extends Migration
      */
     public function up()
     {
-        Schema::create('defectos_posicion', function (Blueprint $table) {
+        Schema::create('defectos_pasadas_posicion', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('posicion');
+            $table->integer('posicion')
+            ->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ class CreateDefectosPosicionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('defectos_posicion');
+        Schema::dropIfExists('defectos_pasadas_posicion');
     }
 }

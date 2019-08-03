@@ -15,13 +15,39 @@ class AddForeignKeyPasadasPosicionTable extends Migration
     {
         Schema::table('pasadas_posicion', function (Blueprint $table) {
 
-            $table->bigInteger('junta_id')
+            $table->bigInteger('posicion_id')
                    ->unsigned()
                    ->after('numero');
                    
-            $table->foreign('junta_id')
+            $table->foreign('posicion_id')
                    ->references('id')
-                   ->on('juntas');      
+                   ->on('posicion');     
+                   
+            $table->bigInteger('soldadorz_id')
+                   ->unsigned()
+                   ->after('posicion_id');
+                   
+            $table->foreign('soldadorz_id')
+                   ->references('id')
+                   ->on('soldadores');
+            
+            $table->bigInteger('soldadorl_id')
+                   ->unsigned()
+                   ->nullable()
+                   ->after('soldadorz_id');
+                   
+            $table->foreign('soldadorl_id')
+                   ->references('id')
+                   ->on('soldadores');
+
+            $table->bigInteger('soldadorp_id')
+                   ->unsigned()
+                   ->nullable()
+                   ->after('soldadorl_id');
+                   
+            $table->foreign('soldadorp_id')
+                   ->references('id')
+                   ->on('soldadores');  
          
 
         });
@@ -36,8 +62,17 @@ class AddForeignKeyPasadasPosicionTable extends Migration
     {
         Schema::table('pasadas_posicion', function (Blueprint $table) {
 
-            $table->dropForeign(['junta_id']);
-            $table->dropColumn('junta_id');
+            $table->dropForeign(['posicion_id']);
+            $table->dropColumn('posicion_id');
+
+            $table->dropForeign(['soldadorz_id']);
+            $table->dropColumn('soldadorz_id');
+
+            $table->dropForeign(['soldadorl_id']);
+            $table->dropColumn('soldadorl_id');
+
+            $table->dropForeign(['soldadorp_id']);
+            $table->dropColumn('soldadorp_id');
 
 
         });

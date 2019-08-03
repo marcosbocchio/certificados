@@ -3515,6 +3515,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -3609,10 +3613,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       posiciones: [],
       defectosRiPlanta: [],
       defectosRiGasoducto: [],
-      inputsJuntasDefectosPlanta: [],
-      inputsDefectosPosicionesPlanta: [{
-        defectosPosicion: []
-      }]
+      inputsJuntasDefectosPlanta: []
     };
   },
   created: function created() {
@@ -3813,33 +3814,26 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         soldador2: this.soldador2,
         posicion: typeof posicion !== 'undefined' ? posicion : this.posicion,
         aceptable_sn: false,
-        observacion: this.observacion,
+        observacion: '',
         defectosPosicion: []
       });
-      this.inputsDefectosPosicionesPlanta = JSON.parse(JSON.stringify(this.inputsJuntasDefectosPlanta));
     },
     removeJuntaDefectosPlanta: function removeJuntaDefectosPlanta(index) {
-      if (this.inputsJuntasDefectosPlanta.length == 1) {
-        this.inputsDefectosPosicionesPlanta = [{
-          defectosPosicion: []
-        }];
-      }
-
-      this.inputsJuntasDefectosPlanta.splice(index, 1);
-      this.inputsDefectosPosicionesPlanta = JSON.parse(JSON.stringify(this.inputsJuntasDefectosPlanta));
       this.indexPosPlanta = 0;
+      console.log('indexposplatanta antes de borrar' + this.indexPosPlanta);
+      console.log('index antes de borrar' + index);
+      this.inputsJuntasDefectosPlanta.splice(index, 1);
+      console.log('indexposplatanta despues de borrar' + this.indexPosPlanta);
     },
     addDefectoPosicionPlanta: function addDefectoPosicionPlanta(index) {
-      this.inputsDefectosPosicionesPlanta = JSON.parse(JSON.stringify(this.inputsJuntasDefectosPlanta));
-      this.inputsDefectosPosicionesPlanta[this.indexPosPlanta].defectosPosicion.push({
+      this.inputsJuntasDefectosPlanta[this.indexPosPlanta].defectosPosicion.push({
         codigo: this.defectoRiPlanta.codigo,
-        descripcion: this.defectoRiPlanta.descripcion
+        descripcion: this.defectoRiPlanta.descripcion,
+        id: this.defectoRiPlanta.id
       });
-      this.inputsJuntasDefectosPlanta = JSON.parse(JSON.stringify(this.inputsDefectosPosicionesPlanta));
     },
     removeDefectoPosicionPlanta: function removeDefectoPosicionPlanta(index) {
-      this.inputsDefectosPosicionesPlanta[this.indexPosPlanta].defectosPosicion.splice(index, 1);
-      this.inputsJuntasDefectosPlanta = JSON.parse(JSON.stringify(this.inputsDefectosPosicionesPlanta));
+      this.inputsJuntasDefectosPlanta[this.indexPosPlanta].defectosPosicion.splice(index, 1);
     },
     insertarClonacion: function insertarClonacion(posicion) {
       this.addJuntaDefectosPlanta(posicion);
@@ -3870,6 +3864,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.errors = [];
       var gasoducto_sn = this.formato == 'GASODUCTO' ? true : false;
+      var defectos = this.formato == 'PLANTA' ? this.inputsJuntasDefectosPlanta : false;
       var urlRegistros = 'informes_ri';
       axios({
         method: 'post',
@@ -3910,7 +3905,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           'eps': this.eps,
           'pqr': this.pqr,
           'actividad': this.actividad,
-          'exposicion': this.exposicion
+          'exposicion': this.exposicion,
+          'detalles': defectos
         }
       }).then(function (response) {
         _this18.response = response.data;
@@ -41655,25 +41651,6 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "box box-danger" }, [
             _c("div", { staticClass: "box-header with-border" }, [
-              _vm.inputsJuntasDefectosPlanta.length > 0
-                ? _c("div", [
-                    _c("h3", { staticClass: "box-title" }, [
-                      _vm._v(
-                        "DEFECTOS POSICIÓN: Junta  " +
-                          _vm._s(
-                            _vm.inputsJuntasDefectosPlanta[_vm.indexPosPlanta]
-                              .junta
-                          ) +
-                          " / Posición  " +
-                          _vm._s(
-                            _vm.inputsJuntasDefectosPlanta[_vm.indexPosPlanta]
-                              .posicion
-                          )
-                      )
-                    ])
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
               _c("div", { staticClass: "box-body" }, [
                 _c("div", { staticClass: "col-md-3" }, [
                   _c(
@@ -41744,9 +41721,13 @@ var render = function() {
                         _c(
                           "tbody",
                           _vm._l(
-                            _vm.inputsDefectosPosicionesPlanta[
-                              _vm.indexPosPlanta
-                            ].defectosPosicion,
+                            _vm.inputsJuntasDefectosPlanta.length > 0 &&
+                              _vm.inputsJuntasDefectosPlanta[_vm.indexPosPlanta]
+                                .defectosPosicion.length > 0
+                              ? _vm.inputsJuntasDefectosPlanta[
+                                  _vm.indexPosPlanta
+                                ].defectosPosicion
+                              : [],
                             function(defectoPosicion, k) {
                               return _c("tr", { key: k }, [
                                 _c("td", [

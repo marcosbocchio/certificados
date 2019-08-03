@@ -340,7 +340,7 @@
                                     </tr>
                                 </thead>                         
                                 <tbody>
-                                    <tr v-for="(inputsJuntaDefectosPlanta,k) in inputsJuntasDefectosPlanta" :key="k" @click="selectPosPlanta(k)">
+                                    <tr v-for="(inputsJuntaDefectosPlanta,k) in (inputsJuntasDefectosPlanta)" :key="k" @click="selectPosPlanta(k)">
                                         <td>{{ inputsJuntaDefectosPlanta.junta }}</td>
                                         <td>{{ inputsJuntaDefectosPlanta.soldador1.nombre }} </td>
                                         <td>{{ inputsJuntaDefectosPlanta.soldador2.nombre }} </td>   
@@ -359,10 +359,13 @@
                    </div>
 
                     <div class="box box-danger">
+                        
                        <div class="box-header with-border">
-                           <div v-if="inputsJuntasDefectosPlanta.length > 0">
+                        <!--
+                           <div v-if="inputsJuntasDefectosPlanta && inputsJuntasDefectosPlanta.length > 0">
                               <h3 class="box-title">DEFECTOS POSICIÓN: Junta  {{ inputsJuntasDefectosPlanta[indexPosPlanta].junta}} / Posición  {{ inputsJuntasDefectosPlanta[indexPosPlanta].posicion}}</h3>  
                            </div>
+                        -->
                       <div class="box-body"> 
                                                    
                         <div class="col-md-3">                          
@@ -383,7 +386,7 @@
                                 <i class="fa fa-plus-circle" @click="addDefectoPosicionPlanta()"></i>
                             </span>
                             </div>
-                        </div>
+                        </div>                      
                         <div class="col-md-12">
                             <div class="table-responsive">
                                 <table class="table table-hover table-striped">
@@ -395,7 +398,8 @@
                                         </tr>
                                     </thead>                         
                                     <tbody>
-                                        <tr v-for="(defectoPosicion,k) in inputsDefectosPosicionesPlanta[indexPosPlanta].defectosPosicion" :key="k">
+                                        <tr v-for="(defectoPosicion,k) in 
+                                         (( (inputsJuntasDefectosPlanta.length > 0) && (inputsJuntasDefectosPlanta[indexPosPlanta].defectosPosicion.length > 0 )) ? inputsJuntasDefectosPlanta[indexPosPlanta].defectosPosicion : [])"  :key="k">
                                             <td>{{ defectoPosicion.codigo }}</td>    
                                             <td>{{ defectoPosicion.descripcion }}</td>             
                                         
@@ -498,7 +502,7 @@ export default {
             junta:'',
             soldador1:'',
             soldador2:'',
-            posicion:'',         
+            posicion:'',          
             defectoObs:'',
             defectoRiPlanta:'',
             defectoRiGasoducto:'',
@@ -529,8 +533,8 @@ export default {
              posiciones:[],
              defectosRiPlanta:[],
              defectosRiGasoducto:[],
-             inputsJuntasDefectosPlanta:[]  ,
-             inputsDefectosPosicionesPlanta:[ { defectosPosicion : []}],
+             inputsJuntasDefectosPlanta:[],           
+           
              
 
 
@@ -770,36 +774,38 @@ export default {
                 soldador2: this.soldador2,     
                 posicion : (typeof(posicion) !== 'undefined') ? posicion : this.posicion, 
                 aceptable_sn : false ,
-                observacion : this.observacion,
+                observacion : '',
                 defectosPosicion : []           
                  });                  
 
-            this.inputsDefectosPosicionesPlanta = JSON.parse(JSON.stringify(this.inputsJuntasDefectosPlanta)) ;
+           
         },
 
         removeJuntaDefectosPlanta(index) {
-
-            if (this.inputsJuntasDefectosPlanta.length == 1){
-                this.inputsDefectosPosicionesPlanta = [ { defectosPosicion : []}]
-            }
+          this.indexPosPlanta = 0;
+          console.log('indexposplatanta antes de borrar' + this.indexPosPlanta);
+          console.log('index antes de borrar' + index);
+           
             this.inputsJuntasDefectosPlanta.splice(index, 1);
-            this.inputsDefectosPosicionesPlanta = JSON.parse(JSON.stringify(this.inputsJuntasDefectosPlanta)) ;
-            this.indexPosPlanta = 0;
+            console.log('indexposplatanta despues de borrar' + this.indexPosPlanta);
+            
+            
         },
 
         addDefectoPosicionPlanta (index) {
-            this.inputsDefectosPosicionesPlanta = JSON.parse(JSON.stringify(this.inputsJuntasDefectosPlanta)) ;
+         
 
-            this.inputsDefectosPosicionesPlanta[this.indexPosPlanta].defectosPosicion.push({ 
+            this.inputsJuntasDefectosPlanta[this.indexPosPlanta].defectosPosicion.push({ 
                 codigo: this.defectoRiPlanta.codigo,
-                descripcion: this.defectoRiPlanta.descripcion,                    
+                descripcion: this.defectoRiPlanta.descripcion,
+                id : this.defectoRiPlanta.id,                    
                  });                  
-            this.inputsJuntasDefectosPlanta = JSON.parse(JSON.stringify(this.inputsDefectosPosicionesPlanta)) ;
+           
         },
 
         removeDefectoPosicionPlanta(index) {
-            this.inputsDefectosPosicionesPlanta[this.indexPosPlanta].defectosPosicion.splice(index, 1);
-             this.inputsJuntasDefectosPlanta = JSON.parse(JSON.stringify(this.inputsDefectosPosicionesPlanta)) ;
+            this.inputsJuntasDefectosPlanta[this.indexPosPlanta].defectosPosicion.splice(index, 1);
+            
         },
 
         insertarClonacion : function (posicion){
@@ -836,7 +842,7 @@ export default {
          
             this.errors =[];
             let gasoducto_sn = this.formato =='GASODUCTO'  ? true : false ;
-         
+            let defectos = this.formato =='PLANTA' ? this.inputsJuntasDefectosPlanta : false
             var urlRegistros = 'informes_ri' ;      
             axios({
               method: 'post',
@@ -878,7 +884,8 @@ export default {
                 'eps':this.eps,
                 'pqr':this.pqr,
                 'actividad' : this.actividad,
-                'exposicion': this.exposicion,               
+                'exposicion': this.exposicion,   
+                'detalles'  : defectos,           
           }}
           
       

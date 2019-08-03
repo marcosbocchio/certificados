@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddForeignKeyDefectosPosicionTable extends Migration
+class AddForeignKeyDefectosPasadasPosicionTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,12 @@ class AddForeignKeyDefectosPosicionTable extends Migration
      */
     public function up()
     {
-        Schema::table('defectos_posicion', function (Blueprint $table) {
-
-            $table->bigInteger('posicion_id')
-                   ->unsigned()
-                   ->after('id');
-                   
-            $table->foreign('posicion_id')
-                   ->references('id')
-                   ->on('posicion');     
+        Schema::table('defectos_pasadas_posicion', function (Blueprint $table) {
+            
                    
             $table->bigInteger('defecto_ri_id')
                     ->unsigned()
-                    ->after('posicion_id');
+                    ->after('id');
                    
             $table->foreign('defecto_ri_id')
                    ->references('id')
@@ -33,7 +26,7 @@ class AddForeignKeyDefectosPosicionTable extends Migration
                    
             $table->bigInteger('pasada_posicion_id')
                     ->unsigned()
-                    ->after('posicion');
+                    ->after('defecto_ri_id');
                    
             $table->foreign('pasada_posicion_id')
                    ->references('id')
@@ -51,9 +44,7 @@ class AddForeignKeyDefectosPosicionTable extends Migration
     public function down()
     {
         Schema::table('defectos_posicion', function (Blueprint $table) {
-
-            $table->dropForeign(['posicion_id']);
-            $table->dropColumn('posicion_id');
+        
 
             $table->dropForeign(['defecto_ri_id']);
             $table->dropColumn('defecto_ri_id');

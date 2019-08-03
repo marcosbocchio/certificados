@@ -7,6 +7,11 @@ use App\Informe;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\DiametrosEspesor;
+use App\Juntas;
+use App\PasadasPosicion;
+use Exception as Exception;
+use App\Posicion;
+
 
 
 class InformesRiRepository extends BaseRepository
@@ -18,11 +23,14 @@ class InformesRiRepository extends BaseRepository
   }
 
   public function store($request){
-    
-    $informe  = new Informe;
-    
+   
+    $informe  = new Informe;    
+
     $this->saveInforme($request,$informe);
     $this->saveInformeRi($request,$informe);
+
+    
+
   }
 
   public function saveInforme($request,$informe){
@@ -79,6 +87,8 @@ class InformesRiRepository extends BaseRepository
     $informe->save();
     
 
+
+    
   }
 
   public function saveInformeRi($request,$informe){
@@ -104,8 +114,81 @@ class InformesRiRepository extends BaseRepository
 
     $informeRi->save();
 
+    if(!$request->gasoducto_sn){
+
+      $this->saveDetallePlanta($request,$informeRi);
+
+    }
+
+  }
+
+  public function saveDetallePlanta($request,$informeRi){
 
 
+   
+      foreach ($request->detalles as $detalle){       
+
+        try {
+
+         $junta = $this->saveJunta($detalle,$informeRi);     
+
+       
+          
+        } 
+        catch(Exception $e){          
+
+          if ($e->getCode() != '23000'){
+
+            throw $e;    
+
+          }
+      
+        }     
+
+        $posicion = $this->savePosicion($detalle,$junta);    
+        $pasadas_posicion = $this->savePasadasPosicion($request->gasoducto_sn,$detalle,$posicion);
+      }
+    
+  }
+
+  public function saveJunta($detalle ,$informeRi){
+
+    $junta =  new Juntas;
+    $junta->codigo = $detalle['junta'];
+    $junta->informe_ri_id = $informeRi->id;
+    $junta->save();
+    
+    return $junta;
+  }
+
+
+  public function savePosicion($detalle,$junta){
+
+    $pos = new Posicion;  
+    $pos->codigo = $detalle['posicion'];
+    $pos->descripcion = $detalle['observacion'] ;
+    $pos->junta_id = $junta['id'];
+    $pos->aceptable_sn = $detalle['aceptable_sn'];
+    $pos->save();
+
+    return $pos;
+  }
+
+  public function savePasadasPosicion($gasoducto_sn,$detalle,$posicion){
+ 
+     
+        $pasadasPosicion = new PasadasPosicion;   
+
+        if (!$gasoducto_sn)
+          $pasadasPosicion->numero = 1;  
+
+        $pasadasPosicion->posicion_id = $posicion['id'];
+        $pasadasPosicion->soldadorz_id = $detalle['soldador1']['id'];               
+        $pasadasPosicion->soldadorl_id = $detalle['soldador2']['id'];
+        $pasadasPosicion->save();       
+
+        return $pasadasPosicion;
+    
   }
 
 }
