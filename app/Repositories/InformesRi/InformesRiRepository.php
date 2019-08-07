@@ -11,6 +11,7 @@ use App\Juntas;
 use App\PasadasPosicion;
 use Exception as Exception;
 use App\Posicion;
+use App\DefectosPasadasPosicion;
 
 
 
@@ -23,7 +24,8 @@ class InformesRiRepository extends BaseRepository
   }
 
   public function store($request){
-   
+
+  
     $informe  = new Informe;    
 
     $this->saveInforme($request,$informe);
@@ -147,6 +149,7 @@ class InformesRiRepository extends BaseRepository
 
         $posicion = $this->savePosicion($detalle,$junta);    
         $pasadas_posicion = $this->savePasadasPosicion($request->gasoducto_sn,$detalle,$posicion);
+      
       }
     
   }
@@ -177,18 +180,36 @@ class InformesRiRepository extends BaseRepository
   public function savePasadasPosicion($gasoducto_sn,$detalle,$posicion){
  
      
-        $pasadasPosicion = new PasadasPosicion;   
+     
+    $defectosPosicion = $detalle['defectosPosicion'];
+    $pasadas = $gasoducto_sn ? 6 : 1 ;
 
-        if (!$gasoducto_sn)
-          $pasadasPosicion->numero = 1;  
+    $i = 1;
+    do {
 
-        $pasadasPosicion->posicion_id = $posicion['id'];
-        $pasadasPosicion->soldadorz_id = $detalle['soldador1']['id'];               
-        $pasadasPosicion->soldadorl_id = $detalle['soldador2']['id'];
-        $pasadasPosicion->save();       
+      $pasadasPosicion = new PasadasPosicion;   
+      $pasadasPosicion->numero = $i;
+      $pasadasPosicion->posicion_id = $posicion['id'];
+      $pasadasPosicion->soldadorz_id = $detalle['soldador1']['id'];               
+      $pasadasPosicion->soldadorl_id = $detalle['soldador2']['id'];
+      $pasadasPosicion->save();   
+      $i++;    
+      
+        foreach ($defectosPosicion as $defectoPosicion) {
+          
+          $defectos_pasadas_posicion = new DefectosPasadasPosicion;
+          $defectos_pasadas_posicion->defecto_ri_id = $defectoPosicion['id'];
+          $defectos_pasadas_posicion->pasada_posicion_id = $pasadasPosicion->id;
+          /*  Esta linea va para gasoducto
+          $defectos_pasadas_posicion->posicion = $defectosPosicion->posicion;
+          */
+          $defectos_pasadas_posicion->save();
+        }
 
-        return $pasadasPosicion;
+    } while ($i <= $pasadas);        
     
   }
+
+ 
 
 }

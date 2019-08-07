@@ -33,9 +33,10 @@ class DatabaseSeeder extends Seeder
         $this->call(EquiposTableSeeder::class);     
         $this->call(TecnicasGraficoSeeder::class);    
         $this->call(SoldadoresSeeder::class);   
-        $this->call(DefectosRiSeeder::class);  
+        $this->call(DefectosRiSeeder::class);
+        $this->call(TecnicaDistanciasSeeder::class);   
      
-      
+        
        // factory('App\Clientes', 2500)->create();
 
 

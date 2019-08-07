@@ -6,6 +6,21 @@
 </head>
 
 <style>
+
+.encabezado {
+    position:fixed;
+    
+}
+
+
+.detalle {
+
+margin-top: 350px;
+
+}
+
+
+
 .bordered {
     border-color: #000000;
     border-style: solid;
@@ -28,7 +43,7 @@ b {
 
 <body>
     
-<table style="text-align: center" width="100%" class="bordered">
+<table style="text-align: center" width="100%" class="bordered encabezado">
     <tbody>
         <tr>
           <td>
@@ -152,6 +167,14 @@ b {
         </tr>
     </tbody>
 </table>
+
+<div style="page-break-inside:avoid;">
+
+<div class="detalle">
+    @for ($i = 0; $i < 100; $i++)
+        <p>   The current value is {{ $i }} </p><br>
+   @endfor
+<div>
 
 </body>
 </html>

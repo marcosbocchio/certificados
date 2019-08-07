@@ -61,6 +61,8 @@ class PdfInformesRiController extends Controller
                                                              'informe_ri',
                                                              'material',
                                                              'tecnicas_grafico'));
+
+  
         
         return $pdf->stream();
     }

@@ -3518,7 +3518,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 
 
 
@@ -3582,6 +3581,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       tecnicas_grafico: '',
       kv: '',
       ma: '',
+      tecnica_distancia: '',
       // Fin Formulario encabezado
       // Formulario detalle
       junta: '',
@@ -3683,6 +3683,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this5 = this;
 
       this.espesor = '';
+      this.distancia_fuente_pelicula = '';
+      this.tecnica = '';
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'espesor/' + this.diametro.diametro_code + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
@@ -3752,23 +3754,33 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this12.tecnicas = response.data;
       });
     },
-    getTecnicasGraficos: function getTecnicasGraficos() {
+    ActualizarDistFuentePelicula: function ActualizarDistFuentePelicula() {
       var _this13 = this;
+
+      axios.defaults.baseURL = this.url;
+      var urlRegistros = 'tecnica_distancias/' + this.tecnica.id + '/diametro/' + this.diametro.diametro_code + '?api_token=' + Laravel.user.api_token;
+      axios.get(urlRegistros).then(function (response) {
+        _this13.tecnica_distancia = response.data;
+        _this13.distancia_fuente_pelicula = _this13.tecnica_distancia[0].distancia_fuente_peliculas;
+      });
+    },
+    getTecnicasGraficos: function getTecnicasGraficos() {
+      var _this14 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'tecnicas_graficos/' + this.tecnica.id + '?api_token=' + Laravel.user.api_token;
       console.log(urlRegistros);
       axios.get(urlRegistros).then(function (response) {
-        _this13.tecnicas_graficos = response.data;
+        _this14.tecnicas_graficos = response.data;
       });
     },
     getEjecutorEnsayo: function getEjecutorEnsayo() {
-      var _this14 = this;
+      var _this15 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'ot-operarios/ejecutor_ensayo/' + this.otdata.id + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this14.ejecutor_ensayos = response.data;
+        _this15.ejecutor_ensayos = response.data;
       });
     },
     resetInputsEquipos: function resetInputsEquipos() {
@@ -3777,30 +3789,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     //detalle
     getSoldadores: function getSoldadores() {
-      var _this15 = this;
+      var _this16 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'soldadores/cliente/' + this.otdata.cliente_id + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this15.soldadores = response.data;
+        _this16.soldadores = response.data;
       });
     },
     getDefectosRiPlanta: function getDefectosRiPlanta() {
-      var _this16 = this;
+      var _this17 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'defectos_ri/planta/' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this16.defectosRiPlanta = response.data;
+        _this17.defectosRiPlanta = response.data;
       });
     },
     getDefectosRiGasoducto: function getDefectosRiGasoducto() {
-      var _this17 = this;
+      var _this18 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'defectos_ri/gasoducto/' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this17.defectosRiGasoducto = response.data;
+        _this18.defectosRiGasoducto = response.data;
       });
     },
     selectPosPlanta: function selectPosPlanta(index) {
@@ -3813,7 +3825,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         soldador1: this.soldador1,
         soldador2: this.soldador2,
         posicion: typeof posicion !== 'undefined' ? posicion : this.posicion,
-        aceptable_sn: false,
+        aceptable_sn: true,
         observacion: '',
         defectosPosicion: []
       });
@@ -3860,7 +3872,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     Store: function Store() {
-      var _this18 = this;
+      var _this19 = this;
 
       this.errors = [];
       var gasoducto_sn = this.formato == 'GASODUCTO' ? true : false;
@@ -3909,14 +3921,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           'detalles': defectos
         }
       }).then(function (response) {
-        _this18.response = response.data;
-        toastr.success('informe N°' + _this18.numero_inf + ' fue creado con éxito ');
+        _this19.response = response.data;
+        toastr.success('informe N°' + _this19.numero_inf + ' fue creado con éxito ');
         console.log(response);
       })["catch"](function (error) {
-        _this18.errors = error.response.data.errors;
+        _this19.errors = error.response.data.errors;
         console.log(error.response);
         console.log('hola');
-        $.each(_this18.errors, function (key, value) {
+        $.each(_this19.errors, function (key, value) {
           toastr.error(value);
           console.log(key + ": " + value);
         });
@@ -41224,7 +41236,11 @@ var render = function() {
                       }
                     ],
                     staticClass: "form-control",
-                    attrs: { type: "text", id: "distancia_fuente_pelicula" },
+                    attrs: {
+                      type: "text",
+                      disabled: !_vm.isChapa,
+                      id: "distancia_fuente_pelicula"
+                    },
                     domProps: { value: _vm.distancia_fuente_pelicula },
                     on: {
                       input: function($event) {
@@ -41273,6 +41289,11 @@ var render = function() {
                     _vm._v(" "),
                     _c("v-select", {
                       attrs: { label: "grafico_id", options: _vm.tecnicas },
+                      on: {
+                        input: function($event) {
+                          return _vm.ActualizarDistFuentePelicula()
+                        }
+                      },
                       scopedSlots: _vm._u([
                         {
                           key: "option",

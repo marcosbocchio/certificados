@@ -239,7 +239,7 @@
                             <div class="col-md-1">
                                 <div class="form-group" >
                                     <label for="distancia_fuente_pelicula">Dist. Fuente</label>
-                                    <input type="text" v-model="distancia_fuente_pelicula" class="form-control" id="distancia_fuente_pelicula">
+                                    <input type="text" v-model="distancia_fuente_pelicula" class="form-control" :disabled="!isChapa" id="distancia_fuente_pelicula">
                                 </div>                            
                             </div>  
 
@@ -254,15 +254,14 @@
                                 <div class="form-group">
                                     <label>Técnica</label>
                                      
-                                    <v-select v-model="tecnica" label="grafico_id" :options="tecnicas">  
+                                    <v-select v-model="tecnica" label="grafico_id" :options="tecnicas" @input="ActualizarDistFuentePelicula()">  
                                         <template slot="option" slot-scope="option">
                                             <img :src="option.path" width="80" height="73" />  
                                            <span style="margin-left: 5px"> {{option.descripcion}} </span>                                     
                                         </template> 
                                    </v-select>
                                 </div>      
-                            </div>                       
-                                             
+                            </div>                                     
                                                                
                   </div>
                </div>
@@ -495,6 +494,7 @@ export default {
             tecnicas_grafico :'',
             kv:'',
             ma:'', 
+            tecnica_distancia:'',
            
            // Fin Formulario encabezado
 
@@ -624,13 +624,14 @@ export default {
         },
 
         getEspesores : function(){
-            this.espesor='';
+            this.espesor=''; 
+            this.distancia_fuente_pelicula='';   
+            this.tecnica ='';      
             axios.defaults.baseURL = this.url ;
                 var urlRegistros = 'espesor/' + this.diametro.diametro_code + '?api_token=' + Laravel.user.api_token;         
                 axios.get(urlRegistros).then(response =>{
                 this.espesores = response.data
                 });
-
         },
 
         getEquipos : function(){
@@ -700,6 +701,18 @@ export default {
                 this.tecnicas = response.data
                 });
               },
+        ActualizarDistFuentePelicula : function(){
+
+                axios.defaults.baseURL = this.url ;
+                var urlRegistros = 'tecnica_distancias/'+ this.tecnica.id +'/diametro/'+ this.diametro.diametro_code + '?api_token=' + Laravel.user.api_token;        
+                axios.get(urlRegistros).then(response =>{
+                this.tecnica_distancia = response.data
+                this.distancia_fuente_pelicula=this.tecnica_distancia[0].distancia_fuente_peliculas;
+               });
+
+  
+
+        },
 
         getTecnicasGraficos: function(){
              
@@ -773,7 +786,7 @@ export default {
                 soldador1: this.soldador1,
                 soldador2: this.soldador2,     
                 posicion : (typeof(posicion) !== 'undefined') ? posicion : this.posicion, 
-                aceptable_sn : false ,
+                aceptable_sn : true ,
                 observacion : '',
                 defectosPosicion : []           
                  });                  
