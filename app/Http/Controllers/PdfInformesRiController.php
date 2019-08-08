@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Informe;
 use App\InformesRi;
@@ -20,11 +20,19 @@ use App\Tecnicas;
 use App\EjecutorEnsayo;
 use App\User;
 use App\TecnicasGraficos;
+use PDF;
+use App\Juntas;
+use App\Soldadores;
+use App\Posicion;
+use App\PasadasPosicion;
+use App\DefectosPasadasPosicion;
 
 class PdfInformesRiController extends Controller
 {
 
     public function inprimir($id){      
+
+       /* header */
 
         $informe = Informe::findOrFail($id);
         $informe_ri = InformesRi::where('informe_id',$informe->id)->firstOrFail();
@@ -43,9 +51,14 @@ class PdfInformesRiController extends Controller
         $ejecutor_ensayo = User::findOrFail($informe->ejecutor_ensayo_id);
         $tecnicas_grafico = TecnicasGraficos::findOrFail($informe_ri->tecnicas_grafico_id);
         
-      
-        
-        $pdf = \PDF::loadView('reportes.informes.ri-test',compact('ot',
+      /* Detalle */ 
+
+        $juntas_posiciones = DB::select('CALL InformeRiPlantaJuntaPosicion(?)',array($informe_ri->id));
+        $defectos_posiciones = DB::select('CALL InformeRiPlantaDefectosPasadaPosicion(?)',array($informe_ri->id));                      
+                    
+       // dd($juntas_posiciones);
+
+        $pdf = PDF::loadView('reportes.informes.ri-test',compact('ot',
                                                              'norma_ensayo',
                                                              'norma_evaluacion',
                                                              'procedimiento_inf',
@@ -60,10 +73,11 @@ class PdfInformesRiController extends Controller
                                                              'informe',
                                                              'informe_ri',
                                                              'material',
-                                                             'tecnicas_grafico'));
+                                                             'tecnicas_grafico',
+                                                             'juntas_posiciones',
+                                                             'defectos_posiciones'));
 
-  
-        
+                                                   
         return $pdf->stream();
     }
 }

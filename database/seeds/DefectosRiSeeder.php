@@ -26,7 +26,7 @@ class DefectosRiSeeder extends Seeder
         ]);
 
         DefectosRi::create([
-            'codigo'              =>'PF',
+            'codigo'              =>'FP',
             'descripcion'         =>'Falta de Penetración',   
             'planta_sn'           =>'1',
             'gasoducto_sn'        =>'1'    
@@ -164,26 +164,6 @@ class DefectosRiSeeder extends Seeder
             'planta_sn'           =>'1',
             'gasoducto_sn'        =>'1'    
         ]);
-
-        DefectosRi::create([
-            'codigo'              =>'RP',
-            'descripcion'         =>'Repetir Placa',   
-            'planta_sn'           =>'1',
-            'gasoducto_sn'        =>'1'    
-        ]);
-
-        DefectosRi::create([
-            'codigo'              =>'AP',
-            'descripcion'         =>'Aprobado',   
-            'planta_sn'           =>'1',
-            'gasoducto_sn'        =>'1'    
-        ]);
-
-        DefectosRi::create([
-            'codigo'              =>'RZ',
-            'descripcion'         =>'Rechazado',   
-            'planta_sn'           =>'1',
-            'gasoducto_sn'        =>'1'    
-        ]);
+        
     }
 }

@@ -21,8 +21,8 @@ class CreateEspesoresDiametroProcedure extends Migration
                         diametro = replace(replace(diametro_code,'b','/'),'s', ' ')        
                 ";
 
-DB::unprepared("DROP procedure IF EXISTS EspesoresDiametro");
-DB::unprepared($procedure);
+        DB::unprepared("DROP procedure IF EXISTS EspesoresDiametro");
+        DB::unprepared($procedure);
 
     }
 
