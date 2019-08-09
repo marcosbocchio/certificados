@@ -297,7 +297,7 @@ b {
                             @if ($defecto_posicion->pasada_posicion_id == $junta_posicion->pasada_posicion_id)
 
 
-                                {{$defecto_posicion->codigo}} 
+                                {{$defecto_posicion->codigo}} /&nbsp;
 
 
                             @endif

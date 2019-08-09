@@ -3606,6 +3606,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       cliente: '',
       isRX: false,
       isChapa: false,
+      isGasoducto: false,
       procedimientos: [],
       materiales: [],
       diametros: [],
@@ -3649,6 +3650,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     diametro: function diametro(val) {
       this.isChapa = val.diametro == 'CHAPA' ? true : false;
+    },
+    formato: function formato(val) {
+      this.isGasoducto = val.formato == 'GASODUCTO' ? true : false;
     }
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])(['url', 'AppUrl'])),

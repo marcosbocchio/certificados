@@ -523,6 +523,7 @@ export default {
             cliente :'',
             isRX:false,
             isChapa:false,
+            isGasoducto:false,
 
              procedimientos:[],
              materiales:[],
@@ -581,6 +582,10 @@ export default {
 
             this.isChapa = val.diametro =='CHAPA' ? true : false;
                 
+        },
+        formato : function (val){
+
+            this.isGasoducto = val.formato == 'GASODUCTO' ? true : false;
         }
     },
 
