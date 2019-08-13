@@ -48,6 +48,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('tecnicas_graficos/{id}', 'TecnicasGraficosController@index');
     Route::get('tecnica_distancias/{id}/diametro/{diametro}', 'TecnicaDistanciasController@TecnicaDistanciasDiametro');
 
+    Route::resource('tipo_soldaduras', 'TipoSoldadurasController');
     Route::get('soldadores/cliente/{id}','SoldadoresController@SoldadoresCliente');
     
     Route::get('equipos/metodo/{metodo}', 'EquiposController@EquiposMetodo');

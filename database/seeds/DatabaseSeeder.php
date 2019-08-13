@@ -35,8 +35,9 @@ class DatabaseSeeder extends Seeder
         $this->call(SoldadoresSeeder::class);   
         $this->call(DefectosRiSeeder::class);
         $this->call(TecnicaDistanciasSeeder::class);   
+        $this->call(TipoSoldadurasSeeder::class);   
      
-        
+     
        // factory('App\Clientes', 2500)->create();
 
 

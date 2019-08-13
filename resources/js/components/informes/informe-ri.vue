@@ -52,7 +52,7 @@
                         <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="prefijo">Prefijo</label>
-                                <input type="text" v-model="prefijo" class="form-control" id="prefijo">
+                                <input type="text" v-model="prefijo" class="form-control" id="prefijo" :disabled="!isGasoducto">
                             </div>                            
                         </div>
                          <div class="col-md-3">
@@ -279,17 +279,37 @@
                <!-- Detalle RI Planta -->
                <div class="box box-danger">
                 <div class="box-body">
+
+                    <div class="col-md-1">                       
+                        <div class="form-group" >                            
+                            <label for="pk">Pk</label>
+                            <input type="number" v-model="pk" class="form-control" id="pk" :disabled="(!isGasoducto || (pasada=='1' && inputsJuntasDefectosPlanta.length > 0))">                           
+                        </div>     
+                    </div>   
+
+                    <div class="col-md-1">                      
+                        <div class="form-group" >
+                           <label>Tipo Soldadura</label>
+                           <v-select v-model="tipo_soldadura" label="codigo" :options="tipo_soldaduras" :disabled="(!isGasoducto || (pasada=='1' && inputsJuntasDefectosPlanta.length > 0))"></v-select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-1">                       
+                        <div class="form-group" >                            
+                            <label for="pasada">N° Pasada</label>
+                            <input type="number" v-model="pasada" class="form-control" id="pasada" :disabled="!isGasoducto">                           
+                        </div>     
+                    </div>
                   
-                    <div class="col-md-2">                       
-                         
-                        
+                    <div class="col-md-2">                      
+                        <div class="form-group" >
                             <label for="junta">Junta</label>
                             <input type="text" v-model="junta" class="form-control" id="junta">
-                      
+                        </div>
                     </div>       
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         
-                            <label>Cunio 1</label>           
+                            <label>Cunio Z</label>           
                             <v-select v-model="soldador1" :options="soldadores" label="nombre">
                                 <template slot="option" slot-scope="option">
                                     <span class="upSelect">{{ option.nombre }} </span> <br> 
@@ -298,31 +318,44 @@
                             </v-select>                
                       
                     </div> 
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                          
-                            <label>Cunio 2</label>           
-                            <v-select v-model="soldador2" :options="soldadores" label="nombre">
+                            <label>Cunio L</label>           
+                            <v-select v-model="soldador2" :options="soldadores" label="nombre" :disabled="(!isGasoducto || pasada!='1')">
                                 <template slot="option" slot-scope="option">
                                     <span class="upSelect">{{ option.nombre }} </span> <br> 
                                     <span class="downSelect">   {{ option.codigo }} </span>
                                 </template>
-                            </v-select>                
-                      
-                    </div>      
-                        <div class="col-md-3">                       
-                          <div class="form-group" >
-                            
-                            <label for="posicion">Posición</label>
+                            </v-select>                    
+                    </div>
+                    <div class="col-md-2">
+                         
+                            <label>Cunio P</label>           
+                            <v-select v-model="soldador3" :options="soldadores" label="nombre" >
+                                <template slot="option" slot-scope="option">
+                                    <span class="upSelect">{{ option.nombre }} </span> <br> 
+                                    <span class="downSelect">   {{ option.codigo }} </span>
+                                </template>
+                            </v-select>                    
+                    </div>   
 
-                            <input type="text" v-model="posicion" class="form-control" id="posicion">
-                           
-                             </div>     
-                        </div>       
-                        <div class="col-md-2"> 
-                            <div class="form-group" >
-                               <button type="button" class="btn btn-primary btn-xs" @click="ClonarPosPlanta()">Clonar Pos</button>
-                            </div> 
-                        </div>  
+
+                    <div class="col-md-1">                       
+                        <div class="form-group" >                            
+                        <label for="posicion">Posición</label>
+                        <input type="text" v-model="posicion" class="form-control" id="posicion">                           
+                        </div>     
+                    </div>       
+                    <div class="col-md-1"> 
+                        <div class="form-group" >
+                            <button type="button" class="btn btn-primary btn-xs" @click="ClonarPosPlanta()">Clonar Posición</button>
+                        </div> 
+                    </div>
+                    <div class="col-md-1"> 
+                        <div class="form-group" >
+                            <button type="button" class="btn btn-primary btn-xs" @click="ClonarPasadas()" :disabled="!EnableClonarPasadas">Clonar Pasadas</button>
+                        </div> 
+                    </div>  
                                                              
                     <div class="col-md-1"> 
                                  
@@ -338,26 +371,34 @@
                             <table class="table table-hover table-striped">
                                 <thead>
                                     <tr>
+                                        <th>Pk</th>
+                                        <th>TIPO SOL.</th>
+                                        <th>N° PASADA</th>
                                         <th>JUNTA</th>
-                                        <th>CUNIO 1</th>
-                                        <th>CUNIO 2</th>
+                                        <th>CUNIO Z</th>
+                                        <th>CUNIO L</th>
+                                        <th>CUNIO P</th>
                                         <th>POS</th>  
                                         <th>ACEPTABLE</th>    
                                         <th>OBS</th>                                                    
                                                                        
-                                        <th colspan="2">&nbsp;</th>
+                                        <th colspan="1">&nbsp;</th>
                                     </tr>
                                 </thead>                         
                                 <tbody>
                                     <tr v-for="(inputsJuntaDefectosPlanta,k) in (inputsJuntasDefectosPlanta)" :key="k" @click="selectPosPlanta(k)">
+                                        <td>{{ inputsJuntaDefectosPlanta.pk }}</td>
+                                        <td>{{ inputsJuntaDefectosPlanta.tipo_soldadura.codigo }}</td>
+                                        <td>{{ inputsJuntaDefectosPlanta.pasada }}</td>
                                         <td>{{ inputsJuntaDefectosPlanta.junta }}</td>
                                         <td>{{ inputsJuntaDefectosPlanta.soldador1.nombre }} </td>
-                                        <td>{{ inputsJuntaDefectosPlanta.soldador2.nombre }} </td>   
+                                        <td>{{ inputsJuntaDefectosPlanta.soldador2.nombre }} </td>
+                                        <td>{{ inputsJuntaDefectosPlanta.soldador3.nombre }} </td>      
                                         <td>{{ inputsJuntaDefectosPlanta.posicion }} </td>   
                                         <td> <input type="checkbox" id="checkbox" v-model="inputsJuntasDefectosPlanta[k].aceptable_sn">  </td>                                 
                                         <td><input type="text" v-model="inputsJuntasDefectosPlanta[k].observacion"></td>
-                                       
-                                        <td> <i class="fa fa-minus-circle" @click="removeJuntaDefectosPlanta(k)" ></i> </td>          
+                                      
+                                        <td><span class="fa fa-minus-circle" @click="removeJuntaDefectosPlanta(k)"></span></td>          
 
                                     </tr>
                                 </tbody>
@@ -372,7 +413,7 @@
                        <div class="box-header with-border">
                         <!--
                            <div v-if="inputsJuntasDefectosPlanta && inputsJuntasDefectosPlanta.length > 0">
-                              <h3 class="box-title">DEFECTOS POSICIÓN: Junta  {{ inputsJuntasDefectosPlanta[indexPosPlanta].junta}} / Posición  {{ inputsJuntasDefectosPlanta[indexPosPlanta].posicion}}</h3>  
+                              <h5 class="box-title">DEFECTOS POSICIÓN: Junta  {{ inputsJuntasDefectosPlanta[indexPosPlanta].junta}} / Posición : {{ inputsJuntasDefectosPlanta[indexPosPlanta].posicion}} // Pasada : {{ inputsJuntasDefectosPlanta[indexPosPlanta].pasada}}</h5>  
                            </div>
                         -->
                       <div class="box-body"> 
@@ -387,13 +428,19 @@
                                     </template>
                                 </v-select>                
                             </div>   
-                        </div>  
+                        </div> 
+                        <div class="col-md-2">                       
+                            <div class="form-group" >                            
+                                <label for="posicionPlaca">Posición Placa</label>
+                                <input type="text" v-model="posicionPlacaGosaducto" class="form-control" id="posicionPlacaGosaducto">                           
+                            </div>     
+                        </div>    
                           
                         <div class="col-md-1"> 
-                        <div class="form-group">                    
-                            <span>
-                                <i class="fa fa-plus-circle" @click="addDefectoPosicionPlanta()"></i>
-                            </span>
+                            <div class="form-group">                    
+                                <span>
+                                    <i class="fa fa-plus-circle" @click="addDefectoPosicionPlanta()"></i>
+                                </span>
                             </div>
                         </div>                      
                         <div class="col-md-12">
@@ -402,7 +449,8 @@
                                     <thead>
                                         <tr>
                                             <th>CÓDIGO</th>                                                                                  
-                                            <th>DESCRIPCIÓN</th>                                                                 
+                                            <th>DESCRIPCIÓN</th>
+                                            <th>POSICIÓN</th>                                                                 
                                             <th colspan="2">&nbsp;</th>
                                         </tr>
                                     </thead>                         
@@ -410,7 +458,8 @@
                                         <tr v-for="(defectoPosicion,k) in 
                                          (( (inputsJuntasDefectosPlanta.length > 0) && (inputsJuntasDefectosPlanta[indexPosPlanta].defectosPosicion.length > 0 )) ? inputsJuntasDefectosPlanta[indexPosPlanta].defectosPosicion : [])"  :key="k">
                                             <td>{{ defectoPosicion.codigo }}</td>    
-                                            <td>{{ defectoPosicion.descripcion }}</td>             
+                                            <td>{{ defectoPosicion.descripcion }}</td>   
+                                            <td>{{ defectoPosicion.posicion }}</td>              
                                         
                                             <td> <i class="fa fa-minus-circle" @click="removeDefectoPosicionPlanta(k)" ></i> </td>          
 
@@ -509,13 +558,18 @@ export default {
            // Fin Formulario encabezado
 
            // Formulario detalle
+            pk:'',
+            tipo_soldadura:'',
+            pasada:'',
             junta:'',
             soldador1:'',
             soldador2:'',
-            posicion:'',          
+            soldador3:'',
+            posicion:'',                      
             defectoObs:'',
             defectoRiPlanta:'',
             defectoRiGasoducto:'',
+            posicionPlacaGosaducto:'',
             indexPosPlanta:0,
 
             //Fin Formulario detalle
@@ -524,6 +578,7 @@ export default {
             isRX:false,
             isChapa:false,
             isGasoducto:false,
+            EnableClonarPasadas:false,
 
              procedimientos:[],
              materiales:[],
@@ -537,9 +592,10 @@ export default {
              norma_ensayos:[],
              tecnicas:[],
              ejecutor_ensayos :[],
-             tecnicas_graficos :[],
+             tecnicas_graficos :[],             
 
-            
+             
+             tipo_soldaduras:[],
              soldadores:[],
              posiciones:[],
              defectosRiPlanta:[],
@@ -568,6 +624,7 @@ export default {
         this.getSoldadores();
         this.getDefectosRiPlanta();
         this.getDefectosRiGasoducto();
+        this.getTipoSoldaduras();
        
     },   
     
@@ -575,24 +632,32 @@ export default {
 
         equipo : function(val){
 
-            this.isRX = val.codigo =='RX' ? true : false;
+            this.isRX = (val.codigo =='RX') ? true : false;
                 
         },
         diametro : function(val){
 
-            this.isChapa = val.diametro =='CHAPA' ? true : false;
+            this.isChapa = (val.diametro =='CHAPA') ? true : false;
                 
         },
         formato : function (val){
 
-            this.isGasoducto = val.formato == 'GASODUCTO' ? true : false;
-        }
+            this.isGasoducto =  (val == 'GASODUCTO') ? true : false;
+        },
+
+        pasada : function (val){
+
+            this.soldador2 =  (val == '1') ? this.soldador2 : '';
+        },
     },
 
     computed :{
 
         ...mapState(['url','AppUrl']),
-        
+
+           HabilitarClonarPasadas(){
+                this.EnableClonarPasadas = (this.isGasoducto && this.pasada=='1' && this.inputsJuntasDefectosPlanta.length);
+           }      
        
      },
 
@@ -757,6 +822,16 @@ export default {
         },
 
         //detalle
+        getTipoSoldaduras : function(){
+
+                 axios.defaults.baseURL = this.url ;
+                var urlRegistros = 'tipo_soldaduras' + '?api_token=' + Laravel.user.api_token;        
+                axios.get(urlRegistros).then(response =>{
+                this.tipo_soldaduras = response.data
+                });
+           
+             
+        },
 
         getSoldadores : function(){
 
@@ -797,9 +872,13 @@ export default {
             console.log(posicion);
 
             this.inputsJuntasDefectosPlanta.push({ 
+                pk : this.pk,
+                tipo_soldadura:this.tipo_soldadura,
+                pasada : this.pasada,
                 junta: this.junta,
                 soldador1: this.soldador1,
                 soldador2: this.soldador2,     
+                soldador3: this.soldador3,     
                 posicion : (typeof(posicion) !== 'undefined') ? posicion : this.posicion, 
                 aceptable_sn : true ,
                 observacion : '',
@@ -826,7 +905,8 @@ export default {
             this.inputsJuntasDefectosPlanta[this.indexPosPlanta].defectosPosicion.push({ 
                 codigo: this.defectoRiPlanta.codigo,
                 descripcion: this.defectoRiPlanta.descripcion,
-                id : this.defectoRiPlanta.id,                    
+                id : this.defectoRiPlanta.id,    
+                posicion : this.posicionPlacaGosaducto,                
                  });                  
            
         },
@@ -913,7 +993,7 @@ export default {
                 'pqr':this.pqr,
                 'actividad' : this.actividad,
                 'exposicion': this.exposicion,   
-                'detalles'  : defectos,           
+                'detalles'  : this.inputsJuntasDefectosPlanta,           
           }}
           
       
@@ -940,11 +1020,7 @@ export default {
 
         }
 
-
-
     }
-
-
     
 }
 </script>
@@ -956,5 +1032,9 @@ export default {
 .checkbox-inline {
     margin-left: 0px;
 }
+.col-md-1-5 {
 
+    width: 12.499999995%
+   
+}
 </style>

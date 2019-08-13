@@ -1,28 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Informe RI</title>
 </head>
 
 <style>
 
-@page { margin: 300px 25px; }
+@page { margin: 330px 25px 257px 25px !important;
+        padding: 0px 0px 0px 0px !important; }
 
 header {
     position:fixed;
-    top: -280px;    
+    top: -289px;
     }
 
-footer {
-    position: fixed; bottom: -68px; 
+.contenido {
 
+    margin-bottom: -2px;
+      padding: 0px 0px 0px 0px !important;
+      background-color: antiquewhite;
 }
 
-.contenido{
-    margin-top: -5px;
-    margin-bottom: -60px;
-   
+.contenido table {
+
+border: red 2px solid;
+margin: 0px 0px 0px 0px !important;
+padding: 0px 0px 0px 0px !important;
+}
+
+footer {
+    position: fixed; bottom:0px; 
+
 }
 
 .pagenum:before {
@@ -33,6 +42,13 @@ footer {
     border-color: #000000;
     border-style: solid;
     border-width: 2px; 
+    border-collapse: collapse;   
+}
+
+.bordered-1 {
+    border-color: #000000;
+    border-style: solid;
+    border-width: 1px; 
     border-collapse: collapse;   
 }
 
@@ -95,7 +111,7 @@ b {
                 </td>
             </tr>
             <tr>
-                <td >
+                <td class="bordered">
                     <table width="100%" style="border-collapse: collapse;" >
                         <tbody>                 
                         <tr>
@@ -167,15 +183,37 @@ b {
                         </tr>
                         <tr>                           
                             <td style="font-size: 12px;  width: 218px;border-right: 1px solid #000;" ><b>Pqr: </b>{{$informe_ri->pqr}}</td>
-                            <td style="font-size: 12px; border-right: 1px solid #000;  " colspan="4" ><b>Ici : </b>{{$ici->codigo}}</td> 
+                            <td style="font-size: 12px; border-right: 1px solid #000;" colspan="4" ><b>Ici : </b>{{$ici->codigo}}</td> 
 
                         </tr>                
                         </tbody>
                     </table>   
                 </td>
             </tr>
+            <tr >
+                <td >
+                    <table  width="100%" style="text-align: center;border-collapse: collapse;">
+                        <tbody>
+                            <tr>
+                                <td style="font-size: 12px; width:70px;  text-align: center " rowspan="2" class="bordered-td" >JUNTA</td>
+                                <td style="font-size: 12px; width:70px;  text-align: center;" rowspan="2" class="bordered-td">CUNIO</td>
+                                <td style="font-size: 12px; width:73px; text-align: center;" rowspan="2" class="bordered-td">POSICIÓN</td>
+                                <td style="font-size: 12px; width:190px;  text-align: center;" rowspan="2" class="bordered-td">DEFECTOS</td>  
+                                <td style="font-size: 12px; width:80px; text-align: center;" colspan="2" class="bordered-td">RESULTADO</td>  
+                                <td style="font-size: 12px; text-align: center" rowspan="2" class="bordered-td">OBSERVACIÓN</td>                     
+                            </tr>
+                            <tr>
+                                <td style="font-size: 11px; text-align: center;" class="bordered-td">AP</td>
+                                <td style="font-size: 11px; text-align: center;" class="bordered-td">RZ</td>                            
+                            </tr>  
+                        </tbody>
+                    </table> 
+                </td>
+            </tr>
+            
         </tbody>
     </table>
+    
 </header>
 
 <footer>
@@ -250,86 +288,74 @@ b {
                         </tbody>
                     </table> 
                 </td>
-            </tr>
+            </tr>      
         </tbody>
     </table>
 </footer>
 
-
 <div class="contenido">
-    <table style="text-align: center; margin-top: 0px;" width="100%" class="bordered">
+    
+    <table width="100%" class="bordered-1" style="margin-bottom: 0px">
         <tbody>
-            <tr>
-                <td>
-                    <table width="100%" style="border-collapse: collapse;" >
-                        <tbody>
-                            <tr>
-                                <td style="font-size: 12px; width:50px;  text-align: center" rowspan="2" class="bordered-td">JUNTA</td>
-                                <td style="font-size: 12px; width:75px;  text-align: center" rowspan="2" class="bordered-td">CUNIO</td>
-                                <td style="font-size: 12px; width:86px; text-align: center" rowspan="2" class="bordered-td">POSICIÓN</td>
-                                <td style="font-size: 12px; width:193px;  text-align: center" rowspan="2" class="bordered-td">DEFECTOS</td>  
-                                <td style="font-size: 12px; width:76px;  text-align: center" colspan="2" class="bordered-td">RESULTADO</td>  
-                                <td style="font-size: 12px; width:259px; text-align: center" rowspan="2" class="bordered-td">OBSERVACIÓN</td>                     
-                            </tr>
-                            <tr>
-                                <td style="font-size: 11px; text-align: center" class="bordered-td">AP</td>
-                                <td style="font-size: 11px; text-align: center" class="bordered-td">RZ</td>                            
-                            </tr>   
+            @foreach ($juntas_posiciones as $junta_posicion)
+                <tr>
+                    <td style="font-size: 11px;  width:71px;text-align: center" class="bordered-td">{{ $junta_posicion->junta }}-{{$loop->index}}</td>
+                    <td style="font-size: 11px;  width:70px;text-align: center" class="bordered-td">{{$junta_posicion->soldadorz}} / {{$junta_posicion->soldadorl}} </td>
+                    <td style="font-size: 11px;  width:73px;text-align: center" class="bordered-td">{{$junta_posicion->posicion}}</td>
+                    <td style="font-size: 11px;  width:190px; " class="bordered-td">&nbsp;
+                        @foreach ($defectos_posiciones as $key => $defecto_posicion)                                
+
                             
-                            @foreach ($juntas_posiciones as $junta_posicion)
-                                <tr>
-                                    <td style="font-size: 11px; text-align: center" class="bordered-td">{{ $junta_posicion->junta }}</td>
-                                    <td style="font-size: 11px; text-align: center" class="bordered-td">{{$junta_posicion->soldadorz}} / {{$junta_posicion->soldadorl}} </td>
-                                    <td style="font-size: 11px; text-align: center" class="bordered-td">{{$junta_posicion->posicion}}</td>
-                                    <td style="font-size: 11px; " class="bordered-td">
-                                        @foreach ($defectos_posiciones as $key => $defecto_posicion)                                
-
-                                          
-                                            @if ($defecto_posicion->pasada_posicion_id == $junta_posicion->pasada_posicion_id)
+                            @if ($defecto_posicion->pasada_posicion_id == $junta_posicion->pasada_posicion_id)
 
 
-                                                {{$defecto_posicion->codigo}} 
+                                {{$defecto_posicion->codigo}} /&nbsp;
 
 
-                                            @endif
-                                            
-                                        @endforeach
-                                    
-                                    </td>
-
-                                    <td style="font-size: 11px; text-align: center " class="bordered-td">
-                                        @if ($junta_posicion->aceptable_sn)
-                                            X
-                                        @endif
-                                    </td>
-
-                                    <td style="font-size: 11px; text-align: center" class="bordered-td">
-                                        @if (!$junta_posicion->aceptable_sn)
-                                            X
-                                        @endif
-                                    </td>
-
-                                    <td style="font-size: 11px;" class="bordered-td">{{$junta_posicion->observacion}}</td>
-                                </tr>
-
-                                
-                            @endforeach
-                                                        
-                        </tbody>
-                    </table>
+                            @endif
+                            
+                        @endforeach
                     
-                </td>               
-            </tr>      
+                    </td>
+
+                    <td style="font-size: 11px; text-align: center;width:39px; " class="bordered-td">
+                        @if ($junta_posicion->aceptable_sn)
+                            X
+                        @endif
+                    </td>
+
+                    <td style="font-size: 11px; text-align: center;width:38px;" class="bordered-td">
+                        @if (!$junta_posicion->aceptable_sn)
+                            X
+                        @endif
+                    </td>
+
+                    <td style="font-size: 11px;" class="bordered-td">&nbsp;{{$junta_posicion->observacion}}</td>
+                </tr>
+
+                
+            @endforeach
+
+           @for ( $x = 1;  $x <= pdfCantFilasACompletar(29,$juntas_posiciones) ; $x++)
+             <tr>
+                <td style="font-size: 11px;  width:71px;text-align: center"  class="bordered-td">{{ count($juntas_posiciones) }}-{{$x}}</td>
+                <td style="font-size: 11px;  width:70px;text-align: center"  class="bordered-td"></td>
+                <td style="font-size: 11px;  width:73px;text-align: center"  class="bordered-td"></td>
+                <td style="font-size: 11px;  width:190px;text-align: center" class="bordered-td"></td>
+                <td style="font-size: 11px;  width:39px;text-align: center"  class="bordered-td"></td>
+                <td style="font-size: 11px;  width:38px;text-align: center"   class="bordered-td"></td>
+                <td style="font-size: 11px;" class="bordered-td"></td>
+
+             </tr>
+           @endfor
+
+                                        
         </tbody>
     </table>
-</div>
+</div>   
+     
 
-<!--
-    <div class="contenido">
-        @for ($x = 0 ; $x <30 ; $x++)
-            <p>El valor es {{ $x }}</p>
-        @endfor
-    </div>
--->
+
+
 </body>
 </html>

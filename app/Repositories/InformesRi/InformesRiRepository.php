@@ -114,13 +114,11 @@ class InformesRiRepository extends BaseRepository
     $informeRi->actividad = $request->actividad;
     $informeRi->exposicion = $request->exposicion;   
 
-    $informeRi->save();
+    $informeRi->save();   
 
-    if(!$request->gasoducto_sn){
+    $this->saveDetallePlanta($request,$informeRi);
 
-      $this->saveDetallePlanta($request,$informeRi);
-
-    }
+   
 
   }
 
@@ -132,9 +130,7 @@ class InformesRiRepository extends BaseRepository
 
         try {
 
-         $junta = $this->saveJunta($detalle,$informeRi);     
-
-       
+         $junta = $this->saveJunta($detalle,$informeRi);            
           
         } 
         catch(Exception $e){          
@@ -158,7 +154,8 @@ class InformesRiRepository extends BaseRepository
 
     $junta =  new Juntas;
     $junta->codigo = $detalle['junta'];
-    $junta->informe_ri_id = $informeRi->id;
+    $junta->informe_ri_id = $informeRi->id;          
+    $junta->km = $detalle['pk']; 
     $junta->save();
     
     return $junta;
@@ -192,6 +189,8 @@ class InformesRiRepository extends BaseRepository
       $pasadasPosicion->posicion_id = $posicion['id'];
       $pasadasPosicion->soldadorz_id = $detalle['soldador1']['id'];               
       $pasadasPosicion->soldadorl_id = $detalle['soldador2']['id'];
+      $pasadasPosicion->soldadorp_id = $detalle['soldador3']['id'];
+
       $pasadasPosicion->save();   
       $i++;    
       
@@ -200,9 +199,13 @@ class InformesRiRepository extends BaseRepository
           $defectos_pasadas_posicion = new DefectosPasadasPosicion;
           $defectos_pasadas_posicion->defecto_ri_id = $defectoPosicion['id'];
           $defectos_pasadas_posicion->pasada_posicion_id = $pasadasPosicion->id;
-          /*  Esta linea va para gasoducto
-          $defectos_pasadas_posicion->posicion = $defectosPosicion->posicion;
-          */
+
+          if($gasoducto_sn){
+          
+            $defectos_pasadas_posicion->posicion = $defectoPosicion['posicion'];         
+
+          }
+
           $defectos_pasadas_posicion->save();
         }
 

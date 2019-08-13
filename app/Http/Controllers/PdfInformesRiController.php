@@ -50,34 +50,69 @@ class PdfInformesRiController extends Controller
         $tecnica = Tecnicas::findOrFail($informe->tecnica_id);
         $ejecutor_ensayo = User::findOrFail($informe->ejecutor_ensayo_id);
         $tecnicas_grafico = TecnicasGraficos::findOrFail($informe_ri->tecnicas_grafico_id);
+
+      //  dd($informe_ri);
+
+        if ($informe_ri->gasoducto_sn){
+
+          $juntas_posiciones = DB::select('CALL InformeRiPlantaJuntaPosicion(?)',array($informe_ri->id));
+          $defectos_posiciones = DB::select('CALL InformeRiPlantaDefectosPasadaPosicion(?)',array($informe_ri->id));   
+
+          $pdf = PDF::loadView('reportes.informes.ri-gasoducto',compact('ot',
+          'norma_ensayo',
+          'norma_evaluacion',
+          'procedimiento_inf',
+          'equipo',
+          'fuente',
+          'tipo_pelicula',
+          'diametro_espesor',
+          'ici',
+          'tecnica',
+          'ejecutor_ensayo',
+          'cliente',
+          'informe',
+          'informe_ri',
+          'material',
+          'tecnicas_grafico',
+          'juntas_posiciones',
+          'defectos_posiciones'))->setPaper('a4','landscape')->setWarnings(false);
+
+
+return $pdf->stream();
+
+        }else
+
+        {
         
       /* Detalle */ 
 
-        $juntas_posiciones = DB::select('CALL InformeRiPlantaJuntaPosicion(?)',array($informe_ri->id));
-        $defectos_posiciones = DB::select('CALL InformeRiPlantaDefectosPasadaPosicion(?)',array($informe_ri->id));                      
-                    
-       // dd($juntas_posiciones);
+          $juntas_posiciones = DB::select('CALL InformeRiPlantaJuntaPosicion(?)',array($informe_ri->id));
+          $defectos_posiciones = DB::select('CALL InformeRiPlantaDefectosPasadaPosicion(?)',array($informe_ri->id));                      
+                      
+        // dd($juntas_posiciones);
 
-        $pdf = PDF::loadView('reportes.informes.ri-test',compact('ot',
-                                                             'norma_ensayo',
-                                                             'norma_evaluacion',
-                                                             'procedimiento_inf',
-                                                             'equipo',
-                                                             'fuente',
-                                                             'tipo_pelicula',
-                                                             'diametro_espesor',
-                                                             'ici',
-                                                             'tecnica',
-                                                             'ejecutor_ensayo',
-                                                             'cliente',
-                                                             'informe',
-                                                             'informe_ri',
-                                                             'material',
-                                                             'tecnicas_grafico',
-                                                             'juntas_posiciones',
-                                                             'defectos_posiciones'));
+          $pdf = PDF::loadView('reportes.informes.ri-planta',compact('ot',
+                                                              'norma_ensayo',
+                                                              'norma_evaluacion',
+                                                              'procedimiento_inf',
+                                                              'equipo',
+                                                              'fuente',
+                                                              'tipo_pelicula',
+                                                              'diametro_espesor',
+                                                              'ici',
+                                                              'tecnica',
+                                                              'ejecutor_ensayo',
+                                                              'cliente',
+                                                              'informe',
+                                                              'informe_ri',
+                                                              'material',
+                                                              'tecnicas_grafico',
+                                                              'juntas_posiciones',
+                                                              'defectos_posiciones'))->setWarnings(false);
 
-                                                   
-        return $pdf->stream();
+                                                    
+          return $pdf->stream();
+
+      }
     }
 }

@@ -3528,6 +3528,55 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3594,19 +3643,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       tecnica_distancia: '',
       // Fin Formulario encabezado
       // Formulario detalle
+      pk: '',
+      tipo_soldadura: '',
+      pasada: '',
       junta: '',
       soldador1: '',
       soldador2: '',
+      soldador3: '',
       posicion: '',
       defectoObs: '',
       defectoRiPlanta: '',
       defectoRiGasoducto: '',
+      posicionPlacaGosaducto: '',
       indexPosPlanta: 0,
       //Fin Formulario detalle
       cliente: '',
       isRX: false,
       isChapa: false,
       isGasoducto: false,
+      EnableClonarPasadas: false,
       procedimientos: [],
       materiales: [],
       diametros: [],
@@ -3620,6 +3675,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       tecnicas: [],
       ejecutor_ensayos: [],
       tecnicas_graficos: [],
+      tipo_soldaduras: [],
       soldadores: [],
       posiciones: [],
       defectosRiPlanta: [],
@@ -3643,6 +3699,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.getSoldadores();
     this.getDefectosRiPlanta();
     this.getDefectosRiGasoducto();
+    this.getTipoSoldaduras();
   },
   watch: {
     equipo: function equipo(val) {
@@ -3652,10 +3709,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.isChapa = val.diametro == 'CHAPA' ? true : false;
     },
     formato: function formato(val) {
-      this.isGasoducto = val.formato == 'GASODUCTO' ? true : false;
+      this.isGasoducto = val == 'GASODUCTO' ? true : false;
+    },
+    pasada: function pasada(val) {
+      this.soldador2 = val == '1' ? this.soldador2 : '';
     }
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])(['url', 'AppUrl'])),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])(['url', 'AppUrl']), {
+    HabilitarClonarPasadas: function HabilitarClonarPasadas() {
+      this.EnableClonarPasadas = this.isGasoducto && this.pasada == '1' && this.inputsJuntasDefectosPlanta.length;
+    }
+  }),
   methods: {
     getCliente: function getCliente() {
       var _this = this;
@@ -3802,31 +3866,40 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.kv = '', this.ma = '';
     },
     //detalle
-    getSoldadores: function getSoldadores() {
+    getTipoSoldaduras: function getTipoSoldaduras() {
       var _this16 = this;
+
+      axios.defaults.baseURL = this.url;
+      var urlRegistros = 'tipo_soldaduras' + '?api_token=' + Laravel.user.api_token;
+      axios.get(urlRegistros).then(function (response) {
+        _this16.tipo_soldaduras = response.data;
+      });
+    },
+    getSoldadores: function getSoldadores() {
+      var _this17 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'soldadores/cliente/' + this.otdata.cliente_id + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this16.soldadores = response.data;
+        _this17.soldadores = response.data;
       });
     },
     getDefectosRiPlanta: function getDefectosRiPlanta() {
-      var _this17 = this;
+      var _this18 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'defectos_ri/planta/' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this17.defectosRiPlanta = response.data;
+        _this18.defectosRiPlanta = response.data;
       });
     },
     getDefectosRiGasoducto: function getDefectosRiGasoducto() {
-      var _this18 = this;
+      var _this19 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'defectos_ri/gasoducto/' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this18.defectosRiGasoducto = response.data;
+        _this19.defectosRiGasoducto = response.data;
       });
     },
     selectPosPlanta: function selectPosPlanta(index) {
@@ -3835,9 +3908,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     addJuntaDefectosPlanta: function addJuntaDefectosPlanta(posicion) {
       console.log(posicion);
       this.inputsJuntasDefectosPlanta.push({
+        pk: this.pk,
+        tipo_soldadura: this.tipo_soldadura,
+        pasada: this.pasada,
         junta: this.junta,
         soldador1: this.soldador1,
         soldador2: this.soldador2,
+        soldador3: this.soldador3,
         posicion: typeof posicion !== 'undefined' ? posicion : this.posicion,
         aceptable_sn: true,
         observacion: '',
@@ -3855,7 +3932,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.inputsJuntasDefectosPlanta[this.indexPosPlanta].defectosPosicion.push({
         codigo: this.defectoRiPlanta.codigo,
         descripcion: this.defectoRiPlanta.descripcion,
-        id: this.defectoRiPlanta.id
+        id: this.defectoRiPlanta.id,
+        posicion: this.posicionPlacaGosaducto
       });
     },
     removeDefectoPosicionPlanta: function removeDefectoPosicionPlanta(index) {
@@ -3886,7 +3964,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     Store: function Store() {
-      var _this19 = this;
+      var _this20 = this;
 
       this.errors = [];
       var gasoducto_sn = this.formato == 'GASODUCTO' ? true : false;
@@ -3932,17 +4010,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           'pqr': this.pqr,
           'actividad': this.actividad,
           'exposicion': this.exposicion,
-          'detalles': defectos
+          'detalles': this.inputsJuntasDefectosPlanta
         }
       }).then(function (response) {
-        _this19.response = response.data;
-        toastr.success('informe N°' + _this19.numero_inf + ' fue creado con éxito ');
+        _this20.response = response.data;
+        toastr.success('informe N°' + _this20.numero_inf + ' fue creado con éxito ');
         console.log(response);
       })["catch"](function (error) {
-        _this19.errors = error.response.data.errors;
+        _this20.errors = error.response.data.errors;
         console.log(error.response);
         console.log('hola');
-        $.each(_this19.errors, function (key, value) {
+        $.each(_this20.errors, function (key, value) {
           toastr.error(value);
           console.log(key + ": " + value);
         });
@@ -5473,7 +5551,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.form-control[disabled][data-v-13a6ae76], .form-control[readonly][data-v-13a6ae76], fieldset[disabled] .form-control[data-v-13a6ae76] {\r\n     background-color: #eee;\n}\n.checkbox-inline[data-v-13a6ae76] {\r\n    margin-left: 0px;\n}\r\n\r\n", ""]);
+exports.push([module.i, "\n.form-control[disabled][data-v-13a6ae76], .form-control[readonly][data-v-13a6ae76], fieldset[disabled] .form-control[data-v-13a6ae76] {\r\n     background-color: #eee;\n}\n.checkbox-inline[data-v-13a6ae76] {\r\n    margin-left: 0px;\n}\n.col-md-1-5[data-v-13a6ae76] {\r\n\r\n    width: 12.499999995%\n}\r\n", ""]);
 
 // exports
 
@@ -40472,7 +40550,11 @@ var render = function() {
                       }
                     ],
                     staticClass: "form-control",
-                    attrs: { type: "text", id: "prefijo" },
+                    attrs: {
+                      type: "text",
+                      id: "prefijo",
+                      disabled: !_vm.isGasoducto
+                    },
                     domProps: { value: _vm.prefijo },
                     on: {
                       input: function($event) {
@@ -41391,37 +41473,137 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "box box-danger" }, [
             _c("div", { staticClass: "box-body" }, [
-              _c("div", { staticClass: "col-md-2" }, [
-                _c("label", { attrs: { for: "junta" } }, [_vm._v("Junta")]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.junta,
-                      expression: "junta"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "text", id: "junta" },
-                  domProps: { value: _vm.junta },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+              _c("div", { staticClass: "col-md-1" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "pk" } }, [_vm._v("Pk")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.pk,
+                        expression: "pk"
                       }
-                      _vm.junta = $event.target.value
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "number",
+                      id: "pk",
+                      disabled:
+                        !_vm.isGasoducto ||
+                        (_vm.pasada == "1" &&
+                          _vm.inputsJuntasDefectosPlanta.length > 0)
+                    },
+                    domProps: { value: _vm.pk },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.pk = $event.target.value
+                      }
                     }
-                  }
-                })
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-1" }, [
+                _c(
+                  "div",
+                  { staticClass: "form-group" },
+                  [
+                    _c("label", [_vm._v("Tipo Soldadura")]),
+                    _vm._v(" "),
+                    _c("v-select", {
+                      attrs: {
+                        label: "codigo",
+                        options: _vm.tipo_soldaduras,
+                        disabled:
+                          !_vm.isGasoducto ||
+                          (_vm.pasada == "1" &&
+                            _vm.inputsJuntasDefectosPlanta.length > 0)
+                      },
+                      model: {
+                        value: _vm.tipo_soldadura,
+                        callback: function($$v) {
+                          _vm.tipo_soldadura = $$v
+                        },
+                        expression: "tipo_soldadura"
+                      }
+                    })
+                  ],
+                  1
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-1" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "pasada" } }, [
+                    _vm._v("N° Pasada")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.pasada,
+                        expression: "pasada"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "number",
+                      id: "pasada",
+                      disabled: !_vm.isGasoducto
+                    },
+                    domProps: { value: _vm.pasada },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.pasada = $event.target.value
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-2" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "junta" } }, [_vm._v("Junta")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.junta,
+                        expression: "junta"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", id: "junta" },
+                    domProps: { value: _vm.junta },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.junta = $event.target.value
+                      }
+                    }
+                  })
+                ])
               ]),
               _vm._v(" "),
               _c(
                 "div",
-                { staticClass: "col-md-3" },
+                { staticClass: "col-md-2" },
                 [
-                  _c("label", [_vm._v("Cunio 1")]),
+                  _c("label", [_vm._v("Cunio Z")]),
                   _vm._v(" "),
                   _c("v-select", {
                     attrs: { options: _vm.soldadores, label: "nombre" },
@@ -41457,12 +41639,16 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "div",
-                { staticClass: "col-md-3" },
+                { staticClass: "col-md-2" },
                 [
-                  _c("label", [_vm._v("Cunio 2")]),
+                  _c("label", [_vm._v("Cunio L")]),
                   _vm._v(" "),
                   _c("v-select", {
-                    attrs: { options: _vm.soldadores, label: "nombre" },
+                    attrs: {
+                      options: _vm.soldadores,
+                      label: "nombre",
+                      disabled: !_vm.isGasoducto || _vm.pasada != "1"
+                    },
                     scopedSlots: _vm._u([
                       {
                         key: "option",
@@ -41493,7 +41679,45 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
-              _c("div", { staticClass: "col-md-3" }, [
+              _c(
+                "div",
+                { staticClass: "col-md-2" },
+                [
+                  _c("label", [_vm._v("Cunio P")]),
+                  _vm._v(" "),
+                  _c("v-select", {
+                    attrs: { options: _vm.soldadores, label: "nombre" },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "option",
+                        fn: function(option) {
+                          return [
+                            _c("span", { staticClass: "upSelect" }, [
+                              _vm._v(_vm._s(option.nombre) + " ")
+                            ]),
+                            _vm._v(" "),
+                            _c("br"),
+                            _vm._v(" "),
+                            _c("span", { staticClass: "downSelect" }, [
+                              _vm._v("   " + _vm._s(option.codigo) + " ")
+                            ])
+                          ]
+                        }
+                      }
+                    ]),
+                    model: {
+                      value: _vm.soldador3,
+                      callback: function($$v) {
+                        _vm.soldador3 = $$v
+                      },
+                      expression: "soldador3"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-1" }, [
                 _c("div", { staticClass: "form-group" }, [
                   _c("label", { attrs: { for: "posicion" } }, [
                     _vm._v("Posición")
@@ -41523,7 +41747,7 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "col-md-2" }, [
+              _c("div", { staticClass: "col-md-1" }, [
                 _c("div", { staticClass: "form-group" }, [
                   _c(
                     "button",
@@ -41536,7 +41760,28 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("Clonar Pos")]
+                    [_vm._v("Clonar Posición")]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-1" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary btn-xs",
+                      attrs: {
+                        type: "button",
+                        disabled: !_vm.EnableClonarPasadas
+                      },
+                      on: {
+                        click: function($event) {
+                          return _vm.ClonarPasadas()
+                        }
+                      }
+                    },
+                    [_vm._v("Clonar Pasadas")]
                   )
                 ])
               ]),
@@ -41580,6 +41825,23 @@ var render = function() {
                             },
                             [
                               _c("td", [
+                                _vm._v(_vm._s(inputsJuntaDefectosPlanta.pk))
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _vm._v(
+                                  _vm._s(
+                                    inputsJuntaDefectosPlanta.tipo_soldadura
+                                      .codigo
+                                  )
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _vm._v(_vm._s(inputsJuntaDefectosPlanta.pasada))
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
                                 _vm._v(_vm._s(inputsJuntaDefectosPlanta.junta))
                               ]),
                               _vm._v(" "),
@@ -41595,6 +41857,14 @@ var render = function() {
                                 _vm._v(
                                   _vm._s(
                                     inputsJuntaDefectosPlanta.soldador2.nombre
+                                  ) + " "
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _vm._v(
+                                  _vm._s(
+                                    inputsJuntaDefectosPlanta.soldador3.nombre
                                   ) + " "
                                 )
                               ]),
@@ -41707,7 +41977,7 @@ var render = function() {
                               ]),
                               _vm._v(" "),
                               _c("td", [
-                                _c("i", {
+                                _c("span", {
                                   staticClass: "fa fa-minus-circle",
                                   on: {
                                     click: function($event) {
@@ -41774,6 +42044,36 @@ var render = function() {
                   )
                 ]),
                 _vm._v(" "),
+                _c("div", { staticClass: "col-md-2" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { attrs: { for: "posicionPlaca" } }, [
+                      _vm._v("Posición Placa")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.posicionPlacaGosaducto,
+                          expression: "posicionPlacaGosaducto"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "text", id: "posicionPlacaGosaducto" },
+                      domProps: { value: _vm.posicionPlacaGosaducto },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.posicionPlacaGosaducto = $event.target.value
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
                 _c("div", { staticClass: "col-md-1" }, [
                   _c("div", { staticClass: "form-group" }, [
                     _c("span", [
@@ -41815,6 +42115,10 @@ var render = function() {
                                 _vm._v(" "),
                                 _c("td", [
                                   _vm._v(_vm._s(defectoPosicion.descripcion))
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _vm._v(_vm._s(defectoPosicion.posicion))
                                 ]),
                                 _vm._v(" "),
                                 _c("td", [
@@ -41867,11 +42171,19 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
+        _c("th", [_vm._v("Pk")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("TIPO SOL.")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("N° PASADA")]),
+        _vm._v(" "),
         _c("th", [_vm._v("JUNTA")]),
         _vm._v(" "),
-        _c("th", [_vm._v("CUNIO 1")]),
+        _c("th", [_vm._v("CUNIO Z")]),
         _vm._v(" "),
-        _c("th", [_vm._v("CUNIO 2")]),
+        _c("th", [_vm._v("CUNIO L")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("CUNIO P")]),
         _vm._v(" "),
         _c("th", [_vm._v("POS")]),
         _vm._v(" "),
@@ -41879,7 +42191,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("OBS")]),
         _vm._v(" "),
-        _c("th", { attrs: { colspan: "2" } }, [_vm._v(" ")])
+        _c("th", { attrs: { colspan: "1" } }, [_vm._v(" ")])
       ])
     ])
   },
@@ -41892,6 +42204,8 @@ var staticRenderFns = [
         _c("th", [_vm._v("CÓDIGO")]),
         _vm._v(" "),
         _c("th", [_vm._v("DESCRIPCIÓN")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("POSICIÓN")]),
         _vm._v(" "),
         _c("th", { attrs: { colspan: "2" } }, [_vm._v(" ")])
       ])

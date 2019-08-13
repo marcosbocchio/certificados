@@ -1,25 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">  
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Informe RI</title>
 </head>
 
 <style>
 
-@page { margin: 360px 25px; }
+@page { margin: 270px 15px 215px 15px !important;
+        padding: 0px 0px 0px 0px !important; }
 
 header {
     position:fixed;
-    top: -292px; 
+    top: -231px; 
    
     }
 
 .contenido {
-    margin-bottom: -135px;
+    
+ 
+    background-color: antiquewhite;
 }
+
+.contenido table {
+
+border: red 2px solid;
+margin:  0px 0px 0px 0px !important;
+padding: 0px 0px 0px 0px !important;
+}
+
 footer {
-    position: fixed; bottom: -129px; 
+    position: fixed; bottom:0px; 
+    padding-top: 0px;
 
 }
 
@@ -64,10 +76,10 @@ b {
                     <table width="100%">
                         <tbody>
                             <tr>
-                                <td rowspan="4" style="text-align: right; width:233px">
+                                <td rowspan="4" style="text-align: right; width:253px">
                                     <img src="{{ public_path('img/logo-enod-web.jpg')}}" alt="" style="height: 60px; margin-right: 25px;">
                                 </td>   
-                                <td style="font-size: 18px; height: 30px; text-align: center;width:234px" rowspan="3"><b>INFORME RADIOGRAFÍA INDUSTRIAL</b></td>
+                                <td style="font-size: 18px; height: 30px; text-align: center;width:534px;" rowspan="3"><b>INFORME RADIOGRAFÍA INDUSTRIAL</b></td>
                                 <td style="font-size: 12px;"><b style="margin-left: 40px"></b></td>                         
                             </tr>
                             <tr>
@@ -100,19 +112,22 @@ b {
                 </td>
             </tr>
             <tr>
-                <td >
+                <td class="bordered">
                     <table width="100%" style="border-collapse: collapse;" >
                         <tbody>                 
                         <tr>
-                            <td style="font-size: 12px; width: 219px;border-right: 1px solid #000;"><b>Componente: </b>{{$informe->componente}}</td>
+                            <td style="font-size: 12px; width: 170px;border-right: 1px solid #000;"><b>Componente: </b>{{$informe->componente}}</td>
                             <td style="font-size: 12px; " colspan="2" ><b>Equipo: </b>{{$equipo->codigo}}</td>
                             <td style="font-size: 12px;" ><b>Kv: </b>{{$informe->kv}}</td>
                             <td style="font-size: 12px; border-right: 1px solid #000;" ><b>mA: </b>{{$informe->ma}}</td>
-                            <td style="font-size: 11px;  " colspan="2"  ><b style="font-size: 12px;">Norma Evaluación: </b>{{$norma_evaluacion->descripcion}}</td>                            
+                            <td style="font-size: 12px;  width: 200px;border-right: 1px solid #000;" ><b>Proc. Sold. : </b>{{$informe_ri->procedimiento_soldadura}}</td>
+                            <td style="font-size: 11px; border-right: 1px solid #000; width: 225px " colspan="2"  ><b style="font-size: 12px;">Norma Evaluación: </b>{{$norma_evaluacion->descripcion}}</td>  
+                            <td style="font-size: 12px;" ><b>Dis.Fuente/pelicula: </b>{{$informe_ri->distancia_fuente_pelicula}}</td>
+                                                 
                         </tr>
                         <tr>                
                             
-                            <td style="font-size: 12px; width: 218px;border-right: 1px solid #000;"  ><b>Material: </b>{{$material->codigo}}</td>
+                            <td style="font-size: 12px;border-right: 1px solid #000;"  ><b>Material: </b>{{$material->codigo}}</td>
                             <td style="font-size: 12px;  width: 260px; border-right: 1px solid #000;" colspan="4"  ><b>Fuente: </b>     
 
                             @if ($fuente)
@@ -123,23 +138,34 @@ b {
                             
                             
                             </td>
-                            <td style="font-size: 12px; " colspan="2"  ><b>Norma Ensayo: </b>{{$norma_ensayo->descripcion}}</td>                
+                            <td style="font-size: 12px; border-right: 1px solid #000;" ><b>Proc. RI: </b>{{$procedimiento_inf->descripcion}} </td> 
+                            <td style="font-size: 12px;border-right: 1px solid #000; " colspan="2"  ><b>Norma Ensayo: </b>{{$norma_ensayo->descripcion}}</td>
+                            <td style="font-size: 12px; "><b>Tecnica: </b>{{$tecnica->codigo}}</td>      
+                                          
                         </tr>
                         <tr>
-                            <td style="font-size: 12px; width: 218px;border-right: 1px solid #000;"  ><b>Plano / Isom :</b>{{$informe->plano_isom}}</td>
-                            <td style="font-size: 12px; border-right: 1px solid #000;" colspan="4"  ><b>Foco: </b>{{$informe_ri->foco}}</td>   
+                            <td style="font-size: 12px; ;border-right: 1px solid #000;"  ><b>Plano / Isom :</b>{{$informe->plano_isom}}</td>
+                            <td style="font-size: 12px;" colspan="2"  ><b>Foco: </b>{{$informe_ri->foco}}</td>
+                            <td style="font-size: 12px; border-right: 1px solid #000; " colspan="2"  ><b>Pelicula : </b>{{$tipo_pelicula->fabricante}}</td>   
+                            <td style="font-size: 12px;  width: 218px;border-right: 1px solid #000;" ><b>Eps: </b>{{$informe_ri->eps}}</td>
                             
                             <td style="font-size: 12px;  "  ><b>Actividad: </b>{{$informe_ri->pos_pos}}</td>
-                            <td style="font-size: 12px;"  ><b>N° Exp. : </b>{{$informe_ri->exposicion}}</td>
-                            
+                            <td style="font-size: 12px; border-right: 1px solid #000;"  ><b>N° Exp. : </b>{{$informe_ri->exposicion}}</td>
+                             <td style="text-align: center; " rowspan="3" >
+                                    <img src="{{ public_path($tecnicas_grafico->path)}}" alt="" style="height: 40px; margin-right: 25px;">              
+                                    
+                            </td>   
                         </tr>
                         <tr>
-                            <td style="font-size: 12px;  width: 218px;border-right: 1px solid #000;"  ><b>Diametro: </b>{{$diametro_espesor->diametro}}</td>    
-                            <td style="font-size: 12px; border-right: 1px solid #000; " colspan="4"  ><b>Pelicula : </b>{{$tipo_pelicula->fabricante}}</td>    
-                            <td style="font-size: 12px;  " colspan="2" ><b>Dis.Fuente/pelicula: </b>{{$informe_ri->distancia_fuente_pelicula}}</td>
+                            <td style="font-size: 12px; border-right: 1px solid #000;"  ><b>Diametro: </b>{{$diametro_espesor->diametro}}</td>   
+                            <td style="font-size: 12px;" colspan="2"  ><b>Tipo: </b>{{$tipo_pelicula->codigo}}</td>    
+                             <td style="font-size: 12px; border-right: 1px solid #000;" colspan="2" ><b>Ici : </b>{{$ici->codigo}}</td>     
+                            <td style="font-size: 12px;  width: 218px;border-right: 1px solid #000;" ><b>Pqr: </b>{{$informe_ri->pqr}}</td> 
+                            <td style="font-size: 12px; border-right: 1px solid #000; " colspan="2" ><b>Ejecutor Ensayo : </b>{{$ejecutor_ensayo->name}}</td>           
+                           
                         </tr>
                         <tr>
-                            <td style="font-size: 12px; width: 218px;border-right: 1px solid #000; "  ><b>Espesor: </b>
+                            <td style="font-size: 12px;border-right: 1px solid #000; "  ><b>Espesor: </b>
 
                                 @if ($informe->espesor_chapa)
                                 {{ $informe->espesor_chapa }}
@@ -147,54 +173,69 @@ b {
                                 {{  $diametro_espesor->espesor }}
                                 @endif                       
                             
-                            </td>
-                            <td style="font-size: 12px; border-right: 1px solid #000;" colspan="4"  ><b>Tipo: </b>{{$tipo_pelicula->codigo}}</td>    
-                            <td style="font-size: 12px;  " colspan="2" ><b>Ejecutor Ensayo : </b>{{$ejecutor_ensayo->name}}</td>                
+                            </td>                 
                         
-                        </tr>
-                        <tr>                           
-                            <td style="font-size: 12px;  width: 218px;border-right: 1px solid #000;" ><b>Proc. Sold. : </b>{{$informe_ri->procedimiento_soldadura}}</td>
-                            
+                     
                             <td style="font-size: 12px; width: 75px"   ><b>Pantalla: </b>Pb</td>
                             <td style="font-size: 12px; width: 15px"  ><b>Ant: </b>{{$informe_ri->pos_ant}}</td>
                             <td style="font-size: 12px; width: 15px"  ><b>Pos: </b>{{$informe_ri->pos_pos}}</td>
                             <td style="font-size: 12px; width: 1px; border-right: 1px solid #000;"  ><b>Lado: </b>{{$informe_ri->lado}}</td>
-                            
-                            <td style="font-size: 12px; " colspan="2" ><b>Tecnica: </b>{{$tecnica->codigo}}</td>
+                            <td style="font-size: 12px;border-right: 1px solid #000;" >&nbsp;</td>
+                            <td style="font-size: 12px;border-right: 1px solid #000;" colspan="2" >&nbsp;</td>
+                           
                         </tr>
                         <tr>
-                            <td style="font-size: 12px;  width: 218px;border-right: 1px solid #000;" ><b>Eps: </b>{{$informe_ri->eps}}</td>
-                            <td style="font-size: 12px; border-right: 1px solid #000; " colspan="4" ><b>Proc. RI: </b>{{$procedimiento_inf->descripcion}} </td>                        
-                            <td style="text-align: center; " colspan="2" rowspan="2" >
-                                    <img src="{{ public_path($tecnicas_grafico->path)}}" alt="" style="height: 40px; margin-right: 25px;">              
-                                    
-                            </td>  
-                        </tr>
-                        <tr>                           
-                            <td style="font-size: 12px;  width: 218px;border-right: 1px solid #000;" ><b>Pqr: </b>{{$informe_ri->pqr}}</td>
-                            <td style="font-size: 12px; border-right: 1px solid #000;  " colspan="4" ><b>Ici : </b>{{$ici->codigo}}</td> 
-
-                        </tr>                
+                            
+                                                   
+                            
+                        </tr>                                   
                         </tbody>
                     </table>   
                 </td>
             </tr>
             <tr >
-                <td class="bordered" >
+                <td >
                     <table  width="100%" style="text-align: center;border-collapse: collapse;">
                         <tbody>
                             <tr>
-                                <td style="font-size: 12px; width:70px;  text-align: center " rowspan="2" class="bordered-td" >JUNTA</td>
-                                <td style="font-size: 12px; width:70px;  text-align: center;" rowspan="2" class="bordered-td">CUNIO</td>
-                                <td style="font-size: 12px; width:71px; text-align: center;" rowspan="2" class="bordered-td">POSICIÓN</td>
-                                <td style="font-size: 12px; width:190px;  text-align: center;" rowspan="2" class="bordered-td">DEFECTOS</td>  
-                                <td style="font-size: 12px; width:80px; text-align: center;" colspan="2" class="bordered-td">RESULTADO</td>  
-                                <td style="font-size: 12px; text-align: center" rowspan="2" class="bordered-td">OBSERVACIÓN</td>                     
+                                <td style="font-size: 12px; text-align: center " colspan="3" class="bordered-td" >Junta</td>
+                                <td style="font-size: 12px; text-align: center " colspan="13" class="bordered-td" >Cuneo</td>
+                                <td style="font-size: 12px; width:75px; text-align: center " rowspan="3" class="bordered-td" >Posición de Placa</td>
+                                <td style="font-size: 12px; width:60px; text-align: center " rowspan="2" colspan="3" class="bordered-td" >Defectos</td>
+                                <td style="font-size: 12px; width:90px; text-align: center " rowspan="2" colspan="2" class="bordered-td" >Resultados</td>
                             </tr>
                             <tr>
+                                <td style="font-size: 12px; width:60px;  text-align: center " rowspan="2" class="bordered-td" >Pk</td>
+                                <td style="font-size: 12px; width:60px;  text-align: center " rowspan="2" class="bordered-td" >JUNTA</td>
+                                <td style="font-size: 12px; width:60px;  text-align: center;" rowspan="2" class="bordered-td">TIPO</td>
+                                <td style="font-size: 12px; width:90px;  text-align: center;" colspan="3" class="bordered-td">1° Pasada</td>
+                                <td style="font-size: 12px; width:60px;  text-align: center;" colspan="2" class="bordered-td">2° Pasada</td>
+                                <td style="font-size: 12px; width:60px;  text-align: center;" colspan="2" class="bordered-td">3° Pasada</td>
+                                <td style="font-size: 12px; width:60px;  text-align: center;" colspan="2" class="bordered-td">4° Pasada</td>
+                                <td style="font-size: 12px; width:60px;  text-align: center;" colspan="2" class="bordered-td">5° Pasada</td>
+                                <td style="font-size: 12px; width:60px;  text-align: center;" colspan="2" class="bordered-td">6° Pasada</td>                   
+
+                            </tr>
+                            <tr>
+                                <td style="font-size: 12px; width:30px;  text-align: center;" class="bordered-td">Z</td>  
+                                <td style="font-size: 12px; width:30px;  text-align: center;" class="bordered-td">L</td>  
+                                <td style="font-size: 12px; width:30px;  text-align: center;" class="bordered-td">P</td>
+                                <td style="font-size: 12px; width:30px;  text-align: center;" class="bordered-td">Z</td>  
+                                <td style="font-size: 12px; width:30px;  text-align: center;" class="bordered-td">P</td>
+                                <td style="font-size: 12px; width:30px;  text-align: center;" class="bordered-td">Z</td>  
+                                <td style="font-size: 12px; width:30px;  text-align: center;" class="bordered-td">P</td>   
+                                <td style="font-size: 12px; width:30px;  text-align: center;" class="bordered-td">Z</td>  
+                                <td style="font-size: 12px; width:30px;  text-align: center;" class="bordered-td">P</td>  
+                                <td style="font-size: 12px; width:30px;  text-align: center;" class="bordered-td">Z</td>  
+                                <td style="font-size: 12px; width:30px;  text-align: center;" class="bordered-td">P</td>  
+                                <td style="font-size: 12px; width:30px;  text-align: center;" class="bordered-td">Z</td>  
+                                <td style="font-size: 12px; width:30px;  text-align: center;" class="bordered-td">P</td>    
+                                <td style="font-size: 12px; width:45px; text-align: center;" class="bordered-td">Tipo</td>  
+                                <td style="font-size: 12px; width:90px; text-align: center"  class="bordered-td">Posición</td>                     
+                                <td style="font-size: 11px; width:45px; text-align: center;" class="bordered-td">Pasadas</td>
                                 <td style="font-size: 11px; text-align: center;" class="bordered-td">AP</td>
                                 <td style="font-size: 11px; text-align: center;" class="bordered-td">RZ</td>                            
-                            </tr>  
+                            </tr>                         
                         </tbody>
                     </table> 
                 </td>
@@ -281,15 +322,18 @@ b {
         </tbody>
     </table>
 </footer>
+
+<!--
+
 <div class="contenido">
     
     <table width="100%" class="bordered" >
         <tbody>
             @foreach ($juntas_posiciones as $junta_posicion)
                 <tr>
-                    <td style="font-size: 11px;  width:72px;text-align: center" class="bordered-td">{{ $junta_posicion->junta }}</td>
-                    <td style="font-size: 11px;  width:71px;text-align: center" class="bordered-td">{{$junta_posicion->soldadorz}} / {{$junta_posicion->soldadorl}} </td>
-                    <td style="font-size: 11px;  width:71px;text-align: center" class="bordered-td">{{$junta_posicion->posicion}}</td>
+                    <td style="font-size: 11px;  width:71px;text-align: center" class="bordered-td">{{ $junta_posicion->junta }}-{{$loop->index}}</td>
+                    <td style="font-size: 11px;  width:70px;text-align: center" class="bordered-td">{{$junta_posicion->soldadorz}} / {{$junta_posicion->soldadorl}} </td>
+                    <td style="font-size: 11px;  width:73px;text-align: center" class="bordered-td">{{$junta_posicion->posicion}}</td>
                     <td style="font-size: 11px;  width:190px; " class="bordered-td">&nbsp;
                         @foreach ($defectos_posiciones as $key => $defecto_posicion)                                
 
@@ -320,22 +364,34 @@ b {
 
                     <td style="font-size: 11px;" class="bordered-td">&nbsp;{{$junta_posicion->observacion}}</td>
                 </tr>
-
                 
             @endforeach
+
+            @for ( $x = 1;  $x <= pdfCantFilasACompletar(19,$juntas_posiciones) ; $x++)
+                <tr>
+                    <td style="font-size: 11px;  width:71px;text-align: center"  class="bordered-td">{{ count($juntas_posiciones) }}-{{$x}}</td>
+                    <td style="font-size: 11px;  width:70px;text-align: center"  class="bordered-td"></td>
+                    <td style="font-size: 11px;  width:73px;text-align: center"  class="bordered-td"></td>
+                    <td style="font-size: 11px;  width:190px;text-align: center" class="bordered-td"></td>
+                    <td style="font-size: 11px;  width:39px;text-align: center"  class="bordered-td"></td>
+                    <td style="font-size: 11px;  width:38px;text-align: center"  class="bordered-td"></td>
+                    <td style="font-size: 11px;" class="bordered-td"></td>
+                </tr>
+            @endfor
                                         
         </tbody>
     </table>
-</div>   
-     
-
-
-<!--
-    <div class="contenido">
-        @for ($x = 0 ; $x <30 ; $x++)
-            <p>El valor es {{ $x }}</p>
-        @endfor
-    </div>
+</div>  
 -->
 </body>
 </html>
+
+<script type='text/php'>
+    if ( isset($pdf) ) { 
+      $font = Font_Metrics::get_font('helvetica', 'normal');
+      $size = 9;
+      $y = $pdf->get_height() - 24;
+      $x = $pdf->get_width() - 15 - Font_Metrics::get_text_width('1/1', $font, $size);
+      $pdf->page_text($x, $y, '{PAGE_NUM}/{PAGE_COUNT}', $font, $size);
+    } 
+</script>
