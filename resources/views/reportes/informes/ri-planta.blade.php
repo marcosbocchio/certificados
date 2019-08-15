@@ -12,7 +12,8 @@
 
 header {
     position:fixed;
-    top: -289px;
+    top: -291px; 
+   
     }
 
 .contenido {
@@ -89,7 +90,7 @@ b {
                             </tr>
                             <tr>
                                 <td style="font-size: 12px;"><b style="margin-left: 120px"></b></td>                     
-                                <td style="font-size: 12px;"><b style="margin-left: 120px">PÁGINA </b> <span class="pagenum"></span></div> <b> de </b>1</td>            
+                                <td style="font-size: 12px;"><b style="margin-left: 120px"></td>            
                             </tr>               
                         </tbody>
                     </table>          
@@ -354,7 +355,22 @@ b {
     </table>
 </div>   
      
+<script type="text/php">
 
+    if ( isset($pdf) ) {
+        $x = 469;
+        $y = 77;
+        $text = "PÁGINA : {PAGE_NUM} de {PAGE_COUNT}";
+        $font = $fontMetrics->get_font("serif", "bold");
+        $size = 9;
+        $color = array(0,0,0);
+        $word_space = 0.0;  //  default
+        $char_space = 0.0;  //  default
+        $angle = 0.0;   //  default
+        $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
+    }
+
+</script>
 
 
 </body>

@@ -34,7 +34,7 @@ class PdfInformesRiController extends Controller
 
        /* header */
 
-        $informe = Informe::findOrFail($id);
+        $informe = Informe::findOrFail($id);       
         $informe_ri = InformesRi::where('informe_id',$informe->id)->firstOrFail();
         $ot = Ots::findOrFail($informe->ot_id);
         $cliente = Clientes::findOrFail($ot->cliente_id);
@@ -44,19 +44,22 @@ class PdfInformesRiController extends Controller
         $procedimiento_inf = Documentaciones::findOrFail($informe->procedimiento_informe_id);
         $equipo = Equipos::findOrFail($informe->equipo_id);
         $fuente = Fuentes::find($informe_ri->fuente_id);
-        $tipo_pelicula = TipoPeliculas::findOrFail($informe_ri->tipo_pelicula_id);
+        $tipo_pelicula = TipoPeliculas::findOrFail($informe_ri->tipo_pelicula_id);     
         $diametro_espesor = DiametrosEspesor::findOrFail($informe->diametro_espesor_id);
         $ici = Icis::findOrFail($informe_ri->ici_id);
         $tecnica = Tecnicas::findOrFail($informe->tecnica_id);
         $ejecutor_ensayo = User::findOrFail($informe->ejecutor_ensayo_id);
         $tecnicas_grafico = TecnicasGraficos::findOrFail($informe_ri->tecnicas_grafico_id);
-
+        
       //  dd($informe_ri);
 
         if ($informe_ri->gasoducto_sn){
 
-          $juntas_posiciones = DB::select('CALL InformeRiPlantaJuntaPosicion(?)',array($informe_ri->id));
-          $defectos_posiciones = DB::select('CALL InformeRiPlantaDefectosPasadaPosicion(?)',array($informe_ri->id));   
+          $juntas_posiciones = DB::select('CALL InformeRiGasoductoJuntaPosicion(?)',array($informe_ri->id));        
+          $pasadas_posiciones = DB::select('CALL InformeRiGasoductoPasadasPosicion(?)',array($informe_ri->id));
+          $defectos_posiciones = DB::select('CALL InformeRiGasoductoDefectosPasadasPosicion(?)',array($informe_ri->id));   
+        //  dd($juntas_posiciones);
+       
 
           $pdf = PDF::loadView('reportes.informes.ri-gasoducto',compact('ot',
           'norma_ensayo',
@@ -75,10 +78,11 @@ class PdfInformesRiController extends Controller
           'material',
           'tecnicas_grafico',
           'juntas_posiciones',
+          'pasadas_posiciones',
           'defectos_posiciones'))->setPaper('a4','landscape')->setWarnings(false);
 
 
-return $pdf->stream();
+          return $pdf->stream();
 
         }else
 
@@ -87,9 +91,9 @@ return $pdf->stream();
       /* Detalle */ 
 
           $juntas_posiciones = DB::select('CALL InformeRiPlantaJuntaPosicion(?)',array($informe_ri->id));
-          $defectos_posiciones = DB::select('CALL InformeRiPlantaDefectosPasadaPosicion(?)',array($informe_ri->id));                      
+          $defectos_posiciones = DB::select('CALL InformeRiPlantaDefectosPasadaPosicion(?)',array($informe_ri->id));                     
                       
-        // dd($juntas_posiciones);
+      
 
           $pdf = PDF::loadView('reportes.informes.ri-planta',compact('ot',
                                                               'norma_ensayo',

@@ -12,21 +12,18 @@
 
 header {
     position:fixed;
-    top: -231px; 
+    top: -249px; 
    
     }
 
-.contenido {
-    
+.contenido {    
  
-    background-color: antiquewhite;
+   
 }
 
 .contenido table {
 
-border: red 2px solid;
-margin:  0px 0px 0px 0px !important;
-padding: 0px 0px 0px 0px !important;
+
 }
 
 footer {
@@ -90,7 +87,7 @@ b {
                             </tr>
                             <tr>
                                 <td style="font-size: 12px;"><b style="margin-left: 120px"></b></td>                     
-                                <td style="font-size: 12px;"><b style="margin-left: 120px">PÁGINA </b> <span class="pagenum"></span></div> <b> de </b>1</td>            
+                                <td style="font-size: 12px;"><b style="margin-left: 120px"></td>            
                             </tr>               
                         </tbody>
                     </table>          
@@ -323,75 +320,191 @@ b {
     </table>
 </footer>
 
-<!--
 
 <div class="contenido">
     
     <table width="100%" class="bordered" >
         <tbody>
-            @foreach ($juntas_posiciones as $junta_posicion)
+            @foreach ($juntas_posiciones as $junta_posiciones)
                 <tr>
-                    <td style="font-size: 11px;  width:71px;text-align: center" class="bordered-td">{{ $junta_posicion->junta }}-{{$loop->index}}</td>
-                    <td style="font-size: 11px;  width:70px;text-align: center" class="bordered-td">{{$junta_posicion->soldadorz}} / {{$junta_posicion->soldadorl}} </td>
-                    <td style="font-size: 11px;  width:73px;text-align: center" class="bordered-td">{{$junta_posicion->posicion}}</td>
-                    <td style="font-size: 11px;  width:190px; " class="bordered-td">&nbsp;
-                        @foreach ($defectos_posiciones as $key => $defecto_posicion)                                
+                    <td style="font-size: 11px;  width:45px;text-align: center" class="bordered-td">{{ $junta_posiciones->km}}-{{$loop->index}}</td>
+                    <td style="font-size: 11px;  width:45px;text-align: center" class="bordered-td">{{$junta_posiciones->junta}} </td>
+                    <td style="font-size: 11px;  width:44px;text-align: center" class="bordered-td">{{$junta_posiciones->tipo_soldadura}}</td>
+                 
+                        <!--   Pasada 1 -->
+                        @foreach ($pasadas_posiciones as $key => $pasadas_posicion)                                
 
                             
-                            @if ($defecto_posicion->pasada_posicion_id == $junta_posicion->pasada_posicion_id)
+                            @if (($pasadas_posicion->posicion_id == $junta_posiciones->posicion_id) && ($pasadas_posicion->numero == 1 ))
 
 
-                                {{$defecto_posicion->codigo}} /&nbsp;
+                                 <td style="font-size: 11px;  width:30px; text-align:center;" class="bordered-td">{{$pasadas_posicion->soldadorz}} </td>                           
+
+
+                            @endif
+
+                            @if (($pasadas_posicion->posicion_id == $junta_posiciones->posicion_id) && ($pasadas_posicion->numero == 1 ))
+
+
+                                 <td style="font-size: 11px;  width:30px; text-align:center;" class="bordered-td">{{$pasadas_posicion->soldadorl}} </td>                           
+
+
+                            @endif
+
+                            @if (($pasadas_posicion->posicion_id == $junta_posiciones->posicion_id) && ($pasadas_posicion->numero == 1 ))
+
+
+                                 <td style="font-size: 11px;  width:30px; text-align:center;" class="bordered-td">{{$pasadas_posicion->soldadorp}} </td>                           
+
+
+                            @endif
+                            
+                        @endforeach     
+                    
+                         <!--   Pasada 2 -->
+
+                         @foreach ($pasadas_posiciones as $key => $pasadas_posicion)                                
+
+                            
+                            @if (($pasadas_posicion->posicion_id == $junta_posiciones->posicion_id) && ($pasadas_posicion->numero == 2 ))
+
+
+                                 <td style="font-size: 11px;  width:30px; text-align:center;" class="bordered-td">{{$pasadas_posicion->soldadorz}} </td>                           
+
+
+                            @endif
+                     
+
+                            @if (($pasadas_posicion->posicion_id == $junta_posiciones->posicion_id) && ($pasadas_posicion->numero == 2 ))
+
+
+                                 <td style="font-size: 11px;  width:30px; text-align:center;" class="bordered-td">{{$pasadas_posicion->soldadorp}} </td>                           
 
 
                             @endif
                             
                         @endforeach
-                    
-                    </td>
 
-                    <td style="font-size: 11px; text-align: center;width:39px; " class="bordered-td">
-                        @if ($junta_posicion->aceptable_sn)
-                            X
-                        @endif
-                    </td>
+                        <!--   Pasada 3 -->
 
-                    <td style="font-size: 11px; text-align: center;width:38px;" class="bordered-td">
-                        @if (!$junta_posicion->aceptable_sn)
-                            X
-                        @endif
-                    </td>
+                         @foreach ($pasadas_posiciones as $key => $pasadas_posicion)                                
 
-                    <td style="font-size: 11px;" class="bordered-td">&nbsp;{{$junta_posicion->observacion}}</td>
+                            
+                            @if (($pasadas_posicion->posicion_id == $junta_posiciones->posicion_id) && ($pasadas_posicion->numero == 3 ))
+
+
+                                 <td style="font-size: 11px;  width:30px; text-align:center;" class="bordered-td">{{$pasadas_posicion->soldadorz}} </td>                           
+
+
+                            @endif                       
+
+                            @if (($pasadas_posicion->posicion_id == $junta_posiciones->posicion_id) && ($pasadas_posicion->numero == 3 ))
+
+
+                                 <td style="font-size: 11px;  width:30px; text-align:center;" class="bordered-td">{{$pasadas_posicion->soldadorp}} </td>                           
+
+
+                            @endif
+                            
+                        @endforeach
+
+                        <!--   Pasada 4 -->
+
+                         @foreach ($pasadas_posiciones as $key => $pasadas_posicion)                                
+
+                            
+                            @if (($pasadas_posicion->posicion_id == $junta_posiciones->posicion_id) && ($pasadas_posicion->numero == 4 ))
+
+
+                                 <td style="font-size: 11px;  width:30px; text-align:center;" class="bordered-td">{{$pasadas_posicion->soldadorz}} </td>                           
+
+
+                            @endif
+
+
+                            @if (($pasadas_posicion->posicion_id == $junta_posiciones->posicion_id) && ($pasadas_posicion->numero == 4 ))
+
+
+                                 <td style="font-size: 11px;  width:30px; text-align:center;" class="bordered-td">{{$pasadas_posicion->soldadorp}} </td>                           
+
+
+                            @endif
+                            
+                        @endforeach
+
+                        <!--   Pasada 5 -->
+
+                         @foreach ($pasadas_posiciones as $key => $pasadas_posicion)                                
+
+                            
+                            @if (($pasadas_posicion->posicion_id == $junta_posiciones->posicion_id) && ($pasadas_posicion->numero == 5 ))
+
+
+                                 <td style="font-size: 11px;  width:30px; text-align:center;" class="bordered-td">{{$pasadas_posicion->soldadorz}} </td>                           
+
+
+                            @endif
+
+
+                            @if (($pasadas_posicion->posicion_id == $junta_posiciones->posicion_id) && ($pasadas_posicion->numero == 5 ))
+
+
+                                 <td style="font-size: 11px;  width:30px; text-align:center;" class="bordered-td">{{$pasadas_posicion->soldadorp}} </td>                           
+
+
+                            @endif
+                            
+                        @endforeach
+
+                        <!--   Pasada 6 -->
+
+                         @foreach ($pasadas_posiciones as $key => $pasadas_posicion)                                
+
+                            
+                            @if (($pasadas_posicion->posicion_id == $junta_posiciones->posicion_id) && ($pasadas_posicion->numero == 6 ))
+
+
+                                 <td style="font-size: 11px;  width:30px; text-align:center;" class="bordered-td">{{$pasadas_posicion->soldadorz}} </td>                           
+
+
+                            @endif
+
+
+                            @if (($pasadas_posicion->posicion_id == $junta_posiciones->posicion_id) && ($pasadas_posicion->numero == 6 ))
+
+
+                                 <td style="font-size: 11px;  width:30px; text-align:center;" class="bordered-td">{{$pasadas_posicion->soldadorp}} </td>                           
+
+
+                            @endif
+                            
+                        @endforeach
+
+                    <td style="font-size: 11px;  width:44px;text-align: center" class="bordered-td">{{$junta_posiciones->codigo}}</td>
                 </tr>
                 
-            @endforeach
-
-            @for ( $x = 1;  $x <= pdfCantFilasACompletar(19,$juntas_posiciones) ; $x++)
-                <tr>
-                    <td style="font-size: 11px;  width:71px;text-align: center"  class="bordered-td">{{ count($juntas_posiciones) }}-{{$x}}</td>
-                    <td style="font-size: 11px;  width:70px;text-align: center"  class="bordered-td"></td>
-                    <td style="font-size: 11px;  width:73px;text-align: center"  class="bordered-td"></td>
-                    <td style="font-size: 11px;  width:190px;text-align: center" class="bordered-td"></td>
-                    <td style="font-size: 11px;  width:39px;text-align: center"  class="bordered-td"></td>
-                    <td style="font-size: 11px;  width:38px;text-align: center"  class="bordered-td"></td>
-                    <td style="font-size: 11px;" class="bordered-td"></td>
-                </tr>
-            @endfor
+            @endforeach      
                                         
         </tbody>
     </table>
 </div>  
--->
+
+<script type="text/php">
+
+    if ( isset($pdf) ) {
+        $x = 702;
+        $y = 77;
+        $text = "PÁGINA: {PAGE_NUM} de {PAGE_COUNT}";
+        $font = $fontMetrics->get_font("serif", "bold");
+        $size = 9;
+        $color = array(0,0,0);
+        $word_space = 0.0;  //  default
+        $char_space = 0.0;  //  default
+        $angle = 0.0;   //  default
+        $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
+    }
+
+</script>
 </body>
 </html>
 
-<script type='text/php'>
-    if ( isset($pdf) ) { 
-      $font = Font_Metrics::get_font('helvetica', 'normal');
-      $size = 9;
-      $y = $pdf->get_height() - 24;
-      $x = $pdf->get_width() - 15 - Font_Metrics::get_text_width('1/1', $font, $size);
-      $pdf->page_text($x, $y, '{PAGE_NUM}/{PAGE_COUNT}', $font, $size);
-    } 
-</script>

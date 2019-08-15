@@ -124,7 +124,6 @@ class InformesRiRepository extends BaseRepository
 
   public function saveDetallePlanta($request,$informeRi){
 
-
    
       foreach ($request->detalles as $detalle){       
 
@@ -141,10 +140,42 @@ class InformesRiRepository extends BaseRepository
 
           }
       
-        }     
+        }  
 
-        $posicion = $this->savePosicion($detalle,$junta);    
-        $pasadas_posicion = $this->savePasadasPosicion($request->gasoducto_sn,$detalle,$posicion);
+        try {
+
+          $posicion = $this->savePosicion($detalle,$junta);   
+  
+           
+         } 
+         catch(Exception $u){          
+ 
+           if ($u->getCode() != '23000'){
+ 
+             throw $u;    
+ 
+           }
+       
+         } 
+
+         try {
+
+          $pasadas_posicion = $this->savePasadasPosicion($request->gasoducto_sn,$detalle,$posicion);
+  
+           
+         } 
+         catch(Exception $z){          
+ 
+           if ($z->getCode() != '23000'){
+ 
+             throw $z;    
+ 
+           }
+       
+         } 
+        
+       
+       
       
       }
     
@@ -174,25 +205,22 @@ class InformesRiRepository extends BaseRepository
     return $pos;
   }
 
+
   public function savePasadasPosicion($gasoducto_sn,$detalle,$posicion){
  
      
      
-    $defectosPosicion = $detalle['defectosPosicion'];
-    $pasadas = $gasoducto_sn ? 6 : 1 ;
-
-    $i = 1;
-    do {
+     $defectosPosicion = $detalle['defectosPosicion'];
+     $numero_pasada    = $detalle['pasada'] ? $detalle['pasada'] : 1;
 
       $pasadasPosicion = new PasadasPosicion;   
-      $pasadasPosicion->numero = $i;
+      $pasadasPosicion->numero = $numero_pasada;
       $pasadasPosicion->posicion_id = $posicion['id'];
       $pasadasPosicion->soldadorz_id = $detalle['soldador1']['id'];               
       $pasadasPosicion->soldadorl_id = $detalle['soldador2']['id'];
       $pasadasPosicion->soldadorp_id = $detalle['soldador3']['id'];
 
-      $pasadasPosicion->save();   
-      $i++;    
+      $pasadasPosicion->save();
       
         foreach ($defectosPosicion as $defectoPosicion) {
           
@@ -209,10 +237,7 @@ class InformesRiRepository extends BaseRepository
           $defectos_pasadas_posicion->save();
         }
 
-    } while ($i <= $pasadas);        
+  
     
   }
-
- 
-
 }
