@@ -7,7 +7,7 @@
 
 <style>
 
-@page { margin: 330px 25px 257px 25px !important;
+@page { margin: 329px 25px 257px 25px !important;
         padding: 0px 0px 0px 0px !important; }
 
 header {
@@ -19,13 +19,11 @@ header {
 .contenido {
 
     margin-bottom: -2px;
-      padding: 0px 0px 0px 0px !important;
-      background-color: antiquewhite;
 }
 
 .contenido table {
 
-border: red 2px solid;
+border: #000 2px solid;
 margin: 0px 0px 0px 0px !important;
 padding: 0px 0px 0px 0px !important;
 }
@@ -175,7 +173,7 @@ b {
                             <td style="font-size: 12px; " colspan="2" ><b>Tecnica: </b>{{$tecnica->codigo}}</td>
                         </tr>
                         <tr>
-                            <td style="font-size: 12px;  width: 218px;border-right: 1px solid #000;" ><b>Eps: </b>{{$informe_ri->eps}}</td>
+                            <td style="font-size: 12px;  width: 218px;border-right: 1px solid #000;" ><b>Eps: </b>{{$informe->eps}}</td>
                             <td style="font-size: 12px; border-right: 1px solid #000; " colspan="4" ><b>Proc. RI: </b>{{$procedimiento_inf->descripcion}} </td>                        
                             <td style="text-align: center; " colspan="2" rowspan="2" >
                                     <img src="{{ public_path($tecnicas_grafico->path)}}" alt="" style="height: 40px; margin-right: 25px;">              
@@ -183,7 +181,7 @@ b {
                             </td>  
                         </tr>
                         <tr>                           
-                            <td style="font-size: 12px;  width: 218px;border-right: 1px solid #000;" ><b>Pqr: </b>{{$informe_ri->pqr}}</td>
+                            <td style="font-size: 12px;  width: 218px;border-right: 1px solid #000;" ><b>Pqr: </b>{{$informe->pqr}}</td>
                             <td style="font-size: 12px; border-right: 1px solid #000;" colspan="4" ><b>Ici : </b>{{$ici->codigo}}</td> 
 
                         </tr>                
@@ -300,7 +298,7 @@ b {
         <tbody>
             @foreach ($juntas_posiciones as $junta_posicion)
                 <tr>
-                    <td style="font-size: 11px;  width:71px;text-align: center" class="bordered-td">{{ $junta_posicion->junta }}-{{$loop->index}}</td>
+                    <td style="font-size: 11px;  width:71px;text-align: center" class="bordered-td">{{ $junta_posicion->junta }}</td>
                     <td style="font-size: 11px;  width:70px;text-align: center" class="bordered-td">{{$junta_posicion->soldadorz}} / {{$junta_posicion->soldadorl}} </td>
                     <td style="font-size: 11px;  width:73px;text-align: center" class="bordered-td">{{$junta_posicion->posicion}}</td>
                     <td style="font-size: 11px;  width:190px; " class="bordered-td">&nbsp;
@@ -336,20 +334,6 @@ b {
 
                 
             @endforeach
-
-           @for ( $x = 1;  $x <= pdfCantFilasACompletar(29,$juntas_posiciones) ; $x++)
-             <tr>
-                <td style="font-size: 11px;  width:71px;text-align: center"  class="bordered-td">{{ count($juntas_posiciones) }}-{{$x}}</td>
-                <td style="font-size: 11px;  width:70px;text-align: center"  class="bordered-td"></td>
-                <td style="font-size: 11px;  width:73px;text-align: center"  class="bordered-td"></td>
-                <td style="font-size: 11px;  width:190px;text-align: center" class="bordered-td"></td>
-                <td style="font-size: 11px;  width:39px;text-align: center"  class="bordered-td"></td>
-                <td style="font-size: 11px;  width:38px;text-align: center"   class="bordered-td"></td>
-                <td style="font-size: 11px;" class="bordered-td"></td>
-
-             </tr>
-           @endfor
-
                                         
         </tbody>
     </table>

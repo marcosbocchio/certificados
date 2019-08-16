@@ -95,8 +95,7 @@ class InformesRiRepository extends BaseRepository
 
   public function saveInformeRi($request,$informe){
 
-
-       
+      
 
     $informeRi  = new InformesRi;
     $informeRi->informe_id = $informe->id;
@@ -185,6 +184,7 @@ class InformesRiRepository extends BaseRepository
 
     $junta =  new Juntas;
     $junta->codigo = $detalle['junta'];
+    $junta->tipo_soldadura_id = $detalle['tipo_soldadura']['id'];
     $junta->informe_ri_id = $informeRi->id;          
     $junta->km = $detalle['pk']; 
     $junta->save();

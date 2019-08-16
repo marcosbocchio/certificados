@@ -98,10 +98,10 @@ b {
                     <table width="100%" >
                         <tbody>
                             <tr>                         
-                                <td style="font-size: 12px;height: 20px; width: 233px;"><b>CLIENTE: </b>{{$cliente->nombre_fantasia}}</td>                        
-                                <td style="font-size: 12px; width: 253px;"><b>PROYECTO: </b>{{$ot->proyecto}}</td>               
+                                <td style="font-size: 12px;height: 20px; width: 200px;"><b>CLIENTE: </b>{{$cliente->nombre_fantasia}}</td>                        
+                                <td style="font-size: 12px; width: 460px;"><b>PROYECTO: </b>{{$ot->proyecto}}</td>               
                                 
-                                <td style="font-size: 12px;"><b>OBRA: </b>{{$ot->obra}}</td>     
+                                <td style="font-size: 12px;width: 225px;"><b>OBRA: </b>{{$ot->obra}}</td>     
                                 <td style="font-size: 12px;"><b>OT N°: </b>{{$ot->numero}}</td>     
                             </tr>               
                         </tbody>
@@ -144,7 +144,7 @@ b {
                             <td style="font-size: 12px; ;border-right: 1px solid #000;"  ><b>Plano / Isom :</b>{{$informe->plano_isom}}</td>
                             <td style="font-size: 12px;" colspan="2"  ><b>Foco: </b>{{$informe_ri->foco}}</td>
                             <td style="font-size: 12px; border-right: 1px solid #000; " colspan="2"  ><b>Pelicula : </b>{{$tipo_pelicula->fabricante}}</td>   
-                            <td style="font-size: 12px;  width: 218px;border-right: 1px solid #000;" ><b>Eps: </b>{{$informe_ri->eps}}</td>
+                            <td style="font-size: 12px;  width: 218px;border-right: 1px solid #000;" ><b>Eps: </b>{{$informe->eps}}</td>
                             
                             <td style="font-size: 12px;  "  ><b>Actividad: </b>{{$informe_ri->pos_pos}}</td>
                             <td style="font-size: 12px; border-right: 1px solid #000;"  ><b>N° Exp. : </b>{{$informe_ri->exposicion}}</td>
@@ -157,7 +157,7 @@ b {
                             <td style="font-size: 12px; border-right: 1px solid #000;"  ><b>Diametro: </b>{{$diametro_espesor->diametro}}</td>   
                             <td style="font-size: 12px;" colspan="2"  ><b>Tipo: </b>{{$tipo_pelicula->codigo}}</td>    
                              <td style="font-size: 12px; border-right: 1px solid #000;" colspan="2" ><b>Ici : </b>{{$ici->codigo}}</td>     
-                            <td style="font-size: 12px;  width: 218px;border-right: 1px solid #000;" ><b>Pqr: </b>{{$informe_ri->pqr}}</td> 
+                            <td style="font-size: 12px;  width: 218px;border-right: 1px solid #000;" ><b>Pqr: </b>{{$informe->pqr}}</td> 
                             <td style="font-size: 12px; border-right: 1px solid #000; " colspan="2" ><b>Ejecutor Ensayo : </b>{{$ejecutor_ensayo->name}}</td>           
                            
                         </tr>
@@ -197,14 +197,14 @@ b {
                             <tr>
                                 <td style="font-size: 12px; text-align: center " colspan="3" class="bordered-td" >Junta</td>
                                 <td style="font-size: 12px; text-align: center " colspan="13" class="bordered-td" >Cuneo</td>
-                                <td style="font-size: 12px; width:75px; text-align: center " rowspan="3" class="bordered-td" >Posición de Placa</td>
-                                <td style="font-size: 12px; width:60px; text-align: center " rowspan="2" colspan="3" class="bordered-td" >Defectos</td>
-                                <td style="font-size: 12px; width:90px; text-align: center " rowspan="2" colspan="2" class="bordered-td" >Resultados</td>
+                                <td style="font-size: 12px; width:50px; text-align: center " rowspan="3" class="bordered-td" >Posición de Placa</td>
+                                <td style="font-size: 12px; text-align: center " rowspan="2" colspan="3" class="bordered-td" >Defectos</td>
+                                <td style="font-size: 12px; text-align: center " rowspan="2" colspan="2" class="bordered-td" >Resultados</td>
                             </tr>
                             <tr>
-                                <td style="font-size: 12px; width:60px;  text-align: center " rowspan="2" class="bordered-td" >Pk</td>
-                                <td style="font-size: 12px; width:60px;  text-align: center " rowspan="2" class="bordered-td" >JUNTA</td>
-                                <td style="font-size: 12px; width:60px;  text-align: center;" rowspan="2" class="bordered-td">TIPO</td>
+                                <td style="font-size: 12px; width:29px;  text-align: center " rowspan="2" class="bordered-td" >Pk</td>
+                                <td style="font-size: 12px; width:39px;  text-align: center " rowspan="2" class="bordered-td" >JUNTA</td>
+                                <td style="font-size: 12px; width:39px;  text-align: center;" rowspan="2" class="bordered-td">TIPO</td>
                                 <td style="font-size: 12px; width:90px;  text-align: center;" colspan="3" class="bordered-td">1° Pasada</td>
                                 <td style="font-size: 12px; width:60px;  text-align: center;" colspan="2" class="bordered-td">2° Pasada</td>
                                 <td style="font-size: 12px; width:60px;  text-align: center;" colspan="2" class="bordered-td">3° Pasada</td>
@@ -214,24 +214,24 @@ b {
 
                             </tr>
                             <tr>
-                                <td style="font-size: 12px; width:30px;  text-align: center;" class="bordered-td">Z</td>  
-                                <td style="font-size: 12px; width:30px;  text-align: center;" class="bordered-td">L</td>  
-                                <td style="font-size: 12px; width:30px;  text-align: center;" class="bordered-td">P</td>
-                                <td style="font-size: 12px; width:30px;  text-align: center;" class="bordered-td">Z</td>  
-                                <td style="font-size: 12px; width:30px;  text-align: center;" class="bordered-td">P</td>
-                                <td style="font-size: 12px; width:30px;  text-align: center;" class="bordered-td">Z</td>  
-                                <td style="font-size: 12px; width:30px;  text-align: center;" class="bordered-td">P</td>   
-                                <td style="font-size: 12px; width:30px;  text-align: center;" class="bordered-td">Z</td>  
-                                <td style="font-size: 12px; width:30px;  text-align: center;" class="bordered-td">P</td>  
-                                <td style="font-size: 12px; width:30px;  text-align: center;" class="bordered-td">Z</td>  
-                                <td style="font-size: 12px; width:30px;  text-align: center;" class="bordered-td">P</td>  
-                                <td style="font-size: 12px; width:30px;  text-align: center;" class="bordered-td">Z</td>  
-                                <td style="font-size: 12px; width:30px;  text-align: center;" class="bordered-td">P</td>    
-                                <td style="font-size: 12px; width:45px; text-align: center;" class="bordered-td">Tipo</td>  
-                                <td style="font-size: 12px; width:90px; text-align: center"  class="bordered-td">Posición</td>                     
-                                <td style="font-size: 11px; width:45px; text-align: center;" class="bordered-td">Pasadas</td>
-                                <td style="font-size: 11px; text-align: center;" class="bordered-td">AP</td>
-                                <td style="font-size: 11px; text-align: center;" class="bordered-td">RZ</td>                            
+                                <td style="font-size: 12px; width:28px;  text-align: center;" class="bordered-td">Z</td>  
+                                <td style="font-size: 12px; width:28px;  text-align: center;" class="bordered-td">L</td>  
+                                <td style="font-size: 12px; width:28px;  text-align: center;" class="bordered-td">P</td>
+                                <td style="font-size: 12px; width:28px;  text-align: center;" class="bordered-td">Z</td>  
+                                <td style="font-size: 12px; width:28px;  text-align: center;" class="bordered-td">P</td>
+                                <td style="font-size: 12px; width:28px;  text-align: center;" class="bordered-td">Z</td>  
+                                <td style="font-size: 12px; width:28px;  text-align: center;" class="bordered-td">P</td>   
+                                <td style="font-size: 12px; width:28px;  text-align: center;" class="bordered-td">Z</td>  
+                                <td style="font-size: 12px; width:28px;  text-align: center;" class="bordered-td">P</td>  
+                                <td style="font-size: 12px; width:28px;  text-align: center;" class="bordered-td">Z</td>  
+                                <td style="font-size: 12px; width:28px;  text-align: center;" class="bordered-td">P</td>  
+                                <td style="font-size: 12px; width:28px;  text-align: center;" class="bordered-td">Z</td>  
+                                <td style="font-size: 12px; width:28px;  text-align: center;" class="bordered-td">P</td>    
+                                <td style="font-size: 12px; width:75px; text-align: center;" class="bordered-td">Tipo</td>  
+                                <td style="font-size: 12px; width:75px; text-align: center"  class="bordered-td">Posición</td>                     
+                                <td style="font-size: 11px; width:75px; text-align: center;" class="bordered-td">Pasadas</td>
+                                <td style="font-size: 11px; width:25px; text-align: center;" class="bordered-td">AP</td>
+                                <td style="font-size: 11px; width:25px; text-align: center;" class="bordered-td">RZ</td>                            
                             </tr>                         
                         </tbody>
                     </table> 
@@ -327,9 +327,9 @@ b {
         <tbody>
             @foreach ($juntas_posiciones as $junta_posiciones)
                 <tr>
-                    <td style="font-size: 11px;  width:45px;text-align: center" class="bordered-td">{{ $junta_posiciones->km}}-{{$loop->index}}</td>
-                    <td style="font-size: 11px;  width:45px;text-align: center" class="bordered-td">{{$junta_posiciones->junta}} </td>
-                    <td style="font-size: 11px;  width:44px;text-align: center" class="bordered-td">{{$junta_posiciones->tipo_soldadura}}</td>
+                    <td style="font-size: 11px;  width:38px;text-align: center" class="bordered-td">{{ $junta_posiciones->km}}</td>
+                    <td style="font-size: 11px;  width:49.5px;text-align: center" class="bordered-td">{{$junta_posiciones->junta}} </td>
+                    <td style="font-size: 11px;  width:49.5px;text-align: center" class="bordered-td">{{$junta_posiciones->tipo_soldadura}}</td>
                  
                         <!--   Pasada 1 -->
                         @foreach ($pasadas_posiciones as $key => $pasadas_posicion)                                
@@ -338,7 +338,7 @@ b {
                             @if (($pasadas_posicion->posicion_id == $junta_posiciones->posicion_id) && ($pasadas_posicion->numero == 1 ))
 
 
-                                 <td style="font-size: 11px;  width:30px; text-align:center;" class="bordered-td">{{$pasadas_posicion->soldadorz}} </td>                           
+                                 <td style="font-size: 11px;  width:36px; text-align:center;" class="bordered-td">{{$pasadas_posicion->soldadorz}} </td>                           
 
 
                             @endif
@@ -346,7 +346,7 @@ b {
                             @if (($pasadas_posicion->posicion_id == $junta_posiciones->posicion_id) && ($pasadas_posicion->numero == 1 ))
 
 
-                                 <td style="font-size: 11px;  width:30px; text-align:center;" class="bordered-td">{{$pasadas_posicion->soldadorl}} </td>                           
+                                 <td style="font-size: 11px;  width:36px; text-align:center;" class="bordered-td">{{$pasadas_posicion->soldadorl}} </td>                           
 
 
                             @endif
@@ -354,7 +354,7 @@ b {
                             @if (($pasadas_posicion->posicion_id == $junta_posiciones->posicion_id) && ($pasadas_posicion->numero == 1 ))
 
 
-                                 <td style="font-size: 11px;  width:30px; text-align:center;" class="bordered-td">{{$pasadas_posicion->soldadorp}} </td>                           
+                                 <td style="font-size: 11px;  width:36px; text-align:center;" class="bordered-td">{{$pasadas_posicion->soldadorp}} </td>                           
 
 
                             @endif
@@ -369,7 +369,7 @@ b {
                             @if (($pasadas_posicion->posicion_id == $junta_posiciones->posicion_id) && ($pasadas_posicion->numero == 2 ))
 
 
-                                 <td style="font-size: 11px;  width:30px; text-align:center;" class="bordered-td">{{$pasadas_posicion->soldadorz}} </td>                           
+                                 <td style="font-size: 11px;  width:36px; text-align:center;" class="bordered-td">{{$pasadas_posicion->soldadorz}} </td>                           
 
 
                             @endif
@@ -378,7 +378,7 @@ b {
                             @if (($pasadas_posicion->posicion_id == $junta_posiciones->posicion_id) && ($pasadas_posicion->numero == 2 ))
 
 
-                                 <td style="font-size: 11px;  width:30px; text-align:center;" class="bordered-td">{{$pasadas_posicion->soldadorp}} </td>                           
+                                 <td style="font-size: 11px;  width:36.5px; text-align:center;" class="bordered-td">{{$pasadas_posicion->soldadorp}} </td>                           
 
 
                             @endif
@@ -393,7 +393,7 @@ b {
                             @if (($pasadas_posicion->posicion_id == $junta_posiciones->posicion_id) && ($pasadas_posicion->numero == 3 ))
 
 
-                                 <td style="font-size: 11px;  width:30px; text-align:center;" class="bordered-td">{{$pasadas_posicion->soldadorz}} </td>                           
+                                 <td style="font-size: 11px;  width:36.5px; text-align:center;" class="bordered-td">{{$pasadas_posicion->soldadorz}} </td>                           
 
 
                             @endif                       
@@ -401,7 +401,7 @@ b {
                             @if (($pasadas_posicion->posicion_id == $junta_posiciones->posicion_id) && ($pasadas_posicion->numero == 3 ))
 
 
-                                 <td style="font-size: 11px;  width:30px; text-align:center;" class="bordered-td">{{$pasadas_posicion->soldadorp}} </td>                           
+                                 <td style="font-size: 11px;  width:36.5px; text-align:center;" class="bordered-td">{{$pasadas_posicion->soldadorp}} </td>                           
 
 
                             @endif
@@ -416,7 +416,7 @@ b {
                             @if (($pasadas_posicion->posicion_id == $junta_posiciones->posicion_id) && ($pasadas_posicion->numero == 4 ))
 
 
-                                 <td style="font-size: 11px;  width:30px; text-align:center;" class="bordered-td">{{$pasadas_posicion->soldadorz}} </td>                           
+                                 <td style="font-size: 11px;  width:36.5px; text-align:center;" class="bordered-td">{{$pasadas_posicion->soldadorz}} </td>                           
 
 
                             @endif
@@ -425,7 +425,7 @@ b {
                             @if (($pasadas_posicion->posicion_id == $junta_posiciones->posicion_id) && ($pasadas_posicion->numero == 4 ))
 
 
-                                 <td style="font-size: 11px;  width:30px; text-align:center;" class="bordered-td">{{$pasadas_posicion->soldadorp}} </td>                           
+                                 <td style="font-size: 11px;  width:36.5px; text-align:center;" class="bordered-td">{{$pasadas_posicion->soldadorp}} </td>                           
 
 
                             @endif
@@ -440,7 +440,7 @@ b {
                             @if (($pasadas_posicion->posicion_id == $junta_posiciones->posicion_id) && ($pasadas_posicion->numero == 5 ))
 
 
-                                 <td style="font-size: 11px;  width:30px; text-align:center;" class="bordered-td">{{$pasadas_posicion->soldadorz}} </td>                           
+                                 <td style="font-size: 11px;  width:36.5px; text-align:center;" class="bordered-td">{{$pasadas_posicion->soldadorz}} </td>                           
 
 
                             @endif
@@ -449,7 +449,7 @@ b {
                             @if (($pasadas_posicion->posicion_id == $junta_posiciones->posicion_id) && ($pasadas_posicion->numero == 5 ))
 
 
-                                 <td style="font-size: 11px;  width:30px; text-align:center;" class="bordered-td">{{$pasadas_posicion->soldadorp}} </td>                           
+                                 <td style="font-size: 11px;  width:37px; text-align:center;" class="bordered-td">{{$pasadas_posicion->soldadorp}} </td>                           
 
 
                             @endif
@@ -464,7 +464,7 @@ b {
                             @if (($pasadas_posicion->posicion_id == $junta_posiciones->posicion_id) && ($pasadas_posicion->numero == 6 ))
 
 
-                                 <td style="font-size: 11px;  width:30px; text-align:center;" class="bordered-td">{{$pasadas_posicion->soldadorz}} </td>                           
+                                 <td style="font-size: 11px;  width:36px; text-align:center;" class="bordered-td">{{$pasadas_posicion->soldadorz}} </td>                           
 
 
                             @endif
@@ -473,27 +473,71 @@ b {
                             @if (($pasadas_posicion->posicion_id == $junta_posiciones->posicion_id) && ($pasadas_posicion->numero == 6 ))
 
 
-                                 <td style="font-size: 11px;  width:30px; text-align:center;" class="bordered-td">{{$pasadas_posicion->soldadorp}} </td>                           
+                                 <td style="font-size: 11px;  width:36.5px; text-align:center;" class="bordered-td">{{$pasadas_posicion->soldadorp}} </td>                           
 
 
                             @endif
                             
                         @endforeach
 
-                    <td style="font-size: 11px;  width:44px;text-align: center" class="bordered-td">{{$junta_posiciones->codigo}}</td>
+                    <td style="font-size: 11px;  width:63.5px;text-align: center" class="bordered-td">{{$junta_posiciones->codigo}}</td>
+
+                    <!-- Defectos Posición -->
+
+                    <td style="font-size: 11px;width:95px;  text-align: center" class="bordered-td">
+
+                        @foreach ( $defectos_posiciones as  $defectos_posicion)
+                            @if ($defectos_posicion->posicion_id == $junta_posiciones->posicion_id)
+                                {{ $defectos_posicion->codigo }} /
+                            @endif
+                        @endforeach
+
+                    </td>
+
+                    <td style="font-size: 11px;width:94.6px; text-align: center" class="bordered-td">
+
+                        @foreach ( $defectos_posiciones as  $defectos_posicion)
+                            @if ($defectos_posicion->posicion_id == $junta_posiciones->posicion_id)
+                                {{ $defectos_posicion->posicion }} /
+                            @endif
+                        @endforeach
+
+                    </td>
+
+                    <td style="font-size: 11px;width:94.7px; text-align: center" class="bordered-td">
+
+                        @foreach ( $defectos_posiciones as  $defectos_posicion)
+                            @if ($defectos_posicion->posicion_id == $junta_posiciones->posicion_id)
+                                {{ $defectos_posicion->numero }} /
+                            @endif
+                        @endforeach
+
+                    </td>
+                     <!-- Resultado-->   
+                    <td style="font-size: 11px;width:32px; text-align: center; " class="bordered-td">
+                        @if ($junta_posiciones->aceptable_sn)
+                            X
+                        @endif
+                    </td>
+
+                    <td style="font-size: 11px; text-align: center;" class="bordered-td">
+                        @if (!$junta_posiciones->aceptable_sn)
+                            X
+                        @endif
+                    </td>
                 </tr>
                 
             @endforeach      
                                         
         </tbody>
-    </table>
+    </table> 
 </div>  
 
 <script type="text/php">
 
     if ( isset($pdf) ) {
         $x = 702;
-        $y = 77;
+        $y = 64;
         $text = "PÁGINA: {PAGE_NUM} de {PAGE_COUNT}";
         $font = $fontMetrics->get_font("serif", "bold");
         $size = 9;
