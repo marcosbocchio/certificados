@@ -3598,6 +3598,62 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     otdata: {
       type: Object,
       required: true
+    },
+    informedata: {
+      type: Object,
+      required: false
+    },
+    informe_ridata: {
+      type: Object,
+      required: false
+    },
+    materialdata: {
+      type: Object,
+      required: false
+    },
+    diametrodata: {
+      type: Object,
+      required: false
+    },
+    diametro_espesordata: {
+      type: Object,
+      required: false
+    },
+    fuentedata: {
+      type: [Object, Array],
+      required: false
+    },
+    tecnicadata: {
+      type: [Object],
+      required: false
+    },
+    equipodata: {
+      type: [Object],
+      required: false
+    },
+    procedimientodata: {
+      type: [Object],
+      required: false
+    },
+    tipo_peliculadata: {
+      type: [Object],
+      required: false
+    },
+    icidata: {
+      type: [Object],
+      required: false
+    },
+    norma_evaluaciondata: {
+      type: [Object],
+      required: false
+    },
+    norma_ensayodata: {
+      type: [Object],
+      required: false
+    },
+    ejecutor_ensayodata: {
+      type: [Object],
+      required: false
     }
   },
   data: function data() {
@@ -3700,6 +3756,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.getDefectosRiPlanta();
     this.getDefectosRiGasoducto();
     this.getTipoSoldaduras();
+    this.setEdit();
   },
   watch: {
     equipo: function equipo(val) {
@@ -3721,6 +3778,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   }),
   methods: {
+    setEdit: function setEdit() {
+      if (this.editmode) {
+        this.formato = this.informe_ridata.gasoducto_sn ? 'GASODUCTO' : 'PLANTA', this.fecha = this.informedata.fecha, this.prefijo = this.informedata.prefijo, this.numero_inf = this.informedata.numero, this.componente = this.informedata.componente, this.material = this.materialdata, this.plano_isom = this.informedata.plano_isom, this.diametro = this.diametrodata, this.espesor = this.diametro_espesordata, this.tecnica = this.tecnicadata, this.equipo = this.equipodata, this.fuente = this.fuentedata, this.procedimiento = this.procedimientodata, this.ici = this.icidata, this.norma_evaluacion = this.norma_evaluaciondata, this.norma_ensayo = this.norma_ensayodata, this.tipo_pelicula = this.tipo_peliculadata, this.espesor_chapa = this.informedata.espesor_chapa, this.procedimiento_soldadura = this.informedata.procedimiento_soldadura, this.eps = this.informedata.eps, this.pqr = this.informedata.pqr, this.kv = this.informedata.kv, this.ma = this.informedata.ma, this.foco = this.informe_ridata.foco, this.pos_ant = this.informe_ridata.pos_ant;
+        this.pos_pos = this.informe_ridata.pos_pos, this.lado = this.informe_ridata.lado, this.actividad = this.informe_ridata.actividad, this.exposicion = this.informe_ridata.exposicion, this.distancia_fuente_pelicula = this.informe_ridata.distancia_fuente_pelicula, this.ejecutor_ensayo = this.ejecutor_ensayodata;
+      }
+    },
     getCliente: function getCliente() {
       var _this = this;
 
@@ -4831,7 +4894,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.getMetodosEnsayos();
     this.getNormaEnsayos();
     this.getNormaEvaluaciones();
-    this.setOt();
+    this.setEdit();
     this.sync();
     this.accion = this.acciondata;
   },
@@ -4872,7 +4935,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   methods: {
-    setOt: function setOt() {
+    setEdit: function setEdit() {
       if (this.acciondata == "edit") {
         this.id = this.otdata.id, this.proyecto = this.otdata.proyecto;
         this.fecha = this.otdata.fecha_hora;

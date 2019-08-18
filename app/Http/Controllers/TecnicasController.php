@@ -62,7 +62,7 @@ class TecnicasController extends Controller
      */
     public function show($id)
     {
-        //
+       
     }
 
     /**

@@ -75,7 +75,7 @@ class InformesRiRepository extends BaseRepository
     $informe->norma_ensayo_id = $request->norma_ensayo['id'];
     $informe->tecnica_id = $request->tecnica['id'];
     $informe->user_id = $user_id;
-    $informe->ejecutor_ensayo_id = $request->ejecutor_ensayo['id'];
+    $informe->ejecutor_ensayo_id = $request->ejecutor_ensayo['ot_operario_id'];
     $informe->material_id = $request->material['id'];
     $informe->fecha = date('Y-m-d',strtotime($request->fecha));
     $informe->numero = $request->numero_inf;

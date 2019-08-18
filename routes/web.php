@@ -40,6 +40,7 @@ Route::group(['middleware' => ['auth']], function () {
   Route::get('operadores/ot/{id}','OtOperariosController@index')->name('otOperadores');
   Route::get('documentaciones/operador/{id}', 'DocumentacionesController@operarios');
   Route::get('/area/enod/ot/{ot_id}/metodo/ri','InformesRiController@create');
+  Route::get('/area/enod/ot/{ot_id}/metodo/ri/{id}/edit','InformesRiController@edit');
 });
 
 Route::group(['middleware' => ['permission:Navegar operador']], function () {

@@ -24,6 +24,8 @@ class DocumentacionesController extends Controller
     {
       $this->documentaciones = $documentacionesRepository;
     }
+
+   
     /**
      * Display a listing of the resource.
      *
@@ -179,6 +181,17 @@ class DocumentacionesController extends Controller
         ->where('metodo_ensayos.metodo','=',$metodo)
         ->select('documentaciones.*')
         ->get();
+    }
+
+    public function ProcedimientoInformeId($id)
+    {
+        $procedimiento = DB::table('documentaciones')
+        ->join('ot_procedimientos_propios','ot_procedimientos_propios.documentacion_id','=','documentaciones.id')
+        ->where('documentaciones.id','=',$id)      
+        ->select('documentaciones.*')
+        ->first();
+
+        return  $procedimiento = Collection::make($procedimiento); 
     }
 
     /**

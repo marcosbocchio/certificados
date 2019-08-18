@@ -16,8 +16,24 @@
 
   <informe-ri      
    
-      metodo="{{$metodo}}"
-     :otdata="{{$ot}}"
+      metodo ="{{$metodo}}"
+     :otdata  ="{{$ot}}"
+     :informedata ="{{$informe}}"
+     :informe_ridata ="{{$informe_ri}}"
+     :materialdata="{{$informe_material}}"
+     :diametrodata="{{$informe_diametro}}"
+     :diametro_espesordata="{{$informe_diametroEspesor}}"
+     :fuentedata="{{$informe_fuente}}"
+     :tecnicadata="{{$informe_tecnica_grafico}}"
+     :equipodata="{{$informe_equipo}}"
+     :procedimientodata="{{$informe_procedimiento}}"
+     :tipo_peliculadata="{{$infome_tipo_pelicula}}"
+     :icidata="{{$informe_ici}}"
+     :norma_evaluaciondata="{{$informe_norma_evaluacion}}"
+     :norma_ensayodata="{{$informe_norma_ensayo}}"
+     :ejecutor_ensayodata="{{$informe_ejecutor_ensayo}}"
+     
+     editmode  
     
   ></informe-ri>
 
@@ -40,5 +56,9 @@
     <script type="text/javascript" src="{{asset('adminlte/plugins/timepicker/bootstrap-timepicker.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('js/app.js')}}"></script>
     <script type="text/javascript" src="{{asset('js/lodash.js')}}"></script>
+
+
+
+
 
 @endsection

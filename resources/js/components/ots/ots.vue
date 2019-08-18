@@ -589,7 +589,7 @@ export default {
         this.getMetodosEnsayos();        
         this.getNormaEnsayos();
         this.getNormaEvaluaciones();
-        this.setOt();        
+        this.setEdit();        
         this.sync();
         this.accion = this.acciondata;
       },
@@ -644,7 +644,7 @@ export default {
    
     methods :{
 
-      setOt : function(){
+      setEdit : function(){
 
 
               if(this.acciondata == "edit"){ 

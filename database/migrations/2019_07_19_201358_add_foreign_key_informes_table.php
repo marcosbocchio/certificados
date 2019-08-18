@@ -94,7 +94,7 @@ class AddForeignKeyInformesTable extends Migration
                    
             $table->foreign('ejecutor_ensayo_id')
                    ->references('id')
-                   ->on('users');
+                   ->on('ot_operarios');
               
            $table->bigInteger('material_id')
                    ->unsigned()

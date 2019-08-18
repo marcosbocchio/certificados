@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\TecnicasGraficos;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection as Collection;
 
 class TecnicasGraficosController extends Controller
 {
@@ -46,7 +48,15 @@ class TecnicasGraficosController extends Controller
      */
     public function show($id)
     {
-        //
+        $tecnica = DB::table('tecnicas')
+                    ->join('tecnicas_graficos','tecnicas_graficos.tecnica_id','=','tecnicas.id')
+                    ->where('tecnicas_graficos.id',$id)
+                    ->select('tecnicas.*','tecnicas_graficos.path','tecnicas_graficos.id as grafico_id')
+                    ->first();
+        $tecnica->path = '/'.$tecnica->path;
+        return  $tecnica = Collection::make($tecnica); 
+
+     
     }
 
     /**

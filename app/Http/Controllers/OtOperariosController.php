@@ -40,13 +40,27 @@ class OtOperariosController extends Controller
                                   ->join('ot_operarios','users.id','=','ot_operarios.user_id')
                                   ->join('ots','ot_operarios.ot_id','=','ots.id')  
                                   ->where('ots.id',$ot_id)
-                                  ->select('users.*')
+                                  ->select('users.*','ot_operarios.id as ot_operario_id')
                                   ->get();
                                
         return $users_ot_operarios;
 
     }
 
+    public function getEjecutorEnsayo($id){
+
+       
+        $ejecutor_ensayo = DB::table('users')
+                                  ->join('ot_operarios','users.id','=','ot_operarios.user_id')                                
+                                  ->where('ot_operarios.id',$id)
+                                  ->select('users.*','ot_operarios.id as ot_operario_id')
+                                  ->first();
+                               
+        return Collection::make($ejecutor_ensayo);
+
+    }
+
+    
     /**
      * Show the form for creating a new resource.
      *

@@ -98,9 +98,9 @@ class DiametrosEspesorController extends Controller
 
        
 
-        $espedores =DB::select('call EspesoresDiametro(?)',array($diametro));
+        $espesores =DB::select('call EspesoresDiametro(?)',array($diametro));
 
-        return $espedores ;
+        return $espesores ;
 
         
 

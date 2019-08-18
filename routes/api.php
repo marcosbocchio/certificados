@@ -91,4 +91,6 @@ Route::get('/pdf/productos/referencias/{id}','PdfProductosReferenciasController@
 
 Route::get('/pdf/informe/{id}','PdfInformesController@index')->name('pdfInformes');
 Route::get('/pdf/informe/ri/{informe}','PdfInformesRiController@inprimir')->name('pdfInformeRi');
+Route::get('/pdf/informe/ri/{informe}','PdfInformesRiController@inprimir')->name('pdfInformeRi');
+
 
