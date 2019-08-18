@@ -13,7 +13,7 @@ class AddIndexPosicionTable extends Migration
      */
     public function up()
     {
-        Schema::table('juntas', function (Blueprint $table) {
+        Schema::table('posicion', function (Blueprint $table) {
 
             $table->unique(['junta_id','codigo']);             
            

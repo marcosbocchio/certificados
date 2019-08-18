@@ -13,7 +13,7 @@ class AddIndexPasadasPosicionTable extends Migration
      */
     public function up()
     {
-        Schema::table('posicion', function (Blueprint $table) {
+        Schema::table('pasadas_posicion', function (Blueprint $table) {
 
             $table->unique(['numero','posicion_id']);          
            
