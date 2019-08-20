@@ -203,13 +203,13 @@
                             <div class="col-md-1">
                             <div class="form-group" >
                                 <label for="pos_ant">Ant</label>
-                                <input type="number" v-model="pos_ant" class="form-control" id="pos_ant">
+                                <input type="number" v-model="pos_ant" class="form-control" id="pos_ant" step=".01">
                             </div>                            
                         </div>
                         <div class="col-md-1">
                             <div class="form-group" >
                                 <label for="pos_pos">Pos</label>
-                                <input type="number" v-model="pos_pos" class="form-control" id="pos_pos">
+                                <input type="number" v-model="pos_pos" class="form-control" id="pos_pos" step=".01">
                             </div>                            
                         </div>
 

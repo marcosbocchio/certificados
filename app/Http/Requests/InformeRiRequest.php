@@ -25,7 +25,26 @@ class InformeRiRequest extends FormRequest
     {
         return [
 
-            'numero_inf' =>'required | integer| digits_between:1,3',
+            'numero_inf'                =>'required | integer| digits_between:1,3',
+            'fecha'                     => 'required',
+            'componente'                => 'required|Max:20',
+            'material'                  => 'required',
+            'plano_isom'                => 'required|Max:10',
+            'diametro'                  => 'required',
+            'tecnica'                   => 'required',
+            'equipo'                    => 'required',
+            'tipo_pelicula'             => 'required',
+            'procedimiento'             => 'required',
+            'pos_ant'                   => 'required|numeric|between:0,999.99',
+            'pos_pos'                   => 'required|numeric|between:0,999.99',
+            'lado'                      => 'required|Max:7',
+            'ici'                       => 'required',
+            'norma_evaluacion'          => 'required',
+            'norma_ensayo'              => 'required',
+            'actividad'                 => 'Max:10',
+            'exposicion'                => 'required|integer|digits_between:1,6',
+            'ejecutor_ensayo'           => 'required',
+            
         ];
 
     }
@@ -34,9 +53,13 @@ class InformeRiRequest extends FormRequest
     public function attributes()
         {
         return [
-            'numero_inf'           => 'Número de informe',  
-    
-    
+            'numero_inf'           => 'número de informe',  
+            'tipo_pelicula'        => 'tipo Pelicula',
+            'pos_ant'              => 'ant',   
+            'pos_pos'              => 'pos',   
+            'norma_evaluacion'     => 'norma Evaluación',
+            'norma_ensayo'         => 'norma Ensayo',
+            'ejecutor_ensayo'      => 'ejecutor ensayo'   
             ];
         }
 }

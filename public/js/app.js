@@ -41380,7 +41380,7 @@ var render = function() {
                       }
                     ],
                     staticClass: "form-control",
-                    attrs: { type: "number", id: "pos_ant" },
+                    attrs: { type: "number", id: "pos_ant", step: ".01" },
                     domProps: { value: _vm.pos_ant },
                     on: {
                       input: function($event) {
@@ -41408,7 +41408,7 @@ var render = function() {
                       }
                     ],
                     staticClass: "form-control",
-                    attrs: { type: "number", id: "pos_pos" },
+                    attrs: { type: "number", id: "pos_pos", step: ".01" },
                     domProps: { value: _vm.pos_pos },
                     on: {
                       input: function($event) {
