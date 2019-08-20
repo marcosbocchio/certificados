@@ -32,6 +32,7 @@
      :norma_evaluaciondata="{{$informe_norma_evaluacion}}"
      :norma_ensayodata="{{$informe_norma_ensayo}}"
      :ejecutor_ensayodata="{{$informe_ejecutor_ensayo}}"
+     :detalledata="{{$informe_detalle}}"
      
      editmode  
     

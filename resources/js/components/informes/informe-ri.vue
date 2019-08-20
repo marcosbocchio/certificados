@@ -289,7 +289,7 @@
 
                     <div class="col-md-1">                      
                         <div class="form-group" >
-                           <label>Tipo Soldadura</label>
+                           <label>Tipo Sol.</label>
                            <v-select v-model="tipo_soldadura" label="codigo" :options="tipo_soldaduras" :disabled="(!isGasoducto || (pasada=='1' && inputsJuntasDefectosPlanta.length > 0))"></v-select>
                         </div>
                     </div>
@@ -356,6 +356,11 @@
                             <button type="button" class="btn btn-primary btn-xs" @click="ClonarPasadas()" :disabled="!EnableClonarPasadas">Clonar Pasadas</button>
                         </div> 
                     </div>  
+                    <div class="col-md-1"> 
+                        <div class="form-group" >
+                            <button type="button" class="btn btn-primary btn-xs" @click="resetDetalle()" >Limpiar Todo</button>
+                        </div> 
+                    </div> 
                                                              
                     <div class="col-md-1"> 
                                  
@@ -432,7 +437,7 @@
                         <div class="col-md-2">                       
                             <div class="form-group" >                            
                                 <label for="posicionPlaca">Posición Placa</label>
-                                <input type="text" v-model="posicionPlacaGosaducto" class="form-control" id="posicionPlacaGosaducto">                           
+                                <input type="text" v-model="posicionPlacaGosaducto" class="form-control" id="posicionPlacaGosaducto" :disabled="!isGasoducto">                           
                             </div>     
                         </div>    
                           
@@ -577,7 +582,12 @@ export default {
       ejecutor_ensayodata : {
       type : [ Object ],  
       required : false
-      },  
+      },
+      
+      detalledata : {
+      type : [ Array ],  
+      required : false
+      }, 
 
 
     },
@@ -695,10 +705,11 @@ export default {
         this.getSoldadores();
         this.getDefectosRiPlanta();
         this.getDefectosRiGasoducto();
-        this.getTipoSoldaduras();
+        this.getTipoSoldaduras();       
         this.setEdit();        
 
     },   
+ 
     
     watch : {
 
@@ -715,6 +726,7 @@ export default {
         formato : function (val){
 
             this.isGasoducto =  (val == 'GASODUCTO') ? true : false;
+          //  this.resetDetalle();
         },
 
         pasada : function (val){
@@ -739,37 +751,38 @@ export default {
 
             if(this.editmode) {
                
-               this.formato = this.informe_ridata.gasoducto_sn ? 'GASODUCTO' : 'PLANTA',
-               this.fecha   = this.informedata.fecha,  
-               this.prefijo = this.informedata.prefijo,
-               this.numero_inf = this.informedata.numero,
-               this.componente = this.informedata.componente,
-               this.material = this.materialdata,
-               this.plano_isom = this.informedata.plano_isom,
-               this.diametro = this.diametrodata,
-               this.espesor = this.diametro_espesordata,
-               this.tecnica = this.tecnicadata,
-               this.equipo = this.equipodata,
-               this.fuente = this.fuentedata,
-               this.procedimiento = this.procedimientodata,
-               this.ici = this.icidata,
-               this.norma_evaluacion = this.norma_evaluaciondata,
-               this.norma_ensayo = this.norma_ensayodata,
-               this.tipo_pelicula = this.tipo_peliculadata,
-               this.espesor_chapa = this.informedata.espesor_chapa,
-               this.procedimiento_soldadura = this.informedata.procedimiento_soldadura,
-               this.eps = this.informedata.eps,
-               this.pqr = this.informedata.pqr,
-               this.kv = this.informedata.kv,
-               this.ma = this.informedata.ma,
-               this.foco = this.informe_ridata.foco,
-               this.pos_ant = this.informe_ridata.pos_ant
-               this.pos_pos = this.informe_ridata.pos_pos,
-               this.lado = this.informe_ridata.lado,
-               this.actividad = this.informe_ridata.actividad,
-               this.exposicion = this.informe_ridata.exposicion,
-               this.distancia_fuente_pelicula = this.informe_ridata.distancia_fuente_pelicula,
-               this.ejecutor_ensayo = this.ejecutor_ensayodata
+               this.formato = this.informe_ridata.gasoducto_sn ? 'GASODUCTO' : 'PLANTA';
+               this.fecha   = this.informedata.fecha;
+               this.prefijo = this.informedata.prefijo;
+               this.numero_inf = this.informedata.numero;
+               this.componente = this.informedata.componente;
+               this.material = this.materialdata;
+               this.plano_isom = this.informedata.plano_isom;
+               this.diametro = this.diametrodata;
+               this.espesor = this.diametro_espesordata;
+               this.tecnica = this.tecnicadata;
+               this.equipo = this.equipodata;
+               this.fuente = this.fuentedata ? this.fuentedata :'';
+               this.procedimiento = this.procedimientodata;
+               this.ici = this.icidata;
+               this.norma_evaluacion = this.norma_evaluaciondata;
+               this.norma_ensayo = this.norma_ensayodata;
+               this.tipo_pelicula = this.tipo_peliculadata;
+               this.espesor_chapa = this.informedata.espesor_chapa;
+               this.procedimiento_soldadura = this.informedata.procedimiento_soldadura;
+               this.eps = this.informedata.eps;
+               this.pqr = this.informedata.pqr;
+               this.kv = this.informedata.kv;
+               this.ma = this.informedata.ma;
+               this.foco = this.informe_ridata.foco;
+               this.pos_ant = this.informe_ridata.pos_ant;
+               this.pos_pos = this.informe_ridata.pos_pos;
+               this.lado = this.informe_ridata.lado;
+               this.actividad = this.informe_ridata.actividad;
+               this.exposicion = this.informe_ridata.exposicion;
+               this.distancia_fuente_pelicula = this.informe_ridata.distancia_fuente_pelicula;
+               this.ejecutor_ensayo = this.ejecutor_ensayodata;          
+               this.inputsJuntasDefectosPlanta = this.detalledata              
 
 
             }
@@ -901,9 +914,7 @@ export default {
                 axios.get(urlRegistros).then(response =>{
                 this.tecnica_distancia = response.data
                 this.distancia_fuente_pelicula=this.tecnica_distancia[0].distancia_fuente_peliculas;
-               });
-
-  
+               });  
 
         },
 
@@ -934,6 +945,21 @@ export default {
 
         },
 
+        resetDetalle : function(){
+
+            this.inputsJuntasDefectosPlanta = [];
+            this.pk = '';
+            this.tipo_soldadura='';
+            this.pasada='';
+            this.junta='';
+            this.soldador1='',
+            this.soldador2='',
+            this.soldador3='',
+            this.posicion='',    
+            this.posicionPlacaGosaducto=''
+
+        },
+
         //detalle
         getTipoSoldaduras : function(){
 
@@ -941,8 +967,7 @@ export default {
                 var urlRegistros = 'tipo_soldaduras' + '?api_token=' + Laravel.user.api_token;        
                 axios.get(urlRegistros).then(response =>{
                 this.tipo_soldaduras = response.data
-                });
-           
+                });           
              
         },
 
@@ -993,10 +1018,10 @@ export default {
                 soldador2: this.soldador2,     
                 soldador3: this.soldador3,     
                 posicion : (typeof(posicion) !== 'undefined') ? posicion : this.posicion, 
-                aceptable_sn : true ,
+                aceptable_sn : 1 ,
                 observacion : '',
                 defectosPosicion : []           
-                 });                  
+                 });            
 
            
         },
@@ -1088,7 +1113,7 @@ export default {
                 'equipo'        :  this.equipo,
                 'kv'            : this.kv,
                 'ma'            : this.ma,
-                'fuente'       :  this.fuente ,
+                'fuente'       :  this.fuente ? this.fuente : null,
                 'foco':           this.foco,
                 'tipo_pelicula' : this.tipo_pelicula,
                 'pantalla':       this.pantalla,
@@ -1129,7 +1154,71 @@ export default {
         },
         Update : function() {
 
-            console.log('entro en el edit');
+            console.log('entro para actualizar' );
+            this.errors =[];
+            let gasoducto_sn = this.formato =='GASODUCTO'  ? true : false ;
+            let defectos = this.formato =='PLANTA' ? this.inputsJuntasDefectosPlanta : false
+            var urlRegistros = 'informes_ri/' + this.informedata.id  ;      
+            axios({
+              method: 'put',
+              url : urlRegistros,    
+              data : {
+                
+                'ot'              : this.otdata,
+                'ejecutor_ensayo' : this.ejecutor_ensayo,  
+                'metodo_ensayo'   : this.metodo,  
+                'fecha':          this.fecha,
+                'numero_inf':     this.numero_inf,
+                'prefijo'        :this.prefijo,
+                'gasoducto_sn' :  gasoducto_sn,               
+                'componente' :    this.componente,
+                'plano_isom' :    this.plano_isom,
+                'procedimiento' : this.procedimiento,           
+                'observaciones':  this.observaciones,
+                'material':       this.material,
+                'diametro':       this.diametro.diametro,
+                'espesor':        this.espesor.espesor,
+                'espesor_chapa' :  this.espesor_chapa, 
+                'equipo'        :  this.equipo,
+                'kv'            : this.kv,
+                'ma'            : this.ma,
+                'fuente'       :  this.fuente ? this.fuente : null,
+                'foco':           this.foco,
+                'tipo_pelicula' : this.tipo_pelicula,
+                'pantalla':       this.pantalla,
+                'pos_ant':        this.pos_ant,
+                'pos_pos':       this.pos_pos,
+                'lado':          this.lado,
+                'distancia_fuente_pelicula': this.distancia_fuente_pelicula,
+                'procedimiento_soldadura': this.procedimiento_soldadura,
+                'norma_evaluacion': this.norma_evaluacion,
+                'ici': this.ici,
+                'norma_ensayo': this.norma_ensayo,
+                'tecnica':this.tecnica,
+                'tecnicas_grafico' : this.tecnica_grafico,
+                'eps':this.eps,
+                'pqr':this.pqr,
+                'actividad' : this.actividad,
+                'exposicion': this.exposicion,   
+                'detalles'  : this.inputsJuntasDefectosPlanta,           
+          }}
+          
+      
+        ).then(response => {
+          this.response = response.data
+          toastr.success('informe N°' + this.numero_inf + ' fue actualizado con éxito ');
+          console.log(response);
+        }).catch(error => {
+               
+               this.errors = error.response.data.errors;
+                console.log(error.response);
+                console.log('hola'); 
+               $.each( this.errors, function( key, value ) {
+                   toastr.error(value);
+                   console.log( key + ": " + value );
+               });
+
+           });
 
         }
 

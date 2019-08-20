@@ -2,6 +2,7 @@
 
 namespace App\Repositories\InformesRi;
 use App\Repositories\BaseRepository;
+use Illuminate\Support\Facades\DB;
 use App\InformesRi;
 use App\Informe;
 use Illuminate\Http\Request;
@@ -26,12 +27,25 @@ class InformesRiRepository extends BaseRepository
   public function store($request){
 
   
-    $informe  = new Informe;    
+    $informe  = new Informe;
+    $informeRi  = new InformesRi;   
+    
+    $this->saveInforme($request,$informe);
+    $this->saveInformeRi($request,$informe,$informeRi);
+    $this->saveDetallePlanta($request,$informeRi);
+
+
+  }
+
+  public function updateInforme($request, $id){
+
+    $informe  = Informe::find($id);
+    $informeRi =InformesRi::where('informe_id',$informe->id)->first();
 
     $this->saveInforme($request,$informe);
-    $this->saveInformeRi($request,$informe);
-
-    
+    $this->saveInformeRi($request,$informe,$informeRi);  
+    $this->deleteDetalle($request,$informeRi->id);   
+    $this->saveDetallePlanta($request,$informeRi);
 
   }
 
@@ -86,20 +100,14 @@ class InformesRiRepository extends BaseRepository
     $informe->eps = $request->eps;
     $informe->pqr = $request->pqr;
     $informe->observaciones = $request->observaciones;
-    $informe->save();
-    
-
-
-    
+    $informe->save();      
   }
 
-  public function saveInformeRi($request,$informe){
+  public function saveInformeRi($request,$informe,$informeRi){      
 
-      
-
-    $informeRi  = new InformesRi;
+   
     $informeRi->informe_id = $informe->id;
-    $informeRi->fuente_id = $request->fuente['id'];
+    $informeRi->fuente_id = isset($request->fuente['id']) ? $request->fuente['id'] : NULL;
     $informeRi->tipo_pelicula_id = $request->tipo_pelicula['id'];
     $informeRi->ici_id  = $request->ici['id'];
     $informeRi->gasoducto_sn = $request->gasoducto_sn;
@@ -115,7 +123,6 @@ class InformesRiRepository extends BaseRepository
 
     $informeRi->save();   
 
-    $this->saveDetallePlanta($request,$informeRi);
 
    
 
@@ -171,9 +178,7 @@ class InformesRiRepository extends BaseRepository
  
            }
        
-         } 
-        
-       
+         }       
        
       
       }
@@ -240,4 +245,35 @@ class InformesRiRepository extends BaseRepository
   
     
   }
+
+public function deleteDetalle($request,$id){
+
+DB::delete('delete dpp from defectos_pasadas_posicion as dpp
+                inner join pasadas_posicion as pp on dpp.pasada_posicion_id = pp.id
+                inner join posicion as p on pp.posicion_id = p.id 
+                inner join juntas as j on j.id = p.junta_id
+                inner join informes_ri as ir on j.informe_ri_id = ir.id
+                where
+                ir.id= ?',[$id]);
+
+DB::delete('delete pp from pasadas_posicion as pp
+                inner join posicion as p on pp.posicion_id = p.id 
+                inner join juntas as j on j.id = p.junta_id
+                inner join informes_ri as ir on j.informe_ri_id = ir.id
+                where
+                ir.id= ?',[$id]);
+
+DB::delete('delete p from posicion as p
+                inner join juntas as j on j.id = p.junta_id
+                inner join informes_ri as ir on j.informe_ri_id = ir.id
+                where
+                ir.id= ?',[$id]);
+    
+DB::delete('delete j from juntas as j
+                inner join informes_ri as ir on j.informe_ri_id = ir.id
+                where
+                ir.id= ?',[$id]);    
+  
+  }
+
 }

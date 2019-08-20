@@ -3577,6 +3577,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -3653,6 +3658,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     ejecutor_ensayodata: {
       type: [Object],
+      required: false
+    },
+    detalledata: {
+      type: [Array],
       required: false
     }
   },
@@ -3766,7 +3775,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.isChapa = val.diametro == 'CHAPA' ? true : false;
     },
     formato: function formato(val) {
-      this.isGasoducto = val == 'GASODUCTO' ? true : false;
+      this.isGasoducto = val == 'GASODUCTO' ? true : false; //  this.resetDetalle();
     },
     pasada: function pasada(val) {
       this.soldador2 = val == '1' ? this.soldador2 : '';
@@ -3780,8 +3789,38 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   methods: {
     setEdit: function setEdit() {
       if (this.editmode) {
-        this.formato = this.informe_ridata.gasoducto_sn ? 'GASODUCTO' : 'PLANTA', this.fecha = this.informedata.fecha, this.prefijo = this.informedata.prefijo, this.numero_inf = this.informedata.numero, this.componente = this.informedata.componente, this.material = this.materialdata, this.plano_isom = this.informedata.plano_isom, this.diametro = this.diametrodata, this.espesor = this.diametro_espesordata, this.tecnica = this.tecnicadata, this.equipo = this.equipodata, this.fuente = this.fuentedata, this.procedimiento = this.procedimientodata, this.ici = this.icidata, this.norma_evaluacion = this.norma_evaluaciondata, this.norma_ensayo = this.norma_ensayodata, this.tipo_pelicula = this.tipo_peliculadata, this.espesor_chapa = this.informedata.espesor_chapa, this.procedimiento_soldadura = this.informedata.procedimiento_soldadura, this.eps = this.informedata.eps, this.pqr = this.informedata.pqr, this.kv = this.informedata.kv, this.ma = this.informedata.ma, this.foco = this.informe_ridata.foco, this.pos_ant = this.informe_ridata.pos_ant;
-        this.pos_pos = this.informe_ridata.pos_pos, this.lado = this.informe_ridata.lado, this.actividad = this.informe_ridata.actividad, this.exposicion = this.informe_ridata.exposicion, this.distancia_fuente_pelicula = this.informe_ridata.distancia_fuente_pelicula, this.ejecutor_ensayo = this.ejecutor_ensayodata;
+        this.formato = this.informe_ridata.gasoducto_sn ? 'GASODUCTO' : 'PLANTA';
+        this.fecha = this.informedata.fecha;
+        this.prefijo = this.informedata.prefijo;
+        this.numero_inf = this.informedata.numero;
+        this.componente = this.informedata.componente;
+        this.material = this.materialdata;
+        this.plano_isom = this.informedata.plano_isom;
+        this.diametro = this.diametrodata;
+        this.espesor = this.diametro_espesordata;
+        this.tecnica = this.tecnicadata;
+        this.equipo = this.equipodata;
+        this.fuente = this.fuentedata ? this.fuentedata : '';
+        this.procedimiento = this.procedimientodata;
+        this.ici = this.icidata;
+        this.norma_evaluacion = this.norma_evaluaciondata;
+        this.norma_ensayo = this.norma_ensayodata;
+        this.tipo_pelicula = this.tipo_peliculadata;
+        this.espesor_chapa = this.informedata.espesor_chapa;
+        this.procedimiento_soldadura = this.informedata.procedimiento_soldadura;
+        this.eps = this.informedata.eps;
+        this.pqr = this.informedata.pqr;
+        this.kv = this.informedata.kv;
+        this.ma = this.informedata.ma;
+        this.foco = this.informe_ridata.foco;
+        this.pos_ant = this.informe_ridata.pos_ant;
+        this.pos_pos = this.informe_ridata.pos_pos;
+        this.lado = this.informe_ridata.lado;
+        this.actividad = this.informe_ridata.actividad;
+        this.exposicion = this.informe_ridata.exposicion;
+        this.distancia_fuente_pelicula = this.informe_ridata.distancia_fuente_pelicula;
+        this.ejecutor_ensayo = this.ejecutor_ensayodata;
+        this.inputsJuntasDefectosPlanta = this.detalledata;
       }
     },
     getCliente: function getCliente() {
@@ -3928,6 +3967,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.fuente = '';
       this.kv = '', this.ma = '';
     },
+    resetDetalle: function resetDetalle() {
+      this.inputsJuntasDefectosPlanta = [];
+      this.pk = '';
+      this.tipo_soldadura = '';
+      this.pasada = '';
+      this.junta = '';
+      this.soldador1 = '', this.soldador2 = '', this.soldador3 = '', this.posicion = '', this.posicionPlacaGosaducto = '';
+    },
     //detalle
     getTipoSoldaduras: function getTipoSoldaduras() {
       var _this16 = this;
@@ -3979,7 +4026,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         soldador2: this.soldador2,
         soldador3: this.soldador3,
         posicion: typeof posicion !== 'undefined' ? posicion : this.posicion,
-        aceptable_sn: true,
+        aceptable_sn: 1,
         observacion: '',
         defectosPosicion: []
       });
@@ -4055,7 +4102,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           'equipo': this.equipo,
           'kv': this.kv,
           'ma': this.ma,
-          'fuente': this.fuente,
+          'fuente': this.fuente ? this.fuente : null,
           'foco': this.foco,
           'tipo_pelicula': this.tipo_pelicula,
           'pantalla': this.pantalla,
@@ -4090,7 +4137,68 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     Update: function Update() {
-      console.log('entro en el edit');
+      var _this21 = this;
+
+      console.log('entro para actualizar');
+      this.errors = [];
+      var gasoducto_sn = this.formato == 'GASODUCTO' ? true : false;
+      var defectos = this.formato == 'PLANTA' ? this.inputsJuntasDefectosPlanta : false;
+      var urlRegistros = 'informes_ri/' + this.informedata.id;
+      axios({
+        method: 'put',
+        url: urlRegistros,
+        data: {
+          'ot': this.otdata,
+          'ejecutor_ensayo': this.ejecutor_ensayo,
+          'metodo_ensayo': this.metodo,
+          'fecha': this.fecha,
+          'numero_inf': this.numero_inf,
+          'prefijo': this.prefijo,
+          'gasoducto_sn': gasoducto_sn,
+          'componente': this.componente,
+          'plano_isom': this.plano_isom,
+          'procedimiento': this.procedimiento,
+          'observaciones': this.observaciones,
+          'material': this.material,
+          'diametro': this.diametro.diametro,
+          'espesor': this.espesor.espesor,
+          'espesor_chapa': this.espesor_chapa,
+          'equipo': this.equipo,
+          'kv': this.kv,
+          'ma': this.ma,
+          'fuente': this.fuente ? this.fuente : null,
+          'foco': this.foco,
+          'tipo_pelicula': this.tipo_pelicula,
+          'pantalla': this.pantalla,
+          'pos_ant': this.pos_ant,
+          'pos_pos': this.pos_pos,
+          'lado': this.lado,
+          'distancia_fuente_pelicula': this.distancia_fuente_pelicula,
+          'procedimiento_soldadura': this.procedimiento_soldadura,
+          'norma_evaluacion': this.norma_evaluacion,
+          'ici': this.ici,
+          'norma_ensayo': this.norma_ensayo,
+          'tecnica': this.tecnica,
+          'tecnicas_grafico': this.tecnica_grafico,
+          'eps': this.eps,
+          'pqr': this.pqr,
+          'actividad': this.actividad,
+          'exposicion': this.exposicion,
+          'detalles': this.inputsJuntasDefectosPlanta
+        }
+      }).then(function (response) {
+        _this21.response = response.data;
+        toastr.success('informe N°' + _this21.numero_inf + ' fue actualizado con éxito ');
+        console.log(response);
+      })["catch"](function (error) {
+        _this21.errors = error.response.data.errors;
+        console.log(error.response);
+        console.log('hola');
+        $.each(_this21.errors, function (key, value) {
+          toastr.error(value);
+          console.log(key + ": " + value);
+        });
+      });
     }
   }
 });
@@ -41576,7 +41684,7 @@ var render = function() {
                   "div",
                   { staticClass: "form-group" },
                   [
-                    _c("label", [_vm._v("Tipo Soldadura")]),
+                    _c("label", [_vm._v("Tipo Sol.")]),
                     _vm._v(" "),
                     _c("v-select", {
                       attrs: {
@@ -41845,6 +41953,24 @@ var render = function() {
                       }
                     },
                     [_vm._v("Clonar Pasadas")]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-1" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary btn-xs",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.resetDetalle()
+                        }
+                      }
+                    },
+                    [_vm._v("Limpiar Todo")]
                   )
                 ])
               ]),
@@ -42123,7 +42249,11 @@ var render = function() {
                         }
                       ],
                       staticClass: "form-control",
-                      attrs: { type: "text", id: "posicionPlacaGosaducto" },
+                      attrs: {
+                        type: "text",
+                        id: "posicionPlacaGosaducto",
+                        disabled: !_vm.isGasoducto
+                      },
                       domProps: { value: _vm.posicionPlacaGosaducto },
                       on: {
                         input: function($event) {

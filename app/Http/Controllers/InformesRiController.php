@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection as Collection;
 use App\User;
 use App\Ots;
 use App\Repositories\InformesRi\InformesRiRepository;
@@ -22,6 +24,8 @@ use App\Icis;
 use App\NormaEvaluaciones;
 use App\NormaEnsayos;
 use App\OtOperarios;
+use App\Soldadores;
+use App\TipoSoldaduras;
 
 class InformesRiController extends Controller
 {
@@ -115,8 +119,9 @@ class InformesRiController extends Controller
         $informe_norma_evaluacion = NormaEvaluaciones::find($informe->norma_evaluacion_id);
         $informe_norma_ensayo = NormaEnsayos::find($informe->norma_ensayo_id);
         $informe_ejecutor_ensayo =(new OtOperariosController())->getEjecutorEnsayo($informe->ejecutor_ensayo_id);
-        
-   
+        $informe_detalle = $this->getDetalle($informe_ri->id);
+     
+      //  dd($informe_detalle);
         return view('informes.ri.edit', compact('ot',
                                                  'metodo',
                                                  'user',
@@ -134,9 +139,68 @@ class InformesRiController extends Controller
                                                  'informe_norma_evaluacion',
                                                  'informe_norma_ensayo',
                                                  'informe_ejecutor_ensayo',
+                                                 'informe_detalle',
                                                  'header_titulo',
                                                  'header_descripcion'));
     }
+
+
+    public function getDetalle($id){
+
+        $informe_detalle = DB::table('informes_ri')
+                               ->join('juntas','juntas.informe_ri_id','=','informes_ri.id')
+                               ->join('posicion','posicion.junta_id','=','juntas.id')
+                               ->join('pasadas_posicion','pasadas_posicion.posicion_id','=','posicion.id')
+                               ->where('informes_ri.id',$id)
+                               ->select('posicion.aceptable_sn',
+                                      'juntas.codigo as junta',
+                                      'posicion.descripcion as observacion',
+                                      'pasadas_posicion.numero as pasada',
+                                      'juntas.km as pk',
+                                      'posicion.codigo as posicion')
+                                ->get();
+
+      
+        foreach ($informe_detalle as $detalle_posicion) {
+
+            $pasadas_posicion = DB::table('informes_ri')
+                            ->join('juntas','juntas.informe_ri_id','=','informes_ri.id')
+                            ->join('posicion','posicion.junta_id','=','juntas.id')
+                            ->join('pasadas_posicion','pasadas_posicion.posicion_id','=','posicion.id')
+                            ->where('informes_ri.id',$id)
+                            ->where('juntas.codigo',$detalle_posicion->junta)
+                            ->where('posicion.codigo',$detalle_posicion->posicion)
+                            ->where('pasadas_posicion.numero',$detalle_posicion->pasada)
+                            ->selectRaw('pasadas_posicion.*,IFNULL(juntas.tipo_soldadura_id,"") as tipo_soldadura_id')
+                            ->first();
+
+            $defecto_pasada_posicion = DB::table('pasadas_posicion')
+                                           ->join('defectos_pasadas_posicion','defectos_pasadas_posicion.pasada_posicion_id','=','pasadas_posicion.id') 
+                                           ->join('defectos_ri','defectos_ri.id','=','defectos_pasadas_posicion.defecto_ri_id')
+                                           ->where('pasadas_posicion.id',$pasadas_posicion->id)
+                                           ->select('defectos_ri.codigo','defectos_ri.descripcion','defectos_ri.id','defectos_pasadas_posicion.posicion')
+                                           ->get();
+
+            $soldador1 = Soldadores::find($pasadas_posicion->soldadorz_id);
+            $soldador2 = Soldadores::find($pasadas_posicion->soldadorl_id) ? Soldadores::find($pasadas_posicion->soldadorl_id) : "";
+            $soldador3 = Soldadores::find($pasadas_posicion->soldadorp_id);
+            $tipo_soldadura = $pasadas_posicion->tipo_soldadura_id ? TipoSoldaduras::find($pasadas_posicion->tipo_soldadura_id) : "" ;
+
+
+            $detalle_posicion->soldador1 = $soldador1;
+            $detalle_posicion->soldador2 = $soldador2;
+            $detalle_posicion->soldador3 = $soldador3;
+            $detalle_posicion->tipo_soldadura = $tipo_soldadura;
+            $detalle_posicion->defectosPosicion = $defecto_pasada_posicion;
+          
+        }
+
+
+        return $informe_detalle; 
+
+
+    }
+
 
     /**
      * Update the specified resource in storage.
@@ -147,7 +211,7 @@ class InformesRiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return $this->informesRi->updateInforme($request,$id);
     }
 
     /**
