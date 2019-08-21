@@ -28,24 +28,46 @@ class InformesRiRepository extends BaseRepository
 
   
     $informe  = new Informe;
-    $informeRi  = new InformesRi;   
+    $informeRi  = new InformesRi;  
     
-    $this->saveInforme($request,$informe);
-    $this->saveInformeRi($request,$informe,$informeRi);
-    $this->saveDetallePlanta($request,$informeRi);
+    DB::beginTransaction();
+    try {
+        
+      $this->saveInforme($request,$informe);
+      $this->saveInformeRi($request,$informe,$informeRi);
+      $this->saveDetalle($request,$informeRi);
 
+      DB::commit();
 
+    } catch (Exception $e) {
+
+      DB::rollback();
+      throw $e;      
+      
+    }
+   
   }
 
   public function updateInforme($request, $id){
 
     $informe  = Informe::find($id);
     $informeRi =InformesRi::where('informe_id',$informe->id)->first();
+    DB::beginTransaction();
+    try {
 
-    $this->saveInforme($request,$informe);
-    $this->saveInformeRi($request,$informe,$informeRi);  
-    $this->deleteDetalle($request,$informeRi->id);   
-    $this->saveDetallePlanta($request,$informeRi);
+        $this->saveInforme($request,$informe);
+        $this->saveInformeRi($request,$informe,$informeRi);  
+        $this->deleteDetalle($request,$informeRi->id);   
+        $this->saveDetalle($request,$informeRi);
+
+        DB::commit();
+        
+      } catch (Exception $e) {
+
+        DB::rollback();
+        throw $e;      
+        
+      }
 
   }
 
@@ -128,7 +150,7 @@ class InformesRiRepository extends BaseRepository
 
   }
 
-  public function saveDetallePlanta($request,$informeRi){
+  public function saveDetalle($request,$informeRi){
 
    
       foreach ($request->detalles as $detalle){       
@@ -141,7 +163,7 @@ class InformesRiRepository extends BaseRepository
         catch(Exception $e){          
 
           if ($e->getCode() != '23000'){
-
+           
             throw $e;    
 
           }
@@ -157,7 +179,7 @@ class InformesRiRepository extends BaseRepository
          catch(Exception $u){          
  
            if ($u->getCode() != '23000'){
- 
+           
              throw $u;    
  
            }
@@ -173,7 +195,7 @@ class InformesRiRepository extends BaseRepository
          catch(Exception $z){          
  
            if ($z->getCode() != '23000'){
- 
+           
              throw $z;    
  
            }
@@ -204,7 +226,6 @@ class InformesRiRepository extends BaseRepository
     $pos->codigo = $detalle['posicion'];
     $pos->descripcion = $detalle['observacion'] ;
     $pos->junta_id = $junta['id'];
-    $pos->aceptable_sn = $detalle['aceptable_sn'];
     $pos->save();
 
     return $pos;
@@ -221,6 +242,8 @@ class InformesRiRepository extends BaseRepository
       $pasadasPosicion = new PasadasPosicion;   
       $pasadasPosicion->numero = $numero_pasada;
       $pasadasPosicion->posicion_id = $posicion['id'];
+      $pasadasPosicion->aceptable_sn = $detalle['aceptable_sn'];
+
       $pasadasPosicion->soldadorz_id = $detalle['soldador1']['id'];               
       $pasadasPosicion->soldadorl_id = $detalle['soldador2']['id'];
       $pasadasPosicion->soldadorp_id = $detalle['soldador3']['id'];

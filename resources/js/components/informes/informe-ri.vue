@@ -1143,11 +1143,16 @@ export default {
                
                this.errors = error.response.data.errors;
                 console.log(error.response);
-                console.log('hola'); 
                $.each( this.errors, function( key, value ) {
                    toastr.error(value);
                    console.log( key + ": " + value );
                });
+
+               if((typeof(this.errors)=='undefined') && (error)){
+
+                     toastr.error("Ocurrió un error al procesar la solicitud");                     
+                  
+                }
 
            });    
 

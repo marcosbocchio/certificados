@@ -80,7 +80,7 @@ class OtOperariosController extends Controller
     public function store(Request $request)
     {
 
-     
+        DB::beginTransaction();
         try
         {
 
@@ -97,7 +97,8 @@ class OtOperariosController extends Controller
             }  
         }catch(\Exception $e)
         {
-            return $e->getMessage();
+            DB::rollback();
+            throw $e;
         }     
    
       

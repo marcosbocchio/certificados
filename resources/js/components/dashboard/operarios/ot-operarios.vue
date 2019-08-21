@@ -130,7 +130,8 @@ export default {
   created : function() {
       
       this.getUsuarios();
-      this.users_ot_operarios = this.ot_operarios_data;
+      this.users_ot_operarios =  JSON.parse(JSON.stringify(this.ot_operarios_data));  
+    
      
      
       
@@ -216,12 +217,17 @@ export default {
                 
             }).catch(error => {
                
-                this.errors = error.response.data.errors;
-
+                this.errors = error.response.data.errors;                 
                 $.each( this.errors, function( key, value ) {
                     toastr.error(value,key);
                     console.log( key + ": " + value );
-                });           
+                });
+                
+                if(this.errors = [] && error){
+
+                     toastr.error("Ocurrio un error al procesar la solicitud");                     
+                     this.users_ot_operarios = this.ot_operarios_data;   
+                }
   
             });
         }

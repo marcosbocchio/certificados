@@ -26,6 +26,7 @@ use App\Soldadores;
 use App\Posicion;
 use App\PasadasPosicion;
 use App\DefectosPasadasPosicion;
+use App\OtOperarios;
 
 class PdfInformesRiController extends Controller
 {
@@ -48,7 +49,8 @@ class PdfInformesRiController extends Controller
         $diametro_espesor = DiametrosEspesor::findOrFail($informe->diametro_espesor_id);
         $ici = Icis::findOrFail($informe_ri->ici_id);
         $tecnica = Tecnicas::findOrFail($informe->tecnica_id);
-        $ejecutor_ensayo = User::findOrFail($informe->ejecutor_ensayo_id);
+        $ot_operador = OtOperarios::findOrFail($informe->ejecutor_ensayo_id);
+        $ejecutor_ensayo = User::findOrFail($ot_operador->user_id);
         $tecnicas_grafico = TecnicasGraficos::findOrFail($informe_ri->tecnicas_grafico_id);
         
       //  dd($informe_ri);
@@ -58,7 +60,10 @@ class PdfInformesRiController extends Controller
           $juntas_posiciones = DB::select('CALL InformeRiGasoductoJuntaPosicion(?)',array($informe_ri->id));        
           $pasadas_posiciones = DB::select('CALL InformeRiGasoductoPasadasPosicion(?)',array($informe_ri->id));
           $defectos_posiciones = DB::select('CALL InformeRiGasoductoDefectosPasadasPosicion(?)',array($informe_ri->id));   
-         // dd($defectos_posiciones);
+
+       
+
+      //    dd($juntas_posiciones);
        
 
           $pdf = PDF::loadView('reportes.informes.ri-gasoducto',compact('ot',

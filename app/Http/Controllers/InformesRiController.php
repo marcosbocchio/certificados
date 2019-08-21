@@ -152,10 +152,10 @@ class InformesRiController extends Controller
                                ->join('posicion','posicion.junta_id','=','juntas.id')
                                ->join('pasadas_posicion','pasadas_posicion.posicion_id','=','posicion.id')
                                ->where('informes_ri.id',$id)
-                               ->select('posicion.aceptable_sn',
-                                      'juntas.codigo as junta',
+                               ->select('juntas.codigo as junta',
                                       'posicion.descripcion as observacion',
                                       'pasadas_posicion.numero as pasada',
+                                      'pasadas_posicion.aceptable_sn as aceptable_sn',
                                       'juntas.km as pk',
                                       'posicion.codigo as posicion')
                                 ->get();

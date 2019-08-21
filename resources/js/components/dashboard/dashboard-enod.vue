@@ -109,7 +109,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="ot in ots" :key="ot.id" @click="selectOt(ot.id)">
+                                <tr v-for="ot in ots" :key="ot.id" @click="selectOt(ot.id)" :class="{selected: ot_id_selected === ot.id}" >
                                     <td> {{ot.numero}}</td>     
                                     <td> {{ot.obra}}</td>         
                                     <td> {{ot.cliente.nombre_fantasia}}</td>         
@@ -160,7 +160,9 @@ export default {
     created : function() {
 
        this.getOts();
+       
     },
+
     methods : {
 
         getOts : function(){
@@ -169,8 +171,10 @@ export default {
             var urlRegistros = 'ots' + '?api_token=' + Laravel.user.api_token;             
             axios.get(urlRegistros).then(response =>{
             this.ots = response.data
+            this.ot_id_selected = this.ots[0].id;    
             });
 
+       
         },
 
          selectOt : function(id){
@@ -198,3 +202,13 @@ export default {
 
 </script>
 
+<style >
+
+
+
+table .selected{
+
+  background-color: rgb(220, 198, 241)!important;
+
+} 
+</style>

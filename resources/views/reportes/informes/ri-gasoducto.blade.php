@@ -158,7 +158,7 @@ b {
                             <td style="font-size: 12px;" colspan="2"  ><b>Tipo: </b>{{$tipo_pelicula->codigo}}</td>    
                              <td style="font-size: 12px; border-right: 1px solid #000;" colspan="2" ><b>Ici : </b>{{$ici->codigo}}</td>     
                             <td style="font-size: 12px;  width: 218px;border-right: 1px solid #000;" ><b>Pqr: </b>{{$informe->pqr}}</td> 
-                            <td style="font-size: 12px; border-right: 1px solid #000; " colspan="2" ><b>Ejecutor Ensayo : </b>{{$ejecutor_ensayo->name}}</td>           
+                            <td style="font-size: 12px; border-right: 1px solid #000; " colspan="2" ><b>Ejec. Ensayo : </b>{{$ejecutor_ensayo->name}}</td>           
                            
                         </tr>
                         <tr>
@@ -515,13 +515,13 @@ b {
                     </td>
                      <!-- Resultado-->   
                     <td style="font-size: 11px;width:32px; text-align: center; " class="bordered-td">
-                        @if ($junta_posiciones->aceptable_sn)
+                        @if ($junta_posiciones->aceptable_sn == 6)
                             X
                         @endif
                     </td>
 
                     <td style="font-size: 11px; text-align: center;" class="bordered-td">
-                        @if (!$junta_posiciones->aceptable_sn)
+                        @if ($junta_posiciones->aceptable_sn != 6)
                             X
                         @endif
                     </td>

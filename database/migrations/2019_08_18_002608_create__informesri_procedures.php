@@ -20,7 +20,7 @@ class CreateInformesriProcedures extends Migration
                         juntas.codigo as junta,
                         posicion.codigo as posicion,
                         posicion.descripcion as observacion,
-                        posicion.aceptable_sn,
+                        pasadas_posicion.aceptable_sn as aceptable_sn,
                         pasadas_posicion.id as pasada_posicion_id,
                         pasadas_posicion.numero as numero,
                         (SELECT	 soldadores.codigo FROM soldadores WHERE soldadores.id = pasadas_posicion.soldadorz_id) AS soldadorz,
@@ -72,8 +72,8 @@ class CreateInformesriProcedures extends Migration
                         juntas.codigo as junta,
                         juntas.km,
                         tipo_soldaduras.codigo as tipo_soldadura,
-                        posicion.codigo,
-                        posicion.aceptable_sn,
+                        posicion.codigo,     
+                        IFNULL((SELECT count(*) FROM pasadas_posicion WHERE pasadas_posicion.posicion_id = posicion.id AND pasadas_posicion.aceptable_sn='1'),0) as aceptable_sn,                  
                         posicion.id as posicion_id
                         FROM juntas 
                         INNER JOIN tipo_soldaduras ON
@@ -90,7 +90,7 @@ class CreateInformesriProcedures extends Migration
                         CREATE PROCEDURE `InformeRiGasoductoPasadasPosicion`(IN `id` BIGINT )
                         SELECT   
                         posicion.id as posicion_id,
-                        pasadas_posicion.numero,
+                        pasadas_posicion.numero,                       
                         (SELECT	 soldadores.codigo FROM soldadores WHERE soldadores.id = pasadas_posicion.soldadorz_id) AS soldadorz,
                         (SELECT soldadores.codigo FROM soldadores WHERE soldadores.id = pasadas_posicion.soldadorl_id) AS soldadorl,
                         (SELECT soldadores.codigo FROM soldadores WHERE soldadores.id = pasadas_posicion.soldadorp_id) AS soldadorp,

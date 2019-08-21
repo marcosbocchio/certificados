@@ -70,7 +70,7 @@ Vue.component('editar-documentaciones', require('./components/abm-maestro/docume
 Vue.component('abm-doc', require('./components/documentaciones/abm-doc.vue').default);
 
 Vue.component('dashboard-enod', require('./components/dashboard/dashboard-enod').default);
-Vue.component('ot-operarios', require('./components/operarios/ot-operarios').default);
+Vue.component('ot-operarios', require('./components/dashboard/operarios/ot-operarios').default);
 
 
 Vue.component('ots', require('./components/ots/ots.vue').default);

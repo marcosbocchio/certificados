@@ -38,6 +38,7 @@ Route::group(['middleware' => ['auth']], function () {
 
   Route::get('institucionales/{id}','DocumentacionesController@institucionales')->name('institucionales');
   Route::get('operadores/ot/{id}','OtOperariosController@index')->name('otOperadores');
+  Route::get('informes/ot/{id}','OtInformesController@index')->name('otInformes');
   Route::get('documentaciones/operador/{id}', 'DocumentacionesController@operarios');
   Route::get('/area/enod/ot/{ot_id}/metodo/ri','InformesRiController@create');
   Route::get('/area/enod/ot/{ot_id}/metodo/ri/{id}/edit','InformesRiController@edit');
