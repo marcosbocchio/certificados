@@ -18,7 +18,7 @@ class CreateTecnicaDistanciasDiametroProcedure extends Migration
                                         
                         SELECT * FROM tecnica_distancias 
                         where 
-                        diametro = replace(replace(diametro_code,'b','/'),'s', ' ') and
+                        diametro = replace(replace(diametro_code,'b','/'),'s', ' ') COLLATE utf8mb4_unicode_ci and
                         tecnica_id = id        
                 ";
 

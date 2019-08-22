@@ -18,7 +18,7 @@ class CreateEspesoresDiametroProcedure extends Migration
                                         
                         SELECT * FROM diametros_espesor 
                         where 
-                        diametro = replace(replace(diametro_code,'b','/'),'s', ' ')        
+                        diametro = replace(replace(diametro_code,'b','/'),'s', ' ') COLLATE utf8mb4_unicode_ci       
                 ";
 
         DB::unprepared("DROP procedure IF EXISTS EspesoresDiametro");
