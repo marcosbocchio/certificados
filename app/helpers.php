@@ -13,3 +13,10 @@ function pdfCantFilasACompletar($filasPage,$cantFilasTotal){
     return ($filasPage - (count($cantFilasTotal) % $filasPage)) ;
 
 }
+
+function FormatearNumeroInforme(int $numero,$metodo){
+
+  return $metodo . sprintf("%03d",$numero) ;
+
+}
+

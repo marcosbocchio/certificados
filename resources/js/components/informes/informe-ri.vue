@@ -58,7 +58,7 @@
                          <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="numero_inf">Informe N°</label>
-                                <input type="number" v-model="numero_inf" class="form-control" id="numero_inf">
+                                <input type="text" v-model="numero_inf_code" class="form-control" id="numero_inf" disabled>
                             </div>                            
                         </div>
                         <div class="col-md-3">
@@ -602,6 +602,7 @@ export default {
 
             fecha:'',
             numero_inf:'',
+            numero_inf_generado:'',
             prefijo:'',
             formato :'',          
             componente:'',
@@ -690,6 +691,7 @@ export default {
 
     created : function(){      
         
+       
         this.getCliente();
         this.getProcedimientos();
         this.getMateriales();
@@ -708,8 +710,12 @@ export default {
         this.getTipoSoldaduras();       
         this.setEdit();        
 
-    },   
- 
+    },
+    
+    mounted : function() {
+
+         this.getNumeroInforme();
+    }, 
     
     watch : {
 
@@ -741,7 +747,14 @@ export default {
 
            HabilitarClonarPasadas(){
                 this.EnableClonarPasadas = (this.isGasoducto && this.pasada=='1' && this.inputsJuntasDefectosPlanta.length);
-           }      
+           },   
+           
+           numero_inf_code : function()  {
+
+               if(this.numero_inf)
+
+                      return this.metodo + (this.numero_inf <10? '00' : this.numero_inf<100? '0' : '') + this.numero_inf ;
+        }
        
      },
 
@@ -782,11 +795,35 @@ export default {
                this.exposicion = this.informe_ridata.exposicion;
                this.distancia_fuente_pelicula = this.informe_ridata.distancia_fuente_pelicula;
                this.ejecutor_ensayo = this.ejecutor_ensayodata;          
-               this.inputsJuntasDefectosPlanta = this.detalledata              
+               this.inputsJuntasDefectosPlanta = this.detalledata        
 
 
             }
 
+        },
+
+        getNumeroInforme:function(){            
+           
+            if(!this.editmode) {
+           
+
+                    axios.defaults.baseURL = this.url ;
+                        var urlRegistros = 'informes/ot/' + this.otdata.id + '/metodo/' + this.metodo + '/generar-numero-informe'  + '?api_token=' + Laravel.user.api_token;         
+                        axios.get(urlRegistros).then(response =>{
+                        this.numero_inf_generado = response.data 
+                        
+                        console.log(this.numero_inf_generado.length);
+                        if(this.numero_inf_generado.length){
+
+                            this.numero_inf =  this.numero_inf_generado[0].numero_informe
+                        }else{
+
+                            this.numero_inf = 1;
+                        }
+                        
+                        
+                        });   
+             }
         },
 
         getCliente : function(){

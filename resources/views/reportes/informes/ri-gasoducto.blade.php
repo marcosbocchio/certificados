@@ -80,7 +80,7 @@ b {
                                 <td style="font-size: 12px;"><b style="margin-left: 40px"></b></td>                         
                             </tr>
                             <tr>
-                                <td style="font-size: 12px;" ><b style="margin-left: 120px" >INFORME N°: </b>{{$informe->numero}}</td>                      
+                                <td style="font-size: 12px;" ><b style="margin-left: 120px" >INFORME N°: </b>{{$informe->prefijo}}-{{FormatearNumeroInforme($informe->numero,'RI')}}</td>                      
                             </tr>
                             <tr>
                                 <td style="font-size: 12px;"><b style="margin-left: 120px">FECHA: </b>{{ date('d-m-Y', strtotime($ot->fecha_hora)) }}</td>

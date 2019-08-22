@@ -2936,6 +2936,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -4023,6 +4024,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       // Formulario encabezado
       fecha: '',
       numero_inf: '',
+      numero_inf_generado: '',
       prefijo: '',
       formato: '',
       componente: '',
@@ -4117,6 +4119,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.getTipoSoldaduras();
     this.setEdit();
   },
+  mounted: function mounted() {
+    this.getNumeroInforme();
+  },
   watch: {
     equipo: function equipo(val) {
       this.isRX = val.codigo == 'RX' ? true : false;
@@ -4134,6 +4139,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])(['url', 'AppUrl']), {
     HabilitarClonarPasadas: function HabilitarClonarPasadas() {
       this.EnableClonarPasadas = this.isGasoducto && this.pasada == '1' && this.inputsJuntasDefectosPlanta.length;
+    },
+    numero_inf_code: function numero_inf_code() {
+      if (this.numero_inf) return this.metodo + (this.numero_inf < 10 ? '00' : this.numero_inf < 100 ? '0' : '') + this.numero_inf;
     }
   }),
   methods: {
@@ -4173,44 +4181,62 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.inputsJuntasDefectosPlanta = this.detalledata;
       }
     },
-    getCliente: function getCliente() {
+    getNumeroInforme: function getNumeroInforme() {
       var _this = this;
+
+      if (!this.editmode) {
+        axios.defaults.baseURL = this.url;
+        var urlRegistros = 'informes/ot/' + this.otdata.id + '/metodo/' + this.metodo + '/generar-numero-informe' + '?api_token=' + Laravel.user.api_token;
+        axios.get(urlRegistros).then(function (response) {
+          _this.numero_inf_generado = response.data;
+          console.log(_this.numero_inf_generado.length);
+
+          if (_this.numero_inf_generado.length) {
+            _this.numero_inf = _this.numero_inf_generado[0].numero_informe;
+          } else {
+            _this.numero_inf = 1;
+          }
+        });
+      }
+    },
+    getCliente: function getCliente() {
+      var _this2 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'clientes/' + this.otdata.cliente_id + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this.cliente = response.data;
+        _this2.cliente = response.data;
       });
     },
     getProcedimientos: function getProcedimientos() {
-      var _this2 = this;
+      var _this3 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'procedimientos_informes/ot/' + this.otdata.id + '/metodo/' + this.metodo + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this2.procedimientos = response.data;
+        _this3.procedimientos = response.data;
       });
     },
     getMateriales: function getMateriales() {
-      var _this3 = this;
+      var _this4 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'materiales' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this3.materiales = response.data;
+        _this4.materiales = response.data;
       });
     },
     getDiametros: function getDiametros() {
-      var _this4 = this;
+      var _this5 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'diametros' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this4.diametros = response.data;
+        _this5.diametros = response.data;
       });
     },
     getEspesores: function getEspesores() {
-      var _this5 = this;
+      var _this6 = this;
 
       this.espesor = '';
       this.distancia_fuente_pelicula = '';
@@ -4218,99 +4244,99 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'espesor/' + this.diametro.diametro_code + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this5.espesores = response.data;
+        _this6.espesores = response.data;
       });
     },
     getEquipos: function getEquipos() {
-      var _this6 = this;
+      var _this7 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'equipos/metodo/' + this.metodo + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this6.equipos = response.data;
+        _this7.equipos = response.data;
       });
     },
     getFuentes: function getFuentes() {
-      var _this7 = this;
+      var _this8 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'fuentes' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this7.fuentes = response.data;
+        _this8.fuentes = response.data;
       });
     },
     getTipoPeliculas: function getTipoPeliculas() {
-      var _this8 = this;
+      var _this9 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'tipo_peliculas' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this8.tipo_peliculas = response.data;
+        _this9.tipo_peliculas = response.data;
       });
     },
     getNormaEvaluaciones: function getNormaEvaluaciones() {
-      var _this9 = this;
+      var _this10 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'norma_evaluaciones' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this9.norma_evaluaciones = response.data;
+        _this10.norma_evaluaciones = response.data;
       });
     },
     getIcis: function getIcis() {
-      var _this10 = this;
+      var _this11 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'icis' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this10.icis = response.data;
+        _this11.icis = response.data;
       });
     },
     getNormaEnsayos: function getNormaEnsayos() {
-      var _this11 = this;
+      var _this12 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'norma_ensayos' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this11.norma_ensayos = response.data;
+        _this12.norma_ensayos = response.data;
       });
     },
     getTecnicas: function getTecnicas() {
-      var _this12 = this;
+      var _this13 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'tecnicas' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this12.tecnicas = response.data;
+        _this13.tecnicas = response.data;
       });
     },
     ActualizarDistFuentePelicula: function ActualizarDistFuentePelicula() {
-      var _this13 = this;
+      var _this14 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'tecnica_distancias/' + this.tecnica.id + '/diametro/' + this.diametro.diametro_code + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this13.tecnica_distancia = response.data;
-        _this13.distancia_fuente_pelicula = _this13.tecnica_distancia[0].distancia_fuente_peliculas;
+        _this14.tecnica_distancia = response.data;
+        _this14.distancia_fuente_pelicula = _this14.tecnica_distancia[0].distancia_fuente_peliculas;
       });
     },
     getTecnicasGraficos: function getTecnicasGraficos() {
-      var _this14 = this;
+      var _this15 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'tecnicas_graficos/' + this.tecnica.id + '?api_token=' + Laravel.user.api_token;
       console.log(urlRegistros);
       axios.get(urlRegistros).then(function (response) {
-        _this14.tecnicas_graficos = response.data;
+        _this15.tecnicas_graficos = response.data;
       });
     },
     getEjecutorEnsayo: function getEjecutorEnsayo() {
-      var _this15 = this;
+      var _this16 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'ot-operarios/ejecutor_ensayo/' + this.otdata.id + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this15.ejecutor_ensayos = response.data;
+        _this16.ejecutor_ensayos = response.data;
       });
     },
     resetInputsEquipos: function resetInputsEquipos() {
@@ -4327,39 +4353,39 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     //detalle
     getTipoSoldaduras: function getTipoSoldaduras() {
-      var _this16 = this;
+      var _this17 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'tipo_soldaduras' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this16.tipo_soldaduras = response.data;
+        _this17.tipo_soldaduras = response.data;
       });
     },
     getSoldadores: function getSoldadores() {
-      var _this17 = this;
+      var _this18 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'soldadores/cliente/' + this.otdata.cliente_id + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this17.soldadores = response.data;
+        _this18.soldadores = response.data;
       });
     },
     getDefectosRiPlanta: function getDefectosRiPlanta() {
-      var _this18 = this;
+      var _this19 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'defectos_ri/planta/' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this18.defectosRiPlanta = response.data;
+        _this19.defectosRiPlanta = response.data;
       });
     },
     getDefectosRiGasoducto: function getDefectosRiGasoducto() {
-      var _this19 = this;
+      var _this20 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'defectos_ri/gasoducto/' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this19.defectosRiGasoducto = response.data;
+        _this20.defectosRiGasoducto = response.data;
       });
     },
     selectPosPlanta: function selectPosPlanta(index) {
@@ -4424,7 +4450,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     Store: function Store() {
-      var _this20 = this;
+      var _this21 = this;
 
       this.errors = [];
       var gasoducto_sn = this.formato == 'GASODUCTO' ? true : false;
@@ -4473,24 +4499,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           'detalles': this.inputsJuntasDefectosPlanta
         }
       }).then(function (response) {
-        _this20.response = response.data;
-        toastr.success('informe N°' + _this20.numero_inf + ' fue creado con éxito ');
+        _this21.response = response.data;
+        toastr.success('informe N°' + _this21.numero_inf + ' fue creado con éxito ');
         console.log(response);
       })["catch"](function (error) {
-        _this20.errors = error.response.data.errors;
+        _this21.errors = error.response.data.errors;
         console.log(error.response);
-        $.each(_this20.errors, function (key, value) {
+        $.each(_this21.errors, function (key, value) {
           toastr.error(value);
           console.log(key + ": " + value);
         });
 
-        if (typeof _this20.errors == 'undefined' && error) {
+        if (typeof _this21.errors == 'undefined' && error) {
           toastr.error("Ocurrió un error al procesar la solicitud");
         }
       });
     },
     Update: function Update() {
-      var _this21 = this;
+      var _this22 = this;
 
       console.log('entro para actualizar');
       this.errors = [];
@@ -4540,14 +4566,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           'detalles': this.inputsJuntasDefectosPlanta
         }
       }).then(function (response) {
-        _this21.response = response.data;
-        toastr.success('informe N°' + _this21.numero_inf + ' fue actualizado con éxito ');
+        _this22.response = response.data;
+        toastr.success('informe N°' + _this22.numero_inf + ' fue actualizado con éxito ');
         console.log(response);
       })["catch"](function (error) {
-        _this21.errors = error.response.data.errors;
+        _this22.errors = error.response.data.errors;
         console.log(error.response);
         console.log('hola');
-        $.each(_this21.errors, function (key, value) {
+        $.each(_this22.errors, function (key, value) {
           toastr.error(value);
           console.log(key + ": " + value);
         });
@@ -40483,7 +40509,9 @@ var render = function() {
                   return _c("tr", { key: k }, [
                     _c("td", [_vm._v(" " + _vm._s(ot_informe.metodo))]),
                     _vm._v(" "),
-                    _c("td", [_vm._v(" " + _vm._s(ot_informe.numero))]),
+                    _c("td", [
+                      _vm._v(" " + _vm._s(ot_informe.numero_formateado))
+                    ]),
                     _vm._v(" "),
                     _c("td", [_vm._v(" " + _vm._s(ot_informe.name))]),
                     _vm._v(" "),
@@ -41450,19 +41478,19 @@ var render = function() {
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.numero_inf,
-                        expression: "numero_inf"
+                        value: _vm.numero_inf_code,
+                        expression: "numero_inf_code"
                       }
                     ],
                     staticClass: "form-control",
-                    attrs: { type: "number", id: "numero_inf" },
-                    domProps: { value: _vm.numero_inf },
+                    attrs: { type: "text", id: "numero_inf", disabled: "" },
+                    domProps: { value: _vm.numero_inf_code },
                     on: {
                       input: function($event) {
                         if ($event.target.composing) {
                           return
                         }
-                        _vm.numero_inf = $event.target.value
+                        _vm.numero_inf_code = $event.target.value
                       }
                     }
                   })

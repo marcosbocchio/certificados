@@ -42,6 +42,7 @@
                         </button>                       
                     </div>
                 </div>
+             
                 <div class="box-body">                        
                     <div class="table-responsive">          
                         <table class="table table-hover table-striped">
@@ -57,7 +58,7 @@
                             <tbody>
                                 <tr v-for="(ot_informe,k) in ot_informes" :key="k">                                 
                                     <td> {{ot_informe.metodo}}</td>
-                                    <td> {{ot_informe.numero}}</td>     
+                                    <td> {{ot_informe.numero_formateado}}</td>     
                                     <td> {{ot_informe.name}}</td>     
                                     <td> {{ot_informe.fecha}}</td>              
                                     <td width="10px"> <a :href="AppUrl + '/area/enod/ot/' + ot_id_data + '/informe/' + ot_informe.id +'/edit' "   class="btn btn-warning btn-sm" title="Editar"><span class="fa fa-edit"></span></a></td>
@@ -119,7 +120,7 @@ export default {
   computed :{
 
        ...mapState(['url','AppUrl'])
-     },
+     },  
     
 }
 </script>

@@ -23,7 +23,7 @@ class InformesController extends Controller
                     ->join('users','users.id','=','informes.user_id')
                     ->join('metodo_ensayos','metodo_ensayos.id','=','informes.metodo_ensayo_id')
                     ->where('informes.ot_id',$id)
-                    ->selectRaw('informes.numero,DATE_FORMAT(informes.created_at,"%d/%m/%Y")as fecha,informes.id,metodo_ensayos.metodo as metodo,users.name')                 
+                    ->selectRaw('informes.numero,DATE_FORMAT(informes.created_at,"%d/%m/%Y")as fecha,informes.id,metodo_ensayos.metodo as metodo,users.name,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado')                 
                     ->get();
 
         $ot_metodos_ensayos = DB::table('ots')
@@ -51,7 +51,8 @@ class InformesController extends Controller
 
     }
 
-    public function create($ot_id,$metodo){
+    public function create($ot_id,$metodo){        
+
 
         switch ($metodo) {
             case 'RI':
@@ -81,6 +82,21 @@ class InformesController extends Controller
 
     }
 
+    public function GenerarNumeroInforme($ot_id,$metodo){
 
+
+        $numero_informe = DB::table('informes')                        
+                          ->join('metodo_ensayos','metodo_ensayos.id','=','informes.metodo_ensayo_id')
+                          ->where('informes.ot_id',$ot_id)
+                          ->where('metodo_ensayos.metodo',$metodo)
+                          ->orderBy('informes.numero', 'DESC')   
+                          ->limit(1)   
+                          ->selectRaw('informes.numero + 1 as numero_informe')                    
+                          ->get();    
+
+        return  $numero_informe;                 
+
+       
+    }
    
 }

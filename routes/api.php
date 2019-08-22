@@ -64,7 +64,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('informes/ot/{ot_id}/total', 'InformesController@OtInformesTotal');
 
   
-
+    Route::get('informes/ot/{ot_id}/metodo/{metodo}/generar-numero-informe', 'InformesController@GenerarNumeroInforme');
 
 
 

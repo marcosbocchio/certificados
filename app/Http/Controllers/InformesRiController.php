@@ -56,8 +56,7 @@ class InformesRiController extends Controller
       //  $editmode = false;      
         $user = auth()->user()->name;
         $header_titulo = "Informe";
-        $header_descripcion ="Crear";  
-
+        $header_descripcion ="Crear";         
         $ot = Ots::findOrFail($ot_id);      
 
         return view('informes.ri.index', compact('ot',
