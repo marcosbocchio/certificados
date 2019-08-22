@@ -61,6 +61,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('espesor/{id}', 'DiametrosEspesorController@getEspesor');
     
     Route::get('procedimientos_informes/ot/{id_ot}/metodo/{metodo}', 'DocumentacionesController@ProcedimientosMetodo');
+    Route::get('informes/ot/{ot_id}/total', 'InformesController@OtInformesTotal');
 
   
 

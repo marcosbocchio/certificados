@@ -21,7 +21,7 @@ class PdfInformesController extends Controller
 
         switch ($metodo_ensayo->metodo) {
             case 'RI':
-                 return redirect()->route('pdfInformeRi',array('id' => $informe->id));
+                 return redirect()->route('pdfInformeRi',array('id' => $id));
                 break;           
         } 
 

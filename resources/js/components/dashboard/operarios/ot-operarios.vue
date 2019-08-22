@@ -18,16 +18,16 @@
         <div class="col-md-12">
             <div class="box box-danger">
                 <div class="box-body">  
-            <div class="form-group">
-                <label>Operadores</label>
-                <v-select v-model="usuario" label="name" :options="usuarios" ></v-select>
-            </div> 
-            <div class="form-group">                    
-                <span>
-                    <i class="fa fa-plus-circle" @click="addOperario(usuario.id)"></i>
-                </span>
-            </div>
-            </div>
+                    <div class="form-group">
+                        <label>Operadores</label>
+                        <v-select v-model="usuario" label="name" :options="usuarios" ></v-select>
+                    </div> 
+                    <div class="form-group">                    
+                        <span>
+                            <i class="fa fa-plus-circle" @click="addOperario(usuario.id)"></i>
+                        </span>
+                    </div>
+                 </div>
             </div>
 
                 <div class="box box-info top-buffer">

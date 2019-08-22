@@ -50,14 +50,14 @@
           <!-- small box -->
           <div class="small-box bg-red">
             <div class="inner">
-              <h3>65</h3>
+              <h3>{{ CantInformes }} </h3>
 
               <p>Informes</p>
             </div>
             <div class="icon">
               <i class="ion ion-pie-graph"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+              <a :href="AppUrl + '/informes/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -72,7 +72,7 @@
             <div class="icon">
               <i class="fa fa-file-pdf-o"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a :href="AppUrl + '/informes/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -138,7 +138,8 @@ export default {
 
         ots :[],
         ot_id_selected : '',
-        CantOperadores :'0'
+        CantOperadores :'0',
+        CantInformes:'0'
 
         }
 
@@ -154,6 +155,7 @@ export default {
  
       ot_id_selected: function (ContarOperadores) {      
       this.ContarOperadores();
+      this.ContarInformes();
     }
   },
 
@@ -191,11 +193,17 @@ export default {
             this.CantOperadores = response.data
             });
 
-         }
+         },
+         ContarInformes : function() {
 
-         
+           axios.defaults.baseURL = this.url ;                
+            var urlRegistros = 'informes/ot/' + this.ot_id_selected +'/total' + '?api_token=' + Laravel.user.api_token;             
+            axios.get(urlRegistros).then(response =>{
+            this.CantInformes = response.data
+            });
 
 
+         }     
     }
 }
     
