@@ -95,6 +95,7 @@ class OtOperariosController extends Controller
                 $ot_operarios->save();
 
             }  
+            DB::commit();
         }catch(\Exception $e)
         {
             DB::rollback();
