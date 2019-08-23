@@ -85,16 +85,35 @@ class OtOperariosController extends Controller
         {
 
                 $ot_id = $request->ot_id;
-                OtOperarios::where('ot_id',$ot_id)->delete();      
+                
+                $ot_operarios = OtOperarios::where('ot_id',$ot_id)->get();
+
+                foreach ($ot_operarios as $ot_operario) {
+                  $existe = false;
+                    foreach ($request->operarios as $operario) {
+                        if($ot_operario['ot_id'] == $ot_id && $ot_operario['id'] == $operario['id']){
+                          $existe = true;
+                        }
+                    }
+
+                  if (!$existe){
+                     OtOperarios::where('ot_id',$ot_id)
+                                 ->where('user_id',$ot_operario['id'])
+                                 ->delete();
+                    }
+                }
 
                foreach ( $request->operarios as $operario) {
-                
-                $ot_operarios                            = new OtOperarios;
-                $ot_operarios->ot_id                     = $request->ot_id;
-                $ot_operarios->user_id                   = $operario['id'];
-                $ot_operarios->save();
 
-            }  
+                    $ot_operarios_update =OtOperarios::firstOrCreate(
+                        ['ot_id' => $request->ot_id,'user_id' => $operario['id']],
+                        ['ot_id' => $request->ot_id,'user_id' => $operario['id']]
+
+                    );
+       
+                $ot_operarios_update->save();
+
+              }  
             DB::commit();
         }catch(\Exception $e)
         {
