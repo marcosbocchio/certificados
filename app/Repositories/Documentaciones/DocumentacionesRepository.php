@@ -41,6 +41,7 @@ class DocumentacionesRepository extends BaseRepository
     else{
 
       $documento->tipo = $request->tipo;
+      $documento->metodo_ensayo_id = $request->metodo_ensayo_id;
       $documento->titulo = $request->titulo;
       $documento->descripcion = $request->descripcion;
       $documento->path = $request->path;

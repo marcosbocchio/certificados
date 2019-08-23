@@ -34,15 +34,19 @@
                             </div>
                             <div v-if="newRegistro.tipo == 'USUARIO'">
                                 <div class="form-group">
-                                <label for="name">Usuario</label>
-                                <v-select v-model="usuario" label="name" :options="usuarios"></v-select>
+                                    <label for="name">Usuario</label>
+                                    <v-select v-model="usuario" label="name" :options="usuarios"></v-select>
                                 </div>
+                            </div>
+                            <div v-if="newRegistro.tipo == 'USUARIO' || newRegistro.tipo == 'PROCEDIMIENTO'">
                                 <div class="form-group">
-                                <label for="name">Método de Ensayo</label>
-                                <v-select v-model="metodo_ensayo" label="metodo" :options="metodo_ensayos"></v-select>
+                                    <label for="name">Método de Ensayo</label>
+                                    <v-select v-model="metodo_ensayo" label="metodo" :options="metodo_ensayos"></v-select>
                                 </div>
+                            </div>    
+                            <div v-if="newRegistro.tipo == 'USUARIO'">
                                 <div class="form-group">
-                                <label for="fecha">Fecha</label>
+                                    <label for="fecha">Fecha</label>
                                     <div class="input-group date">
                                         <div class="input-group-addon">
                                         <i class="fa fa-calendar"></i>

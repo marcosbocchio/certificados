@@ -3279,6 +3279,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -41086,8 +41090,13 @@ var render = function() {
                           })
                         ],
                         1
-                      ),
-                      _vm._v(" "),
+                      )
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.newRegistro.tipo == "USUARIO" ||
+                _vm.newRegistro.tipo == "PROCEDIMIENTO"
+                  ? _c("div", [
                       _c(
                         "div",
                         { staticClass: "form-group" },
@@ -41111,8 +41120,12 @@ var render = function() {
                           })
                         ],
                         1
-                      ),
-                      _vm._v(" "),
+                      )
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.newRegistro.tipo == "USUARIO"
+                  ? _c("div", [
                       _c("div", { staticClass: "form-group" }, [
                         _c("label", { attrs: { for: "fecha" } }, [
                           _vm._v("Fecha")
