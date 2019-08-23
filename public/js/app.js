@@ -4114,7 +4114,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       posiciones: [],
       defectosRiPlanta: [],
       defectosRiGasoducto: [],
-      inputsJuntasDefectosPlanta: []
+      inputsJuntasDefectosPlanta: [],
+      junta_posicion_selected: ''
     };
   },
   created: function created() {
@@ -5926,7 +5927,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.form-control[disabled][data-v-13a6ae76], .form-control[readonly][data-v-13a6ae76], fieldset[disabled] .form-control[data-v-13a6ae76] {\r\n     background-color: #eee;\n}\n.checkbox-inline[data-v-13a6ae76] {\r\n    margin-left: 0px;\n}\n.col-md-1-5[data-v-13a6ae76] {\r\n\r\n    width: 12.499999995%\n}\r\n", ""]);
+exports.push([module.i, "\n.form-control[disabled][data-v-13a6ae76], .form-control[readonly][data-v-13a6ae76], fieldset[disabled] .form-control[data-v-13a6ae76] {\r\n     background-color: #eee;\n}\n.checkbox-inline[data-v-13a6ae76] {\r\n    margin-left: 0px;\n}\n.col-md-1-5[data-v-13a6ae76] {\r\n\r\n    width: 12.499999995%\n}\ntable .selected[data-v-13a6ae76]{\r\n\r\n  background-color: rgb(220, 198, 241)!important;\n} \r\n", ""]);
 
 // exports
 
@@ -42784,6 +42785,7 @@ var render = function() {
                             "tr",
                             {
                               key: k,
+                              class: { selected: _vm.indexPosPlanta === k },
                               on: {
                                 click: function($event) {
                                   return _vm.selectPosPlanta(k)

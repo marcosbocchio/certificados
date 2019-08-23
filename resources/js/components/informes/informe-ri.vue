@@ -391,7 +391,7 @@
                                     </tr>
                                 </thead>                         
                                 <tbody>
-                                    <tr v-for="(inputsJuntaDefectosPlanta,k) in (inputsJuntasDefectosPlanta)" :key="k" @click="selectPosPlanta(k)">
+                                    <tr v-for="(inputsJuntaDefectosPlanta,k) in (inputsJuntasDefectosPlanta)" :key="k" @click="selectPosPlanta(k)" :class="{selected: indexPosPlanta === k}">
                                         <td>{{ inputsJuntaDefectosPlanta.pk }}</td>
                                         <td>{{ inputsJuntaDefectosPlanta.tipo_soldadura.codigo }}</td>
                                         <td>{{ inputsJuntaDefectosPlanta.pasada }}</td>
@@ -683,7 +683,8 @@ export default {
              defectosRiPlanta:[],
              defectosRiGasoducto:[],
              inputsJuntasDefectosPlanta:[],           
-           
+             
+             junta_posicion_selected : '',
              
 
 
@@ -800,7 +801,7 @@ export default {
 
             }
 
-        },
+        },       
 
         getNumeroInforme:function(){            
            
@@ -1040,6 +1041,7 @@ export default {
         selectPosPlanta :function(index){
 
             this.indexPosPlanta = index ;
+           
         },
 
         addJuntaDefectosPlanta (posicion) { 
@@ -1281,4 +1283,10 @@ export default {
     width: 12.499999995%
    
 }
+
+table .selected{
+
+  background-color: rgb(220, 198, 241)!important;
+
+} 
 </style>
