@@ -2350,6 +2350,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     registros: {
@@ -3336,7 +3340,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this = this;
 
       axios.defaults.baseURL = this.url;
-      var urlRegistros = this.modelo;
+      var urlRegistros = this.modelo; //  console.log(urlRegistros);
+
       axios.get(urlRegistros).then(function (response) {
         _this.registros = response.data;
       });
@@ -39554,6 +39559,10 @@ var render = function() {
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(registro.descripcion))]),
                 _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(registro.metodo))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(registro.name))]),
+                _vm._v(" "),
                 _c("td", { attrs: { width: "10px" } }, [
                   _c(
                     "a",
@@ -39612,6 +39621,10 @@ var staticRenderFns = [
         _c("th", [_vm._v("Título")]),
         _vm._v(" "),
         _c("th", [_vm._v("Descripción")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Metodo")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Usuario")]),
         _vm._v(" "),
         _c("th", { attrs: { colspan: "2" } }, [_vm._v("Acción")])
       ])

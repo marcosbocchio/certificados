@@ -27,14 +27,14 @@ class DocumentacionesRepository extends BaseRepository
       $documento->tipo = $request->tipo;
       $documento->titulo = $request->titulo;
       $documento->descripcion = $request->descripcion;
+      $documento->metodo_ensayo_id = $request->metodo_ensayo_id;
       $documento->path = $request->path;
       $documento->save();
 
       $usuarioDocumento = new UsuarioDocumentaciones;
 
       $usuarioDocumento->documentacion_id = $documento->id;
-      $usuarioDocumento->user_id = $request->usuario_id;
-      $usuarioDocumento->metodo_ensayo_id = $request->metodo_ensayo_id;
+      $usuarioDocumento->user_id = $request->usuario_id;      
       $usuarioDocumento->fecha_caducidad = $fecha_caducidad;
       $usuarioDocumento->save();
     }

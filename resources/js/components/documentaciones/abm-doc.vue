@@ -155,6 +155,7 @@ export default {
 
         axios.defaults.baseURL = this.url ;
         var urlRegistros = this.modelo;   
+      //  console.log(urlRegistros);
         axios.get(urlRegistros).then(response =>{
         this.registros = response.data
         });

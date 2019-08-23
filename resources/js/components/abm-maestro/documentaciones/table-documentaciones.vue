@@ -8,6 +8,8 @@
             <th>Tipo</th>
             <th>Título</th>
             <th>Descripción</th>
+            <th>Metodo</th>
+            <th>Usuario</th>
             <th colspan="2">Acción</th>
           </tr>
         </thead>
@@ -25,6 +27,8 @@
            
             <td>{{ registro.titulo}}</td>
             <td>{{ registro.descripcion }}</td>
+            <td>{{ registro.metodo}}</td>
+             <td>{{ registro.name}}</td>
             <td width="10px">
               <a href="#" class="btn btn-warning btn-sm" title="Editar" v-on:click.prevent="$emit('editRegistroEvent',registro)"><span class="fa fa-edit"></span></a>  
             </td>

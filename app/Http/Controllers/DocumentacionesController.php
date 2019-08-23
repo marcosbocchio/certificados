@@ -34,18 +34,22 @@ class DocumentacionesController extends Controller
     public function index()
     {
         $documentaciones = DB::select('select   
-                                documentaciones.id as id,
-                                documentaciones.tipo as tipo,
-                                documentaciones.titulo as titulo,
-                                documentaciones.descripcion as descripcion,
-                                documentaciones.path as path,
-                                usuario_documentaciones.user_id as user_id,
-                                usuario_documentaciones.metodo_ensayo_id as metodo_ensayo_id,
-                                usuario_documentaciones.fecha_caducidad as fecha_caducidad
-                                
-                                from
-                                documentaciones left join usuario_documentaciones on
-                                usuario_documentaciones.documentacion_id = documentaciones.id
+                                        documentaciones.id as id,
+                                        documentaciones.tipo as tipo,
+                                        documentaciones.titulo as titulo,
+                                        documentaciones.descripcion as descripcion,
+                                        documentaciones.path as path,
+                                        metodo_ensayos.metodo,
+                                        usuario_documentaciones.user_id as user_id,
+                                        documentaciones.metodo_ensayo_id as metodo_ensayo_id,
+                                        usuario_documentaciones.fecha_caducidad as fecha_caducidad,
+                                        users.name
+                                        
+                                        from
+                                        documentaciones left join usuario_documentaciones on                                
+                                        usuario_documentaciones.documentacion_id = documentaciones.id
+                                        left join users on users.id = usuario_documentaciones.user_id
+                                        left join metodo_ensayos on metodo_ensayos.id = documentaciones.metodo_ensayo_id
                               ');
 
         $documentaciones = Collection::make($documentaciones);
@@ -100,7 +104,7 @@ class DocumentacionesController extends Controller
                                     documentaciones.descripcion as descripcion,
                                     documentaciones.path as path,
                                     usuario_documentaciones.user_id as user_id,
-                                    usuario_documentaciones.metodo_ensayo_id as metodo_ensayo_id,
+                                    documentaciones.metodo_ensayo_id as metodo_ensayo_id,
                                     usuario_documentaciones.fecha_caducidad as fecha_caducidad
                                     
                                     from
@@ -145,7 +149,7 @@ class DocumentacionesController extends Controller
                         documentaciones.titulo as titulo,
                         documentaciones.path,
                         usuario_documentaciones.user_id,
-                        usuario_documentaciones.metodo_ensayo_id,
+                        documentaciones.metodo_ensayo_id,
                         usuario_documentaciones.fecha_caducidad,
                         users.name 
                         
@@ -157,7 +161,7 @@ class DocumentacionesController extends Controller
                         inner join ot_operarios on
                         ot_operarios.user_id = users.id 
                         where 
-                        (usuario_documentaciones.metodo_ensayo_id is null or usuario_documentaciones.metodo_ensayo_id in (Select servicios.metodo_ensayo_id from servicios
+                        (documentaciones.metodo_ensayo_id is null or documentaciones.metodo_ensayo_id in (Select servicios.metodo_ensayo_id from servicios
                         inner join ot_servicios on 
                         ot_servicios.servicio_id = servicios.id                          
                         where
