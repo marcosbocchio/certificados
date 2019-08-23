@@ -2941,6 +2941,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -40527,7 +40535,23 @@ var render = function() {
                     _c("td", [_vm._v(" " + _vm._s(ot_informe.metodo))]),
                     _vm._v(" "),
                     _c("td", [
-                      _vm._v(" " + _vm._s(ot_informe.numero_formateado))
+                      ot_informe.prefijo != null
+                        ? _c("div", [
+                            _vm._v(
+                              "\n                                         " +
+                                _vm._s(ot_informe.prefijo) +
+                                "-" +
+                                _vm._s(ot_informe.numero_formateado) +
+                                "\n                                    "
+                            )
+                          ])
+                        : _c("div", [
+                            _vm._v(
+                              "\n                                         " +
+                                _vm._s(ot_informe.numero_formateado) +
+                                "       \n                                    "
+                            )
+                          ])
                     ]),
                     _vm._v(" "),
                     _c("td", [_vm._v(" " + _vm._s(ot_informe.name))]),

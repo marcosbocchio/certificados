@@ -23,7 +23,7 @@ class InformesController extends Controller
                     ->join('users','users.id','=','informes.user_id')
                     ->join('metodo_ensayos','metodo_ensayos.id','=','informes.metodo_ensayo_id')
                     ->where('informes.ot_id',$id)
-                    ->selectRaw('informes.numero,DATE_FORMAT(informes.created_at,"%d/%m/%Y")as fecha,informes.id,metodo_ensayos.metodo as metodo,users.name,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado')                 
+                    ->selectRaw('informes.numero,DATE_FORMAT(informes.created_at,"%d/%m/%Y")as fecha,informes.id,metodo_ensayos.metodo as metodo,users.name,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado,informes.prefijo as prefijo')                 
                     ->get();
 
         $ot_metodos_ensayos = DB::table('ots')
