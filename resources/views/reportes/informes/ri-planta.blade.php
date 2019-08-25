@@ -117,7 +117,7 @@ b {
                             <td style="font-size: 12px; width: 219px;border-right: 1px solid #000;"><b>Componente: </b>{{$informe->componente}}</td>
                             <td style="font-size: 12px; " colspan="2" ><b>Equipo: </b>{{$equipo->codigo}}</td>
                             <td style="font-size: 12px;" ><b>Kv: </b>{{$informe->kv}}</td>
-                            <td style="font-size: 12px; border-right: 1px solid #000;" ><b>mA: </b>{{$informe->ma}}</td>
+                            <td style="font-size: 12px; width: 50px; border-right: 1px solid #000;" ><b>mA: </b>{{$informe->ma}}</td>
                             <td style="font-size: 11px;  " colspan="2"  ><b style="font-size: 12px;">Norma Evaluación: </b>{{$norma_evaluacion->descripcion}}</td>                            
                         </tr>
                         <tr>                
@@ -258,7 +258,7 @@ b {
                                  <td style="font-size: 11px; " colspan="3" class="bordered-td"><b>RZ: </b>Rechazado</td>
                             </tr>
                             <tr>                                
-                                <td style="font-size: 12px;" colspan="6" class="bordered-td"><b>Observaciones: </b>{{$informe->Observaciones}}</td>                                  
+                                <td style="font-size: 12px;" colspan="6" class="bordered-td"><b>Observaciones: </b>{{$informe->observaciones}}</td>                                  
                             </tr>                         
                         </tbody>
                     </table>

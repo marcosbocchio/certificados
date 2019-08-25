@@ -53,7 +53,8 @@ class PdfInformesRiController extends Controller
         $ejecutor_ensayo = User::findOrFail($ot_operador->user_id);
         $tecnicas_grafico = TecnicasGraficos::findOrFail($informe_ri->tecnicas_grafico_id);
         
-      //  dd($informe_ri);
+      //  dd($informe);
+      //   dd($informe->observaciones);
 
         if ($informe_ri->gasoducto_sn){
 

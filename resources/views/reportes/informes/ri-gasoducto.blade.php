@@ -286,7 +286,7 @@ b {
                                  <td style="font-size: 11px; " colspan="3" class="bordered-td"><b>RZ: </b>Rechazado</td>
                             </tr>
                             <tr>                                
-                                <td style="font-size: 12px;" colspan="6" class="bordered-td"><b>Observaciones: </b>{{$informe->Observaciones}}</td>                                  
+                                <td style="font-size: 12px;" colspan="6" class="bordered-td"><b>Observaciones: </b>{{$informe->observaciones}}</td>                                  
                             </tr>                         
                         </tbody>
                     </table>

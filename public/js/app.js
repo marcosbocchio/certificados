@@ -3950,6 +3950,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -4196,7 +4204,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.exposicion = this.informe_ridata.exposicion;
         this.distancia_fuente_pelicula = this.informe_ridata.distancia_fuente_pelicula;
         this.ejecutor_ensayo = this.ejecutor_ensayodata;
-        this.inputsJuntasDefectosPlanta = this.detalledata;
+        this.inputsJuntasDefectosPlanta = this.detalledata, this.observaciones = this.informedata.observaciones;
       }
     },
     getNumeroInforme: function getNumeroInforme() {
@@ -43123,6 +43131,36 @@ var render = function() {
                     )
                   ])
                 ])
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "box box-danger" }, [
+            _c("div", { staticClass: "box-body" }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", [_vm._v("Observaciones")]),
+                _vm._v(" "),
+                _c("textarea", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.observaciones,
+                      expression: "observaciones"
+                    }
+                  ],
+                  staticClass: "form-control noresize",
+                  attrs: { rows: "3", placeholder: "", maxlength: "250" },
+                  domProps: { value: _vm.observaciones },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.observaciones = $event.target.value
+                    }
+                  }
+                })
               ])
             ])
           ]),

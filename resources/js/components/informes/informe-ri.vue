@@ -476,6 +476,14 @@
                        </div>
                       </div>
                     </div>                    
+                    <div class="box box-danger">
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label>Observaciones</label>
+                                <textarea v-model="observaciones" class="form-control noresize" rows="3" placeholder="" maxlength="250"></textarea>
+                            </div>
+                        </div>
+                    </div>                 
                
                   <button class="btn btn-primary" type="submit">Guardar</button>   
            </form>    
@@ -796,7 +804,8 @@ export default {
                this.exposicion = this.informe_ridata.exposicion;
                this.distancia_fuente_pelicula = this.informe_ridata.distancia_fuente_pelicula;
                this.ejecutor_ensayo = this.ejecutor_ensayodata;          
-               this.inputsJuntasDefectosPlanta = this.detalledata        
+               this.inputsJuntasDefectosPlanta = this.detalledata,  
+               this.observaciones = this.informedata.observaciones 
 
 
             }
