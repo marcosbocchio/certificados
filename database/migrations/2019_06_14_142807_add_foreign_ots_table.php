@@ -64,6 +64,14 @@ class AddForeignOtsTable extends Migration
             $table->foreign('user_id')
                    ->references('id')
                    ->on('users');
+
+            $table->bigInteger('responsable_ot_id')
+                     ->unsigned()
+                     ->after('user_id');              
+                   
+            $table->foreign('responsable_ot_id')
+                   ->references('id')
+                   ->on('users');  
               
 
         });

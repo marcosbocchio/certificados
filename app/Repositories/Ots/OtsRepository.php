@@ -42,16 +42,26 @@ class OtsRepository extends BaseRepository
     $tipo_peliculas = $request->tipo_peliculas;
     $epps      = $request->epps;
     $riesgos   = $request->riesgos;
-  
-    
-    $this->setOt($request, $ot);    
-    $this->setServicios($servicios,$ot);
-    $this->setTipoPeliculas($tipo_peliculas,$ot);
-    $this->setProductos($productos,$ot);
-    $this->setEpps($epps,$ot);
-    $this->setRiesgos($riesgos,$ot);
 
+
+    DB::beginTransaction();
+    try {  
+    
+        $this->setOt($request, $ot);    
+        $this->setServicios($servicios,$ot);
+        $this->setTipoPeliculas($tipo_peliculas,$ot);
+        $this->setProductos($productos,$ot);
+        $this->setEpps($epps,$ot);
+        $this->setRiesgos($riesgos,$ot);
+
+      DB::commit();
+
+    } catch (Exception $e) {
+
+      DB::rollback();
+      throw $e;      
       
+    }
 
 
   }
@@ -68,25 +78,35 @@ class OtsRepository extends BaseRepository
 
          
 
-        $this->setOt($request, $ot);   
+        DB::beginTransaction();
+          try {  
 
-        OtCalidadPlacas::where('ot_id',$ot->id)->delete();
-        $this->SetTipoPeliculas($tipo_peliculas,$ot);          
+                $this->setOt($request, $ot);   
 
-        OtServicios::where('ot_id',$ot->id)->delete();
-        $this->setServicios($servicios,$ot);
+                OtCalidadPlacas::where('ot_id',$ot->id)->delete();
+                $this->SetTipoPeliculas($tipo_peliculas,$ot);          
 
-        
-        OtProductos::where('ot_id',$ot->id)->delete();
-        $this->setProductos($productos,$ot);
-        
-        OtEpps::where('ot_id',$ot->id)->delete();
-        $this->setEpps($epps,$ot);
-        
-        OtRiesgos::where('ot_id',$ot->id)->delete();
-        $this->setRiesgos($riesgos,$ot);
+                OtServicios::where('ot_id',$ot->id)->delete();
+                $this->setServicios($servicios,$ot);
 
+                
+                OtProductos::where('ot_id',$ot->id)->delete();
+                $this->setProductos($productos,$ot);
+                
+                OtEpps::where('ot_id',$ot->id)->delete();
+                $this->setEpps($epps,$ot);
+                
+                OtRiesgos::where('ot_id',$ot->id)->delete();
+                $this->setRiesgos($riesgos,$ot);
+
+                DB::commit();
+
+      } catch (Exception $e) {
+  
+        DB::rollback();
+        throw $e;      
         
+      }
 
   }
 
@@ -116,6 +136,7 @@ class OtsRepository extends BaseRepository
     $ot->contacto1_id     = $request->contacto1;
     $ot->contacto2_id     = $request->contacto2;
     $ot->contacto3_id     = $request->contacto3;
+    $ot->responsable_ot_id = $request->user_empresa;
     $ot->observaciones    = $request->observaciones;
     $ot->fecha_estimada_ensayo = $fecha_estimada_ensayo;
     $ot->user_id          = $user_id;

@@ -230,8 +230,12 @@ td b,td span {
               <table>
                 <tbody>
                   <tr style="padding: 15px 0px 15px 0px">
-                      <td style="font-size: 13px; width: 500px; padding: 20px 0px 20px 0px"><b>Responsable OT: </b>Pablo Martín Bocchio</td>      
+                      <td style="font-size: 13px; width: 500px; padding: 20px 0px 20px 0px"><b>Responsable OT: </b>{{$responsable_ot->name }}</td>      
                       <td style="font-size: 13px; width: 200px; padding: 20px 0px 20px 0px"><b>Firma: </b></td>        
+                  </tr>
+                   <tr style="padding: 5px 0px 15px 0px">
+                      <td style="font-size: 13px; width: 500px; padding: 20px 0px 20px 0px"><b>Generador OT: </b>{{$generador_ot->name }}</td>     
+                            
                   </tr>
                   
                 </tbody>

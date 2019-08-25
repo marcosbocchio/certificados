@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
 use App\Ots;
 use App\Clientes;
 use App\Http\Controllers\OtServiciosController;
@@ -26,7 +27,8 @@ class PdfOtController extends Controller
 
         
 
-      //   dd($contacto3);
+        $responsable_ot = User :: find($ot->responsable_ot_id);
+        $generador_ot = User:: find($ot->user_id);
         $cliente = Clientes::find($ot->cliente_id);   
         $localidad = Localidades::find($ot->localidad_id);
         $provincia = Provincias::find($localidad->provincia_id); 
@@ -40,18 +42,7 @@ class PdfOtController extends Controller
         $ot_productos = (new OtProductosController)->show($ot->id);
         $ot_epps = (new OtEppsController)->show($ot->id);
         $ot_riesgos = (new OtRiesgosController)->show($ot->id);
-        $ot_calidad_placas = (new OtCalidadPlacasController)->show($ot->id);
-
-       // dd($metodos_ensayo);
-       // dd($ot); 
-       // dd($contacto2);
-       // dd($cliente);
-       // dd($ot_servicios);
-       // dd($ot_productos);
-       // dd($ot_epps);
-       // dd($ot_riesgos);
-       // dd($geo);
-       // dd($ot_calidad_placas);
+        $ot_calidad_placas = (new OtCalidadPlacasController)->show($ot->id);      
 
         $pdf = \PDF::loadView('reportes.ots.ot',compact('ot',
                                                         'cliente',
@@ -63,6 +54,8 @@ class PdfOtController extends Controller
                                                         'contacto1',
                                                         'contacto2',
                                                         'contacto3',
+                                                        'responsable_ot',
+                                                        'generador_ot',
                                                          'localidad',
                                                          'provincia',
                                                          'metodos_ensayos',

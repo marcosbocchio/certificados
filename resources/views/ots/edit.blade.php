@@ -23,6 +23,7 @@
       :otcontacto1data="{{$ot_contacto1}}"
       :otcontacto2data="{{$ot_contacto2}}"
       :otcontacto3data="{{$ot_contacto3}}"
+      :users_empresadata ="{{$responsable_ot}}"
       :ot_eppsdata="{{$ot_epps}}"
       :ot_riesgosdata="{{$ot_riesgos}}"
       :ot_provinciasdata="{{$ot_provincia}}"

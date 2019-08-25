@@ -92,6 +92,12 @@
               <v-select v-model="contacto3" name="contacto_3" label="nombre" :options="contactos"></v-select>   
           </div>
         </div>
+        <div class="col-md-6">
+          <div class="form-group">
+              <label>Responsable OT</label>
+              <v-select v-model="user_empresa" name="respontable_ot" label="name" :options="users_empresa"></v-select>   
+          </div>
+        </div>
       </div>
     </div>
     <div class="box box-danger">
@@ -458,6 +464,11 @@ export default {
        type : Object,
        required : false
      },
+
+     users_empresadata : {
+       type : Object,
+       required : false
+     },
      otcontacto2data : {
        type : [ Object, Array ],
        required : false,
@@ -523,6 +534,7 @@ export default {
           contacto1:[] ,
           contacto2:[] ,
           contacto3:[] ,
+          users_empresa:[],
           observaciones:'',
           localidades:[],
           localidad: {
@@ -539,6 +551,7 @@ export default {
           servicio:'',        
           norma_ensayo :'',
           norma_evaluacion :'',
+          user_empresa:'',
           inputsServicios: [],
 
           peliculas_selected:[],
@@ -579,7 +592,7 @@ export default {
     created : function(){
         
         this.getClientes();
-        console.log(process.env.MIX_API_URL_DEV);
+        this.getUsersEmpresa();     
         this.getProvincias();
         this.getServicios();
         this.getTipoPeliculas();
@@ -665,6 +678,7 @@ export default {
                 this.observaciones   = this.otdata.observaciones;
                 this.fecha_ensayo    = this.otdata.fecha_estimada_ensayo;               
                 this.contacto1       = this.otcontacto1data;
+                this.user_empresa    = this.users_empresadata;
                 if(this.otcontacto2data != null)
                      this.contacto2       = this.otcontacto2data;
                 if(this.otcontacto3data != null)
@@ -701,6 +715,16 @@ export default {
                 var urlRegistros = 'contactos/' + this.cliente.id + '?api_token=' + Laravel.user.api_token;    
                 axios.get(urlRegistros).then(response =>{
                 this.contactos = response.data
+                });
+              },
+
+      getUsersEmpresa : function(){
+              
+                axios.defaults.baseURL = this.url ;                
+                var urlRegistros = 'users/empresa' + '?api_token=' + Laravel.user.api_token;  
+                console.log(axios.defaults.baseURL + '/' + urlRegistros);           
+                axios.get(urlRegistros).then(response =>{
+                this.users_empresa = response.data             
                 });
               },
       getMedidasProducto : function(){
@@ -962,6 +986,7 @@ export default {
               'contacto1'     : this.contacto1.id,
               'contacto2'     : this.contacto2.id,
               'contacto3'     : this.contacto3.id,
+              'user_empresa'  : this.user_empresa.id,
               'provincia'     : this.provincia.id,
               'localidad'     : this.localidad.id,
               'fecha_ensayo'  : this.fecha_ensayo,
@@ -985,13 +1010,18 @@ export default {
                
                this.errors = error.response.data.errors;
                 console.log(error.response);
-                console.log('hola'); 
                $.each( this.errors, function( key, value ) {
                    toastr.error(value);
                    console.log( key + ": " + value );
                });
 
-           });
+               if((typeof(this.errors)=='undefined') && (error)){
+
+                     toastr.error("Ocurrió un error al procesar la solicitud");                     
+                  
+                }
+
+           });  
       }
       else if (this.accion =='edit')
       { 
@@ -1015,6 +1045,7 @@ export default {
               'contacto1'     : (this.contacto1 ? this.contacto1.id : null ),
               'contacto2'     : (this.contacto2 ? this.contacto2.id : null ),
               'contacto3'     : (this.contacto3 ? this.contacto3.id : null ),
+              'user_empresa'  : (this.user_empresa ? this.user_empresa.id : null),
               'provincia'     : (this.provincia ? this.provincia.id : null),
               'localidad'     : (this.localidad ? this.localidad.id : null),
               'fecha_ensayo'  : this.fecha_ensayo,
@@ -1032,15 +1063,22 @@ export default {
           ).then(response => {
           this.response = response
          toastr.success('OT N° ' + this.ot + ' fue editada con éxito ');
-        }).catch(error => {         
-           this.errors = error.response.data.errors;
+        }).catch(error => {
                
+               this.errors = error.response.data.errors;
+                console.log(error.response);
                $.each( this.errors, function( key, value ) {
                    toastr.error(value);
                    console.log( key + ": " + value );
                });
 
-           });
+               if((typeof(this.errors)=='undefined') && (error)){
+
+                     toastr.error("Ocurrió un error al procesar la solicitud");                     
+                  
+                }
+
+           }); 
 
           
       }

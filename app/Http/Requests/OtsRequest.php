@@ -35,6 +35,7 @@ class OtsRequest extends FormRequest
             'hora'                     => 'required',
             'obra'                     => 'integer|nullable',
             'contacto1'                => 'required', 
+            'user_empresa'             => 'required',
             'provincia'                => 'required',
             'localidad'                => 'required',
             'fecha_ensayo'             => 'required',
@@ -63,7 +64,8 @@ class OtsRequest extends FormRequest
         'servicios.*.cantidad_servicios'      => 'cant.',  
         'servicios.*.cantidad_placas'         => 'Max N° Placas', 
         'productos.*.medida'                  => 'medida',   
-        'productos.*.cantidad_productos'      => 'cant.'  
+        'productos.*.cantidad_productos'      => 'cant.',
+        'user_empresa'                        => 'Responsable OT'    
 
 
          ];

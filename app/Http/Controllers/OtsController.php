@@ -84,9 +84,9 @@ class OtsController extends Controller
         $accion = 'edit';      
         $user = auth()->user()->name;
         $ot = $this->ot->find($id);
-        $cliente = Clientes::find($ot->cliente_id);        
-     
-      
+        $cliente = Clientes::find($ot->cliente_id);    
+        
+
         $ot_servicios = (new OtServiciosController)->show($ot->id);
         $ot_productos = (new OtProductosController)->show($ot->id);
         $ot_epps = (new OtEppsController)->show($ot->id);
@@ -104,7 +104,8 @@ class OtsController extends Controller
         $ot_contacto3 = Contactos::find($ot->contacto3_id);
         
         $ot_localidad = Localidades::find($ot->localidad_id);
-        $ot_provincia = Provincias::find($ot_localidad->provincia_id);       
+        $ot_provincia = Provincias::find($ot_localidad->provincia_id);
+        $responsable_ot = User::find($ot->responsable_ot_id);       
      
         
         if ($ot_contacto2 == null)
@@ -124,6 +125,7 @@ class OtsController extends Controller
                                         'ot_contacto1',
                                         'ot_contacto2',
                                         'ot_contacto3',
+                                        'responsable_ot',
                                         'ot_provincia',
                                         'ot_localidad',
                                         'header_titulo',

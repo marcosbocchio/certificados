@@ -24,6 +24,7 @@ Route::middleware('auth:api')->get('/clientes','ClientesController@index');
 Route::group(['middleware' => 'auth:api'], function()
 {
     Route::resource('clientes', 'ClientesController'); 
+    Route::get('users/empresa', 'UserController@getUsersEmpresa');    
     Route::resource('users', 'UserController');    
     Route::resource('materiales', 'MaterialesController');
     Route::resource('provincias', 'ProvinciasController');

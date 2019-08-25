@@ -74,28 +74,28 @@
                             </div>      
                         </div>                      
                         
-                        <div class="col-md-1" style="width: 12.499999995%">
+                        <div class="col-md-1 size-1-5">
                             <div class="form-group" >
                                 <label for="plano_isom">Plano / Isom</label>
                                 <input type="text" v-model="plano_isom" class="form-control" id="plano_isom">
                             </div>                            
                         </div>
 
-                        <div class="col-md-3" style="width: 12.499999995%">
+                        <div class="col-md-3 size-1-5">
                             <div class="form-group" >
                                 <label for="Diametro">Diametro</label>
                                 <v-select v-model="diametro" label="diametro" :options="diametros" @input="getEspesores()"></v-select>   
                             </div>                            
                         </div>                       
                         
-                        <div class="col-md-1" style="width: 12.499999995%">
+                        <div class="col-md-1 size-1-5">
                             <div class="form-group" >
                                 <label>Espesor</label>
                                 <v-select v-model="espesor" label="espesor" :options="espesores" :disabled="isChapa"></v-select>   
                             </div>                            
                         </div>
                       
-                        <div class="col-md-1" style="width: 12.499999995%">    
+                        <div class="col-md-1 size-1-5">    
                              <div class="form-group" >                         
                                 <label for="espesor_chapa">Espesor Chapa</label>
                                 <input  type="text" class="form-control" v-model="espesor_chapa"  id="espesor_chapa" :disabled="!isChapa" > 
@@ -165,14 +165,14 @@
                             </div>                            
                         </div>
 
-                        <div class="col-md-1" style="width: 12.499999995%">
+                        <div class="col-md-1 size-1-5">
                             <div class="form-group" >
                                 <label for="foco">Foco</label>
                                 <input type="text" v-model="foco" class="form-control" id="foco">
                             </div>                            
                         </div>
 
-                        <div class="col-md-1" style="width: 12.499999995%">
+                        <div class="col-md-1 size-1-5">
                             <div class="form-group">
                                 <label>Calidad de placas</label>
                                     <v-select  v-model="tipo_pelicula" :options="tipo_peliculas" label="codigo">
@@ -436,7 +436,7 @@
                         </div> 
                         <div class="col-md-2">                       
                             <div class="form-group" >                            
-                                <label for="posicionPlaca">Posición Placa</label>
+                                <label for="posicionPlaca">Posición Defecto</label>
                                 <input type="text" v-model="posicionPlacaGosaducto" class="form-control" id="posicionPlacaGosaducto" :disabled="!isGasoducto">                           
                             </div>     
                         </div>    
@@ -1256,13 +1256,18 @@ export default {
                
                this.errors = error.response.data.errors;
                 console.log(error.response);
-                console.log('hola'); 
                $.each( this.errors, function( key, value ) {
                    toastr.error(value);
                    console.log( key + ": " + value );
                });
 
-           });
+               if((typeof(this.errors)=='undefined') && (error)){
+
+                     toastr.error("Ocurrió un error al procesar la solicitud");                     
+                  
+                }
+
+           }); 
 
         }
 
@@ -1289,4 +1294,12 @@ table .selected{
   background-color: rgb(220, 198, 241)!important;
 
 } 
+
+@media (min-width: 768px)  { 
+    
+.size-1-5 {
+
+    width: 12.499999995%;
+}
+}
 </style>

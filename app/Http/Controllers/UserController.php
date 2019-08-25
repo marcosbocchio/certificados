@@ -50,4 +50,10 @@ class UserController extends Controller
       $user = $this->users->find($id);    
       $user->delete();
     }
+
+    public function getUsersEmpresa(){
+
+      return User::where('cliente_id',null)->get();
+
+  }
 }
