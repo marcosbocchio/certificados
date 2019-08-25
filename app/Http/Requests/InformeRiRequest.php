@@ -37,13 +37,14 @@ class InformeRiRequest extends FormRequest
             'procedimiento'             => 'required',
             'pos_ant'                   => 'required|numeric|between:0,999.99',
             'pos_pos'                   => 'required|numeric|between:0,999.99',
-            'lado'                      => 'required|Max:7',
+            'lado'                      => 'required|Max:6',
             'ici'                       => 'required',
             'norma_evaluacion'          => 'required',
             'norma_ensayo'              => 'required',
             'actividad'                 => 'Max:10',
             'exposicion'                => 'required|integer|digits_between:1,6',
             'ejecutor_ensayo'           => 'required',
+            'observaciones'             =>'max:190'
             
         ];
 
