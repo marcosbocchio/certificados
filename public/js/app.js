@@ -5371,7 +5371,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var urlRegistros = 'epps' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         _this10.epps = response.data;
+
+        _this10.cargarEppDefaults();
       });
+    },
+    cargarEppDefaults: function cargarEppDefaults() {
+      console.log('cargarEppDefaults');
+
+      if (this.acciondata == 'create') {
+        this.epps.forEach(function (eppDefault) {
+          if (eppDefault["default"] == '1') {
+            this.inputsEpps.push({
+              'id': eppDefault.id,
+              'descripcion': eppDefault.descripcion
+            });
+          }
+        }.bind(this));
+      }
     },
     getRiesgos: function getRiesgos() {
       var _this11 = this;
@@ -5426,8 +5442,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     getMetodo: function getMetodo($id) {
       this.metodo_ensayos.forEach(function (metodo) {
-        console.log(metodo.id + ' ' + $id + ' ' + metodo.metodo);
-
         if (metodo.id == $id) {
           this.var_metodo = metodo.metodo;
         }

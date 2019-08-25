@@ -17,6 +17,7 @@ class CreateEppsTable extends Migration
             $table->bigIncrements('id');
             $table->string('codigo',10);
             $table->string('descripcion',100)->nullable();
+            $table->boolean('default')->default(0);          
             $table->timestamps();
         });
     }

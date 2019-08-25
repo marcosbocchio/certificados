@@ -615,12 +615,15 @@ export default {
 
        $('.timepicker').timepicker({
           showInputs: false
-    })
+        })
+
+
     },
     computed :{
 
         ...mapState(['url'])
      },
+    
 
      watch : {
 
@@ -781,9 +784,31 @@ export default {
                 axios.defaults.baseURL = this.url ;
                 var urlRegistros = 'epps' + '?api_token=' + Laravel.user.api_token;        
                 axios.get(urlRegistros).then(response =>{
-                this.epps = response.data
-                });
+                this.epps = response.data  
+                           
+                this.cargarEppDefaults();
+
+                });               
               },
+        cargarEppDefaults :  function(){
+
+               console.log('cargarEppDefaults'); 
+              
+               if (this.acciondata == 'create'){
+                 
+                 this.epps.forEach(function (eppDefault){
+                   
+                   if(eppDefault.default == '1'){                  
+                       this.inputsEpps.push({                         
+                         'id'           : eppDefault.id,
+                         'descripcion' : eppDefault.descripcion});                      
+                     }                 
+
+
+                   }.bind(this));
+                  }
+
+        },
         getRiesgos : function(){
              
                 axios.defaults.baseURL = this.url ;
@@ -824,15 +849,12 @@ export default {
                 this.localidad.lon = latLng.lng() ;
                 
               },
-      sync () {
-
-             
+      sync () {            
               
                 this.mapCenter.lat = parseFloat(this.localidad.lat);
                 this.mapCenter.lng = parseFloat(this.localidad.lon);
                 this.markers[0].position.lat =parseFloat(this.localidad.lat);
-                this.markers[0].position.lng = parseFloat(this.localidad.lon);
-              
+                this.markers[0].position.lng = parseFloat(this.localidad.lon);              
             
               },
               
@@ -846,8 +868,7 @@ export default {
              },
       getMetodo : function($id){
 
-            this.metodo_ensayos.forEach( function(metodo) {
-                  console.log(metodo.id + ' ' + $id + ' '+ metodo.metodo );                 
+            this.metodo_ensayos.forEach( function(metodo) {               
                 
                  if(metodo.id == $id){
                     this.var_metodo = metodo.metodo;
