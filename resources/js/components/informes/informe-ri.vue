@@ -462,7 +462,7 @@
                                     <thead>
                                         <tr>
                                             <th style="width:90px;">CÓDIGO</th>                                                                                  
-                                            <th style="width:150px;">DESCRIPCIÓN</th>
+                                            <th style="width:250px;">DESCRIPCIÓN</th>
                                             <th style="width:90px;">POSICIÓN</th>                                                                 
                                             <th style="width:30px;" colspan="2">&nbsp;</th>
                                         </tr>

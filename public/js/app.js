@@ -43251,7 +43251,7 @@ var staticRenderFns = [
       _c("tr", [
         _c("th", { staticStyle: { width: "90px" } }, [_vm._v("CÓDIGO")]),
         _vm._v(" "),
-        _c("th", { staticStyle: { width: "150px" } }, [_vm._v("DESCRIPCIÓN")]),
+        _c("th", { staticStyle: { width: "250px" } }, [_vm._v("DESCRIPCIÓN")]),
         _vm._v(" "),
         _c("th", { staticStyle: { width: "90px" } }, [_vm._v("POSICIÓN")]),
         _vm._v(" "),
