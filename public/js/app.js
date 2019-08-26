@@ -3963,6 +3963,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 
 
@@ -42933,7 +42936,7 @@ var render = function() {
                               ]),
                               _vm._v(" "),
                               _c("td", [
-                                !_vm.isGasoducto
+                                !_vm.isGasoducto && _vm.indexPosPlanta == k
                                   ? _c("div", [
                                       _c("input", {
                                         directives: [
@@ -42967,7 +42970,16 @@ var render = function() {
                                         }
                                       })
                                     ])
-                                  : _vm._e()
+                                  : _c("div", [
+                                      _vm._v(
+                                        "\n                                            " +
+                                          _vm._s(
+                                            _vm.inputsJuntasDefectosPlanta[k]
+                                              .observacion
+                                          ) +
+                                          "\n                                         "
+                                      )
+                                    ])
                               ]),
                               _vm._v(" "),
                               _c("td", [

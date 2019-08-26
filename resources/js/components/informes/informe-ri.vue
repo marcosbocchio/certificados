@@ -402,9 +402,12 @@
                                         <td>{{ inputsJuntaDefectosPlanta.posicion }} </td>   
                                         <td> <input type="checkbox" id="checkbox" v-model="inputsJuntasDefectosPlanta[k].aceptable_sn">  </td>                                 
                                         <td>
-                                           <div v-if="!isGasoducto">       
+                                            <div v-if="!isGasoducto && indexPosPlanta == k ">       
                                               <input type="text" v-model="inputsJuntasDefectosPlanta[k].observacion">        
-                                            </div>                                      
+                                            </div>   
+                                            <div v-else>
+                                               {{ inputsJuntasDefectosPlanta[k].observacion }}
+                                            </div>                                   
                                         </td>
 
                                       
