@@ -376,18 +376,18 @@
                             <table class="table table-hover table-striped">
                                 <thead>
                                     <tr>
-                                        <th>Pk</th>
-                                        <th>TIPO SOL.</th>
-                                        <th>N° PASADA</th>
-                                        <th>JUNTA</th>
-                                        <th>CUNIO Z</th>
-                                        <th>CUNIO L</th>
-                                        <th>CUNIO P</th>
-                                        <th>POS</th>  
-                                        <th>ACEPTABLE</th>    
-                                        <th>OBS</th>                                                    
+                                        <th style="width:30px;">Pk</th>
+                                        <th style="width:80px;">TIPO SOL.</th>
+                                        <th style="width:90px;">N° PASADA</th>
+                                        <th style="width:90px;">JUNTA</th>
+                                        <th style="width:120px;">CUNIO Z</th>
+                                        <th style="width:120px;" >CUNIO L</th>
+                                        <th style="width:120px;">CUNIO P</th>
+                                        <th style="width:90px;">POS</th>  
+                                        <th style="width:80px;">ACEPTABLE</th>    
+                                        <th style="width:300px;">OBSERVACIÓN</th>                                                   
                                                                        
-                                        <th colspan="1">&nbsp;</th>
+                                        <th colspan="1" style="width:30px;">&nbsp;</th>
                                     </tr>
                                 </thead>                         
                                 <tbody>
@@ -403,9 +403,9 @@
                                         <td> <input type="checkbox" id="checkbox" v-model="inputsJuntasDefectosPlanta[k].aceptable_sn">  </td>                                 
                                         <td>
                                             <div v-if="!isGasoducto && indexPosPlanta == k ">       
-                                              <input type="text" v-model="inputsJuntasDefectosPlanta[k].observacion">        
+                                              <input type="text" v-model="inputsJuntasDefectosPlanta[k].observacion" maxlength="50" size="60">        
                                             </div>   
-                                            <div v-else>
+                                            <div v-else-if="!isGasoducto">
                                                {{ inputsJuntasDefectosPlanta[k].observacion }}
                                             </div>                                   
                                         </td>
@@ -461,10 +461,10 @@
                                 <table class="table table-hover table-striped">
                                     <thead>
                                         <tr>
-                                            <th>CÓDIGO</th>                                                                                  
-                                            <th>DESCRIPCIÓN</th>
-                                            <th>POSICIÓN</th>                                                                 
-                                            <th colspan="2">&nbsp;</th>
+                                            <th style="width:90px;">CÓDIGO</th>                                                                                  
+                                            <th style="width:150px;">DESCRIPCIÓN</th>
+                                            <th style="width:90px;">POSICIÓN</th>                                                                 
+                                            <th style="width:30px;" colspan="2">&nbsp;</th>
                                         </tr>
                                     </thead>                         
                                     <tbody>

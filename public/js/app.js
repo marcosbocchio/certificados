@@ -42950,7 +42950,11 @@ var render = function() {
                                               "inputsJuntasDefectosPlanta[k].observacion"
                                           }
                                         ],
-                                        attrs: { type: "text" },
+                                        attrs: {
+                                          type: "text",
+                                          maxlength: "50",
+                                          size: "60"
+                                        },
                                         domProps: {
                                           value:
                                             _vm.inputsJuntasDefectosPlanta[k]
@@ -42970,7 +42974,8 @@ var render = function() {
                                         }
                                       })
                                     ])
-                                  : _c("div", [
+                                  : !_vm.isGasoducto
+                                  ? _c("div", [
                                       _vm._v(
                                         "\n                                            " +
                                           _vm._s(
@@ -42980,6 +42985,7 @@ var render = function() {
                                           "\n                                         "
                                       )
                                     ])
+                                  : _vm._e()
                               ]),
                               _vm._v(" "),
                               _c("td", [
@@ -43211,27 +43217,29 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
-        _c("th", [_vm._v("Pk")]),
+        _c("th", { staticStyle: { width: "30px" } }, [_vm._v("Pk")]),
         _vm._v(" "),
-        _c("th", [_vm._v("TIPO SOL.")]),
+        _c("th", { staticStyle: { width: "80px" } }, [_vm._v("TIPO SOL.")]),
         _vm._v(" "),
-        _c("th", [_vm._v("N° PASADA")]),
+        _c("th", { staticStyle: { width: "90px" } }, [_vm._v("N° PASADA")]),
         _vm._v(" "),
-        _c("th", [_vm._v("JUNTA")]),
+        _c("th", { staticStyle: { width: "90px" } }, [_vm._v("JUNTA")]),
         _vm._v(" "),
-        _c("th", [_vm._v("CUNIO Z")]),
+        _c("th", { staticStyle: { width: "120px" } }, [_vm._v("CUNIO Z")]),
         _vm._v(" "),
-        _c("th", [_vm._v("CUNIO L")]),
+        _c("th", { staticStyle: { width: "120px" } }, [_vm._v("CUNIO L")]),
         _vm._v(" "),
-        _c("th", [_vm._v("CUNIO P")]),
+        _c("th", { staticStyle: { width: "120px" } }, [_vm._v("CUNIO P")]),
         _vm._v(" "),
-        _c("th", [_vm._v("POS")]),
+        _c("th", { staticStyle: { width: "90px" } }, [_vm._v("POS")]),
         _vm._v(" "),
-        _c("th", [_vm._v("ACEPTABLE")]),
+        _c("th", { staticStyle: { width: "80px" } }, [_vm._v("ACEPTABLE")]),
         _vm._v(" "),
-        _c("th", [_vm._v("OBS")]),
+        _c("th", { staticStyle: { width: "300px" } }, [_vm._v("OBSERVACIÓN")]),
         _vm._v(" "),
-        _c("th", { attrs: { colspan: "1" } }, [_vm._v(" ")])
+        _c("th", { staticStyle: { width: "30px" }, attrs: { colspan: "1" } }, [
+          _vm._v(" ")
+        ])
       ])
     ])
   },
@@ -43241,13 +43249,15 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
-        _c("th", [_vm._v("CÓDIGO")]),
+        _c("th", { staticStyle: { width: "90px" } }, [_vm._v("CÓDIGO")]),
         _vm._v(" "),
-        _c("th", [_vm._v("DESCRIPCIÓN")]),
+        _c("th", { staticStyle: { width: "150px" } }, [_vm._v("DESCRIPCIÓN")]),
         _vm._v(" "),
-        _c("th", [_vm._v("POSICIÓN")]),
+        _c("th", { staticStyle: { width: "90px" } }, [_vm._v("POSICIÓN")]),
         _vm._v(" "),
-        _c("th", { attrs: { colspan: "2" } }, [_vm._v(" ")])
+        _c("th", { staticStyle: { width: "30px" }, attrs: { colspan: "2" } }, [
+          _vm._v(" ")
+        ])
       ])
     ])
   }
