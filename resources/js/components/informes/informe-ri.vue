@@ -401,7 +401,12 @@
                                         <td>{{ inputsJuntaDefectosPlanta.soldador3.nombre }} </td>      
                                         <td>{{ inputsJuntaDefectosPlanta.posicion }} </td>   
                                         <td> <input type="checkbox" id="checkbox" v-model="inputsJuntasDefectosPlanta[k].aceptable_sn">  </td>                                 
-                                        <td><input type="text" v-model="inputsJuntasDefectosPlanta[k].observacion"></td>
+                                        <td>
+                                           <div v-if="!isGasoducto">       
+                                              <input type="text" v-model="inputsJuntasDefectosPlanta[k].observacion">        
+                                            </div>                                      
+                                        </td>
+
                                       
                                         <td><span class="fa fa-minus-circle" @click="removeJuntaDefectosPlanta(k)"></span></td>          
 

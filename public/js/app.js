@@ -3958,6 +3958,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -42928,37 +42933,41 @@ var render = function() {
                               ]),
                               _vm._v(" "),
                               _c("td", [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value:
-                                        _vm.inputsJuntasDefectosPlanta[k]
-                                          .observacion,
-                                      expression:
-                                        "inputsJuntasDefectosPlanta[k].observacion"
-                                    }
-                                  ],
-                                  attrs: { type: "text" },
-                                  domProps: {
-                                    value:
-                                      _vm.inputsJuntasDefectosPlanta[k]
-                                        .observacion
-                                  },
-                                  on: {
-                                    input: function($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
-                                      _vm.$set(
-                                        _vm.inputsJuntasDefectosPlanta[k],
-                                        "observacion",
-                                        $event.target.value
-                                      )
-                                    }
-                                  }
-                                })
+                                !_vm.isGasoducto
+                                  ? _c("div", [
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value:
+                                              _vm.inputsJuntasDefectosPlanta[k]
+                                                .observacion,
+                                            expression:
+                                              "inputsJuntasDefectosPlanta[k].observacion"
+                                          }
+                                        ],
+                                        attrs: { type: "text" },
+                                        domProps: {
+                                          value:
+                                            _vm.inputsJuntasDefectosPlanta[k]
+                                              .observacion
+                                        },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.inputsJuntasDefectosPlanta[k],
+                                              "observacion",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      })
+                                    ])
+                                  : _vm._e()
                               ]),
                               _vm._v(" "),
                               _c("td", [
