@@ -299,7 +299,7 @@ b {
             @foreach ($juntas_posiciones as $junta_posicion)
                 <tr>
                     <td style="font-size: 11px;  width:71px;text-align: center" class="bordered-td">{{ $junta_posicion->junta }}</td>
-                    <td style="font-size: 11px;  width:70px;text-align: center" class="bordered-td">{{$junta_posicion->soldadorz}} / {{$junta_posicion->soldadorl}} </td>
+                    <td style="font-size: 11px;  width:70px;text-align: center" class="bordered-td">{{$junta_posicion->soldadorz}} / {{$junta_posicion->soldadorp}} </td>
                     <td style="font-size: 11px;  width:73px;text-align: center" class="bordered-td">{{$junta_posicion->posicion}}</td>
                     <td style="font-size: 11px;  width:190px; " class="bordered-td">&nbsp;
                         @foreach ($defectos_posiciones as $key => $defecto_posicion)                                
