@@ -20,7 +20,6 @@ class PdfServiciosReferenciasController extends Controller
         $ot_referencia = OtReferencias::find($id);
         $tabla = 'Servicio';
 
-      
 
        
       

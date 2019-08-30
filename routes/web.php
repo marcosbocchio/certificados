@@ -42,9 +42,13 @@ Route::group(['middleware' => ['auth']], function () {
   Route::get('informes/ot/{id}','InformesController@index')->name('otInformes');
   Route::get('documentaciones/operador/{id}', 'DocumentacionesController@operarios');
   Route::get('/area/enod/ot/{ot_id}/informe/metodo/{metodo}/create','InformesController@create');
-  Route::get('/area/enod/ot/{ot_id}/informe/metodo/ri','InformesRiController@create')->name('InformeRiCreate');;
+  Route::get('/area/enod/ot/{ot_id}/informe/metodo/ri','InformesRiController@create')->name('InformeRiCreate');
+  Route::get('/area/enod/ot/{ot_id}/informe/metodo/pm','InformesPmController@create')->name('InformePmCreate');
   Route::get('/area/enod/ot/{ot_id}/informe/{id}/edit','InformesController@edit');
   Route::get('/area/enod/ot/{ot_id}/informe/{id}/edit/ri','InformesRiController@edit')->name('InformeRiEdit');
+  Route::get('/area/enod/ot/{ot_id}/informe/{id}/edit/pm','InformesPmController@edit')->name('InformePmEdit');
+
+  
 });
 
 Route::group(['middleware' => ['permission:Navegar operador']], function () {

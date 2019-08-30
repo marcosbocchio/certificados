@@ -81,6 +81,8 @@ Vue.component('create-referencias', require('./components/ots/referencias/create
 
   /* Infomres    */
   Vue.component('informe-ri', require('./components/informes/informe-ri.vue').default);
+  Vue.component('informe-pm', require('./components/informes/informe-pm.vue').default);
+  Vue.component('informe-header', require('./components/informes/informe-header.vue').default);
 
 
 

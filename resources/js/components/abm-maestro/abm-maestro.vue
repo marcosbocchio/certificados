@@ -86,9 +86,8 @@
                 this.registro_id = registro_id;
                 eventEditRegistro.$emit('edit');             
                     
-            },
-
-          
+            },     
+                 
             confirmDeleteRegistro: function(registro,dato){            
               this.fillRegistro.id = registro.id;
               this.datoDelete = dato;             

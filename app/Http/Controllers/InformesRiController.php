@@ -52,8 +52,7 @@ class InformesRiController extends Controller
      */
     public function create($ot_id)
     {
-        $metodo = 'RI';
-      //  $editmode = false;      
+        $metodo = 'RI';    
         $user = auth()->user()->name;
         $header_titulo = "Informe";
         $header_descripcion ="Crear";         

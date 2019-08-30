@@ -83,18 +83,18 @@ td b,td span {
                         <tbody>
                             <tr>
                                 <td style="text-align: center; width: 360px;height: 300px">
-                                    <img src="{{ $ot_referencia->path1 }}" alt="" style="height: 174; width: 255;">
+                                    <img src="{{ public_path($ot_referencia->path1) }}" alt="" style="height: 174; width: 255;">
                                 </td>
                                 <td style="text-align: center; width: 360px;height: 300px">
-                                        <img src="{{ $ot_referencia->path2 }}" alt="" style="height: 174; width: 255;">
+                                        <img src="{{  public_path($ot_referencia->path2) }}" alt="" style="height: 174; width: 255;">
                                 </td>
                             </tr>
                             <tr>
                                     <td style="text-align: center; width: 360px;height: 300px">
-                                            <img src="{{ $ot_referencia->path3 }}" alt="" style="height: 174; width: 255;">
+                                            <img src="{{  public_path($ot_referencia->path3) }}" alt="" style="height: 174; width: 255;">
                                 </td>
                                 <td style="text-align: center; width: 360px;height: 300px">
-                                        <img src="{{ $ot_referencia->path4 }}" alt="" style="height: 174; width: 255;">
+                                        <img src="{{  public_path($ot_referencia->path4) }}" alt="" style="height: 174; width: 255;">
                                 </td>
                             </tr>
                         </tbody>

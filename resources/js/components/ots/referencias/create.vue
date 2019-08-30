@@ -12,61 +12,61 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Observaciones</label>
-                        <textarea v-model="inputsData.observaciones" class="form-control noresize" rows="3" placeholder="" maxlength="250"></textarea>
+                        <textarea v-model="referencia.observaciones" class="form-control noresize" rows="3" placeholder="" maxlength="250"></textarea>
                     </div>    
                
                     <div class="col-md-6">     
-                        <div v-if="inputsData.path1 == null">
+                        <div v-if="referencia.path1 == null">
                             <img :src="path_empty" class="margin" alt="..." width="304" height="236">
                         </div>    
                         <div v-else>
-                          <img :src="inputsData.path1" class="margin" alt="..." width="304" height="236">  
+                          <img :src="referencia.path1" class="margin" alt="..." width="304" height="236">  
                         </div>               
                      
                         <div class="form-group">                          
-                            <input type="file" class="form-control" id="inputFile1" name="file" @change="onFileSelected($event,'imagen1')">
+                            <input type="file" class="form-control" ref="inputFile1" id="inputFile1" name="file" @change="onFileSelected($event,'imagen1')">
                             <button class="hide"  @click.prevent="onUpload($event,'1')" >upload</button>
                         </div>                                              
                     </div>
                     
 
                     <div class="col-md-6">             
-                        <div v-if="inputsData.path2 == null">
+                        <div v-if="referencia.path2 == null">
                             <img :src="path_empty" class="margin" alt="..." width="304" height="236">
                         </div>    
                         <div v-else>
-                          <img :src="inputsData.path2" class="margin" alt="..." width="304" height="236">  
+                          <img :src="referencia.path2" class="margin" alt="..." width="304" height="236">  
                         </div>
                         <div class="form-group">
                            
-                            <input type="file" class="form-control" id="inputFile2" name="file" @change="onFileSelected($event,'imagen2')">
+                            <input type="file" class="form-control" ref="inputFile2" id="inputFile2" name="file" @change="onFileSelected($event,'imagen2')">
                             <button class="hide" @click.prevent="onUpload($event,'2')" >upload</button>
                         </div>                            
                     </div>    
                 
                     <div class="col-md-6">
-                        <div v-if="inputsData.path3 == null">
+                        <div v-if="referencia.path3 == null">
                             <img :src="path_empty" class="margin" alt="..." width="304" height="236">
                         </div>    
                         <div v-else>
-                          <img :src="inputsData.path3" class="margin" alt="..." width="304" height="236">  
+                          <img :src="referencia.path3" class="margin" alt="..." width="304" height="236">  
                         </div>
                         <div class="form-group">
                           
-                            <input type="file" class="form-control" id="inputFile3" name="file" @change="onFileSelected($event,'imagen3')">
+                            <input type="file" class="form-control" ref="inputFile3" id="inputFile3" name="file" @change="onFileSelected($event,'imagen3')">
                             <button class="hide" @click.prevent="onUpload($event,'3')" >upload</button>
                         </div>  
                     </div>
                     <div class="col-md-6">  
-                        <div v-if="inputsData.path4 == null">
+                        <div v-if="referencia.path4 == null">
                             <img :src="path_empty" class="margin" alt="..." width="304" height="236">
                         </div>    
                         <div v-else>
-                          <img :src="inputsData.path4" class="margin" alt="..." width="304" height="236">  
+                          <img :src="referencia.path4" class="margin" alt="..." width="304" height="236">  
                         </div>
                         <div class="form-group">
                                   
-                            <input type="file" class="form-control" id="inputFile4" name="file" @change="onFileSelected($event,'imagen4')" >
+                            <input type="file" class="form-control" ref="inputFile4" id="inputFile4" name="file" @change="onFileSelected($event,'imagen4')" >
                             <button class="hide" @click.prevent="onUpload($event,'4')" >upload</button>
                         </div>
                     </div>   
@@ -91,7 +91,6 @@
  import {mapState} from 'vuex'
  import { eventSetReferencia } from '../../event-bus';
 export default {
-
     props :{
       inputsData : {
        type : Object,
@@ -102,11 +101,8 @@ export default {
        type : String,
        required : true
      },
-
     },
-
     data() { return {  
-
         selectedFile1 : null,
         selectedFile2 : null,
         selectedFile3 : null,
@@ -121,7 +117,6 @@ export default {
             path2 :'',
             path3 :'',
             path4 :''
-
         },
      
          }
@@ -131,71 +126,85 @@ export default {
       
       
       eventSetReferencia.$on('open', function(){
-
       
-          console.log(this.path_empty);
-          console.log(this.inputsData);
+         
           this.setReferencia();
           $('#nuevo').modal('show');   
           
-
       }.bind(this));
-
     },
-    
+
+     
     computed :{
     
-         ...mapState(['url','AppUrl'])
+         ...mapState(['url','AppUrl']),
+
+         
+
+         
     }, 
    
-    methods: {          
+    methods: {     
+        
+        	clearSelectedFile (inputref) {
+
+                    const input = inputref
+                    input.type = 'text';
+                    input.type = 'file';      
+
+                },
          
  
-            setReferencia : function(){           
+            setReferencia : function(){     
+                this.$nextTick(function () {      
+                    
+                    
+                    
+                this.referencia.observaciones = this.inputsData.observaciones;                  
 
-                this.referencia.observaciones = this.inputsData.observaciones;
-
-                if (this.inputsData.path1 != null )                   
-                    this.referencia.path1 = this.inputsData.path1;
-               
-                else
-                    this.referencia.path1 = this.path_empty
+                if (this.inputsData.path1 != null )
+                    this.referencia.path1 = this.inputsData.path1;               
+                else{
+                    this.referencia.path1 = this.path_empty;
+                    this.clearSelectedFile(this.$refs.inputFile1);
+                   }
                 
                 if (this.inputsData.path2 != null)
                     this.referencia.path2 = this.inputsData.path2;
-                else
-                    this.referencia.path2= this.path_empty
-                
+                else{
+                    this.referencia.path2= this.path_empty;
+                      this.clearSelectedFile(this.$refs.inputFile2);
+                }
                 if (this.inputsData.path3 != null)
                     this.referencia.path3 = this.inputsData.path3;
-                else
-                    this.referencia.path3= this.path_empty
-                
+                else{
+                    this.referencia.path3= this.path_empty;
+                     this.clearSelectedFile(this.$refs.inputFile3);
+
+                }
                 if (this.inputsData.path4 != null)
                     this.referencia.path4 = this.inputsData.path4;
-                else
-                    this.referencia.path4= this.path_empty
-                
+                else{
+                    this.referencia.path4= this.path_empty;
+                     this.clearSelectedFile(this.$refs.inputFile4);
+                }
+                    })
            },
             storeRegistro: function(){               
                 
-                this.inputsData.tabla = this.tabla
-                let Ref = this.inputsData;
+                this.referencia.tabla = this.tabla
+                let Ref = this.referencia;
                 this.$emit('setReferencia',Ref);
                 
-
                 this.referencia.tabla = '';          
-                this.referencia.observaciones='';
+                this.referencia.observaciones='';                                                                                                                                           
                 this.referencia.path1 ='';
                 this.referencia.path2 ='';
                 this.referencia.path3 ='';
                 this.referencia.path4 ='';
                         
-
               },
             onFileSelected(event,imagen) {
-
-
                 switch (imagen) {
                        case 'imagen1':
                            this.selectedFile1 = event.target.files[0];
@@ -215,7 +224,6 @@ export default {
                            break;
                 
                    }
-
                
             },
             onUpload(path) {
@@ -242,33 +250,30 @@ export default {
                console.log(fd);
                axios.post(url,fd,settings)
                .then (response => {
-
                    switch (path) {
                        case '1':
-                           this.inputsData.path1 = this.AppUrl + '/' + response.data
+                           this.referencia.path1 = '/' + response.data
                            break;
                        case '2':
-                           this.inputsData.path2 = this.AppUrl + '/' + response.data
+                           this.referencia.path2 =  '/' + response.data
                            break;
                        case '3' :
-                           this.inputsData.path3 = this.AppUrl + '/' + response.data
+                           this.referencia.path3 = '/' + response.data
                            break;
                        case '4':
-                           this.inputsData.path4 = this.AppUrl + '/' + response.data
+                           this.referencia.path4 = '/' + response.data
                            break;
                 
                    }
                    
                    path = response.data
+
                    console.log(path);
                }).catch(response => {
                     console.log(response)
                 })
-
             }
 }
     
 }
 </script>
-
-

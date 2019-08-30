@@ -13,7 +13,7 @@ class StorageController extends Controller
       if ($request->hasFile('image')){
 
        // $path = $request->image->store('referencias-image');
-          $path = Storage::disk('local')->put('referencias-image',$request->file('image'));  
+          $path = Storage::disk('public')->put('referencias',$request->file('image'));  
     
         return $path;
       }

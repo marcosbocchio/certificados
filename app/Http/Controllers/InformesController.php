@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Informe;
 use App\MetodoEnsayos;
+use App\DiametrosEspesor;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+
 
 
 class InformesController extends Controller
@@ -57,7 +60,10 @@ class InformesController extends Controller
         switch ($metodo) {
             case 'RI':
                 return redirect()->route('InformeRiCreate',array('ot_id' => $ot_id));
-                break;        
+                break;  
+            case 'PM':
+                return redirect()->route('InformePmCreate',array('ot_id' => $ot_id));
+                break;      
          
         }
 
@@ -75,6 +81,9 @@ class InformesController extends Controller
     switch ($metodo_ensayo->metodo) {
         case 'RI':
             return redirect()->route('InformeRiEdit',array('ot_id' => $ot_id, 'id' => $id));
+            break; 
+         case 'PM':
+            return redirect()->route('InformePmEdit',array('ot_id' => $ot_id, 'id' => $id));
             break;        
      
     }
@@ -98,5 +107,64 @@ class InformesController extends Controller
 
        
     }
+
+    public function saveInforme($request,$informe){
+
+        $user_id = null;
+        
+        if (Auth::check())
+        {
+             $user_id = $userId = Auth::id();    
+        }
+       
+        //revisar esto 
+
+        $metodo_ensayo = MetodoEnsayos::where('metodo',$request->metodo_ensayo)->first();
+      
+        
+        $informe->ot_id  = $request->ot['id'];
+        $informe->procedimiento_informe_id = $request->procedimiento['ot_procedimientos_propios_id'];
+    
+        if ($request->diametro =='CHAPA'){
+    
+          $diametro_espesor = DiametrosEspesor::where('diametro',$request->diametro)                                 
+                                              ->first(); 
+    
+          $informe->diametro_espesor_id = $diametro_espesor['id'];
+          $informe->espesor_chapa       = $request->espesor_chapa;
+    
+        }else{
+    
+          $diametro_espesor = DiametrosEspesor::where('diametro',$request->diametro) 
+                                              ->where('espesor',$request->espesor)
+                                              ->first();
+    
+          $informe->diametro_espesor_id = $diametro_espesor['id'];
+    
+        } 
+    
+        $informe->equipo_id = $request->equipo['id'];
+        $informe->Kv = $request->kv;
+        $informe->ma =$request->ma;  
+        $informe->metodo_ensayo_id  = $metodo_ensayo['id'];
+        $informe->norma_evaluacion_id = $request->norma_evaluacion['id'];
+        $informe->norma_ensayo_id = $request->norma_ensayo['id'];
+        $informe->tecnica_id = $request->tecnica['id'];
+        $informe->user_id = $user_id;
+        $informe->ejecutor_ensayo_id = $request->ejecutor_ensayo['ot_operario_id'];
+        $informe->material_id = $request->material['id'];
+        $informe->fecha = date('Y-m-d',strtotime($request->fecha));
+        $informe->numero = $request->numero_inf;
+        $informe->prefijo = $request->prefijo;  
+        $informe->componente = $request->componente;
+        $informe->procedimiento_soldadura = $request->procedimiento_soldadura;
+        $informe->plano_isom = $request->plano_isom;
+        $informe->eps = $request->eps;
+        $informe->pqr = $request->pqr;
+        $informe->observaciones = $request->observaciones;
+        $informe->save();   
+        
+        return $informe;
+      }
    
 }

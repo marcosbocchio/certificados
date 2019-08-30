@@ -14,20 +14,26 @@ class TecnicasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-      //  return Tecnicas::with(['Graficos'])->get();
+    public function index($metodo)
+    {  
+    }
 
-      $tecnicas = DB::select(' select
-                                tecnicas.id,
-                                tecnicas.codigo,
-                                tecnicas.descripcion,
-                                CONCAT("/",path) as path,                                
-                                tecnicas_graficos.id as grafico_id
-                                
-                                from tecnicas
-                                inner join tecnicas_graficos on
-                                tecnicas.id = tecnicas_graficos.tecnica_id');
+    public function tecnicasMetodo($metodo)
+    {
+     
+
+      $tecnicas = DB::select('select
+                            tecnicas.id,
+                            tecnicas.codigo,
+                            tecnicas.descripcion,
+                            CONCAT("/",path) as path,                                
+                            tecnicas_graficos.id as grafico_id
+                            
+                            from tecnicas
+                            left join tecnicas_graficos on tecnicas.id = tecnicas_graficos.tecnica_id
+                            inner join metodo_ensayos on metodo_ensayos.id = tecnicas.metodo_ensayo_id
+                            where 
+                            metodo_ensayos.metodo=:metodo',['metodo'=>$metodo]);
 
      $tecnicas = Collection::make($tecnicas);                                
      return $tecnicas;

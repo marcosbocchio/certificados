@@ -183,7 +183,7 @@ class DocumentacionesController extends Controller
         ->join('metodo_ensayos','metodo_ensayos.id','=','documentaciones.metodo_ensayo_id')   
         ->where('ots.id','=',$ot_id)
         ->where('metodo_ensayos.metodo','=',$metodo)
-        ->select('documentaciones.*')
+        ->select('documentaciones.*','ot_procedimientos_propios.id as ot_procedimientos_propios_id')
         ->get();
     }
 
@@ -191,8 +191,8 @@ class DocumentacionesController extends Controller
     {
         $procedimiento = DB::table('documentaciones')
         ->join('ot_procedimientos_propios','ot_procedimientos_propios.documentacion_id','=','documentaciones.id')
-        ->where('documentaciones.id','=',$id)      
-        ->select('documentaciones.*')
+        ->where('ot_procedimientos_propios.id','=',$id)      
+        ->select('documentaciones.*','ot_procedimientos_propios.id as ot_procedimientos_propios_id')
         ->first();
 
         return  $procedimiento = Collection::make($procedimiento); 

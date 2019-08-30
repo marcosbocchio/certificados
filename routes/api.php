@@ -46,6 +46,12 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('equipos', 'EquiposController');
     Route::resource('icis', 'IcisController');
     Route::resource('tecnicas', 'TecnicasController');
+    Route::resource('tipos_magnetizacion', 'TiposMagnetizacionController');
+    Route::resource('metodos_trabajo_pm', 'MetodosTrabajoPmController');
+    Route::resource('corrientes', 'CorrientesController');
+    Route::resource('color_particulas', 'ColorParticulasController');
+    Route::resource('iluminaciones', 'IluminacionesController');
+    Route::get('tecnicas/metodo/{metodo}', 'TecnicasController@tecnicasMetodo');
     Route::get('tecnicas_graficos/{id}', 'TecnicasGraficosController@index');
     Route::get('tecnica_distancias/{id}/diametro/{diametro}', 'TecnicaDistanciasController@TecnicaDistanciasDiametro');
 
@@ -82,6 +88,7 @@ Route::group(['middleware' => 'auth:api'], function()
    
     /*  informes */ 
     Route::resource('informes_ri', 'InformesRiController');
+    Route::resource('informes_pm', 'InformesPmController');
     
    
 });
@@ -92,7 +99,7 @@ Route::get('/pdf/servicios/referencias/{id}','PdfServiciosReferenciasController@
 Route::get('/pdf/productos/referencias/{id}','PdfProductosReferenciasController@imprimir')->name('ProductosReferencias');
 
 Route::get('/pdf/informe/{id}','PdfInformesController@index')->name('pdfInformes');
-Route::get('/pdf/informe/ri/{informe}','PdfInformesRiController@inprimir')->name('pdfInformeRi');
-Route::get('/pdf/informe/ri/{informe}','PdfInformesRiController@inprimir')->name('pdfInformeRi');
+Route::get('/pdf/informe/ri/{informe}','PdfInformesRiController@imprimir')->name('pdfInformeRi');
+
 
 

@@ -36,10 +36,15 @@ class DatabaseSeeder extends Seeder
         $this->call(DefectosRiSeeder::class);
         $this->call(TecnicaDistanciasSeeder::class);   
         $this->call(TipoSoldadurasSeeder::class);   
-     
-     
+        $this->call(MetodosTrabajoPmTableSeeder::class);   
+        $this->call(TiposMagnetizacionTableSeeder::class);      
+        $this->call(CorrientesTableSeeder::class);   
+        $this->call(ColorParticulasTableSeeder::class);        
+        $this->call(IluminacionesTableSeeder::class);          
+       
+      
        // factory('App\Clientes', 2500)->create();
-
-
+     
+      
     }
 }

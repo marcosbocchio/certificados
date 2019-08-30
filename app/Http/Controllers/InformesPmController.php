@@ -1,0 +1,165 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Ots;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Repositories\Documentaciones\DocumentacionesRepository;
+use App\Informe;
+use App\InformesPm;
+use App\Materiales;
+use App\DiametroView;
+use App\DiametrosEspesor;
+use App\Equipos;
+use App\Tecnicas;
+use App\TipoPeliculas;
+use App\NormaEvaluaciones;
+use App\NormaEnsayos;
+use App\MetodosTrabajoPm;
+use App\TiposMagnetizacion;
+use App\Corrientes;
+use App\ColorParticulas;
+use App\Iluminaciones;
+
+class InformesPmController extends Controller
+{
+    public function create($ot_id)
+    {
+        $metodo = 'PM';    
+        $user = auth()->user()->name;
+        $header_titulo = "Informe";
+        $header_descripcion ="Crear";         
+        $ot = Ots::findOrFail($ot_id);      
+
+        return view('informes.pm.index', compact('ot',
+                                                 'metodo',
+                                                 'user',                                              
+                                                 'header_titulo',
+                                                 'header_descripcion'));
+    }
+
+    public function store(Request $request)
+    {
+        $informe  = new Informe;          
+        $informePm  = new InformesPm;  
+      //  return $request;
+        DB::beginTransaction();
+        try { 
+         
+        
+          $informe = (new \App\Http\Controllers\InformesController)->saveInforme($request,$informe);
+          $this->saveInformePm($request,$informe,$informePm);
+    
+          DB::commit(); 
+    
+        } catch (Exception $e) {
+    
+          DB::rollback();
+          throw $e;      
+          
+        }
+    }
+
+    public function update(Request $request, $id){
+
+      $informe  = Informe::find($id);
+      $informePm =InformesPm::where('informe_id',$informe->id)->first();
+      DB::beginTransaction();
+      try {
+  
+          $informe = (new \App\Http\Controllers\InformesController)->saveInforme($request,$informe);
+          $this->saveInformePm($request,$informe,$informePm);       
+  
+          DB::commit();
+          
+        } catch (Exception $e) {
+  
+          DB::rollback();
+          throw $e;      
+          
+        }
+  
+    }
+
+    public function saveInformePm($request,$informe,$informePm){      
+
+   
+      $informePm->informe_id = $informe->id;
+      $informePm->metodo_trabajo_pm_id = $request->metodo_trabajo_pm['id'];
+      $informePm->voltaje = $request->voltaje;
+      $informePm->amperaje  = $request->am;
+      $informePm->vehiculo = $request->vehiculo;
+      $informePm->aditivo = $request->aditivo;
+      $informePm->concentracion = $request->concentracion;
+      $informePm->tipo_magnetizacion_id = $request->tipo_magnetizacion['id'];
+      $informePm->corriente_magnetizacion_id = $request->magnetizacion['id'];
+      $informePm->corriente_desmagnetizacion_id    = $request->desmagnetizacion['id'];
+      $informePm->color_particula_id = $request->color_particula['id'];
+      $informePm->iluminacion_id = $request->iluminacion['id'];
+  
+      $informePm->save();     
+  
+     
+  
+    }
+
+    public function edit($ot_id,$id)
+    {
+        $header_titulo = "Informe";
+        $header_descripcion ="Editar";  
+        $metodo = 'PM';    
+        $accion = 'edit';      
+        $user = auth()->user()->name;
+        $ot = Ots::findOrFail($ot_id);
+        $informe = Informe::findOrFail($id);
+        $informe_pm =InformesPm::where('informe_id',$informe->id)->first();     
+        $informe_material = Materiales::find($informe->material_id);
+        $informe_diametroEspesor = DiametrosEspesor::find($informe->diametro_espesor_id);
+        $informe_diametro = DiametroView::where('diametro',$informe_diametroEspesor->diametro)->first();       
+        $informe_equipo = Equipos::find($informe->equipo_id);
+        $documetacionesRepository = new DocumentacionesRepository;
+        $informe_procedimiento = (new DocumentacionesController($documetacionesRepository))->ProcedimientoInformeId($informe->procedimiento_informe_id);    
+        $informe_norma_evaluacion = NormaEvaluaciones::find($informe->norma_evaluacion_id);
+        $informe_tecnica = Tecnicas::find($informe->tecnica_id);
+        $informe_norma_ensayo = NormaEnsayos::find($informe->norma_ensayo_id);
+        $informe_ejecutor_ensayo =(new OtOperariosController())->getEjecutorEnsayo($informe->ejecutor_ensayo_id);
+        $informe_pm_metodo_trabajo_pm = MetodosTrabajoPm::find($informe_pm->metodo_trabajo_pm_id);
+        $informe_pm_tipo_magnetizacion = TiposMagnetizacion::find($informe_pm->tipo_magnetizacion_id);
+        $informe_pm_magnetizacion = Corrientes::find($informe_pm->corriente_magnetizacion_id);
+        $informe_pm_desmagnetizacion = Corrientes::find($informe_pm->corriente_desmagnetizacion_id);
+        $infome_pm_color_particula = ColorParticulas::find($informe_pm->color_particula_id);
+        $informe_pm_iluminacion = Iluminaciones::find($informe_pm->iluminacion_id);
+
+      //  $informe_detalle = $this->getDetalle($informe_ri->id);
+  //    dd($infr);
+  //    dd($informe_pm_tipo_magnetizacion);
+
+
+        return view('informes.pm.edit', compact('ot',
+                                                 'metodo',
+                                                 'user',
+                                                 'informe',
+                                                 'informe_pm',  
+                                                 'informe_material',  
+                                                 'informe_diametro',
+                                                 'informe_diametroEspesor',                                                                            
+                                                 'informe_tecnica_grafico',
+                                                 'informe_equipo',   
+                                                 'informe_tecnica', 
+                                                 'informe_procedimiento',                                              
+                                                 'informe_norma_evaluacion',
+                                                 'informe_norma_ensayo',
+                                                 'informe_ejecutor_ensayo',     
+                                                 'informe_pm_metodo_trabajo_pm',    
+                                                 'informe_pm_tipo_magnetizacion',
+                                                 'informe_pm_magnetizacion',
+                                                 'informe_pm_desmagnetizacion',
+                                                 'infome_pm_color_particula',
+                                                 'informe_pm_iluminacion',
+                                                 'header_titulo',
+                                                 'header_descripcion'));
+    }
+
+    
+}

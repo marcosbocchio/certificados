@@ -117,7 +117,7 @@ b {
                             <td style="font-size: 12px; " colspan="2" ><b>Equipo: </b>{{$equipo->codigo}}</td>
                             <td style="font-size: 12px;" ><b>Kv: </b>{{$informe->kv}}</td>
                             <td style="font-size: 12px; width:50px;  border-right: 1px solid #000;" ><b>mA: </b>{{$informe->ma}}</td>
-                            <td style="font-size: 12px; width: 200px;border-right: 1px solid #000;" ><b>Proc. Sold. : </b>{{$informe_ri->procedimiento_soldadura}}</td>
+                            <td style="font-size: 12px; width: 200px;border-right: 1px solid #000;" ><b>Proc. Sold. : </b>{{$informe->procedimiento_soldadura}}</td>
                             <td style="font-size: 11px; border-right: 1px solid #000; width: 225px " colspan="2"  ><b style="font-size: 12px;">Norma Evaluación: </b>{{$norma_evaluacion->descripcion}}</td>  
                             <td style="font-size: 12px;" ><b>Dis.Fuente/pelicula: </b>{{$informe_ri->distancia_fuente_pelicula}}</td>
                                                  
@@ -135,7 +135,7 @@ b {
                             
                             
                             </td>
-                            <td style="font-size: 12px; border-right: 1px solid #000;" ><b>Proc. RI: </b>{{$procedimiento_inf->descripcion}} </td> 
+                            <td style="font-size: 12px; border-right: 1px solid #000;" ><b>Proc. RI: </b>{{$procedimiento_inf->titulo}} </td> 
                             <td style="font-size: 12px;border-right: 1px solid #000; " colspan="2"  ><b>Norma Ensayo: </b>{{$norma_ensayo->descripcion}}</td>
                             <td style="font-size: 12px; "><b>Tecnica: </b>{{$tecnica->codigo}}</td>      
                                           

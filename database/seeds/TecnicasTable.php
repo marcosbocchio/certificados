@@ -14,17 +14,50 @@ class TecnicasTable extends Seeder
     {
         Tecnicas::create([
             'codigo'        =>'SWE/SWV',          
-            'descripcion'   =>'Simple Pared/Simple Imagen',                  
+            'descripcion'   =>'Simple Pared/Simple Imagen',
+            'metodo_ensayo_id'  =>'1'                
         ]);
 
         Tecnicas::create([
             'codigo'        =>'DWE/SWV',          
-            'descripcion'   =>'Doble Pared/Simple Imagen',                   
+            'descripcion'   =>'Doble Pared/Simple Imagen',   
+            'metodo_ensayo_id'  =>'1'                          
         ]);
 
         Tecnicas::create([
             'codigo'        =>'DWE/DWV',          
-            'descripcion'   =>'Doble Pared/Doble Imagen',             
+            'descripcion'   =>'Doble Pared/Doble Imagen',      
+            'metodo_ensayo_id'  =>'1'                 
+        ]);
+
+        Tecnicas::create([
+            'codigo'        =>'Y',          
+            'descripcion'   =>'Yugo',      
+            'metodo_ensayo_id'  =>'3'                 
+        ]);
+
+        Tecnicas::create([
+            'codigo'        =>'PC',          
+            'descripcion'   =>'Puntas de contacto',      
+            'metodo_ensayo_id'  =>'3'                 
+        ]);
+
+        Tecnicas::create([
+            'codigo'        =>'B',          
+            'descripcion'   =>'Bobina',      
+            'metodo_ensayo_id'  =>'3'                 
+        ]);
+
+        Tecnicas::create([
+            'codigo'        =>'CC',          
+            'descripcion'   =>'Conducto Central',      
+            'metodo_ensayo_id'  =>'3'                 
+        ]);
+
+        Tecnicas::create([
+            'codigo'        =>'R',          
+            'descripcion'   =>'Residual',      
+            'metodo_ensayo_id'  =>'3'                 
         ]);
     }
 }

@@ -27,11 +27,12 @@ use App\Posicion;
 use App\PasadasPosicion;
 use App\DefectosPasadasPosicion;
 use App\OtOperarios;
+use App\OtProcedimientosPropios;
 
 class PdfInformesRiController extends Controller
 {
 
-    public function inprimir($id){      
+    public function imprimir($id){      
 
        /* header */
 
@@ -42,7 +43,8 @@ class PdfInformesRiController extends Controller
         $material = Materiales::findOrFail($informe->material_id);   
         $norma_ensayo = NormaEnsayos::findOrFail($informe->norma_ensayo_id);   
         $norma_evaluacion = NormaEvaluaciones::findOrFail($informe->norma_evaluacion_id); 
-        $procedimiento_inf = Documentaciones::findOrFail($informe->procedimiento_informe_id);
+        $ot_procedimiento_propio = OtProcedimientosPropios::findOrFail($informe->procedimiento_informe_id);
+        $procedimiento_inf = Documentaciones::findOrFail($ot_procedimiento_propio->documentacion_id);
         $equipo = Equipos::findOrFail($informe->equipo_id);
         $fuente = Fuentes::find($informe_ri->fuente_id);
         $tipo_pelicula = TipoPeliculas::findOrFail($informe_ri->tipo_pelicula_id);     
@@ -53,8 +55,8 @@ class PdfInformesRiController extends Controller
         $ejecutor_ensayo = User::findOrFail($ot_operador->user_id);
         $tecnicas_grafico = TecnicasGraficos::findOrFail($informe_ri->tecnicas_grafico_id);
         
-      //  dd($informe);
-      //   dd($informe->observaciones);
+       // dd($procedimiento_inf);
+      //  dd($informe->observaciones);
 
         if ($informe_ri->gasoducto_sn){
 

@@ -15,7 +15,6 @@ use App\Posicion;
 use App\DefectosPasadasPosicion;
 
 
-
 class InformesRiRepository extends BaseRepository
 {
 
@@ -31,13 +30,14 @@ class InformesRiRepository extends BaseRepository
     $informeRi  = new InformesRi;  
     
     DB::beginTransaction();
-    try {
-        
-      $this->saveInforme($request,$informe);
+    try { 
+     
+    
+      $informe = (new \App\Http\Controllers\InformesController)->saveInforme($request,$informe);
       $this->saveInformeRi($request,$informe,$informeRi);
       $this->saveDetalle($request,$informeRi);
 
-      DB::commit();
+      DB::commit(); 
 
     } catch (Exception $e) {
 
@@ -55,7 +55,7 @@ class InformesRiRepository extends BaseRepository
     DB::beginTransaction();
     try {
 
-        $this->saveInforme($request,$informe);
+        $informe = (new \App\Http\Controllers\InformesController)->saveInforme($request,$informe);
         $this->saveInformeRi($request,$informe,$informeRi);  
         $this->deleteDetalle($request,$informeRi->id);   
         $this->saveDetalle($request,$informeRi);
@@ -70,61 +70,7 @@ class InformesRiRepository extends BaseRepository
       }
 
   }
-
-  public function saveInforme($request,$informe){
-
-    $user_id = null;
-    
-    if (Auth::check())
-    {
-         $user_id = $userId = Auth::id();    
-    }
-   
-    //revisar esto 
-    
-    $informe->ot_id  = $request->ot['id'];
-    $informe->procedimiento_informe_id = $request->procedimiento['id'];
-
-    if ($request->diametro =='CHAPA'){
-
-      $diametro_espesor = DiametrosEspesor::where('diametro',$request->diametro)                                 
-                                          ->first(); 
-
-      $informe->diametro_espesor_id = $diametro_espesor['id'];
-      $informe->espesor_chapa       = $request->espesor_chapa;
-
-    }else{
-
-      $diametro_espesor = DiametrosEspesor::where('diametro',$request->diametro) 
-                                          ->where('espesor',$request->espesor)
-                                          ->first();
-
-      $informe->diametro_espesor_id = $diametro_espesor['id'];
-
-    } 
-
-    $informe->equipo_id = $request->equipo['id'];
-    $informe->Kv = $request->kv;
-    $informe->ma =$request->ma;  
-    $informe->metodo_ensayo_id  = 1;
-    $informe->norma_evaluacion_id = $request->norma_evaluacion['id'];
-    $informe->norma_ensayo_id = $request->norma_ensayo['id'];
-    $informe->tecnica_id = $request->tecnica['id'];
-    $informe->user_id = $user_id;
-    $informe->ejecutor_ensayo_id = $request->ejecutor_ensayo['ot_operario_id'];
-    $informe->material_id = $request->material['id'];
-    $informe->fecha = date('Y-m-d',strtotime($request->fecha));
-    $informe->numero = $request->numero_inf;
-    $informe->prefijo = $request->prefijo;  
-    $informe->componente = $request->componente;
-    $informe->procedimiento_soldadura = $request->procedimiento_soldadura;
-    $informe->plano_isom = $request->plano_isom;
-    $informe->eps = $request->eps;
-    $informe->pqr = $request->pqr;
-    $informe->observaciones = $request->observaciones;
-    $informe->save();      
-  }
-
+  
   public function saveInformeRi($request,$informe,$informeRi){      
 
    

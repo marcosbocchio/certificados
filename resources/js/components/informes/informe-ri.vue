@@ -2,34 +2,7 @@
    <div class="row">
        <div class="col-md-12">
            <form @submit.prevent="editmode ?  Update() : Store()"  method="post">
-               <div class="box box-danger">
-                  <div class="box-body"> 
-                      <div class="col-md-6">
-                            <div class="form-group" >
-                                <label for="cliente">Cliente</label>
-                                <input type="text" v-model="cliente.nombre_fantasia" class="form-control" id="cliente" disabled>
-                            </div>                            
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group" >
-                                <label for="proyecto">Proyecto</label>
-                                <input type="text" v-model="otdata.proyecto" class="form-control" id="proyecto" disabled>
-                            </div>                            
-                        </div>                        
-                        <div class="col-md-6">
-                            <div class="form-group" >
-                                <label for="obra">Obra N°</label>
-                                <input type="number" v-model="otdata.obra" class="form-control" id="obra" disabled>
-                            </div>                            
-                        </div>
-                        <div class="col-md-6">
-                                <div class="form-group" >
-                                    <label for="ot">Orden de Trabajo N°</label>
-                                    <input type="number" v-model="otdata.numero" class="form-control" id="ot" disabled>
-                                </div>                            
-                            </div>
-                  </div>
-               </div>
+               <informe-header :otdata="otdata"></informe-header>
                <div class="box box-danger">
                   <div class="box-body">
                         <div class="col-md-3">
@@ -186,7 +159,7 @@
 
                         <div class="col-md-3">                       
                             <div class="form-group">
-                                <label for="procRadio">Procedimiento Radiográfico</label>
+                                <label for="procRadio">Procedimiento RI</label>
                                 <v-select v-model="procedimiento" label="titulo" :options="procedimientos" id="procRadio"></v-select>   
                             </div>      
                         </div>
@@ -269,8 +242,7 @@
                                 <label for="ejecutor_ensayo">Ejecutor Ensayo</label>
                                 <v-select v-model="ejecutor_ensayo" label="name" :options="ejecutor_ensayos"></v-select>   
                             </div>         
-                        </div>                       
-                           
+                        </div>
                                                                  
                                                                
                   </div>
@@ -671,8 +643,7 @@ export default {
             indexPosPlanta:0,
 
             //Fin Formulario detalle
-
-            cliente :'',
+           
             isRX:false,
             isChapa:false,
             isGasoducto:false,
@@ -706,10 +677,8 @@ export default {
 
     }},
 
-    created : function(){      
-        
-       
-        this.getCliente();
+    created : function(){       
+      
         this.getProcedimientos();
         this.getMateriales();
         this.getDiametros();
@@ -842,16 +811,7 @@ export default {
                         
                         });   
              }
-        },
-
-        getCliente : function(){
-
-            axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'clientes/' + this.otdata.cliente_id + '?api_token=' + Laravel.user.api_token;         
-                axios.get(urlRegistros).then(response =>{
-                this.cliente = response.data
-                });
-        },
+        },     
 
         getProcedimientos : function(){
 
@@ -957,7 +917,7 @@ export default {
         getTecnicas: function(){
              
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'tecnicas' + '?api_token=' + Laravel.user.api_token;        
+                var urlRegistros = 'tecnicas/metodo/'+ this.metodo + '?api_token=' + Laravel.user.api_token;        
                 axios.get(urlRegistros).then(response =>{
                 this.tecnicas = response.data
                 });
@@ -1083,10 +1043,7 @@ export default {
         },
 
         removeJuntaDefectosPlanta(index) {
-          this.indexPosPlanta = 0;
-          console.log('indexposplatanta antes de borrar' + this.indexPosPlanta);
-          console.log('index antes de borrar' + index);
-           
+           this.indexPosPlanta = 0;   
             this.inputsJuntasDefectosPlanta.splice(index, 1);
             console.log('indexposplatanta despues de borrar' + this.indexPosPlanta);
             
