@@ -7,7 +7,7 @@
 
 <style>
 
-@page { margin: 329px 25px 257px 25px !important;
+@page { margin: 329px 25px 194px 25px !important;
         padding: 0px 0px 0px 0px !important; }
 
 header {
@@ -18,6 +18,7 @@ header {
 
 .contenido {
 
+   
     margin-bottom: -2px;
 }
 
@@ -294,7 +295,7 @@ b {
 
 <div class="contenido">
     
-    <table width="100%" class="bordered-1" style="margin-bottom: 0px">
+    <table width="100%" class="bordered-1" style="margin-bottom: 0px;">
         <tbody>
             @foreach ($juntas_posiciones as $junta_posicion)
                 <tr>

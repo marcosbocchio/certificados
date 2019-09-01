@@ -31,7 +31,10 @@ class InformeRiRequest extends FormRequest
             'material'                  => 'required',
             'plano_isom'                => 'required|Max:10',
             'diametro'                  => 'required',
+            'procedimiento_soldadura'   => 'required|Max:20', 
             'tecnica'                   => 'required',
+            'eps'                       => 'Max:30',
+            'pqr'                       => 'Max:30',
             'equipo'                    => 'required',
             'tipo_pelicula'             => 'required',
             'procedimiento'             => 'required',
@@ -44,7 +47,8 @@ class InformeRiRequest extends FormRequest
             'actividad'                 => 'Max:10',
             'exposicion'                => 'required|integer|digits_between:1,6',
             'ejecutor_ensayo'           => 'required',
-            'observaciones'             =>'max:250'
+            'observaciones'             => 'max:250',
+           
             
         ];
 
@@ -60,7 +64,8 @@ class InformeRiRequest extends FormRequest
             'pos_pos'              => 'pos',   
             'norma_evaluacion'     => 'norma Evaluación',
             'norma_ensayo'         => 'norma Ensayo',
-            'ejecutor_ensayo'      => 'ejecutor ensayo'   
+            'ejecutor_ensayo'      => 'ejecutor ensayo',
+            'procedimiento_soldadura' =>'procedimiento soldadura',    
             ];
         }
 }

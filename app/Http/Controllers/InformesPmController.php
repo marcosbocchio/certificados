@@ -6,6 +6,7 @@ use App\Ots;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\Documentaciones\DocumentacionesRepository;
+use App\Http\Requests\InformePmRequest;
 use App\Informe;
 use App\InformesPm;
 use App\Materiales;
@@ -21,6 +22,8 @@ use App\TiposMagnetizacion;
 use App\Corrientes;
 use App\ColorParticulas;
 use App\Iluminaciones;
+use App\DetallesPm;
+use App\DetallesPmReferencias;
 
 class InformesPmController extends Controller
 {
@@ -39,17 +42,18 @@ class InformesPmController extends Controller
                                                  'header_descripcion'));
     }
 
-    public function store(Request $request)
+    public function store(InformePmRequest $request)
     {
         $informe  = new Informe;          
         $informePm  = new InformesPm;  
-      //  return $request;
+
         DB::beginTransaction();
-        try { 
-         
+        try {          
         
           $informe = (new \App\Http\Controllers\InformesController)->saveInforme($request,$informe);
-          $this->saveInformePm($request,$informe,$informePm);
+          $informePm = $this->saveInformePm($request,$informe,$informePm);
+       
+          $this->saveDetalle($request,$informePm);
     
           DB::commit(); 
     
@@ -61,7 +65,7 @@ class InformesPmController extends Controller
         }
     }
 
-    public function update(Request $request, $id){
+    public function update(InformePmRequest $request, $id){
 
       $informe  = Informe::find($id);
       $informePm =InformesPm::where('informe_id',$informe->id)->first();
@@ -70,7 +74,8 @@ class InformesPmController extends Controller
   
           $informe = (new \App\Http\Controllers\InformesController)->saveInforme($request,$informe);
           $this->saveInformePm($request,$informe,$informePm);       
-  
+          DetallesPm::where('informe_pm_id',$informePm->id)->delete();
+          $this->saveDetalle($request,$informePm);
           DB::commit();
           
         } catch (Exception $e) {
@@ -99,10 +104,55 @@ class InformesPmController extends Controller
       $informePm->iluminacion_id = $request->iluminacion['id'];
   
       $informePm->save();     
-  
-     
+      
+      return $informePm;
   
     }
+
+    public function saveDetalle($request,$informePm){
+
+
+      foreach ($request->detalles as $detalle){    
+        
+        $referencia_id = $this->saveReferencia($detalle);
+
+        $detallePm  = new DetallesPm; 
+        $detallePm->informe_pm_id = $informePm->id;
+        $detallePm->pieza = $detalle['pieza'];
+        $detallePm->numero = $detalle['numero'];
+        $detallePm->detalle = $detalle['detalle'];
+        $detallePm->aceptable_sn = $detalle['aceptable_sn'];
+        $detallePm->detalle_pm_referencia_id = $referencia_id;
+        $detallePm->save();           
+
+      } 
+
+    }
+
+    public function saveReferencia($detalle){
+ 
+      if (($detalle['observaciones'])||
+          ($detalle['path1']) ||
+          ($detalle['path2']) ||
+          ($detalle['path3']) ||
+          ($detalle['path4'])){
+  
+            $detalle_pm_referencia                     = new DetallesPmReferencias;
+            $detalle_pm_referencia->descripcion        = $detalle['observaciones'];
+            $detalle_pm_referencia->path1              = $detalle['path1'];
+            $detalle_pm_referencia->path2              = $detalle['path2'];
+            $detalle_pm_referencia->path3              = $detalle['path3'];
+            $detalle_pm_referencia->path4              = $detalle['path4'];
+            $detalle_pm_referencia->save();
+  
+            return $detalle_pm_referencia->id;
+         }
+         else{
+            return null;
+         }
+  
+    }     
+    
 
     public function edit($ot_id,$id)
     {
@@ -131,9 +181,11 @@ class InformesPmController extends Controller
         $infome_pm_color_particula = ColorParticulas::find($informe_pm->color_particula_id);
         $informe_pm_iluminacion = Iluminaciones::find($informe_pm->iluminacion_id);
 
-      //  $informe_detalle = $this->getDetalle($informe_ri->id);
-  //    dd($infr);
-  //    dd($informe_pm_tipo_magnetizacion);
+        $informe_detalle = $this->getDetalle($informe_pm->id);
+
+    
+ // dd($informe_detalle);
+ // dd($informe_pm_tipo_magnetizacion);
 
 
         return view('informes.pm.edit', compact('ot',
@@ -157,9 +209,30 @@ class InformesPmController extends Controller
                                                  'informe_pm_desmagnetizacion',
                                                  'infome_pm_color_particula',
                                                  'informe_pm_iluminacion',
+                                                 'informe_detalle',
                                                  'header_titulo',
                                                  'header_descripcion'));
     }
+
+    public function getDetalle($id){
+
+      $informe_detalle = DB::table('detalles_pm')
+                             ->leftjoin('detalles_pm_referencias','detalles_pm_referencias.id','=','detalles_pm.detalle_pm_referencia_id')                      
+                             ->where('detalles_pm.informe_pm_id',$id)
+                             ->selectRaw('detalles_pm.detalle as detalle,
+                                        detalles_pm.numero as numero,
+                                        detalles_pm.pieza as pieza,
+                                        detalles_pm.aceptable_sn as aceptable_sn,
+                                        detalles_pm_referencias.descripcion as observaciones,
+                                        detalles_pm_referencias.path1 as path1,
+                                        detalles_pm_referencias.path2 as path2,
+                                        detalles_pm_referencias.path3 as path3,
+                                        detalles_pm_referencias.path4 as path4')
+                              ->get();  
+   
+      return $informe_detalle;
+
+  }
 
     
 }

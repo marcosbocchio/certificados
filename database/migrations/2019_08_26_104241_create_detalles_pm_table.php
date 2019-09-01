@@ -18,6 +18,7 @@ class CreateDetallesPmTable extends Migration
             $table->string('pieza',10);
             $table->integer('numero');
             $table->string('detalle');
+            $table->boolean('aceptable_sn');           
             $table->timestamps();
         });
     }

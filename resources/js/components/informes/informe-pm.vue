@@ -47,7 +47,7 @@
 
                        <div class="col-md-3 size-1-5">
                             <div class="form-group" >
-                                <label for="Diametro">Diametro</label>
+                                <label for="Diametro">Diametro (*)</label>
                                 <v-select v-model="diametro" label="diametro" :options="diametros" @input="getEspesores()"></v-select>   
                             </div>                            
                         </div>                       
@@ -448,6 +448,7 @@ export default {
       type : [ Array ],  
       required : false
       }
+
     },
     data() {return {
         
@@ -629,7 +630,7 @@ export default {
                this.iluminacion = this.iluminacion_data;
                this.am = this.informe_pmdata.amperaje;              
                this.ejecutor_ensayo = this.ejecutor_ensayodata;          
-               //this.inputsJuntasDefectosPlanta = this.detalledata,  
+               this.inputPiezasFalla = this.detalledata,  
                this.observaciones = this.informedata.observaciones 
 
 
@@ -907,20 +908,20 @@ export default {
                 'fuerza_portante'   :this.fuerza_portante,
                 'color_particula'   :this.color_partula,
                 'iluminacion'       :this.iluminacion,
-             //   'detalles'  : this.inputsJuntasDefectosPlanta,           
+                'detalles'  :      this.inputPiezasFalla,        
           }
           
           }).then(response => {
           this.response = response.data
           toastr.success('informe N°' + this.numero_inf + ' fue creado con éxito ');
-       
+           console.log(response.data);  
         }).catch(error => {
                
                this.errors = error.response.data.errors;
                 console.log(error.response);
                $.each( this.errors, function( key, value ) {
                    toastr.error(value);
-                
+                     console.log( key + ": " + value );
                });
 
                if((typeof(this.errors)=='undefined') && (error)){
@@ -977,7 +978,7 @@ export default {
                 'fuerza_portante'   :this.fuerza_portante,
                 'color_particula'   :this.color_partula,
                 'iluminacion'       :this.iluminacion,
-             //   'detalles'  : this.inputsJuntasDefectosPlanta,                
+                 'detalles'  :      this.inputPiezasFalla,                      
           }}
           
       

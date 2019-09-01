@@ -155,10 +155,9 @@ export default {
                 },
          
  
-            setReferencia : function(){     
-                this.$nextTick(function () {      
-                    
-                    
+            setReferencia : function(){    
+                 
+                this.$nextTick(function () {                    
                     
                 this.referencia.observaciones = this.inputsData.observaciones;                  
 

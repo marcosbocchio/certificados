@@ -4106,9 +4106,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.color_partula = this.color_particula_data;
         this.iluminacion = this.iluminacion_data;
         this.am = this.informe_pmdata.amperaje;
-        this.ejecutor_ensayo = this.ejecutor_ensayodata; //this.inputsJuntasDefectosPlanta = this.detalledata,  
-
-        this.observaciones = this.informedata.observaciones;
+        this.ejecutor_ensayo = this.ejecutor_ensayodata;
+        this.inputPiezasFalla = this.detalledata, this.observaciones = this.informedata.observaciones;
       }
     },
     getCliente: function getCliente() {
@@ -4343,17 +4342,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           'desmagnetizacion': this.desmagnetizacion,
           'fuerza_portante': this.fuerza_portante,
           'color_particula': this.color_partula,
-          'iluminacion': this.iluminacion //   'detalles'  : this.inputsJuntasDefectosPlanta,           
-
+          'iluminacion': this.iluminacion,
+          'detalles': this.inputPiezasFalla
         }
       }).then(function (response) {
         _this17.response = response.data;
         toastr.success('informe N°' + _this17.numero_inf + ' fue creado con éxito ');
+        console.log(response.data);
       })["catch"](function (error) {
         _this17.errors = error.response.data.errors;
         console.log(error.response);
         $.each(_this17.errors, function (key, value) {
           toastr.error(value);
+          console.log(key + ": " + value);
         });
 
         if (typeof _this17.errors == 'undefined' && error) {
@@ -4405,8 +4406,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           'desmagnetizacion': this.desmagnetizacion,
           'fuerza_portante': this.fuerza_portante,
           'color_particula': this.color_partula,
-          'iluminacion': this.iluminacion //   'detalles'  : this.inputsJuntasDefectosPlanta,                
-
+          'iluminacion': this.iluminacion,
+          'detalles': this.inputPiezasFalla
         }
       }).then(function (response) {
         _this18.response = response.data;
@@ -42730,7 +42731,7 @@ var render = function() {
                     { staticClass: "form-group" },
                     [
                       _c("label", { attrs: { for: "Diametro" } }, [
-                        _vm._v("Diametro")
+                        _vm._v("Diametro (*)")
                       ]),
                       _vm._v(" "),
                       _c("v-select", {

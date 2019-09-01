@@ -35,6 +35,7 @@
      :desmagnetizacion_data = "{{$informe_pm_desmagnetizacion}}"   
      :color_particula_data = "{{$infome_pm_color_particula}}"      
      :iluminacion_data = "{{$informe_pm_iluminacion}}"   
+     :detalledata="{{$informe_detalle}}"     
      
      editmode  
     
