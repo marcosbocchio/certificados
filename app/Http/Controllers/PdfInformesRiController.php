@@ -120,7 +120,7 @@ class PdfInformesRiController extends Controller
                                                               'material',
                                                               'tecnicas_grafico',
                                                               'juntas_posiciones',
-                                                              'defectos_posiciones'))->setWarnings(false);
+                                                              'defectos_posiciones'))->setPaper('a4','portrait')->setWarnings(false);
 
                                                     
           return $pdf->stream();

@@ -23,7 +23,16 @@ class InformePmRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $concentracion_max = $this->metodo_trabajo_pm['concentracion_max'];
+        $concentracion_min = $this->metodo_trabajo_pm['concentracion_min'];
+
+        $condicional = [      
+           
+         'concentracion' => 'required|numeric|between:'. $concentracion_min . ','. $concentracion_max 
+            
+        ];
+
+        $validacion = [
 
             'numero_inf'                =>'required | integer| digits_between:1,3',
             'fecha'                     => 'required',
@@ -33,8 +42,7 @@ class InformePmRequest extends FormRequest
             'diametro'                  => 'required',
             'procedimiento_soldadura'   => 'required|Max:20', 
             'eps'                       => 'Max:30',
-            'pqr'                       => 'Max:30',           
-            'concentracion'             => 'required|numeric|between:0,999.99',
+            'pqr'                       => 'Max:30',             
             'tecnica'                   => 'required',          
             'procedimiento'             => 'required',         
             'norma_evaluacion'          => 'required',
@@ -45,12 +53,16 @@ class InformePmRequest extends FormRequest
             'iluminacion'               => 'required', 
             'desmagnetizacion'          => 'required',  
             'ejecutor_ensayo'           => 'required',
-            'observaciones'             => 'Max:250',
-            'detalles.*.detalle'        => 'required|Max:250',
+            'observaciones'             => 'Max:250',  
+            'detalles.*.detalle'        => 'required|Max:250',         
             'detalles.*.pieza'          => 'required|Max:10',
             'detalles.*.numero'         => 'required|integer',
             
         ];
+
+    $validacion_completa =array_merge($condicional,$validacion);
+
+    return $validacion_completa;
    
     }
 

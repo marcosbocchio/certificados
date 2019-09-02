@@ -47215,7 +47215,7 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control noresize",
-                attrs: { rows: "3", placeholder: "", maxlength: "250" },
+                attrs: { rows: "3", placeholder: "", maxlength: "500" },
                 domProps: { value: _vm.referencia.observaciones },
                 on: {
                   input: function($event) {

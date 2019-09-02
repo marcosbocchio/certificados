@@ -42,12 +42,19 @@ class PdfInformesPmController extends Controller
          $ot_operador = OtOperarios::findOrFail($informe->ejecutor_ensayo_id);
          $ejecutor_ensayo = User::findOrFail($ot_operador->user_id);
          
-      
-
- 
+         $detalles =  DB::select('SELECT 
+                                detalles_pm.pieza as pieza,
+                                detalles_pm.numero as numero,
+                                detalles_pm.detalle as detalle,
+                                detalles_pm.aceptable_sn as aceptable_sn,
+                                detalles_pm_referencias.id as referencia_id
+                                FROM
+                                detalles_pm
+                                INNER JOIN informes_pm ON detalles_pm.informe_pm_id = informes_pm.id
+                                LEFT JOIN detalles_pm_referencias ON detalles_pm.detalle_pm_referencia_id = detalles_pm_referencias.id
+                                WHERE
+                                informes_pm.id =:id',['id' => $informe_pm->id ]);
         
- 
-       //    dd($juntas_posiciones);
         
  
            $pdf = PDF::loadView('reportes.informes.pm',compact('ot',
@@ -62,8 +69,9 @@ class PdfInformesPmController extends Controller
                                                                 'ejecutor_ensayo',
                                                                 'cliente',
                                                                 'informe',
-                                                                'informe_ri',
-                                                                'material'
+                                                                'informe_pm',
+                                                                'material',
+                                                                'detalles'
                                                                 ))->setPaper('a4','portrait')->setWarnings(false);
                                                         
  

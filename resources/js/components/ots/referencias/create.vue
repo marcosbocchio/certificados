@@ -12,7 +12,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Observaciones</label>
-                        <textarea v-model="referencia.observaciones" class="form-control noresize" rows="3" placeholder="" maxlength="250"></textarea>
+                        <textarea v-model="referencia.observaciones" class="form-control noresize" rows="3" placeholder="" maxlength="500"></textarea>
                     </div>    
                
                     <div class="col-md-6">     
