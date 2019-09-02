@@ -33,7 +33,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
 
-      //  Schema::defaultStringLength(191);   
+        Schema::defaultStringLength(250);   
         
         view()->composer('*', function($view) {
             $view->with('documentos', Documentaciones::all());
