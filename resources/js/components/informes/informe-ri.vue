@@ -68,14 +68,25 @@
                         
                         <div class="col-md-1 size-1-5">
                             <div class="form-group" >
-                                <label>Espesor</label>
+                               <div v-if="isChapa">
+                                    <label for="espesor">Espesor</label> 
+                                </div>
+                                <div v-else>
+                                     <label for="espesor">Espesor (*)</label> 
+                                </div>                             
                                 <v-select v-model="espesor" label="espesor" :options="espesores" :disabled="isChapa"></v-select>   
                             </div>                            
                         </div>
                       
                         <div class="col-md-1 size-1-5">    
-                             <div class="form-group" >                         
-                                <label for="espesor_chapa">Espesor Chapa</label>
+                             <div class="form-group" >   
+                                <div v-if="isChapa">
+                                    <label for="espesor_chapa">Espesor Chapa (*)</label> 
+                                </div>
+                                <div v-else>
+                                     <label for="espesor_chapa">Espesor Chapa (*)</label> 
+                                </div>                        
+                            
                                 <input  type="text" class="form-control" v-model="espesor_chapa"  id="espesor_chapa" :disabled="!isChapa" > 
                              </div>                                      
                         </div>
@@ -237,7 +248,7 @@
                         
                         <div class="col-md-3">
                             <div class="form-group" >
-                                <label for="distancia_fuente_pelicula">Dist. Fuente</label>
+                                <label for="distancia_fuente_pelicula">Dist. Fuente (*)</label>
                                 <input type="text" v-model="distancia_fuente_pelicula" class="form-control" :disabled="!isChapa" id="distancia_fuente_pelicula">
                             </div>                            
                         </div>  

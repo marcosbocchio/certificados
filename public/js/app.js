@@ -4937,6 +4937,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -44133,7 +44144,17 @@ var render = function() {
                   "div",
                   { staticClass: "form-group" },
                   [
-                    _c("label", [_vm._v("Espesor")]),
+                    _vm.isChapa
+                      ? _c("div", [
+                          _c("label", { attrs: { for: "espesor" } }, [
+                            _vm._v("Espesor")
+                          ])
+                        ])
+                      : _c("div", [
+                          _c("label", { attrs: { for: "espesor" } }, [
+                            _vm._v("Espesor (*)")
+                          ])
+                        ]),
                     _vm._v(" "),
                     _c("v-select", {
                       attrs: {
@@ -44156,9 +44177,17 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "col-md-1 size-1-5" }, [
                 _c("div", { staticClass: "form-group" }, [
-                  _c("label", { attrs: { for: "espesor_chapa" } }, [
-                    _vm._v("Espesor Chapa")
-                  ]),
+                  _vm.isChapa
+                    ? _c("div", [
+                        _c("label", { attrs: { for: "espesor_chapa" } }, [
+                          _vm._v("Espesor Chapa (*)")
+                        ])
+                      ])
+                    : _c("div", [
+                        _c("label", { attrs: { for: "espesor_chapa" } }, [
+                          _vm._v("Espesor Chapa (*)")
+                        ])
+                      ]),
                   _vm._v(" "),
                   _c("input", {
                     directives: [
@@ -44791,7 +44820,7 @@ var render = function() {
               _c("div", { staticClass: "col-md-3" }, [
                 _c("div", { staticClass: "form-group" }, [
                   _c("label", { attrs: { for: "distancia_fuente_pelicula" } }, [
-                    _vm._v("Dist. Fuente")
+                    _vm._v("Dist. Fuente (*)")
                   ]),
                   _vm._v(" "),
                   _c("input", {
