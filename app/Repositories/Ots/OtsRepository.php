@@ -83,11 +83,8 @@ class OtsRepository extends BaseRepository
         DB::beginTransaction();
           try {  
 
-                OtOperarios::where('ot_id',$ot->id)
-                              ->where('user_id',$ot->responsable_ot_id)
-                              ->delete();
-                              
-                $this->setOt($request, $ot);   
+            
+               $this->setOt($request, $ot);       
 
                 $this->setOperarios($ot);  
 
@@ -154,10 +151,18 @@ class OtsRepository extends BaseRepository
 
   public function setOperarios($ot){
 
-    $ot_operario = new OtOperarios;
-    $ot_operario->ot_id = $ot->id;
-    $ot_operario->user_id = $ot->responsable_ot_id;
-    $ot_operario->save();
+    $ot_operario = OtOperarios::where('ot_id',$ot->id)
+    ->where('user_id',$ot->responsable_ot_id)
+    ->first();
+
+    if($ot_operario == null) {
+        
+      $ot_operario = new OtOperarios;
+      $ot_operario->ot_id = $ot->id;
+      $ot_operario->user_id = $ot->responsable_ot_id;
+      $ot_operario->save();
+
+    }
 
   }
 
