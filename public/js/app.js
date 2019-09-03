@@ -43731,7 +43731,7 @@ var render = function() {
                                         return _vm.OpenReferencias(
                                           $event,
                                           k,
-                                          "detalles_pm",
+                                          "Informe PM",
                                           inputPiezaFalla
                                         )
                                       }

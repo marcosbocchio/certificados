@@ -301,7 +301,7 @@
                                                                         inputPiezaFalla.path2 ||
                                                                         inputPiezaFalla.path3 ||
                                                                         inputPiezaFalla.path4 )                      
-                                          }" class="fa fa-file-archive-o" @click="OpenReferencias($event,k,'detalles_pm',inputPiezaFalla)" ></span>
+                                          }" class="fa fa-file-archive-o" @click="OpenReferencias($event,k,'Informe PM',inputPiezaFalla)" ></span>
                                         </td>                                
 
                                       
