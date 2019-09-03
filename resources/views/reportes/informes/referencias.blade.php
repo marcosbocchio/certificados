@@ -103,18 +103,27 @@ td {
                             <tbody>
                                 <tr>
                                     <td style="text-align: center; width: 360px;height: 300px">
-                                        <img src="{{ public_path($detalle_pm_referencia->path1) }}" alt="" style="height: 174; width: 255;">
+                                          @if ($detalle_pm_referencia->path1)
+                                              <img src="{{ public_path($detalle_pm_referencia->path1) }}" alt="" style="height: 174; width: 255;">
+                                          @endif  
+                                          
                                     </td>
                                     <td style="text-align: center; width: 360px;height: 300px">
+                                     @if ($detalle_pm_referencia->path2)
                                             <img src="{{  public_path($detalle_pm_referencia->path2) }}" alt="" style="height: 174; width: 255;">
+                                     @endif  
                                     </td>
                                 </tr>
                                 <tr>
-                                        <td style="text-align: center; width: 360px;height: 300px">
-                                                <img src="{{  public_path($detalle_pm_referencia->path3) }}" alt="" style="height: 174; width: 255;">
+                                    <td style="text-align: center; width: 360px;height: 300px">
+                                     @if ($detalle_pm_referencia->path3)
+                                            <img src="{{  public_path($detalle_pm_referencia->path3) }}" alt="" style="height: 174; width: 255;">
+                                    @endif  
                                     </td>
                                     <td style="text-align: center; width: 360px;height: 300px">
+                                     @if ($detalle_pm_referencia->path4)
                                             <img src="{{  public_path($detalle_pm_referencia->path4) }}" alt="" style="height: 174; width: 255;">
+                                    @endif  
                                     </td>
                                 </tr>
                             </tbody>

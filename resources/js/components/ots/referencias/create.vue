@@ -20,7 +20,7 @@
                             <img :src="path_empty" class="margin" alt="..." width="304" height="236">
                         </div>    
                         <div v-else>
-                          <img :src="referencia.path1" class="margin" alt="..." width="304" height="236">  
+                           <img :src="referencia.path1" class="margin" alt="..." width="304" height="236">  
                         </div>               
                      
                         <div class="form-group">                          
@@ -108,7 +108,7 @@ export default {
         selectedFile3 : null,
         selectedFile4 : null,
         errors:{}, 
-        path_empty : 'https://via.placeholder.com/304x236.png',     
+        path_empty : '/referencias/blanco.jpg',     
         
         referencia : {
             tabla: '',           

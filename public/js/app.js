@@ -6725,7 +6725,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       selectedFile3: null,
       selectedFile4: null,
       errors: {},
-      path_empty: 'https://via.placeholder.com/304x236.png',
+      path_empty: '/referencias/blanco.jpg',
       referencia: {
         tabla: '',
         observaciones: '',

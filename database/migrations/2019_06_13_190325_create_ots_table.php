@@ -23,7 +23,7 @@ class CreateOtsTable extends Migration
             $table->string('lugar',200);
             $table->string('lat',100)->nullable();
             $table->string('lon',100)->nullable();
-            $table->string('observaciones')->nullable();
+            $table->string('observaciones',250)->nullable();
             $table->datetime('fecha_estimada_ensayo');
             $table->enum('estado',['CARGANDO','EN PROGRESO','TERMINADA']);
             $table->timestamps();

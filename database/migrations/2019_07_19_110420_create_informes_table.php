@@ -24,7 +24,7 @@ class CreateInformesTable extends Migration
             $table->string('plano_isom',10);
             $table->string('eps',30)->nullable();
             $table->string('pqr',30)->nullable();
-            $table->string('observaciones')->nullable();
+            $table->string('observaciones',250)->nullable();
             $table->timestamps();
         });
     }
