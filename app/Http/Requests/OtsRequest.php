@@ -41,7 +41,7 @@ class OtsRequest extends FormRequest
             'fecha_ensayo'             => 'required',
             'lugar_ensayo'             => 'required',
             'lat'                      => 'required',
-            'lon'                      => 'required',
+            'lon'                      => 'required',          
             'observaciones'            => 'Max:255',         
             'servicios.*.cantidad_servicios' => 'required|integer|Min:1',          
             'servicios.*.cantidad_placas'    => 'nullable|integer|Min:1',

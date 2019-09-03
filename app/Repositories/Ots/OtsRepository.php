@@ -13,6 +13,7 @@ Use App\OtEpps;
 Use App\OtRiesgos;
 use App\OtReferencias;
 use App\OtCalidadPlacas;
+use App\OtOperarios;
 
 
 class OtsRepository extends BaseRepository
@@ -47,7 +48,8 @@ class OtsRepository extends BaseRepository
     DB::beginTransaction();
     try {  
     
-        $this->setOt($request, $ot);    
+        $this->setOt($request, $ot);  
+        $this->setOperarios($ot);  
         $this->setServicios($servicios,$ot);
         $this->setTipoPeliculas($tipo_peliculas,$ot);
         $this->setProductos($productos,$ot);
@@ -81,7 +83,13 @@ class OtsRepository extends BaseRepository
         DB::beginTransaction();
           try {  
 
+                OtOperarios::where('ot_id',$ot->id)
+                              ->where('user_id',$ot->responsable_ot_id)
+                              ->delete();
+                              
                 $this->setOt($request, $ot);   
+
+                $this->setOperarios($ot);  
 
                 OtCalidadPlacas::where('ot_id',$ot->id)->delete();
                 $this->SetTipoPeliculas($tipo_peliculas,$ot);          
@@ -142,6 +150,15 @@ class OtsRepository extends BaseRepository
     $ot->user_id          = $user_id;
     $ot->estado      = 'CARGANDO';
     $ot->save();     
+  }
+
+  public function setOperarios($ot){
+
+    $ot_operario = new OtOperarios;
+    $ot_operario->ot_id = $ot->id;
+    $ot_operario->user_id = $ot->responsable_ot_id;
+    $ot_operario->save();
+
   }
 
   public function SetServicios($servicios,Ots $ot){    
