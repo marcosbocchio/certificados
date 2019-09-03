@@ -6742,7 +6742,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       selectedFile3: null,
       selectedFile4: null,
       errors: {},
-      path_empty: '/referencias/blanco.jpg',
+      path_empty1: '/img/imagen1.jpg',
+      path_empty2: '/img/imagen2.jpg',
+      path_empty3: '/img/imagen3.jpg',
+      path_empty4: '/img/imagen4.jpg',
       referencia: {
         tabla: '',
         observaciones: '',
@@ -47295,7 +47298,7 @@ var render = function() {
                     _c("img", {
                       staticClass: "margin",
                       attrs: {
-                        src: _vm.path_empty,
+                        src: _vm.path_empty1,
                         alt: "...",
                         width: "304",
                         height: "236"
@@ -47348,7 +47351,7 @@ var render = function() {
                     _c("img", {
                       staticClass: "margin",
                       attrs: {
-                        src: _vm.path_empty,
+                        src: _vm.path_empty2,
                         alt: "...",
                         width: "304",
                         height: "236"
@@ -47401,7 +47404,7 @@ var render = function() {
                     _c("img", {
                       staticClass: "margin",
                       attrs: {
-                        src: _vm.path_empty,
+                        src: _vm.path_empty3,
                         alt: "...",
                         width: "304",
                         height: "236"
@@ -47454,7 +47457,7 @@ var render = function() {
                     _c("img", {
                       staticClass: "margin",
                       attrs: {
-                        src: _vm.path_empty,
+                        src: _vm.path_empty4,
                         alt: "...",
                         width: "304",
                         height: "236"

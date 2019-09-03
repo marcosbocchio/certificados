@@ -17,7 +17,7 @@
                
                     <div class="col-md-6">     
                         <div v-if="referencia.path1 == null">
-                            <img :src="path_empty" class="margin" alt="..." width="304" height="236">
+                            <img :src="path_empty1" class="margin" alt="..." width="304" height="236">
                         </div>    
                         <div v-else>
                            <img :src="referencia.path1" class="margin" alt="..." width="304" height="236">  
@@ -32,7 +32,7 @@
 
                     <div class="col-md-6">             
                         <div v-if="referencia.path2 == null">
-                            <img :src="path_empty" class="margin" alt="..." width="304" height="236">
+                            <img :src="path_empty2" class="margin" alt="..." width="304" height="236">
                         </div>    
                         <div v-else>
                           <img :src="referencia.path2" class="margin" alt="..." width="304" height="236">  
@@ -46,7 +46,7 @@
                 
                     <div class="col-md-6">
                         <div v-if="referencia.path3 == null">
-                            <img :src="path_empty" class="margin" alt="..." width="304" height="236">
+                            <img :src="path_empty3" class="margin" alt="..." width="304" height="236">
                         </div>    
                         <div v-else>
                           <img :src="referencia.path3" class="margin" alt="..." width="304" height="236">  
@@ -59,7 +59,7 @@
                     </div>
                     <div class="col-md-6">  
                         <div v-if="referencia.path4 == null">
-                            <img :src="path_empty" class="margin" alt="..." width="304" height="236">
+                            <img :src="path_empty4" class="margin" alt="..." width="304" height="236">
                         </div>    
                         <div v-else>
                           <img :src="referencia.path4" class="margin" alt="..." width="304" height="236">  
@@ -108,7 +108,10 @@ export default {
         selectedFile3 : null,
         selectedFile4 : null,
         errors:{}, 
-        path_empty : '/referencias/blanco.jpg',     
+        path_empty1 : '/img/imagen1.jpg',
+        path_empty2 : '/img/imagen2.jpg', 
+        path_empty3 : '/img/imagen3.jpg', 
+        path_empty4 : '/img/imagen4.jpg',     
         
         referencia : {
             tabla: '',           
