@@ -7,7 +7,7 @@
                   <div class="box-body">                  
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="fecha">Fecha</label>
+                            <label for="fecha">Fecha (*)</label>
                             <div class="input-group date">
                                 <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
@@ -24,14 +24,14 @@
                     </div>    
                     <div class="col-md-3">
                         <div class="form-group" >
-                            <label for="componente">Componente</label>
+                            <label for="componente">Componente (*)</label>
                             <input type="text" v-model="componente" class="form-control" id="componente">
                         </div>                            
                     </div>
 
                     <div class="col-md-3" >                       
                         <div class="form-group">
-                            <label for="materiales">Material</label>
+                            <label for="materiales">Material (*)</label>
                             <v-select v-model="material" label="codigo" :options="materiales" id="materiales"></v-select>   
                         </div>      
                     </div>      
@@ -40,7 +40,7 @@
 
                     <div class="col-md-1 size-1-5">
                         <div class="form-group" >
-                            <label for="plano_isom">Plano / Isom</label>
+                            <label for="plano_isom">Plano / Isom (*)</label>
                             <input type="text" v-model="plano_isom" class="form-control" id="plano_isom">
                         </div>                            
                     </div>
@@ -68,7 +68,7 @@
 
                         <div class="col-md-3">
                             <div class="form-group" >
-                                <label for="procedimientos_soldadura">Procedimiento Soldadura</label>
+                                <label for="procedimientos_soldadura">Procedimiento Soldadura (*)</label>
                                 <input type="text" v-model="procedimiento_soldadura" class="form-control" id="procedimientos_soldadura">
                             </div>                            
                         </div>  
@@ -89,14 +89,14 @@
 
                         <div class="col-md-3" >                       
                             <div class="form-group">
-                                <label for="tecnicas">Tecnica</label>
+                                <label for="tecnicas">Tecnica (*)</label>
                                 <v-select v-model="tecnica" label="descripcion" :options="tecnicas" id="tecnicas"></v-select>   
                             </div>      
                          </div>                   
 
                          <div class="col-md-3">
                             <div class="form-group" >
-                                <label for="equipos">Equipo</label>
+                                <label for="equipos">Equipo (*)</label>
                                 <v-select v-model="equipo" label="codigo" :options="equipos" ></v-select>  
                             </div>                            
                         </div>
@@ -116,56 +116,66 @@
 
                         <div class="col-md-3">                       
                             <div class="form-group">
-                                <label for="procRadio">Procedimiento PM</label>
+                                <label for="procRadio">Procedimiento PM (*)</label>
                                 <v-select v-model="procedimiento" label="titulo" :options="procedimientos" id="procRadio"></v-select>   
                             </div>      
                         </div>
 
                         <div class="col-md-3">                       
                             <div class="form-group">
-                                <label>Norma Evaluación</label>
+                                <label>Norma Evaluación (*)</label>
                                 <v-select v-model="norma_evaluacion" label="descripcion" :options="norma_evaluaciones"></v-select>   
                             </div>      
                         </div>
                         
                         <div class="col-md-3">                       
                             <div class="form-group">
-                                <label>Norma Ensayo</label>
+                                <label>Norma Ensayo (*)</label>
                                 <v-select v-model="norma_ensayo" label="descripcion" :options="norma_ensayos"></v-select>   
                             </div>      
                         </div>
 
                         <div class="col-md-3">                       
                             <div class="form-group">
-                                <label>Método</label>
+                                <label>Método (*)</label>
                                 <v-select v-model="metodo_trabajo_pm" label="codigo" :options="metodos_trabajo_pm"></v-select>   
                             </div>      
                         </div>
 
                          <div class="col-md-3">
-                            <div class="form-group" >                        
-                                <label for="vehiculo">Vehículo</label>
+                            <div class="form-group" >  
+                                <div v-if="requiereVehiculoAditivo">
+                                    <label for="vehiculo">Vehículo (*)</label> 
+                                </div>
+                                <div v-else>
+                                     <label for="vehiculo">Vehículo</label> 
+                                </div>                           
                                 <input  type="text" class="form-control" v-model="vehiculo" :disabled="!requiereVehiculoAditivo" id="vehiculo"> 
                             </div>                             
                         </div> 
 
                          <div class="col-md-3">
-                            <div class="form-group" >                        
-                                <label for="aditivo">Aditivo</label>
+                            <div class="form-group" >
+                                <div v-if="requiereVehiculoAditivo">
+                                    <label for="aditivo">Aditivo (*)</label> 
+                                </div>
+                                <div v-else>
+                                     <label for="aditivo">Aditivo</label>       
+                                </div>                             
                                 <input  type="text" class="form-control" v-model="aditivo"  :disabled="!requiereVehiculoAditivo" id="aditivo"> 
                             </div>                             
                         </div>   
 
                         <div class="col-md-3">
                             <div class="form-group" >                        
-                                <label for="concentracion">Concentración</label>
+                                <label for="concentracion">Concentración (*)</label>
                                 <input  type="number" class="form-control" v-model="concentracion" id="concentracion" step=".01"> 
                             </div>                             
                         </div> 
 
                         <div class="col-md-3">                       
                             <div class="form-group">
-                                <label>Tipo Magnetización</label>
+                                <label>Tipo Magnetización (*)</label>
                                 <v-select v-model="tipo_magnetizacion" label="codigo" :options="tipos_magnetizacion"></v-select>   
                             </div>      
                         </div>
@@ -174,7 +184,7 @@
 
                         <div class="col-md-3">                       
                             <div class="form-group">
-                                <label>Magnetización</label>
+                                <label>Magnetización (*)</label>
                                 <v-select v-model="magnetizacion" label="codigo" :options="corrientes"></v-select>   
                             </div>      
                         </div>
@@ -188,42 +198,42 @@
 
                         <div class="col-md-3">                       
                             <div class="form-group">
-                                <label>Desmagnetización</label>
+                                <label>Desmagnetización (*)</label>
                                 <v-select v-model="desmagnetizacion" label="codigo" :options="corrientes"></v-select>   
                             </div>      
                         </div>
 
                         <div class="col-md-1 size-1-5">
                             <div class="form-group" >                        
-                                <label for="v">Voltaje</label>
+                                <label for="v">Voltaje (*)</label>
                                 <input  type="number" class="form-control" v-model="voltaje" id="v" max="999"> 
                             </div>                             
                         </div> 
 
                         <div class="col-md-1 size-1-5">
                             <div class="form-group" >                        
-                                <label for="am">Am</label>
+                                <label for="am">Am (*)</label>
                                 <input  type="number" class="form-control" v-model="am" id="am" max="99"> 
                             </div>                             
                         </div> 
 
                         <div class="col-md-3">                       
                             <div class="form-group" >
-                                <label for="color_particulas">Color Particulas</label>
+                                <label for="color_particulas">Color Particulas (*)</label>
                                 <v-select v-model="color_partula" label="codigo" :options="color_particulas"></v-select>   
                             </div>         
                         </div>  
 
                         <div class="col-md-3">                       
                             <div class="form-group" >
-                                <label for="iluminaciones">Iluminaciones</label>
+                                <label for="iluminaciones">Iluminaciones (*)</label>
                                 <v-select v-model="iluminacion" label="codigo" :options="iluminaciones"></v-select>   
                             </div>         
                         </div>  
 
                         <div class="col-md-3">                       
                             <div class="form-group" >
-                                <label for="ejecutor_ensayo">Ejecutor Ensayo</label>
+                                <label for="ejecutor_ensayo">Ejecutor Ensayo (*)</label>
                                 <v-select v-model="ejecutor_ensayo" label="name" :options="ejecutor_ensayos"></v-select>   
                             </div>         
                         </div>                         

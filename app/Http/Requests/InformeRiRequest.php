@@ -26,6 +26,7 @@ class InformeRiRequest extends FormRequest
         return [
 
             'numero_inf'                =>'required | integer| digits_between:1,3',
+            'gasoducto_sn'              => 'required',
             'fecha'                     => 'required',
             'componente'                => 'required|Max:20',
             'material'                  => 'required',
@@ -35,6 +36,7 @@ class InformeRiRequest extends FormRequest
             'tecnica'                   => 'required',
             'eps'                       => 'Max:30',
             'pqr'                       => 'Max:30',
+            'foco'                      => 'required',
             'equipo'                    => 'required',
             'tipo_pelicula'             => 'required',
             'procedimiento'             => 'required',
@@ -65,7 +67,8 @@ class InformeRiRequest extends FormRequest
             'norma_evaluacion'     => 'norma Evaluación',
             'norma_ensayo'         => 'norma Ensayo',
             'ejecutor_ensayo'      => 'ejecutor ensayo',
-            'procedimiento_soldadura' =>'procedimiento soldadura',    
+            'procedimiento_soldadura' =>'procedimiento soldadura',  
+            'gasoducto_sn'          =>'formato'  
             ];
         }
 }

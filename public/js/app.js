@@ -3874,6 +3874,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -4922,6 +4932,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -5430,7 +5445,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this20 = this;
 
       this.errors = [];
-      var gasoducto_sn = this.formato == 'GASODUCTO' ? true : false;
+      var gasoducto_sn;
+      if (this.formato == 'GASODUCTO') gasoducto_sn = true;else if (this.formato == 'PLANTA') gasoducto_sn = false;else gasoducto_sn = null;
       var defectos = this.formato == 'PLANTA' ? this.inputsJuntasDefectosPlanta : false;
       var urlRegistros = 'informes_ri';
       axios({
@@ -5497,7 +5513,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       console.log('entro para actualizar');
       this.errors = [];
-      var gasoducto_sn = this.formato == 'GASODUCTO' ? true : false;
+      var gasoducto_sn;
+      if (this.formato == 'GASODUCTO') gasoducto_sn = true;else if (this.formato == 'PLANTA') gasoducto_sn = false;else gasoducto_sn = null;
       var defectos = this.formato == 'PLANTA' ? this.inputsJuntasDefectosPlanta : false;
       var urlRegistros = 'informes_ri/' + this.informedata.id;
       axios({
@@ -42578,7 +42595,9 @@ var render = function() {
               _c("div", { staticClass: "box-body" }, [
                 _c("div", { staticClass: "col-md-3" }, [
                   _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "fecha" } }, [_vm._v("Fecha")]),
+                    _c("label", { attrs: { for: "fecha" } }, [
+                      _vm._v("Fecha (*)")
+                    ]),
                     _vm._v(" "),
                     _c(
                       "div",
@@ -42638,7 +42657,7 @@ var render = function() {
                 _c("div", { staticClass: "col-md-3" }, [
                   _c("div", { staticClass: "form-group" }, [
                     _c("label", { attrs: { for: "componente" } }, [
-                      _vm._v("Componente")
+                      _vm._v("Componente (*)")
                     ]),
                     _vm._v(" "),
                     _c("input", {
@@ -42671,7 +42690,7 @@ var render = function() {
                     { staticClass: "form-group" },
                     [
                       _c("label", { attrs: { for: "materiales" } }, [
-                        _vm._v("Material")
+                        _vm._v("Material (*)")
                       ]),
                       _vm._v(" "),
                       _c("v-select", {
@@ -42698,7 +42717,7 @@ var render = function() {
                 _c("div", { staticClass: "col-md-1 size-1-5" }, [
                   _c("div", { staticClass: "form-group" }, [
                     _c("label", { attrs: { for: "plano_isom" } }, [
-                      _vm._v("Plano / Isom")
+                      _vm._v("Plano / Isom (*)")
                     ]),
                     _vm._v(" "),
                     _c("input", {
@@ -42819,7 +42838,7 @@ var render = function() {
                     _c(
                       "label",
                       { attrs: { for: "procedimientos_soldadura" } },
-                      [_vm._v("Procedimiento Soldadura")]
+                      [_vm._v("Procedimiento Soldadura (*)")]
                     ),
                     _vm._v(" "),
                     _c("input", {
@@ -42908,7 +42927,7 @@ var render = function() {
                     { staticClass: "form-group" },
                     [
                       _c("label", { attrs: { for: "tecnicas" } }, [
-                        _vm._v("Tecnica")
+                        _vm._v("Tecnica (*)")
                       ]),
                       _vm._v(" "),
                       _c("v-select", {
@@ -42936,7 +42955,7 @@ var render = function() {
                     { staticClass: "form-group" },
                     [
                       _c("label", { attrs: { for: "equipos" } }, [
-                        _vm._v("Equipo")
+                        _vm._v("Equipo (*)")
                       ]),
                       _vm._v(" "),
                       _c("v-select", {
@@ -43016,7 +43035,7 @@ var render = function() {
                     { staticClass: "form-group" },
                     [
                       _c("label", { attrs: { for: "procRadio" } }, [
-                        _vm._v("Procedimiento PM")
+                        _vm._v("Procedimiento PM (*)")
                       ]),
                       _vm._v(" "),
                       _c("v-select", {
@@ -43043,7 +43062,7 @@ var render = function() {
                     "div",
                     { staticClass: "form-group" },
                     [
-                      _c("label", [_vm._v("Norma Evaluación")]),
+                      _c("label", [_vm._v("Norma Evaluación (*)")]),
                       _vm._v(" "),
                       _c("v-select", {
                         attrs: {
@@ -43068,7 +43087,7 @@ var render = function() {
                     "div",
                     { staticClass: "form-group" },
                     [
-                      _c("label", [_vm._v("Norma Ensayo")]),
+                      _c("label", [_vm._v("Norma Ensayo (*)")]),
                       _vm._v(" "),
                       _c("v-select", {
                         attrs: {
@@ -43093,7 +43112,7 @@ var render = function() {
                     "div",
                     { staticClass: "form-group" },
                     [
-                      _c("label", [_vm._v("Método")]),
+                      _c("label", [_vm._v("Método (*)")]),
                       _vm._v(" "),
                       _c("v-select", {
                         attrs: {
@@ -43115,9 +43134,17 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-3" }, [
                   _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "vehiculo" } }, [
-                      _vm._v("Vehículo")
-                    ]),
+                    _vm.requiereVehiculoAditivo
+                      ? _c("div", [
+                          _c("label", { attrs: { for: "vehiculo" } }, [
+                            _vm._v("Vehículo (*)")
+                          ])
+                        ])
+                      : _c("div", [
+                          _c("label", { attrs: { for: "vehiculo" } }, [
+                            _vm._v("Vehículo")
+                          ])
+                        ]),
                     _vm._v(" "),
                     _c("input", {
                       directives: [
@@ -43149,9 +43176,17 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-3" }, [
                   _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "aditivo" } }, [
-                      _vm._v("Aditivo")
-                    ]),
+                    _vm.requiereVehiculoAditivo
+                      ? _c("div", [
+                          _c("label", { attrs: { for: "aditivo" } }, [
+                            _vm._v("Aditivo (*)")
+                          ])
+                        ])
+                      : _c("div", [
+                          _c("label", { attrs: { for: "aditivo" } }, [
+                            _vm._v("Aditivo")
+                          ])
+                        ]),
                     _vm._v(" "),
                     _c("input", {
                       directives: [
@@ -43184,7 +43219,7 @@ var render = function() {
                 _c("div", { staticClass: "col-md-3" }, [
                   _c("div", { staticClass: "form-group" }, [
                     _c("label", { attrs: { for: "concentracion" } }, [
-                      _vm._v("Concentración")
+                      _vm._v("Concentración (*)")
                     ]),
                     _vm._v(" "),
                     _c("input", {
@@ -43220,7 +43255,7 @@ var render = function() {
                     "div",
                     { staticClass: "form-group" },
                     [
-                      _c("label", [_vm._v("Tipo Magnetización")]),
+                      _c("label", [_vm._v("Tipo Magnetización (*)")]),
                       _vm._v(" "),
                       _c("v-select", {
                         attrs: {
@@ -43247,7 +43282,7 @@ var render = function() {
                     "div",
                     { staticClass: "form-group" },
                     [
-                      _c("label", [_vm._v("Magnetización")]),
+                      _c("label", [_vm._v("Magnetización (*)")]),
                       _vm._v(" "),
                       _c("v-select", {
                         attrs: { label: "codigo", options: _vm.corrientes },
@@ -43307,7 +43342,7 @@ var render = function() {
                     "div",
                     { staticClass: "form-group" },
                     [
-                      _c("label", [_vm._v("Desmagnetización")]),
+                      _c("label", [_vm._v("Desmagnetización (*)")]),
                       _vm._v(" "),
                       _c("v-select", {
                         attrs: { label: "codigo", options: _vm.corrientes },
@@ -43326,7 +43361,9 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-1 size-1-5" }, [
                   _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "v" } }, [_vm._v("Voltaje")]),
+                    _c("label", { attrs: { for: "v" } }, [
+                      _vm._v("Voltaje (*)")
+                    ]),
                     _vm._v(" "),
                     _c("input", {
                       directives: [
@@ -43354,7 +43391,7 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-1 size-1-5" }, [
                   _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "am" } }, [_vm._v("Am")]),
+                    _c("label", { attrs: { for: "am" } }, [_vm._v("Am (*)")]),
                     _vm._v(" "),
                     _c("input", {
                       directives: [
@@ -43386,7 +43423,7 @@ var render = function() {
                     { staticClass: "form-group" },
                     [
                       _c("label", { attrs: { for: "color_particulas" } }, [
-                        _vm._v("Color Particulas")
+                        _vm._v("Color Particulas (*)")
                       ]),
                       _vm._v(" "),
                       _c("v-select", {
@@ -43413,7 +43450,7 @@ var render = function() {
                     { staticClass: "form-group" },
                     [
                       _c("label", { attrs: { for: "iluminaciones" } }, [
-                        _vm._v("Iluminaciones")
+                        _vm._v("Iluminaciones (*)")
                       ]),
                       _vm._v(" "),
                       _c("v-select", {
@@ -43437,7 +43474,7 @@ var render = function() {
                     { staticClass: "form-group" },
                     [
                       _c("label", { attrs: { for: "ejecutor_ensayo" } }, [
-                        _vm._v("Ejecutor Ensayo")
+                        _vm._v("Ejecutor Ensayo (*)")
                       ]),
                       _vm._v(" "),
                       _c("v-select", {
@@ -43850,7 +43887,7 @@ var render = function() {
                   { staticClass: "form-group" },
                   [
                     _c("label", { attrs: { for: "formato" } }, [
-                      _vm._v("Tipo informe RI")
+                      _vm._v("Tipo informe RI (*)")
                     ]),
                     _vm._v(" "),
                     _c("v-select", {
@@ -43870,7 +43907,9 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "col-md-3" }, [
                 _c("div", { staticClass: "form-group" }, [
-                  _c("label", { attrs: { for: "fecha" } }, [_vm._v("Fecha")]),
+                  _c("label", { attrs: { for: "fecha" } }, [
+                    _vm._v("Fecha (*)")
+                  ]),
                   _vm._v(" "),
                   _c(
                     "div",
@@ -43899,9 +43938,17 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "col-md-3" }, [
                 _c("div", { staticClass: "form-group" }, [
-                  _c("label", { attrs: { for: "prefijo" } }, [
-                    _vm._v("Prefijo")
-                  ]),
+                  _vm.isGasoducto
+                    ? _c("div", [
+                        _c("label", { attrs: { for: "prefijo" } }, [
+                          _vm._v("Prefijo (*)")
+                        ])
+                      ])
+                    : _c("div", [
+                        _c("label", { attrs: { for: "prefijo" } }, [
+                          _vm._v("Prefijo")
+                        ])
+                      ]),
                   _vm._v(" "),
                   _c("input", {
                     directives: [
@@ -43964,7 +44011,7 @@ var render = function() {
               _c("div", { staticClass: "col-md-3" }, [
                 _c("div", { staticClass: "form-group" }, [
                   _c("label", { attrs: { for: "componente" } }, [
-                    _vm._v("Componente")
+                    _vm._v("Componente (*)")
                   ]),
                   _vm._v(" "),
                   _c("input", {
@@ -43997,7 +44044,7 @@ var render = function() {
                   { staticClass: "form-group" },
                   [
                     _c("label", { attrs: { for: "materiales" } }, [
-                      _vm._v("Material")
+                      _vm._v("Material (*)")
                     ]),
                     _vm._v(" "),
                     _c("v-select", {
@@ -44022,7 +44069,7 @@ var render = function() {
               _c("div", { staticClass: "col-md-1 size-1-5" }, [
                 _c("div", { staticClass: "form-group" }, [
                   _c("label", { attrs: { for: "plano_isom" } }, [
-                    _vm._v("Plano / Isom")
+                    _vm._v("Plano / Isom (*)")
                   ]),
                   _vm._v(" "),
                   _c("input", {
@@ -44055,7 +44102,7 @@ var render = function() {
                   { staticClass: "form-group" },
                   [
                     _c("label", { attrs: { for: "Diametro" } }, [
-                      _vm._v("Diametro")
+                      _vm._v("Diametro (*)")
                     ]),
                     _vm._v(" "),
                     _c("v-select", {
@@ -44141,7 +44188,7 @@ var render = function() {
               _c("div", { staticClass: "col-md-3" }, [
                 _c("div", { staticClass: "form-group" }, [
                   _c("label", { attrs: { for: "procedimientos_soldadura" } }, [
-                    _vm._v("Procedimiento Soldadura")
+                    _vm._v("Procedimiento Soldadura (*)")
                   ]),
                   _vm._v(" "),
                   _c("input", {
@@ -44229,7 +44276,7 @@ var render = function() {
                   "div",
                   { staticClass: "form-group" },
                   [
-                    _c("label", [_vm._v("Técnica")]),
+                    _c("label", [_vm._v("Técnica (*)")]),
                     _vm._v(" "),
                     _c("v-select", {
                       attrs: { label: "grafico_id", options: _vm.tecnicas },
@@ -44281,7 +44328,7 @@ var render = function() {
                   { staticClass: "form-group" },
                   [
                     _c("label", { attrs: { for: "equipos" } }, [
-                      _vm._v("Equipo")
+                      _vm._v("Equipo (*)")
                     ]),
                     _vm._v(" "),
                     _c("v-select", {
@@ -44390,7 +44437,7 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "col-md-1 size-1-5" }, [
                 _c("div", { staticClass: "form-group" }, [
-                  _c("label", { attrs: { for: "foco" } }, [_vm._v("Foco")]),
+                  _c("label", { attrs: { for: "foco" } }, [_vm._v("Foco (*)")]),
                   _vm._v(" "),
                   _c("input", {
                     directives: [
@@ -44421,7 +44468,7 @@ var render = function() {
                   "div",
                   { staticClass: "form-group" },
                   [
-                    _c("label", [_vm._v("Calidad de placas")]),
+                    _c("label", [_vm._v("Calidad de placas (*)")]),
                     _vm._v(" "),
                     _c("v-select", {
                       attrs: { options: _vm.tipo_peliculas, label: "codigo" },
@@ -44462,7 +44509,7 @@ var render = function() {
                   { staticClass: "form-group" },
                   [
                     _c("label", { attrs: { for: "procRadio" } }, [
-                      _vm._v("Procedimiento RI")
+                      _vm._v("Procedimiento RI (*)")
                     ]),
                     _vm._v(" "),
                     _c("v-select", {
@@ -44518,7 +44565,9 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "col-md-1" }, [
                 _c("div", { staticClass: "form-group" }, [
-                  _c("label", { attrs: { for: "pos_ant" } }, [_vm._v("Ant")]),
+                  _c("label", { attrs: { for: "pos_ant" } }, [
+                    _vm._v("Ant (*)")
+                  ]),
                   _vm._v(" "),
                   _c("input", {
                     directives: [
@@ -44546,7 +44595,9 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "col-md-1" }, [
                 _c("div", { staticClass: "form-group" }, [
-                  _c("label", { attrs: { for: "pos_pos" } }, [_vm._v("Pos")]),
+                  _c("label", { attrs: { for: "pos_pos" } }, [
+                    _vm._v("Pos (*)")
+                  ]),
                   _vm._v(" "),
                   _c("input", {
                     directives: [
@@ -44574,7 +44625,9 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "col-md-1" }, [
                 _c("div", { staticClass: "form-group" }, [
-                  _c("label", { attrs: { for: "pos_pos" } }, [_vm._v("lado")]),
+                  _c("label", { attrs: { for: "pos_pos" } }, [
+                    _vm._v("lado (*)")
+                  ]),
                   _vm._v(" "),
                   _c("input", {
                     directives: [
@@ -44605,7 +44658,7 @@ var render = function() {
                   "div",
                   { staticClass: "form-group" },
                   [
-                    _c("label", { attrs: { for: "ici" } }, [_vm._v("Ici")]),
+                    _c("label", { attrs: { for: "ici" } }, [_vm._v("Ici (*)")]),
                     _vm._v(" "),
                     _c("v-select", {
                       attrs: { label: "codigo", options: _vm.icis },
@@ -44627,7 +44680,7 @@ var render = function() {
                   "div",
                   { staticClass: "form-group" },
                   [
-                    _c("label", [_vm._v("Norma Evaluación")]),
+                    _c("label", [_vm._v("Norma Evaluación (*)")]),
                     _vm._v(" "),
                     _c("v-select", {
                       attrs: {
@@ -44652,7 +44705,7 @@ var render = function() {
                   "div",
                   { staticClass: "form-group" },
                   [
-                    _c("label", [_vm._v("Norma Ensayo")]),
+                    _c("label", [_vm._v("Norma Ensayo (*)")]),
                     _vm._v(" "),
                     _c("v-select", {
                       attrs: {
@@ -44705,7 +44758,7 @@ var render = function() {
               _c("div", { staticClass: "col-md-3" }, [
                 _c("div", { staticClass: "form-group" }, [
                   _c("label", { attrs: { for: "eps" } }, [
-                    _vm._v("Exposición")
+                    _vm._v("Exposición (*)")
                   ]),
                   _vm._v(" "),
                   _c("input", {
@@ -44772,7 +44825,7 @@ var render = function() {
                   { staticClass: "form-group" },
                   [
                     _c("label", { attrs: { for: "ejecutor_ensayo" } }, [
-                      _vm._v("Ejecutor Ensayo")
+                      _vm._v("Ejecutor Ensayo (*)")
                     ]),
                     _vm._v(" "),
                     _c("v-select", {
@@ -45650,7 +45703,7 @@ var render = function() {
               _c("div", { staticClass: "col-md-6" }, [
                 _c("div", { staticClass: "form-group" }, [
                   _c("label", { attrs: { for: "proyecto" } }, [
-                    _vm._v("Proyecto")
+                    _vm._v("Proyecto (*)")
                   ]),
                   _vm._v(" "),
                   _c("input", {
@@ -45683,7 +45736,7 @@ var render = function() {
             _c("div", { staticClass: "box-body" }, [
               _c("div", { staticClass: "col-md-3" }, [
                 _c("div", { staticClass: "form-group" }, [
-                  _c("label", { attrs: { for: "ot" } }, [_vm._v("OT Nº")]),
+                  _c("label", { attrs: { for: "ot" } }, [_vm._v("OT Nº (*)")]),
                   _vm._v(" "),
                   _c("input", {
                     directives: [
@@ -45711,7 +45764,9 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "col-md-3" }, [
                 _c("div", { staticClass: "form-group" }, [
-                  _c("label", { attrs: { for: "fts" } }, [_vm._v("FTS Nº")]),
+                  _c("label", { attrs: { for: "fts" } }, [
+                    _vm._v("FTS Nº (*)")
+                  ]),
                   _vm._v(" "),
                   _c("input", {
                     directives: [
@@ -45739,7 +45794,9 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "col-md-3" }, [
                 _c("div", { staticClass: "form-group" }, [
-                  _c("label", { attrs: { for: "fecha" } }, [_vm._v("Fecha")]),
+                  _c("label", { attrs: { for: "fecha" } }, [
+                    _vm._v("Fecha (*)")
+                  ]),
                   _vm._v(" "),
                   _c(
                     "div",
@@ -45769,7 +45826,7 @@ var render = function() {
               _c("div", { staticClass: "col-md-3" }, [
                 _c("div", { staticClass: "bootstrap-timepicker" }, [
                   _c("div", { staticClass: "form-group" }, [
-                    _c("label", [_vm._v("Hora")]),
+                    _c("label", [_vm._v("Hora (*)")]),
                     _vm._v(" "),
                     _c(
                       "div",
@@ -45798,7 +45855,7 @@ var render = function() {
                   "div",
                   { staticClass: "form-group" },
                   [
-                    _c("label", [_vm._v("Cliente")]),
+                    _c("label", [_vm._v("Cliente (*)")]),
                     _vm._v(" "),
                     _c("v-select", {
                       attrs: {
@@ -45854,7 +45911,7 @@ var render = function() {
               _c("div", { staticClass: "col-md-3" }, [
                 _c("div", { staticClass: "form-group" }, [
                   _c("label", { attrs: { for: "fecha" } }, [
-                    _vm._v("Fecha estimada de ensayo")
+                    _vm._v("Fecha estimada de ensayo (*)")
                   ]),
                   _vm._v(" "),
                   _c(
@@ -45887,7 +45944,7 @@ var render = function() {
                   "div",
                   { staticClass: "form-group" },
                   [
-                    _c("label", [_vm._v("Contacto 1")]),
+                    _c("label", [_vm._v("Contacto 1 (*)")]),
                     _vm._v(" "),
                     _c("v-select", {
                       attrs: {
@@ -45965,7 +46022,7 @@ var render = function() {
                   "div",
                   { staticClass: "form-group" },
                   [
-                    _c("label", [_vm._v("Responsable OT")]),
+                    _c("label", [_vm._v("Responsable OT (*)")]),
                     _vm._v(" "),
                     _c("v-select", {
                       attrs: {
@@ -45993,7 +46050,7 @@ var render = function() {
               _c("div", { staticClass: "col-md-6" }, [
                 _c("div", { staticClass: "form-group" }, [
                   _c("label", { attrs: { for: "lugar_ensayo" } }, [
-                    _vm._v("Lugar de ensayo")
+                    _vm._v("Lugar de ensayo (*)")
                   ]),
                   _vm._v(" "),
                   _c("input", {
@@ -46027,7 +46084,7 @@ var render = function() {
                   "div",
                   { staticClass: "form-group" },
                   [
-                    _c("label", [_vm._v("Provincia")]),
+                    _c("label", [_vm._v("Provincia (*)")]),
                     _vm._v(" "),
                     _c("v-select", {
                       attrs: { label: "provincia", options: _vm.provincias },
@@ -46052,7 +46109,7 @@ var render = function() {
                   "div",
                   { staticClass: "form-group" },
                   [
-                    _c("label", [_vm._v("Localidad")]),
+                    _c("label", [_vm._v("Localidad (*)")]),
                     _vm._v(" "),
                     _c("v-select", {
                       attrs: { label: "localidad", options: _vm.localidades },

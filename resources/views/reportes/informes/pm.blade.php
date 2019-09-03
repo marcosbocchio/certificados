@@ -7,7 +7,7 @@
 
 <style>
 
-@page { margin: 319px 25px 125px 25px !important;
+@page { margin: 319px 10px 125px 40px !important;
         padding: 0px 0px 0px 0px !important; }
 
 header {

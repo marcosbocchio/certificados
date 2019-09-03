@@ -6,7 +6,7 @@
       <div class="box-body">
         <div class="col-md-6">
           <div class="form-group">
-            <label for="proyecto">Proyecto</label>
+            <label for="proyecto">Proyecto (*)</label>
             <input type="text" v-model="proyecto" class="form-control" id="proyecto" placeholder="">
           </div>
         </div>
@@ -16,19 +16,19 @@
       <div class="box-body">
         <div class="col-md-3">
           <div class="form-group">
-            <label for="ot">OT Nº</label>
+            <label for="ot">OT Nº (*)</label>
             <input v-model="ot" type="number" class="form-control" id="ot" placeholder="">
           </div>
         </div>
       <div class="col-md-3">
         <div class="form-group">
-          <label for="fts">FTS Nº</label>
+          <label for="fts">FTS Nº (*)</label>
           <input v-model="fts" type="number" class="form-control" id="fts" placeholder="">
         </div>
       </div>
       <div class="col-md-3">
         <div class="form-group">
-          <label for="fecha">Fecha</label>
+          <label for="fecha">Fecha (*)</label>
             <div class="input-group date">
                 <div class="input-group-addon">
                   <i class="fa fa-calendar"></i>
@@ -40,7 +40,7 @@
        <div class="col-md-3">
         <div class="bootstrap-timepicker">
               <div class="form-group">
-                <label>Hora</label>
+                <label>Hora (*)</label>
 
                 <div class="input-group">
                   <div class="input-group-addon">
@@ -53,7 +53,7 @@
         </div> 
         <div class="col-md-6">                       
           <div class="form-group">
-              <label>Cliente</label>
+              <label>Cliente (*)</label>
               <v-select v-model="cliente" label="nombre_fantasia" :options="clientes" @input="getContactos()"></v-select>   
           </div>      
         </div>
@@ -65,7 +65,7 @@
         </div>        
         <div class="col-md-3">
           <div class="form-group">
-            <label for="fecha">Fecha estimada de ensayo</label>
+            <label for="fecha">Fecha estimada de ensayo (*)</label>
               <div class="input-group date">
                 <div class="input-group-addon">
                   <i class="fa fa-calendar"></i>
@@ -76,7 +76,7 @@
         </div>
         <div class="col-md-6">
           <div class="form-group">
-              <label>Contacto 1</label>
+              <label>Contacto 1 (*)</label>
               <v-select v-model="contacto1" name="contacto_1" label="nombre" :options="contactos"></v-select>   
             </div>
         </div>
@@ -94,7 +94,7 @@
         </div>
         <div class="col-md-6">
           <div class="form-group">
-              <label>Responsable OT</label>
+              <label>Responsable OT (*)</label>
               <v-select v-model="user_empresa" name="respontable_ot" label="name" :options="users_empresa"></v-select>   
           </div>
         </div>
@@ -104,15 +104,15 @@
       <div class="box-body">
         <div class="col-md-6">
           <div class="form-group">
-            <label for="lugar_ensayo">Lugar de ensayo</label>
+            <label for="lugar_ensayo">Lugar de ensayo (*)</label>
             <input v-model="lugar_ensayo" type="text" class="form-control" id="lugar_ensayo" placeholder="">
           </div>        
           <div class="form-group">
-            <label>Provincia</label>
+            <label>Provincia (*)</label>
             <v-select v-model="provincia" label="provincia" :options="provincias" @input="getLocalidades()"></v-select>   
           </div>
           <div class="form-group">
-            <label>Localidad</label>
+            <label>Localidad (*)</label>
             <v-select v-model="localidad" label="localidad" :options="localidades" @input="sync()"></v-select>   
           </div>
           <div class="form-group">
