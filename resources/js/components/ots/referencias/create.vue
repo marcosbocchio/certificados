@@ -122,27 +122,23 @@ export default {
             path4 :''
         },
      
-         }
-    
+         }    
     },
-    created :function ()  {
+    created :function ()  {      
       
-      
-      eventSetReferencia.$on('open', function(){
-      
+      eventSetReferencia.$on('open', function(){      
          
           this.setReferencia();
           $('#nuevo').modal('show');   
           
       }.bind(this));
-    },
+      
+      },
 
      
     computed :{
     
-         ...mapState(['url','AppUrl']),
-
-         
+         ...mapState(['url','AppUrl']),       
 
          
     }, 
