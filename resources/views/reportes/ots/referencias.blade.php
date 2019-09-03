@@ -82,27 +82,27 @@ td b,td span {
                     <table>    
                         <tbody>
                              <tr>
-                                <td style="text-align: center; width: 360px;height: 300px">
-                                        @if ($detalle_pm_referencia->path1!='/img/imagen1.jpg')
-                                            <img src="{{ public_path($detalle_pm_referencia->path1) }}" alt="" style="height: 174; width: 255;">
-                                        @endif  
+                                    <td style="text-align: center; width: 360px;height: 300px">
+                                          @if ($ot_referencia->path1!='/img/imagen1.jpg')
+                                              <img src="{{ public_path($ot_referencia->path1) }}" alt="" style="height: 174; width: 255;">
+                                          @endif  
                                           
                                     </td>
                                     <td style="text-align: center; width: 360px;height: 300px">
-                                     @if ($detalle_pm_referencia->path2!='/img/imagen2.jpg')
-                                            <img src="{{  public_path($detalle_pm_referencia->path2) }}" alt="" style="height: 174; width: 255;">
+                                     @if ($ot_referencia->path2!='/img/imagen2.jpg')
+                                            <img src="{{  public_path($ot_referencia->path2) }}" alt="" style="height: 174; width: 255;">
                                      @endif  
                                     </td>
                                 </tr>
                                 <tr>
                                     <td style="text-align: center; width: 360px;height: 300px">
-                                     @if ($detalle_pm_referencia->path3!='/img/imagen3.jpg')
-                                            <img src="{{  public_path($detalle_pm_referencia->path3) }}" alt="" style="height: 174; width: 255;">
+                                     @if ($ot_referencia->path3!='/img/imagen3.jpg')
+                                            <img src="{{  public_path($ot_referencia->path3) }}" alt="" style="height: 174; width: 255;">
                                     @endif  
                                     </td>
                                     <td style="text-align: center; width: 360px;height: 300px">
-                                     @if ($detalle_pm_referencia->path4!='/img/imagen4.jpg')
-                                            <img src="{{  public_path($detalle_pm_referencia->path4) }}" alt="" style="height: 174; width: 255;">
+                                     @if ($ot_referencia->path4!='/img/imagen4.jpg')
+                                            <img src="{{  public_path($ot_referencia->path4) }}" alt="" style="height: 174; width: 255;">
                                     @endif  
                                     </td>
                                 </tr>
