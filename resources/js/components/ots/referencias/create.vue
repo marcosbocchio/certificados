@@ -167,27 +167,27 @@ export default {
                 if (this.inputsData.path1 != null )
                     this.referencia.path1 = this.inputsData.path1;               
                 else{
-                    this.referencia.path1 = this.path_empty;
+                    this.referencia.path1 = this.path_empty1;
                     this.clearSelectedFile(this.$refs.inputFile1);
                    }
                 
                 if (this.inputsData.path2 != null)
                     this.referencia.path2 = this.inputsData.path2;
                 else{
-                    this.referencia.path2= this.path_empty;
+                    this.referencia.path2= this.path_empty2;
                       this.clearSelectedFile(this.$refs.inputFile2);
                 }
                 if (this.inputsData.path3 != null)
                     this.referencia.path3 = this.inputsData.path3;
                 else{
-                    this.referencia.path3= this.path_empty;
+                    this.referencia.path3= this.path_empty3;
                      this.clearSelectedFile(this.$refs.inputFile3);
 
                 }
                 if (this.inputsData.path4 != null)
                     this.referencia.path4 = this.inputsData.path4;
                 else{
-                    this.referencia.path4= this.path_empty;
+                    this.referencia.path4= this.path_empty4;
                      this.clearSelectedFile(this.$refs.inputFile4);
                 }
                     })
