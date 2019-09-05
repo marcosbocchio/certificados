@@ -40,6 +40,7 @@ Route::group(['middleware' => ['auth']], function () {
   Route::get('operadores/ot/{id}','OtOperariosController@index')->name('otOperadores');
  // Route::get('informes/ot/{id}','OtInformesController@index')->name('otInformes');
   Route::get('informes/ot/{id}','InformesController@index')->name('otInformes');
+  Route::get('remitos/ot/{id}','RemitosController@index')->name('otRemitos');
   Route::get('documentaciones/operador/{id}', 'DocumentacionesController@operarios');
   Route::get('/area/enod/ot/{ot_id}/informe/metodo/{metodo}/create','InformesController@create');
   Route::get('/area/enod/ot/{ot_id}/informe/metodo/ri','InformesRiController@create')->name('InformeRiCreate');

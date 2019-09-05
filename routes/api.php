@@ -90,6 +90,8 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('informes_pm', 'InformesPmController');
 
     //Remito
+  
+    Route::get('remitos/ot/{ot_id}/total', 'RemitosController@RemitosTotal');
     Route::resource('remitos', 'RemitosController');
    
 });

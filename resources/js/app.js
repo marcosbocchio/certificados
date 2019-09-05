@@ -72,6 +72,7 @@ Vue.component('abm-doc', require('./components/documentaciones/abm-doc.vue').def
 Vue.component('dashboard-enod', require('./components/dashboard/dashboard-enod').default);
 Vue.component('ot-operarios', require('./components/dashboard/operarios/ot-operarios').default);
 Vue.component('ot-informes', require('./components/dashboard/informes/ot-informes').default);
+Vue.component('ot-remitos', require('./components/dashboard/remitos/ot-remitos').default);
 
 
 Vue.component('ots', require('./components/ots/ots.vue').default);

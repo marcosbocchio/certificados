@@ -16,9 +16,28 @@ class RemitosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($ot_id)
     {
-        //
+      $header_titulo = "Remitos OT";
+      $header_descripcion ="Alta | Modificación";          
+      $user = auth()->user()->name;
+      $remitos = $this->getRemitosOt($ot_id);
+
+      return view('ot-remitos.index',compact('ot_id',
+                                             'user',  
+                                             'remitos',                                                                  
+                                             'header_titulo',
+                                             'header_descripcion'));
+
+    }
+
+    public function getRemitosOt($ot_id){
+
+
+      return DB::table('remitos')
+                 ->where('ot_id','=',$ot_id)
+                 ->selectRaw('id,ot_id,prefijo,numero,DATE_FORMAT(remitos.created_at,"%d/%m/%Y")as fecha,receptor,destino')
+                 ->get();
     }
 
     /**
@@ -105,7 +124,7 @@ class RemitosController extends Controller
              $detalle_remito->producto_id          = $detalle['producto']['id'];       
              $detalle_remito->medida_id            = $detalle['medida']['id'];
              $detalle_remito->cantidad             = $detalle['cantidad_productos'];         
-            $detalle_remito->save();           
+             $detalle_remito->save();           
       
            }
 
@@ -151,13 +170,13 @@ class RemitosController extends Controller
     public function getDetalle($id){
 
 
-        $detalle_remito_temp = DB::table('detalle_remitos')
+        $detalle_remito       = DB::table('detalle_remitos')
                                ->where('remito_id','=',$id)
                                ->select('id','cantidad')
                                ->get();            
   
 
-         foreach ($detalle_remito_temp as $item) {
+         foreach ($detalle_remito as $item) {
              
                 $producto = DB::table('productos')
                                 ->join('detalle_remitos','detalle_remitos.producto_id','=','productos.id')
@@ -195,15 +214,15 @@ class RemitosController extends Controller
 
         
         $remito = Remitos::where('id',$id)->first();
+        $detalles = $request->detalles;
         
         DB::beginTransaction();
         try {     
-            
+          
             $remito = $this->saveRemito($request,$remito);
-            DetalleRemitos::where('remito_id',$id)->delete();
-            $test = $this->saveDetalle($request,$remito);
-
-            return $test;
+            DetalleRemitos::where('remito_id',$id)->delete();           
+            $this->saveDetalle($detalles,$remito);
+           
            
           DB::commit();
           
@@ -214,6 +233,12 @@ class RemitosController extends Controller
           
         }
   
+    }
+
+    public function RemitosTotal($ot_id){
+
+      return Remitos::where('ot_id',$ot_id)->count(); 
+
     }
 
     /**

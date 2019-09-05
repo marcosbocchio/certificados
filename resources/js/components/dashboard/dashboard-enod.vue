@@ -20,14 +20,14 @@
           <!-- small box -->
           <div class="small-box bg-gray">
             <div class="inner">
-              <h3>0</h3>
+              <h3>{{ CantRemitos }}</h3>
 
               <p>Remitos</p>
             </div>
             <div class="icon">
               <i class="fa fa-tasks"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a :href="AppUrl + '/remitos/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -139,7 +139,8 @@ export default {
         ots :[],
         ot_id_selected : '',
         CantOperadores :'0',
-        CantInformes:'0'
+        CantInformes:'0',
+        CantRemitos:'0',
 
         }
 
@@ -156,6 +157,7 @@ export default {
       ot_id_selected: function (ContarOperadores) {      
       this.ContarOperadores();
       this.ContarInformes();
+      this.ContarRemitos();
     }
   },
 
@@ -202,8 +204,16 @@ export default {
             this.CantInformes = response.data
             });
 
+         },
+         ContarRemitos : function (){
 
-         }     
+            axios.defaults.baseURL = this.url ;                
+            var urlRegistros = 'remitos/ot/' + this.ot_id_selected +'/total' + '?api_token=' + Laravel.user.api_token;             
+            axios.get(urlRegistros).then(response =>{
+            this.CantRemitos = response.data
+            });
+
+         },     
     }
 }
     
