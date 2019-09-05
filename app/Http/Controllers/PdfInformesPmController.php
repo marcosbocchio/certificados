@@ -14,12 +14,16 @@ use App\Fuentes;
 use App\TipoPeliculas;
 use App\DiametrosEspesor;
 use App\Tecnicas;
+use App\Equipos;
 use App\EjecutorEnsayo;
 use App\User;
 use App\TecnicasGraficos;
 use PDF;
 use App\OtOperarios;
 use App\OtProcedimientosPropios;
+use App\TiposMagnetizacion;
+use App\Corrientes;
+use App\MetodosTrabajoPm;
 
 class PdfInformesPmController extends Controller
 {
@@ -39,7 +43,12 @@ class PdfInformesPmController extends Controller
          $fuente = Fuentes::find($informe_pm->fuente_id);
          $diametro_espesor = DiametrosEspesor::findOrFail($informe->diametro_espesor_id);
          $tecnica = Tecnicas::findOrFail($informe->tecnica_id);
+         $equipo = Equipos::findOrFail($informe->equipo_id);
+         $tipo_magnetizacion = TiposMagnetizacion::findOrFail($informe_pm->tipo_magnetizacion_id);
+         $magnetizacion = Corrientes::findOrFail($informe_pm->corriente_magnetizacion_id);
+         $desmagnetizacion = Corrientes::findOrFail($informe_pm->corriente_desmagnetizacion_id);
          $ot_operador = OtOperarios::findOrFail($informe->ejecutor_ensayo_id);
+         $metodo = MetodosTrabajoPm::findOrFail($informe_pm->metodo_trabajo_pm_id);
          $ejecutor_ensayo = User::findOrFail($ot_operador->user_id);
          
          $detalles =  DB::select('SELECT 
@@ -66,11 +75,16 @@ class PdfInformesPmController extends Controller
                                                                 'diametro_espesor',
                                                                 'ici',
                                                                 'tecnica',
+                                                                'equipo',
                                                                 'ejecutor_ensayo',
                                                                 'cliente',
                                                                 'informe',
                                                                 'informe_pm',
                                                                 'material',
+                                                                'tipo_magnetizacion',
+                                                                'magnetizacion',
+                                                                'desmagnetizacion',
+                                                                'metodo',
                                                                 'detalles'
                                                                 ))->setPaper('a4','portrait')->setWarnings(false);
                                                         

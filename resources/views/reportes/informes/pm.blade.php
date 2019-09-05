@@ -77,7 +77,7 @@ b {
                                 <td rowspan="4" style="text-align: right; width:233px">
                                     <img src="{{ public_path('img/logo-enod-web.jpg')}}" alt="" style="height: 60px; margin-right: 25px;">
                                 </td>   
-                                <td style="font-size: 18px; height: 30px; text-align: center;width:234px" rowspan="3"><b>INFORME RADIOGRAFÍA INDUSTRIAL</b></td>
+                                <td style="font-size: 18px; height: 30px; text-align: center;width:234px" rowspan="3"><b>INFORME PARTICULAS MAGNETIZABLES</b></td>
                                 <td style="font-size: 12px;"><b style="margin-left: 40px"></b></td>                         
                             </tr>
                             <tr>
@@ -115,7 +115,7 @@ b {
                         <tbody>                 
                         <tr>
                             <td style="font-size: 12px; width: 200px;border-right: 1px solid #000;"><b>Componente: </b>{{$informe->componente}}</td>
-                            <td style="font-size: 12px;width: 50px; " colspan="2" ><b>Equipo: </b></td>
+                            <td style="font-size: 12px;width: 50px; " colspan="2" ><b>Equipo: </b>{{$equipo->codigo}}</td>
                             <td style="font-size: 12px;" ><b>Kv: </b>{{$informe->kv}}</td>
                             <td style="font-size: 12px; width: 50px; border-right: 1px solid #000;" ><b>mA: </b>{{$informe->ma}}</td>
                             <td style="font-size: 11px;  " colspan="2"  ><b style="font-size: 12px;">Norma Evaluación: </b>{{$norma_evaluacion->descripcion}}</td>                            
@@ -123,21 +123,13 @@ b {
                         <tr>                
                             
                             <td style="font-size: 12px;border-right: 1px solid #000;"  ><b>Material: </b>{{$material->codigo}}</td>
-                            <td style="font-size: 12px;  width: 270px; border-right: 1px solid #000;" colspan="4"  ><b>Fuente: </b>     
-
-                            @if ($fuente)
-
-                                {{$fuente->codigo}} 
-                                
-                            @endif
-                            
-                            
-                            </td>
+                            <td style="font-size: 12px;  width: 270px; border-right: 1px solid #000;" colspan="4"  ><b>Método: </b>{{$metodo->codigo}}</td>
                             <td style="font-size: 12px; " colspan="2"  ><b>Norma Ensayo: </b>{{$norma_ensayo->descripcion}}</td>                
                         </tr>
                         <tr>
                             <td style="font-size: 12px;border-right: 1px solid #000;"  ><b>Plano / Isom :</b>{{$informe->plano_isom}}</td>
-                            <td style="font-size: 12px; border-right: 1px solid #000;" colspan="4"  ><b>Tipo Magnetización: </b>{{$informe_pm->foco}}</td>   
+                            <td style="font-size: 12px;border-right: 1px solid #000; " colspan="4"  ><b>Vehículo: </b>{{$informe_pm->vehiculo}}</td>
+                            
                             
                             <td style="font-size: 12px;  "  ><b>Actividad: </b>{{$informe_pm->pos_pos}}</td>
                             <td style="font-size: 12px;"  ><b>N° Exp. : </b>{{$informe_pm->exposicion}}</td>
@@ -145,8 +137,7 @@ b {
                         </tr>
                         <tr>
                             <td style="font-size: 12px; border-right: 1px solid #000;"  ><b>Diametro: </b>{{$diametro_espesor->diametro}}</td>    
-                            <td style="font-size: 12px; border-right: 1px solid #000; " colspan="2"  ><b>Magnetización : </b></td>  
-                             <td style="font-size: 12px;" colspan="2"  ><b>Desmaganetización: </b></td>      
+                            <td style="font-size: 12px;border-right: 1px solid #000; " colspan="4"  ><b>Aditivo: </b>{{$informe_pm->aditivo}}</td>    
                             <td style="font-size: 12px;  " colspan="2" ><b>Dis.Fuente/pelicula: </b>{{$informe_pm->distancia_fuente_pelicula}}</td>
                         </tr>
                         <tr>
@@ -159,31 +150,28 @@ b {
                                 @endif                       
                             
                             </td>
-                            <td style="font-size: 12px; border-right: 1px solid #000;" colspan="4"  ><b>Desmaganetización: </b></td>    
+                            <td style="font-size: 12px; border-right: 1px solid #000;" colspan="4"  ><b>Tipo Magnetización: </b>{{$tipo_magnetizacion->codigo}}</td>    
                             <td style="font-size: 12px;  " colspan="2" ><b>Ejecutor Ensayo : </b>{{$ejecutor_ensayo->name}}</td>                
                         
                         </tr>
                         <tr>                           
                             <td style="font-size: 12px;border-right: 1px solid #000;" ><b>Proc. Sold. : </b>{{$informe->procedimiento_soldadura}}</td>
                             
-                            <td style="font-size: 12px; width: 75px"   ><b>Pantalla: </b>Pb</td>
-                            <td style="font-size: 12px; width: 15px"  ><b>Ant: </b>{{$informe_pm->pos_ant}}</td>
-                            <td style="font-size: 12px; width: 15px"  ><b>Pos: </b>{{$informe_pm->pos_pos}}</td>
-                            <td style="font-size: 12px; width: 1px; border-right: 1px solid #000;"  ><b>Lado: </b>{{$informe_pm->lado}}</td>
-                            
-                            <td style="font-size: 12px; " colspan="2" ><b>Tecnica: </b>{{$tecnica->descripcion}}</td>
+                           <td style="font-size: 12px;  " colspan="2"  ><b>Magnetización : </b>{{$magnetizacion->codigo}}</td>  
+                           <td style="font-size: 12px;border-right: 1px solid #000;" colspan="2"  ><b>Fueza Portante: </b>{{$magnetizacion->fuerza_portante}}</td>                            
+                           <td style="font-size: 12px; " colspan="2" ><b>Tecnica: </b>{{$tecnica->descripcion}}</td>
                         </tr>
                         <tr>
                             <td style="font-size: 12px;border-right: 1px solid #000;" ><b>Eps: </b>{{$informe->eps}}</td>
-                            <td style="font-size: 12px; border-right: 1px solid #000; " colspan="4" ><b>Proc. RI: </b>{{$procedimiento_inf->titulo}} </td>                        
-                            <td style="text-align: center; " colspan="2" rowspan="2" >
-                                          
-                                    
-                            </td>  
+                            <td style="font-size: 12px;" colspan="2"  ><b>Concentración: </b>{{$informe_pm->concentracion}}</td>
+                            <td style="font-size: 12px;" colspan="1"  ><b>V: </b>{{$informe_pm->voltaje}}</td>  
+                            <td style="font-size: 12px; border-right: 1px solid #000;" colspan="1"  ><b>Am: </b>{{$informe_pm->amperaje}}</td>                          
+                            <td style="font-size: 12px; border-right: 1px solid #000;" colspan="2"  ><b>Desmaganetización: </b>{{$desmagnetizacion->codigo}}</td>  
                         </tr>
                         <tr>                           
                             <td style="font-size: 12px;border-right: 1px solid #000;" ><b>Pqr: </b>{{$informe->pqr}}</td>
-                            <td style="font-size: 12px; border-right: 1px solid #000;" colspan="4" ><b>Ici : </b></td> 
+                            <td style="font-size: 12px; border-right: 1px solid #000; " colspan="4" ><b>Proc. PM: </b>{{$procedimiento_inf->titulo}} </td>
+                            <td style="text-align: center; " colspan="2" ></td>  
 
                         </tr>                
                         </tbody>
@@ -294,7 +282,7 @@ b {
 <script type="text/php">
 
     if ( isset($pdf) ) {
-        $x = 469;
+        $x = 481;
         $y = 77;
         $text = "PÁGINA : {PAGE_NUM} de {PAGE_COUNT}";
         $font = $fontMetrics->get_font("serif", "bold");
