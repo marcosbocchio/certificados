@@ -59,7 +59,7 @@ class PdfOtController extends Controller
                                                          'localidad',
                                                          'provincia',
                                                          'metodos_ensayos',
-                                                         'geo'));
+                                                         'geo'))->setPaper('a4','portrait')->setWarnings(false);
 
         return $pdf->stream();
         

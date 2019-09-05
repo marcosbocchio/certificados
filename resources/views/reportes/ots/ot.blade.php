@@ -19,12 +19,14 @@ td {
 td b,td span {
   margin-left: 10px;
 } 
+
+
 </style>
 
   </head>
   <body>
 
-    <table style="text-align: center" class="bordered" width="100%">
+    <table style="text-align: center;" class="bordered" width="100%">
       <tbody>
         <tr> 
           <td class="bordered">
@@ -128,7 +130,7 @@ td b,td span {
             </td>
         </tr>
         <tr>
-            <td style="height: 415px;vertical-align: top;">
+            <td style="height: 540px;vertical-align: top;">
               <table>
                   <tbody>
                       <tr>
@@ -229,12 +231,12 @@ td b,td span {
             <td  class="bordered">
               <table>
                 <tbody>
-                  <tr style="padding: 15px 0px 15px 0px">
-                      <td style="font-size: 13px; width: 500px; padding: 20px 0px 20px 0px"><b>Responsable OT: </b>{{$responsable_ot->name }}</td>      
-                      <td style="font-size: 13px; width: 200px; padding: 20px 0px 20px 0px"><b>Firma: </b></td>        
+                  <tr >
+                      <td style="font-size: 13px; width: 500px; padding: 20px 0px 10px 0px"><b>Responsable OT: </b>{{$responsable_ot->name }}</td>      
+                      <td style="font-size: 13px; width: 200px; padding: 20px 0px 10px 0px"><b>Firma: </b></td>        
                   </tr>
-                   <tr style="padding: 5px 0px 15px 0px">
-                      <td style="font-size: 13px; width: 500px; padding: 20px 0px 20px 0px"><b>Generador OT: </b>{{$generador_ot->name }}</td>     
+                   <tr >
+                      <td style="font-size: 13px; width: 500px; padding: 10px 0px 20px 0px"><b>Generador OT: </b>{{$generador_ot->name }}</td>     
                             
                   </tr>
                   

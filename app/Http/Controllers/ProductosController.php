@@ -3,19 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Repositories\Productos\ProductosRepository;
 use App\Productos;
-use App\User;
 
 class ProductosController extends Controller
 {
 
-    Protected $productos;
-
-    public function __construct(ProductosRepository $productosRepository)
-    {
-      $this->productos = $productosRepository;
-    }
     /**
      * Display a listing of the resource.
      *
@@ -23,8 +15,14 @@ class ProductosController extends Controller
      */
     public function index()
     {
-        return  $this->productos->getAll();
+        return  Productos::All();
     }
+
+    public function ProductosOts(){
+
+        return  Productos::where('visible_ot',1)->get();
+    }
+  
 
     /**
      * Show the form for creating a new resource.

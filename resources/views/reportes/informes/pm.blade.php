@@ -17,7 +17,6 @@ header {
     }
 
 .contenido {
-
    
     margin-bottom: -2px;
 }
@@ -138,7 +137,7 @@ b {
                         </tr>
                         <tr>
                             <td style="font-size: 12px;border-right: 1px solid #000;"  ><b>Plano / Isom :</b>{{$informe->plano_isom}}</td>
-                            <td style="font-size: 12px; border-right: 1px solid #000;" colspan="4"  ><b>Foco: </b>{{$informe_pm->foco}}</td>   
+                            <td style="font-size: 12px; border-right: 1px solid #000;" colspan="4"  ><b>Tipo Magnetización: </b>{{$informe_pm->foco}}</td>   
                             
                             <td style="font-size: 12px;  "  ><b>Actividad: </b>{{$informe_pm->pos_pos}}</td>
                             <td style="font-size: 12px;"  ><b>N° Exp. : </b>{{$informe_pm->exposicion}}</td>
@@ -146,7 +145,8 @@ b {
                         </tr>
                         <tr>
                             <td style="font-size: 12px; border-right: 1px solid #000;"  ><b>Diametro: </b>{{$diametro_espesor->diametro}}</td>    
-                            <td style="font-size: 12px; border-right: 1px solid #000; " colspan="4"  ><b>Pelicula : </b></td>    
+                            <td style="font-size: 12px; border-right: 1px solid #000; " colspan="2"  ><b>Magnetización : </b></td>  
+                             <td style="font-size: 12px;" colspan="2"  ><b>Desmaganetización: </b></td>      
                             <td style="font-size: 12px;  " colspan="2" ><b>Dis.Fuente/pelicula: </b>{{$informe_pm->distancia_fuente_pelicula}}</td>
                         </tr>
                         <tr>
@@ -159,7 +159,7 @@ b {
                                 @endif                       
                             
                             </td>
-                            <td style="font-size: 12px; border-right: 1px solid #000;" colspan="4"  ><b>Tipo: </b></td>    
+                            <td style="font-size: 12px; border-right: 1px solid #000;" colspan="4"  ><b>Desmaganetización: </b></td>    
                             <td style="font-size: 12px;  " colspan="2" ><b>Ejecutor Ensayo : </b>{{$ejecutor_ensayo->name}}</td>                
                         
                         </tr>

@@ -20,7 +20,7 @@
           <!-- small box -->
           <div class="small-box bg-gray">
             <div class="inner">
-              <h3>53<sup style="font-size: 20px">%</sup></h3>
+              <h3>0</h3>
 
               <p>Remitos</p>
             </div>
@@ -35,7 +35,7 @@
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3>44</h3>
+              <h3>0</h3>
 
               <p>Procedimientos</p>
             </div>
@@ -65,7 +65,7 @@
           <!-- small box -->
           <div class="small-box bg-blue">
             <div class="inner">
-              <h3>65</h3>
+              <h3>0</h3>
 
               <p>Partes Diarios</p>
             </div>
@@ -80,7 +80,7 @@
           <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
-              <h3>65</h3>
+              <h3>0</h3>
 
               <p>Certificados</p>
             </div>

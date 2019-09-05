@@ -774,10 +774,10 @@ export default {
         getProductos : function(){
              
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'productos' + '?api_token=' + Laravel.user.api_token;        
+                var urlRegistros = 'productos/ots' + '?api_token=' + Laravel.user.api_token;        
                 axios.get(urlRegistros).then(response =>{
                 this.productos = response.data
-                });
+                }); 
               },
         getEpps : function(){
              

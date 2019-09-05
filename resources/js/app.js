@@ -78,6 +78,9 @@ Vue.component('ots', require('./components/ots/ots.vue').default);
 Vue.component('create-referencias', require('./components/ots/referencias/create.vue').default);
 
 
+Vue.component('remitos', require('./components/remitos/remitos.vue').default);
+
+
 
   /* Infomres    */
   Vue.component('informe-ri', require('./components/informes/informe-ri.vue').default);

@@ -37,6 +37,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('norma_evaluaciones', 'NormaEvaluacionesController');
     Route::resource('ots', 'OtsController');
     Route::resource('ot_servicios', 'OtServiciosController');
+    Route::get('productos/ots', 'ProductosController@ProductosOts');
     Route::resource('productos', 'ProductosController');
     Route::resource('medidas', 'MedidasController');
     Route::resource('epps', 'EppsController');
@@ -71,9 +72,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('informes/ot/{ot_id}/total', 'InformesController@OtInformesTotal');
 
   
-    Route::get('informes/ot/{ot_id}/metodo/{metodo}/generar-numero-informe', 'InformesController@GenerarNumeroInforme');
-
-
+    Route::get('informes/ot/{ot_id}/metodo/{metodo}/generar-numero-informe', 'InformesController@GenerarNumeroInforme');   
 
     Route::post('storage/referencia', 'StorageController@saveReferencia');
     Route::post('storage/documento', 'StorageController@saveDocumento');
@@ -89,7 +88,9 @@ Route::group(['middleware' => 'auth:api'], function()
     /*  informes */ 
     Route::resource('informes_ri', 'InformesRiController');
     Route::resource('informes_pm', 'InformesPmController');
-    
+
+    //Remito
+    Route::resource('remitos', 'RemitosController');
    
 });
 
