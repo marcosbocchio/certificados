@@ -48197,7 +48197,7 @@ var render = function() {
               _c("div", { staticClass: "col-md-3" }, [
                 _c("div", { staticClass: "form-group" }, [
                   _c("label", { attrs: { for: "prefijo" } }, [
-                    _vm._v("Prefijo N°")
+                    _vm._v("Prefijo N° (*)")
                   ]),
                   _vm._v(" "),
                   _c("input", {
@@ -48227,7 +48227,7 @@ var render = function() {
               _c("div", { staticClass: "col-md-3" }, [
                 _c("div", { staticClass: "form-group" }, [
                   _c("label", { attrs: { for: "numero" } }, [
-                    _vm._v("Remito N°")
+                    _vm._v("Remito N° (*)")
                   ]),
                   _vm._v(" "),
                   _c("input", {
@@ -48257,7 +48257,7 @@ var render = function() {
               _c("div", { staticClass: "col-md-6" }, [
                 _c("div", { staticClass: "form-group" }, [
                   _c("label", { attrs: { for: "receptor" } }, [
-                    _vm._v("Receptor")
+                    _vm._v("Receptor (*)")
                   ]),
                   _vm._v(" "),
                   _c("input", {
@@ -48287,7 +48287,7 @@ var render = function() {
               _c("div", { staticClass: "col-md-6" }, [
                 _c("div", { staticClass: "form-group" }, [
                   _c("label", { attrs: { for: "destino" } }, [
-                    _vm._v("Destinatario")
+                    _vm._v("Destinatario (*)")
                   ]),
                   _vm._v(" "),
                   _c("input", {

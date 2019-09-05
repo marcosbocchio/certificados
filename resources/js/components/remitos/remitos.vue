@@ -18,25 +18,25 @@
                         </div>  
                         <div class="col-md-3">
                             <div class="form-group" >
-                                <label for="prefijo">Prefijo N°</label>
+                                <label for="prefijo">Prefijo N° (*)</label>
                                 <input type="number" v-model="prefijo" class="form-control" id="prefijo">
                             </div>                            
                         </div>  
                         <div class="col-md-3">
                             <div class="form-group" >
-                                <label for="numero">Remito N°</label>
+                                <label for="numero">Remito N° (*)</label>
                                 <input type="number" v-model="numero" class="form-control" id="numero">
                             </div>                            
                         </div>  
                         <div class="col-md-6">
                             <div class="form-group" >
-                                <label for="receptor">Receptor</label>
+                                <label for="receptor">Receptor (*)</label>
                                 <input type="text" v-model="receptor" class="form-control" id="receptor" maxlength="45" >
                             </div>                            
                         </div>
                         <div class="col-md-6">
                             <div class="form-group" >
-                                <label for="destino">Destinatario</label>
+                                <label for="destino">Destinatario (*)</label>
                                 <input type="text" v-model="destino" class="form-control" id="destino" maxlength="100">
                             </div>                            
                         </div>

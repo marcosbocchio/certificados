@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\RemitoRequest;
 use App\Ots;
 use App\Remitos;
 use Illuminate\Support\Facades\DB;
@@ -64,7 +65,7 @@ class RemitosController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RemitoRequest $request)
     {
      
 
@@ -209,7 +210,7 @@ class RemitosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(RemitoRequest $request, $id)
     {
 
         
