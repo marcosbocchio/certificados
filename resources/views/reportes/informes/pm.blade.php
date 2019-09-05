@@ -131,8 +131,7 @@ b {
                             <td style="font-size: 12px;border-right: 1px solid #000; " colspan="4"  ><b>Vehículo: </b>{{$informe_pm->vehiculo}}</td>
                             
                             
-                            <td style="font-size: 12px;  "  ><b>Actividad: </b>{{$informe_pm->pos_pos}}</td>
-                            <td style="font-size: 12px;"  ><b>N° Exp. : </b>{{$informe_pm->exposicion}}</td>
+                            <td style="font-size: 12px; border-right: 1px solid #000;" colspan="2"  ><b>Desmaganetización: </b>{{$desmagnetizacion->codigo}}</td>
                             
                         </tr>
                         <tr>
@@ -166,12 +165,12 @@ b {
                             <td style="font-size: 12px;" colspan="2"  ><b>Concentración: </b>{{$informe_pm->concentracion}}</td>
                             <td style="font-size: 12px;" colspan="1"  ><b>V: </b>{{$informe_pm->voltaje}}</td>  
                             <td style="font-size: 12px; border-right: 1px solid #000;" colspan="1"  ><b>Am: </b>{{$informe_pm->amperaje}}</td>                          
-                            <td style="font-size: 12px; border-right: 1px solid #000;" colspan="2"  ><b>Desmaganetización: </b>{{$desmagnetizacion->codigo}}</td>  
+                            <td style="font-size: 12px; border-right: 1px solid #000;" colspan="2"  ><b>Color Partículas: </b>{{$color_particula->codigo}} </td>  
                         </tr>
                         <tr>                           
                             <td style="font-size: 12px;border-right: 1px solid #000;" ><b>Pqr: </b>{{$informe->pqr}}</td>
                             <td style="font-size: 12px; border-right: 1px solid #000; " colspan="4" ><b>Proc. PM: </b>{{$procedimiento_inf->titulo}} </td>
-                            <td style="text-align: center; " colspan="2" ></td>  
+                             <td style="font-size: 12px; border-right: 1px solid #000;" colspan="2"  ><b>Iluminación: </b>{{$iluminacion->codigo}} </td>  
 
                         </tr>                
                         </tbody>

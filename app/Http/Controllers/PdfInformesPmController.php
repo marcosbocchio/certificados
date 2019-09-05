@@ -24,6 +24,8 @@ use App\OtProcedimientosPropios;
 use App\TiposMagnetizacion;
 use App\Corrientes;
 use App\MetodosTrabajoPm;
+use App\ColorParticulas;
+use App\Iluminaciones;
 
 class PdfInformesPmController extends Controller
 {
@@ -50,6 +52,8 @@ class PdfInformesPmController extends Controller
          $ot_operador = OtOperarios::findOrFail($informe->ejecutor_ensayo_id);
          $metodo = MetodosTrabajoPm::findOrFail($informe_pm->metodo_trabajo_pm_id);
          $ejecutor_ensayo = User::findOrFail($ot_operador->user_id);
+         $color_particula = ColorParticulas::findOrFail($informe_pm->color_particula_id);
+         $iluminacion = Iluminaciones::findOrFail($informe_pm->iluminacion_id);
          
          $detalles =  DB::select('SELECT 
                                 detalles_pm.pieza as pieza,
@@ -85,6 +89,8 @@ class PdfInformesPmController extends Controller
                                                                 'magnetizacion',
                                                                 'desmagnetizacion',
                                                                 'metodo',
+                                                                'color_particula',
+                                                                'iluminacion',
                                                                 'detalles'
                                                                 ))->setPaper('a4','portrait')->setWarnings(false);
                                                         
