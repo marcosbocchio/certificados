@@ -6,14 +6,15 @@
 
  <style>
          @page { size: auto;  margin: 0mm; }
-         
- body {
-        height: 842px;
-        width: 595px;
-        /* to centre page on screen*/
-        margin-left: auto;
-        margin-right: auto;
-    }
+
+@media print {
+    body{
+        width: 21cm;
+        height: 29.7cm;
+        margin: 30mm 45mm 30mm 45mm; 
+        /* change the margins as you want them to be. */
+   } 
+}
 
 header .fecha span {
 
