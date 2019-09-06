@@ -5,17 +5,16 @@
    
 
  <style>
-         @page { size: auto;  margin: 0mm; }
+       
 
-@media print {
-    body{
-        width: 21cm;
-        height: 29.7cm;
-        margin: 30mm 45mm 30mm 45mm; 
-        /* change the margins as you want them to be. */
-   } 
+@media print {  
+  @page {
+    size: 210mm 297mm ; /* landscape */
+    /* you can also specify margins here: */
+    margin: 25mm;
+    margin-right: 45mm; /* for compatibility with both A4 and Letter */
+  }
 }
-
 header .fecha span {
 
     font-size: 20px;
@@ -24,21 +23,21 @@ header .fecha span {
 header .fecha .dia {
 
     position: absolute;
-    top: 100px;
+    top: 150px;
     left: 550px;
 }
 
 header .fecha .mes {
 
     position: absolute;
-    top: 100px;
+    top: 150px;
     left: 580px;
 }
 
 header .fecha .anio {
 
     position: absolute;
-    top: 100px;
+    top: 150px;
     left: 610px;
 }
 
