@@ -36,7 +36,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group" >
-                                <label for="destino">Destinatario (*)</label>
+                                <label for="destino">Lugar Destino (*)</label>
                                 <input type="text" v-model="destino" class="form-control" id="destino" maxlength="100">
                             </div>                            
                         </div>

@@ -42606,7 +42606,7 @@ var render = function() {
                           staticClass: "btn btn-default btn-sm",
                           attrs: {
                             href:
-                              _vm.AppUrl + "/api/pdf/informe/" + ot_remito.id,
+                              _vm.AppUrl + "/api/pdf/remito/" + ot_remito.id,
                             target: "_blank",
                             title: "Imprimir"
                           }
@@ -48315,7 +48315,7 @@ var render = function() {
               _c("div", { staticClass: "col-md-6" }, [
                 _c("div", { staticClass: "form-group" }, [
                   _c("label", { attrs: { for: "destino" } }, [
-                    _vm._v("Destinatario (*)")
+                    _vm._v("Lugar Destino (*)")
                   ]),
                   _vm._v(" "),
                   _c("input", {

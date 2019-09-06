@@ -93,10 +93,11 @@ Route::group(['middleware' => 'auth:api'], function()
   
     Route::get('remitos/ot/{ot_id}/total', 'RemitosController@RemitosTotal');
     Route::resource('remitos', 'RemitosController');
-   
+    
 });
 
 
+Route::get('/pdf/remito/{id}','PdfRemitosController@imprimir')->name('pdfRemito');
 Route::get('/pdf/ot/{id}','PdfOtController@imprimir')->name('pdfot');
 Route::get('/pdf/servicios/referencias/{id}','PdfServiciosReferenciasController@imprimir')->name('ServiciosReferencias');
 Route::get('/pdf/productos/referencias/{id}','PdfProductosReferenciasController@imprimir')->name('ProductosReferencias');

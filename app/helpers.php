@@ -20,3 +20,9 @@ function FormatearNumeroInforme(int $numero,$metodo){
 
 }
 
+function FormatearNumeroConCeros(int $numero,$ceros){
+
+  return sprintf("%0" . $ceros ."d",$numero) ;
+
+}
+
