@@ -5,7 +5,9 @@
    
 
  <style>
-         @page { size: auto;  margin: 0mm; }
+         @page { size: 7in 9.25in;
+                 margin: 27mm 16mm 27mm 16mm;
+                }
 
 header .fecha span {
 
