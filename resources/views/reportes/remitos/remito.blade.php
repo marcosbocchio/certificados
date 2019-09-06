@@ -5,9 +5,15 @@
    
 
  <style>
-         @page { size: 7in 9.25in;
-                 margin: 27mm 16mm 27mm 16mm;
-                }
+         @page { size: auto;  margin: 0mm; }
+         
+ body {
+        height: 842px;
+        width: 595px;
+        /* to centre page on screen*/
+        margin-left: auto;
+        margin-right: auto;
+    }
 
 header .fecha span {
 
