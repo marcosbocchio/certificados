@@ -7164,7 +7164,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       cantidad_productos: '',
       productos: [],
       medidas: [],
-      inputsProductos: []
+      inputsProductos: [],
+      numero_formatedo: '',
+      prefijo_formateado: ''
     };
   },
   created: function created() {
@@ -7181,6 +7183,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.receptor = this.remitodata.receptor;
         this.destino = this.remitodata.destino;
         this.inputsProductos = this.detalledata;
+        this.formatearPrefijo(this.prefijo, 4);
+        this.formatearNumero(this.numero, 8);
+      }
+    },
+    formatearPrefijo: function formatearPrefijo(number, width) {
+      width -= number.toString().length;
+
+      if (width > 0) {
+        this.prefijo = new Array(width + (/\./.test(number) ? 2 : 1)).join('0') + number;
+      }
+    },
+    formatearNumero: function formatearNumero(number, width) {
+      width -= number.toString().length;
+
+      if (width > 0) {
+        this.numero = new Array(width + (/\./.test(number) ? 2 : 1)).join('0') + number;
       }
     },
     getProductos: function getProductos() {
@@ -42549,9 +42567,9 @@ var render = function() {
                     _c("td", [
                       _vm._v(
                         " " +
-                          _vm._s(ot_remito.prefijo) +
+                          _vm._s(ot_remito.prefijo_formateado) +
                           "-" +
-                          _vm._s(ot_remito.numero)
+                          _vm._s(ot_remito.numero_formateado)
                       )
                     ]),
                     _vm._v(" "),
@@ -48210,7 +48228,12 @@ var render = function() {
                       }
                     ],
                     staticClass: "form-control",
-                    attrs: { type: "number", id: "prefijo" },
+                    attrs: {
+                      type: "number",
+                      id: "prefijo",
+                      min: "1",
+                      max: "9999"
+                    },
                     domProps: { value: _vm.prefijo },
                     on: {
                       input: function($event) {
@@ -48240,7 +48263,12 @@ var render = function() {
                       }
                     ],
                     staticClass: "form-control",
-                    attrs: { type: "number", id: "numero" },
+                    attrs: {
+                      type: "number",
+                      id: "numero",
+                      min: "1",
+                      max: "99999999"
+                    },
                     domProps: { value: _vm.numero },
                     on: {
                       input: function($event) {

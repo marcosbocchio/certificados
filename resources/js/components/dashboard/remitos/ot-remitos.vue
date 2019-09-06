@@ -34,7 +34,7 @@
                             </thead>
                             <tbody>
                                 <tr v-for="(ot_remito,k) in ot_remitos" :key="k">                                 
-                                    <td> {{ot_remito.prefijo}}-{{ot_remito.numero}}</td>
+                                    <td> {{ot_remito.prefijo_formateado}}-{{ot_remito.numero_formateado}}</td>
                                     <td> {{ot_remito.receptor}} </td>     
                                     <td> {{ot_remito.destino}}</td>     
                                     <td> {{ot_remito.fecha}}</td>              

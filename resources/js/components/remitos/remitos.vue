@@ -19,13 +19,13 @@
                         <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="prefijo">Prefijo N° (*)</label>
-                                <input type="number" v-model="prefijo" class="form-control" id="prefijo">
+                                <input type="number" v-model="prefijo" class="form-control" id="prefijo" min="1" max="9999"/>
                             </div>                            
                         </div>  
                         <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="numero">Remito N° (*)</label>
-                                <input type="number" v-model="numero" class="form-control" id="numero">
+                                <input type="number" v-model="numero" class="form-control" id="numero" min="1" max="99999999"/>
                             </div>                            
                         </div>  
                         <div class="col-md-6">
@@ -89,10 +89,10 @@
                                         </thead>
                                         <tbody>
                                             <tr v-for="(inputsProducto,k) in inputsProductos" :key="k">
-                                            <td> {{ inputsProducto.producto.descripcion}}</td>                                                        
-                                            <td> {{ inputsProducto.medida.descripcion}}&nbsp; &nbsp; {{inputsProducto.medida.codigo }}</td>  
-                                            <td> {{ inputsProducto.cantidad_productos}}</td>                                  
-                                            <td> <i class="fa fa-minus-circle" @click="removeProducto(k)" ></i></td>
+                                                <td> {{ inputsProducto.producto.descripcion}}</td>                                                        
+                                                <td> {{ inputsProducto.medida.descripcion}}&nbsp; &nbsp; {{inputsProducto.medida.codigo }}</td>  
+                                                <td> {{ inputsProducto.cantidad_productos}}</td>                                  
+                                                <td> <i class="fa fa-minus-circle" @click="removeProducto(k)" ></i></td>
                                             </tr>
                                         </tbody>
                                         </table>
@@ -161,6 +161,9 @@ export default {
         productos:[],
         medidas:[],
         inputsProductos:[],
+
+        numero_formatedo:'',
+        prefijo_formateado:''
     }},
 
      created : function() {
@@ -172,7 +175,8 @@ export default {
 
     computed :{
 
-        ...mapState(['url','AppUrl']),   
+        ...mapState(['url','AppUrl']),
+
 
        
      },
@@ -188,43 +192,67 @@ export default {
                this.prefijo = this.remitodata.prefijo;
                this.receptor = this.remitodata.receptor;
                this.destino = this.remitodata.destino;
-               this.inputsProductos = this.detalledata;
+               this.inputsProductos = this.detalledata;   
+                
+              this.formatearPrefijo(this.prefijo,4);
+              this.formatearNumero(this.numero,8);
 
-
-            }
-         
+            }         
 
         },   
 
-    getProductos : function(){
-            
-            axios.defaults.baseURL = this.url ;
-            var urlRegistros = 'productos' + '?api_token=' + Laravel.user.api_token;        
-            axios.get(urlRegistros).then(response =>{
-            this.productos = response.data
-            }); 
-            },
+        formatearPrefijo : function ( number, width )
+                {
 
-    getMedidasProducto : function(){
-                this.medida = '';               
+                    width -= number.toString().length;
+                    if ( width > 0 )
+                    {
+                       this.prefijo=  new Array( width + (/\./.test( number ) ? 2 : 1) ).join( '0' ) + number;
+                    }
+                  
+
+                },
+         formatearNumero : function ( number, width )
+                {
+
+                    width -= number.toString().length;
+                    if ( width > 0 )
+                    {
+                       this.numero=  new Array( width + (/\./.test( number ) ? 2 : 1) ).join( '0' ) + number;
+                    }
+                  
+
+                },
+
+        getProductos : function(){
+                
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'medidas/' + this.producto.unidades_medida_id + '?api_token=' + Laravel.user.api_token;         
+                var urlRegistros = 'productos' + '?api_token=' + Laravel.user.api_token;        
                 axios.get(urlRegistros).then(response =>{
-                this.medidas = response.data
-                });
-              },
+                this.productos = response.data
+                }); 
+                },
 
-    addProducto(index) {
-            this.inputsProductos.push({ 
-                producto:this.producto,             
-                medida : this.medida,              
-                cantidad_productos:this.cantidad_productos,             
-                 });
-            this.producto='',        
-            this.medida ='',       
-            this.cantidad_productos='1'
+        getMedidasProducto : function(){
+                    this.medida = '';               
+                    axios.defaults.baseURL = this.url ;
+                    var urlRegistros = 'medidas/' + this.producto.unidades_medida_id + '?api_token=' + Laravel.user.api_token;         
+                    axios.get(urlRegistros).then(response =>{
+                    this.medidas = response.data
+                    });
+                },
 
-        },
+        addProducto(index) {
+                this.inputsProductos.push({ 
+                    producto:this.producto,             
+                    medida : this.medida,              
+                    cantidad_productos:this.cantidad_productos,             
+                    });
+                this.producto='',        
+                this.medida ='',       
+                this.cantidad_productos='1'
+
+            },
 
         removeProducto(index) {
             this.inputsProductos.splice(index, 1);

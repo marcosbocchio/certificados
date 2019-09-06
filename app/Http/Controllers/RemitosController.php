@@ -37,7 +37,7 @@ class RemitosController extends Controller
 
       return DB::table('remitos')
                  ->where('ot_id','=',$ot_id)
-                 ->selectRaw('id,ot_id,prefijo,numero,DATE_FORMAT(remitos.created_at,"%d/%m/%Y")as fecha,receptor,destino')
+                 ->selectRaw('id,ot_id,LPAD(prefijo, 4, "0") as prefijo_formateado,LPAD(numero, 8, "0") as numero_formateado,DATE_FORMAT(remitos.created_at,"%d/%m/%Y")as fecha,receptor,destino')
                  ->get();
     }
 

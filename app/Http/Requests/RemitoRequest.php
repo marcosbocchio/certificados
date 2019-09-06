@@ -25,8 +25,8 @@ class RemitoRequest extends FormRequest
     {
         return [
             'fecha'                    => 'required',
-            'prefijo'                  =>'required | integer',
-            'numero'                   =>'required | integer',
+            'prefijo'                  =>'required | numeric',
+            'numero'                   =>'required | numeric',
             'receptor'                 =>'required | Max:45',  
             'destino'                  =>'required | Max:100',  
         ];
