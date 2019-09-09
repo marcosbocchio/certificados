@@ -7250,7 +7250,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       }).then(function (response) {
         _this3.response = response.data;
-        toastr.success('Remito N°' + _this3.numero + ' fue creado con éxito ');
+        toastr.success('Remito N° ' + _this3.prefijo + '-' + _this3.numero + ' fue creado con éxito ');
         console.log(response.data);
       })["catch"](function (error) {
         _this3.errors = error.response.data.errors;
@@ -7285,7 +7285,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       }).then(function (response) {
         _this4.response = response.data;
-        toastr.success('Remito N°' + _this4.numero_inf + ' fue actualizado con éxito ');
+        toastr.success('Remito N° ' + _this4.prefijo + '-' + _this4.numero + ' fue actualizado con éxito ');
         console.log(response.data);
       })["catch"](function (error) {
         _this4.errors = error.response.data.errors;
@@ -48236,6 +48236,9 @@ var render = function() {
                     },
                     domProps: { value: _vm.prefijo },
                     on: {
+                      change: function($event) {
+                        return _vm.formatearPrefijo(_vm.prefijo, 4)
+                      },
                       input: function($event) {
                         if ($event.target.composing) {
                           return
@@ -48271,6 +48274,9 @@ var render = function() {
                     },
                     domProps: { value: _vm.numero },
                     on: {
+                      change: function($event) {
+                        return _vm.formatearNumero(_vm.numero, 8)
+                      },
                       input: function($event) {
                         if ($event.target.composing) {
                           return

@@ -19,13 +19,13 @@
                         <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="prefijo">Prefijo N° (*)</label>
-                                <input type="number" v-model="prefijo" class="form-control" id="prefijo" min="1" max="9999"/>
+                                <input type="number" v-model="prefijo" class="form-control" id="prefijo" @change="formatearPrefijo(prefijo,4)" min="1" max="9999"/>
                             </div>                            
                         </div>  
                         <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="numero">Remito N° (*)</label>
-                                <input type="number" v-model="numero" class="form-control" id="numero" min="1" max="99999999"/>
+                                <input type="number" v-model="numero" class="form-control" id="numero"  @change="formatearNumero(numero,8)" min="1" max="99999999"/>
                             </div>                            
                         </div>  
                         <div class="col-md-6">
@@ -278,7 +278,7 @@ export default {
           
           }).then(response => {
           this.response = response.data
-          toastr.success('Remito N°' + this.numero + ' fue creado con éxito ');
+          toastr.success('Remito N° ' +  this.prefijo + '-' + this.numero + ' fue creado con éxito ');
            console.log(response.data);  
         }).catch(error => {
                
@@ -320,7 +320,7 @@ export default {
       
         ).then(response => {
           this.response = response.data
-          toastr.success('Remito N°' + this.numero_inf + ' fue actualizado con éxito ');
+          toastr.success('Remito N° ' +  this.prefijo + '-' +this.numero + ' fue actualizado con éxito ');
        console.log(response.data);  
         }).catch(error => {
                

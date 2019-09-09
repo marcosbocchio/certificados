@@ -150,7 +150,7 @@ class RemitosController extends Controller
      */
     public function edit($ot_id,$id)
     {
-        $header_titulo = "Informe";
+        $header_titulo = "Remitos";
         $header_descripcion ="Editar";  
         $user = auth()->user()->name;
         $ot = Ots::findOrFail($ot_id);
