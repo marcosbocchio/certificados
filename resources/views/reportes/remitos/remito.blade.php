@@ -9,15 +9,9 @@
 
 @page {
   size: A4;
-  margin: 0;
+  margin: 0mm;
 }
-@media print {
-  html, body {
-    width: 210mm;
-    height: 297mm;
-  }
-  /* ... the rest of the rules ... */
-}
+
 header .fecha span {
 
     font-size: 15px;
