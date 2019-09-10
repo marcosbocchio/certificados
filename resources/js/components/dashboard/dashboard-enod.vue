@@ -37,7 +37,7 @@
             <div class="inner">
               <h3>0</h3>
 
-              <p>Procedimientos</p>
+              <p>Procedimientos/Documentos</p>
             </div>
             <div class="icon">
               <i class="ion ion-person-add"></i>

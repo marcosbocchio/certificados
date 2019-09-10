@@ -32,7 +32,7 @@
      :metodo_trabajo_pmdata="{{$informe_pm_metodo_trabajo_pm}}"
      :tipo_magnetizacion_data = "{{$informe_pm_tipo_magnetizacion}}"  
      :magnetizacion_data = "{{$informe_pm_magnetizacion}}"   
-     :desmagnetizacion_data = "{{$informe_pm_desmagnetizacion}}"   
+     :desmagnetizacion_sn_data = "{{$informe_pm_desmagnetizacion_sn}}"   
      :color_particula_data = "{{$infome_pm_color_particula}}"      
      :iluminacion_data = "{{$informe_pm_iluminacion}}"   
      :detalledata="{{$informe_detalle}}"     

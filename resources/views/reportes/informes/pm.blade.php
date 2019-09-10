@@ -131,7 +131,16 @@ b {
                             <td style="font-size: 12px;border-right: 1px solid #000; " colspan="4"  ><b>Vehículo: </b>{{$informe_pm->vehiculo}}</td>
                             
                             
-                            <td style="font-size: 12px; border-right: 1px solid #000;" colspan="2"  ><b>Desmaganetización: </b>{{$desmagnetizacion->codigo}}</td>
+                            <td style="font-size: 12px; border-right: 1px solid #000;" colspan="2"  ><b>Desmaganetización: </b>
+
+                            @if ($desmagnetizacion_sn)
+                                SI
+                            @else
+                                NO 
+                            @endif                    
+                            
+                            
+                            </td>
                             
                         </tr>
                         <tr>

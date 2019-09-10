@@ -119,7 +119,7 @@ b {
                             <td style="font-size: 12px; width:50px;  border-right: 1px solid #000;" ><b>mA: </b>{{$informe->ma}}</td>
                             <td style="font-size: 12px; width: 200px;border-right: 1px solid #000;" ><b>Proc. Sold. : </b>{{$informe->procedimiento_soldadura}}</td>
                             <td style="font-size: 11px; border-right: 1px solid #000; width: 225px " colspan="2"  ><b style="font-size: 12px;">Norma Evaluación: </b>{{$norma_evaluacion->descripcion}}</td>  
-                            <td style="font-size: 12px;" ><b>Dis.Fuente/pelicula: </b>{{$informe_ri->distancia_fuente_pelicula}}</td>
+                            <td style="font-size: 12px; "><b>Tecnica: </b>{{$tecnica->codigo}}</td>      
                                                  
                         </tr>
                         <tr>                
@@ -137,8 +137,10 @@ b {
                             </td>
                             <td style="font-size: 12px; border-right: 1px solid #000;" ><b>Proc. RI: </b>{{$procedimiento_inf->titulo}} </td> 
                             <td style="font-size: 12px;border-right: 1px solid #000; " colspan="2"  ><b>Norma Ensayo: </b>{{$norma_ensayo->descripcion}}</td>
-                            <td style="font-size: 12px; "><b>Tecnica: </b>{{$tecnica->codigo}}</td>      
-                                          
+                            <td style="text-align: center; " rowspan="4" >
+                                    <img src="{{ public_path($tecnicas_grafico->path)}}" alt="" style="height: 65px; margin-right: 25px;">              
+                                    
+                            </td>                                           
                         </tr>
                         <tr>
                             <td style="font-size: 12px; ;border-right: 1px solid #000;"  ><b>Plano / Isom :</b>{{$informe->plano_isom}}</td>
@@ -148,10 +150,7 @@ b {
                             
                             <td style="font-size: 12px;  "  ><b>Actividad: </b>{{$informe_ri->pos_pos}}</td>
                             <td style="font-size: 12px; border-right: 1px solid #000;"  ><b>N° Exp. : </b>{{$informe_ri->exposicion}}</td>
-                             <td style="text-align: center; " rowspan="3" >
-                                    <img src="{{ public_path($tecnicas_grafico->path)}}" alt="" style="height: 40px; margin-right: 25px;">              
-                                    
-                            </td>   
+                               
                         </tr>
                         <tr>
                             <td style="font-size: 12px; border-right: 1px solid #000;"  ><b>Diametro: </b>{{$diametro_espesor->diametro}}</td>   
@@ -177,7 +176,7 @@ b {
                             <td style="font-size: 12px; width: 15px"  ><b>Ant: </b>{{$informe_ri->pos_ant}}</td>
                             <td style="font-size: 12px; width: 15px"  ><b>Pos: </b>{{$informe_ri->pos_pos}}</td>
                             <td style="font-size: 12px; width: 1px; border-right: 1px solid #000;"  ><b>Lado: </b>{{$informe_ri->lado}}</td>
-                            <td style="font-size: 12px;border-right: 1px solid #000;" >&nbsp;</td>
+                            <td style="font-size: 12px; border-right: 1px solid #000;" ><b>Dis.Fuente/pelicula: </b>{{$informe_ri->distancia_fuente_pelicula}}</td>
                             <td style="font-size: 12px;border-right: 1px solid #000;" colspan="2" >&nbsp;</td>
                            
                         </tr>

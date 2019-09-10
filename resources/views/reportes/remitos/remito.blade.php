@@ -7,13 +7,16 @@
  <style>
        
 
-@media print {  
-  @page {
-    size: 210mm 297mm ; /* landscape */
-    /* you can also specify margins here: */
-    margin: 25mm;
-    margin-right: 45mm; /* for compatibility with both A4 and Letter */
+@page {
+  size: A4;
+  margin: 0;
+}
+@media print {
+  html, body {
+    width: 210mm;
+    height: 297mm;
   }
+  /* ... the rest of the rules ... */
 }
 header .fecha span {
 

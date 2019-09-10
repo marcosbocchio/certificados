@@ -99,20 +99,8 @@
                                 <label for="equipos">Equipo (*)</label>
                                 <v-select v-model="equipo" label="codigo" :options="equipos" ></v-select>  
                             </div>                            
-                        </div>
-                       
-                        <div class="col-md-1 size-1-5">
-                            <div class="form-group" >                   
-                                <label for="kv">Kv</label>
-                                <input  type="number" class="form-control" v-model="kv" id="kv">     
-                            </div>                         
-                        </div>
-                        <div class="col-md-1 size-1-5">
-                            <div class="form-group" >                        
-                                <label for="ma">mA</label>
-                                <input  type="number" class="form-control" v-model="ma" id="ma"> 
-                            </div>                             
-                        </div> 
+                        </div>       
+                
 
                         <div class="col-md-3">                       
                             <div class="form-group">
@@ -120,6 +108,8 @@
                                 <v-select v-model="procedimiento" label="titulo" :options="procedimientos" id="procRadio"></v-select>   
                             </div>      
                         </div>
+
+                        <div class="clearfix"></div>    
 
                         <div class="col-md-3">                       
                             <div class="form-group">
@@ -171,7 +161,7 @@
                                 <label for="concentracion">Concentración (*)</label>
                                 <input  type="number" class="form-control" v-model="concentracion" id="concentracion" step=".01"> 
                             </div>                             
-                        </div> 
+                        </div>                        
 
                         <div class="col-md-3">                       
                             <div class="form-group">
@@ -180,7 +170,20 @@
                             </div>      
                         </div>
 
-                        <div class="clearfix"></div>    
+                         
+                        <div class="col-md-1 size-1-5">
+                            <div class="form-group" >                        
+                                <label for="v">Voltaje (*)</label>
+                                <input  type="number" class="form-control" v-model="voltaje" id="v" max="999"> 
+                            </div>                             
+                        </div> 
+
+                        <div class="col-md-1 size-1-5">
+                            <div class="form-group" >                        
+                                <label for="am">Am (*)</label>
+                                <input  type="number" class="form-control" v-model="am" id="am" max="99"> 
+                            </div>                             
+                        </div> 
 
                         <div class="col-md-3">                       
                             <div class="form-group">
@@ -197,27 +200,6 @@
                         </div> 
 
                         <div class="col-md-3">                       
-                            <div class="form-group">
-                                <label>Desmagnetización (*)</label>
-                                <v-select v-model="desmagnetizacion" label="codigo" :options="corrientes"></v-select>   
-                            </div>      
-                        </div>
-
-                        <div class="col-md-1 size-1-5">
-                            <div class="form-group" >                        
-                                <label for="v">Voltaje (*)</label>
-                                <input  type="number" class="form-control" v-model="voltaje" id="v" max="999"> 
-                            </div>                             
-                        </div> 
-
-                        <div class="col-md-1 size-1-5">
-                            <div class="form-group" >                        
-                                <label for="am">Am (*)</label>
-                                <input  type="number" class="form-control" v-model="am" id="am" max="99"> 
-                            </div>                             
-                        </div> 
-
-                        <div class="col-md-3">                       
                             <div class="form-group" >
                                 <label for="color_particulas">Color Particulas (*)</label>
                                 <v-select v-model="color_partula" label="codigo" :options="color_particulas"></v-select>   
@@ -230,6 +212,15 @@
                                 <v-select v-model="iluminacion" label="codigo" :options="iluminaciones"></v-select>   
                             </div>         
                         </div>  
+
+                        <div class="clearfix"></div>    
+
+                        <div class="col-md-3">                       
+                            <div class="form-group">
+                                <label>Desmagnetización (*)</label>
+                                <v-select v-model="desmagnetizacion" label="codigo" :options="['SI','NO']"></v-select>   
+                            </div>      
+                        </div>
 
                         <div class="col-md-3">                       
                             <div class="form-group" >
@@ -260,57 +251,55 @@
                         </div>  
 
                          <div class="col-md-1">                             
-                                <span>
-                                    <i class="fa fa-plus-circle" @click="addDetalle()"></i>
-                                </span>
-                            
+                            <span>
+                                <i class="fa fa-plus-circle" @click="addDetalle()"></i>
+                            </span>                            
                          </div>  
 
                          <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-hover table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:100px;">PIEZA</th>
+                                            <th style="width:50px;">N°</th> 
+                                            <th style="width:400px;">DETALLE</th>
+                                            <th style="width:80px;">ACEPTABLE </th>    
+                                            <th style="width:80px;">REFERENCIA </th>                                                  
+                                                                        
+                                            <th  style="width:30px;"  colspan="1">&nbsp;</th>
+                                        </tr>
+                                    </thead>                         
+                                    <tbody>
+                                        <tr v-for="(inputPiezaFalla,k) in (inputPiezasFalla)" :key="k" @click="selectPosDetalle(k)" :class="{selected: indexPosDetalle === k}" >
+                                            <td>{{ inputPiezaFalla.pieza }}</td>                                        
+                                            <td>{{ inputPiezaFalla.numero }}</td>
+                                            <td>   
+                                                <div v-if="indexPosDetalle == k ">       
+                                                <input type="text" v-model="inputPiezasFalla[k].detalle" maxlength="50" size="120">        
+                                                </div>   
+                                                <div v-else>
+                                                {{ inputPiezasFalla[k].detalle }}
+                                                </div>  
+                                            </td>    
+                                            <td> 
+                                                <input type="checkbox" id="checkbox" v-model="inputPiezasFalla[k].aceptable_sn">  </td>
+                                            <td> 
+                                                <span :class="{ existe : (inputPiezaFalla.observaciones ||
+                                                                            inputPiezaFalla.path1 ||
+                                                                            inputPiezaFalla.path2 ||
+                                                                            inputPiezaFalla.path3 ||
+                                                                            inputPiezaFalla.path4 )                      
+                                            }" class="fa fa-file-archive-o" @click="OpenReferencias($event,k,'Informe PM',inputPiezaFalla)" ></span>
+                                            </td>                                
 
-                        <div class="table-responsive">
-                            <table class="table table-hover table-striped">
-                                <thead>
-                                    <tr>
-                                        <th style="width:100px;">PIEZA</th>
-                                        <th style="width:50px;">N°</th> 
-                                        <th style="width:400px;">DETALLE</th>
-                                        <th style="width:80px;">ACEPTABLE </th>    
-                                         <th style="width:80px;">REFERENCIA </th>                                                  
-                                                                       
-                                        <th  style="width:30px;"  colspan="1">&nbsp;</th>
-                                    </tr>
-                                </thead>                         
-                                <tbody>
-                                    <tr v-for="(inputPiezaFalla,k) in (inputPiezasFalla)" :key="k" @click="selectPosDetalle(k)" :class="{selected: indexPosDetalle === k}" >
-                                        <td>{{ inputPiezaFalla.pieza }}</td>                                        
-                                        <td>{{ inputPiezaFalla.numero }}</td>
-                                        <td>   
-                                            <div v-if="indexPosDetalle == k ">       
-                                              <input type="text" v-model="inputPiezasFalla[k].detalle" maxlength="50" size="120">        
-                                            </div>   
-                                            <div v-else>
-                                               {{ inputPiezasFalla[k].detalle }}
-                                            </div>  
-                                         </td>    
-                                        <td> 
-                                            <input type="checkbox" id="checkbox" v-model="inputPiezasFalla[k].aceptable_sn">  </td>
-                                        <td> 
-                                            <span :class="{ existe : (inputPiezaFalla.observaciones ||
-                                                                        inputPiezaFalla.path1 ||
-                                                                        inputPiezaFalla.path2 ||
-                                                                        inputPiezaFalla.path3 ||
-                                                                        inputPiezaFalla.path4 )                      
-                                          }" class="fa fa-file-archive-o" @click="OpenReferencias($event,k,'Informe PM',inputPiezaFalla)" ></span>
-                                        </td>                                
+                                        
+                                            <td><span class="fa fa-minus-circle" @click="removeDetalle(k)"></span></td>          
 
-                                      
-                                        <td><span class="fa fa-minus-circle" @click="removeDetalle(k)"></span></td>          
-
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                        </div>              
                  
                   </div>    
@@ -439,7 +428,7 @@ export default {
       required : false
       },
 
-      desmagnetizacion_data : {
+      desmagnetizacion_sn_data : {
       type : [ Object ],  
       required : false
       },
@@ -481,9 +470,7 @@ export default {
         eps:'',
         pqr:'',
         tecnica:'',
-        equipo:'',
-        kv:'',
-        ma:'', 
+        equipo:'',       
         procedimiento:'',
         norma_ensayo:'',
         norma_evaluacion:'',
@@ -515,8 +502,7 @@ export default {
         tipos_magnetizacion:[],
         corrientes:[],
         iluminaciones:[],
-        color_particulas:[],
-
+        color_particulas:[],     
         isChapa:false,
         requiereVehiculoAditivo:false,
 
@@ -602,6 +588,7 @@ export default {
 
             if(this.editmode) {               
             
+
                this.fecha   = this.informedata.fecha;            
                this.numero_inf = this.informedata.numero;
                this.componente = this.informedata.componente;
@@ -617,24 +604,21 @@ export default {
                this.espesor_chapa = this.informedata.espesor_chapa;
                this.procedimiento_soldadura = this.informedata.procedimiento_soldadura;
                this.eps = this.informedata.eps;
-               this.pqr = this.informedata.pqr;
-               this.kv = this.informedata.kv;
-               this.ma = this.informedata.ma;  
+               this.pqr = this.informedata.pqr;           
                this.metodo_trabajo_pm = this.metodo_trabajo_pmdata;               
 
             this.$nextTick(function(){
                 
-                this.vehiculo = this.informe_pmdata.vehiculo;    
+               this.vehiculo = this.informe_pmdata.vehiculo;    
                this.aditivo = this.informe_pmdata.aditivo;
 
-            })
-               
+            })           
 
 
                this.concentracion  = this.informe_pmdata.concentracion;
                this.tipo_magnetizacion = this.tipo_magnetizacion_data;
                this.magnetizacion = this.magnetizacion_data;
-               this.desmagnetizacion = this.desmagnetizacion_data;
+               this.desmagnetizacion = this.desmagnetizacion_sn_data ? 'SI' : 'NO';
                this.voltaje = this.informe_pmdata.voltaje;
                this.color_partula = this.color_particula_data;
                this.iluminacion = this.iluminacion_data;
@@ -877,7 +861,14 @@ export default {
          Store : function(){
          
           this.errors =[];
-          
+          let desmagnetizacion_sn ;
+          if(this.desmagnetizacion =='SI')
+            desmagnetizacion_sn = true;
+          else if(this.desmagnetizacion =='NO')
+            desmagnetizacion_sn = false;
+          else
+            desmagnetizacion_sn= null;  
+
             var urlRegistros = 'informes_pm' ;      
             axios({
               method: 'post',
@@ -896,9 +887,7 @@ export default {
                 'diametro':       this.diametro.diametro,
                 'espesor':        this.espesor.espesor,
                 'espesor_chapa' :  this.espesor_chapa, 
-                'equipo'        :  this.equipo,
-                'kv'            : this.kv,
-                'ma'            : this.ma,             
+                'equipo'        :  this.equipo,               
                 'tipo_pelicula' : this.tipo_pelicula,              
                 'procedimiento_soldadura': this.procedimiento_soldadura,
                 'norma_evaluacion': this.norma_evaluacion,           
@@ -914,7 +903,7 @@ export default {
                 'concentracion'     :this.concentracion,
                 'tipo_magnetizacion':this.tipo_magnetizacion,
                 'magnetizacion'     :this.magnetizacion,
-                'desmagnetizacion'   :this.desmagnetizacion,
+                'desmagnetizacion_sn'  :desmagnetizacion_sn,
                 'fuerza_portante'   :this.fuerza_portante,
                 'color_particula'   :this.color_partula,
                 'iluminacion'       :this.iluminacion,
@@ -948,6 +937,14 @@ export default {
 
             console.log('entro para actualizar' );
             this.errors =[];        
+            let desmagnetizacion_sn ;
+            if(this.desmagnetizacion =='SI')
+                desmagnetizacion_sn = true;
+            else if(this.desmagnetizacion =='NO')
+                desmagnetizacion_sn = false;
+            else
+                desmagnetizacion_sn= null;    
+
             var urlRegistros = 'informes_pm/' + this.informedata.id  ;      
             axios({
               method: 'put',
@@ -966,9 +963,7 @@ export default {
                 'diametro':       this.diametro.diametro,
                 'espesor':        this.espesor.espesor,
                 'espesor_chapa' :  this.espesor_chapa, 
-                'equipo'        :  this.equipo,
-                'kv'            : this.kv,
-                'ma'            : this.ma,             
+                'equipo'        :  this.equipo,          
                 'tipo_pelicula' : this.tipo_pelicula,              
                 'procedimiento_soldadura': this.procedimiento_soldadura,
                 'norma_evaluacion': this.norma_evaluacion,           
@@ -984,7 +979,7 @@ export default {
                 'concentracion'     :this.concentracion,
                 'tipo_magnetizacion':this.tipo_magnetizacion,
                 'magnetizacion'     :this.magnetizacion,
-                'desmagnetizacion'   :this.desmagnetizacion,
+                'desmagnetizacion_sn'  :desmagnetizacion_sn,
                 'fuerza_portante'   :this.fuerza_portante,
                 'color_particula'   :this.color_partula,
                 'iluminacion'       :this.iluminacion,
@@ -1016,8 +1011,6 @@ export default {
         }
 
     }
-
-
     
 }
 </script>

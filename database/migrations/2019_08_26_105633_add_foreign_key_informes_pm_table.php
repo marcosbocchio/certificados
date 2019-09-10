@@ -45,19 +45,11 @@ class AddForeignKeyInformesPmTable extends Migration
                     
             $table->foreign('corriente_magnetizacion_id')
                     ->references('id')
-                    ->on('corrientes');
-
-           $table->bigInteger('corriente_desmagnetizacion_id')
-                    ->unsigned()                             
-                    ->after('corriente_magnetizacion_id');
-                    
-            $table->foreign('corriente_desmagnetizacion_id')
-                    ->references('id')
-                    ->on('corrientes');
+                    ->on('corrientes');          
 
             $table->bigInteger('color_particula_id')
                     ->unsigned()                             
-                    ->after('corriente_desmagnetizacion_id');
+                    ->after('corriente_magnetizacion_id');
                     
             $table->foreign('color_particula_id')
                     ->references('id')

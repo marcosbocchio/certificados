@@ -48,13 +48,14 @@ class PdfInformesPmController extends Controller
          $equipo = Equipos::findOrFail($informe->equipo_id);
          $tipo_magnetizacion = TiposMagnetizacion::findOrFail($informe_pm->tipo_magnetizacion_id);
          $magnetizacion = Corrientes::findOrFail($informe_pm->corriente_magnetizacion_id);
-         $desmagnetizacion = Corrientes::findOrFail($informe_pm->corriente_desmagnetizacion_id);
+         $desmagnetizacion_sn = $informe_pm->desmagnetizacion_sn;
          $ot_operador = OtOperarios::findOrFail($informe->ejecutor_ensayo_id);
          $metodo = MetodosTrabajoPm::findOrFail($informe_pm->metodo_trabajo_pm_id);
          $ejecutor_ensayo = User::findOrFail($ot_operador->user_id);
          $color_particula = ColorParticulas::findOrFail($informe_pm->color_particula_id);
          $iluminacion = Iluminaciones::findOrFail($informe_pm->iluminacion_id);
          
+       // dd($desmagnetizacion_sn);
          $detalles =  DB::select('SELECT 
                                 detalles_pm.pieza as pieza,
                                 detalles_pm.numero as numero,
@@ -87,7 +88,7 @@ class PdfInformesPmController extends Controller
                                                                 'material',
                                                                 'tipo_magnetizacion',
                                                                 'magnetizacion',
-                                                                'desmagnetizacion',
+                                                                'desmagnetizacion_sn',
                                                                 'metodo',
                                                                 'color_particula',
                                                                 'iluminacion',

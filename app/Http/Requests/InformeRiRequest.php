@@ -27,6 +27,9 @@ class InformeRiRequest extends FormRequest
     $condicion_espesor_no_chapa = '' ;      
     $condicion_espesor_chapa = '' ;
     $condicion_dist_fuente_pelicula ='';
+    $condicion_componente='';
+
+   
 
     if($this->diametro == 'CHAPA'){
 
@@ -39,6 +42,9 @@ class InformeRiRequest extends FormRequest
 
     }    
 
+    if($this->gasoducto_sn == false){
+        $condicion_componente = 'required |';
+    }
 
 
     $condicional = [      
@@ -55,7 +61,7 @@ class InformeRiRequest extends FormRequest
                 'numero_inf'                =>'required | integer| digits_between:1,3',
                 'gasoducto_sn'              => 'required',
                 'fecha'                     => 'required',
-                'componente'                => 'required|Max:20',
+                'componente'                => $condicion_componente . 'Max:20',
                 'material'                  => 'required',
                 'plano_isom'                => 'required|Max:10',
                 'diametro'                  => 'required',

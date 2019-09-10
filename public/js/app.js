@@ -3973,17 +3973,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -4063,7 +4052,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       type: [Object],
       required: false
     },
-    desmagnetizacion_data: {
+    desmagnetizacion_sn_data: {
       type: [Object],
       required: false
     },
@@ -4101,8 +4090,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       pqr: '',
       tecnica: '',
       equipo: '',
-      kv: '',
-      ma: '',
       procedimiento: '',
       norma_ensayo: '',
       norma_evaluacion: '',
@@ -4201,8 +4188,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.procedimiento_soldadura = this.informedata.procedimiento_soldadura;
         this.eps = this.informedata.eps;
         this.pqr = this.informedata.pqr;
-        this.kv = this.informedata.kv;
-        this.ma = this.informedata.ma;
         this.metodo_trabajo_pm = this.metodo_trabajo_pmdata;
         this.$nextTick(function () {
           this.vehiculo = this.informe_pmdata.vehiculo;
@@ -4211,7 +4196,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.concentracion = this.informe_pmdata.concentracion;
         this.tipo_magnetizacion = this.tipo_magnetizacion_data;
         this.magnetizacion = this.magnetizacion_data;
-        this.desmagnetizacion = this.desmagnetizacion_data;
+        this.desmagnetizacion = this.desmagnetizacion_sn_data ? 'SI' : 'NO';
         this.voltaje = this.informe_pmdata.voltaje;
         this.color_partula = this.color_particula_data;
         this.iluminacion = this.iluminacion_data;
@@ -4413,6 +4398,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this17 = this;
 
       this.errors = [];
+      var desmagnetizacion_sn;
+      if (this.desmagnetizacion == 'SI') desmagnetizacion_sn = true;else if (this.desmagnetizacion == 'NO') desmagnetizacion_sn = false;else desmagnetizacion_sn = null;
       var urlRegistros = 'informes_pm';
       axios({
         method: 'post',
@@ -4432,8 +4419,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           'espesor': this.espesor.espesor,
           'espesor_chapa': this.espesor_chapa,
           'equipo': this.equipo,
-          'kv': this.kv,
-          'ma': this.ma,
           'tipo_pelicula': this.tipo_pelicula,
           'procedimiento_soldadura': this.procedimiento_soldadura,
           'norma_evaluacion': this.norma_evaluacion,
@@ -4449,7 +4434,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           'concentracion': this.concentracion,
           'tipo_magnetizacion': this.tipo_magnetizacion,
           'magnetizacion': this.magnetizacion,
-          'desmagnetizacion': this.desmagnetizacion,
+          'desmagnetizacion_sn': desmagnetizacion_sn,
           'fuerza_portante': this.fuerza_portante,
           'color_particula': this.color_partula,
           'iluminacion': this.iluminacion,
@@ -4477,6 +4462,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       console.log('entro para actualizar');
       this.errors = [];
+      var desmagnetizacion_sn;
+      if (this.desmagnetizacion == 'SI') desmagnetizacion_sn = true;else if (this.desmagnetizacion == 'NO') desmagnetizacion_sn = false;else desmagnetizacion_sn = null;
       var urlRegistros = 'informes_pm/' + this.informedata.id;
       axios({
         method: 'put',
@@ -4496,8 +4483,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           'espesor': this.espesor.espesor,
           'espesor_chapa': this.espesor_chapa,
           'equipo': this.equipo,
-          'kv': this.kv,
-          'ma': this.ma,
           'tipo_pelicula': this.tipo_pelicula,
           'procedimiento_soldadura': this.procedimiento_soldadura,
           'norma_evaluacion': this.norma_evaluacion,
@@ -4513,7 +4498,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           'concentracion': this.concentracion,
           'tipo_magnetizacion': this.tipo_magnetizacion,
           'magnetizacion': this.magnetizacion,
-          'desmagnetizacion': this.desmagnetizacion,
+          'desmagnetizacion_sn': desmagnetizacion_sn,
           'fuerza_portante': this.fuerza_portante,
           'color_particula': this.color_partula,
           'iluminacion': this.iluminacion,
@@ -4559,6 +4544,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
 //
 //
 //
@@ -41910,7 +41896,7 @@ var staticRenderFns = [
         _c("div", { staticClass: "inner" }, [
           _c("h3", [_vm._v("0")]),
           _vm._v(" "),
-          _c("p", [_vm._v("Procedimientos")])
+          _c("p", [_vm._v("Procedimientos/Documentos")])
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "icon" }, [
@@ -43560,62 +43546,6 @@ var render = function() {
                   )
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-md-1 size-1-5" }, [
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "kv" } }, [_vm._v("Kv")]),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.kv,
-                          expression: "kv"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: { type: "number", id: "kv" },
-                      domProps: { value: _vm.kv },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.kv = $event.target.value
-                        }
-                      }
-                    })
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-1 size-1-5" }, [
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "ma" } }, [_vm._v("mA")]),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.ma,
-                          expression: "ma"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: { type: "number", id: "ma" },
-                      domProps: { value: _vm.ma },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.ma = $event.target.value
-                        }
-                      }
-                    })
-                  ])
-                ]),
-                _vm._v(" "),
                 _c("div", { staticClass: "col-md-3" }, [
                   _c(
                     "div",
@@ -43643,6 +43573,8 @@ var render = function() {
                     1
                   )
                 ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "clearfix" }),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-3" }, [
                   _c(
@@ -43862,7 +43794,63 @@ var render = function() {
                   )
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "clearfix" }),
+                _c("div", { staticClass: "col-md-1 size-1-5" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { attrs: { for: "v" } }, [
+                      _vm._v("Voltaje (*)")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.voltaje,
+                          expression: "voltaje"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "number", id: "v", max: "999" },
+                      domProps: { value: _vm.voltaje },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.voltaje = $event.target.value
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-1 size-1-5" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { attrs: { for: "am" } }, [_vm._v("Am (*)")]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.am,
+                          expression: "am"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "number", id: "am", max: "99" },
+                      domProps: { value: _vm.am },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.am = $event.target.value
+                        }
+                      }
+                    })
+                  ])
+                ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-3" }, [
                   _c(
@@ -43929,86 +43917,6 @@ var render = function() {
                     "div",
                     { staticClass: "form-group" },
                     [
-                      _c("label", [_vm._v("Desmagnetización (*)")]),
-                      _vm._v(" "),
-                      _c("v-select", {
-                        attrs: { label: "codigo", options: _vm.corrientes },
-                        model: {
-                          value: _vm.desmagnetizacion,
-                          callback: function($$v) {
-                            _vm.desmagnetizacion = $$v
-                          },
-                          expression: "desmagnetizacion"
-                        }
-                      })
-                    ],
-                    1
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-1 size-1-5" }, [
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "v" } }, [
-                      _vm._v("Voltaje (*)")
-                    ]),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.voltaje,
-                          expression: "voltaje"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: { type: "number", id: "v", max: "999" },
-                      domProps: { value: _vm.voltaje },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.voltaje = $event.target.value
-                        }
-                      }
-                    })
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-1 size-1-5" }, [
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "am" } }, [_vm._v("Am (*)")]),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.am,
-                          expression: "am"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: { type: "number", id: "am", max: "99" },
-                      domProps: { value: _vm.am },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.am = $event.target.value
-                        }
-                      }
-                    })
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-3" }, [
-                  _c(
-                    "div",
-                    { staticClass: "form-group" },
-                    [
                       _c("label", { attrs: { for: "color_particulas" } }, [
                         _vm._v("Color Particulas (*)")
                       ]),
@@ -44048,6 +43956,30 @@ var render = function() {
                             _vm.iluminacion = $$v
                           },
                           expression: "iluminacion"
+                        }
+                      })
+                    ],
+                    1
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "clearfix" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c(
+                    "div",
+                    { staticClass: "form-group" },
+                    [
+                      _c("label", [_vm._v("Desmagnetización (*)")]),
+                      _vm._v(" "),
+                      _c("v-select", {
+                        attrs: { label: "codigo", options: ["SI", "NO"] },
+                        model: {
+                          value: _vm.desmagnetizacion,
+                          callback: function($$v) {
+                            _vm.desmagnetizacion = $$v
+                          },
+                          expression: "desmagnetizacion"
                         }
                       })
                     ],
@@ -44227,11 +44159,11 @@ var render = function() {
                                       ])
                                     : _c("div", [
                                         _vm._v(
-                                          "\n                                             " +
+                                          "\n                                              " +
                                             _vm._s(
                                               _vm.inputPiezasFalla[k].detalle
                                             ) +
-                                            "\n                                          "
+                                            "\n                                              "
                                         )
                                       ])
                                 ]),
@@ -45228,6 +45160,28 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
+              _c("div", { staticClass: "col-md-2" }, [
+                _c(
+                  "div",
+                  { staticClass: "form-group" },
+                  [
+                    _c("label", { attrs: { for: "ici" } }, [_vm._v("Ici (*)")]),
+                    _vm._v(" "),
+                    _c("v-select", {
+                      attrs: { label: "codigo", options: _vm.icis },
+                      model: {
+                        value: _vm.ici,
+                        callback: function($$v) {
+                          _vm.ici = $$v
+                        },
+                        expression: "ici"
+                      }
+                    })
+                  ],
+                  1
+                )
+              ]),
+              _vm._v(" "),
               _c("div", { staticClass: "col-md-1" }, [
                 _c("div", { staticClass: "form-group" }, [
                   _c("label", { attrs: { for: "pos_pos" } }, [
@@ -45256,28 +45210,6 @@ var render = function() {
                     }
                   })
                 ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-2" }, [
-                _c(
-                  "div",
-                  { staticClass: "form-group" },
-                  [
-                    _c("label", { attrs: { for: "ici" } }, [_vm._v("Ici (*)")]),
-                    _vm._v(" "),
-                    _c("v-select", {
-                      attrs: { label: "codigo", options: _vm.icis },
-                      model: {
-                        value: _vm.ici,
-                        callback: function($$v) {
-                          _vm.ici = $$v
-                        },
-                        expression: "ici"
-                      }
-                    })
-                  ],
-                  1
-                )
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "col-md-3" }, [
@@ -45363,7 +45295,7 @@ var render = function() {
               _c("div", { staticClass: "col-md-3" }, [
                 _c("div", { staticClass: "form-group" }, [
                   _c("label", { attrs: { for: "eps" } }, [
-                    _vm._v("Exposición (*)")
+                    _vm._v("N° Exposiciones (*)")
                   ]),
                   _vm._v(" "),
                   _c("input", {

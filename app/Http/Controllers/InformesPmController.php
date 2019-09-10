@@ -99,7 +99,7 @@ class InformesPmController extends Controller
       $informePm->concentracion = $request->concentracion;
       $informePm->tipo_magnetizacion_id = $request->tipo_magnetizacion['id'];
       $informePm->corriente_magnetizacion_id = $request->magnetizacion['id'];
-      $informePm->corriente_desmagnetizacion_id    = $request->desmagnetizacion['id'];
+      $informePm->desmagnetizacion_sn    = $request->desmagnetizacion_sn;
       $informePm->color_particula_id = $request->color_particula['id'];
       $informePm->iluminacion_id = $request->iluminacion['id'];
   
@@ -177,14 +177,14 @@ class InformesPmController extends Controller
         $informe_pm_metodo_trabajo_pm = MetodosTrabajoPm::find($informe_pm->metodo_trabajo_pm_id);
         $informe_pm_tipo_magnetizacion = TiposMagnetizacion::find($informe_pm->tipo_magnetizacion_id);
         $informe_pm_magnetizacion = Corrientes::find($informe_pm->corriente_magnetizacion_id);
-        $informe_pm_desmagnetizacion = Corrientes::find($informe_pm->corriente_desmagnetizacion_id);
+        $informe_pm_desmagnetizacion_sn = $informe_pm->desmagnetizacion_sn;
         $infome_pm_color_particula = ColorParticulas::find($informe_pm->color_particula_id);
         $informe_pm_iluminacion = Iluminaciones::find($informe_pm->iluminacion_id);
 
         $informe_detalle = $this->getDetalle($informe_pm->id);
 
     
- // dd($informe_detalle);
+  //dd($informe_pm_desmagnetizacion_sn);
  // dd($informe_pm_tipo_magnetizacion);
 
 
@@ -206,7 +206,7 @@ class InformesPmController extends Controller
                                                  'informe_pm_metodo_trabajo_pm',    
                                                  'informe_pm_tipo_magnetizacion',
                                                  'informe_pm_magnetizacion',
-                                                 'informe_pm_desmagnetizacion',
+                                                 'informe_pm_desmagnetizacion_sn',
                                                  'infome_pm_color_particula',
                                                  'informe_pm_iluminacion',
                                                  'informe_detalle',

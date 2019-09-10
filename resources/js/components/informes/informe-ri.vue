@@ -202,19 +202,20 @@
                             </div>                            
                         </div>
 
-                            <div class="col-md-1">
+                        <div class="col-md-2">
+                            <div class="form-group" >
+                                <label for="ici">Ici (*)</label>
+                                <v-select v-model="ici" label="codigo" :options="icis"></v-select>   
+                            </div>                            
+                        </div>    
+
+                        <div class="col-md-1">
                             <div class="form-group" >
                                 <label for="pos_pos">lado (*)</label>
                                 <input type="text" v-model="lado" class="form-control" id="lado">
                             </div>                            
                         </div>
                             
-                        <div class="col-md-2">
-                            <div class="form-group" >
-                                <label for="ici">Ici (*)</label>
-                                <v-select v-model="ici" label="codigo" :options="icis"></v-select>   
-                            </div>                            
-                        </div>                            
                            
                         <div class="col-md-3">                       
                             <div class="form-group">
@@ -240,7 +241,7 @@
                         </div>       
                         <div class="col-md-3">                       
                             <div class="form-group" >
-                                <label for="eps">Exposición (*)</label>
+                                <label for="eps">N° Exposiciones (*)</label>
                                 <input type="number" v-model="exposicion" class="form-control" id="exposicion">
                             </div>         
                         </div>                                            

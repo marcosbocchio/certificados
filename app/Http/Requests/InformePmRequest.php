@@ -53,7 +53,7 @@ class InformePmRequest extends FormRequest
             'magnetizacion'             => 'required', 
             'color_particula'           => 'required', 
             'iluminacion'               => 'required', 
-            'desmagnetizacion'          => 'required', 
+            'desmagnetizacion_sn'       => 'required', 
             'voltaje'                   => 'required', 
             'am'                        => 'required',            
             'ejecutor_ensayo'           => 'required',
@@ -81,7 +81,8 @@ class InformePmRequest extends FormRequest
             'tipo_magnetizacion'          => 'tipo magnetización',
             'detalles.*.detalle'          => 'detalle',
             'detalles.*.pieza'            => 'pieza',
-            'detalles.*.numero'           => 'número',  
+            'detalles.*.numero'           => 'número', 
+            'desmagnetizacion_sn'         => 'desmagnetización',    
             ];
     }
 }
