@@ -26,22 +26,22 @@ header .fecha span {
 header .fecha .dia {
 
     position: absolute;
-    top: 135px;
-    left: 600px;
+    top: 125px;
+    left: 620px;
 }
 
 header .fecha .mes {
 
     position: absolute;
-    top: 135px;
-    left: 645px;
+    top: 125px;
+    left: 665px;
 }
 
 header .fecha .anio {
 
     position: absolute;
-    top: 135px;
-    left: 725px;
+    top: 125px;
+    left: 705px;
 }
 
 header .receptor  {
@@ -55,7 +55,7 @@ header .receptor  {
 header .destino {
 
     position: absolute;
-    top: 255px;
+    top: 275px;
     left:130px;
 
 }
@@ -64,7 +64,7 @@ header .destino {
 
     position: absolute;
     top: 430px;
-    left:140px;
+    left:100px;
 }
 
  </style>  
@@ -93,14 +93,30 @@ header .destino {
 </header>   
 
 <div class="detalle">
+    <table>
+        <tbody>
+            @foreach ( $detalle as $producto )
+               <tr>
 
-    @foreach ( $detalle as $producto )
+                <td style="width: 50px;">                         
+                    <span class="cantidad">{{ $producto->cantidad}} </span>           
+                </td>
+                <td style="width: 400px;">
+                    <span class="producto">{{ $producto->producto}} </span>    
+                </td>
+                <td>
+                    <span  class="medida">{{ $producto->medida}} {{ $producto->unidad_medida}}</span>  
+                </td>
+                    
 
-        <span class="cantidad">{{ $producto->cantidad}} </span>    
-        <span  class="producto">{{ $producto->producto}} </span>    
-        <span  class="medida">{{ $producto->medida}} {{ $producto->unidad_medida}}</span><br>    
-        
-    @endforeach
+            </tr>
+                @endforeach
+        </tbody>
+
+
+
+    </table>
+  
 
 </div>
 
