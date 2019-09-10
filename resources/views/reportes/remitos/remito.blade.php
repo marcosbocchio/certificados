@@ -26,29 +26,29 @@ header .fecha span {
 header .fecha .dia {
 
     position: absolute;
-    top: 125px;
+    top: 127px;
     left: 620px;
 }
 
 header .fecha .mes {
 
     position: absolute;
-    top: 125px;
+    top: 127px;
     left: 665px;
 }
 
 header .fecha .anio {
 
     position: absolute;
-    top: 125px;
+    top: 127px;
     left: 705px;
 }
 
 header .receptor  {
 
     position: absolute;
-    top: 247px;
-    left: 130px;
+    top: 248.5px;
+    left: 125px;
 
 }
 
@@ -56,7 +56,7 @@ header .destino {
 
     position: absolute;
     top: 272px;
-    left:130px;
+    left:125px;
 
 }
 
@@ -101,7 +101,7 @@ header .destino {
                 <td style="width: 50px;">                         
                     <span class="cantidad">{{ $producto->cantidad}} </span>           
                 </td>
-                <td style="width: 400px;">
+                <td style="width: 475px;">
                     <span class="producto">{{ $producto->producto}} </span>    
                 </td>
                 <td>
