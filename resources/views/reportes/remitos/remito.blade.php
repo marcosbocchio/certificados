@@ -20,7 +20,7 @@
 }
 header .fecha span {
 
-    font-size: 20px;
+    font-size: 15px;
 }         
 
 header .fecha .dia {
@@ -47,7 +47,7 @@ header .fecha .anio {
 header .receptor  {
 
     position: absolute;
-    top: 245px;
+    top: 247px;
     left: 130px;
 
 }
@@ -55,7 +55,7 @@ header .receptor  {
 header .destino {
 
     position: absolute;
-    top: 275px;
+    top: 272px;
     left:130px;
 
 }
@@ -64,7 +64,7 @@ header .destino {
 
     position: absolute;
     top: 430px;
-    left:100px;
+    left:70px;
 }
 
  </style>  
