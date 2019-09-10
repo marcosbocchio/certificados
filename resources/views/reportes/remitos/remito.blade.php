@@ -26,44 +26,44 @@ header .fecha span {
 header .fecha .dia {
 
     position: absolute;
-    top: 150px;
+    top: 135px;
     left: 600px;
 }
 
 header .fecha .mes {
 
     position: absolute;
-    top: 150px;
-    left: 630px;
+    top: 135px;
+    left: 645px;
 }
 
 header .fecha .anio {
 
     position: absolute;
-    top: 150px;
-    left: 660px;
+    top: 135px;
+    left: 725px;
 }
 
 header .receptor  {
 
     position: absolute;
-    top: 250px;
-    left: 140px;
+    top: 245px;
+    left: 130px;
 
 }
 
 header .destino {
 
     position: absolute;
-    top: 290px;
-    left:140px;
+    top: 255px;
+    left:130px;
 
 }
 
 .detalle {
 
     position: absolute;
-    top: 500px;
+    top: 430px;
     left:140px;
 }
 
