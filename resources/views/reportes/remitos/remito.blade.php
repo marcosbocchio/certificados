@@ -63,7 +63,7 @@ header .destino {
 .detalle {
 
     position: absolute;
-    top: 375px;
+    top: 390px;
     left:70px;
 }
 
