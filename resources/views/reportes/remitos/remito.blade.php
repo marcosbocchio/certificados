@@ -55,7 +55,7 @@ header .receptor  {
 header .destino {
 
     position: absolute;
-    top: 272px;
+    top: 271px;
     left:125px;
 
 }
@@ -63,7 +63,7 @@ header .destino {
 .detalle {
 
     position: absolute;
-    top: 430px;
+    top: 375px;
     left:70px;
 }
 
