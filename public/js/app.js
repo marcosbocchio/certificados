@@ -5596,6 +5596,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     addDefectos: function addDefectos() {
+      if (this.defectoRiPlanta == '') {
+        toastr.error('Campo defecto es obligatorio');
+        return;
+      }
+
       this.TablaDetalle[this.indexDetalle].defectos.push({
         codigo: this.defectoRiPlanta.codigo,
         descripcion: this.defectoRiPlanta.descripcion,
