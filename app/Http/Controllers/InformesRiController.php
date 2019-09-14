@@ -190,7 +190,7 @@ class InformesRiController extends Controller
                 $obj->pasada = $pasada_posicion->numero ;
                 $obj->soldador1 = Soldadores::find($pasada_posicion->soldadorz_id);
                 $obj->soldador2 = Soldadores::find($pasada_posicion->soldadorl_id) ? Soldadores::find($pasada_posicion->soldadorl_id) : "";
-                $obj->soldador3 = Soldadores::find($pasada_posicion->soldadorp_id);
+                $obj->soldador3 = Soldadores::find($pasada_posicion->soldadorp_id) ? Soldadores::find($pasada_posicion->soldadorp_id) : "";
 
                 array_push($pasadas,$obj);
              }

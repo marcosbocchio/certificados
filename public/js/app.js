@@ -5580,6 +5580,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     AddPasadas: function AddPasadas() {
+      if (this.formato == 'PLANTA') {
+        if (this.TablaDetalle[this.indexDetalle].pasadas.length == 1) {
+          toastr.error('Error : Formato PLANTA  acepta 1 pasada');
+          return;
+        }
+      }
+
+      if (this.formato == 'GASODUCTO') {
+        if (this.TablaDetalle[this.indexDetalle].pasadas.length == 6) {
+          toastr.error('Error : Formato GASODUCTO acepta 6 pasadas');
+          return;
+        }
+      }
+
       if (this.soldador1) {
         this.TablaDetalle[this.indexDetalle].pasadas.push({
           pasada: this.pasada,

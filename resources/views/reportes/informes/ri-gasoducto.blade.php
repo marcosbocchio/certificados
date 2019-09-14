@@ -5,9 +5,7 @@
     <title>Informe RI</title>
 </head>
 
-<style>
-
-  
+<style>  
 
 @page {    
         margin: 280px 15px 204px 15px !important;

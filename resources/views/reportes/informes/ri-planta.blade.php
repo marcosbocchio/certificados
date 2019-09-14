@@ -12,25 +12,19 @@
 
 header {
     position:fixed;
-    top: -291px; 
+    top: -290px; 
    
     }
 
-.contenido {
-
+main{
    
-    margin-bottom: -2px;
+    margin-top: -2px;
 }
 
-.contenido table {
-
-border: #000 2px solid;
-margin: 0px 0px 0px 0px !important;
-padding: 0px 0px 0px 0px !important;
-}
 
 footer {
-    position: fixed; bottom:0px; 
+    position: fixed; bottom:6px; 
+    padding-top: 0px;
 
 }
 
@@ -290,9 +284,9 @@ b {
     </table>
 </footer>
 
-<div class="contenido">
+<main>
     
-    <table width="100%" class="bordered-1" style="margin-bottom: 0px;">
+    <table width="100%" class="bordered">
         <tbody>
             @foreach ($juntas_posiciones as $junta_posicion)
                 <tr>
@@ -335,7 +329,7 @@ b {
                                         
         </tbody>
     </table>
-</div>   
+</main>   
      
 <script type="text/php">
 
