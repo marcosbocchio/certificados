@@ -395,7 +395,7 @@
                             <div class="form-group">  
                                  <p>&nbsp;</p>                  
                                 <span>
-                                  <a  @click="addDefectos()"> <app-icon img="plus-circle" color="black"></app-icon> </a>                        
+                                  <a title="Agregar Defecto" @click="addDefectos()"> <app-icon img="plus-circle" color="black"></app-icon> </a>                        
                                 </span>
                             </div>
                         </div>  
@@ -478,7 +478,7 @@
                      <div class="col-md-1"> 
                           <p>&nbsp;</p>
                           <span>                             
-                             <a  @click="AddPasadas()"> <app-icon img="plus-circle" color="black"></app-icon> </a>
+                             <a title="Agregar Pasada" @click="AddPasadas()"> <app-icon img="plus-circle" color="black"></app-icon> </a>
                           </span>
                        
                     </div>

@@ -2667,7 +2667,7 @@ __webpack_require__.r(__webpack_exports__);
   props: ['img', 'color'],
   computed: {
     cssClasses: function cssClasses() {
-      return 'fa fa-lg fa-' + this.img;
+      return 'fa fa-sm fa-' + this.img;
     },
     cssStyle: function cssStyle() {
       return 'color:' + this.color;
@@ -45982,6 +45982,7 @@ var render = function() {
                     _c(
                       "a",
                       {
+                        attrs: { title: "Agregar Defecto" },
                         on: {
                           click: function($event) {
                             return _vm.addDefectos()
@@ -46232,6 +46233,7 @@ var render = function() {
                   _c(
                     "a",
                     {
+                      attrs: { title: "Agregar Pasada" },
                       on: {
                         click: function($event) {
                           return _vm.AddPasadas()

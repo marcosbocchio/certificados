@@ -11,7 +11,7 @@ export default {
 
         cssClasses : function () {
 
-            return 'fa fa-lg fa-' + this.img
+            return 'fa fa-sm fa-' + this.img
 
         },
         cssStyle : function (){
