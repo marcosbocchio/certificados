@@ -16,7 +16,6 @@ class CreatePasadasPosicionTable extends Migration
         Schema::create('pasadas_posicion', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('numero');
-            $table->boolean('aceptable_sn');            
             $table->timestamps();
         });
     }

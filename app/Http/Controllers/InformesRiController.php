@@ -26,6 +26,7 @@ use App\NormaEnsayos;
 use App\OtOperarios;
 use App\Soldadores;
 use App\TipoSoldaduras;
+use \stdClass;
 
 class InformesRiController extends Controller
 {
@@ -145,51 +146,62 @@ class InformesRiController extends Controller
 
     public function getDetalle($id){
 
-        $informe_detalle = DB::table('informes_ri')
+          $informe_detalle = DB::table('informes_ri')
                                ->join('juntas','juntas.informe_ri_id','=','informes_ri.id')
-                               ->join('posicion','posicion.junta_id','=','juntas.id')
-                               ->join('pasadas_posicion','pasadas_posicion.posicion_id','=','posicion.id')
+                               ->join('posicion','posicion.junta_id','=','juntas.id')                            
                                ->where('informes_ri.id',$id)
                                ->select('juntas.codigo as junta',
-                                      'posicion.descripcion as observacion',
-                                      'pasadas_posicion.numero as pasada',
-                                      'pasadas_posicion.aceptable_sn as aceptable_sn',
+                                      'posicion.descripcion as observacion',                                   
+                                      'posicion.aceptable_sn as aceptable_sn',                                     
                                       'juntas.km as pk',
-                                      'posicion.codigo as posicion')
+                                      'posicion.codigo as posicion',
+                                      'posicion.id as posicion_id',
+                                      'juntas.tipo_soldadura_id')
+                                ->orderBy('posicion.id','asc')
                                 ->get();
 
       
         foreach ($informe_detalle as $detalle_posicion) {
+            
+            
+            $defecto_posicion = DB::table('posicion')
+                                            ->join('defectos_posicion','defectos_posicion.posicion_id','=','posicion.id') 
+                                            ->join('defectos_ri','defectos_ri.id','=','defectos_posicion.defecto_ri_id')                                           
+                                            ->where('posicion.id',$detalle_posicion->posicion_id)
+                                            ->select('defectos_ri.codigo','defectos_ri.descripcion','defectos_ri.id','defectos_posicion.posicion')
+                                            ->get();
+
 
             $pasadas_posicion = DB::table('informes_ri')
-                            ->join('juntas','juntas.informe_ri_id','=','informes_ri.id')
-                            ->join('posicion','posicion.junta_id','=','juntas.id')
-                            ->join('pasadas_posicion','pasadas_posicion.posicion_id','=','posicion.id')
-                            ->where('informes_ri.id',$id)
-                            ->where('juntas.codigo',$detalle_posicion->junta)
-                            ->where('posicion.codigo',$detalle_posicion->posicion)
-                            ->where('pasadas_posicion.numero',$detalle_posicion->pasada)
-                            ->selectRaw('pasadas_posicion.*,IFNULL(juntas.tipo_soldadura_id,"") as tipo_soldadura_id')
-                            ->first();
+                                            ->join('juntas','juntas.informe_ri_id','=','informes_ri.id')
+                                            ->join('posicion','posicion.junta_id','=','juntas.id')
+                                            ->join('pasadas_posicion','pasadas_posicion.posicion_id','=','posicion.id')
+                                            ->where('informes_ri.id',$id)
+                                            ->where('juntas.codigo',$detalle_posicion->junta)
+                                            ->where('posicion.codigo',$detalle_posicion->posicion)
+                                            ->selectRaw('pasadas_posicion.*,IFNULL(juntas.tipo_soldadura_id,"") as tipo_soldadura_id')
+                                            ->get();
 
-            $defecto_pasada_posicion = DB::table('pasadas_posicion')
-                                           ->join('defectos_pasadas_posicion','defectos_pasadas_posicion.pasada_posicion_id','=','pasadas_posicion.id') 
-                                           ->join('defectos_ri','defectos_ri.id','=','defectos_pasadas_posicion.defecto_ri_id')
-                                           ->where('pasadas_posicion.id',$pasadas_posicion->id)
-                                           ->select('defectos_ri.codigo','defectos_ri.descripcion','defectos_ri.id','defectos_pasadas_posicion.posicion')
-                                           ->get();
+            $pasadas = array();
 
-            $soldador1 = Soldadores::find($pasadas_posicion->soldadorz_id);
-            $soldador2 = Soldadores::find($pasadas_posicion->soldadorl_id) ? Soldadores::find($pasadas_posicion->soldadorl_id) : "";
-            $soldador3 = Soldadores::find($pasadas_posicion->soldadorp_id);
-            $tipo_soldadura = $pasadas_posicion->tipo_soldadura_id ? TipoSoldaduras::find($pasadas_posicion->tipo_soldadura_id) : "" ;
+             foreach ( $pasadas_posicion as $pasada_posicion) {          
 
+                $obj = new stdClass();
+                $obj->pasada = $pasada_posicion->numero ;
+                $obj->soldador1 = Soldadores::find($pasada_posicion->soldadorz_id);
+                $obj->soldador2 = Soldadores::find($pasada_posicion->soldadorl_id) ? Soldadores::find($pasada_posicion->soldadorl_id) : "";
+                $obj->soldador3 = Soldadores::find($pasada_posicion->soldadorp_id);
 
-            $detalle_posicion->soldador1 = $soldador1;
-            $detalle_posicion->soldador2 = $soldador2;
-            $detalle_posicion->soldador3 = $soldador3;
+                array_push($pasadas,$obj);
+             }
+
+             
+            $tipo_soldadura = TipoSoldaduras::find($detalle_posicion->tipo_soldadura_id) ? TipoSoldaduras::find($detalle_posicion->tipo_soldadura_id) : "";           
+         
+
+            $detalle_posicion->defectos = $defecto_posicion;
+            $detalle_posicion->pasadas = $pasadas;       
             $detalle_posicion->tipo_soldadura = $tipo_soldadura;
-            $detalle_posicion->defectosPosicion = $defecto_pasada_posicion;
           
         }
 

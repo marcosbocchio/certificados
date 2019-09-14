@@ -259,74 +259,43 @@
                                 <label for="ejecutor_ensayo">Ejecutor Ensayo (*)</label>
                                 <v-select v-model="ejecutor_ensayo" label="name" :options="ejecutor_ensayos"></v-select>   
                             </div>         
-                        </div>
-                                                                 
+                        </div>                                                                
                                                                
                   </div>
                </div>
 
-               <!-- Detalle RI Planta -->
+               <!-- Detalle RI -->
                <div class="box box-danger">
+                     <div class="box-header with-border">
+                        <h3 class="box-title">JUNTAS/POSICIONES</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                            </button>                       
+                        </div>
+                    </div>
                 <div class="box-body">
 
                     <div class="col-md-1">                       
                         <div class="form-group" >                            
                             <label for="pk">Pk</label>
-                            <input type="number" v-model="pk" class="form-control" id="pk" :disabled="(!isGasoducto || (pasada=='1' && inputsJuntasDefectosPlanta.length > 0))">                           
+                            <input type="number" v-model="pk" class="form-control" id="pk" :disabled="(!isGasoducto)">                           
                         </div>     
                     </div>   
 
                     <div class="col-md-1">                      
                         <div class="form-group" >
                            <label>Tipo Sol.</label>
-                           <v-select v-model="tipo_soldadura" label="codigo" :options="tipo_soldaduras" :disabled="(!isGasoducto || (pasada=='1' && inputsJuntasDefectosPlanta.length > 0))"></v-select>
+                           <v-select v-model="tipo_soldadura" label="codigo" :options="tipo_soldaduras" :disabled="(!isGasoducto)"></v-select>
                         </div>
-                    </div>
-
-                    <div class="col-md-1">                       
-                        <div class="form-group" >                            
-                            <label for="pasada">N° Pasada</label>
-                            <input type="number" v-model="pasada" class="form-control" id="pasada" :disabled="!isGasoducto">                           
-                        </div>     
-                    </div>
+                    </div>                   
                   
                     <div class="col-md-2">                      
                         <div class="form-group" >
                             <label for="junta">Junta</label>
                             <input type="text" v-model="junta" class="form-control" id="junta">
                         </div>
-                    </div>       
-                    <div class="col-md-2">
-                        
-                            <label>Cunio Z</label>           
-                            <v-select v-model="soldador1" :options="soldadores" label="nombre">
-                                <template slot="option" slot-scope="option">
-                                    <span class="upSelect">{{ option.nombre }} </span> <br> 
-                                    <span class="downSelect">   {{ option.codigo }} </span>
-                                </template>
-                            </v-select>                
-                      
-                    </div> 
-                    <div class="col-md-2">
-                         
-                            <label>Cunio L</label>           
-                            <v-select v-model="soldador2" :options="soldadores" label="nombre" :disabled="(!isGasoducto || pasada!='1')">
-                                <template slot="option" slot-scope="option">
-                                    <span class="upSelect">{{ option.nombre }} </span> <br> 
-                                    <span class="downSelect">   {{ option.codigo }} </span>
-                                </template>
-                            </v-select>                    
-                    </div>
-                    <div class="col-md-2">
-                         
-                            <label>Cunio P</label>           
-                            <v-select v-model="soldador3" :options="soldadores" label="nombre" >
-                                <template slot="option" slot-scope="option">
-                                    <span class="upSelect">{{ option.nombre }} </span> <br> 
-                                    <span class="downSelect">   {{ option.codigo }} </span>
-                                </template>
-                            </v-select>                    
-                    </div>   
+                    </div>     
+                  
 
 
                     <div class="col-md-1">                       
@@ -334,30 +303,17 @@
                         <label for="posicion">Posición</label>
                         <input type="text" v-model="posicion" class="form-control" id="posicion">                           
                         </div>     
-                    </div>       
-                    <div class="col-md-1"> 
-                        <div class="form-group" >
-                            <button type="button" class="btn btn-primary btn-xs" @click="ClonarPosPlanta()">Clonar Posición</button>
-                        </div> 
-                    </div>
-                    <div class="col-md-1"> 
-                        <div class="form-group" >
-                            <button type="button" class="btn btn-primary btn-xs" @click="ClonarPasadas()" :disabled="!EnableClonarPasadas">Clonar Pasadas</button>
-                        </div> 
-                    </div>  
-                    <div class="col-md-1"> 
-                        <div class="form-group" >
-                            <button type="button" class="btn btn-primary btn-xs" @click="resetDetalle()" >Limpiar Todo</button>
-                        </div> 
-                    </div> 
-                                                             
-                    <div class="col-md-1"> 
-                                 
-                          <span>
-                              <i class="fa fa-plus-circle" @click="addJuntaDefectosPlanta()"></i>
-                          </span>
-                       
-                    </div>
+                    </div>   
+
+                    <div class="col-md-2">                       
+                             <p>&nbsp;</p>                                        
+                             <i title="Agregar Junta/Posición" @click="AddDetalle()" style="display:inline-block;margin-left:15px;"> <app-icon img="plus-circle" color="black"></app-icon> </i>                
+                         
+                             <i title="Clonar Posición" @click="ClonarPosPlanta()" style="display:inline-block;margin-left:15px;"> <app-icon img="clone" color="black"></app-icon> </i>                      
+                          
+                             <i title="Limpiar Todo" @click="resetDetalle()" style="display:inline-block;margin-left:15px;"> <app-icon img="trash" color="black"></app-icon> </i>                                             
+                   
+                    </div>         
                     
                     <div class="col-md-12">
 
@@ -366,41 +322,34 @@
                                 <thead>
                                     <tr>
                                         <th style="width:30px;">Pk</th>
-                                        <th style="width:80px;">TIPO SOL.</th>
-                                        <th style="width:90px;">N° PASADA</th>
-                                        <th style="width:90px;">JUNTA</th>
-                                        <th style="width:120px;">CUNIO Z</th>
-                                        <th style="width:120px;" >CUNIO L</th>
-                                        <th style="width:120px;">CUNIO P</th>
+                                        <th style="width:80px;">TIPO SOL.</th>                                     
+                                        <th style="width:90px;">JUNTA</th>                                       
                                         <th style="width:90px;">POS</th>  
                                         <th style="width:80px;">ACEPTABLE</th>    
-                                        <th style="width:300px;">OBSERVACIÓN</th>                                                   
+                                        <th style="width:300px;">OBSERVACIÓN</th>        
                                                                        
                                         <th colspan="1" style="width:30px;">&nbsp;</th>
                                     </tr>
                                 </thead>                         
                                 <tbody>
-                                    <tr v-for="(inputsJuntaDefectosPlanta,k) in (inputsJuntasDefectosPlanta)" :key="k" @click="selectPosPlanta(k)" :class="{selected: indexPosPlanta === k}">
-                                        <td>{{ inputsJuntaDefectosPlanta.pk }}</td>
-                                        <td>{{ inputsJuntaDefectosPlanta.tipo_soldadura.codigo }}</td>
-                                        <td>{{ inputsJuntaDefectosPlanta.pasada }}</td>
-                                        <td>{{ inputsJuntaDefectosPlanta.junta }}</td>
-                                        <td>{{ inputsJuntaDefectosPlanta.soldador1.nombre }} </td>
-                                        <td>{{ inputsJuntaDefectosPlanta.soldador2.nombre }} </td>
-                                        <td>{{ inputsJuntaDefectosPlanta.soldador3.nombre }} </td>      
-                                        <td>{{ inputsJuntaDefectosPlanta.posicion }} </td>   
-                                        <td> <input type="checkbox" id="checkbox" v-model="inputsJuntasDefectosPlanta[k].aceptable_sn">  </td>                                 
+                                    <tr v-for="(FIlaTabla,k) in (TablaDetalle)" :key="k" @click="selectPosDetalle(k)" :class="{selected: indexDetalle === k}">
+                                        <td>{{ FIlaTabla.pk }}</td>
+                                        <td>{{ FIlaTabla.tipo_soldadura.codigo }}</td>                                 
+                                        <td>{{ FIlaTabla.junta }}</td>                                      
+                                        <td>{{ FIlaTabla.posicion }} </td>   
+                                        <td> <input type="checkbox" id="checkbox" v-model="TablaDetalle[k].aceptable_sn">  </td>                                 
                                         <td>
-                                            <div v-if="!isGasoducto && indexPosPlanta == k ">       
-                                              <input type="text" v-model="inputsJuntasDefectosPlanta[k].observacion" maxlength="50" size="60">        
+                                            <div v-if="indexDetalle == k ">       
+                                              <input type="text" v-model="TablaDetalle[k].observacion" maxlength="50" size="60">        
                                             </div>   
-                                            <div v-else-if="!isGasoducto">
-                                               {{ inputsJuntasDefectosPlanta[k].observacion }}
+                                            <div v-else>
+                                               {{ TablaDetalle[k].observacion }}
                                             </div>                                   
                                         </td>
 
                                       
-                                        <td><span class="fa fa-minus-circle" @click="removeJuntaDefectosPlanta(k)"></span></td>          
+                                        <td> <a  @click="RemoveDetalle(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a> 
+                                        </td>          
 
                                     </tr>
                                 </tbody>
@@ -410,20 +359,24 @@
                     </div>
                    </div>
 
+                   <!-- DEFECTOS RI -->
+
                     <div class="box box-danger">
                         
-                       <div class="box-header with-border">
-                        <!--
-                           <div v-if="inputsJuntasDefectosPlanta && inputsJuntasDefectosPlanta.length > 0">
-                              <h5 class="box-title">DEFECTOS POSICIÓN: Junta  {{ inputsJuntasDefectosPlanta[indexPosPlanta].junta}} / Posición : {{ inputsJuntasDefectosPlanta[indexPosPlanta].posicion}} // Pasada : {{ inputsJuntasDefectosPlanta[indexPosPlanta].pasada}}</h5>  
-                           </div>
-                        -->
+                        <div class="box-header with-border">
+                            <h5 class="box-title">DEFECTOS</h5>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                </button>                       
+                            </div>
+                        </div>
+                       
                       <div class="box-body"> 
                                                    
                         <div class="col-md-3">                          
                            <div class="form-group" >
                                 <label>Defectos</label>           
-                                <v-select v-model="defectoRiPlanta" :options="defectosRiPlanta" label="descripcion">
+                                <v-select v-model="defectoRiPlanta" :options="defectosRiPlanta" label="descripcion" :disabled="(!TablaDetalle.length)">
                                     <template slot="option" slot-scope="option">
                                         <span class="upSelect">{{ option.descripcion }} </span> <br> 
                                         <span class="downSelect">{{ option.codigo }} </span>
@@ -434,17 +387,19 @@
                         <div class="col-md-2">                       
                             <div class="form-group" >                            
                                 <label for="posicionPlaca">Posición Defecto</label>
-                                <input type="text" v-model="posicionPlacaGosaducto" class="form-control" id="posicionPlacaGosaducto" :disabled="!isGasoducto">                           
+                                <input type="text" v-model="posicionPlacaGosaducto" class="form-control" id="posicionPlacaGosaducto" :disabled="(!TablaDetalle.length)">                           
                             </div>     
                         </div>    
                           
                         <div class="col-md-1"> 
-                            <div class="form-group">                    
+                            <div class="form-group">  
+                                 <p>&nbsp;</p>                  
                                 <span>
-                                    <i class="fa fa-plus-circle" @click="addDefectoPosicionPlanta()"></i>
+                                  <a  @click="addDefectos()"> <app-icon img="plus-circle" color="black"></app-icon> </a>                        
                                 </span>
                             </div>
-                        </div>                      
+                        </div>  
+                                          
                         <div class="col-md-12">
                             <div class="table-responsive">
                                 <table class="table table-hover table-striped">
@@ -457,22 +412,107 @@
                                         </tr>
                                     </thead>                         
                                     <tbody>
-                                        <tr v-for="(defectoPosicion,k) in 
-                                         (( (inputsJuntasDefectosPlanta.length > 0) && (inputsJuntasDefectosPlanta[indexPosPlanta].defectosPosicion.length > 0 )) ? inputsJuntasDefectosPlanta[indexPosPlanta].defectosPosicion : [])"  :key="k">
-                                            <td>{{ defectoPosicion.codigo }}</td>    
-                                            <td>{{ defectoPosicion.descripcion }}</td>   
-                                            <td>{{ defectoPosicion.posicion }}</td>              
+                                        <tr v-for="(defectoPasada,k) in 
+                                         ( (TablaDetalle.length > 0 )  ? TablaDetalle[indexDetalle].defectos : [])"  :key="k">
+                                            <td>{{ defectoPasada.codigo }}</td>    
+                                            <td>{{ defectoPasada.descripcion }}</td>   
+                                            <td>{{ defectoPasada.posicion }}</td>              
                                         
-                                            <td> <i class="fa fa-minus-circle" @click="removeDefectoPosicionPlanta(k)" ></i> </td>          
-
+                                            <td>
+                                                <a  @click="RemoveDefectos(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a> 
+                                            </td> 
                                         </tr>
                                     </tbody>
                                  </table>
                                 </div>
-                           </div>
-                       </div>
+                           </div>                                
+
+                       </div> 
                       </div>
-                    </div>                    
+                      
+
+                <!-- PASADAS RI -->
+               <div class="box box-danger">
+                   <div class="box-header with-border">
+                        <h5 class="box-title">PASADAS</h5>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                            </button>                       
+                        </div>
+                    </div>
+                <div class="box-body">
+                    <div class="col-md-1">
+                        <div class="form-group" >                            
+                            <label for="pasada">N° Pasada</label>
+                            <input type="number" v-model="pasada" class="form-control" id="pasada" :disabled="(!isGasoducto || !TablaDetalle.length)">                           
+                        </div>     
+                    </div>
+                    <div class="col-md-2">                        
+                        <label>Cunio Z</label>           
+                        <v-select v-model="soldador1" :options="soldadores" label="nombre" :disabled="(!TablaDetalle.length)">
+                            <template slot="option" slot-scope="option">
+                                <span class="upSelect">{{ option.nombre }} </span> <br> 
+                                <span class="downSelect">   {{ option.codigo }} </span>
+                            </template>
+                        </v-select>                  
+                    </div> 
+                    <div class="col-md-2">                         
+                        <label>Cunio L</label>           
+                        <v-select v-model="soldador2" :options="soldadores" label="nombre" :disabled="(!isGasoducto || pasada!='1' || !TablaDetalle.length)">
+                            <template slot="option" slot-scope="option">
+                                <span class="upSelect">{{ option.nombre }} </span> <br> 
+                                <span class="downSelect">   {{ option.codigo }} </span>
+                            </template>
+                        </v-select>                    
+                    </div>
+
+                    <div class="col-md-2">                         
+                        <label>Cunio P</label>           
+                        <v-select v-model="soldador3" :options="soldadores" label="nombre" :disabled="(!TablaDetalle.length)">
+                            <template slot="option" slot-scope="option">
+                                <span class="upSelect">{{ option.nombre }} </span> <br> 
+                                <span class="downSelect">   {{ option.codigo }} </span>
+                            </template>
+                        </v-select>                    
+                    </div>  
+                     <div class="col-md-1"> 
+                          <p>&nbsp;</p>
+                          <span>                             
+                             <a  @click="AddPasadas()"> <app-icon img="plus-circle" color="black"></app-icon> </a>
+                          </span>
+                       
+                    </div>
+                        <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-striped">
+                                        <thead>
+                                            <tr>                                  
+                                                <th style="width:90px;">N° PASADA</th>                                  
+                                                <th style="width:120px;">CUNIO Z</th>
+                                                <th style="width:120px;">CUNIO L</th>
+                                                <th style="width:120px;">CUNIO P</th>                                                             
+                                                <th colspan="1" style="width:30px;">&nbsp;</th>
+                                            </tr>
+                                        </thead>                         
+                                        <tbody>
+                                            <tr v-for="(Pasada,k) in  ((TablaDetalle.length > 0) ? TablaDetalle[indexDetalle].pasadas : [])" :key="k" @click="selectPosPasada(k)" :class="{selected: indexPasada === k}">                                         
+                                                <td>{{ Pasada.pasada }}</td>                                            
+                                                <td>{{ Pasada.soldador1.nombre }} </td>
+                                                <td>{{ Pasada.soldador2.nombre }} </td>
+                                                <td>{{ Pasada.soldador3.nombre }} </td>                                          
+                                                <td> 
+                                                    <a  @click="RemovePasada(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a>
+                                                </td>          
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                        </div>               
+                  </div>  
+                </div>
+
+                  
                     <div class="box box-danger">
                         <div class="box-body">
                             <div class="form-group">
@@ -657,7 +697,8 @@ export default {
             defectoRiPlanta:'',
             defectoRiGasoducto:'',
             posicionPlacaGosaducto:'',
-            indexPosPlanta:0,
+            indexDetalle:0,
+            indexPasada:0,
 
             //Fin Formulario detalle
            
@@ -686,9 +727,12 @@ export default {
              posiciones:[],
              defectosRiPlanta:[],
              defectosRiGasoducto:[],
-             inputsJuntasDefectosPlanta:[],           
+             TablaDetalle:[],   
+             TablaPasadas:[],        
              
              junta_posicion_selected : '',
+             clonando : false,
+             validoPasadas : true,
              
 
 
@@ -710,7 +754,9 @@ export default {
         this.getSoldadores();
         this.getDefectosRiPlanta();
         this.getDefectosRiGasoducto();
-        this.getTipoSoldaduras();       
+        this.getTipoSoldaduras();     
+        this.pasada = 1;  
+        this.formato = 'PLANTA'
         this.setEdit();        
 
     },
@@ -734,8 +780,9 @@ export default {
         },
         formato : function (val){
 
-            this.isGasoducto =  (val == 'GASODUCTO') ? true : false;
-          //  this.resetDetalle();
+            this.isGasoducto =  (val == 'GASODUCTO') ? true : false;        
+            
+
         },
 
         pasada : function (val){
@@ -749,7 +796,7 @@ export default {
         ...mapState(['url','AppUrl']),
 
            HabilitarClonarPasadas(){
-                this.EnableClonarPasadas = (this.isGasoducto && this.pasada=='1' && this.inputsJuntasDefectosPlanta.length);
+                this.EnableClonarPasadas = (this.isGasoducto && this.pasada=='1' && this.TablaDetalle.length);
            },   
            
            numero_inf_code : function()  {
@@ -798,7 +845,7 @@ export default {
                this.exposicion = this.informe_ridata.exposicion;
                this.distancia_fuente_pelicula = this.informe_ridata.distancia_fuente_pelicula;
                this.ejecutor_ensayo = this.ejecutor_ensayodata;          
-               this.inputsJuntasDefectosPlanta = this.detalledata,  
+               this.TablaDetalle = this.detalledata,  
                this.observaciones = this.informedata.observaciones 
 
 
@@ -979,7 +1026,7 @@ export default {
 
         resetDetalle : function(){
 
-            this.inputsJuntasDefectosPlanta = [];
+            this.TablaDetalle = [];
             this.pk = '';
             this.tipo_soldadura='';
             this.pasada='';
@@ -1032,247 +1079,318 @@ export default {
              
         },
 
-        selectPosPlanta :function(index){
+        selectPosDetalle :function(index){
 
-            this.indexPosPlanta = index ;
+            this.indexDetalle = index ;
            
         },
 
-        addJuntaDefectosPlanta (posicion) { 
-            
-            console.log(posicion);
+        selectPosPasada :function(index){
 
-            this.inputsJuntasDefectosPlanta.push({ 
+            this.indexPasada = index ;
+           
+        },
+
+        AddDetalle (posicion) { 
+            
+            if(this.junta == '' ){
+
+                 toastr.error('Campo junta es obligatorio'); 
+                 return;
+            }else if(this.posicion == '' && this.clonando == false) {
+
+                 toastr.error('Campo posición es obligatorio'); 
+                  return;
+            }          
+
+            this.TablaDetalle.push({ 
                 pk : this.pk,
-                tipo_soldadura:this.tipo_soldadura,
-                pasada : this.pasada,
-                junta: this.junta,
-                soldador1: this.soldador1,
-                soldador2: this.soldador2,     
-                soldador3: this.soldador3,     
+                tipo_soldadura:this.tipo_soldadura,             
+                junta: this.junta,           
                 posicion : (typeof(posicion) !== 'undefined') ? posicion : this.posicion, 
                 aceptable_sn : 1 ,
                 observacion : '',
-                defectosPosicion : []           
-                 });            
+                pasadas : [],
+                defectos : []  
+            });   
 
            
         },
 
-        removeJuntaDefectosPlanta(index) {
-           this.indexPosPlanta = 0;   
-            this.inputsJuntasDefectosPlanta.splice(index, 1);
-            console.log('indexposplatanta despues de borrar' + this.indexPosPlanta);
+        AddPasadas () {            
             
-            
+            if(this.soldador1) {
+
+                    this.TablaDetalle[this.indexDetalle].pasadas.push({ 
+                        pasada : this.pasada,
+                        soldador1: this.soldador1,
+                        soldador2: this.soldador2,     
+                        soldador3: this.soldador3,                
+
+                    });  
+                    
+                    if (this.isGasoducto){
+                        if (this.pasada < 6)
+                            this.pasada++;
+                        else if(this.pasada == 6)
+                        this.pasada = 1;
+                    }
+
+            }
+            else{
+
+                toastr.error('Campo Cunio Z es obligatorio'); 
+
+            } 
         },
 
-        addDefectoPosicionPlanta (index) {
-         
-
-            this.inputsJuntasDefectosPlanta[this.indexPosPlanta].defectosPosicion.push({ 
+        addDefectos () {             
+    
+            this.TablaDetalle[this.indexDetalle].defectos.push({ 
                 codigo: this.defectoRiPlanta.codigo,
                 descripcion: this.defectoRiPlanta.descripcion,
                 id : this.defectoRiPlanta.id,    
                 posicion : this.posicionPlacaGosaducto,                
-                 });                  
-           
+                    });                  
+            
+            },
+        RemoveDetalle(index) {
+           this.indexDetalle = 0;   
+           this.TablaDetalle.splice(index, 1);               
+            
         },
 
-        removeDefectoPosicionPlanta(index) {
-            this.inputsJuntasDefectosPlanta[this.indexPosPlanta].defectosPosicion.splice(index, 1);
+        RemovePasada(index) {
+            this.indexPasada = 0;   
+            this.TablaDetalle[this.indexDetalle].pasadas.splice(index, 1);       
             
+        },
+
+        RemoveDefectos(index) {            
+            this.TablaDetalle[this.indexDetalle].defectos.splice(index, 1);            
         },
 
         insertarClonacion : function (posicion){
 
-           this.addJuntaDefectosPlanta(posicion);
+           this.AddDetalle(posicion);
         },
 
         ClonarPosPlanta : function(){
-            console.log("entro en clonar");
 
-            if(this.inputsJuntasDefectosPlanta.length > 0){
+            this.clonando = true;
 
-                let inputsJuntasDefectosPlantaReverse =  JSON.parse(JSON.stringify(this.inputsJuntasDefectosPlanta));         
-                let x = inputsJuntasDefectosPlantaReverse.length-1;
-                let juntaAux = inputsJuntasDefectosPlantaReverse[x].junta;
-                let posicionJunta =[];
+            if(this.TablaDetalle.length > 0){
 
-                console.log(juntaAux);
-                console.log(inputsJuntasDefectosPlantaReverse.length);
-                while (  (x >= 0)  && (juntaAux == inputsJuntasDefectosPlantaReverse[x].junta)) {     
+                let TablaDetalleReverse =  JSON.parse(JSON.stringify(this.TablaDetalle));         
+                let x = TablaDetalleReverse.length-1;
+                let juntaAux = TablaDetalleReverse[x].junta;
+                let posicionJunta =[];          
+                while (  (x >= 0)  && (juntaAux == TablaDetalleReverse[x].junta)) {     
 
-                    posicionJunta.unshift(inputsJuntasDefectosPlantaReverse[x].posicion);                    
+                    posicionJunta.unshift(TablaDetalleReverse[x].posicion);                    
                     x = x - 1;
                 }
 
                 posicionJunta.forEach(function(pos) {
 
-                    this.addJuntaDefectosPlanta(pos);       
+                this.AddDetalle(pos);       
+
                 }.bind(this));
             }
+
+            this.clonando = false;
+        },
+
+        validarPasadas : function() {
+
+            this.TablaDetalle.forEach(function(item){
+
+                if(item['pasadas'].length == 0){
+
+                    this.validoPasadas = false;
+                    return;
+                }
+
+            }.bind(this))
         },
 
         Store : function(){
-         
-            this.errors =[];
-            let gasoducto_sn ;
-            if(this.formato =='GASODUCTO')
-                gasoducto_sn = true;
-            else if(this.formato =='PLANTA')
-                gasoducto_sn = false;
-            else
-                gasoducto_sn= null;
-        
-            let defectos = this.formato =='PLANTA' ? this.inputsJuntasDefectosPlanta : false
-            var urlRegistros = 'informes_ri' ;      
-            axios({
-              method: 'post',
-              url : urlRegistros,    
-              data : {
+            
+            this.$nextTick(function () {
+                 this.validarPasadas();
+            })
+            if (this.validoPasadas){
+
+                    this.errors =[];
+                    let gasoducto_sn ;
+
+                    if(this.formato =='GASODUCTO')
+                        gasoducto_sn = true;
+                    else if(this.formato =='PLANTA')
+                        gasoducto_sn = false;
+                    else
+                        gasoducto_sn= null;
                 
-                'ot'              : this.otdata,
-                'ejecutor_ensayo' : this.ejecutor_ensayo,  
-                'metodo_ensayo'   : this.metodo,  
-                'fecha':          this.fecha,
-                'numero_inf':     this.numero_inf,
-                'prefijo'        :this.prefijo,
-                'gasoducto_sn' :  gasoducto_sn,               
-                'componente' :    this.componente,
-                'plano_isom' :    this.plano_isom,
-                'procedimiento' : this.procedimiento,           
-                'observaciones':  this.observaciones,
-                'material':       this.material,
-                'diametro':       this.diametro.diametro,
-                'espesor':        this.espesor.espesor,
-                'espesor_chapa' :  this.espesor_chapa, 
-                'equipo'        :  this.equipo,
-                'kv'            : this.kv,
-                'ma'            : this.ma,
-                'fuente'       :  this.fuente ? this.fuente : null,
-                'foco':           this.foco,
-                'tipo_pelicula' : this.tipo_pelicula,
-                'pantalla':       this.pantalla,
-                'pos_ant':        this.pos_ant,
-                'pos_pos':       this.pos_pos,
-                'lado':          this.lado,
-                'distancia_fuente_pelicula': this.distancia_fuente_pelicula,
-                'procedimiento_soldadura': this.procedimiento_soldadura,
-                'norma_evaluacion': this.norma_evaluacion,
-                'ici': this.ici,
-                'norma_ensayo': this.norma_ensayo,
-                'tecnica':this.tecnica,
-                'tecnicas_grafico' : this.tecnica_grafico,
-                'eps':this.eps,
-                'pqr':this.pqr,
-                'actividad' : this.actividad,
-                'exposicion': this.exposicion,   
-                'detalles'  : this.inputsJuntasDefectosPlanta,           
-          }}
-          
-      
-        ).then(response => {
-          this.response = response.data
-          toastr.success('informe N°' + this.numero_inf + ' fue creado con éxito ');
-          console.log(response);
-        }).catch(error => {
-               
-               this.errors = error.response.data.errors;
-                console.log(error.response);
-               $.each( this.errors, function( key, value ) {
-                   toastr.error(value);
-                   console.log( key + ": " + value );
-               });
+                    let defectos = this.formato =='PLANTA' ? this.TablaDetalle : false
+                    var urlRegistros = 'informes_ri' ;      
+                    axios({
+                    method: 'post',
+                    url : urlRegistros,    
+                    data : {
+                        
+                        'ot'              : this.otdata,
+                        'ejecutor_ensayo' : this.ejecutor_ensayo,  
+                        'metodo_ensayo'   : this.metodo,  
+                        'fecha':          this.fecha,
+                        'numero_inf':     this.numero_inf,
+                        'prefijo'        :this.prefijo,
+                        'gasoducto_sn' :  gasoducto_sn,               
+                        'componente' :    this.componente,
+                        'plano_isom' :    this.plano_isom,
+                        'procedimiento' : this.procedimiento,           
+                        'observaciones':  this.observaciones,
+                        'material':       this.material,
+                        'diametro':       this.diametro.diametro,
+                        'espesor':        this.espesor.espesor,
+                        'espesor_chapa' :  this.espesor_chapa, 
+                        'equipo'        :  this.equipo,
+                        'kv'            : this.kv,
+                        'ma'            : this.ma,
+                        'fuente'       :  this.fuente ? this.fuente : null,
+                        'foco':           this.foco,
+                        'tipo_pelicula' : this.tipo_pelicula,
+                        'pantalla':       this.pantalla,
+                        'pos_ant':        this.pos_ant,
+                        'pos_pos':       this.pos_pos,
+                        'lado':          this.lado,
+                        'distancia_fuente_pelicula': this.distancia_fuente_pelicula,
+                        'procedimiento_soldadura': this.procedimiento_soldadura,
+                        'norma_evaluacion': this.norma_evaluacion,
+                        'ici': this.ici,
+                        'norma_ensayo': this.norma_ensayo,
+                        'tecnica':this.tecnica,
+                        'tecnicas_grafico' : this.tecnica_grafico,
+                        'eps':this.eps,
+                        'pqr':this.pqr,
+                        'actividad' : this.actividad,
+                        'exposicion': this.exposicion,   
+                        'detalles'  : this.TablaDetalle,           
+                }}
+                
+            
+                ).then(response => {
+                this.response = response.data
+                toastr.success('informe N°' + this.numero_inf + ' fue creado con éxito ');
+                console.log(response);
+                }).catch(error => {
+                    
+                    this.errors = error.response.data.errors;
+                        console.log(error.response);
+                    $.each( this.errors, function( key, value ) {
+                        toastr.error(value);
+                        console.log( key + ": " + value );
+                    });
 
-               if((typeof(this.errors)=='undefined') && (error)){
+                    if((typeof(this.errors)=='undefined') && (error)){
 
-                     toastr.error("Ocurrió un error al procesar la solicitud");                     
-                  
-                }
+                            toastr.error("Ocurrió un error al procesar la solicitud");                     
+                        
+                        }
 
-           });    
+                });    
+           }else {
 
+                toastr.error("Error: Pasadas sin completar");    
+                this.validoPasadas = true;
+           }
         },
-        Update : function() {
+        Update : function() {    
 
-            console.log('entro para actualizar' );
-            this.errors =[];
-            let gasoducto_sn ;
-            if(this.formato =='GASODUCTO')
-                gasoducto_sn = true;
-            else if(this.formato =='PLANTA')
-                gasoducto_sn = false;
-            else
-                gasoducto_sn= null;
-            let defectos = this.formato =='PLANTA' ? this.inputsJuntasDefectosPlanta : false
-            var urlRegistros = 'informes_ri/' + this.informedata.id  ;      
-            axios({
-              method: 'put',
-              url : urlRegistros,    
-              data : {
+            this.validarPasadas();
+            if (this.validoPasadas){
+
+                    console.log('entro para actualizar' );
+                    this.errors =[];
+                    let gasoducto_sn ;
+                    if(this.formato =='GASODUCTO')
+                        gasoducto_sn = true;
+                    else if(this.formato =='PLANTA')
+                        gasoducto_sn = false;
+                    else
+                        gasoducto_sn= null;
+                    let defectos = this.formato =='PLANTA' ? this.TablaDetalle : false
+                    var urlRegistros = 'informes_ri/' + this.informedata.id  ;      
+                    axios({
+                    method: 'put',
+                    url : urlRegistros,    
+                    data : {
+                        
+                        'ot'              : this.otdata,
+                        'ejecutor_ensayo' : this.ejecutor_ensayo,  
+                        'metodo_ensayo'   : this.metodo,  
+                        'fecha':          this.fecha,
+                        'numero_inf':     this.numero_inf,
+                        'prefijo'        :this.prefijo,
+                        'gasoducto_sn' :  gasoducto_sn,               
+                        'componente' :    this.componente,
+                        'plano_isom' :    this.plano_isom,
+                        'procedimiento' : this.procedimiento,           
+                        'observaciones':  this.observaciones,
+                        'material':       this.material,
+                        'diametro':       this.diametro.diametro,
+                        'espesor':        this.espesor.espesor,
+                        'espesor_chapa' :  this.espesor_chapa, 
+                        'equipo'        :  this.equipo,
+                        'kv'            : this.kv,
+                        'ma'            : this.ma,
+                        'fuente'       :  this.fuente ? this.fuente : null,
+                        'foco':           this.foco,
+                        'tipo_pelicula' : this.tipo_pelicula,
+                        'pantalla':       this.pantalla,
+                        'pos_ant':        this.pos_ant,
+                        'pos_pos':       this.pos_pos,
+                        'lado':          this.lado,
+                        'distancia_fuente_pelicula': this.distancia_fuente_pelicula,
+                        'procedimiento_soldadura': this.procedimiento_soldadura,
+                        'norma_evaluacion': this.norma_evaluacion,
+                        'ici': this.ici,
+                        'norma_ensayo': this.norma_ensayo,
+                        'tecnica':this.tecnica,
+                        'tecnicas_grafico' : this.tecnica_grafico,
+                        'eps':this.eps,
+                        'pqr':this.pqr,
+                        'actividad' : this.actividad,
+                        'exposicion': this.exposicion,   
+                        'detalles'  : this.TablaDetalle,           
+                }}
                 
-                'ot'              : this.otdata,
-                'ejecutor_ensayo' : this.ejecutor_ensayo,  
-                'metodo_ensayo'   : this.metodo,  
-                'fecha':          this.fecha,
-                'numero_inf':     this.numero_inf,
-                'prefijo'        :this.prefijo,
-                'gasoducto_sn' :  gasoducto_sn,               
-                'componente' :    this.componente,
-                'plano_isom' :    this.plano_isom,
-                'procedimiento' : this.procedimiento,           
-                'observaciones':  this.observaciones,
-                'material':       this.material,
-                'diametro':       this.diametro.diametro,
-                'espesor':        this.espesor.espesor,
-                'espesor_chapa' :  this.espesor_chapa, 
-                'equipo'        :  this.equipo,
-                'kv'            : this.kv,
-                'ma'            : this.ma,
-                'fuente'       :  this.fuente ? this.fuente : null,
-                'foco':           this.foco,
-                'tipo_pelicula' : this.tipo_pelicula,
-                'pantalla':       this.pantalla,
-                'pos_ant':        this.pos_ant,
-                'pos_pos':       this.pos_pos,
-                'lado':          this.lado,
-                'distancia_fuente_pelicula': this.distancia_fuente_pelicula,
-                'procedimiento_soldadura': this.procedimiento_soldadura,
-                'norma_evaluacion': this.norma_evaluacion,
-                'ici': this.ici,
-                'norma_ensayo': this.norma_ensayo,
-                'tecnica':this.tecnica,
-                'tecnicas_grafico' : this.tecnica_grafico,
-                'eps':this.eps,
-                'pqr':this.pqr,
-                'actividad' : this.actividad,
-                'exposicion': this.exposicion,   
-                'detalles'  : this.inputsJuntasDefectosPlanta,           
-          }}
-          
-      
-        ).then(response => {
-          this.response = response.data
-          toastr.success('informe N°' + this.numero_inf + ' fue actualizado con éxito ');
-          console.log(response);
-        }).catch(error => {
-               
-               this.errors = error.response.data.errors;
-                console.log(error.response);
-               $.each( this.errors, function( key, value ) {
-                   toastr.error(value);
-                   console.log( key + ": " + value );
-               });
+            
+                ).then(response => {
+                this.response = response.data
+                toastr.success('informe N°' + this.numero_inf + ' fue actualizado con éxito ');
+                console.log(response);
+                }).catch(error => {
+                    
+                    this.errors = error.response.data.errors;
+                        console.log(error.response);
+                    $.each( this.errors, function( key, value ) {
+                        toastr.error(value);
+                        console.log( key + ": " + value );
+                    });
 
-               if((typeof(this.errors)=='undefined') && (error)){
+                    if((typeof(this.errors)=='undefined') && (error)){
 
-                     toastr.error("Ocurrió un error al procesar la solicitud");                     
-                  
-                }
+                            toastr.error("Ocurrió un error al procesar la solicitud");                     
+                        
+                        }
 
-           }); 
+                }); 
+        } else {
 
+                toastr.error("Error: Pasadas sin completar");    
+                this.validoPasadas = true;
+
+           }
         }
 
     }
@@ -1295,7 +1413,7 @@ export default {
 
 table .selected{
 
-  background-color: rgb(220, 198, 241)!important;
+  background-color: rgb(243, 200, 126)!important;
 
 } 
 
@@ -1304,6 +1422,14 @@ table .selected{
 .size-1-5 {
 
     width: 12.499999995%;
+}
+
+.box-title {
+
+    font-size: 15px;
+    font-style: italic;
+    font-weight: bold;
+    color : #6E6A6A;
 }
 }
 </style>

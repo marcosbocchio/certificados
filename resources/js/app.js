@@ -55,7 +55,7 @@ vSelect.props.components.default = () => ({
   },
 });
 */
-
+Vue.component('app-icon', require('./components/app-icon.vue').default);
 Vue.component('abm-maestro', require('./components/abm-maestro/abm-maestro.vue').default);
 Vue.component('table-users', require('./components/abm-maestro/usuarios/table-users.vue').default);
 Vue.component('nuevo-users', require('./components/abm-maestro/usuarios/nuevo-users.vue').default);

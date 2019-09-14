@@ -7,29 +7,29 @@
 
 <style>
 
-@page { margin: 270px 15px 215px 15px !important;
-        padding: 0px 0px 0px 0px !important; }
+  
+
+@page {    
+        margin: 280px 15px 204px 15px !important;
+        padding: 0px 0px 0px 0px !important;
+       }
 
 header {
     position:fixed;
-    top: -249px; 
-   
-    }
-
-.contenido {    
- 
-   
+    top: -258px;    
 }
 
-.contenido table {
 
-
-}
 
 footer {
-    position: fixed; bottom:0px; 
+    position: fixed; bottom:5.5px; 
     padding-top: 0px;
 
+}
+
+main {
+
+    margin-top: -2px;
 }
 
 .pagenum:before {
@@ -320,9 +320,9 @@ b {
 </footer>
 
 
-<div class="contenido">
+<main>
     
-    <table width="100%" class="bordered" >
+    <table width="100%" class="bordered"  >
         <tbody>
             @foreach ($juntas_posiciones as $junta_posiciones)
                 <tr>
@@ -330,6 +330,8 @@ b {
                     <td style="font-size: 11px;  width:49.5px;text-align: center" class="bordered-td">{{$junta_posiciones->junta}} </td>
                     <td style="font-size: 11px;  width:49.5px;text-align: center" class="bordered-td">{{$junta_posiciones->tipo_soldadura}}</td>
                  
+                        {{ $x =0  }}
+
                         <!--   Pasada 1 -->
                         @foreach ($pasadas_posiciones as $key => $pasadas_posicion)                                
 
@@ -338,7 +340,7 @@ b {
 
 
                                  <td style="font-size: 11px;  width:36px; text-align:center;" class="bordered-td">{{$pasadas_posicion->soldadorz}} </td>                           
-
+                                  {{  $x = 1 }}
 
                             @endif
 
@@ -358,15 +360,26 @@ b {
 
                             @endif
                             
-                        @endforeach     
+                        @endforeach  
+
+                        @if ($x == 0)
+
+                             <td style="font-size: 11px;  width:36px; text-align:center;" class="bordered-td"> </td>
+                             <td style="font-size: 11px;  width:36px; text-align:center;" class="bordered-td"> </td>
+                             <td style="font-size: 11px;  width:36px; text-align:center;" class="bordered-td"></td>
+                            
+                        @endif   
                     
                          <!--   Pasada 2 -->
 
+                         {{ $x = 0  }}
+
                          @foreach ($pasadas_posiciones as $key => $pasadas_posicion)                                
 
-                            
+                             
                             @if (($pasadas_posicion->posicion_id == $junta_posiciones->posicion_id) && ($pasadas_posicion->numero == 2 ))
 
+                               {{  $x = 1 }}
 
                                  <td style="font-size: 11px;  width:36px; text-align:center;" class="bordered-td">{{$pasadas_posicion->soldadorz}} </td>                           
 
@@ -384,14 +397,21 @@ b {
                             
                         @endforeach
 
+                           @if ($x == 0)
+                             <td style="font-size: 11px;  width:36px; text-align:center;" class="bordered-td"> </td>
+                             <td style="font-size: 11px;  width:36px; text-align:center;" class="bordered-td"></td>                            
+                          @endif   
+
                         <!--   Pasada 3 -->
+
+                         {{ $x =0  }}
 
                          @foreach ($pasadas_posiciones as $key => $pasadas_posicion)                                
 
                             
                             @if (($pasadas_posicion->posicion_id == $junta_posiciones->posicion_id) && ($pasadas_posicion->numero == 3 ))
 
-
+                                 {{  $x = 1 }}
                                  <td style="font-size: 11px;  width:36.5px; text-align:center;" class="bordered-td">{{$pasadas_posicion->soldadorz}} </td>                           
 
 
@@ -407,14 +427,21 @@ b {
                             
                         @endforeach
 
+                         @if ($x == 0)
+                             <td style="font-size: 11px;  width:36px; text-align:center;" class="bordered-td"> </td>
+                             <td style="font-size: 11px;  width:36px; text-align:center;" class="bordered-td"></td>                            
+                          @endif 
+
                         <!--   Pasada 4 -->
+
+                         {{ $x =0  }}
 
                          @foreach ($pasadas_posiciones as $key => $pasadas_posicion)                                
 
                             
                             @if (($pasadas_posicion->posicion_id == $junta_posiciones->posicion_id) && ($pasadas_posicion->numero == 4 ))
 
-
+                                {{  $x = 1 }}
                                  <td style="font-size: 11px;  width:36.5px; text-align:center;" class="bordered-td">{{$pasadas_posicion->soldadorz}} </td>                           
 
 
@@ -431,14 +458,21 @@ b {
                             
                         @endforeach
 
+                        @if ($x == 0)
+                            <td style="font-size: 11px;  width:36px; text-align:center;" class="bordered-td"> </td>
+                            <td style="font-size: 11px;  width:36px; text-align:center;" class="bordered-td"></td>                            
+                        @endif 
+
                         <!--   Pasada 5 -->
+
+                        {{ $x =0  }}
 
                          @foreach ($pasadas_posiciones as $key => $pasadas_posicion)                                
 
                             
                             @if (($pasadas_posicion->posicion_id == $junta_posiciones->posicion_id) && ($pasadas_posicion->numero == 5 ))
 
-
+                                 {{  $x = 1 }}
                                  <td style="font-size: 11px;  width:36.5px; text-align:center;" class="bordered-td">{{$pasadas_posicion->soldadorz}} </td>                           
 
 
@@ -455,14 +489,21 @@ b {
                             
                         @endforeach
 
+                        @if ($x == 0)
+                            <td style="font-size: 11px;  width:36px; text-align:center;" class="bordered-td"> </td>
+                            <td style="font-size: 11px;  width:36px; text-align:center;" class="bordered-td"></td>                            
+                        @endif 
+
                         <!--   Pasada 6 -->
+
+                        {{ $x =0  }}
 
                          @foreach ($pasadas_posiciones as $key => $pasadas_posicion)                                
 
                             
                             @if (($pasadas_posicion->posicion_id == $junta_posiciones->posicion_id) && ($pasadas_posicion->numero == 6 ))
 
-
+                                 {{  $x = 1 }}
                                  <td style="font-size: 11px;  width:36px; text-align:center;" class="bordered-td">{{$pasadas_posicion->soldadorz}} </td>                           
 
 
@@ -478,6 +519,11 @@ b {
                             @endif
                             
                         @endforeach
+
+                        @if ($x == 0)
+                            <td style="font-size: 11px;  width:36px; text-align:center;" class="bordered-td"> </td>
+                            <td style="font-size: 11px;  width:36px; text-align:center;" class="bordered-td"></td>                            
+                        @endif 
 
                     <td style="font-size: 11px;  width:63.5px;text-align: center" class="bordered-td">{{$junta_posiciones->codigo}}</td>
 
@@ -503,24 +549,18 @@ b {
 
                     </td>
 
-                    <td style="font-size: 11px;width:94.7px; text-align: center" class="bordered-td">
-
-                        @foreach ( $defectos_posiciones as  $defectos_posicion)
-                            @if ($defectos_posicion->posicion_id == $junta_posiciones->posicion_id)
-                                {{ $defectos_posicion->numero }} /
-                            @endif
-                        @endforeach
+                    <td style="font-size: 11px;width:94.7px; text-align: center" class="bordered-td">                     
 
                     </td>
                      <!-- Resultado-->   
                     <td style="font-size: 11px;width:32px; text-align: center; " class="bordered-td">
-                        @if ($junta_posiciones->aceptable_sn == 6)
+                        @if ($junta_posiciones->aceptable_sn == 1)
                             X
                         @endif
                     </td>
 
                     <td style="font-size: 11px; text-align: center;" class="bordered-td">
-                        @if ($junta_posiciones->aceptable_sn != 6)
+                        @if ($junta_posiciones->aceptable_sn == 0)
                             X
                         @endif
                     </td>
@@ -530,7 +570,7 @@ b {
                                         
         </tbody>
     </table> 
-</div>  
+</main>  
 
 <script type="text/php">
 

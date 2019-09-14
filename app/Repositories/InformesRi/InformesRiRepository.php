@@ -12,7 +12,7 @@ use App\Juntas;
 use App\PasadasPosicion;
 use Exception as Exception;
 use App\Posicion;
-use App\DefectosPasadasPosicion;
+use App\DefectosPosicion;
 
 
 class InformesRiRepository extends BaseRepository
@@ -134,8 +134,8 @@ class InformesRiRepository extends BaseRepository
 
          try {
 
-          $pasadas_posicion = $this->savePasadasPosicion($request->gasoducto_sn,$detalle,$posicion);
-  
+         $this->savePasadasPosicion($detalle['pasadas'],$posicion);
+         $this->saveDefectos($detalle['defectos'],$posicion);
            
          } 
          catch(Exception $z){          
@@ -150,14 +150,15 @@ class InformesRiRepository extends BaseRepository
        
       
       }
+ 
     
   }
 
   public function saveJunta($detalle ,$informeRi){
 
     $junta =  new Juntas;
-    $junta->codigo = $detalle['junta'];
     $junta->tipo_soldadura_id = $detalle['tipo_soldadura']['id'];
+    $junta->codigo = $detalle['junta'];
     $junta->informe_ri_id = $informeRi->id;          
     $junta->km = $detalle['pk']; 
     $junta->save();
@@ -168,80 +169,74 @@ class InformesRiRepository extends BaseRepository
 
   public function savePosicion($detalle,$junta){
 
-    $pos = new Posicion;  
-    $pos->codigo = $detalle['posicion'];
-    $pos->descripcion = $detalle['observacion'] ;
-    $pos->junta_id = $junta['id'];
-    $pos->save();
+    $posicion = new Posicion;  
+    $posicion->junta_id = $junta['id'];
+    $posicion->codigo = $detalle['posicion'];
+    $posicion->descripcion = $detalle['observacion'] ;
+    $posicion->aceptable_sn = $detalle['aceptable_sn'];
+    $posicion->save();
 
-    return $pos;
+    return $posicion;
   }
 
 
-  public function savePasadasPosicion($gasoducto_sn,$detalle,$posicion){
+  public function savePasadasPosicion($pasadas,$posicion){   
+     
  
-     
-     
-     $defectosPosicion = $detalle['defectosPosicion'];
-     $numero_pasada    = $detalle['pasada'] ? $detalle['pasada'] : 1;
+      foreach ($pasadas as $pasada) {
 
-      $pasadasPosicion = new PasadasPosicion;   
-      $pasadasPosicion->numero = $numero_pasada;
-      $pasadasPosicion->posicion_id = $posicion['id'];
-      $pasadasPosicion->aceptable_sn = $detalle['aceptable_sn'];
-
-      $pasadasPosicion->soldadorz_id = $detalle['soldador1']['id'];               
-      $pasadasPosicion->soldadorl_id = $detalle['soldador2']['id'];
-      $pasadasPosicion->soldadorp_id = $detalle['soldador3']['id'];
-
-      $pasadasPosicion->save();
-      
-        foreach ($defectosPosicion as $defectoPosicion) {
-          
-          $defectos_pasadas_posicion = new DefectosPasadasPosicion;
-          $defectos_pasadas_posicion->defecto_ri_id = $defectoPosicion['id'];
-          $defectos_pasadas_posicion->pasada_posicion_id = $pasadasPosicion->id;
-
-          if($gasoducto_sn){
-          
-            $defectos_pasadas_posicion->posicion = $defectoPosicion['posicion'];         
-
-          }
-
-          $defectos_pasadas_posicion->save();
-        }
-
+        $pasadasPosicion = new PasadasPosicion;   
+        $pasadasPosicion->numero = $pasada['pasada'];
+        $pasadasPosicion->posicion_id =  $posicion['id'];
+        $pasadasPosicion->soldadorz_id = $pasada['soldador1']['id'];               
+        $pasadasPosicion->soldadorl_id = $pasada['soldador2']['id'];
+        $pasadasPosicion->soldadorp_id = $pasada['soldador3']['id'];
   
+        $pasadasPosicion->save();
+
+       
+      }
+    }
+
+  public function saveDefectos($defectos,$posicion){
+      
+        foreach ($defectos as $defecto) {
+          
+          $defectosPosicion = new DefectosPosicion;
+          $defectosPosicion->posicion_id = $posicion['id'];
+          $defectosPosicion->defecto_ri_id = $defecto['id'];       
+          $defectosPosicion->posicion = $defecto['posicion']; 
+          $defectosPosicion->save();
+        }  
     
   }
 
 public function deleteDetalle($request,$id){
 
-DB::delete('delete dpp from defectos_pasadas_posicion as dpp
-                inner join pasadas_posicion as pp on dpp.pasada_posicion_id = pp.id
-                inner join posicion as p on pp.posicion_id = p.id 
-                inner join juntas as j on j.id = p.junta_id
-                inner join informes_ri as ir on j.informe_ri_id = ir.id
-                where
-                ir.id= ?',[$id]);
+      DB::delete('delete dpp from defectos_posicion as dpp              
+                      inner join posicion as p on dpp.posicion_id = p.id 
+                      inner join juntas as j on j.id = p.junta_id
+                      inner join informes_ri as ir on j.informe_ri_id = ir.id
+                      where
+                      ir.id= ?',[$id]);
 
-DB::delete('delete pp from pasadas_posicion as pp
-                inner join posicion as p on pp.posicion_id = p.id 
-                inner join juntas as j on j.id = p.junta_id
-                inner join informes_ri as ir on j.informe_ri_id = ir.id
-                where
-                ir.id= ?',[$id]);
+      DB::delete('delete pp from pasadas_posicion as pp
+                      inner join posicion as p on pp.posicion_id = p.id 
+                      inner join juntas as j on j.id = p.junta_id
+                      inner join informes_ri as ir on j.informe_ri_id = ir.id
+                      where
+                      ir.id= ?',[$id]);
 
-DB::delete('delete p from posicion as p
-                inner join juntas as j on j.id = p.junta_id
-                inner join informes_ri as ir on j.informe_ri_id = ir.id
-                where
-                ir.id= ?',[$id]);
-    
-DB::delete('delete j from juntas as j
-                inner join informes_ri as ir on j.informe_ri_id = ir.id
-                where
-                ir.id= ?',[$id]);    
+      DB::delete('delete p from posicion as p
+                      inner join juntas as j on j.id = p.junta_id
+                      inner join informes_ri as ir on j.informe_ri_id = ir.id
+                      where
+                      ir.id= ?',[$id]);
+          
+      DB::delete('delete j from juntas as j
+                      inner join informes_ri as ir on j.informe_ri_id = ir.id
+                      where
+                      ir.id= ?',[$id]);    
   
   }
 

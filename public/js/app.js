@@ -2649,6 +2649,34 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/app-icon.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/app-icon.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['img', 'color'],
+  computed: {
+    cssClasses: function cssClasses() {
+      return 'fa fa-lg fa-' + this.img;
+    },
+    cssStyle: function cssStyle() {
+      return 'color:' + this.color;
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/dashboard-enod.vue?vue&type=script&lang=js&":
 /*!***********************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/dashboard/dashboard-enod.vue?vue&type=script&lang=js& ***!
@@ -5034,6 +5062,46 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -5173,7 +5241,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       defectoRiPlanta: '',
       defectoRiGasoducto: '',
       posicionPlacaGosaducto: '',
-      indexPosPlanta: 0,
+      indexDetalle: 0,
+      indexPasada: 0,
       //Fin Formulario detalle
       isRX: false,
       isChapa: false,
@@ -5197,8 +5266,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       posiciones: [],
       defectosRiPlanta: [],
       defectosRiGasoducto: [],
-      inputsJuntasDefectosPlanta: [],
-      junta_posicion_selected: ''
+      TablaDetalle: [],
+      TablaPasadas: [],
+      junta_posicion_selected: '',
+      clonando: false,
+      validoPasadas: true
     };
   },
   created: function created() {
@@ -5217,6 +5289,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.getDefectosRiPlanta();
     this.getDefectosRiGasoducto();
     this.getTipoSoldaduras();
+    this.pasada = 1;
+    this.formato = 'PLANTA';
     this.setEdit();
   },
   mounted: function mounted() {
@@ -5230,7 +5304,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.isChapa = val.diametro == 'CHAPA' ? true : false;
     },
     formato: function formato(val) {
-      this.isGasoducto = val == 'GASODUCTO' ? true : false; //  this.resetDetalle();
+      this.isGasoducto = val == 'GASODUCTO' ? true : false;
     },
     pasada: function pasada(val) {
       this.soldador2 = val == '1' ? this.soldador2 : '';
@@ -5238,7 +5312,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])(['url', 'AppUrl']), {
     HabilitarClonarPasadas: function HabilitarClonarPasadas() {
-      this.EnableClonarPasadas = this.isGasoducto && this.pasada == '1' && this.inputsJuntasDefectosPlanta.length;
+      this.EnableClonarPasadas = this.isGasoducto && this.pasada == '1' && this.TablaDetalle.length;
     },
     numero_inf_code: function numero_inf_code() {
       if (this.numero_inf) return this.metodo + (this.numero_inf < 10 ? '00' : this.numero_inf < 100 ? '0' : '') + this.numero_inf;
@@ -5278,7 +5352,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.exposicion = this.informe_ridata.exposicion;
         this.distancia_fuente_pelicula = this.informe_ridata.distancia_fuente_pelicula;
         this.ejecutor_ensayo = this.ejecutor_ensayodata;
-        this.inputsJuntasDefectosPlanta = this.detalledata, this.observaciones = this.informedata.observaciones;
+        this.TablaDetalle = this.detalledata, this.observaciones = this.informedata.observaciones;
       }
     },
     getNumeroInforme: function getNumeroInforme() {
@@ -5435,7 +5509,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.kv = '', this.ma = '';
     },
     resetDetalle: function resetDetalle() {
-      this.inputsJuntasDefectosPlanta = [];
+      this.TablaDetalle = [];
       this.pk = '';
       this.tipo_soldadura = '';
       this.pasada = '';
@@ -5479,199 +5553,249 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this19.defectosRiGasoducto = response.data;
       });
     },
-    selectPosPlanta: function selectPosPlanta(index) {
-      this.indexPosPlanta = index;
+    selectPosDetalle: function selectPosDetalle(index) {
+      this.indexDetalle = index;
     },
-    addJuntaDefectosPlanta: function addJuntaDefectosPlanta(posicion) {
-      console.log(posicion);
-      this.inputsJuntasDefectosPlanta.push({
+    selectPosPasada: function selectPosPasada(index) {
+      this.indexPasada = index;
+    },
+    AddDetalle: function AddDetalle(posicion) {
+      if (this.junta == '') {
+        toastr.error('Campo junta es obligatorio');
+        return;
+      } else if (this.posicion == '' && this.clonando == false) {
+        toastr.error('Campo posición es obligatorio');
+        return;
+      }
+
+      this.TablaDetalle.push({
         pk: this.pk,
         tipo_soldadura: this.tipo_soldadura,
-        pasada: this.pasada,
         junta: this.junta,
-        soldador1: this.soldador1,
-        soldador2: this.soldador2,
-        soldador3: this.soldador3,
         posicion: typeof posicion !== 'undefined' ? posicion : this.posicion,
         aceptable_sn: 1,
         observacion: '',
-        defectosPosicion: []
+        pasadas: [],
+        defectos: []
       });
     },
-    removeJuntaDefectosPlanta: function removeJuntaDefectosPlanta(index) {
-      this.indexPosPlanta = 0;
-      this.inputsJuntasDefectosPlanta.splice(index, 1);
-      console.log('indexposplatanta despues de borrar' + this.indexPosPlanta);
+    AddPasadas: function AddPasadas() {
+      if (this.soldador1) {
+        this.TablaDetalle[this.indexDetalle].pasadas.push({
+          pasada: this.pasada,
+          soldador1: this.soldador1,
+          soldador2: this.soldador2,
+          soldador3: this.soldador3
+        });
+
+        if (this.isGasoducto) {
+          if (this.pasada < 6) this.pasada++;else if (this.pasada == 6) this.pasada = 1;
+        }
+      } else {
+        toastr.error('Campo Cunio Z es obligatorio');
+      }
     },
-    addDefectoPosicionPlanta: function addDefectoPosicionPlanta(index) {
-      this.inputsJuntasDefectosPlanta[this.indexPosPlanta].defectosPosicion.push({
+    addDefectos: function addDefectos() {
+      this.TablaDetalle[this.indexDetalle].defectos.push({
         codigo: this.defectoRiPlanta.codigo,
         descripcion: this.defectoRiPlanta.descripcion,
         id: this.defectoRiPlanta.id,
         posicion: this.posicionPlacaGosaducto
       });
     },
-    removeDefectoPosicionPlanta: function removeDefectoPosicionPlanta(index) {
-      this.inputsJuntasDefectosPlanta[this.indexPosPlanta].defectosPosicion.splice(index, 1);
+    RemoveDetalle: function RemoveDetalle(index) {
+      this.indexDetalle = 0;
+      this.TablaDetalle.splice(index, 1);
+    },
+    RemovePasada: function RemovePasada(index) {
+      this.indexPasada = 0;
+      this.TablaDetalle[this.indexDetalle].pasadas.splice(index, 1);
+    },
+    RemoveDefectos: function RemoveDefectos(index) {
+      this.TablaDetalle[this.indexDetalle].defectos.splice(index, 1);
     },
     insertarClonacion: function insertarClonacion(posicion) {
-      this.addJuntaDefectosPlanta(posicion);
+      this.AddDetalle(posicion);
     },
     ClonarPosPlanta: function ClonarPosPlanta() {
-      console.log("entro en clonar");
+      this.clonando = true;
 
-      if (this.inputsJuntasDefectosPlanta.length > 0) {
-        var inputsJuntasDefectosPlantaReverse = JSON.parse(JSON.stringify(this.inputsJuntasDefectosPlanta));
-        var x = inputsJuntasDefectosPlantaReverse.length - 1;
-        var juntaAux = inputsJuntasDefectosPlantaReverse[x].junta;
+      if (this.TablaDetalle.length > 0) {
+        var TablaDetalleReverse = JSON.parse(JSON.stringify(this.TablaDetalle));
+        var x = TablaDetalleReverse.length - 1;
+        var juntaAux = TablaDetalleReverse[x].junta;
         var posicionJunta = [];
-        console.log(juntaAux);
-        console.log(inputsJuntasDefectosPlantaReverse.length);
 
-        while (x >= 0 && juntaAux == inputsJuntasDefectosPlantaReverse[x].junta) {
-          posicionJunta.unshift(inputsJuntasDefectosPlantaReverse[x].posicion);
+        while (x >= 0 && juntaAux == TablaDetalleReverse[x].junta) {
+          posicionJunta.unshift(TablaDetalleReverse[x].posicion);
           x = x - 1;
         }
 
         posicionJunta.forEach(function (pos) {
-          this.addJuntaDefectosPlanta(pos);
+          this.AddDetalle(pos);
         }.bind(this));
       }
+
+      this.clonando = false;
+    },
+    validarPasadas: function validarPasadas() {
+      this.TablaDetalle.forEach(function (item) {
+        if (item['pasadas'].length == 0) {
+          this.validoPasadas = false;
+          return;
+        }
+      }.bind(this));
     },
     Store: function Store() {
       var _this20 = this;
 
-      this.errors = [];
-      var gasoducto_sn;
-      if (this.formato == 'GASODUCTO') gasoducto_sn = true;else if (this.formato == 'PLANTA') gasoducto_sn = false;else gasoducto_sn = null;
-      var defectos = this.formato == 'PLANTA' ? this.inputsJuntasDefectosPlanta : false;
-      var urlRegistros = 'informes_ri';
-      axios({
-        method: 'post',
-        url: urlRegistros,
-        data: {
-          'ot': this.otdata,
-          'ejecutor_ensayo': this.ejecutor_ensayo,
-          'metodo_ensayo': this.metodo,
-          'fecha': this.fecha,
-          'numero_inf': this.numero_inf,
-          'prefijo': this.prefijo,
-          'gasoducto_sn': gasoducto_sn,
-          'componente': this.componente,
-          'plano_isom': this.plano_isom,
-          'procedimiento': this.procedimiento,
-          'observaciones': this.observaciones,
-          'material': this.material,
-          'diametro': this.diametro.diametro,
-          'espesor': this.espesor.espesor,
-          'espesor_chapa': this.espesor_chapa,
-          'equipo': this.equipo,
-          'kv': this.kv,
-          'ma': this.ma,
-          'fuente': this.fuente ? this.fuente : null,
-          'foco': this.foco,
-          'tipo_pelicula': this.tipo_pelicula,
-          'pantalla': this.pantalla,
-          'pos_ant': this.pos_ant,
-          'pos_pos': this.pos_pos,
-          'lado': this.lado,
-          'distancia_fuente_pelicula': this.distancia_fuente_pelicula,
-          'procedimiento_soldadura': this.procedimiento_soldadura,
-          'norma_evaluacion': this.norma_evaluacion,
-          'ici': this.ici,
-          'norma_ensayo': this.norma_ensayo,
-          'tecnica': this.tecnica,
-          'tecnicas_grafico': this.tecnica_grafico,
-          'eps': this.eps,
-          'pqr': this.pqr,
-          'actividad': this.actividad,
-          'exposicion': this.exposicion,
-          'detalles': this.inputsJuntasDefectosPlanta
-        }
-      }).then(function (response) {
-        _this20.response = response.data;
-        toastr.success('informe N°' + _this20.numero_inf + ' fue creado con éxito ');
-        console.log(response);
-      })["catch"](function (error) {
-        _this20.errors = error.response.data.errors;
-        console.log(error.response);
-        $.each(_this20.errors, function (key, value) {
-          toastr.error(value);
-          console.log(key + ": " + value);
-        });
-
-        if (typeof _this20.errors == 'undefined' && error) {
-          toastr.error("Ocurrió un error al procesar la solicitud");
-        }
+      this.$nextTick(function () {
+        this.validarPasadas();
       });
+
+      if (this.validoPasadas) {
+        this.errors = [];
+        var gasoducto_sn;
+        if (this.formato == 'GASODUCTO') gasoducto_sn = true;else if (this.formato == 'PLANTA') gasoducto_sn = false;else gasoducto_sn = null;
+        var defectos = this.formato == 'PLANTA' ? this.TablaDetalle : false;
+        var urlRegistros = 'informes_ri';
+        axios({
+          method: 'post',
+          url: urlRegistros,
+          data: {
+            'ot': this.otdata,
+            'ejecutor_ensayo': this.ejecutor_ensayo,
+            'metodo_ensayo': this.metodo,
+            'fecha': this.fecha,
+            'numero_inf': this.numero_inf,
+            'prefijo': this.prefijo,
+            'gasoducto_sn': gasoducto_sn,
+            'componente': this.componente,
+            'plano_isom': this.plano_isom,
+            'procedimiento': this.procedimiento,
+            'observaciones': this.observaciones,
+            'material': this.material,
+            'diametro': this.diametro.diametro,
+            'espesor': this.espesor.espesor,
+            'espesor_chapa': this.espesor_chapa,
+            'equipo': this.equipo,
+            'kv': this.kv,
+            'ma': this.ma,
+            'fuente': this.fuente ? this.fuente : null,
+            'foco': this.foco,
+            'tipo_pelicula': this.tipo_pelicula,
+            'pantalla': this.pantalla,
+            'pos_ant': this.pos_ant,
+            'pos_pos': this.pos_pos,
+            'lado': this.lado,
+            'distancia_fuente_pelicula': this.distancia_fuente_pelicula,
+            'procedimiento_soldadura': this.procedimiento_soldadura,
+            'norma_evaluacion': this.norma_evaluacion,
+            'ici': this.ici,
+            'norma_ensayo': this.norma_ensayo,
+            'tecnica': this.tecnica,
+            'tecnicas_grafico': this.tecnica_grafico,
+            'eps': this.eps,
+            'pqr': this.pqr,
+            'actividad': this.actividad,
+            'exposicion': this.exposicion,
+            'detalles': this.TablaDetalle
+          }
+        }).then(function (response) {
+          _this20.response = response.data;
+          toastr.success('informe N°' + _this20.numero_inf + ' fue creado con éxito ');
+          console.log(response);
+        })["catch"](function (error) {
+          _this20.errors = error.response.data.errors;
+          console.log(error.response);
+          $.each(_this20.errors, function (key, value) {
+            toastr.error(value);
+            console.log(key + ": " + value);
+          });
+
+          if (typeof _this20.errors == 'undefined' && error) {
+            toastr.error("Ocurrió un error al procesar la solicitud");
+          }
+        });
+      } else {
+        toastr.error("Error: Pasadas sin completar");
+        this.validoPasadas = true;
+      }
     },
     Update: function Update() {
       var _this21 = this;
 
-      console.log('entro para actualizar');
-      this.errors = [];
-      var gasoducto_sn;
-      if (this.formato == 'GASODUCTO') gasoducto_sn = true;else if (this.formato == 'PLANTA') gasoducto_sn = false;else gasoducto_sn = null;
-      var defectos = this.formato == 'PLANTA' ? this.inputsJuntasDefectosPlanta : false;
-      var urlRegistros = 'informes_ri/' + this.informedata.id;
-      axios({
-        method: 'put',
-        url: urlRegistros,
-        data: {
-          'ot': this.otdata,
-          'ejecutor_ensayo': this.ejecutor_ensayo,
-          'metodo_ensayo': this.metodo,
-          'fecha': this.fecha,
-          'numero_inf': this.numero_inf,
-          'prefijo': this.prefijo,
-          'gasoducto_sn': gasoducto_sn,
-          'componente': this.componente,
-          'plano_isom': this.plano_isom,
-          'procedimiento': this.procedimiento,
-          'observaciones': this.observaciones,
-          'material': this.material,
-          'diametro': this.diametro.diametro,
-          'espesor': this.espesor.espesor,
-          'espesor_chapa': this.espesor_chapa,
-          'equipo': this.equipo,
-          'kv': this.kv,
-          'ma': this.ma,
-          'fuente': this.fuente ? this.fuente : null,
-          'foco': this.foco,
-          'tipo_pelicula': this.tipo_pelicula,
-          'pantalla': this.pantalla,
-          'pos_ant': this.pos_ant,
-          'pos_pos': this.pos_pos,
-          'lado': this.lado,
-          'distancia_fuente_pelicula': this.distancia_fuente_pelicula,
-          'procedimiento_soldadura': this.procedimiento_soldadura,
-          'norma_evaluacion': this.norma_evaluacion,
-          'ici': this.ici,
-          'norma_ensayo': this.norma_ensayo,
-          'tecnica': this.tecnica,
-          'tecnicas_grafico': this.tecnica_grafico,
-          'eps': this.eps,
-          'pqr': this.pqr,
-          'actividad': this.actividad,
-          'exposicion': this.exposicion,
-          'detalles': this.inputsJuntasDefectosPlanta
-        }
-      }).then(function (response) {
-        _this21.response = response.data;
-        toastr.success('informe N°' + _this21.numero_inf + ' fue actualizado con éxito ');
-        console.log(response);
-      })["catch"](function (error) {
-        _this21.errors = error.response.data.errors;
-        console.log(error.response);
-        $.each(_this21.errors, function (key, value) {
-          toastr.error(value);
-          console.log(key + ": " + value);
-        });
+      this.validarPasadas();
 
-        if (typeof _this21.errors == 'undefined' && error) {
-          toastr.error("Ocurrió un error al procesar la solicitud");
-        }
-      });
+      if (this.validoPasadas) {
+        console.log('entro para actualizar');
+        this.errors = [];
+        var gasoducto_sn;
+        if (this.formato == 'GASODUCTO') gasoducto_sn = true;else if (this.formato == 'PLANTA') gasoducto_sn = false;else gasoducto_sn = null;
+        var defectos = this.formato == 'PLANTA' ? this.TablaDetalle : false;
+        var urlRegistros = 'informes_ri/' + this.informedata.id;
+        axios({
+          method: 'put',
+          url: urlRegistros,
+          data: {
+            'ot': this.otdata,
+            'ejecutor_ensayo': this.ejecutor_ensayo,
+            'metodo_ensayo': this.metodo,
+            'fecha': this.fecha,
+            'numero_inf': this.numero_inf,
+            'prefijo': this.prefijo,
+            'gasoducto_sn': gasoducto_sn,
+            'componente': this.componente,
+            'plano_isom': this.plano_isom,
+            'procedimiento': this.procedimiento,
+            'observaciones': this.observaciones,
+            'material': this.material,
+            'diametro': this.diametro.diametro,
+            'espesor': this.espesor.espesor,
+            'espesor_chapa': this.espesor_chapa,
+            'equipo': this.equipo,
+            'kv': this.kv,
+            'ma': this.ma,
+            'fuente': this.fuente ? this.fuente : null,
+            'foco': this.foco,
+            'tipo_pelicula': this.tipo_pelicula,
+            'pantalla': this.pantalla,
+            'pos_ant': this.pos_ant,
+            'pos_pos': this.pos_pos,
+            'lado': this.lado,
+            'distancia_fuente_pelicula': this.distancia_fuente_pelicula,
+            'procedimiento_soldadura': this.procedimiento_soldadura,
+            'norma_evaluacion': this.norma_evaluacion,
+            'ici': this.ici,
+            'norma_ensayo': this.norma_ensayo,
+            'tecnica': this.tecnica,
+            'tecnicas_grafico': this.tecnica_grafico,
+            'eps': this.eps,
+            'pqr': this.pqr,
+            'actividad': this.actividad,
+            'exposicion': this.exposicion,
+            'detalles': this.TablaDetalle
+          }
+        }).then(function (response) {
+          _this21.response = response.data;
+          toastr.success('informe N°' + _this21.numero_inf + ' fue actualizado con éxito ');
+          console.log(response);
+        })["catch"](function (error) {
+          _this21.errors = error.response.data.errors;
+          console.log(error.response);
+          $.each(_this21.errors, function (key, value) {
+            toastr.error(value);
+            console.log(key + ": " + value);
+          });
+
+          if (typeof _this21.errors == 'undefined' && error) {
+            toastr.error("Ocurrió un error al procesar la solicitud");
+          }
+        });
+      } else {
+        toastr.error("Error: Pasadas sin completar");
+        this.validoPasadas = true;
+      }
     }
   }
 });
@@ -7417,7 +7541,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.form-control[disabled][data-v-13a6ae76], .form-control[readonly][data-v-13a6ae76], fieldset[disabled] .form-control[data-v-13a6ae76] {\r\n     background-color: #eee;\n}\n.checkbox-inline[data-v-13a6ae76] {\r\n    margin-left: 0px;\n}\n.col-md-1-5[data-v-13a6ae76] {\r\n\r\n    width: 12.499999995%\n}\ntable .selected[data-v-13a6ae76]{\r\n\r\n  background-color: rgb(220, 198, 241)!important;\n}\n@media (min-width: 768px)  {\n.size-1-5[data-v-13a6ae76] {\r\n\r\n    width: 12.499999995%;\n}\n}\r\n", ""]);
+exports.push([module.i, "\n.form-control[disabled][data-v-13a6ae76], .form-control[readonly][data-v-13a6ae76], fieldset[disabled] .form-control[data-v-13a6ae76] {\r\n     background-color: #eee;\n}\n.checkbox-inline[data-v-13a6ae76] {\r\n    margin-left: 0px;\n}\n.col-md-1-5[data-v-13a6ae76] {\r\n\r\n    width: 12.499999995%\n}\ntable .selected[data-v-13a6ae76]{\r\n\r\n  background-color: rgb(243, 200, 126)!important;\n}\n@media (min-width: 768px)  {\n.size-1-5[data-v-13a6ae76] {\r\n\r\n    width: 12.499999995%;\n}\n.box-title[data-v-13a6ae76] {\r\n\r\n    font-size: 15px;\r\n    font-style: italic;\r\n    font-weight: bold;\r\n    color : #6E6A6A;\n}\n}\r\n", ""]);
 
 // exports
 
@@ -41674,6 +41798,36 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/app-icon.vue?vue&type=template&id=3a221120&":
+/*!***********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/app-icon.vue?vue&type=template&id=3a221120& ***!
+  \***********************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("span", {
+      class: _vm.cssClasses,
+      style: _vm.cssStyle,
+      attrs: { "aria-hidden": "true" }
+    })
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/dashboard/dashboard-enod.vue?vue&type=template&id=3ebf36fd&":
 /*!***************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/dashboard/dashboard-enod.vue?vue&type=template&id=3ebf36fd& ***!
@@ -45383,6 +45537,8 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "box box-danger" }, [
+            _vm._m(1),
+            _vm._v(" "),
             _c("div", { staticClass: "box-body" }, [
               _c("div", { staticClass: "col-md-1" }, [
                 _c("div", { staticClass: "form-group" }, [
@@ -45401,10 +45557,7 @@ var render = function() {
                     attrs: {
                       type: "number",
                       id: "pk",
-                      disabled:
-                        !_vm.isGasoducto ||
-                        (_vm.pasada == "1" &&
-                          _vm.inputsJuntasDefectosPlanta.length > 0)
+                      disabled: !_vm.isGasoducto
                     },
                     domProps: { value: _vm.pk },
                     on: {
@@ -45430,10 +45583,7 @@ var render = function() {
                       attrs: {
                         label: "codigo",
                         options: _vm.tipo_soldaduras,
-                        disabled:
-                          !_vm.isGasoducto ||
-                          (_vm.pasada == "1" &&
-                            _vm.inputsJuntasDefectosPlanta.length > 0)
+                        disabled: !_vm.isGasoducto
                       },
                       model: {
                         value: _vm.tipo_soldadura,
@@ -45446,40 +45596,6 @@ var render = function() {
                   ],
                   1
                 )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-1" }, [
-                _c("div", { staticClass: "form-group" }, [
-                  _c("label", { attrs: { for: "pasada" } }, [
-                    _vm._v("N° Pasada")
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.pasada,
-                        expression: "pasada"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      type: "number",
-                      id: "pasada",
-                      disabled: !_vm.isGasoducto
-                    },
-                    domProps: { value: _vm.pasada },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.pasada = $event.target.value
-                      }
-                    }
-                  })
-                ])
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "col-md-2" }, [
@@ -45510,6 +45626,476 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
+              _c("div", { staticClass: "col-md-1" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "posicion" } }, [
+                    _vm._v("Posición")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.posicion,
+                        expression: "posicion"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", id: "posicion" },
+                    domProps: { value: _vm.posicion },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.posicion = $event.target.value
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-2" }, [
+                _c("p", [_vm._v(" ")]),
+                _vm._v(" "),
+                _c(
+                  "i",
+                  {
+                    staticStyle: {
+                      display: "inline-block",
+                      "margin-left": "15px"
+                    },
+                    attrs: { title: "Agregar Junta/Posición" },
+                    on: {
+                      click: function($event) {
+                        return _vm.AddDetalle()
+                      }
+                    }
+                  },
+                  [
+                    _c("app-icon", {
+                      attrs: { img: "plus-circle", color: "black" }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "i",
+                  {
+                    staticStyle: {
+                      display: "inline-block",
+                      "margin-left": "15px"
+                    },
+                    attrs: { title: "Clonar Posición" },
+                    on: {
+                      click: function($event) {
+                        return _vm.ClonarPosPlanta()
+                      }
+                    }
+                  },
+                  [_c("app-icon", { attrs: { img: "clone", color: "black" } })],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "i",
+                  {
+                    staticStyle: {
+                      display: "inline-block",
+                      "margin-left": "15px"
+                    },
+                    attrs: { title: "Limpiar Todo" },
+                    on: {
+                      click: function($event) {
+                        return _vm.resetDetalle()
+                      }
+                    }
+                  },
+                  [_c("app-icon", { attrs: { img: "trash", color: "black" } })],
+                  1
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-12" }, [
+                _c("div", { staticClass: "table-responsive" }, [
+                  _c(
+                    "table",
+                    { staticClass: "table table-hover table-striped" },
+                    [
+                      _vm._m(2),
+                      _vm._v(" "),
+                      _c(
+                        "tbody",
+                        _vm._l(_vm.TablaDetalle, function(FIlaTabla, k) {
+                          return _c(
+                            "tr",
+                            {
+                              key: k,
+                              class: { selected: _vm.indexDetalle === k },
+                              on: {
+                                click: function($event) {
+                                  return _vm.selectPosDetalle(k)
+                                }
+                              }
+                            },
+                            [
+                              _c("td", [_vm._v(_vm._s(FIlaTabla.pk))]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _vm._v(_vm._s(FIlaTabla.tipo_soldadura.codigo))
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [_vm._v(_vm._s(FIlaTabla.junta))]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _vm._v(_vm._s(FIlaTabla.posicion) + " ")
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.TablaDetalle[k].aceptable_sn,
+                                      expression: "TablaDetalle[k].aceptable_sn"
+                                    }
+                                  ],
+                                  attrs: { type: "checkbox", id: "checkbox" },
+                                  domProps: {
+                                    checked: Array.isArray(
+                                      _vm.TablaDetalle[k].aceptable_sn
+                                    )
+                                      ? _vm._i(
+                                          _vm.TablaDetalle[k].aceptable_sn,
+                                          null
+                                        ) > -1
+                                      : _vm.TablaDetalle[k].aceptable_sn
+                                  },
+                                  on: {
+                                    change: function($event) {
+                                      var $$a =
+                                          _vm.TablaDetalle[k].aceptable_sn,
+                                        $$el = $event.target,
+                                        $$c = $$el.checked ? true : false
+                                      if (Array.isArray($$a)) {
+                                        var $$v = null,
+                                          $$i = _vm._i($$a, $$v)
+                                        if ($$el.checked) {
+                                          $$i < 0 &&
+                                            _vm.$set(
+                                              _vm.TablaDetalle[k],
+                                              "aceptable_sn",
+                                              $$a.concat([$$v])
+                                            )
+                                        } else {
+                                          $$i > -1 &&
+                                            _vm.$set(
+                                              _vm.TablaDetalle[k],
+                                              "aceptable_sn",
+                                              $$a
+                                                .slice(0, $$i)
+                                                .concat($$a.slice($$i + 1))
+                                            )
+                                        }
+                                      } else {
+                                        _vm.$set(
+                                          _vm.TablaDetalle[k],
+                                          "aceptable_sn",
+                                          $$c
+                                        )
+                                      }
+                                    }
+                                  }
+                                })
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _vm.indexDetalle == k
+                                  ? _c("div", [
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value:
+                                              _vm.TablaDetalle[k].observacion,
+                                            expression:
+                                              "TablaDetalle[k].observacion"
+                                          }
+                                        ],
+                                        attrs: {
+                                          type: "text",
+                                          maxlength: "50",
+                                          size: "60"
+                                        },
+                                        domProps: {
+                                          value: _vm.TablaDetalle[k].observacion
+                                        },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.TablaDetalle[k],
+                                              "observacion",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      })
+                                    ])
+                                  : _c("div", [
+                                      _vm._v(
+                                        "\n                                            " +
+                                          _vm._s(
+                                            _vm.TablaDetalle[k].observacion
+                                          ) +
+                                          "\n                                         "
+                                      )
+                                    ])
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _c(
+                                  "a",
+                                  {
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.RemoveDetalle(k)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("app-icon", {
+                                      attrs: {
+                                        img: "minus-circle",
+                                        color: "black"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              ])
+                            ]
+                          )
+                        }),
+                        0
+                      )
+                    ]
+                  )
+                ])
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "box box-danger" }, [
+            _vm._m(3),
+            _vm._v(" "),
+            _c("div", { staticClass: "box-body" }, [
+              _c("div", { staticClass: "col-md-3" }, [
+                _c(
+                  "div",
+                  { staticClass: "form-group" },
+                  [
+                    _c("label", [_vm._v("Defectos")]),
+                    _vm._v(" "),
+                    _c("v-select", {
+                      attrs: {
+                        options: _vm.defectosRiPlanta,
+                        label: "descripcion",
+                        disabled: !_vm.TablaDetalle.length
+                      },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "option",
+                          fn: function(option) {
+                            return [
+                              _c("span", { staticClass: "upSelect" }, [
+                                _vm._v(_vm._s(option.descripcion) + " ")
+                              ]),
+                              _vm._v(" "),
+                              _c("br"),
+                              _vm._v(" "),
+                              _c("span", { staticClass: "downSelect" }, [
+                                _vm._v(_vm._s(option.codigo) + " ")
+                              ])
+                            ]
+                          }
+                        }
+                      ]),
+                      model: {
+                        value: _vm.defectoRiPlanta,
+                        callback: function($$v) {
+                          _vm.defectoRiPlanta = $$v
+                        },
+                        expression: "defectoRiPlanta"
+                      }
+                    })
+                  ],
+                  1
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-2" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "posicionPlaca" } }, [
+                    _vm._v("Posición Defecto")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.posicionPlacaGosaducto,
+                        expression: "posicionPlacaGosaducto"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "text",
+                      id: "posicionPlacaGosaducto",
+                      disabled: !_vm.TablaDetalle.length
+                    },
+                    domProps: { value: _vm.posicionPlacaGosaducto },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.posicionPlacaGosaducto = $event.target.value
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-1" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("p", [_vm._v(" ")]),
+                  _vm._v(" "),
+                  _c("span", [
+                    _c(
+                      "a",
+                      {
+                        on: {
+                          click: function($event) {
+                            return _vm.addDefectos()
+                          }
+                        }
+                      },
+                      [
+                        _c("app-icon", {
+                          attrs: { img: "plus-circle", color: "black" }
+                        })
+                      ],
+                      1
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-12" }, [
+                _c("div", { staticClass: "table-responsive" }, [
+                  _c(
+                    "table",
+                    { staticClass: "table table-hover table-striped" },
+                    [
+                      _vm._m(4),
+                      _vm._v(" "),
+                      _c(
+                        "tbody",
+                        _vm._l(
+                          _vm.TablaDetalle.length > 0
+                            ? _vm.TablaDetalle[_vm.indexDetalle].defectos
+                            : [],
+                          function(defectoPasada, k) {
+                            return _c("tr", { key: k }, [
+                              _c("td", [_vm._v(_vm._s(defectoPasada.codigo))]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _vm._v(_vm._s(defectoPasada.descripcion))
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _vm._v(_vm._s(defectoPasada.posicion))
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _c(
+                                  "a",
+                                  {
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.RemoveDefectos(k)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("app-icon", {
+                                      attrs: {
+                                        img: "minus-circle",
+                                        color: "black"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                )
+                              ])
+                            ])
+                          }
+                        ),
+                        0
+                      )
+                    ]
+                  )
+                ])
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "box box-danger" }, [
+            _vm._m(5),
+            _vm._v(" "),
+            _c("div", { staticClass: "box-body" }, [
+              _c("div", { staticClass: "col-md-1" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "pasada" } }, [
+                    _vm._v("N° Pasada")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.pasada,
+                        expression: "pasada"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "number",
+                      id: "pasada",
+                      disabled: !_vm.isGasoducto || !_vm.TablaDetalle.length
+                    },
+                    domProps: { value: _vm.pasada },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.pasada = $event.target.value
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
               _c(
                 "div",
                 { staticClass: "col-md-2" },
@@ -45517,7 +46103,11 @@ var render = function() {
                   _c("label", [_vm._v("Cunio Z")]),
                   _vm._v(" "),
                   _c("v-select", {
-                    attrs: { options: _vm.soldadores, label: "nombre" },
+                    attrs: {
+                      options: _vm.soldadores,
+                      label: "nombre",
+                      disabled: !_vm.TablaDetalle.length
+                    },
                     scopedSlots: _vm._u([
                       {
                         key: "option",
@@ -45558,7 +46148,10 @@ var render = function() {
                     attrs: {
                       options: _vm.soldadores,
                       label: "nombre",
-                      disabled: !_vm.isGasoducto || _vm.pasada != "1"
+                      disabled:
+                        !_vm.isGasoducto ||
+                        _vm.pasada != "1" ||
+                        !_vm.TablaDetalle.length
                     },
                     scopedSlots: _vm._u([
                       {
@@ -45597,7 +46190,11 @@ var render = function() {
                   _c("label", [_vm._v("Cunio P")]),
                   _vm._v(" "),
                   _c("v-select", {
-                    attrs: { options: _vm.soldadores, label: "nombre" },
+                    attrs: {
+                      options: _vm.soldadores,
+                      label: "nombre",
+                      disabled: !_vm.TablaDetalle.length
+                    },
                     scopedSlots: _vm._u([
                       {
                         key: "option",
@@ -45629,102 +46226,25 @@ var render = function() {
               ),
               _vm._v(" "),
               _c("div", { staticClass: "col-md-1" }, [
-                _c("div", { staticClass: "form-group" }, [
-                  _c("label", { attrs: { for: "posicion" } }, [
-                    _vm._v("Posición")
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.posicion,
-                        expression: "posicion"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { type: "text", id: "posicion" },
-                    domProps: { value: _vm.posicion },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.posicion = $event.target.value
-                      }
-                    }
-                  })
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-1" }, [
-                _c("div", { staticClass: "form-group" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary btn-xs",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.ClonarPosPlanta()
-                        }
-                      }
-                    },
-                    [_vm._v("Clonar Posición")]
-                  )
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-1" }, [
-                _c("div", { staticClass: "form-group" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary btn-xs",
-                      attrs: {
-                        type: "button",
-                        disabled: !_vm.EnableClonarPasadas
-                      },
-                      on: {
-                        click: function($event) {
-                          return _vm.ClonarPasadas()
-                        }
-                      }
-                    },
-                    [_vm._v("Clonar Pasadas")]
-                  )
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-1" }, [
-                _c("div", { staticClass: "form-group" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary btn-xs",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.resetDetalle()
-                        }
-                      }
-                    },
-                    [_vm._v("Limpiar Todo")]
-                  )
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-1" }, [
+                _c("p", [_vm._v(" ")]),
+                _vm._v(" "),
                 _c("span", [
-                  _c("i", {
-                    staticClass: "fa fa-plus-circle",
-                    on: {
-                      click: function($event) {
-                        return _vm.addJuntaDefectosPlanta()
+                  _c(
+                    "a",
+                    {
+                      on: {
+                        click: function($event) {
+                          return _vm.AddPasadas()
+                        }
                       }
-                    }
-                  })
+                    },
+                    [
+                      _c("app-icon", {
+                        attrs: { img: "plus-circle", color: "black" }
+                      })
+                    ],
+                    1
+                  )
                 ])
               ]),
               _vm._v(" "),
@@ -45734,366 +46254,70 @@ var render = function() {
                     "table",
                     { staticClass: "table table-hover table-striped" },
                     [
-                      _vm._m(1),
+                      _vm._m(6),
                       _vm._v(" "),
                       _c(
                         "tbody",
-                        _vm._l(_vm.inputsJuntasDefectosPlanta, function(
-                          inputsJuntaDefectosPlanta,
-                          k
-                        ) {
-                          return _c(
-                            "tr",
-                            {
-                              key: k,
-                              class: { selected: _vm.indexPosPlanta === k },
-                              on: {
-                                click: function($event) {
-                                  return _vm.selectPosPlanta(k)
-                                }
-                              }
-                            },
-                            [
-                              _c("td", [
-                                _vm._v(_vm._s(inputsJuntaDefectosPlanta.pk))
-                              ]),
-                              _vm._v(" "),
-                              _c("td", [
-                                _vm._v(
-                                  _vm._s(
-                                    inputsJuntaDefectosPlanta.tipo_soldadura
-                                      .codigo
-                                  )
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("td", [
-                                _vm._v(_vm._s(inputsJuntaDefectosPlanta.pasada))
-                              ]),
-                              _vm._v(" "),
-                              _c("td", [
-                                _vm._v(_vm._s(inputsJuntaDefectosPlanta.junta))
-                              ]),
-                              _vm._v(" "),
-                              _c("td", [
-                                _vm._v(
-                                  _vm._s(
-                                    inputsJuntaDefectosPlanta.soldador1.nombre
-                                  ) + " "
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("td", [
-                                _vm._v(
-                                  _vm._s(
-                                    inputsJuntaDefectosPlanta.soldador2.nombre
-                                  ) + " "
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("td", [
-                                _vm._v(
-                                  _vm._s(
-                                    inputsJuntaDefectosPlanta.soldador3.nombre
-                                  ) + " "
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("td", [
-                                _vm._v(
-                                  _vm._s(inputsJuntaDefectosPlanta.posicion) +
-                                    " "
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("td", [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value:
-                                        _vm.inputsJuntasDefectosPlanta[k]
-                                          .aceptable_sn,
-                                      expression:
-                                        "inputsJuntasDefectosPlanta[k].aceptable_sn"
-                                    }
-                                  ],
-                                  attrs: { type: "checkbox", id: "checkbox" },
-                                  domProps: {
-                                    checked: Array.isArray(
-                                      _vm.inputsJuntasDefectosPlanta[k]
-                                        .aceptable_sn
-                                    )
-                                      ? _vm._i(
-                                          _vm.inputsJuntasDefectosPlanta[k]
-                                            .aceptable_sn,
-                                          null
-                                        ) > -1
-                                      : _vm.inputsJuntasDefectosPlanta[k]
-                                          .aceptable_sn
-                                  },
-                                  on: {
-                                    change: function($event) {
-                                      var $$a =
-                                          _vm.inputsJuntasDefectosPlanta[k]
-                                            .aceptable_sn,
-                                        $$el = $event.target,
-                                        $$c = $$el.checked ? true : false
-                                      if (Array.isArray($$a)) {
-                                        var $$v = null,
-                                          $$i = _vm._i($$a, $$v)
-                                        if ($$el.checked) {
-                                          $$i < 0 &&
-                                            _vm.$set(
-                                              _vm.inputsJuntasDefectosPlanta[k],
-                                              "aceptable_sn",
-                                              $$a.concat([$$v])
-                                            )
-                                        } else {
-                                          $$i > -1 &&
-                                            _vm.$set(
-                                              _vm.inputsJuntasDefectosPlanta[k],
-                                              "aceptable_sn",
-                                              $$a
-                                                .slice(0, $$i)
-                                                .concat($$a.slice($$i + 1))
-                                            )
-                                        }
-                                      } else {
-                                        _vm.$set(
-                                          _vm.inputsJuntasDefectosPlanta[k],
-                                          "aceptable_sn",
-                                          $$c
-                                        )
-                                      }
-                                    }
+                        _vm._l(
+                          _vm.TablaDetalle.length > 0
+                            ? _vm.TablaDetalle[_vm.indexDetalle].pasadas
+                            : [],
+                          function(Pasada, k) {
+                            return _c(
+                              "tr",
+                              {
+                                key: k,
+                                class: { selected: _vm.indexPasada === k },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.selectPosPasada(k)
                                   }
-                                })
-                              ]),
-                              _vm._v(" "),
-                              _c("td", [
-                                !_vm.isGasoducto && _vm.indexPosPlanta == k
-                                  ? _c("div", [
-                                      _c("input", {
-                                        directives: [
-                                          {
-                                            name: "model",
-                                            rawName: "v-model",
-                                            value:
-                                              _vm.inputsJuntasDefectosPlanta[k]
-                                                .observacion,
-                                            expression:
-                                              "inputsJuntasDefectosPlanta[k].observacion"
-                                          }
-                                        ],
+                                }
+                              },
+                              [
+                                _c("td", [_vm._v(_vm._s(Pasada.pasada))]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _vm._v(_vm._s(Pasada.soldador1.nombre) + " ")
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _vm._v(_vm._s(Pasada.soldador2.nombre) + " ")
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _vm._v(_vm._s(Pasada.soldador3.nombre) + " ")
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _c(
+                                    "a",
+                                    {
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.RemovePasada(k)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("app-icon", {
                                         attrs: {
-                                          type: "text",
-                                          maxlength: "50",
-                                          size: "60"
-                                        },
-                                        domProps: {
-                                          value:
-                                            _vm.inputsJuntasDefectosPlanta[k]
-                                              .observacion
-                                        },
-                                        on: {
-                                          input: function($event) {
-                                            if ($event.target.composing) {
-                                              return
-                                            }
-                                            _vm.$set(
-                                              _vm.inputsJuntasDefectosPlanta[k],
-                                              "observacion",
-                                              $event.target.value
-                                            )
-                                          }
+                                          img: "minus-circle",
+                                          color: "black"
                                         }
                                       })
-                                    ])
-                                  : !_vm.isGasoducto
-                                  ? _c("div", [
-                                      _vm._v(
-                                        "\n                                            " +
-                                          _vm._s(
-                                            _vm.inputsJuntasDefectosPlanta[k]
-                                              .observacion
-                                          ) +
-                                          "\n                                         "
-                                      )
-                                    ])
-                                  : _vm._e()
-                              ]),
-                              _vm._v(" "),
-                              _c("td", [
-                                _c("span", {
-                                  staticClass: "fa fa-minus-circle",
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.removeJuntaDefectosPlanta(k)
-                                    }
-                                  }
-                                })
-                              ])
-                            ]
-                          )
-                        }),
+                                    ],
+                                    1
+                                  )
+                                ])
+                              ]
+                            )
+                          }
+                        ),
                         0
                       )
                     ]
                   )
-                ])
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "box box-danger" }, [
-            _c("div", { staticClass: "box-header with-border" }, [
-              _c("div", { staticClass: "box-body" }, [
-                _c("div", { staticClass: "col-md-3" }, [
-                  _c(
-                    "div",
-                    { staticClass: "form-group" },
-                    [
-                      _c("label", [_vm._v("Defectos")]),
-                      _vm._v(" "),
-                      _c("v-select", {
-                        attrs: {
-                          options: _vm.defectosRiPlanta,
-                          label: "descripcion"
-                        },
-                        scopedSlots: _vm._u([
-                          {
-                            key: "option",
-                            fn: function(option) {
-                              return [
-                                _c("span", { staticClass: "upSelect" }, [
-                                  _vm._v(_vm._s(option.descripcion) + " ")
-                                ]),
-                                _vm._v(" "),
-                                _c("br"),
-                                _vm._v(" "),
-                                _c("span", { staticClass: "downSelect" }, [
-                                  _vm._v(_vm._s(option.codigo) + " ")
-                                ])
-                              ]
-                            }
-                          }
-                        ]),
-                        model: {
-                          value: _vm.defectoRiPlanta,
-                          callback: function($$v) {
-                            _vm.defectoRiPlanta = $$v
-                          },
-                          expression: "defectoRiPlanta"
-                        }
-                      })
-                    ],
-                    1
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-2" }, [
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "posicionPlaca" } }, [
-                      _vm._v("Posición Defecto")
-                    ]),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.posicionPlacaGosaducto,
-                          expression: "posicionPlacaGosaducto"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: {
-                        type: "text",
-                        id: "posicionPlacaGosaducto",
-                        disabled: !_vm.isGasoducto
-                      },
-                      domProps: { value: _vm.posicionPlacaGosaducto },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.posicionPlacaGosaducto = $event.target.value
-                        }
-                      }
-                    })
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-1" }, [
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("span", [
-                      _c("i", {
-                        staticClass: "fa fa-plus-circle",
-                        on: {
-                          click: function($event) {
-                            return _vm.addDefectoPosicionPlanta()
-                          }
-                        }
-                      })
-                    ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-12" }, [
-                  _c("div", { staticClass: "table-responsive" }, [
-                    _c(
-                      "table",
-                      { staticClass: "table table-hover table-striped" },
-                      [
-                        _vm._m(2),
-                        _vm._v(" "),
-                        _c(
-                          "tbody",
-                          _vm._l(
-                            _vm.inputsJuntasDefectosPlanta.length > 0 &&
-                              _vm.inputsJuntasDefectosPlanta[_vm.indexPosPlanta]
-                                .defectosPosicion.length > 0
-                              ? _vm.inputsJuntasDefectosPlanta[
-                                  _vm.indexPosPlanta
-                                ].defectosPosicion
-                              : [],
-                            function(defectoPosicion, k) {
-                              return _c("tr", { key: k }, [
-                                _c("td", [
-                                  _vm._v(_vm._s(defectoPosicion.codigo))
-                                ]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _vm._v(_vm._s(defectoPosicion.descripcion))
-                                ]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _vm._v(_vm._s(defectoPosicion.posicion))
-                                ]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _c("i", {
-                                    staticClass: "fa fa-minus-circle",
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.removeDefectoPosicionPlanta(
-                                          k
-                                        )
-                                      }
-                                    }
-                                  })
-                                ])
-                              ])
-                            }
-                          ),
-                          0
-                        )
-                      ]
-                    )
-                  ])
                 ])
               ])
             ])
@@ -46153,21 +46377,32 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "box-header with-border" }, [
+      _c("h3", { staticClass: "box-title" }, [_vm._v("JUNTAS/POSICIONES")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "box-tools pull-right" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-box-tool",
+            attrs: { type: "button", "data-widget": "collapse" }
+          },
+          [_c("i", { staticClass: "fa fa-minus" })]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
         _c("th", { staticStyle: { width: "30px" } }, [_vm._v("Pk")]),
         _vm._v(" "),
         _c("th", { staticStyle: { width: "80px" } }, [_vm._v("TIPO SOL.")]),
         _vm._v(" "),
-        _c("th", { staticStyle: { width: "90px" } }, [_vm._v("N° PASADA")]),
-        _vm._v(" "),
         _c("th", { staticStyle: { width: "90px" } }, [_vm._v("JUNTA")]),
-        _vm._v(" "),
-        _c("th", { staticStyle: { width: "120px" } }, [_vm._v("CUNIO Z")]),
-        _vm._v(" "),
-        _c("th", { staticStyle: { width: "120px" } }, [_vm._v("CUNIO L")]),
-        _vm._v(" "),
-        _c("th", { staticStyle: { width: "120px" } }, [_vm._v("CUNIO P")]),
         _vm._v(" "),
         _c("th", { staticStyle: { width: "90px" } }, [_vm._v("POS")]),
         _vm._v(" "),
@@ -46185,6 +46420,25 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "box-header with-border" }, [
+      _c("h5", { staticClass: "box-title" }, [_vm._v("DEFECTOS")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "box-tools pull-right" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-box-tool",
+            attrs: { type: "button", "data-widget": "collapse" }
+          },
+          [_c("i", { staticClass: "fa fa-minus" })]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
         _c("th", { staticStyle: { width: "90px" } }, [_vm._v("CÓDIGO")]),
@@ -46194,6 +46448,45 @@ var staticRenderFns = [
         _c("th", { staticStyle: { width: "90px" } }, [_vm._v("POSICIÓN")]),
         _vm._v(" "),
         _c("th", { staticStyle: { width: "30px" }, attrs: { colspan: "2" } }, [
+          _vm._v(" ")
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "box-header with-border" }, [
+      _c("h5", { staticClass: "box-title" }, [_vm._v("PASADAS")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "box-tools pull-right" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-box-tool",
+            attrs: { type: "button", "data-widget": "collapse" }
+          },
+          [_c("i", { staticClass: "fa fa-minus" })]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { staticStyle: { width: "90px" } }, [_vm._v("N° PASADA")]),
+        _vm._v(" "),
+        _c("th", { staticStyle: { width: "120px" } }, [_vm._v("CUNIO Z")]),
+        _vm._v(" "),
+        _c("th", { staticStyle: { width: "120px" } }, [_vm._v("CUNIO L")]),
+        _vm._v(" "),
+        _c("th", { staticStyle: { width: "120px" } }, [_vm._v("CUNIO P")]),
+        _vm._v(" "),
+        _c("th", { staticStyle: { width: "30px" }, attrs: { colspan: "1" } }, [
           _vm._v(" ")
         ])
       ])
@@ -66816,6 +67109,7 @@ vSelect.props.components.default = () => ({
 });
 */
 
+Vue.component('app-icon', __webpack_require__(/*! ./components/app-icon.vue */ "./resources/js/components/app-icon.vue")["default"]);
 Vue.component('abm-maestro', __webpack_require__(/*! ./components/abm-maestro/abm-maestro.vue */ "./resources/js/components/abm-maestro/abm-maestro.vue")["default"]);
 Vue.component('table-users', __webpack_require__(/*! ./components/abm-maestro/usuarios/table-users.vue */ "./resources/js/components/abm-maestro/usuarios/table-users.vue")["default"]);
 Vue.component('nuevo-users', __webpack_require__(/*! ./components/abm-maestro/usuarios/nuevo-users.vue */ "./resources/js/components/abm-maestro/usuarios/nuevo-users.vue")["default"]);
@@ -67559,6 +67853,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_table_users_vue_vue_type_template_id_18c4562b___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_table_users_vue_vue_type_template_id_18c4562b___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/app-icon.vue":
+/*!**********************************************!*\
+  !*** ./resources/js/components/app-icon.vue ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _app_icon_vue_vue_type_template_id_3a221120___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./app-icon.vue?vue&type=template&id=3a221120& */ "./resources/js/components/app-icon.vue?vue&type=template&id=3a221120&");
+/* harmony import */ var _app_icon_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./app-icon.vue?vue&type=script&lang=js& */ "./resources/js/components/app-icon.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _app_icon_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _app_icon_vue_vue_type_template_id_3a221120___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _app_icon_vue_vue_type_template_id_3a221120___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/app-icon.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/app-icon.vue?vue&type=script&lang=js&":
+/*!***********************************************************************!*\
+  !*** ./resources/js/components/app-icon.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_app_icon_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./app-icon.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/app-icon.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_app_icon_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/app-icon.vue?vue&type=template&id=3a221120&":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/app-icon.vue?vue&type=template&id=3a221120& ***!
+  \*****************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_app_icon_vue_vue_type_template_id_3a221120___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./app-icon.vue?vue&type=template&id=3a221120& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/app-icon.vue?vue&type=template&id=3a221120&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_app_icon_vue_vue_type_template_id_3a221120___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_app_icon_vue_vue_type_template_id_3a221120___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

@@ -49,7 +49,6 @@ class OtsRequest extends FormRequest
             'productos.*.medida'              =>'required',
                 
         ];     
-
       
     }
 
@@ -66,7 +65,6 @@ class OtsRequest extends FormRequest
         'productos.*.medida'                  => 'medida',   
         'productos.*.cantidad_productos'      => 'cant.',
         'user_empresa'                        => 'Responsable OT'    
-
 
          ];
     }

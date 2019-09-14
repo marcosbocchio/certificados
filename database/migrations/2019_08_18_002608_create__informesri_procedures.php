@@ -20,8 +20,8 @@ class CreateInformesriProcedures extends Migration
                         juntas.codigo as junta,
                         posicion.codigo as posicion,
                         posicion.descripcion as observacion,
-                        pasadas_posicion.aceptable_sn as aceptable_sn,
-                        pasadas_posicion.id as pasada_posicion_id,
+                        posicion.aceptable_sn as aceptable_sn,
+                        posicion.id as posicion_id,
                         pasadas_posicion.numero as numero,
                         (SELECT	 soldadores.codigo FROM soldadores WHERE soldadores.id = pasadas_posicion.soldadorz_id) AS soldadorz,
                         (SELECT soldadores.codigo FROM soldadores WHERE soldadores.id = pasadas_posicion.soldadorl_id) AS soldadorl,
@@ -31,7 +31,8 @@ class CreateInformesriProcedures extends Migration
                         posicion.junta_id = juntas.id 
                         INNER JOIN pasadas_posicion ON
                         pasadas_posicion.posicion_id = posicion.id
-                        WHERE juntas.informe_ri_id=id     
+                        WHERE juntas.informe_ri_id=id
+                        ORDER BY posicion.id   
                 ";
 
         DB::unprepared("DROP procedure IF EXISTS InformeRiPlantaJuntaPosicion");
@@ -41,25 +42,22 @@ class CreateInformesriProcedures extends Migration
                         CREATE PROCEDURE `InformeRiPlantaDefectosPasadaPosicion`(IN `id` BIGINT )
                         SELECT 
                         
-                        pasadas_posicion.id as pasada_posicion_id,
                         posicion.id as posicion_id,
                         defectos_ri.codigo as codigo,
-                        defectos_pasadas_posicion.posicion as posicion
+                        defectos_posicion.posicion as posicion
                         
                         FROM
                         informes_ri 
                         INNER JOIN juntas on
                         juntas.informe_ri_id = informes_ri.id
                         INNER JOIN posicion ON 
-                        posicion.junta_id = juntas.id 
-                        INNER JOIN pasadas_posicion ON
-                        pasadas_posicion.posicion_id  = posicion.id
-                        INNER JOIN defectos_pasadas_posicion ON
-                        defectos_pasadas_posicion.pasada_posicion_id = pasadas_posicion.id
+                        posicion.junta_id = juntas.id                      
+                        INNER JOIN defectos_posicion ON
+                        defectos_posicion.posicion_id = posicion.id
                         INNER JOIN defectos_ri ON
-                        defectos_pasadas_posicion.defecto_ri_id = defectos_ri.id
+                        defectos_posicion.defecto_ri_id = defectos_ri.id
                         WHERE 
-                        informes_ri.id=id    
+                        informes_ri.id=id 
                 ";
 
         DB::unprepared("DROP procedure IF EXISTS InformeRiPlantaDefectosPasadaPosicion");
@@ -68,19 +66,22 @@ class CreateInformesriProcedures extends Migration
         $procedure = "
                         CREATE PROCEDURE `InformeRiGasoductoJuntaPosicion`(IN `id` BIGINT )
                         SELECT
+
                         juntas.id,
                         juntas.codigo as junta,
                         juntas.km,
                         tipo_soldaduras.codigo as tipo_soldadura,
                         posicion.codigo,     
-                        IFNULL((SELECT count(*) FROM pasadas_posicion WHERE pasadas_posicion.posicion_id = posicion.id AND pasadas_posicion.aceptable_sn='1'),0) as aceptable_sn,                  
+                        posicion.aceptable_sn as aceptable_sn,                  
                         posicion.id as posicion_id
                         FROM juntas 
                         INNER JOIN tipo_soldaduras ON
                         tipo_soldaduras.id = juntas.tipo_soldadura_id
                         INNER JOIN posicion ON
                         posicion.junta_id = juntas.id
-                        WHERE juntas.informe_ri_id=id     
+                        WHERE juntas.informe_ri_id=id
+                        
+                        ORDER BY posicion.id
                 ";
 
         DB::unprepared("DROP procedure IF EXISTS InformeRiGasoductoJuntaPosicion");
@@ -89,6 +90,7 @@ class CreateInformesriProcedures extends Migration
         $procedure = "
                         CREATE PROCEDURE `InformeRiGasoductoPasadasPosicion`(IN `id` BIGINT )
                         SELECT   
+
                         posicion.id as posicion_id,
                         pasadas_posicion.numero,                       
                         (SELECT	 soldadores.codigo FROM soldadores WHERE soldadores.id = pasadas_posicion.soldadorz_id) AS soldadorz,
@@ -105,7 +107,7 @@ class CreateInformesriProcedures extends Migration
                         INNER JOIN pasadas_posicion ON
                         pasadas_posicion.posicion_id  = posicion.id
                         WHERE 
-                        informes_ri.id=id     
+                        informes_ri.id=id
                 ";
 
         DB::unprepared("DROP procedure IF EXISTS InformeRiGasoductoPasadasPosicion");
@@ -115,26 +117,22 @@ class CreateInformesriProcedures extends Migration
                         CREATE PROCEDURE `InformeRiGasoductoDefectosPasadasPosicion`(IN `id` BIGINT )
                         SELECT  
                         
-                        pasadas_posicion.numero, 
+                        posicion.id as posicion_id,
                         defectos_ri.codigo as codigo,
-                        defectos_pasadas_posicion.pasada_posicion_id as pasada_posicion_id,
-                        defectos_pasadas_posicion.posicion as posicion,
-                        posicion.id as posicion_id
-                            
+                        defectos_posicion.posicion as posicion
+
                         FROM
                         informes_ri 
                         INNER JOIN juntas on
                         juntas.informe_ri_id = informes_ri.id
                         INNER JOIN posicion ON 
-                        posicion.junta_id = juntas.id 
-                        INNER JOIN pasadas_posicion ON
-                        pasadas_posicion.posicion_id  = posicion.id
-                        INNER JOIN defectos_pasadas_posicion ON
-                        defectos_pasadas_posicion.pasada_posicion_id = pasadas_posicion.id
+                        posicion.junta_id = juntas.id                      
+                        INNER JOIN defectos_posicion ON
+                        defectos_posicion.posicion_id = posicion.id
                         INNER JOIN defectos_ri ON
-                        defectos_pasadas_posicion.defecto_ri_id = defectos_ri.id
+                        defectos_posicion.defecto_ri_id = defectos_ri.id
                         WHERE 
-                        informes_ri.id=id   
+                        informes_ri.id=id 
                 ";
 
         DB::unprepared("DROP procedure IF EXISTS InformeRiGasoductoDefectosPasadasPosicion");

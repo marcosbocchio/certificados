@@ -7,7 +7,7 @@
 
 <style>
 
-@page { margin: 329px 25px 194px 25px !important;
+@page { margin: 329px 10px 194px 40px !important;
         padding: 0px 0px 0px 0px !important; }
 
 header {
@@ -303,7 +303,7 @@ b {
                         @foreach ($defectos_posiciones as $key => $defecto_posicion)                                
 
                             
-                            @if ($defecto_posicion->pasada_posicion_id == $junta_posicion->pasada_posicion_id)
+                            @if ($defecto_posicion->posicion_id == $junta_posicion->posicion_id)
 
 
                                 {{$defecto_posicion->codigo}} /&nbsp;
