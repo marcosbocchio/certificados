@@ -137,7 +137,7 @@ b {
                                 @endif                       
                             
                             </td>                 
-                            <td style="font-size: 12px;width: 140px;"><b>Fuente: </b>     
+                            <td style="font-size: 12px;width: 180px;"><b>Fuente: </b>     
 
                                 @if ($fuente)
 
@@ -146,7 +146,7 @@ b {
                                 @endif                           
                             
                             </td>
-                            <td style="font-size: 12px;width: 140px;border-right: 1px solid #000;" ><b>Act: </b>{{$informe_ri->actividad}}</td>
+                            <td style="font-size: 12px;width: 100px;border-right: 1px solid #000;" ><b>Act: </b>{{$informe_ri->actividad}}</td>
                             <td style="font-size: 12px;width: 280px; border-right: 1px solid #000;"  colspan="3" ><b>Proc. Sold. : </b>{{$informe->procedimiento_soldadura}}</td>                        
                         </tr>
                         <tr>
