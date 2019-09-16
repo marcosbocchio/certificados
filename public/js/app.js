@@ -2822,6 +2822,35 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -41864,7 +41893,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-lg-4 col-xs-6" }, [
+      _c("div", { staticClass: "col-lg-3 col-xs-6" }, [
         _c("div", { staticClass: "small-box bg-aqua" }, [
           _c("div", { staticClass: "inner" }, [
             _c("h3", [_vm._v(_vm._s(_vm.CantOperadores))]),
@@ -41890,7 +41919,7 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-lg-4 col-xs-6" }, [
+      _c("div", { staticClass: "col-lg-3 col-xs-6" }, [
         _c("div", { staticClass: "small-box bg-gray" }, [
           _c("div", { staticClass: "inner" }, [
             _c("h3", [_vm._v(_vm._s(_vm.CantRemitos))]),
@@ -41916,7 +41945,7 @@ var render = function() {
       _vm._v(" "),
       _vm._m(2),
       _vm._v(" "),
-      _c("div", { staticClass: "col-lg-4 col-xs-6" }, [
+      _c("div", { staticClass: "col-lg-3 col-xs-6" }, [
         _c("div", { staticClass: "small-box bg-red" }, [
           _c("div", { staticClass: "inner" }, [
             _c("h3", [_vm._v(_vm._s(_vm.CantInformes) + " ")]),
@@ -41940,7 +41969,7 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-lg-4 col-xs-6" }, [
+      _c("div", { staticClass: "col-lg-3 col-xs-6" }, [
         _c("div", { staticClass: "small-box bg-blue" }, [
           _vm._m(4),
           _vm._v(" "),
@@ -41960,7 +41989,11 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _vm._m(6)
+      _vm._m(6),
+      _vm._v(" "),
+      _vm._m(7),
+      _vm._v(" "),
+      _vm._m(8)
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "col-md-12" }, [
@@ -41968,7 +42001,7 @@ var render = function() {
         _c("div", { staticClass: "box-body" }, [
           _c("div", { staticClass: "table-responsive" }, [
             _c("table", { staticClass: "table table-hover table-striped" }, [
-              _vm._m(7),
+              _vm._m(9),
               _vm._v(" "),
               _c(
                 "tbody",
@@ -42064,12 +42097,12 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-lg-4 col-xs-6" }, [
+    return _c("div", { staticClass: "col-lg-3 col-xs-6" }, [
       _c("div", { staticClass: "small-box bg-yellow" }, [
         _c("div", { staticClass: "inner" }, [
           _c("h3", [_vm._v("0")]),
           _vm._v(" "),
-          _c("p", [_vm._v("Procedimientos/Documentos")])
+          _c("p", [_vm._v("Procedimientos")])
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "icon" }, [
@@ -42113,7 +42146,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-lg-4 col-xs-6" }, [
+    return _c("div", { staticClass: "col-lg-3 col-xs-6" }, [
       _c("div", { staticClass: "small-box bg-green" }, [
         _c("div", { staticClass: "inner" }, [
           _c("h3", [_vm._v("0")]),
@@ -42123,6 +42156,52 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("div", { staticClass: "icon" }, [
           _c("i", { staticClass: "ion ion-pie-graph" })
+        ]),
+        _vm._v(" "),
+        _c("a", { staticClass: "small-box-footer", attrs: { href: "#" } }, [
+          _vm._v("More info "),
+          _c("i", { staticClass: "fa fa-arrow-circle-right" })
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-3 col-xs-6" }, [
+      _c("div", { staticClass: "small-box bg-yellow" }, [
+        _c("div", { staticClass: "inner" }, [
+          _c("h3", [_vm._v("0")]),
+          _vm._v(" "),
+          _c("p", [_vm._v("Documentaciones")])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "icon" }, [
+          _c("i", { staticClass: "ion ion-person-add" })
+        ]),
+        _vm._v(" "),
+        _c("a", { staticClass: "small-box-footer", attrs: { href: "#" } }, [
+          _vm._v("More info "),
+          _c("i", { staticClass: "fa fa-arrow-circle-right" })
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-3 col-xs-6" }, [
+      _c("div", { staticClass: "small-box bg-yellow" }, [
+        _c("div", { staticClass: "inner" }, [
+          _c("h3", [_vm._v("0")]),
+          _vm._v(" "),
+          _c("p", [_vm._v("Soldadores")])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "icon" }, [
+          _c("i", { staticClass: "ion ion-person-add" })
         ]),
         _vm._v(" "),
         _c("a", { staticClass: "small-box-footer", attrs: { href: "#" } }, [

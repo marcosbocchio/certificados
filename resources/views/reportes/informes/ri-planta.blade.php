@@ -332,15 +332,15 @@ b {
             {{ $filasACompletar = pdfCantFilasACompletar($filasPage,$cantFilasTotal) }}
 
             @for ( $x=0 ;  $x < $filasACompletar ; $x++)
-            <tr>
-                <td style="font-size: 11px;  width:66px;text-align: center" class="bordered-td">&nbsp;</td>
-                <td style="font-size: 11px;  width:65px;text-align: center" class="bordered-td">&nbsp;</td>
-                <td style="font-size: 11px;  width:64.5px;text-align: center" class="bordered-td">&nbsp;</td>
-                <td style="font-size: 11px;  width:201.5px; " class="bordered-td">&nbsp;</td>
-                <td style="font-size: 11px; text-align: center;width:39px; " class="bordered-td">&nbsp;</td>
-                <td style="font-size: 11px; text-align: center;width:39px; " class="bordered-td">&nbsp;</td>
-                <td style="font-size: 11px;" class="bordered-td">&nbsp;</td>
-            </tr>
+                <tr>
+                    <td style="font-size: 11px;  width:66px;text-align: center" class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 11px;  width:65px;text-align: center" class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 11px;  width:64.5px;text-align: center" class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 11px;  width:201.5px; " class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 11px; text-align: center;width:39px; " class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 11px; text-align: center;width:39px; " class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 11px;" class="bordered-td">&nbsp;</td>
+                </tr>
             @endfor
          
                 
@@ -353,7 +353,7 @@ b {
 <script type="text/php">
 
     if ( isset($pdf) ) {
-        $x = 469;
+        $x = 480;
         $y = 77;
         $text = "PÁGINA : {PAGE_NUM} de {PAGE_COUNT}";
         $font = $fontMetrics->get_font("serif", "bold");
