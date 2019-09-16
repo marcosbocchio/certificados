@@ -326,6 +326,25 @@ b {
 
                 
             @endforeach
+
+            {{ $cantFilasTotal = count($juntas_posiciones) }}
+            {{ $filasPage = 37 }}
+            {{ $filasACompletar = pdfCantFilasACompletar($filasPage,$cantFilasTotal) }}
+
+            @for ( $x=0 ;  $x < $filasACompletar ; $x++)
+            <tr>
+                <td style="font-size: 11px;  width:66px;text-align: center" class="bordered-td">&nbsp;</td>
+                <td style="font-size: 11px;  width:65px;text-align: center" class="bordered-td">&nbsp;</td>
+                <td style="font-size: 11px;  width:64.5px;text-align: center" class="bordered-td">&nbsp;</td>
+                <td style="font-size: 11px;  width:201.5px; " class="bordered-td">&nbsp;</td>
+                <td style="font-size: 11px; text-align: center;width:39px; " class="bordered-td">&nbsp;</td>
+                <td style="font-size: 11px; text-align: center;width:39px; " class="bordered-td">&nbsp;</td>
+                <td style="font-size: 11px;" class="bordered-td">&nbsp;</td>
+            </tr>
+            @endfor
+         
+                
+            
                                         
         </tbody>
     </table>

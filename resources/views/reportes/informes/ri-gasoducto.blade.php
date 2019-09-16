@@ -564,7 +564,39 @@ b {
                     </td>
                 </tr>
                 
-            @endforeach      
+            @endforeach    
+
+            {{ $cantFilasTotal = count($juntas_posiciones) }}
+            {{ $filasPage = 19 }}
+            {{ $filasACompletar = pdfCantFilasACompletar($filasPage,$cantFilasTotal) }}  
+
+             @for ( $x=0 ;  $x < $filasACompletar ; $x++)
+            <tr>
+                <td style="font-size: 11px;  width:38px;text-align: center" class="bordered-td">&nbsp;</td>
+                <td style="font-size: 11px;  width:49.5px;text-align: center" class="bordered-td">&nbsp;</td>
+                <td style="font-size: 11px;  width:49.5px;text-align: center" class="bordered-td">&nbsp;</td>
+                <td style="font-size: 11px;  width:36px; text-align:center;" class="bordered-td">&nbsp;</td>
+                <td style="font-size: 11px;  width:36px; text-align:center;" class="bordered-td">&nbsp;</td>
+                <td style="font-size: 11px;  width:36px; text-align:center;" class="bordered-td">&nbsp;</td>
+                <td style="font-size: 11px;  width:36px; text-align:center;" class="bordered-td">&nbsp;</td>
+                <td style="font-size: 11px;  width:36px; text-align:center;" class="bordered-td">&nbsp;</td>
+                <td style="font-size: 11px;  width:36px; text-align:center;" class="bordered-td">&nbsp;</td>
+                <td style="font-size: 11px;  width:36px; text-align:center;" class="bordered-td">&nbsp;</td>
+                <td style="font-size: 11px;  width:36px; text-align:center;" class="bordered-td">&nbsp;</td>
+                <td style="font-size: 11px;  width:36px; text-align:center;" class="bordered-td">&nbsp;</td>
+                <td style="font-size: 11px;  width:36px; text-align:center;" class="bordered-td">&nbsp;</td>
+                <td style="font-size: 11px;  width:36px; text-align:center;" class="bordered-td">&nbsp;</td>
+                <td style="font-size: 11px;  width:36px; text-align:center;" class="bordered-td">&nbsp;</td>
+                <td style="font-size: 11px;  width:36px; text-align:center;" class="bordered-td">&nbsp;</td>
+                <td style="font-size: 11px;  width:63.5px;text-align: center" class="bordered-td">&nbsp;</td>
+                <td style="font-size: 11px;width:95px;  text-align: center" class="bordered-td">&nbsp;</td>
+                <td style="font-size: 11px;width:94.6px; text-align: center" class="bordered-td">&nbsp;</td>
+                <td style="font-size: 11px;width:94.7px; text-align: center" class="bordered-td">        
+                <td style="font-size: 11px;width:32px; text-align: center; " class="bordered-td">&nbsp;</td>
+                <td style="font-size: 11px; text-align: center;" class="bordered-td">&nbsp;</td>
+               
+            </tr>
+            @endfor
                                         
         </tbody>
     </table> 

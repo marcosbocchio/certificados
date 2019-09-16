@@ -10,7 +10,7 @@
 function pdfCantFilasACompletar($filasPage,$cantFilasTotal){
 
 
-    return ($filasPage - (count($cantFilasTotal) % $filasPage)) ;
+    return ($filasPage - ($cantFilasTotal % $filasPage)) ;
 
 }
 
