@@ -452,7 +452,7 @@
                         <v-select v-model="soldador1" :options="soldadores" label="nombre" :disabled="(!TablaDetalle.length)">
                             <template slot="option" slot-scope="option">
                                 <span class="upSelect">{{ option.nombre }} </span> <br> 
-                                <span class="downSelect">   {{ option.codigo }} </span>
+                                <span class="downSelect"> {{ option.codigo }} </span>
                             </template>
                         </v-select>                  
                     </div> 
@@ -461,7 +461,7 @@
                         <v-select v-model="soldador2" :options="soldadores" label="nombre" :disabled="(!isGasoducto || pasada!='1' || !TablaDetalle.length)">
                             <template slot="option" slot-scope="option">
                                 <span class="upSelect">{{ option.nombre }} </span> <br> 
-                                <span class="downSelect">   {{ option.codigo }} </span>
+                                <span class="downSelect"> {{ option.codigo }} </span>
                             </template>
                         </v-select>                    
                     </div>
@@ -471,7 +471,7 @@
                         <v-select v-model="soldador3" :options="soldadores" label="nombre" :disabled="(!TablaDetalle.length)">
                             <template slot="option" slot-scope="option">
                                 <span class="upSelect">{{ option.nombre }} </span> <br> 
-                                <span class="downSelect">   {{ option.codigo }} </span>
+                                <span class="downSelect"> {{ option.codigo }} </span>
                             </template>
                         </v-select>                    
                     </div>  

@@ -46219,7 +46219,7 @@ var render = function() {
                             _c("br"),
                             _vm._v(" "),
                             _c("span", { staticClass: "downSelect" }, [
-                              _vm._v("   " + _vm._s(option.codigo) + " ")
+                              _vm._v(" " + _vm._s(option.codigo) + " ")
                             ])
                           ]
                         }
@@ -46264,7 +46264,7 @@ var render = function() {
                             _c("br"),
                             _vm._v(" "),
                             _c("span", { staticClass: "downSelect" }, [
-                              _vm._v("   " + _vm._s(option.codigo) + " ")
+                              _vm._v(" " + _vm._s(option.codigo) + " ")
                             ])
                           ]
                         }
@@ -46306,7 +46306,7 @@ var render = function() {
                             _c("br"),
                             _vm._v(" "),
                             _c("span", { staticClass: "downSelect" }, [
-                              _vm._v("   " + _vm._s(option.codigo) + " ")
+                              _vm._v(" " + _vm._s(option.codigo) + " ")
                             ])
                           ]
                         }
