@@ -272,7 +272,22 @@ b {
                         @endif
                     </td>
                 </tr>                
-            @endforeach                                        
+            @endforeach    
+
+            {{ $cantFilasTotal = count($detalles) }}
+            {{ $filasPage = 30 }}
+            {{ $filasACompletar = pdfCantFilasACompletar($filasPage,$cantFilasTotal) }}  
+
+                  @for ( $x=0 ;  $x < $filasACompletar ; $x++)
+                <tr>
+                    <td style="font-size: 11px;  width:66px;text-align: center" class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 11px;  width:40px;text-align: center" class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 11px;  width:500px;" class="bordered-td">&nbsp;</td>               
+                    <td style="font-size: 11px; text-align: center;width:39px; " class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 11px; text-align: center;width:38px;" class="bordered-td">&nbsp;</td>
+                    <td class="bordered-td">&nbsp;</td>
+                </tr>
+            @endfor                                  
         </tbody>
     </table>
 </main>
