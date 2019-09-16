@@ -7,7 +7,7 @@
 
 <style>
 
-@page { margin: 319px 10px 125px 40px !important;
+@page { margin: 319px 10px 141px 40px !important;
         padding: 0px 0px 0px 0px !important; }
 
 header {
@@ -16,20 +16,13 @@ header {
    
     }
 
-.contenido {
+main{
    
-    margin-bottom: -2px;
-}
-
-.contenido table {
-
-border: #000 2px solid;
-margin: 0px 0px 0px 0px !important;
-padding: 0px 0px 0px 0px !important;
+    margin-top: -2px;
 }
 
 footer {
-    position: fixed; bottom:0px; 
+    position: fixed; bottom:4px; 
 
 }
 
@@ -253,9 +246,9 @@ b {
     </table>
 </footer>
 
-<div class="contenido">
+<main>
     
-    <table width="100%" class="bordered-1" style="margin-bottom: 0px;">
+    <table width="100%" class="bordered">
         <tbody>
             @foreach ($detalles as $detalle)
                 <tr>
@@ -278,14 +271,11 @@ b {
                             <a href="{{ route('InformePmReferencias',$detalle->referencia_id)}}"><img src="{{ public_path('img/fa-file-pdf.jpg')}}" alt="" style="height: 15px;margin-left:3px;;margin-top:2px;text-align: center;"></a>                                                       
                         @endif
                     </td>
-                </tr>
-
-                
-            @endforeach
-                                        
+                </tr>                
+            @endforeach                                        
         </tbody>
     </table>
-</div>
+</main>
      
 <script type="text/php">
 

@@ -20,7 +20,7 @@ class CreateInformePmTable extends Migration
             $table->string('vehiculo',20)->nullable();
             $table->string('aditivo',20)->nullable();
             $table->float('concentracion');  
-            $table->boolean('desmagnetizacion')->defaul(0);  
+            $table->boolean('desmagnetizacion_sn')->defaul(0);  
             $table->timestamps();
         });
     }

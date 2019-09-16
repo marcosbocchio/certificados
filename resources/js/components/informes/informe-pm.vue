@@ -218,7 +218,7 @@
                         <div class="col-md-3">                       
                             <div class="form-group">
                                 <label>Desmagnetización (*)</label>
-                                <v-select v-model="desmagnetizacion" label="codigo" :options="['SI','NO']"></v-select>   
+                                <v-select v-model="desmagnetizacion" :options="['SI','NO']"></v-select>   
                             </div>      
                         </div>
 
@@ -429,7 +429,7 @@ export default {
       },
 
       desmagnetizacion_sn_data : {
-      type : [ Object ],  
+      type : [ Number ],  
       required : false
       },
 

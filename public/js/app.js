@@ -4081,7 +4081,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       required: false
     },
     desmagnetizacion_sn_data: {
-      type: [Object],
+      type: [Number],
       required: false
     },
     color_particula_data: {
@@ -44146,7 +44146,7 @@ var render = function() {
                       _c("label", [_vm._v("Desmagnetización (*)")]),
                       _vm._v(" "),
                       _c("v-select", {
-                        attrs: { label: "codigo", options: ["SI", "NO"] },
+                        attrs: { options: ["SI", "NO"] },
                         model: {
                           value: _vm.desmagnetizacion,
                           callback: function($$v) {

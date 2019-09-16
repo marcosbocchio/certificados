@@ -184,7 +184,7 @@ class InformesPmController extends Controller
         $informe_detalle = $this->getDetalle($informe_pm->id);
 
     
-  //dd($informe_pm_desmagnetizacion_sn);
+ // dd($informe_pm_desmagnetizacion_sn);
  // dd($informe_pm_tipo_magnetizacion);
 
 
@@ -228,6 +228,7 @@ class InformesPmController extends Controller
                                         detalles_pm_referencias.path2 as path2,
                                         detalles_pm_referencias.path3 as path3,
                                         detalles_pm_referencias.path4 as path4')
+                              ->orderBy('detalles_pm.id','asc')
                               ->get();  
    
       return $informe_detalle;
