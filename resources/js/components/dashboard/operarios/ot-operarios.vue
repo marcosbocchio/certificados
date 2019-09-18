@@ -63,7 +63,7 @@
                 </div> 
                 <a class="btn btn-primary" v-on:click.prevent="submit()" >Actualizar</a>      
             </div>
-              <div class="clearfix"></div>
+            <div class="clearfix"></div>
             <div class="col-md-12 top-buffer" >
                 <div class="box box-danger">
                     <div class="box-header with-border">

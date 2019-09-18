@@ -80,6 +80,12 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('documentaciones', 'DocumentacionesController');
     Route::get('documentaciones/ot_operarios/{ot_id}/{user_id}', 'DocumentacionesController@getDocOtOperarios');
 
+    //Soldadores
+    Route::resource('ot_soldadores', 'OtSoldadoresController');  
+    Route::get('ot_soldadores/ot/{id}','OtSoldadoresController@SoldadoresOt');
+    Route::get('ot_soldadores/ot/{ot_id}/total', 'OtSoldadoresController@OtSoldadoresTotal');
+
+    //operarios
     Route::resource('ot_operarios', 'OtOperariosController');
     Route::get('ot-operarios/users', 'OtOperariosController@users');
     Route::get('ot-operarios/ejecutor_ensayo/{ot_id}', 'OtOperariosController@getOperadoresOt');

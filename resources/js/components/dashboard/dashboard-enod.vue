@@ -15,21 +15,22 @@
             <a :href="AppUrl + '/operadores/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
-        <!-- ./col -->
+
+         <!-- ./col -->
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
-          <div class="small-box bg-gray">
+          <div class="small-box bg-yellow">
             <div class="inner">
-              <h3>{{ CantRemitos }}</h3>
-
-              <p>Remitos</p>
+              <h3>{{ CantSoldadores }}</h3>
+              <p>Soldadores</p>
             </div>
             <div class="icon">
-              <i class="fa fa-tasks"></i>
+              <i class="ion ion-person-add"></i>
             </div>
-            <a :href="AppUrl + '/remitos/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a :href="AppUrl + '/soldadores/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
+
         <!-- ./col -->
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
@@ -45,6 +46,39 @@
             <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
+
+        <!-- ./col -->       
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-yellow">
+            <div class="inner">
+              <h3>0</h3>
+              <p>Documentaciones</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-person-add"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+
+
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-gray">
+            <div class="inner">
+              <h3>{{ CantRemitos }}</h3>
+
+              <p>Remitos</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-tasks"></i>
+            </div>
+            <a :href="AppUrl + '/remitos/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+    
         <!-- ./col -->
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
@@ -90,36 +124,7 @@
             <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
-        <!-- ./col -->
-       
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-yellow">
-            <div class="inner">
-              <h3>0</h3>
-              <p>Documentaciones</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-person-add"></i>
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-
-         <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-yellow">
-            <div class="inner">
-              <h3>0</h3>
-              <p>Soldadores</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-person-add"></i>
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
+             
     </div>  
         <div class="col-md-12">
             <div class="box box-primary top-buffer">
@@ -170,6 +175,7 @@ export default {
         CantOperadores :'0',
         CantInformes:'0',
         CantRemitos:'0',
+        CantSoldadores:'0',
 
         }
 
@@ -187,6 +193,7 @@ export default {
       this.ContarOperadores();
       this.ContarInformes();
       this.ContarRemitos();
+      this.ContarSoldadores();
     }
   },
 
@@ -222,6 +229,16 @@ export default {
             var urlRegistros = 'ot_operarios/users/' + this.ot_id_selected +'/total' + '?api_token=' + Laravel.user.api_token;             
             axios.get(urlRegistros).then(response =>{
             this.CantOperadores = response.data
+            });
+
+         },
+
+         ContarSoldadores : function (){
+
+            axios.defaults.baseURL = this.url ;                
+            var urlRegistros = 'ot_soldadores/ot/' + this.ot_id_selected +'/total' + '?api_token=' + Laravel.user.api_token;             
+            axios.get(urlRegistros).then(response =>{
+            this.CantSoldadores = response.data
             });
 
          },

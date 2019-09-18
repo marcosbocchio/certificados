@@ -51,7 +51,7 @@ class TecnicasGraficosController extends Controller
         $tecnica = DB::table('tecnicas')
                     ->join('tecnicas_graficos','tecnicas_graficos.tecnica_id','=','tecnicas.id')
                     ->where('tecnicas_graficos.id',$id)
-                    ->select('tecnicas.*','tecnicas_graficos.path','tecnicas_graficos.id as grafico_id')
+                    ->selectRaw('tecnicas.*,tecnicas_graficos.path,tecnicas_graficos.id as grafico_id,CONCAT(tecnicas.codigo,"-", tecnicas_graficos.id) as codigo_grafico_id')
                     ->first();
         $tecnica->path = '/'.$tecnica->path;
         return  $tecnica = Collection::make($tecnica); 

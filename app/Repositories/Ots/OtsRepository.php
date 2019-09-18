@@ -14,6 +14,7 @@ Use App\OtRiesgos;
 use App\OtReferencias;
 use App\OtCalidadPlacas;
 use App\OtOperarios;
+use App\OtSoldadores;
 
 
 class OtsRepository extends BaseRepository
@@ -78,13 +79,18 @@ class OtsRepository extends BaseRepository
         $epps      = $request->epps;
         $riesgos   = $request->riesgos;       
 
-         
+
 
         DB::beginTransaction();
           try {  
 
-            
-               $this->setOt($request, $ot);       
+              if ( $ot->cliente_id != $request->cliente) {
+
+                $this->borrarSoldadoresOT($ot->id);
+          
+              }
+              
+                $this->setOt($request, $ot);       
 
                 $this->setOperarios($ot);  
 
@@ -116,6 +122,13 @@ class OtsRepository extends BaseRepository
   }
 
 
+  public function borrarSoldadoresOT($ot_id){
+
+    OtSoldadores::where('ot_id',$ot_id)->delete();
+
+  }
+
+
   public function SetOt($request ,$ot){
 
     $user_id = null;
@@ -123,26 +136,25 @@ class OtsRepository extends BaseRepository
     if (Auth::check())
     {
          $user_id = $userId = Auth::id();    
-    }
+    }  
 
     $fecha_hora = date('Y-m-d',strtotime($request->fecha)) .' ' . date('H:i:s',strtotime($request->hora)) ;
     $fecha_estimada_ensayo =  date('Y-m-d',strtotime($request->fecha_ensayo));
-
-    $ot->proyecto         = $request->proyecto;
-    $ot->cliente_id       = $request->cliente;
-    $ot->obra             = $request->obra;
-    $ot->fecha_hora       = $fecha_hora;
-    $ot->numero           = $request->ot;
-    $ot->presupuesto      = $request->fts;
-    $ot->lugar            = $request->lugar_ensayo;
-    $ot->localidad_id     = $request->localidad;
-    $ot->lat              = $request->lat;
-    $ot->lon              = $request->lon;
-    $ot->contacto1_id     = $request->contacto1;
-    $ot->contacto2_id     = $request->contacto2;
-    $ot->contacto3_id     = $request->contacto3;
+    $ot->proyecto          = $request->proyecto;
+    $ot->cliente_id        = $request->cliente;
+    $ot->obra              = $request->obra;
+    $ot->fecha_hora        = $fecha_hora;
+    $ot->numero            = $request->ot;
+    $ot->presupuesto       = $request->fts;
+    $ot->lugar             = $request->lugar_ensayo;
+    $ot->localidad_id      = $request->localidad;
+    $ot->lat               = $request->lat;
+    $ot->lon               = $request->lon;
+    $ot->contacto1_id      = $request->contacto1;
+    $ot->contacto2_id      = $request->contacto2;
+    $ot->contacto3_id      = $request->contacto3;
     $ot->responsable_ot_id = $request->user_empresa;
-    $ot->observaciones    = $request->observaciones;
+    $ot->observaciones     = $request->observaciones;
     $ot->fecha_estimada_ensayo = $fecha_estimada_ensayo;
     $ot->user_id          = $user_id;
     $ot->estado      = 'CARGANDO';

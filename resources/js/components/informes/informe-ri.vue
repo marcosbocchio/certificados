@@ -116,7 +116,7 @@
                             <div class="form-group">
                                 <label>Técnica (*)</label>
                                     
-                                <v-select v-model="tecnica" label="grafico_id" :options="tecnicas" @input="ActualizarDistFuentePelicula()">  
+                                <v-select v-model="tecnica" label="codigo_grafico_id" :options="tecnicas" @input="ActualizarDistFuentePelicula()">  
                                     <template slot="option" slot-scope="option">
                                         <img :src="option.path" width="80" height="73" />  
                                         <span style="margin-left: 5px"> {{option.descripcion}} </span>                                     
@@ -476,6 +476,7 @@
                         </v-select>                    
                     </div>  
                      <div class="col-md-1"> 
+
                           <p>&nbsp;</p>
                           <span>                             
                              <a title="Agregar Pasada" @click="AddPasadas()"> <app-icon img="plus-circle" color="black"></app-icon> </a>
@@ -511,16 +512,15 @@
                         </div>               
                   </div>  
                 </div>
-
-                  
-                    <div class="box box-danger">
-                        <div class="box-body">
-                            <div class="form-group">
-                                <label>Observaciones</label>
-                                <textarea v-model="observaciones" class="form-control noresize" rows="3" placeholder="" maxlength="250"></textarea>
-                            </div>
+                
+                <div class="box box-danger">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label>Observaciones</label>
+                            <textarea v-model="observaciones" class="form-control noresize" rows="3" placeholder="" maxlength="250"></textarea>
                         </div>
-                    </div>                 
+                    </div>
+                </div>                 
                
                   <button class="btn btn-primary" type="submit">Guardar</button>   
            </form>    
@@ -986,6 +986,17 @@ export default {
                 this.tecnicas = response.data
                 });
               },
+
+        getTecnicasGraficos: function(){
+                 
+                    axios.defaults.baseURL = this.url ;
+                    var urlRegistros = 'tecnicas_graficos/'+ this.tecnica.id + '?api_token=' + Laravel.user.api_token;     
+                    console.log(urlRegistros);   
+                    axios.get(urlRegistros).then(response =>{
+                    this.tecnicas_graficos = response.data
+                    });
+                  },
+
         ActualizarDistFuentePelicula : function(){
 
                 axios.defaults.baseURL = this.url ;
@@ -997,15 +1008,6 @@ export default {
 
         },
 
-        getTecnicasGraficos: function(){
-             
-                axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'tecnicas_graficos/'+ this.tecnica.id + '?api_token=' + Laravel.user.api_token;     
-                console.log(urlRegistros);   
-                axios.get(urlRegistros).then(response =>{
-                this.tecnicas_graficos = response.data
-                });
-              },
 
         getEjecutorEnsayo: function(){
              
@@ -1053,7 +1055,7 @@ export default {
         getSoldadores : function(){
 
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'soldadores/cliente/' + this.otdata.cliente_id + '?api_token=' + Laravel.user.api_token;        
+                var urlRegistros = 'ot_soldadores/ot/' + this.otdata.id + '?api_token=' + Laravel.user.api_token;        
                 axios.get(urlRegistros).then(response =>{
                 this.soldadores = response.data
                 });
@@ -1242,9 +1244,8 @@ export default {
 
         Store : function(){
             
-            this.$nextTick(function () {
-                 this.validarPasadas();
-            })
+          
+            this.validarPasadas();         
             if (this.validoPasadas){
 
                     this.errors =[];
