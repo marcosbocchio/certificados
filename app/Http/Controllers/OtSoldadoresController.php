@@ -22,7 +22,7 @@ class OtSoldadoresController extends Controller
         $user = auth()->user()->name;
 
         $ot_soldadores = $this->getSoldadoresOt($id);
-        $ot = Ots::find($id)->first();
+        $ot = Ots::find($id);
 
         return view('ot-soldadores.index',compact('ot',
                                         'ot_soldadores',                                   
