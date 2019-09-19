@@ -11,8 +11,7 @@ class StorageController extends Controller
 
     
       if ($request->hasFile('image')){
-
-       // $path = $request->image->store('referencias-image');
+      
           $path = Storage::disk('public')->put('referencias',$request->file('image'));  
     
         return $path;
@@ -29,8 +28,8 @@ class StorageController extends Controller
      
       if ($request->hasFile('documento')){
 
-       // $path = $request->image->store('referencias-image');
-          $path = Storage::disk('local')->put('documentaciones',$request->file('documento'));  
+      
+          $path = Storage::disk('public')->put('documentaciones',$request->file('documento'));  
     
         return $path;
       }

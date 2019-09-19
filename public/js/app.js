@@ -40915,7 +40915,7 @@ var render = function() {
                 "div",
                 { staticClass: "form-group" },
                 [
-                  _c("label", [_vm._v("Tipo Documento")]),
+                  _c("label", [_vm._v("Tipo Documentos")]),
                   _vm._v(" "),
                   _c("v-select", {
                     attrs: {

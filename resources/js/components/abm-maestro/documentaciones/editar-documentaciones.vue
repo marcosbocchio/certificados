@@ -9,7 +9,7 @@
                     </div>
                     <div class="modal-body">
                          <div class="form-group">
-                            <label>Tipo Documento</label>
+                            <label>Tipo Documentos</label>
                             <v-select v-model="tipo_documento" label="descripcion" :options="tipo_documentos"></v-select>   
                          </div>      
                          <div class="form-group">
