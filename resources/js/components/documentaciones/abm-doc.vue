@@ -56,7 +56,7 @@
                                 </div>                               
                             </div>
                             <div class="form-group">                           
-                               <input type="file" class="form-control" id="inputFile" name="file" @change="onFileSelected($event)">
+                               <input type="file" class="form-control" id="inputFile" ref="inputFile1" name="file" @change="onFileSelected($event)">
                                <button class="hide" @click.prevent="onUpload()" >upload</button>  
                                <progress-bar
                                 :options="options"
@@ -228,11 +228,17 @@ export default {
 
                  event.preventDefault();
                  toastr.error('Archivo demasiado grande. (Max 1 MB)');
-                 this.isLoading_file = false;      
-                 return;
+                 this.$refs.inputFile1.type = 'text';
+                 this.$refs.inputFile1.type = 'file';  
+                 this.selectedFile = null;
+                 this.uploadPercentage = 0;
+                 this.isLoading_file = false;  
+            }else{
+
+                this.onUpload();   
+
             }
 
-            this.onUpload();   
            
           
          

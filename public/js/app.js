@@ -3758,11 +3758,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       if (this.selectedFile.size > 1024 * 1024) {
         event.preventDefault();
         toastr.error('Archivo demasiado grande. (Max 1 MB)');
+        this.$refs.inputFile1.type = 'text';
+        this.$refs.inputFile1.type = 'file';
+        this.selectedFile = null;
+        this.uploadPercentage = 0;
         this.isLoading_file = false;
-        return;
+      } else {
+        this.onUpload();
       }
-
-      this.onUpload();
     },
     onUpload: function onUpload() {
       var _this3 = this;
@@ -43636,6 +43639,7 @@ var render = function() {
                       { staticClass: "form-group" },
                       [
                         _c("input", {
+                          ref: "inputFile1",
                           staticClass: "form-control",
                           attrs: {
                             type: "file",
