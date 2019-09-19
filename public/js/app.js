@@ -3753,10 +3753,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     onFileSelected: function onFileSelected(event) {
       this.isLoading_file = true;
-      this.$nextTick(function () {
-        this.selectedFile = event.target.files[0];
-        this.onUpload();
-      });
+      this.selectedFile = event.target.files[0];
+
+      if (this.selectedFile.size > 1024 * 1024) {
+        event.preventDefault();
+        toastr.error('Archivo demasiado grande. (Max 1 MB)');
+        this.isLoading_file = false;
+        return;
+      }
+
+      this.onUpload();
     },
     onUpload: function onUpload() {
       var _this3 = this;

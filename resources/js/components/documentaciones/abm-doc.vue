@@ -219,12 +219,21 @@ export default {
         },
 
     onFileSelected(event) {
+         
           
-            this.isLoading_file = true;       
-            this.$nextTick(function () {
-                this.selectedFile = event.target.files[0];
-                this.onUpload();   
-             });  
+            this.isLoading_file = true;          
+            this.selectedFile = event.target.files[0];
+         
+            if(this.selectedFile.size > 1024 * 1024){
+
+                 event.preventDefault();
+                 toastr.error('Archivo demasiado grande. (Max 1 MB)');
+                 this.isLoading_file = false;      
+                 return;
+            }
+
+            this.onUpload();   
+           
           
          
         },
