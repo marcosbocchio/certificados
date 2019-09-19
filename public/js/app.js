@@ -43446,277 +43446,251 @@ var render = function() {
         },
         [
           _c("div", { staticClass: "modal fade", attrs: { id: "nuevo" } }, [
-            _c(
-              "div",
-              { staticClass: "modal-dialog" },
-              [
-                _c("div", { staticClass: "modal-content" }, [
-                  _vm._m(0),
+            _c("div", { staticClass: "modal-dialog" }, [
+              _c("div", { staticClass: "modal-content" }, [
+                _vm._m(0),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-body" }, [
+                  _c(
+                    "div",
+                    { staticClass: "form-group" },
+                    [
+                      _c("label", [_vm._v("Tipo Documento")]),
+                      _vm._v(" "),
+                      _c("v-select", {
+                        attrs: { label: "tipo", options: _vm.tipo_documentos },
+                        model: {
+                          value: _vm.newRegistro.tipo,
+                          callback: function($$v) {
+                            _vm.$set(_vm.newRegistro, "tipo", $$v)
+                          },
+                          expression: "newRegistro.tipo"
+                        }
+                      })
+                    ],
+                    1
+                  ),
                   _vm._v(" "),
-                  _c("div", { staticClass: "modal-body" }, [
-                    _c(
-                      "div",
-                      { staticClass: "form-group" },
-                      [
-                        _c("label", [_vm._v("Tipo Documento")]),
-                        _vm._v(" "),
-                        _c("v-select", {
-                          attrs: {
-                            label: "tipo",
-                            options: _vm.tipo_documentos
-                          },
-                          model: {
-                            value: _vm.newRegistro.tipo,
-                            callback: function($$v) {
-                              _vm.$set(_vm.newRegistro, "tipo", $$v)
-                            },
-                            expression: "newRegistro.tipo"
-                          }
-                        })
-                      ],
-                      1
-                    ),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { attrs: { for: "name" } }, [_vm._v("Título")]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("label", { attrs: { for: "name" } }, [
-                        _vm._v("Título")
-                      ]),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.newRegistro.titulo,
-                            expression: "newRegistro.titulo"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: { type: "text", name: "titulo", value: "" },
-                        domProps: { value: _vm.newRegistro.titulo },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.newRegistro,
-                              "titulo",
-                              $event.target.value
-                            )
-                          }
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.newRegistro.titulo,
+                          expression: "newRegistro.titulo"
                         }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("label", { attrs: { for: "name" } }, [
-                        _vm._v("Descripción")
-                      ]),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.newRegistro.descripcion,
-                            expression: "newRegistro.descripcion"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: { type: "text", name: "descripcion", value: "" },
-                        domProps: { value: _vm.newRegistro.descripcion },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.newRegistro,
-                              "descripcion",
-                              $event.target.value
-                            )
-                          }
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _vm.newRegistro.tipo == "USUARIO"
-                      ? _c("div", [
-                          _c(
-                            "div",
-                            { staticClass: "form-group" },
-                            [
-                              _c("label", { attrs: { for: "name" } }, [
-                                _vm._v("Usuario")
-                              ]),
-                              _vm._v(" "),
-                              _c("v-select", {
-                                attrs: { label: "name", options: _vm.usuarios },
-                                model: {
-                                  value: _vm.usuario,
-                                  callback: function($$v) {
-                                    _vm.usuario = $$v
-                                  },
-                                  expression: "usuario"
-                                }
-                              })
-                            ],
-                            1
-                          )
-                        ])
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _vm.newRegistro.tipo == "USUARIO" ||
-                    _vm.newRegistro.tipo == "PROCEDIMIENTO"
-                      ? _c("div", [
-                          _c(
-                            "div",
-                            { staticClass: "form-group" },
-                            [
-                              _c("label", { attrs: { for: "name" } }, [
-                                _vm._v("Método de Ensayo")
-                              ]),
-                              _vm._v(" "),
-                              _c("v-select", {
-                                attrs: {
-                                  label: "metodo",
-                                  options: _vm.metodo_ensayos
-                                },
-                                model: {
-                                  value: _vm.metodo_ensayo,
-                                  callback: function($$v) {
-                                    _vm.metodo_ensayo = $$v
-                                  },
-                                  expression: "metodo_ensayo"
-                                }
-                              })
-                            ],
-                            1
-                          )
-                        ])
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _vm.newRegistro.tipo == "USUARIO"
-                      ? _c("div", [
-                          _c("div", { staticClass: "form-group" }, [
-                            _c("label", { attrs: { for: "fecha" } }, [
-                              _vm._v("Fecha")
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              { staticClass: "input-group date" },
-                              [
-                                _vm._m(1),
-                                _vm._v(" "),
-                                _c("Datepicker", {
-                                  attrs: {
-                                    "input-class": "form-control pull-right",
-                                    language: _vm.es
-                                  },
-                                  model: {
-                                    value: _vm.newRegistro.fecha_caducidad,
-                                    callback: function($$v) {
-                                      _vm.$set(
-                                        _vm.newRegistro,
-                                        "fecha_caducidad",
-                                        $$v
-                                      )
-                                    },
-                                    expression: "newRegistro.fecha_caducidad"
-                                  }
-                                })
-                              ],
-                              1
-                            )
-                          ])
-                        ])
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "form-group" },
-                      [
-                        _c("input", {
-                          ref: "inputFile1",
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "file",
-                            id: "inputFile",
-                            name: "file"
-                          },
-                          on: {
-                            change: function($event) {
-                              return _vm.onFileSelected($event)
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c(
-                          "button",
-                          {
-                            staticClass: "hide",
-                            on: {
-                              click: function($event) {
-                                $event.preventDefault()
-                                return _vm.onUpload()
-                              }
-                            }
-                          },
-                          [_vm._v("upload")]
-                        ),
-                        _vm._v(" "),
-                        _c("progress-bar", {
-                          attrs: {
-                            options: _vm.options,
-                            value: _vm.uploadPercentage
-                          }
-                        })
                       ],
-                      1
-                    )
+                      staticClass: "form-control",
+                      attrs: { type: "text", name: "titulo", value: "" },
+                      domProps: { value: _vm.newRegistro.titulo },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.newRegistro,
+                            "titulo",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "modal-footer" }, [
-                    _c("input", {
-                      staticClass: "btn btn-primary",
-                      attrs: {
-                        type: "submit",
-                        value: "Guardar",
-                        disabled: !_vm.subioArchivo
-                      }
-                    }),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { attrs: { for: "name" } }, [
+                      _vm._v("Descripción")
+                    ]),
                     _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-default",
-                        attrs: {
-                          type: "button",
-                          name: "button",
-                          "data-dismiss": "modal"
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.newRegistro.descripcion,
+                          expression: "newRegistro.descripcion"
                         }
-                      },
-                      [_vm._v("Cancelar")]
-                    )
-                  ])
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "text", name: "descripcion", value: "" },
+                      domProps: { value: _vm.newRegistro.descripcion },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.newRegistro,
+                            "descripcion",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _vm.newRegistro.tipo == "USUARIO"
+                    ? _c("div", [
+                        _c(
+                          "div",
+                          { staticClass: "form-group" },
+                          [
+                            _c("label", { attrs: { for: "name" } }, [
+                              _vm._v("Usuario")
+                            ]),
+                            _vm._v(" "),
+                            _c("v-select", {
+                              attrs: { label: "name", options: _vm.usuarios },
+                              model: {
+                                value: _vm.usuario,
+                                callback: function($$v) {
+                                  _vm.usuario = $$v
+                                },
+                                expression: "usuario"
+                              }
+                            })
+                          ],
+                          1
+                        )
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.newRegistro.tipo == "USUARIO" ||
+                  _vm.newRegistro.tipo == "PROCEDIMIENTO"
+                    ? _c("div", [
+                        _c(
+                          "div",
+                          { staticClass: "form-group" },
+                          [
+                            _c("label", { attrs: { for: "name" } }, [
+                              _vm._v("Método de Ensayo")
+                            ]),
+                            _vm._v(" "),
+                            _c("v-select", {
+                              attrs: {
+                                label: "metodo",
+                                options: _vm.metodo_ensayos
+                              },
+                              model: {
+                                value: _vm.metodo_ensayo,
+                                callback: function($$v) {
+                                  _vm.metodo_ensayo = $$v
+                                },
+                                expression: "metodo_ensayo"
+                              }
+                            })
+                          ],
+                          1
+                        )
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.newRegistro.tipo == "USUARIO"
+                    ? _c("div", [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", { attrs: { for: "fecha" } }, [
+                            _vm._v("Fecha")
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "input-group date" },
+                            [
+                              _vm._m(1),
+                              _vm._v(" "),
+                              _c("Datepicker", {
+                                attrs: {
+                                  "input-class": "form-control pull-right",
+                                  language: _vm.es
+                                },
+                                model: {
+                                  value: _vm.newRegistro.fecha_caducidad,
+                                  callback: function($$v) {
+                                    _vm.$set(
+                                      _vm.newRegistro,
+                                      "fecha_caducidad",
+                                      $$v
+                                    )
+                                  },
+                                  expression: "newRegistro.fecha_caducidad"
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        ])
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "form-group" },
+                    [
+                      _c("input", {
+                        ref: "inputFile1",
+                        staticClass: "form-control",
+                        attrs: { type: "file", id: "inputFile", name: "file" },
+                        on: {
+                          change: function($event) {
+                            return _vm.onFileSelected($event)
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "hide",
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.onUpload()
+                            }
+                          }
+                        },
+                        [_vm._v("upload")]
+                      ),
+                      _vm._v(" "),
+                      _c("progress-bar", {
+                        attrs: {
+                          options: _vm.options,
+                          value: _vm.uploadPercentage
+                        }
+                      })
+                    ],
+                    1
+                  )
                 ]),
                 _vm._v(" "),
-                _c("loading", {
-                  attrs: {
-                    active: _vm.isLoading_file,
-                    "is-full-page": _vm.fullPage
-                  },
-                  on: {
-                    "update:active": function($event) {
-                      _vm.isLoading_file = $event
+                _c("div", { staticClass: "modal-footer" }, [
+                  _c("input", {
+                    staticClass: "btn btn-primary",
+                    attrs: {
+                      type: "submit",
+                      value: "Guardar",
+                      disabled: !_vm.subioArchivo
                     }
-                  }
-                })
-              ],
-              1
-            )
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-default",
+                      attrs: {
+                        type: "button",
+                        name: "button",
+                        "data-dismiss": "modal"
+                      }
+                    },
+                    [_vm._v("Cancelar")]
+                  )
+                ])
+              ])
+            ])
           ])
         ]
       ),

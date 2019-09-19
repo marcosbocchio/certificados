@@ -70,10 +70,10 @@
                        
                         </div>
                     </div>
-                    <!-- End Modal-->        
+                    <!-- End Modal     
                     <loading :active.sync="isLoading_file"           
                              :is-full-page="fullPage">
-                     </loading>
+                     </loading> -->   
                 </div>
             </div>
 
