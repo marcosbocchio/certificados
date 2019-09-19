@@ -152,7 +152,8 @@ export default {
             
                 layout: {
                     height: 20,
-                    width: 150,            
+                    width: 150,    
+                    verticalTextAlign: 74,        
                  }
                 }
         }

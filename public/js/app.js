@@ -3702,7 +3702,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       options: {
         layout: {
           height: 20,
-          width: 150
+          width: 150,
+          verticalTextAlign: 74
         }
       }
     };
