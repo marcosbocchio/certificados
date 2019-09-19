@@ -133,8 +133,10 @@ Vue.use(VueGoogleMaps, {
      installComponents: true,
 })
 
-import Vuex from 'vuex' 
-import vSelect from 'vue-select'
+import Vuex from 'vuex' ;
+import vSelect from 'vue-select';
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 
 const store = new Vuex.Store({
   

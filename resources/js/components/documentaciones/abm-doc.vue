@@ -56,8 +56,8 @@
                                 </div>                               
                             </div>
                             <div class="form-group">                           
-                                <input type="file" class="form-control" id="inputFile" name="file" @change="onFileSelected($event)">
-                                <button class="hide" @click.prevent="onUpload()" >upload</button>
+                               <input type="file" class="form-control" id="inputFile" name="file" @change="onFileSelected($event)">
+                         -     <button class="hide" @click.prevent="onUpload()" >upload</button>  
                             </div>                 
                         </div>
                         <div class="modal-footer">
@@ -65,19 +65,29 @@
                             <button type="button" class="btn btn-default" name="button" data-dismiss="modal" >Cancelar</button>
                         </div>
                     </div>
+                    <!-- End Modal-->        
+                    <loading :active.sync="isLoading_file"           
+                             :is-full-page="fullPage">
+                     </loading>
                 </div>
             </div>
+
         </form>
 
-        <!-- End Modal-->
-       
+        <loading :active.sync="isLoading"           
+                :is-full-page="fullPage">
+        </loading>
     </div>    
 </template>
 
 <script>
+
+
 import {mapState} from 'vuex'
 import Datepicker from 'vuejs-datepicker';
 import {en, es} from 'vuejs-datepicker/dist/locale'
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 
 export default {
     name: 'abm-doc',
@@ -90,7 +100,8 @@ export default {
       },
 
       components: {
-            Datepicker
+            Datepicker,
+            Loading
         },
 
       data() { return {
@@ -104,13 +115,18 @@ export default {
             titulo: '',
             descripcion  : '',
             path : '',            
-            fecha_caducidad:'',            
+            fecha_caducidad:'',   
+
             
-         },          
+         },   
+         isLoading: false,
+         fullPage: false,
+         isLoading_file: false,     
 
          tipo_documentos :[
                           
-            'INSTITUCIONAL',              
+            'INSTITUCIONAL',
+            'OT',              
             'PROCEDIMIENTO',
             'USUARIO'           
          ], 
@@ -128,10 +144,10 @@ export default {
 
       created : function(){
 
-        this.getRegistros();
-        this.getUsuarios();
-        this.getMetodosEnsayos();
-
+            this.getRegistros();
+            this.getUsuarios();
+            this.getMetodosEnsayos();
+        
       },
        
     computed :{
@@ -158,11 +174,13 @@ export default {
 
     getRegistros : function(){
 
+        this.isLoading = true;
         axios.defaults.baseURL = this.url ;
         var urlRegistros = this.modelo;   
       //  console.log(urlRegistros);
         axios.get(urlRegistros).then(response =>{
-        this.registros = response.data
+        this.registros = response.data;
+         this.isLoading = false;
         });
         },
 
@@ -176,9 +194,16 @@ export default {
         },
 
     onFileSelected(event) {
-            console.log('entro en onFileSelect')   ; 
-            this.selectedFile = event.target.files[0];
-            this.onUpload();               
+
+          
+            this.isLoading_file = true;       
+            this.$nextTick(function () {
+                this.selectedFile = event.target.files[0];
+                this.onUpload();           
+                this.isLoading_file = false         
+             });  
+          
+         
         },
         onUpload() {
               console.log('entro en onupload')   ;
