@@ -3686,7 +3686,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       tipo_documentos: ['INSTITUCIONAL', 'OT', 'PROCEDIMIENTO', 'USUARIO'],
       en: vuejs_datepicker_dist_locale__WEBPACK_IMPORTED_MODULE_2__["en"],
       es: vuejs_datepicker_dist_locale__WEBPACK_IMPORTED_MODULE_2__["es"],
-      errors: {},
+      errors: [],
       metodo_ensayos: [],
       metodo_ensayo: {},
       usuario: {},
@@ -3738,7 +3738,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.$nextTick(function () {
         this.selectedFile = event.target.files[0];
         this.onUpload();
-        this.isLoading_file = false;
       });
     },
     onUpload: function onUpload() {
@@ -3757,8 +3756,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       console.log(fd);
       axios.post(url, fd, settings).then(function (response) {
         _this3.newRegistro.path = response.data;
+        _this3.isLoading_file = false;
       })["catch"](function (response) {
-        console.log(response);
+        _this3.errors = error.response.data.errors;
+        _this3.isLoading_file = false;
       });
     },
     getUsuarios: function getUsuarios() {

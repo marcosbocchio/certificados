@@ -133,7 +133,7 @@ export default {
          en: en,
          es: es,    
       
-         errors: {},
+         errors:[],
          metodo_ensayos:[],
          metodo_ensayo :{},
          usuario :{},
@@ -194,13 +194,11 @@ export default {
         },
 
     onFileSelected(event) {
-
           
             this.isLoading_file = true;       
             this.$nextTick(function () {
                 this.selectedFile = event.target.files[0];
-                this.onUpload();           
-                this.isLoading_file = false         
+                this.onUpload();   
              });  
           
          
@@ -216,11 +214,12 @@ export default {
                var url = 'storage/documento';
                console.log(fd);
                axios.post(url,fd,settings)
-               .then (response => {
-                                
-                  this.newRegistro.path = response.data;          
+               .then (response => {                                
+                  this.newRegistro.path = response.data;      
+                    this.isLoading_file = false          
                }).catch(response => {
-                    console.log(response)
+                   this.errors = error.response.data.errors;
+                    this.isLoading_file = false      
                 })
 
             },
@@ -284,8 +283,7 @@ export default {
                 this.usuario ={};
                 this.selectedFile =  null,      
                 $('#nuevo').modal('show');  
-                this.newRegistro = registro;    
-                
+                this.newRegistro = registro;                   
                     
             },
 }
