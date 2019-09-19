@@ -135,8 +135,8 @@ Vue.use(VueGoogleMaps, {
 
 import Vuex from 'vuex' ;
 import vSelect from 'vue-select';
-import Loading from 'vue-loading-overlay';
-import 'vue-loading-overlay/dist/vue-loading.css';
+import ProgressBar from 'vuejs-progress-bar'
+Vue.use(ProgressBar)
 
 const store = new Vuex.Store({
   

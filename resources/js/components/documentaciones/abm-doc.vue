@@ -57,12 +57,17 @@
                             </div>
                             <div class="form-group">                           
                                <input type="file" class="form-control" id="inputFile" name="file" @change="onFileSelected($event)">
-                         -     <button class="hide" @click.prevent="onUpload()" >upload</button>  
+                               <button class="hide" @click.prevent="onUpload()" >upload</button>  
+                               <progress-bar
+                                :options="options"
+                                :value="uploadPercentage"
+                                />
                             </div>                 
                         </div>
                         <div class="modal-footer">
-                            <input type="submit" class="btn btn-primary" value="Guardar">
-                            <button type="button" class="btn btn-default" name="button" data-dismiss="modal" >Cancelar</button>
+                            <input type="submit" class="btn btn-primary" value="Guardar" :disabled="!subioArchivo">
+                            <button type="button" class="btn btn-default" name="button" data-dismiss="modal" >Cancelar</button>                      
+                       
                         </div>
                     </div>
                     <!-- End Modal-->        
@@ -88,6 +93,7 @@ import Datepicker from 'vuejs-datepicker';
 import {en, es} from 'vuejs-datepicker/dist/locale'
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
+
 
 export default {
     name: 'abm-doc',
@@ -122,6 +128,7 @@ export default {
          isLoading: false,
          fullPage: false,
          isLoading_file: false,     
+         uploadPercentage: 0,
 
          tipo_documentos :[
                           
@@ -138,7 +145,16 @@ export default {
          metodo_ensayo :{},
          usuario :{},
          usuarios:[],
-         selectedFile : null,      
+         selectedFile : null,     
+         subioArchivo : false, 
+
+         options: {
+            
+                layout: {
+                    height: 20,
+                    width: 150,            
+                 }
+                }
         }
     },
 
@@ -149,6 +165,15 @@ export default {
             this.getMetodosEnsayos();
         
       },
+
+      watch : {
+
+        uploadPercentage : function(val){
+
+            this.subioArchivo = (val == 100 ) ? true : false;
+                
+        }
+    },
        
     computed :{
 
@@ -157,7 +182,7 @@ export default {
              return 'table-' + this.modelo ;
          },       
          
-         ...mapState(['url'])
+         ...mapState(['url']) 
      },
 
     methods :{
@@ -205,7 +230,9 @@ export default {
         },
         onUpload() {
               console.log('entro en onupload')   ;
-              let settings = { headers: { 'content-type': 'multipart/form-data' } }
+              let settings = { headers: { 'content-type': 'multipart/form-data' }, onUploadProgress: function( progressEvent ) {
+                                                                                    this.uploadPercentage = parseInt( Math.round( ( progressEvent.loaded * 100 ) / progressEvent.total ) );
+                                                                                    }.bind(this) }
                const fd = new FormData();
                
                fd.append('documento',this.selectedFile);
@@ -213,6 +240,7 @@ export default {
                axios.defaults.baseURL = this.url;     
                var url = 'storage/documento';
                console.log(fd);
+
                axios.post(url,fd,settings)
                .then (response => {                                
                   this.newRegistro.path = response.data;      
@@ -267,7 +295,9 @@ export default {
 
             });
 
-        },    
+        },  
+    
+
 
     confirmDeleteRegistro: function(registro,dato){            
               this.fillRegistro.id = registro.id;

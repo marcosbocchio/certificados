@@ -33,6 +33,7 @@
         "vue-timeselector": "^0.1.7",
         "vue2-google-maps": "^0.10.6",
         "vuejs-datepicker": "^1.5.4",
+        "vuejs-progress-bar": "^1.1.1",
         "vuex": "^3.1.1"
     }
 }

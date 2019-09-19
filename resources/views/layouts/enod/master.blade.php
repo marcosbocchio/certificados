@@ -21,9 +21,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Ionicons -->
     <link  rel="stylesheet" href="{{asset('adminlte/bower_components/Ionicons/css/ionicons.min.css')}}">
 
-    <!-- Loading -->
-    <link  rel="stylesheet" href="{{asset('adminlte/bower_components/laoding/css/loading.min.css')}}">
-
     <!-- message -->
     <link href="{{ asset('css/toastr.css') }}" rel="stylesheet">
 
