@@ -134,8 +134,8 @@ class InformesRiRepository extends BaseRepository
 
          try {
 
-         $this->savePasadasPosicion($detalle['pasadas'],$posicion);
-         $this->saveDefectos($detalle['defectos'],$posicion);
+          $this->savePasadasPosicion($detalle['pasadas'],$posicion);
+          $this->saveDefectos($detalle['defectos'],$posicion);
            
          } 
          catch(Exception $z){          

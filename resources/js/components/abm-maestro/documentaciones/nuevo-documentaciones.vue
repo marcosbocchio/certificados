@@ -101,9 +101,8 @@ export default {
          metodo_ensayo :{},
          usuario :{},
          usuarios:[],
-         selectedFile : null,     
-
-      
+         selectedFile : null,   
+               
         }
     },
 

@@ -188,9 +188,26 @@ class InformesRiController extends Controller
 
                 $obj = new stdClass();
                 $obj->pasada = $pasada_posicion->numero ;
-                $obj->soldador1 = Soldadores::find($pasada_posicion->soldadorz_id);
-                $obj->soldador2 = Soldadores::find($pasada_posicion->soldadorl_id) ? Soldadores::find($pasada_posicion->soldadorl_id) : "";
-                $obj->soldador3 = Soldadores::find($pasada_posicion->soldadorp_id) ? Soldadores::find($pasada_posicion->soldadorp_id) : "";
+
+                $obj->soldador1 = DB::table('soldadores')
+                                            ->join('ot_soldadores','ot_soldadores.soldadores_id','=','soldadores.id')  
+                                            ->where('ot_soldadores.id',$pasada_posicion->soldadorz_id)
+                                            ->select('soldadores.codigo','soldadores.nombre','ot_soldadores.*')
+                                            ->first();
+
+                $obj->soldador2 = DB::table('soldadores')
+                                            ->join('ot_soldadores','ot_soldadores.soldadores_id','=','soldadores.id')  
+                                            ->where('ot_soldadores.id',$pasada_posicion->soldadorl_id)
+                                            ->select('soldadores.codigo','soldadores.nombre','ot_soldadores.*')
+                                            ->first();
+                $obj->soldador2 =   $obj->soldador2 ? $obj->soldador2 : "";    
+
+                $obj->soldador3 = DB::table('soldadores')
+                                            ->join('ot_soldadores','ot_soldadores.soldadores_id','=','soldadores.id')  
+                                            ->where('ot_soldadores.id',$pasada_posicion->soldadorp_id)
+                                            ->select('soldadores.codigo','soldadores.nombre','ot_soldadores.*')
+                                            ->first();
+                $obj->soldador3 = $obj->soldador3 ? $obj->soldador3 : "";    
 
                 array_push($pasadas,$obj);
              }

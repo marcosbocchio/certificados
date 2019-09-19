@@ -164,8 +164,8 @@ class OtsRepository extends BaseRepository
   public function setOperarios($ot){
 
     $ot_operario = OtOperarios::where('ot_id',$ot->id)
-    ->where('user_id',$ot->responsable_ot_id)
-    ->first();
+                              ->where('user_id',$ot->responsable_ot_id)
+                              ->first();
 
     if($ot_operario == null) {
         

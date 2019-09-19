@@ -145,6 +145,7 @@ export default {
      },
 
     methods :{
+        
     openNuevoRegistro : function(){
 
             this.editmode = false;

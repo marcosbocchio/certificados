@@ -29,7 +29,7 @@ class StorageController extends Controller
       if ($request->hasFile('documento')){
 
       
-          $path = Storage::disk('public')->put('documentaciones',$request->file('documento'));  
+          $path = Storage::disk('public')->putFile('documentaciones',$request->file('documento'));  
     
         return $path;
       }

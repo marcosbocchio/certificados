@@ -123,7 +123,7 @@ class DocumentacionesController extends Controller
         $document = Documentaciones::where('id' , $id)
                                      ->where('tipo','INSTITUCIONAL')
                                      ->firstOrFail();
-        $path = storage_path('app/'. $document->path);
+        $path = public_path($document->path);
         return response()->file($path);
 
     }
@@ -135,7 +135,7 @@ class DocumentacionesController extends Controller
                                      ->where('tipo','USUARIO')
                                      ->firstOrFail();   
 
-        $path = storage_path('app/'. $document->path);    
+        $path = public_path($document->path);    
         return response()->file($path);
        
     }
