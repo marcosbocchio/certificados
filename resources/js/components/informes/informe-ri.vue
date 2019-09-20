@@ -523,7 +523,12 @@
                 </div>                 
                
                   <button class="btn btn-primary" type="submit">Guardar</button>   
-           </form>    
+           </form>          
+         
+                <loading :active.sync="isLoading"           
+                        :is-full-page="fullPage">
+                </loading>  
+          
        </div>
    </div>
 </template>
@@ -534,11 +539,14 @@ import uniq from 'lodash/uniq';
 import Datepicker from 'vuejs-datepicker';
 import {mapState} from 'vuex';
 import {en, es} from 'vuejs-datepicker/dist/locale'
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 export default {
 
     components: {
 
-      Datepicker
+      Datepicker,
+        Loading
       
     },
 
@@ -641,7 +649,9 @@ export default {
 
         errors:[],
             en: en,
-            es: es,          
+            es: es, 
+            isLoading: false,
+            fullPage: false,         
 
            // Formulario encabezado
 
@@ -739,7 +749,8 @@ export default {
     }},
 
     created : function(){       
-      
+        
+        this.isLoading =  true;
         this.getProcedimientos();
         this.getMateriales();
         this.getDiametros();
@@ -1044,10 +1055,12 @@ export default {
         //detalle
         getTipoSoldaduras : function(){
 
-                 axios.defaults.baseURL = this.url ;
+                axios.defaults.baseURL = this.url ;
                 var urlRegistros = 'tipo_soldaduras' + '?api_token=' + Laravel.user.api_token;        
                 axios.get(urlRegistros).then(response =>{
                 this.tipo_soldaduras = response.data
+                this.isLoading =  false;
+
                 });           
              
         },
@@ -1458,5 +1471,6 @@ table .selected{
     font-weight: bold;
     color : #6E6A6A;
 }
+
 }
 </style>

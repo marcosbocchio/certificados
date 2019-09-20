@@ -171,8 +171,19 @@ export default {
 
         uploadPercentage : function(val){
 
-            this.subioArchivo = (val == 100 ) ? true : false;
-                
+            let cambio = false;    
+             this.subioArchivo = (val == 100 ) ? true : false;
+            
+            if (cambio){
+
+                setTimeout(() => {
+                  this.subioArchivo = true
+                },500)
+            }else {
+
+               this.subioArchivo = false
+
+            }
         }
     },
        
