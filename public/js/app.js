@@ -3658,6 +3658,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3706,7 +3713,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       },
       usuarios: [],
       selectedFile: null,
-      subioArchivo: false,
+      HabilitarGuardar: true,
       options: {
         layout: {
           height: 20,
@@ -3765,6 +3772,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     onFileSelected: function onFileSelected(event) {
       this.isLoading_file = true;
+      this.HabilitarGuardar = false;
       this.selectedFile = event.target.files[0];
 
       if (this.selectedFile.size > 1024 * 1024) {
@@ -3782,7 +3790,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     onUpload: function onUpload() {
       var _this3 = this;
 
-      this.subioArchivo = false;
+      this.HabilitarGuardar = false;
       var settings = {
         headers: {
           'content-type': 'multipart/form-data'
@@ -3799,11 +3807,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       axios.post(url, fd, settings).then(function (response) {
         _this3.newRegistro.path = response.data;
         _this3.isLoading_file = false;
-        _this3.subioArchivo = true;
+        _this3.HabilitarGuardar = true;
       })["catch"](function (response) {
         _this3.errors = error.response.data.errors;
         _this3.isLoading_file = false;
-        _this3.subioArchivo = false;
+        _this3.HabilitarGuardar = true;
       });
     },
     getUsuarios: function getUsuarios() {
@@ -43717,34 +43725,49 @@ var render = function() {
                       ])
                     : _vm._e(),
                   _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("input", {
+                      ref: "inputFile1",
+                      staticClass: "form-control",
+                      attrs: { type: "file", id: "inputFile", name: "file" },
+                      on: {
+                        change: function($event) {
+                          return _vm.onFileSelected($event)
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "hide",
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.onUpload()
+                          }
+                        }
+                      },
+                      [_vm._v("upload")]
+                    )
+                  ]),
+                  _vm._v(" "),
                   _c(
                     "div",
                     { staticClass: "form-group" },
                     [
-                      _c("input", {
-                        ref: "inputFile1",
-                        staticClass: "form-control",
-                        attrs: { type: "file", id: "inputFile", name: "file" },
-                        on: {
-                          change: function($event) {
-                            return _vm.onFileSelected($event)
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "hide",
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.onUpload()
-                            }
-                          }
-                        },
-                        [_vm._v("upload")]
-                      ),
+                      _vm.newRegistro.path != ""
+                        ? _c("div", [
+                            _c("img", {
+                              staticClass: "margin imagen-documento",
+                              attrs: {
+                                src: "/" + _vm.newRegistro.path,
+                                alt: "...",
+                                width: "120"
+                              }
+                            })
+                          ])
+                        : _vm._e(),
                       _vm._v(" "),
                       _c("progress-bar", {
                         attrs: {
@@ -43763,7 +43786,7 @@ var render = function() {
                     attrs: {
                       type: "submit",
                       value: "Guardar",
-                      disabled: !_vm.subioArchivo
+                      disabled: !_vm.HabilitarGuardar
                     }
                   }),
                   _vm._v(" "),

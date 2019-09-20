@@ -2,9 +2,11 @@
 
 @section('contenido')
 
+
 <div id="app">
 
    <abm-doc  modelo= "documentaciones" ></abm-doc>
+
 
 </div>
 @endsection
@@ -14,6 +16,7 @@
 
 
 <script>
+
     window.Laravel = {!! json_encode([
         'csrfToken' => csrf_token(), 
         'user' => Auth::user()
@@ -23,6 +26,6 @@
     <script type="text/javascript" src="{{asset('adminlte/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('adminlte/plugins/timepicker/bootstrap-timepicker.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('js/app.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/lodash.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/lodash.js')}}"></script>  
 
 @endsection

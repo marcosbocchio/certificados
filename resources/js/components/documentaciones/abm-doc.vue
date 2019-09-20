@@ -62,15 +62,22 @@
                             </div>
                             <div class="form-group">                           
                                <input type="file" class="form-control" id="inputFile" ref="inputFile1" name="file" @change="onFileSelected($event)">
-                               <button class="hide" @click.prevent="onUpload()" >upload</button>  
+                               <button class="hide" @click.prevent="onUpload()" >upload</button>                            
+                            </div>   
+                             <div class="form-group">   
+                                   
+                                <div v-if="newRegistro.path != ''">                                 
+                                    <img :src="'/' + newRegistro.path" class="margin imagen-documento" alt="..." width="120" >
+                                </div>                                                           
+                              
                                <progress-bar
                                 :options="options"
                                 :value="uploadPercentage"
-                                />
-                            </div>                 
+                                /> 
+                             </div>                  
                         </div>
                         <div class="modal-footer">
-                            <input type="submit" class="btn btn-primary" value="Guardar" :disabled="!subioArchivo">
+                            <input type="submit" class="btn btn-primary" value="Guardar" :disabled="!HabilitarGuardar">
                             <button type="button" class="btn btn-default" name="button" data-dismiss="modal" >Cancelar</button>                      
                        
                         </div>
@@ -91,7 +98,6 @@
 </template>
 
 <script>
-
 
 import {mapState} from 'vuex'
 import Datepicker from 'vuejs-datepicker';
@@ -152,7 +158,7 @@ export default {
          },
          usuarios:[],
          selectedFile : null,     
-         subioArchivo : false, 
+         HabilitarGuardar : true, 
 
          options: {
             
@@ -229,6 +235,7 @@ export default {
     onFileSelected(event) {         
           
             this.isLoading_file = true;  
+            this.HabilitarGuardar = false;          
 
             this.selectedFile = event.target.files[0];
          
@@ -250,7 +257,7 @@ export default {
         },
         onUpload() {
 
-              this.subioArchivo = false          
+              this.HabilitarGuardar = false          
               let settings = { headers: { 'content-type': 'multipart/form-data' }, onUploadProgress: function( progressEvent ) {
                                                                                     this.uploadPercentage = parseInt( Math.round( ( progressEvent.loaded * 100 ) / progressEvent.total ) );
                                                                                     }.bind(this) }
@@ -266,11 +273,11 @@ export default {
                .then (response => {                                
                   this.newRegistro.path = response.data;      
                   this.isLoading_file = false   
-                  this.subioArchivo = true       
+                 this.HabilitarGuardar = true;        
                }).catch(response => {
                    this.errors = error.response.data.errors;
                    this.isLoading_file = false   
-                   this.subioArchivo = false          
+                   this.HabilitarGuardar = true;            
                 })
 
             },
@@ -390,5 +397,7 @@ export default {
             },
 }
 }
+
+
 </script>
 

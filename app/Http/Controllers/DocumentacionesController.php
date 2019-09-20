@@ -40,7 +40,7 @@ class DocumentacionesController extends Controller
                                 ->orWhere('documentaciones.tipo','USUARIO')
                                 ->orWhere('documentaciones.tipo','OT')
                                 ->orWhere('documentaciones.tipo','INSTITUCIONAL')
-                                ->select('documentaciones.*','usuario_documentaciones.fecha_caducidad')
+                                ->selectRaw('documentaciones.*,usuario_documentaciones.fecha_caducidad')
                                 ->get();  
         
         foreach ($documentaciones as $documentacion) {
