@@ -28,7 +28,7 @@ class DocumentacionesRequest extends FormRequest
             'tipo' =>'required',
             'titulo' =>'required | max:45',
             'descripcion' => 'max:50',
-            'usuario_id' => 'required',
+            'usuario.name' => 'required',
             'path' =>'required',
            
         ];
@@ -46,7 +46,7 @@ class DocumentacionesRequest extends FormRequest
     public function attributes()
     {
     return [
-        'usuario_id'   => 'usuario',   
+        'usuario.name'   => 'usuario',   
           ];
     }
 }

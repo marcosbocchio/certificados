@@ -10,6 +10,8 @@ use App\UsuarioDocumentaciones;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection as Collection;
+use App\MetodoEnsayos;
+use App\Users;
 
 
 
@@ -32,28 +34,36 @@ class DocumentacionesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        $documentaciones = DB::select('select   
-                                        documentaciones.id as id,
-                                        documentaciones.tipo as tipo,
-                                        documentaciones.titulo as titulo,
-                                        documentaciones.descripcion as descripcion,
-                                        documentaciones.path as path,
-                                        metodo_ensayos.metodo,
-                                        usuario_documentaciones.user_id as user_id,
-                                        documentaciones.metodo_ensayo_id as metodo_ensayo_id,
-                                        usuario_documentaciones.fecha_caducidad as fecha_caducidad,
-                                        users.name
-                                        
-                                        from
-                                        documentaciones left join usuario_documentaciones on                                
-                                        usuario_documentaciones.documentacion_id = documentaciones.id
-                                        left join users on users.id = usuario_documentaciones.user_id
-                                        left join metodo_ensayos on metodo_ensayos.id = documentaciones.metodo_ensayo_id
-                              ');
+    {   
+        $documentaciones = DB::table('documentaciones')
+                                ->leftJoin('usuario_documentaciones','usuario_documentaciones.documentacion_id','=','documentaciones.id')
+                                ->orWhere('documentaciones.tipo','USUARIO')
+                                ->orWhere('documentaciones.tipo','OT')
+                                ->orWhere('documentaciones.tipo','INSTITUCIONAL')
+                                ->select('documentaciones.*','usuario_documentaciones.fecha_caducidad')
+                                ->get();  
+        
+        foreach ($documentaciones as $documentacion) {
 
-        $documentaciones = Collection::make($documentaciones);
+            $metodo_ensayo = DB::table('documentaciones')
+                             ->leftJoin('metodo_ensayos','documentaciones.metodo_ensayo_id','=','metodo_ensayos.id')
+                             ->where('documentaciones.id',$documentacion->id)   
+                             ->select('metodo_ensayos.*')
+                             ->first();
 
+            $usuario = DB::table('documentaciones')
+                             ->leftJoin('usuario_documentaciones','usuario_documentaciones.documentacion_id','=','documentaciones.id')
+                             ->leftJoin('users','usuario_documentaciones.user_id','=','users.id')
+                             ->where('documentaciones.id',$documentacion->id)   
+                             ->select('users.*')
+                             ->first();  
+
+            $metodo_ensayo = $metodo_ensayo ? $metodo_ensayo : "";       
+            $usuario = $usuario ? $usuario : "";        
+            $documentacion->metodo_ensayo = $metodo_ensayo ;
+            $documentacion->usuario = $usuario ;
+        }               
+   
         return $documentaciones;
     }
 
@@ -216,9 +226,12 @@ class DocumentacionesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(DocumentacionesRequest $request, $id)
     {
-        //
+
+       return $this->documentaciones->updateDocumentacion($request,$id);
+   
+
     }
 
     /**

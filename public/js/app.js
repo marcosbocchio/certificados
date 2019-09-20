@@ -1784,7 +1784,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3654,6 +3653,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -3689,13 +3693,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       fullPage: false,
       isLoading_file: false,
       uploadPercentage: 0,
-      tipo_documentos: ['INSTITUCIONAL', 'OT', 'PROCEDIMIENTO', 'USUARIO'],
+      tipo_documentos: ['INSTITUCIONAL', 'OT', 'USUARIO'],
       en: vuejs_datepicker_dist_locale__WEBPACK_IMPORTED_MODULE_2__["en"],
       es: vuejs_datepicker_dist_locale__WEBPACK_IMPORTED_MODULE_2__["es"],
       errors: [],
       metodo_ensayos: [],
-      metodo_ensayo: {},
-      usuario: {},
+      metodo_ensayo: {
+        id: ''
+      },
+      usuario: {
+        id: ''
+      },
       usuarios: [],
       selectedFile: null,
       subioArchivo: false,
@@ -3713,22 +3721,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.getUsuarios();
     this.getMetodosEnsayos();
   },
-  watch: {
-    uploadPercentage: function uploadPercentage(val) {
-      var cambio = false;
-      /* 
-      cambio = (val == 100 ) ? true : false;
-      
-      if (cambio){
-            setTimeout(() => {
-            this.subioArchivo = true
-          },500)
-      }else {
-           this.subioArchivo = false
-        }
-      */
-    }
-  },
+  watch: {},
   computed: _objectSpread({
     setTablaComponente: function setTablaComponente() {
       return 'table-' + this.modelo;
@@ -3737,18 +3730,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   methods: {
     openNuevoRegistro: function openNuevoRegistro() {
       this.editmode = false;
-      this.newRegistro = {};
-      this.metodo_ensayo = {};
-      this.usuario = {};
-      this.selectedFile = null, $('#nuevo').modal('show');
+      this.uploadPercentage = 0;
+      this.newRegistro = {
+        tipo: '',
+        titulo: '',
+        descripcion: '',
+        path: '',
+        fecha_caducidad: ''
+      };
+      this.$refs.inputFile1.type = 'text';
+      this.$refs.inputFile1.type = 'file';
+      this.selectedFile = null;
+      $('#nuevo').modal('show');
     },
     getRegistros: function getRegistros() {
       var _this = this;
 
       this.isLoading = true;
       axios.defaults.baseURL = this.url;
-      var urlRegistros = this.modelo; //  console.log(urlRegistros);
-
+      var urlRegistros = this.modelo;
       axios.get(urlRegistros).then(function (response) {
         _this.registros = response.data;
         _this.isLoading = false;
@@ -3824,8 +3824,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         'tipo': this.newRegistro.tipo,
         'titulo': this.newRegistro.titulo,
         'descripcion': this.newRegistro.descripcion,
-        'usuario_id': this.usuario.id,
-        'metodo_ensayo_id': this.metodo_ensayo.id,
+        'usuario': this.usuario,
+        'metodo_ensayo': this.metodo_ensayo,
         'fecha_caducidad': this.newRegistro.fecha_caducidad,
         'path': this.newRegistro.path
       }).then(function (response) {
@@ -3836,10 +3836,49 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this5.getRegistros();
       })["catch"](function (error) {
         _this5.errors = error.response.data.errors;
+        console.log(error.response);
         $.each(_this5.errors, function (key, value) {
-          toastr.error(value, key);
+          toastr.error(value);
           console.log(key + ": " + value);
         });
+
+        if (typeof _this5.errors == 'undefined' && error) {
+          toastr.error("Ocurrió un error al procesar la solicitud");
+        }
+      });
+    },
+    updateRegistro: function updateRegistro() {
+      var _this6 = this;
+
+      axios.defaults.baseURL = this.url;
+      var urlRegistros = 'documentaciones/' + this.newRegistro.id;
+      axios.put(urlRegistros, {
+        'tipo': this.newRegistro.tipo,
+        'titulo': this.newRegistro.titulo,
+        'descripcion': this.newRegistro.descripcion,
+        'usuario': this.usuario,
+        'metodo_ensayo': this.metodo_ensayo,
+        'fecha_caducidad': this.newRegistro.fecha_caducidad,
+        'path': this.newRegistro.path
+      }).then(function (response) {
+        _this6.errors = [];
+        $('#nuevo').modal('hide');
+        _this6.newRegistro = {}, toastr.success('Nuevo registro creado con éxito');
+
+        _this6.getRegistros();
+
+        console.log(response);
+      })["catch"](function (error) {
+        _this6.errors = error.response.data.errors;
+        console.log(error.response);
+        $.each(_this6.errors, function (key, value) {
+          toastr.error(value);
+          console.log(key + ": " + value);
+        });
+
+        if (typeof _this6.errors == 'undefined' && error) {
+          toastr.error("Ocurrió un error al procesar la solicitud");
+        }
       });
     },
     confirmDeleteRegistro: function confirmDeleteRegistro(registro, dato) {
@@ -3853,6 +3892,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.metodo_ensayo = {};
       this.usuario = {};
       this.selectedFile = null, $('#nuevo').modal('show');
+      this.metodo_ensayo = registro.metodo_ensayo;
+      this.usuario = registro.usuario;
       this.newRegistro = registro;
     }
   }
@@ -41576,17 +41617,17 @@ var render = function() {
               return _c("tr", { key: registro.id }, [
                 registro.tipo == "USUARIO"
                   ? _c("div", [_c("td", [_vm._v("USUARIOS")])])
-                  : registro.tipo == "PROCEDIMIENTO"
-                  ? _c("div", [_c("td", [_vm._v("PROCEDIMIENTOS")])])
+                  : registro.tipo == "OT"
+                  ? _c("div", [_c("td", [_vm._v("OT")])])
                   : _c("div", [_c("td", [_vm._v("INSTITUCIONAL")])]),
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(registro.titulo))]),
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(registro.descripcion))]),
                 _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(registro.metodo))]),
+                _c("td", [_vm._v(_vm._s(registro.metodo_ensayo["metodo"]))]),
                 _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(registro.name))]),
+                _c("td", [_vm._v(_vm._s(registro.usuario["name"]))]),
                 _vm._v(" "),
                 _c("td", { attrs: { width: "10px" } }, [
                   _c(
@@ -43478,7 +43519,28 @@ var render = function() {
           _c("div", { staticClass: "modal fade", attrs: { id: "nuevo" } }, [
             _c("div", { staticClass: "modal-dialog" }, [
               _c("div", { staticClass: "modal-content" }, [
-                _vm._m(0),
+                _c("div", { staticClass: "modal-header" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "close",
+                      attrs: { type: "button", "data-dismiss": "modal" }
+                    },
+                    [_vm._v("×")]
+                  ),
+                  _vm._v(" "),
+                  _vm.editmode
+                    ? _c("div", [
+                        _c("h4", { staticClass: "modal-title" }, [
+                          _vm._v("Editar")
+                        ])
+                      ])
+                    : _c("div", [
+                        _c("h4", { staticClass: "modal-title" }, [
+                          _vm._v("Crear")
+                        ])
+                      ])
+                ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "modal-body" }, [
                   _c(
@@ -43589,8 +43651,7 @@ var render = function() {
                       ])
                     : _vm._e(),
                   _vm._v(" "),
-                  _vm.newRegistro.tipo == "USUARIO" ||
-                  _vm.newRegistro.tipo == "PROCEDIMIENTO"
+                  _vm.newRegistro.tipo == "USUARIO"
                     ? _c("div", [
                         _c(
                           "div",
@@ -43630,7 +43691,7 @@ var render = function() {
                             "div",
                             { staticClass: "input-group date" },
                             [
-                              _vm._m(1),
+                              _vm._m(0),
                               _vm._v(" "),
                               _c("Datepicker", {
                                 attrs: {
@@ -43738,23 +43799,6 @@ var render = function() {
   )
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c(
-        "button",
-        {
-          staticClass: "close",
-          attrs: { type: "button", "data-dismiss": "modal" }
-        },
-        [_vm._v("×")]
-      ),
-      _vm._v(" "),
-      _c("h4", { staticClass: "modal-title" }, [_vm._v("Crear")])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

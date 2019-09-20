@@ -2,14 +2,13 @@
 <div>
     <div class="col-sm-10">
         <a href="#" class="btn btn-primary pull-right" v-on:click.prevent="openNuevoRegistro()" >Nuevo</a>
-    </div>
-    
-      <div class="col-sm-10">
-          <component :is= setTablaComponente :registros="registros"  @confirmarDelete="confirmDeleteRegistro" @editRegistroEvent="editRegistro"/>               
-          <delete-registro :datoDelete="datoDelete" :fillRegistro="fillRegistro" @close-modal="getRegistros" :modelo="modelo"></delete-registro>  
-          <component :is= setNuevoComponente @store="getRegistros"/>
-          <component :is= setEditarComponente :registro_id="registro_id" @store="getRegistros"/>      
-      </div> 
+    </div>    
+    <div class="col-sm-10">
+        <component :is= setTablaComponente :registros="registros"  @confirmarDelete="confirmDeleteRegistro" @editRegistroEvent="editRegistro"/>               
+        <delete-registro :datoDelete="datoDelete" :fillRegistro="fillRegistro" @close-modal="getRegistros" :modelo="modelo"></delete-registro>  
+        <component :is= setNuevoComponente @store="getRegistros"/>
+        <component :is= setEditarComponente :registro_id="registro_id" @store="getRegistros"/>      
+    </div> 
 
 </div> 
 </template>

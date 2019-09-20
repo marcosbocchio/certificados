@@ -17,7 +17,12 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Crear</h4>
+                           <div v-if="editmode">
+                                <h4 class="modal-title">Editar</h4>
+                            </div>
+                            <div v-else>
+                                 <h4 class="modal-title">Crear</h4>
+                            </div>
                         </div>
                         <div class="modal-body">
                            <div class="form-group">
@@ -38,7 +43,7 @@
                                     <v-select v-model="usuario" label="name" :options="usuarios"></v-select>
                                 </div>
                             </div>
-                            <div v-if="newRegistro.tipo == 'USUARIO' || newRegistro.tipo == 'PROCEDIMIENTO'">
+                            <div v-if="newRegistro.tipo == 'USUARIO'">
                                 <div class="form-group">
                                     <label for="name">Método de Ensayo</label>
                                     <v-select v-model="metodo_ensayo" label="metodo" :options="metodo_ensayos"></v-select>
@@ -94,7 +99,6 @@ import {en, es} from 'vuejs-datepicker/dist/locale'
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 
-
 export default {
     name: 'abm-doc',
       props : {         
@@ -121,10 +125,9 @@ export default {
             titulo: '',
             descripcion  : '',
             path : '',            
-            fecha_caducidad:'',   
-
-            
+            fecha_caducidad:'',               
          },   
+
          isLoading: false,
          fullPage: false,
          isLoading_file: false,     
@@ -134,7 +137,6 @@ export default {
                           
             'INSTITUCIONAL',
             'OT',              
-            'PROCEDIMIENTO',
             'USUARIO'           
          ], 
          en: en,
@@ -142,8 +144,12 @@ export default {
       
          errors:[],
          metodo_ensayos:[],
-         metodo_ensayo :{},
-         usuario :{},
+         metodo_ensayo :{
+             id:'',
+         },
+         usuario :{
+              id:'',
+         },
          usuarios:[],
          selectedFile : null,     
          subioArchivo : false, 
@@ -168,25 +174,7 @@ export default {
       },
 
       watch : {
-
-        uploadPercentage : function(val){
-
-            let cambio = false;   
-            /* 
-            cambio = (val == 100 ) ? true : false;
-            
-            if (cambio){
-
-                setTimeout(() => {
-                  this.subioArchivo = true
-                },500)
-            }else {
-
-               this.subioArchivo = false
-
-            }
-           */
-        }
+    
     },
        
     computed :{
@@ -201,25 +189,31 @@ export default {
 
     methods :{
         
-    openNuevoRegistro : function(){
-
-            this.editmode = false;
-            this.newRegistro = {};    
-            this.metodo_ensayo={};   
-            this.usuario ={};
-            this.selectedFile =  null,   
-             $('#nuevo').modal('show');    
+    openNuevoRegistro : function(){      
+            
+           this.editmode = false; 
+           this.uploadPercentage = 0;          
+           this.newRegistro = {  
+                tipo :'',          
+                titulo: '',
+                descripcion  : '',
+                path : '',            
+                fecha_caducidad:'',               
+                };
+           this.$refs.inputFile1.type = 'text';
+           this.$refs.inputFile1.type = 'file';  
+           this.selectedFile =  null    
+           $('#nuevo').modal('show');    
            }, 
 
     getRegistros : function(){
 
         this.isLoading = true;
         axios.defaults.baseURL = this.url ;
-        var urlRegistros = this.modelo;   
-      //  console.log(urlRegistros);
+        var urlRegistros = this.modelo;      
         axios.get(urlRegistros).then(response =>{
-        this.registros = response.data;
-         this.isLoading = false;
+            this.registros = response.data;
+            this.isLoading = false;
         });
         },
 
@@ -232,8 +226,7 @@ export default {
         });
         },
 
-    onFileSelected(event) {
-         
+    onFileSelected(event) {         
           
             this.isLoading_file = true;  
 
@@ -252,10 +245,7 @@ export default {
 
                 this.onUpload();   
 
-            }
-
-           
-          
+            } 
          
         },
         onUpload() {
@@ -304,8 +294,8 @@ export default {
             'tipo'               : this.newRegistro.tipo,
             'titulo'             : this.newRegistro.titulo,
             'descripcion'        : this.newRegistro.descripcion,
-            'usuario_id'         : this.usuario.id, 
-            'metodo_ensayo_id'   : this.metodo_ensayo.id,
+            'usuario'            : this.usuario,         
+            'metodo_ensayo'      : this.metodo_ensayo,   
             'fecha_caducidad'    : this.newRegistro.fecha_caducidad,
             'path'               : this.newRegistro.path      
                 
@@ -317,20 +307,67 @@ export default {
                 toastr.success('Nuevo registro creado con éxito');  
                 this.getRegistros();              
                 
-            }).catch(error => {
+             }).catch(error => {
                
-                this.errors = error.response.data.errors;
+               this.errors = error.response.data.errors;
+                console.log(error.response);
+               $.each( this.errors, function( key, value ) {
+                   toastr.error(value);
+                   console.log( key + ": " + value );
+               });
+
+               if((typeof(this.errors)=='undefined') && (error)){
+
+                     toastr.error("Ocurrió un error al procesar la solicitud");                     
+                  
+                }
+
+           });  
+        },   
+        
+    updateRegistro: function(){
+
+            axios.defaults.baseURL = this.url ;
+            var urlRegistros = 'documentaciones/' + this.newRegistro.id;                  
+            axios.put(urlRegistros, {   
+                
+            'tipo'               : this.newRegistro.tipo,
+            'titulo'             : this.newRegistro.titulo,
+            'descripcion'        : this.newRegistro.descripcion,
+            'usuario'            : this.usuario,         
+            'metodo_ensayo'      : this.metodo_ensayo,   
+            'fecha_caducidad'    : this.newRegistro.fecha_caducidad,
+            'path'               : this.newRegistro.path      
+                
+
+            }).then(response => {              
+                this.errors=[];
+                $('#nuevo').modal('hide');
+                this.newRegistro = {},               
+                toastr.success('Nuevo registro creado con éxito');  
+                this.getRegistros();              
+                 console.log(response);
+                
+             }).catch(error => {
                
-                $.each( this.errors, function( key, value ) {
-                    toastr.error(value,key);
-                    console.log( key + ": " + value );
-                });
+               this.errors = error.response.data.errors;
+                console.log(error.response);
+               $.each( this.errors, function( key, value ) {
+                   toastr.error(value);
+                   console.log( key + ": " + value );
+               });
 
-            });
+               if((typeof(this.errors)=='undefined') && (error)){
 
-        },  
-    
+                     toastr.error("Ocurrió un error al procesar la solicitud");                     
+                  
+                }
 
+           });  
+
+
+
+    },
 
     confirmDeleteRegistro: function(registro,dato){            
               this.fillRegistro.id = registro.id;
@@ -346,6 +383,8 @@ export default {
                 this.usuario ={};
                 this.selectedFile =  null,      
                 $('#nuevo').modal('show');  
+                this.metodo_ensayo = registro.metodo_ensayo;
+                this.usuario = registro.usuario;                
                 this.newRegistro = registro;                   
                     
             },

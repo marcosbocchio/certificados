@@ -15,7 +15,7 @@ class CreateDocumentacionesTable extends Migration
     {
         Schema::create('documentaciones', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->enum('tipo',['INSTITUCIONAL','PROCEDIMIENTO','USUARIO'])
+            $table->enum('tipo',['INSTITUCIONAL','PROCEDIMIENTO','USUARIO','OT'])
             ->comment('I = Institucional
             P = Procedimientos 
             U = Usuario');

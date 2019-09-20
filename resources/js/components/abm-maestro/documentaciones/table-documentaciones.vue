@@ -18,8 +18,8 @@
             <div v-if="registro.tipo == 'USUARIO'">
                 <td>USUARIOS</td>
             </div>
-            <div v-else-if="registro.tipo == 'PROCEDIMIENTO'">
-              <td>PROCEDIMIENTOS</td>
+            <div v-else-if="registro.tipo == 'OT'">
+              <td>OT</td>
             </div>
             <div v-else>
               <td>INSTITUCIONAL</td>
@@ -27,8 +27,8 @@
            
             <td>{{ registro.titulo}}</td>
             <td>{{ registro.descripcion }}</td>
-            <td>{{ registro.metodo}}</td>
-             <td>{{ registro.name}}</td>
+            <td>{{ registro.metodo_ensayo['metodo']}}</td>
+             <td>{{ registro.usuario['name']}}</td>
             <td width="10px">
               <a href="#" class="btn btn-warning btn-sm" title="Editar" v-on:click.prevent="$emit('editRegistroEvent',registro)"><span class="fa fa-edit"></span></a>  
             </td>
