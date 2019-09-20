@@ -172,7 +172,7 @@ export default {
         uploadPercentage : function(val){
 
             let cambio = false;    
-             this.subioArchivo = (val == 100 ) ? true : false;
+            cambio = (val == 100 ) ? true : false;
             
             if (cambio){
 

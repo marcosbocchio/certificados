@@ -3718,7 +3718,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this = this;
 
       var cambio = false;
-      this.subioArchivo = val == 100 ? true : false;
+      cambio = val == 100 ? true : false;
 
       if (cambio) {
         setTimeout(function () {
