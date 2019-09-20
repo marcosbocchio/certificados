@@ -3715,18 +3715,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   watch: {
     uploadPercentage: function uploadPercentage(val) {
-      var _this = this;
-
       var cambio = false;
-      cambio = val == 100 ? true : false;
-
-      if (cambio) {
-        setTimeout(function () {
-          _this.subioArchivo = true;
-        }, 500);
-      } else {
-        this.subioArchivo = false;
-      }
+      /* 
+      cambio = (val == 100 ) ? true : false;
+      
+      if (cambio){
+            setTimeout(() => {
+            this.subioArchivo = true
+          },500)
+      }else {
+           this.subioArchivo = false
+        }
+      */
     }
   },
   computed: _objectSpread({
@@ -3743,24 +3743,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.selectedFile = null, $('#nuevo').modal('show');
     },
     getRegistros: function getRegistros() {
-      var _this2 = this;
+      var _this = this;
 
       this.isLoading = true;
       axios.defaults.baseURL = this.url;
       var urlRegistros = this.modelo; //  console.log(urlRegistros);
 
       axios.get(urlRegistros).then(function (response) {
-        _this2.registros = response.data;
-        _this2.isLoading = false;
+        _this.registros = response.data;
+        _this.isLoading = false;
       });
     },
     getMetodosEnsayos: function getMetodosEnsayos() {
-      var _this3 = this;
+      var _this2 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'metodo_ensayos' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this3.metodo_ensayos = response.data;
+        _this2.metodo_ensayos = response.data;
       });
     },
     onFileSelected: function onFileSelected(event) {
@@ -3780,9 +3780,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     onUpload: function onUpload() {
-      var _this4 = this;
+      var _this3 = this;
 
-      console.log('entro en onupload');
+      this.subioArchivo = false;
       var settings = {
         headers: {
           'content-type': 'multipart/form-data'
@@ -3797,24 +3797,26 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var url = 'storage/documento';
       console.log(fd);
       axios.post(url, fd, settings).then(function (response) {
-        _this4.newRegistro.path = response.data;
-        _this4.isLoading_file = false;
+        _this3.newRegistro.path = response.data;
+        _this3.isLoading_file = false;
+        _this3.subioArchivo = true;
       })["catch"](function (response) {
-        _this4.errors = error.response.data.errors;
-        _this4.isLoading_file = false;
+        _this3.errors = error.response.data.errors;
+        _this3.isLoading_file = false;
+        _this3.subioArchivo = false;
       });
     },
     getUsuarios: function getUsuarios() {
-      var _this5 = this;
+      var _this4 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'users' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this5.usuarios = response.data;
+        _this4.usuarios = response.data;
       });
     },
     storeRegistro: function storeRegistro() {
-      var _this6 = this;
+      var _this5 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'documentaciones';
@@ -3827,14 +3829,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         'fecha_caducidad': this.newRegistro.fecha_caducidad,
         'path': this.newRegistro.path
       }).then(function (response) {
-        _this6.errors = [];
+        _this5.errors = [];
         $('#nuevo').modal('hide');
-        _this6.newRegistro = {}, toastr.success('Nuevo registro creado con éxito');
+        _this5.newRegistro = {}, toastr.success('Nuevo registro creado con éxito');
 
-        _this6.getRegistros();
+        _this5.getRegistros();
       })["catch"](function (error) {
-        _this6.errors = error.response.data.errors;
-        $.each(_this6.errors, function (key, value) {
+        _this5.errors = error.response.data.errors;
+        $.each(_this5.errors, function (key, value) {
           toastr.error(value, key);
           console.log(key + ": " + value);
         });

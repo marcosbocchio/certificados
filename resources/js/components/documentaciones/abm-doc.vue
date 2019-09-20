@@ -171,7 +171,8 @@ export default {
 
         uploadPercentage : function(val){
 
-            let cambio = false;    
+            let cambio = false;   
+            /* 
             cambio = (val == 100 ) ? true : false;
             
             if (cambio){
@@ -184,6 +185,7 @@ export default {
                this.subioArchivo = false
 
             }
+           */
         }
     },
        
@@ -233,7 +235,8 @@ export default {
     onFileSelected(event) {
          
           
-            this.isLoading_file = true;          
+            this.isLoading_file = true;  
+
             this.selectedFile = event.target.files[0];
          
             if(this.selectedFile.size > 1024 * 1024){
@@ -256,7 +259,8 @@ export default {
          
         },
         onUpload() {
-              console.log('entro en onupload')   ;
+
+              this.subioArchivo = false          
               let settings = { headers: { 'content-type': 'multipart/form-data' }, onUploadProgress: function( progressEvent ) {
                                                                                     this.uploadPercentage = parseInt( Math.round( ( progressEvent.loaded * 100 ) / progressEvent.total ) );
                                                                                     }.bind(this) }
@@ -271,10 +275,12 @@ export default {
                axios.post(url,fd,settings)
                .then (response => {                                
                   this.newRegistro.path = response.data;      
-                    this.isLoading_file = false          
+                  this.isLoading_file = false   
+                  this.subioArchivo = true       
                }).catch(response => {
                    this.errors = error.response.data.errors;
-                    this.isLoading_file = false      
+                   this.isLoading_file = false   
+                   this.subioArchivo = false          
                 })
 
             },
