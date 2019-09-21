@@ -43295,7 +43295,7 @@ var render = function() {
               _c("label", [_vm._v("Soldadores")]),
               _vm._v(" "),
               _c("v-select", {
-                attrs: { options: _vm.soldadores, label: "nombre" },
+                attrs: { options: _vm.soldadores, label: "codigo" },
                 scopedSlots: _vm._u([
                   {
                     key: "option",
@@ -46834,7 +46834,7 @@ var render = function() {
                     _c("v-select", {
                       attrs: {
                         options: _vm.soldadores,
-                        label: "nombre",
+                        label: "codigo",
                         disabled: !_vm.TablaDetalle.length
                       },
                       scopedSlots: _vm._u([
@@ -46876,7 +46876,7 @@ var render = function() {
                     _c("v-select", {
                       attrs: {
                         options: _vm.soldadores,
-                        label: "nombre",
+                        label: "codigo",
                         disabled:
                           !_vm.isGasoducto ||
                           _vm.pasada != "1" ||
@@ -46921,7 +46921,7 @@ var render = function() {
                     _c("v-select", {
                       attrs: {
                         options: _vm.soldadores,
-                        label: "nombre",
+                        label: "codigo",
                         disabled: !_vm.TablaDetalle.length
                       },
                       scopedSlots: _vm._u([
@@ -47009,19 +47009,19 @@ var render = function() {
                                   _vm._v(" "),
                                   _c("td", [
                                     _vm._v(
-                                      _vm._s(Pasada.soldador1.nombre) + " "
+                                      _vm._s(Pasada.soldador1.codigo) + " "
                                     )
                                   ]),
                                   _vm._v(" "),
                                   _c("td", [
                                     _vm._v(
-                                      _vm._s(Pasada.soldador2.nombre) + " "
+                                      _vm._s(Pasada.soldador2.codigo) + " "
                                     )
                                   ]),
                                   _vm._v(" "),
                                   _c("td", [
                                     _vm._v(
-                                      _vm._s(Pasada.soldador3.nombre) + " "
+                                      _vm._s(Pasada.soldador3.codigo) + " "
                                     )
                                   ]),
                                   _vm._v(" "),

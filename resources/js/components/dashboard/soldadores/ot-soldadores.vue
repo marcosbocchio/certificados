@@ -19,7 +19,7 @@
                 <div class="box-body">  
                     <div class="form-group">
                         <label>Soldadores</label>           
-                        <v-select v-model="soldador" :options="soldadores" label="nombre">
+                        <v-select v-model="soldador" :options="soldadores" label="codigo">
                             <template slot="option" slot-scope="option">
                                 <span class="upSelect">{{ option.nombre }} </span> <br> 
                                 <span class="downSelect"> {{ option.codigo }} </span>

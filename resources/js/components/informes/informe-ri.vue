@@ -449,7 +449,7 @@
                     </div>
                     <div class="col-md-2">                        
                         <label>Cunio Z</label>           
-                        <v-select v-model="soldador1" :options="soldadores" label="nombre" :disabled="(!TablaDetalle.length)">
+                        <v-select v-model="soldador1" :options="soldadores" label="codigo" :disabled="(!TablaDetalle.length)">
                             <template slot="option" slot-scope="option">
                                 <span class="upSelect">{{ option.nombre }} </span> <br> 
                                 <span class="downSelect"> {{ option.codigo }} </span>
@@ -458,7 +458,7 @@
                     </div> 
                     <div class="col-md-2">                         
                         <label>Cunio L</label>           
-                        <v-select v-model="soldador2" :options="soldadores" label="nombre" :disabled="(!isGasoducto || pasada!='1' || !TablaDetalle.length)">
+                        <v-select v-model="soldador2" :options="soldadores" label="codigo" :disabled="(!isGasoducto || pasada!='1' || !TablaDetalle.length)">
                             <template slot="option" slot-scope="option">
                                 <span class="upSelect">{{ option.nombre }} </span> <br> 
                                 <span class="downSelect"> {{ option.codigo }} </span>
@@ -468,7 +468,7 @@
 
                     <div class="col-md-2">                         
                         <label>Cunio P</label>           
-                        <v-select v-model="soldador3" :options="soldadores" label="nombre" :disabled="(!TablaDetalle.length)">
+                        <v-select v-model="soldador3" :options="soldadores" label="codigo" :disabled="(!TablaDetalle.length)">
                             <template slot="option" slot-scope="option">
                                 <span class="upSelect">{{ option.nombre }} </span> <br> 
                                 <span class="downSelect"> {{ option.codigo }} </span>
@@ -498,9 +498,9 @@
                                         <tbody>
                                             <tr v-for="(Pasada,k) in  ((TablaDetalle.length > 0) ? TablaDetalle[indexDetalle].pasadas : [])" :key="k" @click="selectPosPasada(k)" :class="{selected: indexPasada === k}">                                         
                                                 <td>{{ Pasada.pasada }}</td>                                            
-                                                <td>{{ Pasada.soldador1.nombre }} </td>
-                                                <td>{{ Pasada.soldador2.nombre }} </td>
-                                                <td>{{ Pasada.soldador3.nombre }} </td>                                          
+                                                <td>{{ Pasada.soldador1.codigo }} </td>
+                                                <td>{{ Pasada.soldador2.codigo }} </td>
+                                                <td>{{ Pasada.soldador3.codigo }} </td>                                          
                                                 <td> 
                                                     <a  @click="RemovePasada(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a>
                                                 </td>          
