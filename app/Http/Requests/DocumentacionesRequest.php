@@ -30,6 +30,7 @@ class DocumentacionesRequest extends FormRequest
             'descripcion' => 'max:50',
             'usuario.name' => 'required',
             'path' =>'required',
+            'fecha_caducidad' =>'required',
            
         ];
         }
@@ -47,6 +48,7 @@ class DocumentacionesRequest extends FormRequest
     {
     return [
         'usuario.name'   => 'usuario',   
+        'fecha_caducidad'   => 'fecha caducidad',   
           ];
     }
 }

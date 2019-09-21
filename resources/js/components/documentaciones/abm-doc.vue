@@ -26,20 +26,20 @@
                         </div>
                         <div class="modal-body">
                            <div class="form-group">
-                                <label>Tipo Documento</label>
+                                <label>Tipo Documento (*)</label>
                                 <v-select v-model="newRegistro.tipo" label="tipo" :options="tipo_documentos"></v-select>   
                             </div>      
                             <div class="form-group">
-                                <label for="name">Título</label>
+                                <label for="name">Título (*)</label>
                                 <input type="text" name="titulo" class="form-control" v-model="newRegistro.titulo" value="">               
                             </div>  
                             <div class="form-group">
-                                <label for="name">Descripción</label>
+                                <label for="name">Descripción (*)</label>
                                 <input type="text" name="descripcion" class="form-control" v-model="newRegistro.descripcion" value="">  
                             </div>
                             <div v-if="newRegistro.tipo == 'USUARIO'">
                                 <div class="form-group">
-                                    <label for="name">Usuario</label>
+                                    <label for="name">Usuario (*)</label>
                                     <v-select v-model="usuario" label="name" :options="usuarios"></v-select>
                                 </div>
                             </div>
@@ -51,7 +51,7 @@
                             </div>    
                             <div v-if="newRegistro.tipo == 'USUARIO'">
                                 <div class="form-group">
-                                    <label for="fecha">Fecha</label>
+                                    <label for="fecha">Fecha (*)</label>
                                     <div class="input-group date">
                                         <div class="input-group-addon">
                                         <i class="fa fa-calendar"></i>

@@ -45915,7 +45915,7 @@ var render = function() {
                     "div",
                     { staticClass: "form-group" },
                     [
-                      _c("label", [_vm._v("Tipo Documento")]),
+                      _c("label", [_vm._v("Tipo Documento (*)")]),
                       _vm._v(" "),
                       _c("v-select", {
                         attrs: { label: "tipo", options: _vm.tipo_documentos },
@@ -45932,7 +45932,9 @@ var render = function() {
                   ),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "name" } }, [_vm._v("Título")]),
+                    _c("label", { attrs: { for: "name" } }, [
+                      _vm._v("Título (*)")
+                    ]),
                     _vm._v(" "),
                     _c("input", {
                       directives: [
@@ -45963,7 +45965,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group" }, [
                     _c("label", { attrs: { for: "name" } }, [
-                      _vm._v("Descripción")
+                      _vm._v("Descripción (*)")
                     ]),
                     _vm._v(" "),
                     _c("input", {
@@ -46000,7 +46002,7 @@ var render = function() {
                           { staticClass: "form-group" },
                           [
                             _c("label", { attrs: { for: "name" } }, [
-                              _vm._v("Usuario")
+                              _vm._v("Usuario (*)")
                             ]),
                             _vm._v(" "),
                             _c("v-select", {
@@ -46052,7 +46054,7 @@ var render = function() {
                     ? _c("div", [
                         _c("div", { staticClass: "form-group" }, [
                           _c("label", { attrs: { for: "fecha" } }, [
-                            _vm._v("Fecha")
+                            _vm._v("Fecha (*)")
                           ]),
                           _vm._v(" "),
                           _c(
