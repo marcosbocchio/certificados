@@ -67,7 +67,7 @@
                              <div class="form-group">   
                                    
                                 <div v-if="newRegistro.path != ''">                                 
-                                  <img :src="'/' + newRegistro.path" class="margin imagen-documento"  @click="openGallery()" alt="..." width="120" >
+                                  <img :src="'/' + newRegistro.path" class="margin zoom-in"  @click="openGallery()" alt="..." width="120" >
                                   <LightBox :images="images"  ref="lightbox"  :show-light-box="false" ></LightBox>
                                 </div>                                                           
                               
@@ -430,3 +430,8 @@ export default {
 
 </script>
 
+<style>
+
+.zoom-in {cursor: zoom-in;}
+
+</style>
