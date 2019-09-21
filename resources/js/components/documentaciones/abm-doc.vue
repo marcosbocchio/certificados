@@ -302,7 +302,9 @@ export default {
                .then (response => {                                
                   this.newRegistro.path = response.data;      
                   this.isLoading_file = false   
-                 this.HabilitarGuardar = true;        
+                  this.HabilitarGuardar = true;   
+                  this.images[0].src ='/' + response.data;
+                  this.images[0].thumb  ='/' + response.data;     
                }).catch(response => {
                    this.errors = error.response.data.errors;
                    this.isLoading_file = false   

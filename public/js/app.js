@@ -4014,6 +4014,8 @@ __webpack_require__(/*! vue-image-lightbox/dist/vue-image-lightbox.min.css */ ".
         _this3.newRegistro.path = response.data;
         _this3.isLoading_file = false;
         _this3.HabilitarGuardar = true;
+        _this3.images[0].src = '/' + response.data;
+        _this3.images[0].thumb = '/' + response.data;
       })["catch"](function (response) {
         _this3.errors = error.response.data.errors;
         _this3.isLoading_file = false;
