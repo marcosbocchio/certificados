@@ -49,6 +49,14 @@ class DocumentacionesRequest extends FormRequest
     return [
         'usuario.name'   => 'usuario',   
         'fecha_caducidad'   => 'fecha caducidad',   
+       
           ];
     }
+
+    public function messages()
+{
+    return [
+        'path.required' =>'No hay archivo seleccionado'
+    ];
+}
 }

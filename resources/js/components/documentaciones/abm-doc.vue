@@ -34,7 +34,7 @@
                                 <input type="text" name="titulo" class="form-control" v-model="newRegistro.titulo" value="">               
                             </div>  
                             <div class="form-group">
-                                <label for="name">Descripción (*)</label>
+                                <label for="name">Descripción </label>
                                 <input type="text" name="descripcion" class="form-control" v-model="newRegistro.descripcion" value="">  
                             </div>
                             <div v-if="newRegistro.tipo == 'USUARIO'">

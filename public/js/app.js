@@ -2855,6 +2855,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -45965,7 +45966,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group" }, [
                     _c("label", { attrs: { for: "name" } }, [
-                      _vm._v("Descripción (*)")
+                      _vm._v("Descripción ")
                     ]),
                     _vm._v(" "),
                     _c("input", {
