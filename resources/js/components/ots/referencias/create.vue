@@ -82,8 +82,7 @@
         </div>         
     </div>
 </div>       
-</template>     
-                     
+</template>                  
                 
             
 

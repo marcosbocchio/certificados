@@ -14,9 +14,6 @@ use App\MetodoEnsayos;
 use App\Users;
 
 
-
-
-
 class DocumentacionesController extends Controller
 {
 

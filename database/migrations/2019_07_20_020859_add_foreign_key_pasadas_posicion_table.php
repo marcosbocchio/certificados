@@ -29,7 +29,7 @@ class AddForeignKeyPasadasPosicionTable extends Migration
                    
             $table->foreign('soldadorz_id')
                    ->references('id')
-                   ->on('soldadores');
+                   ->on('ot_soldadores');
             
             $table->bigInteger('soldadorl_id')
                    ->unsigned()
@@ -38,7 +38,7 @@ class AddForeignKeyPasadasPosicionTable extends Migration
                    
             $table->foreign('soldadorl_id')
                    ->references('id')
-                   ->on('soldadores');
+                   ->on('ot_soldadores');
 
             $table->bigInteger('soldadorp_id')
                    ->unsigned()
@@ -47,7 +47,7 @@ class AddForeignKeyPasadasPosicionTable extends Migration
                    
             $table->foreign('soldadorp_id')
                    ->references('id')
-                   ->on('soldadores');  
+                   ->on('ot_soldadores');  
          
 
         });

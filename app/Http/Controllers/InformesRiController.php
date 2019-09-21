@@ -200,7 +200,7 @@ class InformesRiController extends Controller
                                             ->where('ot_soldadores.id',$pasada_posicion->soldadorl_id)
                                             ->select('soldadores.codigo','soldadores.nombre','ot_soldadores.*')
                                             ->first();
-                                            
+
                 $obj->soldador2 =   $obj->soldador2 ? $obj->soldador2 : "";    
 
                 $obj->soldador3 = DB::table('soldadores')

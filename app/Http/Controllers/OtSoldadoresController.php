@@ -111,7 +111,7 @@ class OtSoldadoresController extends Controller
         return DB::table('soldadores')
                    ->join('ot_soldadores','ot_soldadores.soldadores_id','=','soldadores.id')  
                    ->where('ot_soldadores.ot_id',$ot_id)
-                   ->select('soldadores.*')
+                   ->select('soldadores.codigo','soldadores.nombre','ot_soldadores.*')
                    ->get();
 
     }
