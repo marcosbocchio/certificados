@@ -55,7 +55,8 @@
                                 <tbody>
                                     <tr v-for="(ot_documentacion,k) in ot_documentaciones" :key="k">                                 
                                         <td> {{ot_documentacion.titulo}}</td>     
-                                        <td> {{ot_documentacion.descripcion}}</td>         
+                                        <td> {{ot_documentacion.descripcion}}</td>     
+                                        <td width="10px"> <a :href="AppUrl + '/' + ot_documentacion.path " target="_blank" title="Imagen"><span class="fa fa-file-image-o"></span></a></td>
                                         <td> <i class="fa fa-minus-circle" @click="removeDocumentacion(k)" ></i></td>
                                     </tr>                       
                                     

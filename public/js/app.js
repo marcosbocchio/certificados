@@ -3030,6 +3030,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -44836,6 +44837,20 @@ var render = function() {
                     _vm._v(" "),
                     _c("td", [
                       _vm._v(" " + _vm._s(ot_documentacion.descripcion))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { attrs: { width: "10px" } }, [
+                      _c(
+                        "a",
+                        {
+                          attrs: {
+                            href: _vm.AppUrl + "/" + ot_documentacion.path,
+                            target: "_blank",
+                            title: "Imagen"
+                          }
+                        },
+                        [_c("span", { staticClass: "fa fa-file-image-o" })]
+                      )
                     ]),
                     _vm._v(" "),
                     _c("td", [
