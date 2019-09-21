@@ -52,13 +52,13 @@
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3>0</h3>
+              <h3>{{ CantDocumentaciones }}</h3>
               <p>Documentaciones</p>
             </div>
             <div class="icon">
               <i class="ion ion-person-add"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a :href="AppUrl + '/documentaciones/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
 
@@ -176,6 +176,7 @@ export default {
         CantInformes:'0',
         CantRemitos:'0',
         CantSoldadores:'0',
+        CantDocumentaciones:'0',
 
         }
 
@@ -191,9 +192,10 @@ export default {
  
       ot_id_selected: function (ContarOperadores) {      
       this.ContarOperadores();
-      this.ContarInformes();
-      this.ContarRemitos();
       this.ContarSoldadores();
+      this.ContarDocumenaciones();
+      this.ContarRemitos();
+      this.ContarInformes();
     }
   },
 
@@ -259,7 +261,17 @@ export default {
             this.CantRemitos = response.data
             });
 
-         },     
+         },  
+         
+         ContarDocumenaciones: function(){
+
+            axios.defaults.baseURL = this.url ;                
+            var urlRegistros = 'ot-documentaciones/ot/' + this.ot_id_selected +'/total' + '?api_token=' + Laravel.user.api_token;             
+            axios.get(urlRegistros).then(response =>{
+            this.CantDocumentaciones = response.data
+            });
+
+         }
     }
 }
     

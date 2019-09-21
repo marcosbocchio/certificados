@@ -73,6 +73,12 @@ class DocumentacionesController extends Controller
         
     }
 
+    public function DocumentacionesDeOt(){
+
+        return Documentaciones::where('tipo','OT')->get();
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *

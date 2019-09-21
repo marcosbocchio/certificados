@@ -76,6 +76,7 @@ Vue.component('ot-operarios', require('./components/dashboard/operarios/ot-opera
 Vue.component('ot-informes', require('./components/dashboard/informes/ot-informes').default);
 Vue.component('ot-remitos', require('./components/dashboard/remitos/ot-remitos').default);
 Vue.component('ot-soldadores', require('./components/dashboard/soldadores/ot-soldadores').default);
+Vue.component('ot-documentaciones', require('./components/dashboard/documentaciones/ot-documentaciones').default);
 
 
 

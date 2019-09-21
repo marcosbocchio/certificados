@@ -77,28 +77,33 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::post('storage/referencia', 'StorageController@saveReferencia');
     Route::post('storage/documento', 'StorageController@saveDocumento');
 
-    Route::resource('documentaciones', 'DocumentacionesController');
+    Route::get('documentaciones/ot','DocumentacionesController@DocumentacionesDeOt'); 
+    Route::resource('documentaciones', 'DocumentacionesController');   
     Route::get('documentaciones/ot_operarios/{ot_id}/{user_id}', 'DocumentacionesController@getDocOtOperarios');
-
+    
     //Soldadores
     Route::resource('ot_soldadores', 'OtSoldadoresController');  
     Route::get('ot_soldadores/ot/{id}','OtSoldadoresController@SoldadoresOt');
     Route::get('ot_soldadores/ot/{ot_id}/total', 'OtSoldadoresController@OtSoldadoresTotal');
-
+    
     //operarios
-    Route::resource('ot_operarios', 'OtOperariosController');
-    Route::get('ot-operarios/users', 'OtOperariosController@users');
-    Route::get('ot-operarios/ejecutor_ensayo/{ot_id}', 'OtOperariosController@getOperadoresOt');
-    Route::get('ot_operarios/users/{ot_id}/total', 'OtOperariosController@OtOperadoresTotal');
-   
+    Route::resource('ot_operarios','OtOperariosController');
+    Route::get('ot-operarios/users','OtOperariosController@users');
+    Route::get('ot-operarios/ejecutor_ensayo/{ot_id}','OtOperariosController@getOperadoresOt');
+    Route::get('ot_operarios/users/{ot_id}/total','OtOperariosController@OtOperadoresTotal');
+    
+    /* Documentaciones*/
+    Route::resource('ot_documentaciones','OtDocumentacionesController');
+    Route::get('ot-documentaciones/ot/{id}','OtDocumentacionesController@DocumentacionesOt');
+    Route::get('ot-documentaciones/ot/{ot_id}/total','OtDocumentacionesController@OtDocumentacionesTotal');
+    
     /*  informes */ 
-    Route::resource('informes_ri', 'InformesRiController');
-    Route::resource('informes_pm', 'InformesPmController');
+    Route::resource('informes_ri','InformesRiController');
+    Route::resource('informes_pm','InformesPmController');
 
-    //Remito
-  
-    Route::get('remitos/ot/{ot_id}/total', 'RemitosController@RemitosTotal');
-    Route::resource('remitos', 'RemitosController');
+    //Remito  
+    Route::get('remitos/ot/{ot_id}/total','RemitosController@RemitosTotal');
+    Route::resource('remitos','RemitosController');
     
 });
 

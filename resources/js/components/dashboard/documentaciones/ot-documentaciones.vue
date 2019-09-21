@@ -4,8 +4,8 @@
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3>{{ ot_soldadores.length }}</h3>
-              <p>Soldadores</p>
+              <h3>{{ ot_documentaciones.length }}</h3>
+              <p>Documentaciones</p>
             </div>
             <div class="icon">
               <i class="ion ion-person-add"></i>
@@ -18,24 +18,24 @@
             <div class="box box-danger">
                 <div class="box-body">  
                     <div class="form-group">
-                        <label>Soldadores</label>           
-                        <v-select v-model="soldador" :options="soldadores" label="codigo">
+                        <label>Documentaciones</label>             
+                        <v-select v-model="documentacion" :options="documentaciones" label="titulo">
                             <template slot="option" slot-scope="option">
-                                <span class="upSelect">{{ option.nombre }} </span> <br> 
-                                <span class="downSelect"> {{ option.codigo }} </span>
+                                <span class="upSelect">{{ option.titulo }} </span> <br> 
+                                <span class="downSelect"> {{ option.descripcion }} </span>
                             </template>
-                        </v-select>          
+                        </v-select>        
                     </div> 
                     <div class="form-group">                    
                         <span>
-                            <i class="fa fa-plus-circle" @click="addSoldador(soldador.id)"></i>
+                            <i class="fa fa-plus-circle" @click="addDocumentacion(documentacion.id)"></i>
                         </span>
                     </div>
                  </div>                
             </div>
                 <div class="box box-info top-buffer">
                     <div class="box-header with-border">
-                    <h3 class="box-title">Soldadores Asignados Orden de Trabajo</h3>
+                    <h3 class="box-title">Documentaciones Asignadas Orden de Trabajo</h3>
 
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -47,16 +47,16 @@
                             <table class="table table-hover table-striped">
                                 <thead>
                                     <tr>
-                                        <th>CODIGO</th>                                                     
-                                        <th>NOMBRE</th>
+                                        <th>TÍTULO</th>                                                     
+                                        <th>DESCRIPCIÓN</th>
                                         <th colspan="2">ACCIÓN</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="(ot_soldador,k) in ot_soldadores" :key="k">                                 
-                                        <td> {{ot_soldador.codigo}}</td>     
-                                        <td> {{ot_soldador.nombre}}</td>         
-                                        <td> <i class="fa fa-minus-circle" @click="removeSoldador(k)" ></i></td>
+                                    <tr v-for="(ot_documentacion,k) in ot_documentaciones" :key="k">                                 
+                                        <td> {{ot_documentacion.titulo}}</td>     
+                                        <td> {{ot_documentacion.descripcion}}</td>         
+                                        <td> <i class="fa fa-minus-circle" @click="removeDocumentacion(k)" ></i></td>
                                     </tr>                       
                                     
                                 </tbody>
@@ -65,8 +65,7 @@
                     </div> 
                 </div> 
                 <a class="btn btn-primary" v-on:click.prevent="submit()" >Actualizar</a>      
-            </div>
-            
+            </div>           
     </div>    
 </template>
 
@@ -75,7 +74,7 @@ import {mapState} from 'vuex'
 export default {
     props :{
 
-    soldadores_data : {
+    documentaciones_data : {
     type : Array,
     required : false
      },
@@ -91,9 +90,9 @@ export default {
 data () { return {
 
 
-      ot_soldadores :[],
-      soldadores:[],
-      soldador:''
+      ot_documentaciones :[],
+      documentaciones:[],
+      documentacion:''
 
     }    
   },
@@ -104,50 +103,50 @@ data () { return {
 
   created : function(){
     
-    this.ot_soldadores =  JSON.parse(JSON.stringify(this.soldadores_data));  
-    this.getSoldadores();
+    this.ot_documentaciones =  JSON.parse(JSON.stringify(this.documentaciones_data));  
+    this.getDocumentaciones();
 
   },
 methods : {
 
-  getSoldadores : function(){
-
+  getDocumentaciones : function(){
+             
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'soldadores/cliente/' + this.ot_data.cliente_id + '?api_token=' + Laravel.user.api_token;        
+                var urlRegistros = 'documentaciones/ot?api_token=' + Laravel.user.api_token;        
                 axios.get(urlRegistros).then(response =>{
-                this.soldadores = response.data
+                this.documentaciones = response.data
                 });
              
         },
 
-  addSoldador : function(id){
+  addDocumentacion : function(id){
 
       console.log('entro en add soldador');
-        if (this.existeSoldador(id)){
-                toastr.error('El soldador ya existe en la OT');  
-        }else if(this.soldador.codigo){
+        if (this.existeDocumentacion(id)){
+                toastr.error('El Documento ya existe en la OT');  
+        }else if(this.documentacion.id){
                console.log('agregando soldador');
-            this.ot_soldadores.push({ 
-                 ...this.soldador
+            this.ot_documentaciones.push({ 
+                 ...this.documentacion
             });
-            this.soldador = '';
+            this.documentacion = '';
         }
 
 
   },
 
-  removeSoldador: function(index){
+  removeDocumentacion: function(index){
 
-         this.ot_soldadores.splice(index, 1);        
+         this.ot_documentaciones.splice(index, 1);        
 
     },
   
-  existeSoldador : function(id){
+  existeDocumentacion : function(id){
 
         let existe = false;
-        this.ot_soldadores.forEach(function (soldador) {           
-            console.log(soldador.id,'==',id);
-            if(soldador.id == id){              
+        this.ot_documentaciones.forEach(function (documento) {           
+            console.log(documento.id,'==',id);
+            if(documento.id == id){              
                 existe = true ;
             }
             
@@ -160,11 +159,11 @@ methods : {
        
 
             axios.defaults.baseURL = this.url ;
-            var urlRegistros = 'ot_soldadores';  
+            var urlRegistros = 'ot_documentaciones';  
                         
             axios.post(urlRegistros, {   
                 
-            soldadores : this.ot_soldadores,
+            documentaciones : this.ot_documentaciones,
             ot : this.ot_data                
 
             }).then(response => {            
@@ -183,7 +182,7 @@ methods : {
                 if(this.errors = [] && error){
 
                      toastr.error("Ocurrio un error al procesar la solicitud");                     
-                     this.ot_soldadores = this.soldadores_data;   
+                     this.ot_documentaciones = this.documentaciones_data;   
                 }
   
             });
