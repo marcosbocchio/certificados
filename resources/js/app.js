@@ -45,6 +45,8 @@ window.Vue = require('vue');
 Vue.component('pagination', require('laravel-vue-pagination'));
 Vue.component('v-select', vSelect);
 
+import Vue from 'vue'
+import VueLazyLoad from 'vue-lazyload'
 /*
 vSelect.props.components.default = () => ({
   Deselect: {
@@ -132,7 +134,7 @@ Vue.use(VueGoogleMaps, {
     ////then disable the following:
      installComponents: true,
 })
-
+Vue.use(VueLazyLoad);
 import Vuex from 'vuex' ;
 import vSelect from 'vue-select';
 import ProgressBar from 'vuejs-progress-bar'

@@ -67,7 +67,8 @@
                              <div class="form-group">   
                                    
                                 <div v-if="newRegistro.path != ''">                                 
-                                    <img :src="'/' + newRegistro.path" class="margin imagen-documento" alt="..." width="120" >
+                                  <img :src="'/' + newRegistro.path" class="margin imagen-documento"  @click="openGallery()" alt="..." width="120" >
+                                  <LightBox :images="images"  ref="lightbox"  :show-light-box="false" ></LightBox>
                                 </div>                                                           
                               
                                <progress-bar
@@ -98,12 +99,15 @@
 </template>
 
 <script>
-
+require('vue-image-lightbox/dist/vue-image-lightbox.min.css')
 import {mapState} from 'vuex'
 import Datepicker from 'vuejs-datepicker';
 import {en, es} from 'vuejs-datepicker/dist/locale'
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
+import LightBox from 'vue-image-lightbox'
+
+
 
 export default {
     name: 'abm-doc',
@@ -117,10 +121,21 @@ export default {
 
       components: {
             Datepicker,
-            Loading
+            Loading,
+            LightBox,
         },
 
       data() { return {
+
+       images:[
+            {
+              
+                src: '',
+                thumb: '',
+                caption: 'caption to display. receive <html> <b>tag</b>', // Optional
+              
+            }
+            ]   ,
 
         editmode: false,
         fillRegistro: {},
@@ -176,11 +191,21 @@ export default {
             this.getRegistros();
             this.getUsuarios();
             this.getMetodosEnsayos();
+
+
         
       },
 
       watch : {
-    
+          
+          newRegistro : function(val) {
+
+                this.images[0].src ='/' + val.path;
+                this.images[0].thumb  ='/' + val.path;
+
+          }
+
+        
     },
        
     computed :{
@@ -194,6 +219,10 @@ export default {
      },
 
     methods :{
+
+    openGallery(index) {
+      this.$refs.lightbox.showImage(0)
+    }   , 
         
     openNuevoRegistro : function(){      
             
