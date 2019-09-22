@@ -268,7 +268,7 @@ export default {
 
             this.selectedFile = event.target.files[0];
          
-            if(this.selectedFile.size > 1024 * 1024){
+            if(this.selectedFile.size > 100024 * 100024){
 
                  event.preventDefault();
                  toastr.error('Archivo demasiado grande. (Max 1 MB)');

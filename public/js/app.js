@@ -3983,7 +3983,7 @@ __webpack_require__(/*! vue-image-lightbox/dist/vue-image-lightbox.min.css */ ".
       this.HabilitarGuardar = false;
       this.selectedFile = event.target.files[0];
 
-      if (this.selectedFile.size > 1024 * 1024) {
+      if (this.selectedFile.size > 100024 * 100024) {
         event.preventDefault();
         toastr.error('Archivo demasiado grande. (Max 1 MB)');
         this.$refs.inputFile1.type = 'text';
