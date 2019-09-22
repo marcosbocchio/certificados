@@ -268,10 +268,11 @@ export default {
 
             this.selectedFile = event.target.files[0];
          
-            if(this.selectedFile.size > 100024 * 100024){
+            let FileSize = this.selectedFile.size / 1024 / 1024; // in MB
 
+            if(FileSize > 20 ){
                  event.preventDefault();
-                 toastr.error('Archivo demasiado grande. (Max 1 MB)');
+                 toastr.error('Archivo demasiado grande. (Max 20 MB)');
                  this.$refs.inputFile1.type = 'text';
                  this.$refs.inputFile1.type = 'file';  
                  this.selectedFile = null;
