@@ -4,6 +4,7 @@ namespace App\Repositories\Documentaciones;
 use App\Repositories\BaseRepository;
 use App\Documentaciones;
 use App\UsuarioDocumentaciones;
+use App\OtProcedimientosPropios;
 use Illuminate\Support\Facades\DB;
 
 
@@ -33,6 +34,12 @@ class DocumentacionesRepository extends BaseRepository
             $this->saveUsuarioDocumento($documento,$usuarioDocumento,$request);    
           }
 
+          if ($request->tipo == 'PROCEDIMIENTO'){
+
+            $ot_procedimieto_propio = new OtProcedimientosPropios;
+            $this->saveProcedimientoPropio($documento,$ot_procedimieto_propio,$request);    
+          }
+
     DB::commit();
 
   } catch (Exception $e) {
@@ -59,6 +66,12 @@ class DocumentacionesRepository extends BaseRepository
        $usuarioDocumento = UsuarioDocumentaciones::where('documentacion_id',$documento->id)->first();
        $this->saveUsuarioDocumento($documento,$usuarioDocumento,$request);
 
+    }
+
+    if ($request->tipo == 'PROCEDIMIENTO'){
+
+      $ot_procedimieto_propio = OtProcedimientosPropios::where('documentacion_id',$documento->id)->first();
+      $this->saveProcedimientoPropio($documento,$ot_procedimieto_propio,$request);    
     }
     DB::commit(); 
       } catch (Exception $e) {
@@ -93,6 +106,15 @@ class DocumentacionesRepository extends BaseRepository
     $usuarioDocumento->user_id = $request->usuario['id'];      
     $usuarioDocumento->fecha_caducidad = $fecha_caducidad;
     $usuarioDocumento->save();
+
+  }
+
+  public function saveProcedimientoPropio($documento,$ot_procedimieto_propio,$request){
+    
+
+    $ot_procedimieto_propio->documentacion_id = $documento->id;
+    $ot_procedimieto_propio->ot_id = $request->ot_id;   
+    $ot_procedimieto_propio->save();
 
   }
 

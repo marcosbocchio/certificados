@@ -114,6 +114,7 @@ export default {
        type : Array,
        required : false
      },
+     
      ot_id_data : '',
     
   },

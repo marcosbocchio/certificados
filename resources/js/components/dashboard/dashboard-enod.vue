@@ -36,14 +36,14 @@
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3>0</h3>
+              <h3>{{ CantProcedimientos }}</h3>
 
               <p>Procedimientos</p>
             </div>
             <div class="icon">
               <i class="ion ion-person-add"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a :href="AppUrl + '/procedimientos/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
 
@@ -178,6 +178,7 @@ export default {
         CantRemitos:'0',
         CantSoldadores:'0',
         CantDocumentaciones:'0',
+        CantProcedimientos:'0',
 
         }
 
@@ -194,6 +195,7 @@ export default {
       ot_id_selected: function (ContarOperadores) {      
       this.ContarOperadores();
       this.ContarSoldadores();
+      this.ContarProcedimietos();
       this.ContarDocumenaciones();
       this.ContarRemitos();
       this.ContarInformes();
@@ -242,6 +244,16 @@ export default {
             var urlRegistros = 'ot_soldadores/ot/' + this.ot_id_selected +'/total' + '?api_token=' + Laravel.user.api_token;             
             axios.get(urlRegistros).then(response =>{
             this.CantSoldadores = response.data
+            });
+
+         },
+
+         ContarProcedimietos : function (){
+
+            axios.defaults.baseURL = this.url ;                
+            var urlRegistros = 'ot_procedimientos_propios/ot/' + this.ot_id_selected +'/total' + '?api_token=' + Laravel.user.api_token;             
+            axios.get(urlRegistros).then(response =>{
+            this.CantProcedimientos = response.data
             });
 
          },

@@ -25,9 +25,17 @@
                             </div>
                         </div>
                         <div class="modal-body">
-                           <div class="form-group">
-                                <label>Tipo Documento (*)</label>
-                                <v-select v-model="newRegistro.tipo" label="tipo" :options="tipo_documentos"></v-select>   
+                            <div v-if="modelo == 'ot_procedimientos_propios'"> 
+                                <div class="form-group">
+                                    <label  for="tipo">Tipo Documento</label>
+                                    <input type="text" id="tipo" class="form-control" v-model="newRegistro.tipo" disabled>    
+                                </div>                             
+                            </div>
+                            <div v-else>
+                                 <div class="form-group">
+                                   <label  for="tipo">Tipo Documento (*)</label>
+                                   <v-select v-model="newRegistro.tipo" label="tipo" :options="tipo_documentos"></v-select>
+                                </div>                             
                             </div>      
                             <div class="form-group">
                                 <label for="name">Título (*)</label>
@@ -43,7 +51,7 @@
                                     <v-select v-model="usuario" label="name" :options="usuarios"></v-select>
                                 </div>
                             </div>
-                            <div v-if="newRegistro.tipo == 'USUARIO'">
+                            <div v-if="newRegistro.tipo == 'USUARIO' |newRegistro.tipo == 'PROCEDIMIENTO'  ">
                                 <div class="form-group">
                                     <label for="name">Método de Ensayo</label>
                                     <v-select v-model="metodo_ensayo" label="metodo" :options="metodo_ensayos"></v-select>
@@ -64,9 +72,12 @@
                                <input type="file" class="form-control" id="inputFile" ref="inputFile1" name="file" @change="onFileSelected($event)">
                                <button class="hide" @click.prevent="onUpload()" >upload</button>                            
                             </div>   
-                             <div class="form-group">   
-                                   
-                                <div v-if="newRegistro.path != ''">                                 
+                            <p>Formatos soportados : jpg, bmp, pdf.</p>
+                             <div class="form-group">  
+                                 <div v-if="isPdf">
+                                    <a :href="AppUrl + '/' + newRegistro.path" target="_blank" class="btn btn-default btn-sm" title="pdf"><span class="fa fa-file-pdf-o"></span></a>
+                                 </div> 
+                                 <div v-else-if="newRegistro.path != ''">                            
                                   <img :src="'/' + newRegistro.path" class="margin zoom-in"  @click="openGallery()" alt="..." width="120" >
                                   <LightBox :images="images"  ref="lightbox"  :show-light-box="false" ></LightBox>
                                 </div>                                                           
@@ -74,6 +85,7 @@
                                <progress-bar
                                 :options="options"
                                 :value="uploadPercentage"
+                                style="margin-top:5px;"
                                 /> 
                              </div>                  
                         </div>
@@ -116,7 +128,11 @@ export default {
             type : String,
             required : true,
             default : ''
-          }
+          },
+          ot_id_data : {
+          type: Number,      
+           required: false
+          },
       },
 
       components: {
@@ -153,6 +169,7 @@ export default {
          fullPage: false,
          isLoading_file: false,     
          uploadPercentage: 0,
+         isPdf: false,
 
          tipo_documentos :[
                           
@@ -190,11 +207,9 @@ export default {
 
             this.getRegistros();
             this.getUsuarios();
-            this.getMetodosEnsayos();
-
-
-        
-      },
+            this.getMetodosEnsayos();       
+      },  
+     
 
       watch : {
           
@@ -203,8 +218,7 @@ export default {
                 this.images[0].src ='/' + val.path;
                 this.images[0].thumb  ='/' + val.path;
 
-          }
-
+          },      
         
     },
        
@@ -215,9 +229,9 @@ export default {
              return 'table-' + this.modelo ;
          },       
          
-         ...mapState(['url']) 
+         ...mapState(['url','AppUrl'])
      },
-
+     
     methods :{
 
     openGallery(index) {
@@ -227,14 +241,29 @@ export default {
     openNuevoRegistro : function(){      
             
            this.editmode = false; 
-           this.uploadPercentage = 0;          
-           this.newRegistro = {  
-                tipo :'',          
-                titulo: '',
-                descripcion  : '',
-                path : '',            
-                fecha_caducidad:'',               
-                };
+           this.uploadPercentage = 0;   
+           this.metodo_ensayo ={
+                id:'',
+            };
+            
+           if(this.newRegistro.tipo == 'PROCEDIMIENTO'){
+
+               this.newRegistro = {  
+                    tipo :'PROCEDIMIENTO',          
+                    titulo: '',
+                    descripcion  : '',
+                    path : '',            
+                    fecha_caducidad:'',               
+                    };
+           }else{
+               this.newRegistro = {  
+                    tipo :'',          
+                    titulo: '',
+                    descripcion  : '',
+                    path : '',            
+                    fecha_caducidad:'',               
+                    };
+           }      
            this.$refs.inputFile1.type = 'text';
            this.$refs.inputFile1.type = 'file';  
            this.selectedFile =  null    
@@ -245,7 +274,15 @@ export default {
 
         this.isLoading = true;
         axios.defaults.baseURL = this.url ;
-        var urlRegistros = this.modelo;      
+        if(this.modelo == 'ot_procedimientos_propios'){
+
+            this.newRegistro.tipo='PROCEDIMIENTO';
+        }
+        if(this.newRegistro.tipo == 'PROCEDIMIENTO'){
+            var urlRegistros = this.modelo + '/ot/' + this.ot_id_data;      
+        }else{
+           var urlRegistros = this.modelo;      
+        }
         axios.get(urlRegistros).then(response =>{
             this.registros = response.data;
             this.isLoading = false;
@@ -268,7 +305,22 @@ export default {
 
             this.selectedFile = event.target.files[0];
          
-            let FileSize = this.selectedFile.size / 1024 / 1024; // in MB
+            let FileSize = this.selectedFile.size / 1024 / 1024; // in MB           
+            let FileType=this.selectedFile.type;         
+            console.log(FileType);
+
+          if (FileType == 'application/pdf') {
+              this.isPdf = true;
+          }else if(FileType == 'image/jpeg' || FileType == 'image/bmp') {
+                this.isPdf = false;
+          }else {
+                toastr.error('El tipo de archivo no es aceptado ');
+                 this.$refs.inputFile1.type = 'text';
+                 this.$refs.inputFile1.type = 'file';  
+                 this.selectedFile = null;
+                return;          }
+          
+            console.log(this.selectedFile);
 
             if(FileSize > 20 ){
                  event.preventDefault();
@@ -336,7 +388,8 @@ export default {
             'usuario'            : this.usuario,         
             'metodo_ensayo'      : this.metodo_ensayo,   
             'fecha_caducidad'    : this.newRegistro.fecha_caducidad,
-            'path'               : this.newRegistro.path      
+            'path'               : this.newRegistro.path,
+            'ot_id'              : this.ot_id_data,   
                 
 
             }).then(response => {              
@@ -376,7 +429,8 @@ export default {
             'usuario'            : this.usuario,         
             'metodo_ensayo'      : this.metodo_ensayo,   
             'fecha_caducidad'    : this.newRegistro.fecha_caducidad,
-            'path'               : this.newRegistro.path      
+            'path'               : this.newRegistro.path,
+            'ot_id'              : this.ot_id_data,         
                 
 
             }).then(response => {              
@@ -424,7 +478,10 @@ export default {
                 $('#nuevo').modal('show');  
                 this.metodo_ensayo = registro.metodo_ensayo;
                 this.usuario = registro.usuario;                
-                this.newRegistro = registro;                   
+                this.newRegistro = registro;  
+                let fileName = this.newRegistro.path ; 
+                let FileExt = fileName.substring(fileName.length-3,fileName.length);
+                this.isPdf = (FileExt == 'pdf') ? true : false ;      
                     
             },
 }
@@ -433,8 +490,11 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
 
-.zoom-in {cursor: zoom-in;}
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+     background-color: #eee;
+}
+
 
 </style>

@@ -66,7 +66,6 @@ Vue.component('nuevo-materiales', require('./components/abm-maestro/materiales/n
 Vue.component('delete-registro', require('./components/abm-maestro//delete.vue').default);
 
 Vue.component('table-documentaciones', require('./components/abm-maestro/documentaciones/table-documentaciones.vue').default);
-Vue.component('nuevo-documentaciones', require('./components/abm-maestro/documentaciones/nuevo-documentaciones.vue').default);
 Vue.component('editar-documentaciones', require('./components/abm-maestro/documentaciones/editar-documentaciones.vue').default);
 
 Vue.component('abm-doc', require('./components/documentaciones/abm-doc.vue').default);
@@ -77,6 +76,7 @@ Vue.component('ot-informes', require('./components/dashboard/informes/ot-informe
 Vue.component('ot-remitos', require('./components/dashboard/remitos/ot-remitos').default);
 Vue.component('ot-soldadores', require('./components/dashboard/soldadores/ot-soldadores').default);
 Vue.component('ot-documentaciones', require('./components/dashboard/documentaciones/ot-documentaciones').default);
+Vue.component('table-ot_procedimientos_propios', require('./components/dashboard/procedimientos/table-ot_procedimientos_propios').default);
 
 
 
