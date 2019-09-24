@@ -81,18 +81,14 @@ export default {
  created: function () {    
      
     eventEditRegistro.$on('editar',function() {
-          this.$nextTick(function () { 
+         
                  this.openModal();
-             })
+             
     }.bind(this));    
     this.getClientes();
   
     },
-
-    update : function () {
-this.$forceUpdate();
-
-    },
+  
     computed :{
     
          ...mapState(['url'])
@@ -101,7 +97,7 @@ this.$forceUpdate();
     methods: {
            openModal : function(){
                console.log('entro en open modal');            
-
+            this.$nextTick(function () { 
                 this.editRegistro.name = this.selectRegistro.name;
                 this.editRegistro.email = this.selectRegistro.email;                
                 this.editRegistro.password = '********';
@@ -116,7 +112,8 @@ this.$forceUpdate();
                 }
                    $('#editar').modal('show');               
 
-              
+                this.$forceUpdate();
+            })
             },
 
             getClientes: function(){

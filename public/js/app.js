@@ -2397,34 +2397,32 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   created: function created() {
     _event_bus__WEBPACK_IMPORTED_MODULE_1__["eventEditRegistro"].$on('editar', function () {
-      this.$nextTick(function () {
-        this.openModal();
-      });
+      this.openModal();
     }.bind(this));
     this.getClientes();
-  },
-  update: function update() {
-    this.$forceUpdate();
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['url'])),
   methods: {
     openModal: function openModal() {
       console.log('entro en open modal');
-      this.editRegistro.name = this.selectRegistro.name;
-      this.editRegistro.email = this.selectRegistro.email;
-      this.editRegistro.password = '********';
-      this.password2 = '********';
-      console.log(this.selectRegistro.cliente_id);
+      this.$nextTick(function () {
+        this.editRegistro.name = this.selectRegistro.name;
+        this.editRegistro.email = this.selectRegistro.email;
+        this.editRegistro.password = '********';
+        this.password2 = '********';
+        console.log(this.selectRegistro.cliente_id);
 
-      if (this.selectRegistro.cliente_id != null) {
-        this.isEnod = false;
-        this.cliente = this.selectRegistro['cliente'];
-      } else {
-        this.isEnod = true;
-        this.cliente = {};
-      }
+        if (this.selectRegistro.cliente_id != null) {
+          this.isEnod = false;
+          this.cliente = this.selectRegistro['cliente'];
+        } else {
+          this.isEnod = true;
+          this.cliente = {};
+        }
 
-      $('#editar').modal('show');
+        $('#editar').modal('show');
+        this.$forceUpdate();
+      });
     },
     getClientes: function getClientes() {
       var _this = this;
