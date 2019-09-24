@@ -82,10 +82,11 @@
                 });
               },
             
-            editRegistro : function(registro){
+            editRegistro : function(item){
                 console.log('entro en editar principal');             
-                this.selectRegistro = registro;               
-               eventEditRegistro.$emit('editar',this.selectRegistro);                  
+                this.selectRegistro = item;    
+                console.log(item);           
+                eventEditRegistro.$emit('editar',this.selectRegistro);                  
                     
             },     
                  

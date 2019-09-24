@@ -1836,9 +1836,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this.registros = response.data;
       });
     },
-    editRegistro: function editRegistro(registro) {
+    editRegistro: function editRegistro(item) {
       console.log('entro en editar principal');
-      this.selectRegistro = registro;
+      this.selectRegistro = item;
+      console.log(item);
       _event_bus__WEBPACK_IMPORTED_MODULE_1__["eventEditRegistro"].$emit('editar', this.selectRegistro);
     },
     confirmDeleteRegistro: function confirmDeleteRegistro(registro, dato) {
