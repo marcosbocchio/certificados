@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
 
+
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Auth;
 
@@ -79,6 +80,17 @@ class User extends Authenticatable
         }
         return $permissions;
     }
-  
+    /*
+    public function cliente(){
+        $cliente = App\Clientes ::find($this->cliente_id);
+        return $cliente;
+    }
+  */
+
+  public function cliente(){
+
+    return $this->belongsTo('App\Clientes','cliente_id','id');
+    
+}
   
 }

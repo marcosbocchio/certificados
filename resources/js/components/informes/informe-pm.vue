@@ -19,7 +19,7 @@
                     <div class="col-md-3">
                         <div class="form-group" >
                             <label for="numero_inf">Informe N°</label>
-                            <input type="text" v-model="numero_inf_code" class="form-control" id="numero_inf" disabled>
+                            <input type="text"  v-model="numero_inf_code" class="form-control" id="numero_inf" disabled>
                         </div>                            
                     </div>    
                     <div class="col-md-3">
@@ -572,11 +572,7 @@ export default {
             this.requiereVehiculoAditivo = val.requiere_vehiculo_aditivo_sn ? true : false;           
                
             this.vehiculo='';
-            this.aditivo='';
-          
-
-
-   
+            this.aditivo='';     
 
         }
 

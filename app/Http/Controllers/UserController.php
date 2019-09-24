@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\UserRequest;
 use App\Repositories\User\UserRepository;
 use Illuminate\Support\Facades\DB;
 use App\User;
@@ -18,8 +19,8 @@ class UserController extends Controller
 
     public function index()
     {   
-         return  $this->users->getAll();
-
+      return User::with('cliente')->get();
+  
     }
 
     public function callView()
@@ -31,15 +32,22 @@ class UserController extends Controller
 
     }
 
-    public function store(Request $request){ 
+    public function store(request $request){     
       
-    $request->validate([
+      $condicion_cliente ='';
+        if(!$request->isEnod) {
+            $condicion_cliente ='required';
+        }
+
+      
+      $request->validate([
     
-      'name' => 'required',
-      'email'  =>'required|unique:users|email',
-      'password' =>'required|Min:8'
-    
-    ]);
+        'name' => 'required',
+        'email'  =>'required|unique:users|email',
+        'password' =>'required|Min:8',
+        'cliente'  =>$condicion_cliente
+      
+      ]);
      
     $this->users->create($request->all()) ;      
     
@@ -54,6 +62,33 @@ class UserController extends Controller
     public function getUsersEmpresa(){
 
       return User::where('cliente_id',null)->get();
+
+  }
+
+  public function update(request $request,$id){
+
+    $condicion_cliente ='';
+        if(!$request->isEnod) {
+            $condicion_cliente ='required';
+        }
+    
+    $User = user::find($id);
+    $condicion_email ='';
+        if($request->email != $User->email) {
+            $condicion_email ='unique:users';
+        }
+
+      
+      $request->validate([
+    
+        'name' => 'required',
+        'email'  =>'required|email|' . $condicion_email,
+        'password' =>'required|Min:8',
+        'cliente'  =>$condicion_cliente
+      
+      ]);
+
+    return $this->users->updateUser($request,$id);
 
   }
 }

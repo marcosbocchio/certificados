@@ -1,24 +1,24 @@
 <template>
     <form v-on:submit.prevent="storeRegistro" method="post">
-    <div class="modal fade" id="nuevo">
+    <div class="modal fade" id="editar">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Crear</h4>
+                    <h4 class="modal-title">Editar</h4>
                 </div>
                 <div class="modal-body">   
             
                  <div class="form-group">
                    <div class="radio">
                        <label>    
-                           <input type="radio"  name="enod" :value="true"  v-model="isEnod">
+                           <input type="radio" id="enod" name="enod" :value="true"  v-model="isEnod">
                             Enod
                         </label>                   
                    </div>
                     <div class="radio">
                          <label> 
-                             <input type="radio" name="cliente" :value="false" v-model="isEnod">
+                             <input type="radio" id="cliente" name="cliente" :value="false" v-model="isEnod">
                              Cliente
                          </label>      
                     </div>
@@ -26,17 +26,17 @@
                    
                     <label for="name">Nombre</label>
                    
-                    <input autocomplete="off" v-model="newRegistro.name" type="text" name="nombre" class="form-control" value="">
+                    <input autocomplete="off" v-model="editRegistro.name" type="text" name="nombre" class="form-control" value="">
                     <label for="name">Cliente</label>
                     <div v-if="!isEnod"> 
                          <v-select v-model="cliente" label="razon_social" :options="clientes"></v-select>                         
                     </div>
                     <label for="usuario">email</label>
-                    <input autocomplete="off" type="text" name="email" class="form-control" v-model="newRegistro.email" value="">
+                    <input autocomplete="off" type="text" name="email" class="form-control" v-model="editRegistro.email" value="">
                     <label for="password">Contraseña</label>
-                          <input autocomplete="off" type="password" name="password" class="form-control" v-model="newRegistro.password" readonly>
+                          <input autocomplete="off" type="password" name="password" class="form-control" v-model="editRegistro.password" value="">
                     <label for="password2">Repetir Contraseña</label>
-                          <input autocomplete="off" type="password" name="password2" class="form-control" v-model="password2" readonly>
+                          <input autocomplete="off" type="password" name="password2" class="form-control" v-model="password2" value="">
                 </div>
             
                 <div class="modal-footer">
@@ -51,17 +51,26 @@
 
 <script>
  import {mapState} from 'vuex'
- import { eventNewRegistro } from '../../event-bus';
+ import { eventEditRegistro } from '../../event-bus';
 export default {
+
+    props : {
+
+        registro : {
+            type : Object,
+            required : false,           
+          }
+
+    },
     data() { return {
     
-        newRegistro : {           
+        editRegistro : {           
             'name'  : '',
             'email' : '',
             'password' : ''
          },
         errors:{},
-        isEnod:true,
+        isEnod:'true',
         cliente:{},
         clientes:[],
         password2:'',
@@ -69,34 +78,40 @@ export default {
          }
     
     },
- created: function () {
+ created: function () {    
      
-    eventNewRegistro.$on('open', this.openModal)
+    eventEditRegistro.$on('editar',function() {
+        this.openModal();
+    }.bind(this));
     this.getClientes();
   
     },
     computed :{
     
          ...mapState(['url'])
-    },
- 
+    }, 
    
     methods: {
            openModal : function(){
-                this.newRegistro = {           
-                        'name'  : '',
-                        'email' : '',
-                        'password' : ''
-                     },
-                this.password2='',
-                this.isEnod=true,
-                $('#nuevo').modal('show');    
-                $( document ).ready(function() {
-                    setTimeout(function(){
-                        $("#pass").attr('readonly', false);
-                        $("#pass").focus();
-                    },500);
-                });           
+               console.log('entro en open modal');
+              
+               this.$nextTick(function () { 
+                this.editRegistro.name = this.registro.name;
+                this.editRegistro.email = this.registro.email;                
+                this.editRegistro.password = '********';
+                this.password2 = '********';
+                console.log(this.registro.cliente_id);
+                if(this.registro.cliente_id != null){                 
+                    this.isEnod = false;
+                    this.cliente = this.registro['cliente'];
+                }else{
+                    this.isEnod = true;
+                    this.cliente = {};
+                      
+                }
+                   $('#editar').modal('show');               
+
+               })
             },
 
             getClientes: function(){
@@ -107,30 +122,29 @@ export default {
                 this.clientes = response.data
                 });
               },
-
             storeRegistro: function(){
 
-                if(this.newRegistro.password != this.password2){
+                if(this.editRegistro.password != this.password2){
                       toastr.error("Las contreseñas ingresadas no coinciden");
                       return;
                 }    
 
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'users';                         
-                axios.post(urlRegistros, {   
+                var urlRegistros = 'users/' + this.registro.id;                         
+                axios.put(urlRegistros, {   
                     
-                'name'      : this.newRegistro.name,                
-                'email'     : this.newRegistro.email,
-                'password'  : this.newRegistro.password,
+                'name'      : this.editRegistro.name,                
+                'email'     : this.editRegistro.email,
+                'password'  : this.editRegistro.password,
                 'cliente'   : this.cliente,
                 'isEnod'    : this.isEnod,
                   
                 }).then(response => {
-                  this.$emit('store');
+                  this.$emit('update');
                   this.errors=[];
-                  $('#nuevo').modal('hide');
+                  $('#editar').modal('hide');
                   toastr.success('Nuevo usuario creado con éxito');               
-                  this.newRegistro={}
+                  this.editRegistro={}
                   
                 }).catch(error => {                   
                     this.errors = error.response.data.errors;

@@ -4,10 +4,10 @@
         <a href="#" class="btn btn-primary pull-right" v-on:click.prevent="openNuevoRegistro()" >Nuevo</a>
     </div>    
     <div class="col-sm-10">
-        <component :is= setTablaComponente :registros="registros"  @confirmarDelete="confirmDeleteRegistro" @editRegistroEvent="editRegistro"/>               
+        <component :is= setTablaComponente :registros="registros" @confirmarDelete="confirmDeleteRegistro" @editar="editRegistro"/>               
         <delete-registro :datoDelete="datoDelete" :fillRegistro="fillRegistro" @close-modal="getRegistros" :modelo="modelo"></delete-registro>  
         <component :is= setNuevoComponente @store="getRegistros"/>
-        <component :is= setEditarComponente :registro_id="registro_id" @store="getRegistros"/>      
+        <component :is= setEditarComponente :registro="selectRegistro" @update="getRegistros"/>      
     </div> 
 
 </div> 
@@ -42,7 +42,9 @@
         registros: [], 
         datoDelete: '',    
         obj :'',
-        registro_id: ''
+        registro_id: '',
+        registro: {},       
+        selectRegistro: {},        
    
         }
       },     
@@ -80,10 +82,10 @@
                 });
               },
             
-            editRegistro : function(registro_id){
-
-                this.registro_id = registro_id;
-                eventEditRegistro.$emit('edit');             
+            editRegistro : function(registro){
+                console.log('entro en editar principal');             
+                this.selectRegistro = registro;               
+               eventEditRegistro.$emit('editar',registro);                  
                     
             },     
                  

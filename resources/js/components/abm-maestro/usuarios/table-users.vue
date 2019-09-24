@@ -17,7 +17,7 @@
             <td>{{ registro.name }}</td>
             <td>{{ registro.email }}</td>
             <td width="10px">
-              <a href="#" class="btn btn-warning btn-sm" title="Editar" v-on:click.prevent="editKeep(registro)"><span class="fa fa-edit"></span></a>
+              <a href="#" class="btn btn-warning btn-sm" title="Editar" v-on:click.prevent="updateValue(registro,$event)"><span class="fa fa-edit"></span></a>
             </td>
             <td width="10px">
               <a href="#" class="btn btn-danger btn-sm" title="Eliminar " v-on:click.prevent="$emit('confirmarDelete',registro,registro.name)"><span class="fa fa-trash"></span></a>
@@ -33,12 +33,23 @@
 <script>
   export default {
 
+    data() {return {
+    selected : null
+
+    }},
+
     props : {
       registros : {
         type : Array,
         required : true        
       }    
+    },
+
+    methods: {
+    updateValue: function (registro) {
+      this.selected = this.$emit('editar', registro);
     }
+  }
   }
 </script>
 

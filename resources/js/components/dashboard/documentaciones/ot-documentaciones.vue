@@ -90,7 +90,6 @@ export default {
 
 data () { return {
 
-
       ot_documentaciones :[],
       documentaciones:[],
       documentacion:''
@@ -170,7 +169,7 @@ methods : {
             }).then(response => {            
                 this.errors=[];     
                 console.log(response);                  
-                toastr.success('Soldadores actualizados con éxito');                
+                toastr.success('Documentación OT actualizada con éxito');                
                 
             }).catch(error => {
                
