@@ -88,6 +88,11 @@ export default {
     this.getClientes();
   
     },
+
+    update : function () {
+this.$forceUpdate();
+
+    },
     computed :{
     
          ...mapState(['url'])

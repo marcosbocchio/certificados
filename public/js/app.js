@@ -2403,6 +2403,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }.bind(this));
     this.getClientes();
   },
+  update: function update() {
+    this.$forceUpdate();
+  },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['url'])),
   methods: {
     openModal: function openModal() {
