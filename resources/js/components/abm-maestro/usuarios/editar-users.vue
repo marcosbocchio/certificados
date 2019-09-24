@@ -130,7 +130,7 @@ export default {
                 }    
 
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'users/' + this.registro.id;                         
+                var urlRegistros = 'users/' + this.selectRegistro.id;                         
                 axios.put(urlRegistros, {   
                     
                 'name'      : this.editRegistro.name,                

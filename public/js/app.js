@@ -2440,7 +2440,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       axios.defaults.baseURL = this.url;
-      var urlRegistros = 'users/' + this.registro.id;
+      var urlRegistros = 'users/' + this.selectRegistro.id;
       axios.put(urlRegistros, {
         'name': this.editRegistro.name,
         'email': this.editRegistro.email,
