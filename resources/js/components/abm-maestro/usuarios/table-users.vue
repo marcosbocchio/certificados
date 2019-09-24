@@ -8,6 +8,7 @@
             <th>ID</th>           
             <th>Nombre</th>
             <th>Email</th>
+            <th>Cliente</th>
             <th colspan="2">&nbsp;</th>
           </tr>
         </thead>
@@ -16,8 +17,14 @@
             <td width="10px">{{ registro.id }}</td>            
             <td>{{ registro.name }}</td>
             <td>{{ registro.email }}</td>
+            <td>
+              <div v-if="registro.cliente">
+              {{ registro.cliente.nombre_fantasia }}
+              </div>            
+              
+            </td>
             <td width="10px">
-              <a href="#" class="btn btn-warning btn-sm" title="Editar" v-on:click.prevent="updateValue(registro,$event)"><span class="fa fa-edit"></span></a>
+              <a href="#" class="btn btn-warning btn-sm" title="Editar" v-on:click.prevent="updateValue(registro)"><span class="fa fa-edit"></span></a>
             </td>
             <td width="10px">
               <a href="#" class="btn btn-danger btn-sm" title="Eliminar " v-on:click.prevent="$emit('confirmarDelete',registro,registro.name)"><span class="fa fa-trash"></span></a>
@@ -33,8 +40,7 @@
 <script>
   export default {
 
-    data() {return {
-    selected : null
+    data() {return {  
 
     }},
 
@@ -47,7 +53,7 @@
 
     methods: {
     updateValue: function (registro) {
-      this.selected = this.$emit('editar', registro);
+       this.$emit('editar', registro);
     }
   }
   }

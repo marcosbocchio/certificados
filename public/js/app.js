@@ -2658,11 +2658,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
-    return {
-      selected: null
-    };
+    return {};
   },
   props: {
     registros: {
@@ -2672,7 +2677,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     updateValue: function updateValue(registro) {
-      this.selected = this.$emit('editar', registro);
+      this.$emit('editar', registro);
     }
   }
 });
@@ -44540,6 +44545,18 @@ var render = function() {
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(registro.email))]),
                 _vm._v(" "),
+                _c("td", [
+                  registro.cliente
+                    ? _c("div", [
+                        _vm._v(
+                          "\n              " +
+                            _vm._s(registro.cliente.nombre_fantasia) +
+                            "\n              "
+                        )
+                      ])
+                    : _vm._e()
+                ]),
+                _vm._v(" "),
                 _c("td", { attrs: { width: "10px" } }, [
                   _c(
                     "a",
@@ -44549,7 +44566,7 @@ var render = function() {
                       on: {
                         click: function($event) {
                           $event.preventDefault()
-                          return _vm.updateValue(registro, $event)
+                          return _vm.updateValue(registro)
                         }
                       }
                     },
@@ -44598,6 +44615,8 @@ var staticRenderFns = [
         _c("th", [_vm._v("Nombre")]),
         _vm._v(" "),
         _c("th", [_vm._v("Email")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Cliente")]),
         _vm._v(" "),
         _c("th", { attrs: { colspan: "2" } }, [_vm._v(" ")])
       ])
