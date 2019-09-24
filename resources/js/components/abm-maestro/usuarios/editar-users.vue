@@ -56,7 +56,7 @@ export default {
 
     props : {
 
-        registro : {
+        selectRegistro : {
             type : Object,
             required : false,           
           }
@@ -81,8 +81,10 @@ export default {
  created: function () {    
      
     eventEditRegistro.$on('editar',function() {
-        this.openModal();
-    }.bind(this));
+          this.$nextTick(function () { 
+                 this.openModal();
+             })
+    }.bind(this));    
     this.getClientes();
   
     },
@@ -93,25 +95,23 @@ export default {
    
     methods: {
            openModal : function(){
-               console.log('entro en open modal');
-              
-               this.$nextTick(function () { 
-                this.editRegistro.name = this.registro.name;
-                this.editRegistro.email = this.registro.email;                
+               console.log('entro en open modal');            
+
+                this.editRegistro.name = this.selectRegistro.name;
+                this.editRegistro.email = this.selectRegistro.email;                
                 this.editRegistro.password = '********';
                 this.password2 = '********';
-                console.log(this.registro.cliente_id);
-                if(this.registro.cliente_id != null){                 
+                console.log(this.selectRegistro.cliente_id);
+                if(this.selectRegistro.cliente_id != null){                 
                     this.isEnod = false;
-                    this.cliente = this.registro['cliente'];
+                    this.cliente = this.selectRegistro['cliente'];
                 }else{
                     this.isEnod = true;
-                    this.cliente = {};
-                      
+                    this.cliente = {};                      
                 }
                    $('#editar').modal('show');               
 
-               })
+              
             },
 
             getClientes: function(){

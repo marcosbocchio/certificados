@@ -7,7 +7,7 @@
         <component :is= setTablaComponente :registros="registros" @confirmarDelete="confirmDeleteRegistro" @editar="editRegistro"/>               
         <delete-registro :datoDelete="datoDelete" :fillRegistro="fillRegistro" @close-modal="getRegistros" :modelo="modelo"></delete-registro>  
         <component :is= setNuevoComponente @store="getRegistros"/>
-        <component :is= setEditarComponente :registro="selectRegistro" @update="getRegistros"/>      
+        <component :is= setEditarComponente :selectRegistro="selectRegistro" @update="getRegistros"/>      
     </div> 
 
 </div> 
@@ -85,7 +85,7 @@
             editRegistro : function(registro){
                 console.log('entro en editar principal');             
                 this.selectRegistro = registro;               
-               eventEditRegistro.$emit('editar',registro);                  
+               eventEditRegistro.$emit('editar',this.selectRegistro);                  
                     
             },     
                  

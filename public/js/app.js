@@ -1839,7 +1839,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     editRegistro: function editRegistro(registro) {
       console.log('entro en editar principal');
       this.selectRegistro = registro;
-      _event_bus__WEBPACK_IMPORTED_MODULE_1__["eventEditRegistro"].$emit('editar', registro);
+      _event_bus__WEBPACK_IMPORTED_MODULE_1__["eventEditRegistro"].$emit('editar', this.selectRegistro);
     },
     confirmDeleteRegistro: function confirmDeleteRegistro(registro, dato) {
       this.fillRegistro.id = registro.id;
@@ -2374,7 +2374,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    registro: {
+    selectRegistro: {
       type: Object,
       required: false
     }
@@ -2396,7 +2396,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   created: function created() {
     _event_bus__WEBPACK_IMPORTED_MODULE_1__["eventEditRegistro"].$on('editar', function () {
-      this.openModal();
+      this.$nextTick(function () {
+        this.openModal();
+      });
     }.bind(this));
     this.getClientes();
   },
@@ -2404,23 +2406,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   methods: {
     openModal: function openModal() {
       console.log('entro en open modal');
-      this.$nextTick(function () {
-        this.editRegistro.name = this.registro.name;
-        this.editRegistro.email = this.registro.email;
-        this.editRegistro.password = '********';
-        this.password2 = '********';
-        console.log(this.registro.cliente_id);
+      this.editRegistro.name = this.selectRegistro.name;
+      this.editRegistro.email = this.selectRegistro.email;
+      this.editRegistro.password = '********';
+      this.password2 = '********';
+      console.log(this.selectRegistro.cliente_id);
 
-        if (this.registro.cliente_id != null) {
-          this.isEnod = false;
-          this.cliente = this.registro['cliente'];
-        } else {
-          this.isEnod = true;
-          this.cliente = {};
-        }
+      if (this.selectRegistro.cliente_id != null) {
+        this.isEnod = false;
+        this.cliente = this.selectRegistro['cliente'];
+      } else {
+        this.isEnod = true;
+        this.cliente = {};
+      }
 
-        $('#editar').modal('show');
-      });
+      $('#editar').modal('show');
     },
     getClientes: function getClientes() {
       var _this = this;
@@ -43211,7 +43211,7 @@ var render = function() {
         _vm._v(" "),
         _c(_vm.setEditarComponente, {
           tag: "component",
-          attrs: { registro: _vm.selectRegistro },
+          attrs: { selectRegistro: _vm.selectRegistro },
           on: { update: _vm.getRegistros }
         })
       ],
