@@ -42,7 +42,7 @@ class ClienteRequest extends FormRequest
 
     if(isset($this->contacto1['id'])){
 
-    if($this->contacto1['nombre'] != '' || $this->contacto1['email']!= '' || $this->contacto1['cargo']!= '' || $this->contacto1['telefono']!= ''){
+    if($this->contacto1['nombre'] != '' || $this->contacto1['email']!= '' || $this->contacto1['cargo']!= '' || $this->contacto1['tel']!= ''){
 
         $this->AsignarValidaciones($val_nombre_contacto,$val_cargo_contacto,$val_email_contacto,$val_telefono_contacto);
       }
@@ -50,7 +50,7 @@ class ClienteRequest extends FormRequest
 
     if(isset($this->contacto2['id'])){
 
-        if($this->contacto2['nombre'] != '' || $this->contacto2['email']!= '' || $this->contacto2['cargo']!= '' || $this->contacto2['telefono']!= ''){
+        if($this->contacto2['nombre'] != '' || $this->contacto2['email']!= '' || $this->contacto2['cargo']!= '' || $this->contacto2['tel']!= ''){
 
             $this->AsignarValidaciones($val_nombre_contacto,$val_cargo_contacto,$val_email_contacto,$val_telefono_contacto);
         }
@@ -58,7 +58,7 @@ class ClienteRequest extends FormRequest
 
     if(isset($this->contacto3['id'])){
 
-        if($this->contacto3['nombre'] != '' || $this->contacto3['email']!= '' || $this->contacto3['cargo']!= '' || $this->contacto3['telefono']!= ''){
+        if($this->contacto3['nombre'] != '' || $this->contacto3['email']!= '' || $this->contacto3['cargo']!= '' || $this->contacto3['tel']!= ''){
 
             $this->AsignarValidaciones($val_nombre_contacto,$val_cargo_contacto,$val_email_contacto,$val_telefono_contacto);
         }
