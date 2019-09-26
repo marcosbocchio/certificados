@@ -70,6 +70,9 @@ Vue.component('table-unidades_medidas', require('./components/abm-maestro/unidad
 Vue.component('nuevo-unidades_medidas', require('./components/abm-maestro/unidades-medidas/nuevo-unidades_medidas.vue').default);
 Vue.component('editar-unidades_medidas', require('./components/abm-maestro/unidades-medidas/editar-unidades_medidas.vue').default);
 
+Vue.component('table-medidas', require('./components/abm-maestro/medidas/table-medidas.vue').default);
+Vue.component('nuevo-medidas', require('./components/abm-maestro/medidas/nuevo-medidas.vue').default);
+Vue.component('editar-medidas', require('./components/abm-maestro/medidas/editar-medidas.vue').default);
 
 Vue.component('table-materiales', require('./components/abm-maestro/materiales/table-materiales.vue').default);
 Vue.component('nuevo-materiales', require('./components/abm-maestro/materiales/nuevo-materiales.vue').default);
@@ -163,6 +166,7 @@ state: {
         process.env.MIX_URL_PRO :
         process.env.MIX_URL_DEV,
         provincias:[],
+        unidades_medidas:[],
 
        
     },
@@ -178,12 +182,27 @@ actions : {
           axios.get(urlRegistros).then((response) => {
             commit('getProvincias', response.data)           
           })
+        },
+
+        loadUnidadesMedidas({
+          commit
+        }) {
+          axios.defaults.baseURL = store.state.url ;
+          var urlRegistros = 'unidades_medidas' + '?api_token=' + Laravel.user.api_token;  
+          console.log(urlRegistros);
+          axios.get(urlRegistros).then((response) => {
+            commit('getUnidadesMedidas', response.data)           
+          })
         }
     },
     mutations: {
       getProvincias(state, provincias) {
         state.provincias = provincias
-      }
+      },
+
+      getUnidadesMedidas(state, unidadesMedidas) {
+        state.unidades_medidas = unidadesMedidas
+      },
     }
 
 })

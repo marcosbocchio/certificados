@@ -64,6 +64,7 @@ Route::group(['middleware' => ['permission:Navegar operador']], function () {
   Route::get('/area/enod/materiales', 'MaterialesController@callView')->name('materiales');
   Route::get('/area/enod/clientes', 'ClientesController@callView')->name('clientes');
   Route::get('/area/enod/unidades-medidas', 'UnidadesMedidasController@callView')->name('unidades-medidas');
+  Route::get('/area/enod/medidas', 'MedidasController@callView')->name('medidas');
   Route::get('/area/enod/ots','OtsController@create')->name('ots.create')->middleware('auth');
   Route::get('/area/enod/ots/{id}/edit','OtsController@Edit')->name('ots.edit');
   Route::get('/area/enod/documentaciones','DocumentacionesController@callView')->name('documentaciones');

@@ -54,7 +54,7 @@
                             <div class="form-group">  
                             <label>Medidas</label>           
 
-                            <v-select v-model="medida" :options="medidas" label="descripcion">
+                            <v-select v-model="medida" :options="medidas" label="codigo">
                                 <template slot="option" slot-scope="option">
                                     <span class="upSelect">{{ option.descripcion }} </span> 
                                     <span class="downSelect">   {{ option.codigo }} </span>
@@ -254,7 +254,7 @@ export default {
                     toastr.error("El campo medida es obligatorio");         
                     return;            
             }
-            
+
             if(!this.cantidad_productos){
                  toastr.error("El campo cantidad de producto es obligatorio");         
                  return;            

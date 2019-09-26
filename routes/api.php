@@ -28,6 +28,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('users', 'UserController');    
     Route::resource('materiales', 'MaterialesController');
     Route::resource('unidades_medidas', 'UnidadesMedidasController');
+    Route::resource('medidas', 'MedidasController');
     Route::resource('provincias', 'ProvinciasController');
     Route::resource('localidades', 'LocalidadesController');
     Route::resource('contactos', 'ContactosController');

@@ -11,11 +11,15 @@
                 
                     <div class="modal-body">                       
                     
-                        <label for="codigo">Código (*)</label>                   
-                        <input autocomplete="off" v-model="editRegistro.codigo" type="text" name="codigo" class="form-control" value="">
-                        
-                        <label for="name">Descripción</label>                   
-                        <input autocomplete="off" type="text" name="descripcion" class="form-control" v-model="editRegistro.descripcion" value="">
+                           
+                    <label for="codigo">Código (*)</label>                   
+                    <input autocomplete="off" v-model="editRegistro.codigo" type="text" name="codigo" class="form-control" value="">
+                    
+                    <label for="name">Descripción</label>                   
+                    <input autocomplete="off" type="text" name="descripcion" class="form-control" v-model="editRegistro.descripcion" value="">
+
+                     <label for="name">Unidad Medida (*)</label>      
+                    <v-select v-model="unidad_medida" label="codigo" :options="unidades_medidas"></v-select>
                     
                     </div>
                 </div>
@@ -47,9 +51,14 @@ export default {
     
         editRegistro : {           
             'codigo'  : '',
-            'descripcion' : '',         
+            'descripcion' : '',           
          },
-        errors:{},      
+
+         unidad_medida :{
+             'codigo' : '',
+             'descripcion':''
+         },       
+        errors:{},        
          }
     
     },
@@ -59,14 +68,13 @@ export default {
          
                  this.openModal();
              
-    }.bind(this));   
-  
-  
+    }.bind(this)); 
+   this.$store.dispatch('loadUnidadesMedidas');
     },
   
     computed :{
     
-         ...mapState(['url'])
+         ...mapState(['url','unidades_medidas'])
     }, 
    
     methods: {
@@ -74,7 +82,8 @@ export default {
                console.log('entro en open modal');            
             this.$nextTick(function () { 
                 this.editRegistro.codigo = this.selectRegistro.codigo;
-                this.editRegistro.descripcion = this.selectRegistro.descripcion;               
+                this.editRegistro.descripcion = this.selectRegistro.descripcion;   
+                this.unidad_medida = this.selectRegistro.unidad_medidas;            
 
                 console.log(this.selectRegistro.cliente_id);
               
@@ -87,16 +96,17 @@ export default {
             storeRegistro: function(){           
 
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'unidades_medidas/' + this.selectRegistro.id;                         
+                var urlRegistros = 'medidas/' + this.selectRegistro.id;                         
                 axios.put(urlRegistros, {   
                     
-                ...this.editRegistro,                
+                ...this.editRegistro,    
+                'unidad_medida' : this.unidad_medida,                       
               
                 }).then(response => {
                   this.$emit('update');
                   this.errors=[];
                   $('#editar').modal('hide');
-                  toastr.success('Nueva Unidad de medidas editada con éxito');         
+                  toastr.success('Nueva medidas editada con éxito');         
                   this.editRegistro={}
                   
                 }).catch(error => {                   

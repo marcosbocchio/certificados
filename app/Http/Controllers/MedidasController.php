@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\MedidaRequest;
 use App\Repositories\Medidas\MedidasRepository;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection as Collection;
@@ -26,7 +27,17 @@ class MedidasController extends Controller
      */
     public function index()
     {
-        //
+        return Medidas::with('unidadMedidas')->get();
+    
+    }
+
+    public function callView()
+    {   
+        $user = auth()->user()->name; 
+        $header_titulo = "Medidas";
+        $header_descripcion ="Alta | Baja | Modificación";  
+        return view('medidas',compact('user','modelo','header_titulo','header_descripcion'));
+
     }
 
     /**
@@ -45,9 +56,9 @@ class MedidasController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(MedidaRequest $request)
     {
-        //
+        $this->medidas->store($request) ;
     }
 
     /**
@@ -61,7 +72,7 @@ class MedidasController extends Controller
         
         
         $medidas = DB::select('select 
-                            medidas.descripcion,
+                            medidas.codigo descripcion,
                             medidas.id,
                             unidades_medidas.codigo 
                             from
@@ -94,9 +105,9 @@ class MedidasController extends Controller
      * @param  \App\Medidas  $medidas
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Medidas $medidas)
+    public function update(MedidaRequest $request,$id)
     {
-        //
+        $this->medidas->updateMedidas($request,$id) ;
     }
 
     /**
@@ -105,8 +116,9 @@ class MedidasController extends Controller
      * @param  \App\Medidas  $medidas
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Medidas $medidas)
+    public function destroy($id)
     {
-        //
+        $medida = Medidas::find($id);
+        $medida->delete();
     }
 }

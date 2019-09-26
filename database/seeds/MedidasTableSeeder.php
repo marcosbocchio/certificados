@@ -13,67 +13,67 @@ class MedidasTableSeeder extends Seeder
     public function run()
     {
         Medidas::create([
-            'codigo'            =>'1',
-            'descripcion'       =>'20',
+            'codigo'            =>'20',
+            'descripcion'       =>'',
             'unidades_medida_id' =>'1'          
         ]);
 
         Medidas::create([
-            'codigo'            =>'1',
-            'descripcion'       =>'30',
+            'codigo'            =>'30',
+            'descripcion'       =>'',
             'unidades_medida_id' =>'1'          
         ]);
 
         Medidas::create([
-            'codigo'            =>'1',
-            'descripcion'       =>'10',
+            'codigo'            =>'10',
+            'descripcion'       =>'',
             'unidades_medida_id' =>'1'          
 
         ]);Medidas::create([
-            'codigo'            =>'1',
-            'descripcion'       =>'60',
+            'codigo'            =>'60',
+            'descripcion'       =>'',
             'unidades_medida_id' =>'1'          
         ]);
 
         Medidas::create([
-            'codigo'            =>'1',
-            'descripcion'       =>'2',
+            'codigo'            =>'2',
+            'descripcion'       =>'',
+            'unidades_medida_id' =>'2'          
+        ]);
+
+        Medidas::create([
+            'codigo'            =>'2.5',
+            'descripcion'       =>'',
+            'unidades_medida_id' =>'2'          
+        ]);
+
+        Medidas::create([
+            'codigo'            =>'6.5',
+            'descripcion'       =>'',
+            'unidades_medida_id' =>'2'          
+        ]);
+
+        Medidas::create([
+            'codigo'            =>'15',
+            'descripcion'       =>'',
             'unidades_medida_id' =>'2'          
         ]);
 
         Medidas::create([
             'codigo'            =>'1',
-            'descripcion'       =>'2.5',
-            'unidades_medida_id' =>'2'          
-        ]);
-
-        Medidas::create([
-            'codigo'            =>'1',
-            'descripcion'       =>'6.5',
-            'unidades_medida_id' =>'2'          
-        ]);
-
-        Medidas::create([
-            'codigo'            =>'1',
-            'descripcion'       =>'15',
-            'unidades_medida_id' =>'2'          
-        ]);
-
-        Medidas::create([
-            'codigo'            =>'1',
-            'descripcion'       =>'1',
+            'descripcion'       =>'',
             'unidades_medida_id' =>'3'          
         ]);
 
         Medidas::create([
-            'codigo'            =>'1',
-            'descripcion'       =>'100',
+            'codigo'            =>'100',
+            'descripcion'       =>'',
             'unidades_medida_id' =>'3'          
         ]);
 
         Medidas::create([
-            'codigo'            =>'1',
-            'descripcion'       =>'250',
+            'codigo'            =>'250',
+            'descripcion'       =>'',
             'unidades_medida_id' =>'3'          
         ]);
     }

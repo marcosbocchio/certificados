@@ -40,6 +40,7 @@
             <li><a href="{{ route('materiales')}}"><i class="fa fa-circle-o"></i>Materiales</a></li>
             <li><a href="{{ route('documentaciones')}}"><i class="fa fa-circle-o"></i>Documentaciones</a></li>
             <li><a href="{{ route('unidades-medidas') }}"><i class="fa fa-circle-o"></i>Unidades de Medidas</a></li>
+            <li><a href="{{ route('medidas') }}"><i class="fa fa-circle-o"></i>Medidas</a></li>
           </ul>
         </li>
 
