@@ -39,6 +39,7 @@
             <li><a href="{{ route('clientes') }}"><i class="fa fa-circle-o"></i>Clientes</a></li>
             <li><a href="{{ route('materiales')}}"><i class="fa fa-circle-o"></i>Materiales</a></li>
             <li><a href="{{ route('documentaciones')}}"><i class="fa fa-circle-o"></i>Documentaciones</a></li>
+            <li><a href="{{ route('unidades-medidas') }}"><i class="fa fa-circle-o"></i>Unidades de Medidas</a></li>
           </ul>
         </li>
 

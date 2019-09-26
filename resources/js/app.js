@@ -65,6 +65,12 @@ Vue.component('editar-users', require('./components/abm-maestro/usuarios/editar-
 Vue.component('table-clientes', require('./components/abm-maestro/clientes/table-clientes.vue').default);
 Vue.component('nuevo-clientes', require('./components/abm-maestro/clientes/nuevo-clientes.vue').default);
 Vue.component('editar-clientes', require('./components/abm-maestro/clientes/editar-clientes.vue').default);
+
+Vue.component('table-unidades_medidas', require('./components/abm-maestro/unidades-medidas/table-unidades_medidas.vue').default);
+Vue.component('nuevo-unidades_medidas', require('./components/abm-maestro/unidades-medidas/nuevo-unidades_medidas.vue').default);
+Vue.component('editar-unidades_medidas', require('./components/abm-maestro/unidades-medidas/editar-unidades_medidas.vue').default);
+
+
 Vue.component('table-materiales', require('./components/abm-maestro/materiales/table-materiales.vue').default);
 Vue.component('nuevo-materiales', require('./components/abm-maestro/materiales/nuevo-materiales.vue').default);
 Vue.component('delete-registro', require('./components/abm-maestro//delete.vue').default);
