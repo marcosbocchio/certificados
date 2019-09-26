@@ -2215,6 +2215,10 @@ __webpack_require__.r(__webpack_exports__);
           toastr.error(value);
           console.log(key + ": " + value);
         });
+
+        if (typeof _this3.errors == 'undefined' && error) {
+          toastr.error("Ocurrió un error al procesar la solicitud");
+        }
       });
     }
   }
@@ -2569,6 +2573,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           toastr.error(value);
           console.log(key + ": " + value);
         });
+
+        if (typeof _this3.errors == 'undefined' && error) {
+          toastr.error("Ocurrió un error al procesar la solicitud");
+        }
       });
     }
   }
@@ -3250,6 +3258,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           toastr.error(value);
           console.log(key + ": " + value);
         });
+
+        if (typeof _this2.errors == 'undefined' && error) {
+          toastr.error("Ocurrió un error al procesar la solicitud");
+        }
       });
     }
   }
@@ -3398,6 +3410,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           toastr.error(value);
           console.log(key + ": " + value);
         });
+
+        if (typeof _this2.errors == 'undefined' && error) {
+          toastr.error("Ocurrió un error al procesar la solicitud");
+        }
       });
     }
   }

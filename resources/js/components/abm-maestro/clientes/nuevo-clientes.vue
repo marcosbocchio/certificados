@@ -352,6 +352,12 @@ export default {
                         toastr.error(value);
                         console.log( key + ": " + value );
                     });
+
+                     if((typeof(this.errors)=='undefined') && (error)){
+
+                     toastr.error("Ocurrió un error al procesar la solicitud");                     
+                  
+                }
                 });
               }
 }
