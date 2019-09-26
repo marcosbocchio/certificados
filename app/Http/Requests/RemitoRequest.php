@@ -35,7 +35,8 @@ class RemitoRequest extends FormRequest
     public function attributes()
     {
             return [
-                'numero'                                  => 'número',
+                'numero'                   => 'Remito N°',
+                'prefijo'                  => 'Prefijo N°',
             ];
      
     }
