@@ -2067,7 +2067,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2120,6 +2119,7 @@ __webpack_require__.r(__webpack_exports__);
   computed: Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['url', 'provincias']),
   methods: {
     openModal: function openModal() {
+      $('#box-widget').boxWidget('collapse');
       this.$nextTick(function () {
         this.newRegistro.codigo = this.selectRegistro.codigo;
         this.newRegistro.nombre = this.selectRegistro.nombre_fantasia;
@@ -2241,6 +2241,8 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
 //
 //
 //
@@ -3405,6 +3407,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         toastr.success('Nuevo usuario creado con éxito');
         _this2.newRegistro = {};
       })["catch"](function (error) {
+        console.log(error);
         _this2.errors = error.response.data.errors;
         $.each(_this2.errors, function (key, value) {
           toastr.error(value);
@@ -8878,6 +8881,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     addProducto: function addProducto(index) {
+      if (!this.producto) {
+        toastr.error("El campo producto es obligatorio");
+        return;
+      }
+
+      if (!this.medida) {
+        toastr.error("El campo medida es obligatorio");
+        return;
+      }
+
+      if (!this.cantidad_productos) {
+        toastr.error("El campo cantidad de producto es obligatorio");
+        return;
+      }
+
       this.inputsProductos.push({
         producto: this.producto,
         medida: this.medida,
@@ -44424,7 +44442,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-md-12" }, [
-                    _c("div", { staticClass: "box box-danger" }, [
+                    _c("div", { staticClass: "box box-danger collapsed-box" }, [
                       _vm._m(2),
                       _vm._v(" "),
                       _c("div", { staticClass: "box-body" }, [
@@ -44588,7 +44606,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-md-12" }, [
-                    _c("div", { staticClass: "box box-danger" }, [
+                    _c("div", { staticClass: "box box-danger collapsed-box" }, [
                       _vm._m(3),
                       _vm._v(" "),
                       _c("div", { staticClass: "box-body" }, [
@@ -44752,7 +44770,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-md-12" }, [
-                    _c("div", { staticClass: "box box-danger" }, [
+                    _c("div", { staticClass: "box box-danger collapsed-box" }, [
                       _vm._m(4),
                       _vm._v(" "),
                       _c("div", { staticClass: "box-body" }, [
@@ -44976,7 +44994,7 @@ var staticRenderFns = [
             staticClass: "btn btn-box-tool",
             attrs: { type: "button", "data-widget": "collapse" }
           },
-          [_c("i", { staticClass: "fa fa-minus" })]
+          [_c("i", { staticClass: "fa fa-plus" })]
         )
       ])
     ])
@@ -44995,7 +45013,7 @@ var staticRenderFns = [
             staticClass: "btn btn-box-tool",
             attrs: { type: "button", "data-widget": "collapse" }
           },
-          [_c("i", { staticClass: "fa fa-minus" })]
+          [_c("i", { staticClass: "fa fa-plus" })]
         )
       ])
     ])
@@ -45014,7 +45032,7 @@ var staticRenderFns = [
             staticClass: "btn btn-box-tool",
             attrs: { type: "button", "data-widget": "collapse" }
           },
-          [_c("i", { staticClass: "fa fa-minus" })]
+          [_c("i", { staticClass: "fa fa-plus" })]
         )
       ])
     ])
@@ -45433,7 +45451,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-md-12" }, [
-                    _c("div", { staticClass: "box box-danger" }, [
+                    _c("div", { staticClass: "box box-danger collapsed-box" }, [
                       _vm._m(2),
                       _vm._v(" "),
                       _c("div", { staticClass: "box-body" }, [
@@ -45597,7 +45615,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-md-12" }, [
-                    _c("div", { staticClass: "box box-danger" }, [
+                    _c("div", { staticClass: "box box-danger collapsed-box" }, [
                       _vm._m(3),
                       _vm._v(" "),
                       _c("div", { staticClass: "box-body" }, [
@@ -45761,7 +45779,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-md-12" }, [
-                    _c("div", { staticClass: "box box-danger" }, [
+                    _c("div", { staticClass: "box box-danger collapsed-box" }, [
                       _vm._m(4),
                       _vm._v(" "),
                       _c("div", { staticClass: "box-body" }, [
@@ -45940,16 +45958,18 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "modal-header" }, [
-      _c(
-        "button",
-        {
-          staticClass: "close",
-          attrs: { type: "button", "data-dismiss": "modal" }
-        },
-        [_vm._v("×")]
-      ),
-      _vm._v(" "),
-      _c("h4", { staticClass: "modal-title" }, [_vm._v("Crear")])
+      _c("div", { staticClass: "col-md-12" }, [
+        _c(
+          "button",
+          {
+            staticClass: "close",
+            attrs: { type: "button", "data-dismiss": "modal" }
+          },
+          [_vm._v("×")]
+        ),
+        _vm._v(" "),
+        _c("h4", { staticClass: "modal-title" }, [_vm._v("Crear")])
+      ])
     ])
   },
   function() {
@@ -45985,7 +46005,7 @@ var staticRenderFns = [
             staticClass: "btn btn-box-tool",
             attrs: { type: "button", "data-widget": "collapse" }
           },
-          [_c("i", { staticClass: "fa fa-minus" })]
+          [_c("i", { staticClass: "fa fa-plus" })]
         )
       ])
     ])
@@ -46004,7 +46024,7 @@ var staticRenderFns = [
             staticClass: "btn btn-box-tool",
             attrs: { type: "button", "data-widget": "collapse" }
           },
-          [_c("i", { staticClass: "fa fa-minus" })]
+          [_c("i", { staticClass: "fa fa-plus" })]
         )
       ])
     ])
@@ -46023,7 +46043,7 @@ var staticRenderFns = [
             staticClass: "btn btn-box-tool",
             attrs: { type: "button", "data-widget": "collapse" }
           },
-          [_c("i", { staticClass: "fa fa-minus" })]
+          [_c("i", { staticClass: "fa fa-plus" })]
         )
       ])
     ])
@@ -48264,7 +48284,6 @@ var render = function() {
                 _c(
                   "a",
                   {
-                    staticClass: "btn btn-primary",
                     attrs: {
                       href:
                         _vm.AppUrl +
@@ -48272,12 +48291,19 @@ var render = function() {
                         _vm.ot_id_data +
                         "/informe/metodo/" +
                         _vm.metodo_ensayo.metodo +
-                        "/create",
-                      role: "button",
-                      disabled: !_vm.metodo_selected
+                        "/create"
                     }
                   },
-                  [_vm._v("Nuevo")]
+                  [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        attrs: { disabled: !_vm.metodo_selected }
+                      },
+                      [_vm._v("Nuevo")]
+                    )
+                  ]
                 )
               ])
             ])

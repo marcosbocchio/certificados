@@ -4,8 +4,10 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title" >Crear</h4>
+                    <div class="col-md-12">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title" >Crear</h4>
+                    </div>
                 </div>
                 <div class="modal-body">   
                     <div class="col-md-12">
@@ -77,11 +79,11 @@
                    </div>
                    <!-- contacto 1 -->  
                     <div class="col-md-12">
-                        <div class="box box-danger">
+                        <div class="box box-danger collapsed-box">
                             <div class="box-header with-border">
                                 <h3 class="box-title">Contacto 1</h3>
                                 <div class="box-tools pull-right">
-                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
                                     </button>                       
                                 </div>
                             </div>
@@ -114,13 +116,13 @@
                         </div>
                     </div>
 
-                    <!-- contacto 1 -->  
+                    <!-- contacto 2 -->  
                     <div class="col-md-12">
-                        <div class="box box-danger">
+                        <div class="box box-danger collapsed-box">
                             <div class="box-header with-border">
                                 <h3 class="box-title">Contacto 2</h3>
                                 <div class="box-tools pull-right">
-                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
                                     </button>                       
                                 </div>
                             </div>
@@ -155,11 +157,11 @@
 
                     <!-- contacto 3 -->
                     <div class="col-md-12">
-                        <div class="box box-danger">
+                        <div class="box box-danger collapsed-box">
                             <div class="box-header with-border">
                                 <h3 class="box-title">Contacto 3</h3>
                                 <div class="box-tools pull-right">
-                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
                                     </button>                       
                                 </div>
                             </div>

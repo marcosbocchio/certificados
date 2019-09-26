@@ -28,7 +28,7 @@ class RemitoRequest extends FormRequest
             'prefijo'                  =>'required | numeric',
             'numero'                   =>'required | numeric',
             'receptor'                 =>'required | Max:45',  
-            'destino'                  =>'required | Max:100',  
+            'destino'                  =>'required | Max:100',             
         ];
     }
 

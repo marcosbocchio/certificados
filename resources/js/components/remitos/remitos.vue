@@ -243,6 +243,23 @@ export default {
                 },
 
         addProducto(index) {
+
+            
+            if(!this.producto){
+                toastr.error("El campo producto es obligatorio");         
+                 return;            
+            }
+
+            if(!this.medida){
+                    toastr.error("El campo medida es obligatorio");         
+                    return;            
+            }
+            
+            if(!this.cantidad_productos){
+                 toastr.error("El campo cantidad de producto es obligatorio");         
+                 return;            
+            }
+
                 this.inputsProductos.push({ 
                     producto:this.producto,             
                     medida : this.medida,              

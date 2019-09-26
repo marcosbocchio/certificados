@@ -27,7 +27,7 @@
                         </div> 
                         <div class="form-group">                    
                             <span>
-                                <a :href="AppUrl + '/area/enod/ot/' + ot_id_data + '/informe/metodo/' + metodo_ensayo.metodo + '/create' " class="btn btn-primary" role="button" :disabled="!metodo_selected">Nuevo</a>                              
+                                <a :href="AppUrl + '/area/enod/ot/' + ot_id_data + '/informe/metodo/' + metodo_ensayo.metodo + '/create' " ><button class="btn btn-primary" :disabled="!metodo_selected">Nuevo</button></a>                              
                             </span>
                         </div>
                     </div>
