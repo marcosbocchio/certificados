@@ -62,6 +62,9 @@ Vue.component('abm-maestro', require('./components/abm-maestro/abm-maestro.vue')
 Vue.component('table-users', require('./components/abm-maestro/usuarios/table-users.vue').default);
 Vue.component('nuevo-users', require('./components/abm-maestro/usuarios/nuevo-users.vue').default);
 Vue.component('editar-users', require('./components/abm-maestro/usuarios/editar-users.vue').default);
+Vue.component('table-clientes', require('./components/abm-maestro/clientes/table-clientes.vue').default);
+Vue.component('nuevo-clientes', require('./components/abm-maestro/clientes/nuevo-clientes.vue').default);
+Vue.component('editar-clientes', require('./components/abm-maestro/clientes/editar-clientes.vue').default);
 Vue.component('table-materiales', require('./components/abm-maestro/materiales/table-materiales.vue').default);
 Vue.component('nuevo-materiales', require('./components/abm-maestro/materiales/nuevo-materiales.vue').default);
 Vue.component('delete-registro', require('./components/abm-maestro//delete.vue').default);
@@ -153,6 +156,28 @@ state: {
         AppUrl:process.env.NODE_ENV == 'production' ? 
         process.env.MIX_URL_PRO :
         process.env.MIX_URL_DEV,
+        provincias:[],
+
+       
+    },
+
+actions : {
+
+        loadData({
+          commit
+        }) {
+          axios.defaults.baseURL = store.state.url ;
+          var urlRegistros = 'provincias' + '?api_token=' + Laravel.user.api_token;  
+          console.log(urlRegistros);
+          axios.get(urlRegistros).then((response) => {
+            commit('getProvincias', response.data)           
+          })
+        }
+    },
+    mutations: {
+      getProvincias(state, provincias) {
+        state.provincias = provincias
+      }
     }
 
 })

@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\ClienteRequest;
 use App\Repositories\Clientes\ClientesRepository;
 use App\Clientes;
+use Illuminate\Support\Facades\DB;
+use App\Contactos;
 use App\User;
+use App\Provincias;
 
 
 class ClientesController extends Controller
@@ -24,7 +28,23 @@ class ClientesController extends Controller
      */
     public function index()
     {
-        return  $this->clientes->getAll();
+        $clientes =  Clientes::with('contactos')->with('localidad')->get();
+        foreach ($clientes as $cliente) {
+
+            $provincia = Provincias::find($cliente->localidad['provincia_id']);
+            $cliente->provincia = $provincia;
+        }
+
+        return $clientes;
+    }
+
+    public function callView()
+    {   
+        $user = auth()->user()->name;
+        $header_titulo = "Clientes";
+        $header_descripcion ="Alta | Baja | Modificación";      
+        return view('clientes',compact('user','header_titulo','header_descripcion'));
+
     }
   
     /**
@@ -43,9 +63,9 @@ class ClientesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(ClienteRequest $request)
+    {  
+        $this->clientes->store($request) ;
     }
 
     /**
@@ -77,9 +97,9 @@ class ClientesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(ClienteRequest $request, $id)
+    {      
+        $this->clientes->updateCliente($request,$id) ;
     }
 
     /**
@@ -89,7 +109,20 @@ class ClientesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-        //
+    {   
+        DB::beginTransaction();
+         try { 
+
+                Contactos::where('cliente_id',$id)->delete();
+                $cliente = Clientes::find($id);    
+                $cliente->delete();
+                DB::commit(); 
+
+            } catch (Exception $e) {
+        
+              DB::rollback();
+              throw $e;      
+              
+            }
     }
 }

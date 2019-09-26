@@ -29,13 +29,14 @@
         </li>
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-th"></i> <span>ABMs</span>
+            <i class="fa fa-th"></i> <span>MAESTROS</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
             <li><a href="{{ route('usuarios') }}"><i class="fa fa-circle-o"></i>Usuarios</a></li>
+            <li><a href="{{ route('clientes') }}"><i class="fa fa-circle-o"></i>Clientes</a></li>
             <li><a href="{{ route('materiales')}}"><i class="fa fa-circle-o"></i>Materiales</a></li>
             <li><a href="{{ route('documentaciones')}}"><i class="fa fa-circle-o"></i>Documentaciones</a></li>
           </ul>

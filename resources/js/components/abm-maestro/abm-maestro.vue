@@ -30,11 +30,7 @@
 
         this.getRegistros();
 
-      },
-      mounted () {
-
-      //  $('#nuevo-user').modal('show');
-      },
+      }, 
 
       data () { return {
         fillRegistro: {},
