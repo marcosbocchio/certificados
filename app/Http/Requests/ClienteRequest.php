@@ -34,35 +34,55 @@ class ClienteRequest extends FormRequest
     public function rules()
     {
 
-    $val_nombre_contacto     ='';
-    $val_cargo_contacto      ='';
-    $val_email_contacto      ='';
-    $val_telefono_contacto   ='';        
+    $val_nombre_contacto1    ='';
+    $val_cargo_contacto1      ='';
+    $val_email_contacto1     ='';
+    $val_telefono_contacto1   ='';
+
+    $val_nombre_contacto2     ='';
+    $val_cargo_contacto2      ='';
+    $val_email_contacto2      ='';
+    $val_telefono_contacto2   ='';  
+
+    $val_nombre_contacto3     ='';
+    $val_cargo_contacto3      ='';
+    $val_email_contacto3      ='';
+    $val_telefono_contacto3   ='';      
 
 
-    if(isset($this->contacto1['id'])){
+   
 
-    if($this->contacto1['nombre'] != '' || $this->contacto1['email']!= '' || $this->contacto1['cargo']!= '' || $this->contacto1['tel']!= ''){
+        if($this->contacto1['nombre'] != '' || $this->contacto1['email']!= '' || $this->contacto1['cargo']!= '' || $this->contacto1['tel']!= ''){
 
-        $this->AsignarValidaciones($val_nombre_contacto,$val_cargo_contacto,$val_email_contacto,$val_telefono_contacto);
-      }
-    }
+            $val_nombre_contacto1   = 'required|Max:20';
+            $val_cargo_contacto1    = 'required|Max:45';
+            $val_email_contacto1    = 'nullable|email';
+            $val_telefono_contacto1 = 'required|regex:/^([0-9-]{6,15})?$/';
+        }
+   
 
-    if(isset($this->contacto2['id'])){
+   
 
         if($this->contacto2['nombre'] != '' || $this->contacto2['email']!= '' || $this->contacto2['cargo']!= '' || $this->contacto2['tel']!= ''){
 
-            $this->AsignarValidaciones($val_nombre_contacto,$val_cargo_contacto,$val_email_contacto,$val_telefono_contacto);
-        }
-    }
+            $val_nombre_contacto2   = 'required|Max:20';
+            $val_cargo_contacto2    = 'required|Max:45';
+            $val_email_contacto2    = 'nullable|email';
+            $val_telefono_contacto2 = 'required|regex:/^([0-9-]{6,15})?$/';
 
-    if(isset($this->contacto3['id'])){
+            }
+  
+
+   
 
         if($this->contacto3['nombre'] != '' || $this->contacto3['email']!= '' || $this->contacto3['cargo']!= '' || $this->contacto3['tel']!= ''){
 
-            $this->AsignarValidaciones($val_nombre_contacto,$val_cargo_contacto,$val_email_contacto,$val_telefono_contacto);
+            $val_nombre_contacto3   = 'required|Max:20';
+            $val_cargo_contacto3    = 'required|Max:45';
+            $val_email_contacto3    = 'nullable|email';
+            $val_telefono_contacto3 = 'required|regex:/^([0-9-]{6,15})?$/';
         }
-    }
+    
   
         return [
           
@@ -76,20 +96,20 @@ class ClienteRequest extends FormRequest
                 'tel'           =>'required|regex:/^([0-9-]{6,15})?$/',
                 'email'         =>'required|unique:users|email',
 
-                'contacto1.nombre' => $val_nombre_contacto,
-                'contacto1.cargo'  => $val_cargo_contacto,
-                'contacto1.email'  => $val_email_contacto,
-                'contacto1.tel'    => $val_telefono_contacto,
+                'contacto1.nombre' => $val_nombre_contacto1,
+                'contacto1.cargo'  => $val_cargo_contacto1,
+                'contacto1.email'  => $val_email_contacto1,
+                'contacto1.tel'    => $val_telefono_contacto1,
 
-                'contacto2.nombre' => $val_nombre_contacto,
-                'contacto2.cargo'  => $val_cargo_contacto,
-                'contacto2.email'  => $val_email_contacto,
-                'contacto2.tel'    => $val_telefono_contacto,
+                'contacto2.nombre' => $val_nombre_contacto2,
+                'contacto2.cargo'  => $val_cargo_contacto2,
+                'contacto2.email'  => $val_email_contacto2,
+                'contacto2.tel'    => $val_telefono_contacto2,
 
-                'contacto3.nombre' => $val_nombre_contacto,
-                'contacto3.cargo'  => $val_cargo_contacto,
-                'contacto3.email'  => $val_email_contacto,
-                'contacto3.tel'    => $val_telefono_contacto,
+                'contacto3.nombre' => $val_nombre_contacto3,
+                'contacto3.cargo'  => $val_cargo_contacto3,
+                'contacto3.email'  => $val_email_contacto3,
+                'contacto3.tel'    => $val_telefono_contacto3,
             ];
      
     }
@@ -101,14 +121,17 @@ class ClienteRequest extends FormRequest
                 'razon_social'        => 'razón social',
                 'direccion'           => 'dirección',
                 'tel'                 => 'teléfono',
+
                 'contacto1.nombre'    => 'nombre del contacto 1',
                 'contacto1.cargo'     => 'cargo del contacto 1',
                 'contacto1.email'     => 'email del contacto 1',
                 'contacto1.tel'       => 'teléfono del contacto 1',
+
                 'contacto2.nombre'    => 'nombre del contacto 2',
                 'contacto2.cargo'     => 'cargo del contacto 2',
                 'contacto2.email'     => 'email del contacto 2',
                 'contacto2.tel'       => 'teléfono del contacto 2',
+
                 'contacto3.nombre'    => 'nombre del contacto 3',
                 'contacto3.cargo'     => 'cargo del contacto 3',
                 'contacto3.email'     => 'email del contacto 3',
