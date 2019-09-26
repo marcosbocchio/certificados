@@ -23,7 +23,16 @@ class ServiciosController extends Controller
      */
     public function index()
     {
-        return  $this->servicios->getAll();
+        return  Servicios::with('metodoEnsayos')->with('unidadMedidas')->get();
+    }
+
+    public function callView()
+    {   
+        $user = auth()->user()->name; 
+        $header_titulo = "Servicios";
+        $header_descripcion ="Alta | Baja | Modificación";  
+        return view('servicios',compact('user','header_titulo','header_descripcion'));
+
     }
 
     /**

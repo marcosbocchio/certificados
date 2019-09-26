@@ -15,12 +15,21 @@ class ProductosController extends Controller
      */
     public function index()
     {
-        return  Productos::All();
+        return  Productos::with('unidadMedidas')->get();
     }
 
     public function ProductosOts(){
 
         return  Productos::where('visible_ot',1)->get();
+    }
+
+    public function callView()
+    {   
+        $user = auth()->user()->name; 
+        $header_titulo = "Productos";
+        $header_descripcion ="Alta | Baja | Modificación";  
+        return view('productos',compact('user','header_titulo','header_descripcion'));
+
     }
   
 

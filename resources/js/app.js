@@ -74,6 +74,16 @@ Vue.component('table-medidas', require('./components/abm-maestro/medidas/table-m
 Vue.component('nuevo-medidas', require('./components/abm-maestro/medidas/nuevo-medidas.vue').default);
 Vue.component('editar-medidas', require('./components/abm-maestro/medidas/editar-medidas.vue').default);
 
+Vue.component('table-productos', require('./components/abm-maestro/productos/table-productos.vue').default);
+Vue.component('nuevo-productos', require('./components/abm-maestro/productos/nuevo-productos.vue').default);
+Vue.component('editar-productos', require('./components/abm-maestro/productos/editar-productos.vue').default);
+
+Vue.component('table-servicios', require('./components/abm-maestro/servicios/table-servicios.vue').default);
+Vue.component('nuevo-servicios', require('./components/abm-maestro/servicios/nuevo-servicios.vue').default);
+Vue.component('editar-servicios', require('./components/abm-maestro/servicios/editar-servicios.vue').default);
+
+
+
 Vue.component('table-materiales', require('./components/abm-maestro/materiales/table-materiales.vue').default);
 Vue.component('nuevo-materiales', require('./components/abm-maestro/materiales/nuevo-materiales.vue').default);
 Vue.component('delete-registro', require('./components/abm-maestro//delete.vue').default);
@@ -167,6 +177,7 @@ state: {
         process.env.MIX_URL_DEV,
         provincias:[],
         unidades_medidas:[],
+        metodos_ensayos:[],
 
        
     },
@@ -193,6 +204,17 @@ actions : {
           axios.get(urlRegistros).then((response) => {
             commit('getUnidadesMedidas', response.data)           
           })
+        },
+
+        loadMetodosEnsayos({
+          commit
+        }) {
+          axios.defaults.baseURL = store.state.url ;
+          var urlRegistros = 'metodo_ensayos' + '?api_token=' + Laravel.user.api_token;  
+          console.log(urlRegistros);
+          axios.get(urlRegistros).then((response) => {
+            commit('getMetodosEnsayos', response.data)           
+          })
         }
     },
     mutations: {
@@ -202,6 +224,10 @@ actions : {
 
       getUnidadesMedidas(state, unidadesMedidas) {
         state.unidades_medidas = unidadesMedidas
+      },
+
+      getMetodosEnsayos(state, metodoEnsayos) {
+        state.metodos_ensayos = metodoEnsayos
       },
     }
 

@@ -41,6 +41,8 @@
             <li><a href="{{ route('documentaciones')}}"><i class="fa fa-circle-o"></i>Documentaciones</a></li>
             <li><a href="{{ route('unidades-medidas') }}"><i class="fa fa-circle-o"></i>Unidades de Medidas</a></li>
             <li><a href="{{ route('medidas') }}"><i class="fa fa-circle-o"></i>Medidas</a></li>
+            <li><a href="{{ route('productos') }}"><i class="fa fa-circle-o"></i>Productos</a></li>
+            <li><a href="{{ route('servicios') }}"><i class="fa fa-circle-o"></i>Servicios</a></li>
           </ul>
         </li>
 
