@@ -52,7 +52,7 @@ class OtProductosController extends Controller
                                     productos.id as id,
                                     ots.id as ot_id,
                                     productos.descripcion as producto,
-                                    medidas.descripcion as medida,
+                                    medidas.codigo as medida,
                                     medidas.id as medida_id,
                                     productos.unidades_medida_id as unidad_medida_id,
                                     unidades_medidas.codigo as unidad_medida_codigo,
