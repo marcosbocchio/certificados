@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Unidades_medidas;
+use App\UnidadesMedidas;
 class UnidadesMedidasTableSeeder extends Seeder
 {
     /**
@@ -11,17 +11,17 @@ class UnidadesMedidasTableSeeder extends Seeder
      */
     public function run()
     {
-        Unidades_medidas::create([
+        UnidadesMedidas::create([
             'codigo'            =>'Cm',
             'descripcion'       =>'Descripción para la unidad de medida cm',          
         ]);
 
-        Unidades_medidas::create([
+        UnidadesMedidas::create([
             'codigo'            =>'"',
             'descripcion'       =>'Descripción para la unidad de medida pulgada',          
         ]);
 
-        Unidades_medidas::create([
+        UnidadesMedidas::create([
             'codigo'            =>'Lts',
             'descripcion'       =>'Descripción para la unidad de medida Litro',          
         ]);
