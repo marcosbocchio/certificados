@@ -50508,8 +50508,7 @@ var render = function() {
                 attrs: {
                   autocomplete: "off",
                   type: "password",
-                  name: "password",
-                  readonly: ""
+                  name: "password"
                 },
                 domProps: { value: _vm.newRegistro.password },
                 on: {
@@ -50539,8 +50538,7 @@ var render = function() {
                 attrs: {
                   autocomplete: "off",
                   type: "password",
-                  name: "password2",
-                  readonly: ""
+                  name: "password2"
                 },
                 domProps: { value: _vm.password2 },
                 on: {

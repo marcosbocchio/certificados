@@ -34,9 +34,9 @@
                     <label for="usuario">email</label>
                     <input autocomplete="off" type="text" name="email" class="form-control" v-model="newRegistro.email" value="">
                     <label for="password">Contraseña</label>
-                          <input autocomplete="off" type="password" name="password" class="form-control" v-model="newRegistro.password" readonly>
+                          <input autocomplete="off" type="password" name="password" class="form-control" v-model="newRegistro.password">
                     <label for="password2">Repetir Contraseña</label>
-                          <input autocomplete="off" type="password" name="password2" class="form-control" v-model="password2" readonly>
+                          <input autocomplete="off" type="password" name="password2" class="form-control" v-model="password2">
                 </div>
             
                 <div class="modal-footer">
