@@ -189,7 +189,7 @@ class RemitosController extends Controller
                                 ->join('detalle_remitos','detalle_remitos.medida_id','=','medidas.id')
                                 ->join('unidades_medidas','unidades_medidas.id','=','medidas.unidades_medida_id')
                                 ->where('detalle_remitos.id','=',$item->id)
-                                ->select('medidas.descripcion as descripcion','unidades_medidas.codigo as codigo','medidas.id as id')
+                                ->select('medidas.codigo as descripcion','unidades_medidas.codigo as codigo','medidas.id as id')
                                 ->first();
 
                 $item->cantidad_productos =(string)$item->cantidad;
