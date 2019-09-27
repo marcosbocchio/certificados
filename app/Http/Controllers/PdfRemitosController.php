@@ -17,7 +17,7 @@ class PdfRemitosController extends Controller
         $detalle = DB::select('SELECT 
                                     detalle_remitos.cantidad as cantidad,
                                     productos.descripcion as producto,
-                                    medidas.descripcion as medida,
+                                    medidas.codigo as medida,
                                     unidades_medidas.codigo as unidad_medida
                                     FROM detalle_remitos
                                     INNER JOIN productos ON productos.id = detalle_remitos.producto_id
