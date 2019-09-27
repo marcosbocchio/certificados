@@ -42,8 +42,7 @@ export default {
     
         newRegistro : {           
             'codigo'  : '',
-            'descripcion' : '',  
-            'visible_ot'  : false                     
+            'descripcion' : '',                           
          },
 
         unidad_medida :{}, 
@@ -69,8 +68,7 @@ export default {
            openModal : function(){
                 this.newRegistro = {           
                         'codigo'  : '',
-                        'descripcion' : '',   
-                         'visible_ot'  : false                    
+                        'descripcion' : '',                                
                      },    
                     this.unidad_medida ={};       
                     this.metodo_ensayo ={};         
@@ -86,7 +84,7 @@ export default {
              getUnidadesMedidas: function(){
              
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'productos' + '?api_token=' + Laravel.user.api_token;        
+                var urlRegistros = 'servicios' + '?api_token=' + Laravel.user.api_token;        
                 axios.get(urlRegistros).then(response =>{
                 this.unidades_medidas = response.data
                 });
@@ -97,18 +95,20 @@ export default {
             storeRegistro: function(){
 
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'productos';                         
+                var urlRegistros = 'servicios';                         
                 axios.post(urlRegistros, {   
                     
                 ...this.newRegistro,
-                'unidad_medida' : this.unidad_medida,           
+                'unidad_medida' : this.unidad_medida,   
+                'metodo_ensayo'  :this.metodo_ensayo,        
           
                   
                 }).then(response => {
                   this.$emit('store');
                   this.errors=[];
+                  console.log(response);
                   $('#nuevo').modal('hide');
-                  toastr.success('Nueva Unidad de medidas creada con éxito');               
+                  toastr.success('Nuevo servicio creado con éxito');               
                   this.newRegistro={}
                   
                 }).catch(error => {                   

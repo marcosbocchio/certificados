@@ -10,13 +10,10 @@
                 <div class="modal-body">   
          
                     <div class="form-group">
-
-                  
-
-                    <label for="codigo">Visible OT</label>             
-                    <input type="checkbox" id="checkbox" v-model="newRegistro.visible_ot"> 
-
+                        <label for="codigo">Visible OT</label>             
+                        <input type="checkbox" id="checkbox" v-model="newRegistro.visible_ot"> 
                     </div>
+
                     <label for="codigo">Código (*)</label>                   
                     <input autocomplete="off" v-model="newRegistro.codigo" type="text" name="codigo" class="form-control" value="">
                     

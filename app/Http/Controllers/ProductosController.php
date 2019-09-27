@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\ProductoRequest;
+use Illuminate\Support\Facades\DB;
 use App\Productos;
 
 class ProductosController extends Controller
@@ -49,9 +51,23 @@ class ProductosController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductoRequest $request)
     {
-        //
+        $producto = new Productos;   
+
+        DB::beginTransaction();
+        try { 
+
+            $this->saveProducto($request,$producto);
+            DB::commit(); 
+
+        } catch (Exception $e) {
+    
+            DB::rollback();
+            throw $e;      
+            
+        }
+        
     }
 
     /**
@@ -83,9 +99,31 @@ class ProductosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ProductoRequest $request, $id)
     {
-        //
+        $producto = Productos::find($id);     
+    
+        DB::beginTransaction();
+        try {
+            $this->saveProducto($request,$producto);
+            DB::commit(); 
+    
+          } catch (Exception $e) {
+      
+            DB::rollback();
+            throw $e;      
+            
+          }
+    }
+
+    public function saveProducto($request,$producto){
+
+        $producto->codigo = $request['codigo'];
+        $producto->descripcion = $request['descripcion'];
+        $producto->unidades_medida_id = $request['unidad_medida']['id'];
+        $producto->visible_ot = $request->visible_ot;
+        $producto->save();
+
     }
 
     /**
@@ -96,6 +134,7 @@ class ProductosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $producto = Productos::find($id);
+        $producto->delete();
     }
 }

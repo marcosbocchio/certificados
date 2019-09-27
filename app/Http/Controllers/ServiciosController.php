@@ -3,19 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Repositories\Servicios\ServiciosRepository;
+use App\Http\Requests\ServicioRequest;
+use Illuminate\Support\Facades\DB;
 use App\Servicios;
 use App\User;
 
 class ServiciosController extends Controller
 {
 
-    Protected $servicios;
-
-    public function __construct(ServiciosRepository $serviciosRepository)
-    {
-      $this->servicios = $serviciosRepository;
-    }
+  
     /**
      * Display a listing of the resource.
      *
@@ -51,9 +47,22 @@ class ServiciosController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ServicioRequest $request)
     {
-        //
+        $servicio = new Servicios;   
+
+        DB::beginTransaction();
+        try { 
+
+            $this->saveServicio($request,$servicio);
+            DB::commit(); 
+
+        } catch (Exception $e) {
+    
+            DB::rollback();
+            throw $e;      
+            
+        }
     }
 
     /**
@@ -85,9 +94,32 @@ class ServiciosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ServicioRequest $request, $id)
     {
-        //
+       
+        $servicio = Servicios::find($id);     
+    
+        DB::beginTransaction();
+        try {
+            $this->saveServicio($request,$servicio);
+            DB::commit(); 
+    
+          } catch (Exception $e) {
+      
+            DB::rollback();
+            throw $e;      
+            
+          }
+    }
+
+    public function saveServicio($request,$servicio){
+
+        $servicio->codigo = $request['codigo'];
+        $servicio->descripcion = $request['descripcion'];
+        $servicio->unidades_medida_id = $request['unidad_medida']['id'];
+        $servicio->metodo_ensayo_id = $request['metodo_ensayo']['id'];
+        $servicio->save();
+        
     }
 
     /**
@@ -98,6 +130,7 @@ class ServiciosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $servicio = Servicios::find($id);
+        $servicio->delete();
     }
 }

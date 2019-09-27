@@ -106,7 +106,7 @@ export default {
                   this.$emit('update');
                   this.errors=[];
                   $('#editar').modal('hide');
-                  toastr.success('Nueva medidas editada con éxito');         
+                  toastr.success('medida editada con éxito');         
                   this.editRegistro={}
                   
                 }).catch(error => {                   
