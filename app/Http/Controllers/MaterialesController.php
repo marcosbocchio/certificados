@@ -3,23 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Repositories\Materiales\MaterialesRepository;
+use App\Http\Requests\MaterialRequest;
+use Illuminate\Support\Facades\DB;
 use App\Materiales;
 use App\User;
 
 
 class MaterialesController extends Controller
 {
-    Protected $materiales;
-
-    public function __construct(MaterialesRepository $materialesRepository)
-    {
-      $this->materiales = $materialesRepository;
-    }
 
     public function index()
     {   
-         return  $this->materiales->getAll();
+         return  Materiales::all();
 
     }
 
@@ -32,21 +27,53 @@ class MaterialesController extends Controller
 
     }
 
-    public function store(Request $request){
+    public function store(MaterialRequest $request){
 
-      $request->validate([
+      $material = new Materiales;   
 
-        'descripcion'  => 'required |unique:materiales'
+        DB::beginTransaction();
+        try { 
+
+            $this->saveMaterial($request,$material);
+            DB::commit(); 
+
+        } catch (Exception $e) {
+    
+            DB::rollback();
+            throw $e;      
+            
+        }      
+
+    }
+
+    public function update(MaterialRequest $request, $id){
+
+      $material = Materiales::find($id);     
+    
+        DB::beginTransaction();
+        try {
+            $this->saveMaterial($request,$material);
+            DB::commit(); 
+    
+          } catch (Exception $e) {
       
-      ]);
-
-      $this->materiales->create($request->all()) ;      
-
+            DB::rollback();
+            throw $e;      
+            
+          }
     }
 
     public function destroy($id){
 
-      $material = $this->materiales->find($id);    
+      $material = Materiales::find($id);    
       $material->delete();
+    }
+
+    public function saveMaterial($request,$material){
+
+      $material->codigo = $request['codigo'];
+      $material->descripcion = $request['descripcion'];
+      $material->save();
+
     }
 }

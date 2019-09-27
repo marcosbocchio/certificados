@@ -86,6 +86,8 @@ Vue.component('editar-servicios', require('./components/abm-maestro/servicios/ed
 
 Vue.component('table-materiales', require('./components/abm-maestro/materiales/table-materiales.vue').default);
 Vue.component('nuevo-materiales', require('./components/abm-maestro/materiales/nuevo-materiales.vue').default);
+Vue.component('editar-materiales', require('./components/abm-maestro/materiales/editar-materiales.vue').default);
+
 Vue.component('delete-registro', require('./components/abm-maestro//delete.vue').default);
 
 Vue.component('table-documentaciones', require('./components/abm-maestro/documentaciones/table-documentaciones.vue').default);

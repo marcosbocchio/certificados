@@ -31,4 +31,13 @@ class ProductoRequest extends FormRequest
             ];
      
     }
+
+    public function attributes()
+    {
+            return [
+                'codigo'                   => 'código',
+                'prefijo'                  => 'descripción',
+            ];
+     
+    }
 }

@@ -447,8 +447,13 @@
                             <input type="number" v-model="pasada" class="form-control" id="pasada" :disabled="(!isGasoducto || !TablaDetalle.length)">                           
                         </div>     
                     </div>
-                    <div class="col-md-2">                        
-                        <label>Cunio Z</label>           
+                    <div class="col-md-2">    
+                        <div v-if="!isGasoducto">   
+                            <label>Cuño 1</label>  
+                        </div>  
+                        <div v-else>                   
+                             <label>Cuño Z</label> 
+                        </div>          
                         <v-select v-model="soldador1" :options="soldadores" label="codigo" :disabled="(!TablaDetalle.length)">
                             <template slot="option" slot-scope="option">
                                 <span class="upSelect">{{ option.nombre }} </span> <br> 
@@ -456,18 +461,26 @@
                             </template>
                         </v-select>                  
                     </div> 
-                    <div class="col-md-2">                         
-                        <label>Cunio L</label>           
-                        <v-select v-model="soldador2" :options="soldadores" label="codigo" :disabled="(!isGasoducto || pasada!='1' || !TablaDetalle.length)">
-                            <template slot="option" slot-scope="option">
-                                <span class="upSelect">{{ option.nombre }} </span> <br> 
-                                <span class="downSelect"> {{ option.codigo }} </span>
-                            </template>
-                        </v-select>                    
+                    <div v-if="isGasoducto">   
+                        <div class="col-md-2">                         
+                            <label>Cuño L</label>           
+                            <v-select v-model="soldador2" :options="soldadores" label="codigo" :disabled="(!isGasoducto || pasada!='1' || !TablaDetalle.length)">
+                                <template slot="option" slot-scope="option">
+                                    <span class="upSelect">{{ option.nombre }} </span> <br> 
+                                    <span class="downSelect"> {{ option.codigo }} </span>
+                                </template>
+                            </v-select>                    
+                        </div>
                     </div>
 
-                    <div class="col-md-2">                         
-                        <label>Cunio P</label>           
+                    <div class="col-md-2">  
+                        <div v-if="!isGasoducto">   
+                            <label>Cuño 2</label>  
+                        </div>  
+                        <div v-else>                   
+                             <label>Cuño P</label> 
+                        </div>                         
+                               
                         <v-select v-model="soldador3" :options="soldadores" label="codigo" :disabled="(!TablaDetalle.length)">
                             <template slot="option" slot-scope="option">
                                 <span class="upSelect">{{ option.nombre }} </span> <br> 
@@ -1097,6 +1110,7 @@ export default {
         selectPosDetalle :function(index){
 
             this.indexDetalle = index ;
+            this.pasada =1 ;
            
         },
 
@@ -1192,7 +1206,13 @@ export default {
                 descripcion: this.defectoRiPlanta.descripcion,
                 id : this.defectoRiPlanta.id,    
                 posicion : this.posicionPlacaGosaducto,                
-                    });                  
+                    });   
+                    
+            if(this.posicionPlacaGosaducto != ''){
+
+                console.log('el defecto tiene posicion placa');
+                this.TablaDetalle[this.indexDetalle].aceptable_sn = false;
+            }
             
             },
         RemoveDetalle(index) {
@@ -1203,12 +1223,29 @@ export default {
 
         RemovePasada(index) {
             this.indexPasada = 0;   
-            this.TablaDetalle[this.indexDetalle].pasadas.splice(index, 1);       
+            this.TablaDetalle[this.indexDetalle].pasadas.splice(index, 1);     
             
         },
 
         RemoveDefectos(index) {            
-            this.TablaDetalle[this.indexDetalle].defectos.splice(index, 1);            
+            
+            console.log('----entro en removeDefectos----');
+            this.TablaDetalle[this.indexDetalle].defectos.splice(index, 1);   
+
+            let aceptable = true;
+
+            this.TablaDetalle[this.indexDetalle].defectos.forEach(function(defecto){
+
+                if(defecto.posicion !=''){
+                    console.log('defecto:' + defecto.descripcion + '  posicion:' + defecto.posicion );
+                    aceptable = false;
+                   
+                }
+
+            })
+
+            this.TablaDetalle[this.indexDetalle].aceptable_sn = aceptable;
+                
         },
 
         insertarClonacion : function (posicion){

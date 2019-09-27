@@ -28,4 +28,13 @@ class UnidadMedidaRequest extends FormRequest
             'descripcion'  =>'nullable|Max:100',
         ];
     }
+
+    public function attributes()
+    {
+            return [
+                'codigo'                   => 'código',
+                'prefijo'                  => 'descripción',
+            ];
+     
+    }
 }
