@@ -1,5 +1,5 @@
 <template>
-    <form v-on:submit.prevent="storeRegistro" method="post">
+    <form v-on:submit.prevent="storeRegistro" method="post" autocomplete="off">
     <div class="modal fade" id="nuevo">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -32,11 +32,13 @@
                          <v-select v-model="cliente" label="razon_social" :options="clientes"></v-select>                         
                     </div>
                     <label for="usuario">email</label>
-                    <input autocomplete="off" type="text" name="email" class="form-control" v-model="newRegistro.email" value="">
+                    <input style="display:none" type="text" name="none-email" class="form-control" v-model="newRegistro.email" value="">
+                    <input autocomplete="nope" type="text" name="email" class="form-control" v-model="newRegistro.email" value="">
                     <label for="password">Contraseña</label>
-                          <input autocomplete="off" type="password" name="password" class="form-control" v-model="newRegistro.password">
+                          <input style="display:none" type="password" name="password" class="form-control" v-model="newRegistro.password">
+                          <input autocomplete="new-password" type="password" name="password" class="form-control" v-model="newRegistro.password">
                     <label for="password2">Repetir Contraseña</label>
-                          <input autocomplete="off" type="password" name="password2" class="form-control" v-model="password2">
+                          <input type="password" name="password2" class="form-control" v-model="password2">
                 </div>
             
                 <div class="modal-footer">

@@ -2160,7 +2160,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     getProvincias: function getProvincias() {
-      this.$store.dispatch('loadData');
+      this.$store.dispatch('loadProvincias');
     },
     getLocalidades: function getLocalidades() {
       var _this = this;
@@ -2529,7 +2529,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     getProvincias: function getProvincias() {
-      this.$store.dispatch('loadData');
+      this.$store.dispatch('loadProvincias');
     },
     getLocalidades: function getLocalidades() {
       var _this = this;
@@ -4609,6 +4609,8 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
 //
 //
 //
@@ -50643,7 +50645,7 @@ var render = function() {
   return _c(
     "form",
     {
-      attrs: { method: "post" },
+      attrs: { method: "post", autocomplete: "off" },
       on: {
         submit: function($event) {
           $event.preventDefault()
@@ -50778,8 +50780,31 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
+                staticStyle: { display: "none" },
+                attrs: { type: "text", name: "none-email", value: "" },
+                domProps: { value: _vm.newRegistro.email },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.newRegistro, "email", $event.target.value)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.newRegistro.email,
+                    expression: "newRegistro.email"
+                  }
+                ],
+                staticClass: "form-control",
                 attrs: {
-                  autocomplete: "off",
+                  autocomplete: "nope",
                   type: "text",
                   name: "email",
                   value: ""
@@ -50809,8 +50834,31 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
+                staticStyle: { display: "none" },
+                attrs: { type: "password", name: "password" },
+                domProps: { value: _vm.newRegistro.password },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.newRegistro, "password", $event.target.value)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.newRegistro.password,
+                    expression: "newRegistro.password"
+                  }
+                ],
+                staticClass: "form-control",
                 attrs: {
-                  autocomplete: "off",
+                  autocomplete: "new-password",
                   type: "password",
                   name: "password"
                 },
@@ -50839,11 +50887,7 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
-                attrs: {
-                  autocomplete: "off",
-                  type: "password",
-                  name: "password2"
-                },
+                attrs: { type: "password", name: "password2" },
                 domProps: { value: _vm.password2 },
                 on: {
                   input: function($event) {
@@ -80674,7 +80718,7 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
     metodos_ensayos: []
   },
   actions: {
-    loadData: function loadData(_ref) {
+    loadProvincias: function loadProvincias(_ref) {
       var commit = _ref.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'provincias' + '?api_token=' + Laravel.user.api_token;

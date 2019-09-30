@@ -323,7 +323,7 @@ export default {
 
             getProvincias : function(){
                 
-                this.$store.dispatch('loadData');
+                this.$store.dispatch('loadProvincias');
 
             },
 

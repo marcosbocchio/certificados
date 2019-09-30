@@ -186,7 +186,7 @@ state: {
 
 actions : {
 
-        loadData({
+        loadProvincias({
           commit
         }) {
           axios.defaults.baseURL = store.state.url ;
