@@ -42,7 +42,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ColorParticulasTableSeeder::class);        
         $this->call(IluminacionesTableSeeder::class);          
        
-      
        // factory('App\Clientes', 2500)->create();
      
       

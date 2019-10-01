@@ -30,4 +30,13 @@ class ServicioRequest extends FormRequest
             'metodo_ensayo' => 'required',
         ];
     }
+
+    public function attributes()
+    {
+            return [
+                'codigo'                   => 'código',
+                'prefijo'                  => 'descripción',
+            ];
+     
+    }
 }

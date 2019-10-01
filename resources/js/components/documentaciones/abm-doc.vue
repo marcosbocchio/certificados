@@ -119,8 +119,6 @@ import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 import LightBox from 'vue-image-lightbox'
 
-
-
 export default {
     name: 'abm-doc',
       props : {         
@@ -194,12 +192,12 @@ export default {
 
          options: {
             
-                layout: {
-                    height: 20,
-                    width: 150,    
-                    verticalTextAlign: 74,        
-                 }
+            layout: {
+                height: 20,
+                width: 150,    
+                verticalTextAlign: 74,        
                 }
+            }
         }
     },
 

@@ -15,10 +15,7 @@
                     
                     <label for="name">Descripción</label>                   
                     <input autocomplete="off" type="text" name="descripcion" class="form-control" v-model="newRegistro.descripcion" value="">
-
-                     <label for="name">Unidad Medida (*)</label>      
-                    <v-select v-model="unidad_medida" label="codigo" :options="unidades_medidas"></v-select>
-
+                   
                 </div>
             
                 <div class="modal-footer">
@@ -39,23 +36,20 @@ export default {
     
         newRegistro : {           
             'codigo'  : '',
-            'descripcion' : '',           
+            'descripcion' : '',         
          },
-
-        unidad_medida :{},      
         errors:{},        
          }
     
     },
  created: function () {
      
-    eventNewRegistro.$on('open', this.openModal);
-    this.$store.dispatch('loadUnidadesMedidas');
+    eventNewRegistro.$on('open', this.openModal)   
   
     },
     computed :{
     
-          ...mapState(['url','unidades_medidas'])
+         ...mapState(['url'])
     },
  
    
@@ -64,8 +58,7 @@ export default {
                 this.newRegistro = {           
                         'codigo'  : '',
                         'descripcion' : '',                       
-                     },    
-                    this.unidad_medida ={};         
+                     },             
                 $('#nuevo').modal('show');    
                 $( document ).ready(function() {
                     setTimeout(function(){
@@ -73,18 +66,7 @@ export default {
                         $("#pass").focus();
                     },500);
                 });           
-            },
-
-             getUnidadesMedidas: function(){
-             
-                axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'unidades_medidas' + '?api_token=' + Laravel.user.api_token;        
-                axios.get(urlRegistros).then(response =>{
-                this.unidades_medidas = response.data
-                });
-              },
-            
-            
+            },       
 
             storeRegistro: function(){
 
@@ -92,8 +74,7 @@ export default {
                 var urlRegistros = 'medidas';                         
                 axios.post(urlRegistros, {   
                     
-                ...this.newRegistro,
-                'unidad_medida' : this.unidad_medida,           
+                ...this.newRegistro,           
           
                   
                 }).then(response => {

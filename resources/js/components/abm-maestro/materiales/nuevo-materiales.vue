@@ -8,8 +8,13 @@
                         <h4 class="modal-title">Crear</h4>
                     </div>
                     <div class="modal-body">
-                        <label for="name">descripción</label>
-                        <input type="text" name="descripcion" class="form-control" v-model="newRegistro.descripcion" value="">               
+
+                    <label for="codigo">Código (*)</label>                   
+                    <input autocomplete="off" v-model="newRegistro.codigo" type="text" name="codigo" class="form-control" value="">
+                    
+                    <label for="name">Descripción (*)</label>                   
+                    <input autocomplete="off" type="text" name="descripcion" class="form-control" v-model="newRegistro.descripcion" value="">
+
                     </div>
                     <div class="modal-footer">
                         <input type="submit" class="btn btn-primary" value="Guardar">

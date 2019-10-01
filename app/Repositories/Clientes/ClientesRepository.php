@@ -17,15 +17,13 @@ class ClientesRepository extends BaseRepository
   public function store($request){
 
 
-    $cliente = $this->getModel();   
-
+    $cliente = $this->getModel();  
+   
     DB::beginTransaction();
     try { 
 
         $this->saveCliente($request,$cliente);
-        $this->saveContacto($request['contacto1'],$cliente);
-        $this->saveContacto($request['contacto2'],$cliente);
-        $this->saveContacto($request['contacto3'],$cliente);
+        $this->saveContactos($request,$cliente);     
 
         DB::commit(); 
 
@@ -46,9 +44,7 @@ class ClientesRepository extends BaseRepository
     DB::beginTransaction();
     try {
         $this->saveCliente($request,$cliente);       
-        $this->updateContacto($request['contacto1'],$cliente);
-        $this->updateContacto($request['contacto2'],$cliente);
-        $this->updateContacto($request['contacto3'],$cliente);
+        $this->updateContacto($request,$cliente);
         DB::commit(); 
 
       } catch (Exception $e) {
@@ -70,50 +66,57 @@ public function saveCliente($request,$cliente){
   $cliente->direccion  =$request['direccion'];
   $cliente->cp = $request['cp'];
   $cliente->localidad_id = $request['localidad']['id'];
+  $cliente->path = $request['path'];
   $cliente->save();
 
   }
 
 
-  public function updateContacto($contacto_request,$cliente){   
+  public function updateContacto($request,$cliente){ 
+         
+    $contactos = Contactos::where('cliente_id',$cliente['id'])->get();
 
-    if(isset($contacto_request['id'])) {
+      DB::beginTransaction();
+      try
+      {
+        
+          foreach ($contactos as $contacto) {
+            $existe = false;
+            foreach ($request['contactos'] as $contacto_request) {
 
-        $contacto = Contactos::find($contacto_request['id']);
+                if(isset($contacto_request['id'])){
 
-        if($contacto_request['nombre'] == ''){
+                    if( ($contacto['id'] == $contacto_request['id'])){
+                      $existe = true;
+                    }
+                }
+              }
 
-          $contacto->delete();
+            if (!$existe){
+              Contactos::where('id',$contacto['id'])                     
+                        ->delete();
+              }
+          }
 
-        }else{
-      
-        $contacto->nombre = $contacto_request['nombre'];
-        $contacto->cargo = $contacto_request['cargo'];
-        $contacto->tel = $contacto_request['tel'];
-        $contacto->email = $contacto_request['email'];
-        $contacto->save();
-      }
+          foreach ($request['contactos'] as $contacto_request) {
 
-    }else {
-        $this->saveContacto($contacto_request,$cliente);
-    }  
+              $contacto_request_new = Contactos::firstOrCreate(
+                  
+                  ['cliente_id' => $cliente['id'],'nombre' => $contacto_request['nombre'],'cargo' => $contacto_request['cargo'],'tel' => $contacto_request['tel'],'email' => $contacto_request['email']],
+                  ['cliente_id' => $cliente['id'],'nombre' => $contacto_request['nombre'],'cargo' => $contacto_request['cargo'],'tel' => $contacto_request['tel'],'email' => $contacto_request['email']]
 
-  }
+              );
 
-  
-  public function saveContacto($contacto_request,$cliente){
-   
-
-    if ($contacto_request['nombre'] != ''){
-  
-          $contacto = new Contactos;
-          $contacto->cliente_id = $cliente->id;
-          $contacto->nombre = $contacto_request['nombre'];
-          $contacto->cargo = $contacto_request['cargo'];
-          $contacto->tel = $contacto_request['tel'];
-          $contacto->email = $contacto_request['email'];
-          $contacto->save();
-      }
+          $contacto_request_new->save();
     
     } 
+
+    DB::commit();
+    }catch(\Exception $e)
+    {
+    DB::rollback();
+    throw $e;
+    }   
+  }
+
 }

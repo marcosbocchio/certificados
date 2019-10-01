@@ -29,4 +29,13 @@ class MedidaRequest extends FormRequest
             'unidad_medida' => 'required',
         ];
     }
+
+    public function attributes()
+    {
+            return [
+                'codigo'                   => 'código',
+                'prefijo'                  => 'descripción',
+            ];
+     
+    }
 }

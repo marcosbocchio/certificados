@@ -7,7 +7,7 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title" >Editar</h4>
                 </div>
-                <div class="modal-body">   
+                <div class="modal-body">              
                     <div class="col-md-12">
                         <div class="box box-danger">
                             <div class="box-header with-border">
@@ -19,179 +19,156 @@
                             </div>
                         <div class="box-body">  
                             <div class="col-md-6">    
-                                        <div class="form-group">
-                                            <label for="name">Código (*)</label>                   
-                                            <input autocomplete="off" v-model="newRegistro.codigo" type="text" name="codigo" class="form-control" value=""> 
-                                        </div>  
-                                    </div>            
-                                    <div class="col-md-6">    
-                                        <div class="form-group">
-                                            <label for="name">Nombre (*)</label>                   
-                                            <input autocomplete="off" v-model="newRegistro.nombre" type="text" name="nombre" class="form-control" value=""> 
-                                        </div>  
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label for="name">Razon Social(*)</label>                   
-                                            <input autocomplete="off" v-model="newRegistro.razon_social" type="text" name="razon_social" class="form-control" value=""> 
-                                        </div> 
-                                    </div> 
-                                <div class="col-md-6">                 
-                                        <div class="form-group">
-                                            <label>Provincia (*)</label>
-                                            <v-select v-model="provincia" label="provincia" :options="provincias" @input="getLocalidades()"></v-select>   
-                                        </div>
+                                <div class="form-group">
+                                    <label for="name">Código (*)</label>                   
+                                    <input autocomplete="off" v-model="newRegistro.codigo" type="text" name="codigo" class="form-control" value=""> 
+                                </div>  
+                            </div>            
+                            <div class="col-md-6">    
+                                <div class="form-group">
+                                    <label for="name">Nombre (*)</label>                   
+                                    <input autocomplete="off" v-model="newRegistro.nombre" type="text" name="nombre" class="form-control" value=""> 
+                                </div>  
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="name">Razon Social(*)</label>                   
+                                    <input autocomplete="off" v-model="newRegistro.razon_social" type="text" name="razon_social" class="form-control" value=""> 
+                                </div> 
+                            </div> 
+                        <div class="col-md-6">                 
+                                <div class="form-group">
+                                    <label>Provincia (*)</label>
+                                    <v-select v-model="provincia" label="provincia" :options="provincias" @input="getLocalidades()"></v-select>   
                                 </div>
-                                    <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Localidad (*)</label>
-                                        <v-select v-model="localidad" label="localidad" :options="localidades"></v-select>   
-                                    </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="name">Código Postal (*)</label>                   
-                                            <input autocomplete="off" v-model="newRegistro.cp" type="text" name="cp" class="form-control" value=""> 
-                                        </div> 
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="name">Dirección (*)</label>                   
-                                            <input autocomplete="off" v-model="newRegistro.direccion" type="text" name="direccion" class="form-control" value=""> 
-                                        </div>  
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="name">Teléfono (*)</label>                   
-                                            <input autocomplete="off" v-model="newRegistro.tel" type="text" name="telefono" class="form-control" value=""> 
-                                        </div> 
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="usuario">email (*)</label>
-                                            <input autocomplete="off" type="text" name="email" class="form-control" v-model="newRegistro.email" value="">
-                                        </div>      
-                                    </div>
-                             </div>
+                        </div>
+                            <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Localidad (*)</label>
+                                <v-select v-model="localidad" label="localidad" :options="localidades"></v-select>   
+                            </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Código Postal (*)</label>                   
+                                    <input autocomplete="off" v-model="newRegistro.cp" type="text" name="cp" class="form-control" value=""> 
+                                </div> 
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Dirección (*)</label>                   
+                                    <input autocomplete="off" v-model="newRegistro.direccion" type="text" name="direccion" class="form-control" value=""> 
+                                </div>  
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Teléfono (*)</label>                   
+                                    <input autocomplete="off" v-model="newRegistro.tel" type="text" name="telefono" class="form-control" value=""> 
+                                </div> 
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="usuario">email (*)</label>
+                                    <input autocomplete="off" type="text" name="email" class="form-control" v-model="newRegistro.email" value="">
+                                </div>      
+                            </div>
+
+                            <div class="col-md-6">   
+                                <div class="form-group">    
+                                    <label>Logo</label>        
+                                    <input type="file" class="form-control" id="inputFile" ref="inputFile1" name="file" @change="onFileSelected($event)">
+                                    <button class="hide" @click.prevent="onUpload()" >upload</button> 
+                               </div>                              
+                            </div>   
+                            <div class="clearfix"></div>
+                            <div class="col-md-6">   
+                                <div class="form-group">       
+                                    <p>Formatos soportados : png, bmp, jpg</p>                          
+                                    <div v-if="newRegistro.path != ''">                            
+                                        <img :src="'/' + newRegistro.path" class="margin zoom-in"  @click="openGallery()" alt="..." width="120" >
+                                        <LightBox :images="images"  ref="lightbox"  :show-light-box="false" ></LightBox>
+                                    </div>                              
+                                    <progress-bar
+                                        :options="options"
+                                        :value="uploadPercentage"
+                                        style="margin-top:5px;"
+                                    /> 
+                                </div>    
+                            </div>
+                      </div>
                         </div>
                    </div>
-                   <!-- contacto 1 -->  
+                   <!-- contacto -->  
                     <div class="col-md-12">
-                        <div class="box box-danger collapsed-box">
+                        <div class="box box-danger ">
                             <div class="box-header with-border">
-                                <h3 class="box-title">Contacto 1</h3>
-                                <div class="box-tools pull-right">
-                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
-                                    </button>                       
-                                </div>
+                                <h3 class="box-title">Contacto</h3>                            
                             </div>
                         <div class="box-body">
                             <div class="col-md-6">    
                                 <div class="form-group">
                                     <label for="name">Nombre</label>                   
-                                    <input autocomplete="off" v-model="contacto1.nombre" type="text" name="nombre" class="form-control" value=""> 
+                                    <input autocomplete="off" v-model="contacto.nombre" type="text" name="nombre" class="form-control" value=""> 
                                 </div>  
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="usuario">Cargo</label>
-                                    <input autocomplete="off" type="text" name="cargo" class="form-control" v-model="contacto1.cargo" value="">
+                                    <input autocomplete="off" type="text" name="cargo" class="form-control" v-model="contacto.cargo" value="">
                                 </div>      
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="usuario">Teléfono</label>
-                                    <input autocomplete="off" type="text" name="telefono" class="form-control" v-model="contacto1.tel" value="">
+                                    <input autocomplete="off" type="text" name="telefono" class="form-control" v-model="contacto.tel" value="">
                                 </div>      
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="usuario">email</label>
-                                    <input autocomplete="off" type="text" name="email" class="form-control" v-model="contacto1.email" value="">
+                                    <input autocomplete="off" type="text" name="email" class="form-control" v-model="contacto.email" value="">
                                 </div>      
                             </div>
-                        </div>
-                        </div>
-                    </div>
+                            <div class="col-md-1"> 
 
-                    <!-- contacto 2 -->  
-                    <div class="col-md-12">
-                        <div class="box box-danger collapsed-box">
-                            <div class="box-header with-border">
-                                <h3 class="box-title">Contacto 2</h3>
-                                <div class="box-tools pull-right">
-                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
-                                    </button>                       
-                                </div>
+                                <p>&nbsp;</p>
+                                <span>                             
+                                    <a title="Agregar Contacto" @click="AddContacto()"> <app-icon img="plus-circle" color="black"></app-icon> </a>
+                                </span>
+                        
                             </div>
-                        <div class="box-body">
-                            <div class="col-md-6">    
-                                <div class="form-group">
-                                    <label for="name">Nombre</label>                   
-                                    <input autocomplete="off" v-model="contacto2.nombre" type="text" name="nombre" class="form-control" value=""> 
-                                </div>  
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="usuario">Cargo</label>
-                                    <input autocomplete="off" type="text" name="cargo" class="form-control" v-model="contacto2.cargo" value="">
-                                </div>      
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="usuario">Teléfono</label>
-                                    <input autocomplete="off" type="text" name="telefono" class="form-control" v-model="contacto2.tel" value="">
-                                </div>      
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="usuario">email</label>
-                                    <input autocomplete="off" type="text" name="email" class="form-control" v-model="contacto2.email" value="">
-                                </div>      
-                            </div>
-                        </div>
-                        </div>
-                    </div>
 
-                    <!-- contacto 3 -->
-                    <div class="col-md-12">
-                        <div class="box box-danger collapsed-box">
-                            <div class="box-header with-border">
-                                <h3 class="box-title">Contacto 3</h3>
-                                <div class="box-tools pull-right">
-                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
-                                    </button>                       
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-striped">
+                                        <thead>
+                                            <tr>                                  
+                                                <th style="width:90px;">NOMBRE</th>                                  
+                                                <th style="width:120px;">CARGO</th>
+                                                <th style="width:120px;">TELÉFONO</th>
+                                                <th style="width:120px;">EMAIL</th>                                                             
+                                                <th colspan="1" style="width:30px;">&nbsp;</th>
+                                            </tr>
+                                        </thead>                         
+                                        <tbody>
+                                             <tr v-for="(FilaTabla,k) in (TablaContactos)" :key="k" >                                        
+                                                <td>{{ FilaTabla.nombre }}</td>                                            
+                                                <td>{{ FilaTabla.cargo }} </td>
+                                                <td>{{ FilaTabla.tel }} </td>
+                                                <td>{{ FilaTabla.email }} </td>                                          
+                                                <td> 
+                                                    <a  @click="RemoveContacto(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a>
+                                                </td>          
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
-                            </div>
-                        <div class="box-body">
-                            <div class="col-md-6">    
-                                <div class="form-group">
-                                    <label for="name">Nombre</label>                   
-                                    <input autocomplete="off" v-model="contacto3.nombre" type="text" name="nombre" class="form-control" value=""> 
-                                </div>  
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="usuario">Cargo</label>
-                                    <input autocomplete="off" type="text" name="cargo" class="form-control" v-model="contacto3.cargo" value="">
-                                </div>      
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="usuario">Teléfono</label>
-                                    <input autocomplete="off" type="text" name="telefono" class="form-control" v-model="contacto3.tel" value="">
-                                </div>      
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="usuario">email</label>
-                                    <input autocomplete="off" type="text" name="email" class="form-control" v-model="contacto3.email" value="">
-                                </div>      
-                            </div>
+                        </div> 
                         </div>
                         </div>
-                    </div>         
-                 
+                         
+                    </div>        
              
               </div>
                 <div class="modal-footer">
@@ -205,9 +182,16 @@
 </template>
 
 <script>
- import {mapState} from 'vuex'
+require('vue-image-lightbox/dist/vue-image-lightbox.min.css')
+import LightBox from 'vue-image-lightbox'
+import {mapState} from 'vuex'
  import { eventEditRegistro } from '../../event-bus';
 export default {
+
+     components: {        
+         
+            LightBox,
+        },
 
     props : {
 
@@ -226,33 +210,46 @@ export default {
             'tel' : '',
             'email' :'',
             'direccion':'',
-            'cp':''            
-         },
+            'cp':'',
+            'path':''              
+         },     
+
         errors:{},               
         provincia:{},
       //  provincias:{},
         localidad:{},
         localidades:[],
-        contacto1 : {
+         contacto : {
            'nombre'  : '',
            'cargo' : '',
            'tel' : '',
            'email' :'',
         },
-        contacto2 : {
-           'nombre'  : '',
-           'cargo' : '',
-           'tel' : '',
-           'email' :'',
-        },
-        contacto3 : {
-           'nombre'  : '',
-           'cargo' : '',
-           'tel' : '',
-           'email' :'',
-        }  
-
+        TablaContactos:[],
+        images:[
+            {
+              
+                src: '',
+                thumb: '',
+                caption: 'caption to display. receive <html> <b>tag</b>', // Optional
+              
+            }
+            ]   ,
        
+        fullPage: false,
+        isLoading_file: false,     
+        uploadPercentage: 0,
+        selectedFile : null,     
+        HabilitarGuardar : true, 
+
+        options: {
+            
+            layout: {
+                height: 20,
+                width: 150,    
+                verticalTextAlign: 74,        
+                }
+            }         
          }
     
     },
@@ -267,8 +264,25 @@ export default {
     
          mapState(['url','provincias'])
        
-    ,   
+    ,  
+
+  watch : {
+          
+          newRegistro : function(val) {
+
+                this.images[0].src ='/' + val.path;
+                this.images[0].thumb  ='/' + val.path;
+
+          },      
+        
+    },
+
+ 
     methods: {
+
+        openGallery(index) {
+                 this.$refs.lightbox.showImage(0)
+            }   ,  
            openModal : function(){
 
            $('#box-widget').boxWidget('collapse')
@@ -282,9 +296,10 @@ export default {
                 this.newRegistro.email = this.selectRegistro.email;
                 this.newRegistro.direccion = this.selectRegistro.direccion;
                 this.newRegistro.cp = this.selectRegistro.cp;
+                this.newRegistro.path = this.selectRegistro.path;
                 this.provincia=this.selectRegistro.provincia;
                 this.localidad=this.selectRegistro.localidad;
-                this.contacto1 = {
+                this.contacto = {
                     'nombre'  : '',
                     'cargo' : '',
                     'tel' : '',
@@ -301,21 +316,11 @@ export default {
                     'cargo' : '',
                     'tel' : '',
                     'email' :'',
-                    }  
-                
-                this.selectRegistro.contactos.forEach(function callback(contacto,index) {
-
-                    if(index  == '0'){
-                      this.contacto1= contacto;
-                    }else if(index  == '1'){
-                        this.contacto2=contacto;
-                    }else if(index == '2'){
-                         this.contacto3=contacto;
-                    }
-                    
-                }.bind(this));
-              
-
+                    },
+                this.images[0].src ='/' + this.selectRegistro.path;
+                this.images[0].thumb  ='/' + this.selectRegistro.path;  
+                this.TablaContactos = this.selectRegistro.contactos;
+                this.selectedFile =  null,      
                 $('#editar').modal('show');    
                 this.$forceUpdate();    
             })
@@ -323,7 +328,7 @@ export default {
 
             getProvincias : function(){
                 
-                this.$store.dispatch('loadData');
+                this.$store.dispatch('loadProvincias');
 
             },
 
@@ -346,6 +351,87 @@ export default {
                 });
               },
 
+            onFileSelected(event) {         
+          
+            this.isLoading_file = true;  
+            this.HabilitarGuardar = false;          
+
+            this.selectedFile = event.target.files[0];
+        
+            let FileSize = this.selectedFile.size / 1024 / 1024; // in MB           
+            let FileType=this.selectedFile.type;         
+            console.log(FileType);
+
+            if (!((FileType == 'image/jpeg') || (FileType == 'image/bmp') || (FileType == 'image/png'))) {                   
+        
+                    toastr.error('El tipo de archivo no es aceptado ');
+                    this.$refs.inputFile1.type = 'text';
+                    this.$refs.inputFile1.type = 'file';  
+                    this.selectedFile = null;
+                    return; 
+             }
+            
+                console.log(this.selectedFile);
+
+                if(FileSize > 20 ){
+                    event.preventDefault();
+                    toastr.error('Archivo demasiado grande. (Max 500 KB)');
+                    this.$refs.inputFile1.type = 'text';
+                    this.$refs.inputFile1.type = 'file';  
+                    this.selectedFile = null;
+                    this.uploadPercentage = 0;
+                    this.isLoading_file = false;  
+                }else{
+
+                    this.onUpload();   
+
+                } 
+         
+           },
+
+            onUpload() {
+
+              this.HabilitarGuardar = false          
+              let settings = { headers: { 'content-type': 'multipart/form-data' }, onUploadProgress: function( progressEvent ) {
+                                                                                    this.uploadPercentage = parseInt( Math.round( ( progressEvent.loaded * 100 ) / progressEvent.total ) );
+                                                                                    }.bind(this) }
+               const fd = new FormData();
+               
+               fd.append('logo-cliente',this.selectedFile);
+              
+               axios.defaults.baseURL = this.url;     
+               var url = 'storage/logo-cliente';
+               console.log(fd);
+
+               axios.post(url,fd,settings)
+               .then (response => {                                
+                  this.newRegistro.path = response.data;      
+                  this.isLoading_file = false   
+                  this.HabilitarGuardar = true;   
+                  this.images[0].src ='/' + response.data;
+                  this.images[0].thumb  ='/' + response.data;   
+                  this.$forceUpdate();      
+                
+               }).catch(response => {
+                   this.errors = error.response.data.errors;
+                   this.isLoading_file = false   
+                   this.HabilitarGuardar = true;            
+                })
+
+            },
+
+            AddContacto : function(){
+
+                this.TablaContactos.push({
+                    ...this.contacto
+                });
+            },
+
+            RemoveContacto : function(index){
+                 this.TablaContactos.splice(index, 1);         
+            },
+
+
             storeRegistro: function(){           
 
                 axios.defaults.baseURL = this.url ;
@@ -359,11 +445,11 @@ export default {
                 'email'         :this.newRegistro.email, 
                 'direccion'     :this.newRegistro.direccion, 
                 'cp'            : this.newRegistro.cp,   
-                 'provincia' : this.provincia,          
-                'localidad'     : this.localidad,
-                'contacto1'     : this.contacto1,
-                'contacto2'     : this.contacto2,
-                'contacto3'     : this.contacto3,
+                'path'          : this.newRegistro.path,   
+                'provincia'     : this.provincia,          
+                'localidad'     : this.localidad,  
+                'contactos'     :this.TablaContactos,
+                  
                   
                 }).then(response => {
                   console.log(response.data);   
