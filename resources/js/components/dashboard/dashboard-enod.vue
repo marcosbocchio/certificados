@@ -21,8 +21,8 @@
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3>{{ CantSoldadores }}</h3>
-              <p>Soldadores</p>
+              <h3>{{ CantSoldadores }} / {{ CantUsuariosCliente }}</h3>
+              <p>Soldadores / Usuarios Cliente</p>
             </div>
             <div class="icon">
               <i class="ion ion-person-add"></i>
@@ -179,6 +179,7 @@ export default {
         CantSoldadores:'0',
         CantDocumentaciones:'0',
         CantProcedimientos:'0',
+        CantUsuariosCliente:'0',
 
         }
 
@@ -195,6 +196,7 @@ export default {
       ot_id_selected: function (ContarOperadores) {      
       this.ContarOperadores();
       this.ContarSoldadores();
+      this.ContarUsuariosCliente();
       this.ContarProcedimietos();
       this.ContarDocumenaciones();
       this.ContarRemitos();
@@ -247,6 +249,16 @@ export default {
             });
 
          },
+
+         ContarUsuariosCliente : function (){
+
+            axios.defaults.baseURL = this.url ;                
+            var urlRegistros = 'ot_usuarios_clientes/ot/' + this.ot_id_selected +'/total' + '?api_token=' + Laravel.user.api_token;             
+            axios.get(urlRegistros).then(response =>{
+            this.CantUsuariosCliente = response.data
+            });
+
+            },
 
          ContarProcedimietos : function (){
 

@@ -59,6 +59,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('tecnica_distancias/{id}/diametro/{diametro}', 'TecnicaDistanciasController@TecnicaDistanciasDiametro');
 
     Route::resource('tipo_soldaduras', 'TipoSoldadurasController');
+    Route::get('users/cliente/{id}','UserController@UserCliente');
     Route::get('soldadores/cliente/{id}','SoldadoresController@SoldadoresCliente');
     
     Route::get('equipos/metodo/{metodo}', 'EquiposController@EquiposMetodo');
@@ -83,11 +84,13 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('documentaciones/ot','DocumentacionesController@DocumentacionesDeOt'); 
     Route::resource('documentaciones', 'DocumentacionesController');   
     Route::get('documentaciones/ot_operarios/{ot_id}/{user_id}', 'DocumentacionesController@getDocOtOperarios');
-    
+      
+
     //Soldadores
     Route::resource('ot_soldadores', 'OtSoldadoresController');  
     Route::get('ot_soldadores/ot/{id}','OtSoldadoresController@SoldadoresOt');
     Route::get('ot_soldadores/ot/{ot_id}/total', 'OtSoldadoresController@OtSoldadoresTotal');
+    Route::get('ot_usuarios_clientes/ot/{ot_id}/total', 'OtUsuariosClientesController@OtUsuariosClienteTotal');
     
     //operarios
     Route::resource('ot_operarios','OtOperariosController');

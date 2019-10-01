@@ -5272,7 +5272,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       CantRemitos: '0',
       CantSoldadores: '0',
       CantDocumentaciones: '0',
-      CantProcedimientos: '0'
+      CantProcedimientos: '0',
+      CantUsuariosCliente: '0'
     };
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['url', 'AppUrl'])),
@@ -5280,6 +5281,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     ot_id_selected: function ot_id_selected(ContarOperadores) {
       this.ContarOperadores();
       this.ContarSoldadores();
+      this.ContarUsuariosCliente();
       this.ContarProcedimietos();
       this.ContarDocumenaciones();
       this.ContarRemitos();
@@ -5321,40 +5323,49 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this3.CantSoldadores = response.data;
       });
     },
-    ContarProcedimietos: function ContarProcedimietos() {
+    ContarUsuariosCliente: function ContarUsuariosCliente() {
       var _this4 = this;
+
+      axios.defaults.baseURL = this.url;
+      var urlRegistros = 'ot_usuarios_clientes/ot/' + this.ot_id_selected + '/total' + '?api_token=' + Laravel.user.api_token;
+      axios.get(urlRegistros).then(function (response) {
+        _this4.CantUsuariosCliente = response.data;
+      });
+    },
+    ContarProcedimietos: function ContarProcedimietos() {
+      var _this5 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'ot_procedimientos_propios/ot/' + this.ot_id_selected + '/total' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this4.CantProcedimientos = response.data;
+        _this5.CantProcedimientos = response.data;
       });
     },
     ContarInformes: function ContarInformes() {
-      var _this5 = this;
+      var _this6 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'informes/ot/' + this.ot_id_selected + '/total' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this5.CantInformes = response.data;
+        _this6.CantInformes = response.data;
       });
     },
     ContarRemitos: function ContarRemitos() {
-      var _this6 = this;
+      var _this7 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'remitos/ot/' + this.ot_id_selected + '/total' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this6.CantRemitos = response.data;
+        _this7.CantRemitos = response.data;
       });
     },
     ContarDocumenaciones: function ContarDocumenaciones() {
-      var _this7 = this;
+      var _this8 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'ot-documentaciones/ot/' + this.ot_id_selected + '/total' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this7.CantDocumentaciones = response.data;
+        _this8.CantDocumentaciones = response.data;
       });
     }
   }
@@ -6113,10 +6124,59 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     soldadores_data: {
+      type: Array,
+      required: false
+    },
+    usuarios_cliente_data: {
       type: Array,
       required: false
     },
@@ -6129,13 +6189,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     return {
       ot_soldadores: [],
       soldadores: [],
-      soldador: ''
+      soldador: '',
+      ot_usuarios_cliente: [],
+      usuarios_cliente: [],
+      usuario_cliente: ''
     };
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['url', 'AppUrl'])),
   created: function created() {
     this.ot_soldadores = JSON.parse(JSON.stringify(this.soldadores_data));
+    this.ot_usuarios_cliente = JSON.parse(JSON.stringify(this.usuarios_cliente_data));
     this.getSoldadores();
+    this.getUsuariosCliente();
   },
   methods: {
     getSoldadores: function getSoldadores() {
@@ -6145,6 +6210,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var urlRegistros = 'soldadores/cliente/' + this.ot_data.cliente_id + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         _this.soldadores = response.data;
+      });
+    },
+    getUsuariosCliente: function getUsuariosCliente() {
+      var _this2 = this;
+
+      axios.defaults.baseURL = this.url;
+      var urlRegistros = 'users/cliente/' + this.ot_data.cliente_id + '?api_token=' + Laravel.user.api_token;
+      axios.get(urlRegistros).then(function (response) {
+        _this2.usuarios_cliente = response.data;
       });
     },
     addSoldador: function addSoldador(id) {
@@ -6158,8 +6232,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.soldador = '';
       }
     },
+    addUsuarioCliente: function addUsuarioCliente(id) {
+      if (this.existeUsuarioCliente(id)) {
+        toastr.error('El Usuario ya existe en la OT');
+      } else if (this.usuario_cliente.name) {
+        console.log('agregando soldador');
+        this.ot_usuarios_cliente.push(_objectSpread({}, this.usuario_cliente));
+        this.usuario_cliente = '';
+      }
+    },
     removeSoldador: function removeSoldador(index) {
       this.ot_soldadores.splice(index, 1);
+    },
+    removeUsuarioCliente: function removeUsuarioCliente(index) {
+      this.ot_usuarios_cliente.splice(index, 1);
     },
     existeSoldador: function existeSoldador(id) {
       var existe = false;
@@ -6172,28 +6258,40 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
       return existe;
     },
+    existeUsuarioCliente: function existeUsuarioCliente(id) {
+      var existe = false;
+      this.ot_usuarios_cliente.forEach(function (usuario) {
+        console.log(usuario.id, '==', id);
+
+        if (usuario.id == id) {
+          existe = true;
+        }
+      });
+      return existe;
+    },
     submit: function submit() {
-      var _this2 = this;
+      var _this3 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'ot_soldadores';
       axios.post(urlRegistros, {
         soldadores: this.ot_soldadores,
+        usuarios_cliente: this.ot_usuarios_cliente,
         ot: this.ot_data
       }).then(function (response) {
-        _this2.errors = [];
+        _this3.errors = [];
         console.log(response);
-        toastr.success('Soldadores actualizados con éxito');
+        toastr.success('Soldadores/Usuarios actualizados con éxito');
       })["catch"](function (error) {
-        _this2.errors = error.response.data.errors;
-        $.each(_this2.errors, function (key, value) {
+        _this3.errors = error.response.data.errors;
+        $.each(_this3.errors, function (key, value) {
           toastr.error(value, key);
           console.log(key + ": " + value);
         });
 
-        if (_this2.errors =  true && error) {
+        if (_this3.errors =  true && error) {
           toastr.error("Ocurrio un error al procesar la solicitud");
-          _this2.ot_soldadores = _this2.soldadores_data;
+          _this3.ot_soldadores = _this3.soldadores_data;
         }
       });
     }
@@ -51428,9 +51526,15 @@ var render = function() {
       _c("div", { staticClass: "col-lg-3 col-xs-6" }, [
         _c("div", { staticClass: "small-box bg-yellow" }, [
           _c("div", { staticClass: "inner" }, [
-            _c("h3", [_vm._v(_vm._s(_vm.CantSoldadores))]),
+            _c("h3", [
+              _vm._v(
+                _vm._s(_vm.CantSoldadores) +
+                  " / " +
+                  _vm._s(_vm.CantUsuariosCliente)
+              )
+            ]),
             _vm._v(" "),
-            _c("p", [_vm._v("Soldadores")])
+            _c("p", [_vm._v("Soldadores / Usuarios Cliente")])
           ]),
           _vm._v(" "),
           _vm._m(1),
@@ -52784,9 +52888,15 @@ var render = function() {
     _c("div", { staticClass: "col-md-12" }, [
       _c("div", { staticClass: "small-box bg-yellow" }, [
         _c("div", { staticClass: "inner" }, [
-          _c("h3", [_vm._v(_vm._s(_vm.ot_soldadores.length))]),
+          _c("h3", [
+            _vm._v(
+              _vm._s(_vm.ot_soldadores.length) +
+                " / " +
+                _vm._s(_vm.ot_usuarios_cliente.length)
+            )
+          ]),
           _vm._v(" "),
-          _c("p", [_vm._v("Soldadores")])
+          _c("p", [_vm._v("Soldadores / Usuarios Cliente ")])
         ]),
         _vm._v(" "),
         _vm._m(0),
@@ -52888,6 +52998,81 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
+      _c("div", { staticClass: "box box-danger" }, [
+        _c("div", { staticClass: "box-body" }, [
+          _c(
+            "div",
+            { staticClass: "form-group" },
+            [
+              _c("label", [_vm._v("Usuarios Cliente")]),
+              _vm._v(" "),
+              _c("v-select", {
+                attrs: { options: _vm.usuarios_cliente, label: "name" },
+                model: {
+                  value: _vm.usuario_cliente,
+                  callback: function($$v) {
+                    _vm.usuario_cliente = $$v
+                  },
+                  expression: "usuario_cliente"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c("span", [
+              _c("i", {
+                staticClass: "fa fa-plus-circle",
+                on: {
+                  click: function($event) {
+                    return _vm.addUsuarioCliente(_vm.usuario_cliente.id)
+                  }
+                }
+              })
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "box box-info top-buffer" }, [
+        _vm._m(4),
+        _vm._v(" "),
+        _c("div", { staticClass: "box-body" }, [
+          _c("div", { staticClass: "table-responsive" }, [
+            _c("table", { staticClass: "table table-hover table-striped" }, [
+              _vm._m(5),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.ot_usuarios_cliente, function(
+                  ot_usuario_cliente,
+                  k
+                ) {
+                  return _c("tr", { key: k }, [
+                    _c("td", [_vm._v(" " + _vm._s(ot_usuario_cliente.name))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(" " + _vm._s(ot_usuario_cliente.email))]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("i", {
+                        staticClass: "fa fa-minus-circle",
+                        on: {
+                          click: function($event) {
+                            return _vm.removeUsuarioCliente(k)
+                          }
+                        }
+                      })
+                    ])
+                  ])
+                }),
+                0
+              )
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
       _c(
         "a",
         {
@@ -52952,6 +53137,41 @@ var staticRenderFns = [
         _c("th", [_vm._v("CODIGO")]),
         _vm._v(" "),
         _c("th", [_vm._v("NOMBRE")]),
+        _vm._v(" "),
+        _c("th", { attrs: { colspan: "2" } }, [_vm._v("ACCIÓN")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "box-header with-border" }, [
+      _c("h3", { staticClass: "box-title" }, [
+        _vm._v("Usurios del Cliente Asignados Orden de Trabajo")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "box-tools pull-right" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-box-tool",
+            attrs: { type: "button", "data-widget": "collapse" }
+          },
+          [_c("i", { staticClass: "fa fa-minus" })]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("NOMBRE")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("EMAIL")]),
         _vm._v(" "),
         _c("th", { attrs: { colspan: "2" } }, [_vm._v("ACCIÓN")])
       ])

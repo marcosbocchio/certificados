@@ -15,16 +15,7 @@ class ClienteRequest extends FormRequest
     {
         return true;
     }
-
-
-    public function AsignarValidaciones(&$val_nombre_contacto,&$val_cargo_contacto,&$val_email_contacto,&$val_telefono_contacto){
-
-        $val_nombre_contacto   = 'required|Max:20';
-        $val_cargo_contacto    = 'required|Max:45';
-        $val_email_contacto    = 'nullable|email';
-        $val_telefono_contacto = 'required|regex:/^([0-9-]{6,15})?$/';
-
-    }
+    
 
     /**
      * Get the validation rules that apply to the request.
@@ -49,7 +40,7 @@ class ClienteRequest extends FormRequest
                 'contactos.*.nombre' =>'required|Max:20',
                 'contactos.*.cargo'  =>'required|Max:45',
                 'contactos.*.tel'  =>'required|regex:/^([0-9-]{6,15})?$/',
-                'contactos.*email'   =>'nullable|email',
+                'contactos.*.email'   =>'nullable|email',
             ];
      
     }
@@ -57,7 +48,7 @@ class ClienteRequest extends FormRequest
     public function attributes()
     {
             return [
-                'codigo'              => 'código',
+                'codigo'              => 'código', 
                 'razon_social'        => 'razón social',
                 'direccion'           => 'dirección',
                 'tel'                 => 'teléfono',

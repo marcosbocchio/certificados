@@ -91,4 +91,9 @@ class UserController extends Controller
     return $this->users->updateUser($request,$id);
 
   }
+
+  public function UserCliente($id){
+
+    return User::where('cliente_id',$id)->get();
+  }
 }
