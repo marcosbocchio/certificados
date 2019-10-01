@@ -151,11 +151,41 @@
                                             </tr>
                                         </thead>                         
                                         <tbody>
-                                             <tr v-for="(FilaTabla,k) in (TablaContactos)" :key="k" >                                        
-                                                <td>{{ FilaTabla.nombre }}</td>                                            
-                                                <td>{{ FilaTabla.cargo }} </td>
-                                                <td>{{ FilaTabla.tel }} </td>
-                                                <td>{{ FilaTabla.email }} </td>                                          
+                                             <tr v-for="(FilaTabla,k) in (TablaContactos)"  @click="selectPosContacto(k)" :key="k" >                                        
+                                                <td>
+                                                    <div v-if="indexDetalle == k ">       
+                                                          <input type="text" v-model="TablaContactos[k].nombre" maxlength="20" size="25">        
+                                                    </div>   
+                                                    <div v-else>
+                                                           {{ TablaContactos[k].nombre }}
+                                                    </div>      
+
+                                                  
+                                                </td>                                            
+                                                <td>
+                                                    <div v-if="indexDetalle == k ">       
+                                                          <input type="text" v-model="TablaContactos[k].cargo" maxlength="20" size="15">        
+                                                    </div>   
+                                                    <div v-else>
+                                                           {{ TablaContactos[k].cargo }}
+                                                    </div>   
+                                                 </td>
+                                                <td>
+                                                    <div v-if="indexDetalle == k ">       
+                                                          <input type="text" v-model="TablaContactos[k].tel" maxlength="20" size="20">        
+                                                    </div>   
+                                                    <div v-else>
+                                                           {{ TablaContactos[k].tel }}
+                                                    </div>   
+                                                 </td>
+                                                <td>
+                                                    <div v-if="indexDetalle == k ">       
+                                                          <input type="text" v-model="TablaContactos[k].email" maxlength="60" size="25">        
+                                                    </div>   
+                                                    <div v-else>
+                                                           {{ TablaContactos[k].email }}
+                                                    </div>   
+                                                 </td>                                          
                                                 <td> 
                                                     <a  @click="RemoveContacto(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a>
                                                 </td>          
@@ -241,6 +271,7 @@ export default {
         uploadPercentage: 0,
         selectedFile : null,     
         HabilitarGuardar : true, 
+         indexDetalle:0,
 
         options: {
             
@@ -422,14 +453,37 @@ export default {
 
             AddContacto : function(){
 
+                 if(this.contacto.nombre == ''){
+                     toastr.error('El campo Nombre es obligatorio');
+                     return;
+                }else if(this.contacto.cargo == ''){
+                     toastr.error('El campo Cargo es obligatorio');
+                     return;
+                }else if(this.contacto.tel == ''){
+                     toastr.error('El campo Teléfono es obligatorio');
+                     return;
+                }
+
                 this.TablaContactos.push({
                     ...this.contacto
                 });
+
+                this.contacto.nombre = '';
+                this.contacto.cargo = '';
+                this.contacto.tel = '';
+                this.contacto.email = '';
             },
 
             RemoveContacto : function(index){
                  this.TablaContactos.splice(index, 1);         
             },
+
+            selectPosContacto :function(index){
+
+            this.indexDetalle = index ;
+          
+           
+           },
 
 
             storeRegistro: function(){           

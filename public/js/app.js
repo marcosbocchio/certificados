@@ -2050,6 +2050,36 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 __webpack_require__(/*! vue-image-lightbox/dist/vue-image-lightbox.min.css */ "./node_modules/vue-image-lightbox/dist/vue-image-lightbox.min.css");
 
 
@@ -2100,6 +2130,7 @@ __webpack_require__(/*! vue-image-lightbox/dist/vue-image-lightbox.min.css */ ".
       uploadPercentage: 0,
       selectedFile: null,
       HabilitarGuardar: true,
+      indexDetalle: 0,
       options: {
         layout: {
           height: 20,
@@ -2245,10 +2276,28 @@ __webpack_require__(/*! vue-image-lightbox/dist/vue-image-lightbox.min.css */ ".
       });
     },
     AddContacto: function AddContacto() {
+      if (this.contacto.nombre == '') {
+        toastr.error('El campo Nombre es obligatorio');
+        return;
+      } else if (this.contacto.cargo == '') {
+        toastr.error('El campo Cargo es obligatorio');
+        return;
+      } else if (this.contacto.tel == '') {
+        toastr.error('El campo Teléfono es obligatorio');
+        return;
+      }
+
       this.TablaContactos.push(_objectSpread({}, this.contacto));
+      this.contacto.nombre = '';
+      this.contacto.cargo = '';
+      this.contacto.tel = '';
+      this.contacto.email = '';
     },
     RemoveContacto: function RemoveContacto(index) {
       this.TablaContactos.splice(index, 1);
+    },
+    selectPosContacto: function selectPosContacto(index) {
+      this.indexDetalle = index;
     },
     storeRegistro: function storeRegistro() {
       var _this4 = this;
@@ -2496,6 +2545,36 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 __webpack_require__(/*! vue-image-lightbox/dist/vue-image-lightbox.min.css */ "./node_modules/vue-image-lightbox/dist/vue-image-lightbox.min.css");
 
 
@@ -2540,6 +2619,7 @@ __webpack_require__(/*! vue-image-lightbox/dist/vue-image-lightbox.min.css */ ".
       uploadPercentage: 0,
       selectedFile: null,
       HabilitarGuardar: true,
+      indexDetalle: 0,
       options: {
         layout: {
           height: 20,
@@ -2686,8 +2766,26 @@ __webpack_require__(/*! vue-image-lightbox/dist/vue-image-lightbox.min.css */ ".
         _this3.HabilitarGuardar = true;
       });
     },
+    selectPosContacto: function selectPosContacto(index) {
+      this.indexDetalle = index;
+    },
     AddContacto: function AddContacto() {
+      if (this.contacto.nombre == '') {
+        toastr.error('El campo Nombre es obligatorio');
+        return;
+      } else if (this.contacto.cargo == '') {
+        toastr.error('El campo Cargo es obligatorio');
+        return;
+      } else if (this.contacto.tel == '') {
+        toastr.error('El campo Teléfono es obligatorio');
+        return;
+      }
+
       this.TablaContactos.push(_objectSpread({}, this.contacto));
+      this.contacto.nombre = '';
+      this.contacto.cargo = '';
+      this.contacto.tel = '';
+      this.contacto.email = '';
     },
     RemoveContacto: function RemoveContacto(index) {
       this.TablaContactos.splice(index, 1);
@@ -46222,45 +46320,250 @@ var render = function() {
                                     FilaTabla,
                                     k
                                   ) {
-                                    return _c("tr", { key: k }, [
-                                      _c("td", [
-                                        _vm._v(_vm._s(FilaTabla.nombre))
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("td", [
-                                        _vm._v(_vm._s(FilaTabla.cargo) + " ")
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("td", [
-                                        _vm._v(_vm._s(FilaTabla.tel) + " ")
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("td", [
-                                        _vm._v(_vm._s(FilaTabla.email) + " ")
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("td", [
-                                        _c(
-                                          "a",
-                                          {
-                                            on: {
-                                              click: function($event) {
-                                                return _vm.RemoveContacto(k)
+                                    return _c(
+                                      "tr",
+                                      {
+                                        key: k,
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.selectPosContacto(k)
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c("td", [
+                                          _vm.indexDetalle == k
+                                            ? _c("div", [
+                                                _c("input", {
+                                                  directives: [
+                                                    {
+                                                      name: "model",
+                                                      rawName: "v-model",
+                                                      value:
+                                                        _vm.TablaContactos[k]
+                                                          .nombre,
+                                                      expression:
+                                                        "TablaContactos[k].nombre"
+                                                    }
+                                                  ],
+                                                  attrs: {
+                                                    type: "text",
+                                                    maxlength: "20",
+                                                    size: "25"
+                                                  },
+                                                  domProps: {
+                                                    value:
+                                                      _vm.TablaContactos[k]
+                                                        .nombre
+                                                  },
+                                                  on: {
+                                                    input: function($event) {
+                                                      if (
+                                                        $event.target.composing
+                                                      ) {
+                                                        return
+                                                      }
+                                                      _vm.$set(
+                                                        _vm.TablaContactos[k],
+                                                        "nombre",
+                                                        $event.target.value
+                                                      )
+                                                    }
+                                                  }
+                                                })
+                                              ])
+                                            : _c("div", [
+                                                _vm._v(
+                                                  "\n                                                       " +
+                                                    _vm._s(
+                                                      _vm.TablaContactos[k]
+                                                        .nombre
+                                                    ) +
+                                                    "\n                                                "
+                                                )
+                                              ])
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _vm.indexDetalle == k
+                                            ? _c("div", [
+                                                _c("input", {
+                                                  directives: [
+                                                    {
+                                                      name: "model",
+                                                      rawName: "v-model",
+                                                      value:
+                                                        _vm.TablaContactos[k]
+                                                          .cargo,
+                                                      expression:
+                                                        "TablaContactos[k].cargo"
+                                                    }
+                                                  ],
+                                                  attrs: {
+                                                    type: "text",
+                                                    maxlength: "20",
+                                                    size: "15"
+                                                  },
+                                                  domProps: {
+                                                    value:
+                                                      _vm.TablaContactos[k]
+                                                        .cargo
+                                                  },
+                                                  on: {
+                                                    input: function($event) {
+                                                      if (
+                                                        $event.target.composing
+                                                      ) {
+                                                        return
+                                                      }
+                                                      _vm.$set(
+                                                        _vm.TablaContactos[k],
+                                                        "cargo",
+                                                        $event.target.value
+                                                      )
+                                                    }
+                                                  }
+                                                })
+                                              ])
+                                            : _c("div", [
+                                                _vm._v(
+                                                  "\n                                                       " +
+                                                    _vm._s(
+                                                      _vm.TablaContactos[k]
+                                                        .cargo
+                                                    ) +
+                                                    "\n                                                "
+                                                )
+                                              ])
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _vm.indexDetalle == k
+                                            ? _c("div", [
+                                                _c("input", {
+                                                  directives: [
+                                                    {
+                                                      name: "model",
+                                                      rawName: "v-model",
+                                                      value:
+                                                        _vm.TablaContactos[k]
+                                                          .tel,
+                                                      expression:
+                                                        "TablaContactos[k].tel"
+                                                    }
+                                                  ],
+                                                  attrs: {
+                                                    type: "text",
+                                                    maxlength: "20",
+                                                    size: "20"
+                                                  },
+                                                  domProps: {
+                                                    value:
+                                                      _vm.TablaContactos[k].tel
+                                                  },
+                                                  on: {
+                                                    input: function($event) {
+                                                      if (
+                                                        $event.target.composing
+                                                      ) {
+                                                        return
+                                                      }
+                                                      _vm.$set(
+                                                        _vm.TablaContactos[k],
+                                                        "tel",
+                                                        $event.target.value
+                                                      )
+                                                    }
+                                                  }
+                                                })
+                                              ])
+                                            : _c("div", [
+                                                _vm._v(
+                                                  "\n                                                       " +
+                                                    _vm._s(
+                                                      _vm.TablaContactos[k].tel
+                                                    ) +
+                                                    "\n                                                "
+                                                )
+                                              ])
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _vm.indexDetalle == k
+                                            ? _c("div", [
+                                                _c("input", {
+                                                  directives: [
+                                                    {
+                                                      name: "model",
+                                                      rawName: "v-model",
+                                                      value:
+                                                        _vm.TablaContactos[k]
+                                                          .email,
+                                                      expression:
+                                                        "TablaContactos[k].email"
+                                                    }
+                                                  ],
+                                                  attrs: {
+                                                    type: "text",
+                                                    maxlength: "60",
+                                                    size: "25"
+                                                  },
+                                                  domProps: {
+                                                    value:
+                                                      _vm.TablaContactos[k]
+                                                        .email
+                                                  },
+                                                  on: {
+                                                    input: function($event) {
+                                                      if (
+                                                        $event.target.composing
+                                                      ) {
+                                                        return
+                                                      }
+                                                      _vm.$set(
+                                                        _vm.TablaContactos[k],
+                                                        "email",
+                                                        $event.target.value
+                                                      )
+                                                    }
+                                                  }
+                                                })
+                                              ])
+                                            : _c("div", [
+                                                _vm._v(
+                                                  "\n                                                       " +
+                                                    _vm._s(
+                                                      _vm.TablaContactos[k]
+                                                        .email
+                                                    ) +
+                                                    "\n                                                "
+                                                )
+                                              ])
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _c(
+                                            "a",
+                                            {
+                                              on: {
+                                                click: function($event) {
+                                                  return _vm.RemoveContacto(k)
+                                                }
                                               }
-                                            }
-                                          },
-                                          [
-                                            _c("app-icon", {
-                                              attrs: {
-                                                img: "minus-circle",
-                                                color: "black"
-                                              }
-                                            })
-                                          ],
-                                          1
-                                        )
-                                      ])
-                                    ])
+                                            },
+                                            [
+                                              _c("app-icon", {
+                                                attrs: {
+                                                  img: "minus-circle",
+                                                  color: "black"
+                                                }
+                                              })
+                                            ],
+                                            1
+                                          )
+                                        ])
+                                      ]
+                                    )
                                   }),
                                   0
                                 )
@@ -47049,45 +47352,250 @@ var render = function() {
                                     FilaTabla,
                                     k
                                   ) {
-                                    return _c("tr", { key: k }, [
-                                      _c("td", [
-                                        _vm._v(_vm._s(FilaTabla.nombre))
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("td", [
-                                        _vm._v(_vm._s(FilaTabla.cargo) + " ")
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("td", [
-                                        _vm._v(_vm._s(FilaTabla.tel) + " ")
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("td", [
-                                        _vm._v(_vm._s(FilaTabla.email) + " ")
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("td", [
-                                        _c(
-                                          "a",
-                                          {
-                                            on: {
-                                              click: function($event) {
-                                                return _vm.RemoveContacto(k)
+                                    return _c(
+                                      "tr",
+                                      {
+                                        key: k,
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.selectPosContacto(k)
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c("td", [
+                                          _vm.indexDetalle == k
+                                            ? _c("div", [
+                                                _c("input", {
+                                                  directives: [
+                                                    {
+                                                      name: "model",
+                                                      rawName: "v-model",
+                                                      value:
+                                                        _vm.TablaContactos[k]
+                                                          .nombre,
+                                                      expression:
+                                                        "TablaContactos[k].nombre"
+                                                    }
+                                                  ],
+                                                  attrs: {
+                                                    type: "text",
+                                                    maxlength: "20",
+                                                    size: "25"
+                                                  },
+                                                  domProps: {
+                                                    value:
+                                                      _vm.TablaContactos[k]
+                                                        .nombre
+                                                  },
+                                                  on: {
+                                                    input: function($event) {
+                                                      if (
+                                                        $event.target.composing
+                                                      ) {
+                                                        return
+                                                      }
+                                                      _vm.$set(
+                                                        _vm.TablaContactos[k],
+                                                        "nombre",
+                                                        $event.target.value
+                                                      )
+                                                    }
+                                                  }
+                                                })
+                                              ])
+                                            : _c("div", [
+                                                _vm._v(
+                                                  "\n                                                       " +
+                                                    _vm._s(
+                                                      _vm.TablaContactos[k]
+                                                        .nombre
+                                                    ) +
+                                                    "\n                                                "
+                                                )
+                                              ])
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _vm.indexDetalle == k
+                                            ? _c("div", [
+                                                _c("input", {
+                                                  directives: [
+                                                    {
+                                                      name: "model",
+                                                      rawName: "v-model",
+                                                      value:
+                                                        _vm.TablaContactos[k]
+                                                          .cargo,
+                                                      expression:
+                                                        "TablaContactos[k].cargo"
+                                                    }
+                                                  ],
+                                                  attrs: {
+                                                    type: "text",
+                                                    maxlength: "20",
+                                                    size: "15"
+                                                  },
+                                                  domProps: {
+                                                    value:
+                                                      _vm.TablaContactos[k]
+                                                        .cargo
+                                                  },
+                                                  on: {
+                                                    input: function($event) {
+                                                      if (
+                                                        $event.target.composing
+                                                      ) {
+                                                        return
+                                                      }
+                                                      _vm.$set(
+                                                        _vm.TablaContactos[k],
+                                                        "cargo",
+                                                        $event.target.value
+                                                      )
+                                                    }
+                                                  }
+                                                })
+                                              ])
+                                            : _c("div", [
+                                                _vm._v(
+                                                  "\n                                                       " +
+                                                    _vm._s(
+                                                      _vm.TablaContactos[k]
+                                                        .cargo
+                                                    ) +
+                                                    "\n                                                "
+                                                )
+                                              ])
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _vm.indexDetalle == k
+                                            ? _c("div", [
+                                                _c("input", {
+                                                  directives: [
+                                                    {
+                                                      name: "model",
+                                                      rawName: "v-model",
+                                                      value:
+                                                        _vm.TablaContactos[k]
+                                                          .tel,
+                                                      expression:
+                                                        "TablaContactos[k].tel"
+                                                    }
+                                                  ],
+                                                  attrs: {
+                                                    type: "text",
+                                                    maxlength: "20",
+                                                    size: "20"
+                                                  },
+                                                  domProps: {
+                                                    value:
+                                                      _vm.TablaContactos[k].tel
+                                                  },
+                                                  on: {
+                                                    input: function($event) {
+                                                      if (
+                                                        $event.target.composing
+                                                      ) {
+                                                        return
+                                                      }
+                                                      _vm.$set(
+                                                        _vm.TablaContactos[k],
+                                                        "tel",
+                                                        $event.target.value
+                                                      )
+                                                    }
+                                                  }
+                                                })
+                                              ])
+                                            : _c("div", [
+                                                _vm._v(
+                                                  "\n                                                       " +
+                                                    _vm._s(
+                                                      _vm.TablaContactos[k].tel
+                                                    ) +
+                                                    "\n                                                "
+                                                )
+                                              ])
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _vm.indexDetalle == k
+                                            ? _c("div", [
+                                                _c("input", {
+                                                  directives: [
+                                                    {
+                                                      name: "model",
+                                                      rawName: "v-model",
+                                                      value:
+                                                        _vm.TablaContactos[k]
+                                                          .email,
+                                                      expression:
+                                                        "TablaContactos[k].email"
+                                                    }
+                                                  ],
+                                                  attrs: {
+                                                    type: "text",
+                                                    maxlength: "60",
+                                                    size: "25"
+                                                  },
+                                                  domProps: {
+                                                    value:
+                                                      _vm.TablaContactos[k]
+                                                        .email
+                                                  },
+                                                  on: {
+                                                    input: function($event) {
+                                                      if (
+                                                        $event.target.composing
+                                                      ) {
+                                                        return
+                                                      }
+                                                      _vm.$set(
+                                                        _vm.TablaContactos[k],
+                                                        "email",
+                                                        $event.target.value
+                                                      )
+                                                    }
+                                                  }
+                                                })
+                                              ])
+                                            : _c("div", [
+                                                _vm._v(
+                                                  "\n                                                       " +
+                                                    _vm._s(
+                                                      _vm.TablaContactos[k]
+                                                        .email
+                                                    ) +
+                                                    "\n                                                "
+                                                )
+                                              ])
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _c(
+                                            "a",
+                                            {
+                                              on: {
+                                                click: function($event) {
+                                                  return _vm.RemoveContacto(k)
+                                                }
                                               }
-                                            }
-                                          },
-                                          [
-                                            _c("app-icon", {
-                                              attrs: {
-                                                img: "minus-circle",
-                                                color: "black"
-                                              }
-                                            })
-                                          ],
-                                          1
-                                        )
-                                      ])
-                                    ])
+                                            },
+                                            [
+                                              _c("app-icon", {
+                                                attrs: {
+                                                  img: "minus-circle",
+                                                  color: "black"
+                                                }
+                                              })
+                                            ],
+                                            1
+                                          )
+                                        ])
+                                      ]
+                                    )
                                   }),
                                   0
                                 )
@@ -47812,7 +48320,6 @@ render._withStripped = true
 /*!*******************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/abm-maestro/materiales/editar-materiales.vue?vue&type=template&id=6f5949d9& ***!
   \*******************************************************************************************************************************************************************************************************************************************/
-<<<<<<< HEAD
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -47905,219 +48412,6 @@ var render = function() {
                         "descripcion",
                         $event.target.value
                       )
-                    }
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _vm._m(1)
-          ])
-        ])
-      ])
-    ]
-  )
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c(
-        "button",
-        {
-          staticClass: "close",
-          attrs: { type: "button", "data-dismiss": "modal" }
-        },
-        [_vm._v("×")]
-      ),
-      _vm._v(" "),
-      _c("h4", { staticClass: "modal-title" }, [_vm._v("Editar")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-footer" }, [
-      _c("input", {
-        staticClass: "btn btn-primary",
-        attrs: { type: "submit", value: "Guardar" }
-      }),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-default",
-          attrs: { type: "button", name: "button", "data-dismiss": "modal" }
-        },
-        [_vm._v("Cancelar")]
-      )
-    ])
-  }
-]
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/abm-maestro/materiales/nuevo-materiales.vue?vue&type=template&id=35893d2e&":
-/*!******************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/abm-maestro/materiales/nuevo-materiales.vue?vue&type=template&id=35893d2e& ***!
-  \******************************************************************************************************************************************************************************************************************************************/
-=======
->>>>>>> 767d0751b211fc79521e38557665dfff0de62e89
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "form",
-    {
-      attrs: { method: "post" },
-      on: {
-        submit: function($event) {
-          $event.preventDefault()
-          return _vm.storeRegistro($event)
-        }
-      }
-    },
-    [
-      _c("div", { staticClass: "modal fade", attrs: { id: "editar" } }, [
-        _c("div", { staticClass: "modal-dialog" }, [
-          _c("div", { staticClass: "modal-content" }, [
-            _vm._m(0),
-            _vm._v(" "),
-            _c("div", { staticClass: "modal-body" }, [
-<<<<<<< HEAD
-              _c("label", { attrs: { for: "codigo" } }, [_vm._v("Código (*)")]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.newRegistro.codigo,
-                    expression: "newRegistro.codigo"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: {
-                  autocomplete: "off",
-                  type: "text",
-                  name: "codigo",
-                  value: ""
-                },
-                domProps: { value: _vm.newRegistro.codigo },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.newRegistro, "codigo", $event.target.value)
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c("label", { attrs: { for: "name" } }, [
-                _vm._v("Descripción (*)")
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.newRegistro.descripcion,
-                    expression: "newRegistro.descripcion"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: {
-                  autocomplete: "off",
-                  type: "text",
-                  name: "descripcion",
-                  value: ""
-                },
-                domProps: { value: _vm.newRegistro.descripcion },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-=======
-              _c("div", { staticClass: "modal-body" }, [
-                _c("label", { attrs: { for: "codigo" } }, [
-                  _vm._v("Código (*)")
-                ]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.editRegistro.codigo,
-                      expression: "editRegistro.codigo"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: {
-                    autocomplete: "off",
-                    type: "text",
-                    name: "codigo",
-                    value: ""
-                  },
-                  domProps: { value: _vm.editRegistro.codigo },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.editRegistro, "codigo", $event.target.value)
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c("label", { attrs: { for: "name" } }, [
-                  _vm._v("Descripción (*)")
-                ]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.editRegistro.descripcion,
-                      expression: "editRegistro.descripcion"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: {
-                    autocomplete: "off",
-                    type: "text",
-                    name: "descripcion",
-                    value: ""
-                  },
-                  domProps: { value: _vm.editRegistro.descripcion },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(
-                        _vm.editRegistro,
-                        "descripcion",
-                        $event.target.value
-                      )
->>>>>>> 767d0751b211fc79521e38557665dfff0de62e89
                     }
                   }
                 })
@@ -80700,8 +80994,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_lazyload__WEBPACK_IMPORTED_MO
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuejs_progress_bar__WEBPACK_IMPORTED_MODULE_5___default.a);
 var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
   state: {
-    url:  false ? undefined : "http://localhost:8000/api",
-    AppUrl:  false ? undefined : "http://localhost:8000",
+    url:  false ? undefined : "http://certificados.test/api",
+    AppUrl:  false ? undefined : "http://certificados.test",
     provincias: [],
     unidades_medidas: [],
     metodos_ensayos: []
@@ -83717,8 +84011,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/sass/toastr.scss */"./resources/sass/toastr.scss");
+__webpack_require__(/*! C:\Users\bocch\code\certificados\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\bocch\code\certificados\resources\sass\toastr.scss */"./resources/sass/toastr.scss");
 
 
 /***/ })
