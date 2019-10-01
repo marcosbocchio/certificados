@@ -47812,6 +47812,7 @@ render._withStripped = true
 /*!*******************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/abm-maestro/materiales/editar-materiales.vue?vue&type=template&id=6f5949d9& ***!
   \*******************************************************************************************************************************************************************************************************************************************/
+<<<<<<< HEAD
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -47904,6 +47905,219 @@ var render = function() {
                         "descripcion",
                         $event.target.value
                       )
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _vm._m(1)
+          ])
+        ])
+      ])
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: { type: "button", "data-dismiss": "modal" }
+        },
+        [_vm._v("×")]
+      ),
+      _vm._v(" "),
+      _c("h4", { staticClass: "modal-title" }, [_vm._v("Editar")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-footer" }, [
+      _c("input", {
+        staticClass: "btn btn-primary",
+        attrs: { type: "submit", value: "Guardar" }
+      }),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-default",
+          attrs: { type: "button", name: "button", "data-dismiss": "modal" }
+        },
+        [_vm._v("Cancelar")]
+      )
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/abm-maestro/materiales/nuevo-materiales.vue?vue&type=template&id=35893d2e&":
+/*!******************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/abm-maestro/materiales/nuevo-materiales.vue?vue&type=template&id=35893d2e& ***!
+  \******************************************************************************************************************************************************************************************************************************************/
+=======
+>>>>>>> 767d0751b211fc79521e38557665dfff0de62e89
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "form",
+    {
+      attrs: { method: "post" },
+      on: {
+        submit: function($event) {
+          $event.preventDefault()
+          return _vm.storeRegistro($event)
+        }
+      }
+    },
+    [
+      _c("div", { staticClass: "modal fade", attrs: { id: "editar" } }, [
+        _c("div", { staticClass: "modal-dialog" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-body" }, [
+<<<<<<< HEAD
+              _c("label", { attrs: { for: "codigo" } }, [_vm._v("Código (*)")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.newRegistro.codigo,
+                    expression: "newRegistro.codigo"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  autocomplete: "off",
+                  type: "text",
+                  name: "codigo",
+                  value: ""
+                },
+                domProps: { value: _vm.newRegistro.codigo },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.newRegistro, "codigo", $event.target.value)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "name" } }, [
+                _vm._v("Descripción (*)")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.newRegistro.descripcion,
+                    expression: "newRegistro.descripcion"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  autocomplete: "off",
+                  type: "text",
+                  name: "descripcion",
+                  value: ""
+                },
+                domProps: { value: _vm.newRegistro.descripcion },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+=======
+              _c("div", { staticClass: "modal-body" }, [
+                _c("label", { attrs: { for: "codigo" } }, [
+                  _vm._v("Código (*)")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.editRegistro.codigo,
+                      expression: "editRegistro.codigo"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    autocomplete: "off",
+                    type: "text",
+                    name: "codigo",
+                    value: ""
+                  },
+                  domProps: { value: _vm.editRegistro.codigo },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.editRegistro, "codigo", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("label", { attrs: { for: "name" } }, [
+                  _vm._v("Descripción (*)")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.editRegistro.descripcion,
+                      expression: "editRegistro.descripcion"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    autocomplete: "off",
+                    type: "text",
+                    name: "descripcion",
+                    value: ""
+                  },
+                  domProps: { value: _vm.editRegistro.descripcion },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.editRegistro,
+                        "descripcion",
+                        $event.target.value
+                      )
+>>>>>>> 767d0751b211fc79521e38557665dfff0de62e89
                     }
                   }
                 })
@@ -80486,8 +80700,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_lazyload__WEBPACK_IMPORTED_MO
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuejs_progress_bar__WEBPACK_IMPORTED_MODULE_5___default.a);
 var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
   state: {
-    url:  false ? undefined : "http://certificados.test/api",
-    AppUrl:  false ? undefined : "http://certificados.test",
+    url:  false ? undefined : "http://localhost:8000/api",
+    AppUrl:  false ? undefined : "http://localhost:8000",
     provincias: [],
     unidades_medidas: [],
     metodos_ensayos: []
@@ -83503,8 +83717,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\bocch\code\certificados\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\bocch\code\certificados\resources\sass\toastr.scss */"./resources/sass/toastr.scss");
+__webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/sass/toastr.scss */"./resources/sass/toastr.scss");
 
 
 /***/ })
