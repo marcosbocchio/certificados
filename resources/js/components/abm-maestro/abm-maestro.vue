@@ -6,7 +6,7 @@
     <div class="col-sm-10">
         <component :is= setTablaComponente :registros="registros" @confirmarDelete="confirmDeleteRegistro" @editar="editRegistro"/>               
         <delete-registro :datoDelete="datoDelete" :fillRegistro="fillRegistro" @close-modal="getRegistros" :modelo="modelo"></delete-registro>  
-        <component :is= setNuevoComponente @store="getRegistros"/>
+        <component :is= setNuevoComponente :modelo ="modelo" @store="getRegistros"/>
         <component :is= setEditarComponente :selectRegistro="selectRegistro" @update="getRegistros"/>      
     </div> 
 
@@ -48,15 +48,15 @@
 
          setTablaComponente : function(){
 
-             return 'table-' + this.modelo ;
+             return 'table-' + this.modelo.substring(0, (this.modelo.indexOf("/") >-1) ? this.modelo.indexOf("/") : this.modelo.length) ;
          },
          setNuevoComponente : function(){
 
-             return 'nuevo-' + this.modelo ;
+             return 'nuevo-' + this.modelo.substring(0, (this.modelo.indexOf("/") >-1) ? this.modelo.indexOf("/") : this.modelo.length) ;
          },
          setEditarComponente : function(){
 
-             return 'editar-' + this.modelo ;
+             return 'editar-' + this.modelo.substring(0, (this.modelo.indexOf("/") >-1) ? this.modelo.indexOf("/") : this.modelo.length) ;
          },
          
          ...mapState(['url'])
@@ -66,7 +66,7 @@
 
            openNuevoRegistro : function(){
 
-             eventNewRegistro.$emit('open');
+             eventNewRegistro.$emit('open',this.modelo);
            }, 
 
             getRegistros : function(){

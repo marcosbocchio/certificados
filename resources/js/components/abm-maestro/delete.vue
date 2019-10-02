@@ -40,7 +40,7 @@ export default {
   dropRegistro :function(id){
 
       axios.defaults.baseURL = this.url;     
-      var url = this.modelo + '/' + id;
+      var url = this.modelo.substring(0, (this.modelo.indexOf("/") >-1) ? this.modelo.indexOf("/") : this.modelo.length) + '/' + id;
       axios.delete(url).then(response =>{       
         this.$emit('close-modal');
         toastr.success('Eliminado correctamente');

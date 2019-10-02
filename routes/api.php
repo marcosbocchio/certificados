@@ -60,7 +60,11 @@ Route::group(['middleware' => 'auth:api'], function()
 
     Route::resource('tipo_soldaduras', 'TipoSoldadurasController');
     Route::get('users/cliente/{id}','UserController@UserCliente');
+
+    Route::resource('soldadores', 'SoldadoresController');
     Route::get('soldadores/cliente/{id}','SoldadoresController@SoldadoresCliente');
+    Route::post('soldadores/cliente/{id}','SoldadoresController@store');
+
     
     Route::get('equipos/metodo/{metodo}', 'EquiposController@EquiposMetodo');
 
@@ -114,8 +118,7 @@ Route::group(['middleware' => 'auth:api'], function()
     //procedimientos
     Route::resource('ot_procedimientos_propios','OtProcedimientosPropiosController');
     Route::get('ot_procedimientos_propios/ot/{id}','OtProcedimientosPropiosController@ProcedimientosPropiosOt');
-    Route::get('ot_procedimientos_propios/ot/{id}/total','OtProcedimientosPropiosController@OtProcedimientosTotal');
-    
+    Route::get('ot_procedimientos_propios/ot/{id}/total','OtProcedimientosPropiosController@OtProcedimientosTotal');    
 });
 
 

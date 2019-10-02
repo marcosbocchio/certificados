@@ -82,6 +82,11 @@ Vue.component('table-servicios', require('./components/abm-maestro/servicios/tab
 Vue.component('nuevo-servicios', require('./components/abm-maestro/servicios/nuevo-servicios.vue').default);
 Vue.component('editar-servicios', require('./components/abm-maestro/servicios/editar-servicios.vue').default);
 
+Vue.component('soldadores', require('./components/abm-maestro/soldadores/soldadores.vue').default);
+Vue.component('table-soldadores', require('./components/abm-maestro/soldadores/table-soldadores.vue').default);
+Vue.component('nuevo-soldadores', require('./components/abm-maestro/soldadores/nuevo-soldadores.vue').default);
+Vue.component('editar-soldadores', require('./components/abm-maestro/soldadores/editar-soldadores.vue').default);
+
 
 
 Vue.component('table-materiales', require('./components/abm-maestro/materiales/table-materiales.vue').default);
