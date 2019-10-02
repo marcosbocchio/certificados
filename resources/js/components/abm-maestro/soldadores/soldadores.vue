@@ -58,6 +58,7 @@ export default {
   .style-chooser .vs__dropdown-menu {  
     
     border-radius: 0px;
+     background: #FFFF;
   }
 
 .style-chooser .vs__search {
