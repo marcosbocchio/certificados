@@ -21,7 +21,7 @@ export default {
      
         cliente :'', 
         clientes:[],
-        modelo: 'soldadores/cliente/1',    
+        modelo: 'soldadores/cliente/-1',    
          }
     
     },

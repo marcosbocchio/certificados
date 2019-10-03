@@ -4660,7 +4660,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     return {
       cliente: '',
       clientes: [],
-      modelo: 'soldadores/cliente/1'
+      modelo: 'soldadores/cliente/-1'
     };
   },
   created: function created() {
