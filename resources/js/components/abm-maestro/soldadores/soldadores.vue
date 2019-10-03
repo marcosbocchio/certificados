@@ -1,17 +1,15 @@
 <template>
     <div> 
-       <form action="">
+       
             <div class="col-lg-6 col-lg-offset-2" >       
-                <div class="input-group ">
+                <div class="form-group ">
                     <label for="">SELECCIONE EL CLIENTE :</label>   
-                    <v-select class="style-chooser" v-model="cliente" label="nombre_fantasia" :options="clientes"></v-select> 
-                    <label for="">&nbsp;</label>   
-                        <span class="input-group-btn" style="margin-left:10px;">
-                        <a :href="AppUrl + '/area/enod/soldadores/cliente/' + cliente.id"  ><button type="button" class="btn btn-info btn-flat">Ir</button></a>
-                        </span>
+                    <v-select class="style-chooser" v-model="cliente" label="nombre_fantasia" :options="clientes"></v-select>                  
                 </div>   
             </div>
-       </form>
+
+           <abm-maestro :modelo="modelo" ></abm-maestro> 
+      
     </div>
 </template>
 
@@ -22,7 +20,8 @@ export default {
     data() { return {    
      
         cliente :'', 
-        clientes:[]    
+        clientes:[],
+        modelo: 'soldadores/cliente/1',    
          }
     
     },
@@ -35,6 +34,16 @@ export default {
     computed :{
     
          ...mapState(['url','AppUrl'])
+    },
+
+    watch : {
+
+        cliente : function(val){
+
+            this.modelo = 'soldadores/cliente/' + val.id;
+                
+        },
+
     },
 
     methods : {

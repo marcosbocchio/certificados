@@ -52,6 +52,17 @@ export default {
          }
     
     },
+
+    watch : {
+
+        modelo : function(val){
+
+            this.cliente_id = val.substring(val.lastIndexOf("/") + 1, val.length)
+                
+        },
+
+    },
+    
  created: function () {
      
     eventNewRegistro.$on('open',function(){

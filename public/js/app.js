@@ -1810,6 +1810,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       selectRegistro: {}
     };
   },
+  watch: {
+    modelo: function modelo() {
+      this.getRegistros();
+    }
+  },
   computed: _objectSpread({
     setTablaComponente: function setTablaComponente() {
       return 'table-' + this.modelo.substring(0, this.modelo.indexOf("/") > -1 ? this.modelo.indexOf("/") : this.modelo.length);
@@ -4562,6 +4567,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       cliente_id: ''
     };
   },
+  watch: {
+    modelo: function modelo(val) {
+      this.cliente_id = val.substring(val.lastIndexOf("/") + 1, val.length);
+    }
+  },
   created: function created() {
     _event_bus__WEBPACK_IMPORTED_MODULE_1__["eventNewRegistro"].$on('open', function () {
       this.openModal();
@@ -4644,20 +4654,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       cliente: '',
-      clientes: []
+      clientes: [],
+      modelo: 'soldadores/cliente/1'
     };
   },
   created: function created() {
     this.getClientes();
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['url', 'AppUrl'])),
+  watch: {
+    cliente: function cliente(val) {
+      this.modelo = 'soldadores/cliente/' + val.id;
+    }
+  },
   methods: {
     getClientes: function getClientes() {
       var _this = this;
@@ -51020,12 +51034,13 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("form", { attrs: { action: "" } }, [
+  return _c(
+    "div",
+    [
       _c("div", { staticClass: "col-lg-6 col-lg-offset-2" }, [
         _c(
           "div",
-          { staticClass: "input-group " },
+          { staticClass: "form-group " },
           [
             _c("label", { attrs: { for: "" } }, [
               _vm._v("SELECCIONE EL CLIENTE :")
@@ -51041,46 +51056,16 @@ var render = function() {
                 },
                 expression: "cliente"
               }
-            }),
-            _vm._v(" "),
-            _c("label", { attrs: { for: "" } }, [_vm._v(" ")]),
-            _vm._v(" "),
-            _c(
-              "span",
-              {
-                staticClass: "input-group-btn",
-                staticStyle: { "margin-left": "10px" }
-              },
-              [
-                _c(
-                  "a",
-                  {
-                    attrs: {
-                      href:
-                        _vm.AppUrl +
-                        "/area/enod/soldadores/cliente/" +
-                        _vm.cliente.id
-                    }
-                  },
-                  [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-info btn-flat",
-                        attrs: { type: "button" }
-                      },
-                      [_vm._v("Ir")]
-                    )
-                  ]
-                )
-              ]
-            )
+            })
           ],
           1
         )
-      ])
-    ])
-  ])
+      ]),
+      _vm._v(" "),
+      _c("abm-maestro", { attrs: { modelo: _vm.modelo } })
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

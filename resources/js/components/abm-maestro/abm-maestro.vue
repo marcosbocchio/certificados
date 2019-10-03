@@ -43,7 +43,17 @@
         selectRegistro: {},        
    
         }
-      },     
+      },    
+      
+      watch : {
+
+        modelo : function(){
+
+            this.getRegistros();
+                
+        },
+
+    },
       computed :{
 
          setTablaComponente : function(){
