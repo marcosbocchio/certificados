@@ -109,8 +109,10 @@
                     </div>
                 </div> 
             </div>
-            <a class="btn btn-primary" v-on:click.prevent="submit()" >Actualizar</a>      
-        </div>
+                  <a class="btn btn-primary" v-on:click.prevent="submit()" >Actualizar</a>  
+        </div>   
+        <div class="clearfix"></div>    
+
             
     </div>    
 </template>
