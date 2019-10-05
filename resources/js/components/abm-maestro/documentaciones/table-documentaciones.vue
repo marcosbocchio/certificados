@@ -15,16 +15,10 @@
         </thead>
         <tbody>
           <tr v-for="registro in registros" :key="registro.id">
-            <div v-if="registro.tipo == 'USUARIO'">
-                <td>USUARIOS</td>
-            </div>
-            <div v-else-if="registro.tipo == 'OT'">
-              <td>OT</td>
-            </div>
-            <div v-else>
-              <td>INSTITUCIONAL</td>
-            </div>
-           
+
+            <td  v-if="registro.tipo == 'USUARIO'">USUARIOS</td>          
+            <td v-if="registro.tipo == 'OT'" >OT</td>          
+            <td v-if="registro.tipo == 'INSTITUCIONAL'">INSTITUCIONAL</td>           
             <td>{{ registro.titulo}}</td>
             <td>{{ registro.descripcion }}</td>
             <td>{{ registro.metodo_ensayo['metodo']}}</td>

@@ -37,7 +37,7 @@ class RemitosController extends Controller
 
       return DB::table('remitos')
                  ->where('ot_id','=',$ot_id)
-                 ->selectRaw('id,ot_id,LPAD(prefijo, 4, "0") as prefijo_formateado,LPAD(numero, 8, "0") as numero_formateado,DATE_FORMAT(remitos.created_at,"%d/%m/%Y")as fecha,receptor,destino')
+                 ->selectRaw('id,ot_id,LPAD(prefijo, 4, "0") as prefijo_formateado,LPAD(numero, 8, "0") as numero_formateado,DATE_FORMAT(remitos.created_at,"%d/%m/%Y")as fecha,receptor,destino,interno_sn')
                  ->get();
     }
 
@@ -103,6 +103,7 @@ class RemitosController extends Controller
         }
 
         $remito->ot_id    = $request->ot['id'];
+        $remito->interno_sn = $request->interno_sn;
         $remito->prefijo  = $request->prefijo;
         $remito->numero   = $request->numero;
         $remito->fecha    = date('Y-m-d',strtotime($request->fecha));
@@ -234,6 +235,19 @@ class RemitosController extends Controller
           
         }
   
+    }
+
+    public function GenerarNumeroRemito($ot_id){
+
+      return DB::table('remitos')
+                 ->where('remitos.ot_id',$ot_id)
+                 ->where('remitos.interno_sn',1)
+                 ->orderBy('remitos.numero', 'DESC')   
+                 ->limit(1) 
+                 ->selectRaw('remitos.numero + 1 as numero_remito')                    
+                 ->get();  
+
+
     }
 
     public function RemitosTotal($ot_id){

@@ -5,7 +5,13 @@
                 <informe-header :otdata="otdata"></informe-header>
                  <div class="box box-danger">
                     <div class="box-body">  
-                        <div class="col-md-6">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="tipo">INTERNO</label>             
+                                <input type="checkbox" id="checkbox" v-model="interno_sn"> 
+                            </div>        
+                        </div>            
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label for="fecha">Fecha (*)</label>
                                 <div class="input-group date">
@@ -19,25 +25,25 @@
                         <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="prefijo">Prefijo N° (*)</label>
-                                <input type="number" v-model="prefijo" class="form-control" id="prefijo" @change="formatearPrefijo(prefijo,4)" min="1" max="9999"/>
+                                <input type="number" v-model="prefijo" class="form-control" id="prefijo" @change="formatearPrefijo(prefijo,4)" min="1" max="9999" :disabled="interno_sn"/>
                             </div>                            
                         </div>  
                         <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="numero">Remito N° (*)</label>
-                                <input type="number" v-model="numero" class="form-control" id="numero"  @change="formatearNumero(numero,8)" min="1" max="99999999"/>
+                                <input type="number" v-model="numero" class="form-control" id="numero"  @change="formatearNumero(numero,8)" min="1" max="99999999" :disabled="interno_sn"/>
                             </div>                            
                         </div>  
                         <div class="col-md-6">
                             <div class="form-group" >
                                 <label for="receptor">Receptor (*)</label>
-                                <input type="text" v-model="receptor" class="form-control" id="receptor" maxlength="45" >
+                                <input type="text" v-model="receptor" class="form-control" id="receptor" maxlength="45" :disabled="interno_sn" >
                             </div>                            
                         </div>
                         <div class="col-md-6">
                             <div class="form-group" >
                                 <label for="destino">Lugar Destino (*)</label>
-                                <input type="text" v-model="destino" class="form-control" id="destino" maxlength="100">
+                                <input type="text" v-model="destino" class="form-control" id="destino" maxlength="100" :disabled="interno_sn">
                             </div>                            
                         </div>
                     </div>
@@ -148,10 +154,10 @@ export default {
         errors:[],
          en: en,
          es: es, 
-
+        interno_sn :true, 
         fecha:'',
         numero:'',
-        prefijo:'',
+        prefijo:'1',
         receptor:'',
         destino:'',
         producto:'',
@@ -166,18 +172,34 @@ export default {
         prefijo_formateado:''
     }},
 
-     created : function() {
+    created : function() {
 
         this.getProductos();  
         this.setEdit();   
 
     },
 
+    mounted : function() {
+
+         this.getNumeroRemito();
+    }, 
+
+    watch :{
+
+        interno_sn : function(val){
+
+            if(val){
+               
+                this.getNumeroRemito();
+              
+              
+            }
+        }
+    },
+
     computed :{
 
         ...mapState(['url','AppUrl']),
-
-
        
      },
 
@@ -187,19 +209,45 @@ export default {
 
             if(this.editmode) {               
             
-               this.fecha   = this.remitodata.fecha;            
+               this.fecha   = this.remitodata.fecha;   
+               this.interno_sn = this.remitodata.interno_sn;         
                this.numero = this.remitodata.numero;   
                this.prefijo = this.remitodata.prefijo;
                this.receptor = this.remitodata.receptor;
                this.destino = this.remitodata.destino;
-               this.inputsProductos = this.detalledata;   
-                
-              this.formatearPrefijo(this.prefijo,4);
-              this.formatearNumero(this.numero,8);
+               this.inputsProductos = this.detalledata;                
+               this.formatearPrefijo(this.prefijo,4);
+               this.formatearNumero(this.numero,8);
 
-            }         
+            }      
 
         },   
+
+        getNumeroRemito:function(){            
+           
+            if(!this.editmode) {           
+
+                        axios.defaults.baseURL = this.url ;
+                        var urlRegistros = 'remitos/ot/' + this.otdata.id +'/generar-numero-remito'  + '?api_token=' + Laravel.user.api_token;         
+                        axios.get(urlRegistros).then(response =>{
+                        this.numero_remito_generado = response.data 
+                        
+                   
+                            if(this.numero_remito_generado.length){
+
+                                this.numero =  this.numero_remito_generado[0].numero_remito
+                            }else{
+
+                                this.numero = 1;
+                            } 
+
+                            this.prefijo = '0'
+                            this.formatearPrefijo(this.prefijo,4);        
+                            this.formatearNumero(this.numero,8);
+                        
+                        });   
+             }
+        },  
 
         formatearPrefijo : function ( number, width )
                 {
@@ -284,7 +332,8 @@ export default {
               method: 'post',
               url : urlRegistros,    
               data : {             
-                'ot'              : this.otdata,            
+                'ot'              : this.otdata,      
+                'interno_sn'      :this.interno_sn,         
                 'fecha'           : this.fecha,
                 'prefijo'         : this.prefijo,
                 'numero'          : this.numero,     
@@ -325,7 +374,8 @@ export default {
               method: 'put',
               url : urlRegistros,    
               data : {
-                'ot'              : this.otdata,            
+                'ot'              : this.otdata,    
+                'interno_sn'      :this.interno_sn,   
                 'fecha'           : this.fecha,
                 'prefijo'         : this.prefijo,
                 'numero'          : this.numero,     
@@ -364,3 +414,10 @@ export default {
     
 }
 </script>
+
+<style scoped>
+
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+     background-color: #eee;
+}
+</style>

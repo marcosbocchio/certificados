@@ -114,6 +114,8 @@ Route::group(['middleware' => 'auth:api'], function()
     //Remito  
     Route::get('remitos/ot/{ot_id}/total','RemitosController@RemitosTotal');
     Route::resource('remitos','RemitosController');
+    Route::get('remitos/ot/{ot_id}/generar-numero-remito', 'RemitosController@GenerarNumeroRemito');   
+
 
     //procedimientos
     Route::resource('ot_procedimientos_propios','OtProcedimientosPropiosController');

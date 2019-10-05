@@ -23,12 +23,20 @@ class RemitoRequest extends FormRequest
      */
     public function rules()
     {
+        $condicion ='';
+        
+        if(!$this->interno_sn) {
+            $condicion ='required |';
+        }else {
+            $condicion ='nullable |';
+        }
+
         return [
             'fecha'                    => 'required',
-            'prefijo'                  =>'required | numeric',
-            'numero'                   =>'required | numeric',
-            'receptor'                 =>'required | Max:45',  
-            'destino'                  =>'required | Max:100',             
+            'prefijo'                  => $condicion . 'numeric',
+            'numero'                   => 'required | numeric',
+            'receptor'                 => $condicion . 'Max:45',  
+            'destino'                  => $condicion . 'Max:100',             
         ];
     }
 

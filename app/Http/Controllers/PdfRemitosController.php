@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Remitos;
+use App\Ots;
+use App\Clientes;
 use App\DetalleRemitos;
 
 class PdfRemitosController extends Controller
@@ -25,10 +27,19 @@ class PdfRemitosController extends Controller
                                     INNER JOIN unidades_medidas ON unidades_medidas.id = medidas.unidades_medida_id
                                     WHERE 
                                     detalle_remitos.remito_id =:id',['id' => $remito->id ]);
-      
+      if($remito->interno_sn){
 
-      return  view('reportes.remitos.remito',compact('remito','detalle'));  
+        $ot = Ots::find($remito->ot_id);
+        $cliente = Clientes::find($ot->cliente_id);
+
+        $pdf = \PDF::loadView('reportes.remitos.remito-interno',compact('remito','ot','cliente','detalle'))->setPaper('a4','portrait')->setWarnings(false);  
+
+        return $pdf->stream();
+
+      }else{
+
+      return  view('reportes.remitos.remito-externo',compact('remito','detalle'));  
     
-    
+      }
     }
 }

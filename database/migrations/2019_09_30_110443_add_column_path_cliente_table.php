@@ -31,11 +31,8 @@ class AddColumnPathClienteTable extends Migration
     public function down()
     {
         Schema::table('clientes', function (Blueprint $table) {
-
-            $table->dropForeign(['path']);
-            $table->dropColumn('path');
-
-           
+          
+            $table->dropColumn('path');        
 
 
         });

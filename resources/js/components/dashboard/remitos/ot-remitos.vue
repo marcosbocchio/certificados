@@ -39,7 +39,9 @@
                                     <td> {{ot_remito.destino}}</td>     
                                     <td> {{ot_remito.fecha}}</td>              
                                     <td width="10px"> <a :href="AppUrl + '/area/enod/ot/' + ot_id_data + '/remito/' + ot_remito.id +'/edit' "   class="btn btn-warning btn-sm" title="Editar"><span class="fa fa-edit"></span></a></td>
-                                    <td width="10px"> <a :href="AppUrl + '/api/pdf/remito/' + ot_remito.id " target="_blank"  class="btn btn-default btn-sm" title="Imprimir"><span class="fa fa-print"></span></a></td>
+                                    <td v-if="ot_remito.interno_sn" width="10px"> <a :href="AppUrl + '/api/pdf/remito/' + ot_remito.id " target="_blank"  class="btn btn-default btn-sm" title="pdf"><span class="fa fa-file-pdf-o"></span></a></td>
+                                    <td v-else width="10px"> <a :href="AppUrl + '/api/pdf/remito/' + ot_remito.id " target="_blank"  class="btn btn-default btn-sm" title="Imprimir"><span class="fa fa-print"></span></a></td>                                  
+                                    
                                 </tr>                       
                                 
                             </tbody>

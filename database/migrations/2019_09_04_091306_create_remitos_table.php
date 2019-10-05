@@ -18,8 +18,8 @@ class CreateRemitosTable extends Migration
             $table->integer('prefijo');
             $table->integer('numero');
             $table->datetime('fecha');
-            $table->string('receptor',45);
-            $table->string('destino',100);
+            $table->string('receptor',45)->nullable();
+            $table->string('destino',100)->nullable();
             $table->boolean('impreso_sn')->default(0);
             $table->timestamps();
         });
