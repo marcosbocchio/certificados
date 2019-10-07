@@ -154,17 +154,17 @@ b {
 <main>    
     <table width="100%" class="bordered">
         <tbody>      
-            {{ $filasPage = 55 }}
+            {{ $filasPage = 51 }}
             @foreach ($detalle as $producto)
                 @if (($loop->index + 1) % $filasPage != 0)
                     <tr class="bordered-0">
-                        <td style="font-size: 12px;  width:41.5px;text-align: center;border-right: 1px solid #000;">{{ $producto->cantidad }}</td>     
-                        <td style="font-size: 12px;  text-align: left"><span style="margin-left:5px"> {{ $producto->producto }} {{ $producto->medida}} {{ $producto->unidad_medida}} </span></td>     
+                        <td style="font-size: 13px;  width:41.5px;text-align: center;border-right: 1px solid #000;">{{ $producto->cantidad }}</td>     
+                        <td style="font-size: 13px;  text-align: left"><span style="margin-left:5px"> {{ $producto->producto }} {{ $producto->medida}} {{ $producto->unidad_medida}} </span></td>     
                     </tr>  
                 @else
                   <tr class="bordered-0">
-                        <td style="font-size: 12px;  width:41.5px;text-align: center;border-right: 1px solid #000; border-bottom:2px solid #000">{{ $producto->cantidad }}</td>     
-                        <td style="font-size: 12px;  text-align: left;border-bottom:2px solid #000""><span style="margin-left:5px"> {{ $producto->producto }} {{ $producto->medida}} {{ $producto->unidad_medida}} </span></td>     
+                        <td style="font-size: 13px;  width:41.5px;text-align: center;border-right: 1px solid #000; border-bottom:2px solid #000">{{ $producto->cantidad }}</td>     
+                        <td style="font-size: 13px;  text-align: left;border-bottom:2px solid #000""><span style="margin-left:5px"> {{ $producto->producto }} {{ $producto->medida}} {{ $producto->unidad_medida}} </span></td>     
                     </tr>  
                 @endif
 
@@ -175,8 +175,8 @@ b {
               
             @for ( $x=0 ;  $x < $filasACompletar ; $x++)
                 <tr>
-                    <td style="  width:40px;border-right: 1px solid #000;">&nbsp;</td>
-                    <td >&nbsp;</td>            
+                    <td style="font-size: 13px;width:40px;border-right: 1px solid #000;">&nbsp;</td>
+                    <td style="font-size: 13px">{{$x}}</td>            
                 </tr>
             @endfor
           
