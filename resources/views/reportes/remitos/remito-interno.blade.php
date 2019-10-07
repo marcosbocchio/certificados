@@ -176,7 +176,7 @@ b {
             @for ( $x=0 ;  $x < $filasACompletar ; $x++)
                 <tr>
                     <td style="font-size: 13px;width:40px;border-right: 1px solid #000;">&nbsp;</td>
-                    <td style="font-size: 13px">{{$x}}</td>            
+                    <td style="font-size: 13px"></td>            
                 </tr>
             @endfor
           
