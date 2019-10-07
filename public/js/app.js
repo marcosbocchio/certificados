@@ -6371,6 +6371,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -53729,6 +53732,18 @@ var render = function() {
                     _vm._v(" "),
                     _c("td", [_vm._v(" " + _vm._s(ot_remito.destino))]),
                     _vm._v(" "),
+                    ot_remito.interno_sn
+                      ? _c("td", { staticStyle: { "text-align": "center" } }, [
+                          _vm._v(" SI ")
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    !ot_remito.interno_sn
+                      ? _c("td", { staticStyle: { "text-align": "center" } }, [
+                          _vm._v(" NO ")
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
                     _c("td", [_vm._v(" " + _vm._s(ot_remito.fecha))]),
                     _vm._v(" "),
                     _c("td", { attrs: { width: "10px" } }, [
@@ -53826,6 +53841,10 @@ var staticRenderFns = [
         _c("th", [_vm._v("RECEPTOR")]),
         _vm._v(" "),
         _c("th", [_vm._v("DESTINO")]),
+        _vm._v(" "),
+        _c("th", { staticStyle: { "text-align": "center" } }, [
+          _vm._v("INTERNO S/N")
+        ]),
         _vm._v(" "),
         _c("th", [_vm._v("FECHA")]),
         _vm._v(" "),

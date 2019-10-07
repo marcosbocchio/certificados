@@ -27,7 +27,8 @@
                                 <tr>                                     
                                     <th>N°</th>
                                     <th>RECEPTOR</th> 
-                                    <th>DESTINO</th>  
+                                    <th>DESTINO</th> 
+                                    <th style="text-align: center;">INTERNO S/N</th> 
                                     <th>FECHA</th>                                                
                                     <th colspan="2">ACCIÓN</th>
                                 </tr>
@@ -36,7 +37,9 @@
                                 <tr v-for="(ot_remito,k) in ot_remitos" :key="k">                                 
                                     <td> {{ot_remito.prefijo_formateado}}-{{ot_remito.numero_formateado}}</td>
                                     <td> {{ot_remito.receptor}} </td>     
-                                    <td> {{ot_remito.destino}}</td>     
+                                    <td> {{ot_remito.destino}}</td>   
+                                    <td v-if="ot_remito.interno_sn" style="text-align: center;"> SI </td>   
+                                    <td v-if="!ot_remito.interno_sn"  style="text-align: center;"> NO </td>  
                                     <td> {{ot_remito.fecha}}</td>              
                                     <td width="10px"> <a :href="AppUrl + '/area/enod/ot/' + ot_id_data + '/remito/' + ot_remito.id +'/edit' "   class="btn btn-warning btn-sm" title="Editar"><span class="fa fa-edit"></span></a></td>
                                     <td v-if="ot_remito.interno_sn" width="10px"> <a :href="AppUrl + '/api/pdf/remito/' + ot_remito.id " target="_blank"  class="btn btn-default btn-sm" title="pdf"><span class="fa fa-file-pdf-o"></span></a></td>
