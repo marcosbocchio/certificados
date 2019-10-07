@@ -7,12 +7,12 @@
 
 <style>
 
-@page { margin: 319px 25px 141px 25px !important;
+@page { margin:167px 10px 53px 40px !important;
         padding: 0px 0px 0px 0px !important; }
 
 header {
     position:fixed;
-    top: -280px; 
+    top: -127px; 
    
     }
 
@@ -98,7 +98,19 @@ b {
                         </tbody>
                     </table>          
                 </td>
-            </tr>        
+            </tr>    
+            <tr >
+                <td >
+                    <table  width="100%" style="text-align: center;border-collapse: collapse;">
+                        <tbody>
+                            <tr>
+                                <td style="font-size: 12px; width:40px;  text-align: center " class="bordered-td" >CANT</td>
+                                <td style="font-size: 12px;  text-align: center;" class="bordered-td">DESCRIPCIÓN</td>                                         
+                            </tr>                         
+                        </tbody>
+                    </table> 
+                </td>
+            </tr>    
             
         </tbody>
     </table>
@@ -108,53 +120,53 @@ b {
 <footer>
     <table style="text-align: center" width="100%" class="bordered">
         <tbody>
-            <tr>
-                <td>
-                    <table width="100%" style="border-collapse: collapse;" >
-                        <tbody>                           
-                            <tr>                                
-                                <td style="font-size: 12px;" colspan="6" class="bordered-td"><b>Observaciones: </b></td>                                  
-                            </tr>                         
-                        </tbody>
-                    </table>
-                </td>               
-            </tr>
-            <tr>
-                <td>
-                    <table width="100%" style="border-collapse: collapse;" >
+             <tr >
+                <td >
+                    <table  width="100%" style="text-align: center;border-collapse: collapse;">
                         <tbody>
-                            <tr>                               
-                               <td style="font-size: 13px; text-align: center" class="bordered-td" ><b>EVALUADOR </b></td>   
-                               <td style="font-size: 13px; text-align: center" class="bordered-td" ><b>CONTRATISTA </b></td> 
-                               <td style="font-size: 13px; text-align: center" class="bordered-td"><b>CLIENTE </b></td>                               
-                            </tr>
-                            <tr>                               
-                                <td style="font-size: 12px; text-align: left; height: 25px;border-right: 1px solid #000;"><span style="margin-left: 2px">FIRMA:</span></td>   
-                                <td style="font-size: 12px; text-align: left; height: 25px;border-right: 1px solid #000;"><span style="margin-left: 2px">FIRMA:</span></td> 
-                                <td style="font-size: 12px; text-align: left; height: 25px;border-right: 1px solid #000;"><span style="margin-left: 2px">FIRMA:</span></td>                              
-                            </tr>
-                            <tr>                               
-                                <td style="font-size: 12px; text-align: left; height: 25px;border-right: 1px solid #000;"><span style="margin-left: 2px">ACLARACIÓN:</span></td>   
-                                <td style="font-size: 12px; text-align: left; height: 25px;border-right: 1px solid #000;"><span style="margin-left: 2px">ACLARACIÓN:</span></td>
-                                <td style="font-size: 12px; text-align: left; height: 25px;border-right: 1px solid #000;"><span style="margin-left: 2px">ACLARACIÓN:</span></td>  
-                     
-                            </tr>
+                            <tr>                             
+                                <td style="font-size: 12px;  text-align: left" class="bordered-td">RESPONSABLE REMITO : </td>                                         
+                            </tr>                         
                         </tbody>
                     </table> 
                 </td>
-            </tr>      
+            </tr>        
         </tbody>
     </table>
 </footer>
+
+<main>    
+    <table width="100%" class="bordered">
+        <tbody>      
+            @foreach ($detalle as $producto)
+                <tr>
+                    <td style="font-size: 11px;  width:40px;text-align: center" class="bordered-td">{{ $producto->cantidad }}</td>     
+                    <td style="font-size: 11px;  text-align: left" class="bordered-td"><span style="margin-left:5px"> {{ $producto->producto }} {{ $producto->medida}} {{ $producto->unidad_medida}} </span></td>     
+                </tr>    
+            @endforeach   
+
+            {{ $cantFilasTotal = count($detalle) }}
+            {{ $filasPage = 56 }}
+            {{ $filasACompletar = pdfCantFilasACompletar($filasPage,$cantFilasTotal) }}
+
+            @for ( $x=0 ;  $x < $filasACompletar ; $x++)
+                <tr>
+                    <td style="font-size: 11px;  width:40px;" class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 11px;" class="bordered-td">&nbsp;</td>            
+                </tr>
+            @endfor
+        </tbody>
+    </table>
+</main>   
      
 <script type="text/php">
 
     if ( isset($pdf) ) {
-        $x = 480;
-        $y = 77;
+        $x = 450;
+        $y = 73;
         $text = "PÁGINA : {PAGE_NUM} de {PAGE_COUNT}";
         $font = $fontMetrics->get_font("serif", "bold");
-        $size = 9;
+        $size = 10;
         $color = array(0,0,0);
         $word_space = 0.0;  //  default
         $char_space = 0.0;  //  default
