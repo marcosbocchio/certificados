@@ -7,7 +7,7 @@
 
 <style>
 
-@page { margin: 319px 10px 141px 40px !important;
+@page { margin: 319px 25px 141px 25px !important;
         padding: 0px 0px 0px 0px !important; }
 
 header {
@@ -67,19 +67,19 @@ b {
                     <table width="100%">
                         <tbody>
                             <tr>
-                                <td rowspan="4" style="text-align: right; width:233px">
+                                <td rowspan="3" style="text-align: right; width:233px">
                                     <img src="{{ public_path('img/logo-enod-web.jpg')}}" alt="" style="height: 60px; margin-right: 25px;">
                                 </td>   
-                                <td style="font-size: 18px; height: 30px; text-align: center;width:234px" rowspan="4"><b>REMITO INTERNO</b></td>
-                                <td style="font-size: 13px; margin-left: 90px " ><b>REMITO N°: </b>{{FormatearNumeroConCeros($remito->prefijo,'4')}}-{{FormatearNumeroConCeros($remito->numero,'8')}}</td>                                        
+                                <td style="font-size: 18px; height: 30px; text-align: center;width:234px" rowspan="3"><b>REMITO INTERNO</b></td>
+                                <td style="font-size: 13px;" colspan="2" ><b style="margin-left: 80px">REMITO N°: </b>{{FormatearNumeroConCeros($remito->prefijo,'4')}} - {{FormatearNumeroConCeros($remito->numero,'8')}}</td>                                        
                             </tr>
                             <tr>
-                                <td style="font-size: 13px;"><b style="margin-left: 80px">FECHA: </b>{{ date('d-m-Y', strtotime($remito->fecha_hora)) }}</td>
+                                <td style="font-size: 13px;" colspan="2"><b style="margin-left: 80px">FECHA: </b>{{ date('d-m-Y', strtotime($remito->fecha_hora)) }}</td>
                             </tr>                         
                             <tr>
                                 <td style="font-size: 12px;"><b style="margin-left: 80px"></b></td>                     
                                 <td style="font-size: 12px;"><b style="margin-left: 80px"></td>            
-                            </tr>               
+                            </tr>            
                         </tbody>
                     </table>          
                 </td>
@@ -150,11 +150,11 @@ b {
 <script type="text/php">
 
     if ( isset($pdf) ) {
-        $x = 451;
-        $y = 70;
+        $x = 480;
+        $y = 77;
         $text = "PÁGINA : {PAGE_NUM} de {PAGE_COUNT}";
         $font = $fontMetrics->get_font("serif", "bold");
-        $size = 10;
+        $size = 9;
         $color = array(0,0,0);
         $word_space = 0.0;  //  default
         $char_space = 0.0;  //  default
