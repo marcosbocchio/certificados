@@ -8,6 +8,7 @@ use App\Remitos;
 use App\Ots;
 use App\Clientes;
 use App\DetalleRemitos;
+use App\User;
 
 class PdfRemitosController extends Controller
 {
@@ -31,8 +32,9 @@ class PdfRemitosController extends Controller
 
         $ot = Ots::find($remito->ot_id);
         $cliente = Clientes::find($ot->cliente_id);
+        $user = User::find($remito->user_id);
 
-        $pdf = \PDF::loadView('reportes.remitos.remito-interno',compact('remito','ot','cliente','detalle'))->setPaper('a4','portrait')->setWarnings(false);  
+        $pdf = \PDF::loadView('reportes.remitos.remito-interno',compact('remito','ot','cliente','detalle','user'))->setPaper('a4','portrait')->setWarnings(false);  
 
         return $pdf->stream();
 

@@ -125,7 +125,7 @@ b {
                     <table  width="100%" style="text-align: center;border-collapse: collapse;">
                         <tbody>
                             <tr>                             
-                                <td style="font-size: 12px;  text-align: left" class="bordered-td">RESPONSABLE REMITO : </td>                                         
+                                <td style="font-size: 12px;  text-align: left" class="bordered-td">RESPONSABLE REMITO : {{$user->name}}</td>                                         
                             </tr>                         
                         </tbody>
                     </table> 
