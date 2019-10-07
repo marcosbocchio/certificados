@@ -10835,6 +10835,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -59975,6 +59987,8 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "box box-danger" }, [
             _c("div", { staticClass: "box-body" }, [
+              _vm._m(0),
+              _vm._v(" "),
               _c("div", { staticClass: "col-md-3" }, [
                 _c("div", { staticClass: "form-group" }, [
                   _c("label", { attrs: { for: "tipo" } }, [_vm._v("INTERNO")]),
@@ -60029,7 +60043,7 @@ var render = function() {
                     "div",
                     { staticClass: "input-group date" },
                     [
-                      _vm._m(0),
+                      _vm._m(1),
                       _vm._v(" "),
                       _c("Datepicker", {
                         attrs: {
@@ -60337,7 +60351,7 @@ var render = function() {
                         "table",
                         { staticClass: "table table-hover table-striped" },
                         [
-                          _vm._m(1),
+                          _vm._m(2),
                           _vm._v(" "),
                           _c(
                             "tbody",
@@ -60408,6 +60422,115 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("label", [
+        _c(
+          "div",
+          {
+            staticClass: "iradio_minimal-blue checked",
+            staticStyle: { position: "relative" },
+            attrs: { "aria-checked": "false", "aria-disabled": "false" }
+          },
+          [
+            _c("input", {
+              staticClass: "minimal",
+              staticStyle: { position: "absolute", opacity: "0" },
+              attrs: { type: "radio", name: "r1", checked: "" }
+            }),
+            _c("ins", {
+              staticClass: "iCheck-helper",
+              staticStyle: {
+                position: "absolute",
+                top: "0%",
+                left: "0%",
+                display: "block",
+                width: "100%",
+                height: "100%",
+                margin: "0px",
+                padding: "0px",
+                background: "rgb(255, 255, 255)",
+                border: "0px",
+                opacity: "0"
+              }
+            })
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _c("label", {}, [
+        _c(
+          "div",
+          {
+            staticClass: "iradio_minimal-blue",
+            staticStyle: { position: "relative" },
+            attrs: { "aria-checked": "false", "aria-disabled": "false" }
+          },
+          [
+            _c("input", {
+              staticClass: "minimal",
+              staticStyle: { position: "absolute", opacity: "0" },
+              attrs: { type: "radio", name: "r1" }
+            }),
+            _c("ins", {
+              staticClass: "iCheck-helper",
+              staticStyle: {
+                position: "absolute",
+                top: "0%",
+                left: "0%",
+                display: "block",
+                width: "100%",
+                height: "100%",
+                margin: "0px",
+                padding: "0px",
+                background: "rgb(255, 255, 255)",
+                border: "0px",
+                opacity: "0"
+              }
+            })
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _c("label", [
+        _c(
+          "div",
+          {
+            staticClass: "iradio_minimal-blue disabled",
+            staticStyle: { position: "relative" },
+            attrs: { "aria-checked": "false", "aria-disabled": "true" }
+          },
+          [
+            _c("input", {
+              staticClass: "minimal",
+              staticStyle: { position: "absolute", opacity: "0" },
+              attrs: { type: "radio", name: "r1", disabled: "" }
+            }),
+            _c("ins", {
+              staticClass: "iCheck-helper",
+              staticStyle: {
+                position: "absolute",
+                top: "0%",
+                left: "0%",
+                display: "block",
+                width: "100%",
+                height: "100%",
+                margin: "0px",
+                padding: "0px",
+                background: "rgb(255, 255, 255)",
+                border: "0px",
+                opacity: "0"
+              }
+            })
+          ]
+        ),
+        _vm._v("\n                 Minimal skin radio\n               ")
+      ])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

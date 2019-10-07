@@ -12,7 +12,13 @@
 
 header {
     position:fixed;
-    top: -127px; 
+    top: -140px; 
+   
+    }
+
+header-detalle {
+    position:fixed;
+    top: -21px; 
    
     }
 
@@ -49,6 +55,10 @@ footer {
     border-style: solid;
     border-width: 1px; 
     border-collapse: collapse; 
+}
+
+mail tr .bordered-0 td {
+    border:0;
 }
 
 b {
@@ -98,24 +108,30 @@ b {
                         </tbody>
                     </table>          
                 </td>
-            </tr>    
-            <tr >
-                <td >
-                    <table  width="100%" style="text-align: center;border-collapse: collapse;">
-                        <tbody>
-                            <tr>
-                                <td style="font-size: 12px; width:40px;  text-align: center " class="bordered-td" >CANT</td>
-                                <td style="font-size: 12px;  text-align: center;" class="bordered-td">DESCRIPCIÓN</td>                                         
-                            </tr>                         
-                        </tbody>
-                    </table> 
-                </td>
-            </tr>    
-            
+            </tr>           
         </tbody>
-    </table>
-    
+    </table>    
 </header>
+
+<header-detalle>
+        <table style="text-align: center" width="100%" class="bordered">
+            <tbody>
+                    <tr >
+                            <td >
+                                <table  width="100%" style="text-align: center;border-collapse: collapse;">
+                                    <tbody>
+                                        <tr>
+                                            <td style="font-size: 12px; width:40px;  text-align: center " class="bordered-td" >CANT</td>
+                                            <td style="font-size: 12px;  text-align: center;" class="bordered-td">DESCRIPCIÓN</td>                                         
+                                        </tr>                         
+                                    </tbody>
+                                </table> 
+                            </td>
+                        </tr>    
+            </tbody>
+        </table>        
+
+</header-detalle>
 
 <footer>
     <table style="text-align: center" width="100%" class="bordered">
@@ -138,23 +154,32 @@ b {
 <main>    
     <table width="100%" class="bordered">
         <tbody>      
+            {{ $filasPage = 59 }}
             @foreach ($detalle as $producto)
-                <tr>
-                    <td style="font-size: 11px;  width:40px;text-align: center" class="bordered-td">{{ $producto->cantidad }}</td>     
-                    <td style="font-size: 11px;  text-align: left" class="bordered-td"><span style="margin-left:5px"> {{ $producto->producto }} {{ $producto->medida}} {{ $producto->unidad_medida}} </span></td>     
-                </tr>    
+                @if (($loop->index + 1) % $filasPage != 0)
+                    <tr class="bordered-0">
+                        <td style="font-size: 11px;  width:41.5px;text-align: center;border-right: 1px solid #000;">{{ $producto->cantidad }}</td>     
+                        <td style="font-size: 11px;  text-align: left"><span style="margin-left:5px"> {{ $producto->producto }} {{ $producto->medida}} {{ $producto->unidad_medida}} </span></td>     
+                    </tr>  
+                @else
+                  <tr class="bordered-0">
+                        <td style="font-size: 11px;  width:41.5px;text-align: center;border-right: 1px solid #000; border-bottom:2px solid #000">{{ $producto->cantidad }}</td>     
+                        <td style="font-size: 11px;  text-align: left;border-bottom:2px solid #000""><span style="margin-left:5px"> {{ $producto->producto }} {{ $producto->medida}} {{ $producto->unidad_medida}} </span></td>     
+                    </tr>  
+                @endif
+
             @endforeach   
 
             {{ $cantFilasTotal = count($detalle) }}
-            {{ $filasPage = 56 }}
             {{ $filasACompletar = pdfCantFilasACompletar($filasPage,$cantFilasTotal) }}
-
+              
             @for ( $x=0 ;  $x < $filasACompletar ; $x++)
                 <tr>
-                    <td style="font-size: 11px;  width:40px;" class="bordered-td">&nbsp;</td>
-                    <td style="font-size: 11px;" class="bordered-td">&nbsp;</td>            
+                    <td style="font-size: 11px;  width:40px;border-right: 1px solid #000;">&nbsp;</td>
+                    <td style="font-size: 11px;" >&nbsp;</td>            
                 </tr>
             @endfor
+          
         </tbody>
     </table>
 </main>   
@@ -163,7 +188,7 @@ b {
 
     if ( isset($pdf) ) {
         $x = 450;
-        $y = 73;
+        $y = 63;
         $text = "PÁGINA : {PAGE_NUM} de {PAGE_COUNT}";
         $font = $fontMetrics->get_font("serif", "bold");
         $size = 10;
