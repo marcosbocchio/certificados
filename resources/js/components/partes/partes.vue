@@ -569,9 +569,33 @@ export default {
 
             },
 
+        validarCmsRi: function(){
+
+                let valido = true;
+
+                this.TablaInformesRi.forEach(function(item){
+
+                    if(item.costura_final=='' && item.pulgadas_final=='' && placas_final=='' & item.cm == null){
+
+                        valido =  false;
+                    }
+                })
+                console.log('valido cms');
+                return valido;
+
+            },
+
         Store : function(){
          
-          this.errors =[];
+            if(!this.validarCmsRi()){
+  
+                  toastr.error('EL campo CM en los informes RI asignados al Parte son obligatorios');
+                  return;
+            }
+
+            this.errors =[];
+
+
           
             var urlRegistros = 'partes' ;      
             axios({
@@ -615,6 +639,13 @@ export default {
         },
 
         Update : function() {
+
+            if(!this.validarCmsRi()){
+
+                toastr.error('EL campo CM en los informes RI asignados al Parte son obligatorios');
+                return;
+
+                }
 
             console.log('entro para actualizar' );
             this.errors =[];        
