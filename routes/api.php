@@ -28,6 +28,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('users', 'UserController');    
     Route::resource('materiales', 'MaterialesController');
     Route::resource('unidades_medidas', 'UnidadesMedidasController');
+    Route::get('medidas/cm', 'MedidasController@getCms');
     Route::resource('medidas', 'MedidasController');
     Route::resource('provincias', 'ProvinciasController');
     Route::resource('localidades', 'LocalidadesController');
@@ -77,6 +78,8 @@ Route::group(['middleware' => 'auth:api'], function()
     
     Route::get('procedimientos_informes/ot/{id_ot}/metodo/{metodo}', 'DocumentacionesController@ProcedimientosMetodo');
     Route::get('informes/ot/{ot_id}/total', 'InformesController@OtInformesTotal');
+    Route::get('informes/ot/{ot_id}/pendientes_parte_diario', 'InformesController@OtInformesPendienteParteDiario');
+    Route::get('informes/ot/{ot_id}/parte/{parte_id}/pendientes_editables_parte_diario', 'InformesController@OtInformesPendienteEditableParteDiario');
 
   
     Route::get('informes/ot/{ot_id}/metodo/{metodo}/generar-numero-informe', 'InformesController@GenerarNumeroInforme');   
@@ -99,7 +102,7 @@ Route::group(['middleware' => 'auth:api'], function()
     //operarios
     Route::resource('ot_operarios','OtOperariosController');
     Route::get('ot-operarios/users','OtOperariosController@users');
-    Route::get('ot-operarios/ejecutor_ensayo/{ot_id}','OtOperariosController@getOperadoresOt');
+    Route::get('ot-operarios/ot/{ot_id}','OtOperariosController@getOperadoresOt');
     Route::get('ot_operarios/users/{ot_id}/total','OtOperariosController@OtOperadoresTotal');
     
     /* Documentaciones*/
@@ -108,7 +111,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('ot-documentaciones/ot/{ot_id}/total','OtDocumentacionesController@OtDocumentacionesTotal');
     
     /*  informes */ 
-    Route::resource('informes_ri','InformesRiController');
+    Route::resource('informes_ri','InformesRiController');    
     Route::resource('informes_pm','InformesPmController');
 
     //Remito  
@@ -120,7 +123,12 @@ Route::group(['middleware' => 'auth:api'], function()
     //procedimientos
     Route::resource('ot_procedimientos_propios','OtProcedimientosPropiosController');
     Route::get('ot_procedimientos_propios/ot/{id}','OtProcedimientosPropiosController@ProcedimientosPropiosOt');
-    Route::get('ot_procedimientos_propios/ot/{id}/total','OtProcedimientosPropiosController@OtProcedimientosTotal');    
+    Route::get('ot_procedimientos_propios/ot/{id}/total','OtProcedimientosPropiosController@OtProcedimientosTotal');   
+    
+    //parte diario
+
+    Route::get('partes/informe_ri/{id}','PartesController@getInformeRiParte');
+    Route::resource('partes', 'PartesController');
 });
 
 

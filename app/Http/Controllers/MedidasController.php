@@ -121,4 +121,13 @@ class MedidasController extends Controller
         $medida = Medidas::find($id);
         $medida->delete();
     }
+
+    public function getCms(){
+
+        return DB::table('medidas')
+                   ->join('unidades_medidas','unidades_medidas.id','=','medidas.unidades_medida_id') 
+                   ->where('unidades_medidas.codigo','Cm')
+                   ->select('medidas.*')
+                   ->get();
+    }
 }

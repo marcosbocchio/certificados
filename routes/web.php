@@ -54,6 +54,9 @@ Route::group(['middleware' => ['auth']], function () {
 
   Route::get('/area/enod/ot/{ot_id}/remito','RemitosController@create')->name('RemitoCreate');
   Route::get('/area/enod/ot/{ot_id}/remito/{id}/edit','RemitosController@edit')->name('RemitoEdit');
+
+  Route::get('/area/enod/ot/{ot_id}/parte','PartesController@create')->name('ParteCreate');
+  Route::get('/area/enod/ot/{ot_id}/parte/{id}/edit','PartesController@edit')->name('ParteEdit');
   
 });
 
@@ -78,9 +81,6 @@ Route::group(['middleware' => ['permission:Navegar operador']], function () {
 });
 
 //Route::get('documentaciones/operador/{id}', 'DocumentacionesController@operarios')->middleware('auth');
-
-
-
 
 //Route::get('area/enod/users', 'UserController@index');
 //Route::resource('users','UserController');

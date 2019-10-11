@@ -91,6 +91,6 @@ class User extends Authenticatable
 
     return $this->belongsTo('App\Clientes','cliente_id','id');
     
-}
+    }
   
 }

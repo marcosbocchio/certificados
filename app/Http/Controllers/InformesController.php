@@ -26,7 +26,7 @@ class InformesController extends Controller
                     ->join('users','users.id','=','informes.user_id')
                     ->join('metodo_ensayos','metodo_ensayos.id','=','informes.metodo_ensayo_id')
                     ->where('informes.ot_id',$id)
-                    ->selectRaw('informes.numero,DATE_FORMAT(informes.created_at,"%d/%m/%Y")as fecha,informes.id,metodo_ensayos.metodo as metodo,users.name,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado,informes.prefijo as prefijo')                 
+                    ->selectRaw('informes.numero,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha,informes.id,metodo_ensayos.metodo as metodo,users.name,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado,informes.prefijo as prefijo')                 
                     ->get();
 
         $ot_metodos_ensayos = DB::table('ots')
@@ -166,5 +166,43 @@ class InformesController extends Controller
         
         return $informe;
       }
+
+     public function OtInformesPendienteParteDiario($ot_id){
+
+        return  informe::with('metodoEnsayos')
+                         ->join('metodo_ensayos','metodo_ensayos.id','=','informes.metodo_ensayo_id')
+                         ->where('parte_id',null)
+                         ->where('ot_id',$ot_id)
+                         ->selectRaw('informes.* , 0 as informe_sel,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada')
+                         ->get();
+     }
+
+     public function OtInformesPendienteEditableParteDiario($ot_id,$parte_id){
+
+        $infomes_pendientes =informe::with('metodoEnsayos')
+                                        ->join('metodo_ensayos','metodo_ensayos.id','=','informes.metodo_ensayo_id')
+                                        ->where('parte_id',null)
+                                        ->where('ot_id',$ot_id)
+                                        ->selectRaw('informes.* , 0 as informe_sel,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada');
+                                        
+        $infomes = informe::with('metodoEnsayos')
+                                    ->join('metodo_ensayos','metodo_ensayos.id','=','informes.metodo_ensayo_id')
+                                   
+                                    ->where('parte_id',$parte_id)
+                                    ->where('ot_id',$ot_id)
+                                    ->selectRaw('informes.* , 0 as informe_sel,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada')
+                                    ->union($infomes_pendientes)
+                                    ->get();
+
+        return $infomes;
+     }
+
+
+     public function setParteId($parte_id,$informe_id){
+
+        $informe  = Informe::find($informe_id);
+        $informe->parte_id = $parte_id;
+        $informe->save();
+     }
    
 }

@@ -108,7 +108,7 @@ Vue.component('ot-soldadores', require('./components/dashboard/soldadores/ot-sol
 Vue.component('ot-documentaciones', require('./components/dashboard/documentaciones/ot-documentaciones').default);
 Vue.component('table-ot_procedimientos_propios', require('./components/dashboard/procedimientos/table-ot_procedimientos_propios').default);
 
-
+Vue.component('partes', require('./components/partes/partes.vue').default);
 
 Vue.component('ots', require('./components/ots/ots.vue').default);
 Vue.component('create-referencias', require('./components/ots/referencias/create.vue').default);

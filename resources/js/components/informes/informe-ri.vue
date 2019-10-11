@@ -1036,7 +1036,7 @@ export default {
         getEjecutorEnsayo: function(){
              
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'ot-operarios/ejecutor_ensayo/' + this.otdata.id + '?api_token=' + Laravel.user.api_token;        
+                var urlRegistros = 'ot-operarios/ot/' + this.otdata.id + '?api_token=' + Laravel.user.api_token;        
                 axios.get(urlRegistros).then(response =>{
                 this.ejecutor_ensayos = response.data
                 });
