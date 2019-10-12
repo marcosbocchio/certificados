@@ -11304,7 +11304,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     validarCmsRi: function validarCmsRi() {
       var valido = true;
       this.TablaInformesRi.forEach(function (item) {
-        if (item.costura_final == '' && item.pulgadas_final == '' && placas_final == '' & item.cm == null) {
+        if ((item.costura_final != '' || item.pulgadas_final != '' || item.placas_final != '') && item.cm == null) {
           valido = false;
         }
       });

@@ -166,8 +166,9 @@ class PartesController extends Controller
 
     public function saveParteDetalleRi($informes_ri,$parte){
 
+        
         foreach ($informes_ri as $informe) {
-           
+            
             $parteDetalle  = new ParteDetalles;
             $parteDetalle->parte_id = $parte->id;            
             $parteDetalle->informe_id =$informe['id'];   
@@ -261,6 +262,7 @@ class PartesController extends Controller
             $this->saveResponsables($request->responsables,$parte);
             $this->saveParteDetalleRi($request->informes_ri,$parte);
             ParteDetalles::where('parte_id',$parte->id)->delete();
+            (new \App\Http\Controllers\InformesController)->deleteParteId($parte->id);
             $this->saveParteDetalleRi($request->informes_ri,$parte);
             
             DB::commit();

@@ -204,5 +204,15 @@ class InformesController extends Controller
         $informe->parte_id = $parte_id;
         $informe->save();
      }
+
+     public function deleteParteId($parte_id){
+
+        $informes  = Informe::where('parte_id',$parte_id)->get();
+        foreach ($informes as $informe) {
+            $informe->parte_id = null;
+            $informe->save();
+        }
+       
+     }
    
 }
