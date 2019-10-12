@@ -31,7 +31,7 @@
                         <div class="clearfix"></div>
                         <div class="col-md-3">
                             <div class="form-group" >               
-                                <input type="checkbox" id="checkbox" v-model="movilidad_propia_sn" style="float:right"> 
+                                <input type="checkbox" id="checkbox" v-model="movilidad_propia_sn" > 
                                 <label for="tipo" style="float: left;;margin-right: 5px;">Movilidad Propia</label>             
                             </div>    
                         </div>  

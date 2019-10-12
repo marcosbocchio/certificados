@@ -60993,7 +60993,6 @@ var render = function() {
                         expression: "movilidad_propia_sn"
                       }
                     ],
-                    staticStyle: { float: "right" },
                     attrs: { type: "checkbox", id: "checkbox" },
                     domProps: {
                       checked: Array.isArray(_vm.movilidad_propia_sn)
