@@ -575,7 +575,7 @@ export default {
 
                 this.TablaInformesRi.forEach(function(item){
 
-                    if((item.costura_final!='' || item.pulgadas_final!='' || item.placas_final!='') && item.cm ){
+                    if((item.costura_final!='' || item.pulgadas_final!='' || item.placas_final!='') && !item.cm ){
 
                         valido =  false;
                     }
