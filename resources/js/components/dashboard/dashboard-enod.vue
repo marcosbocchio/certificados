@@ -99,14 +99,14 @@
           <!-- small box -->
           <div class="small-box bg-blue">
             <div class="inner">
-              <h3>0</h3>
+              <h3>{{CantPartes}}</h3>
 
               <p>Partes Diarios</p>
             </div>
             <div class="icon">
               <i class="fa fa-file-pdf-o"></i>
             </div>
-            <a :href="AppUrl + '/informes/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a :href="AppUrl + '/partes/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -176,6 +176,7 @@ export default {
         CantOperadores :'0',
         CantInformes:'0',
         CantRemitos:'0',
+        CantPartes:'0',
         CantSoldadores:'0',
         CantDocumentaciones:'0',
         CantProcedimientos:'0',
@@ -201,6 +202,8 @@ export default {
       this.ContarDocumenaciones();
       this.ContarRemitos();
       this.ContarInformes();
+      this.ContarPartes();
+
     }
   },
 
@@ -286,7 +289,17 @@ export default {
             this.CantRemitos = response.data
             });
 
-         },  
+         },
+         
+         ContarPartes : function (){
+
+            axios.defaults.baseURL = this.url ;                
+            var urlRegistros = 'partes/ot/' + this.ot_id_selected +'/total' + '?api_token=' + Laravel.user.api_token;             
+            axios.get(urlRegistros).then(response =>{
+            this.CantPartes = response.data
+            });
+
+         }, 
          
          ContarDocumenaciones: function(){
 

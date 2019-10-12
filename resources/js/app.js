@@ -104,6 +104,7 @@ Vue.component('dashboard-enod', require('./components/dashboard/dashboard-enod')
 Vue.component('ot-operarios', require('./components/dashboard/operarios/ot-operarios').default);
 Vue.component('ot-informes', require('./components/dashboard/informes/ot-informes').default);
 Vue.component('ot-remitos', require('./components/dashboard/remitos/ot-remitos').default);
+Vue.component('ot-partes', require('./components/dashboard/partes/ot-partes').default);
 Vue.component('ot-soldadores', require('./components/dashboard/soldadores/ot-soldadores').default);
 Vue.component('ot-documentaciones', require('./components/dashboard/documentaciones/ot-documentaciones').default);
 Vue.component('table-ot_procedimientos_propios', require('./components/dashboard/procedimientos/table-ot_procedimientos_propios').default);

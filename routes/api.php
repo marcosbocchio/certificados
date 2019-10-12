@@ -127,8 +127,10 @@ Route::group(['middleware' => 'auth:api'], function()
     
     //parte diario
 
-    Route::get('partes/informe_ri/{id}','PartesController@getInformeRiParte');
+    Route::get('partes/ot/{ot_id}/total','PartesController@PartesTotal');
     Route::resource('partes', 'PartesController');
+    Route::get('partes/informe_ri/{id}','PartesController@getInformeRiParte');
+
 });
 
 

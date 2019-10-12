@@ -23,10 +23,29 @@ class PartesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($ot_id)
     {
-        //
+      $header_titulo = "Partes OT";
+      $header_descripcion ="Alta | Modificación";          
+      $user = auth()->user()->name;
+      $partes = $this->getPartesOt($ot_id);
+
+      return view('ot-partes.index',compact('ot_id',
+                                             'user',  
+                                             'partes',                                                                  
+                                             'header_titulo',
+                                             'header_descripcion'));
+
     }
+
+    public function getPartesOt($ot_id){
+
+
+        return DB::table('partes')
+                   ->where('ot_id','=',$ot_id)
+                   ->selectRaw('id,ot_id,DATE_FORMAT(partes.created_at,"%d/%m/%Y")as fecha,tipo_servicio')
+                   ->get();
+      }
 
     /**
      * Show the form for creating a new resource.
@@ -287,4 +306,9 @@ class PartesController extends Controller
 
     }
 
+    public function PartesTotal($ot_id){
+
+        return Partes::where('ot_id',$ot_id)->count(); 
+  
+      }
 }
