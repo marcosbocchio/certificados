@@ -28,7 +28,7 @@
                                 <label for="numero">Remito N° (*)</label>
                                
                                 <input type="checkbox" id="checkbox" v-model="interno_sn" style="float:right"> 
-                                <label for="tipo" style="float:right;margin-right: 5px;;">INTERNO</label>             
+                                <label for="tipo" style="float:right;margin-right: 5px;">INTERNO</label>             
                                
                                 <input type="number" v-model="numero" class="form-control" id="numero"  @change="formatearNumero(numero,8)" min="1" max="99999999" :disabled="interno_sn"/>
                             </div>                            
