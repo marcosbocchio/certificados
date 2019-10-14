@@ -5614,6 +5614,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -53389,78 +53390,88 @@ var render = function() {
     _c("div", { staticClass: "col-md-12" }, [
       _c("div", { staticClass: "box box-primary top-buffer" }, [
         _c("div", { staticClass: "box-body" }, [
-          _c("div", { staticClass: "table-responsive" }, [
-            _c("table", { staticClass: "table table-hover table-striped" }, [
-              _vm._m(8),
-              _vm._v(" "),
-              _c(
-                "tbody",
-                _vm._l(_vm.ots, function(ot) {
-                  return _c(
-                    "tr",
-                    {
-                      key: ot.id,
-                      class: { selected: _vm.ot_id_selected === ot.id },
-                      on: {
-                        click: function($event) {
-                          return _vm.selectOt(ot.id)
+          _c(
+            "div",
+            { staticClass: "table-responsive" },
+            [
+              _c("table", { staticClass: "table table-hover table-striped" }, [
+                _vm._m(8),
+                _vm._v(" "),
+                _c(
+                  "tbody",
+                  _vm._l(_vm.ots, function(ot) {
+                    return _c(
+                      "tr",
+                      {
+                        key: ot.id,
+                        class: { selected: _vm.ot_id_selected === ot.id },
+                        on: {
+                          click: function($event) {
+                            return _vm.selectOt(ot.id)
+                          }
                         }
-                      }
-                    },
-                    [
-                      _c("td", [_vm._v(" " + _vm._s(ot.numero))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(" " + _vm._s(ot.obra))]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _vm._v(" " + _vm._s(ot.cliente.nombre_fantasia))
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(" " + _vm._s(ot.proyecto))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(" " + _vm._s(ot.fecha_hora))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(" " + _vm._s(ot.estado))]),
-                      _vm._v(" "),
-                      _c("td", { attrs: { width: "10px" } }, [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "btn btn-warning btn-sm",
-                            attrs: {
-                              href:
-                                _vm.AppUrl +
-                                "/area/enod/ots/" +
-                                ot.id +
-                                "/edit",
-                              title: "Editar"
-                            }
-                          },
-                          [_c("span", { staticClass: "fa fa-edit" })]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("td", { attrs: { width: "10px" } }, [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "btn btn-default btn-sm",
-                            attrs: {
-                              href: _vm.AppUrl + "/api/pdf/ot/" + ot.id,
-                              target: "_blank",
-                              title: "pdf"
-                            }
-                          },
-                          [_c("span", { staticClass: "fa fa-file-pdf-o" })]
-                        )
-                      ])
-                    ]
-                  )
-                }),
-                0
-              )
-            ])
-          ])
+                      },
+                      [
+                        _c("td", [_vm._v(" " + _vm._s(ot.numero))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(" " + _vm._s(ot.obra))]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(" " + _vm._s(ot.cliente.nombre_fantasia))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(" " + _vm._s(ot.proyecto))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(" " + _vm._s(ot.fecha_hora))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(" " + _vm._s(ot.estado))]),
+                        _vm._v(" "),
+                        _c("td", { attrs: { width: "10px" } }, [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn btn-warning btn-sm",
+                              attrs: {
+                                href:
+                                  _vm.AppUrl +
+                                  "/area/enod/ots/" +
+                                  ot.id +
+                                  "/edit",
+                                title: "Editar"
+                              }
+                            },
+                            [_c("span", { staticClass: "fa fa-edit" })]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { attrs: { width: "10px" } }, [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn btn-default btn-sm",
+                              attrs: {
+                                href: _vm.AppUrl + "/api/pdf/ot/" + ot.id,
+                                target: "_blank",
+                                title: "pdf"
+                              }
+                            },
+                            [_c("span", { staticClass: "fa fa-file-pdf-o" })]
+                          )
+                        ])
+                      ]
+                    )
+                  }),
+                  0
+                )
+              ]),
+              _vm._v(" "),
+              _c("pagination", {
+                attrs: { data: _vm.ots },
+                on: { "pagination-change-page": _vm.getResults }
+              })
+            ],
+            1
+          )
         ])
       ])
     ])
@@ -54396,7 +54407,7 @@ var render = function() {
                               _vm.AppUrl +
                               "/api/pdf/parte/" +
                               ot_parte.id +
-                              "original",
+                              "/original",
                             target: "_blank",
                             title: "pdf"
                           }
@@ -54415,7 +54426,7 @@ var render = function() {
                               _vm.AppUrl +
                               "/api/pdf/parte/" +
                               ot_parte.id +
-                              "final",
+                              "/final",
                             target: "_blank",
                             title: "pdf"
                           }

@@ -156,6 +156,7 @@
                                 </tr>
                         </tbody>
                         </table>
+                        <pagination :data="ots" @pagination-change-page="getResults"></pagination>
                     </div>       
                 </div> 
             </div>       

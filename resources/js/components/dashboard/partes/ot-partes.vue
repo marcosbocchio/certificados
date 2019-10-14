@@ -37,8 +37,8 @@
                                     <td> {{ot_parte.tipo_servicio}} </td>     
                                     <td> {{ot_parte.fecha}}</td>              
                                     <td width="10px"> <a :href="AppUrl + '/area/enod/ot/' + ot_id_data + '/parte/' + ot_parte.id +'/edit' "   class="btn btn-warning btn-sm" title="Editar"><span class="fa fa-edit"></span></a></td>
-                                    <td width="10px"> <a :href="AppUrl + '/api/pdf/parte/' + ot_parte.id + 'original' " target="_blank"  class="btn btn-default btn-sm" title="pdf"><span class="fa fa-file-pdf-o"></span></a></td>             
-                                    <td width="10px"> <a :href="AppUrl + '/api/pdf/parte/' + ot_parte.id + 'final' " target="_blank"  class="btn btn-default btn-sm" title="pdf"><span class="fa fa-file-pdf-o"></span></a></td>                                    
+                                    <td width="10px"> <a :href="AppUrl + '/api/pdf/parte/' + ot_parte.id + '/original' " target="_blank"  class="btn btn-default btn-sm" title="pdf"><span class="fa fa-file-pdf-o"></span></a></td>             
+                                    <td width="10px"> <a :href="AppUrl + '/api/pdf/parte/' + ot_parte.id + '/final' " target="_blank"  class="btn btn-default btn-sm" title="pdf"><span class="fa fa-file-pdf-o"></span></a></td>                                    
                                 </tr>                      
                             </tbody>
                         </table>                     
