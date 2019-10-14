@@ -207,29 +207,38 @@ b {
                         </tbody>
                     </table>          
                 </td> 
-            </tr> 
-           
-            <tr>
-               <td class="bordered">
-                    <table width="100%" >
-                        <tbody>
-                            <td style="font-size: 12px;height: 20px; width: 233px;"><b>INFORMES DEL PARTE: </b>
+            </tr>
+            {{$ExisteRI = false}} 
+             @foreach ($parte_detalle as $item)
 
-                                @foreach ($parte_detalle as $item)
+                @if ($item->metodo == 'RI')
+                       {{ $ExisteRI = true }}}
+                @endif
+                
+            @endforeach
+            @if ($ExisteRI)               
+                    <tr>
+                        <td class="bordered">
+                            <table width="100%" >
+                                <tbody>
+                                    <td style="font-size: 12px;height: 20px; width: 233px;"><b>INFORMES DEL PARTE: </b>
 
-                                    @if (!$loop->first)
-                                    ,
-                                    @endif 
+                                        @foreach ($parte_detalle as $item)
 
-                                    {{$item->numero_formateado}}
-                                    
-                                @endforeach
+                                            @if (!$loop->first)
+                                            ,
+                                            @endif 
 
-                            </td> 
-                         </tbody>
-                    </table>
-                </td>
-            </tr> 
+                                            {{$item->numero_formateado}}
+                                            
+                                        @endforeach
+
+                                    </td> 
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr> 
+            @endif
             <tr > 
                 <td class="bordered">
                     <table width="100%" >
