@@ -207,63 +207,65 @@ b {
                         </tbody>
                     </table>          
                 </td> 
-            </tr>
-            {{$ExisteRI = false}} 
-             @foreach ($parte_detalle as $item)
-
-                @if ($item->metodo == 'RI')
-                       {{ $ExisteRI = true }}}
-                @endif
-                
-            @endforeach
-            @if ($ExisteRI)               
-                    <tr>
-                        <td class="bordered">
-                            <table width="100%" >
-                                <tbody>
-                                    <td style="font-size: 12px;height: 20px; width: 233px;"><b>INFORMES DEL PARTE: </b>
-
-                                        @foreach ($parte_detalle as $item)
-
-                                            @if (!$loop->first)
-                                            ,
-                                            @endif 
-
-                                            {{$item->numero_formateado}}
-                                            
-                                        @endforeach
-
-                                    </td> 
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr> 
-            @endif
-            <tr > 
+            </tr>              
+            <tr>
                 <td class="bordered">
                     <table width="100%" >
                         <tbody>
-                            <tr>                         
-                                <td style="font-size: 12px;height: 20px;" colspan="5"><b>METODO ENSAYO: RI </b></td>                                         
-                            </tr>    
-                           
-                            @foreach ($parte_detalle as $item)
-                              <tr>                         
-                                <td style="font-size: 12px;height: 20px;" colspan="5"><b>{{$item->numero_formateado}} </b></td>                                         
-                             </tr>   
-                            <tr> 
-                                <td style="font-size: 12px; "><b></b></td>  
-                                <td style="font-size: 12px; "><b>Costuras: </b>{{$item->costura}}</td>                        
-                                <td style="font-size: 12px; "><b>Pulgadas: </b>{{$item->pulgadas}}</td>                         
-                                <td style="font-size: 12px;"><b>Placas: </b>{{$item->placas}}</td>    
-                                <td style="font-size: 12px; "><b>Cm: </b>{{$item->cm}}</td>                        
-                            </tr>
-                            @endforeach                     
-                                   
+                            <td style="font-size: 12px;height: 20px; width: 233px;"><b>INFORMES DEL PARTE: </b>
+
+                                @foreach ($parte_detalle as $item)
+
+                                    @if (!$loop->first)
+                                    ,
+                                    @endif 
+
+                                    {{$item->numero_formateado}}
+                                    
+                                @endforeach
+
+                            </td> 
                         </tbody>
-                    </table>          
+                    </table>
                 </td>
-            </tr>  
+            </tr>             
+
+            {{$ExisteRI = false}} 
+            @foreach ($parte_detalle as $item)
+
+                @if ($item->metodo == 'RI')
+                        {{ $ExisteRI = true }}}
+                @endif
+                
+            @endforeach
+
+            @if ($ExisteRI)       
+                <tr > 
+                    <td class="bordered">
+                        <table width="100%" >
+                            <tbody>
+                                <tr>                         
+                                    <td style="font-size: 12px;height: 20px;" colspan="5"><b>METODO ENSAYO: RI </b></td>                                         
+                                </tr>    
+                            
+                                @foreach ($parte_detalle as $item)
+                                <tr>                         
+                                    <td style="font-size: 12px;height: 20px;" colspan="5"><b>{{$item->numero_formateado}} </b></td>                                         
+                                </tr>   
+                                <tr> 
+                                    <td style="font-size: 12px; "><b></b></td>  
+                                    <td style="font-size: 12px; "><b>Costuras: </b>{{$item->costura}}</td>                        
+                                    <td style="font-size: 12px; "><b>Pulgadas: </b>{{$item->pulgadas}}</td>                         
+                                    <td style="font-size: 12px;"><b>Placas: </b>{{$item->placas}}</td>    
+                                    <td style="font-size: 12px; "><b>Cm: </b>{{$item->cm}}</td>                        
+                                </tr>
+                                @endforeach                     
+                                    
+                            </tbody>
+                        </table>          
+                    </td>
+                </tr>  
+            @endif
         </tbody>
     </table>
 <main>
