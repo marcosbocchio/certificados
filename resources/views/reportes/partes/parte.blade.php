@@ -285,6 +285,11 @@ b {
         $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
     }
 
+   
+     $pdf->line(31.5,130,31.5,800,array(0,0,0),1.5);
+     $pdf->line(586.3,130,586.3,800,array(0,0,0),1.5);
+        
+
 </script>
 
 
