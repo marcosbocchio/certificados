@@ -41,11 +41,10 @@ class PdfPartesController extends Controller
                         ->join('parte_detalles','parte_detalles.informe_id','=','informes.id')
                         ->where('parte_detalles.parte_id',$id)
                         ->selectRaw('metodo_ensayos.metodo as metodo,informes.id as informe_id,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado')
-                        ->groupBy('informes.id')                      
+                        ->groupBy('informes.id','metodo','numero_formateado')                      
                         ->get();
 
-        //    dd($metodos_informe);
-    
+        //    dd($metodos_informe);    
 
         $pdf = \PDF::loadView('reportes.partes.parte',compact('ot',
                                                             'cliente', 
