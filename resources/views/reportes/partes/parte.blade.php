@@ -181,7 +181,7 @@ b {
         <tbody>  
             <tr>      
                 <td class="bordered">
-                     <table width="100%" >
+                     <table width="100%"  >
                         <tbody> 
                             <tr>                         
                                 <td style="font-size: 14px;height: 20px; text-align: center;" colspan="2"><b>RESPONSABLES</td>                                       
@@ -196,8 +196,7 @@ b {
                                          <td style="font-size: 12px;height: 20px;" ><b>{{$responsable->responsabilidad}}: </b>{{$responsable->nombre}}</td>         
                                         </tr>  
 
-                                    @endif
-                                                            
+                                    @endif                                                           
 
                                     @if ($loop->last && $loop->odd)
                                         <td style="font-size: 12px;height: 20px;"></td> 
@@ -209,12 +208,12 @@ b {
                 </td> 
             </tr>              
             <tr>
-                <td class="bordered">
+                <td >
                     <table width="100%" >
                         <tbody>
                             <td style="font-size: 12px;height: 20px; width: 233px;"><b>INFORMES DEL PARTE: </b>
 
-                                @foreach ($parte_detalle as $item)
+                                @foreach ($metodos_informe as $item)
 
                                     @if (!$loop->first)
                                     ,
@@ -246,21 +245,75 @@ b {
                             <tbody>
                                 <tr>                         
                                     <td style="font-size: 12px;height: 20px;" colspan="5"><b>METODO ENSAYO: RI </b></td>                                         
-                                </tr>    
-                            
+                                </tr>  
                                 @foreach ($parte_detalle as $item)
-                                <tr>                         
-                                    <td style="font-size: 12px;height: 20px;" colspan="5"><b>{{$item->numero_formateado}} </b></td>                                         
-                                </tr>   
-                                <tr> 
-                                    <td style="font-size: 12px; "><b></b></td>  
-                                    <td style="font-size: 12px; "><b>Costuras: </b>{{$item->costura}}</td>                        
-                                    <td style="font-size: 12px; "><b>Pulgadas: </b>{{$item->pulgadas}}</td>                         
-                                    <td style="font-size: 12px;"><b>Placas: </b>{{$item->placas}}</td>    
-                                    <td style="font-size: 12px; "><b>Cm: </b>{{$item->cm}}</td>                        
-                                </tr>
+                                    @if ($item->metodo == 'RI')                               
+                                        <tr>                         
+                                            <td style="font-size: 12px;height: 20px;" colspan="5"><b>{{$item->numero_formateado}} </b></td>                                         
+                                        </tr>   
+                                        <tr>    
+                                            <td style="font-size: 12px; "><b></b></td>  
+                                            <td style="font-size: 12px;  text-align: center; "><b>Costuras </b></td>                        
+                                            <td style="font-size: 12px;  text-align: center;"><b>Pulgadas </b></td>                         
+                                            <td style="font-size: 12px;  text-align: center;"><b>Placas </b></td>    
+                                            <td style="font-size: 12px;  text-align: center;"><b>Cm </b></td>    
+                                        </tr> 
+                                        <tr> 
+                                            <td style="font-size: 12px; "><b></b></td>  
+                                            <td style="font-size: 12px; text-align: center;">{{$item->costura}}</td>                        
+                                            <td style="font-size: 12px; text-align: center;">{{$item->pulgadas}}</td>                         
+                                            <td style="font-size: 12px; text-align: center;">{{$item->placas}}</td>    
+                                            <td style="font-size: 12px; text-align: center;">{{$item->cm}}</td>                        
+                                        </tr>
+                                    @endif
                                 @endforeach                     
                                     
+                            </tbody>
+                        </table>          
+                    </td>
+                </tr>  
+            @endif
+
+            {{$ExistePM = false}} 
+            @foreach ($parte_detalle as $item)
+
+                @if ($item->metodo == 'PM')
+                        {{ $ExistePM = true }}}
+                @endif
+                
+            @endforeach
+
+            @if ($ExistePM)       
+                <tr > 
+                    <td class="bordered">
+                        <table width="100%" >
+                            <tbody>
+                                <tr>                         
+                                    <td style="font-size: 12px;height: 20px;" colspan="4"><b>METODO ENSAYO: PM </b></td>                                         
+                                </tr>                           
+                                @foreach ($informes_detalle as $item)
+                                    @if ($item->metodo == 'PM')      
+                                        <tr>                         
+                                            <td style="font-size: 12px;height: 20px;" colspan="4"><b>{{$item->numero_formateado}} </b></td>                                         
+                                        </tr>  
+                                        <tr> 
+                                            <td style="font-size: 12px;text-align: center;"><b></b></td>  
+                                            <td style="font-size: 12px;text-align: center; "><b>Pieza </b></td>                        
+                                            <td style="font-size: 12px;text-align: center; "><b>Número </b></td>                         
+                                            <td style="font-size: 12px;text-align: center;"><b>Metros Lineales </b></td>                                            
+                                        </tr> 
+                                        @foreach ($parte_detalle as $item_pm)
+                                            @if ($item->informe_id == $item_pm->informe_id)      
+                                                <tr> 
+                                                    <td style="font-size: 12px;text-align: center;"><b></b></td>  
+                                                    <td style="font-size: 12px;text-align: center; ">{{$item_pm->pieza}}</td>                        
+                                                    <td style="font-size: 12px;text-align: center; ">{{$item_pm->nro}}</td>                         
+                                                    <td style="font-size: 12px;text-align: center;">{{$item_pm->metros_lineales}}</td>                                            
+                                                </tr>
+                                             @endif
+                                         @endforeach      
+                                    @endif
+                                @endforeach                             
                             </tbody>
                         </table>          
                     </td>

@@ -253,10 +253,10 @@
                                                   
                                                     <td v-if="item.visible">
                                                         <div v-if="indexTablaInformesPm == k ">       
-                                                          <input type="number" v-model="TablaInformesPm[k].numero_final" maxlength="11">        
+                                                          <input type="number" v-model="TablaInformesPm[k].nro_final" maxlength="11">        
                                                         </div>   
                                                         <div v-else>
-                                                           {{ item.numero_final }}
+                                                           {{ item.nro_final }}
                                                         </div>                                   
                                                     </td>   
                                                     
@@ -333,6 +333,11 @@ export default {
       },
 
       informes_ri_data : {
+      type : [ Array ],  
+      required : false
+      },
+
+      informes_pm_data : {
       type : [ Array ],  
       required : false
       },
@@ -496,9 +501,11 @@ export default {
 
                                   item_informe.informe_sel = true;
 
-                            });
+                            });                    
                       
                     }.bind(this));
+
+
 
                     this.informes_ri_data.forEach(function(item){
 
@@ -520,10 +527,46 @@ export default {
                             costura_final: item.costura_final,
                             pulgadas_final: item.pulgadas_final,
                             placas_final : item.placas_final, 
-                            cm: item.cm,  
+                            cm: item.cm  
 
                             }); 
-                        }.bind(this));     
+                        }.bind(this));   
+
+                        this.informes_pm_data.forEach(function(item_data){
+
+
+                            this.informes.forEach(function(item_informe){                         
+
+                                if(item_data.informe_id == item_informe.id)
+
+                                    item_informe.informe_sel = true;
+
+                                });                    
+                        
+                        }.bind(this)); 
+
+                        this.informes_pm_data.forEach(function(item){
+
+                        let visible_sn = true;
+                        if( !item.pieza_final  &&  !item.nro_final && !item.metros_lineales){
+
+                            visible_sn = false
+
+                        }
+
+                        this.TablaInformesPm.push({ 
+
+                            numero_formateado  : item.numero_formateado,              
+                            pieza_original: item.pieza_original,
+                            pieza_final: item.pieza_final,
+                            nro_original : item.nro_original,    
+                            nro_final : item.nro_final,          
+                            id      : item.informe_id,
+                            visible : visible_sn,   
+                            metros_lineales: item.metros_lineales             
+
+                            }); 
+                        }.bind(this));    
              });
                 
  
@@ -573,7 +616,7 @@ export default {
             
             this.TablaInformesPm[index].visible = false;
             this.TablaInformesPm[index].pieza_final='';
-            this.TablaInformesPm[index].numero_final='';
+            this.TablaInformesPm[index].nro_final='';
             this.TablaInformesPm[index].metros_lineales=''       
 
         },
@@ -630,6 +673,7 @@ export default {
                 pulgadas_final: this.informe_ri_parte[0].pulgadas,
                 placas_final : this.informe_ri_parte[0].placas, 
                 cm: '', 
+                metodo : this.informe_ri_parte[0].metodo
 
              });  
                     
@@ -649,14 +693,15 @@ export default {
             this.informe_pm_parte.forEach(function(item){
 
                 this.TablaInformesPm.push({ 
-                id      : id,
-                numero_formateado  : this.informes[index].numero_formateado,               
-                visible : true,
-                pieza_original : item.pieza,
-                pieza_final : item.pieza,
-                numero_original : item.numero,
-                numero_final : item.numero,
-                metros_lineales : '',
+                    id      : id,
+                    numero_formateado  : this.informes[index].numero_formateado,               
+                    visible : true,
+                    pieza_original : item.pieza,
+                    pieza_final : item.pieza,
+                    nro_original : item.numero,
+                    nro_final : item.numero,
+                    metros_lineales : '', 
+                    metodo : item.metodo
                     
                     });                       
 
@@ -672,9 +717,13 @@ export default {
 
                 this.TablaInformesRi.forEach(function(item){
 
-                    if((item.costura_final!='' || item.pulgadas_final!='' || item.placas_final!='') && !item.cm ){
+                    if((item.costura_final || item.pulgadas_final || item.placas_final) && !item.cm ){
 
                         valido =  false;
+                        console.log(item.costura_final);
+                        console.log(item.pulgadas_final);
+                        console.log(item.placas_final);
+                        console.log(item.cm);
                     }
                 })
                 console.log('valido cms');

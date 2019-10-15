@@ -11146,6 +11146,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       type: [Array],
       required: false
     },
+    informes_pm_data: {
+      type: [Array],
+      required: false
+    },
     responsables_data: {
       type: [Array],
       required: false
@@ -11282,6 +11286,31 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             cm: item.cm
           });
         }.bind(_this4));
+
+        _this4.informes_pm_data.forEach(function (item_data) {
+          this.informes.forEach(function (item_informe) {
+            if (item_data.informe_id == item_informe.id) item_informe.informe_sel = true;
+          });
+        }.bind(_this4));
+
+        _this4.informes_pm_data.forEach(function (item) {
+          var visible_sn = true;
+
+          if (!item.pieza_final && !item.nro_final && !item.metros_lineales) {
+            visible_sn = false;
+          }
+
+          this.TablaInformesPm.push({
+            numero_formateado: item.numero_formateado,
+            pieza_original: item.pieza_original,
+            pieza_final: item.pieza_final,
+            nro_original: item.nro_original,
+            nro_final: item.nro_final,
+            id: item.informe_id,
+            visible: visible_sn,
+            metros_lineales: item.metros_lineales
+          });
+        }.bind(_this4));
       });
     },
     addResponsable: function addResponsable(index) {
@@ -11315,7 +11344,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     RemoveTablaInformePm: function RemoveTablaInformePm(index) {
       this.TablaInformesPm[index].visible = false;
       this.TablaInformesPm[index].pieza_final = '';
-      this.TablaInformesPm[index].numero_final = '';
+      this.TablaInformesPm[index].nro_final = '';
       this.TablaInformesPm[index].metros_lineales = '';
     },
     getInforme: function getInforme(index) {
@@ -11365,7 +11394,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           costura_final: _this5.informe_ri_parte[0].costuras,
           pulgadas_final: _this5.informe_ri_parte[0].pulgadas,
           placas_final: _this5.informe_ri_parte[0].placas,
-          cm: ''
+          cm: '',
+          metodo: _this5.informe_ri_parte[0].metodo
         });
       });
     },
@@ -11384,9 +11414,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             visible: true,
             pieza_original: item.pieza,
             pieza_final: item.pieza,
-            numero_original: item.numero,
-            numero_final: item.numero,
-            metros_lineales: ''
+            nro_original: item.numero,
+            nro_final: item.numero,
+            metros_lineales: '',
+            metodo: item.metodo
           });
         }.bind(_this6));
       });
@@ -11394,8 +11425,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     validarCmsRi: function validarCmsRi() {
       var valido = true;
       this.TablaInformesRi.forEach(function (item) {
-        if ((item.costura_final != '' || item.pulgadas_final != '' || item.placas_final != '') && !item.cm) {
+        if ((item.costura_final || item.pulgadas_final || item.placas_final) && !item.cm) {
           valido = false;
+          console.log(item.costura_final);
+          console.log(item.pulgadas_final);
+          console.log(item.placas_final);
+          console.log(item.cm);
         }
       });
       console.log('valido cms');
@@ -61859,9 +61894,9 @@ var render = function() {
                                                       rawName: "v-model",
                                                       value:
                                                         _vm.TablaInformesPm[k]
-                                                          .numero_final,
+                                                          .nro_final,
                                                       expression:
-                                                        "TablaInformesPm[k].numero_final"
+                                                        "TablaInformesPm[k].nro_final"
                                                     }
                                                   ],
                                                   attrs: {
@@ -61871,7 +61906,7 @@ var render = function() {
                                                   domProps: {
                                                     value:
                                                       _vm.TablaInformesPm[k]
-                                                        .numero_final
+                                                        .nro_final
                                                   },
                                                   on: {
                                                     input: function($event) {
@@ -61882,7 +61917,7 @@ var render = function() {
                                                       }
                                                       _vm.$set(
                                                         _vm.TablaInformesPm[k],
-                                                        "numero_final",
+                                                        "nro_final",
                                                         $event.target.value
                                                       )
                                                     }
@@ -61892,7 +61927,7 @@ var render = function() {
                                             : _c("div", [
                                                 _vm._v(
                                                   "\n                                                          " +
-                                                    _vm._s(item.numero_final) +
+                                                    _vm._s(item.nro_final) +
                                                     "\n                                                       "
                                                 )
                                               ])

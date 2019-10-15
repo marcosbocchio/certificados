@@ -18,6 +18,7 @@
   :otdata="{{$ot}}" 
   :parte_data="{{$parte}}" 
   :informes_ri_data="{{$informes_ri}}"
+  :informes_pm_data="{{$informes_pm}}"
   :responsables_data="{{$responsables}}"
   editmode  
   

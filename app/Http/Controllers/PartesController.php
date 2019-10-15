@@ -82,6 +82,7 @@ class PartesController extends Controller
           $parte  = $this->saveParte($request,$parte);
           $this->saveResponsables($request->responsables,$parte);
           $this->saveParteDetalleRi($request->informes_ri,$parte);
+          $this->saveParteDetallePm($request->informes_pm,$parte);
          
           DB::commit(); 
     
@@ -126,17 +127,7 @@ class PartesController extends Controller
        
                 $ot_operarios_update->save();
                 }
-        /*
-        foreach ($responsables as $responsable) {
-           
-            $parteOperador                   = new ParteOperadores;
-            $parteOperador->parte_id         = $parte->id;            
-            $parteOperador->user_id          = $responsable['operador']['id'];        
-            $parteOperador->responsabilidad  = $responsable['responsabilidad'];     
-            $parteOperador->save();
-           
-        }
-        */
+
     }
 
     public function saveParte($request,$parte){
@@ -188,6 +179,27 @@ class PartesController extends Controller
 
     }
 
+    public function saveParteDetallePm($informes_pm,$parte){
+
+        
+        foreach ($informes_pm as $informe) {
+            
+            $parteDetalle  = new ParteDetalles;
+            $parteDetalle->parte_id = $parte->id;            
+            $parteDetalle->informe_id =$informe['id'];   
+            $parteDetalle->pieza_original = $informe['pieza_original'];      
+            $parteDetalle->pieza_final = $informe['pieza_final'];
+            $parteDetalle->nro_original = $informe['nro_original'];
+            $parteDetalle->nro_final = $informe['nro_final'];          
+            $parteDetalle->metros_lineales = $informe['metros_lineales'];
+            $parteDetalle->save();
+
+            (new \App\Http\Controllers\InformesController)->setParteId($parte->id,$informe['id']);
+           
+        }
+
+    }
+
     /**
      * Display the specified resource.
      *
@@ -224,8 +236,17 @@ class PartesController extends Controller
                             ->join('informes','informes.id','=','parte_detalles.informe_id')
                             ->join('metodo_ensayos','metodo_ensayos.id','=','informes.metodo_ensayo_id')                            
                              ->where('parte_detalles.parte_id',$id)
+                             ->where('metodo_ensayos.metodo','RI')
                              ->selectRaw('parte_detalles.* , 0 as informe_sel,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada')
                              ->get();
+
+        $informes_pm  = DB::table('parte_detalles')
+                             ->join('informes','informes.id','=','parte_detalles.informe_id')          
+                             ->join('metodo_ensayos','metodo_ensayos.id','=','informes.metodo_ensayo_id')    
+                             ->where('metodo_ensayos.metodo','PM')                                              
+                              ->where('parte_detalles.parte_id',$id)
+                              ->selectRaw('parte_detalles.* , 0 as informe_sel,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada')
+                              ->get();
                              
          foreach ($informes_ri as $informe_ri) {
 
@@ -239,6 +260,7 @@ class PartesController extends Controller
         return view('partes.edit', compact('parte',
                                             'responsables',
                                             'informes_ri',
+                                            'informes_pm',
                                             'ot',                                            
                                             'user',                                              
                                             'header_titulo',
@@ -264,6 +286,7 @@ class PartesController extends Controller
             ParteDetalles::where('parte_id',$parte->id)->delete();
             (new \App\Http\Controllers\InformesController)->deleteParteId($parte->id);
             $this->saveParteDetalleRi($request->informes_ri,$parte);
+            $this->saveParteDetallePm($request->informes_pm,$parte);
             
             DB::commit();
             
@@ -291,7 +314,8 @@ class PartesController extends Controller
         $informe_ri = DB::select('select
                                     COUNT(DISTINCT(juntas.codigo)) as costuras,
                                     diametros_espesor.diametro as pulgadas,       
-                                    COUNT(posicion.id) as placas
+                                    COUNT(posicion.id) as placas,
+                                    "RI" as metodo
                                     FROM informes 
                                     
                                     inner join informes_ri on informes.id = informes_ri.informe_id
@@ -311,14 +335,15 @@ class PartesController extends Controller
     public function getInformePmParte($id){
 
         $informe_pm = DB::select('select
-                                detalles_pm.pieza ,
-                                detalles_pm.numero
-                                FROM informes
-                                
-                                inner join informes_pm on informes.id = informes_pm.informe_id
-                                left join detalles_pm on detalles_pm.informe_pm_id = informes_pm.id
-                                WHERE
-                                informes.id =:id',['id' => $id ]);
+                                    detalles_pm.pieza ,
+                                    detalles_pm.numero,
+                                    "PM" as metodo
+                                    FROM informes
+                                    
+                                    inner join informes_pm on informes.id = informes_pm.informe_id
+                                    left join detalles_pm on detalles_pm.informe_pm_id = informes_pm.id
+                                    WHERE
+                                    informes.id =:id',['id' => $id ]);
 
       $informe_pm = Collection::make($informe_pm);
 
