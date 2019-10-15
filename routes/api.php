@@ -130,6 +130,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('partes/ot/{ot_id}/total','PartesController@PartesTotal');
     Route::resource('partes', 'PartesController');
     Route::get('partes/informe_ri/{id}','PartesController@getInformeRiParte');
+    Route::get('partes/informe_pm/{id}','PartesController@getInformePmParte');
 
 });
 

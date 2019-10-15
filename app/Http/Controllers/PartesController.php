@@ -308,6 +308,25 @@ class PartesController extends Controller
 
     }
 
+    public function getInformePmParte($id){
+
+        $informe_pm = DB::select('select
+                                detalles_pm.pieza ,
+                                detalles_pm.numero
+                                FROM informes
+                                
+                                inner join informes_pm on informes.id = informes_pm.informe_id
+                                left join detalles_pm on detalles_pm.informe_pm_id = informes_pm.id
+                                WHERE
+                                informes.id =:id',['id' => $id ]);
+
+      $informe_pm = Collection::make($informe_pm);
+
+
+      return $informe_pm;
+
+    }
+
     public function PartesTotal($ot_id){
 
         return Partes::where('ot_id',$ot_id)->count(); 
