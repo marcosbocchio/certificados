@@ -11436,11 +11436,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       console.log('valido cms');
       return valido;
     },
+    validarResponsables: function validarResponsables() {
+      var valido = 'true';
+      valido = this.TablaResponsables.length ? true : false;
+      return valido;
+    },
     Store: function Store() {
       var _this7 = this;
 
       if (!this.validarCmsRi()) {
         toastr.error('EL campo CM en los informes RI asignados al Parte son obligatorios');
+        return;
+      }
+
+      this.errors = [];
+
+      if (!this.validarResponsables()) {
+        toastr.error('El Parte debe tener al menos 1 responsable');
         return;
       }
 
@@ -11485,6 +11497,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       if (!this.validarCmsRi()) {
         toastr.error('EL campo CM en los informes RI asignados al Parte son obligatorios');
+        return;
+      }
+
+      if (!this.validarResponsables()) {
+        toastr.error('El Parte debe tener al menos 1 responsable');
         return;
       }
 

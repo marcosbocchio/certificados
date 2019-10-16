@@ -730,6 +730,14 @@ export default {
                 return valido;
 
             },
+        validarResponsables: function(){
+
+            let valido = 'true';
+
+            valido = this.TablaResponsables.length ? true :false
+
+            return valido;
+        },
 
         Store : function(){
          
@@ -738,6 +746,14 @@ export default {
                   toastr.error('EL campo CM en los informes RI asignados al Parte son obligatorios');
                   return;
             }
+
+            this.errors =[];
+
+            if(!this.validarResponsables()){
+  
+                toastr.error('El Parte debe tener al menos 1 responsable');
+                return;
+                }
 
             this.errors =[];
 
@@ -792,6 +808,12 @@ export default {
                 toastr.error('EL campo CM en los informes RI asignados al Parte son obligatorios');
                 return;
 
+                }
+
+            if(!this.validarResponsables()){
+                
+                toastr.error('El Parte debe tener al menos 1 responsable');
+                return;
                 }
 
             console.log('entro para actualizar' );
