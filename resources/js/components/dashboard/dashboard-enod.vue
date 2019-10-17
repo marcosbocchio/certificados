@@ -139,7 +139,7 @@
                                     <th>PROYECTO</th>  
                                     <th>FECHA</th>     
                                     <th>ESTADO</th>                        
-                                    <th colspan="2">ACCIÓN</th>
+                                    <th colspan="3">ACCIÓN</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -153,7 +153,7 @@
                                             
                                     <td width="10px"> <a :href="AppUrl + '/area/enod/ots/' + ot.id + '/edit' "   class="btn btn-warning btn-sm" title="Editar"><span class="fa fa-edit"></span></a></td>
                                     <td width="10px"> <a :href="AppUrl + '/api/pdf/ot/' + ot.id " target="_blank"  class="btn btn-default btn-sm" title="pdf"><span class="fa fa-file-pdf-o"></span></a></td>
-                                    <td v-if="!ot.firma" width="10px"> <a  @click="firmar(k)"  class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span> </a></td>   
+                                    <td v-if="!ot.firma" width="10px"> <a  @click="firmar(k)"  class="btn btn-default btn-sm" title="Firmar"><span class="glyphicon glyphicon-pencil"></span> </a></td>   
 
                                 </tr>
                         </tbody>

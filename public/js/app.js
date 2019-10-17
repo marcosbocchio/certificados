@@ -54300,6 +54300,7 @@ var render = function() {
                               "a",
                               {
                                 staticClass: "btn btn-default btn-sm",
+                                attrs: { title: "Firmar" },
                                 on: {
                                   click: function($event) {
                                     return _vm.firmar(k)
@@ -54424,7 +54425,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("ESTADO")]),
         _vm._v(" "),
-        _c("th", { attrs: { colspan: "2" } }, [_vm._v("ACCIÓN")])
+        _c("th", { attrs: { colspan: "3" } }, [_vm._v("ACCIÓN")])
       ])
     ])
   }
@@ -54823,6 +54824,7 @@ var render = function() {
                             "a",
                             {
                               staticClass: "btn btn-default btn-sm",
+                              attrs: { title: "Firmar" },
                               on: {
                                 click: function($event) {
                                   return _vm.firmar(k)
@@ -54901,7 +54903,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("FECHA")]),
         _vm._v(" "),
-        _c("th", { attrs: { colspan: "2" } }, [_vm._v("ACCIÓN")])
+        _c("th", { attrs: { colspan: "3" } }, [_vm._v("ACCIÓN")])
       ])
     ])
   }
@@ -55311,6 +55313,7 @@ var render = function() {
                             "a",
                             {
                               staticClass: "btn btn-default btn-sm",
+                              attrs: { title: "Firmar" },
                               on: {
                                 click: function($event) {
                                   return _vm.firmar(k)
@@ -55366,7 +55369,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("FECHA")]),
         _vm._v(" "),
-        _c("th", { attrs: { colspan: "3" } }, [_vm._v("ACCIÓN")])
+        _c("th", { attrs: { colspan: "4" } }, [_vm._v("ACCIÓN")])
       ])
     ])
   }
