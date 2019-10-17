@@ -15,6 +15,8 @@ use App\OtServicios;
 use App\User;
 use App\Provincias;
 use App\Localidades;
+use Illuminate\Support\Facades\Auth;
+
 
 class OtsController extends Controller
 {
@@ -156,4 +158,21 @@ class OtsController extends Controller
     {
         //
     }
+
+    public function firmar($id){
+
+        $user_id = null;
+        
+        if (Auth::check())
+        {
+             $user_id = $userId = Auth::id();    
+        }
+
+        $ot = Ots::findOrFail($id);
+        $ot->firma =  $user_id;
+        $ot->save();
+
+        return $ot;
+
+    } 
 }

@@ -26,7 +26,7 @@ class InformesController extends Controller
                     ->join('users','users.id','=','informes.user_id')
                     ->join('metodo_ensayos','metodo_ensayos.id','=','informes.metodo_ensayo_id')
                     ->where('informes.ot_id',$id)
-                    ->selectRaw('informes.numero,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha,informes.id,metodo_ensayos.metodo as metodo,users.name,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado,informes.prefijo as prefijo')                 
+                    ->selectRaw('informes.numero,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha,informes.id,metodo_ensayos.metodo as metodo,users.name,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado,informes.prefijo as prefijo,firma')                 
                     ->get();
 
         $ot_metodos_ensayos = DB::table('ots')
@@ -214,5 +214,22 @@ class InformesController extends Controller
         }
        
      }
+
+    public function firmar($id){
+
+        $user_id = null;
+        
+        if (Auth::check())
+        {
+             $user_id = $userId = Auth::id();    
+        }
+
+        $informe = Informe::findOrFail($id);
+        $informe->firma =  $user_id;
+        $informe->save();
+
+        return $informe;
+
+    } 
    
 }

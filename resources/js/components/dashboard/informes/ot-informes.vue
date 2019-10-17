@@ -70,9 +70,11 @@
                                     <td> {{ot_informe.name}}</td>     
                                     <td> {{ot_informe.fecha}}</td>              
                                     <td width="10px"> <a :href="AppUrl + '/area/enod/ot/' + ot_id_data + '/informe/' + ot_informe.id +'/edit' "   class="btn btn-warning btn-sm" title="Editar"><span class="fa fa-edit"></span></a></td>
-                                    <td width="10px"> <a :href="AppUrl + '/api/pdf/informe/' + ot_informe.id " target="_blank"  class="btn btn-default btn-sm" title="pdf"><span class="fa fa-file-pdf-o"></span></a></td>
+                                    <td width="10px"> <a :href="AppUrl + '/api/pdf/informe/' + ot_informe.id " target="_blank"  class="btn btn-default btn-sm" title="pdf"><span class="fa fa-file-pdf-o"></span></a></td>                                    
+                                    <td v-if="!ot_informe.firma" width="10px"> <a  @click="firmar(k)"  class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span> </a></td>   
+
                                 </tr>                       
-                                
+                                 
                             </tbody>
                         </table>                     
                     </div>
@@ -129,6 +131,34 @@ export default {
 
        ...mapState(['url','AppUrl'])
      },  
+
+    methods : {
+
+        firmar : function(index){
+
+            axios.defaults.baseURL = this.url ;
+                var urlRegistros = 'informes/' + this.ot_informes[index].id + '/firmar';                      
+                axios.put(urlRegistros).then(response => {
+                  console.log(response.data); 
+                  this.ot_informes[index].firma = response.data.firma;    
+                  toastr.success('El reporte fue firmado con éxito');                
+                  
+                }).catch(error => {                   
+                    this.errors = error.response.data.errors;
+                    $.each( this.errors, function( key, value ) {
+                        toastr.error(value);
+                        console.log( key + ": " + value );
+                    });
+
+                     if((typeof(this.errors)=='undefined') && (error)){
+
+                     toastr.error("Ocurrió un error al procesar la solicitud");                     
+                  
+                }
+                });
+
+        }
+    },
     
 }
 </script>

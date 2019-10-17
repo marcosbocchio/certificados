@@ -38,6 +38,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('metodo_ensayos', 'MetodoEnsayosController');
     Route::resource('norma_ensayos', 'NormaEnsayosController');
     Route::resource('norma_evaluaciones', 'NormaEvaluacionesController');
+    Route::put('ots/{id}/firmar', 'OtsController@firmar');
     Route::resource('ots', 'OtsController');
     Route::resource('ot_servicios', 'OtServiciosController');
     Route::get('productos/ots', 'ProductosController@ProductosOts');
@@ -77,7 +78,8 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('espesor/{id}', 'DiametrosEspesorController@getEspesor');
     
     Route::get('procedimientos_informes/ot/{id_ot}/metodo/{metodo}', 'DocumentacionesController@ProcedimientosMetodo');
-    Route::get('informes/ot/{ot_id}/total', 'InformesController@OtInformesTotal');
+    Route::get('informes/ot/{ot_id}/total', 'InformesController@OtInformesTotal');   
+    Route::put('informes/{id}/firmar', 'InformesController@firmar');   
     Route::get('informes/ot/{ot_id}/pendientes_parte_diario', 'InformesController@OtInformesPendienteParteDiario');
     Route::get('informes/ot/{ot_id}/parte/{parte_id}/pendientes_editables_parte_diario', 'InformesController@OtInformesPendienteEditableParteDiario');
 
@@ -129,6 +131,7 @@ Route::group(['middleware' => 'auth:api'], function()
     //parte diario
 
     Route::get('partes/ot/{ot_id}/total','PartesController@PartesTotal');
+    Route::put('partes/{id}/firmar', 'PartesController@firmar');
     Route::resource('partes', 'PartesController');
     Route::get('partes/informe_ri/{id}','PartesController@getInformeRiParte');
     Route::get('partes/informe_pm/{id}','PartesController@getInformePmParte');

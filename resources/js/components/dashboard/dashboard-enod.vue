@@ -143,7 +143,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="ot in ots" :key="ot.id" @click="selectOt(ot.id)" :class="{selected: ot_id_selected === ot.id}" >
+                                <tr v-for="(ot,k) in ots" :key="k" @click="selectOt(k)" :class="{selected: ot_id_selected === k}" >
                                     <td> {{ot.numero}}</td>     
                                     <td> {{ot.obra}}</td>         
                                     <td> {{ot.cliente.nombre_fantasia}}</td>         
@@ -153,10 +153,12 @@
                                             
                                     <td width="10px"> <a :href="AppUrl + '/area/enod/ots/' + ot.id + '/edit' "   class="btn btn-warning btn-sm" title="Editar"><span class="fa fa-edit"></span></a></td>
                                     <td width="10px"> <a :href="AppUrl + '/api/pdf/ot/' + ot.id " target="_blank"  class="btn btn-default btn-sm" title="pdf"><span class="fa fa-file-pdf-o"></span></a></td>
+                                    <td v-if="!ot.firma" width="10px"> <a  @click="firmar(k)"  class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span> </a></td>   
+
                                 </tr>
                         </tbody>
                         </table>
-                        <pagination :data="ots" @pagination-change-page="getResults"></pagination>
+                    <!--    <pagination :data="ots" @pagination-change-page="getResults"></pagination> -->
                     </div>       
                 </div> 
             </div>       
@@ -228,9 +230,9 @@ export default {
        
         },
 
-         selectOt : function(id){
+         selectOt : function(index){
 
-            this.ot_id_selected = id;
+            this.ot_id_selected = this.ots[index].id;
 
          },
 
@@ -310,7 +312,32 @@ export default {
             this.CantDocumentaciones = response.data
             });
 
-         }
+         },
+
+         firmar : function(index){
+
+                axios.defaults.baseURL = this.url ;
+                var urlRegistros = 'ots/' + this.ots[index].id + '/firmar';                      
+                axios.put(urlRegistros).then(response => {
+                  console.log(response.data); 
+                  this.ots[index].firma = response.data.firma;    
+                  toastr.success('La OT fue firmada con éxito');                
+                  
+                }).catch(error => {                   
+                    this.errors = error.response.data.errors;
+                    $.each( this.errors, function( key, value ) {
+                        toastr.error(value);
+                        console.log( key + ": " + value );
+                    });
+
+                     if((typeof(this.errors)=='undefined') && (error)){
+
+                     toastr.error("Ocurrió un error al procesar la solicitud");                     
+                  
+                }
+                });
+
+        }
     }
 }
     

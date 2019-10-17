@@ -5950,6 +5950,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -5993,8 +5995,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this.ot_id_selected = _this.ots[0].id;
       });
     },
-    selectOt: function selectOt(id) {
-      this.ot_id_selected = id;
+    selectOt: function selectOt(index) {
+      this.ot_id_selected = this.ots[index].id;
     },
     ContarOperadores: function ContarOperadores() {
       var _this2 = this;
@@ -6066,6 +6068,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var urlRegistros = 'ot-documentaciones/ot/' + this.ot_id_selected + '/total' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         _this9.CantDocumentaciones = response.data;
+      });
+    },
+    firmar: function firmar(index) {
+      var _this10 = this;
+
+      axios.defaults.baseURL = this.url;
+      var urlRegistros = 'ots/' + this.ots[index].id + '/firmar';
+      axios.put(urlRegistros).then(function (response) {
+        console.log(response.data);
+        _this10.ots[index].firma = response.data.firma;
+        toastr.success('La OT fue firmada con éxito');
+      })["catch"](function (error) {
+        _this10.errors = error.response.data.errors;
+        $.each(_this10.errors, function (key, value) {
+          toastr.error(value);
+          console.log(key + ": " + value);
+        });
+
+        if (typeof _this10.errors == 'undefined' && error) {
+          toastr.error("Ocurrió un error al procesar la solicitud");
+        }
       });
     }
   }
@@ -6346,6 +6369,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -6374,7 +6399,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   created: function created() {
     this.ot_informes = JSON.parse(JSON.stringify(this.ot_informes_data));
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['url', 'AppUrl']))
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['url', 'AppUrl'])),
+  methods: {
+    firmar: function firmar(index) {
+      var _this = this;
+
+      axios.defaults.baseURL = this.url;
+      var urlRegistros = 'informes/' + this.ot_informes[index].id + '/firmar';
+      axios.put(urlRegistros).then(function (response) {
+        console.log(response.data);
+        _this.ot_informes[index].firma = response.data.firma;
+        toastr.success('El reporte fue firmado con éxito');
+      })["catch"](function (error) {
+        _this.errors = error.response.data.errors;
+        $.each(_this.errors, function (key, value) {
+          toastr.error(value);
+          console.log(key + ": " + value);
+        });
+
+        if (typeof _this.errors == 'undefined' && error) {
+          toastr.error("Ocurrió un error al procesar la solicitud");
+        }
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -6660,6 +6708,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -6677,7 +6727,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   created: function created() {
     this.ot_partes = JSON.parse(JSON.stringify(this.partes_data));
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['url', 'AppUrl']))
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['url', 'AppUrl'])),
+  methods: {
+    firmar: function firmar(index) {
+      var _this = this;
+
+      axios.defaults.baseURL = this.url;
+      var urlRegistros = 'partes/' + this.ot_partes[index].id + '/firmar';
+      axios.put(urlRegistros).then(function (response) {
+        console.log(response.data);
+        _this.ot_partes[index].firma = response.data.firma;
+        toastr.success('El Parte fue firmado con éxito');
+      })["catch"](function (error) {
+        _this.errors = error.response.data.errors;
+        $.each(_this.errors, function (key, value) {
+          toastr.error(value);
+          console.log(key + ": " + value);
+        });
+
+        if (typeof _this.errors == 'undefined' && error) {
+          toastr.error("Ocurrió un error al procesar la solicitud");
+        }
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -54155,88 +54228,99 @@ var render = function() {
     _c("div", { staticClass: "col-md-12" }, [
       _c("div", { staticClass: "box box-primary top-buffer" }, [
         _c("div", { staticClass: "box-body" }, [
-          _c(
-            "div",
-            { staticClass: "table-responsive" },
-            [
-              _c("table", { staticClass: "table table-hover table-striped" }, [
-                _vm._m(8),
-                _vm._v(" "),
-                _c(
-                  "tbody",
-                  _vm._l(_vm.ots, function(ot) {
-                    return _c(
-                      "tr",
-                      {
-                        key: ot.id,
-                        class: { selected: _vm.ot_id_selected === ot.id },
-                        on: {
-                          click: function($event) {
-                            return _vm.selectOt(ot.id)
-                          }
-                        }
-                      },
-                      [
-                        _c("td", [_vm._v(" " + _vm._s(ot.numero))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(" " + _vm._s(ot.obra))]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _vm._v(" " + _vm._s(ot.cliente.nombre_fantasia))
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(" " + _vm._s(ot.proyecto))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(" " + _vm._s(ot.fecha_hora))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(" " + _vm._s(ot.estado))]),
-                        _vm._v(" "),
-                        _c("td", { attrs: { width: "10px" } }, [
-                          _c(
-                            "a",
-                            {
-                              staticClass: "btn btn-warning btn-sm",
-                              attrs: {
-                                href:
-                                  _vm.AppUrl +
-                                  "/area/enod/ots/" +
-                                  ot.id +
-                                  "/edit",
-                                title: "Editar"
-                              }
-                            },
-                            [_c("span", { staticClass: "fa fa-edit" })]
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("td", { attrs: { width: "10px" } }, [
-                          _c(
-                            "a",
-                            {
-                              staticClass: "btn btn-default btn-sm",
-                              attrs: {
-                                href: _vm.AppUrl + "/api/pdf/ot/" + ot.id,
-                                target: "_blank",
-                                title: "pdf"
-                              }
-                            },
-                            [_c("span", { staticClass: "fa fa-file-pdf-o" })]
-                          )
-                        ])
-                      ]
-                    )
-                  }),
-                  0
-                )
-              ]),
+          _c("div", { staticClass: "table-responsive" }, [
+            _c("table", { staticClass: "table table-hover table-striped" }, [
+              _vm._m(8),
               _vm._v(" "),
-              _c("pagination", {
-                attrs: { data: _vm.ots },
-                on: { "pagination-change-page": _vm.getResults }
-              })
-            ],
-            1
-          )
+              _c(
+                "tbody",
+                _vm._l(_vm.ots, function(ot, k) {
+                  return _c(
+                    "tr",
+                    {
+                      key: k,
+                      class: { selected: _vm.ot_id_selected === k },
+                      on: {
+                        click: function($event) {
+                          return _vm.selectOt(k)
+                        }
+                      }
+                    },
+                    [
+                      _c("td", [_vm._v(" " + _vm._s(ot.numero))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(" " + _vm._s(ot.obra))]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _vm._v(" " + _vm._s(ot.cliente.nombre_fantasia))
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(" " + _vm._s(ot.proyecto))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(" " + _vm._s(ot.fecha_hora))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(" " + _vm._s(ot.estado))]),
+                      _vm._v(" "),
+                      _c("td", { attrs: { width: "10px" } }, [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "btn btn-warning btn-sm",
+                            attrs: {
+                              href:
+                                _vm.AppUrl +
+                                "/area/enod/ots/" +
+                                ot.id +
+                                "/edit",
+                              title: "Editar"
+                            }
+                          },
+                          [_c("span", { staticClass: "fa fa-edit" })]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("td", { attrs: { width: "10px" } }, [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "btn btn-default btn-sm",
+                            attrs: {
+                              href: _vm.AppUrl + "/api/pdf/ot/" + ot.id,
+                              target: "_blank",
+                              title: "pdf"
+                            }
+                          },
+                          [_c("span", { staticClass: "fa fa-file-pdf-o" })]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      !ot.firma
+                        ? _c("td", { attrs: { width: "10px" } }, [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "btn btn-default btn-sm",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.firmar(k)
+                                  }
+                                }
+                              },
+                              [
+                                _c("span", {
+                                  staticClass: "glyphicon glyphicon-pencil"
+                                })
+                              ]
+                            )
+                          ])
+                        : _vm._e()
+                    ]
+                  )
+                }),
+                0
+              )
+            ])
+          ])
         ])
       ])
     ])
@@ -54731,7 +54815,28 @@ var render = function() {
                         },
                         [_c("span", { staticClass: "fa fa-file-pdf-o" })]
                       )
-                    ])
+                    ]),
+                    _vm._v(" "),
+                    !ot_informe.firma
+                      ? _c("td", { attrs: { width: "10px" } }, [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn btn-default btn-sm",
+                              on: {
+                                click: function($event) {
+                                  return _vm.firmar(k)
+                                }
+                              }
+                            },
+                            [
+                              _c("span", {
+                                staticClass: "glyphicon glyphicon-pencil"
+                              })
+                            ]
+                          )
+                        ])
+                      : _vm._e()
                   ])
                 }),
                 0
@@ -55198,7 +55303,28 @@ var render = function() {
                         },
                         [_c("span", { staticClass: "fa fa-file-pdf-o" })]
                       )
-                    ])
+                    ]),
+                    _vm._v(" "),
+                    !ot_parte.firma
+                      ? _c("td", { attrs: { width: "10px" } }, [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn btn-default btn-sm",
+                              on: {
+                                click: function($event) {
+                                  return _vm.firmar(k)
+                                }
+                              }
+                            },
+                            [
+                              _c("span", {
+                                staticClass: "glyphicon glyphicon-pencil"
+                              })
+                            ]
+                          )
+                        ])
+                      : _vm._e()
                   ])
                 }),
                 0
