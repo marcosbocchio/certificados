@@ -321,7 +321,7 @@ export default {
                 axios.put(urlRegistros).then(response => {
                   console.log(response.data); 
                   this.ots[index].firma = response.data.firma;    
-                  toastr.success('La OT fue firmada con éxito');                
+                  toastr.success('La OT N° '+ response.data.numero +' fue firmada con éxito');                
                   
                 }).catch(error => {                   
                     this.errors = error.response.data.errors;

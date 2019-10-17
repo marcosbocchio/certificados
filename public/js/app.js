@@ -6078,7 +6078,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       axios.put(urlRegistros).then(function (response) {
         console.log(response.data);
         _this10.ots[index].firma = response.data.firma;
-        toastr.success('La OT fue firmada con éxito');
+        toastr.success('La OT N° ' + response.data.numero + ' fue firmada con éxito');
       })["catch"](function (error) {
         _this10.errors = error.response.data.errors;
         $.each(_this10.errors, function (key, value) {
@@ -6409,7 +6409,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       axios.put(urlRegistros).then(function (response) {
         console.log(response.data);
         _this.ot_informes[index].firma = response.data.firma;
-        toastr.success('El reporte fue firmado con éxito');
+        toastr.success('El Informe N° ' + (_this.ot_informes[index].prefijo ? _this.ot_informes[index].prefijo : '') + '-' + _this.ot_informes[index].numero_formateado + '  fue firmado con éxito');
       })["catch"](function (error) {
         _this.errors = error.response.data.errors;
         $.each(_this.errors, function (key, value) {
@@ -6737,7 +6737,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       axios.put(urlRegistros).then(function (response) {
         console.log(response.data);
         _this.ot_partes[index].firma = response.data.firma;
-        toastr.success('El Parte fue firmado con éxito');
+        toastr.success('El Parte N° ' + response.data.id + ' fue firmado con éxito');
       })["catch"](function (error) {
         _this.errors = error.response.data.errors;
         $.each(_this.errors, function (key, value) {
