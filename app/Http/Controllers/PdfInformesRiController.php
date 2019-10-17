@@ -54,6 +54,7 @@ class PdfInformesRiController extends Controller
         $ot_operador = OtOperarios::findOrFail($informe->ejecutor_ensayo_id);
         $ejecutor_ensayo = User::findOrFail($ot_operador->user_id);
         $tecnicas_grafico = TecnicasGraficos::findOrFail($informe_ri->tecnicas_grafico_id);
+        $evaluador = User::find($informe->firma);
         
        // dd($procedimiento_inf);
       //  dd($informe->observaciones);
@@ -87,7 +88,8 @@ class PdfInformesRiController extends Controller
           'tecnicas_grafico',
           'juntas_posiciones',
           'pasadas_posiciones',
-          'defectos_posiciones'))->setPaper('a4','landscape')->setWarnings(false);
+          'defectos_posiciones',
+          'evaluador'))->setPaper('a4','landscape')->setWarnings(false);
 
 
           return $pdf->stream();
