@@ -284,7 +284,7 @@ b {
                             <tr>                               
                                 <td style="font-size: 12px; text-align: left; height: 25px;width:100px;"><span style="margin-left: 2px">FIRMA:</span></td>  
                                 <td style="font-size: 12px; border-right: 1px solid #000;" rowspan="2">
-                                @if($evaluador && $evaluador->paht)
+                                @if($evaluador && $evaluador->path)
                                      <img src="{{ public_path($evaluador->path)}}" alt="" style="height: 70px; ">
                                 @endif
                                 </td> 

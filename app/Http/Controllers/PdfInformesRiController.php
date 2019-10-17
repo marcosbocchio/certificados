@@ -56,7 +56,7 @@ class PdfInformesRiController extends Controller
         $tecnicas_grafico = TecnicasGraficos::findOrFail($informe_ri->tecnicas_grafico_id);
         $evaluador = User::find($informe->firma);
         
-        dd($evaluador);
+      //  dd($evaluador);
       //  dd($informe->observaciones);
 
         if ($informe_ri->gasoducto_sn){
