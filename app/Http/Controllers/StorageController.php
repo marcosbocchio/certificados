@@ -56,4 +56,21 @@ class StorageController extends Controller
       } 
      
     }
+
+    public function saveFirmaDigital(Request $request){
+
+     
+      if ($request->hasFile('firma-digital')){
+
+      
+          $path = Storage::disk('public')->putFile('firmas-digitales',$request->file('firma-digital'));  
+    
+        return $path;
+      }
+      else
+      {
+        return "Seleccione un archivo";
+      } 
+     
+    }
 }

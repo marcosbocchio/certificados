@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddColumnPathClienteTable extends Migration
+class AddColumnPathUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class AddColumnPathClienteTable extends Migration
      */
     public function up()
     {
-        Schema::table('clientes', function (Blueprint $table) {
-        
-            $table->string('path','500')                  
-                    ->after('localidad_id')
+        Schema::table('users', function (Blueprint $table) {
+
+        $table->string('path','500')                  
+                    ->after('remember_token')
                     ->nullable()
                     ->default(NULL);       
 
-             });
+        });
     }
 
     /**
@@ -30,7 +30,7 @@ class AddColumnPathClienteTable extends Migration
      */
     public function down()
     {
-        Schema::table('clientes', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
           
             $table->dropColumn('path');        
 

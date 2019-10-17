@@ -5025,10 +5025,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var _event_bus__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../event-bus */ "./resources/js/components/event-bus.js");
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
-
+/* harmony import */ var vue_image_lightbox__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-image-lightbox */ "./node_modules/vue-image-lightbox/dist/vue-image-lightbox.min.js");
+/* harmony import */ var vue_image_lightbox__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_image_lightbox__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _event_bus__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../event-bus */ "./resources/js/components/event-bus.js");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 //
@@ -5082,9 +5082,64 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+__webpack_require__(/*! vue-image-lightbox/dist/vue-image-lightbox.min.css */ "./node_modules/vue-image-lightbox/dist/vue-image-lightbox.min.css");
+
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    LightBox: vue_image_lightbox__WEBPACK_IMPORTED_MODULE_0___default.a
+  },
   props: {
     selectRegistro: {
       type: Object,
@@ -5096,24 +5151,52 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       editRegistro: {
         'name': '',
         'email': '',
-        'password': ''
+        'password': '',
+        'path': ''
       },
       errors: {},
-      isEnod: 'true',
+      isEnod: true,
       cliente: {},
       clientes: [],
       password2: '',
-      request: []
+      request: [],
+      images: [{
+        src: '',
+        thumb: '',
+        caption: 'caption to display. receive <html> <b>tag</b>' // Optional
+
+      }],
+      fullPage: false,
+      isLoading_file: false,
+      uploadPercentage: 0,
+      selectedFile: null,
+      HabilitarGuardar: true,
+      options: {
+        layout: {
+          height: 20,
+          width: 150,
+          verticalTextAlign: 74
+        }
+      }
     };
   },
   created: function created() {
-    _event_bus__WEBPACK_IMPORTED_MODULE_1__["eventEditRegistro"].$on('editar', function () {
+    _event_bus__WEBPACK_IMPORTED_MODULE_2__["eventEditRegistro"].$on('editar', function () {
       this.openModal();
     }.bind(this));
     this.getClientes();
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['url'])),
-  methods: {
+  computed: Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])(['url']),
+  watch: {
+    editRegistro: function editRegistro(val) {
+      this.images[0].src = '/' + val.path;
+      this.images[0].thumb = '/' + val.path;
+    }
+  },
+  methods: _defineProperty({
+    openGallery: function openGallery(index) {
+      this.$refs.lightbox.showImage(0);
+    },
     openModal: function openModal() {
       console.log('entro en open modal');
       this.$nextTick(function () {
@@ -5121,6 +5204,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.editRegistro.email = this.selectRegistro.email;
         this.editRegistro.password = '********';
         this.password2 = '********';
+        this.editRegistro.path = this.selectRegistro.path;
         console.log(this.selectRegistro.cliente_id);
 
         if (this.selectRegistro.cliente_id != null) {
@@ -5131,7 +5215,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           this.cliente = {};
         }
 
-        $('#editar').modal('show');
+        this.images[0].src = '/' + this.selectRegistro.path;
+        this.images[0].thumb = '/' + this.selectRegistro.path;
+        this.TablaContactos = this.selectRegistro.contactos;
+        this.selectedFile = null, $('#editar').modal('show');
         this.$forceUpdate();
       });
     },
@@ -5144,8 +5231,70 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this.clientes = response.data;
       });
     },
-    storeRegistro: function storeRegistro() {
+    onFileSelected: function onFileSelected(event) {
+      this.isLoading_file = true;
+      this.HabilitarGuardar = false;
+      this.selectedFile = event.target.files[0];
+      var FileSize = this.selectedFile.size / 1024 / 1024; // in MB           
+
+      var FileType = this.selectedFile.type;
+      console.log(FileType);
+
+      if (!(FileType == 'image/jpeg' || FileType == 'image/bmp' || FileType == 'image/png')) {
+        toastr.error('El tipo de archivo no es aceptado ');
+        this.$refs.inputFile1.type = 'text';
+        this.$refs.inputFile1.type = 'file';
+        this.selectedFile = null;
+        return;
+      }
+
+      console.log(this.selectedFile);
+
+      if (FileSize > 20) {
+        event.preventDefault();
+        toastr.error('Archivo demasiado grande. (Max 500 KB)');
+        this.$refs.inputFile1.type = 'text';
+        this.$refs.inputFile1.type = 'file';
+        this.selectedFile = null;
+        this.uploadPercentage = 0;
+        this.isLoading_file = false;
+      } else {
+        this.onUpload();
+      }
+    },
+    onUpload: function onUpload() {
       var _this2 = this;
+
+      this.HabilitarGuardar = false;
+      var settings = {
+        headers: {
+          'content-type': 'multipart/form-data'
+        },
+        onUploadProgress: function (progressEvent) {
+          this.uploadPercentage = parseInt(Math.round(progressEvent.loaded * 100 / progressEvent.total));
+        }.bind(this)
+      };
+      var fd = new FormData();
+      fd.append('firma-digital', this.selectedFile);
+      axios.defaults.baseURL = this.url;
+      var url = 'storage/firma-digital';
+      console.log(fd);
+      axios.post(url, fd, settings).then(function (response) {
+        _this2.editRegistro.path = response.data;
+        _this2.isLoading_file = false;
+        _this2.HabilitarGuardar = true;
+        _this2.images[0].src = '/' + response.data;
+        _this2.images[0].thumb = '/' + response.data;
+
+        _this2.$forceUpdate();
+      })["catch"](function (response) {
+        _this2.errors = error.response.data.errors;
+        _this2.isLoading_file = false;
+        _this2.HabilitarGuardar = true;
+      });
+    },
+    storeRegistro: function storeRegistro() {
+      var _this3 = this;
 
       if (this.editRegistro.password != this.password2) {
         toastr.error("Las contreseñas ingresadas no coinciden");
@@ -5153,33 +5302,70 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       axios.defaults.baseURL = this.url;
-      var urlRegistros = 'users/' + this.selectRegistro.id;
-      axios.put(urlRegistros, {
+      var urlRegistros = 'users';
+      axios.post(urlRegistros, {
         'name': this.editRegistro.name,
         'email': this.editRegistro.email,
         'password': this.editRegistro.password,
         'cliente': this.cliente,
-        'isEnod': this.isEnod
+        'isEnod': this.isEnod,
+        'path': this.editRegistro.path
       }).then(function (response) {
-        _this2.$emit('update');
+        _this3.$emit('store');
 
-        _this2.errors = [];
-        $('#editar').modal('hide');
+        _this3.errors = [];
+        $('#nuevo').modal('hide');
         toastr.success('Nuevo usuario creado con éxito');
-        _this2.editRegistro = {};
+        _this3.editRegistro = {};
       })["catch"](function (error) {
-        _this2.errors = error.response.data.errors;
-        $.each(_this2.errors, function (key, value) {
+        console.log(error);
+        _this3.errors = error.response.data.errors;
+        $.each(_this3.errors, function (key, value) {
           toastr.error(value);
           console.log(key + ": " + value);
         });
 
-        if (typeof _this2.errors == 'undefined' && error) {
+        if (typeof _this3.errors == 'undefined' && error) {
           toastr.error("Ocurrió un error al procesar la solicitud");
         }
       });
     }
-  }
+  }, "storeRegistro", function storeRegistro() {
+    var _this4 = this;
+
+    if (this.editRegistro.password != this.password2) {
+      toastr.error("Las contreseñas ingresadas no coinciden");
+      return;
+    }
+
+    axios.defaults.baseURL = this.url;
+    var urlRegistros = 'users/' + this.selectRegistro.id;
+    axios.put(urlRegistros, {
+      'name': this.editRegistro.name,
+      'email': this.editRegistro.email,
+      'password': this.editRegistro.password,
+      'cliente': this.cliente,
+      'isEnod': this.isEnod,
+      'path': this.editRegistro.path
+    }).then(function (response) {
+      _this4.$emit('update');
+
+      _this4.errors = [];
+      $('#editar').modal('hide');
+      toastr.success('Nuevo usuario creado con éxito');
+      _this4.editRegistro = {};
+    })["catch"](function (error) {
+      _this4.errors = error.response.data.errors;
+      $.each(_this4.errors, function (key, value) {
+        toastr.error(value);
+        console.log(key + ": " + value);
+      });
+
+      if (typeof _this4.errors == 'undefined' && error) {
+        toastr.error("Ocurrió un error al procesar la solicitud");
+      }
+    });
+  })
 });
 
 /***/ }),
@@ -5193,8 +5379,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var _event_bus__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../event-bus */ "./resources/js/components/event-bus.js");
+/* harmony import */ var vue_image_lightbox__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-image-lightbox */ "./node_modules/vue-image-lightbox/dist/vue-image-lightbox.min.js");
+/* harmony import */ var vue_image_lightbox__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_image_lightbox__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _event_bus__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../event-bus */ "./resources/js/components/event-bus.js");
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -5252,36 +5440,120 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+__webpack_require__(/*! vue-image-lightbox/dist/vue-image-lightbox.min.css */ "./node_modules/vue-image-lightbox/dist/vue-image-lightbox.min.css");
+
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    LightBox: vue_image_lightbox__WEBPACK_IMPORTED_MODULE_0___default.a
+  },
   data: function data() {
     return {
       newRegistro: {
         'name': '',
         'email': '',
-        'password': ''
+        'password': '',
+        'path': ''
       },
       errors: {},
       isEnod: true,
       cliente: {},
       clientes: [],
       password2: '',
-      request: []
+      request: [],
+      images: [{
+        src: '',
+        thumb: '',
+        caption: 'caption to display. receive <html> <b>tag</b>' // Optional
+
+      }],
+      fullPage: false,
+      isLoading_file: false,
+      uploadPercentage: 0,
+      selectedFile: null,
+      HabilitarGuardar: true,
+      options: {
+        layout: {
+          height: 20,
+          width: 150,
+          verticalTextAlign: 74
+        }
+      }
     };
   },
   created: function created() {
-    _event_bus__WEBPACK_IMPORTED_MODULE_1__["eventNewRegistro"].$on('open', this.openModal);
+    _event_bus__WEBPACK_IMPORTED_MODULE_2__["eventNewRegistro"].$on('open', this.openModal);
     this.getClientes();
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['url'])),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])(['url'])),
+  watch: {
+    newRegistro: function newRegistro(val) {
+      this.images[0].src = '/' + val.path;
+      this.images[0].thumb = '/' + val.path;
+    }
+  },
   methods: {
+    openGallery: function openGallery(index) {
+      this.$refs.lightbox.showImage(0);
+    },
     openModal: function openModal() {
       this.newRegistro = {
         'name': '',
         'email': '',
         'password': ''
-      }, this.password2 = '', this.isEnod = true, $('#nuevo').modal('show');
+      }, this.password2 = '', this.isEnod = true, this.$refs.inputFile1.type = 'text';
+      this.$refs.inputFile1.type = 'file';
+      this.selectedFile = null;
+      $('#nuevo').modal('show');
       $(document).ready(function () {
         setTimeout(function () {
           $("#pass").attr('readonly', false);
@@ -5298,8 +5570,70 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this.clientes = response.data;
       });
     },
-    storeRegistro: function storeRegistro() {
+    onFileSelected: function onFileSelected(event) {
+      this.isLoading_file = true;
+      this.HabilitarGuardar = false;
+      this.selectedFile = event.target.files[0];
+      var FileSize = this.selectedFile.size / 1024 / 1024; // in MB           
+
+      var FileType = this.selectedFile.type;
+      console.log(FileType);
+
+      if (!(FileType == 'image/jpeg' || FileType == 'image/bmp' || FileType == 'image/png')) {
+        toastr.error('El tipo de archivo no es aceptado ');
+        this.$refs.inputFile1.type = 'text';
+        this.$refs.inputFile1.type = 'file';
+        this.selectedFile = null;
+        return;
+      }
+
+      console.log(this.selectedFile);
+
+      if (FileSize > 20) {
+        event.preventDefault();
+        toastr.error('Archivo demasiado grande. (Max 500 KB)');
+        this.$refs.inputFile1.type = 'text';
+        this.$refs.inputFile1.type = 'file';
+        this.selectedFile = null;
+        this.uploadPercentage = 0;
+        this.isLoading_file = false;
+      } else {
+        this.onUpload();
+      }
+    },
+    onUpload: function onUpload() {
       var _this2 = this;
+
+      this.HabilitarGuardar = false;
+      var settings = {
+        headers: {
+          'content-type': 'multipart/form-data'
+        },
+        onUploadProgress: function (progressEvent) {
+          this.uploadPercentage = parseInt(Math.round(progressEvent.loaded * 100 / progressEvent.total));
+        }.bind(this)
+      };
+      var fd = new FormData();
+      fd.append('firma-digital', this.selectedFile);
+      axios.defaults.baseURL = this.url;
+      var url = 'storage/firma-digital';
+      console.log(fd);
+      axios.post(url, fd, settings).then(function (response) {
+        _this2.newRegistro.path = response.data;
+        _this2.isLoading_file = false;
+        _this2.HabilitarGuardar = true;
+        _this2.images[0].src = '/' + response.data;
+        _this2.images[0].thumb = '/' + response.data;
+
+        _this2.$forceUpdate();
+      })["catch"](function (response) {
+        _this2.errors = error.response.data.errors;
+        _this2.isLoading_file = false;
+        _this2.HabilitarGuardar = true;
+      });
+    },
+    storeRegistro: function storeRegistro() {
+      var _this3 = this;
 
       if (this.newRegistro.password != this.password2) {
         toastr.error("Las contreseñas ingresadas no coinciden");
@@ -5313,23 +5647,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         'email': this.newRegistro.email,
         'password': this.newRegistro.password,
         'cliente': this.cliente,
-        'isEnod': this.isEnod
+        'isEnod': this.isEnod,
+        'path': this.newRegistro.path
       }).then(function (response) {
-        _this2.$emit('store');
+        _this3.$emit('store');
 
-        _this2.errors = [];
+        _this3.errors = [];
         $('#nuevo').modal('hide');
         toastr.success('Nuevo usuario creado con éxito');
-        _this2.newRegistro = {};
+        _this3.newRegistro = {};
       })["catch"](function (error) {
         console.log(error);
-        _this2.errors = error.response.data.errors;
-        $.each(_this2.errors, function (key, value) {
+        _this3.errors = error.response.data.errors;
+        $.each(_this3.errors, function (key, value) {
           toastr.error(value);
           console.log(key + ": " + value);
         });
 
-        if (typeof _this2.errors == 'undefined' && error) {
+        if (typeof _this3.errors == 'undefined' && error) {
           toastr.error("Ocurrió un error al procesar la solicitud");
         }
       });
@@ -47565,7 +47900,7 @@ var render = function() {
                                 _vm._v("Formatos soportados : png, bmp, jpg")
                               ]),
                               _vm._v(" "),
-                              _vm.newRegistro.path != ""
+                              _vm.newRegistro.path
                                 ? _c(
                                     "div",
                                     [
@@ -52603,115 +52938,162 @@ var render = function() {
             _vm._m(0),
             _vm._v(" "),
             _c("div", { staticClass: "modal-body" }, [
-              _c("div", { staticClass: "form-group" }, [
-                _c("div", { staticClass: "radio" }, [
-                  _c("label", [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.isEnod,
-                          expression: "isEnod"
+              _c("div", { staticClass: "col-md-12" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("div", { staticClass: "radio" }, [
+                    _c("label", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.isEnod,
+                            expression: "isEnod"
+                          }
+                        ],
+                        attrs: { type: "radio", name: "enod" },
+                        domProps: {
+                          value: true,
+                          checked: _vm._q(_vm.isEnod, true)
+                        },
+                        on: {
+                          change: function($event) {
+                            _vm.isEnod = true
+                          }
                         }
-                      ],
-                      attrs: { type: "radio", id: "enod", name: "enod" },
-                      domProps: {
-                        value: true,
-                        checked: _vm._q(_vm.isEnod, true)
-                      },
-                      on: {
-                        change: function($event) {
-                          _vm.isEnod = true
+                      }),
+                      _vm._v(
+                        "\n                                    Enod\n                                "
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "radio" }, [
+                    _c("label", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.isEnod,
+                            expression: "isEnod"
+                          }
+                        ],
+                        attrs: { type: "radio", name: "cliente" },
+                        domProps: {
+                          value: false,
+                          checked: _vm._q(_vm.isEnod, false)
+                        },
+                        on: {
+                          change: function($event) {
+                            _vm.isEnod = false
+                          }
                         }
-                      }
-                    }),
-                    _vm._v(
-                      "\n                        Enod\n                    "
-                    )
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "radio" }, [
-                  _c("label", [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.isEnod,
-                          expression: "isEnod"
-                        }
-                      ],
-                      attrs: { type: "radio", id: "cliente", name: "cliente" },
-                      domProps: {
-                        value: false,
-                        checked: _vm._q(_vm.isEnod, false)
-                      },
-                      on: {
-                        change: function($event) {
-                          _vm.isEnod = false
-                        }
-                      }
-                    }),
-                    _vm._v(
-                      "\n                         Cliente\n                     "
-                    )
+                      }),
+                      _vm._v(
+                        "\n                                Cliente\n                            "
+                      )
+                    ])
                   ])
                 ])
               ]),
               _vm._v(" "),
-              _c("label", { attrs: { for: "name" } }, [_vm._v("Nombre")]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.editRegistro.name,
-                    expression: "editRegistro.name"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: {
-                  autocomplete: "off",
-                  type: "text",
-                  name: "nombre",
-                  value: ""
-                },
-                domProps: { value: _vm.editRegistro.name },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
+              _c("div", { staticClass: "col-md-12" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "name" } }, [_vm._v("Nombre")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.editRegistro.name,
+                        expression: "editRegistro.name"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      autocomplete: "off",
+                      type: "text",
+                      name: "nombre",
+                      value: ""
+                    },
+                    domProps: { value: _vm.editRegistro.name },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.editRegistro, "name", $event.target.value)
+                      }
                     }
-                    _vm.$set(_vm.editRegistro, "name", $event.target.value)
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c("label", { attrs: { for: "name" } }, [_vm._v("Cliente")]),
+                  })
+                ])
+              ]),
               _vm._v(" "),
               !_vm.isEnod
-                ? _c(
-                    "div",
-                    [
-                      _c("v-select", {
-                        attrs: { label: "razon_social", options: _vm.clientes },
-                        model: {
-                          value: _vm.cliente,
-                          callback: function($$v) {
-                            _vm.cliente = $$v
-                          },
-                          expression: "cliente"
-                        }
-                      })
-                    ],
-                    1
-                  )
+                ? _c("div", [
+                    _c("div", { staticClass: "col-md-12" }, [
+                      _c(
+                        "div",
+                        { staticClass: "form-group" },
+                        [
+                          _c("label", { attrs: { for: "name" } }, [
+                            _vm._v("Cliente")
+                          ]),
+                          _vm._v(" "),
+                          _c("v-select", {
+                            attrs: {
+                              label: "razon_social",
+                              options: _vm.clientes
+                            },
+                            model: {
+                              value: _vm.cliente,
+                              callback: function($$v) {
+                                _vm.cliente = $$v
+                              },
+                              expression: "cliente"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ])
+                  ])
                 : _vm._e(),
               _vm._v(" "),
-              _c("label", { attrs: { for: "usuario" } }, [_vm._v("email")]),
+              _c("div", { staticClass: "col-md-12" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "usuario" } }, [_vm._v("email")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.editRegistro.email,
+                        expression: "editRegistro.email"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      autocomplete: "nope",
+                      type: "text",
+                      name: "email",
+                      value: ""
+                    },
+                    domProps: { value: _vm.editRegistro.email },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.editRegistro, "email", $event.target.value)
+                      }
+                    }
+                  })
+                ])
+              ]),
               _vm._v(" "),
               _c("input", {
                 directives: [
@@ -52723,12 +53105,8 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
-                attrs: {
-                  autocomplete: "off",
-                  type: "text",
-                  name: "email",
-                  value: ""
-                },
+                staticStyle: { display: "none" },
+                attrs: { type: "text", name: "none-email", value: "" },
                 domProps: { value: _vm.editRegistro.email },
                 on: {
                   input: function($event) {
@@ -52740,8 +53118,42 @@ var render = function() {
                 }
               }),
               _vm._v(" "),
-              _c("label", { attrs: { for: "password" } }, [
-                _vm._v("Contraseña")
+              _c("div", { staticClass: "col-md-12" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "password" } }, [
+                    _vm._v("Contraseña")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.editRegistro.password,
+                        expression: "editRegistro.password"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      autocomplete: "new-password",
+                      type: "password",
+                      name: "password"
+                    },
+                    domProps: { value: _vm.editRegistro.password },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.editRegistro,
+                          "password",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  })
+                ])
               ]),
               _vm._v(" "),
               _c("input", {
@@ -52754,12 +53166,8 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
-                attrs: {
-                  autocomplete: "off",
-                  type: "password",
-                  name: "password",
-                  value: ""
-                },
+                staticStyle: { display: "none" },
+                attrs: { type: "password", name: "password" },
                 domProps: { value: _vm.editRegistro.password },
                 on: {
                   input: function($event) {
@@ -52771,36 +53179,127 @@ var render = function() {
                 }
               }),
               _vm._v(" "),
-              _c("label", { attrs: { for: "password2" } }, [
-                _vm._v("Repetir Contraseña")
+              _c("div", { staticClass: "col-md-12" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "password2" } }, [
+                    _vm._v("Repetir Contraseña")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.password2,
+                        expression: "password2"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "password", name: "password2" },
+                    domProps: { value: _vm.password2 },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.password2 = $event.target.value
+                      }
+                    }
+                  })
+                ])
               ]),
               _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.password2,
-                    expression: "password2"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: {
-                  autocomplete: "off",
-                  type: "password",
-                  name: "password2",
-                  value: ""
-                },
-                domProps: { value: _vm.password2 },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.password2 = $event.target.value
-                  }
-                }
-              })
+              _vm.isEnod
+                ? _c("div", [
+                    _c("div", { staticClass: "col-md-12" }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", [_vm._v("Firma Digital")]),
+                        _vm._v(" "),
+                        _c("input", {
+                          ref: "inputFile1",
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "file",
+                            id: "inputFile",
+                            name: "file"
+                          },
+                          on: {
+                            change: function($event) {
+                              return _vm.onFileSelected($event)
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "hide",
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.onUpload()
+                              }
+                            }
+                          },
+                          [_vm._v("upload")]
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "clearfix" }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-12" }, [
+                      _c(
+                        "div",
+                        { staticClass: "form-group" },
+                        [
+                          _c("p", [
+                            _vm._v("Formatos soportados : png, bmp, jpg")
+                          ]),
+                          _vm._v(" "),
+                          _vm.editRegistro.path
+                            ? _c(
+                                "div",
+                                [
+                                  _c("img", {
+                                    staticClass: "margin zoom-in",
+                                    attrs: {
+                                      src: "/" + _vm.editRegistro.path,
+                                      alt: "...",
+                                      width: "120"
+                                    },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.openGallery()
+                                      }
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("LightBox", {
+                                    ref: "lightbox",
+                                    attrs: {
+                                      images: _vm.images,
+                                      "show-light-box": false
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _c("progress-bar", {
+                            staticStyle: { "margin-top": "5px" },
+                            attrs: {
+                              options: _vm.options,
+                              value: _vm.uploadPercentage
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ])
+                  ])
+                : _vm._e()
             ]),
             _vm._v(" "),
             _vm._m(1)
@@ -52888,115 +53387,162 @@ var render = function() {
             _vm._m(0),
             _vm._v(" "),
             _c("div", { staticClass: "modal-body" }, [
-              _c("div", { staticClass: "form-group" }, [
-                _c("div", { staticClass: "radio" }, [
-                  _c("label", [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.isEnod,
-                          expression: "isEnod"
+              _c("div", { staticClass: "col-md-12" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("div", { staticClass: "radio" }, [
+                    _c("label", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.isEnod,
+                            expression: "isEnod"
+                          }
+                        ],
+                        attrs: { type: "radio", name: "enod" },
+                        domProps: {
+                          value: true,
+                          checked: _vm._q(_vm.isEnod, true)
+                        },
+                        on: {
+                          change: function($event) {
+                            _vm.isEnod = true
+                          }
                         }
-                      ],
-                      attrs: { type: "radio", name: "enod" },
-                      domProps: {
-                        value: true,
-                        checked: _vm._q(_vm.isEnod, true)
-                      },
-                      on: {
-                        change: function($event) {
-                          _vm.isEnod = true
+                      }),
+                      _vm._v(
+                        "\n                                    Enod\n                                "
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "radio" }, [
+                    _c("label", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.isEnod,
+                            expression: "isEnod"
+                          }
+                        ],
+                        attrs: { type: "radio", name: "cliente" },
+                        domProps: {
+                          value: false,
+                          checked: _vm._q(_vm.isEnod, false)
+                        },
+                        on: {
+                          change: function($event) {
+                            _vm.isEnod = false
+                          }
                         }
-                      }
-                    }),
-                    _vm._v(
-                      "\n                        Enod\n                    "
-                    )
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "radio" }, [
-                  _c("label", [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.isEnod,
-                          expression: "isEnod"
-                        }
-                      ],
-                      attrs: { type: "radio", name: "cliente" },
-                      domProps: {
-                        value: false,
-                        checked: _vm._q(_vm.isEnod, false)
-                      },
-                      on: {
-                        change: function($event) {
-                          _vm.isEnod = false
-                        }
-                      }
-                    }),
-                    _vm._v(
-                      "\n                         Cliente\n                     "
-                    )
+                      }),
+                      _vm._v(
+                        "\n                                Cliente\n                            "
+                      )
+                    ])
                   ])
                 ])
               ]),
               _vm._v(" "),
-              _c("label", { attrs: { for: "name" } }, [_vm._v("Nombre")]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.newRegistro.name,
-                    expression: "newRegistro.name"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: {
-                  autocomplete: "off",
-                  type: "text",
-                  name: "nombre",
-                  value: ""
-                },
-                domProps: { value: _vm.newRegistro.name },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
+              _c("div", { staticClass: "col-md-12" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "name" } }, [_vm._v("Nombre")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.newRegistro.name,
+                        expression: "newRegistro.name"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      autocomplete: "off",
+                      type: "text",
+                      name: "nombre",
+                      value: ""
+                    },
+                    domProps: { value: _vm.newRegistro.name },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.newRegistro, "name", $event.target.value)
+                      }
                     }
-                    _vm.$set(_vm.newRegistro, "name", $event.target.value)
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c("label", { attrs: { for: "name" } }, [_vm._v("Cliente")]),
+                  })
+                ])
+              ]),
               _vm._v(" "),
               !_vm.isEnod
-                ? _c(
-                    "div",
-                    [
-                      _c("v-select", {
-                        attrs: { label: "razon_social", options: _vm.clientes },
-                        model: {
-                          value: _vm.cliente,
-                          callback: function($$v) {
-                            _vm.cliente = $$v
-                          },
-                          expression: "cliente"
-                        }
-                      })
-                    ],
-                    1
-                  )
+                ? _c("div", [
+                    _c("div", { staticClass: "col-md-12" }, [
+                      _c(
+                        "div",
+                        { staticClass: "form-group" },
+                        [
+                          _c("label", { attrs: { for: "name" } }, [
+                            _vm._v("Cliente")
+                          ]),
+                          _vm._v(" "),
+                          _c("v-select", {
+                            attrs: {
+                              label: "razon_social",
+                              options: _vm.clientes
+                            },
+                            model: {
+                              value: _vm.cliente,
+                              callback: function($$v) {
+                                _vm.cliente = $$v
+                              },
+                              expression: "cliente"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ])
+                  ])
                 : _vm._e(),
               _vm._v(" "),
-              _c("label", { attrs: { for: "usuario" } }, [_vm._v("email")]),
+              _c("div", { staticClass: "col-md-12" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "usuario" } }, [_vm._v("email")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.newRegistro.email,
+                        expression: "newRegistro.email"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      autocomplete: "nope",
+                      type: "text",
+                      name: "email",
+                      value: ""
+                    },
+                    domProps: { value: _vm.newRegistro.email },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.newRegistro, "email", $event.target.value)
+                      }
+                    }
+                  })
+                ])
+              ]),
               _vm._v(" "),
               _c("input", {
                 directives: [
@@ -53021,35 +53567,42 @@ var render = function() {
                 }
               }),
               _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.newRegistro.email,
-                    expression: "newRegistro.email"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: {
-                  autocomplete: "nope",
-                  type: "text",
-                  name: "email",
-                  value: ""
-                },
-                domProps: { value: _vm.newRegistro.email },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
+              _c("div", { staticClass: "col-md-12" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "password" } }, [
+                    _vm._v("Contraseña")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.newRegistro.password,
+                        expression: "newRegistro.password"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      autocomplete: "new-password",
+                      type: "password",
+                      name: "password"
+                    },
+                    domProps: { value: _vm.newRegistro.password },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.newRegistro,
+                          "password",
+                          $event.target.value
+                        )
+                      }
                     }
-                    _vm.$set(_vm.newRegistro, "email", $event.target.value)
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c("label", { attrs: { for: "password" } }, [
-                _vm._v("Contraseña")
+                  })
+                ])
               ]),
               _vm._v(" "),
               _c("input", {
@@ -53075,57 +53628,127 @@ var render = function() {
                 }
               }),
               _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.newRegistro.password,
-                    expression: "newRegistro.password"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: {
-                  autocomplete: "new-password",
-                  type: "password",
-                  name: "password"
-                },
-                domProps: { value: _vm.newRegistro.password },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
+              _c("div", { staticClass: "col-md-12" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "password2" } }, [
+                    _vm._v("Repetir Contraseña")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.password2,
+                        expression: "password2"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "password", name: "password2" },
+                    domProps: { value: _vm.password2 },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.password2 = $event.target.value
+                      }
                     }
-                    _vm.$set(_vm.newRegistro, "password", $event.target.value)
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c("label", { attrs: { for: "password2" } }, [
-                _vm._v("Repetir Contraseña")
+                  })
+                ])
               ]),
               _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.password2,
-                    expression: "password2"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { type: "password", name: "password2" },
-                domProps: { value: _vm.password2 },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.password2 = $event.target.value
-                  }
-                }
-              })
+              _vm.isEnod
+                ? _c("div", [
+                    _c("div", { staticClass: "col-md-12" }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", [_vm._v("Firma Digital")]),
+                        _vm._v(" "),
+                        _c("input", {
+                          ref: "inputFile1",
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "file",
+                            id: "inputFile",
+                            name: "file"
+                          },
+                          on: {
+                            change: function($event) {
+                              return _vm.onFileSelected($event)
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "hide",
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.onUpload()
+                              }
+                            }
+                          },
+                          [_vm._v("upload")]
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "clearfix" }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-12" }, [
+                      _c(
+                        "div",
+                        { staticClass: "form-group" },
+                        [
+                          _c("p", [
+                            _vm._v("Formatos soportados : png, bmp, jpg")
+                          ]),
+                          _vm._v(" "),
+                          _vm.newRegistro.path
+                            ? _c(
+                                "div",
+                                [
+                                  _c("img", {
+                                    staticClass: "margin zoom-in",
+                                    attrs: {
+                                      src: "/" + _vm.newRegistro.path,
+                                      alt: "...",
+                                      width: "120"
+                                    },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.openGallery()
+                                      }
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("LightBox", {
+                                    ref: "lightbox",
+                                    attrs: {
+                                      images: _vm.images,
+                                      "show-light-box": false
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _c("progress-bar", {
+                            staticStyle: { "margin-top": "5px" },
+                            attrs: {
+                              options: _vm.options,
+                              value: _vm.uploadPercentage
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ])
+                  ])
+                : _vm._e()
             ]),
             _vm._v(" "),
             _vm._m(1)

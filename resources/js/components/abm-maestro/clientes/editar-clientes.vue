@@ -84,7 +84,7 @@
                             <div class="col-md-6">   
                                 <div class="form-group">       
                                     <p>Formatos soportados : png, bmp, jpg</p>                          
-                                    <div v-if="newRegistro.path != ''">                            
+                                    <div v-if="newRegistro.path ">                            
                                         <img :src="'/' + newRegistro.path" class="margin zoom-in"  @click="openGallery()" alt="..." width="120" >
                                         <LightBox :images="images"  ref="lightbox"  :show-light-box="false" ></LightBox>
                                     </div>                              

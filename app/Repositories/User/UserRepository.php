@@ -42,12 +42,14 @@ class UserRepository extends BaseRepository
     
     $User->name = $request['name'];
     $User->email = $request['email'];
+
     if($request['password'] != '********'){
 
       $User->password = bcrypt($request['password']);
 
-    }         
+    }
     $User->api_token = str_random(60);
+    $User->path = $request['path'];
     $User->save();
 
 
