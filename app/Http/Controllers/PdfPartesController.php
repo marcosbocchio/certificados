@@ -44,8 +44,9 @@ class PdfPartesController extends Controller
                         ->selectRaw('metodo_ensayos.metodo as metodo,informes.id as informe_id,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado')
                         ->groupBy('informes.id','metodo','numero_formateado')                      
                         ->get();
+                        
         $evaluador = User::find($parte->firma);
-        //    dd($metodos_informe);    
+        dd($evaluador);    
 
         $pdf = \PDF::loadView('reportes.partes.parte',compact('ot',
                                                             'cliente', 
