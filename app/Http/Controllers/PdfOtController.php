@@ -42,7 +42,8 @@ class PdfOtController extends Controller
         $ot_productos = (new OtProductosController)->show($ot->id);
         $ot_epps = (new OtEppsController)->show($ot->id);
         $ot_riesgos = (new OtRiesgosController)->show($ot->id);
-        $ot_calidad_placas = (new OtCalidadPlacasController)->show($ot->id);      
+        $ot_calidad_placas = (new OtCalidadPlacasController)->show($ot->id);    
+        $evaluador = User::find($ot->firma);  
 
         $pdf = \PDF::loadView('reportes.ots.ot',compact('ot',
                                                         'cliente',
@@ -59,7 +60,8 @@ class PdfOtController extends Controller
                                                          'localidad',
                                                          'provincia',
                                                          'metodos_ensayos',
-                                                         'geo'))->setPaper('a4','portrait')->setWarnings(false);
+                                                         'geo',
+                                                         'evaluador'))->setPaper('a4','portrait')->setWarnings(false);
 
         return $pdf->stream();
         

@@ -232,11 +232,16 @@ td b,td span {
               <table>
                 <tbody>
                   <tr >
-                      <td style="font-size: 13px; width: 500px; padding: 20px 0px 10px 0px"><b>Responsable OT: </b>{{$responsable_ot->name }}</td>      
-                      <td style="font-size: 13px; width: 200px; padding: 20px 0px 10px 0px"><b>Firma: </b></td>        
+                      <td style="font-size: 13px; width: 400px; padding: 20px 0px 10px 0px"><b>Responsable OT: </b>{{$responsable_ot->name }}</td>      
+                      <td style="font-size: 13px; width: 40px; padding: 20px 0px 10px 0px"><b>Firma: </b></td>        
+                      <td style="font-size: 12px;" rowspan="2">
+                        @if($evaluador && $evaluador->path)
+                              <img src="{{ public_path($evaluador->path)}}" alt="" style="height: 70px;margin-left:40px ">
+                        @endif
+                      </td> 
                   </tr>
                    <tr >
-                      <td style="font-size: 13px; width: 500px; padding: 10px 0px 20px 0px"><b>Generador OT: </b>{{$generador_ot->name }}</td>     
+                      <td style="font-size: 13px; width: 400px; padding: 10px 0px 20px 0px"><b>Generador OT: </b>{{$generador_ot->name }}</td>     
                             
                   </tr>
                   

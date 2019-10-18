@@ -285,7 +285,7 @@ b {
                                 <td style="font-size: 12px; text-align: left; height: 25px;width:100px;"><span style="margin-left: 2px">FIRMA:</span></td>  
                                 <td style="font-size: 12px; border-right: 1px solid #000;" rowspan="2">
                                 @if($evaluador && $evaluador->path)
-                                     <img src="{{ public_path($evaluador->path)}}" alt="" style="height: 70px; ">
+                                     <img src="{{ public_path($evaluador->path)}}" alt="" style="height: 70px;margin-left:40px ">
                                 @endif
                                 </td> 
                                 <td style="font-size: 12px; text-align: left; height: 25px;width:100px;"><span style="margin-left: 2px">FIRMA:</span></td> 
@@ -296,8 +296,7 @@ b {
                             <tr>                               
                                 <td style="font-size: 12px; text-align: left; height: 25px;"><span style="margin-left: 2px">ACLARACIÓN:</span></td>   
                                 <td style="font-size: 12px; text-align: left; height: 25px;"><span style="margin-left: 2px">ACLARACIÓN:</span></td>
-                                <td style="font-size: 12px; text-align: left; height: 25px;"><span style="margin-left: 2px">ACLARACIÓN:</span></td>  
-                     
+                                <td style="font-size: 12px; text-align: left; height: 25px;"><span style="margin-left: 2px">ACLARACIÓN:</span></td>                      
                             </tr>
                         </tbody>
                     </table> 

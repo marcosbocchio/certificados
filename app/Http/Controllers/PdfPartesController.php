@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Partes;
 use App\Ots;
 use App\Clientes;
+use App\User;
 
 class PdfPartesController extends Controller
 {
@@ -43,7 +44,7 @@ class PdfPartesController extends Controller
                         ->selectRaw('metodo_ensayos.metodo as metodo,informes.id as informe_id,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado')
                         ->groupBy('informes.id','metodo','numero_formateado')                      
                         ->get();
-
+        $evaluador = User::find($parte->firma);
         //    dd($metodos_informe);    
 
         $pdf = \PDF::loadView('reportes.partes.parte',compact('ot',
@@ -52,7 +53,8 @@ class PdfPartesController extends Controller
                                                             'metodos_informe',
                                                             'informes_detalle',
                                                             'responsables',
-                                                            'parte_detalle'                                                              
+                                                            'parte_detalle',
+                                                            'evaluador'                                                              
                                                                 ))->setPaper('a4','portrait')->setWarnings(false);
         return $pdf->stream();        
     
