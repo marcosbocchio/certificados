@@ -46,7 +46,7 @@ class PdfPartesController extends Controller
                         ->groupBy('informes.id','metodo','numero_formateado')                      
                         ->get();
 
-        dd($parte);    
+        //dd($parte);    
 
         $pdf = \PDF::loadView('reportes.partes.parte',compact('ot',
                                                             'cliente', 
