@@ -143,7 +143,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(ot,k) in ots" :key="k" @click="selectOt(k)" :class="{selected: ot_id_selected === k}" >
+                                <tr v-for="(ot,k) in ots" :key="k" @click="selectOt(k)" :class="{selected: ot_id_selected === ots[k].id}" >
                                     <td> {{ot.numero}}</td>     
                                     <td> {{ot.obra}}</td>         
                                     <td> {{ot.cliente.nombre_fantasia}}</td>         

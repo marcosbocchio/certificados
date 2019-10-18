@@ -54239,7 +54239,7 @@ var render = function() {
                     "tr",
                     {
                       key: k,
-                      class: { selected: _vm.ot_id_selected === k },
+                      class: { selected: _vm.ot_id_selected === _vm.ots[k].id },
                       on: {
                         click: function($event) {
                           return _vm.selectOt(k)
