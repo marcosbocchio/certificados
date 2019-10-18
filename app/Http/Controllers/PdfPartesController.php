@@ -16,7 +16,7 @@ class PdfPartesController extends Controller
     public function imprimir($id,$estado){ 
     
         
-        $parte = Partes::find($id)->first();             
+        $parte = Partes::find($id);             
         $ot = Ots::find($parte->ot_id);   
         $cliente = Clientes::find($ot->cliente_id);   
         $evaluador = User::find($parte->firma);
