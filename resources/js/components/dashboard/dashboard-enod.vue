@@ -143,7 +143,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(ot,k) in ots" :key="k" @click="selectOt(k)" :class="{selected: ot_id_selected === ots[k].id}" >
+                                <tr v-for="(ot,k) in ots.data" :key="k" @click="selectOt(k)" :class="{selected: ot_id_selected === ots.data[k].id}" >
                                     <td> {{ot.numero}}</td>     
                                     <td> {{ot.obra}}</td>         
                                     <td> {{ot.cliente.nombre_fantasia}}</td>         
@@ -158,8 +158,11 @@
                                 </tr>
                         </tbody>
                         </table>
-                    <!--    <pagination :data="ots" @pagination-change-page="getResults"></pagination> -->
-                    </div>       
+          
+                    </div>     
+                  
+                   <pagination :data="ots" @pagination-change-page="getResults" ><span slot="prev-nav">&lt; Previous</span>
+                   <span slot="next-nav">Next &gt;</span> </pagination>
                 </div> 
             </div>       
         </div> 
@@ -170,11 +173,11 @@
 <script>
 
 import {mapState} from 'vuex'
-export default {
+export default {  
 
     data() { return {
 
-        ots :[],
+        ots :{},       
         ot_id_selected : '',
         CantOperadores :'0',
         CantInformes:'0',
@@ -210,21 +213,24 @@ export default {
     }
   },
 
-    created : function() {
+    mounted : function() {
 
-       this.getOts();
+       this.getResults();
        
     },
 
     methods : {
 
-        getOts : function(){
+        getResults : function(page = 1){
 
+            console.log('entro en getResults : ' + page);
             axios.defaults.baseURL = this.url ;                
-            var urlRegistros = 'ots' + '?api_token=' + Laravel.user.api_token;             
+            var urlRegistros = 'ots?page='+ page + '&api_token=' + Laravel.user.api_token;      
+           console.log(urlRegistros);        
             axios.get(urlRegistros).then(response =>{
-            this.ots = response.data
-            this.ot_id_selected = this.ots[0].id;    
+            this.ots = response.data    
+            console.log('response en getResults');       
+            this.ot_id_selected = this.ots.data[0].id;    
             });
 
        
@@ -232,7 +238,7 @@ export default {
 
          selectOt : function(index){
 
-            this.ot_id_selected = this.ots[index].id;
+            this.ot_id_selected = this.ots.data[index].id;
 
          },
 
@@ -320,7 +326,7 @@ export default {
                 var urlRegistros = 'ots/' + this.ots[index].id + '/firmar';                      
                 axios.put(urlRegistros).then(response => {
                   console.log(response.data); 
-                  this.ots[index].firma = response.data.firma;    
+                  this.ots.data[index].firma = response.data.firma;    
                   toastr.success('La OT N° '+ response.data.numero +' fue firmada con éxito');                
                   
                 }).catch(error => {                   

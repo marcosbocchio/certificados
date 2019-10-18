@@ -31,9 +31,10 @@ class OtsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return $this->ot->getAll();
+        
+             return ots::with('cliente')->orderBy('id','DESC')->paginate(5); 
     }
     
     /**

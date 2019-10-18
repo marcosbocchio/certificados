@@ -5952,11 +5952,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      ots: [],
+      ots: {},
       ot_id_selected: '',
       CantOperadores: '0',
       CantInformes: '0',
@@ -5981,22 +5984,26 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.ContarPartes();
     }
   },
-  created: function created() {
-    this.getOts();
+  mounted: function mounted() {
+    this.getResults();
   },
   methods: {
-    getOts: function getOts() {
+    getResults: function getResults() {
       var _this = this;
 
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      console.log('entro en getResults : ' + page);
       axios.defaults.baseURL = this.url;
-      var urlRegistros = 'ots' + '?api_token=' + Laravel.user.api_token;
+      var urlRegistros = 'ots?page=' + page + '&api_token=' + Laravel.user.api_token;
+      console.log(urlRegistros);
       axios.get(urlRegistros).then(function (response) {
         _this.ots = response.data;
-        _this.ot_id_selected = _this.ots[0].id;
+        console.log('response en getResults');
+        _this.ot_id_selected = _this.ots.data[0].id;
       });
     },
     selectOt: function selectOt(index) {
-      this.ot_id_selected = this.ots[index].id;
+      this.ot_id_selected = this.ots.data[index].id;
     },
     ContarOperadores: function ContarOperadores() {
       var _this2 = this;
@@ -6077,7 +6084,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var urlRegistros = 'ots/' + this.ots[index].id + '/firmar';
       axios.put(urlRegistros).then(function (response) {
         console.log(response.data);
-        _this10.ots[index].firma = response.data.firma;
+        _this10.ots.data[index].firma = response.data.firma;
         toastr.success('La OT N° ' + response.data.numero + ' fue firmada con éxito');
       })["catch"](function (error) {
         _this10.errors = error.response.data.errors;
@@ -54227,102 +54234,126 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "col-md-12" }, [
       _c("div", { staticClass: "box box-primary top-buffer" }, [
-        _c("div", { staticClass: "box-body" }, [
-          _c("div", { staticClass: "table-responsive" }, [
-            _c("table", { staticClass: "table table-hover table-striped" }, [
-              _vm._m(8),
-              _vm._v(" "),
-              _c(
-                "tbody",
-                _vm._l(_vm.ots, function(ot, k) {
-                  return _c(
-                    "tr",
-                    {
-                      key: k,
-                      class: { selected: _vm.ot_id_selected === _vm.ots[k].id },
-                      on: {
-                        click: function($event) {
-                          return _vm.selectOt(k)
+        _c(
+          "div",
+          { staticClass: "box-body" },
+          [
+            _c("div", { staticClass: "table-responsive" }, [
+              _c("table", { staticClass: "table table-hover table-striped" }, [
+                _vm._m(8),
+                _vm._v(" "),
+                _c(
+                  "tbody",
+                  _vm._l(_vm.ots.data, function(ot, k) {
+                    return _c(
+                      "tr",
+                      {
+                        key: k,
+                        class: {
+                          selected: _vm.ot_id_selected === _vm.ots.data[k].id
+                        },
+                        on: {
+                          click: function($event) {
+                            return _vm.selectOt(k)
+                          }
                         }
-                      }
-                    },
-                    [
-                      _c("td", [_vm._v(" " + _vm._s(ot.numero))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(" " + _vm._s(ot.obra))]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _vm._v(" " + _vm._s(ot.cliente.nombre_fantasia))
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(" " + _vm._s(ot.proyecto))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(" " + _vm._s(ot.fecha_hora))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(" " + _vm._s(ot.estado))]),
-                      _vm._v(" "),
-                      _c("td", { attrs: { width: "10px" } }, [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "btn btn-warning btn-sm",
-                            attrs: {
-                              href:
-                                _vm.AppUrl +
-                                "/area/enod/ots/" +
-                                ot.id +
-                                "/edit",
-                              title: "Editar"
-                            }
-                          },
-                          [_c("span", { staticClass: "fa fa-edit" })]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("td", { attrs: { width: "10px" } }, [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "btn btn-default btn-sm",
-                            attrs: {
-                              href: _vm.AppUrl + "/api/pdf/ot/" + ot.id,
-                              target: "_blank",
-                              title: "pdf"
-                            }
-                          },
-                          [_c("span", { staticClass: "fa fa-file-pdf-o" })]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      !ot.firma
-                        ? _c("td", { attrs: { width: "10px" } }, [
-                            _c(
-                              "a",
-                              {
-                                staticClass: "btn btn-default btn-sm",
-                                attrs: { title: "Firmar" },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.firmar(k)
+                      },
+                      [
+                        _c("td", [_vm._v(" " + _vm._s(ot.numero))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(" " + _vm._s(ot.obra))]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(" " + _vm._s(ot.cliente.nombre_fantasia))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(" " + _vm._s(ot.proyecto))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(" " + _vm._s(ot.fecha_hora))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(" " + _vm._s(ot.estado))]),
+                        _vm._v(" "),
+                        _c("td", { attrs: { width: "10px" } }, [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn btn-warning btn-sm",
+                              attrs: {
+                                href:
+                                  _vm.AppUrl +
+                                  "/area/enod/ots/" +
+                                  ot.id +
+                                  "/edit",
+                                title: "Editar"
+                              }
+                            },
+                            [_c("span", { staticClass: "fa fa-edit" })]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { attrs: { width: "10px" } }, [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn btn-default btn-sm",
+                              attrs: {
+                                href: _vm.AppUrl + "/api/pdf/ot/" + ot.id,
+                                target: "_blank",
+                                title: "pdf"
+                              }
+                            },
+                            [_c("span", { staticClass: "fa fa-file-pdf-o" })]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        !ot.firma
+                          ? _c("td", { attrs: { width: "10px" } }, [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "btn btn-default btn-sm",
+                                  attrs: { title: "Firmar" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.firmar(k)
+                                    }
                                   }
-                                }
-                              },
-                              [
-                                _c("span", {
-                                  staticClass: "glyphicon glyphicon-pencil"
-                                })
-                              ]
-                            )
-                          ])
-                        : _vm._e()
-                    ]
-                  )
-                }),
-                0
-              )
-            ])
-          ])
-        ])
+                                },
+                                [
+                                  _c("span", {
+                                    staticClass: "glyphicon glyphicon-pencil"
+                                  })
+                                ]
+                              )
+                            ])
+                          : _vm._e()
+                      ]
+                    )
+                  }),
+                  0
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "pagination",
+              {
+                attrs: { data: _vm.ots },
+                on: { "pagination-change-page": _vm.getResults }
+              },
+              [
+                _c("span", { attrs: { slot: "prev-nav" }, slot: "prev-nav" }, [
+                  _vm._v("< Previous")
+                ]),
+                _vm._v(" "),
+                _c("span", { attrs: { slot: "next-nav" }, slot: "next-nav" }, [
+                  _vm._v("Next >")
+                ])
+              ]
+            )
+          ],
+          1
+        )
       ])
     ])
   ])

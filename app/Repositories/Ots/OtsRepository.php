@@ -29,7 +29,8 @@ class OtsRepository extends BaseRepository
   public function getAll(){
 
   
-   return ots::with('cliente')->get();   
+   return ots::with('cliente')->paginate(5);   
+ 
 
   }
 
