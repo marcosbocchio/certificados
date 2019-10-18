@@ -19,6 +19,7 @@ class PdfPartesController extends Controller
         $parte = Partes::find($id)->first();             
         $ot = Ots::find($parte->ot_id);   
         $cliente = Clientes::find($ot->cliente_id);   
+        $evaluador = User::find($parte->firma);
         $responsables = DB::table('parte_operadores')
                           ->join('users','users.id','=','parte_operadores.user_id')
                           ->where('parte_operadores.parte_id',$id)
@@ -45,7 +46,6 @@ class PdfPartesController extends Controller
                         ->groupBy('informes.id','metodo','numero_formateado')                      
                         ->get();
 
-        $evaluador = User::find($parte->firma);
         dd($parte);    
 
         $pdf = \PDF::loadView('reportes.partes.parte',compact('ot',
