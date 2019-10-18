@@ -267,7 +267,7 @@ b {
                             </tr>
                             <tr>                               
                                 <td style="font-size: 12px; text-align: left; height: 25px;width:50px;"><span style="margin-left: 2px">FIRMA:</span></td>   
-                                <td style="font-size: 12px; border-right: 1px solid #000;" rowspan="2">
+                                <td style="font-size: 12px; border-right: 1px solid #000;width:150px;" rowspan="2">
                                 @if($evaluador && $evaluador->path)
                                      <img src="{{ public_path($evaluador->path)}}" alt="" style="height: 70px;margin:0 0 0 5px;">
                                 @endif
