@@ -16,6 +16,8 @@
                     <label for="name">Descripción</label>                   
                     <input autocomplete="off" type="text" name="descripcion" class="form-control" v-model="newRegistro.descripcion" value="">
                    
+                    <label for="name">Unidad Medida (*)</label>      
+                    <v-select v-model="unidad_medida" label="codigo" :options="unidades_medidas"></v-select>
                 </div>
             
                 <div class="modal-footer">
@@ -38,6 +40,10 @@ export default {
             'codigo'  : '',
             'descripcion' : '',         
          },
+         unidad_medida :{
+             'codigo' : '',
+             'descripcion':''
+         }, 
         errors:{},        
          }
     
@@ -49,7 +55,7 @@ export default {
     },
     computed :{
     
-         ...mapState(['url'])
+         ...mapState(['url','unidades_medidas'])
     },
  
    
@@ -58,14 +64,13 @@ export default {
                 this.newRegistro = {           
                         'codigo'  : '',
                         'descripcion' : '',                       
-                     },             
+                     },  
+                this.unidad_medida ={
+                        'codigo' : '',
+                        'descripcion':''
+                        },            
                 $('#nuevo').modal('show');    
-                $( document ).ready(function() {
-                    setTimeout(function(){
-                        $("#pass").attr('readonly', false);
-                        $("#pass").focus();
-                    },500);
-                });           
+                      
             },       
 
             storeRegistro: function(){
@@ -74,14 +79,15 @@ export default {
                 var urlRegistros = 'medidas';                         
                 axios.post(urlRegistros, {   
                     
-                ...this.newRegistro,           
+                ...this.newRegistro,     
+                'unidad_medida' : this.unidad_medida,      
           
                   
                 }).then(response => {
                   this.$emit('store');
                   this.errors=[];
                   $('#nuevo').modal('hide');
-                  toastr.success('Nueva Unidad de medidas creada con éxito');               
+                  toastr.success('Nueva medidas creada con éxito');               
                   this.newRegistro={}
                   
                 }).catch(error => {                   

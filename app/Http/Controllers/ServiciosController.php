@@ -22,6 +22,11 @@ class ServiciosController extends Controller
         return  Servicios::with('metodoEnsayos')->with('unidadMedidas')->get();
     }
 
+    public function paginate(Request $request){
+
+        return  Servicios::with('metodoEnsayos')->with('unidadMedidas')->orderBy('id','DESC')->paginate(10);
+    }
+
     public function callView()
     {   
         $user = auth()->user()->name; 

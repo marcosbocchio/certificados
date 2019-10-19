@@ -27,8 +27,14 @@ class MedidasController extends Controller
      */
     public function index()
     {
-        return Medidas::with('unidadMedidas')->get();
+        return Medidas::all();
     
+    }
+
+    public function paginate(Request $request){
+
+        return Medidas::with('unidadMedidas')->orderBy('id','DESC')->paginate(10);
+
     }
 
     public function callView()

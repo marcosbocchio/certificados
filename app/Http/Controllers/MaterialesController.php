@@ -18,6 +18,12 @@ class MaterialesController extends Controller
 
     }
 
+    public function paginate(Request $request){
+
+      return Materiales::orderBy('id','DESC')->paginate(10);
+
+    }
+
     public function callView()
     {   
         $user = auth()->user()->name;

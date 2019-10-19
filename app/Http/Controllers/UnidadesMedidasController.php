@@ -18,6 +18,12 @@ class UnidadesMedidasController extends Controller
         return UnidadesMedidas::all();
     }
 
+    public function paginate(Request $request){
+
+        return UnidadesMedidas::orderBy('id','DESC')->paginate(10);
+
+    }
+
     public function callView()
     {   
         $user = auth()->user()->name;

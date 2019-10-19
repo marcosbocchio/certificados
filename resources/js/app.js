@@ -207,7 +207,7 @@ actions : {
           commit
         }) {
           axios.defaults.baseURL = store.state.url ;
-          var urlRegistros = 'unidades_medidas' + '?api_token=' + Laravel.user.api_token;  
+          var urlRegistros = 'unidades_medidas/' + '?api_token=' + Laravel.user.api_token;  
           console.log(urlRegistros);
           axios.get(urlRegistros).then((response) => {
             commit('getUnidadesMedidas', response.data)           

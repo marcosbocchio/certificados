@@ -38,6 +38,19 @@ class ClientesController extends Controller
         return $clientes;
     }
 
+    public function paginate(Request $request){
+
+        $clientes =  Clientes::with('contactos')->with('localidad')->orderBy('id','DESC')->paginate(10);
+        foreach ($clientes as $cliente) {
+
+            $provincia = Provincias::find($cliente->localidad['provincia_id']);
+            $cliente->provincia = $provincia;
+        }
+
+        return $clientes;
+
+    }
+
     public function callView()
     {   
         $user = auth()->user()->name;

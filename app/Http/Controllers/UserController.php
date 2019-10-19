@@ -17,10 +17,16 @@ class UserController extends Controller
       $this->users = $userRepository;
     }
 
-    public function index()
+    public function index(Request $request)
     {   
       return User::with('cliente')->get();
   
+    }
+
+    public function paginate(Request $request){
+
+      return User::with('cliente')->orderBy('id','DESC')->paginate(10);
+
     }
 
     public function callView()

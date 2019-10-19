@@ -22,17 +22,23 @@ Route::middleware('auth:api')->get('/clientes','ClientesController@index');
 */
 
 Route::group(['middleware' => 'auth:api'], function()
-{
+{   
+    Route::get('clientes/paginate', 'ClientesController@paginate'); 
     Route::resource('clientes', 'ClientesController'); 
-    Route::get('users/empresa', 'UserController@getUsersEmpresa');    
-    Route::resource('users', 'UserController');    
+    Route::get('users/empresa', 'UserController@getUsersEmpresa');  
+    Route::get('users/paginate', 'UserController@paginate');      
+    Route::resource('users', 'UserController');  
+    Route::get('materiales/paginate', 'MaterialesController@paginate');        
     Route::resource('materiales', 'MaterialesController');
+    Route::get('unidades_medidas/paginate', 'UnidadesMedidasController@paginate');
     Route::resource('unidades_medidas', 'UnidadesMedidasController');
     Route::get('medidas/cm', 'MedidasController@getCms');
+    Route::get('medidas/paginate', 'MedidasController@paginate');
     Route::resource('medidas', 'MedidasController');
     Route::resource('provincias', 'ProvinciasController');
     Route::resource('localidades', 'LocalidadesController');
     Route::resource('contactos', 'ContactosController');
+    Route::get('servicios/paginate', 'ServiciosController@paginate');
     Route::resource('servicios', 'ServiciosController');
     Route::resource('tipo_peliculas', 'TipoPeliculasController');
     Route::resource('metodo_ensayos', 'MetodoEnsayosController');
@@ -42,6 +48,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('ots', 'OtsController');
     Route::resource('ot_servicios', 'OtServiciosController');
     Route::get('productos/ots', 'ProductosController@ProductosOts');
+    Route::get('productos/paginate', 'ProductosController@paginate');
     Route::resource('productos', 'ProductosController');
     Route::resource('medidas', 'MedidasController');
     Route::resource('epps', 'EppsController');
@@ -64,6 +71,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('users/cliente/{id}','UserController@UserCliente');
 
     Route::resource('soldadores', 'SoldadoresController');
+    Route::get('soldadores/cliente/{id}/paginate', 'SoldadoresController@paginate');
     Route::get('soldadores/cliente/{id}','SoldadoresController@SoldadoresCliente');
     Route::post('soldadores/cliente/{id}','SoldadoresController@store');
 

@@ -20,6 +20,12 @@ class ProductosController extends Controller
         return  Productos::with('unidadMedidas')->get();
     }
 
+    public function paginate(Request $request){
+
+        return  Productos::with('unidadMedidas')->orderBy('id','DESC')->paginate(10);
+
+    }
+
     public function ProductosOts(){
 
         return  Productos::where('visible_ot',1)->get();

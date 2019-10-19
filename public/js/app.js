@@ -1784,6 +1784,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1796,13 +1801,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   created: function created() {
-    this.getRegistros();
+    this.getResults();
   },
   data: function data() {
     return {
       fillRegistro: {},
       errors: [],
-      registros: [],
+      registros: {},
       datoDelete: '',
       obj: '',
       registro_id: '',
@@ -1812,7 +1817,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   watch: {
     modelo: function modelo() {
-      this.getRegistros();
+      this.getResults();
     }
   },
   computed: _objectSpread({
@@ -1830,11 +1835,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     openNuevoRegistro: function openNuevoRegistro() {
       _event_bus__WEBPACK_IMPORTED_MODULE_1__["eventNewRegistro"].$emit('open', this.modelo);
     },
-    getRegistros: function getRegistros() {
+    getResults: function getResults() {
       var _this = this;
 
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
       axios.defaults.baseURL = this.url;
-      var urlRegistros = this.modelo;
+      var urlRegistros = this.modelo + '/paginate' + '?page=' + page;
       axios.get(urlRegistros).then(function (response) {
         _this.registros = response.data;
       });
@@ -3630,6 +3636,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3639,37 +3647,40 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         'codigo': '',
         'descripcion': ''
       },
+      unidad_medida: {
+        'codigo': '',
+        'descripcion': ''
+      },
       errors: {}
     };
   },
   created: function created() {
     _event_bus__WEBPACK_IMPORTED_MODULE_1__["eventNewRegistro"].$on('open', this.openModal);
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['url'])),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['url', 'unidades_medidas'])),
   methods: {
     openModal: function openModal() {
       this.newRegistro = {
         'codigo': '',
         'descripcion': ''
+      }, this.unidad_medida = {
+        'codigo': '',
+        'descripcion': ''
       }, $('#nuevo').modal('show');
-      $(document).ready(function () {
-        setTimeout(function () {
-          $("#pass").attr('readonly', false);
-          $("#pass").focus();
-        }, 500);
-      });
     },
     storeRegistro: function storeRegistro() {
       var _this = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'medidas';
-      axios.post(urlRegistros, _objectSpread({}, this.newRegistro)).then(function (response) {
+      axios.post(urlRegistros, _objectSpread({}, this.newRegistro, {
+        'unidad_medida': this.unidad_medida
+      })).then(function (response) {
         _this.$emit('store');
 
         _this.errors = [];
         $('#nuevo').modal('hide');
-        toastr.success('Nueva Unidad de medidas creada con éxito');
+        toastr.success('Nueva medidas creada con éxito');
         _this.newRegistro = {};
       })["catch"](function (error) {
         console.log(error);
@@ -47512,7 +47523,7 @@ var render = function() {
       [
         _c(_vm.setTablaComponente, {
           tag: "component",
-          attrs: { registros: _vm.registros },
+          attrs: { registros: _vm.registros.data },
           on: {
             confirmarDelete: _vm.confirmDeleteRegistro,
             editar: _vm.editRegistro
@@ -47525,20 +47536,37 @@ var render = function() {
             fillRegistro: _vm.fillRegistro,
             modelo: _vm.modelo
           },
-          on: { "close-modal": _vm.getRegistros }
+          on: { "close-modal": _vm.getResults }
         }),
         _vm._v(" "),
         _c(_vm.setNuevoComponente, {
           tag: "component",
           attrs: { modelo: _vm.modelo },
-          on: { store: _vm.getRegistros }
+          on: { store: _vm.getResults }
         }),
         _vm._v(" "),
         _c(_vm.setEditarComponente, {
           tag: "component",
           attrs: { selectRegistro: _vm.selectRegistro },
-          on: { update: _vm.getRegistros }
-        })
+          on: { update: _vm.getResults }
+        }),
+        _vm._v(" "),
+        _c(
+          "pagination",
+          {
+            attrs: { data: _vm.registros },
+            on: { "pagination-change-page": _vm.getResults }
+          },
+          [
+            _c("span", { attrs: { slot: "prev-nav" }, slot: "prev-nav" }, [
+              _vm._v("< Previous")
+            ]),
+            _vm._v(" "),
+            _c("span", { attrs: { slot: "next-nav" }, slot: "next-nav" }, [
+              _vm._v("Next >")
+            ])
+          ]
+        )
       ],
       1
     )
@@ -50843,69 +50871,93 @@ var render = function() {
           _c("div", { staticClass: "modal-content" }, [
             _vm._m(0),
             _vm._v(" "),
-            _c("div", { staticClass: "modal-body" }, [
-              _c("label", { attrs: { for: "codigo" } }, [_vm._v("Código (*)")]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.newRegistro.codigo,
-                    expression: "newRegistro.codigo"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: {
-                  autocomplete: "off",
-                  type: "text",
-                  name: "codigo",
-                  value: ""
-                },
-                domProps: { value: _vm.newRegistro.codigo },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
+            _c(
+              "div",
+              { staticClass: "modal-body" },
+              [
+                _c("label", { attrs: { for: "codigo" } }, [
+                  _vm._v("Código (*)")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.newRegistro.codigo,
+                      expression: "newRegistro.codigo"
                     }
-                    _vm.$set(_vm.newRegistro, "codigo", $event.target.value)
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c("label", { attrs: { for: "name" } }, [_vm._v("Descripción")]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.newRegistro.descripcion,
-                    expression: "newRegistro.descripcion"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: {
-                  autocomplete: "off",
-                  type: "text",
-                  name: "descripcion",
-                  value: ""
-                },
-                domProps: { value: _vm.newRegistro.descripcion },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    autocomplete: "off",
+                    type: "text",
+                    name: "codigo",
+                    value: ""
+                  },
+                  domProps: { value: _vm.newRegistro.codigo },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.newRegistro, "codigo", $event.target.value)
                     }
-                    _vm.$set(
-                      _vm.newRegistro,
-                      "descripcion",
-                      $event.target.value
-                    )
                   }
-                }
-              })
-            ]),
+                }),
+                _vm._v(" "),
+                _c("label", { attrs: { for: "name" } }, [
+                  _vm._v("Descripción")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.newRegistro.descripcion,
+                      expression: "newRegistro.descripcion"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    autocomplete: "off",
+                    type: "text",
+                    name: "descripcion",
+                    value: ""
+                  },
+                  domProps: { value: _vm.newRegistro.descripcion },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.newRegistro,
+                        "descripcion",
+                        $event.target.value
+                      )
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("label", { attrs: { for: "name" } }, [
+                  _vm._v("Unidad Medida (*)")
+                ]),
+                _vm._v(" "),
+                _c("v-select", {
+                  attrs: { label: "codigo", options: _vm.unidades_medidas },
+                  model: {
+                    value: _vm.unidad_medida,
+                    callback: function($$v) {
+                      _vm.unidad_medida = $$v
+                    },
+                    expression: "unidad_medida"
+                  }
+                })
+              ],
+              1
+            ),
             _vm._v(" "),
             _vm._m(1)
           ])
@@ -85373,8 +85425,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_lazyload__WEBPACK_IMPORTED_MO
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuejs_progress_bar__WEBPACK_IMPORTED_MODULE_5___default.a);
 var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
   state: {
-    url:  false ? undefined : "http://certificados.test/api",
-    AppUrl:  false ? undefined : "http://certificados.test",
+    url:  false ? undefined : "http://localhost:8000/api",
+    AppUrl:  false ? undefined : "http://localhost:8000",
     provincias: [],
     unidades_medidas: [],
     metodos_ensayos: []
@@ -85392,7 +85444,7 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
     loadUnidadesMedidas: function loadUnidadesMedidas(_ref2) {
       var commit = _ref2.commit;
       axios.defaults.baseURL = store.state.url;
-      var urlRegistros = 'unidades_medidas' + '?api_token=' + Laravel.user.api_token;
+      var urlRegistros = 'unidades_medidas/' + '?api_token=' + Laravel.user.api_token;
       console.log(urlRegistros);
       axios.get(urlRegistros).then(function (response) {
         commit('getUnidadesMedidas', response.data);
@@ -88858,8 +88910,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\bocch\code\certificados\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\bocch\code\certificados\resources\sass\toastr.scss */"./resources/sass/toastr.scss");
+__webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/sass/toastr.scss */"./resources/sass/toastr.scss");
 
 
 /***/ })

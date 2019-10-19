@@ -34,7 +34,7 @@ class OtsController extends Controller
     public function index(Request $request)
     {
         
-             return ots::with('cliente')->orderBy('created_at','DESC')->paginate(5); 
+             return ots::with('cliente')->orderBy('id','DESC')->paginate(5); 
     }
     
     /**
