@@ -226,7 +226,7 @@ export default {
             console.log('entro en getResults : ' + page);
             axios.defaults.baseURL = this.url ;                
             var urlRegistros = 'ots?page='+ page + '&api_token=' + Laravel.user.api_token;      
-           console.log(urlRegistros);        
+            console.log(urlRegistros);        
             axios.get(urlRegistros).then(response =>{
             this.ots = response.data    
             console.log('response en getResults');       
@@ -323,7 +323,7 @@ export default {
          firmar : function(index){
 
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'ots/' + this.ots[index].id + '/firmar';                      
+                var urlRegistros = 'ots/' + this.ots.data[index].id + '/firmar';                      
                 axios.put(urlRegistros).then(response => {
                   console.log(response.data); 
                   this.ots.data[index].firma = response.data.firma;    

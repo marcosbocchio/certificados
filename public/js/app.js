@@ -6081,7 +6081,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this10 = this;
 
       axios.defaults.baseURL = this.url;
-      var urlRegistros = 'ots/' + this.ots[index].id + '/firmar';
+      var urlRegistros = 'ots/' + this.ots.data[index].id + '/firmar';
       axios.put(urlRegistros).then(function (response) {
         console.log(response.data);
         _this10.ots.data[index].firma = response.data.firma;
