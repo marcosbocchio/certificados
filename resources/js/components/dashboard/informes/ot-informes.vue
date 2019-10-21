@@ -4,7 +4,8 @@
             <!-- small box -->
             <div class="small-box bg-red">
             <div class="inner">
-                <h3>{{ot_informes.length}}</h3>
+
+                <h3 >{{CantInformes}}</h3>
 
                 <p>Informes</p>
             </div>
@@ -131,11 +132,12 @@ export default {
   mounted : function(){
 
       this.getResults();
+      this.ContarInformes();
   },
 
   computed :{
 
-       ...mapState(['url','AppUrl'])
+       ...mapState(['url','AppUrl','CantInformes'])
      },  
 
     methods : {
@@ -149,6 +151,12 @@ export default {
                 });
 
         },
+
+        ContarInformes : function(){
+                
+                this.$store.dispatch('loadContarInformes',this.ot_id_data);
+
+            },
 
         firmar : function(index){
 

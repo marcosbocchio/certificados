@@ -186,6 +186,7 @@ state: {
         provincias:[],
         unidades_medidas:[],
         metodos_ensayos:[],
+        CantInformes:'0',
 
        
     },
@@ -223,7 +224,17 @@ actions : {
           axios.get(urlRegistros).then((response) => {
             commit('getMetodosEnsayos', response.data)           
           })
-        }
+        },
+
+        loadContarInformes({
+          commit},ot_id) {
+           axios.defaults.baseURL = store.state.url ;
+           var urlRegistros = 'informes/ot/' + ot_id +'/total' + '?api_token=' + Laravel.user.api_token;             
+           axios.get(urlRegistros).then((response) => {
+           commit('ContarInformes', response.data)           
+          })
+        },
+
     },
     mutations: {
       getProvincias(state, provincias) {
@@ -236,6 +247,10 @@ actions : {
 
       getMetodosEnsayos(state, metodoEnsayos) {
         state.metodos_ensayos = metodoEnsayos
+      },
+
+      ContarInformes(state, CantInformes) {
+        state.CantInformes = CantInformes
       },
     }
 

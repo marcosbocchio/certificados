@@ -6394,6 +6394,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -6419,8 +6420,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   mounted: function mounted() {
     this.getResults();
+    this.ContarInformes();
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['url', 'AppUrl'])),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['url', 'AppUrl', 'CantInformes'])),
   methods: {
     getResults: function getResults() {
       var _this = this;
@@ -6431,6 +6433,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       axios.get(urlRegistros).then(function (response) {
         _this.ot_informes = response.data;
       });
+    },
+    ContarInformes: function ContarInformes() {
+      this.$store.dispatch('loadContarInformes', this.ot_id_data);
     },
     firmar: function firmar(index) {
       var _this2 = this;
@@ -54766,7 +54771,7 @@ var render = function() {
     _c("div", { staticClass: "col-md-12" }, [
       _c("div", { staticClass: "small-box bg-red" }, [
         _c("div", { staticClass: "inner" }, [
-          _c("h3", [_vm._v(_vm._s(_vm.ot_informes.length))]),
+          _c("h3", [_vm._v(_vm._s(_vm.CantInformes))]),
           _vm._v(" "),
           _c("p", [_vm._v("Informes")])
         ]),
@@ -85466,7 +85471,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
     AppUrl:  false ? undefined : "http://localhost:8000",
     provincias: [],
     unidades_medidas: [],
-    metodos_ensayos: []
+    metodos_ensayos: [],
+    CantInformes: '0'
   },
   actions: {
     loadProvincias: function loadProvincias(_ref) {
@@ -85495,6 +85501,14 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
       axios.get(urlRegistros).then(function (response) {
         commit('getMetodosEnsayos', response.data);
       });
+    },
+    loadContarInformes: function loadContarInformes(_ref4, ot_id) {
+      var commit = _ref4.commit;
+      axios.defaults.baseURL = store.state.url;
+      var urlRegistros = 'informes/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
+      axios.get(urlRegistros).then(function (response) {
+        commit('ContarInformes', response.data);
+      });
     }
   },
   mutations: {
@@ -85506,6 +85520,9 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
     },
     getMetodosEnsayos: function getMetodosEnsayos(state, metodoEnsayos) {
       state.metodos_ensayos = metodoEnsayos;
+    },
+    ContarInformes: function ContarInformes(state, CantInformes) {
+      state.CantInformes = CantInformes;
     }
   }
 });
