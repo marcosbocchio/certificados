@@ -45,7 +45,7 @@ class InformesController extends Controller
                     ->where('informes.ot_id',$id)
                     ->selectRaw('informes.numero,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha,informes.id,metodo_ensayos.metodo as metodo,users.name,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado,informes.prefijo as prefijo,firma')      
                     ->orderBy('id','DESC')           
-                    ->paginate(1);
+                    ->paginate(10);
 
 
     }
