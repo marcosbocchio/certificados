@@ -178,37 +178,29 @@ export default {
     data() { return {
 
         ots :{},       
-        ot_id_selected : '',
-        CantOperadores :'0',
-        CantInformes:'0',
-        CantRemitos:'0',
-        CantPartes:'0',
-        CantSoldadores:'0',
-        CantDocumentaciones:'0',
-        CantProcedimientos:'0',
-        CantUsuariosCliente:'0',
-
+        ot_id_selected : ''
         }
 
     },
 
     computed :{
 
-        ...mapState(['url','AppUrl'])
+        ...mapState(['url','AppUrl','CantInformes','CantSoldadores','CantOperadores','CantRemitos','CantProcedimientos','CantPartes','CantDocumentaciones','CantUsuariosCliente'])
         
      },
     
      watch: {
  
-      ot_id_selected: function (ContarOperadores) {      
-      this.ContarOperadores();
-      this.ContarSoldadores();
-      this.ContarUsuariosCliente();
-      this.ContarProcedimietos();
-      this.ContarDocumenaciones();
-      this.ContarRemitos();
-      this.ContarInformes();
-      this.ContarPartes();
+      ot_id_selected: function (ot_id) {  
+              
+        this.$store.dispatch('loadContarOperadores',ot_id);
+        this.$store.dispatch('loadContarSoldadores',ot_id);
+        this.$store.dispatch('loadContarUsuariosCliente',ot_id);
+        this.$store.dispatch('loadContarProcedimientos',ot_id);
+        this.$store.dispatch('loadContarDocumentaciones',ot_id);
+        this.$store.dispatch('loadContarRemitos',ot_id);
+        this.$store.dispatch('loadContarInformes',ot_id);
+        this.$store.dispatch('loadContarPartes',ot_id);
 
     }
   },
@@ -239,84 +231,6 @@ export default {
          selectOt : function(index){
 
             this.ot_id_selected = this.ots.data[index].id;
-
-         },
-
-         ContarOperadores : function (){
-
-            axios.defaults.baseURL = this.url ;                
-            var urlRegistros = 'ot_operarios/users/' + this.ot_id_selected +'/total' + '?api_token=' + Laravel.user.api_token;             
-            axios.get(urlRegistros).then(response =>{
-            this.CantOperadores = response.data
-            });
-
-         },
-
-         ContarSoldadores : function (){
-
-            axios.defaults.baseURL = this.url ;                
-            var urlRegistros = 'ot_soldadores/ot/' + this.ot_id_selected +'/total' + '?api_token=' + Laravel.user.api_token;             
-            axios.get(urlRegistros).then(response =>{
-            this.CantSoldadores = response.data
-            });
-
-         },
-
-         ContarUsuariosCliente : function (){
-
-            axios.defaults.baseURL = this.url ;                
-            var urlRegistros = 'ot_usuarios_clientes/ot/' + this.ot_id_selected +'/total' + '?api_token=' + Laravel.user.api_token;             
-            axios.get(urlRegistros).then(response =>{
-            this.CantUsuariosCliente = response.data
-            });
-
-            },
-
-         ContarProcedimietos : function (){
-
-            axios.defaults.baseURL = this.url ;                
-            var urlRegistros = 'ot_procedimientos_propios/ot/' + this.ot_id_selected +'/total' + '?api_token=' + Laravel.user.api_token;             
-            axios.get(urlRegistros).then(response =>{
-            this.CantProcedimientos = response.data
-            });
-
-         },
-         ContarInformes : function() {
-
-           axios.defaults.baseURL = this.url ;                
-            var urlRegistros = 'informes/ot/' + this.ot_id_selected +'/total' + '?api_token=' + Laravel.user.api_token;             
-            axios.get(urlRegistros).then(response =>{
-            this.CantInformes = response.data
-            });
-
-         },
-         ContarRemitos : function (){
-
-            axios.defaults.baseURL = this.url ;                
-            var urlRegistros = 'remitos/ot/' + this.ot_id_selected +'/total' + '?api_token=' + Laravel.user.api_token;             
-            axios.get(urlRegistros).then(response =>{
-            this.CantRemitos = response.data
-            });
-
-         },
-         
-         ContarPartes : function (){
-
-            axios.defaults.baseURL = this.url ;                
-            var urlRegistros = 'partes/ot/' + this.ot_id_selected +'/total' + '?api_token=' + Laravel.user.api_token;             
-            axios.get(urlRegistros).then(response =>{
-            this.CantPartes = response.data
-            });
-
-         }, 
-         
-         ContarDocumenaciones: function(){
-
-            axios.defaults.baseURL = this.url ;                
-            var urlRegistros = 'ot-documentaciones/ot/' + this.ot_id_selected +'/total' + '?api_token=' + Laravel.user.api_token;             
-            axios.get(urlRegistros).then(response =>{
-            this.CantDocumentaciones = response.data
-            });
 
          },
 

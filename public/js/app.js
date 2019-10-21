@@ -5971,28 +5971,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   data: function data() {
     return {
       ots: {},
-      ot_id_selected: '',
-      CantOperadores: '0',
-      CantInformes: '0',
-      CantRemitos: '0',
-      CantPartes: '0',
-      CantSoldadores: '0',
-      CantDocumentaciones: '0',
-      CantProcedimientos: '0',
-      CantUsuariosCliente: '0'
+      ot_id_selected: ''
     };
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['url', 'AppUrl'])),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['url', 'AppUrl', 'CantInformes', 'CantSoldadores', 'CantOperadores', 'CantRemitos', 'CantProcedimientos', 'CantPartes', 'CantDocumentaciones', 'CantUsuariosCliente'])),
   watch: {
-    ot_id_selected: function ot_id_selected(ContarOperadores) {
-      this.ContarOperadores();
-      this.ContarSoldadores();
-      this.ContarUsuariosCliente();
-      this.ContarProcedimietos();
-      this.ContarDocumenaciones();
-      this.ContarRemitos();
-      this.ContarInformes();
-      this.ContarPartes();
+    ot_id_selected: function ot_id_selected(ot_id) {
+      this.$store.dispatch('loadContarOperadores', ot_id);
+      this.$store.dispatch('loadContarSoldadores', ot_id);
+      this.$store.dispatch('loadContarUsuariosCliente', ot_id);
+      this.$store.dispatch('loadContarProcedimientos', ot_id);
+      this.$store.dispatch('loadContarDocumentaciones', ot_id);
+      this.$store.dispatch('loadContarRemitos', ot_id);
+      this.$store.dispatch('loadContarInformes', ot_id);
+      this.$store.dispatch('loadContarPartes', ot_id);
     }
   },
   mounted: function mounted() {
@@ -6016,95 +6008,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     selectOt: function selectOt(index) {
       this.ot_id_selected = this.ots.data[index].id;
     },
-    ContarOperadores: function ContarOperadores() {
-      var _this2 = this;
-
-      axios.defaults.baseURL = this.url;
-      var urlRegistros = 'ot_operarios/users/' + this.ot_id_selected + '/total' + '?api_token=' + Laravel.user.api_token;
-      axios.get(urlRegistros).then(function (response) {
-        _this2.CantOperadores = response.data;
-      });
-    },
-    ContarSoldadores: function ContarSoldadores() {
-      var _this3 = this;
-
-      axios.defaults.baseURL = this.url;
-      var urlRegistros = 'ot_soldadores/ot/' + this.ot_id_selected + '/total' + '?api_token=' + Laravel.user.api_token;
-      axios.get(urlRegistros).then(function (response) {
-        _this3.CantSoldadores = response.data;
-      });
-    },
-    ContarUsuariosCliente: function ContarUsuariosCliente() {
-      var _this4 = this;
-
-      axios.defaults.baseURL = this.url;
-      var urlRegistros = 'ot_usuarios_clientes/ot/' + this.ot_id_selected + '/total' + '?api_token=' + Laravel.user.api_token;
-      axios.get(urlRegistros).then(function (response) {
-        _this4.CantUsuariosCliente = response.data;
-      });
-    },
-    ContarProcedimietos: function ContarProcedimietos() {
-      var _this5 = this;
-
-      axios.defaults.baseURL = this.url;
-      var urlRegistros = 'ot_procedimientos_propios/ot/' + this.ot_id_selected + '/total' + '?api_token=' + Laravel.user.api_token;
-      axios.get(urlRegistros).then(function (response) {
-        _this5.CantProcedimientos = response.data;
-      });
-    },
-    ContarInformes: function ContarInformes() {
-      var _this6 = this;
-
-      axios.defaults.baseURL = this.url;
-      var urlRegistros = 'informes/ot/' + this.ot_id_selected + '/total' + '?api_token=' + Laravel.user.api_token;
-      axios.get(urlRegistros).then(function (response) {
-        _this6.CantInformes = response.data;
-      });
-    },
-    ContarRemitos: function ContarRemitos() {
-      var _this7 = this;
-
-      axios.defaults.baseURL = this.url;
-      var urlRegistros = 'remitos/ot/' + this.ot_id_selected + '/total' + '?api_token=' + Laravel.user.api_token;
-      axios.get(urlRegistros).then(function (response) {
-        _this7.CantRemitos = response.data;
-      });
-    },
-    ContarPartes: function ContarPartes() {
-      var _this8 = this;
-
-      axios.defaults.baseURL = this.url;
-      var urlRegistros = 'partes/ot/' + this.ot_id_selected + '/total' + '?api_token=' + Laravel.user.api_token;
-      axios.get(urlRegistros).then(function (response) {
-        _this8.CantPartes = response.data;
-      });
-    },
-    ContarDocumenaciones: function ContarDocumenaciones() {
-      var _this9 = this;
-
-      axios.defaults.baseURL = this.url;
-      var urlRegistros = 'ot-documentaciones/ot/' + this.ot_id_selected + '/total' + '?api_token=' + Laravel.user.api_token;
-      axios.get(urlRegistros).then(function (response) {
-        _this9.CantDocumentaciones = response.data;
-      });
-    },
     firmar: function firmar(index) {
-      var _this10 = this;
+      var _this2 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'ots/' + this.ots.data[index].id + '/firmar';
       axios.put(urlRegistros).then(function (response) {
         console.log(response.data);
-        _this10.ots.data[index].firma = response.data.firma;
+        _this2.ots.data[index].firma = response.data.firma;
         toastr.success('La OT N° ' + response.data.numero + ' fue firmada con éxito');
       })["catch"](function (error) {
-        _this10.errors = error.response.data.errors;
-        $.each(_this10.errors, function (key, value) {
+        _this2.errors = error.response.data.errors;
+        $.each(_this2.errors, function (key, value) {
           toastr.error(value);
           console.log(key + ": " + value);
         });
 
-        if (typeof _this10.errors == 'undefined' && error) {
+        if (typeof _this2.errors == 'undefined' && error) {
           toastr.error("Ocurrió un error al procesar la solicitud");
         }
       });
@@ -85472,7 +85392,14 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
     provincias: [],
     unidades_medidas: [],
     metodos_ensayos: [],
-    CantInformes: '0'
+    CantInformes: '0',
+    CantOperadores: '0',
+    CantRemitos: '0',
+    CantPartes: '0',
+    CantSoldadores: '0',
+    CantDocumentaciones: '0',
+    CantProcedimientos: '0',
+    CantUsuariosCliente: '0'
   },
   actions: {
     loadProvincias: function loadProvincias(_ref) {
@@ -85484,8 +85411,17 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
         commit('getProvincias', response.data);
       });
     },
-    loadUnidadesMedidas: function loadUnidadesMedidas(_ref2) {
+    loadLocalidades: function loadLocalidades(_ref2) {
       var commit = _ref2.commit;
+      axios.defaults.baseURL = store.state.url;
+      var urlRegistros = 'localidades/' + provincia_id + '?api_token=' + Laravel.user.api_token;
+      console.log(urlRegistros);
+      axios.get(urlRegistros).then(function (response) {
+        commit('getLocalidades', response.data);
+      });
+    },
+    loadUnidadesMedidas: function loadUnidadesMedidas(_ref3) {
+      var commit = _ref3.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'unidades_medidas/' + '?api_token=' + Laravel.user.api_token;
       console.log(urlRegistros);
@@ -85493,8 +85429,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
         commit('getUnidadesMedidas', response.data);
       });
     },
-    loadMetodosEnsayos: function loadMetodosEnsayos(_ref3) {
-      var commit = _ref3.commit;
+    loadMetodosEnsayos: function loadMetodosEnsayos(_ref4) {
+      var commit = _ref4.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'metodo_ensayos' + '?api_token=' + Laravel.user.api_token;
       console.log(urlRegistros);
@@ -85502,12 +85438,68 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
         commit('getMetodosEnsayos', response.data);
       });
     },
-    loadContarInformes: function loadContarInformes(_ref4, ot_id) {
-      var commit = _ref4.commit;
+    loadContarInformes: function loadContarInformes(_ref5, ot_id) {
+      var commit = _ref5.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'informes/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('ContarInformes', response.data);
+      });
+    },
+    loadContarOperadores: function loadContarOperadores(_ref6, ot_id) {
+      var commit = _ref6.commit;
+      axios.defaults.baseURL = store.state.url;
+      var urlRegistros = 'ot_operarios/users/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
+      axios.get(urlRegistros).then(function (response) {
+        commit('ContarOperadores', response.data);
+      });
+    },
+    loadContarSoldadores: function loadContarSoldadores(_ref7, ot_id) {
+      var commit = _ref7.commit;
+      axios.defaults.baseURL = store.state.url;
+      var urlRegistros = 'ot_soldadores/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
+      axios.get(urlRegistros).then(function (response) {
+        commit('ContarSoldadores', response.data);
+      });
+    },
+    loadContarUsuariosCliente: function loadContarUsuariosCliente(_ref8, ot_id) {
+      var commit = _ref8.commit;
+      axios.defaults.baseURL = store.state.url;
+      var urlRegistros = 'ot_usuarios_clientes/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
+      axios.get(urlRegistros).then(function (response) {
+        commit('ContarUsuariosCliente', response.data);
+      });
+    },
+    loadContarProcedimientos: function loadContarProcedimientos(_ref9, ot_id) {
+      var commit = _ref9.commit;
+      axios.defaults.baseURL = store.state.url;
+      var urlRegistros = 'ot_procedimientos_propios/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
+      axios.get(urlRegistros).then(function (response) {
+        commit('ContarProcedimientos', response.data);
+      });
+    },
+    loadContarDocumentaciones: function loadContarDocumentaciones(_ref10, ot_id) {
+      var commit = _ref10.commit;
+      axios.defaults.baseURL = store.state.url;
+      var urlRegistros = 'ot-documentaciones/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
+      axios.get(urlRegistros).then(function (response) {
+        commit('ContarDocumentaciones', response.data);
+      });
+    },
+    loadContarRemitos: function loadContarRemitos(_ref11, ot_id) {
+      var commit = _ref11.commit;
+      axios.defaults.baseURL = store.state.url;
+      var urlRegistros = 'remitos/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
+      axios.get(urlRegistros).then(function (response) {
+        commit('ContarRemitos', response.data);
+      });
+    },
+    loadContarPartes: function loadContarPartes(_ref12, ot_id) {
+      var commit = _ref12.commit;
+      axios.defaults.baseURL = store.state.url;
+      var urlRegistros = 'partes/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
+      axios.get(urlRegistros).then(function (response) {
+        commit('ContarPartes', response.data);
       });
     }
   },
@@ -85523,6 +85515,27 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
     },
     ContarInformes: function ContarInformes(state, CantInformes) {
       state.CantInformes = CantInformes;
+    },
+    ContarOperadores: function ContarOperadores(state, CantOperadores) {
+      state.CantOperadores = CantOperadores;
+    },
+    ContarSoldadores: function ContarSoldadores(state, CantSoldadores) {
+      state.CantSoldadores = CantSoldadores;
+    },
+    ContarUsuariosCliente: function ContarUsuariosCliente(state, CantUsuariosCliente) {
+      state.CantUsuariosCliente = CantUsuariosCliente;
+    },
+    ContarProcedimientos: function ContarProcedimientos(state, CantProcedimientos) {
+      state.CantProcedimientos = CantProcedimientos;
+    },
+    ContarDocumentaciones: function ContarDocumentaciones(state, CantDocumentaciones) {
+      state.CantDocumentaciones = CantDocumentaciones;
+    },
+    ContarPartes: function ContarPartes(state, CantPartes) {
+      state.CantPartes = CantPartes;
+    },
+    ContarRemitos: function ContarRemitos(state, CantRemitos) {
+      state.CantRemitos = CantRemitos;
     }
   }
 });

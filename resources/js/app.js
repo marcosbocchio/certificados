@@ -187,6 +187,13 @@ state: {
         unidades_medidas:[],
         metodos_ensayos:[],
         CantInformes:'0',
+        CantOperadores :'0',
+        CantRemitos:'0',
+        CantPartes:'0',
+        CantSoldadores:'0',
+        CantDocumentaciones:'0',
+        CantProcedimientos:'0',
+        CantUsuariosCliente:'0',
 
        
     },
@@ -201,6 +208,17 @@ actions : {
           console.log(urlRegistros);
           axios.get(urlRegistros).then((response) => {
             commit('getProvincias', response.data)           
+          })
+        },
+
+        loadLocalidades({
+          commit
+        }) {
+          axios.defaults.baseURL = store.state.url ;
+          var urlRegistros = 'localidades/' + provincia_id + '?api_token=' + Laravel.user.api_token;        
+          console.log(urlRegistros);
+          axios.get(urlRegistros).then((response) => {
+            commit('getLocalidades', response.data)           
           })
         },
 
@@ -235,6 +253,69 @@ actions : {
           })
         },
 
+        loadContarOperadores({
+          commit},ot_id) {
+           axios.defaults.baseURL = store.state.url ;
+           var urlRegistros = 'ot_operarios/users/' + ot_id +'/total' + '?api_token=' + Laravel.user.api_token;             
+           axios.get(urlRegistros).then((response) => {
+           commit('ContarOperadores', response.data)           
+          })
+        },
+
+        loadContarSoldadores({
+          commit},ot_id) {
+           axios.defaults.baseURL = store.state.url ;
+           var urlRegistros = 'ot_soldadores/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;             
+           axios.get(urlRegistros).then((response) => {
+           commit('ContarSoldadores', response.data)           
+          })
+        },
+
+        loadContarUsuariosCliente({
+          commit},ot_id) {
+           axios.defaults.baseURL = store.state.url ;
+           var urlRegistros = 'ot_usuarios_clientes/ot/' + ot_id +'/total' + '?api_token=' + Laravel.user.api_token;             
+           axios.get(urlRegistros).then((response) => {
+           commit('ContarUsuariosCliente', response.data)           
+          })
+        },
+
+        loadContarProcedimientos({
+          commit},ot_id) {
+           axios.defaults.baseURL = store.state.url ;
+           var urlRegistros = 'ot_procedimientos_propios/ot/' + ot_id +'/total' + '?api_token=' + Laravel.user.api_token;             
+           axios.get(urlRegistros).then((response) => {
+           commit('ContarProcedimientos', response.data)           
+          })
+        },
+
+        loadContarDocumentaciones({
+          commit},ot_id) {
+           axios.defaults.baseURL = store.state.url ;
+           var urlRegistros = 'ot-documentaciones/ot/' + ot_id +'/total' + '?api_token=' + Laravel.user.api_token;             
+           axios.get(urlRegistros).then((response) => {
+           commit('ContarDocumentaciones', response.data)           
+          })
+        },
+
+        loadContarRemitos({
+          commit},ot_id) {
+           axios.defaults.baseURL = store.state.url ;
+           var urlRegistros = 'remitos/ot/' + ot_id +'/total' + '?api_token=' + Laravel.user.api_token;             
+           axios.get(urlRegistros).then((response) => {
+           commit('ContarRemitos', response.data)           
+          })
+        },
+
+        loadContarPartes({
+          commit},ot_id) {
+           axios.defaults.baseURL = store.state.url ;
+           var urlRegistros = 'partes/ot/' + ot_id +'/total' + '?api_token=' + Laravel.user.api_token;             
+           axios.get(urlRegistros).then((response) => {
+           commit('ContarPartes', response.data)           
+          })
+        },
+
     },
     mutations: {
       getProvincias(state, provincias) {
@@ -252,6 +333,35 @@ actions : {
       ContarInformes(state, CantInformes) {
         state.CantInformes = CantInformes
       },
+
+      ContarOperadores(state, CantOperadores) {
+        state.CantOperadores = CantOperadores
+      },
+
+      ContarSoldadores(state, CantSoldadores) {
+        state.CantSoldadores = CantSoldadores
+      },
+
+      ContarUsuariosCliente(state, CantUsuariosCliente) {
+        state.CantUsuariosCliente = CantUsuariosCliente
+      },
+
+      ContarProcedimientos(state, CantProcedimientos) {
+        state.CantProcedimientos = CantProcedimientos
+      },
+
+      ContarDocumentaciones(state, CantDocumentaciones) {
+        state.CantDocumentaciones = CantDocumentaciones
+      },
+
+      ContarPartes(state, CantPartes) {
+        state.CantPartes = CantPartes
+      },
+
+      ContarRemitos(state, CantRemitos) {
+        state.CantRemitos = CantRemitos
+      },
+
     }
 
 })
