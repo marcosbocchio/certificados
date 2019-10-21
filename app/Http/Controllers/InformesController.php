@@ -20,15 +20,6 @@ class InformesController extends Controller
         $header_descripcion ="Alta | Modificación";    
         $user = auth()->user()->name;
         
-     // $ot_informes = Informe::where('ot_id',$id)->get();
-
-        $ot_informes = DB::table('informes')
-                    ->join('users','users.id','=','informes.user_id')
-                    ->join('metodo_ensayos','metodo_ensayos.id','=','informes.metodo_ensayo_id')
-                    ->where('informes.ot_id',$id)
-                    ->selectRaw('informes.numero,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha,informes.id,metodo_ensayos.metodo as metodo,users.name,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado,informes.prefijo as prefijo,firma')                 
-                    ->get();
-
         $ot_metodos_ensayos = DB::table('ots')
                                    ->join('ot_servicios','ot_servicios.ot_id','=','ots.id')
                                    ->join('servicios','servicios.id','=','ot_servicios.servicio_id') 
@@ -39,11 +30,23 @@ class InformesController extends Controller
                                    ->get();
 
         return view('ot-informes.index',compact('id',
-                                        'ot_informes',
                                         'ot_metodos_ensayos',                                   
                                         'user',                                       
                                         'header_titulo',
                                         'header_descripcion'));
+
+    }
+
+    public function paginate(Request $request,$id){
+
+        return  DB::table('informes')
+                    ->join('users','users.id','=','informes.user_id')
+                    ->join('metodo_ensayos','metodo_ensayos.id','=','informes.metodo_ensayo_id')
+                    ->where('informes.ot_id',$id)
+                    ->selectRaw('informes.numero,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha,informes.id,metodo_ensayos.metodo as metodo,users.name,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado,informes.prefijo as prefijo,firma')      
+                    ->orderBy('id','DESC')           
+                    ->paginate(1);
+
 
     }
 

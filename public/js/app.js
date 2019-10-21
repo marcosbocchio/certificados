@@ -6389,6 +6389,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -6396,15 +6401,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       type: Array,
       required: false
     },
-    ot_informes_data: {
-      type: Array,
-      required: false
-    },
     ot_id_data: ''
   },
   data: function data() {
     return {
-      ot_informes: [],
+      ot_informes: {},
       metodo_ensayo: '',
       metodo_selected: false
     };
@@ -6414,28 +6415,40 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       if (val == null) this.metodo_ensayo = '';else this.metodo_selected = val == '' ? false : true;
     }
   },
-  created: function created() {
-    this.ot_informes = JSON.parse(JSON.stringify(this.ot_informes_data));
+  created: function created() {// this.ot_informes =  JSON.parse(JSON.stringify(this.ot_informes_data)); 
+  },
+  mounted: function mounted() {
+    this.getResults();
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['url', 'AppUrl'])),
   methods: {
-    firmar: function firmar(index) {
+    getResults: function getResults() {
       var _this = this;
 
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
       axios.defaults.baseURL = this.url;
-      var urlRegistros = 'informes/' + this.ot_informes[index].id + '/firmar';
+      var urlRegistros = 'informes/ot/' + this.ot_id_data + '/paginate' + '?page=' + page;
+      axios.get(urlRegistros).then(function (response) {
+        _this.ot_informes = response.data;
+      });
+    },
+    firmar: function firmar(index) {
+      var _this2 = this;
+
+      axios.defaults.baseURL = this.url;
+      var urlRegistros = 'informes/' + this.ot_informes.data[index].id + '/firmar';
       axios.put(urlRegistros).then(function (response) {
         console.log(response.data);
-        _this.ot_informes[index].firma = response.data.firma;
-        toastr.success('El Informe N° ' + (_this.ot_informes[index].prefijo ? _this.ot_informes[index].prefijo : '') + '-' + _this.ot_informes[index].numero_formateado + '  fue firmado con éxito');
+        _this2.ot_informes.data[index].firma = response.data.firma;
+        toastr.success('El Informe N° ' + (_this2.ot_informes.data[index].prefijo ? _this2.ot_informes.data[index].prefijo : '') + '-' + _this2.ot_informes.data[index].numero_formateado + '  fue firmado con éxito');
       })["catch"](function (error) {
-        _this.errors = error.response.data.errors;
-        $.each(_this.errors, function (key, value) {
+        _this2.errors = error.response.data.errors;
+        $.each(_this2.errors, function (key, value) {
           toastr.error(value);
           console.log(key + ": " + value);
         });
 
-        if (typeof _this.errors == 'undefined' && error) {
+        if (typeof _this2.errors == 'undefined' && error) {
           toastr.error("Ocurrió un error al procesar la solicitud");
         }
       });
@@ -54830,105 +54843,129 @@ var render = function() {
       _c("div", { staticClass: "box box-info top-buffer" }, [
         _vm._m(2),
         _vm._v(" "),
-        _c("div", { staticClass: "box-body" }, [
-          _c("div", { staticClass: "table-responsive" }, [
-            _c("table", { staticClass: "table table-hover table-striped" }, [
-              _vm._m(3),
-              _vm._v(" "),
-              _c(
-                "tbody",
-                _vm._l(_vm.ot_informes, function(ot_informe, k) {
-                  return _c("tr", { key: k }, [
-                    _c("td", [_vm._v(" " + _vm._s(ot_informe.metodo))]),
-                    _vm._v(" "),
-                    _c("td", [
-                      ot_informe.prefijo != null
-                        ? _c("div", [
-                            _vm._v(
-                              "\n                                         " +
-                                _vm._s(ot_informe.prefijo) +
-                                "-" +
-                                _vm._s(ot_informe.numero_formateado) +
-                                "\n                                    "
-                            )
-                          ])
-                        : _c("div", [
-                            _vm._v(
-                              "\n                                         " +
-                                _vm._s(ot_informe.numero_formateado) +
-                                "       \n                                    "
-                            )
-                          ])
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(" " + _vm._s(ot_informe.name))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(" " + _vm._s(ot_informe.fecha))]),
-                    _vm._v(" "),
-                    _c("td", { attrs: { width: "10px" } }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "btn btn-warning btn-sm",
-                          attrs: {
-                            href:
-                              _vm.AppUrl +
-                              "/area/enod/ot/" +
-                              _vm.ot_id_data +
-                              "/informe/" +
-                              ot_informe.id +
-                              "/edit",
-                            title: "Editar"
-                          }
-                        },
-                        [_c("span", { staticClass: "fa fa-edit" })]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { attrs: { width: "10px" } }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "btn btn-default btn-sm",
-                          attrs: {
-                            href:
-                              _vm.AppUrl + "/api/pdf/informe/" + ot_informe.id,
-                            target: "_blank",
-                            title: "pdf"
-                          }
-                        },
-                        [_c("span", { staticClass: "fa fa-file-pdf-o" })]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    !ot_informe.firma
-                      ? _c("td", { attrs: { width: "10px" } }, [
-                          _c(
-                            "a",
-                            {
-                              staticClass: "btn btn-default btn-sm",
-                              attrs: { title: "Firmar" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.firmar(k)
+        _c(
+          "div",
+          { staticClass: "box-body" },
+          [
+            _c("div", { staticClass: "table-responsive" }, [
+              _c("table", { staticClass: "table table-hover table-striped" }, [
+                _vm._m(3),
+                _vm._v(" "),
+                _c(
+                  "tbody",
+                  _vm._l(_vm.ot_informes.data, function(ot_informe, k) {
+                    return _c("tr", { key: k }, [
+                      _c("td", [_vm._v(" " + _vm._s(ot_informe.metodo))]),
+                      _vm._v(" "),
+                      _c("td", [
+                        ot_informe.prefijo != null
+                          ? _c("div", [
+                              _vm._v(
+                                "\n                                         " +
+                                  _vm._s(ot_informe.prefijo) +
+                                  "-" +
+                                  _vm._s(ot_informe.numero_formateado) +
+                                  "\n                                    "
+                              )
+                            ])
+                          : _c("div", [
+                              _vm._v(
+                                "\n                                         " +
+                                  _vm._s(ot_informe.numero_formateado) +
+                                  "       \n                                    "
+                              )
+                            ])
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(" " + _vm._s(ot_informe.name))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(" " + _vm._s(ot_informe.fecha))]),
+                      _vm._v(" "),
+                      _c("td", { attrs: { width: "10px" } }, [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "btn btn-warning btn-sm",
+                            attrs: {
+                              href:
+                                _vm.AppUrl +
+                                "/area/enod/ot/" +
+                                _vm.ot_id_data +
+                                "/informe/" +
+                                ot_informe.id +
+                                "/edit",
+                              title: "Editar"
+                            }
+                          },
+                          [_c("span", { staticClass: "fa fa-edit" })]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("td", { attrs: { width: "10px" } }, [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "btn btn-default btn-sm",
+                            attrs: {
+                              href:
+                                _vm.AppUrl +
+                                "/api/pdf/informe/" +
+                                ot_informe.id,
+                              target: "_blank",
+                              title: "pdf"
+                            }
+                          },
+                          [_c("span", { staticClass: "fa fa-file-pdf-o" })]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      !ot_informe.firma
+                        ? _c("td", { attrs: { width: "10px" } }, [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "btn btn-default btn-sm",
+                                attrs: { title: "Firmar" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.firmar(k)
+                                  }
                                 }
-                              }
-                            },
-                            [
-                              _c("span", {
-                                staticClass: "glyphicon glyphicon-pencil"
-                              })
-                            ]
-                          )
-                        ])
-                      : _vm._e()
-                  ])
-                }),
-                0
-              )
-            ])
-          ])
-        ])
+                              },
+                              [
+                                _c("span", {
+                                  staticClass: "glyphicon glyphicon-pencil"
+                                })
+                              ]
+                            )
+                          ])
+                        : _vm._e()
+                    ])
+                  }),
+                  0
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "pagination",
+              {
+                attrs: { data: _vm.ot_informes },
+                on: { "pagination-change-page": _vm.getResults }
+              },
+              [
+                _c("span", { attrs: { slot: "prev-nav" }, slot: "prev-nav" }, [
+                  _vm._v("< Previous")
+                ]),
+                _vm._v(" "),
+                _c("span", { attrs: { slot: "next-nav" }, slot: "next-nav" }, [
+                  _vm._v("Next >")
+                ])
+              ]
+            )
+          ],
+          1
+        )
       ])
     ])
   ])

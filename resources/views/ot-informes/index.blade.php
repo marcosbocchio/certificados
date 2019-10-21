@@ -2,11 +2,12 @@
 
 @section('contenido')
 
+<?php // return dd($ot_informes);?>
+
 <div id="app">
 
    <ot-informes
     :ot_id_data = "{{$id}}"
-    :ot_informes_data= "{{$ot_informes}}" 
     :ot_metodos_ensayos_data ="{{$ot_metodos_ensayos}}"
    
    ></ot-informes>

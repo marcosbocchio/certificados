@@ -56,7 +56,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(ot_informe,k) in ot_informes" :key="k">                                 
+                                <tr v-for="(ot_informe,k) in ot_informes.data" :key="k">                                 
                                     <td> {{ot_informe.metodo}}</td>
                                     <td>
                                         <div v-if="ot_informe.prefijo != null">
@@ -78,6 +78,11 @@
                             </tbody>
                         </table>                     
                     </div>
+                    <pagination 
+                        :data="ot_informes" @pagination-change-page="getResults" >
+                        <span slot="prev-nav">&lt; Previous</span>
+                        <span slot="next-nav">Next &gt;</span> 
+                   </pagination>
                 </div> 
             </div>   
         </div>    
@@ -93,11 +98,6 @@ export default {
     type : Array,
     required : false
     },    
-    
-    ot_informes_data : {
-    type : Array,
-    required : false
-    },
 
     ot_id_data : '',
     
@@ -105,7 +105,7 @@ export default {
 
     data () { return {
 
-      ot_informes :[],
+      ot_informes :{},
       metodo_ensayo:'',  
       metodo_selected:false
     
@@ -125,8 +125,14 @@ export default {
 
   created : function() {
 
-      this.ot_informes =  JSON.parse(JSON.stringify(this.ot_informes_data)); 
+     // this.ot_informes =  JSON.parse(JSON.stringify(this.ot_informes_data)); 
   },
+
+  mounted : function(){
+
+      this.getResults();
+  },
+
   computed :{
 
        ...mapState(['url','AppUrl'])
@@ -134,14 +140,24 @@ export default {
 
     methods : {
 
+        getResults :function(page = 1){
+
+                axios.defaults.baseURL = this.url ;
+                var urlRegistros = 'informes/ot/' + this.ot_id_data + '/paginate' + '?page='+ page;   
+                axios.get(urlRegistros).then(response =>{
+                this.ot_informes = response.data
+                });
+
+        },
+
         firmar : function(index){
 
             axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'informes/' + this.ot_informes[index].id + '/firmar';                      
+                var urlRegistros = 'informes/' + this.ot_informes.data[index].id + '/firmar';                      
                 axios.put(urlRegistros).then(response => {
                   console.log(response.data); 
-                  this.ot_informes[index].firma = response.data.firma;    
-                  toastr.success('El Informe N° '+  (this.ot_informes[index].prefijo ? this.ot_informes[index].prefijo : '') +'-'+ this.ot_informes[index].numero_formateado +'  fue firmado con éxito');                
+                  this.ot_informes.data[index].firma = response.data.firma;    
+                  toastr.success('El Informe N° '+  (this.ot_informes.data[index].prefijo ? this.ot_informes.data[index].prefijo : '') +'-'+ this.ot_informes.data[index].numero_formateado +'  fue firmado con éxito');                
                   
                 }).catch(error => {                   
                     this.errors = error.response.data.errors;
