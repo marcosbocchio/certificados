@@ -22,14 +22,21 @@ class RemitosController extends Controller
       $header_titulo = "Remitos OT";
       $header_descripcion ="Alta | Modificación";          
       $user = auth()->user()->name;
-      $remitos = $this->getRemitosOt($ot_id);
 
       return view('ot-remitos.index',compact('ot_id',
-                                             'user',  
-                                             'remitos',                                                                  
+                                             'user',                                            
                                              'header_titulo',
                                              'header_descripcion'));
 
+    }
+
+    public function paginate(Request $request,$ot_id){
+
+      return DB::table('remitos')
+                  ->where('ot_id','=',$ot_id)
+                  ->selectRaw('id,ot_id,LPAD(prefijo, 4, "0") as prefijo_formateado,LPAD(numero, 8, "0") as numero_formateado,DATE_FORMAT(remitos.created_at,"%d/%m/%Y")as fecha,receptor,destino,interno_sn')
+                  ->orderBy('id','DESC')           
+                  ->paginate(1);
     }
 
     public function getRemitosOt($ot_id){

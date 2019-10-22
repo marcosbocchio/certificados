@@ -2120,9 +2120,7 @@ __webpack_require__(/*! vue-image-lightbox/dist/vue-image-lightbox.min.css */ ".
       },
       errors: {},
       provincia: {},
-      //  provincias:{},
       localidad: {},
-      localidades: [],
       contacto: {
         'nombre': '',
         'cargo': '',
@@ -2155,7 +2153,7 @@ __webpack_require__(/*! vue-image-lightbox/dist/vue-image-lightbox.min.css */ ".
     _event_bus__WEBPACK_IMPORTED_MODULE_2__["eventEditRegistro"].$on('editar', this.openModal);
     this.getProvincias();
   },
-  computed: Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])(['url', 'provincias']),
+  computed: Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])(['url', 'provincias', 'localidades']),
   watch: {
     newRegistro: function newRegistro(val) {
       this.images[0].src = '/' + val.path;
@@ -2205,23 +2203,16 @@ __webpack_require__(/*! vue-image-lightbox/dist/vue-image-lightbox.min.css */ ".
       this.$store.dispatch('loadProvincias');
     },
     getLocalidades: function getLocalidades() {
-      var _this = this;
-
-      this.localidades = [];
       this.localidad = '';
-      axios.defaults.baseURL = this.url;
-      var urlRegistros = 'localidades/' + this.provincia.id + '?api_token=' + Laravel.user.api_token;
-      axios.get(urlRegistros).then(function (response) {
-        _this.localidades = response.data;
-      });
+      this.$store.dispatch('loadLocalidades', this.provincia.id);
     },
     getClientes: function getClientes() {
-      var _this2 = this;
+      var _this = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'clientes' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this2.clientes = response.data;
+        _this.clientes = response.data;
       });
     },
     onFileSelected: function onFileSelected(event) {
@@ -2256,7 +2247,7 @@ __webpack_require__(/*! vue-image-lightbox/dist/vue-image-lightbox.min.css */ ".
       }
     },
     onUpload: function onUpload() {
-      var _this3 = this;
+      var _this2 = this;
 
       this.HabilitarGuardar = false;
       var settings = {
@@ -2273,17 +2264,17 @@ __webpack_require__(/*! vue-image-lightbox/dist/vue-image-lightbox.min.css */ ".
       var url = 'storage/logo-cliente';
       console.log(fd);
       axios.post(url, fd, settings).then(function (response) {
-        _this3.newRegistro.path = response.data;
-        _this3.isLoading_file = false;
-        _this3.HabilitarGuardar = true;
-        _this3.images[0].src = '/' + response.data;
-        _this3.images[0].thumb = '/' + response.data;
+        _this2.newRegistro.path = response.data;
+        _this2.isLoading_file = false;
+        _this2.HabilitarGuardar = true;
+        _this2.images[0].src = '/' + response.data;
+        _this2.images[0].thumb = '/' + response.data;
 
-        _this3.$forceUpdate();
+        _this2.$forceUpdate();
       })["catch"](function (response) {
-        _this3.errors = error.response.data.errors;
-        _this3.isLoading_file = false;
-        _this3.HabilitarGuardar = true;
+        _this2.errors = error.response.data.errors;
+        _this2.isLoading_file = false;
+        _this2.HabilitarGuardar = true;
       });
     },
     AddContacto: function AddContacto() {
@@ -2311,7 +2302,7 @@ __webpack_require__(/*! vue-image-lightbox/dist/vue-image-lightbox.min.css */ ".
       this.indexDetalle = index;
     },
     storeRegistro: function storeRegistro() {
-      var _this4 = this;
+      var _this3 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'clientes/' + this.selectRegistro.id;
@@ -2330,20 +2321,20 @@ __webpack_require__(/*! vue-image-lightbox/dist/vue-image-lightbox.min.css */ ".
       }).then(function (response) {
         console.log(response.data);
 
-        _this4.$emit('update');
+        _this3.$emit('update');
 
-        _this4.errors = [];
+        _this3.errors = [];
         $('#editar').modal('hide');
         toastr.success('Nuevo usuario creado con éxito');
-        _this4.newRegistro = {};
+        _this3.newRegistro = {};
       })["catch"](function (error) {
-        _this4.errors = error.response.data.errors;
-        $.each(_this4.errors, function (key, value) {
+        _this3.errors = error.response.data.errors;
+        $.each(_this3.errors, function (key, value) {
           toastr.error(value);
           console.log(key + ": " + value);
         });
 
-        if (typeof _this4.errors == 'undefined' && error) {
+        if (typeof _this3.errors == 'undefined' && error) {
           toastr.error("Ocurrió un error al procesar la solicitud");
         }
       });
@@ -2609,9 +2600,7 @@ __webpack_require__(/*! vue-image-lightbox/dist/vue-image-lightbox.min.css */ ".
       },
       errors: {},
       provincia: {},
-      //  provincias:{},
       localidad: {},
-      localidades: [],
       contacto: {
         'nombre': '',
         'cargo': '',
@@ -2644,7 +2633,7 @@ __webpack_require__(/*! vue-image-lightbox/dist/vue-image-lightbox.min.css */ ".
     _event_bus__WEBPACK_IMPORTED_MODULE_2__["eventNewRegistro"].$on('open', this.openModal);
     this.getProvincias();
   },
-  computed: Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])(['url', 'provincias']),
+  computed: Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])(['url', 'provincias', 'localidades']),
   watch: {
     newRegistro: function newRegistro(val) {
       this.images[0].src = '/' + val.path;
@@ -2696,23 +2685,17 @@ __webpack_require__(/*! vue-image-lightbox/dist/vue-image-lightbox.min.css */ ".
       this.$store.dispatch('loadProvincias');
     },
     getLocalidades: function getLocalidades() {
-      var _this = this;
-
-      this.localidades = [];
       this.localidad = '';
-      axios.defaults.baseURL = this.url;
-      var urlRegistros = 'localidades/' + this.provincia.id + '?api_token=' + Laravel.user.api_token;
-      axios.get(urlRegistros).then(function (response) {
-        _this.localidades = response.data;
-      });
+      console.log('llama a getlocalidades');
+      this.$store.dispatch('loadLocalidades', this.provincia.id);
     },
     getClientes: function getClientes() {
-      var _this2 = this;
+      var _this = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'clientes' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this2.clientes = response.data;
+        _this.clientes = response.data;
       });
     },
     onFileSelected: function onFileSelected(event) {
@@ -2747,7 +2730,7 @@ __webpack_require__(/*! vue-image-lightbox/dist/vue-image-lightbox.min.css */ ".
       }
     },
     onUpload: function onUpload() {
-      var _this3 = this;
+      var _this2 = this;
 
       this.HabilitarGuardar = false;
       var settings = {
@@ -2764,17 +2747,17 @@ __webpack_require__(/*! vue-image-lightbox/dist/vue-image-lightbox.min.css */ ".
       var url = 'storage/logo-cliente';
       console.log(fd);
       axios.post(url, fd, settings).then(function (response) {
-        _this3.newRegistro.path = response.data;
-        _this3.isLoading_file = false;
-        _this3.HabilitarGuardar = true;
-        _this3.images[0].src = '/' + response.data;
-        _this3.images[0].thumb = '/' + response.data;
+        _this2.newRegistro.path = response.data;
+        _this2.isLoading_file = false;
+        _this2.HabilitarGuardar = true;
+        _this2.images[0].src = '/' + response.data;
+        _this2.images[0].thumb = '/' + response.data;
 
-        _this3.$forceUpdate();
+        _this2.$forceUpdate();
       })["catch"](function (response) {
-        _this3.errors = error.response.data.errors;
-        _this3.isLoading_file = false;
-        _this3.HabilitarGuardar = true;
+        _this2.errors = error.response.data.errors;
+        _this2.isLoading_file = false;
+        _this2.HabilitarGuardar = true;
       });
     },
     selectPosContacto: function selectPosContacto(index) {
@@ -2802,7 +2785,7 @@ __webpack_require__(/*! vue-image-lightbox/dist/vue-image-lightbox.min.css */ ".
       this.TablaContactos.splice(index, 1);
     },
     storeRegistro: function storeRegistro() {
-      var _this4 = this;
+      var _this3 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'clientes';
@@ -2811,20 +2794,20 @@ __webpack_require__(/*! vue-image-lightbox/dist/vue-image-lightbox.min.css */ ".
         'provincia': this.provincia,
         'localidad': this.localidad
       })).then(function (response) {
-        _this4.$emit('store');
+        _this3.$emit('store');
 
-        _this4.errors = [];
+        _this3.errors = [];
         $('#nuevo').modal('hide');
         toastr.success('Nuevo usuario creado con éxito');
-        _this4.newRegistro = {};
+        _this3.newRegistro = {};
       })["catch"](function (error) {
-        _this4.errors = error.response.data.errors;
-        $.each(_this4.errors, function (key, value) {
+        _this3.errors = error.response.data.errors;
+        $.each(_this3.errors, function (key, value) {
           toastr.error(value);
           console.log(key + ": " + value);
         });
 
-        if (typeof _this4.errors == 'undefined' && error) {
+        if (typeof _this3.errors == 'undefined' && error) {
           toastr.error("Ocurrió un error al procesar la solicitud");
         }
       });
@@ -6666,42 +6649,54 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    partes_data: {
-      type: Array,
-      required: false
-    },
     ot_id_data: ''
   },
   data: function data() {
     return {
-      ot_partes: []
+      ot_partes: {}
     };
   },
   created: function created() {
-    this.ot_partes = JSON.parse(JSON.stringify(this.partes_data));
+    this.getResults();
+    this.$store.dispatch('loadContarPartes', this.ot_id_data);
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['url', 'AppUrl'])),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['url', 'AppUrl', 'CantPartes'])),
   methods: {
-    firmar: function firmar(index) {
+    getResults: function getResults() {
       var _this = this;
+
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      axios.defaults.baseURL = this.url;
+      var urlRegistros = 'partes/ot/' + this.ot_id_data + '/paginate' + '?page=' + page;
+      axios.get(urlRegistros).then(function (response) {
+        _this.ot_partes = response.data;
+      });
+    },
+    firmar: function firmar(index) {
+      var _this2 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'partes/' + this.ot_partes[index].id + '/firmar';
       axios.put(urlRegistros).then(function (response) {
         console.log(response.data);
-        _this.ot_partes[index].firma = response.data.firma;
+        _this2.ot_partes[index].firma = response.data.firma;
         toastr.success('El Parte N° ' + response.data.id + ' fue firmado con éxito');
       })["catch"](function (error) {
-        _this.errors = error.response.data.errors;
-        $.each(_this.errors, function (key, value) {
+        _this2.errors = error.response.data.errors;
+        $.each(_this2.errors, function (key, value) {
           toastr.error(value);
           console.log(key + ": " + value);
         });
 
-        if (typeof _this.errors == 'undefined' && error) {
+        if (typeof _this2.errors == 'undefined' && error) {
           toastr.error("Ocurrió un error al procesar la solicitud");
         }
       });
@@ -6837,24 +6832,38 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    remitos_data: {
-      type: Array,
-      required: false
-    },
     ot_id_data: ''
   },
   data: function data() {
     return {
-      ot_remitos: []
+      ot_remitos: {}
     };
   },
   created: function created() {
-    this.ot_remitos = JSON.parse(JSON.stringify(this.remitos_data));
+    this.getResults();
+    this.$store.dispatch('loadContarRemitos', this.ot_id_data);
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['url', 'AppUrl']))
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['url', 'AppUrl', 'CantRemitos'])),
+  methods: {
+    getResults: function getResults() {
+      var _this = this;
+
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      axios.defaults.baseURL = this.url;
+      var urlRegistros = 'remitos/ot/' + this.ot_id_data + '/paginate' + '?page=' + page;
+      axios.get(urlRegistros).then(function (response) {
+        _this.ot_remitos = response.data;
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -10405,12 +10414,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       contacto3: [],
       users_empresa: [],
       observaciones: '',
-      localidades: [],
       localidad: {
         lat: -34.603684400000011,
         lon: -58.381559100000004
       },
-      provincias: [],
       provincia: '',
       servicios: [],
       norma_ensayos: [],
@@ -10451,7 +10458,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   created: function created() {
     this.getClientes();
     this.getUsersEmpresa();
-    this.getProvincias();
+    this.$store.dispatch('loadProvincias');
     this.getServicios();
     this.getTipoPeliculas();
     this.getProductos();
@@ -10471,7 +10478,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       showInputs: false
     });
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['url'])),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['url', 'provincias', 'localidades'])),
   watch: {
     metodo_ensayos: function metodo_ensayos(metodo_ensayo) {
       metodo_ensayo.forEach(function (metodo) {
@@ -10574,62 +10581,45 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this4.medidas = response.data;
       });
     },
-    getProvincias: function getProvincias() {
-      var _this5 = this;
-
-      axios.defaults.baseURL = this.url;
-      var urlRegistros = 'provincias' + '?api_token=' + Laravel.user.api_token;
-      axios.get(urlRegistros).then(function (response) {
-        _this5.provincias = response.data;
-      });
-    },
     getLocalidades: function getLocalidades() {
-      var _this6 = this;
-
-      this.localidades = [];
-      this.localidad = '';
-      axios.defaults.baseURL = this.url;
-      var urlRegistros = 'localidades/' + this.provincia.id + '?api_token=' + Laravel.user.api_token;
-      axios.get(urlRegistros).then(function (response) {
-        _this6.localidades = response.data;
-      });
+      this.$store.dispatch('loadLocalidades', this.provincia.id);
     },
     getServicios: function getServicios() {
-      var _this7 = this;
+      var _this5 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'servicios' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this7.servicios = response.data;
+        _this5.servicios = response.data;
       });
     },
     getTipoPeliculas: function getTipoPeliculas() {
-      var _this8 = this;
+      var _this6 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'tipo_peliculas' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this8.tipo_peliculas = response.data;
+        _this6.tipo_peliculas = response.data;
       });
     },
     getProductos: function getProductos() {
-      var _this9 = this;
+      var _this7 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'productos/ots' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this9.productos = response.data;
+        _this7.productos = response.data;
       });
     },
     getEpps: function getEpps() {
-      var _this10 = this;
+      var _this8 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'epps' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this10.epps = response.data;
+        _this8.epps = response.data;
 
-        _this10.cargarEppDefaults();
+        _this8.cargarEppDefaults();
       });
     },
     cargarEppDefaults: function cargarEppDefaults() {
@@ -10647,39 +10637,39 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     getRiesgos: function getRiesgos() {
-      var _this11 = this;
+      var _this9 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'riesgos' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this11.riesgos = response.data;
+        _this9.riesgos = response.data;
       });
     },
     getMetodosEnsayos: function getMetodosEnsayos() {
-      var _this12 = this;
+      var _this10 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'metodo_ensayos' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this12.metodo_ensayos = response.data;
+        _this10.metodo_ensayos = response.data;
       });
     },
     getNormaEnsayos: function getNormaEnsayos() {
-      var _this13 = this;
+      var _this11 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'norma_ensayos' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this13.norma_ensayos = response.data;
+        _this11.norma_ensayos = response.data;
       });
     },
     getNormaEvaluaciones: function getNormaEvaluaciones() {
-      var _this14 = this;
+      var _this12 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'norma_evaluaciones' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this14.norma_evaluaciones = response.data;
+        _this12.norma_evaluaciones = response.data;
       });
     },
     updateCenter: function updateCenter(latLng) {
@@ -10795,7 +10785,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       $('#nuevo').modal('hide');
     },
     submit: function submit() {
-      var _this15 = this;
+      var _this13 = this;
 
       if (this.accion == 'create') {
         this.errors = [];
@@ -10829,18 +10819,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             'riesgos': this.inputsRiesgos
           }
         }).then(function (response) {
-          _this15.response = response.data;
-          toastr.success('OT N° ' + _this15.ot + ' fue creada con éxito ');
+          _this13.response = response.data;
+          toastr.success('OT N° ' + _this13.ot + ' fue creada con éxito ');
           console.log(response.data);
         })["catch"](function (error) {
-          _this15.errors = error.response.data.errors;
+          _this13.errors = error.response.data.errors;
           console.log(error.response);
-          $.each(_this15.errors, function (key, value) {
+          $.each(_this13.errors, function (key, value) {
             toastr.error(value);
             console.log(key + ": " + value);
           });
 
-          if (typeof _this15.errors == 'undefined' && error) {
+          if (typeof _this13.errors == 'undefined' && error) {
             toastr.error("Ocurrió un error al procesar la solicitud");
           }
         });
@@ -10877,17 +10867,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             'riesgos': this.inputsRiesgos
           }
         }).then(function (response) {
-          _this15.response = response;
-          toastr.success('OT N° ' + _this15.ot + ' fue editada con éxito ');
+          _this13.response = response;
+          toastr.success('OT N° ' + _this13.ot + ' fue editada con éxito ');
         })["catch"](function (error) {
-          _this15.errors = error.response.data.errors;
+          _this13.errors = error.response.data.errors;
           console.log(error.response);
-          $.each(_this15.errors, function (key, value) {
+          $.each(_this13.errors, function (key, value) {
             toastr.error(value);
             console.log(key + ": " + value);
           });
 
-          if (typeof _this15.errors == 'undefined' && error) {
+          if (typeof _this13.errors == 'undefined' && error) {
             toastr.error("Ocurrió un error al procesar la solicitud");
           }
         });
@@ -55249,7 +55239,7 @@ var render = function() {
     _c("div", { staticClass: "col-md-12" }, [
       _c("div", { staticClass: "small-box bg-blue" }, [
         _c("div", { staticClass: "inner" }, [
-          _c("h3", [_vm._v(_vm._s(_vm.ot_partes.length))]),
+          _c("h3", [_vm._v(_vm._s(_vm.CantPartes))]),
           _vm._v(" "),
           _c("p", [_vm._v("Partes")])
         ]),
@@ -55277,109 +55267,131 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "col-md-12" }, [
       _c("div", { staticClass: "box box-danger top-buffer" }, [
-        _c("div", { staticClass: "box-header with-border" }, [
-          _c("div", { staticClass: "table-responsive" }, [
-            _c("table", { staticClass: "table table-hover table-striped" }, [
-              _vm._m(2),
-              _vm._v(" "),
-              _c(
-                "tbody",
-                _vm._l(_vm.ot_partes, function(ot_parte, k) {
-                  return _c("tr", { key: k }, [
-                    _c("td", [_vm._v(" " + _vm._s(ot_parte.id))]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _vm._v(" " + _vm._s(ot_parte.tipo_servicio) + " ")
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(" " + _vm._s(ot_parte.fecha))]),
-                    _vm._v(" "),
-                    _c("td", { attrs: { width: "10px" } }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "btn btn-warning btn-sm",
-                          attrs: {
-                            href:
-                              _vm.AppUrl +
-                              "/area/enod/ot/" +
-                              _vm.ot_id_data +
-                              "/parte/" +
-                              ot_parte.id +
-                              "/edit",
-                            title: "Editar"
-                          }
-                        },
-                        [_c("span", { staticClass: "fa fa-edit" })]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { attrs: { width: "10px" } }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "btn btn-default btn-sm",
-                          attrs: {
-                            href:
-                              _vm.AppUrl +
-                              "/api/pdf/parte/" +
-                              ot_parte.id +
-                              "/original",
-                            target: "_blank",
-                            title: "pdf"
-                          }
-                        },
-                        [_c("span", { staticClass: "fa fa-file-pdf-o" })]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { attrs: { width: "10px" } }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "btn btn-default btn-sm",
-                          attrs: {
-                            href:
-                              _vm.AppUrl +
-                              "/api/pdf/parte/" +
-                              ot_parte.id +
-                              "/final",
-                            target: "_blank",
-                            title: "pdf"
-                          }
-                        },
-                        [_c("span", { staticClass: "fa fa-file-pdf-o" })]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    !ot_parte.firma
-                      ? _c("td", { attrs: { width: "10px" } }, [
-                          _c(
-                            "a",
-                            {
-                              staticClass: "btn btn-default btn-sm",
-                              attrs: { title: "Firmar" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.firmar(k)
+        _c(
+          "div",
+          { staticClass: "box-header with-border" },
+          [
+            _c("div", { staticClass: "table-responsive" }, [
+              _c("table", { staticClass: "table table-hover table-striped" }, [
+                _vm._m(2),
+                _vm._v(" "),
+                _c(
+                  "tbody",
+                  _vm._l(_vm.ot_partes.data, function(ot_parte, k) {
+                    return _c("tr", { key: k }, [
+                      _c("td", [_vm._v(" " + _vm._s(ot_parte.id))]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _vm._v(" " + _vm._s(ot_parte.tipo_servicio) + " ")
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(" " + _vm._s(ot_parte.fecha))]),
+                      _vm._v(" "),
+                      _c("td", { attrs: { width: "10px" } }, [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "btn btn-warning btn-sm",
+                            attrs: {
+                              href:
+                                _vm.AppUrl +
+                                "/area/enod/ot/" +
+                                _vm.ot_id_data +
+                                "/parte/" +
+                                ot_parte.id +
+                                "/edit",
+                              title: "Editar"
+                            }
+                          },
+                          [_c("span", { staticClass: "fa fa-edit" })]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("td", { attrs: { width: "10px" } }, [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "btn btn-default btn-sm",
+                            attrs: {
+                              href:
+                                _vm.AppUrl +
+                                "/api/pdf/parte/" +
+                                ot_parte.id +
+                                "/original",
+                              target: "_blank",
+                              title: "pdf"
+                            }
+                          },
+                          [_c("span", { staticClass: "fa fa-file-pdf-o" })]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("td", { attrs: { width: "10px" } }, [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "btn btn-default btn-sm",
+                            attrs: {
+                              href:
+                                _vm.AppUrl +
+                                "/api/pdf/parte/" +
+                                ot_parte.id +
+                                "/final",
+                              target: "_blank",
+                              title: "pdf"
+                            }
+                          },
+                          [_c("span", { staticClass: "fa fa-file-pdf-o" })]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      !ot_parte.firma
+                        ? _c("td", { attrs: { width: "10px" } }, [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "btn btn-default btn-sm",
+                                attrs: { title: "Firmar" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.firmar(k)
+                                  }
                                 }
-                              }
-                            },
-                            [
-                              _c("span", {
-                                staticClass: "glyphicon glyphicon-pencil"
-                              })
-                            ]
-                          )
-                        ])
-                      : _vm._e()
-                  ])
-                }),
-                0
-              )
-            ])
-          ])
-        ])
+                              },
+                              [
+                                _c("span", {
+                                  staticClass: "glyphicon glyphicon-pencil"
+                                })
+                              ]
+                            )
+                          ])
+                        : _vm._e()
+                    ])
+                  }),
+                  0
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "pagination",
+              {
+                attrs: { data: _vm.ot_partes },
+                on: { "pagination-change-page": _vm.getResults }
+              },
+              [
+                _c("span", { attrs: { slot: "prev-nav" }, slot: "prev-nav" }, [
+                  _vm._v("< Previous")
+                ]),
+                _vm._v(" "),
+                _c("span", { attrs: { slot: "next-nav" }, slot: "next-nav" }, [
+                  _vm._v("Next >")
+                ])
+              ]
+            )
+          ],
+          1
+        )
       ])
     ])
   ])
@@ -55549,7 +55561,7 @@ var render = function() {
     _c("div", { staticClass: "col-md-12" }, [
       _c("div", { staticClass: "small-box bg-aqua" }, [
         _c("div", { staticClass: "inner" }, [
-          _c("h3", [_vm._v(_vm._s(_vm.ot_remitos.length))]),
+          _c("h3", [_vm._v(_vm._s(_vm.CantRemitos))]),
           _vm._v(" "),
           _c("p", [_vm._v("Remitos")])
         ]),
@@ -55577,104 +55589,132 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "col-md-12" }, [
       _c("div", { staticClass: "box box-danger top-buffer" }, [
-        _c("div", { staticClass: "box-header with-border" }, [
-          _c("div", { staticClass: "table-responsive" }, [
-            _c("table", { staticClass: "table table-hover table-striped" }, [
-              _vm._m(2),
-              _vm._v(" "),
-              _c(
-                "tbody",
-                _vm._l(_vm.ot_remitos, function(ot_remito, k) {
-                  return _c("tr", { key: k }, [
-                    _c("td", [
-                      _vm._v(
-                        " " +
-                          _vm._s(ot_remito.prefijo_formateado) +
-                          "-" +
-                          _vm._s(ot_remito.numero_formateado)
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(" " + _vm._s(ot_remito.receptor) + " ")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(" " + _vm._s(ot_remito.destino))]),
-                    _vm._v(" "),
-                    ot_remito.interno_sn
-                      ? _c("td", { staticStyle: { "text-align": "center" } }, [
-                          _vm._v(" SI ")
-                        ])
-                      : _vm._e(),
-                    _vm._v(" "),
-                    !ot_remito.interno_sn
-                      ? _c("td", { staticStyle: { "text-align": "center" } }, [
-                          _vm._v(" NO ")
-                        ])
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(" " + _vm._s(ot_remito.fecha))]),
-                    _vm._v(" "),
-                    _c("td", { attrs: { width: "10px" } }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "btn btn-warning btn-sm",
-                          attrs: {
-                            href:
-                              _vm.AppUrl +
-                              "/area/enod/ot/" +
-                              _vm.ot_id_data +
-                              "/remito/" +
-                              ot_remito.id +
-                              "/edit",
-                            title: "Editar"
-                          }
-                        },
-                        [_c("span", { staticClass: "fa fa-edit" })]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    ot_remito.interno_sn
-                      ? _c("td", { attrs: { width: "10px" } }, [
-                          _c(
-                            "a",
-                            {
-                              staticClass: "btn btn-default btn-sm",
-                              attrs: {
-                                href:
-                                  _vm.AppUrl +
-                                  "/api/pdf/remito/" +
-                                  ot_remito.id,
-                                target: "_blank",
-                                title: "pdf"
-                              }
-                            },
-                            [_c("span", { staticClass: "fa fa-file-pdf-o" })]
+        _c(
+          "div",
+          { staticClass: "box-header with-border" },
+          [
+            _c("div", { staticClass: "table-responsive" }, [
+              _c("table", { staticClass: "table table-hover table-striped" }, [
+                _vm._m(2),
+                _vm._v(" "),
+                _c(
+                  "tbody",
+                  _vm._l(_vm.ot_remitos.data, function(ot_remito, k) {
+                    return _c("tr", { key: k }, [
+                      _c("td", [
+                        _vm._v(
+                          " " +
+                            _vm._s(ot_remito.prefijo_formateado) +
+                            "-" +
+                            _vm._s(ot_remito.numero_formateado)
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _vm._v(" " + _vm._s(ot_remito.receptor) + " ")
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(" " + _vm._s(ot_remito.destino))]),
+                      _vm._v(" "),
+                      ot_remito.interno_sn
+                        ? _c(
+                            "td",
+                            { staticStyle: { "text-align": "center" } },
+                            [_vm._v(" SI ")]
                           )
-                        ])
-                      : _c("td", { attrs: { width: "10px" } }, [
-                          _c(
-                            "a",
-                            {
-                              staticClass: "btn btn-default btn-sm",
-                              attrs: {
-                                href:
-                                  _vm.AppUrl +
-                                  "/api/pdf/remito/" +
-                                  ot_remito.id,
-                                target: "_blank",
-                                title: "Imprimir"
-                              }
-                            },
-                            [_c("span", { staticClass: "fa fa-print" })]
+                        : _vm._e(),
+                      _vm._v(" "),
+                      !ot_remito.interno_sn
+                        ? _c(
+                            "td",
+                            { staticStyle: { "text-align": "center" } },
+                            [_vm._v(" NO ")]
                           )
-                        ])
-                  ])
-                }),
-                0
-              )
-            ])
-          ])
-        ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(" " + _vm._s(ot_remito.fecha))]),
+                      _vm._v(" "),
+                      _c("td", { attrs: { width: "10px" } }, [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "btn btn-warning btn-sm",
+                            attrs: {
+                              href:
+                                _vm.AppUrl +
+                                "/area/enod/ot/" +
+                                _vm.ot_id_data +
+                                "/remito/" +
+                                ot_remito.id +
+                                "/edit",
+                              title: "Editar"
+                            }
+                          },
+                          [_c("span", { staticClass: "fa fa-edit" })]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      ot_remito.interno_sn
+                        ? _c("td", { attrs: { width: "10px" } }, [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "btn btn-default btn-sm",
+                                attrs: {
+                                  href:
+                                    _vm.AppUrl +
+                                    "/api/pdf/remito/" +
+                                    ot_remito.id,
+                                  target: "_blank",
+                                  title: "pdf"
+                                }
+                              },
+                              [_c("span", { staticClass: "fa fa-file-pdf-o" })]
+                            )
+                          ])
+                        : _c("td", { attrs: { width: "10px" } }, [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "btn btn-default btn-sm",
+                                attrs: {
+                                  href:
+                                    _vm.AppUrl +
+                                    "/api/pdf/remito/" +
+                                    ot_remito.id,
+                                  target: "_blank",
+                                  title: "Imprimir"
+                                }
+                              },
+                              [_c("span", { staticClass: "fa fa-print" })]
+                            )
+                          ])
+                    ])
+                  }),
+                  0
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "pagination",
+              {
+                attrs: { data: _vm.ot_remitos },
+                on: { "pagination-change-page": _vm.getResults }
+              },
+              [
+                _c("span", { attrs: { slot: "prev-nav" }, slot: "prev-nav" }, [
+                  _vm._v("< Previous")
+                ]),
+                _vm._v(" "),
+                _c("span", { attrs: { slot: "next-nav" }, slot: "next-nav" }, [
+                  _vm._v("Next >")
+                ])
+              ]
+            )
+          ],
+          1
+        )
       ])
     ])
   ])
@@ -85390,6 +85430,7 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
     url:  false ? undefined : "http://localhost:8000/api",
     AppUrl:  false ? undefined : "http://localhost:8000",
     provincias: [],
+    localidades: [],
     unidades_medidas: [],
     metodos_ensayos: [],
     CantInformes: '0',
@@ -85406,17 +85447,16 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
       var commit = _ref.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'provincias' + '?api_token=' + Laravel.user.api_token;
-      console.log(urlRegistros);
       axios.get(urlRegistros).then(function (response) {
         commit('getProvincias', response.data);
       });
     },
-    loadLocalidades: function loadLocalidades(_ref2) {
+    loadLocalidades: function loadLocalidades(_ref2, provincia_id) {
       var commit = _ref2.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'localidades/' + provincia_id + '?api_token=' + Laravel.user.api_token;
-      console.log(urlRegistros);
       axios.get(urlRegistros).then(function (response) {
+        console.log(response.data);
         commit('getLocalidades', response.data);
       });
     },
@@ -85506,6 +85546,9 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
   mutations: {
     getProvincias: function getProvincias(state, provincias) {
       state.provincias = provincias;
+    },
+    getLocalidades: function getLocalidades(state, localidades) {
+      state.localidades = localidades;
     },
     getUnidadesMedidas: function getUnidadesMedidas(state, unidadesMedidas) {
       state.unidades_medidas = unidadesMedidas;

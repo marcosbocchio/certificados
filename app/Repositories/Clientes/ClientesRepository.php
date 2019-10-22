@@ -23,7 +23,7 @@ class ClientesRepository extends BaseRepository
     try { 
 
         $this->saveCliente($request,$cliente);
-        $this->saveContactos($request,$cliente);     
+        $this->updateContacto($request,$cliente);     
 
         DB::commit(); 
 

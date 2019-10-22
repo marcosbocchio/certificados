@@ -240,9 +240,8 @@ export default {
          },
         errors:{},               
         provincia:{},
-      //  provincias:{},
         localidad:{},
-        localidades:[],
+       
         contacto : {
            'nombre'  : '',
            'cargo' : '',
@@ -290,7 +289,7 @@ export default {
     },
     computed : 
     
-         mapState(['url','provincias'])
+         mapState(['url','provincias','localidades'])
        
     ,   
 
@@ -363,13 +362,11 @@ export default {
             },
 
             getLocalidades : function(){
-                this.localidades=[];
+
                 this.localidad ='';
-                axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'localidades/' + this.provincia.id + '?api_token=' + Laravel.user.api_token;        
-                axios.get(urlRegistros).then(response =>{
-                this.localidades = response.data
-                });
+                console.log('llama a getlocalidades');
+                this.$store.dispatch('loadLocalidades',this.provincia.id);
+          
               },
 
             getClientes: function(){

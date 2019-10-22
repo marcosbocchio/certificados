@@ -4,7 +4,7 @@
           <!-- small box -->
           <div class="small-box bg-aqua">
             <div class="inner">
-              <h3>{{ot_remitos.length}}</h3>
+              <h3>{{CantRemitos}}</h3>
 
               <p>Remitos</p>
             </div>
@@ -34,7 +34,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(ot_remito,k) in ot_remitos" :key="k">                                 
+                                <tr v-for="(ot_remito,k) in ot_remitos.data" :key="k">                                 
                                     <td> {{ot_remito.prefijo_formateado}}-{{ot_remito.numero_formateado}}</td>
                                     <td> {{ot_remito.receptor}} </td>     
                                     <td> {{ot_remito.destino}}</td>   
@@ -50,6 +50,11 @@
                             </tbody>
                         </table>                     
                     </div>
+                    <pagination 
+                        :data="ot_remitos" @pagination-change-page="getResults" >
+                        <span slot="prev-nav">&lt; Previous</span>
+                        <span slot="next-nav">Next &gt;</span> 
+                    </pagination>
                 </div>
             </div>
         </div>    
@@ -61,30 +66,40 @@ import {mapState} from 'vuex'
 export default {
     props :{
 
-    remitos_data : {
-    type : Array,
-    required : false
-     },
-
      ot_id_data : '',
     
   }, 
 
   data () { return {
 
-      ot_remitos :[],
+      ot_remitos :{},
 
     }    
   },
 
   created : function() {
+      this.getResults();
+      this.$store.dispatch('loadContarRemitos',this.ot_id_data);
 
-      this.ot_remitos =  JSON.parse(JSON.stringify(this.remitos_data)); 
   },
   
   computed :{
 
-       ...mapState(['url','AppUrl'])
+       ...mapState(['url','AppUrl','CantRemitos'])
      },  
+
+ methods : {
+     
+     getResults :function(page = 1){
+
+                axios.defaults.baseURL = this.url ;
+                var urlRegistros = 'remitos/ot/' + this.ot_id_data + '/paginate' + '?page='+ page;   
+                axios.get(urlRegistros).then(response =>{
+                this.ot_remitos = response.data
+                });
+
+        },
+
+ }
 }
 </script>

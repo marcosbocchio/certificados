@@ -128,6 +128,7 @@ Route::group(['middleware' => 'auth:api'], function()
 
     //Remito  
     Route::get('remitos/ot/{ot_id}/total','RemitosController@RemitosTotal');
+    Route::get('remitos/ot/{ot_id}/paginate', 'RemitosController@paginate');   
     Route::resource('remitos','RemitosController');
     Route::get('remitos/ot/{ot_id}/generar-numero-remito', 'RemitosController@GenerarNumeroRemito');   
 
@@ -139,6 +140,7 @@ Route::group(['middleware' => 'auth:api'], function()
     
     //parte diario
 
+    Route::get('partes/ot/{ot_id}/paginate', 'PartesController@paginate');   
     Route::get('partes/ot/{ot_id}/total','PartesController@PartesTotal');
     Route::put('partes/{id}/firmar', 'PartesController@firmar');
     Route::resource('partes', 'PartesController');

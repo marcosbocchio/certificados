@@ -536,13 +536,11 @@ export default {
           contacto3:[] ,
           users_empresa:[],
           observaciones:'',
-          localidades:[],
           localidad: {
             
             lat : -34.603684400000011,
             lon : -58.381559100000004
           },
-          provincias:[],
           provincia: '',
 
           servicios:[],
@@ -593,7 +591,7 @@ export default {
         
         this.getClientes();
         this.getUsersEmpresa();     
-        this.getProvincias();
+        this.$store.dispatch('loadProvincias');
         this.getServicios();
         this.getTipoPeliculas();
         this.getProductos();
@@ -621,7 +619,7 @@ export default {
     },
     computed :{
 
-        ...mapState(['url'])
+        ...mapState(['url','provincias','localidades'])
      },
     
 
@@ -738,22 +736,11 @@ export default {
                 this.medidas = response.data
                 });
               },
-      getProvincias : function(){
-
-                axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'provincias' + '?api_token=' + Laravel.user.api_token;        
-                axios.get(urlRegistros).then(response =>{
-                this.provincias = response.data
-                });
-              },
+    
       getLocalidades : function(){
-                this.localidades=[];
-                this.localidad ='';
-                axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'localidades/' + this.provincia.id + '?api_token=' + Laravel.user.api_token;        
-                axios.get(urlRegistros).then(response =>{
-                this.localidades = response.data
-                });
+
+                  this.$store.dispatch('loadLocalidades',this.provincia.id);
+
               },
        getServicios : function(){
              

@@ -184,6 +184,7 @@ state: {
         process.env.MIX_URL_PRO :
         process.env.MIX_URL_DEV,
         provincias:[],
+        localidades:[],
         unidades_medidas:[],
         metodos_ensayos:[],
         CantInformes:'0',
@@ -195,7 +196,6 @@ state: {
         CantProcedimientos:'0',
         CantUsuariosCliente:'0',
 
-       
     },
 
 actions : {
@@ -205,19 +205,17 @@ actions : {
         }) {
           axios.defaults.baseURL = store.state.url ;
           var urlRegistros = 'provincias' + '?api_token=' + Laravel.user.api_token;  
-          console.log(urlRegistros);
           axios.get(urlRegistros).then((response) => {
             commit('getProvincias', response.data)           
           })
         },
 
         loadLocalidades({
-          commit
-        }) {
+          commit},provincia_id) {
           axios.defaults.baseURL = store.state.url ;
           var urlRegistros = 'localidades/' + provincia_id + '?api_token=' + Laravel.user.api_token;        
-          console.log(urlRegistros);
           axios.get(urlRegistros).then((response) => {
+            console.log(response.data);
             commit('getLocalidades', response.data)           
           })
         },
@@ -320,6 +318,10 @@ actions : {
     mutations: {
       getProvincias(state, provincias) {
         state.provincias = provincias
+      },
+
+      getLocalidades(state, localidades) {
+        state.localidades = localidades
       },
 
       getUnidadesMedidas(state, unidadesMedidas) {

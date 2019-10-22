@@ -4,7 +4,7 @@
           <!-- small box -->
           <div class="small-box bg-blue">
             <div class="inner">
-              <h3>{{ot_partes.length}}</h3>
+              <h3>{{CantPartes}}</h3>
 
               <p>Partes</p>
             </div>
@@ -32,7 +32,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(ot_parte,k) in ot_partes" :key="k">                                 
+                                <tr v-for="(ot_parte,k) in ot_partes.data" :key="k">                                 
                                     <td> {{ot_parte.id}}</td>
                                     <td> {{ot_parte.tipo_servicio}} </td>     
                                     <td> {{ot_parte.fecha}}</td>              
@@ -45,6 +45,11 @@
                             </tbody>
                         </table>                     
                     </div>
+                    <pagination 
+                        :data="ot_partes" @pagination-change-page="getResults" >
+                        <span slot="prev-nav">&lt; Previous</span>
+                        <span slot="next-nav">Next &gt;</span> 
+                    </pagination>
                 </div>
             </div>
         </div>    
@@ -56,33 +61,39 @@ import {mapState} from 'vuex'
 export default {
     props :{
 
-    partes_data : {
-    type : Array,
-    required : false
-     },
-
      ot_id_data : '',
     
   }, 
 
   data () { return {
 
-      ot_partes :[],
+      ot_partes :{},
 
     }    
   },
 
   created : function() {
 
-      this.ot_partes =  JSON.parse(JSON.stringify(this.partes_data)); 
+      this.getResults();
+      this.$store.dispatch('loadContarPartes',this.ot_id_data);
   },
   
   computed :{
 
-       ...mapState(['url','AppUrl'])
+       ...mapState(['url','AppUrl','CantPartes'])
      },  
 
   methods : {
+
+      getResults :function(page = 1){
+
+                axios.defaults.baseURL = this.url ;
+                var urlRegistros = 'partes/ot/' + this.ot_id_data + '/paginate' + '?page='+ page;   
+                axios.get(urlRegistros).then(response =>{
+                this.ot_partes = response.data
+                });
+
+        },
 
         firmar : function(index){
 

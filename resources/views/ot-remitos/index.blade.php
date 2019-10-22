@@ -5,9 +5,7 @@
 <div id="app">
 
    <ot-remitos
-    :ot_id_data = "{{$ot_id}}" 
-    :remitos_data = "{{$remitos}}"
-   
+    :ot_id_data = "{{$ot_id}}"    
    ></ot-remitos>
 
 </div>
