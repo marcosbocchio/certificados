@@ -23,14 +23,14 @@ class AddForeignKeyDetallesPmTable extends Migration
                     ->references('id')
                     ->on('informes_pm');
             
-          $table->bigInteger('detalle_pm_referencia_id')
-                    ->unsigned()   
-                    ->nullable()                          
-                    ->after('informe_pm_id');
-                    
-         $table->foreign('detalle_pm_referencia_id')
-                     ->references('id')
-                     ->on('detalles_pm_referencias');
+            $table->bigInteger('detalle_pm_referencia_id')
+                        ->unsigned()   
+                        ->nullable()                          
+                        ->after('informe_pm_id');
+                        
+            $table->foreign('detalle_pm_referencia_id')
+                        ->references('id')
+                        ->on('detalles_pm_referencias');
            
         });
     }

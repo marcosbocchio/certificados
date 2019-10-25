@@ -66,6 +66,9 @@ class InformesController extends Controller
                 break;  
             case 'PM':
                 return redirect()->route('InformePmCreate',array('ot_id' => $ot_id));
+                break;
+            case 'LP':
+                return redirect()->route('InformeLpCreate',array('ot_id' => $ot_id));
                 break;      
          
         }

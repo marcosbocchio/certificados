@@ -39,6 +39,13 @@ class ServiciosTableSeeder extends Seeder
             'metodo_ensayo_id'   =>'2'          
         ]);
 
+        Servicios::create([
+            'codigo'             =>'codigo 5',
+            'descripcion'        =>'Servicio testing LP',
+            'unidades_medida_id' =>'1',
+            'metodo_ensayo_id'   =>'4'          
+        ]);
+
 
     }
 }

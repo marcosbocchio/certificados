@@ -60,6 +60,9 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('tecnicas', 'TecnicasController');
     Route::resource('tipos_magnetizacion', 'TiposMagnetizacionController');
     Route::resource('metodos_trabajo_pm', 'MetodosTrabajoPmController');
+    Route::resource('metodos_trabajo_lp', 'MetodosTrabajoLpController');
+    Route::resource('aplicaciones_lp', 'AplicacionesLpController');
+    Route::get('tipo_liquidos/{tipo}', 'TipoLiquidosController@getTipoLiquidos');
     Route::resource('corrientes', 'CorrientesController');
     Route::resource('color_particulas', 'ColorParticulasController');
     Route::resource('iluminaciones', 'IluminacionesController');
@@ -75,7 +78,8 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('soldadores/cliente/{id}','SoldadoresController@SoldadoresCliente');
     Route::post('soldadores/cliente/{id}','SoldadoresController@store');
 
-    
+    Route::get('interno_equipos/metodo/{metodo}/activos', 'InternoEquiposController@getEquiposMetodoActivos');   
+
     Route::get('equipos/metodo/{metodo}', 'EquiposController@EquiposMetodo');
 
     Route::get('defectos_ri/planta', 'DefectosRiController@DefectosPlanta');
@@ -125,6 +129,7 @@ Route::group(['middleware' => 'auth:api'], function()
     /*  informes */ 
     Route::resource('informes_ri','InformesRiController');    
     Route::resource('informes_pm','InformesPmController');
+    Route::resource('informes_lp','InformesLpController');
 
     //Remito  
     Route::get('remitos/ot/{ot_id}/total','RemitosController@RemitosTotal');

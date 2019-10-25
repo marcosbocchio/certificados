@@ -11,12 +11,12 @@ class IluminacionesTableSeeder extends Seeder
      */
     public function run()
     {
-        Iluminaciones::create([
+        Iluminaciones::create([ 
             'codigo'              =>'1076 Lux',              
         ]);
 
         Iluminaciones::create([
-            'codigo'              =>'1000 mw/cm2',              
+            'codigo'              =>'1000 µv/cm2',              
         ]);
     }
 }

@@ -729,19 +729,13 @@ export default {
             isChapa:false,
             isGasoducto:false,
             EnableClonarPasadas:false,
-
-             procedimientos:[],
-             materiales:[],
-             diametros:[],
-             espesores:[],
+           
              equipos:[],
              fuentes:[],
              tipo_peliculas:[],
-             norma_evaluaciones:[],
+             
              icis:[],
-             norma_ensayos:[],
-             tecnicas:[],
-             ejecutor_ensayos :[],
+             tecnicas:[],            
              tecnicas_graficos :[],             
 
              
@@ -764,17 +758,17 @@ export default {
     created : function(){       
         
         this.isLoading =  true;
-        this.getProcedimientos();
-        this.getMateriales();
-        this.getDiametros();
+        this.$store.dispatch('loadProcedimietosOtMetodo',  { 'ot_id' : this.otdata.id, 'metodo' : this.metodo });
+        this.$store.dispatch('loadMateriales');
+        this.$store.dispatch('loadDiametros');
         this.getEquipos();
         this.getFuentes();
         this.getTipoPeliculas();
-        this.getNormaEvaluaciones();
+        this.$store.dispatch('loadNormaEvaluaciones');        
+        this.$store.dispatch('loadNormaEnsayos');       
         this.getIcis();
-        this.getNormaEnsayos();
         this.getTecnicas();
-        this.getEjecutorEnsayo();
+        this.$store.dispatch('loadEjecutorEnsayo', this.otdata.id); 
         this.getSoldadores();
         this.getDefectosRiPlanta();
         this.getDefectosRiGasoducto();
@@ -817,7 +811,7 @@ export default {
 
     computed :{
 
-        ...mapState(['url','AppUrl']),
+        ...mapState(['url','AppUrl','materiales','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','ejecutor_ensayos']),
 
            HabilitarClonarPasadas(){
                 this.EnableClonarPasadas = (this.isGasoducto && this.pasada=='1' && this.TablaDetalle.length);
@@ -899,48 +893,13 @@ export default {
                         
                         });   
              }
-        },     
-
-        getProcedimientos : function(){
-
-            axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'procedimientos_informes/ot/' + this.otdata.id + '/metodo/' + this.metodo + '?api_token=' + Laravel.user.api_token;         
-                axios.get(urlRegistros).then(response =>{
-                this.procedimientos = response.data
-                });
-
-        },
-
-        getMateriales : function(){
-
-            axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'materiales' + '?api_token=' + Laravel.user.api_token;         
-                axios.get(urlRegistros).then(response =>{
-                this.materiales = response.data
-                });
-
-        },
-
-        getDiametros : function(){
-
-            axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'diametros' + '?api_token=' + Laravel.user.api_token;         
-                axios.get(urlRegistros).then(response =>{
-                this.diametros = response.data
-               
-                });
-         
-        },
+        },           
 
         getEspesores : function(){
             this.espesor=''; 
             this.distancia_fuente_pelicula='';   
             this.tecnica ='';      
-            axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'espesor/' + this.diametro.diametro_code + '?api_token=' + Laravel.user.api_token;         
-                axios.get(urlRegistros).then(response =>{
-                this.espesores = response.data
-                });
+            this.$store.dispatch('loadEspesores',this.diametro.diametro_code);
         },
 
         getEquipos : function(){
@@ -948,8 +907,7 @@ export default {
             axios.defaults.baseURL = this.url ;
                 var urlRegistros = 'equipos/metodo/' + this.metodo + '?api_token=' + Laravel.user.api_token;         
                 axios.get(urlRegistros).then(response =>{
-                this.equipos = response.data   
-            
+                this.equipos = response.data               
                 });
 
         },
@@ -973,16 +931,7 @@ export default {
                
                 });
          
-        },
-
-        getNormaEvaluaciones: function(){
-             
-                axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'norma_evaluaciones' + '?api_token=' + Laravel.user.api_token;        
-                axios.get(urlRegistros).then(response =>{
-                this.norma_evaluaciones = response.data
-                });
-              },
+        },       
 
         getIcis: function(){
              
@@ -991,16 +940,7 @@ export default {
                 axios.get(urlRegistros).then(response =>{
                 this.icis = response.data
                 });
-              },
-
-        getNormaEnsayos: function(){
-             
-                axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'norma_ensayos' + '?api_token=' + Laravel.user.api_token;        
-                axios.get(urlRegistros).then(response =>{
-                this.norma_ensayos = response.data
-                });
-              },
+              },       
 
         getTecnicas: function(){
              

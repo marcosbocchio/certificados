@@ -99,8 +99,7 @@
                                 <label for="equipos">Equipo (*)</label>
                                 <v-select v-model="equipo" label="codigo" :options="equipos" ></v-select>  
                             </div>                            
-                        </div>       
-                
+                        </div>                
 
                         <div class="col-md-3">                       
                             <div class="form-group">
@@ -341,21 +340,21 @@ export default {
 
     props :{
 
-      editmode : {
+    editmode : {
       type : Boolean,
       required : false,    
       default : false
     },
 
-      metodo : {
+    metodo : {
       type : String,
       required :true
     },
 
-      otdata : {
-       type : Object,
-       required : true
-      },
+    otdata : {
+        type : Object,
+        required : true
+    },
 
     informedata : {
       type : Object,
@@ -451,9 +450,9 @@ export default {
     },
     data() {return {
         
-         errors:[],
-         en: en,
-         es: es, 
+        errors:[],
+        en: en,
+        es: es, 
 
         cliente:'',
         fecha:'',
@@ -486,22 +485,14 @@ export default {
         voltaje:'',
         am:'',
         color_partula:'',
-        iluminacion:'',
-
-
-        materiales:[],
-        diametros:[],
-        espesores:[],
+        iluminacion:'',       
+      
         tecnicas:[],
         equipos:[],
-        procedimientos:[],
-        norma_evaluaciones:[],
-        norma_ensayos:[],
-        ejecutor_ensayos :[],
+
         metodos_trabajo_pm:[],
         tipos_magnetizacion:[],
-        corrientes:[],
-        iluminaciones:[],
+        corrientes:[],      
         color_particulas:[],     
         isChapa:false,
         requiereVehiculoAditivo:false,
@@ -521,19 +512,19 @@ export default {
     created : function() {
 
       this.getCliente();  
-      this.getMateriales();
-      this.getDiametros();
+      this.$store.dispatch('loadMateriales');
+      this.$store.dispatch('loadDiametros');
       this.getTecnicas();
       this.getEquipos();
-      this.getProcedimientos();
-      this.getNormaEvaluaciones();
-      this.getNormaEnsayos();
+      this.$store.dispatch('loadProcedimietosOtMetodo',  { 'ot_id' : this.otdata.id, 'metodo' : this.metodo });
+      this.$store.dispatch('loadNormaEvaluaciones');        
+      this.$store.dispatch('loadNormaEnsayos');
       this.getMetodosTrabajoPm();
-      this.getEjecutorEnsayo();
+      this.$store.dispatch('loadEjecutorEnsayo', this.otdata.id); 
       this.getTiposMagnetizacon();
       this.getCorrientes();
       this.getColorParticulas();
-      this.getIluminaciones();
+      this.$store.dispatch('loadIluminaciones');
       this.setEdit();      
     },
 
@@ -544,7 +535,7 @@ export default {
 
     computed :{
 
-        ...mapState(['url','AppUrl']),     
+        ...mapState(['url','AppUrl','materiales','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','iluminaciones','ejecutor_ensayos']),     
 
         numero_inf_code : function()  {
 
@@ -552,7 +543,6 @@ export default {
 
                       return this.metodo + (this.numero_inf <10? '00' : this.numero_inf<100? '0' : '') + this.numero_inf ;
         },
-
        
      },
 
@@ -566,11 +556,8 @@ export default {
         },
 
         metodo_trabajo_pm : function(val){
-
-            console.log('entro en watch trabajo');
-               console.log(val);
-            this.requiereVehiculoAditivo = val.requiere_vehiculo_aditivo_sn ? true : false;           
-               
+            
+            this.requiereVehiculoAditivo = val.requiere_vehiculo_aditivo_sn ? true : false;              
             this.vehiculo='';
             this.aditivo='';     
 
@@ -623,20 +610,16 @@ export default {
                this.inputPiezasFalla = this.detalledata,  
                this.observaciones = this.informedata.observaciones 
 
-
-            }
-         
+            }         
 
         },       
 
         getCliente : function(){
            
             axios.defaults.baseURL = this.url ;
-            var urlRegistros = 'clientes/' + this.otdata.cliente_id + '?api_token=' + Laravel.user.api_token;     
-           
+            var urlRegistros = 'clientes/' + this.otdata.cliente_id + '?api_token=' + Laravel.user.api_token;           
             axios.get(urlRegistros).then(response =>{
             this.cliente = response.data
-
            
             });
         },
@@ -644,58 +627,31 @@ export default {
 
         getNumeroInforme:function(){            
            
-            if(!this.editmode) {
-           
+            if(!this.editmode) {           
 
-                    axios.defaults.baseURL = this.url ;
-                        var urlRegistros = 'informes/ot/' + this.otdata.id + '/metodo/' + this.metodo + '/generar-numero-informe'  + '?api_token=' + Laravel.user.api_token;         
-                        axios.get(urlRegistros).then(response =>{
-                        this.numero_inf_generado = response.data 
-                        
-                   
-                        if(this.numero_inf_generado.length){
+                axios.defaults.baseURL = this.url ;
+                    var urlRegistros = 'informes/ot/' + this.otdata.id + '/metodo/' + this.metodo + '/generar-numero-informe'  + '?api_token=' + Laravel.user.api_token;         
+                    axios.get(urlRegistros).then(response =>{
+                    this.numero_inf_generado = response.data 
+                    
+                
+                    if(this.numero_inf_generado.length){
 
-                            this.numero_inf =  this.numero_inf_generado[0].numero_informe
-                        }else{
+                        this.numero_inf =  this.numero_inf_generado[0].numero_informe
+                    }else{
 
-                            this.numero_inf = 1;
-                        }
-                        
-                        
-                        });   
+                        this.numero_inf = 1;
+                    }
+                    
+                    
+                    });   
              }
-        },  
-
-        getMateriales : function(){
-
-            axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'materiales' + '?api_token=' + Laravel.user.api_token;         
-                axios.get(urlRegistros).then(response =>{
-                this.materiales = response.data
-                });
-
-        },
-
-        getDiametros : function(){
-
-            axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'diametros' + '?api_token=' + Laravel.user.api_token;         
-                axios.get(urlRegistros).then(response =>{
-                this.diametros = response.data
-               
-                });
-         
-        },
+        },     
 
         getEspesores : function(){
-            this.espesor=''; 
-            this.distancia_fuente_pelicula='';   
+            this.espesor='';          
             this.tecnica ='';      
-            axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'espesor/' + this.diametro.diametro_code + '?api_token=' + Laravel.user.api_token;         
-                axios.get(urlRegistros).then(response =>{
-                this.espesores = response.data
-                });
+            this.$store.dispatch('loadEspesores',this.diametro.diametro_code);
         },
 
         getTecnicas: function(){
@@ -716,35 +672,7 @@ export default {
             
                 });
 
-        },
-
-        getProcedimientos : function(){
-
-            axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'procedimientos_informes/ot/' + this.otdata.id + '/metodo/' + this.metodo + '?api_token=' + Laravel.user.api_token;         
-                axios.get(urlRegistros).then(response =>{
-                this.procedimientos = response.data
-                });
-
-        },
-
-        getNormaEvaluaciones: function(){
-             
-                axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'norma_evaluaciones' + '?api_token=' + Laravel.user.api_token;        
-                axios.get(urlRegistros).then(response =>{
-                this.norma_evaluaciones = response.data
-                });
-          },
-
-        getNormaEnsayos: function(){
-             
-            axios.defaults.baseURL = this.url ;
-            var urlRegistros = 'norma_ensayos' + '?api_token=' + Laravel.user.api_token;        
-            axios.get(urlRegistros).then(response =>{
-            this.norma_ensayos = response.data
-            });
-         },
+        },         
 
          getEjecutorEnsayo: function(){
              
@@ -789,16 +717,6 @@ export default {
             axios.get(urlRegistros).then(response =>{
             this.color_particulas = response.data
             });
-         },
-
-         getIluminaciones: function(){
-         
-            axios.defaults.baseURL = this.url ;
-            var urlRegistros = 'iluminaciones' + '?api_token=' + Laravel.user.api_token;        
-            axios.get(urlRegistros).then(response =>{                
-               
-            this.iluminaciones = response.data
-            }); 
          },
 
          selectPosDetalle :function(index){
@@ -1022,6 +940,7 @@ export default {
 .checkbox-inline {
     margin-left: 0px;
 }
+
 .col-md-1-5 {
 
     width: 12.499999995%
@@ -1030,10 +949,10 @@ export default {
 
 @media (min-width: 768px)  { 
     
-.size-1-5 {
+    .size-1-5 {
 
-    width: 12.499999995%;
-}
+        width: 12.499999995%;
+    }
 }
 
 .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {

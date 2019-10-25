@@ -33,7 +33,7 @@ class SoldadoresController extends Controller
 
     public function paginate(Request $request,$id){
 
-        return Soldadores::where('cliente_id',$id)->orderBy('id','DESC')->paginate(2);
+        return Soldadores::where('cliente_id',$id)->orderBy('id','DESC')->paginate(10);
     }
 
     public function callView($cliente_id)

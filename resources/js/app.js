@@ -122,9 +122,8 @@ Vue.component('remitos', require('./components/remitos/remitos.vue').default);
   /* Infomres    */
   Vue.component('informe-ri', require('./components/informes/informe-ri.vue').default);
   Vue.component('informe-pm', require('./components/informes/informe-pm.vue').default);
+  Vue.component('informe-lp', require('./components/informes/informe-lp.vue').default);
   Vue.component('informe-header', require('./components/informes/informe-header.vue').default);
-
-
 
 
 Vue.prototype.Laravel = window.Laravel;
@@ -185,8 +184,20 @@ state: {
         process.env.MIX_URL_DEV,
         provincias:[],
         localidades:[],
+        materiales:[],
+        diametros:[],
+        espesores:[],
+        procedimientos:[],
         unidades_medidas:[],
         metodos_ensayos:[],
+        norma_evaluaciones:[],
+        norma_ensayos:[],
+        interno_equipos_activos:[],
+        penetrantes_tipo_liquido:[],
+        reveladores_tipo_liquido:[],
+        removedores_tipo_liquido:[],
+        iluminaciones:[],
+        ejecutor_ensayos:[],
         CantInformes:'0',
         CantOperadores :'0',
         CantRemitos:'0',
@@ -220,6 +231,69 @@ actions : {
           })
         },
 
+        loadMateriales({
+          commit
+        }) {
+          axios.defaults.baseURL = store.state.url ;
+          var urlRegistros = 'materiales' + '?api_token=' + Laravel.user.api_token;  
+          console.log(urlRegistros);
+          axios.get(urlRegistros).then((response) => {
+            commit('getMateriales', response.data)           
+          })
+        },
+
+        loadDiametros({
+          commit
+        }) {
+          axios.defaults.baseURL = store.state.url ;
+          var urlRegistros = 'diametros' + '?api_token=' + Laravel.user.api_token;  
+          console.log(urlRegistros);
+          axios.get(urlRegistros).then((response) => {
+            commit('getDiametros', response.data)           
+          })
+        },
+
+        loadEspesores({
+          commit},diametro_code) {
+          axios.defaults.baseURL = store.state.url ;
+          var urlRegistros = 'espesor/' + diametro_code + '?api_token=' + Laravel.user.api_token;         
+          console.log(urlRegistros);
+          axios.get(urlRegistros).then((response) => {
+            commit('getEspesores', response.data)           
+          })
+        },
+
+        loadProcedimietosOtMetodo({
+          commit},payload) {
+          axios.defaults.baseURL = store.state.url 
+          console.log(payload);
+          var urlRegistros = 'procedimientos_informes/ot/' + payload.ot_id + '/metodo/' + payload.metodo + '?api_token=' + Laravel.user.api_token;         
+          console.log(urlRegistros);
+          axios.get(urlRegistros).then((response) => {        
+            commit('getProcedimientosOtMetodo', response.data)           
+          })
+        },
+
+        loadNormaEvaluaciones({
+          commit}) {
+          axios.defaults.baseURL = store.state.url ;
+          var urlRegistros = 'norma_evaluaciones' + '?api_token=' + Laravel.user.api_token;        
+          console.log(urlRegistros);
+          axios.get(urlRegistros).then((response) => {
+            commit('getNormaEvaluaciones', response.data)           
+          })
+        },
+
+        loadNormaEnsayos({
+          commit}) {
+          axios.defaults.baseURL = store.state.url ;
+          var urlRegistros = 'norma_ensayos' + '?api_token=' + Laravel.user.api_token;        
+          console.log(urlRegistros);
+          axios.get(urlRegistros).then((response) => {
+            commit('getNormaEnsayos', response.data)           
+          })
+        },
+
         loadUnidadesMedidas({
           commit
         }) {
@@ -239,6 +313,50 @@ actions : {
           console.log(urlRegistros);
           axios.get(urlRegistros).then((response) => {
             commit('getMetodosEnsayos', response.data)           
+          })
+        },
+
+        loadInternoEquiposActivos({
+          commit},metodo) {
+          axios.defaults.baseURL = store.state.url ;
+          var urlRegistros = 'interno_equipos/metodo/' + metodo + '/activos' + '?api_token=' + Laravel.user.api_token;         
+          console.log(urlRegistros);
+          axios.get(urlRegistros).then((response) => {
+            console.log(response.data);
+            commit('getInternoEquiposActivos', response.data)           
+          })
+        },  
+        
+        loadTipoLiquidos({
+          commit},tipo) {
+          axios.defaults.baseURL = store.state.url ;
+          var urlRegistros = 'tipo_liquidos/' + tipo +  '?api_token=' + Laravel.user.api_token;         
+          console.log(urlRegistros);
+          axios.get(urlRegistros).then((response) => {
+            console.log(response.data);
+            commit('getTipoLiquidos',{ 'liquidos' :response.data,'tipo' : tipo })           
+          })
+        }, 
+
+        loadIluminaciones({
+          commit}) {
+          axios.defaults.baseURL = store.state.url ;
+          var urlRegistros = 'iluminaciones' + '?api_token=' + Laravel.user.api_token;        
+          console.log(urlRegistros);
+          axios.get(urlRegistros).then((response) => {
+            console.log(response.data);
+            commit('getIluminaciones', response.data)           
+          })
+        },
+
+        loadEjecutorEnsayo({
+          commit},ot_id) {
+          axios.defaults.baseURL = store.state.url ;
+          var urlRegistros = 'ot-operarios/ot/' + ot_id + '?api_token=' + Laravel.user.api_token;        
+          console.log(urlRegistros);
+          axios.get(urlRegistros).then((response) => {
+            console.log(response.data);
+            commit('getEjecutorEnsayo', response.data)           
           })
         },
 
@@ -324,12 +442,75 @@ actions : {
         state.localidades = localidades
       },
 
+      getMateriales(state, materiales) {
+        state.materiales = materiales
+      },
+
+      getDiametros(state, diametros) {
+        state.diametros = diametros
+      },
+
+      getEspesores(state, espesores) {
+        state.espesores = espesores
+      },
+
+      getProcedimientosOtMetodo(state, procedimientos) {
+        state.procedimientos = procedimientos
+      },
+
+      getNormaEvaluaciones(state, norma_evaluaciones) {
+        state.norma_evaluaciones = norma_evaluaciones
+      },
+
+      getNormaEnsayos(state, norma_ensayos) {
+        state.norma_ensayos = norma_ensayos
+      },
+
       getUnidadesMedidas(state, unidadesMedidas) {
         state.unidades_medidas = unidadesMedidas
       },
 
       getMetodosEnsayos(state, metodoEnsayos) {
         state.metodos_ensayos = metodoEnsayos
+      },
+
+      getInternoEquiposActivos(state, interno_equipos_activos) {
+        state.interno_equipos_activos = interno_equipos_activos
+      },
+
+      getTipoLiquidos(state, tipo_liquidos) {
+
+        console.log('tipo_liquido:');
+        console.log(tipo_liquidos);
+
+        switch (tipo_liquidos.tipo) {
+
+          case 'penetrante_tipo_liquido':
+
+            state.penetrantes_tipo_liquido = tipo_liquidos.liquidos;
+            break;
+
+          case 'revelador_tipo_liquido':
+
+            state.reveladores_tipo_liquido = tipo_liquidos.liquidos;
+            break;
+          
+          case 'removedor_tipo_liquido':
+            
+            state.removedores_tipo_liquido = tipo_liquidos.liquidos;
+            break;        
+         
+        }
+
+       
+      },
+
+      getIluminaciones(state, iluminaciones) {
+        state.iluminaciones = iluminaciones
+      },
+
+      getEjecutorEnsayo(state, ejecutor_ensayos) {
+        state.ejecutor_ensayos = ejecutor_ensayos
       },
 
       ContarInformes(state, CantInformes) {

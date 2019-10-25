@@ -26,5 +26,10 @@ class MetodoEnsayoTableSeeder extends Seeder
             'metodo'            =>'PM',
             'descripcion'       =>'Descripción metodo de ensayo PM',          
         ]);
+
+        MetodoEnsayos::create([
+            'metodo'            =>'LP',
+            'descripcion'       =>'Descripción metodo de ensayo LP',          
+        ]);
     }
 }

@@ -40,8 +40,10 @@ class DatabaseSeeder extends Seeder
         $this->call(TiposMagnetizacionTableSeeder::class);      
         $this->call(CorrientesTableSeeder::class);   
         $this->call(ColorParticulasTableSeeder::class);        
-        $this->call(IluminacionesTableSeeder::class);          
-       
+        $this->call(IluminacionesTableSeeder::class);
+        $this->call(MetodosTrabajoLpTableSeeder::class); 
+        $this->call(AplicacionesLpTableSeeder::class);        
+      
        // factory('App\Clientes', 2500)->create();
      
       
