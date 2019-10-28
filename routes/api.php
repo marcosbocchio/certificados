@@ -54,6 +54,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('epps', 'EppsController');
     Route::resource('riesgos', 'RiesgosController');
     Route::resource('ot_riesgos', 'OtRiesgosController');
+    Route::get('fuentes/interno_fuente/{interno_fuente_id}', 'FuentesController@getFuentePorInterno');
     Route::resource('fuentes', 'FuentesController');
     Route::resource('equipos', 'EquiposController');
     Route::resource('icis', 'IcisController');

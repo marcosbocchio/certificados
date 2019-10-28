@@ -17,6 +17,13 @@ class FuentesController extends Controller
         return Fuentes::All();
     }
 
+    public function getFuentePorInterno($interno_fuente_id){
+
+        return Fuentes::join('interno_fuentes','interno_fuentes.fuente_id','fuentes.id')
+                        ->where('interno_fuentes.id',$interno_fuente_id)
+                        ->first();
+
+    }
     /**
      * Show the form for creating a new resource.
      *

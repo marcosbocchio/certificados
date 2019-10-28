@@ -149,9 +149,7 @@ class InformesController extends Controller
     
         } 
     
-        $informe->equipo_id = $request->equipo['id'];
-        $informe->Kv = $request->kv;
-        $informe->ma =$request->ma;  
+        $informe->interno_equipo_id = $request->interno_equipo['id'];
         $informe->metodo_ensayo_id  = $metodo_ensayo['id'];
         $informe->norma_evaluacion_id = $request->norma_evaluacion['id'];
         $informe->norma_ensayo_id = $request->norma_ensayo['id'];

@@ -193,6 +193,7 @@ state: {
         norma_evaluaciones:[],
         norma_ensayos:[],
         interno_equipos_activos:[],
+        fuentePorInterno:{},
         penetrantes_tipo_liquido:[],
         reveladores_tipo_liquido:[],
         removedores_tipo_liquido:[],
@@ -324,6 +325,17 @@ actions : {
           axios.get(urlRegistros).then((response) => {
             console.log(response.data);
             commit('getInternoEquiposActivos', response.data)           
+          })
+        },  
+
+        loadFuentePorInterno({
+          commit},interno_fuente_id) {
+          axios.defaults.baseURL = store.state.url ;
+          var urlRegistros = 'fuentes/interno_fuente/' + interno_fuente_id  + '?api_token=' + Laravel.user.api_token;         
+          console.log(urlRegistros);
+          axios.get(urlRegistros).then((response) => {
+            console.log(response.data);
+            commit('getFuentePorInterno', response.data)           
           })
         },  
         
@@ -476,6 +488,10 @@ actions : {
 
       getInternoEquiposActivos(state, interno_equipos_activos) {
         state.interno_equipos_activos = interno_equipos_activos
+      },
+
+      getFuentePorInterno(state, fuentePorInterno) {
+        state.fuentePorInterno = fuentePorInterno
       },
 
       getTipoLiquidos(state, tipo_liquidos) {

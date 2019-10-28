@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\InternoEquipos;
 use Illuminate\Support\Facades\DB;
+use App\Fuentes;
+use \stdClass;
 
 class InternoEquiposController extends Controller
 {
@@ -31,14 +33,14 @@ class InternoEquiposController extends Controller
     public function getEquiposMetodoActivos($metodo){
       
 
-        return InternoEquipos::join('equipos','equipos.id','=','interno_equipos.equipo_id') 
+        return  InternoEquipos::join('equipos','equipos.id','=','interno_equipos.equipo_id') 
                                 ->join('metodo_ensayos','equipos.metodo_ensayo_id','=','metodo_ensayos.id')
                                 ->where('metodo_ensayos.metodo',$metodo)
                                 ->where('interno_equipos.activo_sn',1)
                                 ->Select('interno_equipos.*')
+                                ->with('equipos')
                                 ->get();
 
-    
 
     }
 

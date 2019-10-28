@@ -7976,6 +7976,67 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -8018,17 +8079,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       eps: '',
       pqr: '',
       tecnica: '',
-      equipo: '',
+      interno_equipo: '',
       procedimiento: '',
       norma_ensayo: '',
       norma_evaluacion: '',
       metodo_trabajo_lp: '',
+      tipo_penetrante: '',
       penetrante_tipo_liquido: '',
+      tiempo_penetracion: '',
       revelador_tipo_liquido: '',
       removedor_tipo_liquido: '',
       penetrante_aplicacion: '',
       revelador_aplicacion: '',
       removedor_aplicacion: '',
+      limpieza_previa: '',
+      limpieza_intermedia: '',
+      limpieza_final: '',
       ejecutor_ensayo: '',
       iluminacion: '',
       isChapa: false,
@@ -8071,7 +8137,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.isChapa = val.diametro == 'CHAPA' ? true : false;
     }
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])(['url', 'AppUrl', 'materiales', 'diametros', 'espesores', 'procedimientos', 'norma_evaluaciones', 'norma_ensayos', 'interno_equipos_activos', 'iluminaciones', 'penetrantes_tipo_liquido', 'reveladores_tipo_liquido', 'removedores_tipo_liquido', 'ejecutor_ensayos']), {
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])(['url', 'AppUrl', 'materiales', 'diametros', 'espesores', 'procedimientos', 'norma_evaluaciones', 'norma_ensayos', 'interno_equipos_activos', 'iluminaciones', 'penetrantes_tipo_liquido', 'reveladores_tipo_liquido', 'removedores_tipo_liquido', 'ejecutor_ensayos', 'fuentePorInterno']), {
     numero_inf_code: function numero_inf_code() {
       if (this.numero_inf) return this.metodo + (this.numero_inf < 10 ? '00' : this.numero_inf < 100 ? '0' : '') + this.numero_inf;
     }
@@ -8099,6 +8165,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.espesor = '';
       this.tecnica = '';
       this.$store.dispatch('loadEspesores', this.diametro.diametro_code);
+    },
+    getFuente: function getFuente() {
+      this.$store.dispatch('loadFuentePorInterno', this.interno_equipo.interno_fuente_id);
     },
     selectPosDetalle: function selectPosDetalle(index) {
       this.indexPosDetalle = index;
@@ -8151,6 +8220,128 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.inputPiezasFalla[this.index_referencias].path3 = Ref.path3;
       this.inputPiezasFalla[this.index_referencias].path4 = Ref.path4;
       $('#nuevo').modal('hide');
+    },
+    Store: function Store() {
+      var _this4 = this;
+
+      this.errors = [];
+      var urlRegistros = 'informes_lp';
+      axios({
+        method: 'post',
+        url: urlRegistros,
+        data: {
+          'ot': this.otdata,
+          'ejecutor_ensayo': this.ejecutor_ensayo,
+          'metodo_ensayo': this.metodo,
+          'fecha': this.fecha,
+          'numero_inf': this.numero_inf,
+          'componente': this.componente,
+          'plano_isom': this.plano_isom,
+          'procedimiento': this.procedimiento,
+          'observaciones': this.observaciones,
+          'material': this.material,
+          'diametro': this.diametro.diametro,
+          'espesor': this.espesor.espesor,
+          'espesor_chapa': this.espesor_chapa,
+          'interno_equipo': this.interno_equipo,
+          'procedimiento_soldadura': this.procedimiento_soldadura,
+          'norma_evaluacion': this.norma_evaluacion,
+          'norma_ensayo': this.norma_ensayo,
+          'tecnica': this.tecnica,
+          'eps': this.eps,
+          'pqr': this.pqr,
+          'metodo_trabajo_lp': this.metodo_trabajo_lp,
+          'tipo_penetrante': this.tipo_penetrante,
+          'penetrante_tipo_liquido': this.penetrante_tipo_liquido,
+          'penetrante_aplicacion': this.penetrante_aplicacion,
+          'tiempo_penetracion': this.tiempo_penetracion,
+          'iluminacion': this.iluminacion,
+          'revelador_tipo_liquido': this.revelador_tipo_liquido,
+          'revelador_aplicacion': this.revelador_aplicacion,
+          'removedor_tipo_liquido': this.removedor_tipo_liquido,
+          'removedor_aplicacion': this.removedor_aplicacion,
+          'limpieza_previa': this.limpieza_previa,
+          'limpieza_intermedia': this.limpieza_intermedia,
+          'limpieza_final': this.limpieza_final,
+          'detalles': this.inputPiezasFalla
+        }
+      }).then(function (response) {
+        _this4.response = response.data;
+        toastr.success('informe N°' + _this4.numero_inf + ' fue creado con éxito ');
+        console.log(response.data);
+      })["catch"](function (error) {
+        _this4.errors = error.response.data.errors;
+        console.log(error.response);
+        $.each(_this4.errors, function (key, value) {
+          toastr.error(value);
+          console.log(key + ": " + value);
+        });
+
+        if (typeof _this4.errors == 'undefined' && error) {
+          toastr.error("Ocurrió un error al procesar la solicitud");
+        }
+      });
+    },
+    Update: function Update() {
+      var _this5 = this;
+
+      console.log('entro para actualizar');
+      this.errors = [];
+      var urlRegistros = 'informes_lp/' + this.informedata.id;
+      axios({
+        method: 'put',
+        url: urlRegistros,
+        data: {
+          'ot': this.otdata,
+          'ejecutor_ensayo': this.ejecutor_ensayo,
+          'metodo_ensayo': this.metodo,
+          'fecha': this.fecha,
+          'numero_inf': this.numero_inf,
+          'componente': this.componente,
+          'plano_isom': this.plano_isom,
+          'procedimiento': this.procedimiento,
+          'observaciones': this.observaciones,
+          'material': this.material,
+          'diametro': this.diametro.diametro,
+          'espesor': this.espesor.espesor,
+          'espesor_chapa': this.espesor_chapa,
+          'equipo': this.equipo,
+          'procedimiento_soldadura': this.procedimiento_soldadura,
+          'norma_evaluacion': this.norma_evaluacion,
+          'norma_ensayo': this.norma_ensayo,
+          'tecnica': this.tecnica,
+          'eps': this.eps,
+          'pqr': this.pqr,
+          'metodo_trabajo_lp': this.metodo_trabajo_lp,
+          'tipo_penetrante': this.tipo_penetrante,
+          'penetrante_tipo_liquido': this.penetrante_tipo_liquido,
+          'penetrante_aplicacion': this.penetrante_aplicacion,
+          'tiempo_penetracion': this.tiempo_penetracion,
+          'iluminacion': this.iluminacion,
+          'revelador_tipo_liquido': this.revelador_tipo_liquido,
+          'revelador_aplicacion': this.revelador_aplicacion,
+          'removedor_tipo_liquido': this.removedor_tipo_liquido,
+          'removedor_aplicacion': this.removedor_aplicacion,
+          'limpieza_previa': this.limpieza_previa,
+          'limpieza_intermedia': this.limpieza_intermedia,
+          'limpieza_final': this.limpieza_final,
+          'detalles': this.inputPiezasFalla
+        }
+      }).then(function (response) {
+        _this5.response = response.data;
+        toastr.success('informe N°' + _this5.numero_inf + ' fue actualizado con éxito ');
+      })["catch"](function (error) {
+        _this5.errors = error.response.data.errors;
+        console.log(error.response);
+        $.each(_this5.errors, function (key, value) {
+          toastr.error(value);
+          console.log(key + ": " + value);
+        });
+
+        if (typeof _this5.errors == 'undefined' && error) {
+          toastr.error("Ocurrió un error al procesar la solicitud");
+        }
+      });
     }
   }
 });
@@ -8881,7 +9072,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           'espesor': this.espesor.espesor,
           'espesor_chapa': this.espesor_chapa,
           'equipo': this.equipo,
-          'tipo_pelicula': this.tipo_pelicula,
           'procedimiento_soldadura': this.procedimiento_soldadura,
           'norma_evaluacion': this.norma_evaluacion,
           'norma_ensayo': this.norma_ensayo,
@@ -8945,7 +9135,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           'espesor': this.espesor.espesor,
           'espesor_chapa': this.espesor_chapa,
           'equipo': this.equipo,
-          'tipo_pelicula': this.tipo_pelicula,
           'procedimiento_soldadura': this.procedimiento_soldadura,
           'norma_evaluacion': this.norma_evaluacion,
           'norma_ensayo': this.norma_ensayo,
@@ -57486,17 +57675,124 @@ var render = function() {
                           label: "nro_serie",
                           options: _vm.interno_equipos_activos
                         },
+                        on: {
+                          input: function($event) {
+                            return _vm.getFuente()
+                          }
+                        },
                         model: {
-                          value: _vm.equipo,
+                          value: _vm.interno_equipo,
                           callback: function($$v) {
-                            _vm.equipo = $$v
+                            _vm.interno_equipo = $$v
                           },
-                          expression: "equipo"
+                          expression: "interno_equipo"
                         }
                       })
                     ],
                     1
                   )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { attrs: { for: "fuente" } }, [
+                      _vm._v("Fuente ")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.fuentePorInterno.codigo,
+                          expression: "fuentePorInterno.codigo"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "text", id: "fuente", disabled: "" },
+                      domProps: { value: _vm.fuentePorInterno.codigo },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.fuentePorInterno,
+                            "codigo",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { attrs: { for: "voltaje" } }, [
+                      _vm._v("Voltaje ")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.interno_equipo.voltaje,
+                          expression: "interno_equipo.voltaje"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "text", id: "voltaje", disabled: "" },
+                      domProps: { value: _vm.interno_equipo.voltaje },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.interno_equipo,
+                            "voltaje",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { attrs: { for: "amperaje" } }, [
+                      _vm._v("Amperaje ")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.interno_equipo.amperaje,
+                          expression: "interno_equipo.amperaje"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "text", id: "amperaje", disabled: "" },
+                      domProps: { value: _vm.interno_equipo.amperaje },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.interno_equipo,
+                            "amperaje",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-3" }, [
@@ -57552,8 +57848,6 @@ var render = function() {
                   )
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "clearfix" }),
-                _vm._v(" "),
                 _c("div", { staticClass: "col-md-3" }, [
                   _c(
                     "div",
@@ -57578,6 +57872,8 @@ var render = function() {
                     1
                   )
                 ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "clearfix" }),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-3" }, [
                   _c(
@@ -57615,6 +57911,31 @@ var render = function() {
                             _vm.metodo_trabajo_lp = $$v
                           },
                           expression: "metodo_trabajo_lp"
+                        }
+                      })
+                    ],
+                    1
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c(
+                    "div",
+                    { staticClass: "form-group" },
+                    [
+                      _c("label", [_vm._v(" Tipo Penetrante (*)")]),
+                      _vm._v(" "),
+                      _c("v-select", {
+                        attrs: {
+                          label: "codigo",
+                          options: ["VISIBLE", "FLUORESCENTE"]
+                        },
+                        model: {
+                          value: _vm.tipo_penetrante,
+                          callback: function($$v) {
+                            _vm.tipo_penetrante = $$v
+                          },
+                          expression: "tipo_penetrante"
                         }
                       })
                     ],
@@ -57670,7 +57991,7 @@ var render = function() {
                     "div",
                     { staticClass: "form-group" },
                     [
-                      _c("label", [_vm._v("Aplicación  Penetrante (*)")]),
+                      _c("label", [_vm._v("Aplicación  Penetrante")]),
                       _vm._v(" "),
                       _c("v-select", {
                         attrs: {
@@ -57688,6 +58009,36 @@ var render = function() {
                     ],
                     1
                   )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { attrs: { for: "tiempo_penetracion" } }, [
+                      _vm._v("Tiempo Penetración")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.tiempo_penetracion,
+                          expression: "tiempo_penetracion"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "number", id: "tiempo_penetracion" },
+                      domProps: { value: _vm.tiempo_penetracion },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.tiempo_penetracion = $event.target.value
+                        }
+                      }
+                    })
+                  ])
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-3" }, [
@@ -57801,6 +58152,8 @@ var render = function() {
                   )
                 ]),
                 _vm._v(" "),
+                _c("div", { staticClass: "clearfix" }),
+                _vm._v(" "),
                 _c("div", { staticClass: "col-md-3" }, [
                   _c(
                     "div",
@@ -57824,6 +58177,96 @@ var render = function() {
                     ],
                     1
                   )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { attrs: { for: "limpieza_previa" } }, [
+                      _vm._v("Limpieza Previa")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.limpieza_previa,
+                          expression: "limpieza_previa"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "text", id: "limpieza_previa" },
+                      domProps: { value: _vm.limpieza_previa },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.limpieza_previa = $event.target.value
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { attrs: { for: "limpieza_intermedia" } }, [
+                      _vm._v("Limpieza Intermedia")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.limpieza_intermedia,
+                          expression: "limpieza_intermedia"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "text", id: "limpieza_intermedia" },
+                      domProps: { value: _vm.limpieza_intermedia },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.limpieza_intermedia = $event.target.value
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { attrs: { for: "limpieza_final" } }, [
+                      _vm._v("Limpieza final")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.limpieza_final,
+                          expression: "limpieza_final"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "text", id: "limpieza_final" },
+                      domProps: { value: _vm.limpieza_final },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.limpieza_final = $event.target.value
+                        }
+                      }
+                    })
+                  ])
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-3" }, [
@@ -86970,8 +87413,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_lazyload__WEBPACK_IMPORTED_MO
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuejs_progress_bar__WEBPACK_IMPORTED_MODULE_5___default.a);
 var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
   state: {
-    url:  false ? undefined : "http://certificados.test/api",
-    AppUrl:  false ? undefined : "http://certificados.test",
+    url:  false ? undefined : "http://localhost:8000/api",
+    AppUrl:  false ? undefined : "http://localhost:8000",
     provincias: [],
     localidades: [],
     materiales: [],
@@ -86983,6 +87426,7 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
     norma_evaluaciones: [],
     norma_ensayos: [],
     interno_equipos_activos: [],
+    fuentePorInterno: {},
     penetrantes_tipo_liquido: [],
     reveladores_tipo_liquido: [],
     removedores_tipo_liquido: [],
@@ -87098,8 +87542,18 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
         commit('getInternoEquiposActivos', response.data);
       });
     },
-    loadTipoLiquidos: function loadTipoLiquidos(_ref12, tipo) {
+    loadFuentePorInterno: function loadFuentePorInterno(_ref12, interno_fuente_id) {
       var commit = _ref12.commit;
+      axios.defaults.baseURL = store.state.url;
+      var urlRegistros = 'fuentes/interno_fuente/' + interno_fuente_id + '?api_token=' + Laravel.user.api_token;
+      console.log(urlRegistros);
+      axios.get(urlRegistros).then(function (response) {
+        console.log(response.data);
+        commit('getFuentePorInterno', response.data);
+      });
+    },
+    loadTipoLiquidos: function loadTipoLiquidos(_ref13, tipo) {
+      var commit = _ref13.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'tipo_liquidos/' + tipo + '?api_token=' + Laravel.user.api_token;
       console.log(urlRegistros);
@@ -87111,8 +87565,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
         });
       });
     },
-    loadIluminaciones: function loadIluminaciones(_ref13) {
-      var commit = _ref13.commit;
+    loadIluminaciones: function loadIluminaciones(_ref14) {
+      var commit = _ref14.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'iluminaciones' + '?api_token=' + Laravel.user.api_token;
       console.log(urlRegistros);
@@ -87121,8 +87575,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
         commit('getIluminaciones', response.data);
       });
     },
-    loadEjecutorEnsayo: function loadEjecutorEnsayo(_ref14, ot_id) {
-      var commit = _ref14.commit;
+    loadEjecutorEnsayo: function loadEjecutorEnsayo(_ref15, ot_id) {
+      var commit = _ref15.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'ot-operarios/ot/' + ot_id + '?api_token=' + Laravel.user.api_token;
       console.log(urlRegistros);
@@ -87131,64 +87585,64 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
         commit('getEjecutorEnsayo', response.data);
       });
     },
-    loadContarInformes: function loadContarInformes(_ref15, ot_id) {
-      var commit = _ref15.commit;
+    loadContarInformes: function loadContarInformes(_ref16, ot_id) {
+      var commit = _ref16.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'informes/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('ContarInformes', response.data);
       });
     },
-    loadContarOperadores: function loadContarOperadores(_ref16, ot_id) {
-      var commit = _ref16.commit;
+    loadContarOperadores: function loadContarOperadores(_ref17, ot_id) {
+      var commit = _ref17.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'ot_operarios/users/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('ContarOperadores', response.data);
       });
     },
-    loadContarSoldadores: function loadContarSoldadores(_ref17, ot_id) {
-      var commit = _ref17.commit;
+    loadContarSoldadores: function loadContarSoldadores(_ref18, ot_id) {
+      var commit = _ref18.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'ot_soldadores/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('ContarSoldadores', response.data);
       });
     },
-    loadContarUsuariosCliente: function loadContarUsuariosCliente(_ref18, ot_id) {
-      var commit = _ref18.commit;
+    loadContarUsuariosCliente: function loadContarUsuariosCliente(_ref19, ot_id) {
+      var commit = _ref19.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'ot_usuarios_clientes/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('ContarUsuariosCliente', response.data);
       });
     },
-    loadContarProcedimientos: function loadContarProcedimientos(_ref19, ot_id) {
-      var commit = _ref19.commit;
+    loadContarProcedimientos: function loadContarProcedimientos(_ref20, ot_id) {
+      var commit = _ref20.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'ot_procedimientos_propios/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('ContarProcedimientos', response.data);
       });
     },
-    loadContarDocumentaciones: function loadContarDocumentaciones(_ref20, ot_id) {
-      var commit = _ref20.commit;
+    loadContarDocumentaciones: function loadContarDocumentaciones(_ref21, ot_id) {
+      var commit = _ref21.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'ot-documentaciones/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('ContarDocumentaciones', response.data);
       });
     },
-    loadContarRemitos: function loadContarRemitos(_ref21, ot_id) {
-      var commit = _ref21.commit;
+    loadContarRemitos: function loadContarRemitos(_ref22, ot_id) {
+      var commit = _ref22.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'remitos/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('ContarRemitos', response.data);
       });
     },
-    loadContarPartes: function loadContarPartes(_ref22, ot_id) {
-      var commit = _ref22.commit;
+    loadContarPartes: function loadContarPartes(_ref23, ot_id) {
+      var commit = _ref23.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'partes/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
@@ -87229,6 +87683,9 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
     },
     getInternoEquiposActivos: function getInternoEquiposActivos(state, interno_equipos_activos) {
       state.interno_equipos_activos = interno_equipos_activos;
+    },
+    getFuentePorInterno: function getFuentePorInterno(state, fuentePorInterno) {
+      state.fuentePorInterno = fuentePorInterno;
     },
     getTipoLiquidos: function getTipoLiquidos(state, tipo_liquidos) {
       console.log('tipo_liquido:');
@@ -90805,8 +91262,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\bocch\code\certificados\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\bocch\code\certificados\resources\sass\toastr.scss */"./resources/sass/toastr.scss");
+__webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/sass/toastr.scss */"./resources/sass/toastr.scss");
 
 
 /***/ })

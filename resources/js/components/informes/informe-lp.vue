@@ -88,7 +88,28 @@
                         <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="equipos">Equipo (*)</label>
-                                <v-select v-model="equipo" label="nro_serie" :options="interno_equipos_activos" ></v-select>  
+                                <v-select v-model="interno_equipo" label="nro_serie" :options="interno_equipos_activos" @input="getFuente()" ></v-select>  
+                            </div>                            
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group" >
+                                <label for="fuente">Fuente </label>
+                                <input type="text" v-model="fuentePorInterno.codigo" class="form-control" id="fuente" disabled>
+                            </div>                            
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group" >
+                                <label for="voltaje">Voltaje </label>
+                                <input type="text" v-model="interno_equipo.voltaje" class="form-control" id="voltaje" disabled>
+                            </div>                            
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group" >
+                                <label for="amperaje">Amperaje </label>
+                                <input type="text" v-model="interno_equipo.amperaje" class="form-control" id="amperaje" disabled>
                             </div>                            
                         </div>
                         
@@ -107,7 +128,6 @@
                             </div>      
                         </div>
                         
-                        <div class="clearfix"></div>    
 
                         <div class="col-md-3">                       
                             <div class="form-group">
@@ -115,6 +135,8 @@
                                 <v-select v-model="norma_ensayo" label="descripcion" :options="norma_ensayos"></v-select>   
                             </div>      
                         </div>
+
+                        <div class="clearfix"></div>    
 
                         <div class="col-md-3">
                             <div class="form-group">
@@ -128,6 +150,13 @@
                             </div>
                         </div>
 
+                        <div class="col-md-3">                       
+                            <div class="form-group">
+                                <label> Tipo Penetrante (*)</label>
+                                <v-select v-model="tipo_penetrante" label="codigo" :options="['VISIBLE','FLUORESCENTE']"></v-select>   
+                            </div>      
+                        </div> 
+
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Líquido Penetrante (*)</label>
@@ -140,12 +169,20 @@
                             </div>
                         </div>
 
+
                         <div class="col-md-3">                       
                             <div class="form-group">
-                                <label>Aplicación  Penetrante (*)</label>
+                                <label>Aplicación  Penetrante</label>
                                 <v-select v-model="penetrante_aplicacion" label="codigo" :options="aplicaciones_lp"></v-select>   
                             </div>      
                         </div> 
+
+                        <div class="col-md-3">                       
+                            <div class="form-group" >
+                                <label for="tiempo_penetracion">Tiempo Penetración</label>
+                                <input type="number" v-model="tiempo_penetracion" class="form-control" id="tiempo_penetracion">
+                            </div>         
+                        </div>
 
                         <div class="col-md-3">
                             <div class="form-group">
@@ -166,6 +203,7 @@
                             </div>      
                         </div>
 
+
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Líquido Removedor (*)</label>
@@ -178,11 +216,34 @@
                             </div>
                         </div>
 
+                        <div class="clearfix"></div>   
+                         
                         <div class="col-md-3">                       
                             <div class="form-group">
                                 <label>Aplicación  Removedor (*)</label>
                                 <v-select v-model="removedor_aplicacion" label="codigo" :options="aplicaciones_lp"></v-select>   
                             </div>      
+                        </div>
+
+                        <div class="col-md-3">                       
+                            <div class="form-group" >
+                                <label for="limpieza_previa">Limpieza Previa</label>
+                                <input type="text" v-model="limpieza_previa" class="form-control" id="limpieza_previa">
+                            </div>         
+                        </div>
+
+                        <div class="col-md-3">                       
+                            <div class="form-group" >
+                                <label for="limpieza_intermedia">Limpieza Intermedia</label>
+                                <input type="text" v-model="limpieza_intermedia" class="form-control" id="limpieza_intermedia">
+                            </div>         
+                        </div>
+
+                        <div class="col-md-3">                       
+                            <div class="form-group" >
+                                <label for="limpieza_final">Limpieza final</label>
+                                <input type="text" v-model="limpieza_final" class="form-control" id="limpieza_final">
+                            </div>         
                         </div>
 
                         <div class="col-md-3">                       
@@ -343,17 +404,22 @@ data() {return {
         eps:'',
         pqr:'',
         tecnica:'',
-        equipo:'',       
+        interno_equipo:'',     
         procedimiento:'',
         norma_ensayo:'',
         norma_evaluacion:'',
         metodo_trabajo_lp:'', 
+        tipo_penetrante:'',
         penetrante_tipo_liquido:'',
+        tiempo_penetracion:'',
         revelador_tipo_liquido:'',
         removedor_tipo_liquido:'',    
         penetrante_aplicacion:'',
         revelador_aplicacion:'',
         removedor_aplicacion:'',  
+        limpieza_previa:'',
+        limpieza_intermedia:'',
+        limpieza_final:'',
         ejecutor_ensayo:'',
         iluminacion:'',
         isChapa:false,
@@ -409,7 +475,7 @@ data() {return {
 
     computed :{
 
-        ...mapState(['url','AppUrl','materiales','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','interno_equipos_activos','iluminaciones','penetrantes_tipo_liquido','reveladores_tipo_liquido','removedores_tipo_liquido','ejecutor_ensayos']),     
+        ...mapState(['url','AppUrl','materiales','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','interno_equipos_activos','iluminaciones','penetrantes_tipo_liquido','reveladores_tipo_liquido','removedores_tipo_liquido','ejecutor_ensayos','fuentePorInterno']),     
 
         numero_inf_code : function()  {
 
@@ -452,6 +518,13 @@ data() {return {
             this.tecnica ='';      
             this.$store.dispatch('loadEspesores',this.diametro.diametro_code);
         },
+
+    getFuente : function(){
+
+        this.$store.dispatch('loadFuentePorInterno',this.interno_equipo.interno_fuente_id);
+       
+
+      },
 
     selectPosDetalle :function(index){
         
@@ -519,6 +592,144 @@ data() {return {
     
         $('#nuevo').modal('hide');     
     },
+
+    Store : function(){
+         
+          this.errors =[];
+
+            var urlRegistros = 'informes_lp' ;      
+            axios({
+              method: 'post',
+              url : urlRegistros,    
+              data : {             
+                'ot'              : this.otdata,
+                'ejecutor_ensayo' : this.ejecutor_ensayo,  
+                'metodo_ensayo'   : this.metodo,  
+                'fecha':          this.fecha,
+                'numero_inf':     this.numero_inf,                            
+                'componente' :    this.componente,
+                'plano_isom' :    this.plano_isom,
+                'procedimiento' : this.procedimiento,           
+                'observaciones':  this.observaciones,
+                'material':       this.material,
+                'diametro':       this.diametro.diametro,
+                'espesor':        this.espesor.espesor,
+                'espesor_chapa'  :  this.espesor_chapa, 
+                'interno_equipo'        :  this.interno_equipo,               
+                'procedimiento_soldadura': this.procedimiento_soldadura,
+                'norma_evaluacion': this.norma_evaluacion,           
+                'norma_ensayo'      : this.norma_ensayo,
+                'tecnica'           :this.tecnica,              
+                'eps'               :this.eps,
+                'pqr'               :this.pqr,  
+                'metodo_trabajo_lp'             : this.metodo_trabajo_lp,
+                'tipo_penetrante'               : this.tipo_penetrante,
+                'penetrante_tipo_liquido'       :this.penetrante_tipo_liquido,
+                'penetrante_aplicacion'         :this.penetrante_aplicacion,
+                'tiempo_penetracion'            :this.tiempo_penetracion,
+                'iluminacion'                   :this.iluminacion,
+                'revelador_tipo_liquido'        :this.revelador_tipo_liquido,
+                'revelador_aplicacion'          :this.revelador_aplicacion,
+                'removedor_tipo_liquido'        :this.removedor_tipo_liquido,
+                'removedor_aplicacion'          :this.removedor_aplicacion,
+                'limpieza_previa'               :this.limpieza_previa,   
+                'limpieza_intermedia'           :this.limpieza_intermedia,   
+                'limpieza_final'                :this.limpieza_final,   
+                'detalles'                      :this.inputPiezasFalla,     
+          }
+          
+          }).then(response => {
+          this.response = response.data
+          toastr.success('informe N°' + this.numero_inf + ' fue creado con éxito ');
+           console.log(response.data);  
+        }).catch(error => {
+               
+               this.errors = error.response.data.errors;
+                console.log(error.response);
+               $.each( this.errors, function( key, value ) {
+                   toastr.error(value);
+                     console.log( key + ": " + value );
+               });
+
+               if((typeof(this.errors)=='undefined') && (error)){
+
+                     toastr.error("Ocurrió un error al procesar la solicitud");                     
+                  
+                }
+
+           });    
+
+        },
+
+        Update : function() {
+
+            console.log('entro para actualizar' );
+            this.errors =[];          
+
+            var urlRegistros = 'informes_lp/' + this.informedata.id  ;      
+            axios({
+              method: 'put',
+              url : urlRegistros,    
+              data : {
+                'ot'              : this.otdata,
+                'ejecutor_ensayo' : this.ejecutor_ensayo,  
+                'metodo_ensayo'   : this.metodo,  
+                'fecha':          this.fecha,
+                'numero_inf':     this.numero_inf,                            
+                'componente' :    this.componente,
+                'plano_isom' :    this.plano_isom,
+                'procedimiento' : this.procedimiento,           
+                'observaciones':  this.observaciones,
+                'material':       this.material,
+                'diametro':       this.diametro.diametro,
+                'espesor':        this.espesor.espesor,
+                'espesor_chapa'  :  this.espesor_chapa, 
+                'equipo'        :  this.equipo,               
+                'procedimiento_soldadura': this.procedimiento_soldadura,
+                'norma_evaluacion': this.norma_evaluacion,           
+                'norma_ensayo'      : this.norma_ensayo,
+                'tecnica'           :this.tecnica,              
+                'eps'               :this.eps,
+                'pqr'               :this.pqr,  
+                'metodo_trabajo_lp'             : this.metodo_trabajo_lp,
+                'tipo_penetrante'               : this.tipo_penetrante,
+                'penetrante_tipo_liquido'       :this.penetrante_tipo_liquido,
+                'penetrante_aplicacion'         :this.penetrante_aplicacion,
+                'tiempo_penetracion'            :this.tiempo_penetracion,
+                'iluminacion'                   :this.iluminacion,
+                'revelador_tipo_liquido'        :this.revelador_tipo_liquido,
+                'revelador_aplicacion'          :this.revelador_aplicacion,
+                'removedor_tipo_liquido'        :this.removedor_tipo_liquido,
+                'removedor_aplicacion'          :this.removedor_aplicacion,
+                'limpieza_previa'               :this.limpieza_previa,   
+                'limpieza_intermedia'           :this.limpieza_intermedia,   
+                'limpieza_final'                :this.limpieza_final,   
+                'detalles'                      :this.inputPiezasFalla,                       
+          }}
+          
+      
+        ).then(response => {
+          this.response = response.data
+          toastr.success('informe N°' + this.numero_inf + ' fue actualizado con éxito ');
+       
+        }).catch(error => {
+               
+               this.errors = error.response.data.errors;
+                console.log(error.response);
+               $.each( this.errors, function( key, value ) {
+                   toastr.error(value);
+                   console.log( key + ": " + value );
+               });
+
+               if((typeof(this.errors)=='undefined') && (error)){
+
+                     toastr.error("Ocurrió un error al procesar la solicitud");                     
+                  
+                }
+
+           }); 
+
+        }
     }
 }
 </script>

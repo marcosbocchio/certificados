@@ -31,23 +31,23 @@ class AddForeignKeyInformesLpTable extends Migration
                     ->references('id')
                     ->on('metodos_trabajo_lp');
 
-            $table->bigInteger('penetrante_tipo_liquido')
+            $table->bigInteger('penetrante_tipo_liquido_id')
                     ->unsigned()                             
                     ->after('tipo_penetrante');
                     
-            $table->foreign('penetrante_tipo_liquido')
+            $table->foreign('penetrante_tipo_liquido_id')
                     ->references('id')
                     ->on('tipo_liquidos');
 
             $table->bigInteger('penetrante_aplicacion_lp_id')
                     ->unsigned()                             
-                    ->after('penetrante_tipo_liquido');
+                    ->after('penetrante_tipo_liquido_id');
                     
             $table->foreign('penetrante_aplicacion_lp_id')
                     ->references('id')
                     ->on('aplicaciones_lp');          
 
-            $table->bigInteger('revelador_tipo_liquido')
+            $table->bigInteger('revelador_tipo_liquido_id')
                     ->unsigned()                             
                     ->after('penetrante_aplicacion_lp_id');
                     
@@ -57,23 +57,23 @@ class AddForeignKeyInformesLpTable extends Migration
             
             $table->bigInteger('revelador_aplicacion_lp_id')
                     ->unsigned()                             
-                    ->after('revelador_tipo_liquido');
+                    ->after('revelador_tipo_liquido_id');
                     
             $table->foreign('revelador_aplicacion_lp_id')
                     ->references('id')
                     ->on('aplicaciones_lp');
             
-            $table->bigInteger('removedor_tipo_liquido')
+            $table->bigInteger('removedor_tipo_liquido_id')
                     ->unsigned()                             
                     ->after('revelador_aplicacion_lp_id');
                     
-            $table->foreign('removedor_tipo_liquido')
+            $table->foreign('removedor_tipo_liquido_id')
                     ->references('id')
                     ->on('tipo_liquidos');
             
             $table->bigInteger('removedor_aplicacion_lp_id')
                     ->unsigned()                             
-                    ->after('removedor_tipo_liquido');
+                    ->after('removedor_tipo_liquido_id');
                     
             $table->foreign('removedor_aplicacion_lp_id')
                     ->references('id')
@@ -105,20 +105,20 @@ class AddForeignKeyInformesLpTable extends Migration
             $table->dropForeign(['metodo_trabajo_lp_id']);
             $table->dropColumn('metodo_trabajo_lp_id');  
 
-            $table->dropForeign(['penetrante_tipo_liquido']);
-            $table->dropColumn('penetrante_tipo_liquido');  
+            $table->dropForeign(['penetrante_tipo_liquido_id']);
+            $table->dropColumn('penetrante_tipo_liquido_id');  
 
             $table->dropForeign(['penetrante_aplicacion_lp_id']);
             $table->dropColumn('penetrante_aplicacion_lp_id');  
 
-            $table->dropForeign(['revelador_tipo_liquido']);
-            $table->dropColumn('revelador_tipo_liquido');  
+            $table->dropForeign(['revelador_tipo_liquido_id']);
+            $table->dropColumn('revelador_tipo_liquido_id');  
 
             $table->dropForeign(['revelador_aplicacion_lp_id']);
             $table->dropColumn('revelador_aplicacion_lp_id');  
 
-            $table->dropForeign(['removedor_tipo_liquido']);
-            $table->dropColumn('removedor_tipo_liquido');  
+            $table->dropForeign(['removedor_tipo_liquido_id']);
+            $table->dropColumn('removedor_tipo_liquido_id');  
 
             $table->dropForeign(['removedor_aplicacion_lp_id']);
             $table->dropColumn('removedor_aplicacion_lp_id');  
