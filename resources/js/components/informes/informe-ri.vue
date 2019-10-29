@@ -127,7 +127,7 @@
 
                         <div class="clearfix"></div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <div class="form-group">
                                 <label>Equipo (*)</label>
                                     <v-select  v-model="interno_equipo" :options="interno_equipos_activos" label="nro_serie" @input="getFuente(interno_equipo.interno_fuente_id)">

@@ -16,6 +16,7 @@ use App\Materiales;
 use App\DiametroView;
 use App\DiametrosEspesor;
 use App\InternoEquipos;
+use App\Fuentes;
 use App\InternoFuentes;
 use App\Tecnicas;
 use App\TecnicasGraficos;

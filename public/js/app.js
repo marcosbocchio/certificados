@@ -60498,7 +60498,7 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticClass: "clearfix" }),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-md-3" }, [
+                _c("div", { staticClass: "col-md-2" }, [
                   _c(
                     "div",
                     { staticClass: "form-group" },

@@ -37,6 +37,7 @@ class InformeLpRequest extends FormRequest
             'norma_evaluacion'          => 'required',
             'norma_ensayo'              => 'required',  
             'metodo_trabajo_lp'         => 'required',
+            'tipo_penetrante'           => 'required',
             'penetrante_tipo_liquido'   => 'required',
             'tiempo_penetracion'        => 'required|integer| digits_between:1,3',
             'revelador_tipo_liquido'    => 'required',
