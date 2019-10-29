@@ -51,7 +51,7 @@ class AddForeignKeyInformesLpTable extends Migration
                     ->unsigned()                             
                     ->after('penetrante_aplicacion_lp_id');
                     
-            $table->foreign('revelador_tipo_liquido')
+            $table->foreign('revelador_tipo_liquido_id')
                     ->references('id')
                     ->on('tipo_liquidos');
             
