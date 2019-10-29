@@ -15,8 +15,8 @@ use App\InformesRi;
 use App\Materiales;
 use App\DiametroView;
 use App\DiametrosEspesor;
-use App\Equipos;
-use App\Fuentes;
+use App\InternoEquipos;
+use App\InternoFuentes;
 use App\Tecnicas;
 use App\TecnicasGraficos;
 use App\TipoPeliculas;
@@ -106,11 +106,11 @@ class InformesRiController extends Controller
         $informe_material = Materiales::find($informe->material_id);
         $informe_diametroEspesor = DiametrosEspesor::find($informe->diametro_espesor_id);
         $informe_diametro = DiametroView::where('diametro',$informe_diametroEspesor->diametro)->first();
-        $informe_fuente = Fuentes::find($informe_ri->fuente_id);
-        if ($informe_fuente == null)
-            $informe_fuente = new Fuentes();
+        $informe_interno_fuente = InternoFuentes::where('id',$informe_ri->interno_fuente_id)->with('fuente')->first();;
+        if ($informe_interno_fuente == null)
+            $informe_interno_fuente = new Fuentes();
         $informe_tecnica_grafico = (new TecnicasGraficosController)->show($informe_ri->tecnicas_grafico_id);
-        $informe_equipo = Equipos::find($informe->equipo_id);
+        $informe_interno_equipo = internoEquipos::where('id',$informe->interno_equipo_id)->with('equipo')->first();
         $documetacionesRepository = new DocumentacionesRepository;
         $informe_procedimiento = (new DocumentacionesController($documetacionesRepository))->ProcedimientoInformeId($informe->procedimiento_informe_id);
         $infome_tipo_pelicula = TipoPeliculas::find($informe_ri->tipo_pelicula_id);
@@ -119,7 +119,8 @@ class InformesRiController extends Controller
         $informe_norma_ensayo = NormaEnsayos::find($informe->norma_ensayo_id);
         $informe_ejecutor_ensayo =(new OtOperariosController())->getEjecutorEnsayo($informe->ejecutor_ensayo_id);
         $informe_detalle = $this->getDetalle($informe_ri->id);
-     
+        
+       // dd($informe_interno_equipo);
       //  dd($informe_detalle);
         return view('informes.ri.edit', compact('ot',
                                                  'metodo',
@@ -129,9 +130,9 @@ class InformesRiController extends Controller
                                                  'informe_material',  
                                                  'informe_diametro',
                                                  'informe_diametroEspesor',  
-                                                 'informe_fuente',                                                
+                                                 'informe_interno_fuente',                                                
                                                  'informe_tecnica_grafico',
-                                                 'informe_equipo',    
+                                                 'informe_interno_equipo',    
                                                  'informe_procedimiento',    
                                                  'infome_tipo_pelicula',                                
                                                  'informe_ici',

@@ -12,7 +12,7 @@ use App\InformesPm;
 use App\Materiales;
 use App\DiametroView;
 use App\DiametrosEspesor;
-use App\Equipos;
+use App\InternoEquipos;
 use App\Tecnicas;
 use App\TipoPeliculas;
 use App\NormaEvaluaciones;
@@ -167,7 +167,7 @@ class InformesPmController extends Controller
         $informe_material = Materiales::find($informe->material_id);
         $informe_diametroEspesor = DiametrosEspesor::find($informe->diametro_espesor_id);
         $informe_diametro = DiametroView::where('diametro',$informe_diametroEspesor->diametro)->first();       
-        $informe_equipo = Equipos::find($informe->equipo_id);
+        $informe_interno_equipo = internoEquipos::where('id',$informe->interno_equipo_id)->with('equipo')->first();
         $documetacionesRepository = new DocumentacionesRepository;
         $informe_procedimiento = (new DocumentacionesController($documetacionesRepository))->ProcedimientoInformeId($informe->procedimiento_informe_id);    
         $informe_norma_evaluacion = NormaEvaluaciones::find($informe->norma_evaluacion_id);
@@ -183,11 +183,6 @@ class InformesPmController extends Controller
 
         $informe_detalle = $this->getDetalle($informe_pm->id);
 
-    
- // dd($informe_pm_desmagnetizacion_sn);
- // dd($informe_pm_tipo_magnetizacion);
-
-
         return view('informes.pm.edit', compact('ot',
                                                  'metodo',
                                                  'user',
@@ -197,7 +192,7 @@ class InformesPmController extends Controller
                                                  'informe_diametro',
                                                  'informe_diametroEspesor',                                                                            
                                                  'informe_tecnica_grafico',
-                                                 'informe_equipo',   
+                                                 'informe_interno_equipo',   
                                                  'informe_tecnica', 
                                                  'informe_procedimiento',                                              
                                                  'informe_norma_evaluacion',

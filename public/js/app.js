@@ -8054,6 +8054,82 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     otdata: {
       type: Object,
       required: true
+    },
+    informedata: {
+      type: Object,
+      required: false
+    },
+    informe_lpdata: {
+      type: Object,
+      required: false
+    },
+    materialdata: {
+      type: Object,
+      required: false
+    },
+    diametrodata: {
+      type: Object,
+      required: false
+    },
+    diametro_espesordata: {
+      type: Object,
+      required: false
+    },
+    interno_equipodata: {
+      type: [Object],
+      required: false
+    },
+    procedimientodata: {
+      type: [Object],
+      required: false
+    },
+    norma_evaluaciondata: {
+      type: [Object],
+      required: false
+    },
+    norma_ensayodata: {
+      type: [Object],
+      required: false
+    },
+    ejecutor_ensayodata: {
+      type: [Object],
+      required: false
+    },
+    metodo_trabajo_lpdata: {
+      type: [Object],
+      required: false
+    },
+    penetrante_tipo_liquido_data: {
+      type: [Object],
+      required: false
+    },
+    revelador_tipo_liquido_data: {
+      type: [Object],
+      required: false
+    },
+    removedor_tipo_liquido_data: {
+      type: [Object],
+      required: false
+    },
+    penetrante_aplicacion_data: {
+      type: [Object],
+      required: false
+    },
+    revelador_aplicacion_data: {
+      type: [Object],
+      required: false
+    },
+    removedor_aplicacion_data: {
+      type: [Object],
+      required: false
+    },
+    iluminacion_data: {
+      type: [Object],
+      required: false
+    },
+    detalledata: {
+      type: [Array],
+      required: false
     }
   },
   data: function data() {
@@ -8125,6 +8201,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.$store.dispatch('loadEjecutorEnsayo', this.otdata.id);
     this.getMetodosTrabajoLp();
     this.getAplicacionesLp();
+    this.setEdit();
   },
   mounted: function mounted() {
     this.getNumeroInforme();
@@ -8140,6 +8217,42 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   }),
   methods: {
+    setEdit: function setEdit() {
+      if (this.editmode) {
+        this.fecha = this.informedata.fecha;
+        this.numero_inf = this.informedata.numero;
+        this.componente = this.informedata.componente;
+        this.material = this.materialdata;
+        this.plano_isom = this.informedata.plano_isom;
+        this.diametro = this.diametrodata;
+        this.espesor = this.diametro_espesordata;
+        this.tecnica = this.tecnicadata;
+        this.interno_equipo = this.interno_equipodata;
+        this.procedimiento = this.procedimientodata;
+        this.norma_evaluacion = this.norma_evaluaciondata;
+        this.norma_ensayo = this.norma_ensayodata;
+        this.espesor_chapa = this.informedata.espesor_chapa;
+        this.procedimiento_soldadura = this.informedata.procedimiento_soldadura;
+        this.eps = this.informedata.eps;
+        this.pqr = this.informedata.pqr;
+        this.metodo_trabajo_lp = this.metodo_trabajo_lpdata;
+        this.ejecutor_ensayo = this.ejecutor_ensayodata;
+        this.observaciones = this.informedata.observaciones;
+        this.tipo_penetrante = this.informe_lpdata.tipo_penetrante;
+        this.penetrante_tipo_liquido = this.penetrante_tipo_liquido_data;
+        this.revelador_tipo_liquido = this.revelador_tipo_liquido_data;
+        this.removedor_tipo_liquido = this.removedor_tipo_liquido_data;
+        this.penetrante_aplicacion = this.penetrante_aplicacion_data;
+        this.tiempo_penetracion = this.informe_lpdata.tiempo_penetracion;
+        this.revelador_aplicacion = this.revelador_aplicacion_data;
+        this.removedor_aplicacion = this.removedor_aplicacion_data;
+        this.limpieza_previa = this.informe_lpdata.limpieza_previa;
+        this.limpieza_intermedia = this.informe_lpdata.limpieza_intermedia;
+        this.limpieza_final = this.informe_lpdata.limpieza_final;
+        this.iluminacion = this.iluminacion_data;
+        this.inputPiezasFalla = this.detalledata;
+      }
+    },
     getNumeroInforme: function getNumeroInforme() {
       var _this = this;
 
@@ -8302,7 +8415,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           'diametro': this.diametro.diametro,
           'espesor': this.espesor.espesor,
           'espesor_chapa': this.espesor_chapa,
-          'equipo': this.equipo,
+          'interno_equipo': this.interno_equipo,
           'procedimiento_soldadura': this.procedimiento_soldadura,
           'norma_evaluacion': this.norma_evaluacion,
           'norma_ensayo': this.norma_ensayo,
@@ -8691,6 +8804,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -8738,7 +8856,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       type: [Object],
       required: false
     },
-    equipodata: {
+    interno_equipodata: {
       type: [Object],
       required: false
     },
@@ -8807,7 +8925,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       eps: '',
       pqr: '',
       tecnica: '',
-      equipo: '',
+      interno_equipo: '',
       procedimiento: '',
       norma_ensayo: '',
       norma_evaluacion: '',
@@ -8847,7 +8965,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.$store.dispatch('loadMateriales');
     this.$store.dispatch('loadDiametros');
     this.getTecnicas();
-    this.getEquipos();
+    this.$store.dispatch('loadInternoEquiposActivos', this.metodo);
     this.$store.dispatch('loadProcedimietosOtMetodo', {
       'ot_id': this.otdata.id,
       'metodo': this.metodo
@@ -8865,7 +8983,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   mounted: function mounted() {
     this.getNumeroInforme();
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])(['url', 'AppUrl', 'materiales', 'diametros', 'espesores', 'procedimientos', 'norma_evaluaciones', 'norma_ensayos', 'iluminaciones', 'ejecutor_ensayos']), {
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])(['url', 'AppUrl', 'materiales', 'diametros', 'espesores', 'procedimientos', 'norma_evaluaciones', 'norma_ensayos', 'iluminaciones', 'ejecutor_ensayos', 'interno_equipos_activos']), {
     numero_inf_code: function numero_inf_code() {
       if (this.numero_inf) return this.metodo + (this.numero_inf < 10 ? '00' : this.numero_inf < 100 ? '0' : '') + this.numero_inf;
     }
@@ -8891,7 +9009,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.diametro = this.diametrodata;
         this.espesor = this.diametro_espesordata;
         this.tecnica = this.tecnicadata;
-        this.equipo = this.equipodata;
+        this.interno_equipo = this.interno_equipodata;
         this.procedimiento = this.procedimientodata;
         this.norma_evaluacion = this.norma_evaluaciondata;
         this.norma_ensayo = this.norma_ensayodata;
@@ -9068,7 +9186,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           'diametro': this.diametro.diametro,
           'espesor': this.espesor.espesor,
           'espesor_chapa': this.espesor_chapa,
-          'equipo': this.equipo,
+          'interno_equipo': this.interno_equipo,
           'procedimiento_soldadura': this.procedimiento_soldadura,
           'norma_evaluacion': this.norma_evaluacion,
           'norma_ensayo': this.norma_ensayo,
@@ -9131,7 +9249,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           'diametro': this.diametro.diametro,
           'espesor': this.espesor.espesor,
           'espesor_chapa': this.espesor_chapa,
-          'equipo': this.equipo,
+          'interno_equipo': this.interno_equipo,
           'procedimiento_soldadura': this.procedimiento_soldadura,
           'norma_evaluacion': this.norma_evaluacion,
           'norma_ensayo': this.norma_ensayo,
@@ -9744,6 +9862,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -9789,7 +9912,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       type: Object,
       required: false
     },
-    fuentedata: {
+    interno_fuentedata: {
       type: [Object, Array],
       required: false
     },
@@ -9797,7 +9920,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       type: [Object],
       required: false
     },
-    equipodata: {
+    interno_equipodata: {
       type: [Object],
       required: false
     },
@@ -9851,7 +9974,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       diametro: '',
       espesor: '',
       espesor_chapa: '',
-      equipo: '',
+      interno_equipo: '',
+      interno_fuente: '',
       fuente: '',
       foco: '',
       tipo_pelicula: '',
@@ -9871,8 +9995,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       actividad: '',
       ejecutor_ensayo: '',
       tecnicas_grafico: '',
-      kv: '',
-      ma: '',
       tecnica_distancia: '',
       // Fin Formulario encabezado
       // Formulario detalle
@@ -9921,8 +10043,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     });
     this.$store.dispatch('loadMateriales');
     this.$store.dispatch('loadDiametros');
-    this.getEquipos();
-    this.getFuentes();
+    this.$store.dispatch('loadInternoEquiposActivos', this.metodo); //  this.getFuentes();
+
     this.getTipoPeliculas();
     this.$store.dispatch('loadNormaEvaluaciones');
     this.$store.dispatch('loadNormaEnsayos');
@@ -9952,9 +10074,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     pasada: function pasada(val) {
       this.soldador2 = val == '1' ? this.soldador2 : '';
+    },
+    fuentePorInterno: function fuentePorInterno(val) {
+      this.fuente = val;
     }
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])(['url', 'AppUrl', 'materiales', 'diametros', 'espesores', 'procedimientos', 'norma_evaluaciones', 'norma_ensayos', 'ejecutor_ensayos']), {
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])(['url', 'AppUrl', 'materiales', 'diametros', 'espesores', 'procedimientos', 'norma_evaluaciones', 'norma_ensayos', 'ejecutor_ensayos', 'interno_equipos_activos', 'fuentePorInterno']), {
     HabilitarClonarPasadas: function HabilitarClonarPasadas() {
       this.EnableClonarPasadas = this.isGasoducto && this.pasada == '1' && this.TablaDetalle.length;
     },
@@ -9975,8 +10100,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.diametro = this.diametrodata;
         this.espesor = this.diametro_espesordata;
         this.tecnica = this.tecnicadata;
-        this.equipo = this.equipodata;
-        this.fuente = this.fuentedata ? this.fuentedata : '';
+        this.interno_equipo = this.interno_equipodata;
+        this.interno_fuente = this.interno_fuentedata;
+        this.fuente = this.interno_fuentedata.fuente;
         this.procedimiento = this.procedimientodata;
         this.ici = this.icidata;
         this.norma_evaluacion = this.norma_evaluaciondata;
@@ -10023,78 +10149,65 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.tecnica = '';
       this.$store.dispatch('loadEspesores', this.diametro.diametro_code);
     },
-    getEquipos: function getEquipos() {
-      var _this2 = this;
-
-      axios.defaults.baseURL = this.url;
-      var urlRegistros = 'equipos/metodo/' + this.metodo + '?api_token=' + Laravel.user.api_token;
-      axios.get(urlRegistros).then(function (response) {
-        _this2.equipos = response.data;
-      });
-    },
-    getFuentes: function getFuentes() {
-      var _this3 = this;
-
-      axios.defaults.baseURL = this.url;
-      var urlRegistros = 'fuentes' + '?api_token=' + Laravel.user.api_token;
-      axios.get(urlRegistros).then(function (response) {
-        _this3.fuentes = response.data;
-      });
+    getFuente: function getFuente(interno_fuente_id) {
+      console.log(interno_fuente_id);
+      this.interno_fuente = this.interno_equipo.interno_fuente;
+      this.$store.dispatch('loadFuentePorInterno', interno_fuente_id);
     },
     getTipoPeliculas: function getTipoPeliculas() {
-      var _this4 = this;
+      var _this2 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'tipo_peliculas' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this4.tipo_peliculas = response.data;
+        _this2.tipo_peliculas = response.data;
       });
     },
     getIcis: function getIcis() {
-      var _this5 = this;
+      var _this3 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'icis' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this5.icis = response.data;
+        _this3.icis = response.data;
       });
     },
     getTecnicas: function getTecnicas() {
-      var _this6 = this;
+      var _this4 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'tecnicas/metodo/' + this.metodo + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this6.tecnicas = response.data;
+        _this4.tecnicas = response.data;
       });
     },
     getTecnicasGraficos: function getTecnicasGraficos() {
-      var _this7 = this;
+      var _this5 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'tecnicas_graficos/' + this.tecnica.id + '?api_token=' + Laravel.user.api_token;
       console.log(urlRegistros);
       axios.get(urlRegistros).then(function (response) {
-        _this7.tecnicas_graficos = response.data;
+        _this5.tecnicas_graficos = response.data;
       });
     },
     ActualizarDistFuentePelicula: function ActualizarDistFuentePelicula() {
-      var _this8 = this;
+      var _this6 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'tecnica_distancias/' + this.tecnica.id + '/diametro/' + this.diametro.diametro_code + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this8.tecnica_distancia = response.data;
-        _this8.distancia_fuente_pelicula = _this8.tecnica_distancia[0].distancia_fuente_peliculas;
+        _this6.tecnica_distancia = response.data;
+        _this6.distancia_fuente_pelicula = _this6.tecnica_distancia[0].distancia_fuente_peliculas;
       });
     },
     getEjecutorEnsayo: function getEjecutorEnsayo() {
-      var _this9 = this;
+      var _this7 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'ot-operarios/ot/' + this.otdata.id + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this9.ejecutor_ensayos = response.data;
+        _this7.ejecutor_ensayos = response.data;
       });
     },
     resetInputsEquipos: function resetInputsEquipos() {
@@ -10111,40 +10224,40 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     //detalle
     getTipoSoldaduras: function getTipoSoldaduras() {
-      var _this10 = this;
+      var _this8 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'tipo_soldaduras' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this10.tipo_soldaduras = response.data;
-        _this10.isLoading = false;
+        _this8.tipo_soldaduras = response.data;
+        _this8.isLoading = false;
       });
     },
     getSoldadores: function getSoldadores() {
-      var _this11 = this;
+      var _this9 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'ot_soldadores/ot/' + this.otdata.id + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this11.soldadores = response.data;
+        _this9.soldadores = response.data;
       });
     },
     getDefectosRiPlanta: function getDefectosRiPlanta() {
-      var _this12 = this;
+      var _this10 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'defectos_ri/planta/' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this12.defectosRiPlanta = response.data;
+        _this10.defectosRiPlanta = response.data;
       });
     },
     getDefectosRiGasoducto: function getDefectosRiGasoducto() {
-      var _this13 = this;
+      var _this11 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'defectos_ri/gasoducto/' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this13.defectosRiGasoducto = response.data;
+        _this11.defectosRiGasoducto = response.data;
       });
     },
     selectPosDetalle: function selectPosDetalle(index) {
@@ -10275,7 +10388,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }.bind(this));
     },
     Store: function Store() {
-      var _this14 = this;
+      var _this12 = this;
 
       this.validarPasadas();
 
@@ -10304,10 +10417,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             'diametro': this.diametro.diametro,
             'espesor': this.espesor.espesor,
             'espesor_chapa': this.espesor_chapa,
-            'equipo': this.equipo,
-            'kv': this.kv,
-            'ma': this.ma,
-            'fuente': this.fuente ? this.fuente : null,
+            'interno_equipo': this.interno_equipo,
+            'interno_fuente': this.interno_fuente,
             'foco': this.foco,
             'tipo_pelicula': this.tipo_pelicula,
             'pantalla': this.pantalla,
@@ -10328,18 +10439,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             'detalles': this.TablaDetalle
           }
         }).then(function (response) {
-          _this14.response = response.data;
-          toastr.success('informe N°' + _this14.numero_inf + ' fue creado con éxito ');
+          _this12.response = response.data;
+          toastr.success('informe N°' + _this12.numero_inf + ' fue creado con éxito ');
           console.log(response);
         })["catch"](function (error) {
-          _this14.errors = error.response.data.errors;
+          _this12.errors = error.response.data.errors;
           console.log(error.response);
-          $.each(_this14.errors, function (key, value) {
+          $.each(_this12.errors, function (key, value) {
             toastr.error(value);
             console.log(key + ": " + value);
           });
 
-          if (typeof _this14.errors == 'undefined' && error) {
+          if (typeof _this12.errors == 'undefined' && error) {
             toastr.error("Ocurrió un error al procesar la solicitud");
           }
         });
@@ -10349,7 +10460,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     Update: function Update() {
-      var _this15 = this;
+      var _this13 = this;
 
       this.validarPasadas();
 
@@ -10379,10 +10490,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             'diametro': this.diametro.diametro,
             'espesor': this.espesor.espesor,
             'espesor_chapa': this.espesor_chapa,
-            'equipo': this.equipo,
-            'kv': this.kv,
-            'ma': this.ma,
-            'fuente': this.fuente ? this.fuente : null,
+            'interno_equipo': this.interno_equipo,
+            'interno_fuente': this.interno_fuente,
             'foco': this.foco,
             'tipo_pelicula': this.tipo_pelicula,
             'pantalla': this.pantalla,
@@ -10403,18 +10512,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             'detalles': this.TablaDetalle
           }
         }).then(function (response) {
-          _this15.response = response.data;
-          toastr.success('informe N°' + _this15.numero_inf + ' fue actualizado con éxito ');
+          _this13.response = response.data;
+          toastr.success('informe N°' + _this13.numero_inf + ' fue actualizado con éxito ');
           console.log(response);
         })["catch"](function (error) {
-          _this15.errors = error.response.data.errors;
+          _this13.errors = error.response.data.errors;
           console.log(error.response);
-          $.each(_this15.errors, function (key, value) {
+          $.each(_this13.errors, function (key, value) {
             toastr.error(value);
             console.log(key + ": " + value);
           });
 
-          if (typeof _this15.errors == 'undefined' && error) {
+          if (typeof _this13.errors == 'undefined' && error) {
             toastr.error("Ocurrió un error al procesar la solicitud");
           }
         });
@@ -59017,18 +59126,46 @@ var render = function() {
                     "div",
                     { staticClass: "form-group" },
                     [
-                      _c("label", { attrs: { for: "equipos" } }, [
-                        _vm._v("Equipo (*)")
-                      ]),
+                      _c("label", [_vm._v("Equipo (*)")]),
                       _vm._v(" "),
                       _c("v-select", {
-                        attrs: { label: "codigo", options: _vm.equipos },
+                        attrs: {
+                          options: _vm.interno_equipos_activos,
+                          label: "nro_serie"
+                        },
+                        on: {
+                          input: function($event) {
+                            return _vm.getFuente(
+                              _vm.interno_equipo.interno_fuente_id
+                            )
+                          }
+                        },
+                        scopedSlots: _vm._u([
+                          {
+                            key: "option",
+                            fn: function(option) {
+                              return [
+                                _c("span", { staticClass: "upSelect" }, [
+                                  _vm._v(_vm._s(option.nro_serie))
+                                ]),
+                                _vm._v(" "),
+                                _c("br"),
+                                _vm._v(" "),
+                                _c("span", { staticClass: "downSelect" }, [
+                                  _vm._v(
+                                    " " + _vm._s(option.equipo.codigo) + " "
+                                  )
+                                ])
+                              ]
+                            }
+                          }
+                        ]),
                         model: {
-                          value: _vm.equipo,
+                          value: _vm.interno_equipo,
                           callback: function($$v) {
-                            _vm.equipo = $$v
+                            _vm.interno_equipo = $$v
                           },
-                          expression: "equipo"
+                          expression: "interno_equipo"
                         }
                       })
                     ],
@@ -60361,28 +60498,51 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticClass: "clearfix" }),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-md-2" }, [
+                _c("div", { staticClass: "col-md-3" }, [
                   _c(
                     "div",
                     { staticClass: "form-group" },
                     [
-                      _c("label", { attrs: { for: "equipos" } }, [
-                        _vm._v("Equipo (*)")
-                      ]),
+                      _c("label", [_vm._v("Equipo (*)")]),
                       _vm._v(" "),
                       _c("v-select", {
-                        attrs: { label: "codigo", options: _vm.equipos },
+                        attrs: {
+                          options: _vm.interno_equipos_activos,
+                          label: "nro_serie"
+                        },
                         on: {
                           input: function($event) {
-                            return _vm.resetInputsEquipos()
+                            return _vm.getFuente(
+                              _vm.interno_equipo.interno_fuente_id
+                            )
                           }
                         },
+                        scopedSlots: _vm._u([
+                          {
+                            key: "option",
+                            fn: function(option) {
+                              return [
+                                _c("span", { staticClass: "upSelect" }, [
+                                  _vm._v(_vm._s(option.nro_serie))
+                                ]),
+                                _vm._v(" "),
+                                _c("br"),
+                                _vm._v(" "),
+                                _c("span", { staticClass: "downSelect" }, [
+                                  _vm._v(
+                                    " " + _vm._s(option.equipo.codigo) + " "
+                                  )
+                                ])
+                              ]
+                            }
+                          }
+                        ]),
                         model: {
-                          value: _vm.equipo,
+                          value: _vm.interno_equipo,
                           callback: function($$v) {
-                            _vm.equipo = $$v
+                            _vm.interno_equipo = $$v
                           },
-                          expression: "equipo"
+                          expression: "interno_equipo"
                         }
                       })
                     ],
@@ -60399,19 +60559,23 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.kv,
-                          expression: "kv"
+                          value: _vm.interno_equipo.voltaje,
+                          expression: "interno_equipo.voltaje"
                         }
                       ],
                       staticClass: "form-control",
-                      attrs: { type: "number", disabled: !_vm.isRX, id: "kv" },
-                      domProps: { value: _vm.kv },
+                      attrs: { type: "text", disabled: "", id: "kv" },
+                      domProps: { value: _vm.interno_equipo.voltaje },
                       on: {
                         input: function($event) {
                           if ($event.target.composing) {
                             return
                           }
-                          _vm.kv = $event.target.value
+                          _vm.$set(
+                            _vm.interno_equipo,
+                            "voltaje",
+                            $event.target.value
+                          )
                         }
                       }
                     })
@@ -60427,19 +60591,23 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.ma,
-                          expression: "ma"
+                          value: _vm.interno_equipo.amperaje,
+                          expression: "interno_equipo.amperaje"
                         }
                       ],
                       staticClass: "form-control",
-                      attrs: { type: "number", disabled: !_vm.isRX, id: "ma" },
-                      domProps: { value: _vm.ma },
+                      attrs: { type: "text", disabled: "", id: "ma" },
+                      domProps: { value: _vm.interno_equipo.amperaje },
                       on: {
                         input: function($event) {
                           if ($event.target.composing) {
                             return
                           }
-                          _vm.ma = $event.target.value
+                          _vm.$set(
+                            _vm.interno_equipo,
+                            "amperaje",
+                            $event.target.value
+                          )
                         }
                       }
                     })
@@ -60447,31 +60615,33 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-2" }, [
-                  _c(
-                    "div",
-                    { staticClass: "form-group" },
-                    [
-                      _c("label", { attrs: { for: "fuente" } }, [
-                        _vm._v("Fuente")
-                      ]),
-                      _vm._v(" "),
-                      _c("v-select", {
-                        attrs: {
-                          label: "codigo",
-                          options: _vm.fuentes,
-                          disabled: _vm.isRX
-                        },
-                        model: {
-                          value: _vm.fuente,
-                          callback: function($$v) {
-                            _vm.fuente = $$v
-                          },
-                          expression: "fuente"
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { attrs: { for: "fuente" } }, [
+                      _vm._v("Fuente")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.fuente.codigo,
+                          expression: "fuente.codigo"
                         }
-                      })
-                    ],
-                    1
-                  )
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "text", id: "fuente", disabled: "" },
+                      domProps: { value: _vm.fuente.codigo },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.fuente, "codigo", $event.target.value)
+                        }
+                      }
+                    })
+                  ])
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-1 size-1-5" }, [

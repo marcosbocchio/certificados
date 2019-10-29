@@ -95,11 +95,16 @@
                          </div>                   
 
                          <div class="col-md-3">
-                            <div class="form-group" >
-                                <label for="equipos">Equipo (*)</label>
-                                <v-select v-model="equipo" label="codigo" :options="equipos" ></v-select>  
-                            </div>                            
-                        </div>                
+                            <div class="form-group">
+                                <label>Equipo (*)</label>
+                                    <v-select  v-model="interno_equipo" :options="interno_equipos_activos" label="nro_serie" @input="getFuente(interno_equipo.interno_fuente_id)">
+                                        <template slot="option" slot-scope="option">
+                                            <span class="upSelect">{{ option.nro_serie }}</span> <br> 
+                                            <span class="downSelect"> {{ option.equipo.codigo }} </span>
+                                        </template>
+                                    </v-select>
+                            </div>
+                         </div>                
 
                         <div class="col-md-3">                       
                             <div class="form-group">
@@ -356,7 +361,7 @@ export default {
         required : true
     },
 
-    informedata : {
+     informedata : {
       type : Object,
       required : false
       },
@@ -387,7 +392,7 @@ export default {
       required : false
       },
 
-      equipodata : {
+      interno_equipodata : {
       type : [ Object ],  
       required : false
       },
@@ -469,7 +474,7 @@ export default {
         eps:'',
         pqr:'',
         tecnica:'',
-        equipo:'',       
+        interno_equipo:'',       
         procedimiento:'',
         norma_ensayo:'',
         norma_evaluacion:'',
@@ -515,7 +520,7 @@ export default {
       this.$store.dispatch('loadMateriales');
       this.$store.dispatch('loadDiametros');
       this.getTecnicas();
-      this.getEquipos();
+      this.$store.dispatch('loadInternoEquiposActivos',this.metodo);       
       this.$store.dispatch('loadProcedimietosOtMetodo',  { 'ot_id' : this.otdata.id, 'metodo' : this.metodo });
       this.$store.dispatch('loadNormaEvaluaciones');        
       this.$store.dispatch('loadNormaEnsayos');
@@ -535,7 +540,7 @@ export default {
 
     computed :{
 
-        ...mapState(['url','AppUrl','materiales','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','iluminaciones','ejecutor_ensayos']),     
+        ...mapState(['url','AppUrl','materiales','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','iluminaciones','ejecutor_ensayos','interno_equipos_activos']),     
 
         numero_inf_code : function()  {
 
@@ -580,7 +585,7 @@ export default {
                this.diametro = this.diametrodata;
                this.espesor = this.diametro_espesordata;
                this.tecnica = this.tecnicadata;
-               this.equipo = this.equipodata;           
+               this.interno_equipo = this.interno_equipodata;           
                this.procedimiento = this.procedimientodata;            
                this.norma_evaluacion = this.norma_evaluaciondata;
                this.norma_ensayo = this.norma_ensayodata;            
@@ -590,12 +595,12 @@ export default {
                this.pqr = this.informedata.pqr;           
                this.metodo_trabajo_pm = this.metodo_trabajo_pmdata;               
 
-            this.$nextTick(function(){
-                
-               this.vehiculo = this.informe_pmdata.vehiculo;    
-               this.aditivo = this.informe_pmdata.aditivo;
+                this.$nextTick(function(){
+                    
+                this.vehiculo = this.informe_pmdata.vehiculo;    
+                this.aditivo = this.informe_pmdata.aditivo;
 
-            })           
+                })           
 
 
                this.concentracion  = this.informe_pmdata.concentracion;
@@ -801,7 +806,7 @@ export default {
                 'diametro':       this.diametro.diametro,
                 'espesor':        this.espesor.espesor,
                 'espesor_chapa' :  this.espesor_chapa, 
-                'equipo'        :  this.equipo,               
+                'interno_equipo'        :  this.interno_equipo,               
                 'procedimiento_soldadura': this.procedimiento_soldadura,
                 'norma_evaluacion': this.norma_evaluacion,           
                 'norma_ensayo'      : this.norma_ensayo,
@@ -876,7 +881,7 @@ export default {
                 'diametro':       this.diametro.diametro,
                 'espesor':        this.espesor.espesor,
                 'espesor_chapa' :  this.espesor_chapa, 
-                'equipo'        :  this.equipo,          
+                'interno_equipo'        :  this.interno_equipo,          
                 'procedimiento_soldadura': this.procedimiento_soldadura,
                 'norma_evaluacion': this.norma_evaluacion,           
                 'norma_ensayo'      : this.norma_ensayo,

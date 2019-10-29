@@ -127,30 +127,35 @@
 
                         <div class="clearfix"></div>
 
-                        <div class="col-md-2">
-                            <div class="form-group" >
-                                <label for="equipos">Equipo (*)</label>
-                                <v-select v-model="equipo" label="codigo" :options="equipos" @input="resetInputsEquipos()"></v-select>  
-                            </div>                            
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Equipo (*)</label>
+                                    <v-select  v-model="interno_equipo" :options="interno_equipos_activos" label="nro_serie" @input="getFuente(interno_equipo.interno_fuente_id)">
+                                        <template slot="option" slot-scope="option">
+                                            <span class="upSelect">{{ option.nro_serie }}</span> <br> 
+                                            <span class="downSelect"> {{ option.equipo.codigo }} </span>
+                                        </template>
+                                    </v-select>
+                            </div>
                         </div>
                        
                         <div class="col-md-1">
                             <div class="form-group" >                   
                                 <label for="kv">Kv</label>
-                                <input  type="number" class="form-control" v-model="kv" :disabled="!isRX"  id="kv">     
+                                <input  type="text" class="form-control" v-model="interno_equipo.voltaje" disabled  id="kv">     
                             </div>                         
                         </div>
                         <div class="col-md-1">
                             <div class="form-group" >                        
                                 <label for="ma">mA</label>
-                                <input  type="number" class="form-control" v-model="ma"  :disabled="!isRX" id="ma"> 
+                                <input  type="text" class="form-control" v-model="interno_equipo.amperaje"  disabled id="ma"> 
                             </div>                             
                         </div>                       
                       
                         <div class="col-md-2">
                             <div class="form-group" >
                                 <label for="fuente">Fuente</label>
-                                <v-select v-model="fuente" label="codigo" :options="fuentes" :disabled="isRX"></v-select>   
+                                 <input type="text" v-model="fuente.codigo" class="form-control" id="fuente" disabled>
                             </div>                            
                         </div>
 
@@ -605,7 +610,7 @@ export default {
       required : false
       },
 
-      fuentedata : {
+      interno_fuentedata : {
       type : [ Object, Array ],  
       required : false
       },
@@ -615,7 +620,7 @@ export default {
       required : false
       },
 
-      equipodata : {
+      interno_equipodata : {
       type : [ Object ],  
       required : false
       },
@@ -681,8 +686,9 @@ export default {
             diametro:'',
             espesor:'',
             espesor_chapa:'', 
-            equipo:'',
-            fuente:'',
+            interno_equipo:'',   
+            interno_fuente:'',   
+            fuente:'',       
             foco:'',
             tipo_pelicula:'',
             pantalla:'Pb',
@@ -700,9 +706,7 @@ export default {
             exposicion:'',      
             actividad:'',          
             ejecutor_ensayo:'',
-            tecnicas_grafico :'',
-            kv:'',
-            ma:'', 
+            tecnicas_grafico :'',          
             tecnica_distancia:'',
            
            // Fin Formulario encabezado
@@ -761,8 +765,8 @@ export default {
         this.$store.dispatch('loadProcedimietosOtMetodo',  { 'ot_id' : this.otdata.id, 'metodo' : this.metodo });
         this.$store.dispatch('loadMateriales');
         this.$store.dispatch('loadDiametros');
-        this.getEquipos();
-        this.getFuentes();
+        this.$store.dispatch('loadInternoEquiposActivos',this.metodo);
+      //  this.getFuentes();
         this.getTipoPeliculas();
         this.$store.dispatch('loadNormaEvaluaciones');        
         this.$store.dispatch('loadNormaEnsayos');       
@@ -806,12 +810,18 @@ export default {
         pasada : function (val){
 
             this.soldador2 =  (val == '1') ? this.soldador2 : '';
-        },
+        },      
+
+        fuentePorInterno: function(val){
+
+            this.fuente = val;
+        }
+       
     },
 
     computed :{
 
-        ...mapState(['url','AppUrl','materiales','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','ejecutor_ensayos']),
+        ...mapState(['url','AppUrl','materiales','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','ejecutor_ensayos','interno_equipos_activos','fuentePorInterno']),
 
            HabilitarClonarPasadas(){
                 this.EnableClonarPasadas = (this.isGasoducto && this.pasada=='1' && this.TablaDetalle.length);
@@ -842,8 +852,9 @@ export default {
                this.diametro = this.diametrodata;
                this.espesor = this.diametro_espesordata;
                this.tecnica = this.tecnicadata;
-               this.equipo = this.equipodata;
-               this.fuente = this.fuentedata ? this.fuentedata :'';
+               this.interno_equipo = this.interno_equipodata;
+               this.interno_fuente = this.interno_fuentedata ;  
+               this.fuente = this.interno_fuentedata.fuente ;                    
                this.procedimiento = this.procedimientodata;
                this.ici = this.icidata;
                this.norma_evaluacion = this.norma_evaluaciondata;
@@ -901,26 +912,15 @@ export default {
             this.tecnica ='';      
             this.$store.dispatch('loadEspesores',this.diametro.diametro_code);
         },
+        
 
-        getEquipos : function(){
-           
-            axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'equipos/metodo/' + this.metodo + '?api_token=' + Laravel.user.api_token;         
-                axios.get(urlRegistros).then(response =>{
-                this.equipos = response.data               
-                });
+        getFuente : function(interno_fuente_id){
+            
+            console.log(interno_fuente_id);
+            this.interno_fuente = this.interno_equipo.interno_fuente;
+            this.$store.dispatch('loadFuentePorInterno',interno_fuente_id);
 
-        },
-
-        getFuentes : function(){
-          
-            axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'fuentes' + '?api_token=' + Laravel.user.api_token;         
-                axios.get(urlRegistros).then(response =>{
-                this.fuentes = response.data
-                });
-
-        },
+        },    
 
         getTipoPeliculas : function(){
 
@@ -929,8 +929,7 @@ export default {
                 axios.get(urlRegistros).then(response =>{
                 this.tipo_peliculas = response.data
                
-                });
-         
+                });         
         },       
 
         getIcis: function(){
@@ -1270,10 +1269,8 @@ export default {
                         'diametro':       this.diametro.diametro,
                         'espesor':        this.espesor.espesor,
                         'espesor_chapa' :  this.espesor_chapa, 
-                        'equipo'        :  this.equipo,
-                        'kv'            : this.kv,
-                        'ma'            : this.ma,
-                        'fuente'       :  this.fuente ? this.fuente : null,
+                        'interno_equipo'   :  this.interno_equipo,  
+                        'interno_fuente' :this.interno_fuente,                           
                         'foco':           this.foco,
                         'tipo_pelicula' : this.tipo_pelicula,
                         'pantalla':       this.pantalla,
@@ -1356,12 +1353,10 @@ export default {
                         'material':       this.material,
                         'diametro':       this.diametro.diametro,
                         'espesor':        this.espesor.espesor,
-                        'espesor_chapa' :  this.espesor_chapa, 
-                        'equipo'        :  this.equipo,
-                        'kv'            : this.kv,
-                        'ma'            : this.ma,
-                        'fuente'       :  this.fuente ? this.fuente : null,
-                        'foco':           this.foco,
+                        'espesor_chapa'    :this.espesor_chapa, 
+                        'interno_equipo'   :this.interno_equipo,    
+                        'interno_fuente' :this.interno_fuente,            
+                        'foco'              :this.foco,
                         'tipo_pelicula' : this.tipo_pelicula,
                         'pantalla':       this.pantalla,
                         'pos_ant':        this.pos_ant,

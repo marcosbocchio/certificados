@@ -21,6 +21,7 @@ class FuentesController extends Controller
 
         return Fuentes::join('interno_fuentes','interno_fuentes.fuente_id','fuentes.id')
                         ->where('interno_fuentes.id',$interno_fuente_id)
+                        ->select('fuentes.*')
                         ->first();
 
     }

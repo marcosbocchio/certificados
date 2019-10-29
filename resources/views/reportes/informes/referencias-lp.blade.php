@@ -41,11 +41,11 @@ td {
                                     <td rowspan="4" style="text-align: right; width:233px">
                                         <img src="{{ public_path('img/logo-enod-web.jpg')}}" alt="" style="height: 60px; margin-right: 25px;">
                                     </td>   
-                                    <td style="font-size: 18px; height: 30px; text-align: center;width:234px" rowspan="3"><b>INFORME RADIOGRAFÍA INDUSTRIAL</b></td>
+                                    <td style="font-size: 18px; height: 30px; text-align: center;width:234px" rowspan="3"><b>INFORME LÍQUIDOS PENETRANTES</b></td>
                                     <td style="font-size: 12px;"><b style="margin-left: 40px"></b></td>                         
                                 </tr>
                                 <tr>
-                                    <td style="font-size: 12px;" ><b style="margin-left: 120px" >INFORME N°: </b>{{FormatearNumeroInforme($informe->numero,'RI')}}</td>                      
+                                    <td style="font-size: 12px;" ><b style="margin-left: 120px" >INFORME N°: </b>{{FormatearNumeroInforme($informe->numero,'LP')}}</td>                      
                                 </tr>
                                 <tr>
                                     <td style="font-size: 12px;"><b style="margin-left: 120px">FECHA: </b>{{ date('d-m-Y', strtotime($ot->fecha_hora)) }}</td>
@@ -78,7 +78,7 @@ td {
                         <table>
                             <tbody>
                                 <tr>
-                                    <td style="font-size: 13px;" > <b>PIEZA: </b>  {{$detalle_pm->pieza}} &nbsp;&nbsp; <b>N°: </b>{{$detalle_pm->numero}}</td>  
+                                    <td style="font-size: 13px;" > <b>PIEZA: </b>  {{$detalle_lp->pieza}} &nbsp;&nbsp; <b>N°: </b>{{$detalle_lp->numero}}</td>  
                                 </tr>
                             </tbody>
                         </table>
@@ -90,7 +90,7 @@ td {
                             <tbody>
                                 <tr>
                                     <td style="font-size: 15px;">
-                                        <p><strong>Observaciones: </strong>{{$detalle_pm_referencia->descripcion}}</p> 
+                                        <p><strong>Observaciones: </strong>{{$detalle_lp_referencia->descripcion}}</p> 
                                     </td>
                                 </tr>
                             </tbody>
@@ -103,26 +103,26 @@ td {
                             <tbody>
                                 <tr>
                                     <td style="text-align: center; width: 360px;height: 300px">
-                                          @if ($detalle_pm_referencia->path1!='/img/imagen1.jpg')
-                                              <img src="{{ public_path($detalle_pm_referencia->path1) }}" alt="" style="height: 174; width: 255;">
+                                          @if ($detalle_lp_referencia->path1!='/img/imagen1.jpg')
+                                              <img src="{{ public_path($detalle_lp_referencia->path1) }}" alt="" style="height: 174; width: 255;">
                                           @endif  
                                           
                                     </td>
                                     <td style="text-align: center; width: 360px;height: 300px">
-                                     @if ($detalle_pm_referencia->path2!='/img/imagen2.jpg')
-                                            <img src="{{  public_path($detalle_pm_referencia->path2) }}" alt="" style="height: 174; width: 255;">
+                                     @if ($detalle_lp_referencia->path2!='/img/imagen2.jpg')
+                                            <img src="{{  public_path($detalle_lp_referencia->path2) }}" alt="" style="height: 174; width: 255;">
                                      @endif  
                                     </td>
                                 </tr>
                                 <tr>
                                     <td style="text-align: center; width: 360px;height: 300px">
-                                     @if ($detalle_pm_referencia->path3!='/img/imagen3.jpg')
-                                            <img src="{{  public_path($detalle_pm_referencia->path3) }}" alt="" style="height: 174; width: 255;">
+                                     @if ($detalle_lp_referencia->path3!='/img/imagen3.jpg')
+                                            <img src="{{  public_path($detalle_lp_referencia->path3) }}" alt="" style="height: 174; width: 255;">
                                     @endif  
                                     </td>
                                     <td style="text-align: center; width: 360px;height: 300px">
-                                     @if ($detalle_pm_referencia->path4!='/img/imagen4.jpg')
-                                            <img src="{{  public_path($detalle_pm_referencia->path4) }}" alt="" style="height: 174; width: 255;">
+                                     @if ($detalle_lp_referencia->path4!='/img/imagen4.jpg')
+                                            <img src="{{  public_path($detalle_lp_referencia->path4) }}" alt="" style="height: 174; width: 255;">
                                     @endif  
                                     </td>
                                 </tr>

@@ -68,7 +68,7 @@ class InformeRiRequest extends FormRequest
                 'eps'                       => 'Max:30',
                 'pqr'                       => 'Max:30',
                 'foco'                      => 'required',
-                'equipo'                    => 'required',
+                'interno_equipo'            => 'required',
                 'tipo_pelicula'             => 'required',
                 'procedimiento'             => 'required',
                 'pos_ant'                   => 'required|numeric|between:0,999.99',

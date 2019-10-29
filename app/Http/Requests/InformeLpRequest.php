@@ -13,7 +13,7 @@ class InformeLpRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,52 @@ class InformeLpRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+
+            'fecha'                     => 'required',
+            'componente'                => 'required|Max:20',
+            'material'                  => 'required',
+            'plano_isom'                => 'required|Max:10',
+            'diametro'                  => 'required',
+            'procedimiento_soldadura'   => 'required|Max:20', 
+            'eps'                       => 'Max:30',
+            'pqr'                       => 'Max:30',
+            'procedimiento'             => 'required',         
+            'norma_evaluacion'          => 'required',
+            'norma_ensayo'              => 'required',  
+            'metodo_trabajo_lp'         => 'required',
+            'penetrante_tipo_liquido'   => 'required',
+            'tiempo_penetracion'        => 'required|integer| digits_between:1,3',
+            'revelador_tipo_liquido'    => 'required',
+            'removedor_tipo_liquido'    => 'required',
+            'penetrante_aplicacion'     => 'required',
+            'revelador_aplicacion'      => 'required',
+            'removedor_aplicacion'      => 'required',
+            'limpieza_previa'           => 'Max:20',
+            'limpieza_intermedia'       => 'Max:20',
+            'limpieza_final'            => 'Max:20',
+            'iluminacion'               => 'required', 
+            'ejecutor_ensayo'           => 'required',
+            'observaciones'             => 'Max:250',  
+            'detalles.*.detalle'        => 'required|Max:250',         
+            'detalles.*.pieza'          => 'required|Max:10',
+            'detalles.*.numero'         => 'required|integer',
+
         ];
+    }
+
+    public function attributes()
+    {
+        return [
+
+            'norma_evaluacion'            => 'norma evaluación',
+            'norma_ensayo'                => 'norma ensayo',
+            'ejecutor_ensayo'             => 'ejecutor ensayo',  
+            'procedimiento_soldadura'     => 'procedimiento soldadura', 
+            'tipo_magnetizacion'          => 'tipo magnetización',
+            'detalles.*.detalle'          => 'detalle',
+            'detalles.*.pieza'            => 'pieza',
+            'detalles.*.numero'           => 'número', 
+           
+            ];
     }
 }

@@ -20,6 +20,8 @@ use App\Documentaciones;
 use App\Fuentes;
 use App\DiametrosEspesor;
 use App\MetodosTrabajoLp;
+use App\TipoLiquidos;
+use App\AplicacionesLp;
 use App\User;
 
 
@@ -36,20 +38,23 @@ class PdfInformesLpController extends Controller
          $material = Materiales::findOrFail($informe->material_id);   
          $norma_ensayo = NormaEnsayos::findOrFail($informe->norma_ensayo_id);   
          $norma_evaluacion = NormaEvaluaciones::findOrFail($informe->norma_evaluacion_id); 
-         $ot_procedimiento_propio = OtProcedimientosPropios::findOrFail($informe->procedimiento_informe_id);
-         $procedimiento_inf = Documentaciones::findOrFail($ot_procedimiento_propio->documentacion_id);    
-         // $fuente = Fuentes::find($informe_lp->fuente_id);
          $diametro_espesor = DiametrosEspesor::findOrFail($informe->diametro_espesor_id);       
+         $ot_procedimiento_propio = OtProcedimientosPropios::findOrFail($informe->procedimiento_informe_id);
+         $procedimiento_inf = Documentaciones::findOrFail($ot_procedimiento_propio->documentacion_id); 
+         $metodo = MetodosTrabajoLp::findOrFail($informe_lp->metodo_trabajo_lp_id);        
          $equipo = InternoEquipos::findOrFail($informe->interno_equipo_id)->with('equipo')->first(); 
          
-         $ot_operador = OtOperarios::findOrFail($informe->ejecutor_ensayo_id);
-         $metodo = MetodosTrabajoLp::findOrFail($informe_lp->metodo_trabajo_lp_id);
-         $ejecutor_ensayo = User::findOrFail($ot_operador->user_id);
-         
-         $iluminacion = Iluminaciones::findOrFail($informe_lp->iluminacion_id);
-        
-         
-       // dd($desmagnetizacion_sn);
+         $ot_operador = OtOperarios::findOrFail($informe->ejecutor_ensayo_id);         
+         $penetrante = TipoLiquidos::findOrFail($informe_lp->penetrante_tipo_liquido_id);
+         $penetrante_aplicacion = AplicacionesLp::findOrFail($informe_lp->penetrante_aplicacion_lp_id);         
+         $revelador = TipoLiquidos::findOrFail($informe_lp->revelador_tipo_liquido_id);
+         $revelador_aplicacion = AplicacionesLp::findOrFail($informe_lp->revelador_aplicacion_lp_id);
+         $removedor = TipoLiquidos::findOrFail($informe_lp->removedor_tipo_liquido_id);
+         $removedor_aplicacion = AplicacionesLp::findOrFail($informe_lp->removedor_aplicacion_lp_id);
+         $ejecutor_ensayo = User::findOrFail($ot_operador->user_id);         
+         $iluminacion = Iluminaciones::findOrFail($informe_lp->iluminacion_id);        
+         $evaluador = User::find($informe->firma);
+
          $detalles =  DB::select('SELECT 
                                 detalles_lp.pieza as pieza,
                                 detalles_lp.numero as numero,
@@ -74,13 +79,21 @@ class PdfInformesLpController extends Controller
                                                                 'diametro_espesor',
                                                                 'ici',                                                                
                                                                 'equipo',
+                                                                'metodo',
                                                                 'ejecutor_ensayo',
                                                                 'cliente',
                                                                 'informe',
                                                                 'informe_lp',
                                                                 'material',                                                            
-                                                                'metodo',                                                           
+                                                                'metodo',   
+                                                                'penetrante',   
+                                                                'penetrante_aplicacion',
+                                                                'revelador',
+                                                                'revelador_aplicacion',
+                                                                'removedor', 
+                                                                'removedor_aplicacion',                                                    
                                                                 'iluminacion',
+                                                                'evaluador',
                                                                 'detalles'
                                                                 ))->setPaper('a4','portrait')->setWarnings(false);
                                                         

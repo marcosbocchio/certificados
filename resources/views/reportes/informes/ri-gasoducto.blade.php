@@ -109,7 +109,7 @@ b {
                         <tbody>                 
                         <tr>
                             <td style="font-size: 12px; width: 280px;border-right: 1px solid #000;" colspan="2"><b>Componente: </b>{{$informe->componente}}</td>
-                            <td style="font-size: 12px; width: 280px;border-right: 1px solid #000;" colspan="2" ><b>Equipo: </b>{{$equipo->codigo}}</td>
+                            <td style="font-size: 12px; width: 280px;border-right: 1px solid #000;" colspan="2" ><b>Equipo: </b>{{$interno_equipo->equipo->codigo}}</td>
                             <td style="font-size: 12px; width: 140px;" colspan="2" ><b>Ici : </b>{{$ici->codigo}}</td>    
                             <td style="font-size: 12px; width: 140px;border-right: 1px solid #000;" ><b>Lado: </b>{{$informe_ri->lado}}</td> 
                             <td style="font-size: 12px;"><b>Tecnica: </b>{{$tecnica->codigo}}</td>                                          
@@ -117,8 +117,8 @@ b {
                         <tr>                      
                             <td style="font-size: 12px; width: 140px;"><b>Material: </b>{{$material->codigo}}</td>
                             <td style="font-size: 12px; width: 140px;border-right: 1px solid #000;"  ><b>Plano / Isom :</b>{{$informe->plano_isom}}</td>
-                            <td style="font-size: 12px; width: 140px;"><b>Kv: </b>{{$informe->kv}}</td>
-                            <td style="font-size: 12px; width: 140px;border-right: 1px solid #000;" ><b>mA: </b>{{$informe->ma}}</td>
+                            <td style="font-size: 12px; width: 140px;"><b>Kv: </b>{{$interno_equipo->voltaje}}</td>
+                            <td style="font-size: 12px; width: 140px;border-right: 1px solid #000;" ><b>mA: </b>{{$interno_equipo->amperaje}}</td>
                             <td style="font-size: 12px; width: 85px"><b>Pantalla: </b>Pb</td>
                             <td style="font-size: 12px; width: 40px"><b>Ant: </b>{{$informe_ri->pos_ant}}</td>
                             <td style="font-size: 12px; width: 40px;border-right: 1px solid #000;"  ><b>Pos: </b>{{$informe_ri->pos_pos}}</td>
@@ -159,12 +159,12 @@ b {
                             <td style="font-size: 12px;border-right: 1px solid #000; " colspan="2"><b>Norma Ensayo: </b>{{$norma_ensayo->descripcion}}</td>
                             <td style="font-size: 12px;"><b>Pelicula : </b>{{$tipo_pelicula->fabricante}}</td>   
                             <td style="font-size: 12px;border-right: 1px solid #000;"><b>Tipo: </b>{{$tipo_pelicula->codigo}}</td>    
-                            <td style="font-size: 12px;border-right: 1px solid #000;" colspan="3" ><b>Eps: </b>{{$informe->eps}}</td>                    
+                            <td style="font-size: 12px;border-right: 1px solid #000;" colspan="3" ><b>EPS: </b>{{$informe->eps}}</td>                    
                         </tr>
                         <tr>
                             <td style="font-size: 12px; border-right: 1px solid #000; " colspan="2" ><b>Ejec. Ensayo : </b>{{$ejecutor_ensayo->name}}</td>           
                             <td style="font-size: 12px; border-right: 1px solid #000;"  colspan="2"><b>Dis.Fuente/pelicula: </b>{{$informe_ri->distancia_fuente_pelicula}}</td>
-                            <td style="font-size: 12px; border-right: 1px solid #000;" colspan="3"><b>Pqr: </b>{{$informe->pqr}}</td>                    
+                            <td style="font-size: 12px; border-right: 1px solid #000;" colspan="3"><b>PQR: </b>{{$informe->pqr}}</td>                    
                         </tr>                                   
                         </tbody>
                     </table>   

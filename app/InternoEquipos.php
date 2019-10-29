@@ -14,7 +14,7 @@ class InternoEquipos extends Model
         
       }
 
-   public function internoFuentes(){
+   public function internoFuente(){
 
       return $this->belongsTo('App\InternoFuentes','interno_fuente_id','id');
     

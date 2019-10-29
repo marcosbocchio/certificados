@@ -24,7 +24,7 @@
      :diametrodata="{{$informe_diametro}}"
      :diametro_espesordata="{{$informe_diametroEspesor}}"  
      :tecnicadata="{{$informe_tecnica}}"     
-     :equipodata="{{$informe_equipo}}"
+     :interno_equipodata="{{$informe_interno_equipo}}"
      :procedimientodata="{{$informe_procedimiento}}" 
      :norma_evaluaciondata="{{$informe_norma_evaluacion}}"
      :norma_ensayodata="{{$informe_norma_ensayo}}"

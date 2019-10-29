@@ -33,8 +33,7 @@ class InformePmRequest extends FormRequest
         ];
 
         $validacion = [
-
-            'numero_inf'                =>'required | integer| digits_between:1,3',
+            
             'fecha'                     => 'required',
             'componente'                => 'required|Max:20',
             'material'                  => 'required',

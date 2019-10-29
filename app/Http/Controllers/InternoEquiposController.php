@@ -39,6 +39,7 @@ class InternoEquiposController extends Controller
                                 ->where('interno_equipos.activo_sn',1)
                                 ->Select('interno_equipos.*')
                                 ->with('equipo')
+                                ->with('internoFuente')
                                 ->get();
 
 

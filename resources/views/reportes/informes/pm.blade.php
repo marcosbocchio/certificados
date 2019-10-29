@@ -108,7 +108,7 @@ b {
                         <tbody>                 
                         <tr>
                             <td style="font-size: 12px; width: 200px;border-right: 1px solid #000;"><b>Componente: </b>{{$informe->componente}}</td>
-                            <td style="font-size: 12px;width: 50px; " colspan="2" ><b>Equipo: </b>{{$equipo->codigo}}</td>
+                            <td style="font-size: 12px;width: 50px; " colspan="2" ><b>Equipo: </b>{{$interno_equipo->equipo->codigo}}</td>
                             <td style="font-size: 12px;" ><b>Kv: </b>{{$informe->kv}}</td>
                             <td style="font-size: 12px; width: 50px; border-right: 1px solid #000;" ><b>mA: </b>{{$informe->ma}}</td>
                             <td style="font-size: 11px;  " colspan="2"  ><b style="font-size: 12px;">Norma Evaluación: </b>{{$norma_evaluacion->descripcion}}</td>                            
@@ -163,14 +163,14 @@ b {
                            <td style="font-size: 12px; " colspan="2" ><b>Tecnica: </b>{{$tecnica->descripcion}}</td>
                         </tr>
                         <tr>
-                            <td style="font-size: 12px;border-right: 1px solid #000;" ><b>Eps: </b>{{$informe->eps}}</td>
+                            <td style="font-size: 12px;border-right: 1px solid #000;" ><b>EPS: </b>{{$informe->eps}}</td>
                             <td style="font-size: 12px;" colspan="2"  ><b>Concentración: </b>{{$informe_pm->concentracion}}</td>
                             <td style="font-size: 12px;" colspan="1"  ><b>V: </b>{{$informe_pm->voltaje}}</td>  
                             <td style="font-size: 12px; border-right: 1px solid #000;" colspan="1"  ><b>Am: </b>{{$informe_pm->amperaje}}</td>                          
                             <td style="font-size: 12px; border-right: 1px solid #000;" colspan="2"  ><b>Color Partículas: </b>{{$color_particula->codigo}} </td>  
                         </tr>
                         <tr>                           
-                            <td style="font-size: 12px;border-right: 1px solid #000;" ><b>Pqr: </b>{{$informe->pqr}}</td>
+                            <td style="font-size: 12px;border-right: 1px solid #000;" ><b>PQR: </b>{{$informe->pqr}}</td>
                             <td style="font-size: 12px; border-right: 1px solid #000; " colspan="4" ><b>Proc. PM: </b>{{$procedimiento_inf->titulo}} </td>
                              <td style="font-size: 12px; border-right: 1px solid #000;" colspan="2"  ><b>Iluminación: </b>{{$iluminacion->codigo}} </td>  
 
@@ -223,19 +223,26 @@ b {
                     <table width="100%" style="border-collapse: collapse;" >
                         <tbody>
                             <tr>                               
-                               <td style="font-size: 13px; text-align: center" class="bordered-td" ><b>EVALUADOR </b></td>   
-                               <td style="font-size: 13px; text-align: center" class="bordered-td" ><b>CONTRATISTA </b></td> 
-                               <td style="font-size: 13px; text-align: center" class="bordered-td"><b>CLIENTE </b></td>                               
+                               <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>EVALUADOR </b></td>   
+                               <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>CONTRATISTA </b></td> 
+                               <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td"><b>CLIENTE </b></td>                              
                             </tr>
                             <tr>                               
-                                <td style="font-size: 12px; text-align: left; height: 25px;border-right: 1px solid #000;"><span style="margin-left: 2px">FIRMA:</span></td>   
-                                <td style="font-size: 12px; text-align: left; height: 25px;border-right: 1px solid #000;"><span style="margin-left: 2px">FIRMA:</span></td> 
-                                <td style="font-size: 12px; text-align: left; height: 25px;border-right: 1px solid #000;"><span style="margin-left: 2px">FIRMA:</span></td>                              
+                                <td style="font-size: 12px; text-align: left; height: 25px;width:50px;"><span style="margin-left: 2px">FIRMA:</span></td>   
+                                <td style="font-size: 12px; border-right: 1px solid #000;width:150px;" rowspan="2">
+                                @if($evaluador && $evaluador->path)
+                                     <img src="{{ public_path($evaluador->path)}}" alt="" style="height: 70px;margin:0 0 0 5px;">
+                                @endif
+                                </td> 
+                                <td style="font-size: 12px; text-align: left; height: 25px;width:50px"><span style="margin-left: 2px">FIRMA:</span></td> 
+                                <td style="font-size: 12px; border-right: 1px solid #000;" rowspan="2"></td>
+                                <td style="font-size: 12px; text-align: left; height: 25px;"><span style="margin-left: 2px">FIRMA:</span></td>
+                                <td style="font-size: 12px; border-right: 1px solid #000;" rowspan="2"></td>                              
                             </tr>
                             <tr>                               
-                                <td style="font-size: 12px; text-align: left; height: 25px;border-right: 1px solid #000;"><span style="margin-left: 2px">ACLARACIÓN:</span></td>   
-                                <td style="font-size: 12px; text-align: left; height: 25px;border-right: 1px solid #000;"><span style="margin-left: 2px">ACLARACIÓN:</span></td>
-                                <td style="font-size: 12px; text-align: left; height: 25px;border-right: 1px solid #000;"><span style="margin-left: 2px">ACLARACIÓN:</span></td>  
+                                <td style="font-size: 12px; text-align: left; height: 25px;"><span style="margin-left: 2px">ACLARACIÓN:</span></td>   
+                                <td style="font-size: 12px; text-align: left; height: 25px;"><span style="margin-left: 2px">ACLARACIÓN:</span></td>
+                                <td style="font-size: 12px; text-align: left; height: 25px;"><span style="margin-left: 2px">ACLARACIÓN:</span></td>  
                      
                             </tr>
                         </tbody>

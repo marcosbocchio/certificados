@@ -25,7 +25,7 @@ class PdfInformesPmReferenciasController extends Controller
         
     //  dd($cliente);
 
-        $pdf = \PDF::loadView('reportes.informes.referencias',compact('ot',
+        $pdf = \PDF::loadView('reportes.informes.referencias-pm',compact('ot',
                                                                 'informe_pm',                                                              
                                                                 'informe',
                                                                 'detalle_pm',

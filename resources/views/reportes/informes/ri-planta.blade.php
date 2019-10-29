@@ -110,9 +110,9 @@ b {
                         <tbody>                 
                         <tr>
                             <td style="font-size: 12px; width: 200px;border-right: 1px solid #000;" colspan="2"><b>Componente: </b>{{$informe->componente}}</td>
-                            <td style="font-size: 12px;width: 50px; " colspan="2" ><b>Equipo: </b>{{$equipo->codigo}}</td>
-                            <td style="font-size: 12px;" ><b>Kv: </b>{{$informe->kv}}</td>
-                            <td style="font-size: 12px; width: 50px; border-right: 1px solid #000;" ><b>mA: </b>{{$informe->ma}}</td>
+                            <td style="font-size: 12px;width: 50px; " colspan="2" ><b>Equipo: </b>{{$interno_equipo->equipo->codigo}}</td>
+                            <td style="font-size: 12px;" ><b>Kv: </b>{{$interno_equipo->voltaje}}</td>
+                            <td style="font-size: 12px; width: 50px; border-right: 1px solid #000;" ><b>mA: </b>{{$interno_equipo->amperaje}}</td>
                             <td style="font-size: 11px;  " colspan="2"  ><b style="font-size: 12px;">Norma Evaluación: </b>{{$norma_evaluacion->descripcion}}</td>                            
                         </tr>
                         <tr>                

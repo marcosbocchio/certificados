@@ -379,6 +379,101 @@ props :{
             type : Object,
             required : true
         },
+
+        informedata : {
+            type : Object,
+            required : false
+            },        
+
+        informe_lpdata : {
+            type : Object,
+            required : false
+            },
+
+        materialdata : {
+            type : Object,
+            required : false
+            },
+
+        diametrodata : {
+            type : Object,
+            required : false
+            },
+
+        diametro_espesordata : {
+            type : Object,
+            required : false
+                },
+
+        interno_equipodata : {
+            type : [ Object ],  
+            required : false
+            },
+
+        procedimientodata : {
+            type : [ Object ],  
+            required : false
+            }, 
+
+        norma_evaluaciondata : {
+            type : [ Object ],  
+            required : false
+            },
+
+        norma_ensayodata : {
+            type : [ Object ],  
+            required : false
+            },
+
+        ejecutor_ensayodata : {
+            type : [ Object ],  
+            required : false
+            },
+
+         metodo_trabajo_lpdata : {
+            type : [ Object ],  
+            required : false
+            },
+
+        penetrante_tipo_liquido_data : {
+            type : [ Object ],  
+            required : false
+            },
+
+        revelador_tipo_liquido_data : {
+            type : [ Object ],  
+            required : false
+            },
+
+        removedor_tipo_liquido_data : {
+            type : [ Object ],  
+            required : false
+            },
+        
+        penetrante_aplicacion_data : {
+            type : [ Object ],  
+            required : false
+            },
+
+        revelador_aplicacion_data : {
+            type : [ Object ],  
+            required : false
+            },
+
+        removedor_aplicacion_data : {
+            type : [ Object ],  
+            required : false
+            },
+
+        iluminacion_data : {
+            type : [ Object ],  
+            required : false
+            },
+
+         detalledata : {
+            type : [ Array ],  
+            required : false
+            }
     }, 
 data() {return {
         
@@ -450,6 +545,7 @@ data() {return {
         this.$store.dispatch('loadEjecutorEnsayo', this.otdata.id); 
         this.getMetodosTrabajoLp();  
         this.getAplicacionesLp();  
+        this.setEdit();     
     },
 
     mounted : function() {
@@ -483,6 +579,49 @@ data() {return {
      },
 
      methods : {
+
+    setEdit : function(){
+
+            if(this.editmode) {               
+            
+
+               this.fecha   = this.informedata.fecha;            
+               this.numero_inf = this.informedata.numero;
+               this.componente = this.informedata.componente;
+               this.material = this.materialdata;
+               this.plano_isom = this.informedata.plano_isom;
+               this.diametro = this.diametrodata;
+               this.espesor = this.diametro_espesordata;
+               this.tecnica = this.tecnicadata;
+               this.interno_equipo = this.interno_equipodata;           
+               this.procedimiento = this.procedimientodata;            
+               this.norma_evaluacion = this.norma_evaluaciondata;
+               this.norma_ensayo = this.norma_ensayodata;            
+               this.espesor_chapa = this.informedata.espesor_chapa;
+               this.procedimiento_soldadura = this.informedata.procedimiento_soldadura;
+               this.eps = this.informedata.eps;
+               this.pqr = this.informedata.pqr;           
+               this.metodo_trabajo_lp = this.metodo_trabajo_lpdata;            
+               this.ejecutor_ensayo = this.ejecutor_ensayodata;          
+               this.observaciones = this.informedata.observaciones;
+               this.tipo_penetrante = this.informe_lpdata.tipo_penetrante;
+               this.penetrante_tipo_liquido = this.penetrante_tipo_liquido_data;
+               this.revelador_tipo_liquido  = this.revelador_tipo_liquido_data;
+               this.removedor_tipo_liquido  = this.removedor_tipo_liquido_data;
+               this.penetrante_aplicacion   = this.penetrante_aplicacion_data;
+               this.tiempo_penetracion      = this.informe_lpdata.tiempo_penetracion;
+               this.revelador_aplicacion    = this.revelador_aplicacion_data; 
+               this.removedor_aplicacion    = this.removedor_aplicacion_data;
+               this.limpieza_previa         = this.informe_lpdata.limpieza_previa;
+               this.limpieza_intermedia     = this.informe_lpdata.limpieza_intermedia; 
+               this.limpieza_final          = this.informe_lpdata.limpieza_final;
+               this.iluminacion = this.iluminacion_data;
+               this.inputPiezasFalla = this.detalledata;
+ 
+ 
+            }         
+
+        },      
 
      getNumeroInforme:function(){            
            
@@ -666,7 +805,7 @@ data() {return {
               method: 'put',
               url : urlRegistros,    
               data : {
-                'ot'              : this.otdata,
+               'ot'              : this.otdata,
                 'ejecutor_ensayo' : this.ejecutor_ensayo,  
                 'metodo_ensayo'   : this.metodo,  
                 'fecha':          this.fecha,
@@ -679,7 +818,7 @@ data() {return {
                 'diametro':       this.diametro.diametro,
                 'espesor':        this.espesor.espesor,
                 'espesor_chapa'  :  this.espesor_chapa, 
-                'equipo'        :  this.equipo,               
+                'interno_equipo'        :  this.interno_equipo,               
                 'procedimiento_soldadura': this.procedimiento_soldadura,
                 'norma_evaluacion': this.norma_evaluacion,           
                 'norma_ensayo'      : this.norma_ensayo,
@@ -699,7 +838,7 @@ data() {return {
                 'limpieza_previa'               :this.limpieza_previa,   
                 'limpieza_intermedia'           :this.limpieza_intermedia,   
                 'limpieza_final'                :this.limpieza_final,   
-                'detalles'                      :this.inputPiezasFalla,                       
+                'detalles'                      :this.inputPiezasFalla,                     
           }}
           
       

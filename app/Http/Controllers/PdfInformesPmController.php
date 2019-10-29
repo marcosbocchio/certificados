@@ -14,7 +14,7 @@ use App\Fuentes;
 use App\TipoPeliculas;
 use App\DiametrosEspesor;
 use App\Tecnicas;
-use App\Equipos;
+use App\InternoEquipos;
 use App\EjecutorEnsayo;
 use App\User;
 use App\TecnicasGraficos;
@@ -45,7 +45,7 @@ class PdfInformesPmController extends Controller
          $fuente = Fuentes::find($informe_pm->fuente_id);
          $diametro_espesor = DiametrosEspesor::findOrFail($informe->diametro_espesor_id);
          $tecnica = Tecnicas::findOrFail($informe->tecnica_id);
-         $equipo = Equipos::findOrFail($informe->equipo_id);
+         $interno_equipo = InternoEquipos::where('id',$informe->interno_equipo_id)->with('equipo')->first();
          $tipo_magnetizacion = TiposMagnetizacion::findOrFail($informe_pm->tipo_magnetizacion_id);
          $magnetizacion = Corrientes::findOrFail($informe_pm->corriente_magnetizacion_id);
          $desmagnetizacion_sn = $informe_pm->desmagnetizacion_sn;
@@ -54,7 +54,8 @@ class PdfInformesPmController extends Controller
          $ejecutor_ensayo = User::findOrFail($ot_operador->user_id);
          $color_particula = ColorParticulas::findOrFail($informe_pm->color_particula_id);
          $iluminacion = Iluminaciones::findOrFail($informe_pm->iluminacion_id);
-         
+         $evaluador = User::find($informe->firma);
+
        // dd($desmagnetizacion_sn);
          $detalles =  DB::select('SELECT 
                                 detalles_pm.pieza as pieza,
@@ -80,7 +81,7 @@ class PdfInformesPmController extends Controller
                                                                 'diametro_espesor',
                                                                 'ici',
                                                                 'tecnica',
-                                                                'equipo',
+                                                                'interno_equipo',
                                                                 'ejecutor_ensayo',
                                                                 'cliente',
                                                                 'informe',
@@ -92,6 +93,7 @@ class PdfInformesPmController extends Controller
                                                                 'metodo',
                                                                 'color_particula',
                                                                 'iluminacion',
+                                                                'evaluador',
                                                                 'detalles'
                                                                 ))->setPaper('a4','portrait')->setWarnings(false);
                                                         
