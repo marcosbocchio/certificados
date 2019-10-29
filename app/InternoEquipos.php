@@ -8,7 +8,7 @@ class InternoEquipos extends Model
 {
     protected $table='interno_equipos';
 
-    public function equipos(){
+    public function equipo(){
 
         return $this->belongsTo('App\Equipos','equipo_id','id');
         

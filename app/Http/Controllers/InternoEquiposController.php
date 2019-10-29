@@ -38,7 +38,7 @@ class InternoEquiposController extends Controller
                                 ->where('metodo_ensayos.metodo',$metodo)
                                 ->where('interno_equipos.activo_sn',1)
                                 ->Select('interno_equipos.*')
-                                ->with('equipos')
+                                ->with('equipo')
                                 ->get();
 
 

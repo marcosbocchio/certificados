@@ -83,35 +83,28 @@
                                 <label for="eps">PQR</label>
                                 <input type="text" v-model="pqr" class="form-control" id="pqr">
                             </div>         
-                        </div> 
+                        </div>
+                       
+                        
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Equipo (*)</label>
+                                    <v-select  v-model="interno_equipo" :options="interno_equipos_activos" label="nro_serie" @input="getFuente()">
+                                        <template slot="option" slot-scope="option">
+                                            <span class="upSelect">{{ option.nro_serie }}</span> <br> 
+                                            <span class="downSelect"> {{ option.equipo.codigo }} </span>
+                                        </template>
+                                    </v-select>
+                            </div>
+                        </div>                       
+
 
                         <div class="col-md-3">
                             <div class="form-group" >
-                                <label for="equipos">Equipo (*)</label>
-                                <v-select v-model="interno_equipo" label="nro_serie" :options="interno_equipos_activos" @input="getFuente()" ></v-select>  
+                                <label for="voltaje">Tipo</label>
+                                <input type="text" v-model="interno_equipo.equipo.tipo_lp" class="form-control" id="Tipo" disabled>
                             </div>                            
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="form-group" >
-                                <label for="fuente">Fuente </label>
-                                <input type="text" v-model="fuentePorInterno.codigo" class="form-control" id="fuente" disabled>
-                            </div>                            
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="form-group" >
-                                <label for="voltaje">Voltaje </label>
-                                <input type="text" v-model="interno_equipo.voltaje" class="form-control" id="voltaje" disabled>
-                            </div>                            
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="form-group" >
-                                <label for="amperaje">Amperaje </label>
-                                <input type="text" v-model="interno_equipo.amperaje" class="form-control" id="amperaje" disabled>
-                            </div>                            
-                        </div>
+                        </div>                     
                         
                         <div class="col-md-3">                       
                             <div class="form-group">
@@ -120,6 +113,7 @@
                             </div>      
                         </div>
 
+                        <div class="clearfix"></div>    
 
                         <div class="col-md-3">                       
                             <div class="form-group">
@@ -136,7 +130,6 @@
                             </div>      
                         </div>
 
-                        <div class="clearfix"></div>    
 
                         <div class="col-md-3">
                             <div class="form-group">
@@ -196,6 +189,8 @@
                             </div>
                         </div>
 
+                        <div class="clearfix"></div>   
+
                         <div class="col-md-3">                       
                             <div class="form-group">
                                 <label>Aplicación  Revelador (*)</label>
@@ -216,7 +211,6 @@
                             </div>
                         </div>
 
-                        <div class="clearfix"></div>   
                          
                         <div class="col-md-3">                       
                             <div class="form-group">
@@ -224,6 +218,7 @@
                                 <v-select v-model="removedor_aplicacion" label="codigo" :options="aplicaciones_lp"></v-select>   
                             </div>      
                         </div>
+                        
 
                         <div class="col-md-3">                       
                             <div class="form-group" >
@@ -404,7 +399,7 @@ data() {return {
         eps:'',
         pqr:'',
         tecnica:'',
-        interno_equipo:'',     
+        interno_equipo:{ equipo:'' },     
         procedimiento:'',
         norma_ensayo:'',
         norma_evaluacion:'',

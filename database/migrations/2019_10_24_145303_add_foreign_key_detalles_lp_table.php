@@ -42,7 +42,7 @@ class AddForeignKeyDetallesLpTable extends Migration
      */
     public function down()
     {
-        Schema::table('detalles_lp', function (Blueprint $table) {
+        Schema::table('detalles_lp', function (Blueprint $table) { 
 
             $table->dropForeign(['informe_lp_id']);
             $table->dropColumn('informe_lp_id');

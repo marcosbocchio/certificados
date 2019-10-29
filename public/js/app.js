@@ -8032,11 +8032,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
 
 
 
@@ -8079,7 +8074,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       eps: '',
       pqr: '',
       tecnica: '',
-      interno_equipo: '',
+      interno_equipo: {
+        equipo: ''
+      },
       procedimiento: '',
       norma_ensayo: '',
       norma_evaluacion: '',
@@ -57666,20 +57663,38 @@ var render = function() {
                     "div",
                     { staticClass: "form-group" },
                     [
-                      _c("label", { attrs: { for: "equipos" } }, [
-                        _vm._v("Equipo (*)")
-                      ]),
+                      _c("label", [_vm._v("Equipo (*)")]),
                       _vm._v(" "),
                       _c("v-select", {
                         attrs: {
-                          label: "nro_serie",
-                          options: _vm.interno_equipos_activos
+                          options: _vm.interno_equipos_activos,
+                          label: "nro_serie"
                         },
                         on: {
                           input: function($event) {
                             return _vm.getFuente()
                           }
                         },
+                        scopedSlots: _vm._u([
+                          {
+                            key: "option",
+                            fn: function(option) {
+                              return [
+                                _c("span", { staticClass: "upSelect" }, [
+                                  _vm._v(_vm._s(option.nro_serie))
+                                ]),
+                                _vm._v(" "),
+                                _c("br"),
+                                _vm._v(" "),
+                                _c("span", { staticClass: "downSelect" }, [
+                                  _vm._v(
+                                    " " + _vm._s(option.equipo.codigo) + " "
+                                  )
+                                ])
+                              ]
+                            }
+                          }
+                        ]),
                         model: {
                           value: _vm.interno_equipo,
                           callback: function($$v) {
@@ -57695,42 +57710,8 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-3" }, [
                   _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "fuente" } }, [
-                      _vm._v("Fuente ")
-                    ]),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.fuentePorInterno.codigo,
-                          expression: "fuentePorInterno.codigo"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: { type: "text", id: "fuente", disabled: "" },
-                      domProps: { value: _vm.fuentePorInterno.codigo },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(
-                            _vm.fuentePorInterno,
-                            "codigo",
-                            $event.target.value
-                          )
-                        }
-                      }
-                    })
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-3" }, [
-                  _c("div", { staticClass: "form-group" }, [
                     _c("label", { attrs: { for: "voltaje" } }, [
-                      _vm._v("Voltaje ")
+                      _vm._v("Tipo")
                     ]),
                     _vm._v(" "),
                     _c("input", {
@@ -57738,55 +57719,21 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.interno_equipo.voltaje,
-                          expression: "interno_equipo.voltaje"
+                          value: _vm.interno_equipo.equipo.tipo_lp,
+                          expression: "interno_equipo.equipo.tipo_lp"
                         }
                       ],
                       staticClass: "form-control",
-                      attrs: { type: "text", id: "voltaje", disabled: "" },
-                      domProps: { value: _vm.interno_equipo.voltaje },
+                      attrs: { type: "text", id: "Tipo", disabled: "" },
+                      domProps: { value: _vm.interno_equipo.equipo.tipo_lp },
                       on: {
                         input: function($event) {
                           if ($event.target.composing) {
                             return
                           }
                           _vm.$set(
-                            _vm.interno_equipo,
-                            "voltaje",
-                            $event.target.value
-                          )
-                        }
-                      }
-                    })
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-3" }, [
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "amperaje" } }, [
-                      _vm._v("Amperaje ")
-                    ]),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.interno_equipo.amperaje,
-                          expression: "interno_equipo.amperaje"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: { type: "text", id: "amperaje", disabled: "" },
-                      domProps: { value: _vm.interno_equipo.amperaje },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(
-                            _vm.interno_equipo,
-                            "amperaje",
+                            _vm.interno_equipo.equipo,
+                            "tipo_lp",
                             $event.target.value
                           )
                         }
@@ -57822,6 +57769,8 @@ var render = function() {
                     1
                   )
                 ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "clearfix" }),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-3" }, [
                   _c(
@@ -57872,8 +57821,6 @@ var render = function() {
                     1
                   )
                 ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "clearfix" }),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-3" }, [
                   _c(
@@ -58084,6 +58031,8 @@ var render = function() {
                   )
                 ]),
                 _vm._v(" "),
+                _c("div", { staticClass: "clearfix" }),
+                _vm._v(" "),
                 _c("div", { staticClass: "col-md-3" }, [
                   _c(
                     "div",
@@ -58151,8 +58100,6 @@ var render = function() {
                     1
                   )
                 ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "clearfix" }),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-3" }, [
                   _c(
@@ -87413,8 +87360,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_lazyload__WEBPACK_IMPORTED_MO
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuejs_progress_bar__WEBPACK_IMPORTED_MODULE_5___default.a);
 var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
   state: {
-    url:  false ? undefined : "http://localhost:8000/api",
-    AppUrl:  false ? undefined : "http://localhost:8000",
+    url:  false ? undefined : "http://certificados.test/api",
+    AppUrl:  false ? undefined : "http://certificados.test",
     provincias: [],
     localidades: [],
     materiales: [],
@@ -91262,8 +91209,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/sass/toastr.scss */"./resources/sass/toastr.scss");
+__webpack_require__(/*! C:\Users\bocch\code\certificados\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\bocch\code\certificados\resources\sass\toastr.scss */"./resources/sass/toastr.scss");
 
 
 /***/ })

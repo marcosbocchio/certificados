@@ -165,6 +165,7 @@ Route::get('/pdf/productos/referencias/{id}','PdfProductosReferenciasController@
 Route::get('/pdf/productos/referencias/informe/pm/{id}','PdfInformesPmReferenciasController@imprimir')->name('InformePmReferencias');
 
 Route::get('/pdf/informe/{id}','PdfInformesController@index')->name('pdfInformes');
+Route::get('/pdf/informe/lp/{informe}','PdfInformesLpController@imprimir')->name('pdfInformeLp');
 Route::get('/pdf/informe/ri/{informe}','PdfInformesRiController@imprimir')->name('pdfInformeRi');
 Route::get('/pdf/informe/pm/{informe}','PdfInformesPmController@imprimir')->name('pdfInformePm');
 
