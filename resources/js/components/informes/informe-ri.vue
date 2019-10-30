@@ -130,9 +130,9 @@
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label>Equipo (*)</label>
-                                    <v-select  v-model="interno_equipo" :options="interno_equipos_activos" label="nro_serie" @input="getFuente(interno_equipo.interno_fuente_id)">
+                                    <v-select  v-model="interno_equipo" :options="interno_equipos_activos" label="nro_interno" @input="getFuente(interno_equipo.interno_fuente_id)">
                                         <template slot="option" slot-scope="option">
-                                            <span class="upSelect">{{ option.nro_serie }}</span> <br> 
+                                            <span class="upSelect">{{ option.nro_interno }}</span> <br> 
                                             <span class="downSelect"> {{ option.equipo.codigo }} </span>
                                         </template>
                                     </v-select>
@@ -240,13 +240,13 @@
 
                         <div class="col-md-3">                       
                             <div class="form-group" >
-                                <label for="eps">Actividad</label>
+                                <label for="actividad">Actividad</label>
                                 <input type="text" v-model="actividad" class="form-control" id="actividad">
                             </div>         
                         </div>       
                         <div class="col-md-3">                       
                             <div class="form-group" >
-                                <label for="eps">N° Exposiciones (*)</label>
+                                <label for="exposicion">N° Exposiciones (*)</label>
                                 <input type="number" v-model="exposicion" class="form-control" id="exposicion">
                             </div>         
                         </div>                                            

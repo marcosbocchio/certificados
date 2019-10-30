@@ -7,21 +7,21 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Editar</h4>
                 </div>
-                <div class="modal-body">   
+                <div class="modal-body">    
                 
-                    <div class="modal-body">                       
-                    
-                           
+                   
                     <label for="codigo">Código (*)</label>                   
                     <input autocomplete="off" v-model="editRegistro.codigo" type="text" name="codigo" class="form-control" value="">
                     
                     <label for="name">Descripción</label>                   
-                    <input autocomplete="off" type="text" name="descripcion" class="form-control" v-model="editRegistro.descripcion" value="">
+                    <input autocomplete="off" type="text" name="descripcion" class="form-control" v-model="editRegistro.descripcion" value="">              
 
-                     <label for="name">Unidad Medida (*)</label>      
-                    <v-select v-model="unidad_medida" label="codigo" :options="unidades_medidas"></v-select>
+                    <label for="metodo_ensayo">Método de Ensayo (*)</label>      
+                    <v-select v-model="metodo_ensayos" label="metodo" :options="metodos_ensayos"></v-select> 
                     
-                    </div>
+                    <label for="tipo_lp">Tipo Lp</label>
+                    <input v-model="editRegistro.tipo_lp" type="text" name="tipo_lp" class="form-control" :disabled="metodo_ensayos.metodo != 'LP'">             
+              
                 </div>
             
                 <div class="modal-footer">
@@ -51,13 +51,13 @@ export default {
     
         editRegistro : {           
             'codigo'  : '',
-            'descripcion' : '',           
+            'descripcion'  : '',
+            'tipo_lp' : '',             
          },
-
-         unidad_medida :{
-             'codigo' : '',
-             'descripcion':''
-         },       
+         metodo_ensayos :{
+             'metodo' : '',            
+         },          
+        
         errors:{},        
          }
     
@@ -70,24 +70,24 @@ export default {
                  this.openModal();
              
     }.bind(this)); 
-   this.$store.dispatch('loadUnidadesMedidas');
+   this.$store.dispatch('loadMetodosEnsayos');
 
     },
   
     computed :{
     
-         ...mapState(['url','unidades_medidas'])
+         ...mapState(['url','metodos_ensayos'])
     }, 
    
     methods: {
            openModal : function(){
-               console.log('entro en open modal');            
+           console.log('entro en open modal');            
             this.$nextTick(function () { 
-                this.editRegistro.codigo = this.selectRegistro.codigo;
-                this.editRegistro.descripcion = this.selectRegistro.descripcion;   
-                this.unidad_medida = this.selectRegistro.unidad_medidas;            
 
-                console.log(this.selectRegistro.cliente_id);
+                this.editRegistro.codigo = this.selectRegistro.codigo;
+                this.editRegistro.descripcion = this.selectRegistro.descripcion;
+                this.editRegistro.tipo_lp = this.selectRegistro.tipo_lp;         
+                this.metodo_ensayos = this.selectRegistro.metodo_ensayos;   
               
                 $('#editar').modal('show');               
 
@@ -98,17 +98,17 @@ export default {
             storeRegistro: function(){           
 
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'medidas/' + this.selectRegistro.id;                         
+                var urlRegistros = 'equipos/' + this.selectRegistro.id;                         
                 axios.put(urlRegistros, {   
                     
-                ...this.editRegistro,    
-                'unidad_medida' : this.unidad_medida,                       
+                ...this.editRegistro,              
+                'metodo_ensayos' : this.metodo_ensayos,                    
               
                 }).then(response => {
                   this.$emit('update');
                   this.errors=[];
                   $('#editar').modal('hide');
-                  toastr.success('medida editada con éxito');         
+                  toastr.success('Equipo editado con éxito');         
                   this.editRegistro={}
                   
                 }).catch(error => {                   
@@ -129,3 +129,12 @@ export default {
     
 }
 </script>
+
+
+<style scoped>
+
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+     background-color: #eee;
+}
+
+</style>

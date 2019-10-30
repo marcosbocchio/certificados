@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\InternoFuenteRequest;
+use App\InternoFuentes;
+use Illuminate\Support\Facades\DB;
+
 
 class InternoFuentesController extends Controller
 {
@@ -16,6 +20,22 @@ class InternoFuentesController extends Controller
         //
     }
 
+    public function paginate(Request $request){
+      
+        return InternoFuentes::orderBy('id','DESC')->with('fuente')->paginate(10);
+  
+      }
+
+      public function callView()
+      {   
+          $user = auth()->user()->name; 
+          $header_titulo = "Interno Fuentes";
+          $header_descripcion ="Alta | Baja | Modificación"; 
+        
+          return view('interno_fuentes',compact('user','header_titulo','header_descripcion'));
+  
+      }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -26,16 +46,53 @@ class InternoFuentesController extends Controller
         //
     }
 
+    public function getFuentesActivos(){
+      
+
+        return  InternoFuentes::where('activo_sn',1)
+                                ->Select('interno_fuentes.*')
+                                ->with('fuente')                            
+                                ->get();
+
+
+    }
+
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
-    }
+    public function store(InternoFuenteRequest $request){
+
+
+        $interno_fuente = new InternoFuentes;   
+    
+        DB::beginTransaction();
+        try { 
+    
+            $this->saveInternoFuente($request,$interno_fuente);
+            DB::commit(); 
+    
+          } catch (Exception $e) {
+      
+            DB::rollback();
+            throw $e;      
+            
+          }
+       
+    
+      }
+    
+    public function saveInternoFuente($request,$interno_fuente){
+
+        $interno_fuente->nro_serie = $request['nro_serie'];
+        $interno_fuente->activo_sn = $request['activo_sn'];
+        $interno_fuente->curie = $request['curie'];
+        $interno_fuente->fuente_id = $request['fuente']['id'];
+        $interno_fuente->save();
+    
+      }
 
     /**
      * Display the specified resource.
@@ -66,10 +123,22 @@ class InternoFuentesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+    public function update(InternoFuenteRequest $request, $id){
+
+        $interno_fuente = InternoFuentes::find($id);     
+      
+          DB::beginTransaction();
+          try {
+              $this->saveInternoFuente($request,$interno_fuente);
+              DB::commit(); 
+      
+            } catch (Exception $e) {
+        
+              DB::rollback();
+              throw $e;      
+              
+            }
+      }
 
     /**
      * Remove the specified resource from storage.
@@ -79,6 +148,7 @@ class InternoFuentesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $interno_fuente = InternoFuentes::find($id);    
+        $interno_fuente->delete();
     }
 }

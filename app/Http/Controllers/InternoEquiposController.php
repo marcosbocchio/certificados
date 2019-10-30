@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\InternoEquipos;
+use App\Http\Requests\InternoEquipoRequest;
 use Illuminate\Support\Facades\DB;
 use App\Fuentes;
 use \stdClass;
@@ -19,6 +20,22 @@ class InternoEquiposController extends Controller
     {
         //
     }
+
+    public function paginate(Request $request){
+      
+        return InternoEquipos::orderBy('id','DESC')->with('equipo')->with('internoFuente')->paginate(10);
+  
+      }
+
+    public function callView()
+      {   
+          $user = auth()->user()->name; 
+          $header_titulo = "Interno Equipos";
+          $header_descripcion ="Alta | Baja | Modificación"; 
+        
+          return view('interno_equipos',compact('user','header_titulo','header_descripcion'));
+  
+      }
 
     /**
      * Show the form for creating a new resource.
@@ -51,10 +68,26 @@ class InternoEquiposController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
-    }
+    public function store(InternoEquipoRequest $request){
+
+
+        $interno_equipo = new InternoEquipos;   
+    
+        DB::beginTransaction();
+        try { 
+    
+            $this->saveInternoEquipo($request,$interno_equipo);
+            DB::commit(); 
+    
+          } catch (Exception $e) {
+      
+            DB::rollback();
+            throw $e;      
+            
+          }
+       
+    
+      }
 
     /**
      * Display the specified resource.
@@ -85,10 +118,35 @@ class InternoEquiposController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+    public function update(InternoEquipoRequest $request, $id){
+
+        $interno_equipo = InternoEquipos::find($id);     
+      
+          DB::beginTransaction();
+          try {
+              $this->saveInternoEquipo($request,$interno_equipo);
+              DB::commit(); 
+      
+            } catch (Exception $e) {
+        
+              DB::rollback();
+              throw $e;      
+              
+            }
+      }
+
+      public function saveInternoEquipo($request,$interno_equipo){
+
+        $interno_equipo->nro_serie = $request['nro_serie'];
+        $interno_equipo->nro_interno = $request['nro_interno'];
+        $interno_equipo->voltaje = $request['voltaje'];
+        $interno_equipo->amperaje = $request['amperaje'];
+        $interno_equipo->activo_sn = $request['activo_sn'];       
+        $interno_equipo->equipo_id = $request['equipo']['id'];
+        $interno_equipo->interno_fuente_id = $request['interno_fuente']['id'];
+        $interno_equipo->save();
+    
+      }
 
     /**
      * Remove the specified resource from storage.
@@ -98,6 +156,7 @@ class InternoEquiposController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $interno_equipo = InternoEquipos::find($id);    
+        $interno_equipo->delete();
     }
 }

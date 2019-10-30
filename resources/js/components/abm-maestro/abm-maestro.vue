@@ -86,6 +86,8 @@
 
             getResults : function(page = 1){
 
+                console.log('entro en getResult');
+                console.log(this.modelo);
                 axios.defaults.baseURL = this.url ;
                 var urlRegistros = this.modelo + '/paginate' + '?page='+ page;   
                 axios.get(urlRegistros).then(response =>{

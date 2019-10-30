@@ -55,7 +55,12 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('riesgos', 'RiesgosController');
     Route::resource('ot_riesgos', 'OtRiesgosController');
     Route::get('fuentes/interno_fuente/{interno_fuente_id}', 'FuentesController@getFuentePorInterno');
+    Route::get('interno_fuentes/activos', 'InternoFuentesController@getFuentesActivos');  
+    Route::get('interno_fuentes/paginate', 'InternoFuentesController@paginate');
+    Route::resource('interno_fuentes', 'InternoFuentesController');
+    Route::get('fuentes/paginate', 'FuentesController@paginate');
     Route::resource('fuentes', 'FuentesController');
+    Route::get('equipos/paginate', 'EquiposController@paginate');
     Route::resource('equipos', 'EquiposController');
     Route::resource('icis', 'IcisController');
     Route::resource('tecnicas', 'TecnicasController');
@@ -80,6 +85,8 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::post('soldadores/cliente/{id}','SoldadoresController@store');
 
     Route::get('interno_equipos/metodo/{metodo}/activos', 'InternoEquiposController@getEquiposMetodoActivos');   
+    Route::get('interno_equipos/paginate', 'InternoEquiposController@paginate');
+    Route::resource('interno_equipos', 'InternoEquiposController');
 
     Route::get('equipos/metodo/{metodo}', 'EquiposController@EquiposMetodo');
 

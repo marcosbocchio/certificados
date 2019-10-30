@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\FuenteRequest;
 use App\Fuentes;
+use Illuminate\Support\Facades\DB;
 
 class FuentesController extends Controller
 {
@@ -16,6 +18,22 @@ class FuentesController extends Controller
     {
         return Fuentes::All();
     }
+
+    public function paginate(Request $request){
+      
+        return Fuentes::orderBy('id','DESC')->paginate(10);
+  
+      }
+
+    public function callView()
+      {   
+          $user = auth()->user()->name; 
+          $header_titulo = "Fuentes";
+          $header_descripcion ="Alta | Baja | Modificación"; 
+        
+          return view('fuentes',compact('user','header_titulo','header_descripcion'));
+  
+      }
 
     public function getFuentePorInterno($interno_fuente_id){
 
@@ -41,10 +59,49 @@ class FuentesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
-    }
+    public function store(FuenteRequest $request){
+
+        $fuente = new Fuentes;   
+  
+          DB::beginTransaction();
+          try { 
+  
+              $this->saveMaterial($request,$fuente);
+              DB::commit(); 
+  
+          } catch (Exception $e) {
+      
+              DB::rollback();
+              throw $e;      
+              
+          }      
+  
+      }
+  
+      public function update(FuenteRequest $request, $id){
+  
+        $fuente = Fuentes::find($id);     
+      
+          DB::beginTransaction();
+          try {
+              $this->saveMaterial($request,$fuente);
+              DB::commit(); 
+      
+            } catch (Exception $e) {
+        
+              DB::rollback();
+              throw $e;      
+              
+            }
+      }
+      public function saveMaterial($request,$fuente){
+  
+        $fuente->codigo = $request['codigo'];
+        $fuente->descripcion = $request['descripcion'];
+    
+        $fuente->save();
+  
+      }
 
     /**
      * Display the specified resource.
@@ -68,18 +125,7 @@ class FuentesController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
+    
     /**
      * Remove the specified resource from storage.
      *
@@ -88,6 +134,7 @@ class FuentesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $fuente = Fuentes::find($id);    
+        $fuente->delete();
     }
 }

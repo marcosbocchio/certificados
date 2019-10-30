@@ -7,21 +7,21 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Editar</h4>
                 </div>
-                <div class="modal-body">   
+                <div class="modal-body">    
                 
-                    <div class="modal-body">                       
-                    
-                           
-                    <label for="codigo">Código (*)</label>                   
-                    <input autocomplete="off" v-model="editRegistro.codigo" type="text" name="codigo" class="form-control" value="">
-                    
-                    <label for="name">Descripción</label>                   
-                    <input autocomplete="off" type="text" name="descripcion" class="form-control" v-model="editRegistro.descripcion" value="">
+                   
+                    <label for="numero_serie">N° Serie (*)</label>   
 
-                     <label for="name">Unidad Medida (*)</label>      
-                    <v-select v-model="unidad_medida" label="codigo" :options="unidades_medidas"></v-select>
-                    
-                    </div>
+                    <input type="checkbox" id="checkbox" v-model="editRegistro.activo_sn" style="float:right"> 
+                    <label for="tipo" style="float:right;margin-right: 5px;">ACTIVO</label>     
+
+                    <input autocomplete="off" v-model="editRegistro.nro_serie" type="text" name="numero_serie" class="form-control" value="">                
+
+                    <label for="curie">Curie</label>
+                    <input v-model="editRegistro.curie" type="number" name="curie" class="form-control" value="" step="2">                
+              
+                    <label for="name">Fuente (*)</label>      
+                    <v-select v-model="fuente" label="codigo" :options="fuentes"></v-select>
                 </div>
             
                 <div class="modal-footer">
@@ -50,11 +50,11 @@ export default {
     data() { return {
     
         editRegistro : {           
-            'codigo'  : '',
-            'descripcion' : '',           
+            'nro_serie'  : '',
+            'curie' : '', 
+            'activo_sn' : true,      
          },
-
-         unidad_medida :{
+         fuente :{
              'codigo' : '',
              'descripcion':''
          },       
@@ -70,24 +70,24 @@ export default {
                  this.openModal();
              
     }.bind(this)); 
-   this.$store.dispatch('loadUnidadesMedidas');
+   this.$store.dispatch('loadFuentes');
 
     },
   
     computed :{
     
-         ...mapState(['url','unidades_medidas'])
+         ...mapState(['url','fuentes'])
     }, 
    
     methods: {
            openModal : function(){
                console.log('entro en open modal');            
             this.$nextTick(function () { 
-                this.editRegistro.codigo = this.selectRegistro.codigo;
-                this.editRegistro.descripcion = this.selectRegistro.descripcion;   
-                this.unidad_medida = this.selectRegistro.unidad_medidas;            
 
-                console.log(this.selectRegistro.cliente_id);
+                this.editRegistro.nro_serie = this.selectRegistro.nro_serie;
+                this.editRegistro.activo_sn = this.selectRegistro.activo_sn;  
+                this.editRegistro.curie = this.selectRegistro.curie; 
+                this.fuente = this.selectRegistro.fuente;               
               
                 $('#editar').modal('show');               
 
@@ -98,17 +98,17 @@ export default {
             storeRegistro: function(){           
 
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'medidas/' + this.selectRegistro.id;                         
+                var urlRegistros = 'interno_fuentes/' + this.selectRegistro.id;                         
                 axios.put(urlRegistros, {   
                     
-                ...this.editRegistro,    
-                'unidad_medida' : this.unidad_medida,                       
+                ...this.editRegistro,     
+                'fuente' : this.fuente,                       
               
                 }).then(response => {
                   this.$emit('update');
                   this.errors=[];
                   $('#editar').modal('hide');
-                  toastr.success('medida editada con éxito');         
+                  toastr.success('Interno Fuente editado con éxito');         
                   this.editRegistro={}
                   
                 }).catch(error => {                   

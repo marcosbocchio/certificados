@@ -7,21 +7,16 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Editar</h4>
                 </div>
-                <div class="modal-body">   
+                <div class="modal-body">    
                 
-                    <div class="modal-body">                       
-                    
-                           
+                   
                     <label for="codigo">Código (*)</label>                   
                     <input autocomplete="off" v-model="editRegistro.codigo" type="text" name="codigo" class="form-control" value="">
                     
                     <label for="name">Descripción</label>                   
-                    <input autocomplete="off" type="text" name="descripcion" class="form-control" v-model="editRegistro.descripcion" value="">
-
-                     <label for="name">Unidad Medida (*)</label>      
-                    <v-select v-model="unidad_medida" label="codigo" :options="unidades_medidas"></v-select>
-                    
-                    </div>
+                    <input autocomplete="off" type="text" name="descripcion" class="form-control" v-model="editRegistro.descripcion" value="">              
+  
+              
                 </div>
             
                 <div class="modal-footer">
@@ -51,13 +46,10 @@ export default {
     
         editRegistro : {           
             'codigo'  : '',
-            'descripcion' : '',           
-         },
-
-         unidad_medida :{
-             'codigo' : '',
-             'descripcion':''
-         },       
+            'descripcion'  : '',
+                 
+         },          
+        
         errors:{},        
          }
     
@@ -70,24 +62,22 @@ export default {
                  this.openModal();
              
     }.bind(this)); 
-   this.$store.dispatch('loadUnidadesMedidas');
+  
 
     },
   
     computed :{
     
-         ...mapState(['url','unidades_medidas'])
+         ...mapState(['url'])
     }, 
    
     methods: {
            openModal : function(){
-               console.log('entro en open modal');            
+           console.log('entro en open modal');            
             this.$nextTick(function () { 
-                this.editRegistro.codigo = this.selectRegistro.codigo;
-                this.editRegistro.descripcion = this.selectRegistro.descripcion;   
-                this.unidad_medida = this.selectRegistro.unidad_medidas;            
 
-                console.log(this.selectRegistro.cliente_id);
+                this.editRegistro.codigo = this.selectRegistro.codigo;
+                this.editRegistro.descripcion = this.selectRegistro.descripcion;    
               
                 $('#editar').modal('show');               
 
@@ -98,17 +88,17 @@ export default {
             storeRegistro: function(){           
 
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'medidas/' + this.selectRegistro.id;                         
+                var urlRegistros = 'fuentes/' + this.selectRegistro.id;                         
                 axios.put(urlRegistros, {   
                     
-                ...this.editRegistro,    
-                'unidad_medida' : this.unidad_medida,                       
+                ...this.editRegistro,     
+                            
               
                 }).then(response => {
                   this.$emit('update');
                   this.errors=[];
                   $('#editar').modal('hide');
-                  toastr.success('medida editada con éxito');         
+                  toastr.success('Fuente editada con éxito');         
                   this.editRegistro={}
                   
                 }).catch(error => {                   

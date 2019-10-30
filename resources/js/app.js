@@ -82,6 +82,24 @@ Vue.component('table-servicios', require('./components/abm-maestro/servicios/tab
 Vue.component('nuevo-servicios', require('./components/abm-maestro/servicios/nuevo-servicios.vue').default);
 Vue.component('editar-servicios', require('./components/abm-maestro/servicios/editar-servicios.vue').default);
 
+
+Vue.component('table-fuentes', require('./components/abm-maestro/fuentes/table-fuentes.vue').default);
+Vue.component('editar-fuentes', require('./components/abm-maestro/fuentes/editar-fuentes.vue').default);
+Vue.component('nuevo-fuentes', require('./components/abm-maestro/fuentes/nuevo-fuentes.vue').default);
+
+Vue.component('table-interno_fuentes', require('./components/abm-maestro/interno-fuentes/table-interno_fuentes.vue').default);
+Vue.component('editar-interno_fuentes', require('./components/abm-maestro/interno-fuentes/editar-interno_fuentes.vue').default);
+Vue.component('nuevo-interno_fuentes', require('./components/abm-maestro/interno-fuentes/nuevo-interno_fuentes.vue').default);
+
+Vue.component('table-equipos', require('./components/abm-maestro/equipos/table-equipos.vue').default);
+Vue.component('editar-equipos', require('./components/abm-maestro/equipos/editar-equipos.vue').default);
+Vue.component('nuevo-equipos', require('./components/abm-maestro/equipos/nuevo-equipos.vue').default);
+
+
+Vue.component('table-interno_equipos', require('./components/abm-maestro/interno-equipos/table-interno_equipos.vue').default);
+Vue.component('editar-interno_equipos', require('./components/abm-maestro/interno-equipos/editar-interno_equipos.vue').default);
+Vue.component('nuevo-interno_equipos', require('./components/abm-maestro/interno-equipos/nuevo-interno_equipos.vue').default);
+
 Vue.component('soldadores', require('./components/abm-maestro/soldadores/soldadores.vue').default);
 Vue.component('table-soldadores', require('./components/abm-maestro/soldadores/table-soldadores.vue').default);
 Vue.component('nuevo-soldadores', require('./components/abm-maestro/soldadores/nuevo-soldadores.vue').default);
@@ -193,6 +211,9 @@ state: {
         norma_evaluaciones:[],
         norma_ensayos:[],
         interno_equipos_activos:[],
+        interno_fuentes_activos:[],
+        fuentes:[],
+        equipos:[],
         fuentePorInterno:{},
         penetrantes_tipo_liquido:[],
         reveladores_tipo_liquido:[],
@@ -326,7 +347,40 @@ actions : {
             console.log(response.data);
             commit('getInternoEquiposActivos', response.data)           
           })
-        },  
+        }, 
+        
+        loadInternoFuentesActivos({
+          commit}) {
+          axios.defaults.baseURL = store.state.url ;
+          var urlRegistros = 'interno_fuentes/' + 'activos' + '?api_token=' + Laravel.user.api_token;         
+          console.log(urlRegistros);
+          axios.get(urlRegistros).then((response) => {
+            console.log(response.data);
+            commit('getInternoFuentesActivos', response.data)           
+          })
+        },
+
+        loadEquipos({
+          commit
+        }) {
+          axios.defaults.baseURL = store.state.url ;
+          var urlRegistros = 'equipos' + '?api_token=' + Laravel.user.api_token;  
+          console.log(urlRegistros);
+          axios.get(urlRegistros).then((response) => {
+            commit('getEquipos', response.data)           
+          })
+        },
+
+        loadFuentes({
+          commit
+        }) {
+          axios.defaults.baseURL = store.state.url ;
+          var urlRegistros = 'fuentes' + '?api_token=' + Laravel.user.api_token;  
+          console.log(urlRegistros);
+          axios.get(urlRegistros).then((response) => {
+            commit('getFuentes', response.data)           
+          })
+        },
 
         loadFuentePorInterno({
           commit},interno_fuente_id) {
@@ -488,6 +542,18 @@ actions : {
 
       getInternoEquiposActivos(state, interno_equipos_activos) {
         state.interno_equipos_activos = interno_equipos_activos
+      },
+
+      getInternoFuentesActivos(state, interno_fuentes_activos) {
+        state.interno_fuentes_activos = interno_fuentes_activos
+      },
+
+      getFuentes(state, fuentes) {
+        state.fuentes = fuentes
+      },
+
+      getEquipos(state, equipos) {
+        state.equipos = equipos
       },
 
       getFuentePorInterno(state, fuentePorInterno) {

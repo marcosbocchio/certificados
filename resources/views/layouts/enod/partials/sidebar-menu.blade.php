@@ -44,6 +44,10 @@
             <li><a href="{{ route('productos') }}"><i class="fa fa-circle-o"></i>Productos</a></li>
             <li><a href="{{ route('servicios') }}"><i class="fa fa-circle-o"></i>Servicios</a></li>
             <li><a href="{{ route('soldadores') }}"><i class="fa fa-circle-o"></i>Soldadores</a></li>
+            <li><a href="{{ route('equipos') }}"><i class="fa fa-circle-o"></i>Equipos</a></li>
+            <li><a href="{{ route('Interno-equipos') }}"><i class="fa fa-circle-o"></i>Interno Equipos</a></li>
+            <li><a href="{{ route('fuentes') }}"><i class="fa fa-circle-o"></i>Fuentes</a></li>
+            <li><a href="{{ route('Interno-fuentes') }}"><i class="fa fa-circle-o"></i>Interno Fuentes</a></li>
           </ul>
         </li>
 

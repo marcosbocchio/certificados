@@ -97,9 +97,9 @@
                          <div class="col-md-3">
                             <div class="form-group">
                                 <label>Equipo (*)</label>
-                                    <v-select  v-model="interno_equipo" :options="interno_equipos_activos" label="nro_serie" @input="getFuente(interno_equipo.interno_fuente_id)">
+                                    <v-select  v-model="interno_equipo" :options="interno_equipos_activos" label="nro_interno" @input="getFuente(interno_equipo.interno_fuente_id)">
                                         <template slot="option" slot-scope="option">
-                                            <span class="upSelect">{{ option.nro_serie }}</span> <br> 
+                                            <span class="upSelect">{{ option.nro_interno }}</span> <br> 
                                             <span class="downSelect"> {{ option.equipo.codigo }} </span>
                                         </template>
                                     </v-select>

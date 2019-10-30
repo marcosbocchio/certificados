@@ -68,13 +68,6 @@ class MaterialesController extends Controller
             
           }
     }
-
-    public function destroy($id){
-
-      $material = Materiales::find($id);    
-      $material->delete();
-    }
-
     public function saveMaterial($request,$material){
 
       $material->codigo = $request['codigo'];
@@ -82,4 +75,11 @@ class MaterialesController extends Controller
       $material->save();
 
     }
+
+    public function destroy($id){
+
+      $material = Materiales::find($id);    
+      $material->delete();
+    }
+
 }
