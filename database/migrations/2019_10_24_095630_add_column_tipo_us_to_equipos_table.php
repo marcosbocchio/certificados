@@ -15,7 +15,7 @@ class AddColumnTipoUsToEquiposTable extends Migration
     {
         Schema::table('equipos', function (Blueprint $table) {
 
-            $table->string('tipo_us','15')                  
+            $table->string('tipo_lp','15')                  
                    ->after('descripcion')
                    ->nullable();         
 
@@ -32,7 +32,7 @@ class AddColumnTipoUsToEquiposTable extends Migration
     {
         Schema::table('equipos', function (Blueprint $table) {
             
-            $table->dropColumn('tipo_us');        
+            $table->dropColumn('tipo_lp');        
 
         });
     }
