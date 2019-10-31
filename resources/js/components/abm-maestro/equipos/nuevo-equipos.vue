@@ -17,7 +17,7 @@
                     <input autocomplete="off" type="text" name="descripcion" class="form-control" v-model="newRegistro.descripcion" value="">              
 
                     <label for="metodo_ensayo">Método de Ensayo (*)</label>      
-                    <v-select v-model="metodo_ensayos" label="metodo" :options="metodos_ensayos"></v-select> 
+                    <v-select v-model="metodo_ensayos" label="metodo" :options="metodos_ensayos" :input="setTipoLp()"></v-select> 
                     
                     <label for="tipo_lp">Tipo Lp</label>
                     <input v-model="newRegistro.tipo_lp" type="text" name="tipo_lp" class="form-control" :disabled="metodo_ensayos.metodo != 'LP'">               
@@ -80,7 +80,14 @@ export default {
 
                 $('#nuevo').modal('show');    
                       
-            },       
+            },   
+
+            setTipoLp : function () {
+               
+               if(this.metodo_ensayos.metodo != 'LP')
+                    this.newRegistro.tipo_lp = '';
+               
+            },    
 
             storeRegistro: function(){
 

@@ -3286,6 +3286,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.$forceUpdate();
       });
     },
+    setTipoLp: function setTipoLp() {
+      if (this.metodo_ensayos.metodo != 'LP') this.editRegistro.tipo_lp = '';
+    },
     storeRegistro: function storeRegistro() {
       var _this = this;
 
@@ -3399,6 +3402,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         'metodo': ''
       };
       $('#nuevo').modal('show');
+    },
+    setTipoLp: function setTipoLp() {
+      if (this.metodo_ensayos.metodo != 'LP') this.newRegistro.tipo_lp = '';
     },
     storeRegistro: function storeRegistro() {
       var _this = this;
@@ -52354,7 +52360,11 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("v-select", {
-                  attrs: { label: "metodo", options: _vm.metodos_ensayos },
+                  attrs: {
+                    label: "metodo",
+                    options: _vm.metodos_ensayos,
+                    input: _vm.setTipoLp()
+                  },
                   model: {
                     value: _vm.metodo_ensayos,
                     callback: function($$v) {
@@ -52554,7 +52564,11 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("v-select", {
-                  attrs: { label: "metodo", options: _vm.metodos_ensayos },
+                  attrs: {
+                    label: "metodo",
+                    options: _vm.metodos_ensayos,
+                    input: _vm.setTipoLp()
+                  },
                   model: {
                     value: _vm.metodo_ensayos,
                     callback: function($$v) {

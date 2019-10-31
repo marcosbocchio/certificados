@@ -17,7 +17,7 @@
                     <input autocomplete="off" type="text" name="descripcion" class="form-control" v-model="editRegistro.descripcion" value="">              
 
                     <label for="metodo_ensayo">Método de Ensayo (*)</label>      
-                    <v-select v-model="metodo_ensayos" label="metodo" :options="metodos_ensayos"></v-select> 
+                    <v-select v-model="metodo_ensayos" label="metodo" :options="metodos_ensayos" :input="setTipoLp()"></v-select> 
                     
                     <label for="tipo_lp">Tipo Lp</label>
                     <input v-model="editRegistro.tipo_lp" type="text" name="tipo_lp" class="form-control" :disabled="metodo_ensayos.metodo != 'LP'">             
@@ -82,18 +82,25 @@ export default {
     methods: {
            openModal : function(){
            console.log('entro en open modal');            
-            this.$nextTick(function () { 
+                this.$nextTick(function () { 
 
-                this.editRegistro.codigo = this.selectRegistro.codigo;
-                this.editRegistro.descripcion = this.selectRegistro.descripcion;
-                this.editRegistro.tipo_lp = this.selectRegistro.tipo_lp;         
-                this.metodo_ensayos = this.selectRegistro.metodo_ensayos;   
-              
-                $('#editar').modal('show');               
+                    this.editRegistro.codigo = this.selectRegistro.codigo;
+                    this.editRegistro.descripcion = this.selectRegistro.descripcion;
+                    this.editRegistro.tipo_lp = this.selectRegistro.tipo_lp;         
+                    this.metodo_ensayos = this.selectRegistro.metodo_ensayos;   
+                
+                    $('#editar').modal('show');               
 
-                this.$forceUpdate();
-            })
+                    this.$forceUpdate();
+                })
             },
+
+            setTipoLp : function () {
+               
+               if(this.metodo_ensayos.metodo != 'LP')
+                    this.editRegistro.tipo_lp = '';
+               
+            },  
 
             storeRegistro: function(){           
 
