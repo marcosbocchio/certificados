@@ -54,9 +54,7 @@ export default {
             'descripcion'  : '',
             'tipo_lp' : '',             
          },
-         metodo_ensayos :{
-             'metodo' : '',            
-         },          
+         metodo_ensayos :'',          
         
         errors:{},        
          }

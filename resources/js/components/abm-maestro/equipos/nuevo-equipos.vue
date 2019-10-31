@@ -45,9 +45,7 @@ export default {
             'descripcion'  : '',
             'tipo_lp' : '',             
          },
-         metodo_ensayos :{
-             'metodo' : '',            
-         },          
+         metodo_ensayos :'',          
         
         errors:{},        
          }
@@ -73,9 +71,7 @@ export default {
                     'tipo_lp' : '',    
                 };
 
-                this.metodo_ensayos = {
-                        'metodo' : '',            
-                    };  
+                this.metodo_ensayos = '';  
               
 
                 $('#nuevo').modal('show');    

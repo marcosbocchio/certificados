@@ -45,10 +45,7 @@ export default {
             'curie' : '', 
             'activo_sn' : true,      
          },
-         fuente :{
-             'codigo' : '',
-             'descripcion':''
-         }, 
+        fuente :'',      
         errors:{},        
          }
     
@@ -71,10 +68,7 @@ export default {
                     'curie' : '100', 
                     'activo_sn' : true,      
                 };
-                this.fuente = {
-                    'codigo' : '',
-                    'descripcion':''
-                };    
+                this.fuente = '';    
 
                 $('#nuevo').modal('show');    
                       

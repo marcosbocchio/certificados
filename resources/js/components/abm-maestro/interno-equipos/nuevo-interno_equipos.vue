@@ -62,14 +62,8 @@ export default {
             'amperaje' : '', 
             'activo_sn' : true,      
          },
-         equipo :{
-             'codigo' : '',
-             'descripcion':''
-         }, 
-         
-         interno_fuente :{
-             'nro_serie' : '',            
-         }, 
+         equipo :'',          
+         interno_fuente :'', 
         errors:{},        
          }
     
@@ -94,13 +88,8 @@ export default {
                     'amperaje' : '', 
                     'activo_sn' : true,      
                 };
-                this.equipo = {
-                    'codigo' : '',
-                    'descripcion':''
-                };  
-                this.interno_fuente = {
-                    'nro_serie' : '',           
-                };  
+                this.equipo = '';  
+                this.interno_fuente ='';  
 
                 $('#nuevo').modal('show');    
                       

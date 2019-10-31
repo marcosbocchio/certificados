@@ -3261,9 +3261,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         'descripcion': '',
         'tipo_lp': ''
       },
-      metodo_ensayos: {
-        'metodo': ''
-      },
+      metodo_ensayos: '',
       errors: {}
     };
   },
@@ -3381,9 +3379,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         'descripcion': '',
         'tipo_lp': ''
       },
-      metodo_ensayos: {
-        'metodo': ''
-      },
+      metodo_ensayos: '',
       errors: {}
     };
   },
@@ -3398,9 +3394,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         'descripcion': '',
         'tipo_lp': ''
       };
-      this.metodo_ensayos = {
-        'metodo': ''
-      };
+      this.metodo_ensayos = '';
       $('#nuevo').modal('show');
     },
     setTipoLp: function setTipoLp() {
@@ -3853,10 +3847,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         'amperaje': '',
         'activo_sn': true
       },
-      equipo: {
-        'codigo': '',
-        'descripcion': ''
-      },
+      equipo: '',
       interno_fuente: {
         'nro_serie': ''
       },
@@ -3997,13 +3988,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         'amperaje': '',
         'activo_sn': true
       },
-      equipo: {
-        'codigo': '',
-        'descripcion': ''
-      },
-      interno_fuente: {
-        'nro_serie': ''
-      },
+      equipo: '',
+      interno_fuente: '',
       errors: {}
     };
   },
@@ -4020,13 +4006,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         'amperaje': '',
         'activo_sn': true
       };
-      this.equipo = {
-        'codigo': '',
-        'descripcion': ''
-      };
-      this.interno_fuente = {
-        'nro_serie': ''
-      };
+      this.equipo = '';
+      this.interno_fuente = '';
       $('#nuevo').modal('show');
     },
     storeRegistro: function storeRegistro() {
@@ -4324,10 +4305,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         'curie': '',
         'activo_sn': true
       },
-      fuente: {
-        'codigo': '',
-        'descripcion': ''
-      },
+      fuente: '',
       errors: {}
     };
   },
@@ -4342,10 +4320,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         'curie': '100',
         'activo_sn': true
       };
-      this.fuente = {
-        'codigo': '',
-        'descripcion': ''
-      };
+      this.fuente = '';
       $('#nuevo').modal('show');
     },
     storeRegistro: function storeRegistro() {
