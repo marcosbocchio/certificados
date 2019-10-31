@@ -3848,9 +3848,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         'activo_sn': true
       },
       equipo: '',
-      interno_fuente: {
-        'nro_serie': ''
-      },
+      interno_fuente: '',
       errors: {}
     };
   },
@@ -4187,10 +4185,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         'curie': '',
         'activo_sn': true
       },
-      fuente: {
-        'codigo': '',
-        'descripcion': ''
-      },
+      fuente: '',
       errors: {}
     };
   },

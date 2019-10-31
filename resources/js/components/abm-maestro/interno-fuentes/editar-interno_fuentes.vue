@@ -54,10 +54,7 @@ export default {
             'curie' : '', 
             'activo_sn' : true,      
          },
-         fuente :{
-             'codigo' : '',
-             'descripcion':''
-         },       
+         fuente :'',       
         errors:{},        
          }
     

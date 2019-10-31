@@ -71,11 +71,8 @@ export default {
             'amperaje' : '', 
             'activo_sn' : true,      
          },
-         equipo :'', 
-         
-         interno_fuente :{
-             'nro_serie' : '',            
-         }, 
+         equipo :'',          
+         interno_fuente :'', 
         errors:{},        
          }
     
