@@ -53841,10 +53841,10 @@ var render = function() {
                 _c("td", { staticStyle: { "text-align": "center" } }, [
                   registro.activo_sn
                     ? _c("div", [
-                        _vm._v("\n                  SI\n              ")
+                        _vm._v("\r\n                  SI\r\n              ")
                       ])
                     : _c("div", [
-                        _vm._v("\n                  NO   \n              ")
+                        _vm._v("\r\n                  NO   \r\n              ")
                       ])
                 ]),
                 _vm._v(" "),
@@ -54412,10 +54412,10 @@ var render = function() {
                 _c("td", { staticStyle: { "text-align": "center" } }, [
                   registro.activo_sn
                     ? _c("div", [
-                        _vm._v("\n                  SI\n              ")
+                        _vm._v("\r\n                  SI\r\n              ")
                       ])
                     : _c("div", [
-                        _vm._v("\n                  NO   \n              ")
+                        _vm._v("\r\n                  NO   \r\n              ")
                       ])
                 ]),
                 _vm._v(" "),
@@ -91138,8 +91138,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_lazyload__WEBPACK_IMPORTED_MO
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuejs_progress_bar__WEBPACK_IMPORTED_MODULE_5___default.a);
 var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
   state: {
-    url:  false ? undefined : "http://localhost:8000/api",
-    AppUrl:  false ? undefined : "http://localhost:8000",
+    url:  false ? undefined : "http://certificados.test/api",
+    AppUrl:  false ? undefined : "http://certificados.test",
     provincias: [],
     localidades: [],
     materiales: [],
@@ -95891,8 +95891,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/sass/toastr.scss */"./resources/sass/toastr.scss");
+__webpack_require__(/*! C:\Users\bocch\code\certificados\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\bocch\code\certificados\resources\sass\toastr.scss */"./resources/sass/toastr.scss");
 
 
 /***/ })

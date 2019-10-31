@@ -16,6 +16,7 @@ use App\Fuentes;
 use App\TipoPeliculas;
 use App\DiametrosEspesor;
 use App\InternoEquipos;
+use App\InternoFuentes;
 use App\Icis;
 use App\Tecnicas;
 use App\EjecutorEnsayo;
@@ -47,7 +48,8 @@ class PdfInformesRiController extends Controller
         $ot_procedimiento_propio = OtProcedimientosPropios::findOrFail($informe->procedimiento_informe_id);
         $procedimiento_inf = Documentaciones::findOrFail($ot_procedimiento_propio->documentacion_id);
         $interno_equipo = InternoEquipos::where('id',$informe->interno_equipo_id)->with('equipo')->first();
-        $fuente = Fuentes::find($informe_ri->interno_fuente_id);
+        $interno_fuente = InternoFuentes::find($informe_ri->interno_fuente_id);
+        $fuente = Fuentes::find($interno_fuente->fuente_id);
         $tipo_pelicula = TipoPeliculas::findOrFail($informe_ri->tipo_pelicula_id);     
         $diametro_espesor = DiametrosEspesor::findOrFail($informe->diametro_espesor_id);
         $ici = Icis::findOrFail($informe_ri->ici_id);
