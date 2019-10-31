@@ -18,7 +18,7 @@
                     <input autocomplete="off" v-model="editRegistro.nro_serie" type="text" name="numero_serie" class="form-control" value="">                
 
                     <label for="curie">Curie</label>
-                    <input v-model="editRegistro.curie" type="number" name="curie" class="form-control" value="" step="2">                
+                    <input v-model="editRegistro.curie" type="number" name="curie" class="form-control" value="" step="0.01">                
               
                     <label for="name">Fuente (*)</label>      
                     <v-select v-model="fuente" label="codigo" :options="fuentes"></v-select>
