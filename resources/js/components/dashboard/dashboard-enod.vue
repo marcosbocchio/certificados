@@ -6,7 +6,6 @@
           <div class="small-box bg-aqua">
             <div class="inner">
               <h3>{{ CantOperadores }}</h3>
-
               <p>Operadores</p>
             </div>
             <div class="icon">
@@ -21,13 +20,13 @@
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3>{{ CantSoldadores }} / {{ CantUsuariosCliente }}</h3>
-              <p>Soldadores / Usuarios Cliente</p>
+              <h3>{{ CantInternoEquipos }}</h3>
+              <p>Equipos</p>
             </div>
             <div class="icon">
-              <i class="ion ion-person-add"></i>
+              <i class="fa fa-wrench"></i>
             </div>
-            <a :href="AppUrl + '/soldadores/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a :href="AppUrl + '/interno_equipos/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
 
@@ -139,7 +138,7 @@
                                     <th>PROYECTO</th>  
                                     <th>FECHA</th>     
                                     <th>ESTADO</th>                        
-                                    <th colspan="3">ACCIÓN</th>
+                                    <th colspan="4">ACCIÓN</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -152,8 +151,10 @@
                                     <td> {{ot.estado}}</td>                                
                                             
                                     <td width="10px"> <a :href="AppUrl + '/area/enod/ots/' + ot.id + '/edit' "   class="btn btn-warning btn-sm" title="Editar"><span class="fa fa-edit"></span></a></td>
+                                    <td width="10px"> <a :href="AppUrl + '/soldadores/ot/' + ot_id_selected"   class="btn btn-default btn-sm" title="Soldadores/Usuarios Cliente"><span class="fa fa-user"></span></a></td>
                                     <td width="10px"> <a :href="AppUrl + '/api/pdf/ot/' + ot.id " target="_blank"  class="btn btn-default btn-sm" title="pdf"><span class="fa fa-file-pdf-o"></span></a></td>
                                     <td v-if="!ot.firma" width="10px"> <a  @click="firmar(k)"  class="btn btn-default btn-sm" title="Firmar"><span class="glyphicon glyphicon-pencil"></span> </a></td>   
+
 
                                 </tr>
                         </tbody>
@@ -185,7 +186,7 @@ export default {
 
     computed :{
 
-        ...mapState(['url','AppUrl','CantInformes','CantSoldadores','CantOperadores','CantRemitos','CantProcedimientos','CantPartes','CantDocumentaciones','CantUsuariosCliente'])
+        ...mapState(['url','AppUrl','CantInformes','CantInternoEquipos','CantOperadores','CantRemitos','CantProcedimientos','CantPartes','CantDocumentaciones'])
         
      },
     
@@ -194,8 +195,7 @@ export default {
       ot_id_selected: function (ot_id) {  
               
         this.$store.dispatch('loadContarOperadores',ot_id);
-        this.$store.dispatch('loadContarSoldadores',ot_id);
-        this.$store.dispatch('loadContarUsuariosCliente',ot_id);
+        this.$store.dispatch('loadContarInternoEquipos',ot_id);
         this.$store.dispatch('loadContarProcedimientos',ot_id);
         this.$store.dispatch('loadContarDocumentaciones',ot_id);
         this.$store.dispatch('loadContarRemitos',ot_id);

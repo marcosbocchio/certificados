@@ -21,21 +21,11 @@ class AddForeignKeyInformesRiTable extends Migration
                    
             $table->foreign('informe_id')
                    ->references('id')
-                   ->on('informes');                       
-
-            
-            $table->bigInteger('interno_fuente_id')
-                   ->unsigned()
-                   ->nullable()
-                   ->after('informe_id');
-                   
-            $table->foreign('interno_fuente_id')
-                   ->references('id')
-                   ->on('interno_fuentes');
+                   ->on('informes');           
 
             $table->bigInteger('tipo_pelicula_id')
                    ->unsigned()
-                   ->after('interno_fuente_id');
+                   ->after('informe_id');
                    
             $table->foreign('tipo_pelicula_id')
                    ->references('id')

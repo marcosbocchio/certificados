@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddColumnOtIdToIntenoEquiposTable extends Migration
+class CreateTrazabilidadEquipoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class AddColumnOtIdToIntenoEquiposTable extends Migration
      */
     public function up()
     {
-        Schema::table('inteno_equipos', function (Blueprint $table) {
-            //
+        Schema::create('trazabilidad_equipo', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +26,6 @@ class AddColumnOtIdToIntenoEquiposTable extends Migration
      */
     public function down()
     {
-        Schema::table('inteno_equipos', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('trazabilidad_equipo');
     }
 }

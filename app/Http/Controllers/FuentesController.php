@@ -66,7 +66,7 @@ class FuentesController extends Controller
           DB::beginTransaction();
           try { 
   
-              $this->saveMaterial($request,$fuente);
+              $this->saveFuente($request,$fuente);
               DB::commit(); 
   
           } catch (Exception $e) {
@@ -84,7 +84,7 @@ class FuentesController extends Controller
       
           DB::beginTransaction();
           try {
-              $this->saveMaterial($request,$fuente);
+              $this->saveFuente($request,$fuente);
               DB::commit(); 
       
             } catch (Exception $e) {
@@ -94,7 +94,7 @@ class FuentesController extends Controller
               
             }
       }
-      public function saveMaterial($request,$fuente){
+      public function saveFuente($request,$fuente){
   
         $fuente->codigo = $request['codigo'];
         $fuente->descripcion = $request['descripcion'];

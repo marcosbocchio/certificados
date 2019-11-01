@@ -26,6 +26,23 @@ toastr.options = {
   "hideMethod": "fadeOut"
 }
 
+const toastrWarning = {
+  "closeButton": true,
+  "debug": false,
+  "newestOnTop": false,
+  "progressBar": false,
+  "positionClass": "toast-bottom-right",
+  "preventDuplicates": false,
+  "onclick": null,
+  "showDuration": "300",
+  "hideDuration": "1000",
+  "timeOut": "5000",
+  "extendedTimeOut": "1000",
+  "showEasing": "swing",
+  "hideEasing": "linear",
+  "showMethod": "fadeIn",
+  "hideMethod": "fadeOut"
+}
 
 window.Vue = require('vue');
 
@@ -120,6 +137,7 @@ Vue.component('abm-doc', require('./components/documentaciones/abm-doc.vue').def
 
 Vue.component('dashboard-enod', require('./components/dashboard/dashboard-enod').default);
 Vue.component('ot-operarios', require('./components/dashboard/operarios/ot-operarios').default);
+Vue.component('ot-interno-equipos', require('./components/dashboard/interno-equipos/ot-interno-equipos').default);
 Vue.component('ot-informes', require('./components/dashboard/informes/ot-informes').default);
 Vue.component('ot-remitos', require('./components/dashboard/remitos/ot-remitos').default);
 Vue.component('ot-partes', require('./components/dashboard/partes/ot-partes').default);
@@ -187,6 +205,7 @@ Vue.use(VueLazyLoad);
 import Vuex from 'vuex' ;
 import vSelect from 'vue-select';
 import ProgressBar from 'vuejs-progress-bar'
+import { resolve } from 'url';
 Vue.use(ProgressBar)
 
 const store = new Vuex.Store({
@@ -210,6 +229,7 @@ state: {
         metodos_ensayos:[],
         norma_evaluaciones:[],
         norma_ensayos:[],
+        interno_equipo_show:{},
         interno_equipos_activos:[],
         interno_fuentes_activos:[],
         fuentes:[],
@@ -223,6 +243,7 @@ state: {
         CantInformes:'0',
         CantOperadores :'0',
         CantRemitos:'0',
+        CantInternoEquipos:'0',
         CantPartes:'0',
         CantSoldadores:'0',
         CantDocumentaciones:'0',
@@ -339,7 +360,7 @@ actions : {
         },
 
         loadInternoEquiposActivos({
-          commit},metodo) {
+          commit},metodo = null) {
           axios.defaults.baseURL = store.state.url ;
           var urlRegistros = 'interno_equipos/metodo/' + metodo + '/activos' + '?api_token=' + Laravel.user.api_token;         
           console.log(urlRegistros);
@@ -347,6 +368,20 @@ actions : {
             console.log(response.data);
             commit('getInternoEquiposActivos', response.data)           
           })
+        }, 
+
+        loadUbicacionInternoEquipo({
+          commit},id) {
+          axios.defaults.baseURL = store.state.url ;
+          var urlRegistros = 'interno_equipos/' + id + '?api_token=' + Laravel.user.api_token;         
+          console.log(urlRegistros);
+          return new Promise((resolve, reject) => {
+              axios.get(urlRegistros).then((response) => {
+                console.log(response.data);
+                commit('getUbicacionInternoEquipo', response.data) ;   
+                resolve()       
+              })
+            })
         }, 
         
         loadInternoFuentesActivos({
@@ -480,6 +515,15 @@ actions : {
           })
         },
 
+        loadContarInternoEquipos({
+          commit},ot_id) {
+           axios.defaults.baseURL = store.state.url ;
+           var urlRegistros = 'interno_equipos/ot/' + ot_id +'/total' + '?api_token=' + Laravel.user.api_token;             
+           axios.get(urlRegistros).then((response) => {
+           commit('ContarInternoEquipos', response.data)           
+          })
+        },
+
         loadContarRemitos({
           commit},ot_id) {
            axios.defaults.baseURL = store.state.url ;
@@ -543,6 +587,10 @@ actions : {
       getInternoEquiposActivos(state, interno_equipos_activos) {
         state.interno_equipos_activos = interno_equipos_activos
       },
+
+      getUbicacionInternoEquipo(state, interno_equipo_show) {
+        state.interno_equipo_show = interno_equipo_show
+      },      
 
       getInternoFuentesActivos(state, interno_fuentes_activos) {
         state.interno_fuentes_activos = interno_fuentes_activos
@@ -609,6 +657,10 @@ actions : {
 
       ContarUsuariosCliente(state, CantUsuariosCliente) {
         state.CantUsuariosCliente = CantUsuariosCliente
+      },
+
+      ContarInternoEquipos(state, CantInternoEquipos) {
+        state.CantInternoEquipos = CantInternoEquipos
       },
 
       ContarProcedimientos(state, CantProcedimientos) {

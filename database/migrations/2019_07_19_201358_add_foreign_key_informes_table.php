@@ -38,19 +38,11 @@ class AddForeignKeyInformesTable extends Migration
                   
            $table->foreign('diametro_espesor_id')
                   ->references('id')
-                  ->on('diametros_espesor');
-
-           $table->bigInteger('interno_equipo_id')
-                   ->unsigned()
-                   ->after('diametro_espesor_id');
-                  
-           $table->foreign('interno_equipo_id')
-                  ->references('id')
-                  ->on('interno_equipos');   
+                  ->on('diametros_espesor');          
             
             $table->bigInteger('metodo_ensayo_id')
                     ->unsigned()
-                    ->after('equipo_id');
+                    ->after('diametro_espesor_id');
                    
             $table->foreign('metodo_ensayo_id')
                    ->references('id')

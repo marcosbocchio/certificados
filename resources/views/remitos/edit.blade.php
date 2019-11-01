@@ -19,6 +19,7 @@
      :otdata  ="{{$ot}}"    
      :remitodata = "{{$remito}}" 
      :detalledata = "{{$detalle_remito}}"
+     :remito_interno_equipos_data = "{{$remito_interno_equipos}}"
      editmode  
     
   ></remitos>

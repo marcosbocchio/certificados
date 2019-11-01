@@ -84,9 +84,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('soldadores/cliente/{id}','SoldadoresController@SoldadoresCliente');
     Route::post('soldadores/cliente/{id}','SoldadoresController@store');
 
-    Route::get('interno_equipos/metodo/{metodo}/activos', 'InternoEquiposController@getEquiposMetodoActivos');   
-    Route::get('interno_equipos/paginate', 'InternoEquiposController@paginate');
-    Route::resource('interno_equipos', 'InternoEquiposController');
+   
 
     Route::get('equipos/metodo/{metodo}', 'EquiposController@EquiposMetodo');
 
@@ -115,7 +113,15 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('documentaciones/ot','DocumentacionesController@DocumentacionesDeOt'); 
     Route::resource('documentaciones', 'DocumentacionesController');   
     Route::get('documentaciones/ot_operarios/{ot_id}/{user_id}', 'DocumentacionesController@getDocOtOperarios');
+    
+    Route::get('interno_equipos/metodo/{metodo}/activos', 'InternoEquiposController@getEquiposMetodoActivos');   
+    Route::get('interno_equipos/paginate', 'InternoEquiposController@paginate');
+    Route::resource('interno_equipos', 'InternoEquiposController');
       
+    //interno Equipos
+
+    Route::get('interno_equipos/ot/{ot_id}/total', 'InternoEquiposController@OtInternoEquiposTotal');
+    Route::post('interno_equipos/ot/{ot_id}', 'InternoEquiposController@StoreOtInternoEquipos');
 
     //Soldadores
     Route::resource('ot_soldadores', 'OtSoldadoresController');  

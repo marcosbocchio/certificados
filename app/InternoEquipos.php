@@ -14,11 +14,17 @@ class InternoEquipos extends Model
         
       }
 
-   public function internoFuente(){
+    public function internoFuente(){
 
-      return $this->belongsTo('App\InternoFuentes','interno_fuente_id','id');
-    
-    }
+        return $this->belongsTo('App\InternoFuentes','interno_fuente_id','id');
+      
+      }
+
+    public function ot(){
+
+        return $this->belongsTo('App\Ots','ot_id','id');
+      
+      }
     
   
 }

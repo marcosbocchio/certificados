@@ -72,6 +72,7 @@ class InternoFuentesController extends Controller
         try { 
     
             $this->saveInternoFuente($request,$interno_fuente);
+            (new \App\Http\Controllers\TrazabilidadCurieController)->saveTrazabilidadCurie($interno_fuente->id,$request['curie']);
             DB::commit(); 
     
           } catch (Exception $e) {
@@ -130,6 +131,7 @@ class InternoFuentesController extends Controller
           DB::beginTransaction();
           try {
               $this->saveInternoFuente($request,$interno_fuente);
+              (new \App\Http\Controllers\TrazabilidadCurieController)->saveTrazabilidadCurie($interno_fuente->id,$request['curie']);
               DB::commit(); 
       
             } catch (Exception $e) {

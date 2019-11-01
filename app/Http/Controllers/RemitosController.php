@@ -9,6 +9,9 @@ use App\Remitos;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\DetalleRemitos;
+use App\InternoEquipos;
+use App\TrazabilidadEquipo;
+use App\RemitoInternoEquipos;
 
 class RemitosController extends Controller
 {
@@ -78,18 +81,18 @@ class RemitosController extends Controller
 
      
       $detalles = $request->detalles;
-
-        // return $request;
+      $interno_equipos = $request->interno_equipos;
+      
 
         $remito = new Remitos;
 
       DB::beginTransaction();
         try {          
         
-          $remito = $this->saveRemito($request,$remito);    
-        
+          $remito = $this->saveRemito($request,$remito);           
           $this->saveDetalle($detalles,$remito);
-    
+          $this->saveInternoEquipos($interno_equipos,$remito);
+          $this->updateInternoEquipos($interno_equipos,$remito);
           DB::commit(); 
     
         } catch (Exception $e) {
@@ -139,6 +142,42 @@ class RemitosController extends Controller
 
      }
 
+     public function saveInternoEquipos($interno_equipos,$remito){
+
+      foreach ($interno_equipos as $item ) {
+       
+        $remito_interno_equipo = new RemitoInternoEquipos;                
+        $remito_interno_equipo->interno_equipo_id  = $item['id'];
+        $remito_interno_equipo->remito_id  = $remito->id;    
+        $remito_interno_equipo->save();          
+
+      }
+ }
+
+     public function updateInternoEquipos($interno_equipos,$remito){
+
+          foreach ($interno_equipos as $item ) {
+           
+            $interno_equipo = InternoEquipos::find($item['id']);                
+            $interno_equipo->ot_id  = $remito->ot_id;;     
+            $interno_equipo->save();  
+            
+            $this->saveTrazabilidadEquipo($interno_equipo,$remito);
+
+    
+          }
+     }
+
+     public function saveTrazabilidadEquipo($interno_equipo,$remito){
+
+         $trazabilidad_equipo = new TrazabilidadEquipo;
+
+         $trazabilidad_equipo->ot_id = $remito->ot_id;
+         $trazabilidad_equipo->interno_equipo_id = $interno_equipo->id;
+         $trazabilidad_equipo->user_id = $remito->user_id;
+         $trazabilidad_equipo->save();      
+     }
+
     /**
      * Display the specified resource.
      *
@@ -165,16 +204,31 @@ class RemitosController extends Controller
         $remito = Remitos::findOrFail($id);
 
         $detalle_remito = $this->getDetalle($remito->id);
+        $remito_interno_equipos = $this->getRemitoInternoEquipos($remito->id);
         
      
         return view('remitos.edit', compact('ot',                                        
                                             'user',   
                                             'remito', 
-                                            'detalle_remito',                                      
+                                            'detalle_remito', 
+                                            'remito_interno_equipos',                                     
                                             'header_titulo',
                                             'header_descripcion'));
     }
 
+    public function getRemitoInternoEquipos($id){
+
+
+      $remito_interno_equipos = InternoEquipos::join('remito_interno_equipos','remito_interno_equipos.interno_equipo_id','=','interno_equipos.id')
+                                                ->join('remitos','remitos.id','=','remito_interno_equipos.remito_id')
+                                                ->where('remitos.id',$id)
+                                                ->select('interno_equipos.*')
+                                                ->with('equipo')
+                                                ->get();
+
+        return $remito_interno_equipos; 
+
+    }
 
     public function getDetalle($id){
 
@@ -224,6 +278,7 @@ class RemitosController extends Controller
         
         $remito = Remitos::where('id',$id)->first();
         $detalles = $request->detalles;
+        $interno_equipos = $request->interno_equipos;
         
         DB::beginTransaction();
         try {     
@@ -231,6 +286,9 @@ class RemitosController extends Controller
             $remito = $this->saveRemito($request,$remito);
             DetalleRemitos::where('remito_id',$id)->delete();           
             $this->saveDetalle($detalles,$remito);
+            RemitoInternoEquipos::where('remito_id',$id)->delete();
+            $this->saveInternoEquipos($interno_equipos,$remito);
+            $this->updateInternoEquipos($interno_equipos,$remito);
            
            
           DB::commit();

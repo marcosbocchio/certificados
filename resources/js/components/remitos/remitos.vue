@@ -67,19 +67,20 @@
                             </v-select>
                             </div>
                         </div> 
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <div class="form-group"> 
                                 <label>Cant.</label>                 
                                 <input v-model="cantidad_productos" type="number" class="form-control" id="cantidad_productos" placeholder="">
                             </div>
-                        </div>
+                        </div>                     
                         <div class="col-md-1"> 
-                            <div class="form-group">                    
-                            <span>
-                                <i class="fa fa-plus-circle" @click="addProducto()"></i>
-                            </span>
+                                <div class="form-group">  
+                                    <p>&nbsp;</p>                  
+                                    <span>
+                                    <a title="Agregar Profucto" @click="addProducto()"> <app-icon img="plus-circle" color="black"></app-icon> </a>                        
+                                    </span>
+                                </div>
                             </div>
-                        </div> 
                             <div v-show="inputsProductos.length">
                                 <div class="col-md-12">
                                     <div class="table-responsive">
@@ -105,6 +106,53 @@
                                 </div>
                             </div>   
                        </div>
+                    </div>    
+                    <div class="box box-danger">
+                        <div class="box-body">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Equipo (*)</label>
+                                    <v-select  v-model="interno_equipo" :options="interno_equipos_activos" label="nro_interno">
+                                        <template slot="option" slot-scope="option">
+                                            <span class="upSelect">{{ option.nro_interno }}</span> <br> 
+                                            <span class="downSelect"> {{ option.equipo.codigo }} </span>
+                                        </template>
+                                    </v-select>
+                                </div>
+                            </div>
+                           <div class="col-md-1"> 
+                                <div class="form-group">  
+                                    <p>&nbsp;</p>                  
+                                    <span>
+                                    <a title="Agregar Equipo" @click="addEquipo(interno_equipo.id)"> <app-icon img="plus-circle" color="black"></app-icon> </a>                        
+                                    </span>
+                                </div>
+                            </div>                           
+                       
+                            <div v-show="inputsEquipos.length">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>N° Int.</th>                                         
+                                                <th>Equipo</th>                                                             
+                                                <th colspan="2">&nbsp;</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="(inputsEquipo,k) in inputsEquipos" :key="k">
+                                                <td> {{ inputsEquipo.nro_interno}}</td>                                                        
+                                                <td> {{ inputsEquipo.equipo.codigo}}</td>                                                                          
+                                                <td> <i class="fa fa-minus-circle" @click="removeEquipo(k)" ></i></td>
+                                            </tr>
+                                        </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div> 
+
+                        </div>
                     </div>     
                     <button class="btn btn-primary" type="submit">Guardar</button>   
             </form>    
@@ -114,6 +162,10 @@
 </template>
 
 <script>
+
+
+import { toastrWarning,toastrDefault } from '../toastrConfig';
+
 import Datepicker from 'vuejs-datepicker';
 import {mapState} from 'vuex';
 import {en, es} from 'vuejs-datepicker/dist/locale'
@@ -145,6 +197,11 @@ export default {
        detalledata : {
       type : [ Array ],  
       required : false
+      },
+
+      remito_interno_equipos_data : {
+      type : [ Array ],  
+      required : false
       }
 
     },
@@ -162,10 +219,12 @@ export default {
         producto:'',
         medida:'',
         cantidad_productos:'',
+        interno_equipo:'',        
 
         productos:[],
         medidas:[],
         inputsProductos:[],
+        inputsEquipos:[],
 
         numero_formatedo:'',
         prefijo_formateado:''
@@ -174,6 +233,7 @@ export default {
     created : function() {
 
         this.getProductos();  
+        this.$store.dispatch('loadInternoEquiposActivos');       
         this.setEdit();   
 
     },
@@ -189,8 +249,7 @@ export default {
 
             if(val){
                
-                this.getNumeroRemito();
-              
+                this.getNumeroRemito();              
               
             }
         }
@@ -198,7 +257,7 @@ export default {
 
     computed :{
 
-        ...mapState(['url','AppUrl']),
+        ...mapState(['url','AppUrl','interno_equipos_activos','interno_equipo_show']),
        
      },
 
@@ -214,7 +273,8 @@ export default {
                this.prefijo = this.remitodata.prefijo;
                this.receptor = this.remitodata.receptor;
                this.destino = this.remitodata.destino;
-               this.inputsProductos = this.detalledata;                
+               this.inputsProductos = this.detalledata;  
+               this.inputsEquipos = this.remito_interno_equipos_data;              
                this.formatearPrefijo(this.prefijo,4);
                this.formatearNumero(this.numero,8);
 
@@ -318,8 +378,60 @@ export default {
 
             },
 
+        existeEquipo : function(id){
+
+            let existe = false;
+            this.inputsEquipos.forEach(function (item) {           
+               
+                if(item.id == id){              
+                    existe = true ;
+                }
+                
+            });
+
+            return existe;
+        },    
+
+        addEquipo(id) {        
+                
+        
+            if (this.existeEquipo(id)){
+                    toastr.error('El Equipo existe en el Remito');  
+            }else if(this.interno_equipo){
+                
+                this.inputsEquipos.push({ 
+
+                    ... this.interno_equipo,       
+                        
+                    });
+                this.getUbicacionEquipo()
+                this.interno_equipo=''; 
+            }
+
+
+         },
+
+        getUbicacionEquipo() {
+           
+         
+                  this.$store.dispatch('loadUbicacionInternoEquipo',this.interno_equipo.id)
+                  .then(() => {
+                    console.log('entro en get ubicacion');    
+                    console.log(this.interno_equipo_show.ot_id + ' = ' + this.otdata.id);
+                    if((this.interno_equipo_show.ot_id != null) && (this.interno_equipo_show.ot_id !=this.otdata.id)){
+                        toastr.options = toastrWarning;
+                        toastr.warning('El Equipo ' + this.interno_equipo_show.nro_interno + ' se encuentra en la OT N° ' + this.interno_equipo_show.ot.numero);  
+                        toastr.options = toastrDefault;
+                    }
+                    });
+
+        },
         removeProducto(index) {
             this.inputsProductos.splice(index, 1);
+        },
+
+        removeEquipo(index) {
+            this.inputsEquipos.splice(index, 1);
         },
 
         Store : function(){
@@ -338,7 +450,8 @@ export default {
                 'numero'          : this.numero,     
                 'receptor'        : this.receptor,
                 'destino'         : this.destino,          
-                'detalles'        : this.inputsProductos,    
+                'detalles'        : this.inputsProductos,  
+                'interno_equipos'         : this.inputsEquipos,  
           }
           
           }).then(response => {
@@ -380,7 +493,9 @@ export default {
                 'numero'          : this.numero,     
                 'receptor'        : this.receptor,
                 'destino'         : this.destino,          
-                'detalles'        : this.inputsProductos,                     
+                'detalles'        : this.inputsProductos,
+                'interno_equipos' : this.inputsEquipos,  
+                     
           }}
           
       
@@ -406,11 +521,7 @@ export default {
            }); 
 
         }
-    }
-
-
-
-    
+    }    
 }
 </script>
 
