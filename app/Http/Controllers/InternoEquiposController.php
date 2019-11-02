@@ -23,7 +23,7 @@ class InternoEquiposController extends Controller
 
     public function paginate(Request $request){
       
-        return InternoEquipos::orderBy('id','DESC')->with('ot.localidad.provincia')->with('equipo')->with('internoFuente.fuente')->paginate(10);
+        return InternoEquipos::orderBy('id','DESC')->with('ot.localidad.provincia','ot.cliente')->with('equipo')->with('internoFuente.fuente')->paginate(10);
   
       }
 

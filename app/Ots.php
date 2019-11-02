@@ -10,7 +10,7 @@ class Ots extends Model
 
     public function cliente()
     {
-        return $this->belongsTo('App\Clientes');
+        return $this->belongsTo('App\Clientes','cliente_id','id');
     }
 
     public function localidad(){

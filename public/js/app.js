@@ -4114,6 +4114,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -55562,6 +55565,12 @@ var render = function() {
                 _vm._v(" "),
                 registro.ot
                   ? _c("td", [
+                      _vm._v(_vm._s(registro.ot.cliente.nombre_fantasia))
+                    ])
+                  : _c("td"),
+                _vm._v(" "),
+                registro.ot
+                  ? _c("td", [
                       _c(
                         "a",
                         {
@@ -55587,7 +55596,9 @@ var render = function() {
                         ]
                       ),
                       _vm._v(
-                        "\n              " +
+                        "\n                " +
+                          _vm._s(registro.ot.localidad.localidad) +
+                          " / " +
                           _vm._s(registro.ot.localidad.provincia.provincia) +
                           "\n              "
                       )
@@ -55668,6 +55679,8 @@ var staticRenderFns = [
         _c("th", [_vm._v("Curie")]),
         _vm._v(" "),
         _c("th", [_vm._v("N° OT")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Cliente")]),
         _vm._v(" "),
         _c("th", [_vm._v("Ubicación")]),
         _vm._v(" "),
