@@ -8,6 +8,7 @@ use App\Remitos;
 use App\Ots;
 use App\Clientes;
 use App\DetalleRemitos;
+use App\RemitoInternoEquipos;
 use App\User;
 
 class PdfRemitosController extends Controller
@@ -28,19 +29,24 @@ class PdfRemitosController extends Controller
                                     INNER JOIN unidades_medidas ON unidades_medidas.id = medidas.unidades_medida_id
                                     WHERE 
                                     detalle_remitos.remito_id =:id',['id' => $remito->id ]);
+
+        $remito_interno_equipos = RemitoInternoEquipos::where('remito_id',$id)->with('InternoEquipo.equipo')->get();      
+        
+       
+
       if($remito->interno_sn){
 
         $ot = Ots::find($remito->ot_id);
         $cliente = Clientes::find($ot->cliente_id);
         $user = User::find($remito->user_id);
 
-        $pdf = \PDF::loadView('reportes.remitos.remito-interno',compact('remito','ot','cliente','detalle','user'))->setPaper('a4','portrait')->setWarnings(false);  
+        $pdf = \PDF::loadView('reportes.remitos.remito-interno',compact('remito','ot','cliente','detalle','remito_interno_equipos','user'))->setPaper('a4','portrait')->setWarnings(false);  
 
         return $pdf->stream();
 
       }else{
 
-      return  view('reportes.remitos.remito-externo',compact('remito','detalle'));  
+      return  view('reportes.remitos.remito-externo',compact('remito','detalle','remito_interno_equipos'));  
     
       }
     }

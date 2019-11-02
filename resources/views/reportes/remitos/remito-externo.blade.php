@@ -91,7 +91,6 @@ header .destino {
         <tbody>
             @foreach ( $detalle as $producto )
                <tr>
-
                 <td style="width: 50px;">                         
                     <span class="cantidad">{{ $producto->cantidad}} </span>           
                 </td>
@@ -100,11 +99,23 @@ header .destino {
                 </td>
                 <td>
                     <span  class="medida">{{ $producto->medida}} {{ $producto->unidad_medida}}</span>  
+                </td> 
+              </tr>
+            @endforeach
+            @foreach ( $remito_interno_equipos as $remito_interno_equipo )
+                <tr>
+                <td style="width: 50px;">                         
+                    <span class="cantidad"> 1 </span>           
                 </td>
-                    
+                <td style="width: 475px;">
+                    <span class="producto">{{ $remito_interno_equipo->InternoEquipo->equipo->codigo }} </span>    
+                </td>
+                <td>
+                    <span  class="medida"></span>  
+                </td> 
+              </tr>
+            @endforeach
 
-            </tr>
-                @endforeach
         </tbody>
 
 
