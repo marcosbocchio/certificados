@@ -10,7 +10,7 @@ class Localidades extends Model
 
     public function provincia(){
 
-        return $this->belongsTo('App\provincias','provincia_id','id');
+        return $this->belongsTo('App\Provincias','provincia_id','id');
       
       }
 }

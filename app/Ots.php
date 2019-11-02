@@ -15,7 +15,7 @@ class Ots extends Model
 
     public function localidad(){
 
-        return $this->belongsTo('App\localidades','localidad_id','id');
+        return $this->belongsTo('App\Localidades','localidad_id','id');
       
       }
 
