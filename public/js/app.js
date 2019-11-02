@@ -4105,18 +4105,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -55539,8 +55527,6 @@ var render = function() {
             "tbody",
             _vm._l(_vm.registros, function(registro) {
               return _c("tr", { key: registro.id }, [
-                _c("td", [_vm._v(_vm._s(registro.nro_serie))]),
-                _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(registro.nro_interno))]),
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(registro.equipo.codigo))]),
@@ -55605,16 +55591,6 @@ var render = function() {
                     ])
                   : _c("td", [_vm._v("Enod")]),
                 _vm._v(" "),
-                _c("td", { staticStyle: { "text-align": "center" } }, [
-                  registro.activo_sn
-                    ? _c("div", [
-                        _vm._v("\n                  SI\n              ")
-                      ])
-                    : _c("div", [
-                        _vm._v("\n                  NO   \n              ")
-                      ])
-                ]),
-                _vm._v(" "),
                 _c("td", { attrs: { width: "10px" } }, [
                   _c(
                     "a",
@@ -55668,8 +55644,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
-        _c("th", [_vm._v("N° Serie")]),
-        _vm._v(" "),
         _c("th", [_vm._v("N° Int.")]),
         _vm._v(" "),
         _c("th", [_vm._v("Equipo")]),
@@ -55683,10 +55657,6 @@ var staticRenderFns = [
         _c("th", [_vm._v("Cliente")]),
         _vm._v(" "),
         _c("th", [_vm._v("Ubicación")]),
-        _vm._v(" "),
-        _c("th", { staticStyle: { "text-align": "center" } }, [
-          _vm._v("Activo")
-        ]),
         _vm._v(" "),
         _c("th", { attrs: { colspan: "2" } }, [_vm._v(" ")])
       ])
