@@ -176,7 +176,7 @@ b {
                         <tbody>
                             <tr>
                                 <td style="font-size: 12px; text-align: center " colspan="3" class="bordered-td" >Junta</td>
-                                <td style="font-size: 12px; text-align: center " colspan="13" class="bordered-td" >Cuneo</td>
+                                <td style="font-size: 12px; text-align: center " colspan="13" class="bordered-td" >Cuño</td>
                                 <td style="font-size: 12px; width:50px; text-align: center " rowspan="3" class="bordered-td" >Posición de Placa</td>
                                 <td style="font-size: 12px; text-align: center " rowspan="2" colspan="3" class="bordered-td" >Defectos</td>
                                 <td style="font-size: 12px; text-align: center " rowspan="2" colspan="2" class="bordered-td" >Resultados</td>

@@ -88,7 +88,7 @@ class TrazabilidadFuenteController extends Controller
         if((!$trazabilidad_fuente_actual) || ($trazabilidad_fuente_actual && $trazabilidad_fuente_actual->interno_fuente_id != $interno_fuente_id) ) {
             
             $interno_fuente = InternoFuentes::find($interno_fuente_id);
-            
+
             $trazabilidad_fuente = New TrazabilidadFuente;
             $trazabilidad_fuente->interno_equipo_id = $interno_equipo_id;
             $trazabilidad_fuente->interno_fuente_id = $interno_fuente_id;

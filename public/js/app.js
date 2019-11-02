@@ -4050,6 +4050,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -4095,6 +4100,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {};
@@ -4105,6 +4125,7 @@ __webpack_require__.r(__webpack_exports__);
       required: true
     }
   },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['url', 'AppUrl'])),
   methods: {
     updateValue: function updateValue(registro) {
       this.$emit('editar', registro);
@@ -55531,6 +55552,48 @@ var render = function() {
                     ])
                   : _c("td"),
                 _vm._v(" "),
+                registro.interno_fuente
+                  ? _c("td", [_vm._v(_vm._s(registro.interno_fuente.curie))])
+                  : _c("td"),
+                _vm._v(" "),
+                registro.ot
+                  ? _c("td", [_vm._v(_vm._s(registro.ot.numero))])
+                  : _c("td"),
+                _vm._v(" "),
+                registro.ot
+                  ? _c("td", [
+                      _c(
+                        "a",
+                        {
+                          attrs: {
+                            href:
+                              "https://www.google.com/maps/search/?api=1&query=" +
+                              registro.ot.lat +
+                              "," +
+                              registro.ot.lon,
+                            target: "_blank",
+                            title: "maps"
+                          }
+                        },
+                        [
+                          _c("img", {
+                            staticStyle: { height: "20px" },
+                            attrs: {
+                              src:
+                                _vm.AppUrl + "/" + "img/mark-google-maps.jpg",
+                              alt: "maps"
+                            }
+                          })
+                        ]
+                      ),
+                      _vm._v(
+                        "\n              " +
+                          _vm._s(registro.ot.localidad.provincia.provincia) +
+                          "\n              "
+                      )
+                    ])
+                  : _c("td", [_vm._v("Enod")]),
+                _vm._v(" "),
                 _c("td", { staticStyle: { "text-align": "center" } }, [
                   registro.activo_sn
                     ? _c("div", [
@@ -55601,6 +55664,12 @@ var staticRenderFns = [
         _c("th", [_vm._v("Equipo")]),
         _vm._v(" "),
         _c("th", [_vm._v("Fuente")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Curie")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("N° OT")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Ubicación")]),
         _vm._v(" "),
         _c("th", { staticStyle: { "text-align": "center" } }, [
           _vm._v("Activo")

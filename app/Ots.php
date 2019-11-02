@@ -13,8 +13,12 @@ class Ots extends Model
         return $this->belongsTo('App\Clientes');
     }
 
-  
+    public function localidad(){
 
- 
+        return $this->belongsTo('App\localidades','localidad_id','id');
+      
+      }
+
+
 
 }

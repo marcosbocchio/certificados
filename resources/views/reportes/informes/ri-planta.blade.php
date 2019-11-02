@@ -187,7 +187,7 @@ b {
                         <tbody>
                             <tr>
                                 <td style="font-size: 12px; width:65px;  text-align: center " rowspan="2" class="bordered-td" >JUNTA</td>
-                                <td style="font-size: 12px; width:65px;  text-align: center;" rowspan="2" class="bordered-td">CUNIO</td>
+                                <td style="font-size: 12px; width:65px;  text-align: center;" rowspan="2" class="bordered-td">CUÑO</td>
                                 <td style="font-size: 12px; width:64.5px; text-align: center;" rowspan="2" class="bordered-td">POSICIÓN</td>
                                 <td style="font-size: 12px; width:201.5px;  text-align: center;" rowspan="2" class="bordered-td">DEFECTOS</td>  
                                 <td style="font-size: 12px; width:80px; text-align: center;" colspan="2" class="bordered-td">RESULTADO</td>  
