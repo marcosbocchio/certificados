@@ -10,8 +10,6 @@
             <th>N° Int.</th>
             <th>Equipo</th>
             <th>Fuente</th>
-            <th style="text-align: center">Voltaje</th> 
-            <th style="text-align: center">Amperaje</th> 
             <th style="text-align: center">Activo</th>  
             <th colspan="2">&nbsp;</th>
           </tr>
@@ -21,10 +19,8 @@
             <td>{{ registro.nro_serie }}</td>
             <td>{{ registro.nro_interno }}</td>
             <td>{{ registro.equipo.codigo }}</td>  
-            <td v-if="registro.interno_fuente" >{{ registro.interno_fuente.nro_serie }}</td>   
-            <td v-else ></td>
-            <td style="text-align: center">{{ registro.voltaje }}</td>    
-            <td style="text-align: center">{{ registro.amperaje }}</td>     
+            <td v-if="registro.interno_fuente" >{{ registro.interno_fuente.nro_serie }} - {{registro.interno_fuente.fuente.codigo}}</td>   
+            <td v-else ></td> 
             <td style="text-align: center">
               <div v-if="registro.activo_sn">
                   SI

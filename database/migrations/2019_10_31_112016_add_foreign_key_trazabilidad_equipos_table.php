@@ -16,7 +16,8 @@ class AddForeignKeyTrazabilidadEquiposTable extends Migration
         Schema::table('trazabilidad_equipo', function (Blueprint $table) {
 
             $table->bigInteger('ot_id')
-                    ->unsigned()                  
+                    ->unsigned()   
+                    ->nullable()                   
                     ->after('id');
             
             $table->foreign('ot_id')

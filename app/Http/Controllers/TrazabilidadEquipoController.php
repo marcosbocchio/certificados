@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\TrazabilidadEquipo;
 use Illuminate\Support\Facades\Auth;
-use App\TrazabilidadFuente;
-use App\InternoFuentes;
 
-class TrazabilidadFuenteController extends Controller
+class TrazabilidadEquipoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -74,30 +73,6 @@ class TrazabilidadFuenteController extends Controller
         //
     }
 
-    public function saveTrazabilidadFuente($interno_equipo_id,$interno_fuente_id){
-
-        $user_id = null;
-        
-        if (Auth::check())
-        {
-             $user_id = $userId = Auth::id();    
-         }
-
-        $trazabilidad_fuente_actual = TrazabilidadFuente::where('interno_equipo_id',$interno_equipo_id)->latest()->first(); 
-
-        if((!$trazabilidad_fuente_actual) || ($trazabilidad_fuente_actual && $trazabilidad_fuente_actual->interno_fuente_id != $interno_fuente_id) ) {
-            
-            $interno_fuente = InternoFuentes::find($interno_fuente_id);
-            
-            $trazabilidad_fuente = New TrazabilidadFuente;
-            $trazabilidad_fuente->interno_equipo_id = $interno_equipo_id;
-            $trazabilidad_fuente->interno_fuente_id = $interno_fuente_id;
-            $trazabilidad_fuente->user_id = $user_id;
-            $trazabilidad_fuente->curie = $interno_fuente->curie;
-            $trazabilidad_fuente->save();  
-          } 
-    }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -107,5 +82,22 @@ class TrazabilidadFuenteController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function saveTrazabilidadEquipo($interno_equipo_id, $ot_id = null){
+        
+        $user_id = null;
+        
+        if (Auth::check())
+        {
+             $user_id = $userId = Auth::id();    
+        }
+
+        $trazabilidad_equipo = new TrazabilidadEquipo;
+
+        $trazabilidad_equipo->ot_id = $ot_id;
+        $trazabilidad_equipo->interno_equipo_id = $interno_equipo_id;
+        $trazabilidad_equipo->user_id = $user_id;
+        $trazabilidad_equipo->save();      
     }
 }

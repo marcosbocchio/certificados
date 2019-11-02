@@ -23,7 +23,7 @@ class InternoEquiposController extends Controller
 
     public function paginate(Request $request){
       
-        return InternoEquipos::orderBy('id','DESC')->with('equipo')->with('internoFuente')->paginate(10);
+        return InternoEquipos::orderBy('id','DESC')->with('equipo')->with('internoFuente.fuente')->paginate(10);
   
       }
 
@@ -89,7 +89,10 @@ class InternoEquiposController extends Controller
         try { 
     
             $this->saveInternoEquipo($request,$interno_equipo);
-            (new \App\Http\Controllers\TrazabilidadFuenteController)->saveTrazabilidadfuente($interno_equipo->id,$request['interno_fuente']['id']);
+
+            if($interno_equipo->interno_fuente_id){
+                 (new \App\Http\Controllers\TrazabilidadFuenteController)->saveTrazabilidadfuente($interno_equipo->id,$request['interno_fuente']['id']);
+            }
             DB::commit(); 
     
           } catch (Exception $e) {
@@ -140,7 +143,9 @@ class InternoEquiposController extends Controller
           DB::beginTransaction();
           try {
               $this->saveInternoEquipo($request,$interno_equipo);
-              (new \App\Http\Controllers\TrazabilidadFuenteController)->saveTrazabilidadfuente($interno_equipo->id,$request['interno_fuente']['id']);
+              if($interno_equipo->interno_fuente_id){
+                (new \App\Http\Controllers\TrazabilidadFuenteController)->saveTrazabilidadfuente($interno_equipo->id,$request['interno_fuente']['id']);
+              }
               DB::commit(); 
       
             } catch (Exception $e) {
@@ -232,6 +237,9 @@ class InternoEquiposController extends Controller
             InternoEquipos::where('ot_id',$ot_id)
                           ->where('id',$ot_interno_equipo['id'])
                           ->update(['ot_id' => null]);
+
+            (new \App\Http\Controllers\TrazabilidadEquipoController)->saveTrazabilidadEquipo($ot_interno_equipo['id']);
+
             }
         }           
 

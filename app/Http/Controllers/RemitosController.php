@@ -161,9 +161,7 @@ class RemitosController extends Controller
             $interno_equipo = InternoEquipos::find($item['id']);                
             $interno_equipo->ot_id  = $remito->ot_id;;     
             $interno_equipo->save();  
-            
-            $this->saveTrazabilidadEquipo($interno_equipo,$remito);
-
+            (new \App\Http\Controllers\TrazabilidadEquipoController)->saveTrazabilidadEquipo($interno_equipo->id,$remito->ot_id);
     
           }
      }
