@@ -60338,7 +60338,7 @@ var render = function() {
                               attrs: {
                                 href: _vm.AppUrl + "/api/pdf/ot/" + ot.id,
                                 target: "_blank",
-                                title: "pdf"
+                                title: "Informe"
                               }
                             },
                             [_c("span", { staticClass: "fa fa-file-pdf-o" })]
@@ -60886,7 +60886,7 @@ var render = function() {
                                 "/api/pdf/informe/" +
                                 ot_informe.id,
                               target: "_blank",
-                              title: "pdf"
+                              title: "Informe"
                             }
                           },
                           [_c("span", { staticClass: "fa fa-file-pdf-o" })]
@@ -61528,7 +61528,7 @@ var render = function() {
                                 ot_parte.id +
                                 "/original",
                               target: "_blank",
-                              title: "pdf"
+                              title: "Informe original"
                             }
                           },
                           [_c("span", { staticClass: "fa fa-file-pdf-o" })]
@@ -61547,7 +61547,7 @@ var render = function() {
                                 ot_parte.id +
                                 "/final",
                               target: "_blank",
-                              title: "pdf"
+                              title: "Informe"
                             }
                           },
                           [_c("span", { staticClass: "fa fa-file-pdf-o" })]
@@ -67279,13 +67279,39 @@ var render = function() {
                   1
                 ),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-md-1" }, [
+                _c("div", { staticClass: "col-md-2" }, [
                   _c("p", [_vm._v(" ")]),
                   _vm._v(" "),
                   _c("span", [
                     _c(
-                      "a",
+                      "i",
                       {
+                        staticStyle: {
+                          display: "inline-block",
+                          "margin-left": "15px"
+                        },
+                        attrs: { title: "Agregar Pasada" },
+                        on: {
+                          click: function($event) {
+                            return _vm.getSoldadores()
+                          }
+                        }
+                      },
+                      [
+                        _c("app-icon", {
+                          attrs: { img: "refresh", color: "black" }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "i",
+                      {
+                        staticStyle: {
+                          display: "inline-block",
+                          "margin-left": "15px"
+                        },
                         attrs: { title: "Agregar Pasada" },
                         on: {
                           click: function($event) {
@@ -67552,11 +67578,11 @@ var staticRenderFns = [
       _c("tr", [
         _c("th", { staticStyle: { width: "90px" } }, [_vm._v("N° PASADA")]),
         _vm._v(" "),
-        _c("th", { staticStyle: { width: "120px" } }, [_vm._v("CUNIO Z")]),
+        _c("th", { staticStyle: { width: "120px" } }, [_vm._v("CUÑO Z")]),
         _vm._v(" "),
-        _c("th", { staticStyle: { width: "120px" } }, [_vm._v("CUNIO L")]),
+        _c("th", { staticStyle: { width: "120px" } }, [_vm._v("CUÑO L")]),
         _vm._v(" "),
-        _c("th", { staticStyle: { width: "120px" } }, [_vm._v("CUNIO P")]),
+        _c("th", { staticStyle: { width: "120px" } }, [_vm._v("CUÑO P")]),
         _vm._v(" "),
         _c("th", { staticStyle: { width: "30px" }, attrs: { colspan: "1" } }, [
           _vm._v(" ")

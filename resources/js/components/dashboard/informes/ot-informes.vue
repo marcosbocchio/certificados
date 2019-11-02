@@ -71,7 +71,7 @@
                                     <td> {{ot_informe.name}}</td>     
                                     <td> {{ot_informe.fecha}}</td>              
                                     <td width="10px"> <a :href="AppUrl + '/area/enod/ot/' + ot_id_data + '/informe/' + ot_informe.id +'/edit' "   class="btn btn-warning btn-sm" title="Editar"><span class="fa fa-edit"></span></a></td>
-                                    <td width="10px"> <a :href="AppUrl + '/api/pdf/informe/' + ot_informe.id " target="_blank"  class="btn btn-default btn-sm" title="pdf"><span class="fa fa-file-pdf-o"></span></a></td>                                    
+                                    <td width="10px"> <a :href="AppUrl + '/api/pdf/informe/' + ot_informe.id " target="_blank"  class="btn btn-default btn-sm" title="Informe"><span class="fa fa-file-pdf-o"></span></a></td>                                    
                                     <td v-if="!ot_informe.firma" width="10px"> <a  @click="firmar(k)"  class="btn btn-default btn-sm" title="Firmar"><span class="glyphicon glyphicon-pencil"></span> </a></td>   
 
                                 </tr>                       

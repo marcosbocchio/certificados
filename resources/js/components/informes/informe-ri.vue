@@ -493,13 +493,13 @@
                             </template>
                         </v-select>                    
                     </div>  
-                     <div class="col-md-1"> 
-
+                    
+                     <div class="col-md-2"> 
                           <p>&nbsp;</p>
                           <span>                             
-                             <a title="Agregar Pasada" @click="AddPasadas()"> <app-icon img="plus-circle" color="black"></app-icon> </a>
+                             <i title="Agregar Pasada" @click="getSoldadores()" style="display:inline-block;margin-left:15px;"> <app-icon img="refresh" color="black"></app-icon> </i>
+                             <i title="Agregar Pasada" @click="AddPasadas()" style="display:inline-block;margin-left:15px;"> <app-icon img="plus-circle" color="black"></app-icon> </i>
                           </span>
-                       
                     </div>
                         <div class="col-md-12">
                                 <div class="table-responsive">
@@ -507,9 +507,9 @@
                                         <thead>
                                             <tr>                                  
                                                 <th style="width:90px;">N° PASADA</th>                                  
-                                                <th style="width:120px;">CUNIO Z</th>
-                                                <th style="width:120px;">CUNIO L</th>
-                                                <th style="width:120px;">CUNIO P</th>                                                             
+                                                <th style="width:120px;">CUÑO Z</th>
+                                                <th style="width:120px;">CUÑO L</th>
+                                                <th style="width:120px;">CUÑO P</th>                                                             
                                                 <th colspan="1" style="width:30px;">&nbsp;</th>
                                             </tr>
                                         </thead>                         
