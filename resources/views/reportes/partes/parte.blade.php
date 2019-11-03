@@ -329,7 +329,7 @@ b {
             {{$ExisteLP = false}} 
             @foreach ($parte_detalle as $item)
 
-                @if ($item->metodo == 'PM')
+                @if ($item->metodo == 'LP')
                         {{ $ExisteLP = true }}}
                 @endif
                 
