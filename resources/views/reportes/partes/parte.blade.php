@@ -325,6 +325,52 @@ b {
                     </td>
                 </tr>  
             @endif
+
+            {{$ExisteLP = false}} 
+            @foreach ($parte_detalle as $item)
+
+                @if ($item->metodo == 'PM')
+                        {{ $ExisteLP = true }}}
+                @endif
+                
+            @endforeach
+
+            @if ($ExisteLP)       
+                <tr > 
+                    <td class="bordered">
+                        <table width="100%" >
+                            <tbody>
+                                <tr>                         
+                                    <td style="font-size: 12px;height: 20px;" colspan="4"><b>METODO ENSAYO: LP </b></td>                                         
+                                </tr>                           
+                                @foreach ($informes_detalle as $item)
+                                    @if ($item->metodo == 'LP')      
+                                        <tr>                         
+                                            <td style="font-size: 12px;height: 20px;" colspan="4"><b>{{$item->numero_formateado}} </b></td>                                         
+                                        </tr>  
+                                        <tr> 
+                                            <td style="font-size: 12px;text-align: center;"><b></b></td>  
+                                            <td style="font-size: 12px;text-align: center; "><b>Pieza </b></td>                        
+                                            <td style="font-size: 12px;text-align: center; "><b>Número </b></td>                         
+                                            <td style="font-size: 12px;text-align: center;"><b>Metros Lineales </b></td>                                            
+                                        </tr> 
+                                        @foreach ($parte_detalle as $item_lp)
+                                            @if ($item->informe_id == $item_lp->informe_id)      
+                                                <tr> 
+                                                    <td style="font-size: 12px;text-align: center;"><b></b></td>  
+                                                    <td style="font-size: 12px;text-align: center; ">{{$item_lp->pieza}}</td>                        
+                                                    <td style="font-size: 12px;text-align: center; ">{{$item_lp->nro}}</td>                         
+                                                    <td style="font-size: 12px;text-align: center;">{{$item_lp->metros_lineales}}</td>                                            
+                                                </tr>
+                                             @endif
+                                         @endforeach      
+                                    @endif
+                                @endforeach                             
+                            </tbody>
+                        </table>          
+                    </td>
+                </tr>  
+            @endif
         </tbody>
     </table>
 <main>

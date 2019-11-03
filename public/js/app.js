@@ -13497,6 +13497,78 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -13530,6 +13602,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       type: [Array],
       required: false
     },
+    informes_lp_data: {
+      type: [Array],
+      required: false
+    },
     responsables_data: {
       type: [Array],
       required: false
@@ -13558,8 +13634,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       informe_ri_parte: '',
       TablaInformesRi: [],
       TablaInformesPm: [],
+      TablaInformesLp: [],
       indexTablaInformesRi: '0',
       indexTablaInformesPm: '0',
+      indexTablaInformesLp: '0',
       cms: []
     };
   },
@@ -13611,6 +13689,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     selectPosTablaInformesPm: function selectPosTablaInformesPm(index) {
       this.indexTablaInformesPm = index;
     },
+    selectPosTablaInformesLp: function selectPosTablaInformesLp(index) {
+      this.indexTablaInformesLp = index;
+    },
     getCms: function getCms() {
       var _this2 = this;
 
@@ -13638,7 +13719,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var urlRegistros = 'informes/ot/' + this.otdata.id + '/parte/' + this.parte_data.id + '/pendientes_editables_parte_diario' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         _this4.informes = response.data;
-        console.log(_this4.informes_ri_data);
+        console.log(_this4.informes_ri_data); // Informe Ri
 
         _this4.informes_ri_data.forEach(function (item_data) {
           this.informes.forEach(function (item_informe) {
@@ -13665,7 +13746,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             placas_final: item.placas_final,
             cm: item.cm
           });
-        }.bind(_this4));
+        }.bind(_this4)); //Informe Pm
+
 
         _this4.informes_pm_data.forEach(function (item_data) {
           this.informes.forEach(function (item_informe) {
@@ -13681,6 +13763,32 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           }
 
           this.TablaInformesPm.push({
+            numero_formateado: item.numero_formateado,
+            pieza_original: item.pieza_original,
+            pieza_final: item.pieza_final,
+            nro_original: item.nro_original,
+            nro_final: item.nro_final,
+            id: item.informe_id,
+            visible: visible_sn,
+            metros_lineales: item.metros_lineales
+          });
+        }.bind(_this4)); //Informe Lp
+
+
+        _this4.informes_lp_data.forEach(function (item_data) {
+          this.informes.forEach(function (item_informe) {
+            if (item_data.informe_id == item_informe.id) item_informe.informe_sel = true;
+          });
+        }.bind(_this4));
+
+        _this4.informes_lp_data.forEach(function (item) {
+          var visible_sn = true;
+
+          if (!item.pieza_final && !item.nro_final && !item.metros_lineales) {
+            visible_sn = false;
+          }
+
+          this.TablaInformesLp.push({
             numero_formateado: item.numero_formateado,
             pieza_original: item.pieza_original,
             pieza_final: item.pieza_final,
@@ -13737,6 +13845,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           case 'PM':
             this.getInformePM(this.informes[index].id, index);
             break;
+
+          case 'LP':
+            this.getInformeLP(this.informes[index].id, index);
+            break;
         }
       } else {
         var id = this.informes[index].id;
@@ -13751,6 +13863,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         for (var i = 0; i < this.TablaInformesPm.length; i++) {
           if (this.TablaInformesPm[i].id == id) {
             this.TablaInformesPm.splice(i, 1);
+            i--;
+          }
+        }
+
+        for (var i = 0; i < this.TablaInformesLp.length; i++) {
+          if (this.TablaInformesLp[i].id == id) {
+            this.TablaInformesLp.splice(i, 1);
             i--;
           }
         }
@@ -13802,6 +13921,31 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }.bind(_this6));
       });
     },
+    getInformeLP: function getInformeLP(id, index) {
+      var _this7 = this;
+
+      axios.defaults.baseURL = this.url;
+      var urlRegistros = 'partes/informe_lp/' + id + '?api_token=' + Laravel.user.api_token;
+      axios.get(urlRegistros).then(function (response) {
+        console.log(urlRegistros);
+        console.log(response.data);
+        _this7.informe_lp_parte = response.data;
+
+        _this7.informe_lp_parte.forEach(function (item) {
+          this.TablaInformesLp.push({
+            id: id,
+            numero_formateado: this.informes[index].numero_formateado,
+            visible: true,
+            pieza_original: item.pieza,
+            pieza_final: item.pieza,
+            nro_original: item.numero,
+            nro_final: item.numero,
+            metros_lineales: '',
+            metodo: item.metodo
+          });
+        }.bind(_this7));
+      });
+    },
     validarCmsRi: function validarCmsRi() {
       var valido = true;
       this.TablaInformesRi.forEach(function (item) {
@@ -13822,7 +13966,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return valido;
     },
     Store: function Store() {
-      var _this7 = this;
+      var _this8 = this;
 
       if (!this.validarCmsRi()) {
         toastr.error('EL campo CM en los informes RI asignados al Parte son obligatorios');
@@ -13853,27 +13997,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           'observaciones': this.observaciones,
           'responsables': this.TablaResponsables,
           'informes_ri': this.TablaInformesRi,
-          'informes_pm': this.TablaInformesPm
+          'informes_pm': this.TablaInformesPm,
+          'informes_lp': this.TablaInformesLp
         }
       }).then(function (response) {
-        _this7.response = response.data;
-        toastr.success('Parte Diario con fecha' + _this7.fecha + ' fue creado con éxito ');
+        _this8.response = response.data;
+        toastr.success('Parte Diario con fecha' + _this8.fecha + ' fue creado con éxito ');
         console.log(response.data);
       })["catch"](function (error) {
-        _this7.errors = error.response.data.errors;
+        _this8.errors = error.response.data.errors;
         console.log(error.response);
-        $.each(_this7.errors, function (key, value) {
+        $.each(_this8.errors, function (key, value) {
           toastr.error(value);
           console.log(key + ": " + value);
         });
 
-        if (typeof _this7.errors == 'undefined' && error) {
+        if (typeof _this8.errors == 'undefined' && error) {
           toastr.error("Ocurrió un error al procesar la solicitud");
         }
       });
     },
     Update: function Update() {
-      var _this8 = this;
+      var _this9 = this;
 
       if (!this.validarCmsRi()) {
         toastr.error('EL campo CM en los informes RI asignados al Parte son obligatorios');
@@ -13903,21 +14048,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           'observaciones': this.observaciones,
           'responsables': this.TablaResponsables,
           'informes_ri': this.TablaInformesRi,
-          'informes_pm': this.TablaInformesPm
+          'informes_pm': this.TablaInformesPm,
+          'informes_lp': this.TablaInformesLp
         }
       }).then(function (response) {
-        _this8.response = response.data;
-        toastr.success('Parte Diario con fecha' + _this8.fecha + ' fue actualizado con éxito ');
+        _this9.response = response.data;
+        toastr.success('Parte Diario con fecha' + _this9.fecha + ' fue actualizado con éxito ');
         console.log(response.data);
       })["catch"](function (error) {
-        _this8.errors = error.response.data.errors;
+        _this9.errors = error.response.data.errors;
         console.log(error.response);
-        $.each(_this8.errors, function (key, value) {
+        $.each(_this9.errors, function (key, value) {
           toastr.error(value);
           console.log(key + ": " + value);
         });
 
-        if (typeof _this8.errors == 'undefined' && error) {
+        if (typeof _this9.errors == 'undefined' && error) {
           toastr.error("Ocurrió un error al procesar la solicitud");
         }
       });
@@ -70516,6 +70662,262 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.TablaInformesLp.length,
+                  expression: "TablaInformesLp.length"
+                }
+              ]
+            },
+            [
+              _c("div", { staticClass: "box box-danger" }, [
+                _vm._m(9),
+                _vm._v(" "),
+                _c("div", { staticClass: "box-body" }, [
+                  _c("div", { staticClass: "col-md-12" }, [
+                    _c("div", { staticClass: "table-responsive" }, [
+                      _c(
+                        "table",
+                        { staticClass: "table table-hover table-striped" },
+                        [
+                          _vm._m(10),
+                          _vm._v(" "),
+                          _c(
+                            "tbody",
+                            [
+                              _vm._l(_vm.TablaInformesLp, function(item, k) {
+                                return _c(
+                                  "tr",
+                                  {
+                                    key: k,
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.selectPosTablaInformesLp(k)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    item.visible
+                                      ? _c("td", [
+                                          _vm._v(
+                                            " " + _vm._s(item.numero_formateado)
+                                          )
+                                        ])
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    item.visible
+                                      ? _c("td", [
+                                          _vm.indexTablaInformesLp == k
+                                            ? _c("div", [
+                                                _c("input", {
+                                                  directives: [
+                                                    {
+                                                      name: "model",
+                                                      rawName: "v-model",
+                                                      value:
+                                                        _vm.TablaInformesLp[k]
+                                                          .pieza_final,
+                                                      expression:
+                                                        "TablaInformesLp[k].pieza_final"
+                                                    }
+                                                  ],
+                                                  attrs: {
+                                                    type: "text",
+                                                    maxlength: "10"
+                                                  },
+                                                  domProps: {
+                                                    value:
+                                                      _vm.TablaInformesLp[k]
+                                                        .pieza_final
+                                                  },
+                                                  on: {
+                                                    input: function($event) {
+                                                      if (
+                                                        $event.target.composing
+                                                      ) {
+                                                        return
+                                                      }
+                                                      _vm.$set(
+                                                        _vm.TablaInformesLp[k],
+                                                        "pieza_final",
+                                                        $event.target.value
+                                                      )
+                                                    }
+                                                  }
+                                                })
+                                              ])
+                                            : _c("div", [
+                                                _vm._v(
+                                                  "\n                                                          " +
+                                                    _vm._s(item.pieza_final) +
+                                                    "\n                                                       "
+                                                )
+                                              ])
+                                        ])
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    item.visible
+                                      ? _c("td", [
+                                          _vm.indexTablaInformesLp == k
+                                            ? _c("div", [
+                                                _c("input", {
+                                                  directives: [
+                                                    {
+                                                      name: "model",
+                                                      rawName: "v-model",
+                                                      value:
+                                                        _vm.TablaInformesLp[k]
+                                                          .nro_final,
+                                                      expression:
+                                                        "TablaInformesLp[k].nro_final"
+                                                    }
+                                                  ],
+                                                  attrs: {
+                                                    type: "number",
+                                                    maxlength: "11"
+                                                  },
+                                                  domProps: {
+                                                    value:
+                                                      _vm.TablaInformesLp[k]
+                                                        .nro_final
+                                                  },
+                                                  on: {
+                                                    input: function($event) {
+                                                      if (
+                                                        $event.target.composing
+                                                      ) {
+                                                        return
+                                                      }
+                                                      _vm.$set(
+                                                        _vm.TablaInformesLp[k],
+                                                        "nro_final",
+                                                        $event.target.value
+                                                      )
+                                                    }
+                                                  }
+                                                })
+                                              ])
+                                            : _c("div", [
+                                                _vm._v(
+                                                  "\n                                                          " +
+                                                    _vm._s(item.nro_final) +
+                                                    "\n                                                       "
+                                                )
+                                              ])
+                                        ])
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    item.visible
+                                      ? _c("td", [
+                                          _vm.indexTablaInformesLp == k
+                                            ? _c("div", [
+                                                _c("input", {
+                                                  directives: [
+                                                    {
+                                                      name: "model",
+                                                      rawName: "v-model",
+                                                      value:
+                                                        _vm.TablaInformesLp[k]
+                                                          .metros_lineales,
+                                                      expression:
+                                                        "TablaInformesLp[k].metros_lineales"
+                                                    }
+                                                  ],
+                                                  attrs: {
+                                                    type: "number",
+                                                    maxlength: "4"
+                                                  },
+                                                  domProps: {
+                                                    value:
+                                                      _vm.TablaInformesLp[k]
+                                                        .metros_lineales
+                                                  },
+                                                  on: {
+                                                    input: function($event) {
+                                                      if (
+                                                        $event.target.composing
+                                                      ) {
+                                                        return
+                                                      }
+                                                      _vm.$set(
+                                                        _vm.TablaInformesLp[k],
+                                                        "metros_lineales",
+                                                        $event.target.value
+                                                      )
+                                                    }
+                                                  }
+                                                })
+                                              ])
+                                            : _c("div", [
+                                                _vm._v(
+                                                  "\n                                                          " +
+                                                    _vm._s(
+                                                      item.metros_lineales
+                                                    ) +
+                                                    "\n                                                       "
+                                                )
+                                              ])
+                                        ])
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    item.visible
+                                      ? _c("td", [
+                                          _c(
+                                            "a",
+                                            {
+                                              on: {
+                                                click: function($event) {
+                                                  return _vm.RemoveTablaInformeLp(
+                                                    k
+                                                  )
+                                                }
+                                              }
+                                            },
+                                            [
+                                              _c("app-icon", {
+                                                attrs: {
+                                                  img: "minus-circle",
+                                                  color: "black"
+                                                }
+                                              })
+                                            ],
+                                            1
+                                          )
+                                        ])
+                                      : _vm._e()
+                                  ]
+                                )
+                              }),
+                              _vm._v(" "),
+                              _vm._l(4, function(fila) {
+                                return _c("tr", [
+                                  _c(
+                                    "td",
+                                    {
+                                      staticStyle: { background: "#FFFFFF" },
+                                      attrs: { colspan: "6" }
+                                    },
+                                    [_vm._v("  ")]
+                                  )
+                                ])
+                              })
+                            ],
+                            2
+                          )
+                        ]
+                      )
+                    ])
+                  ])
+                ])
+              ])
+            ]
+          ),
+          _vm._v(" "),
           _c("div", { staticClass: "box box-danger" }, [
             _c("div", { staticClass: "box-body" }, [
               _c("div", { staticClass: "form-group" }, [
@@ -70681,6 +71083,43 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "box-header with-border" }, [
       _c("h3", { staticClass: "box-title" }, [_vm._v("Informes PM")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "box-tools pull-right" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-box-tool",
+            attrs: { type: "button", "data-widget": "collapse" }
+          },
+          [_c("i", { staticClass: "fa fa-minus" })]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("INFORME")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("PIEZA")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("NÚMERO")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("METROS LINEALES")]),
+        _vm._v(" "),
+        _c("th", { attrs: { colspan: "2" } }, [_vm._v(" ")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "box-header with-border" }, [
+      _c("h3", { staticClass: "box-title" }, [_vm._v("Informes LP")]),
       _vm._v(" "),
       _c("div", { staticClass: "box-tools pull-right" }, [
         _c(
@@ -93240,8 +93679,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_lazyload__WEBPACK_IMPORTED_MO
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuejs_progress_bar__WEBPACK_IMPORTED_MODULE_5___default.a);
 var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
   state: {
-    url:  false ? undefined : "http://localhost:8000/api",
-    AppUrl:  false ? undefined : "http://localhost:8000",
+    url:  false ? undefined : "http://certificados.test/api",
+    AppUrl:  false ? undefined : "http://certificados.test",
     provincias: [],
     localidades: [],
     materiales: [],
@@ -98140,8 +98579,8 @@ var toastrDefault = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/sass/toastr.scss */"./resources/sass/toastr.scss");
+__webpack_require__(/*! C:\Users\bocch\code\certificados\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\bocch\code\certificados\resources\sass\toastr.scss */"./resources/sass/toastr.scss");
 
 
 /***/ })

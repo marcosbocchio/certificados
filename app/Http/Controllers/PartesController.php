@@ -90,6 +90,7 @@ class PartesController extends Controller
           $this->saveResponsables($request->responsables,$parte);
           $this->saveParteDetalleRi($request->informes_ri,$parte);
           $this->saveParteDetallePm($request->informes_pm,$parte);
+          $this->saveParteDetalleLp($request->informes_lp,$parte);
          
           DB::commit(); 
     
@@ -207,6 +208,27 @@ class PartesController extends Controller
 
     }
 
+    public function saveParteDetalleLp($informes_lp,$parte){
+
+        
+        foreach ($informes_lp as $informe) {
+            
+            $parteDetalle  = new ParteDetalles;
+            $parteDetalle->parte_id = $parte->id;            
+            $parteDetalle->informe_id =$informe['id'];   
+            $parteDetalle->pieza_original = $informe['pieza_original'];      
+            $parteDetalle->pieza_final = $informe['pieza_final'];
+            $parteDetalle->nro_original = $informe['nro_original'];
+            $parteDetalle->nro_final = $informe['nro_final'];          
+            $parteDetalle->metros_lineales = $informe['metros_lineales'];
+            $parteDetalle->save();
+
+            (new \App\Http\Controllers\InformesController)->setParteId($parte->id,$informe['id']);
+           
+        }
+
+    }
+
     /**
      * Display the specified resource.
      *
@@ -254,6 +276,14 @@ class PartesController extends Controller
                               ->where('parte_detalles.parte_id',$id)
                               ->selectRaw('parte_detalles.* , 0 as informe_sel,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada')
                               ->get();
+
+        $informes_lp  = DB::table('parte_detalles')
+                              ->join('informes','informes.id','=','parte_detalles.informe_id')          
+                              ->join('metodo_ensayos','metodo_ensayos.id','=','informes.metodo_ensayo_id')    
+                              ->where('metodo_ensayos.metodo','LP')                                              
+                               ->where('parte_detalles.parte_id',$id)
+                               ->selectRaw('parte_detalles.* , 0 as informe_sel,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada')
+                               ->get();
                              
          foreach ($informes_ri as $informe_ri) {
 
@@ -268,6 +298,7 @@ class PartesController extends Controller
                                             'responsables',
                                             'informes_ri',
                                             'informes_pm',
+                                            'informes_lp',
                                             'ot',                                            
                                             'user',                                              
                                             'header_titulo',
@@ -294,6 +325,7 @@ class PartesController extends Controller
             (new \App\Http\Controllers\InformesController)->deleteParteId($parte->id);
             $this->saveParteDetalleRi($request->informes_ri,$parte);
             $this->saveParteDetallePm($request->informes_pm,$parte);
+            $this->saveParteDetalleLp($request->informes_lp,$parte);
             
             DB::commit();
             
@@ -356,6 +388,26 @@ class PartesController extends Controller
 
 
       return $informe_pm;
+
+    }
+
+    public function getInformeLpParte($id){
+
+        $informe_lp = DB::select('select
+                                    detalles_lp.pieza ,
+                                    detalles_lp.numero,
+                                    "LP" as metodo
+                                    FROM informes
+                                    
+                                    inner join informes_lp on informes.id = informes_lp.informe_id
+                                    left join detalles_lp on detalles_lp.informe_lp_id = informes_lp.id
+                                    WHERE
+                                    informes.id =:id',['id' => $id ]);
+
+      $informe_lp = Collection::make($informe_lp);
+
+
+      return $informe_lp;
 
     }
 
