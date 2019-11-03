@@ -35,8 +35,8 @@ class RemitoRequest extends FormRequest
             'fecha'                    => 'required',
             'prefijo'                  => $condicion . 'numeric',
             'numero'                   => 'required | numeric',
-            'receptor'                 => $condicion . 'Max:45',  
-            'destino'                  => $condicion . 'Max:100',             
+            'receptor'                 => 'required | Max:45',  
+            'destino'                  => 'required | Max:100',             
         ];
     }
 

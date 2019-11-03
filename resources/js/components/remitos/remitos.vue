@@ -36,13 +36,13 @@
                         <div class="col-md-6">
                             <div class="form-group" >
                                 <label for="receptor">Receptor (*)</label>
-                                <input type="text" v-model="receptor" class="form-control" id="receptor" maxlength="45" :disabled="interno_sn" >
+                                <input type="text" v-model="receptor" class="form-control" id="receptor" maxlength="45">
                             </div>                            
                         </div>
                         <div class="col-md-6">
                             <div class="form-group" >
                                 <label for="destino">Lugar Destino (*)</label>
-                                <input type="text" v-model="destino" class="form-control" id="destino" maxlength="100" :disabled="interno_sn">
+                                <input type="text" v-model="destino" class="form-control" id="destino" maxlength="100">
                             </div>                            
                         </div>
                     </div>

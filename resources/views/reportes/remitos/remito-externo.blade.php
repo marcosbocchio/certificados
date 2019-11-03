@@ -108,7 +108,12 @@ header .destino {
                     <span class="cantidad"> 1 </span>           
                 </td>
                 <td style="width: 475px;">
-                    <span class="producto">{{ $remito_interno_equipo->InternoEquipo->equipo->codigo }} </span>    
+                    <span class="producto">{{ $remito_interno_equipo->InternoEquipo->equipo->codigo }} - N° Serie : {{ $remito_interno_equipo->InternoEquipo->nro_serie}} - N° Int : {{$remito_interno_equipo->InternoEquipo->nro_interno}} 
+                         @if ($remito_interno_equipo->InternoEquipo->internoFuente)
+                             
+                         - Fuente : {{$remito_interno_equipo->InternoEquipo->internoFuente->fuente->codigo}}
+
+                         @endif </span>    
                 </td>
                 <td>
                     <span  class="medida"></span>  

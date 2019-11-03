@@ -30,10 +30,8 @@ class PdfRemitosController extends Controller
                                     WHERE 
                                     detalle_remitos.remito_id =:id',['id' => $remito->id ]);
 
-        $remito_interno_equipos = RemitoInternoEquipos::where('remito_id',$id)->with('InternoEquipo.equipo')->get();      
+        $remito_interno_equipos = RemitoInternoEquipos::where('remito_id',$id)->with('InternoEquipo.equipo','InternoEquipo.internoFuente.fuente')->get();      
         
-       
-
       if($remito->interno_sn){
 
         $ot = Ots::find($remito->ot_id);

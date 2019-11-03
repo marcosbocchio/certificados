@@ -71364,12 +71364,7 @@ var render = function() {
                       }
                     ],
                     staticClass: "form-control",
-                    attrs: {
-                      type: "text",
-                      id: "receptor",
-                      maxlength: "45",
-                      disabled: _vm.interno_sn
-                    },
+                    attrs: { type: "text", id: "receptor", maxlength: "45" },
                     domProps: { value: _vm.receptor },
                     on: {
                       input: function($event) {
@@ -71399,12 +71394,7 @@ var render = function() {
                       }
                     ],
                     staticClass: "form-control",
-                    attrs: {
-                      type: "text",
-                      id: "destino",
-                      maxlength: "100",
-                      disabled: _vm.interno_sn
-                    },
+                    attrs: { type: "text", id: "destino", maxlength: "100" },
                     domProps: { value: _vm.destino },
                     on: {
                       input: function($event) {

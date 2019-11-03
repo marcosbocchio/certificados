@@ -172,17 +172,21 @@ b {
 
             @foreach ( $remito_interno_equipos as $remito_interno_equipo )
 
-                 @if (($loop->index + 1) % $filasPage != 0)
+              
                     <tr class="bordered-0">
                         <td style="font-size: 13px;  width:41.5px;text-align: center;border-right: 1px solid #000;">1</td>     
-                        <td style="font-size: 13px;  text-align: left"><span style="margin-left:5px"> {{ $remito_interno_equipo->InternoEquipo->equipo->codigo }} </span></td>     
+                        <td style="font-size: 13px;  text-align: left"><span style="margin-left:5px">
+
+                         {{ $remito_interno_equipo->InternoEquipo->equipo->codigo }} - N° Serie : {{ $remito_interno_equipo->InternoEquipo->nro_serie}} - N° Int : {{$remito_interno_equipo->InternoEquipo->nro_interno}} 
+                         @if ($remito_interno_equipo->InternoEquipo->internoFuente)
+                             
+                         - Fuente : {{$remito_interno_equipo->InternoEquipo->internoFuente->fuente->codigo}}
+
+                         @endif
+                         
+                          </span></td>     
                     </tr>  
-                @else
-                  <tr class="bordered-0">
-                        <td style="font-size: 13px;  width:41.5px;text-align: center;border-right: 1px solid #000; border-bottom:2px solid #000">1</td>     
-                        <td style="font-size: 13px;  text-align: left;border-bottom:2px solid #000""><span style="margin-left:5px"> {{ $remito_interno_equipo->InternoEquipo->equipo->codigo }}  </span></td>     
-                    </tr>  
-                @endif
+              
                 
             @endforeach
 
