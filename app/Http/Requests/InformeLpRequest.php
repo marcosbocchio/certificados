@@ -33,6 +33,7 @@ class InformeLpRequest extends FormRequest
             'procedimiento_soldadura'   => 'required|Max:20', 
             'eps'                       => 'Max:30',
             'pqr'                       => 'Max:30',
+            'equipo'                    => 'required',      
             'procedimiento'             => 'required',         
             'norma_evaluacion'          => 'required',
             'norma_ensayo'              => 'required',  

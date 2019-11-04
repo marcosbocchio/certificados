@@ -44,7 +44,7 @@ class DatabaseSeeder extends Seeder
         $this->call(MetodosTrabajoLpTableSeeder::class); 
         $this->call(AplicacionesLpTableSeeder::class);        
       
-       // factory('App\Clientes', 2500)->create();
+      // factory('App\Clientes', 2500)->create();
      
       
     }

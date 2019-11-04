@@ -37,6 +37,7 @@ class DocumentacionesController extends Controller
                                 ->orWhere('documentaciones.tipo','USUARIO')
                                 ->orWhere('documentaciones.tipo','OT')
                                 ->orWhere('documentaciones.tipo','INSTITUCIONAL')
+                                ->orWhere('documentaciones.tipo','PROCEDIMIENTO GENERAL')
                                 ->selectRaw('documentaciones.*,usuario_documentaciones.fecha_caducidad')
                                 ->get();  
         
@@ -190,14 +191,28 @@ class DocumentacionesController extends Controller
 
     public function ProcedimientosMetodo($ot_id,$metodo)
     {
-        return DB::table('ot_procedimientos_propios')
-        ->join('ots','ots.id','=','ot_procedimientos_propios.ot_id')
-        ->join('documentaciones','documentaciones.id','=','ot_procedimientos_propios.documentacion_id')      
-        ->join('metodo_ensayos','metodo_ensayos.id','=','documentaciones.metodo_ensayo_id')   
-        ->where('ots.id','=',$ot_id)
-        ->where('metodo_ensayos.metodo','=',$metodo)
-        ->select('documentaciones.*','ot_procedimientos_propios.id as ot_procedimientos_propios_id')
-        ->get();
+            $procedimientos = DB::table('ot_procedimientos_propios')
+                                    ->join('ots','ots.id','=','ot_procedimientos_propios.ot_id')
+                                    ->join('documentaciones','documentaciones.id','=','ot_procedimientos_propios.documentacion_id')      
+                                    ->join('metodo_ensayos','metodo_ensayos.id','=','documentaciones.metodo_ensayo_id')   
+                                    ->where('ots.id','=',$ot_id)
+                                    ->where('metodo_ensayos.metodo','=',$metodo)
+                                    ->select('documentaciones.*','ot_procedimientos_propios.id as ot_procedimientos_propios_id')
+                                    ->get();
+                               
+            if(count($procedimientos) == 0){                
+                
+                
+            $procedimientos = DB::table('documentaciones')
+                                ->join('metodo_ensayos','metodo_ensayos.id','=','documentaciones.metodo_ensayo_id')                              
+                                ->where('metodo_ensayos.metodo','=',$metodo)
+                                ->where('documentaciones.tipo','PROCEDIMIENTO GENERAL')
+                                ->select('documentaciones.*')
+                                ->get();
+        } 
+
+        return $procedimientos;
+
     }
 
     public function ProcedimientoInformeId($id)

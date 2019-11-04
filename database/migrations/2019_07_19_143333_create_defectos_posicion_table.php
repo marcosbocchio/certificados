@@ -15,7 +15,7 @@ class CreateDefectosPosicionTable extends Migration
     {
         Schema::create('defectos_posicion', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('posicion')
+            $table->string('posicion',10)
             ->nullable();
             $table->timestamps();
         });

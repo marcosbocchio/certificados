@@ -16,13 +16,14 @@
         <tbody>
           <tr v-for="registro in registros" :key="registro.id">
 
-            <td  v-if="registro.tipo == 'USUARIO'">USUARIOS</td>          
+            <td v-if="registro.tipo == 'USUARIO'">USUARIOS</td>          
             <td v-if="registro.tipo == 'OT'" >OT</td>          
-            <td v-if="registro.tipo == 'INSTITUCIONAL'">INSTITUCIONAL</td>           
+            <td v-if="registro.tipo == 'INSTITUCIONAL'">INSTITUCIONAL</td>    
+            <td v-if="registro.tipo == 'PROCEDIMIENTO GENERAL'">PROCEDIMIENTO GENERAL</td>       
             <td>{{ registro.titulo}}</td>
             <td>{{ registro.descripcion }}</td>
             <td>{{ registro.metodo_ensayo['metodo']}}</td>
-             <td>{{ registro.usuario['name']}}</td>
+            <td>{{ registro.usuario['name']}}</td>
             <td width="10px">
               <a href="#" class="btn btn-warning btn-sm" title="Editar" v-on:click.prevent="$emit('editRegistroEvent',registro)"><span class="fa fa-edit"></span></a>  
             </td>

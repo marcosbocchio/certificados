@@ -9,7 +9,7 @@
         <component :is= setNuevoComponente :modelo ="modelo" @store="getResults"/>
         <component :is= setEditarComponente :selectRegistro="selectRegistro" @update="getResults"/>  
         <pagination 
-                  :data="registros" @pagination-change-page="getResults" >
+                  :data="registros" @pagination-change-page="getResults" :limit="3" >
                   <span slot="prev-nav">&lt; Previous</span>
                   <span slot="next-nav">Next &gt;</span> 
         </pagination>    

@@ -312,7 +312,8 @@ actions : {
           console.log(payload);
           var urlRegistros = 'procedimientos_informes/ot/' + payload.ot_id + '/metodo/' + payload.metodo + '?api_token=' + Laravel.user.api_token;         
           console.log(urlRegistros);
-          axios.get(urlRegistros).then((response) => {        
+          axios.get(urlRegistros).then((response) => {     
+            console.log(response.data);   
             commit('getProcedimientosOtMetodo', response.data)           
           })
         },

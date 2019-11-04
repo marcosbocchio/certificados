@@ -392,7 +392,7 @@
                         <div class="col-md-2">                       
                             <div class="form-group" >                            
                                 <label for="posicionPlaca">Posición Defecto</label>
-                                <input type="text" v-model="posicionPlacaGosaducto" class="form-control" id="posicionPlacaGosaducto" :disabled="(!TablaDetalle.length)">                           
+                                <input type="text" v-model="posicionPlacaGosaducto" class="form-control" id="posicionPlacaGosaducto" :disabled="(!TablaDetalle.length)" maxlength="10">                           
                             </div>     
                         </div>    
                           

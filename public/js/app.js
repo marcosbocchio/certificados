@@ -3183,6 +3183,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     registros: {
@@ -8675,7 +8676,7 @@ __webpack_require__(/*! vue-image-lightbox/dist/vue-image-lightbox.min.css */ ".
       isLoading_file: false,
       uploadPercentage: 0,
       isPdf: false,
-      tipo_documentos: ['INSTITUCIONAL', 'OT', 'USUARIO'],
+      tipo_documentos: ['INSTITUCIONAL', 'OT', 'PROCEDIMIENTO GENERAL', 'USUARIO'],
       en: vuejs_datepicker_dist_locale__WEBPACK_IMPORTED_MODULE_2__["en"],
       es: vuejs_datepicker_dist_locale__WEBPACK_IMPORTED_MODULE_2__["es"],
       errors: [],
@@ -51408,7 +51409,7 @@ var render = function() {
         _c(
           "pagination",
           {
-            attrs: { data: _vm.registros },
+            attrs: { data: _vm.registros, limit: 3 },
             on: { "pagination-change-page": _vm.getResults }
           },
           [
@@ -54024,6 +54025,10 @@ var render = function() {
                 _vm._v(" "),
                 registro.tipo == "INSTITUCIONAL"
                   ? _c("td", [_vm._v("INSTITUCIONAL")])
+                  : _vm._e(),
+                _vm._v(" "),
+                registro.tipo == "PROCEDIMIENTO GENERAL"
+                  ? _c("td", [_vm._v("PROCEDIMIENTO GENERAL")])
                   : _vm._e(),
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(registro.titulo))]),
@@ -62021,7 +62026,7 @@ var render = function() {
                                     "/api/pdf/remito/" +
                                     ot_remito.id,
                                   target: "_blank",
-                                  title: "pdf"
+                                  title: "Informe"
                                 }
                               },
                               [_c("span", { staticClass: "fa fa-file-pdf-o" })]
@@ -62540,7 +62545,7 @@ var render = function() {
                     ? _c("div", [
                         _c("div", { staticClass: "form-group" }, [
                           _c("label", { attrs: { for: "tipo" } }, [
-                            _vm._v("Tipo Documento")
+                            _vm._v("Tipo Documento (*)")
                           ]),
                           _vm._v(" "),
                           _c("input", {
@@ -62688,7 +62693,8 @@ var render = function() {
                     : _vm._e(),
                   _vm._v(" "),
                   (_vm.newRegistro.tipo == "USUARIO") |
-                  (_vm.newRegistro.tipo == "PROCEDIMIENTO")
+                  (_vm.newRegistro.tipo == "PROCEDIMIENTO") |
+                  (_vm.newRegistro.tipo == "PROCEDIMIENTO GENERAL")
                     ? _c("div", [
                         _c(
                           "div",
@@ -67137,7 +67143,8 @@ var render = function() {
                       attrs: {
                         type: "text",
                         id: "posicionPlacaGosaducto",
-                        disabled: !_vm.TablaDetalle.length
+                        disabled: !_vm.TablaDetalle.length,
+                        maxlength: "10"
                       },
                       domProps: { value: _vm.posicionPlacaGosaducto },
                       on: {
@@ -93754,6 +93761,7 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
       var urlRegistros = 'procedimientos_informes/ot/' + payload.ot_id + '/metodo/' + payload.metodo + '?api_token=' + Laravel.user.api_token;
       console.log(urlRegistros);
       axios.get(urlRegistros).then(function (response) {
+        console.log(response.data);
         commit('getProcedimientosOtMetodo', response.data);
       });
     },

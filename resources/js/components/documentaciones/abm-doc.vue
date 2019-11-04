@@ -27,7 +27,7 @@
                         <div class="modal-body">
                             <div v-if="modelo == 'ot_procedimientos_propios'"> 
                                 <div class="form-group">
-                                    <label  for="tipo">Tipo Documento</label>
+                                    <label  for="tipo">Tipo Documento (*)</label>
                                     <input type="text" id="tipo" class="form-control" v-model="newRegistro.tipo" disabled>    
                                 </div>                             
                             </div>
@@ -51,7 +51,7 @@
                                     <v-select v-model="usuario" label="name" :options="usuarios"></v-select>
                                 </div>
                             </div>
-                            <div v-if="newRegistro.tipo == 'USUARIO' |newRegistro.tipo == 'PROCEDIMIENTO'  ">
+                            <div v-if="newRegistro.tipo == 'USUARIO' |newRegistro.tipo == 'PROCEDIMIENTO' |newRegistro.tipo == 'PROCEDIMIENTO GENERAL' ">
                                 <div class="form-group">
                                     <label for="name">Método de Ensayo</label>
                                     <v-select v-model="metodo_ensayo" label="metodo" :options="metodo_ensayos"></v-select>
@@ -172,7 +172,8 @@ export default {
          tipo_documentos :[
                           
             'INSTITUCIONAL',
-            'OT',              
+            'OT',    
+            'PROCEDIMIENTO GENERAL',          
             'USUARIO'           
          ], 
          en: en,
