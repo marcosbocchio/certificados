@@ -470,6 +470,7 @@ export default {
     editRegistro : function(registro){
 
                 this.editmode = true;
+                this.HabilitarGuardar = true;
                 this.newRegistro = {};    
                 this.metodo_ensayo={};   
                 this.usuario ={};

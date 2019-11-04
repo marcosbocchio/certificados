@@ -91,10 +91,16 @@ class OtProcedimientosPropiosController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
-    }
+
+
+    public function store($documento_id,$ot_procedimieto_propio,$ot_id){
+    
+
+        $ot_procedimieto_propio->documentacion_id = $documento_id;
+        $ot_procedimieto_propio->ot_id = $ot_id;   
+        $ot_procedimieto_propio->save();
+    
+      }
 
     /**
      * Display the specified resource.

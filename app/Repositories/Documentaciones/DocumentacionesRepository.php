@@ -8,7 +8,6 @@ use App\OtProcedimientosPropios;
 use Illuminate\Support\Facades\DB;
 
 
-
 class DocumentacionesRepository extends BaseRepository
 {
 
@@ -37,7 +36,7 @@ class DocumentacionesRepository extends BaseRepository
           if ($request->tipo == 'PROCEDIMIENTO'){
 
             $ot_procedimieto_propio = new OtProcedimientosPropios;
-            $this->saveProcedimientoPropio($documento,$ot_procedimieto_propio,$request);    
+            (new \App\Http\Controllers\OtProcedimientosPropiosController)->store($documento->id,$ot_procedimieto_propio,$request->ot_id);
           }
 
     DB::commit();
@@ -71,7 +70,7 @@ class DocumentacionesRepository extends BaseRepository
     if ($request->tipo == 'PROCEDIMIENTO'){
 
       $ot_procedimieto_propio = OtProcedimientosPropios::where('documentacion_id',$documento->id)->first();
-      $this->saveProcedimientoPropio($documento,$ot_procedimieto_propio,$request);    
+      (new \App\Http\Controllers\OtProcedimientosPropiosController)->store($documento->id,$ot_procedimieto_propio,$request->ot_id); 
     }
     DB::commit(); 
       } catch (Exception $e) {
@@ -109,6 +108,7 @@ class DocumentacionesRepository extends BaseRepository
 
   }
 
+  /*
   public function saveProcedimientoPropio($documento,$ot_procedimieto_propio,$request){
     
 
@@ -117,5 +117,5 @@ class DocumentacionesRepository extends BaseRepository
     $ot_procedimieto_propio->save();
 
   }
-
+*/
 }

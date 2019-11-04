@@ -8,6 +8,7 @@ use App\MetodoEnsayos;
 use App\DiametrosEspesor;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\OtProcedimientosPropios;
 
 
 
@@ -127,14 +128,24 @@ class InformesController extends Controller
              $user_id = $userId = Auth::id();    
         }
        
-        //revisar esto 
+        
 
         $metodo_ensayo = MetodoEnsayos::where('metodo',$request->metodo_ensayo)->first();
       
         
         $informe->ot_id  = $request->ot['id'];
-        $informe->procedimiento_informe_id = $request->procedimiento['ot_procedimientos_propios_id'];
-    
+
+        If(!isset($request->procedimiento['ot_procedimientos_propios_id'])){
+        
+        $ot_procedimieto_propio = new OtProcedimientosPropios;
+        (new \App\Http\Controllers\OtProcedimientosPropiosController)->store($request->procedimiento['id'],$ot_procedimieto_propio,$request->ot['id']);
+        $informe->procedimiento_informe_id = $ot_procedimieto_propio->id;
+
+        }else{
+
+                 $informe->procedimiento_informe_id = $request->procedimiento['ot_procedimientos_propios_id'];
+          }
+
         if ($request->diametro =='CHAPA'){
     
           $diametro_espesor = DiametrosEspesor::where('diametro',$request->diametro)                                 
