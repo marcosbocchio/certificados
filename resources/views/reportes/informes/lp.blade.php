@@ -108,7 +108,7 @@ b {
                         <tbody>                 
                         <tr>
                             <td style="font-size: 12px; width: 200px;border-right: 1px solid #000;"><b>Componente: </b>{{$informe->componente}}</td>
-                            <td style="font-size: 12px;  width: 270px; border-right: 1px solid #000;" colspan="4"  ><b>Inst. Medición: </b>{{$equipo->equipo->tipo_lp}} / {{$equipo->equipo->codigo}}</td>                            
+                            <td style="font-size: 12px;  width: 265px; border-right: 1px solid #000;" colspan="4"  ><b>Inst. Medición: </b>{{$equipo->equipo->tipo_lp}} / {{$equipo->equipo->codigo}}</td>                            
                             <td style="font-size: 12px;width: 125px;  " colspan="1"  ><b style="font-size: 12px;">Rem: </b>
                              {{$removedor->tipo}}
                              @if ($removedor->marca)
