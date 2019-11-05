@@ -201,26 +201,59 @@ export default {
                 this.referencia.path4 ='';
                         
               },
+
             onFileSelected(event,imagen) {
-                switch (imagen) {
-                       case 'imagen1':
-                           this.selectedFile1 = event.target.files[0];
-                           this.onUpload('1');
-                           break;
-                       case 'imagen2':
-                           this.selectedFile2 = event.target.files[0];
-                           this.onUpload('2');
-                           break;
-                       case 'imagen3' :
-                           this.selectedFile3 = event.target.files[0];
-                           this.onUpload('3');
-                           break;
-                       case 'imagen4':
-                           this.selectedFile4 = event.target.files[0];
-                           this.onUpload('4');
-                           break;
                 
-                   }
+                        this.selectedFile = event.target.files[0];
+            
+                        let FileSize = this.selectedFile.size / 1024 / 1024; // in MB           
+                        let FileType=this.selectedFile.type;         
+                        console.log(FileType);
+
+                        if (!((FileType == 'image/jpeg') || (FileType == 'image/bmp') || (FileType == 'image/png'))) {                   
+                    
+                                toastr.error('El tipo de archivo no es aceptado ');
+                                this.$refs.inputFile1.type = 'text';
+                                this.$refs.inputFile1.type = 'file';  
+                                this.selectedFile = null;                               
+                                return; 
+                        }
+                        
+                        console.log(this.selectedFile);
+
+                        if(FileSize > 1 ){
+                            event.preventDefault();
+                            toastr.error('Archivo demasiado grande. (Max 1 MB)');
+                            this.$refs.inputFile1.type = 'text';
+                            this.$refs.inputFile1.type = 'file';  
+                            this.selectedFile = null;                           
+                            return;
+                        }else{
+
+                            this.onUpload();   
+
+                        } 
+
+                    switch (imagen) {
+                        case 'imagen1':
+                            this.selectedFile1 = event.target.files[0];
+                            this.onUpload('1');
+                            break;
+                        case 'imagen2':
+                            this.selectedFile2 = event.target.files[0];
+                            this.onUpload('2');
+                            break;
+                        case 'imagen3' :
+                            this.selectedFile3 = event.target.files[0];
+                            this.onUpload('3');
+                            break;
+                        case 'imagen4':
+                            this.selectedFile4 = event.target.files[0];
+                            this.onUpload('4');
+                            break;
+                    
+                    }
+
                
             },
             onUpload(path) {
