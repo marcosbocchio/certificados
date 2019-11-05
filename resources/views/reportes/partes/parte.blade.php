@@ -7,7 +7,7 @@
 
 <style>
 
-@page { margin:190px 10px 120px 40px !important;
+@page { margin:190px 1px 120px 49px !important;
         padding: 0px 0px 0px 0px !important; }
 
 header {
@@ -378,7 +378,7 @@ b {
 <script type="text/php">
 
     if ( isset($pdf) ) {
-        $x = 450;
+        $x = 457;
         $y = 63;
         $text = "PÁGINA : {PAGE_NUM} de {PAGE_COUNT}";
         $font = $fontMetrics->get_font("serif", "bold");
@@ -391,8 +391,8 @@ b {
     }
 
    
-     $pdf->line(31.5,130,31.5,800,array(0,0,0),1.5);
-     $pdf->line(586.3,130,586.3,800,array(0,0,0),1.5);
+     $pdf->line(38.5,130,38.5,800,array(0,0,0),1.5);
+     $pdf->line(593,130,593,800,array(0,0,0),1.5);
         
 
 </script>

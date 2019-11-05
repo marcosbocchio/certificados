@@ -7,7 +7,7 @@
 
 <style>
 
-@page { margin: 319px 10px 141px 40px !important;
+@page { margin: 319px 1px 141px 49px !important;
         padding: 0px 0px 0px 0px !important; }
 
 header {
@@ -124,7 +124,7 @@ b {
                             <td style="font-size: 12px;border-right: 1px solid #000; " colspan="4"  ><b>Vehículo: </b>{{$informe_pm->vehiculo}}</td>
                             
                             
-                            <td style="font-size: 12px; border-right: 1px solid #000;" colspan="2"  ><b>Desmaganetización: </b>
+                            <td style="font-size: 12px;" colspan="2"  ><b>Desmaganetización: </b>
 
                             @if ($desmagnetizacion_sn)
                                 SI
@@ -167,12 +167,12 @@ b {
                             <td style="font-size: 12px;" colspan="2"  ><b>Concentración: </b>{{$informe_pm->concentracion}}</td>
                             <td style="font-size: 12px;" colspan="1"  ><b>V: </b>{{$informe_pm->voltaje}}</td>  
                             <td style="font-size: 12px; border-right: 1px solid #000;" colspan="1"  ><b>Am: </b>{{$informe_pm->amperaje}}</td>                          
-                            <td style="font-size: 12px; border-right: 1px solid #000;" colspan="2"  ><b>Color Partículas: </b>{{$color_particula->codigo}} </td>  
+                            <td style="font-size: 12px;" colspan="2"  ><b>Color Partículas: </b>{{$color_particula->codigo}} </td>  
                         </tr>
                         <tr>                           
                             <td style="font-size: 12px;border-right: 1px solid #000;" ><b>PQR: </b>{{$informe->pqr}}</td>
                             <td style="font-size: 12px; border-right: 1px solid #000; " colspan="4" ><b>Proc. PM: </b>{{$procedimiento_inf->titulo}} </td>
-                             <td style="font-size: 12px; border-right: 1px solid #000;" colspan="2"  ><b>Iluminación: </b>{{$iluminacion->codigo}} </td>  
+                             <td style="font-size: 12px;" colspan="2"  ><b>Iluminación: </b>{{$iluminacion->codigo}} </td>  
 
                         </tr>                
                         </tbody>
@@ -313,6 +313,9 @@ b {
         $angle = 0.0;   //  default
         $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
     }
+
+     $pdf->line(38.5,130,38.5,800,array(0,0,0),1.5);
+     $pdf->line(593,130,593,800,array(0,0,0),1.5);
 
 </script>
 

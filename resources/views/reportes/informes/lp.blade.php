@@ -7,7 +7,7 @@
 
 <style>
 
-@page { margin: 319px 10px 141px 40px !important;
+@page { margin: 319px 1px 141px 49px !important;
         padding: 0px 0px 0px 0px !important; }
 
 header {
@@ -309,7 +309,7 @@ b {
 <script type="text/php">
 
     if ( isset($pdf) ) {
-        $x = 481;
+        $x = 487;
         $y = 77;
         $text = "PÁGINA : {PAGE_NUM} de {PAGE_COUNT}";
         $font = $fontMetrics->get_font("serif", "bold");
@@ -320,6 +320,9 @@ b {
         $angle = 0.0;   //  default
         $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
     }
+
+    $pdf->line(38.5,130,38.5,800,array(0,0,0),1.5);
+     $pdf->line(593,130,593,800,array(0,0,0),1.5);
 
 </script>
 

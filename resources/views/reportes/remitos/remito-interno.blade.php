@@ -7,12 +7,12 @@
 
 <style>
 
-@page { margin:167px 10px 53px 40px !important;
+@page { margin:187px 1px 53px 49px !important;
         padding: 0px 0px 0px 0px !important; }
 
 header {
     position:fixed;
-    top: -140px; 
+    top: -160px; 
    
     }
 
@@ -100,11 +100,15 @@ b {
                         <tbody>
                             <tr>                         
                                 <td style="font-size: 12px;height: 20px; width: 233px;"><b>CLIENTE: </b>{{$cliente->nombre_fantasia}}</td>                        
-                                <td style="font-size: 12px; width: 253px;"><b>PROYECTO: </b>{{$ot->proyecto}}</td>               
+                                <td style="font-size: 12px; width: 253px;"><b>PROYECTO: </b>{{$ot->proyecto}}</td>            
                                 
                                 <td style="font-size: 12px;"><b>OBRA: </b>{{$ot->obra}}</td>     
                                 <td style="font-size: 12px;"><b>OT N°: </b>{{$ot->numero}}</td>     
-                            </tr>               
+                            </tr>   
+                            <tr>                         
+                                <td style="font-size: 12px;height: 20px; width: 233px;"><b>RECEPTOR: </b>{{$remito->receptor}}</td>                        
+                                <td style="font-size: 12px; width: 253px;"><b>LUGAR DESTINO: </b>{{$remito->destino}}</td>               
+                            </tr>            
                         </tbody>
                     </table>          
                 </td>
@@ -154,7 +158,7 @@ b {
 <main>    
     <table width="100%" class="bordered">
         <tbody>      
-            {{ $filasPage = 51 }}
+            {{ $filasPage = 50 }}
             @foreach ($detalle as $producto)
                 @if (($loop->index + 1) % $filasPage != 0)
                     <tr class="bordered-0">
@@ -207,7 +211,7 @@ b {
 <script type="text/php">
 
     if ( isset($pdf) ) {
-        $x = 450;
+        $x = 457;
         $y = 63;
         $text = "PÁGINA : {PAGE_NUM} de {PAGE_COUNT}";
         $font = $fontMetrics->get_font("serif", "bold");
@@ -218,6 +222,8 @@ b {
         $angle = 0.0;   //  default
         $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
     }
+
+
 
 </script>
 
