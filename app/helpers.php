@@ -8,9 +8,20 @@
 */
 
 function pdfCantFilasACompletar($filasPage,$cantFilasTotal){
+   
 
+    $filas_completar = ($filasPage - ($cantFilasTotal % $filasPage)) ;
 
-    return ($filasPage - ($cantFilasTotal % $filasPage)) ;
+    if($filas_completar == $filasPage){
+
+      return 0 ;
+
+    }
+    else {
+
+      return $filas_completar ;
+      
+    }
 
 }
 

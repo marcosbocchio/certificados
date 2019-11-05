@@ -9,6 +9,7 @@ use App\Ots;
 use App\Clientes;
 use App\DetallesLpReferencias;
 use App\DetallesLp;
+use App\User;
 
 class PdfInformesLpReferenciasController extends Controller
 {
@@ -21,7 +22,8 @@ class PdfInformesLpReferenciasController extends Controller
         $informe_lp = InformesLp::find($detalle_lp->informe_lp_id);
         $informe = Informe::find($informe_lp->informe_id);      
         $ot = Ots:: find($informe->ot_id);
-        $cliente = Clientes::find($ot->cliente_id);         
+        $cliente = Clientes::find($ot->cliente_id);    
+        $evaluador = User::find($informe->firma);     
         
     //  dd($cliente);
 
@@ -30,7 +32,8 @@ class PdfInformesLpReferenciasController extends Controller
                                                                 'informe',
                                                                 'detalle_lp',
                                                                 'detalle_lp_referencia',
-                                                                'cliente'                                                              
+                                                                'cliente',
+                                                                'evaluador'                                                              
                                                                ))->setPaper('a4','portrait')->setWarnings(false);
         return $pdf->stream();
         

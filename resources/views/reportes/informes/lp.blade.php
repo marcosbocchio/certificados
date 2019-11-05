@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Informe RI</title>
+    <title>Informe LP</title>
 </head>
 
 <style>
@@ -74,7 +74,7 @@ b {
                                 <td style="font-size: 12px;"><b style="margin-left: 40px"></b></td>                         
                             </tr>
                             <tr>
-                                <td style="font-size: 12px;" ><b style="margin-left: 120px" >INFORME N°: </b>{{FormatearNumeroInforme($informe->numero,'RI')}}</td>                      
+                                <td style="font-size: 12px;" ><b style="margin-left: 120px" >INFORME N°: </b>{{FormatearNumeroInforme($informe->numero,'LP')}}</td>                      
                             </tr>
                             <tr>
                                 <td style="font-size: 12px;"><b style="margin-left: 120px">FECHA: </b>{{ date('d-m-Y', strtotime($ot->fecha_hora)) }}</td>
@@ -159,7 +159,7 @@ b {
                         </tr>
                         <tr>                           
                            <td style="font-size: 12px;border-right: 1px solid #000;" ><b>Proc. Sold. : </b>{{$informe->procedimiento_soldadura}}</td>
-                           <td style="font-size: 12px;" colspan="2" ><b>Aplic Pen.: </b>{{$penetrante_aplicacion->codigo}}</td>  
+                           <td style="font-size: 12px;width: 150px" colspan="2" ><b>Aplic Pen.: </b>{{$penetrante_aplicacion->codigo}}</td>  
                            <td style="font-size: 12px;border-right: 1px solid #000;" colspan="2"  ><b>Tiempo Pen.: </b> {{$informe_lp->tiempo_penetracion}} Min.</td>
                            <td style="font-size: 12px; " colspan="2" ><b>Norma Ensayo: </b>{{$norma_ensayo->descripcion}}</td>                
                         </tr>
@@ -292,7 +292,7 @@ b {
             {{ $filasPage = 30 }}
             {{ $filasACompletar = pdfCantFilasACompletar($filasPage,$cantFilasTotal) }}  
 
-                  @for ( $x=0 ;  $x < $filasACompletar ; $x++)
+             @for ( $x=0 ;  $x < $filasACompletar ; $x++)
                 <tr>
                     <td style="font-size: 12px;  width:66px;text-align: center" class="bordered-td">&nbsp;</td>
                     <td style="font-size: 12px;  width:40px;text-align: center" class="bordered-td">&nbsp;</td>

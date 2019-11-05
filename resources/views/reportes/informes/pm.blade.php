@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Informe RI</title>
+    <title>Informe PM</title>
 </head>
 
 <style>
@@ -74,7 +74,7 @@ b {
                                 <td style="font-size: 12px;"><b style="margin-left: 40px"></b></td>                         
                             </tr>
                             <tr>
-                                <td style="font-size: 12px;" ><b style="margin-left: 120px" >INFORME N°: </b>{{FormatearNumeroInforme($informe->numero,'RI')}}</td>                      
+                                <td style="font-size: 12px;" ><b style="margin-left: 120px" >INFORME N°: </b>{{FormatearNumeroInforme($informe->numero,'PM')}}</td>                      
                             </tr>
                             <tr>
                                 <td style="font-size: 12px;"><b style="margin-left: 120px">FECHA: </b>{{ date('d-m-Y', strtotime($ot->fecha_hora)) }}</td>
@@ -207,7 +207,7 @@ b {
 <footer>
     <table style="text-align: center" width="100%" class="bordered">
         <tbody>
-            <tr>
+            <tr> 
                 <td>
                     <table width="100%" style="border-collapse: collapse;" >
                         <tbody>                           
@@ -223,18 +223,18 @@ b {
                     <table width="100%" style="border-collapse: collapse;" >
                         <tbody>
                             <tr>                               
-                               <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>EVALUADOR </b></td>   
-                               <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>CONTRATISTA </b></td> 
-                               <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td"><b>CLIENTE </b></td>                              
+                               <td style="font-size: 13px; text-align: center;width:170px" colspan="2" class="bordered-td" ><b>EVALUADOR </b></td>   
+                               <td style="font-size: 13px; text-align: center;width:230px" colspan="2" class="bordered-td" ><b>CONTRATISTA </b></td> 
+                               <td style="font-size: 13px; text-align: center;width:230px" colspan="2" class="bordered-td"><b>CLIENTE </b></td>                              
                             </tr>
                             <tr>                               
                                 <td style="font-size: 12px; text-align: left; height: 25px;width:50px;"><span style="margin-left: 2px">FIRMA:</span></td>   
                                 <td style="font-size: 12px; border-right: 1px solid #000;width:150px;" rowspan="2">
                                 @if($evaluador && $evaluador->path)
-                                     <img src="{{ public_path($evaluador->path)}}" alt="" style="height: 70px;margin:0 0 0 5px;">
+                                     <img src="{{ public_path($evaluador->path)}}" alt="" style="height: 60px;margin:0 0 0 0px;">
                                 @endif
                                 </td> 
-                                <td style="font-size: 12px; text-align: left; height: 25px;width:50px"><span style="margin-left: 2px">FIRMA:</span></td> 
+                                <td style="font-size: 12px; text-align: left; height: 25px;"><span style="margin-left: 2px">FIRMA:</span></td> 
                                 <td style="font-size: 12px; border-right: 1px solid #000;" rowspan="2"></td>
                                 <td style="font-size: 12px; text-align: left; height: 25px;"><span style="margin-left: 2px">FIRMA:</span></td>
                                 <td style="font-size: 12px; border-right: 1px solid #000;" rowspan="2"></td>                              
@@ -302,7 +302,7 @@ b {
 <script type="text/php">
 
     if ( isset($pdf) ) {
-        $x = 481;
+        $x = 487;
         $y = 77;
         $text = "PÁGINA : {PAGE_NUM} de {PAGE_COUNT}";
         $font = $fontMetrics->get_font("serif", "bold");
