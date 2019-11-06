@@ -25,7 +25,7 @@ class InternoFuenteRequest extends FormRequest
     {
         return [
             'nro_serie'  => 'required|Max:45',    
-            'curie'      => 'nullable | numeric |between:0,100',   
+            'curie'      => 'nullable | numeric |between:0,200',   
             'fuente'     => 'required',
         ];
     }

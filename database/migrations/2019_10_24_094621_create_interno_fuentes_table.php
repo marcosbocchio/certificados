@@ -17,6 +17,7 @@ class CreateInternoFuentesTable extends Migration
             $table->bigIncrements('id');
             $table->string('nro_serie',45);
             $table->boolean('activo_sn')->default(null);
+            $table->datetime('fecha_evaluacion');
             $table->float('curie')->nullable();
             $table->timestamps();
         });

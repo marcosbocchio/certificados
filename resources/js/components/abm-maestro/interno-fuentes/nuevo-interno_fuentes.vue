@@ -8,20 +8,42 @@
                     <h4 class="modal-title">Crear</h4>
                 </div>
                 <div class="modal-body">    
-                
-                   
-                    <label for="numero_serie">N° Serie (*)</label>   
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="numero_serie">N° Serie (*)</label>   
+                                <input type="checkbox" id="checkbox" v-model="newRegistro.activo_sn" style="float:right"> 
+                                <label for="tipo" style="float:right;margin-right: 5px;">ACTIVO</label>     
+                                <input autocomplete="off" v-model="newRegistro.nro_serie" type="text" name="numero_serie" class="form-control" value="">         
+                            </div>
+                        </div>   
 
-                    <input type="checkbox" id="checkbox" v-model="newRegistro.activo_sn" style="float:right"> 
-                    <label for="tipo" style="float:right;margin-right: 5px;">ACTIVO</label>     
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="fecha">Fecha Evaluación(*)</label>
+                                <div class="input-group date">
+                                    <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                    </div>
+                                        <Datepicker v-model="newRegistro.fecha_evaluacion" :input-class="'form-control pull-right'" :language="es"></Datepicker>   
+                                </div>
+                            </div>
+                        </div>       
+                        
+                    <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="curie">Curie</label>
+                                <input v-model="newRegistro.curie" type="number" name="curie" class="form-control" value="" step="0.01"> 
+                            </div>
+                    </div>
 
-                    <input autocomplete="off" v-model="newRegistro.nro_serie" type="text" name="numero_serie" class="form-control" value="">                
-
-                    <label for="curie">Curie</label>
-                    <input v-model="newRegistro.curie" type="number" name="curie" class="form-control" value="" step="0.01"> 
-
-                    <label for="name">Fuente (*)</label>      
-                    <v-select v-model="fuente" label="codigo" :options="fuentes"></v-select>
+                    <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="name">Fuente (*)</label>      
+                                <v-select v-model="fuente" label="codigo" :options="fuentes" ></v-select>
+                            </div>
+                    </div>
+                    </div>
                 </div>
             
                 <div class="modal-footer">
@@ -36,12 +58,22 @@
 
 <script>
  import {mapState} from 'vuex'
+ import Datepicker from 'vuejs-datepicker';
+ import {en, es} from 'vuejs-datepicker/dist/locale'
  import { eventNewRegistro } from '../../event-bus';
 export default {
+    components: {
+      Datepicker,
+      
+  },
     data() { return {
+
+         en: en,
+         es: es,
     
         newRegistro : {           
             'nro_serie'  : '',
+            'fecha_evaluacion' :'',
             'curie' : '', 
             'activo_sn' : true,      
          },
@@ -62,9 +94,11 @@ export default {
  
    
     methods: {
+
            openModal : function(){
                 this.newRegistro = {           
                     'nro_serie'  : '',
+                    'fecha_evaluacion' :'',
                     'curie' : '100', 
                     'activo_sn' : true,      
                 };

@@ -249,6 +249,7 @@ state: {
         CantDocumentaciones:'0',
         CantProcedimientos:'0',
         CantUsuariosCliente:'0',
+        curie:'0',
 
     },
 
@@ -543,6 +544,15 @@ actions : {
           })
         },
 
+        loadCurie({
+          commit},fuente_id) {
+           axios.defaults.baseURL = store.state.url ;
+           var urlRegistros = 'interno_fuentes/' + interno_fuente_id +'/curie' + '?api_token=' + Laravel.user.api_token;             
+           axios.get(urlRegistros).then((response) => {
+           commit('CalcularCurie', response.data)           
+          })
+        },
+
     },
     mutations: {
       getProvincias(state, provincias) {
@@ -679,6 +689,12 @@ actions : {
       ContarRemitos(state, CantRemitos) {
         state.CantRemitos = CantRemitos
       },
+
+      CalcularCurie(state, curie) {
+        state.curie = curie
+      },
+
+    
 
     }
 

@@ -15,7 +15,10 @@
                     
                     <label for="name">Descripción</label>                   
                     <input autocomplete="off" type="text" name="descripcion" class="form-control" v-model="editRegistro.descripcion" value="">              
-  
+
+                    <label for="t">T 1/2</label>                   
+                    <input autocomplete="off" type="integer" name="t" class="form-control" v-model="editRegistro.t" value="">              
+
               
                 </div>
             
@@ -78,6 +81,7 @@ export default {
 
                 this.editRegistro.codigo = this.selectRegistro.codigo;
                 this.editRegistro.descripcion = this.selectRegistro.descripcion;    
+                this.editRegistro.t=this.selectRegistro.const_t;
               
                 $('#editar').modal('show');               
 

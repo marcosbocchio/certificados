@@ -3543,6 +3543,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3573,6 +3576,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.$nextTick(function () {
         this.editRegistro.codigo = this.selectRegistro.codigo;
         this.editRegistro.descripcion = this.selectRegistro.descripcion;
+        this.editRegistro.t = this.selectRegistro.const_t;
         $('#editar').modal('show');
         this.$forceUpdate();
       });
@@ -3652,6 +3656,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3659,7 +3666,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     return {
       newRegistro: {
         'codigo': '',
-        'descripcion': ''
+        'descripcion': '',
+        't': ''
       },
       errors: {}
     };
@@ -3672,7 +3680,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     openModal: function openModal() {
       this.newRegistro = {
         'codigo': '',
-        'descripcion': ''
+        'descripcion': '',
+        't': ''
       };
       $('#nuevo').modal('show');
     },
@@ -4137,7 +4146,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var _event_bus__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../event-bus */ "./resources/js/components/event-bus.js");
+/* harmony import */ var vuejs_datepicker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuejs-datepicker */ "./node_modules/vuejs-datepicker/dist/vuejs-datepicker.esm.js");
+/* harmony import */ var vuejs_datepicker_dist_locale__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuejs-datepicker/dist/locale */ "./node_modules/vuejs-datepicker/dist/locale/index.js");
+/* harmony import */ var vuejs_datepicker_dist_locale__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vuejs_datepicker_dist_locale__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _event_bus__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../event-bus */ "./resources/js/components/event-bus.js");
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -4178,9 +4190,36 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    Datepicker: vuejs_datepicker__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
   props: {
     selectRegistro: {
       type: Object,
@@ -4189,8 +4228,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   data: function data() {
     return {
+      en: vuejs_datepicker_dist_locale__WEBPACK_IMPORTED_MODULE_2__["en"],
+      es: vuejs_datepicker_dist_locale__WEBPACK_IMPORTED_MODULE_2__["es"],
       editRegistro: {
         'nro_serie': '',
+        'fecha_evaluacion': '',
         'curie': '',
         'activo_sn': true
       },
@@ -4199,7 +4241,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   created: function created() {
-    _event_bus__WEBPACK_IMPORTED_MODULE_1__["eventEditRegistro"].$on('editar', function () {
+    _event_bus__WEBPACK_IMPORTED_MODULE_3__["eventEditRegistro"].$on('editar', function () {
       this.openModal();
     }.bind(this));
     this.$store.dispatch('loadFuentes');
@@ -4211,6 +4253,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.$nextTick(function () {
         this.editRegistro.nro_serie = this.selectRegistro.nro_serie;
         this.editRegistro.activo_sn = this.selectRegistro.activo_sn;
+        this.editRegistro.fecha_evaluacion = this.selectRegistro.fecha_evaluacion;
         this.editRegistro.curie = this.selectRegistro.curie;
         this.fuente = this.selectRegistro.fuente;
         $('#editar').modal('show');
@@ -4258,7 +4301,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var _event_bus__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../event-bus */ "./resources/js/components/event-bus.js");
+/* harmony import */ var vuejs_datepicker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuejs-datepicker */ "./node_modules/vuejs-datepicker/dist/vuejs-datepicker.esm.js");
+/* harmony import */ var vuejs_datepicker_dist_locale__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuejs-datepicker/dist/locale */ "./node_modules/vuejs-datepicker/dist/locale/index.js");
+/* harmony import */ var vuejs_datepicker_dist_locale__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vuejs_datepicker_dist_locale__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _event_bus__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../event-bus */ "./resources/js/components/event-bus.js");
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -4299,13 +4345,43 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    Datepicker: vuejs_datepicker__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
   data: function data() {
     return {
+      en: vuejs_datepicker_dist_locale__WEBPACK_IMPORTED_MODULE_2__["en"],
+      es: vuejs_datepicker_dist_locale__WEBPACK_IMPORTED_MODULE_2__["es"],
       newRegistro: {
         'nro_serie': '',
+        'fecha_evaluacion': '',
         'curie': '',
         'activo_sn': true
       },
@@ -4314,13 +4390,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   created: function created() {
-    _event_bus__WEBPACK_IMPORTED_MODULE_1__["eventNewRegistro"].$on('open', this.openModal);
+    _event_bus__WEBPACK_IMPORTED_MODULE_3__["eventNewRegistro"].$on('open', this.openModal);
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['url', 'fuentes'])),
   methods: {
     openModal: function openModal() {
       this.newRegistro = {
         'nro_serie': '',
+        'fecha_evaluacion': '',
         'curie': '100',
         'activo_sn': true
       };
@@ -54747,6 +54824,35 @@ var render = function() {
                     )
                   }
                 }
+              }),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "t" } }, [_vm._v("T 1/2")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.editRegistro.t,
+                    expression: "editRegistro.t"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  autocomplete: "off",
+                  type: "integer",
+                  name: "t",
+                  value: ""
+                },
+                domProps: { value: _vm.editRegistro.t },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.editRegistro, "t", $event.target.value)
+                  }
+                }
               })
             ]),
             _vm._v(" "),
@@ -54864,7 +54970,9 @@ var render = function() {
                 }
               }),
               _vm._v(" "),
-              _c("label", { attrs: { for: "name" } }, [_vm._v("Descripción")]),
+              _c("label", { attrs: { for: "descripcion" } }, [
+                _vm._v("Descripción")
+              ]),
               _vm._v(" "),
               _c("input", {
                 directives: [
@@ -54893,6 +55001,35 @@ var render = function() {
                       "descripcion",
                       $event.target.value
                     )
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "t" } }, [_vm._v("T 1/2")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.newRegistro.t,
+                    expression: "newRegistro.t"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  autocomplete: "off",
+                  type: "integer",
+                  name: "t",
+                  value: ""
+                },
+                domProps: { value: _vm.newRegistro.t },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.newRegistro, "t", $event.target.value)
                   }
                 }
               })
@@ -55880,146 +56017,201 @@ var render = function() {
           _c("div", { staticClass: "modal-content" }, [
             _vm._m(0),
             _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "modal-body" },
-              [
-                _c("label", { attrs: { for: "numero_serie" } }, [
-                  _vm._v("N° Serie (*)")
+            _c("div", { staticClass: "modal-body" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-12" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { attrs: { for: "numero_serie" } }, [
+                      _vm._v("N° Serie (*)")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.editRegistro.activo_sn,
+                          expression: "editRegistro.activo_sn"
+                        }
+                      ],
+                      staticStyle: { float: "right" },
+                      attrs: { type: "checkbox", id: "checkbox" },
+                      domProps: {
+                        checked: Array.isArray(_vm.editRegistro.activo_sn)
+                          ? _vm._i(_vm.editRegistro.activo_sn, null) > -1
+                          : _vm.editRegistro.activo_sn
+                      },
+                      on: {
+                        change: function($event) {
+                          var $$a = _vm.editRegistro.activo_sn,
+                            $$el = $event.target,
+                            $$c = $$el.checked ? true : false
+                          if (Array.isArray($$a)) {
+                            var $$v = null,
+                              $$i = _vm._i($$a, $$v)
+                            if ($$el.checked) {
+                              $$i < 0 &&
+                                _vm.$set(
+                                  _vm.editRegistro,
+                                  "activo_sn",
+                                  $$a.concat([$$v])
+                                )
+                            } else {
+                              $$i > -1 &&
+                                _vm.$set(
+                                  _vm.editRegistro,
+                                  "activo_sn",
+                                  $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                                )
+                            }
+                          } else {
+                            _vm.$set(_vm.editRegistro, "activo_sn", $$c)
+                          }
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      {
+                        staticStyle: { float: "right", "margin-right": "5px" },
+                        attrs: { for: "tipo" }
+                      },
+                      [_vm._v("ACTIVO")]
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.editRegistro.nro_serie,
+                          expression: "editRegistro.nro_serie"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        autocomplete: "off",
+                        type: "text",
+                        name: "numero_serie",
+                        value: ""
+                      },
+                      domProps: { value: _vm.editRegistro.nro_serie },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.editRegistro,
+                            "nro_serie",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
                 ]),
                 _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.editRegistro.activo_sn,
-                      expression: "editRegistro.activo_sn"
-                    }
-                  ],
-                  staticStyle: { float: "right" },
-                  attrs: { type: "checkbox", id: "checkbox" },
-                  domProps: {
-                    checked: Array.isArray(_vm.editRegistro.activo_sn)
-                      ? _vm._i(_vm.editRegistro.activo_sn, null) > -1
-                      : _vm.editRegistro.activo_sn
-                  },
-                  on: {
-                    change: function($event) {
-                      var $$a = _vm.editRegistro.activo_sn,
-                        $$el = $event.target,
-                        $$c = $$el.checked ? true : false
-                      if (Array.isArray($$a)) {
-                        var $$v = null,
-                          $$i = _vm._i($$a, $$v)
-                        if ($$el.checked) {
-                          $$i < 0 &&
-                            _vm.$set(
-                              _vm.editRegistro,
-                              "activo_sn",
-                              $$a.concat([$$v])
-                            )
-                        } else {
-                          $$i > -1 &&
-                            _vm.$set(
-                              _vm.editRegistro,
-                              "activo_sn",
-                              $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                            )
+                _c("div", { staticClass: "col-md-6" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { attrs: { for: "fecha" } }, [
+                      _vm._v("Fecha Evaluación(*)")
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "input-group date" },
+                      [
+                        _vm._m(1),
+                        _vm._v(" "),
+                        _c("Datepicker", {
+                          attrs: {
+                            "input-class": "form-control pull-right",
+                            language: _vm.es
+                          },
+                          model: {
+                            value: _vm.editRegistro.fecha_evaluacion,
+                            callback: function($$v) {
+                              _vm.$set(
+                                _vm.editRegistro,
+                                "fecha_evaluacion",
+                                $$v
+                              )
+                            },
+                            expression: "editRegistro.fecha_evaluacion"
+                          }
+                        })
+                      ],
+                      1
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-6" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { attrs: { for: "curie" } }, [_vm._v("Curie")]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.editRegistro.curie,
+                          expression: "editRegistro.curie"
                         }
-                      } else {
-                        _vm.$set(_vm.editRegistro, "activo_sn", $$c)
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "number",
+                        name: "curie",
+                        value: "",
+                        step: "0.01"
+                      },
+                      domProps: { value: _vm.editRegistro.curie },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.editRegistro,
+                            "curie",
+                            $event.target.value
+                          )
+                        }
                       }
-                    }
-                  }
-                }),
+                    })
+                  ])
+                ]),
                 _vm._v(" "),
-                _c(
-                  "label",
-                  {
-                    staticStyle: { float: "right", "margin-right": "5px" },
-                    attrs: { for: "tipo" }
-                  },
-                  [_vm._v("ACTIVO")]
-                ),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.editRegistro.nro_serie,
-                      expression: "editRegistro.nro_serie"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: {
-                    autocomplete: "off",
-                    type: "text",
-                    name: "numero_serie",
-                    value: ""
-                  },
-                  domProps: { value: _vm.editRegistro.nro_serie },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(
-                        _vm.editRegistro,
-                        "nro_serie",
-                        $event.target.value
-                      )
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c("label", { attrs: { for: "curie" } }, [_vm._v("Curie")]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.editRegistro.curie,
-                      expression: "editRegistro.curie"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: {
-                    type: "number",
-                    name: "curie",
-                    value: "",
-                    step: "0.01"
-                  },
-                  domProps: { value: _vm.editRegistro.curie },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.editRegistro, "curie", $event.target.value)
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c("label", { attrs: { for: "name" } }, [_vm._v("Fuente (*)")]),
-                _vm._v(" "),
-                _c("v-select", {
-                  attrs: { label: "codigo", options: _vm.fuentes },
-                  model: {
-                    value: _vm.fuente,
-                    callback: function($$v) {
-                      _vm.fuente = $$v
-                    },
-                    expression: "fuente"
-                  }
-                })
-              ],
-              1
-            ),
+                _c("div", { staticClass: "col-md-12" }, [
+                  _c(
+                    "div",
+                    { staticClass: "form-group" },
+                    [
+                      _c("label", { attrs: { for: "name" } }, [
+                        _vm._v("Fuente (*)")
+                      ]),
+                      _vm._v(" "),
+                      _c("v-select", {
+                        attrs: { label: "codigo", options: _vm.fuentes },
+                        model: {
+                          value: _vm.fuente,
+                          callback: function($$v) {
+                            _vm.fuente = $$v
+                          },
+                          expression: "fuente"
+                        }
+                      })
+                    ],
+                    1
+                  )
+                ])
+              ])
+            ]),
             _vm._v(" "),
-            _vm._m(1)
+            _vm._m(2)
           ])
         ])
       ])
@@ -56042,6 +56234,14 @@ var staticRenderFns = [
       ),
       _vm._v(" "),
       _c("h4", { staticClass: "modal-title" }, [_vm._v("Editar")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-addon" }, [
+      _c("i", { staticClass: "fa fa-calendar" })
     ])
   },
   function() {
@@ -56103,146 +56303,197 @@ var render = function() {
           _c("div", { staticClass: "modal-content" }, [
             _vm._m(0),
             _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "modal-body" },
-              [
-                _c("label", { attrs: { for: "numero_serie" } }, [
-                  _vm._v("N° Serie (*)")
+            _c("div", { staticClass: "modal-body" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-12" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { attrs: { for: "numero_serie" } }, [
+                      _vm._v("N° Serie (*)")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.newRegistro.activo_sn,
+                          expression: "newRegistro.activo_sn"
+                        }
+                      ],
+                      staticStyle: { float: "right" },
+                      attrs: { type: "checkbox", id: "checkbox" },
+                      domProps: {
+                        checked: Array.isArray(_vm.newRegistro.activo_sn)
+                          ? _vm._i(_vm.newRegistro.activo_sn, null) > -1
+                          : _vm.newRegistro.activo_sn
+                      },
+                      on: {
+                        change: function($event) {
+                          var $$a = _vm.newRegistro.activo_sn,
+                            $$el = $event.target,
+                            $$c = $$el.checked ? true : false
+                          if (Array.isArray($$a)) {
+                            var $$v = null,
+                              $$i = _vm._i($$a, $$v)
+                            if ($$el.checked) {
+                              $$i < 0 &&
+                                _vm.$set(
+                                  _vm.newRegistro,
+                                  "activo_sn",
+                                  $$a.concat([$$v])
+                                )
+                            } else {
+                              $$i > -1 &&
+                                _vm.$set(
+                                  _vm.newRegistro,
+                                  "activo_sn",
+                                  $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                                )
+                            }
+                          } else {
+                            _vm.$set(_vm.newRegistro, "activo_sn", $$c)
+                          }
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      {
+                        staticStyle: { float: "right", "margin-right": "5px" },
+                        attrs: { for: "tipo" }
+                      },
+                      [_vm._v("ACTIVO")]
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.newRegistro.nro_serie,
+                          expression: "newRegistro.nro_serie"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        autocomplete: "off",
+                        type: "text",
+                        name: "numero_serie",
+                        value: ""
+                      },
+                      domProps: { value: _vm.newRegistro.nro_serie },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.newRegistro,
+                            "nro_serie",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
                 ]),
                 _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.newRegistro.activo_sn,
-                      expression: "newRegistro.activo_sn"
-                    }
-                  ],
-                  staticStyle: { float: "right" },
-                  attrs: { type: "checkbox", id: "checkbox" },
-                  domProps: {
-                    checked: Array.isArray(_vm.newRegistro.activo_sn)
-                      ? _vm._i(_vm.newRegistro.activo_sn, null) > -1
-                      : _vm.newRegistro.activo_sn
-                  },
-                  on: {
-                    change: function($event) {
-                      var $$a = _vm.newRegistro.activo_sn,
-                        $$el = $event.target,
-                        $$c = $$el.checked ? true : false
-                      if (Array.isArray($$a)) {
-                        var $$v = null,
-                          $$i = _vm._i($$a, $$v)
-                        if ($$el.checked) {
-                          $$i < 0 &&
-                            _vm.$set(
-                              _vm.newRegistro,
-                              "activo_sn",
-                              $$a.concat([$$v])
-                            )
-                        } else {
-                          $$i > -1 &&
-                            _vm.$set(
-                              _vm.newRegistro,
-                              "activo_sn",
-                              $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                            )
+                _c("div", { staticClass: "col-md-6" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { attrs: { for: "fecha" } }, [
+                      _vm._v("Fecha Evaluación(*)")
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "input-group date" },
+                      [
+                        _vm._m(1),
+                        _vm._v(" "),
+                        _c("Datepicker", {
+                          attrs: {
+                            "input-class": "form-control pull-right",
+                            language: _vm.es
+                          },
+                          model: {
+                            value: _vm.newRegistro.fecha_evaluacion,
+                            callback: function($$v) {
+                              _vm.$set(_vm.newRegistro, "fecha_evaluacion", $$v)
+                            },
+                            expression: "newRegistro.fecha_evaluacion"
+                          }
+                        })
+                      ],
+                      1
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-6" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { attrs: { for: "curie" } }, [_vm._v("Curie")]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.newRegistro.curie,
+                          expression: "newRegistro.curie"
                         }
-                      } else {
-                        _vm.$set(_vm.newRegistro, "activo_sn", $$c)
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "number",
+                        name: "curie",
+                        value: "",
+                        step: "0.01"
+                      },
+                      domProps: { value: _vm.newRegistro.curie },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.newRegistro,
+                            "curie",
+                            $event.target.value
+                          )
+                        }
                       }
-                    }
-                  }
-                }),
+                    })
+                  ])
+                ]),
                 _vm._v(" "),
-                _c(
-                  "label",
-                  {
-                    staticStyle: { float: "right", "margin-right": "5px" },
-                    attrs: { for: "tipo" }
-                  },
-                  [_vm._v("ACTIVO")]
-                ),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.newRegistro.nro_serie,
-                      expression: "newRegistro.nro_serie"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: {
-                    autocomplete: "off",
-                    type: "text",
-                    name: "numero_serie",
-                    value: ""
-                  },
-                  domProps: { value: _vm.newRegistro.nro_serie },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(
-                        _vm.newRegistro,
-                        "nro_serie",
-                        $event.target.value
-                      )
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c("label", { attrs: { for: "curie" } }, [_vm._v("Curie")]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.newRegistro.curie,
-                      expression: "newRegistro.curie"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: {
-                    type: "number",
-                    name: "curie",
-                    value: "",
-                    step: "0.01"
-                  },
-                  domProps: { value: _vm.newRegistro.curie },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.newRegistro, "curie", $event.target.value)
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c("label", { attrs: { for: "name" } }, [_vm._v("Fuente (*)")]),
-                _vm._v(" "),
-                _c("v-select", {
-                  attrs: { label: "codigo", options: _vm.fuentes },
-                  model: {
-                    value: _vm.fuente,
-                    callback: function($$v) {
-                      _vm.fuente = $$v
-                    },
-                    expression: "fuente"
-                  }
-                })
-              ],
-              1
-            ),
+                _c("div", { staticClass: "col-md-12" }, [
+                  _c(
+                    "div",
+                    { staticClass: "form-group" },
+                    [
+                      _c("label", { attrs: { for: "name" } }, [
+                        _vm._v("Fuente (*)")
+                      ]),
+                      _vm._v(" "),
+                      _c("v-select", {
+                        attrs: { label: "codigo", options: _vm.fuentes },
+                        model: {
+                          value: _vm.fuente,
+                          callback: function($$v) {
+                            _vm.fuente = $$v
+                          },
+                          expression: "fuente"
+                        }
+                      })
+                    ],
+                    1
+                  )
+                ])
+              ])
+            ]),
             _vm._v(" "),
-            _vm._m(1)
+            _vm._m(2)
           ])
         ])
       ])
@@ -56265,6 +56516,14 @@ var staticRenderFns = [
       ),
       _vm._v(" "),
       _c("h4", { staticClass: "modal-title" }, [_vm._v("Crear")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-addon" }, [
+      _c("i", { staticClass: "fa fa-calendar" })
     ])
   },
   function() {
@@ -93704,8 +93963,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_lazyload__WEBPACK_IMPORTED_MO
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuejs_progress_bar__WEBPACK_IMPORTED_MODULE_5___default.a);
 var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
   state: {
-    url:  false ? undefined : "http://certificados.test/api",
-    AppUrl:  false ? undefined : "http://certificados.test",
+    url:  false ? undefined : "http://localhost:8000/api",
+    AppUrl:  false ? undefined : "http://localhost:8000",
     provincias: [],
     localidades: [],
     materiales: [],
@@ -93735,7 +93994,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
     CantSoldadores: '0',
     CantDocumentaciones: '0',
     CantProcedimientos: '0',
-    CantUsuariosCliente: '0'
+    CantUsuariosCliente: '0',
+    curie: '0'
   },
   actions: {
     loadProvincias: function loadProvincias(_ref) {
@@ -93995,6 +94255,14 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
       axios.get(urlRegistros).then(function (response) {
         commit('ContarPartes', response.data);
       });
+    },
+    loadCurie: function loadCurie(_ref29, fuente_id) {
+      var commit = _ref29.commit;
+      axios.defaults.baseURL = store.state.url;
+      var urlRegistros = 'interno_fuentes/' + interno_fuente_id + '/curie' + '?api_token=' + Laravel.user.api_token;
+      axios.get(urlRegistros).then(function (response) {
+        commit('CalcularCurie', response.data);
+      });
     }
   },
   mutations: {
@@ -94096,6 +94364,9 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
     },
     ContarRemitos: function ContarRemitos(state, CantRemitos) {
       state.CantRemitos = CantRemitos;
+    },
+    CalcularCurie: function CalcularCurie(state, curie) {
+      state.curie = curie;
     }
   }
 });
@@ -98605,8 +98876,8 @@ var toastrDefault = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\bocch\code\certificados\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\bocch\code\certificados\resources\sass\toastr.scss */"./resources/sass/toastr.scss");
+__webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/sass/toastr.scss */"./resources/sass/toastr.scss");
 
 
 /***/ })

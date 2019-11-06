@@ -98,7 +98,7 @@ class FuentesController extends Controller
   
         $fuente->codigo = $request['codigo'];
         $fuente->descripcion = $request['descripcion'];
-    
+        $fuente->const_t = $request['t'];
         $fuente->save();
   
       }
@@ -112,6 +112,13 @@ class FuentesController extends Controller
     public function show($id)
     {
         //
+    }
+
+    public function CalcularCurie($fuente_id){
+
+      $fuente = Fuentes::find($fuente_id);
+      return 99;
+
     }
 
     /**

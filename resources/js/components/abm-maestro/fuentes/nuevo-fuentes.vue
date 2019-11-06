@@ -13,8 +13,11 @@
                     <label for="codigo">Código (*)</label>                   
                     <input autocomplete="off" v-model="newRegistro.codigo" type="text" name="codigo" class="form-control" value="">
                     
-                    <label for="name">Descripción</label>                   
-                    <input autocomplete="off" type="text" name="descripcion" class="form-control" v-model="newRegistro.descripcion" value="">              
+                    <label for="descripcion">Descripción</label>                   
+                    <input autocomplete="off" type="text" name="descripcion" class="form-control" v-model="newRegistro.descripcion" value="">
+
+                    <label for="t">T 1/2</label>                   
+                    <input autocomplete="off" type="integer" name="t" class="form-control" v-model="newRegistro.t" value="">              
        
               
                 </div>
@@ -37,7 +40,8 @@ export default {
     
         newRegistro : {           
             'codigo'  : '',
-            'descripcion'  : '',                   
+            'descripcion'  : '',  
+            't':'',                        
          },
          
         
@@ -61,7 +65,8 @@ export default {
 
                 this.newRegistro = {           
                     'codigo'  : '',
-                    'descripcion'  : '',                   
+                    'descripcion'  : '',  
+                    't':'',                 
                 };           
               
 
