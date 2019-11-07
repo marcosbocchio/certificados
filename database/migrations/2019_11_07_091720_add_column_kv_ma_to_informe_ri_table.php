@@ -16,7 +16,7 @@ class AddColumnKvMaToInformeRiTable extends Migration
         Schema::table('informes_ri', function (Blueprint $table) {
 
             $table->integer('kv')
-                   ->after('interno_fuente_id')                  
+                   ->after('interno_fuente_id');                  
 
             $table->integer('ma')
                    ->after('kv');            
