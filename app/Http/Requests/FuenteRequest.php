@@ -22,7 +22,8 @@ class FuenteRequest extends FormRequest
         return [
 
             'codigo'            => 'required|Max:20',
-            'descripcion'       =>'nullable|Max:100',
+            'descripcion'       => 'nullable|Max:100',
+            't'                 => 'required|numeric|between:1,200',
          
           
         ];
@@ -32,7 +33,8 @@ class FuenteRequest extends FormRequest
     {
             return [
                 'codigo'                   => 'código',
-                'descripcion'              =>'descripción',              
+                'descripcion'              =>'descripción',   
+                't'                  =>' T 1/2',
             ];
      
     }
