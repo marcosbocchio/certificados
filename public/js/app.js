@@ -4246,7 +4246,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }.bind(this));
     this.$store.dispatch('loadFuentes');
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['url', 'fuentes'])),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['url', 'fuentes', 'curie'])),
   methods: {
     openModal: function openModal() {
       console.log('entro en open modal');
@@ -4254,11 +4254,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.editRegistro.nro_serie = this.selectRegistro.nro_serie;
         this.editRegistro.activo_sn = this.selectRegistro.activo_sn;
         this.editRegistro.fecha_evaluacion = this.selectRegistro.fecha_evaluacion;
-        this.editRegistro.curie = this.selectRegistro.curie;
+        this.editRegistro.curie = '';
         this.fuente = this.selectRegistro.fuente;
-        $('#editar').modal('show');
+        this.$store.dispatch('loadCurie', this.selectRegistro.id);
         this.$forceUpdate();
       });
+      $('#editar').modal('show');
     },
     storeRegistro: function storeRegistro() {
       var _this = this;
@@ -11415,6 +11416,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       espesor_chapa: '',
       interno_equipo: '',
       interno_fuente: '',
+      kv: '',
+      ma: '',
       fuente: '',
       foco: '',
       tipo_pelicula: '',
@@ -11482,8 +11485,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     });
     this.$store.dispatch('loadMateriales');
     this.$store.dispatch('loadDiametros');
-    this.$store.dispatch('loadInternoEquiposActivos', this.metodo); //  this.getFuentes();
-
+    this.$store.dispatch('loadInternoEquiposActivos', this.metodo);
     this.getTipoPeliculas();
     this.$store.dispatch('loadNormaEvaluaciones');
     this.$store.dispatch('loadNormaEnsayos');
@@ -11518,7 +11520,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.fuente = val;
     }
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])(['url', 'AppUrl', 'materiales', 'diametros', 'espesores', 'procedimientos', 'norma_evaluaciones', 'norma_ensayos', 'ejecutor_ensayos', 'interno_equipos_activos', 'fuentePorInterno']), {
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])(['url', 'AppUrl', 'materiales', 'diametros', 'espesores', 'procedimientos', 'norma_evaluaciones', 'norma_ensayos', 'ejecutor_ensayos', 'interno_equipos_activos', 'fuentePorInterno', 'curie']), {
     HabilitarClonarPasadas: function HabilitarClonarPasadas() {
       this.EnableClonarPasadas = this.isGasoducto && this.pasada == '1' && this.TablaDetalle.length;
     },
@@ -11528,6 +11530,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   }),
   methods: {
     setEdit: function setEdit() {
+      var _this = this;
+
       if (this.editmode) {
         this.formato = this.informe_ridata.gasoducto_sn ? 'GASODUCTO' : 'PLANTA';
         this.fecha = this.informedata.fecha;
@@ -11541,6 +11545,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.tecnica = this.tecnicadata;
         this.interno_equipo = this.interno_equipodata;
         this.interno_fuente = this.interno_fuentedata;
+        this.kv = this.informe_ridata.kv;
+        this.ma = this.informe_ridata.ma;
         this.fuente = this.interno_fuentedata.fuente;
         this.procedimiento = this.procedimientodata;
         this.ici = this.icidata;
@@ -11551,33 +11557,33 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.procedimiento_soldadura = this.informedata.procedimiento_soldadura;
         this.eps = this.informedata.eps;
         this.pqr = this.informedata.pqr;
-        this.kv = this.informedata.kv;
-        this.ma = this.informedata.ma;
         this.foco = this.informe_ridata.foco;
         this.pos_ant = this.informe_ridata.pos_ant;
         this.pos_pos = this.informe_ridata.pos_pos;
         this.lado = this.informe_ridata.lado;
-        this.actividad = this.informe_ridata.actividad;
         this.exposicion = this.informe_ridata.exposicion;
         this.distancia_fuente_pelicula = this.informe_ridata.distancia_fuente_pelicula;
         this.ejecutor_ensayo = this.ejecutor_ensayodata;
         this.TablaDetalle = this.detalledata, this.observaciones = this.informedata.observaciones;
+        this.$store.dispatch('loadCurie', this.interno_fuentedata.id).then(function (response) {
+          _this.actividad = _this.curie;
+        });
       }
     },
     getNumeroInforme: function getNumeroInforme() {
-      var _this = this;
+      var _this2 = this;
 
       if (!this.editmode) {
         axios.defaults.baseURL = this.url;
         var urlRegistros = 'informes/ot/' + this.otdata.id + '/metodo/' + this.metodo + '/generar-numero-informe' + '?api_token=' + Laravel.user.api_token;
         axios.get(urlRegistros).then(function (response) {
-          _this.numero_inf_generado = response.data;
-          console.log(_this.numero_inf_generado.length);
+          _this2.numero_inf_generado = response.data;
+          console.log(_this2.numero_inf_generado.length);
 
-          if (_this.numero_inf_generado.length) {
-            _this.numero_inf = _this.numero_inf_generado[0].numero_informe;
+          if (_this2.numero_inf_generado.length) {
+            _this2.numero_inf = _this2.numero_inf_generado[0].numero_informe;
           } else {
-            _this.numero_inf = 1;
+            _this2.numero_inf = 1;
           }
         });
       }
@@ -11589,69 +11595,75 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.$store.dispatch('loadEspesores', this.diametro.diametro_code);
     },
     getFuente: function getFuente(interno_fuente_id) {
+      var _this3 = this;
+
       console.log(interno_fuente_id);
       this.interno_fuente = this.interno_equipo.interno_fuente;
       this.$store.dispatch('loadFuentePorInterno', interno_fuente_id);
+      this.$store.dispatch('loadCurie', interno_fuente_id).then(function (response) {
+        _this3.actividad = _this3.curie;
+      });
+      this.resetInputsEquipos();
+    },
+    resetInputsEquipos: function resetInputsEquipos() {
+      this.kv = this.interno_equipo.voltaje;
+      this.ma = this.interno_equipo.amperaje;
     },
     getTipoPeliculas: function getTipoPeliculas() {
-      var _this2 = this;
+      var _this4 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'tipo_peliculas' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this2.tipo_peliculas = response.data;
+        _this4.tipo_peliculas = response.data;
       });
     },
     getIcis: function getIcis() {
-      var _this3 = this;
+      var _this5 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'icis' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this3.icis = response.data;
+        _this5.icis = response.data;
       });
     },
     getTecnicas: function getTecnicas() {
-      var _this4 = this;
+      var _this6 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'tecnicas/metodo/' + this.metodo + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this4.tecnicas = response.data;
+        _this6.tecnicas = response.data;
       });
     },
     getTecnicasGraficos: function getTecnicasGraficos() {
-      var _this5 = this;
+      var _this7 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'tecnicas_graficos/' + this.tecnica.id + '?api_token=' + Laravel.user.api_token;
       console.log(urlRegistros);
       axios.get(urlRegistros).then(function (response) {
-        _this5.tecnicas_graficos = response.data;
+        _this7.tecnicas_graficos = response.data;
       });
     },
     ActualizarDistFuentePelicula: function ActualizarDistFuentePelicula() {
-      var _this6 = this;
+      var _this8 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'tecnica_distancias/' + this.tecnica.id + '/diametro/' + this.diametro.diametro_code + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this6.tecnica_distancia = response.data;
-        _this6.distancia_fuente_pelicula = _this6.tecnica_distancia[0].distancia_fuente_peliculas;
+        _this8.tecnica_distancia = response.data;
+        _this8.distancia_fuente_pelicula = _this8.tecnica_distancia[0].distancia_fuente_peliculas;
       });
     },
     getEjecutorEnsayo: function getEjecutorEnsayo() {
-      var _this7 = this;
+      var _this9 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'ot-operarios/ot/' + this.otdata.id + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this7.ejecutor_ensayos = response.data;
+        _this9.ejecutor_ensayos = response.data;
       });
-    },
-    resetInputsEquipos: function resetInputsEquipos() {
-      this.fuente = '';
-      this.kv = '', this.ma = '';
     },
     resetDetalle: function resetDetalle() {
       this.TablaDetalle = [];
@@ -11663,40 +11675,40 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     //detalle
     getTipoSoldaduras: function getTipoSoldaduras() {
-      var _this8 = this;
+      var _this10 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'tipo_soldaduras' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this8.tipo_soldaduras = response.data;
-        _this8.isLoading = false;
+        _this10.tipo_soldaduras = response.data;
+        _this10.isLoading = false;
       });
     },
     getSoldadores: function getSoldadores() {
-      var _this9 = this;
+      var _this11 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'ot_soldadores/ot/' + this.otdata.id + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this9.soldadores = response.data;
+        _this11.soldadores = response.data;
       });
     },
     getDefectosRiPlanta: function getDefectosRiPlanta() {
-      var _this10 = this;
+      var _this12 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'defectos_ri/planta/' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this10.defectosRiPlanta = response.data;
+        _this12.defectosRiPlanta = response.data;
       });
     },
     getDefectosRiGasoducto: function getDefectosRiGasoducto() {
-      var _this11 = this;
+      var _this13 = this;
 
       axios.defaults.baseURL = this.url;
       var urlRegistros = 'defectos_ri/gasoducto/' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
-        _this11.defectosRiGasoducto = response.data;
+        _this13.defectosRiGasoducto = response.data;
       });
     },
     selectPosDetalle: function selectPosDetalle(index) {
@@ -11827,7 +11839,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }.bind(this));
     },
     Store: function Store() {
-      var _this12 = this;
+      var _this14 = this;
 
       this.validarPasadas();
 
@@ -11857,6 +11869,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             'espesor': this.espesor.espesor,
             'espesor_chapa': this.espesor_chapa,
             'interno_equipo': this.interno_equipo,
+            'kv': this.kv,
+            'ma': this.ma,
             'interno_fuente': this.interno_fuente,
             'foco': this.foco,
             'tipo_pelicula': this.tipo_pelicula,
@@ -11873,23 +11887,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             'tecnicas_grafico': this.tecnica_grafico,
             'eps': this.eps,
             'pqr': this.pqr,
-            'actividad': this.actividad,
             'exposicion': this.exposicion,
             'detalles': this.TablaDetalle
           }
         }).then(function (response) {
-          _this12.response = response.data;
-          toastr.success('informe N°' + _this12.numero_inf + ' fue creado con éxito ');
+          _this14.response = response.data;
+          toastr.success('informe N°' + _this14.numero_inf + ' fue creado con éxito ');
           console.log(response);
         })["catch"](function (error) {
-          _this12.errors = error.response.data.errors;
+          _this14.errors = error.response.data.errors;
           console.log(error.response);
-          $.each(_this12.errors, function (key, value) {
+          $.each(_this14.errors, function (key, value) {
             toastr.error(value);
             console.log(key + ": " + value);
           });
 
-          if (typeof _this12.errors == 'undefined' && error) {
+          if (typeof _this14.errors == 'undefined' && error) {
             toastr.error("Ocurrió un error al procesar la solicitud");
           }
         });
@@ -11899,7 +11912,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     Update: function Update() {
-      var _this13 = this;
+      var _this15 = this;
 
       this.validarPasadas();
 
@@ -11930,6 +11943,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             'espesor': this.espesor.espesor,
             'espesor_chapa': this.espesor_chapa,
             'interno_equipo': this.interno_equipo,
+            'kv': this.kv,
+            'ma': this.ma,
             'interno_fuente': this.interno_fuente,
             'foco': this.foco,
             'tipo_pelicula': this.tipo_pelicula,
@@ -11946,23 +11961,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             'tecnicas_grafico': this.tecnica_grafico,
             'eps': this.eps,
             'pqr': this.pqr,
-            'actividad': this.actividad,
             'exposicion': this.exposicion,
             'detalles': this.TablaDetalle
           }
         }).then(function (response) {
-          _this13.response = response.data;
-          toastr.success('informe N°' + _this13.numero_inf + ' fue actualizado con éxito ');
+          _this15.response = response.data;
+          toastr.success('informe N°' + _this15.numero_inf + ' fue actualizado con éxito ');
           console.log(response);
         })["catch"](function (error) {
-          _this13.errors = error.response.data.errors;
+          _this15.errors = error.response.data.errors;
           console.log(error.response);
-          $.each(_this13.errors, function (key, value) {
+          $.each(_this15.errors, function (key, value) {
             toastr.error(value);
             console.log(key + ": " + value);
           });
 
-          if (typeof _this13.errors == 'undefined' && error) {
+          if (typeof _this15.errors == 'undefined' && error) {
             toastr.error("Ocurrió un error al procesar la solicitud");
           }
         });
@@ -14767,6 +14781,25 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 // module
 exports.push([module.i, "\n.form-control[disabled][data-v-4e376807], .form-control[readonly][data-v-4e376807], fieldset[disabled] .form-control[data-v-4e376807] {\n     background-color: #eee;\n}\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/abm-maestro/interno-fuentes/editar-interno_fuentes.vue?vue&type=style&index=0&id=37ebe717&scoped=true&lang=css&":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/abm-maestro/interno-fuentes/editar-interno_fuentes.vue?vue&type=style&index=0&id=37ebe717&scoped=true&lang=css& ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.form-control[disabled][data-v-37ebe717], .form-control[readonly][data-v-37ebe717], fieldset[disabled] .form-control[data-v-37ebe717]  {\n     background-color: #eee;\n}\n\n", ""]);
 
 // exports
 
@@ -47196,6 +47229,36 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/abm-maestro/interno-fuentes/editar-interno_fuentes.vue?vue&type=style&index=0&id=37ebe717&scoped=true&lang=css&":
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/abm-maestro/interno-fuentes/editar-interno_fuentes.vue?vue&type=style&index=0&id=37ebe717&scoped=true&lang=css& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../../node_modules/css-loader??ref--6-1!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/src??ref--6-2!../../../../../node_modules/vue-loader/lib??vue-loader-options!./editar-interno_fuentes.vue?vue&type=style&index=0&id=37ebe717&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/abm-maestro/interno-fuentes/editar-interno_fuentes.vue?vue&type=style&index=0&id=37ebe717&scoped=true&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/abm-maestro/soldadores/soldadores.vue?vue&type=style&index=0&lang=css&":
 /*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/abm-maestro/soldadores/soldadores.vue?vue&type=style&index=0&lang=css& ***!
@@ -55858,7 +55921,9 @@ var render = function() {
                   : _c("td"),
                 _vm._v(" "),
                 registro.interno_fuente
-                  ? _c("td", [_vm._v(_vm._s(registro.interno_fuente.curie))])
+                  ? _c("td", [
+                      _vm._v(_vm._s(registro.interno_fuente.curie_actual))
+                    ])
                   : _c("td"),
                 _vm._v(" "),
                 registro.ot
@@ -55985,10 +56050,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/abm-maestro/interno-fuentes/editar-interno_fuentes.vue?vue&type=template&id=37ebe717&":
-/*!*****************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/abm-maestro/interno-fuentes/editar-interno_fuentes.vue?vue&type=template&id=37ebe717& ***!
-  \*****************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/abm-maestro/interno-fuentes/editar-interno_fuentes.vue?vue&type=template&id=37ebe717&scoped=true&":
+/*!*****************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/abm-maestro/interno-fuentes/editar-interno_fuentes.vue?vue&type=template&id=37ebe717&scoped=true& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -56128,7 +56193,8 @@ var render = function() {
                         _c("Datepicker", {
                           attrs: {
                             "input-class": "form-control pull-right",
-                            language: _vm.es
+                            language: _vm.es,
+                            disabled: ""
                           },
                           model: {
                             value: _vm.editRegistro.fecha_evaluacion,
@@ -56157,8 +56223,8 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.editRegistro.curie,
-                          expression: "editRegistro.curie"
+                          value: _vm.curie,
+                          expression: "curie"
                         }
                       ],
                       staticClass: "form-control",
@@ -56166,19 +56232,16 @@ var render = function() {
                         type: "number",
                         name: "curie",
                         value: "",
-                        step: "0.01"
+                        step: "0.01",
+                        disabled: ""
                       },
-                      domProps: { value: _vm.editRegistro.curie },
+                      domProps: { value: _vm.curie },
                       on: {
                         input: function($event) {
                           if ($event.target.composing) {
                             return
                           }
-                          _vm.$set(
-                            _vm.editRegistro,
-                            "curie",
-                            $event.target.value
-                          )
+                          _vm.curie = $event.target.value
                         }
                       }
                     })
@@ -56195,7 +56258,11 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("v-select", {
-                        attrs: { label: "codigo", options: _vm.fuentes },
+                        attrs: {
+                          label: "codigo",
+                          options: _vm.fuentes,
+                          disabled: ""
+                        },
                         model: {
                           value: _vm.fuente,
                           callback: function($$v) {
@@ -56582,7 +56649,7 @@ var render = function() {
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(registro.fuente.codigo))]),
                 _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(registro.curie))]),
+                _c("td", [_vm._v(_vm._s(registro.curie_actual))]),
                 _vm._v(" "),
                 _c("td", { staticStyle: { "text-align": "center" } }, [
                   registro.activo_sn
@@ -66492,23 +66559,19 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.interno_equipo.voltaje,
-                          expression: "interno_equipo.voltaje"
+                          value: _vm.kv,
+                          expression: "kv"
                         }
                       ],
                       staticClass: "form-control",
-                      attrs: { type: "text", disabled: "", id: "kv" },
-                      domProps: { value: _vm.interno_equipo.voltaje },
+                      attrs: { type: "text", id: "kv" },
+                      domProps: { value: _vm.kv },
                       on: {
                         input: function($event) {
                           if ($event.target.composing) {
                             return
                           }
-                          _vm.$set(
-                            _vm.interno_equipo,
-                            "voltaje",
-                            $event.target.value
-                          )
+                          _vm.kv = $event.target.value
                         }
                       }
                     })
@@ -66524,23 +66587,19 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.interno_equipo.amperaje,
-                          expression: "interno_equipo.amperaje"
+                          value: _vm.ma,
+                          expression: "ma"
                         }
                       ],
                       staticClass: "form-control",
-                      attrs: { type: "text", disabled: "", id: "ma" },
-                      domProps: { value: _vm.interno_equipo.amperaje },
+                      attrs: { type: "text", id: "ma" },
+                      domProps: { value: _vm.ma },
                       on: {
                         input: function($event) {
                           if ($event.target.composing) {
                             return
                           }
-                          _vm.$set(
-                            _vm.interno_equipo,
-                            "amperaje",
-                            $event.target.value
-                          )
+                          _vm.ma = $event.target.value
                         }
                       }
                     })
@@ -66889,7 +66948,7 @@ var render = function() {
                         }
                       ],
                       staticClass: "form-control",
-                      attrs: { type: "text", id: "actividad" },
+                      attrs: { type: "text", id: "actividad", disabled: "" },
                       domProps: { value: _vm.actividad },
                       on: {
                         input: function($event) {
@@ -93963,8 +94022,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_lazyload__WEBPACK_IMPORTED_MO
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuejs_progress_bar__WEBPACK_IMPORTED_MODULE_5___default.a);
 var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
   state: {
-    url:  false ? undefined : "http://localhost:8000/api",
-    AppUrl:  false ? undefined : "http://localhost:8000",
+    url:  false ? undefined : "http://certificados.test/api",
+    AppUrl:  false ? undefined : "http://certificados.test",
     provincias: [],
     localidades: [],
     materiales: [],
@@ -94256,12 +94315,16 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
         commit('ContarPartes', response.data);
       });
     },
-    loadCurie: function loadCurie(_ref29, fuente_id) {
+    loadCurie: function loadCurie(_ref29, interno_fuente_id) {
       var commit = _ref29.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'interno_fuentes/' + interno_fuente_id + '/curie' + '?api_token=' + Laravel.user.api_token;
-      axios.get(urlRegistros).then(function (response) {
-        commit('CalcularCurie', response.data);
+      return new Promise(function (resolve, reject) {
+        axios.get(urlRegistros).then(function (response) {
+          console.log(response.data);
+          commit('CalcularCurie', response.data);
+          resolve();
+        });
       });
     }
   },
@@ -95582,9 +95645,11 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _editar_interno_fuentes_vue_vue_type_template_id_37ebe717___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./editar-interno_fuentes.vue?vue&type=template&id=37ebe717& */ "./resources/js/components/abm-maestro/interno-fuentes/editar-interno_fuentes.vue?vue&type=template&id=37ebe717&");
+/* harmony import */ var _editar_interno_fuentes_vue_vue_type_template_id_37ebe717_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./editar-interno_fuentes.vue?vue&type=template&id=37ebe717&scoped=true& */ "./resources/js/components/abm-maestro/interno-fuentes/editar-interno_fuentes.vue?vue&type=template&id=37ebe717&scoped=true&");
 /* harmony import */ var _editar_interno_fuentes_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./editar-interno_fuentes.vue?vue&type=script&lang=js& */ "./resources/js/components/abm-maestro/interno-fuentes/editar-interno_fuentes.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _editar_interno_fuentes_vue_vue_type_style_index_0_id_37ebe717_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./editar-interno_fuentes.vue?vue&type=style&index=0&id=37ebe717&scoped=true&lang=css& */ "./resources/js/components/abm-maestro/interno-fuentes/editar-interno_fuentes.vue?vue&type=style&index=0&id=37ebe717&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
 
 
 
@@ -95592,13 +95657,13 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _editar_interno_fuentes_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _editar_interno_fuentes_vue_vue_type_template_id_37ebe717___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _editar_interno_fuentes_vue_vue_type_template_id_37ebe717___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _editar_interno_fuentes_vue_vue_type_template_id_37ebe717_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _editar_interno_fuentes_vue_vue_type_template_id_37ebe717_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  null,
+  "37ebe717",
   null
   
 )
@@ -95624,19 +95689,35 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/abm-maestro/interno-fuentes/editar-interno_fuentes.vue?vue&type=template&id=37ebe717&":
-/*!***********************************************************************************************************************!*\
-  !*** ./resources/js/components/abm-maestro/interno-fuentes/editar-interno_fuentes.vue?vue&type=template&id=37ebe717& ***!
-  \***********************************************************************************************************************/
+/***/ "./resources/js/components/abm-maestro/interno-fuentes/editar-interno_fuentes.vue?vue&type=style&index=0&id=37ebe717&scoped=true&lang=css&":
+/*!*************************************************************************************************************************************************!*\
+  !*** ./resources/js/components/abm-maestro/interno-fuentes/editar-interno_fuentes.vue?vue&type=style&index=0&id=37ebe717&scoped=true&lang=css& ***!
+  \*************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_editar_interno_fuentes_vue_vue_type_style_index_0_id_37ebe717_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/style-loader!../../../../../node_modules/css-loader??ref--6-1!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/src??ref--6-2!../../../../../node_modules/vue-loader/lib??vue-loader-options!./editar-interno_fuentes.vue?vue&type=style&index=0&id=37ebe717&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/abm-maestro/interno-fuentes/editar-interno_fuentes.vue?vue&type=style&index=0&id=37ebe717&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_editar_interno_fuentes_vue_vue_type_style_index_0_id_37ebe717_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_editar_interno_fuentes_vue_vue_type_style_index_0_id_37ebe717_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_editar_interno_fuentes_vue_vue_type_style_index_0_id_37ebe717_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_editar_interno_fuentes_vue_vue_type_style_index_0_id_37ebe717_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_editar_interno_fuentes_vue_vue_type_style_index_0_id_37ebe717_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/components/abm-maestro/interno-fuentes/editar-interno_fuentes.vue?vue&type=template&id=37ebe717&scoped=true&":
+/*!***********************************************************************************************************************************!*\
+  !*** ./resources/js/components/abm-maestro/interno-fuentes/editar-interno_fuentes.vue?vue&type=template&id=37ebe717&scoped=true& ***!
+  \***********************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_editar_interno_fuentes_vue_vue_type_template_id_37ebe717___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./editar-interno_fuentes.vue?vue&type=template&id=37ebe717& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/abm-maestro/interno-fuentes/editar-interno_fuentes.vue?vue&type=template&id=37ebe717&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_editar_interno_fuentes_vue_vue_type_template_id_37ebe717___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_editar_interno_fuentes_vue_vue_type_template_id_37ebe717_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./editar-interno_fuentes.vue?vue&type=template&id=37ebe717&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/abm-maestro/interno-fuentes/editar-interno_fuentes.vue?vue&type=template&id=37ebe717&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_editar_interno_fuentes_vue_vue_type_template_id_37ebe717_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_editar_interno_fuentes_vue_vue_type_template_id_37ebe717___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_editar_interno_fuentes_vue_vue_type_template_id_37ebe717_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -98876,8 +98957,8 @@ var toastrDefault = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/sass/toastr.scss */"./resources/sass/toastr.scss");
+__webpack_require__(/*! C:\Users\bocch\code\certificados\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\bocch\code\certificados\resources\sass\toastr.scss */"./resources/sass/toastr.scss");
 
 
 /***/ })

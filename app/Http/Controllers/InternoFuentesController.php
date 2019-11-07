@@ -22,8 +22,14 @@ class InternoFuentesController extends Controller
 
     public function paginate(Request $request){
       
-        return InternoFuentes::orderBy('id','DESC')->with('fuente')->paginate(10);
-  
+        $interno_fuentes =  InternoFuentes::orderBy('id','DESC')->with('fuente')->paginate(10);
+
+        foreach ($interno_fuentes as $interno_fuente) {
+          
+          $interno_fuente->curie_actual = curie($interno_fuente->curie,$interno_fuente->fecha_evaluacion,$interno_fuente->fuente->const_t);
+        }
+        
+        return $interno_fuentes;
       }
 
       public function callView()
@@ -72,7 +78,6 @@ class InternoFuentesController extends Controller
         try { 
     
             $this->saveInternoFuente($request,$interno_fuente);
-            (new \App\Http\Controllers\TrazabilidadCurieController)->saveTrazabilidadCurie($interno_fuente->id,$request['curie']);
             DB::commit(); 
     
           } catch (Exception $e) {
@@ -89,6 +94,7 @@ class InternoFuentesController extends Controller
 
         $interno_fuente->nro_serie = $request['nro_serie'];
         $interno_fuente->activo_sn = $request['activo_sn'];
+        $interno_fuente->fecha_evaluacion = date('Y-m-d',strtotime($request['fecha_evaluacion'])) ;
         $interno_fuente->curie = $request['curie'];
         $interno_fuente->fuente_id = $request['fuente']['id'];
         $interno_fuente->save();
@@ -130,8 +136,7 @@ class InternoFuentesController extends Controller
       
           DB::beginTransaction();
           try {
-              $this->saveInternoFuente($request,$interno_fuente);
-              (new \App\Http\Controllers\TrazabilidadCurieController)->saveTrazabilidadCurie($interno_fuente->id,$request['curie']);
+              $this->saveInternoFuente($request,$interno_fuente);            
               DB::commit(); 
       
             } catch (Exception $e) {
@@ -153,4 +158,15 @@ class InternoFuentesController extends Controller
         $interno_fuente = InternoFuentes::find($id);    
         $interno_fuente->delete();
     }
+
+    public function CalcularCurie($interno_fuente_id){
+
+      $interno_fuente = InternoFuentes::where('id',$interno_fuente_id)->with('fuente')->first();  
+
+      $curie_actual =  curie($interno_fuente->curie,$interno_fuente->fecha_evaluacion,$interno_fuente->fuente->const_t);
+
+      return  $curie_actual;
+
+    }
+
 }

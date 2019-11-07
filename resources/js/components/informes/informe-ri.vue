@@ -142,13 +142,13 @@
                         <div class="col-md-1">
                             <div class="form-group" >                   
                                 <label for="kv">Kv</label>
-                                <input  type="text" class="form-control" v-model="interno_equipo.voltaje" disabled  id="kv">     
+                                <input  type="text" class="form-control" v-model="kv" id="kv">     
                             </div>                         
                         </div>
                         <div class="col-md-1">
                             <div class="form-group" >                        
                                 <label for="ma">mA</label>
-                                <input  type="text" class="form-control" v-model="interno_equipo.amperaje"  disabled id="ma"> 
+                                <input  type="text" class="form-control" v-model="ma" id="ma"> 
                             </div>                             
                         </div>                       
                       
@@ -241,7 +241,7 @@
                         <div class="col-md-3">                       
                             <div class="form-group" >
                                 <label for="actividad">Actividad</label>
-                                <input type="text" v-model="actividad" class="form-control" id="actividad">
+                                <input type="text" v-model="actividad" class="form-control" id="actividad" disabled>
                             </div>         
                         </div>       
                         <div class="col-md-3">                       
@@ -688,6 +688,8 @@ export default {
             espesor_chapa:'', 
             interno_equipo:'',   
             interno_fuente:'',   
+            kv:'',
+            ma:'',
             fuente:'',       
             foco:'',
             tipo_pelicula:'',
@@ -765,8 +767,7 @@ export default {
         this.$store.dispatch('loadProcedimietosOtMetodo',  { 'ot_id' : this.otdata.id, 'metodo' : this.metodo });
         this.$store.dispatch('loadMateriales');
         this.$store.dispatch('loadDiametros');
-        this.$store.dispatch('loadInternoEquiposActivos',this.metodo);
-      //  this.getFuentes();
+        this.$store.dispatch('loadInternoEquiposActivos',this.metodo);      
         this.getTipoPeliculas();
         this.$store.dispatch('loadNormaEvaluaciones');        
         this.$store.dispatch('loadNormaEnsayos');       
@@ -821,7 +822,7 @@ export default {
 
     computed :{
 
-        ...mapState(['url','AppUrl','materiales','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','ejecutor_ensayos','interno_equipos_activos','fuentePorInterno']),
+        ...mapState(['url','AppUrl','materiales','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','ejecutor_ensayos','interno_equipos_activos','fuentePorInterno','curie']),
 
            HabilitarClonarPasadas(){
                 this.EnableClonarPasadas = (this.isGasoducto && this.pasada=='1' && this.TablaDetalle.length);
@@ -853,7 +854,9 @@ export default {
                this.espesor = this.diametro_espesordata;
                this.tecnica = this.tecnicadata;
                this.interno_equipo = this.interno_equipodata;
-               this.interno_fuente = this.interno_fuentedata ;  
+               this.interno_fuente = this.interno_fuentedata ;                 
+               this.kv = this.informe_ridata.kv;
+               this.ma = this.informe_ridata.ma;
                this.fuente = this.interno_fuentedata.fuente ;                    
                this.procedimiento = this.procedimientodata;
                this.ici = this.icidata;
@@ -863,20 +866,20 @@ export default {
                this.espesor_chapa = this.informedata.espesor_chapa;
                this.procedimiento_soldadura = this.informedata.procedimiento_soldadura;
                this.eps = this.informedata.eps;
-               this.pqr = this.informedata.pqr;
-               this.kv = this.informedata.kv;
-               this.ma = this.informedata.ma;
+               this.pqr = this.informedata.pqr;        
                this.foco = this.informe_ridata.foco;
                this.pos_ant = this.informe_ridata.pos_ant;
                this.pos_pos = this.informe_ridata.pos_pos;
-               this.lado = this.informe_ridata.lado;
-               this.actividad = this.informe_ridata.actividad;
+               this.lado = this.informe_ridata.lado;            
                this.exposicion = this.informe_ridata.exposicion;
                this.distancia_fuente_pelicula = this.informe_ridata.distancia_fuente_pelicula;
                this.ejecutor_ensayo = this.ejecutor_ensayodata;          
                this.TablaDetalle = this.detalledata,  
-               this.observaciones = this.informedata.observaciones 
+               this.observaciones = this.informedata.observaciones            
+               this.$store.dispatch('loadCurie',this.interno_fuentedata.id).then(response => {
 
+                     this.actividad = this.curie;
+                  });
 
             }
 
@@ -919,8 +922,21 @@ export default {
             console.log(interno_fuente_id);
             this.interno_fuente = this.interno_equipo.interno_fuente;
             this.$store.dispatch('loadFuentePorInterno',interno_fuente_id);
+            this.$store.dispatch('loadCurie',interno_fuente_id).then(response => {
 
-        },    
+                this.actividad = this.curie;
+            });
+
+            this.resetInputsEquipos();
+
+        },   
+        
+        resetInputsEquipos : function() {
+               
+                this.kv = this.interno_equipo.voltaje;
+                this.ma = this.interno_equipo.amperaje;
+
+        },
 
         getTipoPeliculas : function(){
 
@@ -981,13 +997,7 @@ export default {
                 });
               },
 
-        resetInputsEquipos : function() {
-
-                this.fuente = '' ;
-                this.kv = '',
-                this.ma = ''
-
-        },
+        
 
         resetDetalle : function(){
 
@@ -1270,6 +1280,8 @@ export default {
                         'espesor':        this.espesor.espesor,
                         'espesor_chapa' :  this.espesor_chapa, 
                         'interno_equipo'   :  this.interno_equipo,  
+                        'kv'               :this.kv,
+                        'ma'               :this.ma,   
                         'interno_fuente' :this.interno_fuente,                           
                         'foco':           this.foco,
                         'tipo_pelicula' : this.tipo_pelicula,
@@ -1285,8 +1297,7 @@ export default {
                         'tecnica':this.tecnica,
                         'tecnicas_grafico' : this.tecnica_grafico,
                         'eps':this.eps,
-                        'pqr':this.pqr,
-                        'actividad' : this.actividad,
+                        'pqr':this.pqr,                      
                         'exposicion': this.exposicion,   
                         'detalles'  : this.TablaDetalle,           
                 }}
@@ -1354,7 +1365,9 @@ export default {
                         'diametro':       this.diametro.diametro,
                         'espesor':        this.espesor.espesor,
                         'espesor_chapa'    :this.espesor_chapa, 
-                        'interno_equipo'   :this.interno_equipo,    
+                        'interno_equipo'   :this.interno_equipo,   
+                        'kv'               :this.kv,
+                        'ma'               :this.ma,   
                         'interno_fuente' :this.interno_fuente,            
                         'foco'              :this.foco,
                         'tipo_pelicula' : this.tipo_pelicula,
@@ -1370,8 +1383,7 @@ export default {
                         'tecnica':this.tecnica,
                         'tecnicas_grafico' : this.tecnica_grafico,
                         'eps':this.eps,
-                        'pqr':this.pqr,
-                        'actividad' : this.actividad,
+                        'pqr':this.pqr,                       
                         'exposicion': this.exposicion,   
                         'detalles'  : this.TablaDetalle,           
                 }}

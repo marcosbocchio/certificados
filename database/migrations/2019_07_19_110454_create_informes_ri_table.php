@@ -21,8 +21,7 @@ class CreateInformesRiTable extends Migration
             $table->float('pos_ant')->nullable();
             $table->float('pos_pos')->nullable();
             $table->string('lado',7);
-            $table->float('distancia_fuente_pelicula');           
-            $table->string('actividad',10)->nullable();
+            $table->float('distancia_fuente_pelicula');          
             $table->integer('exposicion');
             $table->timestamps();
         });

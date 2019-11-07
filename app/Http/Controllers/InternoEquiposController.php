@@ -23,7 +23,25 @@ class InternoEquiposController extends Controller
 
     public function paginate(Request $request){
       
-        return InternoEquipos::orderBy('id','DESC')->with('ot.localidad.provincia','ot.cliente')->with('equipo')->with('internoFuente.fuente')->paginate(10);
+        $interno_equipos = InternoEquipos::orderBy('id','DESC')->with('ot.localidad.provincia','ot.cliente')->with('equipo')->with('internoFuente.fuente')->paginate(10);
+
+ 
+
+        foreach ( $interno_equipos as $interno_equipo) {
+          
+          if($interno_equipo->internoFuente){
+
+            $interno_fuente = $interno_equipo->internoFuente;
+            $fuente = $interno_fuente->fuente;         
+            $curie_actual = curie( $interno_fuente->curie, $interno_fuente->fecha_evaluacion,$fuente->const_t);
+            $interno_fuente->curie_actual = $curie_actual;
+          
+          }
+       
+     
+        }
+
+        return $interno_equipos;
   
       }
 

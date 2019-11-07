@@ -17,7 +17,7 @@
           <tr v-for="registro in registros" :key="registro.id">                        
             <td>{{ registro.nro_serie }}</td>
             <td>{{ registro.fuente.codigo }}</td>     
-            <td>{{ registro.curie }}</td>         
+            <td>{{ registro.curie_actual }}</td>         
             <td style="text-align: center">
               <div v-if="registro.activo_sn">
                   SI

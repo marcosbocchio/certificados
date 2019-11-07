@@ -75,6 +75,8 @@ class InformesRiRepository extends BaseRepository
 
    
     $informeRi->informe_id = $informe->id;
+    $informeRi->kv = $request->kv;
+    $informeRi->ma = $request->ma;
     $informeRi->interno_fuente_id = $request->interno_fuente['id'];
     $informeRi->tipo_pelicula_id = $request->tipo_pelicula['id'];
     $informeRi->ici_id  = $request->ici['id'];
@@ -86,9 +88,7 @@ class InformesRiRepository extends BaseRepository
     $informeRi->lado    = $request->lado;
     $informeRi->distancia_fuente_pelicula = $request->distancia_fuente_pelicula;
     $informeRi->tecnicas_grafico_id = $request->tecnica['grafico_id'];
-    $informeRi->actividad = $request->actividad;
-    $informeRi->exposicion = $request->exposicion;   
-
+    $informeRi->exposicion = $request->exposicion;
     $informeRi->save();   
 
 

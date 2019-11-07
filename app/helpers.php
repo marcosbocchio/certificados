@@ -36,4 +36,12 @@ function FormatearNumeroConCeros(int $numero,$ceros){
   return sprintf("%0" . $ceros ."d",$numero) ;
 
 }
+function curie($curie,$fecha_evaluacion,$const_t){
+
+  $Ti = strtotime($fecha_evaluacion);
+  $Tf = strtotime(date('Y-m-d',strtotime('now')));
+  $t  = intval(($Tf-$Ti)/60/60/24);
+  $curie_actual = round(($curie)  /(pow(2,(($t)/$const_t))),1);
+  return $curie_actual;   
+}
 

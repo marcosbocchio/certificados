@@ -25,7 +25,7 @@
                                     <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                     </div>
-                                        <Datepicker v-model="editRegistro.fecha_evaluacion" :input-class="'form-control pull-right'" :language="es"></Datepicker>   
+                                        <Datepicker v-model="editRegistro.fecha_evaluacion" :input-class="'form-control pull-right'" :language="es" disabled ></Datepicker>   
                                 </div>
                             </div>
                         </div>       
@@ -33,14 +33,14 @@
                     <div class="col-md-6">
                             <div class="form-group">
                                 <label for="curie">Curie</label>
-                                <input v-model="editRegistro.curie" type="number" name="curie" class="form-control" value="" step="0.01"> 
+                                <input v-model="curie" type="number" name="curie" class="form-control" value="" step="0.01" disabled> 
                             </div>
                     </div>
 
                     <div class="col-md-12">
                             <div class="form-group">
                                 <label for="name">Fuente (*)</label>      
-                                <v-select v-model="fuente" label="codigo" :options="fuentes"></v-select>
+                                <v-select v-model="fuente" label="codigo" :options="fuentes" disabled></v-select>
                             </div>
                     </div>
                     </div>
@@ -99,14 +99,17 @@ export default {
                  this.openModal();
              
     }.bind(this)); 
-   this.$store.dispatch('loadFuentes');
 
-    },
+    this.$store.dispatch('loadFuentes');
+
+    },  
   
     computed :{
     
-         ...mapState(['url','fuentes'])
+         ...mapState(['url','fuentes','curie'])
     }, 
+
+    
    
     methods: {
            openModal : function(){
@@ -116,13 +119,13 @@ export default {
                 this.editRegistro.nro_serie = this.selectRegistro.nro_serie;
                 this.editRegistro.activo_sn = this.selectRegistro.activo_sn;  
                 this.editRegistro.fecha_evaluacion = this.selectRegistro.fecha_evaluacion;
-                this.editRegistro.curie = this.selectRegistro.curie; 
+                this.editRegistro.curie = ''; 
                 this.fuente = this.selectRegistro.fuente;               
-              
-                $('#editar').modal('show');               
+                this.$store.dispatch('loadCurie',this.selectRegistro.id);
 
                 this.$forceUpdate();
             })
+                $('#editar').modal('show');               
             },
 
             storeRegistro: function(){           
@@ -159,3 +162,11 @@ export default {
     
 }
 </script>
+
+<style scoped>
+
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control  {
+     background-color: #eee;
+}
+
+</style>

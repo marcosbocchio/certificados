@@ -545,12 +545,16 @@ actions : {
         },
 
         loadCurie({
-          commit},fuente_id) {
+          commit},interno_fuente_id) {
            axios.defaults.baseURL = store.state.url ;
-           var urlRegistros = 'interno_fuentes/' + interno_fuente_id +'/curie' + '?api_token=' + Laravel.user.api_token;             
+           var urlRegistros = 'interno_fuentes/' + interno_fuente_id +'/curie' + '?api_token=' + Laravel.user.api_token;   
+           return new Promise((resolve, reject) => {          
            axios.get(urlRegistros).then((response) => {
+           console.log(response.data);
            commit('CalcularCurie', response.data)           
+           resolve()       
           })
+        })
         },
 
     },
