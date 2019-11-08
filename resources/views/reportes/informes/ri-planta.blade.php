@@ -120,9 +120,9 @@ b {
                             <td style="font-size: 12px;border-right: 1px solid #000;" colspan="2" ><b>Material: </b>{{$material->codigo}}</td>
                             <td style="font-size: 12px;  width: 270px; border-right: 1px solid #000;" colspan="4"  ><b>Fuente: </b>     
 
-                            @if ($fuente)
+                            @if ($interno_fuente)
 
-                                {{$fuente->codigo}} 
+                                {{$interno_fuente->fuente->codigo}} 
                                 
                             @endif
                             

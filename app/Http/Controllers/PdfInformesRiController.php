@@ -48,8 +48,7 @@ class PdfInformesRiController extends Controller
         $ot_procedimiento_propio = OtProcedimientosPropios::findOrFail($informe->procedimiento_informe_id);
         $procedimiento_inf = Documentaciones::findOrFail($ot_procedimiento_propio->documentacion_id);
         $interno_equipo = InternoEquipos::where('id',$informe->interno_equipo_id)->with('equipo')->first();
-        $interno_fuente = InternoFuentes::find($informe_ri->interno_fuente_id);
-        $fuente = Fuentes::find($interno_fuente->fuente_id);
+        $interno_fuente = InternoFuentes::where('id',$informe_ri->interno_fuente_id)->with('fuente')->first();              
         $tipo_pelicula = TipoPeliculas::findOrFail($informe_ri->tipo_pelicula_id);     
         $diametro_espesor = DiametrosEspesor::findOrFail($informe->diametro_espesor_id);
         $ici = Icis::findOrFail($informe_ri->ici_id);
@@ -59,7 +58,7 @@ class PdfInformesRiController extends Controller
         $tecnicas_grafico = TecnicasGraficos::findOrFail($informe_ri->tecnicas_grafico_id);
         $evaluador = User::find($informe->firma);
         
-      //  dd($equipo);
+      // dd($interno_fuente);
 
         if ($informe_ri->gasoducto_sn){
 
@@ -77,7 +76,7 @@ class PdfInformesRiController extends Controller
           'norma_evaluacion',
           'procedimiento_inf',
           'interno_equipo',
-          'fuente',
+          'interno_fuente',
           'tipo_pelicula',
           'diametro_espesor',
           'ici',
@@ -112,7 +111,7 @@ class PdfInformesRiController extends Controller
                                                               'norma_evaluacion',
                                                               'procedimiento_inf',
                                                               'interno_equipo',
-                                                              'fuente',
+                                                              'interno_fuente',
                                                               'tipo_pelicula',
                                                               'diametro_espesor',
                                                               'ici',

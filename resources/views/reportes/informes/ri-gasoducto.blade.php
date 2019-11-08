@@ -139,11 +139,11 @@ b {
                             </td>                 
                             <td style="font-size: 12px;width: 180px;"><b>Fuente: </b>     
 
-                                @if ($fuente)
+                              @if ($interno_fuente)
 
-                                    {{$fuente->codigo}} 
-                                    
-                                @endif                           
+                                {{$interno_fuente->fuente->codigo}} 
+                                
+                              @endif                          
                             
                             </td>
                             <td style="font-size: 12px;width: 100px;border-right: 1px solid #000;" ><b>Act: </b>{{$informe_ri->actividad}}</td>
