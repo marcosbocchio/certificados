@@ -11548,7 +11548,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.interno_fuente = this.interno_fuentedata;
         this.kv = this.informe_ridata.kv;
         this.ma = this.informe_ridata.ma;
-        this.fuente = this.interno_fuentedata.fuente;
+        this.fuente = this.interno_fuentedata.fuente ? this.interno_fuentedata.fuente : '';
         this.procedimiento = this.procedimientodata;
         this.ici = this.icidata;
         this.norma_evaluacion = this.norma_evaluaciondata;
@@ -67790,7 +67790,7 @@ var render = function() {
                           display: "inline-block",
                           "margin-left": "15px"
                         },
-                        attrs: { title: "Agregar Pasada" },
+                        attrs: { title: "Recargar Cuños" },
                         on: {
                           click: function($event) {
                             return _vm.getSoldadores()

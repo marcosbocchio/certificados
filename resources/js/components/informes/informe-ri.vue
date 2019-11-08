@@ -497,7 +497,7 @@
                      <div class="col-md-2"> 
                           <p>&nbsp;</p>
                           <span>                             
-                             <i title="Agregar Pasada" @click="getSoldadores()" style="display:inline-block;margin-left:15px;"> <app-icon img="refresh" color="black"></app-icon> </i>
+                             <i title="Recargar Cuños" @click="getSoldadores()" style="display:inline-block;margin-left:15px;"> <app-icon img="refresh" color="black"></app-icon> </i>
                              <i title="Agregar Pasada" @click="AddPasadas()" style="display:inline-block;margin-left:15px;"> <app-icon img="plus-circle" color="black"></app-icon> </i>
                           </span>
                     </div>
@@ -813,9 +813,10 @@ export default {
             this.soldador2 =  (val == '1') ? this.soldador2 : '';
         },      
 
-        fuentePorInterno: function(val){
-
-            this.fuente = val;
+        fuentePorInterno: function(val){            
+      
+              this.fuente = val;
+        
         }
        
     },
@@ -857,7 +858,7 @@ export default {
                this.interno_fuente = this.interno_fuentedata ;                 
                this.kv = this.informe_ridata.kv;
                this.ma = this.informe_ridata.ma;
-               this.fuente = this.interno_fuentedata.fuente ;                    
+               this.fuente = this.interno_fuentedata.fuente ? this.interno_fuentedata.fuente : '' ;                    
                this.procedimiento = this.procedimientodata;
                this.ici = this.icidata;
                this.norma_evaluacion = this.norma_evaluaciondata;
@@ -920,6 +921,7 @@ export default {
         getFuente : function(interno_fuente_id){
             
             console.log(interno_fuente_id);
+
             this.interno_fuente = this.interno_equipo.interno_fuente;
             this.$store.dispatch('loadFuentePorInterno',interno_fuente_id);
             this.$store.dispatch('loadCurie',interno_fuente_id).then(response => {
