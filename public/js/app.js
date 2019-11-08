@@ -6858,7 +6858,8 @@ __webpack_require__(/*! vue-image-lightbox/dist/vue-image-lightbox.min.css */ ".
       this.newRegistro = {
         'name': '',
         'email': '',
-        'password': ''
+        'password': '',
+        'path': ''
       }, this.password2 = '', this.isEnod = true, this.$refs.inputFile1.type = 'text';
       this.$refs.inputFile1.type = 'file';
       this.selectedFile = null;

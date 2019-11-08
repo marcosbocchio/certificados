@@ -184,8 +184,9 @@ export default {
                 this.newRegistro = {           
                         'name'  : '',
                         'email' : '',
-                        'password' : ''
-                     },
+                        'password' : '',
+                        'path':''                 
+                },
                 this.password2='',
                 this.isEnod=true,
                 this.$refs.inputFile1.type = 'text';

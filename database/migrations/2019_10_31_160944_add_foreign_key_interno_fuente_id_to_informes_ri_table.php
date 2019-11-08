@@ -16,8 +16,7 @@ class AddForeignKeyInternoFuenteIdToInformesRiTable extends Migration
         Schema::table('informes_ri', function (Blueprint $table) {
 
             $table->bigInteger('interno_fuente_id')
-                   ->unsigned()
-                   ->nullable()
+                   ->unsigned()                  
                    ->after('informe_id');
                    
             $table->foreign('interno_fuente_id')
