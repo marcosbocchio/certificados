@@ -17,10 +17,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-/*
-Route::middleware('auth:api')->get('/clientes','ClientesController@index');
-*/
-
 Route::group(['middleware' => 'auth:api'], function()
 {   
     Route::get('clientes/paginate', 'ClientesController@paginate'); 
@@ -83,9 +79,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('soldadores', 'SoldadoresController');
     Route::get('soldadores/cliente/{id}/paginate', 'SoldadoresController@paginate');
     Route::get('soldadores/cliente/{id}','SoldadoresController@SoldadoresCliente');
-    Route::post('soldadores/cliente/{id}','SoldadoresController@store');
-
-   
+    Route::post('soldadores/cliente/{id}','SoldadoresController@store');   
 
     Route::get('equipos/metodo/{metodo}', 'EquiposController@EquiposMetodo');
 

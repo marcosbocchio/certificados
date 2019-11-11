@@ -89,6 +89,7 @@ class InformesController extends Controller
         case 'RI':
             return redirect()->route('InformeRiEdit',array('ot_id' => $ot_id, 'id' => $id));
             break; 
+            
          case 'PM':
             return redirect()->route('InformePmEdit',array('ot_id' => $ot_id, 'id' => $id));
             break; 

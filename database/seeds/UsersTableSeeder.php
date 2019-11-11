@@ -21,8 +21,7 @@ class UsersTableSeeder extends Seeder
             'api_token' => Str::random(60),
         ]);
 
-        $administrador->assignRole('Super Admin');
-
+        $administrador->assignRole('Super Admin'); 
 
         // Usuario con el rol operador
 
@@ -44,7 +43,7 @@ class UsersTableSeeder extends Seeder
             'api_token' => Str::random(60),
         ]);
 
-        $cliente->assignRole('Cliente');
+        $cliente->assignRole('cliente');
 
         $cliente = User::create([
             'name'     => 'julian' ,
@@ -53,7 +52,7 @@ class UsersTableSeeder extends Seeder
             'api_token' => Str::random(60),
         ]);
 
-        $cliente->assignRole('Operador');
+        $cliente->assignRole('operador');
 
         $cliente = User::create([
             'name'     => 'Karem' ,
@@ -62,7 +61,7 @@ class UsersTableSeeder extends Seeder
             'api_token' => Str::random(60),
         ]);
 
-        $cliente->givePermissionTo('Navegar cliente');
+        $cliente->givePermissionTo('cliente');
 
         $cliente = User::create([
             'name'     => 'Lautaro' ,
@@ -71,7 +70,7 @@ class UsersTableSeeder extends Seeder
             'api_token' => Str::random(60),
         ]);
 
-        $cliente->givePermissionTo('Navegar cliente');
+        $cliente->givePermissionTo('cliente');
 
         $cliente = User::create([
             'name'     => 'Oscar' ,
@@ -80,7 +79,7 @@ class UsersTableSeeder extends Seeder
             'api_token' => Str::random(60),
         ]);
 
-        $cliente->givePermissionTo('Navegar cliente');
+        $cliente->givePermissionTo('cliente');
 
         $cliente = User::create([
             'name'     => 'Marianella' ,
@@ -89,6 +88,6 @@ class UsersTableSeeder extends Seeder
             'api_token' => Str::random(60),
         ]);
 
-        $cliente->givePermissionTo('Navegar cliente');
+        $cliente->givePermissionTo('cliente');
     }
 }

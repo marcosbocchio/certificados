@@ -33,9 +33,13 @@ class LoginController extends Controller
     public function redirectPath()
     {
 
+        return '/area/enod';
+
         $User = auth()->user();
 
         /* Si tiene el permiso "Navegar operador" es Administrador u operador */
+
+        /*
 
         if($User->hasPermissionTo('Navegar operador')){
 
@@ -43,7 +47,9 @@ class LoginController extends Controller
 
          }elseif($User->hasPermissionTo('Navegar cliente')){
 
-            return '/area/cliente';
+            return '/area/enod';
         }
+
+        */
       }
 }

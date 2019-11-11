@@ -17,8 +17,7 @@ class UserRepository extends BaseRepository
 
 
         $User = $this->getModel();   
-        $this->saveUser($request,$User);
-        $User->assignRole('Operador');     
+        $this->saveUser($request,$User);      
 
   }
 
@@ -31,13 +30,15 @@ class UserRepository extends BaseRepository
 
   public function saveUser($request,$User){
 
-    if (!$request['isEnod']) {
-
-      $User->cliente_id = $request['cliente']['id'];
-
-    }else {
+    if ($request['isEnod']) {
 
       $User->cliente_id = null ;
+      $User->givePermissionTo('enod');
+      
+    }else {
+      
+      $User->cliente_id = $request['cliente']['id'];
+      $User->givePermissionTo('cliente');
     }        
     
     $User->name = $request['name'];

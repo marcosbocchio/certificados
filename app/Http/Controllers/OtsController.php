@@ -32,9 +32,20 @@ class OtsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {
+    {       
+            $user_id = null;
+            
+            if (Auth::check())
+            {
+                $user_id = Auth::id();  
+                $user = Auth::user(); 
+           }
+            
+            $tipoUsuario =  $user->cliente_id ? 'CLIENTE' : 'ENOD';
         
-             return ots::with('cliente')->orderBy('id','DESC')->paginate(5); 
+             return ots::whereRaw(' CASE :tipoUsuario WHEN "ENOD" THEN 1=1
+                                    ELSE ots.id IN (Select ot_id FROM ot_usuarios_clientes where user_id = :user_id) 
+                                    END',[$tipoUsuario,$user_id])->with('cliente')->orderBy('id','DESC')->paginate(5); 
     }
     
     /**
@@ -176,4 +187,5 @@ class OtsController extends Controller
         return $ot;
 
     } 
+    
 }

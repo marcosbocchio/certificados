@@ -28,7 +28,7 @@ Route::get('operadores/ot/{id}','OtOperariosController@index')
 
 */
 
-Route::group(['middleware' => ['permission:Navegar cliente']], function () {
+Route::group(['middleware' => ['permission:cliente']], function () {
 
   Route::get('/area/cliente', 'dashboardClientesController@index')->name('dashboardC');
 
@@ -42,7 +42,6 @@ Route::group(['middleware' => ['auth']], function () {
   Route::get('soldadores/ot/{id}','OtSoldadoresController@index')->name('otSoldadores');
   Route::get('procedimientos/ot/{id}','OtProcedimientosPropiosController@index')->name('otProcedimientos');
   Route::get('documentaciones/ot/{id}','OtDocumentacionesController@index')->name('otDocumentaciones');
- // Route::get('informes/ot/{id}','OtInformesController@index')->name('otInformes');
   Route::get('informes/ot/{id}','InformesController@index')->name('otInformes');
   Route::get('remitos/ot/{id}','RemitosController@index')->name('otRemitos');
   Route::get('partes/ot/{id}','PartesController@index')->name('otPartes');
@@ -64,9 +63,10 @@ Route::group(['middleware' => ['auth']], function () {
   
 });
 
-Route::group(['middleware' => ['permission:Navegar operador']], function () {
+Route::get('/area/enod','dashboardOperadoresController@index')->name('dashboardO');
 
-  Route::get('/area/enod','dashboardOperadoresController@index')->name('dashboardO');
+Route::group(['middleware' => ['permission:enod']], function () {
+
   Route::get('/area/enod/usuarios', 'UserController@callView')->name('usuarios');
   Route::get('/area/enod/materiales', 'MaterialesController@callView')->name('materiales');
   Route::get('/area/enod/clientes', 'ClientesController@callView')->name('clientes');
@@ -82,8 +82,7 @@ Route::group(['middleware' => ['permission:Navegar operador']], function () {
   Route::get('/area/enod/interno_equipos', 'InternoEquiposController@callView')->name('Interno-equipos');
   Route::get('/area/enod/ots','OtsController@create')->name('ots.create')->middleware('auth');
   Route::get('/area/enod/ots/{id}/edit','OtsController@Edit')->name('ots.edit');
-  Route::get('/area/enod/documentaciones','DocumentacionesController@callView')->name('documentaciones');
- 
+  Route::get('/area/enod/documentaciones','DocumentacionesController@callView')->name('documentaciones'); 
 
 
 });

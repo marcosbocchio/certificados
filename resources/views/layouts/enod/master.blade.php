@@ -23,17 +23,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <!-- message -->
     <link href="{{ asset('css/toastr.css') }}" rel="stylesheet">
-   
-
-
+  
 
     <!-- Theme style -->
     <link rel="stylesheet" href="{{asset('css/AdminLTE.min.css')}}">
-    <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
-          page. However, you can choose any other skin. Make sure you
-          apply the skin class to the body tag so the changes take effect. -->
 
+    <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
+        page. However, you can choose any other skin. Make sure you
+        apply the skin class to the body tag so the changes take effect. -->
     <link rel="stylesheet" href="{{asset('css/_all-skins.min.css')}}">
+
 
     <link rel="stylesheet" href="{{asset('css/custom.css')}}">
 
@@ -69,7 +68,7 @@ desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class="sidebar-mini skin-yellow">
+<body @can('enod') class="sidebar-mini skin-yellow" @else class="hold-transition skin-blue sidebar-boxed" @endcan >
 
 @include('layouts.enod.partials.header')
 @include('layouts.enod.partials.content-header')

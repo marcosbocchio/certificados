@@ -16,6 +16,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="{{asset('font-awesome/css/font-awesome.min.css')}}">
     <!-- Ionicons -->
     <link rel="stylesheet" href="{{asset('css/ionicons.min.css')}}">
+
+
     <!-- Theme style -->
     <link rel="stylesheet" href="{{asset('css/AdminLTE.min.css')}}">
     <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
@@ -58,6 +60,7 @@ desired effect
 |---------------------------------------------------------|
 -->
 <body class="hold-transition skin-blue sidebar-boxed">
+
 @include('layouts.clientes.partials.header')
 @include('layouts.clientes.partials.content-header')
 
