@@ -34,7 +34,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="{{asset('css/_all-skins.min.css')}}">
 
 
-    <link rel="stylesheet" href="{{asset('css/custom.css')}}">
+    <link rel="stylesheet" href="{{mix('css/custom.css')}}">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -100,8 +100,8 @@ desired effect
 <!-- AdminLTE App -->
 <script src="{{asset('js/adminlte.min.js')}}"></script>
 @yield('script')
-<!-- Optionally, you can add Slimscroll and FastClick plugins.
-     Both of these plugins are recommended to enhance the
-     user experience. -->
+
+ <script type="text/javascript" src="{{mix('js/app.js')}}"></script>  
+  
 </body>
 </html>
