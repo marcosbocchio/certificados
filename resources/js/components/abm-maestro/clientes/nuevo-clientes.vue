@@ -1,215 +1,213 @@
 <template>
     <form v-on:submit.prevent="storeRegistro" method="post">
-    <div class="modal fade" id="nuevo"  tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" >
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title" >Crear</h4>
-                    
-                </div>
-                <div class="modal-body">   
-                    <div class="col-md-12">
-                        <div class="box box-danger">
-                            <div class="box-header with-border">
-                                <h3 class="box-title">Datos Cliente</h3>
-                                <div class="box-tools pull-right">
-                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                                    </button>                       
+        <div class="modal fade" id="nuevo" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">                        
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Crear</h4>                        
+                    </div>
+                    <div class="modal-body">   
+                        <div class="col-md-12">
+                            <div class="box box-danger">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Datos Cliente</h3>
+                                    <div class="box-tools pull-right">
+                                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                        </button>                       
+                                    </div>
                                 </div>
-                            </div>
-                        <div class="box-body">  
-                            <div class="col-md-6">    
-                                <div class="form-group">
-                                    <label for="name">Código (*)</label>                   
-                                    <input autocomplete="off" v-model="newRegistro.codigo" type="text" name="codigo" class="form-control" value=""> 
-                                </div>  
-                            </div>            
-                            <div class="col-md-6">    
-                                <div class="form-group">
-                                    <label for="name">Nombre (*)</label>                   
-                                    <input autocomplete="off" v-model="newRegistro.nombre" type="text" name="nombre" class="form-control" value=""> 
-                                </div>  
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="name">Razon Social(*)</label>                   
-                                    <input autocomplete="off" v-model="newRegistro.razon_social" type="text" name="razon_social" class="form-control" value=""> 
+                            <div class="box-body">  
+                                <div class="col-md-6">    
+                                    <div class="form-group">
+                                        <label for="name">Código (*)</label>                   
+                                        <input autocomplete="off" v-model="newRegistro.codigo" type="text" name="codigo" class="form-control" value=""> 
+                                    </div>  
+                                </div>            
+                                <div class="col-md-6">    
+                                    <div class="form-group">
+                                        <label for="name">Nombre (*)</label>                   
+                                        <input autocomplete="off" v-model="newRegistro.nombre" type="text" name="nombre" class="form-control" value=""> 
+                                    </div>  
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="name">Razon Social(*)</label>                   
+                                        <input autocomplete="off" v-model="newRegistro.razon_social" type="text" name="razon_social" class="form-control" value=""> 
+                                    </div> 
                                 </div> 
+                            <div class="col-md-6">                 
+                                    <div class="form-group">
+                                        <label>Provincia (*)</label>
+                                        <v-select v-model="provincia" label="provincia" :options="provincias" @input="getLocalidades()"></v-select>   
+                                    </div>
+                            </div>
+                                <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Localidad (*)</label>
+                                    <v-select v-model="localidad" label="localidad" :options="localidades"></v-select>   
+                                </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="name">Código Postal (*)</label>                   
+                                        <input autocomplete="off" v-model="newRegistro.cp" type="text" name="cp" class="form-control" value=""> 
+                                    </div> 
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="name">Dirección (*)</label>                   
+                                        <input autocomplete="off" v-model="newRegistro.direccion" type="text" name="direccion" class="form-control" value=""> 
+                                    </div>  
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="name">Teléfono (*)</label>                   
+                                        <input autocomplete="off" v-model="newRegistro.tel" type="text" name="telefono" class="form-control" value=""> 
+                                    </div> 
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="usuario">email (*)</label>
+                                        <input autocomplete="off" type="text" name="email" class="form-control" v-model="newRegistro.email" value="">
+                                    </div>      
+                                </div>
+
+                                <div class="col-md-6">   
+                                    <div class="form-group">    
+                                        <label>Logo</label>        
+                                        <input type="file" class="form-control" id="inputFile" ref="inputFile1" name="file" @change="onFileSelected($event)">
+                                        <button class="hide" @click.prevent="onUpload()" >upload</button> 
+                                </div>                              
+                                </div>   
+                                <div class="clearfix"></div>
+                                <div class="col-md-6">   
+                                    <div class="form-group">       
+                                        <p>Formatos soportados : png, bmp, jpg</p>                          
+                                        <div v-if="newRegistro.path != ''">                            
+                                            <img :src="'/' + newRegistro.path" class="margin zoom-in"  @click="openGallery()" alt="..." width="120" >
+                                            <LightBox :images="images"  ref="lightbox"  :show-light-box="false" ></LightBox>
+                                        </div>                              
+                                        <progress-bar
+                                            :options="options"
+                                            :value="uploadPercentage"
+                                            style="margin-top:5px;"
+                                        /> 
+                                    </div>    
+                                </div>
+                        </div>
+                            </div>
+                    </div>
+                    <!-- contacto -->  
+                        <div class="col-md-12">
+                            <div class="box box-danger ">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Contacto</h3>                            
+                                </div>
+                            <div class="box-body">
+                                <div class="col-md-6">    
+                                    <div class="form-group">
+                                        <label for="name">Nombre</label>                   
+                                        <input autocomplete="off" v-model="contacto.nombre" type="text" name="nombre" class="form-control" value=""> 
+                                    </div>  
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="usuario">Cargo</label>
+                                        <input autocomplete="off" type="text" name="cargo" class="form-control" v-model="contacto.cargo" value="">
+                                    </div>      
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="usuario">Teléfono</label>
+                                        <input autocomplete="off" type="text" name="telefono" class="form-control" v-model="contacto.tel" value="">
+                                    </div>      
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="usuario">email</label>
+                                        <input autocomplete="off" type="text" name="email" class="form-control" v-model="contacto.email" value="">
+                                    </div>      
+                                </div>
+                                <div class="col-md-1"> 
+
+                                    <p>&nbsp;</p>
+                                    <span>                             
+                                        <a title="Agregar Contacto" @click="AddContacto()"> <app-icon img="plus-circle" color="black"></app-icon> </a>
+                                    </span>
+                            
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-striped">
+                                            <thead>
+                                                <tr>                                  
+                                                    <th style="width:90px;">NOMBRE</th>                                  
+                                                    <th style="width:120px;">CARGO</th>
+                                                    <th style="width:120px;">TELÉFONO</th>
+                                                    <th style="width:120px;">EMAIL</th>                                                             
+                                                    <th colspan="1" style="width:30px;">&nbsp;</th>
+                                                </tr>
+                                            </thead>                         
+                                            <tbody>
+                                                <tr v-for="(FilaTabla,k) in (TablaContactos)"  @click="selectPosContacto(k)" :key="k" >                                        
+                                                    <td>
+                                                        <div v-if="indexDetalle == k ">       
+                                                            <input type="text" v-model="TablaContactos[k].nombre" maxlength="20" size="25">        
+                                                        </div>   
+                                                        <div v-else>
+                                                            {{ TablaContactos[k].nombre }}
+                                                        </div>      
+
+                                                    
+                                                    </td>                                            
+                                                    <td>
+                                                        <div v-if="indexDetalle == k ">       
+                                                            <input type="text" v-model="TablaContactos[k].cargo" maxlength="20" size="15">        
+                                                        </div>   
+                                                        <div v-else>
+                                                            {{ TablaContactos[k].cargo }}
+                                                        </div>   
+                                                    </td>
+                                                    <td>
+                                                        <div v-if="indexDetalle == k ">       
+                                                            <input type="text" v-model="TablaContactos[k].tel" maxlength="20" size="20">        
+                                                        </div>   
+                                                        <div v-else>
+                                                            {{ TablaContactos[k].tel }}
+                                                        </div>   
+                                                    </td>
+                                                    <td>
+                                                        <div v-if="indexDetalle == k ">       
+                                                            <input type="text" v-model="TablaContactos[k].email" maxlength="60" size="25">        
+                                                        </div>   
+                                                        <div v-else>
+                                                            {{ TablaContactos[k].email }}
+                                                        </div>   
+                                                    </td>                                          
+                                                    <td> 
+                                                        <a  @click="RemoveContacto(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a>
+                                                    </td>          
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                             </div> 
-                        <div class="col-md-6">                 
-                                <div class="form-group">
-                                    <label>Provincia (*)</label>
-                                    <v-select v-model="provincia" label="provincia" :options="provincias" @input="getLocalidades()"></v-select>   
-                                </div>
-                        </div>
-                            <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Localidad (*)</label>
-                                <v-select v-model="localidad" label="localidad" :options="localidades"></v-select>   
                             </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Código Postal (*)</label>                   
-                                    <input autocomplete="off" v-model="newRegistro.cp" type="text" name="cp" class="form-control" value=""> 
-                                </div> 
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Dirección (*)</label>                   
-                                    <input autocomplete="off" v-model="newRegistro.direccion" type="text" name="direccion" class="form-control" value=""> 
-                                </div>  
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Teléfono (*)</label>                   
-                                    <input autocomplete="off" v-model="newRegistro.tel" type="text" name="telefono" class="form-control" value=""> 
-                                </div> 
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="usuario">email (*)</label>
-                                    <input autocomplete="off" type="text" name="email" class="form-control" v-model="newRegistro.email" value="">
-                                </div>      
-                            </div>
-
-                            <div class="col-md-6">   
-                                <div class="form-group">    
-                                    <label>Logo</label>        
-                                    <input type="file" class="form-control" id="inputFile" ref="inputFile1" name="file" @change="onFileSelected($event)">
-                                    <button class="hide" @click.prevent="onUpload()" >upload</button> 
-                               </div>                              
-                            </div>   
-                            <div class="clearfix"></div>
-                            <div class="col-md-6">   
-                                <div class="form-group">       
-                                    <p>Formatos soportados : png, bmp, jpg</p>                          
-                                    <div v-if="newRegistro.path != ''">                            
-                                        <img :src="'/' + newRegistro.path" class="margin zoom-in"  @click="openGallery()" alt="..." width="120" >
-                                        <LightBox :images="images"  ref="lightbox"  :show-light-box="false" ></LightBox>
-                                    </div>                              
-                                    <progress-bar
-                                        :options="options"
-                                        :value="uploadPercentage"
-                                        style="margin-top:5px;"
-                                    /> 
-                                </div>    
-                            </div>
-                      </div>
-                        </div>
-                   </div>
-                   <!-- contacto -->  
-                    <div class="col-md-12">
-                        <div class="box box-danger ">
-                            <div class="box-header with-border">
-                                <h3 class="box-title">Contacto</h3>                            
-                            </div>
-                        <div class="box-body">
-                            <div class="col-md-6">    
-                                <div class="form-group">
-                                    <label for="name">Nombre</label>                   
-                                    <input autocomplete="off" v-model="contacto.nombre" type="text" name="nombre" class="form-control" value=""> 
-                                </div>  
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="usuario">Cargo</label>
-                                    <input autocomplete="off" type="text" name="cargo" class="form-control" v-model="contacto.cargo" value="">
-                                </div>      
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="usuario">Teléfono</label>
-                                    <input autocomplete="off" type="text" name="telefono" class="form-control" v-model="contacto.tel" value="">
-                                </div>      
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="usuario">email</label>
-                                    <input autocomplete="off" type="text" name="email" class="form-control" v-model="contacto.email" value="">
-                                </div>      
-                            </div>
-                            <div class="col-md-1"> 
-
-                                <p>&nbsp;</p>
-                                <span>                             
-                                    <a title="Agregar Contacto" @click="AddContacto()"> <app-icon img="plus-circle" color="black"></app-icon> </a>
-                                </span>
-                        
-                            </div>
-
-                            <div class="col-md-12">
-                                <div class="table-responsive">
-                                    <table class="table table-hover table-striped">
-                                        <thead>
-                                            <tr>                                  
-                                                <th style="width:90px;">NOMBRE</th>                                  
-                                                <th style="width:120px;">CARGO</th>
-                                                <th style="width:120px;">TELÉFONO</th>
-                                                <th style="width:120px;">EMAIL</th>                                                             
-                                                <th colspan="1" style="width:30px;">&nbsp;</th>
-                                            </tr>
-                                        </thead>                         
-                                        <tbody>
-                                             <tr v-for="(FilaTabla,k) in (TablaContactos)"  @click="selectPosContacto(k)" :key="k" >                                        
-                                                <td>
-                                                    <div v-if="indexDetalle == k ">       
-                                                          <input type="text" v-model="TablaContactos[k].nombre" maxlength="20" size="25">        
-                                                    </div>   
-                                                    <div v-else>
-                                                           {{ TablaContactos[k].nombre }}
-                                                    </div>      
-
-                                                  
-                                                </td>                                            
-                                                <td>
-                                                    <div v-if="indexDetalle == k ">       
-                                                          <input type="text" v-model="TablaContactos[k].cargo" maxlength="20" size="15">        
-                                                    </div>   
-                                                    <div v-else>
-                                                           {{ TablaContactos[k].cargo }}
-                                                    </div>   
-                                                 </td>
-                                                <td>
-                                                    <div v-if="indexDetalle == k ">       
-                                                          <input type="text" v-model="TablaContactos[k].tel" maxlength="20" size="20">        
-                                                    </div>   
-                                                    <div v-else>
-                                                           {{ TablaContactos[k].tel }}
-                                                    </div>   
-                                                 </td>
-                                                <td>
-                                                    <div v-if="indexDetalle == k ">       
-                                                          <input type="text" v-model="TablaContactos[k].email" maxlength="60" size="25">        
-                                                    </div>   
-                                                    <div v-else>
-                                                           {{ TablaContactos[k].email }}
-                                                    </div>   
-                                                 </td>                                          
-                                                <td> 
-                                                    <a  @click="RemoveContacto(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a>
-                                                </td>          
-
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                        </div> 
-                        </div>
-                        </div>
-                         
-                    </div>        
-             
-              </div>
-                <div class="modal-footer">
-                    <input type="submit" class="btn btn-primary" value="Guardar">
-                    <button type="button" class="btn btn-default" name="button" data-dismiss="modal" >Cancelar</button>
-                </div>              
+                            
+                        </div>        
+                
+                </div>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-primary" value="Guardar">
+                        <button type="button" class="btn btn-default" name="button" data-dismiss="modal" >Cancelar</button>
+                    </div>              
+                </div>
             </div>
         </div>
-    </div>
     </form>
     
 </template>

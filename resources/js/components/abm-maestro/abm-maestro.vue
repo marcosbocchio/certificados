@@ -91,8 +91,7 @@
                 axios.defaults.baseURL = this.url ;
                 var urlRegistros = this.modelo + '/paginate' + '?page='+ page;   
                 axios.get(urlRegistros).then(response =>{
-                this.registros = response.data
-                this.$forceUpdate();         
+                this.registros = response.data                       
                 });
               },
             

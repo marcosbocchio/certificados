@@ -25,9 +25,10 @@
                     
                         <div class="col-md-12">    
                             <div class="form-group">
+                                <strong>Permisos</strong>
                                 <div v-for="(permiso,k) in permisos" :key="k" >
 
-                                <div class="col-md-4">                                   
+                                 <div class="col-sm-4 col-xs-12">                           
                                     <input type="checkbox" :id=" permiso.name " :value="permiso.name" v-model="rol_permisos" style="float:left"> 
                                     <label for="tipo" style="float:left;margin-left: 5px;">{{ permiso.name }}</label>         
                                 </div>     

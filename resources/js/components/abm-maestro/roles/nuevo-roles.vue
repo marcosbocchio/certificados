@@ -1,42 +1,45 @@
 <template>
     <form v-on:submit.prevent="storeRegistro" method="post">
-        <div class="modal fade" id="nuevo">
-            <div class="modal-dialog modal-lg">
+        <div class="modal fade" id="nuevo" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+            <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title">Crear</h4>
                     </div>
-                    <div class="modal-body">
-                        <div class="col-md-6">    
-                            <div class="form-group">
-                                <label for="codigo">Nombre (*)</label>                   
-                                <input autocomplete="off" v-model="newRegistro.name" type="text" name="codigo" class="form-control" value="">
-                            </div>
-                        </div>
-                        <div class="col-md-6">    
-                            <div class="form-group">
-                                <label for="name">Guard (*)</label>                   
-                                <v-select v-model="newRegistro.guard_name" :options="guards"></v-select>
-                            </div>
-                        </div>
-                    
-                        <div class="col-md-12">    
-                            <div class="form-group">
-                                <div v-for="(permiso,k) in permisos" :key="k" >
-
-                                <div class="col-md-4">
-                                    <input type="checkbox" :id=" permiso.name " :value="permiso.name" v-model="rol_permisos" style="float:left"> 
-                                    <label for="tipo" style="float:left;margin-left: 5px;">{{ permiso.name }}</label>         
-                                </div>     
+                    <div class="modal-body">     
+                        <div class="row">               
+                            <div class="col-md-6">    
+                                <div class="form-group">
+                                    <label for="codigo">Nombre (*)</label>                   
+                                    <input autocomplete="off" v-model="newRegistro.name" type="text" name="codigo" class="form-control" value="">
                                 </div>
-                             </div>
-                        </div>
+                            </div>
+                            <div class="col-md-6">    
+                                <div class="form-group">
+                                    <label for="name">Guard (*)</label>                   
+                                    <v-select v-model="newRegistro.guard_name" :options="guards"></v-select>
+                                </div>
+                            </div>
+                        
+                            <div class="col-md-12">    
+                                <div class="form-group">
+                                    <strong>Permisos</strong>
+                                    <div v-for="(permiso,k) in permisos" :key="k" >
 
-                    </div>
-                    <div class="modal-footer">
-                        <input type="submit" class="btn btn-primary" value="Guardar">
-                        <button type="button" class="btn btn-default" name="button" data-dismiss="modal" >Cancelar</button>
+                                        <div class="col-sm-4 col-xs-12">
+                                            <input type="checkbox" :id=" permiso.name " :value="permiso.name" v-model="rol_permisos" style="float:left"> 
+                                            <label for="tipo" style="float:left;margin-left: 5px;">{{ permiso.name }}</label>         
+                                        </div>     
+                                    </div>
+                                </div>
+                            </div>        
+
+                        </div>
+                        <div class="modal-footer">
+                            <input type="submit" class="btn btn-primary" value="Guardar">
+                            <button type="button" class="btn btn-default" name="button" data-dismiss="modal" >Cancelar</button>
+                        </div>
                     </div>
                 </div>
             </div>
