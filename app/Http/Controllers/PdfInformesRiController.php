@@ -58,7 +58,9 @@ class PdfInformesRiController extends Controller
         $tecnicas_grafico = TecnicasGraficos::findOrFail($informe_ri->tecnicas_grafico_id);
         $evaluador = User::find($informe->firma);
         
-      // dd($interno_fuente);
+      //  dd($interno_fuente);
+      //  dd($informe);
+       
 
         if ($informe_ri->gasoducto_sn){
 
@@ -69,7 +71,7 @@ class PdfInformesRiController extends Controller
        
 
       //    dd($juntas_posiciones);
-       
+      
 
           $pdf = PDF::loadView('reportes.informes.ri-gasoducto',compact('ot',
           'norma_ensayo',
@@ -98,13 +100,14 @@ class PdfInformesRiController extends Controller
         }else
 
         {
-        
-      /* Detalle */ 
-
-          $juntas_posiciones = DB::select('CALL InformeRiPlantaJuntaPosicion(?)',array($informe_ri->id));
-          $defectos_posiciones = DB::select('CALL InformeRiPlantaDefectosPasadaPosicion(?)',array($informe_ri->id));                     
-                      
       
+      /* Detalle */
+      
+      $juntas_posiciones = DB::select('CALL InformeRiPlantaJuntaPosicion(?)',array($informe_ri->id));
+      $defectos_posiciones = DB::select('CALL InformeRiPlantaDefectosPasadaPosicion(?)',array($informe_ri->id));                                          
+      
+  //   dd($juntas_posiciones);
+   //   dd($defectos_posiciones);
 
           $pdf = PDF::loadView('reportes.informes.ri-planta',compact('ot',
                                                               'norma_ensayo',
@@ -124,7 +127,7 @@ class PdfInformesRiController extends Controller
                                                               'tecnicas_grafico',
                                                               'juntas_posiciones',
                                                               'defectos_posiciones',
-                                                              'evaluador'))->setPaper('a4','portrait')->setWarnings(false);
+                                                              'evaluador'))->setPaper('a4','portrait')->setWarnings(false);;
 
                                                     
           return $pdf->stream();

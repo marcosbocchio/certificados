@@ -48,13 +48,7 @@ class User extends Authenticatable
     public function getId(){
         
         return $this->id;
-    }
-
-    /**
-     * The accessors to append to the model's array form.
-    *
-    * @var array
-    */
+    }    
 
     protected $appends = ['all_permissions','can'];
 
@@ -92,5 +86,7 @@ class User extends Authenticatable
     return $this->belongsTo('App\Clientes','cliente_id','id');
     
     }
+
+
   
 }

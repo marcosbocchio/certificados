@@ -73,6 +73,12 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('tecnicas_graficos/{id}', 'TecnicasGraficosController@index');
     Route::get('tecnica_distancias/{id}/diametro/{diametro}', 'TecnicaDistanciasController@TecnicaDistanciasDiametro');
 
+    Route::get('roles/paginate', 'RolesController@paginate');      
+    Route::resource('roles', 'RolesController');
+
+    Route::get('permissions/paginate', 'PermissionsController@paginate');      
+    Route::resource('permissions', 'PermissionsController');
+
     Route::resource('tipo_soldaduras', 'TipoSoldadurasController');
     Route::get('users/cliente/{id}','UserController@UserCliente');
 

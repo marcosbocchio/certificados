@@ -4,6 +4,7 @@ namespace App\Repositories\User;
 use App\Repositories\BaseRepository;
 use Illuminate\Support\Facades\DB;
 use App\User;
+use Spatie\Permission\Models\Role;
 
 class UserRepository extends BaseRepository
 {
@@ -32,13 +33,12 @@ class UserRepository extends BaseRepository
 
     if ($request['isEnod']) {
 
-      $User->cliente_id = null ;
-      $User->givePermissionTo('enod');
+      $User->cliente_id = null ;   
       
     }else {
       
-      $User->cliente_id = $request['cliente']['id'];
-      $User->givePermissionTo('cliente');
+      $User->cliente_id = $request['cliente']['id'];     
+   
     }        
     
     $User->name = $request['name'];
@@ -51,8 +51,10 @@ class UserRepository extends BaseRepository
     }
     $User->api_token = str_random(60);
     $User->path = $request['path'];
+    $User->syncRoles($request['roles']);
     $User->save();
 
+    
 
   }
  

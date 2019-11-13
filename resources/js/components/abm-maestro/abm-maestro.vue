@@ -92,11 +92,12 @@
                 var urlRegistros = this.modelo + '/paginate' + '?page='+ page;   
                 axios.get(urlRegistros).then(response =>{
                 this.registros = response.data
+                this.$forceUpdate();         
                 });
               },
             
             editRegistro : function(item){
-                console.log('entro en editar principal');             
+                console.log('entro en editar principal');              
                 this.selectRegistro = item;    
                 console.log(item);           
                 eventEditRegistro.$emit('editar',this.selectRegistro);                  

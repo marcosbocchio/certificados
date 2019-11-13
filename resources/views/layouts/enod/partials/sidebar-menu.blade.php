@@ -51,6 +51,12 @@
               <li><a href="{{ route('Interno-equipos') }}"><i class="fa fa-circle-o"></i>Interno Equipos</a></li>
               <li><a href="{{ route('fuentes') }}"><i class="fa fa-circle-o"></i>Fuentes</a></li>
               <li><a href="{{ route('Interno-fuentes') }}"><i class="fa fa-circle-o"></i>Interno Fuentes</a></li>
+              @can('roles')
+              <li><a href="{{ route('roles') }}"><i class="fa fa-circle-o"></i>Roles</a></li>
+              @endcan
+               @can('permisos')
+               <li><a href="{{ route('permisos') }}"><i class="fa fa-circle-o"></i>Permisos</a></li>
+               @endcan
             </ul>
           </li>
         @endcan

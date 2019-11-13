@@ -128,6 +128,14 @@ Vue.component('table-materiales', require('./components/abm-maestro/materiales/t
 Vue.component('nuevo-materiales', require('./components/abm-maestro/materiales/nuevo-materiales.vue').default);
 Vue.component('editar-materiales', require('./components/abm-maestro/materiales/editar-materiales.vue').default);
 
+Vue.component('table-roles', require('./components/abm-maestro/roles/table-roles.vue').default);
+Vue.component('editar-roles', require('./components/abm-maestro/roles/editar-roles.vue').default);
+Vue.component('nuevo-roles', require('./components/abm-maestro/roles/nuevo-roles.vue').default);
+
+Vue.component('table-permissions', require('./components/abm-maestro/permisos/table-permissions.vue').default);
+Vue.component('editar-permissions', require('./components/abm-maestro/permisos/editar-permissions.vue').default);
+Vue.component('nuevo-permissions', require('./components/abm-maestro/permisos/nuevo-permissions.vue').default);
+
 Vue.component('delete-registro', require('./components/abm-maestro//delete.vue').default);
 
 Vue.component('table-documentaciones', require('./components/abm-maestro/documentaciones/table-documentaciones.vue').default);
@@ -238,6 +246,8 @@ state: {
         penetrantes_tipo_liquido:[],
         reveladores_tipo_liquido:[],
         removedores_tipo_liquido:[],
+        roles:[],
+        permisos:[],
         iluminaciones:[],
         ejecutor_ensayos:[],
         CantInformes:'0',
@@ -557,6 +567,30 @@ actions : {
         })
         },
 
+        loadRoles({
+          commit
+        }) {
+          axios.defaults.baseURL = store.state.url ;
+          var urlRegistros = 'roles' + '?api_token=' + Laravel.user.api_token;  
+          console.log(urlRegistros);
+          axios.get(urlRegistros).then((response) => {
+            commit('getRoles', response.data)           
+          })
+        },
+
+        loadPermisos({
+          commit
+        }) {
+          axios.defaults.baseURL = store.state.url ;
+          var urlRegistros = 'permissions' + '?api_token=' + Laravel.user.api_token;  
+          console.log(urlRegistros);
+          axios.get(urlRegistros).then((response) => {
+            commit('getPermisos', response.data)           
+          })
+        },
+
+        
+
     },
     mutations: {
       getProvincias(state, provincias) {
@@ -656,6 +690,14 @@ actions : {
 
       getEjecutorEnsayo(state, ejecutor_ensayos) {
         state.ejecutor_ensayos = ejecutor_ensayos
+      },
+
+      getRoles(state, roles) {
+        state.roles = roles
+      },
+
+      getPermisos(state, permisos) {
+        state.permisos = permisos
       },
 
       ContarInformes(state, CantInformes) {

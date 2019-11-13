@@ -62,6 +62,8 @@
                             <input type="password" name="password2" class="form-control" v-model="password2">
                         </div>
                     </div> 
+
+
                     <div v-if="isEnod"> 
                         <div class="col-md-12">   
                             <div class="form-group">    
@@ -71,6 +73,7 @@
                             </div>                              
                         </div>         
                         <div class="clearfix"></div>
+                        
                         <div class="col-md-12">   
                             <div class="form-group">       
                                 <p>Formatos soportados : png, bmp, jpg</p>                          
@@ -84,6 +87,19 @@
                                     style="margin-top:5px;"
                                 /> 
                            </div>    
+                        </div>
+                     </div>
+
+                     <div class="col-md-12">    
+                        <div class="form-group">
+                            <strong>Roles</strong>    
+                            <div v-for="(rol,k) in roles" :key="k" >
+
+                                <div class="col-md-4">
+                                    <input type="checkbox" :id=" rol.name " :value="rol.name" v-model="user_rol" style="float:left" :disabled="(rol.name=='Usuario Cliente') || (rol.name == 'Usuario Enod')" > 
+                                    <label for="tipo" style="float:left;margin-left: 5px;">{{ rol.name }}</label>         
+                                </div>     
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -130,6 +146,7 @@ export default {
         isEnod:true,
         cliente:{},
         clientes:[],
+        user_rol:[],
         password2:'',
         request : [],
 
@@ -168,13 +185,15 @@ export default {
         this.openModal();
              
     }.bind(this));    
+    this.$store.dispatch('loadRoles');
     this.getClientes();
+
   
     },  
     
     computed :
     
-         mapState(['url'])
+         mapState(['url','roles'])
        
     ,  
 
@@ -186,6 +205,19 @@ export default {
                 this.images[0].thumb  ='/' + val.path;
 
           },   
+
+          isEnod : function(val){
+
+              if(val){
+                  this.user_rol.splice('Usuario Cliente'); 
+                  this.user_rol.push('Usuario Enod');
+              }else {
+                  this.user_rol.splice('Usuario Enod');    
+                  this.user_rol.push('Usuario Cliente')
+              }
+
+
+          },
      }, 
     methods: {
 
@@ -213,11 +245,20 @@ export default {
                 this.images[0].src ='/' + this.selectRegistro.path;
                 this.images[0].thumb  ='/' + this.selectRegistro.path;  
                 this.TablaContactos = this.selectRegistro.contactos;
-                this.selectedFile =  null,      
+                this.selectedFile =  null;
+                this.setRoles(); 
                 $('#editar').modal('show');    
                 this.$forceUpdate();    
             
             })
+            },
+
+            setRoles: function(){
+               this.user_rol=[];
+               this.selectRegistro.roles.forEach(function(item) {
+                    this.user_rol.push(item.name);
+               }.bind(this));
+               
             },
 
             getClientes: function(){
@@ -312,7 +353,8 @@ export default {
                 'password'  : this.editRegistro.password,
                 'cliente'   : this.cliente,
                 'isEnod'    : this.isEnod,
-                'path'      : this.editRegistro.path
+                'path'      : this.editRegistro.path,
+                'roles'     :this.user_rol,
                   
                 }).then(response => {
                   this.$emit('store');
@@ -351,7 +393,8 @@ export default {
                     'password'  : this.editRegistro.password,
                     'cliente'   : this.cliente,
                     'isEnod'    : this.isEnod,
-                    'path'      : this.editRegistro.path
+                    'path'      : this.editRegistro.path,
+                    'roles'     :this.user_rol,
                   
                 }).then(response => {
                   this.$emit('update');

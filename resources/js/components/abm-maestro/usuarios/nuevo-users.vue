@@ -61,7 +61,8 @@
                             <label for="password2">Repetir Contraseña</label>
                             <input type="password" name="password2" class="form-control" v-model="password2">
                         </div>
-                    </div> 
+                    </div>                     
+                    
                     <div v-if="isEnod"> 
                         <div class="col-md-12">   
                             <div class="form-group">    
@@ -84,8 +85,22 @@
                                     style="margin-top:5px;"
                                 /> 
                            </div>    
-                        </div>
+                        </div>                        
                     </div>
+
+                    <div class="col-md-12">    
+                          <div class="form-group">
+                            <strong>Roles</strong>    
+                            <div v-for="(rol,k) in roles" :key="k" >
+
+                                <div class="col-md-4">                                  
+                                
+                                    <input type="checkbox" :id=" rol.name " :value="rol.name" v-model="user_rol" style="float:left" :disabled="(rol.name=='Usuario Cliente') || (rol.name == 'Usuario Enod')" > 
+                                    <label for="tipo" style="float:left;margin-left: 5px;">{{ rol.name }}</label>         
+                                </div>     
+                            </div>
+                          </div>
+                      </div>
                 </div>
             
                 <div class="modal-footer">
@@ -122,6 +137,7 @@ export default {
         isEnod:true,
         cliente:{},
         clientes:[],
+        user_rol:[],
         password2:'',
         request : [],
 
@@ -160,7 +176,7 @@ export default {
     },
     computed :{
     
-         ...mapState(['url'])
+         ...mapState(['url','roles'])
     },
 
     watch : {
@@ -170,7 +186,20 @@ export default {
                 this.images[0].src ='/' + val.path;
                 this.images[0].thumb  ='/' + val.path;
 
-          },      
+          },    
+          
+          isEnod : function(val){
+
+              if(val){
+                  this.user_rol.splice('Usuario Cliente'); 
+                  this.user_rol.push('Usuario Enod');
+              }else {
+                  this.user_rol.splice('Usuario Enod');    
+                  this.user_rol.push('Usuario Cliente')
+              }
+
+
+          },
         
     }, 
    
@@ -191,7 +220,9 @@ export default {
                 this.isEnod=true,
                 this.$refs.inputFile1.type = 'text';
                 this.$refs.inputFile1.type = 'file';  
-                this.selectedFile =  null    
+                this.selectedFile =  null;
+                this.user_rol=[],    
+                this.user_rol.push('Usuario Enod');
                 $('#nuevo').modal('show');    
                 $( document ).ready(function() {
                     setTimeout(function(){
@@ -294,7 +325,9 @@ export default {
                 'password'  : this.newRegistro.password,
                 'cliente'   : this.cliente,
                 'isEnod'    : this.isEnod,
-                'path'      : this.newRegistro.path
+                'path'      : this.newRegistro.path,
+                'roles'     :this.user_rol,
+
                   
                 }).then(response => {
                   this.$emit('store');
