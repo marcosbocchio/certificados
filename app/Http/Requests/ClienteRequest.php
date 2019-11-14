@@ -32,7 +32,7 @@ class ClienteRequest extends FormRequest
                 'razon_social'  => 'required|Max:100',
                 'provincia'     =>'required',
                 'localidad'     =>'required',
-                'cp'            =>'required|regex:/[A-Z0-9]{8}/',
+                'cp'            =>'required|min:4|max:8|regex:/[A-Z0-9]/',
                 'direccion'     =>'required|Max:50',
                 'tel'           =>'required|regex:/^([0-9-]{6,15})?$/',
                 'email'         =>'required|unique:users|email',
@@ -52,7 +52,6 @@ class ClienteRequest extends FormRequest
                 'razon_social'        => 'razón social',
                 'direccion'           => 'dirección',
                 'tel'                 => 'teléfono',
-
                 'contactos.*.nombre'    => 'nombre del contacto',
                 'contactos.*.cargo'     => 'cargo del contacto',
                 'contactos.*.email'     => 'email del contacto',

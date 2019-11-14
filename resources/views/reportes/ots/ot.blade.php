@@ -50,7 +50,7 @@ td b,td span {
                 </tr>                  
                 <tr>
                   <td style="font-size: 13px;"><b>OT N°: </b>{{$ot->numero}}</td>
-                  <td style="font-size: 13px;"><b>FTS N°: </b>{{$ot->presupuesto}}</td>
+                  <td style="font-size: 13px;"><b>FST N°: </b>{{$ot->presupuesto}}</td>
 
                </tr>
              </tbody>

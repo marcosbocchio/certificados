@@ -25,7 +25,7 @@ class CreateOtsTable extends Migration
             $table->string('lon',100)->nullable();
             $table->string('observaciones',250)->nullable();
             $table->datetime('fecha_estimada_ensayo');
-            $table->enum('estado',['CARGANDO','EN PROGRESO','TERMINADA']);
+            $table->enum('estado',['EDITANDO','ACTIVA','TERMINADA']);
             $table->timestamps();
         });
     }

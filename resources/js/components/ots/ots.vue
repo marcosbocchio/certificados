@@ -22,8 +22,8 @@
         </div>
       <div class="col-md-3">
         <div class="form-group">
-          <label for="fts">FTS Nº (*)</label>
-          <input v-model="fts" type="number" class="form-control" id="fts" placeholder="">
+          <label for="fst">FST Nº (*)</label>
+          <input v-model="fst" type="number" class="form-control" id="fst" placeholder="">
         </div>
       </div>
       <div class="col-md-3">
@@ -59,7 +59,7 @@
         </div>
         <div class="col-md-3">
           <div class="form-group">
-            <label for="fts">Obra Nº</label>
+            <label for="fst">Obra Nº</label>
             <input v-model="obra" type="number" class="form-control" id="obra" placeholder="">
           </div>
         </div>        
@@ -527,7 +527,7 @@ export default {
             id: null
           },
           ot:'',
-          fts:'',
+          fst:'',
           lugar_ensayo:'',
           obra:'',
           contactos:[],
@@ -672,7 +672,7 @@ export default {
                 this.cliente         = this.clientedata;
                 this.getContactos();
                 this.ot              = this.otdata.numero;
-                this.fts             = this.otdata.presupuesto;
+                this.fst             = this.otdata.presupuesto;
                 this.provincia       = this.ot_provinciasdata; 
                 this.localidad       = this.ot_localidaddata; 
                 this.obra            = this.otdata.obra;
@@ -989,7 +989,7 @@ export default {
               'fecha'         : this.fecha,
               'hora'          : this.hora,
               'ot'            : this.ot,
-              'fts'           : this.fts,
+              'fst'           : this.fst,
               'obra'          : this.obra,
               'contacto1'     : this.contacto1.id,
               'contacto2'     : this.contacto2.id,
@@ -1048,7 +1048,7 @@ export default {
               'fecha'         : this.fecha,
               'hora'          : this.hora,
               'ot'            : this.ot,
-              'fts'           : this.fts,
+              'fst'           : this.fst,
               'obra'          : this.obra,
               'contacto1'     : (this.contacto1 ? this.contacto1.id : null ),
               'contacto2'     : (this.contacto2 ? this.contacto2.id : null ),

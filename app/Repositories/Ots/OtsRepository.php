@@ -145,7 +145,7 @@ class OtsRepository extends BaseRepository
     $ot->obra              = $request->obra;
     $ot->fecha_hora        = $fecha_hora;
     $ot->numero            = $request->ot;
-    $ot->presupuesto       = $request->fts;
+    $ot->presupuesto       = $request->fst;
     $ot->lugar             = $request->lugar_ensayo;
     $ot->localidad_id      = $request->localidad;
     $ot->lat               = $request->lat;

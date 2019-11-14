@@ -133,9 +133,9 @@
                             <thead>
                                 <tr>
                                     <th>OT N°</th>
-                                    <th>OBRA N°</th>     
                                     <th>CLIENTE</th>    
                                     <th>PROYECTO</th>  
+                                    <th>OBRA N°</th>     
                                     <th>FECHA</th>     
                                     <th>ESTADO</th>                        
                                     <th colspan="4">ACCIÓN</th>
@@ -144,16 +144,16 @@
                             <tbody>
                                 <tr v-for="(ot,k) in ots.data" :key="k" @click="selectOt(k)" :class="{selected: ot_id_selected === ots.data[k].id}" >
                                     <td> {{ot.numero}}</td>     
-                                    <td> {{ot.obra}}</td>         
                                     <td> {{ot.cliente.nombre_fantasia}}</td>         
                                     <td> {{ot.proyecto}}</td>         
+                                    <td> {{ot.obra}}</td>         
                                     <td> {{ot.fecha_hora}}</td>         
                                     <td> {{ot.estado}}</td>                                
-                                            
                                     <td width="10px"> <a :href="AppUrl + '/area/enod/ots/' + ot.id + '/edit' "   class="btn btn-warning btn-sm" title="Editar"><span class="fa fa-edit"></span></a></td>
                                     <td width="10px"> <a :href="AppUrl + '/soldadores/ot/' + ot_id_selected"   class="btn btn-default btn-sm" title="Soldadores/Usuarios Cliente"><span class="fa fa-user"></span></a></td>
                                     <td width="10px"> <a :href="AppUrl + '/api/pdf/ot/' + ot.id " target="_blank"  class="btn btn-default btn-sm" title="Informe"><span class="fa fa-file-pdf-o"></span></a></td>
                                     <td v-if="!ot.firma" width="10px"> <a  @click="firmar(k)"  class="btn btn-default btn-sm" title="Firmar"><span class="glyphicon glyphicon-pencil"></span> </a></td>   
+                                    <td v-else> <a class="btn btn-default btn-sm" title="Cerrar"><span class="glyphicon glyphicon-arrow-right"></span></a></td>
 
 
                                 </tr>
@@ -167,7 +167,6 @@
                 </div> 
             </div>       
         </div> 
-    
 </div>
 
 </template>
@@ -240,7 +239,8 @@ export default {
                 var urlRegistros = 'ots/' + this.ots.data[index].id + '/firmar';                      
                 axios.put(urlRegistros).then(response => {
                   console.log(response.data); 
-                  this.ots.data[index].firma = response.data.firma;    
+                  this.ots.data[index].firma = response.data.firma;
+                  this.getResults(this.ots.current_page);
                   toastr.success('La OT N° '+ response.data.numero +' fue firmada con éxito');                
                   
                 }).catch(error => {                   

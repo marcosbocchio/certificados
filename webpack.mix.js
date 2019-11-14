@@ -24,4 +24,4 @@ mix.js([
 ], 'public/css/custom.css')
 .sass('resources/sass/toastr.scss', 'public/css')
 
-mix.verson();
+mix.version();

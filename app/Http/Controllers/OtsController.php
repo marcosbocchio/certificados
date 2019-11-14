@@ -182,6 +182,7 @@ class OtsController extends Controller
 
         $ot = Ots::findOrFail($id);
         $ot->firma =  $user_id;
+        $ot->estado = 'ACTIVA';
         $ot->save();
 
         return $ot;

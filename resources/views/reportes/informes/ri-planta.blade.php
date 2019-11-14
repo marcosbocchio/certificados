@@ -162,11 +162,11 @@ b {
                             </td>                  
                         </tr>
                         <tr>                           
-                            <td style="font-size: 12px;border-right: 1px solid #000;" colspan="2" ><b>Eps: </b>{{$informe->eps}}</td>
+                            <td style="font-size: 12px;border-right: 1px solid #000;" colspan="2" ><b>EPS: </b>{{$informe->eps}}</td>
                             <td style="font-size: 12px; border-right: 1px solid #000;" colspan="4" ><b>Ici : </b>{{$ici->codigo}}</td>                            
                         </tr>
                         <tr>
-                            <td style="font-size: 12px;border-right: 1px solid #000;" colspan="2"><b>Pqr: </b>{{$informe->pqr}}</td>
+                            <td style="font-size: 12px;border-right: 1px solid #000;" colspan="2"><b>PQR: </b>{{$informe->pqr}}</td>
                             <td style="font-size: 12px;" colspan="2" ><b>Actividad: </b>{{$informe_ri->actividad}}</td>
                             <td style="font-size: 12px;border-right: 1px solid #000;" colspan="2" ><b>N° Exp. : </b>{{$informe_ri->exposicion}}</td>  
                            

@@ -7905,7 +7905,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -7955,6 +7954,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       axios.put(urlRegistros).then(function (response) {
         console.log(response.data);
         _this2.ots.data[index].firma = response.data.firma;
+
+        _this2.getResults(_this2.ots.current_page);
+
         toastr.success('La OT N° ' + response.data.numero + ' fue firmada con éxito');
       })["catch"](function (error) {
         _this2.errors = error.response.data.errors;
@@ -13165,7 +13167,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         id: null
       },
       ot: '',
-      fts: '',
+      fst: '',
       lugar_ensayo: '',
       obra: '',
       contactos: [],
@@ -13278,7 +13280,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.cliente = this.clientedata;
         this.getContactos();
         this.ot = this.otdata.numero;
-        this.fts = this.otdata.presupuesto;
+        this.fst = this.otdata.presupuesto;
         this.provincia = this.ot_provinciasdata;
         this.localidad = this.ot_localidaddata;
         this.obra = this.otdata.obra;
@@ -13559,7 +13561,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             'fecha': this.fecha,
             'hora': this.hora,
             'ot': this.ot,
-            'fts': this.fts,
+            'fst': this.fst,
             'obra': this.obra,
             'contacto1': this.contacto1.id,
             'contacto2': this.contacto2.id,
@@ -13607,7 +13609,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             'fecha': this.fecha,
             'hora': this.hora,
             'ot': this.ot,
-            'fts': this.fts,
+            'fst': this.fst,
             'obra': this.obra,
             'contacto1': this.contacto1 ? this.contacto1.id : null,
             'contacto2': this.contacto2 ? this.contacto2.id : null,
@@ -62541,13 +62543,13 @@ var render = function() {
                       [
                         _c("td", [_vm._v(" " + _vm._s(ot.numero))]),
                         _vm._v(" "),
-                        _c("td", [_vm._v(" " + _vm._s(ot.obra))]),
-                        _vm._v(" "),
                         _c("td", [
                           _vm._v(" " + _vm._s(ot.cliente.nombre_fantasia))
                         ]),
                         _vm._v(" "),
                         _c("td", [_vm._v(" " + _vm._s(ot.proyecto))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(" " + _vm._s(ot.obra))]),
                         _vm._v(" "),
                         _c("td", [_vm._v(" " + _vm._s(ot.fecha_hora))]),
                         _vm._v(" "),
@@ -62623,7 +62625,7 @@ var render = function() {
                                 ]
                               )
                             ])
-                          : _vm._e()
+                          : _c("td", [_vm._m(9, true)])
                       ]
                     )
                   }),
@@ -62743,11 +62745,11 @@ var staticRenderFns = [
       _c("tr", [
         _c("th", [_vm._v("OT N°")]),
         _vm._v(" "),
-        _c("th", [_vm._v("OBRA N°")]),
-        _vm._v(" "),
         _c("th", [_vm._v("CLIENTE")]),
         _vm._v(" "),
         _c("th", [_vm._v("PROYECTO")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("OBRA N°")]),
         _vm._v(" "),
         _c("th", [_vm._v("FECHA")]),
         _vm._v(" "),
@@ -62756,6 +62758,16 @@ var staticRenderFns = [
         _c("th", { attrs: { colspan: "4" } }, [_vm._v("ACCIÓN")])
       ])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      { staticClass: "btn btn-default btn-sm", attrs: { title: "Cerrar" } },
+      [_c("span", { staticClass: "glyphicon glyphicon-arrow-right" })]
+    )
   }
 ]
 render._withStripped = true
@@ -69944,8 +69956,8 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "col-md-3" }, [
                 _c("div", { staticClass: "form-group" }, [
-                  _c("label", { attrs: { for: "fts" } }, [
-                    _vm._v("FTS Nº (*)")
+                  _c("label", { attrs: { for: "fst" } }, [
+                    _vm._v("FST Nº (*)")
                   ]),
                   _vm._v(" "),
                   _c("input", {
@@ -69953,19 +69965,19 @@ var render = function() {
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.fts,
-                        expression: "fts"
+                        value: _vm.fst,
+                        expression: "fst"
                       }
                     ],
                     staticClass: "form-control",
-                    attrs: { type: "number", id: "fts", placeholder: "" },
-                    domProps: { value: _vm.fts },
+                    attrs: { type: "number", id: "fst", placeholder: "" },
+                    domProps: { value: _vm.fst },
                     on: {
                       input: function($event) {
                         if ($event.target.composing) {
                           return
                         }
-                        _vm.fts = $event.target.value
+                        _vm.fst = $event.target.value
                       }
                     }
                   })
@@ -70062,7 +70074,7 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "col-md-3" }, [
                 _c("div", { staticClass: "form-group" }, [
-                  _c("label", { attrs: { for: "fts" } }, [_vm._v("Obra Nº")]),
+                  _c("label", { attrs: { for: "fst" } }, [_vm._v("Obra Nº")]),
                   _vm._v(" "),
                   _c("input", {
                     directives: [
