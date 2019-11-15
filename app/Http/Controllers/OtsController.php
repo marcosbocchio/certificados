@@ -100,8 +100,7 @@ class OtsController extends Controller
         $user = auth()->user()->name;
         $ot = $this->ot->find($id);
         $cliente = Clientes::find($ot->cliente_id);    
-        $contratista = Contratistas::find($ot->contratista_id);
-        
+        $contratista = Contratistas::find($ot->contratista_id);      
 
         $ot_servicios = (new OtServiciosController)->show($ot->id);
         $ot_productos = (new OtProductosController)->show($ot->id);
@@ -128,7 +127,10 @@ class OtsController extends Controller
                 $ot_contacto2 = new Contactos();
         if ($ot_contacto3 == null)
                 $ot_contacto3 = new Contactos();
-
+    // if ($contratista == null)
+     //           $contratista = new Contratistas();
+                
+         
         return view('ots.edit',compact('ot',
                                         'cliente',
                                         'contratista',
