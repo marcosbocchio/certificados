@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use App\Http\Requests\ContratistaRequest;
 use App\Contratistas;
 class ContratistasController extends Controller
 {
@@ -16,6 +17,22 @@ class ContratistasController extends Controller
         return Contratistas::all();
     }
 
+    public function paginate(Request $request){
+      
+        return Contratistas::orderBy('id','DESC')->paginate(10);
+  
+      }
+
+    public function callView()
+      {   
+          $user = auth()->user()->name; 
+          $header_titulo = "Contratistas";
+          $header_descripcion ="Alta | Baja | Modificación"; 
+        
+          return view('contratistas',compact('user','header_titulo','header_descripcion'));
+  
+      }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -26,16 +43,48 @@ class ContratistasController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+    public function store(ContratistaRequest $request){
+
+        $contratista = new Contratistas;   
+  
+          DB::beginTransaction();
+          try { 
+  
+              $this->saveContratista($request,$contratista);
+              DB::commit(); 
+  
+          } catch (Exception $e) {
+      
+              DB::rollback();
+              throw $e;      
+              
+          }      
+  
+      }
+  
+      public function update(ContratistaRequest $request, $id){
+  
+        $contratista = Contratistas::find($id);     
+      
+          DB::beginTransaction();
+          try {
+              $this->saveContratista($request,$contratista);
+              DB::commit(); 
+      
+            } catch (Exception $e) {
+        
+              DB::rollback();
+              throw $e;      
+              
+            }
+      }
+      public function saveContratista($request,$contratista){
+  
+        $contratista->nombre = $request['nombre'];
+        $contratista->path_logo = $request['path_logo'];
+        $contratista->save();
+  
+      }
 
     /**
      * Display the specified resource.
@@ -59,17 +108,7 @@ class ContratistasController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+
 
     /**
      * Remove the specified resource from storage.
@@ -79,6 +118,7 @@ class ContratistasController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $contratista = Contratistas::find($id);    
+        $contratista->delete();
     }
 }

@@ -135,7 +135,6 @@ class OtsController extends Controller
 
            $contratista = new Contratistas();
                 
-       //  dd($contratista);
         return view('ots.edit',compact('ot',
                                         'cliente',
                                         'contratista',

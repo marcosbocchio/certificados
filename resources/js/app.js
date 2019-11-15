@@ -76,12 +76,19 @@ vSelect.props.components.default = () => ({
 */
 Vue.component('app-icon', require('./components/app-icon.vue').default);
 Vue.component('abm-maestro', require('./components/abm-maestro/abm-maestro.vue').default);
+
 Vue.component('table-users', require('./components/abm-maestro/usuarios/table-users.vue').default);
 Vue.component('nuevo-users', require('./components/abm-maestro/usuarios/nuevo-users.vue').default);
 Vue.component('editar-users', require('./components/abm-maestro/usuarios/editar-users.vue').default);
+
 Vue.component('table-clientes', require('./components/abm-maestro/clientes/table-clientes.vue').default);
 Vue.component('nuevo-clientes', require('./components/abm-maestro/clientes/nuevo-clientes.vue').default);
 Vue.component('editar-clientes', require('./components/abm-maestro/clientes/editar-clientes.vue').default);
+
+//contratistas
+Vue.component('table-contratistas', require('./components/abm-maestro/contratistas/table-contratistas.vue').default);
+Vue.component('nuevo-contratistas', require('./components/abm-maestro/contratistas/nuevo-contratistas.vue').default);
+Vue.component('editar-contratistas', require('./components/abm-maestro/contratistas/editar-contratistas.vue').default);
 
 Vue.component('table-unidades_medidas', require('./components/abm-maestro/unidades-medidas/table-unidades_medidas.vue').default);
 Vue.component('nuevo-unidades_medidas', require('./components/abm-maestro/unidades-medidas/nuevo-unidades_medidas.vue').default);

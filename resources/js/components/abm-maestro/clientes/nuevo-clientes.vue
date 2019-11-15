@@ -78,7 +78,7 @@
                                         <label>Logo</label>        
                                         <input type="file" class="form-control" id="inputFile" ref="inputFile1" name="file" @change="onFileSelected($event)">
                                         <button class="hide" @click.prevent="onUpload()" >upload</button> 
-                                </div>                              
+                                    </div>                              
                                 </div>   
                                 <div class="clearfix"></div>
                                 <div class="col-md-6">   
@@ -307,7 +307,7 @@ export default {
 
            openGallery(index) {
                  this.$refs.lightbox.showImage(0)
-            }   ,   
+            },   
 
            openModal : function(){
                 this.newRegistro = {   
@@ -399,7 +399,7 @@ export default {
             
                 console.log(this.selectedFile);
 
-                if(FileSize > 20 ){
+                if(FileSize > (20) ){
                     event.preventDefault();
                     toastr.error('Archivo demasiado grande. (Max 500 KB)');
                     this.$refs.inputFile1.type = 'text';

@@ -2881,6 +2881,508 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/abm-maestro/contratistas/editar-contratistas.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/abm-maestro/contratistas/editar-contratistas.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue_image_lightbox__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-image-lightbox */ "./node_modules/vue-image-lightbox/dist/vue-image-lightbox.min.js");
+/* harmony import */ var vue_image_lightbox__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_image_lightbox__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _event_bus__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../event-bus */ "./resources/js/components/event-bus.js");
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+__webpack_require__(/*! vue-image-lightbox/dist/vue-image-lightbox.min.css */ "./node_modules/vue-image-lightbox/dist/vue-image-lightbox.min.css");
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    LightBox: vue_image_lightbox__WEBPACK_IMPORTED_MODULE_0___default.a
+  },
+  props: {
+    selectRegistro: {
+      type: Object,
+      required: false
+    }
+  },
+  data: function data() {
+    return {
+      errors: {},
+      editRegistro: {
+        'nombre': '',
+        'logo_path': ''
+      },
+      images: [{
+        src: '',
+        thumb: '',
+        caption: 'caption to display. receive <html> <b>tag</b>' // Optional
+
+      }],
+      fullPage: false,
+      isLoading_file: false,
+      uploadPercentage: 0,
+      selectedFile: null,
+      HabilitarGuardar: true,
+      options: {
+        layout: {
+          height: 20,
+          width: 150,
+          verticalTextAlign: 74
+        }
+      }
+    };
+  },
+  watch: {
+    editRegistro: function editRegistro(val) {
+      this.images[0].src = '/' + val.path_logo;
+      this.images[0].thumb = '/' + val.path_logo;
+    }
+  },
+  created: function created() {
+    _event_bus__WEBPACK_IMPORTED_MODULE_2__["eventEditRegistro"].$on('editar', function () {
+      this.openModal();
+    }.bind(this));
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])(['url'])),
+  methods: {
+    openGallery: function openGallery(index) {
+      this.$refs.lightbox.showImage(0);
+    },
+    openModal: function openModal() {
+      this.$nextTick(function () {
+        this.editRegistro.nombre = this.selectRegistro.nombre;
+        this.editRegistro.path_logo = this.selectRegistro.path_logo;
+        this.images[0].src = '/' + this.selectRegistro.path_logo;
+        this.images[0].thumb = '/' + this.selectRegistro.path_logo;
+        $('#editar').modal('show');
+        this.$forceUpdate();
+      });
+    },
+    onFileSelected: function onFileSelected(event) {
+      this.isLoading_file = true;
+      this.HabilitarGuardar = false;
+      this.selectedFile = event.target.files[0];
+      var FileSize = this.selectedFile.size / 1024 / 1024; // in MB           
+
+      var FileType = this.selectedFile.type;
+      console.log(FileType);
+
+      if (!(FileType == 'image/jpeg' || FileType == 'image/bmp' || FileType == 'image/png')) {
+        toastr.error('El tipo de archivo no es aceptado ');
+        this.$refs.inputFile1.type = 'text';
+        this.$refs.inputFile1.type = 'file';
+        this.selectedFile = null;
+        return;
+      }
+
+      console.log(this.selectedFile);
+
+      if (FileSize > (0, 5)) {
+        event.preventDefault();
+        toastr.error('Archivo demasiado grande. (Max 500 KB)');
+        this.$refs.inputFile1.type = 'text';
+        this.$refs.inputFile1.type = 'file';
+        this.selectedFile = null;
+        this.uploadPercentage = 0;
+        this.isLoading_file = false;
+      } else {
+        this.onUpload();
+      }
+    },
+    onUpload: function onUpload() {
+      var _this = this;
+
+      this.HabilitarGuardar = false;
+      var settings = {
+        headers: {
+          'content-type': 'multipart/form-data'
+        },
+        onUploadProgress: function (progressEvent) {
+          this.uploadPercentage = parseInt(Math.round(progressEvent.loaded * 100 / progressEvent.total));
+        }.bind(this)
+      };
+      var fd = new FormData();
+      fd.append('logo-contratista', this.selectedFile);
+      axios.defaults.baseURL = this.url;
+      var url = 'storage/logo-contratista';
+      console.log(fd);
+      axios.post(url, fd, settings).then(function (response) {
+        _this.editRegistro.path_logo = response.data;
+        _this.isLoading_file = false;
+        _this.HabilitarGuardar = true;
+        _this.images[0].src = '/' + response.data;
+        _this.images[0].thumb = '/' + response.data;
+
+        _this.$forceUpdate();
+      })["catch"](function (response) {
+        _this.errors = error.response.data.errors;
+        _this.isLoading_file = false;
+        _this.HabilitarGuardar = true;
+      });
+    },
+    storeRegistro: function storeRegistro() {
+      var _this2 = this;
+
+      axios.defaults.baseURL = this.url;
+      var urlRegistros = 'contratistas/' + this.selectRegistro.id;
+      axios.put(urlRegistros, _objectSpread({}, this.editRegistro)).then(function (response) {
+        _this2.$emit('update');
+
+        _this2.errors = [];
+        $('#editar').modal('hide');
+        toastr.success('Contratista editado con éxito');
+        _this2.editRegistro = {};
+      })["catch"](function (error) {
+        _this2.errors = error.response.data.errors;
+        $.each(_this2.errors, function (key, value) {
+          toastr.error(value);
+          console.log(key + ": " + value);
+        });
+
+        if (typeof _this2.errors == 'undefined' && error) {
+          toastr.error("Ocurrió un error al procesar la solicitud");
+        }
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/abm-maestro/contratistas/nuevo-contratistas.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/abm-maestro/contratistas/nuevo-contratistas.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue_image_lightbox__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-image-lightbox */ "./node_modules/vue-image-lightbox/dist/vue-image-lightbox.min.js");
+/* harmony import */ var vue_image_lightbox__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_image_lightbox__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _event_bus__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../event-bus */ "./resources/js/components/event-bus.js");
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+__webpack_require__(/*! vue-image-lightbox/dist/vue-image-lightbox.min.css */ "./node_modules/vue-image-lightbox/dist/vue-image-lightbox.min.css");
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    LightBox: vue_image_lightbox__WEBPACK_IMPORTED_MODULE_0___default.a
+  },
+  data: function data() {
+    return {
+      error: {},
+      newRegistro: {
+        'nombre': '',
+        'logo_path': ''
+      },
+      images: [{
+        src: '',
+        thumb: '',
+        caption: 'caption to display. receive <html> <b>tag</b>' // Optional
+
+      }],
+      fullPage: false,
+      isLoading_file: false,
+      uploadPercentage: 0,
+      selectedFile: null,
+      HabilitarGuardar: true,
+      options: {
+        layout: {
+          height: 20,
+          width: 150,
+          verticalTextAlign: 74
+        }
+      }
+    };
+  },
+  watch: {
+    newRegistro: function newRegistro(val) {
+      this.images[0].src = '/' + val.path_logo;
+      this.images[0].thumb = '/' + val.path_logo;
+    }
+  },
+  created: function created() {
+    _event_bus__WEBPACK_IMPORTED_MODULE_2__["eventNewRegistro"].$on('open', this.openModal);
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])(['url'])),
+  methods: {
+    openGallery: function openGallery(index) {
+      this.$refs.lightbox.showImage(0);
+    },
+    openModal: function openModal() {
+      this.newRegistro = {
+        'nombre': '',
+        'path_logo': ''
+      };
+      $('#nuevo').modal('show');
+    },
+    onFileSelected: function onFileSelected(event) {
+      this.isLoading_file = true;
+      this.HabilitarGuardar = false;
+      this.selectedFile = event.target.files[0];
+      var FileSize = this.selectedFile.size / 1024 / 1024; // in MB           
+
+      var FileType = this.selectedFile.type;
+      console.log(FileType);
+
+      if (!(FileType == 'image/jpeg' || FileType == 'image/bmp' || FileType == 'image/png')) {
+        toastr.error('El tipo de archivo no es aceptado ');
+        this.$refs.inputFile1.type = 'text';
+        this.$refs.inputFile1.type = 'file';
+        this.selectedFile = null;
+        return;
+      }
+
+      console.log(this.selectedFile);
+
+      if (FileSize > (0, 5)) {
+        event.preventDefault();
+        toastr.error('Archivo demasiado grande. (Max 500 KB)');
+        this.$refs.inputFile1.type = 'text';
+        this.$refs.inputFile1.type = 'file';
+        this.selectedFile = null;
+        this.uploadPercentage = 0;
+        this.isLoading_file = false;
+      } else {
+        this.onUpload();
+      }
+    },
+    onUpload: function onUpload() {
+      var _this = this;
+
+      this.HabilitarGuardar = false;
+      var settings = {
+        headers: {
+          'content-type': 'multipart/form-data'
+        },
+        onUploadProgress: function (progressEvent) {
+          this.uploadPercentage = parseInt(Math.round(progressEvent.loaded * 100 / progressEvent.total));
+        }.bind(this)
+      };
+      var fd = new FormData();
+      fd.append('logo-contratista', this.selectedFile);
+      axios.defaults.baseURL = this.url;
+      var url = 'storage/logo-contratista';
+      console.log(fd);
+      axios.post(url, fd, settings).then(function (response) {
+        _this.newRegistro.path_logo = response.data;
+        _this.isLoading_file = false;
+        _this.HabilitarGuardar = true;
+        _this.images[0].src = '/' + response.data;
+        _this.images[0].thumb = '/' + response.data;
+
+        _this.$forceUpdate();
+      })["catch"](function (response) {
+        _this.errors = error.response.data.errors;
+        _this.isLoading_file = false;
+        _this.HabilitarGuardar = true;
+      });
+    },
+    storeRegistro: function storeRegistro() {
+      var _this2 = this;
+
+      axios.defaults.baseURL = this.url;
+      var urlRegistros = 'contratistas';
+      axios.post(urlRegistros, _objectSpread({}, this.newRegistro)).then(function (response) {
+        _this2.$emit('store');
+
+        _this2.errors = [];
+        $('#nuevo').modal('hide');
+        toastr.success('Contratista creado con éxito');
+        _this2.newRegistro = {};
+      })["catch"](function (error) {
+        console.log(error);
+        _this2.errors = error.response.data.errors;
+        $.each(_this2.errors, function (key, value) {
+          toastr.error(value);
+          console.log(key + ": " + value);
+        });
+
+        if (typeof _this2.errors == 'undefined' && error) {
+          toastr.error("Ocurrió un error al procesar la solicitud");
+        }
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/abm-maestro/contratistas/table-contratistas.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/abm-maestro/contratistas/table-contratistas.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {};
+  },
+  props: {
+    registros: {
+      type: Array,
+      required: true
+    }
+  },
+  methods: {
+    updateValue: function updateValue(registro) {
+      this.$emit('editar', registro);
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/abm-maestro/delete.vue?vue&type=script&lang=js&":
 /*!*****************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/abm-maestro/delete.vue?vue&type=script&lang=js& ***!
@@ -54449,6 +54951,517 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/abm-maestro/contratistas/editar-contratistas.vue?vue&type=template&id=2007d881&":
+/*!***********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/abm-maestro/contratistas/editar-contratistas.vue?vue&type=template&id=2007d881& ***!
+  \***********************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "form",
+    {
+      attrs: { method: "post" },
+      on: {
+        submit: function($event) {
+          $event.preventDefault()
+          return _vm.storeRegistro($event)
+        }
+      }
+    },
+    [
+      _c("div", { staticClass: "modal fade", attrs: { id: "editar" } }, [
+        _c("div", { staticClass: "modal-dialog" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-body" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-12" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { attrs: { for: "codigo" } }, [
+                      _vm._v("Nombre (*)")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.editRegistro.nombre,
+                          expression: "editRegistro.nombre"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        autocomplete: "off",
+                        type: "text",
+                        name: "codigo",
+                        value: ""
+                      },
+                      domProps: { value: _vm.editRegistro.nombre },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.editRegistro,
+                            "nombre",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-12" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", [_vm._v("Logo")]),
+                    _vm._v(" "),
+                    _c("input", {
+                      ref: "inputFile1",
+                      staticClass: "form-control",
+                      attrs: { type: "file", id: "inputFile", name: "file" },
+                      on: {
+                        change: function($event) {
+                          return _vm.onFileSelected($event)
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "hide",
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.onUpload()
+                          }
+                        }
+                      },
+                      [_vm._v("upload")]
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "clearfix" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-12" }, [
+                  _c(
+                    "div",
+                    { staticClass: "form-group" },
+                    [
+                      _c("p", [_vm._v("Formatos soportados : png, bmp, jpg")]),
+                      _vm._v(" "),
+                      _vm.editRegistro.path_logo
+                        ? _c(
+                            "div",
+                            [
+                              _c("img", {
+                                staticClass: "margin zoom-in",
+                                attrs: {
+                                  src: "/" + _vm.editRegistro.path_logo,
+                                  alt: "...",
+                                  width: "120"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.openGallery()
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("LightBox", {
+                                ref: "lightbox",
+                                attrs: {
+                                  images: _vm.images,
+                                  "show-light-box": false
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c("progress-bar", {
+                        staticStyle: { "margin-top": "5px" },
+                        attrs: {
+                          options: _vm.options,
+                          value: _vm.uploadPercentage
+                        }
+                      })
+                    ],
+                    1
+                  )
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _vm._m(1)
+          ])
+        ])
+      ])
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: { type: "button", "data-dismiss": "modal" }
+        },
+        [_vm._v("×")]
+      ),
+      _vm._v(" "),
+      _c("h4", { staticClass: "modal-title" }, [_vm._v("Editar")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-footer" }, [
+      _c("input", {
+        staticClass: "btn btn-primary",
+        attrs: { type: "submit", value: "Guardar" }
+      }),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-default",
+          attrs: { type: "button", name: "button", "data-dismiss": "modal" }
+        },
+        [_vm._v("Cancelar")]
+      )
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/abm-maestro/contratistas/nuevo-contratistas.vue?vue&type=template&id=1e005ee9&":
+/*!**********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/abm-maestro/contratistas/nuevo-contratistas.vue?vue&type=template&id=1e005ee9& ***!
+  \**********************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "form",
+    {
+      attrs: { method: "post" },
+      on: {
+        submit: function($event) {
+          $event.preventDefault()
+          return _vm.storeRegistro($event)
+        }
+      }
+    },
+    [
+      _c("div", { staticClass: "modal fade", attrs: { id: "nuevo" } }, [
+        _c("div", { staticClass: "modal-dialog" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-body" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-12" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { attrs: { for: "codigo" } }, [
+                      _vm._v("Nombre (*)")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.newRegistro.nombre,
+                          expression: "newRegistro.nombre"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        autocomplete: "off",
+                        type: "text",
+                        name: "codigo",
+                        value: ""
+                      },
+                      domProps: { value: _vm.newRegistro.nombre },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.newRegistro,
+                            "nombre",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-12" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", [_vm._v("Logo")]),
+                    _vm._v(" "),
+                    _c("input", {
+                      ref: "inputFile1",
+                      staticClass: "form-control",
+                      attrs: { type: "file", id: "inputFile", name: "file" },
+                      on: {
+                        change: function($event) {
+                          return _vm.onFileSelected($event)
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "hide",
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.onUpload()
+                          }
+                        }
+                      },
+                      [_vm._v("upload")]
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "clearfix" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-12" }, [
+                  _c(
+                    "div",
+                    { staticClass: "form-group" },
+                    [
+                      _c("p", [_vm._v("Formatos soportados : png, bmp, jpg")]),
+                      _vm._v(" "),
+                      _vm.newRegistro.path_logo
+                        ? _c(
+                            "div",
+                            [
+                              _c("img", {
+                                staticClass: "margin zoom-in",
+                                attrs: {
+                                  src: "/" + _vm.newRegistro.path_logo,
+                                  alt: "...",
+                                  width: "120"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.openGallery()
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("LightBox", {
+                                ref: "lightbox",
+                                attrs: {
+                                  images: _vm.images,
+                                  "show-light-box": false
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c("progress-bar", {
+                        staticStyle: { "margin-top": "5px" },
+                        attrs: {
+                          options: _vm.options,
+                          value: _vm.uploadPercentage
+                        }
+                      })
+                    ],
+                    1
+                  )
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _vm._m(1)
+          ])
+        ])
+      ])
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: { type: "button", "data-dismiss": "modal" }
+        },
+        [_vm._v("×")]
+      ),
+      _vm._v(" "),
+      _c("h4", { staticClass: "modal-title" }, [_vm._v("Crear")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-footer" }, [
+      _c("input", {
+        staticClass: "btn btn-primary",
+        attrs: { type: "submit", value: "Guardar" }
+      }),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-default",
+          attrs: { type: "button", name: "button", "data-dismiss": "modal" }
+        },
+        [_vm._v("Cancelar")]
+      )
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/abm-maestro/contratistas/table-contratistas.vue?vue&type=template&id=4821329c&":
+/*!**********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/abm-maestro/contratistas/table-contratistas.vue?vue&type=template&id=4821329c& ***!
+  \**********************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "box box-danger top-buffer" }, [
+    _c("div", { staticClass: "box-body" }, [
+      _c("div", { staticClass: "table-responsive" }, [
+        _c("table", { staticClass: "table table-hover table-striped" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.registros, function(registro) {
+              return _c("tr", { key: registro.id }, [
+                _c("td", [_vm._v(_vm._s(registro.nombre))]),
+                _vm._v(" "),
+                _c("td", { attrs: { width: "10px" } }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "btn btn-warning btn-sm",
+                      attrs: { href: "#", title: "Editar" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.updateValue(registro)
+                        }
+                      }
+                    },
+                    [_c("span", { staticClass: "fa fa-edit" })]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("td", { attrs: { width: "10px" } }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "btn btn-danger btn-sm",
+                      attrs: { href: "#", title: "Eliminar " },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.$emit(
+                            "confirmarDelete",
+                            registro,
+                            registro.nombre_fantasia
+                          )
+                        }
+                      }
+                    },
+                    [_c("span", { staticClass: "fa fa-trash" })]
+                  )
+                ])
+              ])
+            }),
+            0
+          )
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Nombre")]),
+        _vm._v(" "),
+        _c("th", { attrs: { colspan: "2" } }, [_vm._v(" ")])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/abm-maestro/delete.vue?vue&type=template&id=34898d97&scoped=true&":
 /*!*********************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/abm-maestro/delete.vue?vue&type=template&id=34898d97&scoped=true& ***!
@@ -95839,7 +96852,11 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('nuevo-users', __webpack_re
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('editar-users', __webpack_require__(/*! ./components/abm-maestro/usuarios/editar-users.vue */ "./resources/js/components/abm-maestro/usuarios/editar-users.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('table-clientes', __webpack_require__(/*! ./components/abm-maestro/clientes/table-clientes.vue */ "./resources/js/components/abm-maestro/clientes/table-clientes.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('nuevo-clientes', __webpack_require__(/*! ./components/abm-maestro/clientes/nuevo-clientes.vue */ "./resources/js/components/abm-maestro/clientes/nuevo-clientes.vue")["default"]);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('editar-clientes', __webpack_require__(/*! ./components/abm-maestro/clientes/editar-clientes.vue */ "./resources/js/components/abm-maestro/clientes/editar-clientes.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('editar-clientes', __webpack_require__(/*! ./components/abm-maestro/clientes/editar-clientes.vue */ "./resources/js/components/abm-maestro/clientes/editar-clientes.vue")["default"]); //contratistas
+
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('table-contratistas', __webpack_require__(/*! ./components/abm-maestro/contratistas/table-contratistas.vue */ "./resources/js/components/abm-maestro/contratistas/table-contratistas.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('nuevo-contratistas', __webpack_require__(/*! ./components/abm-maestro/contratistas/nuevo-contratistas.vue */ "./resources/js/components/abm-maestro/contratistas/nuevo-contratistas.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('editar-contratistas', __webpack_require__(/*! ./components/abm-maestro/contratistas/editar-contratistas.vue */ "./resources/js/components/abm-maestro/contratistas/editar-contratistas.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('table-unidades_medidas', __webpack_require__(/*! ./components/abm-maestro/unidades-medidas/table-unidades_medidas.vue */ "./resources/js/components/abm-maestro/unidades-medidas/table-unidades_medidas.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('nuevo-unidades_medidas', __webpack_require__(/*! ./components/abm-maestro/unidades-medidas/nuevo-unidades_medidas.vue */ "./resources/js/components/abm-maestro/unidades-medidas/nuevo-unidades_medidas.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('editar-unidades_medidas', __webpack_require__(/*! ./components/abm-maestro/unidades-medidas/editar-unidades_medidas.vue */ "./resources/js/components/abm-maestro/unidades-medidas/editar-unidades_medidas.vue")["default"]);
@@ -96725,6 +97742,213 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_table_clientes_vue_vue_type_template_id_1d6a599c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_table_clientes_vue_vue_type_template_id_1d6a599c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/abm-maestro/contratistas/editar-contratistas.vue":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/abm-maestro/contratistas/editar-contratistas.vue ***!
+  \**********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _editar_contratistas_vue_vue_type_template_id_2007d881___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./editar-contratistas.vue?vue&type=template&id=2007d881& */ "./resources/js/components/abm-maestro/contratistas/editar-contratistas.vue?vue&type=template&id=2007d881&");
+/* harmony import */ var _editar_contratistas_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./editar-contratistas.vue?vue&type=script&lang=js& */ "./resources/js/components/abm-maestro/contratistas/editar-contratistas.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _editar_contratistas_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _editar_contratistas_vue_vue_type_template_id_2007d881___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _editar_contratistas_vue_vue_type_template_id_2007d881___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/abm-maestro/contratistas/editar-contratistas.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/abm-maestro/contratistas/editar-contratistas.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************!*\
+  !*** ./resources/js/components/abm-maestro/contratistas/editar-contratistas.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_editar_contratistas_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./editar-contratistas.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/abm-maestro/contratistas/editar-contratistas.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_editar_contratistas_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/abm-maestro/contratistas/editar-contratistas.vue?vue&type=template&id=2007d881&":
+/*!*****************************************************************************************************************!*\
+  !*** ./resources/js/components/abm-maestro/contratistas/editar-contratistas.vue?vue&type=template&id=2007d881& ***!
+  \*****************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_editar_contratistas_vue_vue_type_template_id_2007d881___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./editar-contratistas.vue?vue&type=template&id=2007d881& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/abm-maestro/contratistas/editar-contratistas.vue?vue&type=template&id=2007d881&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_editar_contratistas_vue_vue_type_template_id_2007d881___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_editar_contratistas_vue_vue_type_template_id_2007d881___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/abm-maestro/contratistas/nuevo-contratistas.vue":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/components/abm-maestro/contratistas/nuevo-contratistas.vue ***!
+  \*********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _nuevo_contratistas_vue_vue_type_template_id_1e005ee9___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./nuevo-contratistas.vue?vue&type=template&id=1e005ee9& */ "./resources/js/components/abm-maestro/contratistas/nuevo-contratistas.vue?vue&type=template&id=1e005ee9&");
+/* harmony import */ var _nuevo_contratistas_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./nuevo-contratistas.vue?vue&type=script&lang=js& */ "./resources/js/components/abm-maestro/contratistas/nuevo-contratistas.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _nuevo_contratistas_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _nuevo_contratistas_vue_vue_type_template_id_1e005ee9___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _nuevo_contratistas_vue_vue_type_template_id_1e005ee9___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/abm-maestro/contratistas/nuevo-contratistas.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/abm-maestro/contratistas/nuevo-contratistas.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************!*\
+  !*** ./resources/js/components/abm-maestro/contratistas/nuevo-contratistas.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_nuevo_contratistas_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./nuevo-contratistas.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/abm-maestro/contratistas/nuevo-contratistas.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_nuevo_contratistas_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/abm-maestro/contratistas/nuevo-contratistas.vue?vue&type=template&id=1e005ee9&":
+/*!****************************************************************************************************************!*\
+  !*** ./resources/js/components/abm-maestro/contratistas/nuevo-contratistas.vue?vue&type=template&id=1e005ee9& ***!
+  \****************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_nuevo_contratistas_vue_vue_type_template_id_1e005ee9___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./nuevo-contratistas.vue?vue&type=template&id=1e005ee9& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/abm-maestro/contratistas/nuevo-contratistas.vue?vue&type=template&id=1e005ee9&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_nuevo_contratistas_vue_vue_type_template_id_1e005ee9___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_nuevo_contratistas_vue_vue_type_template_id_1e005ee9___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/abm-maestro/contratistas/table-contratistas.vue":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/components/abm-maestro/contratistas/table-contratistas.vue ***!
+  \*********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _table_contratistas_vue_vue_type_template_id_4821329c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./table-contratistas.vue?vue&type=template&id=4821329c& */ "./resources/js/components/abm-maestro/contratistas/table-contratistas.vue?vue&type=template&id=4821329c&");
+/* harmony import */ var _table_contratistas_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./table-contratistas.vue?vue&type=script&lang=js& */ "./resources/js/components/abm-maestro/contratistas/table-contratistas.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _table_contratistas_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _table_contratistas_vue_vue_type_template_id_4821329c___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _table_contratistas_vue_vue_type_template_id_4821329c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/abm-maestro/contratistas/table-contratistas.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/abm-maestro/contratistas/table-contratistas.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************!*\
+  !*** ./resources/js/components/abm-maestro/contratistas/table-contratistas.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_table_contratistas_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./table-contratistas.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/abm-maestro/contratistas/table-contratistas.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_table_contratistas_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/abm-maestro/contratistas/table-contratistas.vue?vue&type=template&id=4821329c&":
+/*!****************************************************************************************************************!*\
+  !*** ./resources/js/components/abm-maestro/contratistas/table-contratistas.vue?vue&type=template&id=4821329c& ***!
+  \****************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_table_contratistas_vue_vue_type_template_id_4821329c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./table-contratistas.vue?vue&type=template&id=4821329c& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/abm-maestro/contratistas/table-contratistas.vue?vue&type=template&id=4821329c&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_table_contratistas_vue_vue_type_template_id_4821329c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_table_contratistas_vue_vue_type_template_id_4821329c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

@@ -57,6 +57,23 @@ class StorageController extends Controller
      
     }
 
+    public function saveLogoContratista(Request $request){
+
+     
+      if ($request->hasFile('logo-contratista')){
+
+      
+          $path = Storage::disk('public')->putFile('logos-contratista',$request->file('logo-contratista'));  
+    
+        return $path;
+      }
+      else
+      {
+        return "Seleccione un archivo";
+      } 
+     
+    }
+
     public function saveFirmaDigital(Request $request){
 
      

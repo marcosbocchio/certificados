@@ -111,6 +111,10 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::post('storage/referencia', 'StorageController@saveReferencia');
     Route::post('storage/documento', 'StorageController@saveDocumento');
     Route::post('storage/logo-cliente', 'StorageController@saveLogoCliente');
+    Route::post('storage/logo-contratista', 'StorageController@saveLogoContratista');
+
+    Route::post('storage/firma-digital', 'StorageController@saveFirmaDigital');
+
     Route::post('storage/firma-digital', 'StorageController@saveFirmaDigital');
 
     Route::get('documentaciones/ot','DocumentacionesController@DocumentacionesDeOt'); 
