@@ -160,9 +160,9 @@ export default {
             
                 console.log(this.selectedFile);
 
-                if(FileSize > (0,5) ){
+                if(FileSize > (0.15) ){
                     event.preventDefault();
-                    toastr.error('Archivo demasiado grande. (Max 500 KB)');
+                    toastr.error('Archivo demasiado grande. (Max 150 KB)');
                     this.$refs.inputFile1.type = 'text';
                     this.$refs.inputFile1.type = 'file';  
                     this.selectedFile = null;

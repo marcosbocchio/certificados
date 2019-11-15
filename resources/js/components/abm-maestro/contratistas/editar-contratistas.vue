@@ -157,7 +157,7 @@ export default {
             this.HabilitarGuardar = false;          
 
             this.selectedFile = event.target.files[0];
-        
+            console.log(this.selectedFile.size);   
             let FileSize = this.selectedFile.size / 1024 / 1024; // in MB           
             let FileType=this.selectedFile.type;         
             console.log(FileType);
@@ -173,9 +173,9 @@ export default {
             
                 console.log(this.selectedFile);
 
-                if(FileSize > (0,5) ){
+                if(FileSize > (0.15) ){
                     event.preventDefault();
-                    toastr.error('Archivo demasiado grande. (Max 500 KB)');
+                    toastr.error('Archivo demasiado grande. (Max 150 KB)');
                     this.$refs.inputFile1.type = 'text';
                     this.$refs.inputFile1.type = 'file';  
                     this.selectedFile = null;

@@ -3022,6 +3022,7 @@ __webpack_require__(/*! vue-image-lightbox/dist/vue-image-lightbox.min.css */ ".
       this.isLoading_file = true;
       this.HabilitarGuardar = false;
       this.selectedFile = event.target.files[0];
+      console.log(this.selectedFile.size);
       var FileSize = this.selectedFile.size / 1024 / 1024; // in MB           
 
       var FileType = this.selectedFile.type;
@@ -3037,9 +3038,9 @@ __webpack_require__(/*! vue-image-lightbox/dist/vue-image-lightbox.min.css */ ".
 
       console.log(this.selectedFile);
 
-      if (FileSize > (0, 5)) {
+      if (FileSize > 0.15) {
         event.preventDefault();
-        toastr.error('Archivo demasiado grande. (Max 500 KB)');
+        toastr.error('Archivo demasiado grande. (Max 150 KB)');
         this.$refs.inputFile1.type = 'text';
         this.$refs.inputFile1.type = 'file';
         this.selectedFile = null;
@@ -3254,9 +3255,9 @@ __webpack_require__(/*! vue-image-lightbox/dist/vue-image-lightbox.min.css */ ".
 
       console.log(this.selectedFile);
 
-      if (FileSize > (0, 5)) {
+      if (FileSize > 0.15) {
         event.preventDefault();
-        toastr.error('Archivo demasiado grande. (Max 500 KB)');
+        toastr.error('Archivo demasiado grande. (Max 150 KB)');
         this.$refs.inputFile1.type = 'text';
         this.$refs.inputFile1.type = 'file';
         this.selectedFile = null;
