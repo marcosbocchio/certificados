@@ -71281,34 +71281,6 @@ var render = function() {
             _c("div", { staticClass: "box-body" }, [
               _c("div", { staticClass: "col-md-2" }, [
                 _c("div", { staticClass: "form-group" }, [
-                  _c("label", { attrs: { for: "ot" } }, [_vm._v("OT Nº (*)")]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.ot,
-                        expression: "ot"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { type: "number", id: "ot", placeholder: "" },
-                    domProps: { value: _vm.ot },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.ot = $event.target.value
-                      }
-                    }
-                  })
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-2" }, [
-                _c("div", { staticClass: "form-group" }, [
                   _c("label", { attrs: { for: "fst" } }, [
                     _vm._v("FST Nº (*)")
                   ]),
@@ -71331,6 +71303,34 @@ var render = function() {
                           return
                         }
                         _vm.fst = $event.target.value
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-2" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "ot" } }, [_vm._v("OT Nº (*)")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.ot,
+                        expression: "ot"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "number", id: "ot", placeholder: "" },
+                    domProps: { value: _vm.ot },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.ot = $event.target.value
                       }
                     }
                   })
@@ -71365,33 +71365,6 @@ var render = function() {
                     ],
                     1
                   )
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-2" }, [
-                _c("div", { staticClass: "bootstrap-timepicker" }, [
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("label", [_vm._v("Hora (*)")]),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "input-group" },
-                      [
-                        _vm._m(1),
-                        _vm._v(" "),
-                        _c("timeselector", {
-                          model: {
-                            value: _vm.hora,
-                            callback: function($$v) {
-                              _vm.hora = $$v
-                            },
-                            expression: "hora"
-                          }
-                        })
-                      ],
-                      1
-                    )
-                  ])
                 ])
               ]),
               _vm._v(" "),
@@ -71433,7 +71406,7 @@ var render = function() {
                     "div",
                     { staticClass: "input-group date" },
                     [
-                      _vm._m(2),
+                      _vm._m(1),
                       _vm._v(" "),
                       _c("Datepicker", {
                         attrs: {
@@ -71451,6 +71424,33 @@ var render = function() {
                     ],
                     1
                   )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-2" }, [
+                _c("div", { staticClass: "bootstrap-timepicker" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", [_vm._v("Hora (*)")]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "input-group" },
+                      [
+                        _vm._m(2),
+                        _vm._v(" "),
+                        _c("timeselector", {
+                          model: {
+                            value: _vm.hora,
+                            callback: function($$v) {
+                              _vm.hora = $$v
+                            },
+                            expression: "hora"
+                          }
+                        })
+                      ],
+                      1
+                    )
+                  ])
                 ])
               ]),
               _vm._v(" "),
@@ -71507,7 +71507,7 @@ var render = function() {
                         staticStyle: { float: "right", "margin-right": "5px" },
                         attrs: { for: "tipo" }
                       },
-                      [_vm._v("LOGO")]
+                      [_vm._v("Mostrar logo")]
                     ),
                     _vm._v(" "),
                     _c("v-select", {
@@ -71586,7 +71586,7 @@ var render = function() {
                         staticStyle: { float: "right", "margin-right": "5px" },
                         attrs: { for: "tipo" }
                       },
-                      [_vm._v("LOGO")]
+                      [_vm._v("Mostrar logo")]
                     ),
                     _vm._v(" "),
                     _c("v-select", {
@@ -72796,7 +72796,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "input-group-addon" }, [
-      _c("i", { staticClass: "fa fa-clock-o" })
+      _c("i", { staticClass: "fa fa-calendar" })
     ])
   },
   function() {
@@ -72804,7 +72804,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "input-group-addon" }, [
-      _c("i", { staticClass: "fa fa-calendar" })
+      _c("i", { staticClass: "fa fa-clock-o" })
     ])
   },
   function() {

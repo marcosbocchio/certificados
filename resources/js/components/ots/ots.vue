@@ -14,18 +14,18 @@
     </div>    
     <div class="box box-danger">
       <div class="box-body">
-        <div class="col-md-2">
-          <div class="form-group">
-            <label for="ot">OT Nº (*)</label>
-            <input v-model="ot" type="number" class="form-control" id="ot" placeholder="">
-          </div>
-        </div>
       <div class="col-md-2">
         <div class="form-group">
           <label for="fst">FST Nº (*)</label>
           <input v-model="fst" type="number" class="form-control" id="fst" placeholder="">
         </div>
       </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label for="ot">OT Nº (*)</label>
+            <input v-model="ot" type="number" class="form-control" id="ot" placeholder="">
+          </div>
+        </div>
       <div class="col-md-2">
         <div class="form-group">
           <label for="fecha">Fecha (*)</label>
@@ -37,20 +37,6 @@
             </div>
         </div>
       </div>
-       <div class="col-md-2">
-        <div class="bootstrap-timepicker">
-              <div class="form-group">
-                <label>Hora (*)</label>
-
-                <div class="input-group">
-                  <div class="input-group-addon">
-                    <i class="fa fa-clock-o"></i>
-                  </div>
-                  <timeselector v-model="hora"></timeselector>
-                </div>
-              </div>
-          </div>
-        </div> 
         <div class="col-md-2">
           <div class="form-group">
             <label for="fst">Obra Nº</label>
@@ -68,11 +54,25 @@
               </div>
           </div>
         </div>
+       <div class="col-md-2">
+        <div class="bootstrap-timepicker">
+              <div class="form-group">
+                <label>Hora (*)</label>
+
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="fa fa-clock-o"></i>
+                  </div>
+                  <timeselector v-model="hora"></timeselector>
+                </div>
+              </div>
+          </div>
+        </div> 
         <div class="col-md-6">                       
           <div class="form-group">
               <label>Cliente (*)</label>
                <input type="checkbox" id="checkbox" v-model="logo_cliente_sn" style="float:right"> 
-               <label for="tipo" style="float:right;margin-right: 5px;">LOGO</label>    
+               <label for="tipo" style="float:right;margin-right: 5px;">Mostrar logo</label>    
               <v-select v-model="cliente" label="nombre_fantasia" :options="clientes" @input="getContactos()"></v-select>   
           </div>      
         </div>
@@ -81,7 +81,7 @@
           <div class="form-group">
               <label>Contratista</label>
                <input type="checkbox" id="checkbox" v-model="logo_contratista_sn" style="float:right"> 
-               <label for="tipo" style="float:right;margin-right: 5px;">LOGO</label>    
+               <label for="tipo" style="float:right;margin-right: 5px;">Mostrar logo</label>    
               <v-select v-model="contratista" label="nombre" :options="contratistas"></v-select>   
           </div>      
         </div>
