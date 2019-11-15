@@ -2236,7 +2236,7 @@ __webpack_require__(/*! vue-image-lightbox/dist/vue-image-lightbox.min.css */ ".
 
       console.log(this.selectedFile);
 
-      if (FileSize > (0, 15)) {
+      if (FileSize > 0.15) {
         event.preventDefault();
         toastr.error('Archivo demasiado grande. (Max 150 KB)');
         this.$refs.inputFile1.type = 'text';
@@ -2717,7 +2717,7 @@ __webpack_require__(/*! vue-image-lightbox/dist/vue-image-lightbox.min.css */ ".
 
       console.log(this.selectedFile);
 
-      if (FileSize > (0, 15)) {
+      if (FileSize > 0.15) {
         event.preventDefault();
         toastr.error('Archivo demasiado grande. (Max 150 KB)');
         this.$refs.inputFile1.type = 'text';
