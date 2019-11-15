@@ -14,19 +14,19 @@
     </div>    
     <div class="box box-danger">
       <div class="box-body">
-        <div class="col-md-3">
+        <div class="col-md-2">
           <div class="form-group">
             <label for="ot">OT Nº (*)</label>
             <input v-model="ot" type="number" class="form-control" id="ot" placeholder="">
           </div>
         </div>
-      <div class="col-md-3">
+      <div class="col-md-2">
         <div class="form-group">
           <label for="fst">FST Nº (*)</label>
           <input v-model="fst" type="number" class="form-control" id="fst" placeholder="">
         </div>
       </div>
-      <div class="col-md-3">
+      <div class="col-md-2">
         <div class="form-group">
           <label for="fecha">Fecha (*)</label>
             <div class="input-group date">
@@ -37,7 +37,7 @@
             </div>
         </div>
       </div>
-       <div class="col-md-3">
+       <div class="col-md-2">
         <div class="bootstrap-timepicker">
               <div class="form-group">
                 <label>Hora (*)</label>
@@ -51,21 +51,15 @@
               </div>
           </div>
         </div> 
-        <div class="col-md-6">                       
-          <div class="form-group">
-              <label>Cliente (*)</label>
-              <v-select v-model="cliente" label="nombre_fantasia" :options="clientes" @input="getContactos()"></v-select>   
-          </div>      
-        </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
           <div class="form-group">
             <label for="fst">Obra Nº</label>
             <input v-model="obra" type="number" class="form-control" id="obra" placeholder="">
           </div>
         </div>        
-        <div class="col-md-3">
+        <div class="col-md-2">
           <div class="form-group">
-            <label for="fecha">Fecha estimada de ensayo (*)</label>
+            <label for="fecha">Fecha estimada(*)</label>
               <div class="input-group date">
                 <div class="input-group-addon">
                   <i class="fa fa-calendar"></i>
@@ -74,6 +68,24 @@
               </div>
           </div>
         </div>
+        <div class="col-md-6">                       
+          <div class="form-group">
+              <label>Cliente (*)</label>
+               <input type="checkbox" id="checkbox" v-model="logo_cliente_sn" style="float:right"> 
+               <label for="tipo" style="float:right;margin-right: 5px;">LOGO</label>    
+              <v-select v-model="cliente" label="nombre_fantasia" :options="clientes" @input="getContactos()"></v-select>   
+          </div>      
+        </div>
+
+        <div class="col-md-6">                       
+          <div class="form-group">
+              <label>Contratista</label>
+               <input type="checkbox" id="checkbox" v-model="logo_contratista_sn" style="float:right"> 
+               <label for="tipo" style="float:right;margin-right: 5px;">LOGO</label>    
+              <v-select v-model="contratista" label="nombre" :options="contratistas"></v-select>   
+          </div>      
+        </div>
+        
         <div class="col-md-6">
           <div class="form-group">
               <label>Contacto 1 (*)</label>
@@ -439,6 +451,10 @@ export default {
        type : Object,
        required : false
      },
+     contratistadata : {
+       type : Object,
+       required : false
+     },
      ot_serviciosdata : {
        type : Array,
        required : false
@@ -523,7 +539,12 @@ export default {
           fecha_ensayo:'',
           hora: '',
           clientes:[],
+          logo_cliente_sn:false,
           cliente: {
+            id: null
+          },         
+          logo_contratista_sn:false,
+          contratista: {
             id: null
           },
           ot:'',
@@ -590,6 +611,7 @@ export default {
     created : function(){
         
         this.getClientes();
+        this.$store.dispatch('loadContratistas');
         this.getUsersEmpresa();     
         this.$store.dispatch('loadProvincias');
         this.getServicios();
@@ -619,7 +641,7 @@ export default {
     },
     computed :{
 
-        ...mapState(['url','provincias','localidades'])
+        ...mapState(['url','provincias','localidades','contratistas'])
      },
     
 
@@ -670,6 +692,9 @@ export default {
                 this.d = new Date(Date.UTC(this.t[0], this.t[1]-1, this.t[2], this.t[3], this.t[4], this.t[5]));
                 this.hora            = this.d;
                 this.cliente         = this.clientedata;
+                this.logo_cliente_sn =this.otdata.logo_cliente_sn,
+                this.contratista     = this.contratistadata;
+                this.logo_contratista_sn =this.otdata.logo_contratista_sn,
                 this.getContactos();
                 this.ot              = this.otdata.numero;
                 this.fst             = this.otdata.presupuesto;
@@ -984,7 +1009,10 @@ export default {
               url : urlRegistros,    
               data : {
             
-              'cliente'       : this.cliente.id,
+              'cliente'             : this.cliente.id,
+              'logo_cliente_sn'     : this.logo_cliente_sn,
+              'contratista'         : this.contratista,
+              'logo_contratista_sn' : this.logo_contratista_sn,
               'proyecto'      : this.proyecto,
               'fecha'         : this.fecha,
               'hora'          : this.hora,
@@ -1043,7 +1071,10 @@ export default {
               data : {
 
               'id'            : this.otdata.id,
-              'cliente'       : this.cliente.id,
+              'cliente'             : this.cliente.id,
+              'logo_cliente_sn'     : this.logo_cliente_sn,
+              'contratista'         : this.contratista,
+              'logo_contratista_sn' : this.logo_contratista_sn,
               'proyecto'      : this.proyecto,
               'fecha'         : this.fecha,
               'hora'          : this.hora,

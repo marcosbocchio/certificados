@@ -227,6 +227,7 @@ state: {
         AppUrl:process.env.NODE_ENV == 'production' ? 
         process.env.MIX_URL_PRO :
         process.env.MIX_URL_DEV,
+        contratistas:[],
         provincias:[],
         localidades:[],
         materiales:[],
@@ -264,6 +265,16 @@ state: {
     },
 
 actions : {
+
+        loadContratistas({
+          commit
+        }) {
+          axios.defaults.baseURL = store.state.url ;
+          var urlRegistros = 'contratistas' + '?api_token=' + Laravel.user.api_token;  
+          axios.get(urlRegistros).then((response) => {
+            commit('getContratistas', response.data)           
+          })
+        },
 
         loadProvincias({
           commit
@@ -593,6 +604,11 @@ actions : {
 
     },
     mutations: {
+
+      getContratistas(state, contratistas) {
+        state.contratistas = contratistas
+      },
+
       getProvincias(state, provincias) {
         state.provincias = provincias
       },

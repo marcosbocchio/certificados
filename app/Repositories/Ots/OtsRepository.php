@@ -142,6 +142,9 @@ class OtsRepository extends BaseRepository
     $fecha_estimada_ensayo =  date('Y-m-d',strtotime($request->fecha_ensayo));
     $ot->proyecto          = $request->proyecto;
     $ot->cliente_id        = $request->cliente;
+    $ot->logo_cliente_sn   = $request->logo_cliente_sn;
+    $ot->contratista_id    = $request->contratista['id'];
+    $ot->logo_contratista_sn   = $request->logo_contratista_sn;
     $ot->obra              = $request->obra;
     $ot->fecha_hora        = $fecha_hora;
     $ot->numero            = $request->ot;
@@ -156,8 +159,8 @@ class OtsRepository extends BaseRepository
     $ot->responsable_ot_id = $request->user_empresa;
     $ot->observaciones     = $request->observaciones;
     $ot->fecha_estimada_ensayo = $fecha_estimada_ensayo;
-    $ot->user_id          = $user_id;
-    $ot->estado      = 'CARGANDO';
+    $ot->user_id            = $user_id;
+    $ot->estado             = 'EDITANDO';
     $ot->save();     
   }
 

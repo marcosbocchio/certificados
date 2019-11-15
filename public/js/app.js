@@ -13070,6 +13070,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -13086,6 +13098,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       required: false
     },
     clientedata: {
+      type: Object,
+      required: false
+    },
+    contratistadata: {
       type: Object,
       required: false
     },
@@ -13163,7 +13179,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       fecha_ensayo: '',
       hora: '',
       clientes: [],
+      logo_cliente_sn: false,
       cliente: {
+        id: null
+      },
+      logo_contratista_sn: false,
+      contratista: {
         id: null
       },
       ot: '',
@@ -13219,6 +13240,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   created: function created() {
     this.getClientes();
+    this.$store.dispatch('loadContratistas');
     this.getUsersEmpresa();
     this.$store.dispatch('loadProvincias');
     this.getServicios();
@@ -13240,7 +13262,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       showInputs: false
     });
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['url', 'provincias', 'localidades'])),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['url', 'provincias', 'localidades', 'contratistas'])),
   watch: {
     metodo_ensayos: function metodo_ensayos(metodo_ensayo) {
       metodo_ensayo.forEach(function (metodo) {
@@ -13278,7 +13300,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.d = new Date(Date.UTC(this.t[0], this.t[1] - 1, this.t[2], this.t[3], this.t[4], this.t[5]));
         this.hora = this.d;
         this.cliente = this.clientedata;
-        this.getContactos();
+        this.logo_cliente_sn = this.otdata.logo_cliente_sn, this.contratista = this.contratistadata;
+        this.logo_contratista_sn = this.otdata.logo_contratista_sn, this.getContactos();
         this.ot = this.otdata.numero;
         this.fst = this.otdata.presupuesto;
         this.provincia = this.ot_provinciasdata;
@@ -13557,6 +13580,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           url: urlRegistros,
           data: {
             'cliente': this.cliente.id,
+            'logo_cliente_sn': this.logo_cliente_sn,
+            'contratista': this.contratista,
+            'logo_contratista_sn': this.logo_contratista_sn,
             'proyecto': this.proyecto,
             'fecha': this.fecha,
             'hora': this.hora,
@@ -13605,6 +13631,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           data: {
             'id': this.otdata.id,
             'cliente': this.cliente.id,
+            'logo_cliente_sn': this.logo_cliente_sn,
+            'contratista': this.contratista,
+            'logo_contratista_sn': this.logo_contratista_sn,
             'proyecto': this.proyecto,
             'fecha': this.fecha,
             'hora': this.hora,
@@ -69926,7 +69955,7 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "box box-danger" }, [
             _c("div", { staticClass: "box-body" }, [
-              _c("div", { staticClass: "col-md-3" }, [
+              _c("div", { staticClass: "col-md-2" }, [
                 _c("div", { staticClass: "form-group" }, [
                   _c("label", { attrs: { for: "ot" } }, [_vm._v("OT Nº (*)")]),
                   _vm._v(" "),
@@ -69954,7 +69983,7 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "col-md-3" }, [
+              _c("div", { staticClass: "col-md-2" }, [
                 _c("div", { staticClass: "form-group" }, [
                   _c("label", { attrs: { for: "fst" } }, [
                     _vm._v("FST Nº (*)")
@@ -69984,7 +70013,7 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "col-md-3" }, [
+              _c("div", { staticClass: "col-md-2" }, [
                 _c("div", { staticClass: "form-group" }, [
                   _c("label", { attrs: { for: "fecha" } }, [
                     _vm._v("Fecha (*)")
@@ -70015,7 +70044,7 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "col-md-3" }, [
+              _c("div", { staticClass: "col-md-2" }, [
                 _c("div", { staticClass: "bootstrap-timepicker" }, [
                   _c("div", { staticClass: "form-group" }, [
                     _c("label", [_vm._v("Hora (*)")]),
@@ -70042,37 +70071,7 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "col-md-6" }, [
-                _c(
-                  "div",
-                  { staticClass: "form-group" },
-                  [
-                    _c("label", [_vm._v("Cliente (*)")]),
-                    _vm._v(" "),
-                    _c("v-select", {
-                      attrs: {
-                        label: "nombre_fantasia",
-                        options: _vm.clientes
-                      },
-                      on: {
-                        input: function($event) {
-                          return _vm.getContactos()
-                        }
-                      },
-                      model: {
-                        value: _vm.cliente,
-                        callback: function($$v) {
-                          _vm.cliente = $$v
-                        },
-                        expression: "cliente"
-                      }
-                    })
-                  ],
-                  1
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-3" }, [
+              _c("div", { staticClass: "col-md-2" }, [
                 _c("div", { staticClass: "form-group" }, [
                   _c("label", { attrs: { for: "fst" } }, [_vm._v("Obra Nº")]),
                   _vm._v(" "),
@@ -70100,10 +70099,10 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "col-md-3" }, [
+              _c("div", { staticClass: "col-md-2" }, [
                 _c("div", { staticClass: "form-group" }, [
                   _c("label", { attrs: { for: "fecha" } }, [
-                    _vm._v("Fecha estimada de ensayo (*)")
+                    _vm._v("Fecha estimada(*)")
                   ]),
                   _vm._v(" "),
                   _c(
@@ -70129,6 +70128,156 @@ var render = function() {
                     1
                   )
                 ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-6" }, [
+                _c(
+                  "div",
+                  { staticClass: "form-group" },
+                  [
+                    _c("label", [_vm._v("Cliente (*)")]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.logo_cliente_sn,
+                          expression: "logo_cliente_sn"
+                        }
+                      ],
+                      staticStyle: { float: "right" },
+                      attrs: { type: "checkbox", id: "checkbox" },
+                      domProps: {
+                        checked: Array.isArray(_vm.logo_cliente_sn)
+                          ? _vm._i(_vm.logo_cliente_sn, null) > -1
+                          : _vm.logo_cliente_sn
+                      },
+                      on: {
+                        change: function($event) {
+                          var $$a = _vm.logo_cliente_sn,
+                            $$el = $event.target,
+                            $$c = $$el.checked ? true : false
+                          if (Array.isArray($$a)) {
+                            var $$v = null,
+                              $$i = _vm._i($$a, $$v)
+                            if ($$el.checked) {
+                              $$i < 0 &&
+                                (_vm.logo_cliente_sn = $$a.concat([$$v]))
+                            } else {
+                              $$i > -1 &&
+                                (_vm.logo_cliente_sn = $$a
+                                  .slice(0, $$i)
+                                  .concat($$a.slice($$i + 1)))
+                            }
+                          } else {
+                            _vm.logo_cliente_sn = $$c
+                          }
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      {
+                        staticStyle: { float: "right", "margin-right": "5px" },
+                        attrs: { for: "tipo" }
+                      },
+                      [_vm._v("LOGO")]
+                    ),
+                    _vm._v(" "),
+                    _c("v-select", {
+                      attrs: {
+                        label: "nombre_fantasia",
+                        options: _vm.clientes
+                      },
+                      on: {
+                        input: function($event) {
+                          return _vm.getContactos()
+                        }
+                      },
+                      model: {
+                        value: _vm.cliente,
+                        callback: function($$v) {
+                          _vm.cliente = $$v
+                        },
+                        expression: "cliente"
+                      }
+                    })
+                  ],
+                  1
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-6" }, [
+                _c(
+                  "div",
+                  { staticClass: "form-group" },
+                  [
+                    _c("label", [_vm._v("Contratista")]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.logo_contratista_sn,
+                          expression: "logo_contratista_sn"
+                        }
+                      ],
+                      staticStyle: { float: "right" },
+                      attrs: { type: "checkbox", id: "checkbox" },
+                      domProps: {
+                        checked: Array.isArray(_vm.logo_contratista_sn)
+                          ? _vm._i(_vm.logo_contratista_sn, null) > -1
+                          : _vm.logo_contratista_sn
+                      },
+                      on: {
+                        change: function($event) {
+                          var $$a = _vm.logo_contratista_sn,
+                            $$el = $event.target,
+                            $$c = $$el.checked ? true : false
+                          if (Array.isArray($$a)) {
+                            var $$v = null,
+                              $$i = _vm._i($$a, $$v)
+                            if ($$el.checked) {
+                              $$i < 0 &&
+                                (_vm.logo_contratista_sn = $$a.concat([$$v]))
+                            } else {
+                              $$i > -1 &&
+                                (_vm.logo_contratista_sn = $$a
+                                  .slice(0, $$i)
+                                  .concat($$a.slice($$i + 1)))
+                            }
+                          } else {
+                            _vm.logo_contratista_sn = $$c
+                          }
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      {
+                        staticStyle: { float: "right", "margin-right": "5px" },
+                        attrs: { for: "tipo" }
+                      },
+                      [_vm._v("LOGO")]
+                    ),
+                    _vm._v(" "),
+                    _c("v-select", {
+                      attrs: { label: "nombre", options: _vm.contratistas },
+                      model: {
+                        value: _vm.contratista,
+                        callback: function($$v) {
+                          _vm.contratista = $$v
+                        },
+                        expression: "contratista"
+                      }
+                    })
+                  ],
+                  1
+                )
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "col-md-6" }, [
@@ -95793,8 +95942,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_lazyload__WEBPACK_IMPORTED_MO
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuejs_progress_bar__WEBPACK_IMPORTED_MODULE_5___default.a);
 var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
   state: {
-    url:  false ? undefined : "http://localhost:8000/api",
-    AppUrl:  false ? undefined : "http://localhost:8000",
+    url:  false ? undefined : "http://certificados.test/api",
+    AppUrl:  false ? undefined : "http://certificados.test",
+    contratistas: [],
     provincias: [],
     localidades: [],
     materiales: [],
@@ -95830,16 +95980,24 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
     curie: '0'
   },
   actions: {
-    loadProvincias: function loadProvincias(_ref) {
+    loadContratistas: function loadContratistas(_ref) {
       var commit = _ref.commit;
+      axios.defaults.baseURL = store.state.url;
+      var urlRegistros = 'contratistas' + '?api_token=' + Laravel.user.api_token;
+      axios.get(urlRegistros).then(function (response) {
+        commit('getContratistas', response.data);
+      });
+    },
+    loadProvincias: function loadProvincias(_ref2) {
+      var commit = _ref2.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'provincias' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('getProvincias', response.data);
       });
     },
-    loadLocalidades: function loadLocalidades(_ref2, provincia_id) {
-      var commit = _ref2.commit;
+    loadLocalidades: function loadLocalidades(_ref3, provincia_id) {
+      var commit = _ref3.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'localidades/' + provincia_id + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
@@ -95847,8 +96005,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
         commit('getLocalidades', response.data);
       });
     },
-    loadMateriales: function loadMateriales(_ref3) {
-      var commit = _ref3.commit;
+    loadMateriales: function loadMateriales(_ref4) {
+      var commit = _ref4.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'materiales' + '?api_token=' + Laravel.user.api_token;
       console.log(urlRegistros);
@@ -95856,8 +96014,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
         commit('getMateriales', response.data);
       });
     },
-    loadDiametros: function loadDiametros(_ref4) {
-      var commit = _ref4.commit;
+    loadDiametros: function loadDiametros(_ref5) {
+      var commit = _ref5.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'diametros' + '?api_token=' + Laravel.user.api_token;
       console.log(urlRegistros);
@@ -95865,8 +96023,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
         commit('getDiametros', response.data);
       });
     },
-    loadEspesores: function loadEspesores(_ref5, diametro_code) {
-      var commit = _ref5.commit;
+    loadEspesores: function loadEspesores(_ref6, diametro_code) {
+      var commit = _ref6.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'espesor/' + diametro_code + '?api_token=' + Laravel.user.api_token;
       console.log(urlRegistros);
@@ -95874,8 +96032,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
         commit('getEspesores', response.data);
       });
     },
-    loadProcedimietosOtMetodo: function loadProcedimietosOtMetodo(_ref6, payload) {
-      var commit = _ref6.commit;
+    loadProcedimietosOtMetodo: function loadProcedimietosOtMetodo(_ref7, payload) {
+      var commit = _ref7.commit;
       axios.defaults.baseURL = store.state.url;
       console.log(payload);
       var urlRegistros = 'procedimientos_informes/ot/' + payload.ot_id + '/metodo/' + payload.metodo + '?api_token=' + Laravel.user.api_token;
@@ -95885,8 +96043,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
         commit('getProcedimientosOtMetodo', response.data);
       });
     },
-    loadNormaEvaluaciones: function loadNormaEvaluaciones(_ref7) {
-      var commit = _ref7.commit;
+    loadNormaEvaluaciones: function loadNormaEvaluaciones(_ref8) {
+      var commit = _ref8.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'norma_evaluaciones' + '?api_token=' + Laravel.user.api_token;
       console.log(urlRegistros);
@@ -95894,8 +96052,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
         commit('getNormaEvaluaciones', response.data);
       });
     },
-    loadNormaEnsayos: function loadNormaEnsayos(_ref8) {
-      var commit = _ref8.commit;
+    loadNormaEnsayos: function loadNormaEnsayos(_ref9) {
+      var commit = _ref9.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'norma_ensayos' + '?api_token=' + Laravel.user.api_token;
       console.log(urlRegistros);
@@ -95903,8 +96061,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
         commit('getNormaEnsayos', response.data);
       });
     },
-    loadUnidadesMedidas: function loadUnidadesMedidas(_ref9) {
-      var commit = _ref9.commit;
+    loadUnidadesMedidas: function loadUnidadesMedidas(_ref10) {
+      var commit = _ref10.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'unidades_medidas/' + '?api_token=' + Laravel.user.api_token;
       console.log(urlRegistros);
@@ -95912,8 +96070,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
         commit('getUnidadesMedidas', response.data);
       });
     },
-    loadMetodosEnsayos: function loadMetodosEnsayos(_ref10) {
-      var commit = _ref10.commit;
+    loadMetodosEnsayos: function loadMetodosEnsayos(_ref11) {
+      var commit = _ref11.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'metodo_ensayos' + '?api_token=' + Laravel.user.api_token;
       console.log(urlRegistros);
@@ -95921,8 +96079,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
         commit('getMetodosEnsayos', response.data);
       });
     },
-    loadInternoEquiposActivos: function loadInternoEquiposActivos(_ref11) {
-      var commit = _ref11.commit;
+    loadInternoEquiposActivos: function loadInternoEquiposActivos(_ref12) {
+      var commit = _ref12.commit;
       var metodo = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'interno_equipos/metodo/' + metodo + '/activos' + '?api_token=' + Laravel.user.api_token;
@@ -95932,8 +96090,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
         commit('getInternoEquiposActivos', response.data);
       });
     },
-    loadUbicacionInternoEquipo: function loadUbicacionInternoEquipo(_ref12, id) {
-      var commit = _ref12.commit;
+    loadUbicacionInternoEquipo: function loadUbicacionInternoEquipo(_ref13, id) {
+      var commit = _ref13.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'interno_equipos/' + id + '?api_token=' + Laravel.user.api_token;
       console.log(urlRegistros);
@@ -95945,8 +96103,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
         });
       });
     },
-    loadInternoFuentesActivos: function loadInternoFuentesActivos(_ref13) {
-      var commit = _ref13.commit;
+    loadInternoFuentesActivos: function loadInternoFuentesActivos(_ref14) {
+      var commit = _ref14.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'interno_fuentes/' + 'activos' + '?api_token=' + Laravel.user.api_token;
       console.log(urlRegistros);
@@ -95955,8 +96113,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
         commit('getInternoFuentesActivos', response.data);
       });
     },
-    loadEquipos: function loadEquipos(_ref14) {
-      var commit = _ref14.commit;
+    loadEquipos: function loadEquipos(_ref15) {
+      var commit = _ref15.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'equipos' + '?api_token=' + Laravel.user.api_token;
       console.log(urlRegistros);
@@ -95964,8 +96122,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
         commit('getEquipos', response.data);
       });
     },
-    loadFuentes: function loadFuentes(_ref15) {
-      var commit = _ref15.commit;
+    loadFuentes: function loadFuentes(_ref16) {
+      var commit = _ref16.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'fuentes' + '?api_token=' + Laravel.user.api_token;
       console.log(urlRegistros);
@@ -95973,8 +96131,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
         commit('getFuentes', response.data);
       });
     },
-    loadFuentePorInterno: function loadFuentePorInterno(_ref16, interno_fuente_id) {
-      var commit = _ref16.commit;
+    loadFuentePorInterno: function loadFuentePorInterno(_ref17, interno_fuente_id) {
+      var commit = _ref17.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'fuentes/interno_fuente/' + interno_fuente_id + '?api_token=' + Laravel.user.api_token;
       console.log(urlRegistros);
@@ -95983,8 +96141,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
         commit('getFuentePorInterno', response.data);
       });
     },
-    loadTipoLiquidos: function loadTipoLiquidos(_ref17, tipo) {
-      var commit = _ref17.commit;
+    loadTipoLiquidos: function loadTipoLiquidos(_ref18, tipo) {
+      var commit = _ref18.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'tipo_liquidos/' + tipo + '?api_token=' + Laravel.user.api_token;
       console.log(urlRegistros);
@@ -95996,8 +96154,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
         });
       });
     },
-    loadIluminaciones: function loadIluminaciones(_ref18) {
-      var commit = _ref18.commit;
+    loadIluminaciones: function loadIluminaciones(_ref19) {
+      var commit = _ref19.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'iluminaciones' + '?api_token=' + Laravel.user.api_token;
       console.log(urlRegistros);
@@ -96006,8 +96164,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
         commit('getIluminaciones', response.data);
       });
     },
-    loadEjecutorEnsayo: function loadEjecutorEnsayo(_ref19, ot_id) {
-      var commit = _ref19.commit;
+    loadEjecutorEnsayo: function loadEjecutorEnsayo(_ref20, ot_id) {
+      var commit = _ref20.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'ot-operarios/ot/' + ot_id + '?api_token=' + Laravel.user.api_token;
       console.log(urlRegistros);
@@ -96016,80 +96174,80 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
         commit('getEjecutorEnsayo', response.data);
       });
     },
-    loadContarInformes: function loadContarInformes(_ref20, ot_id) {
-      var commit = _ref20.commit;
+    loadContarInformes: function loadContarInformes(_ref21, ot_id) {
+      var commit = _ref21.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'informes/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('ContarInformes', response.data);
       });
     },
-    loadContarOperadores: function loadContarOperadores(_ref21, ot_id) {
-      var commit = _ref21.commit;
+    loadContarOperadores: function loadContarOperadores(_ref22, ot_id) {
+      var commit = _ref22.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'ot_operarios/users/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('ContarOperadores', response.data);
       });
     },
-    loadContarSoldadores: function loadContarSoldadores(_ref22, ot_id) {
-      var commit = _ref22.commit;
+    loadContarSoldadores: function loadContarSoldadores(_ref23, ot_id) {
+      var commit = _ref23.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'ot_soldadores/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('ContarSoldadores', response.data);
       });
     },
-    loadContarUsuariosCliente: function loadContarUsuariosCliente(_ref23, ot_id) {
-      var commit = _ref23.commit;
+    loadContarUsuariosCliente: function loadContarUsuariosCliente(_ref24, ot_id) {
+      var commit = _ref24.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'ot_usuarios_clientes/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('ContarUsuariosCliente', response.data);
       });
     },
-    loadContarProcedimientos: function loadContarProcedimientos(_ref24, ot_id) {
-      var commit = _ref24.commit;
+    loadContarProcedimientos: function loadContarProcedimientos(_ref25, ot_id) {
+      var commit = _ref25.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'ot_procedimientos_propios/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('ContarProcedimientos', response.data);
       });
     },
-    loadContarDocumentaciones: function loadContarDocumentaciones(_ref25, ot_id) {
-      var commit = _ref25.commit;
+    loadContarDocumentaciones: function loadContarDocumentaciones(_ref26, ot_id) {
+      var commit = _ref26.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'ot-documentaciones/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('ContarDocumentaciones', response.data);
       });
     },
-    loadContarInternoEquipos: function loadContarInternoEquipos(_ref26, ot_id) {
-      var commit = _ref26.commit;
+    loadContarInternoEquipos: function loadContarInternoEquipos(_ref27, ot_id) {
+      var commit = _ref27.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'interno_equipos/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('ContarInternoEquipos', response.data);
       });
     },
-    loadContarRemitos: function loadContarRemitos(_ref27, ot_id) {
-      var commit = _ref27.commit;
+    loadContarRemitos: function loadContarRemitos(_ref28, ot_id) {
+      var commit = _ref28.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'remitos/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('ContarRemitos', response.data);
       });
     },
-    loadContarPartes: function loadContarPartes(_ref28, ot_id) {
-      var commit = _ref28.commit;
+    loadContarPartes: function loadContarPartes(_ref29, ot_id) {
+      var commit = _ref29.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'partes/ot/' + ot_id + '/total' + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         commit('ContarPartes', response.data);
       });
     },
-    loadCurie: function loadCurie(_ref29, interno_fuente_id) {
-      var commit = _ref29.commit;
+    loadCurie: function loadCurie(_ref30, interno_fuente_id) {
+      var commit = _ref30.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'interno_fuentes/' + interno_fuente_id + '/curie' + '?api_token=' + Laravel.user.api_token;
       return new Promise(function (resolve, reject) {
@@ -96100,8 +96258,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
         });
       });
     },
-    loadRoles: function loadRoles(_ref30) {
-      var commit = _ref30.commit;
+    loadRoles: function loadRoles(_ref31) {
+      var commit = _ref31.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'roles' + '?api_token=' + Laravel.user.api_token;
       console.log(urlRegistros);
@@ -96109,8 +96267,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
         commit('getRoles', response.data);
       });
     },
-    loadPermisos: function loadPermisos(_ref31) {
-      var commit = _ref31.commit;
+    loadPermisos: function loadPermisos(_ref32) {
+      var commit = _ref32.commit;
       axios.defaults.baseURL = store.state.url;
       var urlRegistros = 'permissions' + '?api_token=' + Laravel.user.api_token;
       console.log(urlRegistros);
@@ -96120,6 +96278,9 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
     }
   },
   mutations: {
+    getContratistas: function getContratistas(state, contratistas) {
+      state.contratistas = contratistas;
+    },
     getProvincias: function getProvincias(state, provincias) {
       state.provincias = provincias;
     },
@@ -101168,8 +101329,8 @@ var toastrDefault = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/sass/toastr.scss */"./resources/sass/toastr.scss");
+__webpack_require__(/*! C:\Users\bocch\code\certificados\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\bocch\code\certificados\resources\sass\toastr.scss */"./resources/sass/toastr.scss");
 
 
 /***/ })

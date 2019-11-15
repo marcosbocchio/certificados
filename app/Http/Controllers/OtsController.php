@@ -7,6 +7,7 @@ use App\Repositories\Ots\OtsRepository;
 use Illuminate\Support\Collection as Collection;
 use App\Ots;
 use App\Clientes;
+use App\Contratistas;
 use App\Contactos;
 use App\Epps;
 use App\Riegos;
@@ -99,6 +100,7 @@ class OtsController extends Controller
         $user = auth()->user()->name;
         $ot = $this->ot->find($id);
         $cliente = Clientes::find($ot->cliente_id);    
+        $contratista = Contratistas::find($ot->contratista_id);
         
 
         $ot_servicios = (new OtServiciosController)->show($ot->id);
@@ -129,6 +131,7 @@ class OtsController extends Controller
 
         return view('ots.edit',compact('ot',
                                         'cliente',
+                                        'contratista',
                                         'user',
                                         'ot_servicios',
                                         'ot_calidad_placas',

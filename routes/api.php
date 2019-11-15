@@ -21,6 +21,8 @@ Route::group(['middleware' => 'auth:api'], function()
 {   
     Route::get('clientes/paginate', 'ClientesController@paginate'); 
     Route::resource('clientes', 'ClientesController'); 
+    Route::get('contratistas/paginate', 'ContratistasController@paginate'); 
+    Route::resource('contratistas', 'ContratistasController'); 
     Route::get('users/empresa', 'UserController@getUsersEmpresa');  
     Route::get('users/paginate', 'UserController@paginate');      
     Route::resource('users', 'UserController');  
