@@ -25,6 +25,21 @@ class NormaEvaluacionesController extends Controller
         return  $this->normaEvaluacion->getAll();
     }
 
+    public function paginate(Request $request){
+
+        return NormaEvaluaciones::orderBy('id','DESC')->paginate(10);
+  
+     }
+
+    public function callView()
+    {   
+        $user = auth()->user()->name; 
+        $header_titulo = "Normas Evaluaciones";
+        $header_descripcion ="Alta | Baja | Modificación";  
+        return view('norma-evaluaciones',compact('user','modelo','header_titulo','header_descripcion'));
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *

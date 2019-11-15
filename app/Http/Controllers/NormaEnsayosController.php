@@ -26,6 +26,21 @@ class NormaEnsayosController extends Controller
         return  $this->normaEnsayo->getAll();
     }
 
+    public function paginate(Request $request){
+
+        return NormaEnsayos::orderBy('id','DESC')->paginate(10);
+  
+     }
+
+    public function callView()
+    {   
+        $user = auth()->user()->name; 
+        $header_titulo = "Normas Ensayos";
+        $header_descripcion ="Alta | Baja | Modificación";  
+        return view('norma-ensayos',compact('user','modelo','header_titulo','header_descripcion'));
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *

@@ -90,6 +90,10 @@ Vue.component('table-contratistas', require('./components/abm-maestro/contratist
 Vue.component('nuevo-contratistas', require('./components/abm-maestro/contratistas/nuevo-contratistas.vue').default);
 Vue.component('editar-contratistas', require('./components/abm-maestro/contratistas/editar-contratistas.vue').default);
 
+Vue.component('table-norma_ensayos', require('./components/abm-maestro/norma-ensayos/table-norma_ensayos.vue').default);
+Vue.component('table-norma_evaluaciones', require('./components/abm-maestro/norma-evaluaciones/table-norma_evaluaciones.vue').default);
+
+
 Vue.component('table-unidades_medidas', require('./components/abm-maestro/unidades-medidas/table-unidades_medidas.vue').default);
 Vue.component('nuevo-unidades_medidas', require('./components/abm-maestro/unidades-medidas/nuevo-unidades_medidas.vue').default);
 Vue.component('editar-unidades_medidas', require('./components/abm-maestro/unidades-medidas/editar-unidades_medidas.vue').default);

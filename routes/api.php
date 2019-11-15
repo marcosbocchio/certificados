@@ -40,7 +40,9 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('servicios', 'ServiciosController');
     Route::resource('tipo_peliculas', 'TipoPeliculasController');
     Route::resource('metodo_ensayos', 'MetodoEnsayosController');
+    Route::get('norma_ensayos/paginate', 'NormaEnsayosController@paginate');
     Route::resource('norma_ensayos', 'NormaEnsayosController');
+    Route::get('norma_evaluaciones/paginate', 'NormaEvaluacionesController@paginate');
     Route::resource('norma_evaluaciones', 'NormaEvaluacionesController');
     Route::put('ots/{id}/firmar', 'OtsController@firmar');
     Route::resource('ots', 'OtsController');

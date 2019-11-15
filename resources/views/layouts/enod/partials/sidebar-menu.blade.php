@@ -42,6 +42,8 @@
               <li><a href="{{ route('clientes') }}"><i class="fa fa-circle-o"></i>Clientes</a></li>
               <li><a href="{{ route('contratistas') }}"><i class="fa fa-circle-o"></i>Contratistas</a></li>
               <li><a href="{{ route('materiales')}}"><i class="fa fa-circle-o"></i>Materiales</a></li>
+              <li><a href="{{ route('norma-ensayos') }}"><i class="fa fa-circle-o"></i>Norma ensayos</a></li>
+              <li><a href="{{ route('norma-evaluaciones') }}"><i class="fa fa-circle-o"></i>Norma Evaluaciones</a></li>
               <li><a href="{{ route('documentaciones')}}"><i class="fa fa-circle-o"></i>Documentaciones</a></li>
               <li><a href="{{ route('unidades-medidas') }}"><i class="fa fa-circle-o"></i>Unidades de Medidas</a></li>
               <li><a href="{{ route('medidas') }}"><i class="fa fa-circle-o"></i>Medidas</a></li>

@@ -75,6 +75,8 @@ Route::group(['middleware' => ['permission:enod']], function () {
   Route::get('/area/enod/medidas', 'MedidasController@callView')->name('medidas');
   Route::get('/area/enod/medidas', 'MedidasController@callView')->name('medidas');
   Route::get('/area/enod/productos', 'ProductosController@callView')->name('productos');
+  Route::get('/area/enod/norma_ensayos', 'NormaEnsayosController@callView')->name('norma-ensayos');
+  Route::get('/area/enod/norma_evaluaciones', 'NormaEvaluacionesController@callView')->name('norma-evaluaciones');
   Route::get('/area/enod/servicios', 'ServiciosController@callView')->name('servicios');
   Route::get('/area/enod/soldadores', 'SoldadoresController@index')->name('soldadores');
   Route::get('/area/enod/fuentes', 'FuentesController@callView')->name('fuentes');
