@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use App\Http\Requests\NormaEvaluacionesRequest;
 use App\Repositories\NormaEvaluaciones\NormaEvaluacionesRepository;
 use App\NormaEvaluaciones;
 use App\User;
@@ -40,26 +42,48 @@ class NormaEvaluacionesController extends Controller
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+    public function store(NormaEvaluacionesRequest $request){
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        $norma_evaluaciones = new NormaEvaluaciones;   
+  
+          DB::beginTransaction();
+          try { 
+  
+              $this->saveNormaEvaluaciones($request,$norma_evaluaciones);
+              DB::commit(); 
+  
+          } catch (Exception $e) {
+      
+              DB::rollback();
+              throw $e;      
+              
+          }      
+  
+      }
+  
+      public function update(NormaEvaluacionesRequest $request, $id){
+  
+        $norma_evaluaciones = NormaEvaluaciones::find($id);     
+      
+          DB::beginTransaction();
+          try {
+              $this->saveNormaEvaluaciones($request,$norma_evaluaciones);
+              DB::commit(); 
+      
+            } catch (Exception $e) {
+        
+              DB::rollback();
+              throw $e;      
+              
+            }
+      }
+      public function saveNormaEvaluaciones($request,$norma_evaluaciones){
+  
+        $norma_evaluaciones->codigo = $request['codigo'];
+        $norma_evaluaciones->descripcion = $request['descripcion'];
+        $norma_evaluaciones->save();
+  
+      }
 
     /**
      * Display the specified resource.
@@ -83,18 +107,7 @@ class NormaEvaluacionesController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
+  
     /**
      * Remove the specified resource from storage.
      *
@@ -103,6 +116,7 @@ class NormaEvaluacionesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $norma_evaluaciones = NormaEvaluaciones::find($id);    
+        $norma_evaluaciones->delete();
     }
 }

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\NormaEnsayosRequest;
+use Illuminate\Support\Facades\DB;
 use App\Repositories\NormaEnsayos\NormaEnsayosRepository;
 use App\NormaEnsayos;
 use App\User;
@@ -51,16 +53,49 @@ class NormaEnsayosController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+    public function store(NormaEnsayosRequest $request){
+
+        $norma_ensayo = new NormaEnsayos;   
+  
+          DB::beginTransaction();
+          try { 
+  
+              $this->saveNormaEnsayos($request,$norma_ensayo);
+              DB::commit(); 
+  
+          } catch (Exception $e) {
+      
+              DB::rollback();
+              throw $e;      
+              
+          }      
+  
+      }
+  
+      public function update(NormaEnsayosRequest $request, $id){
+  
+        $norma_ensayo = NormaEnsayos::find($id);     
+      
+          DB::beginTransaction();
+          try {
+              $this->saveNormaEnsayos($request,$norma_ensayo);
+              DB::commit(); 
+      
+            } catch (Exception $e) {
+        
+              DB::rollback();
+              throw $e;      
+              
+            }
+      }
+      public function saveNormaEnsayos($request,$norma_ensayo){
+  
+        $norma_ensayo->codigo = $request['codigo'];
+        $norma_ensayo->descripcion = $request['descripcion'];
+        $norma_ensayo->save();
+  
+      }
+
 
     /**
      * Display the specified resource.
@@ -84,17 +119,6 @@ class NormaEnsayosController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.
@@ -104,6 +128,7 @@ class NormaEnsayosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $norma_ensayo = NormaEnsayos::find($id);    
+        $norma_ensayo->delete();
     }
 }
