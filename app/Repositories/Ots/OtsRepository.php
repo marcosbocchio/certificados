@@ -138,15 +138,15 @@ class OtsRepository extends BaseRepository
          $user_id = $userId = Auth::id();    
     }  
 
-    $fecha_hora = date('Y-m-d',strtotime($request->fecha)) .' ' . date('H:i:s',strtotime($request->hora)) ;
-    $fecha_estimada_ensayo =  date('Y-m-d',strtotime($request->fecha_ensayo));
+    $fecha = date('Y-m-d',strtotime($request->fecha));
+    $fecha_hora_estimada_ensayo =  date('Y-m-d',strtotime($request->fecha_ensayo)) .' ' . date('H:i:s',strtotime($request->hora)) ;;
     $ot->proyecto          = $request->proyecto;
     $ot->cliente_id        = $request->cliente;
     $ot->logo_cliente_sn   = $request->logo_cliente_sn;
     $ot->contratista_id    = $request->contratista['id'];
     $ot->logo_contratista_sn   = $request->logo_contratista_sn;
     $ot->obra              = $request->obra;
-    $ot->fecha_hora        = $fecha_hora;
+    $ot->fecha             = $fecha;
     $ot->numero            = $request->ot;
     $ot->presupuesto       = $request->fst;
     $ot->lugar             = $request->lugar_ensayo;
@@ -158,7 +158,7 @@ class OtsRepository extends BaseRepository
     $ot->contacto3_id      = $request->contacto3;
     $ot->responsable_ot_id = $request->user_empresa;
     $ot->observaciones     = $request->observaciones;
-    $ot->fecha_estimada_ensayo = $fecha_estimada_ensayo;
+    $ot->fecha_hora_estimada_ensayo = $fecha_hora_estimada_ensayo;
     $ot->user_id            = $user_id;
     $ot->estado             = 'EDITANDO';
     $ot->save();     

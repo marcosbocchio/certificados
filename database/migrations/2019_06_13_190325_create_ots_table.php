@@ -15,7 +15,7 @@ class CreateOtsTable extends Migration
     {
         Schema::create('ots', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->datetime('fecha_hora');
+            $table->datetime('fecha');
             $table->integer('numero')->unique();
             $table->string('proyecto',50);
             $table->integer('obra')->nullable();
@@ -24,7 +24,7 @@ class CreateOtsTable extends Migration
             $table->string('lat',100)->nullable();
             $table->string('lon',100)->nullable();
             $table->string('observaciones',250)->nullable();
-            $table->datetime('fecha_estimada_ensayo');
+            $table->datetime('fecha_hora_estimada_ensayo');
             $table->enum('estado',['EDITANDO','ACTIVA','CERRADA']);
             $table->timestamps();
         });

@@ -14327,8 +14327,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     setEdit: function setEdit() {
       if (this.acciondata == "edit") {
         this.id = this.otdata.id, this.proyecto = this.otdata.proyecto;
-        this.fecha = this.otdata.fecha_hora;
-        this.t = this.otdata.fecha_hora.split(/[- :]/);
+        this.fecha = this.otdata.fecha;
+        this.t = this.otdata.fecha_hora_estimada_ensayo.split(/[- :]/);
         this.d = new Date(Date.UTC(this.t[0], this.t[1] - 1, this.t[2], this.t[3], this.t[4], this.t[5]));
         this.hora = this.d;
         this.cliente = this.clientedata;
@@ -14340,7 +14340,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.localidad = this.ot_localidaddata;
         this.obra = this.otdata.obra;
         this.observaciones = this.otdata.observaciones;
-        this.fecha_ensayo = this.otdata.fecha_estimada_ensayo;
+        this.fecha_ensayo = this.otdata.fecha_hora_estimada_ensayo;
         this.contacto1 = this.otcontacto1data;
         this.user_empresa = this.users_empresadata;
         if (this.otcontacto2data != null) this.contacto2 = this.otcontacto2data;
@@ -14613,7 +14613,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           data: {
             'cliente': this.cliente.id,
             'logo_cliente_sn': this.logo_cliente_sn,
-            'contratista': this.contratista,
+            'contratista': this.contratista ? this.contratista.id : null,
             'logo_contratista_sn': this.logo_contratista_sn,
             'proyecto': this.proyecto,
             'fecha': this.fecha,
@@ -14664,7 +14664,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             'id': this.otdata.id,
             'cliente': this.cliente.id,
             'logo_cliente_sn': this.logo_cliente_sn,
-            'contratista': this.contratista,
+            'contratista': this.contratista ? this.contratista.id : null,
             'logo_contratista_sn': this.logo_contratista_sn,
             'proyecto': this.proyecto,
             'fecha': this.fecha,
