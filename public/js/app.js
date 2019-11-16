@@ -14328,8 +14328,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       if (this.acciondata == "edit") {
         this.id = this.otdata.id, this.proyecto = this.otdata.proyecto;
         this.fecha = this.otdata.fecha;
-        this.t = this.otdata.fecha_hora_estimada_ensayo.split(/[- :]/);
-        this.d = new Date(Date.UTC(this.t[0], this.t[1] - 1, this.t[2], this.t[3], this.t[4], this.t[5]));
+        this.d = new Date(this.otdata.fecha_hora_estimada_ensayo);
         this.hora = this.d;
         this.cliente = this.clientedata;
         this.logo_cliente_sn = this.otdata.logo_cliente_sn, this.contratista = this.contratistadata;

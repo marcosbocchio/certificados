@@ -129,12 +129,9 @@ class OtsController extends Controller
                 $ot_contacto2 = new Contactos();
         if ($ot_contacto3 == null)
                 $ot_contacto3 = new Contactos();
-
-
        if ($contratista == null)
-
            $contratista = new Contratistas();
-                
+        
         return view('ots.edit',compact('ot',
                                         'cliente',
                                         'contratista',
