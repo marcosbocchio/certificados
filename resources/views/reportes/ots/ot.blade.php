@@ -46,7 +46,7 @@ td b,td span {
                </tr>
                <tr>
                   <td style="font-size: 13px;"><b>OBRA: </b>{{$ot->obra}}</td>
-                  <td style="font-size: 13px;"><b>FECHA: </b>{{ date('d-m-Y', strtotime($ot->fecha_hora)) }}</td>    
+                  <td style="font-size: 13px;"><b>FECHA: </b>{{ date('d-m-Y', strtotime($ot->fecha)) }}</td>    
                 </tr>                  
                 <tr>
                   <td style="font-size: 13px;"><b>OT N°: </b>{{$ot->numero}}</td>
@@ -68,7 +68,7 @@ td b,td span {
                         <img src="{{ public_path('img/mark-google-maps.jpg')}}" alt="" style="height: 20px;">
                       </a>  
                     </td>
-                    <td style="font-size: 13px;  width:250px" ><b>Horario: </b>{{ date('H:i', strtotime($ot->fecha_hora)) }}</td>    
+                    <td style="font-size: 13px;  width:250px" ><b>Horario: </b>{{ date('H:i', strtotime($ot->fecha_hora_estimada_ensayo)) }}</td>    
                   </tr>
                   <tr>
                     <td style="font-size: 13px; width:300px"" ><b>Localidad: </b>{{$localidad->localidad}}</td>
@@ -124,7 +124,7 @@ td b,td span {
                             @endforeach
                         
                         </td>
-                        <td style="font-size: 13px; width:250px" ><b>Fecha Estimada ensayo: </b>{{ date('d-m-Y', strtotime($ot->fecha_estimada_ensayo)) }} </td>
+                        <td style="font-size: 13px; width:250px" ><b>Fecha Estimada ensayo: </b>{{ date('d-m-Y', strtotime($ot->fecha_hora_estimada_ensayo)) }} </td>
                     </tr>
                 </tbody>
               </table>   
