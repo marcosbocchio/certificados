@@ -21,7 +21,7 @@
                     </div>                            
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group" >
+                    <div class="form-group">
                         <label for="ot">Orden de Trabajo N°</label>
                         <input type="number" v-model="otdata.numero" class="form-control" id="ot" disabled>
                     </div>                            

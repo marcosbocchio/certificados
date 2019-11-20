@@ -30,6 +30,7 @@ use App\PasadasPosicion;
 use App\DefectosPasadasPosicion;
 use App\OtOperarios;
 use App\OtProcedimientosPropios;
+use App\Contratistas;
 
 class PdfInformesRiController extends Controller
 {
@@ -57,8 +58,9 @@ class PdfInformesRiController extends Controller
         $ejecutor_ensayo = User::findOrFail($ot_operador->user_id);
         $tecnicas_grafico = TecnicasGraficos::findOrFail($informe_ri->tecnicas_grafico_id);
         $evaluador = User::find($informe->firma);
+        $contratista = Contratistas::find($ot->contratista_id);
         
-      //  dd($interno_fuente);
+      //   dd($contratista);
       //  dd($informe);
        
 
@@ -85,6 +87,7 @@ class PdfInformesRiController extends Controller
           'tecnica',
           'ejecutor_ensayo',
           'cliente',
+          'contratista',
           'informe',
           'informe_ri',
           'material',
@@ -106,7 +109,7 @@ class PdfInformesRiController extends Controller
       $juntas_posiciones = DB::select('CALL InformeRiPlantaJuntaPosicion(?)',array($informe_ri->id));
       $defectos_posiciones = DB::select('CALL InformeRiPlantaDefectosPasadaPosicion(?)',array($informe_ri->id));                                          
       
-  //   dd($juntas_posiciones);
+   // dd($cliente);
    //   dd($defectos_posiciones);
 
           $pdf = PDF::loadView('reportes.informes.ri-planta',compact('ot',
@@ -121,6 +124,7 @@ class PdfInformesRiController extends Controller
                                                               'tecnica',
                                                               'ejecutor_ensayo',
                                                               'cliente',
+                                                              'contratista',
                                                               'informe',
                                                               'informe_ri',
                                                               'material',

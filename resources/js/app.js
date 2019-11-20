@@ -245,6 +245,7 @@ state: {
         AppUrl:process.env.NODE_ENV == 'production' ? 
         process.env.MIX_URL_PRO :
         process.env.MIX_URL_DEV,
+        
         contratistas:[],
         provincias:[],
         localidades:[],
