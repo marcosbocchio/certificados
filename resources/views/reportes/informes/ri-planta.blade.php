@@ -52,11 +52,9 @@ footer {
     border-width: 1px; 
     border-collapse: collapse; 
 }
-
 .vcenter {
-    display: inline-block;
+    display: table-cell;
     vertical-align: middle;
-    float: none;
 }
 
 b {
@@ -100,22 +98,29 @@ b {
                     <table width="100%" >
                         <tbody>
                             <tr>                         
-                                <td  style="font-size: 11px;width: 233px;height: 45px;" ><b>CLIENTE: </b>{{$cliente->nombre_fantasia}} 
+                                <td style="font-size: 11px;width: 233px;height: 45px; vertical-align: middle"><b>CLIENTE: </b>{{$cliente->nombre_fantasia}} 
+                                   
                                     @if($ot->logo_cliente_sn && $cliente->path)
-                                     <img  src="{{ public_path($cliente->path)}}" alt="" style="height: 40px; margin-left: 15px;margin-top: 5px;">
+                                     <img  src="{{ public_path($cliente->path)}}" alt=""  style="height: 40px; margin-left: 15px;margin-top: 5px;vertical-align:middle">
+                                    @else
+                                      <img  src="{{ public_path('img/blank.png')}}" alt=""  style="height: 40px; margin-left: 15px;margin-top: 5px;vertical-align:middle">
                                     @endif
+                                    
                                 </td>                                      
-                             
-
-                                <td style="font-size: 11px; width: 253px;">
+                            
+                                <td style="font-size: 11px; width: 253px; vertical-align: middle">
                                     @if($contratista)
                                         <b>CONTRATISTA: </b>{{$contratista->nombre}}
                                     @endif
-                                    @if($ot->logo_contratista_sn && $contratista->path_logo)
-                                       <img  src="{{ public_path($contratista->path_logo)}}" alt="" style="height: 40px; margin-left: 15px;margin-top: 5px;"">
-                                    @endif
-                                </td> 
 
+                               
+                                    @if($ot->logo_contratista_sn && $contratista->path_logo)
+                                       <img  src="{{ public_path($contratista->path_logo)}}" alt="" style="height: 40px; margin-left: 15px;margin-top: 5px;vertical-align:middle">
+                                    @else
+                                       <img  src="{{ public_path('img/blank.png')}}" alt=""  style="height: 40px; margin-left: 15px;margin-top: 5px;vertical-align:middle">
+                                    @endif
+                                 
+                                </td> 
                                                     
                             </tr>            
                             <tr>                                                  
