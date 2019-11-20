@@ -107,9 +107,12 @@ b {
                                 </td>                                      
                              
 
-                                <td style="font-size: 11px; width: 253px;"><b>CONTRATISTA: </b>{{$contratista->nombre}}
+                                <td style="font-size: 11px; width: 253px;">
+                                    @if($contratista)
+                                        <b>CONTRATISTA: </b>{{$contratista->nombre}}
+                                    @endif
                                     @if($ot->logo_contratista_sn && $contratista->path_logo)
-                                      <img  src="{{ public_path($contratista->path_logo)}}" alt="" style="height: 40px; margin-left: 15px;margin-top: 5px;"">
+                                       <img  src="{{ public_path($contratista->path_logo)}}" alt="" style="height: 40px; margin-left: 15px;margin-top: 5px;"">
                                     @endif
                                 </td> 
 
