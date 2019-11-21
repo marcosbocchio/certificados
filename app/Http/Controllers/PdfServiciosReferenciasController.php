@@ -8,6 +8,8 @@ use App\Clientes;
 use App\Ots;
 use App\Servicios;
 use App\OtReferencias;
+use App\Contratistas;
+use App\User;
 
 class PdfServiciosReferenciasController extends Controller
 {
@@ -19,16 +21,16 @@ class PdfServiciosReferenciasController extends Controller
         $modelo = Servicios::find($ot_modelos->servicio_id);
         $ot_referencia = OtReferencias::find($id);
         $tabla = 'Servicio';
-
-
-       
+        $evaluador = User::find($ot->firma);
+        $contratista = Contratistas::find($ot->contratista_id);
       
-
         $pdf = \PDF::loadView('reportes.ots.referencias',compact('ot',
                                                                 'cliente',
+                                                                'contratista',
                                                                 'modelo',
                                                                 'ot_modelos',
                                                                 'ot_referencia',
+                                                                'evaluador',
                                                                 'tabla'
                                                                ));
         return $pdf->stream();

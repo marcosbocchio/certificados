@@ -11,9 +11,9 @@
 
 header {
     position:fixed;
-    top: -153px; 
-   
+    top: -153px;  
     }
+
 footer {
     position: fixed; bottom: -59px; 
 
@@ -223,22 +223,22 @@ b {
 
     <script type="text/php">
 
-    if ( isset($pdf) ) {
-        $x = 484;
-        $y = 77;
-        $text = "PÁGINA : {PAGE_NUM} de {PAGE_COUNT}";
-        $font = $fontMetrics->get_font("serif", "bold");
-        $size = 9;
-        $color = array(0,0,0);
-        $word_space = 0.0;  //  default
-        $char_space = 0.0;  //  default
-        $angle = 0.0;   //  default
-        $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
-    }
+        if ( isset($pdf) ) {
+            $x = 484;
+            $y = 77;
+            $text = "PÁGINA : {PAGE_NUM} de {PAGE_COUNT}";
+            $font = $fontMetrics->get_font("serif", "bold");
+            $size = 9;
+            $color = array(0,0,0);
+            $word_space = 0.0;  //  default
+            $char_space = 0.0;  //  default
+            $angle = 0.0;   //  default
+            $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
+        }
 
-    $pdf->line(46.5,130,46.5,800,array(0,0,0),1.5);
-    $pdf->line(571.3,130,571.3,800,array(0,0,0),1.5);
+        $pdf->line(46.5,130,46.5,800,array(0,0,0),1.5);
+        $pdf->line(571.3,130,571.3,800,array(0,0,0),1.5);
 
-</script>
+    </script>
   </body>  
 </html>
