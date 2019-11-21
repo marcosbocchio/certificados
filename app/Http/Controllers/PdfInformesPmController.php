@@ -26,6 +26,8 @@ use App\Corrientes;
 use App\MetodosTrabajoPm;
 use App\ColorParticulas;
 use App\Iluminaciones;
+use App\Contratistas;
+
 
 class PdfInformesPmController extends Controller
 {
@@ -55,6 +57,7 @@ class PdfInformesPmController extends Controller
          $color_particula = ColorParticulas::findOrFail($informe_pm->color_particula_id);
          $iluminacion = Iluminaciones::findOrFail($informe_pm->iluminacion_id);
          $evaluador = User::find($informe->firma);
+         $contratista = Contratistas::find($ot->contratista_id);
 
        // dd($desmagnetizacion_sn);
          $detalles =  DB::select('SELECT 
@@ -84,6 +87,7 @@ class PdfInformesPmController extends Controller
                                                                 'interno_equipo',
                                                                 'ejecutor_ensayo',
                                                                 'cliente',
+                                                                'contratista',
                                                                 'informe',
                                                                 'informe_pm',
                                                                 'material',
