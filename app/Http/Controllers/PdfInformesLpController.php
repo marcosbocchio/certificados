@@ -23,6 +23,7 @@ use App\MetodosTrabajoLp;
 use App\TipoLiquidos;
 use App\AplicacionesLp;
 use App\User;
+use App\Contratistas;
 
 
 class PdfInformesLpController extends Controller
@@ -54,6 +55,7 @@ class PdfInformesLpController extends Controller
          $ejecutor_ensayo = User::findOrFail($ot_operador->user_id);         
          $iluminacion = Iluminaciones::findOrFail($informe_lp->iluminacion_id);        
          $evaluador = User::find($informe->firma);
+         $contratista = Contratistas::find($ot->contratista_id);
 
          $detalles =  DB::select('SELECT 
                                 detalles_lp.pieza as pieza,
@@ -82,6 +84,7 @@ class PdfInformesLpController extends Controller
                                                                 'metodo',
                                                                 'ejecutor_ensayo',
                                                                 'cliente',
+                                                                'contratista',
                                                                 'informe',
                                                                 'informe_lp',
                                                                 'material',                                                            

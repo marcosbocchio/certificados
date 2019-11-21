@@ -12,8 +12,7 @@
 
 header {
     position:fixed;
-    top: -326px; 
-   
+    top: -326px;    
     }
 
 main{
@@ -25,7 +24,6 @@ main{
 footer {
     position: fixed; bottom:6px; 
     padding-top: 0px;
-
 }
 
 .pagenum:before {
@@ -93,7 +91,7 @@ b {
                     </table>          
                 </td>
             </tr>
-            <tr >
+            <tr>
                 <td class="bordered">
                     <table width="100%" >
                         <tbody>
