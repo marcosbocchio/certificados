@@ -71,21 +71,21 @@ b {
                     <table width="100%">
                         <tbody>
                             <tr>
-                                <td rowspan="4" style="text-align: right;">
+                                <td rowspan="4" style="text-align: right;width: 240px;">
                                     <img src="{{ public_path('img/logo-enod-web.jpg')}}" alt="" style="height: 60px; margin-right: 25px;">
                                 </td>   
-                                <td style="font-size: 18px; height: 30px; text-align: center;" rowspan="3"><b>INFORME RADIOGRAFÍA INDUSTRIAL</b></td>
-                                <td style="font-size: 11px;"><b style="margin-left: 40px"></b></td>                         
+                                <td style="font-size: 19px; height: 30px;width: 200px; text-align: center;margin-left: 0px" rowspan="3"><b>RADIOGRAFIA INDUSTRIAL</b></td>
+                                <td style="font-size: 11px;"><b ></b></td>                         
                             </tr>
                             <tr>
-                                <td style="font-size: 11px;" ><b style="margin-left: 80px" >INFORME N°: </b>{{FormatearNumeroInforme($informe->numero,'RI')}}</td>                      
+                                <td style="font-size: 11px;" ><b style="margin-left: 131px;">INFORME N°: </b>{{FormatearNumeroInforme($informe->numero,'RI')}}</td>                      
                             </tr>
                             <tr>
-                                <td style="font-size: 11px;"><b style="margin-left: 80px">FECHA: </b>{{ date('d-m-Y', strtotime($ot->fecha_hora)) }}</td>
+                                <td style="font-size: 11px;"><b style="margin-left: 131px;">FECHA: </b>{{ date('d-m-Y', strtotime($ot->fecha_hora)) }}</td>
                             </tr>
                             <tr>
-                                <td style="font-size: 11px;"><b style="margin-left: 80px"></b></td>                     
-                                <td style="font-size: 11px;"><b style="margin-left: 80px"></td>            
+                                <td style="font-size: 11px;"><b></b></td>                     
+                                <td style="font-size: 11px;"><b></td>            
                             </tr>               
                         </tbody>
                     </table>          
@@ -385,7 +385,7 @@ b {
 <script type="text/php">
 
     if ( isset($pdf) ) {
-        $x = 485;
+        $x = 484;
         $y = 77;
         $text = "PÁGINA : {PAGE_NUM} de {PAGE_COUNT}";
         $font = $fontMetrics->get_font("serif", "bold");
