@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Referencia</title>
-</head>
+    <title>Referencia Informe N°: {{FormatearNumeroInforme($informe->numero,'PM')}} - Pieza N°: {{$detalle_pm->numero}}</title></head>
 <style>
  
  @page { margin: 193px 30px 194px 60px !important;

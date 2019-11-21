@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Referencia</title>
+    <title>Referencia Informe N°: {{FormatearNumeroInforme($informe->numero,'LP')}} - Pieza N°: {{$detalle_lp->numero}}</title>
 </head>
 <style>
  
@@ -139,39 +139,39 @@ b {
                     </td>               
                 </tr>
                 <tr>
-                <td>
-                    <table width="100%" style="border-collapse: collapse;" >
-                        <tbody>
-                            <tr>                               
-                               <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>EVALUADOR </b></td>   
-                               <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>CONTRATISTA </b></td> 
-                               <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>CLIENTE </b></td>                              
-                            </tr>
-                            
-                            <tr>                               
-                                <td style="font-size: 11px; text-align: left; height: 25px;width:75px;"><span style="margin-left: 2px">FIRMA:</span></td>   
-
-                                <td style="text-align:left ;font-size: 11px; border-right: 1px solid #000;width: 150px;margin-left: 15px;" rowspan="2">
-                                    @if($evaluador && $evaluador->path)
-                                        <img src="{{ public_path($evaluador->path)}}" alt="" style="width: 100px;">
-                                    @endif
-                                </td> 
-
-                                <td style="font-size: 11px; text-align: left; height: 25px; border-right: 1px solid #000;" colspan="2"> <span style="margin-left: 2px">FIRMA:</span></td> 
+                    <td>
+                        <table width="100%" style="border-collapse: collapse;" >
+                            <tbody>
+                                <tr>                               
+                                <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>EVALUADOR </b></td>   
+                                <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>CONTRATISTA </b></td> 
+                                <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>CLIENTE </b></td>                              
+                                </tr>
                                 
-                                <td style="font-size: 11px; text-align: left; height: 25px; border-right: 1px solid #000;" colspan="2"><span style="margin-left: 2px">FIRMA:</span></td>
-                                                        
-                            </tr>
-                           
-                            <tr>                               
-                                <td style="font-size: 11px; text-align: left; height: 25px;width:75px;"><span style="margin-left: 2px">ACLARACIÓN:</span></td>   
-                                <td style="font-size: 11px; text-align: left; height: 25px; border-right: 1px solid #000;" colspan="2"><span style="margin-left: 2px">ACLARACIÓN:</span></td>
-                                <td style="font-size: 11px; text-align: left; height: 25px; border-right: 1px solid #000;" colspan="2"><span style="margin-left: 2px">ACLARACIÓN:</span></td>                       
-                            </tr>
-                        </tbody>
-                    </table> 
-                </td>
-            </tr>      
+                                <tr>                               
+                                    <td style="font-size: 11px; text-align: left; height: 25px;width:75px;"><span style="margin-left: 2px">FIRMA:</span></td>   
+
+                                    <td style="text-align:left ;font-size: 11px; border-right: 1px solid #000;width: 150px;margin-left: 15px;" rowspan="2">
+                                        @if($evaluador && $evaluador->path)
+                                            <img src="{{ public_path($evaluador->path)}}" alt="" style="width: 100px;">
+                                        @endif
+                                    </td> 
+
+                                    <td style="font-size: 11px; text-align: left; height: 25px; border-right: 1px solid #000;" colspan="2"> <span style="margin-left: 2px">FIRMA:</span></td> 
+                                    
+                                    <td style="font-size: 11px; text-align: left; height: 25px; border-right: 1px solid #000;" colspan="2"><span style="margin-left: 2px">FIRMA:</span></td>
+                                                            
+                                </tr>
+                            
+                                <tr>                               
+                                    <td style="font-size: 11px; text-align: left; height: 25px;width:75px;"><span style="margin-left: 2px">ACLARACIÓN:</span></td>   
+                                    <td style="font-size: 11px; text-align: left; height: 25px; border-right: 1px solid #000;" colspan="2"><span style="margin-left: 2px">ACLARACIÓN:</span></td>
+                                    <td style="font-size: 11px; text-align: left; height: 25px; border-right: 1px solid #000;" colspan="2"><span style="margin-left: 2px">ACLARACIÓN:</span></td>                       
+                                </tr>
+                            </tbody>
+                        </table> 
+                    </td>
+                </tr>      
             </tbody>
         </table>
     </footer>
