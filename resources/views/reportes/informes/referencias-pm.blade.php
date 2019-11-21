@@ -74,29 +74,34 @@ b {
                     <table width="100%" >
                         <tbody>
                             <tr>                         
-                                <td style="font-size: 11px;width: 233px;height: 45px; vertical-align: middle"><b>CLIENTE: </b>{{$cliente->nombre_fantasia}} 
-                                   
-                                    @if($ot->logo_cliente_sn && $cliente->path)
-                                     <img  src="{{ public_path($cliente->path)}}" alt=""  style="height: 40px; margin-left: 15px;margin-top: 5px;vertical-align:middle">
-                                    @else
-                                      <img  src="{{ public_path('img/blank.png')}}" alt=""  style="height: 40px; margin-left: 15px;margin-top: 5px;vertical-align:middle">
-                                    @endif
+                                <td style="font-size: 11px;width: 200px;height: 45px;"><b>CLIENTE: </b>{{$cliente->nombre_fantasia}}                            
                                     
-                                </td>                                      
-                            
-                                <td style="font-size: 11px; width: 253px; vertical-align: middle">
-                                    @if($contratista)
-                                        <b>CONTRATISTA: </b>{{$contratista->nombre}}
-                                    @endif
+                                </td>  
 
-                               
-                                    @if($ot->logo_contratista_sn && $contratista->path_logo)
-                                       <img  src="{{ public_path($contratista->path_logo)}}" alt="" style="height: 40px; margin-left: 15px;margin-top: 5px;vertical-align:middle">
-                                    @else
-                                       <img  src="{{ public_path('img/blank.png')}}" alt=""  style="height: 40px; margin-left: 15px;margin-top: 5px;vertical-align:middle">
-                                    @endif
+                                <td style="width: 175px;">
+                                    @if($ot->logo_cliente_sn && $cliente->path)
+                                    <img  src="{{ public_path($cliente->path)}}" alt=""  style="height: 40px;margin-top: 5px;">
+                                   @else
+                                     <img  src="{{ public_path('img/blank.png')}}" alt=""  style="height: 40px;margin-top: 5px;">
+                                   @endif    
+                                </td>                                    
+                            
+                                <td style="font-size: 11px; width: 200px;">
+                                  
+                                        @if($contratista)
+                                            <b>CONTRATISTA: </b>{{$contratista->nombre}}
+                                        @endif                                               
                                  
                                 </td> 
+                                <td>
+                                    
+                                    @if($ot->logo_contratista_sn && $contratista->path_logo)
+                                       <img  src="{{ public_path($contratista->path_logo)}}" alt="" style="height:40px;margin-top: 5px;">
+                                    @else
+                                       <img  src="{{ public_path('img/blank.png')}}" alt=""  style="height: 40px;margin-top: 5px;">
+                                    @endif
+
+                                </td>
                                                     
                             </tr>            
                             <tr>                                                  
@@ -184,27 +189,27 @@ b {
                         <table>    
                             <tbody>
                                 <tr>
-                                    <td style="text-align: center; width: 360px;height: 300px">
+                                    <td style="text-align: center; width: 330px;height: 275px">
                                             @if ($detalle_pm_referencia->path1!='/img/imagen1.jpg')
-                                                <img src="{{ public_path($detalle_pm_referencia->path1) }}" alt="" style="height: 174; width: 255;">
+                                                <img src="{{ public_path($detalle_pm_referencia->path1) }}" alt="" style="height: 160; width: 234;">
                                             @endif  
                                             
                                     </td>
-                                    <td style="text-align: center; width: 360px;height: 300px">
+                                    <td style="text-align: center;width: 330px;height: 275px">
                                         @if ($detalle_pm_referencia->path2!='/img/imagen2.jpg')
-                                            <img src="{{  public_path($detalle_pm_referencia->path2) }}" alt="" style="height: 174; width: 255;">
+                                            <img src="{{  public_path($detalle_pm_referencia->path2) }}" alt="" style="height: 160; width: 234;">
                                         @endif  
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td style="text-align: center; width: 360px;height: 300px">
+                                    <td style="text-align: center; width: 330px;height: 275px">
                                         @if ($detalle_pm_referencia->path3!='/img/imagen3.jpg')
-                                            <img src="{{  public_path($detalle_pm_referencia->path3) }}" alt="" style="height: 174; width: 255;">
+                                            <img src="{{  public_path($detalle_pm_referencia->path3) }}" alt="" style="height: 160; width: 234;">
                                     @endif  
                                     </td>
-                                    <td style="text-align: center; width: 360px;height: 300px">
+                                    <td style="text-align: center; width: 330px;height: 275px">
                                         @if ($detalle_pm_referencia->path4!='/img/imagen4.jpg')
-                                            <img src="{{  public_path($detalle_pm_referencia->path4) }}" alt="" style="height: 174; width: 255;">
+                                            <img src="{{  public_path($detalle_pm_referencia->path4) }}" alt="" style="height: 160; width: 234;">
                                     @endif  
                                     </td>
                                 </tr>
