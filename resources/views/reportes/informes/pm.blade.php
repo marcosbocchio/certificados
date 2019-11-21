@@ -213,7 +213,7 @@ b {
                             <tr>
                                 <td style="font-size: 11px; width:65px;  text-align: center " rowspan="2" class="bordered-td" >PIEZA</td>
                                 <td style="font-size: 11px; width:40px;  text-align: center;" rowspan="2" class="bordered-td">N°</td>
-                                <td style="font-size: 11px; width:460px; text-align: center;" rowspan="2" class="bordered-td">DETALLE</td>
+                                <td style="font-size: 11px; width:465px; text-align: center;" rowspan="2" class="bordered-td">DETALLE</td>
                                 <td style="font-size: 11px; width:80px; text-align: center;" colspan="2" class="bordered-td">RESULTADO</td>  
                                 <td style="font-size: 11px; text-align: center" rowspan="2" class="bordered-td">REF</td>                     
                             </tr>
@@ -291,7 +291,7 @@ b {
                 <tr>
                     <td style="font-size: 11px;  width:66px;text-align: center" class="bordered-td">{{ $detalle->pieza }}</td>
                     <td style="font-size: 11px;  width:40px;text-align: center" class="bordered-td">{{$detalle->numero}}</td>
-                    <td style="font-size: 11px;  width:450px;" class="bordered-td">&nbsp; {{$detalle->detalle}}</td>               
+                    <td style="font-size: 11px;  width:465px;" class="bordered-td">&nbsp; {{$detalle->detalle}}</td>               
                     <td style="font-size: 11px; text-align: center;width:39px; " class="bordered-td">
                         @if ($detalle->aceptable_sn)
                             X
@@ -319,7 +319,7 @@ b {
                 <tr>
                     <td style="font-size: 11px;  width:66px;text-align: center" class="bordered-td">&nbsp;</td>
                     <td style="font-size: 11px;  width:40px;text-align: center" class="bordered-td">&nbsp;</td>
-                    <td style="font-size: 11px;  width:460px;" class="bordered-td">&nbsp;</td>               
+                    <td style="font-size: 11px;  width:465px;" class="bordered-td">&nbsp;</td>               
                     <td style="font-size: 11px; text-align: center;width:39px; " class="bordered-td">&nbsp;</td>
                     <td style="font-size: 11px; text-align: center;width:38px;" class="bordered-td">&nbsp;</td>
                     <td class="bordered-td">&nbsp;</td>
