@@ -10,7 +10,7 @@ use App\Clientes;
 use App\DetallesPmReferencias;
 use App\DetallesPm;
 use App\User;
-
+use App\Contratistas;
 
 class PdfInformesPmReferenciasController extends Controller
 {
@@ -25,7 +25,7 @@ class PdfInformesPmReferenciasController extends Controller
         $ot = Ots:: find($informe->ot_id);
         $cliente = Clientes::find($ot->cliente_id);       
         $evaluador = User::find($informe->firma);       
-        
+        $contratista = Contratistas::find($ot->contratista_id);
     //  dd($cliente);
 
         $pdf = \PDF::loadView('reportes.informes.referencias-pm',compact('ot',
@@ -34,6 +34,7 @@ class PdfInformesPmReferenciasController extends Controller
                                                                 'detalle_pm',
                                                                 'detalle_pm_referencia',
                                                                 'cliente',
+                                                                'contratista',
                                                                 'evaluador'                                                                    
                                                                ))->setPaper('a4','portrait')->setWarnings(false);
         return $pdf->stream();

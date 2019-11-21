@@ -6,7 +6,7 @@
 </head>
 <style>
  
-@page { margin: 193px 1px 194px 49px !important;
+ @page { margin: 193px 30px 194px 60px !important;
         padding: 0px 0px 0px 0px !important; }
 
 
@@ -16,7 +16,7 @@ header {
    
     }
 footer {
-    position: fixed; bottom:-59px; 
+    position: fixed; bottom: -59px; 
 
 }
 
@@ -50,41 +50,65 @@ b {
                         <table width="100%">
                             <tbody>
                                 <tr>
-                                    <td rowspan="4" style="text-align: right; width:233px">
+                                    <td rowspan="4" style="text-align: right;width: 240px;">
                                         <img src="{{ public_path('img/logo-enod-web.jpg')}}" alt="" style="height: 60px; margin-right: 25px;">
                                     </td>   
-                                    <td style="font-size: 18px; height: 30px; text-align: center;width:234px" rowspan="3"><b>INFORME  PARTICULAS MAGNETIZABLES</b></td>
-                                    <td style="font-size: 12px;"><b style="margin-left: 40px"></b></td>                         
+                                    <td style="font-size: 19px; height: 30px;width: 200px; text-align: center;margin-left: 0px" rowspan="3"><b>PARTÍCULAS MAGNETIZABLES</b></td>
+                                    <td style="font-size: 11px;"><b ></b></td>                         
                                 </tr>
                                 <tr>
-                                    <td style="font-size: 12px;" ><b style="margin-left: 120px" >INFORME N°: </b>{{FormatearNumeroInforme($informe->numero,'PM')}}</td>                      
+                                    <td style="font-size: 11px;" ><b style="margin-left: 131px;">INFORME N°: </b>{{FormatearNumeroInforme($informe->numero,'PM')}}</td>                      
                                 </tr>
                                 <tr>
-                                    <td style="font-size: 12px;"><b style="margin-left: 120px">FECHA: </b>{{ date('d-m-Y', strtotime($ot->fecha_hora)) }}</td>
+                                    <td style="font-size: 11px;"><b style="margin-left: 131px;">FECHA: </b>{{ date('d-m-Y', strtotime($ot->fecha_hora)) }}</td>
                                 </tr>
                                 <tr>
-                                    <td style="font-size: 12px;"><b style="margin-left: 120px"></b></td>                     
-                                    <td style="font-size: 12px;"><b style="margin-left: 120px"></td>            
+                                    <td style="font-size: 11px;"><b></b></td>                     
+                                    <td style="font-size: 11px;"><b></td>            
                                 </tr>               
                             </tbody>
                         </table>          
                     </td>
-                </tr>
-                <tr >
-                    <td class="bordered">
-                        <table width="100%" >
-                            <tbody>
-                                <tr>                         
-                                    <td style="font-size: 12px;height: 20px; width: 233px;"><b>CLIENTE: </b>{{$cliente->nombre_fantasia}}</td>                        
-                                    <td style="font-size: 12px; width: 253px;"><b>PROYECTO: </b>{{$ot->proyecto}}</td>               
+               </tr>
+            <tr>
+                <td class="bordered">
+                    <table width="100%" >
+                        <tbody>
+                            <tr>                         
+                                <td style="font-size: 11px;width: 233px;height: 45px; vertical-align: middle"><b>CLIENTE: </b>{{$cliente->nombre_fantasia}} 
+                                   
+                                    @if($ot->logo_cliente_sn && $cliente->path)
+                                     <img  src="{{ public_path($cliente->path)}}" alt=""  style="height: 40px; margin-left: 15px;margin-top: 5px;vertical-align:middle">
+                                    @else
+                                      <img  src="{{ public_path('img/blank.png')}}" alt=""  style="height: 40px; margin-left: 15px;margin-top: 5px;vertical-align:middle">
+                                    @endif
                                     
-                                    <td style="font-size: 12px;"><b>OBRA: </b>{{$ot->obra}}</td>     
-                                    <td style="font-size: 12px;"><b>OT N°: </b>{{$ot->numero}}</td>     
-                                </tr>               
-                            </tbody>
-                        </table>          
-                    </td>
-                </tr>
+                                </td>                                      
+                            
+                                <td style="font-size: 11px; width: 253px; vertical-align: middle">
+                                    @if($contratista)
+                                        <b>CONTRATISTA: </b>{{$contratista->nombre}}
+                                    @endif
+
+                               
+                                    @if($ot->logo_contratista_sn && $contratista->path_logo)
+                                       <img  src="{{ public_path($contratista->path_logo)}}" alt="" style="height: 40px; margin-left: 15px;margin-top: 5px;vertical-align:middle">
+                                    @else
+                                       <img  src="{{ public_path('img/blank.png')}}" alt=""  style="height: 40px; margin-left: 15px;margin-top: 5px;vertical-align:middle">
+                                    @endif
+                                 
+                                </td> 
+                                                    
+                            </tr>            
+                            <tr>                                                  
+                                <td style="font-size: 11px; width: 253px;" colspan="2"><b>PROYECTO: </b>{{$ot->proyecto}}</td>                            
+                                <td style="font-size: 11px;"><b>OBRA: </b>{{$ot->obra}}</td>     
+                                <td style="font-size: 11px;"><b>OT N°: </b>{{$ot->numero}}</td>     
+                            </tr>   
+                        </tbody>
+                    </table>          
+                </td>
+            </tr>
                 <tr>
                     <td class="bordered">
                         <table>
@@ -119,26 +143,30 @@ b {
                     <table width="100%" style="border-collapse: collapse;" >
                         <tbody>
                             <tr>                               
-                                <td style="font-size: 13px; text-align: center;width:170px" colspan="2" class="bordered-td" ><b>EVALUADOR </b></td>   
-                                <td style="font-size: 13px; text-align: center;width:230px" colspan="2" class="bordered-td" ><b>CONTRATISTA </b></td> 
-                                <td style="font-size: 13px; text-align: center;width:230px" colspan="2" class="bordered-td"><b>CLIENTE </b></td>                              
-                                </tr>
-                            <tr>                               
-                                <td style="font-size: 12px; text-align: left; height: 25px;width:50px;"><span style="margin-left: 2px">FIRMA:</span></td>   
-                                <td style="font-size: 12px; border-right: 1px solid #000;" rowspan="2">
-                                @if($evaluador && $evaluador->path)
-                                        <img src="{{ public_path($evaluador->path)}}" alt="" style="height: 60px;margin:0 0 0 0px;">
-                                @endif
-                                </td> 
-                                <td style="font-size: 12px; text-align: left; height: 25px;"><span style="margin-left: 2px">FIRMA:</span></td> 
-                                <td style="font-size: 12px; border-right: 1px solid #000;" rowspan="2"></td>
-                                <td style="font-size: 12px; text-align: left; height: 25px;"><span style="margin-left: 2px">FIRMA:</span></td>
-                                <td style="font-size: 12px; border-right: 1px solid #000;" rowspan="2"></td>                              
+                            <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>EVALUADOR </b></td>   
+                            <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>CONTRATISTA </b></td> 
+                            <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>CLIENTE </b></td>                              
                             </tr>
+                            
                             <tr>                               
-                                <td style="font-size: 12px; text-align: left; height: 25px;"><span style="margin-left: 2px">ACLARACIÓN:</span></td>   
-                                <td style="font-size: 12px; text-align: left; height: 25px;"><span style="margin-left: 2px">ACLARACIÓN:</span></td>
-                                <td style="font-size: 12px; text-align: left; height: 25px;"><span style="margin-left: 2px">ACLARACIÓN:</span></td>                                  
+                                <td style="font-size: 11px; text-align: left; height: 25px;width:75px;"><span style="margin-left: 2px">FIRMA:</span></td>   
+
+                                <td style="text-align:left ;font-size: 11px; border-right: 1px solid #000;width: 150px;margin-left: 15px;" rowspan="2">
+                                    @if($evaluador && $evaluador->path)
+                                        <img src="{{ public_path($evaluador->path)}}" alt="" style="width: 100px;">
+                                    @endif
+                                </td> 
+
+                                <td style="font-size: 11px; text-align: left; height: 25px; border-right: 1px solid #000;" colspan="2"> <span style="margin-left: 2px">FIRMA:</span></td> 
+                                
+                                <td style="font-size: 11px; text-align: left; height: 25px; border-right: 1px solid #000;" colspan="2"><span style="margin-left: 2px">FIRMA:</span></td>
+                                                        
+                            </tr>
+                        
+                            <tr>                               
+                                <td style="font-size: 11px; text-align: left; height: 25px;width:75px;"><span style="margin-left: 2px">ACLARACIÓN:</span></td>   
+                                <td style="font-size: 11px; text-align: left; height: 25px; border-right: 1px solid #000;" colspan="2"><span style="margin-left: 2px">ACLARACIÓN:</span></td>
+                                <td style="font-size: 11px; text-align: left; height: 25px; border-right: 1px solid #000;" colspan="2"><span style="margin-left: 2px">ACLARACIÓN:</span></td>                       
                             </tr>
                         </tbody>
                     </table> 
@@ -192,8 +220,8 @@ b {
     <script type="text/php">
 
     if ( isset($pdf) ) {
-        $x = 486;
-        $y = 78;
+        $x = 484;
+        $y = 77;
         $text = "PÁGINA : {PAGE_NUM} de {PAGE_COUNT}";
         $font = $fontMetrics->get_font("serif", "bold");
         $size = 9;
@@ -204,8 +232,8 @@ b {
         $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
     }
 
-    $pdf->line(38.5,130,38.5,750,array(0,0,0),1.5);
-    $pdf->line(593,130,593,750,array(0,0,0),1.5);
+    $pdf->line(46.5,130,46.5,800,array(0,0,0),1.5);
+    $pdf->line(571.3,130,571.3,800,array(0,0,0),1.5);
 
 </script>
   </body>  
