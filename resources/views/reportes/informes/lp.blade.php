@@ -114,7 +114,7 @@ b {
                                 </td> 
                                 <td>
                                     
-                                    @if($ot->logo_contratista_sn && $contratista->path_logo)
+                                    @if($contratista && $ot->logo_contratista_sn && $contratista->path_logo)
                                        <img  src="{{ public_path($contratista->path_logo)}}" alt="" style="height:40px;margin-top: 5px;">
                                     @else
                                        <img  src="{{ public_path('img/blank.png')}}" alt=""  style="height: 40px;margin-top: 5px;">
