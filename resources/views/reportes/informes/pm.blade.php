@@ -18,6 +18,7 @@ header {
 main{
    
     margin-top: -2px;
+  
 }
 
 footer {
@@ -235,7 +236,7 @@ b {
     </table>
     
 </header>
-
+<!--
 <footer>
     <table style="text-align: center" width="100%" class="bordered">
         <tbody>
@@ -287,9 +288,8 @@ b {
         </tbody>
     </table>
 </footer>
-
-<main>
-    
+-->
+<main>    
     <table width="100%" class="bordered">
         <tbody>
             @foreach ($detalles as $detalle)
@@ -320,7 +320,7 @@ b {
             {{ $filasPage = 29 }}
             {{ $filasACompletar = pdfCantFilasACompletar($filasPage,$cantFilasTotal) }}  
 
-                  @for ( $x=0 ;  $x < $filasACompletar ; $x++)
+            @for ( $x=0 ;  $x < $filasACompletar ; $x++)
                 <tr>
                     <td style="font-size: 11px;  width:66px;text-align: center" class="bordered-td">&nbsp;</td>
                     <td style="font-size: 11px;  width:40px;text-align: center" class="bordered-td">&nbsp;</td>

@@ -13,7 +13,7 @@ use App\Provincias;
 use App\Http\Controllers\OtProductosController;
 use App\Repositories\MetodoEnsayos\MetodoEnsayosRepository;
 use App\Http\Controllers\MetodoEnsayosController;
-
+use App\Contratistas;
 
 class PdfOtController extends Controller
 {
@@ -44,9 +44,11 @@ class PdfOtController extends Controller
         $ot_riesgos = (new OtRiesgosController)->show($ot->id);
         $ot_calidad_placas = (new OtCalidadPlacasController)->show($ot->id);    
         $evaluador = User::find($ot->firma);  
+        $contratista = Contratistas::find($ot->contratista_id);
 
         $pdf = \PDF::loadView('reportes.ots.ot',compact('ot',
                                                         'cliente',
+                                                        'contratista',
                                                         'ot_calidad_placas',
                                                         'ot_servicios',
                                                         'ot_productos',
