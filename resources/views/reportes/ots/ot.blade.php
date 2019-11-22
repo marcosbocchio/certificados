@@ -7,12 +7,12 @@
  <style>
 
  
-@page { margin: 357px 30px 200px 60px !important;
+@page { margin: 397px 30px 200px 60px !important;
         padding: 0px 0px 0px 0px !important; }
 
 header {
     position:fixed;
-    top: -317px;    
+    top: -357px;    
     }
 
 main{
@@ -65,7 +65,7 @@ td b,td span {
 <body>
 
 <header>
-    <table style="text-align: center" class="bordered" width="100%">
+    <table style="text-align: center;border-bottom: none;" class="bordered" width="100%">
         <tbody>
             <tr>
                  <td>
@@ -204,11 +204,24 @@ td b,td span {
                         
                         </td>
                         <td style="font-size: 12px; width:240px" ><b>Fecha Estimada ensayo: </b>{{ date('d-m-Y', strtotime($ot->fecha_hora_estimada_ensayo)) }} </td>
-                    </tr>
+                    </tr>                    
                 </tbody>
               </table>   
             </td>
-        </tr>               
+        </tr>   
+        <tr>
+          <td>
+            <table>
+              <tbody>
+                  <tr>
+                      <td style="font-size: 12px; width:500px; height: 20px;" ><b>Datos de elementos a ensayar </b></td>
+                      <td style="font-size: 12px; width:100px;text-align: center;" ><b>Cantidad </b></td>
+                      <td style="font-size: 12px; width:70px;text-align: center;" ><b>Unidad </b></td>
+                  </tr> 
+              </tbody>
+            </table>
+          </td>
+        </tr>            
         </tbody>
     </table>
 </header>
@@ -282,12 +295,7 @@ td b,td span {
 <main>    
     <table width="100%" style="border-right: 2px solid black;border-left: 2px solid black;border-collapse: collapse;">
         <tbody>
-            <tr>
-                <td style="font-size: 12px; width:470px; height: 20px;" ><b>Datos de elementos a ensayar </b></td>
-                <td style="font-size: 12px; width:80px;text-align: center;" ><b>Cantidad </b></td>
-                <td style="font-size: 12px; width:80px;text-align: center;" ><b>Unidad </b></td>
-            </tr> 
-          
+
             @foreach ( $ot_servicios as $ot_servicio )
                   <tr> 
                     
