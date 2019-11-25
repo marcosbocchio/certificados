@@ -112,6 +112,8 @@ Route::group(['middleware' => 'auth:api'], function()
 
     Route::post('storage/referencia', 'StorageController@saveReferencia');
     Route::post('storage/documento', 'StorageController@saveDocumento');
+    Route::post('storage/placas', 'StorageController@savePlacas');
+
     Route::post('storage/logo-cliente', 'StorageController@saveLogoCliente');
     Route::post('storage/logo-contratista', 'StorageController@saveLogoContratista');
 
@@ -166,6 +168,11 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('ot_procedimientos_propios/ot/{id}','OtProcedimientosPropiosController@ProcedimientosPropiosOt');
     Route::get('ot_procedimientos_propios/ot/{id}/total','OtProcedimientosPropiosController@OtProcedimientosTotal');   
     
+    //placas
+    Route::resource('placas_ri','PlacasRiController');
+    Route::get('placas_ri/informe/{id}','PlacasRiController@PlacasInforme');
+
+
     //parte diario
 
     Route::get('partes/ot/{ot_id}/paginate', 'PartesController@paginate');   

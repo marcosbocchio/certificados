@@ -154,8 +154,7 @@
                                     <td width="10px"> <a :href="AppUrl + '/api/pdf/ot/' + ot.id " target="_blank"  class="btn btn-default btn-sm" title="Informe"><span class="fa fa-file-pdf-o"></span></a></td>
                                     <td v-if="!ot.firma" width="10px"> <a  @click="firmar(k)"  class="btn btn-default btn-sm" title="Firmar"><span class="glyphicon glyphicon-pencil"></span> </a></td>   
                                     <td v-else> <a class="btn btn-default btn-sm" title="Cerrar"><span class="glyphicon glyphicon-arrow-right"></span></a></td>
-
-
+                                  
                                 </tr>
                         </tbody>
                         </table>

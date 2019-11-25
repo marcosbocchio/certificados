@@ -108,14 +108,4 @@ class DocumentacionesRepository extends BaseRepository
 
   }
 
-  /*
-  public function saveProcedimientoPropio($documento,$ot_procedimieto_propio,$request){
-    
-
-    $ot_procedimieto_propio->documentacion_id = $documento->id;
-    $ot_procedimieto_propio->ot_id = $request->ot_id;   
-    $ot_procedimieto_propio->save();
-
-  }
-*/
 }
