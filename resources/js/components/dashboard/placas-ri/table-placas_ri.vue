@@ -5,13 +5,15 @@
       <table class="table table-hover table-striped">
         <thead>
           <tr>
-            <th>Descripción</th>
+            <th>Descripción</th>           
             <th colspan="2">Acción</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="registro in registros" :key="registro.id">           
-            <td>{{ registro.descripcion }}</td>
+            <td> {{ registro.descripcion }} <a :href="AppUrl + '/' + registro.path" target="_blank" class="btn btn-default btn-sm" title="descargar"><span class="fa fa-download"></span></a>    
+           
+            </td>
             <td width="10px">
               <a href="#" class="btn btn-warning btn-sm" title="Editar" v-on:click.prevent="$emit('editRegistroEvent',registro)"><span class="fa fa-edit"></span></a>  
             </td>
@@ -27,6 +29,7 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
   export default {
    
     props : {
@@ -34,6 +37,11 @@
         type : Array,
         required : true
       }         
-    }      
+    } ,  
+    
+    computed :{           
+         
+         ...mapState(['url','AppUrl'])
+     },
   }
 </script>
