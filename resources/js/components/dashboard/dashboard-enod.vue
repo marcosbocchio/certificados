@@ -147,7 +147,7 @@
                                     <td> {{ot.cliente.nombre_fantasia}}</td>         
                                     <td> {{ot.proyecto}}</td>         
                                     <td> {{ot.obra}}</td>         
-                                    <td> {{ot.fecha_hora}}</td>         
+                                    <td> {{ot.fecha_formateada}}</td>         
                                     <td> {{ot.estado}}</td>                                
                                     <td width="10px"> <a :href="AppUrl + '/area/enod/ots/' + ot.id + '/edit' "   class="btn btn-warning btn-sm" title="Editar"><span class="fa fa-edit"></span></a></td>
                                     <td width="10px"> <a :href="AppUrl + '/soldadores/ot/' + ot_id_selected"   class="btn btn-default btn-sm" title="Soldadores/Usuarios Cliente"><span class="fa fa-user"></span></a></td>

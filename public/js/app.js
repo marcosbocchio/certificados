@@ -65324,7 +65324,7 @@ var render = function() {
                         _vm._v(" "),
                         _c("td", [_vm._v(" " + _vm._s(ot.obra))]),
                         _vm._v(" "),
-                        _c("td", [_vm._v(" " + _vm._s(ot.fecha_hora))]),
+                        _c("td", [_vm._v(" " + _vm._s(ot.fecha_formateada))]),
                         _vm._v(" "),
                         _c("td", [_vm._v(" " + _vm._s(ot.estado))]),
                         _vm._v(" "),
