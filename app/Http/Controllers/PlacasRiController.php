@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\PlacaRiRequest;
 use App\Informe;
 use App\InformesRi;
 use App\PlacasRi;
@@ -65,7 +66,7 @@ class PlacasRiController extends Controller
      */
 
 
-    public function store(Request $request)
+    public function store(PlacaRiRequest $request)
 
     { 
         DB::beginTransaction();
@@ -123,7 +124,7 @@ class PlacasRiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PlacaRiRequest $request, $id)
     {
         DB::beginTransaction();
         try { 

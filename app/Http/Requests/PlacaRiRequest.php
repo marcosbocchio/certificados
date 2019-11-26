@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProductoRequest extends FormRequest
+class PlacaRiRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,21 +23,29 @@ class ProductoRequest extends FormRequest
      */
     public function rules()
     {
-     
-            return [
-                'codigo' => 'required|Max:10',
-                'descripcion'  =>'nullable|Max:100',
-                'unidad_medida' => 'required',
-            ];
-     
+            
+        return [
+
+            'descripcion'  =>'required|Max:20',
+            'path'         =>'required',       
+            
+        ];
     }
 
     public function attributes()
     {
             return [
-                'codigo'                   => 'código',
+              
                 'descripcion'                  => 'descripción',
+
             ];
      
+    }
+
+    public function messages()
+    {
+        return [
+            'path.required' =>'No hay archivo seleccionado'
+        ];
     }
 }
