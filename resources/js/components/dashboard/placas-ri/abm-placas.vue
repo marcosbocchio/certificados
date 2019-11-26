@@ -178,13 +178,20 @@ export default {
             this.HabilitarGuardar = false;          
 
             this.selectedFile = event.target.files[0];
-         
+            let fileName = this.selectedFile.name;
             let FileSize = this.selectedFile.size / 1024 / 1024; // in MB           
-            let FileType=this.selectedFile.type;         
-            console.log(FileType);
+            let FileType=this.selectedFile.type;      
+            let extension = (fileName.substring(fileName.lastIndexOf("."))).toLowerCase();
 
-          
-            console.log(this.selectedFile);
+            if(extension != '.dcm'){
+
+                 toastr.error('El tipo de archivo no es aceptado ');
+                 this.$refs.inputFile1.type = 'text';
+                 this.$refs.inputFile1.type = 'file';  
+                 this.selectedFile = null;
+                 return;     
+
+            }
 
             if(FileSize > 20 ){
                  event.preventDefault();

@@ -9993,11 +9993,19 @@ __webpack_require__(/*! vue-image-lightbox/dist/vue-image-lightbox.min.css */ ".
       this.isLoading_file = true;
       this.HabilitarGuardar = false;
       this.selectedFile = event.target.files[0];
+      var fileName = this.selectedFile.name;
       var FileSize = this.selectedFile.size / 1024 / 1024; // in MB           
 
       var FileType = this.selectedFile.type;
-      console.log(FileType);
-      console.log(this.selectedFile);
+      var extension = fileName.substring(fileName.lastIndexOf(".")).toLowerCase();
+
+      if (extension != '.dcm') {
+        toastr.error('El tipo de archivo no es aceptado ');
+        this.$refs.inputFile1.type = 'text';
+        this.$refs.inputFile1.type = 'file';
+        this.selectedFile = null;
+        return;
+      }
 
       if (FileSize > 20) {
         event.preventDefault();
