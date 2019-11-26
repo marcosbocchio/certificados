@@ -66977,7 +66977,7 @@ var render = function() {
                   _c(
                     "a",
                     {
-                      staticClass: "btn btn-default btn-sm",
+                      staticClass: "btn btn-default btn-xs",
                       attrs: {
                         href: _vm.AppUrl + "/" + registro.path,
                         target: "_blank",
