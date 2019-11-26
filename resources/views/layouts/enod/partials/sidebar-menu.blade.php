@@ -84,6 +84,20 @@
             
           </ul>
         </li>   
+       
+        <li class="treeview">
+          <a href="#">
+            <i class="fa  fa-cloud-download"></i>
+            <span>Download</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ route('software_download','INDUSTREX V4.2 Lite Setup.exe') }}"><i class="fa fa-download"></i>INDUSTREX V4.2 Lite</a></li>                      
+          </ul>
+        </li>
+       
 
       </ul>
     </section>

@@ -37,6 +37,7 @@ Route::group(['middleware' => ['permission:cliente']], function () {
 Route::group(['middleware' => ['auth']], function () {
 
   Route::get('institucionales/{id}','DocumentacionesController@institucionales')->name('institucionales');
+  Route::get('download/{name}','SoftwareDownloadController@software_download')->name('software_download');
   Route::get('operadores/ot/{id}','OtOperariosController@index')->name('otOperadores');
   Route::get('interno_equipos/ot/{id}','InternoEquiposController@OtInternoEquipos')->name('otInternoEquipos');
   Route::get('soldadores/ot/{id}','OtSoldadoresController@index')->name('otSoldadores');
@@ -92,13 +93,6 @@ Route::group(['middleware' => ['permission:enod']], function () {
 
 
 });
-
-//Route::get('documentaciones/operador/{id}', 'DocumentacionesController@operarios')->middleware('auth');
-
-//Route::get('area/enod/users', 'UserController@index');
-//Route::resource('users','UserController');
-
- //Route::get('test','TestController@index');
 
  Route::get('test', function () {
   return Auth::id();
