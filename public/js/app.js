@@ -65515,19 +65515,21 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
-        _c("th", [_vm._v("OT N°")]),
+        _c("th", { staticClass: "col-lg-1" }, [_vm._v("OT N°")]),
         _vm._v(" "),
-        _c("th", [_vm._v("CLIENTE")]),
+        _c("th", { staticClass: "col-lg-3" }, [_vm._v("CLIENTE")]),
         _vm._v(" "),
-        _c("th", [_vm._v("PROYECTO")]),
+        _c("th", { staticClass: "col-lg-3" }, [_vm._v("PROYECTO")]),
         _vm._v(" "),
-        _c("th", [_vm._v("OBRA N°")]),
+        _c("th", { staticClass: "col-lg-1" }, [_vm._v("OBRA N°")]),
         _vm._v(" "),
-        _c("th", [_vm._v("FECHA")]),
+        _c("th", { staticClass: "col-lg-2" }, [_vm._v("FECHA")]),
         _vm._v(" "),
-        _c("th", [_vm._v("ESTADO")]),
+        _c("th", { staticClass: "col-lg-1" }, [_vm._v("ESTADO")]),
         _vm._v(" "),
-        _c("th", { attrs: { colspan: "4" } }, [_vm._v("ACCIÓN")])
+        _c("th", { staticClass: "col-lg-1", attrs: { colspan: "4" } }, [
+          _vm._v("ACCIÓN")
+        ])
       ])
     ])
   },
@@ -65864,122 +65866,135 @@ var render = function() {
           { staticClass: "box-body" },
           [
             _c("div", { staticClass: "table-responsive" }, [
-              _c("table", { staticClass: "table table-hover table-striped" }, [
-                _vm._m(3),
-                _vm._v(" "),
-                _c(
-                  "tbody",
-                  _vm._l(_vm.ot_informes.data, function(ot_informe, k) {
-                    return _c("tr", { key: k }, [
-                      _c("td", [_vm._v(" " + _vm._s(ot_informe.metodo))]),
-                      _vm._v(" "),
-                      _c("td", [
-                        ot_informe.prefijo != null
-                          ? _c("div", [
-                              _vm._v(
-                                "\n                                         " +
-                                  _vm._s(ot_informe.prefijo) +
-                                  "-" +
-                                  _vm._s(ot_informe.numero_formateado) +
-                                  "\n                                    "
-                              )
-                            ])
-                          : _c("div", [
-                              _vm._v(
-                                "\n                                         " +
-                                  _vm._s(ot_informe.numero_formateado) +
-                                  "       \n                                    "
-                              )
-                            ])
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(" " + _vm._s(ot_informe.name))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(" " + _vm._s(ot_informe.fecha))]),
-                      _vm._v(" "),
-                      _c("td", { attrs: { width: "10px" } }, [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "btn btn-warning btn-sm",
-                            attrs: {
-                              href:
-                                _vm.AppUrl +
-                                "/area/enod/ot/" +
-                                _vm.ot_id_data +
-                                "/informe/" +
-                                ot_informe.id +
-                                "/edit",
-                              title: "Editar"
-                            }
-                          },
-                          [_c("span", { staticClass: "fa fa-edit" })]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("td", { attrs: { width: "10px" } }, [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "btn btn-default btn-sm",
-                            attrs: {
-                              href:
-                                _vm.AppUrl +
-                                "/api/pdf/informe/" +
-                                ot_informe.id,
-                              target: "_blank",
-                              title: "Informe"
-                            }
-                          },
-                          [_c("span", { staticClass: "fa fa-file-pdf-o" })]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      !ot_informe.firma
-                        ? _c("td", { attrs: { width: "10px" } }, [
-                            _c(
-                              "a",
-                              {
-                                staticClass: "btn btn-default btn-sm",
-                                attrs: { title: "Firmar" },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.firmar(k)
+              _c(
+                "table",
+                {
+                  staticClass: "table table-hover table-striped table-bordered"
+                },
+                [
+                  _vm._m(3),
+                  _vm._v(" "),
+                  _c(
+                    "tbody",
+                    _vm._l(_vm.ot_informes.data, function(ot_informe, k) {
+                      return _c("tr", { key: k }, [
+                        _c("td", [_vm._v(" " + _vm._s(ot_informe.metodo))]),
+                        _vm._v(" "),
+                        _c("td", [
+                          ot_informe.prefijo != null
+                            ? _c("div", [
+                                _vm._v(
+                                  "\n                                         " +
+                                    _vm._s(ot_informe.prefijo) +
+                                    "-" +
+                                    _vm._s(ot_informe.numero_formateado) +
+                                    "\n                                    "
+                                )
+                              ])
+                            : _c("div", [
+                                _vm._v(
+                                  "\n                                         " +
+                                    _vm._s(ot_informe.numero_formateado) +
+                                    "       \n                                    "
+                                )
+                              ])
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(" " + _vm._s(ot_informe.name))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(" " + _vm._s(ot_informe.fecha))]),
+                        _vm._v(" "),
+                        _c("td", { attrs: { width: "10px" } }, [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn btn-warning btn-sm",
+                              attrs: {
+                                href:
+                                  _vm.AppUrl +
+                                  "/area/enod/ot/" +
+                                  _vm.ot_id_data +
+                                  "/informe/" +
+                                  ot_informe.id +
+                                  "/edit",
+                                title: "Editar"
+                              }
+                            },
+                            [_c("span", { staticClass: "fa fa-edit" })]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { attrs: { width: "10px" } }, [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn btn-default btn-sm",
+                              attrs: {
+                                href:
+                                  _vm.AppUrl +
+                                  "/api/pdf/informe/" +
+                                  ot_informe.id,
+                                target: "_blank",
+                                title: "Informe"
+                              }
+                            },
+                            [_c("span", { staticClass: "fa fa-file-pdf-o" })]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        !ot_informe.firma
+                          ? _c("td", { attrs: { width: "10px" } }, [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "btn btn-default btn-sm",
+                                  attrs: { title: "Firmar" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.firmar(k)
+                                    }
                                   }
-                                }
-                              },
-                              [
-                                _c("span", {
-                                  staticClass: "glyphicon glyphicon-pencil"
-                                })
-                              ]
-                            )
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      ot_informe.metodo == "RI"
-                        ? _c("td", [
-                            _c(
-                              "a",
-                              {
-                                staticClass: "btn btn-default btn-sm",
-                                attrs: {
-                                  href:
-                                    _vm.AppUrl +
-                                    "/placas/informe/" +
-                                    ot_informe.id,
-                                  title: "Placas informe"
-                                }
-                              },
-                              [_vm._v("Placas")]
-                            )
-                          ])
-                        : _vm._e()
-                    ])
-                  }),
-                  0
-                )
-              ])
+                                },
+                                [
+                                  _c("span", {
+                                    staticClass: "glyphicon glyphicon-pencil"
+                                  })
+                                ]
+                              )
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        ot_informe.metodo == "RI"
+                          ? _c("td", [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "btn btn-default btn-sm",
+                                  attrs: {
+                                    href:
+                                      _vm.AppUrl +
+                                      "/placas/informe/" +
+                                      ot_informe.id,
+                                    title: "Placas informe"
+                                  }
+                                },
+                                [
+                                  _c("img", {
+                                    attrs: {
+                                      width: "16px",
+                                      src: _vm.AppUrl + "/img/carestream.ico"
+                                    }
+                                  })
+                                ]
+                              )
+                            ])
+                          : _vm._e()
+                      ])
+                    }),
+                    0
+                  )
+                ]
+              )
             ]),
             _vm._v(" "),
             _c(
@@ -66050,15 +66065,17 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
-        _c("th", [_vm._v("TIPO")]),
+        _c("th", { staticClass: "col-lg-1" }, [_vm._v("TIPO")]),
         _vm._v(" "),
-        _c("th", [_vm._v("N°")]),
+        _c("th", { staticClass: "col-lg-2" }, [_vm._v("N°")]),
         _vm._v(" "),
-        _c("th", [_vm._v("USUARIO ALTA")]),
+        _c("th", { staticClass: "col-lg-6" }, [_vm._v("USUARIO ALTA")]),
         _vm._v(" "),
-        _c("th", [_vm._v("FECHA")]),
+        _c("th", { staticClass: "col-lg-2" }, [_vm._v("FECHA")]),
         _vm._v(" "),
-        _c("th", { attrs: { colspan: "4" } }, [_vm._v("ACCIÓN")])
+        _c("th", { staticClass: "col-lg-1", attrs: { colspan: "4" } }, [
+          _vm._v("ACCIÓN")
+        ])
       ])
     ])
   }
@@ -99065,8 +99082,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_lazyload__WEBPACK_IMPORTED_MO
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuejs_progress_bar__WEBPACK_IMPORTED_MODULE_5___default.a);
 var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
   state: {
-    url:  false ? undefined : "http://localhost:8000/api",
-    AppUrl:  false ? undefined : "http://localhost:8000",
+    url:  false ? undefined : "http://certificados.test/api",
+    AppUrl:  false ? undefined : "http://certificados.test",
     contratistas: [],
     provincias: [],
     localidades: [],
@@ -105229,8 +105246,8 @@ var toastrDefault = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/sass/toastr.scss */"./resources/sass/toastr.scss");
+__webpack_require__(/*! C:\Users\bocch\code\certificados\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\bocch\code\certificados\resources\sass\toastr.scss */"./resources/sass/toastr.scss");
 
 
 /***/ })

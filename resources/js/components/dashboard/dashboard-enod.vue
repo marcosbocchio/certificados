@@ -132,13 +132,13 @@
                         <table class="table table-hover table-striped">
                             <thead>
                                 <tr>
-                                    <th>OT N°</th>
-                                    <th>CLIENTE</th>    
-                                    <th>PROYECTO</th>  
-                                    <th>OBRA N°</th>     
-                                    <th>FECHA</th>     
-                                    <th>ESTADO</th>                        
-                                    <th colspan="4">ACCIÓN</th>
+                                    <th class="col-lg-1">OT N°</th>
+                                    <th class="col-lg-3" >CLIENTE</th>    
+                                    <th class="col-lg-3">PROYECTO</th>  
+                                    <th class="col-lg-1">OBRA N°</th>     
+                                    <th class="col-lg-2">FECHA</th>     
+                                    <th class="col-lg-1">ESTADO</th>                        
+                                    <th class="col-lg-1" colspan="4">ACCIÓN</th>
                                 </tr>
                             </thead>
                             <tbody>

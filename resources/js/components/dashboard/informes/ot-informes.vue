@@ -46,14 +46,14 @@
              
                 <div class="box-body">                        
                     <div class="table-responsive">          
-                        <table class="table table-hover table-striped">
+                        <table class="table table-hover table-striped table-bordered">
                             <thead>
                                 <tr>
-                                    <th>TIPO</th>   
-                                    <th>N°</th>
-                                    <th>USUARIO ALTA</th> 
-                                    <th>FECHA</th>                                                  
-                                    <th colspan="4">ACCIÓN</th>
+                                    <th class="col-lg-1">TIPO</th>   
+                                    <th class="col-lg-2">N°</th>
+                                    <th class="col-lg-6">USUARIO ALTA</th> 
+                                    <th class="col-lg-2" >FECHA</th>                                                  
+                                    <th class="col-lg-1" colspan="4">ACCIÓN</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -71,8 +71,8 @@
                                     <td> {{ot_informe.fecha}}</td>              
                                     <td width="10px"> <a :href="AppUrl + '/area/enod/ot/' + ot_id_data + '/informe/' + ot_informe.id +'/edit' "   class="btn btn-warning btn-sm" title="Editar"><span class="fa fa-edit"></span></a></td>
                                     <td width="10px"> <a :href="AppUrl + '/api/pdf/informe/' + ot_informe.id " target="_blank"  class="btn btn-default btn-sm" title="Informe"><span class="fa fa-file-pdf-o"></span></a></td>  
-                                    <td v-if="!ot_informe.firma" width="10px"> <a  @click="firmar(k)"  class="btn btn-default btn-sm" title="Firmar"><span class="glyphicon glyphicon-pencil"></span> </a></td>   
-                                    <td v-if="ot_informe.metodo == 'RI'"> <a :href="AppUrl + '/placas/informe/' + ot_informe.id"   class="btn btn-default btn-sm" title="Placas informe">Placas</a></td> 
+                                    <td v-if="!ot_informe.firma" width="10px"> <a  @click="firmar(k)"  class="btn btn-default btn-sm" title="Firmar"><span class="glyphicon glyphicon-pencil"></span></a></td>   
+                                    <td v-if="ot_informe.metodo == 'RI'"> <a :href="AppUrl + '/placas/informe/' + ot_informe.id"   class="btn btn-default btn-sm" title="Placas informe"><img width="16px" :src="AppUrl + '/img/carestream.ico'"></a></td> 
 
                                 </tr>                       
                                  
