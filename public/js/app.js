@@ -9287,6 +9287,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -65924,6 +65925,32 @@ var render = function() {
                           )
                         ]),
                         _vm._v(" "),
+                        ot_informe.metodo == "RI"
+                          ? _c("td", [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "btn btn-default btn-sm",
+                                  attrs: {
+                                    href:
+                                      _vm.AppUrl +
+                                      "/placas/informe/" +
+                                      ot_informe.id,
+                                    title: "Placas informe"
+                                  }
+                                },
+                                [
+                                  _c("img", {
+                                    attrs: {
+                                      width: "16px",
+                                      src: _vm.AppUrl + "/img/carestream.ico"
+                                    }
+                                  })
+                                ]
+                              )
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
                         _c("td", { attrs: { width: "10px" } }, [
                           _c(
                             "a",
@@ -65962,33 +65989,23 @@ var render = function() {
                                 ]
                               )
                             ])
-                          : _vm._e(),
-                        _vm._v(" "),
-                        ot_informe.metodo == "RI"
-                          ? _c("td", [
+                          : _c("td", [
                               _c(
                                 "a",
                                 {
                                   staticClass: "btn btn-default btn-sm",
-                                  attrs: {
-                                    href:
-                                      _vm.AppUrl +
-                                      "/placas/informe/" +
-                                      ot_informe.id,
-                                    title: "Placas informe"
-                                  }
+                                  attrs: { title: "Firmado" }
                                 },
                                 [
                                   _c("img", {
                                     attrs: {
                                       width: "16px",
-                                      src: _vm.AppUrl + "/img/carestream.ico"
+                                      src: _vm.AppUrl + "/img/firma.png"
                                     }
                                   })
                                 ]
                               )
                             ])
-                          : _vm._e()
                       ])
                     }),
                     0
