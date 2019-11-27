@@ -25,11 +25,19 @@ class AddForeignKeyDetalleUsPaUsTable extends Migration
                 
             $table->bigInteger('detalle_us_referencia_id')
                 ->unsigned()
-                ->after('id');
+                ->after('informe_us_id');
 
             $table->foreign('detalle_us_referencia_id')
                 ->references('id')
                 ->on('detalles_us_referencias');
+
+            $table->bigInteger('diametro_id')
+                ->unsigned()
+                ->after('detalle_us_referencia_id');
+
+            $table->foreign('diametro_id')
+                ->references('id')
+                ->on('diametros_espesor');
                   
         });
     }
@@ -43,11 +51,14 @@ class AddForeignKeyDetalleUsPaUsTable extends Migration
     {
         Schema::table('detalle_us_pa_us', function (Blueprint $table) { 
 
-            $table->dropForeign(['informe_us_id']);
-            $table->dropColumn('informe_us_id');
+           $table->dropForeign(['informe_us_id']);
+           $table->dropColumn('informe_us_id');
 
-            $table->dropForeign(['detalle_us_referencia_id']);
-            $table->dropColumn('detalle_us_referencia_id');
+           $table->dropForeign(['detalle_us_referencia_id']);
+           $table->dropColumn('detalle_us_referencia_id');
+
+           $table->dropForeign(['diametro_id']);
+           $table->dropColumn('diametro_id');
 
         });
     }

@@ -23,6 +23,13 @@ class AddForeignKeyInformesUsMeTable extends Migration
                 ->references('id')
                 ->on('informes_us'); 
                   
+            $table->bigInteger('diametro_id')
+                ->unsigned()
+                ->after('informe_us_id');
+
+            $table->foreign('diametro_id')
+                ->references('id')
+                ->on('diametros_espesor');
         });
     }
 
@@ -37,6 +44,9 @@ class AddForeignKeyInformesUsMeTable extends Migration
 
             $table->dropForeign(['informe_us_id']);
             $table->dropColumn('informe_us_id');
+
+            $table->dropForeign(['diametro_id']);
+            $table->dropColumn('diametro_id');
 
         });
     }
