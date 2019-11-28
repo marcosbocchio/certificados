@@ -14140,6 +14140,201 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -14176,7 +14371,37 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       espesor: '',
       espesor_chapa: '',
       isVarios: false,
-      isChapa: false
+      isChapa: false,
+      eps: '',
+      pqr: '',
+      tecnica: '',
+      interno_equipo: '',
+      procedimiento: '',
+      norma_ensayo: '',
+      norma_evaluacion: '',
+      ejecutor_ensayo: '',
+      estado_superficie: '',
+      encoder: '',
+      agente_acoplamiento: '',
+      zapata: '',
+      palpador: '',
+      frecuencia: '',
+      angulo_apertura: '',
+      rango: '',
+      posicion: '',
+      curva_elevacion: '',
+      block_calibracion: '',
+      block_sensibilidad: '',
+      tipo_reflector: '',
+      refector_referencia: '',
+      ganancia_referencia: '',
+      nivel_registro: '',
+      correccion_transferencia: '',
+      adicional_barrido: '',
+      amplificacion_total: '',
+      tecnicas: [],
+      palpadores: [],
+      estados_superficies: []
     };
   },
   created: function created() {
@@ -14191,6 +14416,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     });
     this.$store.dispatch('loadNormaEvaluaciones');
     this.$store.dispatch('loadNormaEnsayos');
+    this.getEstadosSuperficies();
+    this.getPalpadores();
     this.$store.dispatch('loadEjecutorEnsayo', this.otdata.id); //  this.setEdit();      
   },
   mounted: function mounted() {
@@ -14249,6 +14476,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var urlRegistros = 'tecnicas/metodo/' + this.metodo + '?api_token=' + Laravel.user.api_token;
       axios.get(urlRegistros).then(function (response) {
         _this3.tecnicas = response.data;
+      });
+    },
+    getEstadosSuperficies: function getEstadosSuperficies() {
+      var _this4 = this;
+
+      axios.defaults.baseURL = this.url;
+      var urlRegistros = 'estados_superficies' + '?api_token=' + Laravel.user.api_token;
+      axios.get(urlRegistros).then(function (response) {
+        _this4.estados_superficies = response.data;
+      });
+    },
+    getPalpadores: function getPalpadores() {
+      var _this5 = this;
+
+      axios.defaults.baseURL = this.url;
+      var urlRegistros = 'palpadores' + '?api_token=' + Laravel.user.api_token;
+      axios.get(urlRegistros).then(function (response) {
+        _this5.palpadores = response.data;
       });
     },
     getEspesores: function getEspesores() {
@@ -70352,13 +70597,6 @@ var render = function() {
                           options: _vm.interno_equipos_activos,
                           label: "nro_interno"
                         },
-                        on: {
-                          input: function($event) {
-                            return _vm.getFuente(
-                              _vm.interno_equipo.interno_fuente_id
-                            )
-                          }
-                        },
                         scopedSlots: _vm._u([
                           {
                             key: "option",
@@ -73350,9 +73588,7 @@ var render = function() {
             _c("div", { staticClass: "box-body" }, [
               _c("div", { staticClass: "col-md-3" }, [
                 _c("div", { staticClass: "form-group" }, [
-                  _c("label", { attrs: { for: "fecha" } }, [
-                    _vm._v("Fecha (*)")
-                  ]),
+                  _c("label", { attrs: { for: "fecha" } }, [_vm._v("Fecha *")]),
                   _vm._v(" "),
                   _c(
                     "div",
@@ -73412,7 +73648,7 @@ var render = function() {
               _c("div", { staticClass: "col-md-3" }, [
                 _c("div", { staticClass: "form-group" }, [
                   _c("label", { attrs: { for: "componente" } }, [
-                    _vm._v("Componente (*)")
+                    _vm._v("Componente *")
                   ]),
                   _vm._v(" "),
                   _c("input", {
@@ -73445,7 +73681,7 @@ var render = function() {
                   { staticClass: "form-group" },
                   [
                     _c("label", { attrs: { for: "materiales" } }, [
-                      _vm._v("Material (*)")
+                      _vm._v("Material *")
                     ]),
                     _vm._v(" "),
                     _c("v-select", {
@@ -73472,7 +73708,7 @@ var render = function() {
               _c("div", { staticClass: "col-md-1 size-1-5" }, [
                 _c("div", { staticClass: "form-group" }, [
                   _c("label", { attrs: { for: "plano_isom" } }, [
-                    _vm._v("Plano / Isom (*)")
+                    _vm._v("Plano / Isom *")
                   ]),
                   _vm._v(" "),
                   _c("input", {
@@ -73505,7 +73741,7 @@ var render = function() {
                   { staticClass: "form-group" },
                   [
                     _c("label", { attrs: { for: "Diametro" } }, [
-                      _vm._v("Diametro (*)")
+                      _vm._v("Diametro *")
                     ]),
                     _vm._v(" "),
                     _c("v-select", {
@@ -73586,6 +73822,850 @@ var render = function() {
                           return
                         }
                         _vm.espesor_chapa = $event.target.value
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-3" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "eps" } }, [_vm._v("EPS")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.eps,
+                        expression: "eps"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", id: "eps" },
+                    domProps: { value: _vm.eps },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.eps = $event.target.value
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-3" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "eps" } }, [_vm._v("PQR")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.pqr,
+                        expression: "pqr"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", id: "pqr" },
+                    domProps: { value: _vm.pqr },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.pqr = $event.target.value
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-3" }, [
+                _c(
+                  "div",
+                  { staticClass: "form-group" },
+                  [
+                    _c("label", { attrs: { for: "tecnicas" } }, [
+                      _vm._v("Tecnica *")
+                    ]),
+                    _vm._v(" "),
+                    _c("v-select", {
+                      attrs: {
+                        label: "descripcion",
+                        options: _vm.tecnicas,
+                        id: "tecnicas"
+                      },
+                      model: {
+                        value: _vm.tecnica,
+                        callback: function($$v) {
+                          _vm.tecnica = $$v
+                        },
+                        expression: "tecnica"
+                      }
+                    })
+                  ],
+                  1
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-3" }, [
+                _c(
+                  "div",
+                  { staticClass: "form-group" },
+                  [
+                    _c("label", [_vm._v("Equipo *")]),
+                    _vm._v(" "),
+                    _c("v-select", {
+                      attrs: {
+                        options: _vm.interno_equipos_activos,
+                        label: "nro_interno"
+                      },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "option",
+                          fn: function(option) {
+                            return [
+                              _c("span", { staticClass: "upSelect" }, [
+                                _vm._v(_vm._s(option.nro_interno))
+                              ]),
+                              _vm._v(" "),
+                              _c("br"),
+                              _vm._v(" "),
+                              _c("span", { staticClass: "downSelect" }, [
+                                _vm._v(" " + _vm._s(option.equipo.codigo) + " ")
+                              ])
+                            ]
+                          }
+                        }
+                      ]),
+                      model: {
+                        value: _vm.interno_equipo,
+                        callback: function($$v) {
+                          _vm.interno_equipo = $$v
+                        },
+                        expression: "interno_equipo"
+                      }
+                    })
+                  ],
+                  1
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-3" }, [
+                _c(
+                  "div",
+                  { staticClass: "form-group" },
+                  [
+                    _c("label", { attrs: { for: "procRadio" } }, [
+                      _vm._v("Procedimiento US *")
+                    ]),
+                    _vm._v(" "),
+                    _c("v-select", {
+                      attrs: {
+                        label: "titulo",
+                        options: _vm.procedimientos,
+                        id: "procRadio"
+                      },
+                      model: {
+                        value: _vm.procedimiento,
+                        callback: function($$v) {
+                          _vm.procedimiento = $$v
+                        },
+                        expression: "procedimiento"
+                      }
+                    })
+                  ],
+                  1
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-3" }, [
+                _c(
+                  "div",
+                  { staticClass: "form-group" },
+                  [
+                    _c("label", [_vm._v("Norma Evaluación *")]),
+                    _vm._v(" "),
+                    _c("v-select", {
+                      attrs: {
+                        label: "descripcion",
+                        options: _vm.norma_evaluaciones
+                      },
+                      model: {
+                        value: _vm.norma_evaluacion,
+                        callback: function($$v) {
+                          _vm.norma_evaluacion = $$v
+                        },
+                        expression: "norma_evaluacion"
+                      }
+                    })
+                  ],
+                  1
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "clearfix" }),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-3" }, [
+                _c(
+                  "div",
+                  { staticClass: "form-group" },
+                  [
+                    _c("label", [_vm._v("Norma Ensayo *")]),
+                    _vm._v(" "),
+                    _c("v-select", {
+                      attrs: {
+                        label: "descripcion",
+                        options: _vm.norma_ensayos
+                      },
+                      model: {
+                        value: _vm.norma_ensayo,
+                        callback: function($$v) {
+                          _vm.norma_ensayo = $$v
+                        },
+                        expression: "norma_ensayo"
+                      }
+                    })
+                  ],
+                  1
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-3" }, [
+                _c(
+                  "div",
+                  { staticClass: "form-group" },
+                  [
+                    _c("label", [_vm._v("Estado Superf. *")]),
+                    _vm._v(" "),
+                    _c("v-select", {
+                      attrs: {
+                        label: "codigo",
+                        options: _vm.estados_superficies
+                      },
+                      model: {
+                        value: _vm.estado_superficie,
+                        callback: function($$v) {
+                          _vm.estado_superficie = $$v
+                        },
+                        expression: "estado_superficie"
+                      }
+                    })
+                  ],
+                  1
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-3" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "encoder" } }, [
+                    _vm._v("Encoder")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.encoder,
+                        expression: "encoder"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", id: "encoder" },
+                    domProps: { value: _vm.encoder },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.encoder = $event.target.value
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-3" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "agente_acoplamiento" } }, [
+                    _vm._v("Agente Acopla.")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.agente_acoplamiento,
+                        expression: "agente_acoplamiento"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", id: "agente_acoplamiento" },
+                    domProps: { value: _vm.agente_acoplamiento },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.agente_acoplamiento = $event.target.value
+                      }
+                    }
+                  })
+                ])
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "box box-danger" }, [
+            _c("div", { staticClass: "box-body" }, [
+              _c("div", { staticClass: "col-md-2" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "zapata", title: "Zapata" } }, [
+                    _vm._v("Zapata*")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.zapata,
+                        expression: "zapata"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", id: "zapata" },
+                    domProps: { value: _vm.zapata },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.zapata = $event.target.value
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-2" }, [
+                _c(
+                  "div",
+                  { staticClass: "form-group" },
+                  [
+                    _c(
+                      "label",
+                      { attrs: { for: "palpador", title: "Palpador" } },
+                      [_vm._v("Palpador*")]
+                    ),
+                    _vm._v(" "),
+                    _c("v-select", {
+                      attrs: {
+                        label: "codigo",
+                        options: _vm.palpadores,
+                        id: "palpador"
+                      },
+                      model: {
+                        value: _vm.palpador,
+                        callback: function($$v) {
+                          _vm.palpador = $$v
+                        },
+                        expression: "palpador"
+                      }
+                    })
+                  ],
+                  1
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-2" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c(
+                    "label",
+                    { attrs: { for: "frecuencia", title: "Frecuencia" } },
+                    [_vm._v("Frec.*")]
+                  ),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.frecuencia,
+                        expression: "frecuencia"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", id: "frecuencia" },
+                    domProps: { value: _vm.frecuencia },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.frecuencia = $event.target.value
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-1" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c(
+                    "label",
+                    {
+                      attrs: {
+                        for: "angulo_apertura",
+                        title: "Ángulo Apertura"
+                      }
+                    },
+                    [_vm._v("Ang. Ap. *")]
+                  ),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.angulo_apertura,
+                        expression: "angulo_apertura"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", id: "angulo_apertura" },
+                    domProps: { value: _vm.angulo_apertura },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.angulo_apertura = $event.target.value
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-1" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "rango" } }, [_vm._v("Rango *")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.rango,
+                        expression: "rango"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", id: "rango" },
+                    domProps: { value: _vm.rango },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.rango = $event.target.value
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-1" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c(
+                    "label",
+                    { attrs: { for: "posicion", title: "Posición" } },
+                    [_vm._v("Pos.*")]
+                  ),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.posicion,
+                        expression: "posicion"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", id: "posicion" },
+                    domProps: { value: _vm.posicion },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.posicion = $event.target.value
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-1" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c(
+                    "label",
+                    {
+                      attrs: {
+                        for: "curva_elevacion",
+                        title: "Curva Elevación"
+                      }
+                    },
+                    [_vm._v("Curva. Elav.*")]
+                  ),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.curva_elevacion,
+                        expression: "curva_elevacion"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", id: "curva_elevacion" },
+                    domProps: { value: _vm.curva_elevacion },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.curva_elevacion = $event.target.value
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-1" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c(
+                    "label",
+                    {
+                      attrs: {
+                        for: "block_calibracion",
+                        title: "Block Calibración"
+                      }
+                    },
+                    [_vm._v("Block. cal.*")]
+                  ),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.block_calibracion,
+                        expression: "block_calibracion"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", id: "block_calibracion" },
+                    domProps: { value: _vm.block_calibracion },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.block_calibracion = $event.target.value
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-2" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c(
+                    "label",
+                    {
+                      attrs: {
+                        for: "block_sensibilidad",
+                        title: "Block Sensibilidad"
+                      }
+                    },
+                    [_vm._v("Block. Sen.*")]
+                  ),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.block_sensibilidad,
+                        expression: "block_sensibilidad"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "number", id: "block_sensibilidad" },
+                    domProps: { value: _vm.block_sensibilidad },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.block_sensibilidad = $event.target.value
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-1" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c(
+                    "label",
+                    {
+                      attrs: { for: "tipo_reflector", title: "Tipo Reflector" }
+                    },
+                    [_vm._v("Tipo Re.*")]
+                  ),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.tipo_reflector,
+                        expression: "tipo_reflector"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", id: "tipo_reflector" },
+                    domProps: { value: _vm.tipo_reflector },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.tipo_reflector = $event.target.value
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-1" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c(
+                    "label",
+                    {
+                      attrs: {
+                        for: "refector_referencia",
+                        title: "Reflector Referencia"
+                      }
+                    },
+                    [_vm._v("Re. Ref.*")]
+                  ),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.refector_referencia,
+                        expression: "refector_referencia"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", id: "refector_referencia" },
+                    domProps: { value: _vm.refector_referencia },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.refector_referencia = $event.target.value
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-1" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c(
+                    "label",
+                    {
+                      attrs: {
+                        for: "ganancia_referencia",
+                        title: "Ganancia Referencia"
+                      }
+                    },
+                    [_vm._v("Gan. Ref.*")]
+                  ),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.ganancia_referencia,
+                        expression: "ganancia_referencia"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", id: "ganancia_referencia" },
+                    domProps: { value: _vm.ganancia_referencia },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.ganancia_referencia = $event.target.value
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-2" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c(
+                    "label",
+                    {
+                      attrs: { for: "nivel_registro", title: "Nivel Registro" }
+                    },
+                    [_vm._v("Nivel. Reg.*")]
+                  ),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.nivel_registro,
+                        expression: "nivel_registro"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", id: "nivel_registro" },
+                    domProps: { value: _vm.nivel_registro },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.nivel_registro = $event.target.value
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-2" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c(
+                    "label",
+                    {
+                      attrs: {
+                        for: "correccion_transferencia",
+                        title: "Corrección Transferencia"
+                      }
+                    },
+                    [_vm._v("Correc. Trans*")]
+                  ),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.correccion_transferencia,
+                        expression: "correccion_transferencia"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", id: "correccion_transferencia" },
+                    domProps: { value: _vm.correccion_transferencia },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.correccion_transferencia = $event.target.value
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-2" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c(
+                    "label",
+                    {
+                      attrs: {
+                        for: "adicional_barrido",
+                        title: "Adicional Baarrido"
+                      }
+                    },
+                    [_vm._v("Adic. Barrido*")]
+                  ),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.adicional_barrido,
+                        expression: "adicional_barrido"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", id: "adicional_barrido" },
+                    domProps: { value: _vm.adicional_barrido },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.adicional_barrido = $event.target.value
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-2" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c(
+                    "label",
+                    { attrs: { for: "amplificacion_total", title: "Zapata" } },
+                    [_vm._v("Ampli. Total*")]
+                  ),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.amplificacion_total,
+                        expression: "amplificacion_total"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", id: "amplificacion_total" },
+                    domProps: { value: _vm.amplificacion_total },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.amplificacion_total = $event.target.value
                       }
                     }
                   })

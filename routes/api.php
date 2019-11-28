@@ -76,6 +76,8 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('tecnicas/metodo/{metodo}', 'TecnicasController@tecnicasMetodo');
     Route::get('tecnicas_graficos/{id}', 'TecnicasGraficosController@index');
     Route::get('tecnica_distancias/{id}/diametro/{diametro}', 'TecnicaDistanciasController@TecnicaDistanciasDiametro');
+    Route::resource('estados_superficies', 'EstadosSuperficiesController');
+    Route::resource('palpadores', 'PalpadoresController');
 
     Route::get('roles/paginate', 'RolesController@paginate');      
     Route::resource('roles', 'RolesController');

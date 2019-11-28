@@ -59,5 +59,23 @@ class TecnicasTable extends Seeder
             'descripcion'   =>'Residual',      
             'metodo_ensayo_id'  =>'3'                 
         ]);
+
+        Tecnicas::create([
+            'codigo'        =>'US',          
+            'descripcion'   =>'US convencional',      
+            'metodo_ensayo_id'  =>'5'                 
+        ]);
+
+        Tecnicas::create([
+            'codigo'        =>'PA',          
+            'descripcion'   =>'Phased array',      
+            'metodo_ensayo_id'  =>'5'                 
+        ]);
+
+        Tecnicas::create([
+            'codigo'        =>'ME',          
+            'descripcion'   =>'Medición de Espesores',      
+            'metodo_ensayo_id'  =>'5'                 
+        ]);
     }
 }
