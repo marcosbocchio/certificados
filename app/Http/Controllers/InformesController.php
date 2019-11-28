@@ -65,13 +65,19 @@ class InformesController extends Controller
             case 'RI':
                 return redirect()->route('InformeRiCreate',array('ot_id' => $ot_id));
                 break;  
+
             case 'PM':
                 return redirect()->route('InformePmCreate',array('ot_id' => $ot_id));
                 break;
+
             case 'LP':
                 return redirect()->route('InformeLpCreate',array('ot_id' => $ot_id));
                 break;      
-         
+
+            case 'US':
+                return redirect()->route('InformeUsCreate',array('ot_id' => $ot_id));
+                break; 
+        
         }
 
     }

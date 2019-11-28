@@ -15,7 +15,7 @@ class CreateDiametrosEspesorTable extends Migration
     {
         Schema::create('diametros_espesor', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('diametro','5');           
+            $table->string('diametro','6');           
             $table->decimal('espesor','6','2');
             $table->timestamps();
         });
