@@ -14,16 +14,16 @@ use App\NormaEnsayos;
 use App\NormaEvaluaciones;
 use App\OtOperarios;
 use App\OtProcedimientosPropios;
-use App\Iluminaciones;
 use App\InternoEquipos;
 use App\Documentaciones;
-use App\Fuentes;
+use App\Iluminaciones;
 use App\DiametrosEspesor;
+use App\Contratistas;
+use App\Fuentes;
 use App\MetodosTrabajoLp;
 use App\TipoLiquidos;
 use App\AplicacionesLp;
 use App\User;
-use App\Contratistas;
 
 
 class PdfInformesLpController extends Controller
@@ -44,7 +44,6 @@ class PdfInformesLpController extends Controller
          $procedimiento_inf = Documentaciones::findOrFail($ot_procedimiento_propio->documentacion_id); 
          $metodo = MetodosTrabajoLp::findOrFail($informe_lp->metodo_trabajo_lp_id);        
          $equipo = InternoEquipos::findOrFail($informe->interno_equipo_id)->with('equipo')->first(); 
-         
          $ot_operador = OtOperarios::findOrFail($informe->ejecutor_ensayo_id);         
          $penetrante = TipoLiquidos::findOrFail($informe_lp->penetrante_tipo_liquido_id);
          $penetrante_aplicacion = AplicacionesLp::findOrFail($informe_lp->penetrante_aplicacion_lp_id);         
@@ -77,7 +76,6 @@ class PdfInformesLpController extends Controller
                                                                 'norma_evaluacion',
                                                                 'procedimiento_inf',                                                               
                                                                 'fuente',
-                                                                'tipo_pelicula',
                                                                 'diametro_espesor',
                                                                 'ici',                                                                
                                                                 'equipo',

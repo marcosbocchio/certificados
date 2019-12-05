@@ -157,17 +157,14 @@ class InformesController extends Controller
                  $informe->procedimiento_informe_id = $request->procedimiento['ot_procedimientos_propios_id'];
           }
 
-        if ($request->diametro['diametro'] =='CHAPA' || 'VARIOS'){
+        if (($request->diametro['diametro'] =='CHAPA') || ($request->diametro['diametro'] =='VARIOS')){
     
           $diametro_espesor = DiametrosEspesor::where('diametro',$request->diametro['diametro'])                                 
                                               ->first(); 
     
           $informe->diametro_espesor_id = $diametro_espesor['id'];
 
-          if($request->diametro['diametro'] =='CHAPA'){
-
-             $informe->espesor_chapa       = $request->espesor_chapa;
-          }
+          
     
         }else{
     
@@ -178,7 +175,7 @@ class InformesController extends Controller
           $informe->diametro_espesor_id = $diametro_espesor['id'];
     
         } 
-    
+        $informe->espesor_chapa       = $request->espesor_chapa;
         $informe->interno_equipo_id = $request->interno_equipo['id'];
         $informe->metodo_ensayo_id  = $metodo_ensayo['id'];
         $informe->norma_evaluacion_id = $request->norma_evaluacion['id'];
