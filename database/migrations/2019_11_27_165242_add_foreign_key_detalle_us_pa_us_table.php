@@ -49,7 +49,7 @@ class AddForeignKeyDetalleUsPaUsTable extends Migration
            $table->dropColumn('informe_us_id');
 
            $table->dropForeign(['detalle_us_pa_us_referencia_id']);
-           $table->dropColumn('detalle_us_pa_us_referencia_id');
+           $table->dropColumn('detalles_us_pa_us_referencia_id');
   
 
         });
