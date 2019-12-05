@@ -13,7 +13,7 @@ class CreateDetallesUsReferenciasTable extends Migration
      */
     public function up()
     {
-        Schema::create('detalles_us_referencias', function (Blueprint $table) {
+        Schema::create('detalles_us_pa_us_referencias', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('descripcion',500)->nullable();
             $table->string('path1')->nullable();
@@ -32,6 +32,6 @@ class CreateDetallesUsReferenciasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('detalles_us_referencias');
+        Schema::dropIfExists('detalles_us_pa_us_referencias');
     }
 }

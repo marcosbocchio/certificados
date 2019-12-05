@@ -16,9 +16,10 @@ class CreateDetalleUsPaUsTable extends Migration
         Schema::create('detalle_us_pa_us', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('elemento',10);
+            $table->string('diametro',10);
             $table->integer('nro_indicacion');
             $table->string('posicion_examen',5);
-            $table->string('angulo_indicencia',10);
+            $table->string('angulo_incidencia',10);
             $table->string('camino_sonico',6);
             $table->integer('x');
             $table->integer('y');

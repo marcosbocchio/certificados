@@ -43,7 +43,9 @@ class DatabaseSeeder extends Seeder
         $this->call(IluminacionesTableSeeder::class);
         $this->call(MetodosTrabajoLpTableSeeder::class); 
         $this->call(AplicacionesLpTableSeeder::class); 
-        $this->call(EstadosSuperficiesSeeder::class);              
+        $this->call(EstadosSuperficiesSeeder::class);    
+        $this->call(GeneratricesSeeder::class);            
+      
       
       // factory('App\Clientes', 2500)->create();
      

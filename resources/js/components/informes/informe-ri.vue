@@ -796,10 +796,13 @@ export default {
             this.isRX = (val.codigo =='RX') ? true : false;
                 
         },
+        
         diametro : function(val){
+            if(val){
 
-            this.isChapa = (val.diametro =='CHAPA') ? true : false;
-                
+                  this.isChapa = (val.diametro =='CHAPA') ? true : false;
+
+            }   
         },
         formato : function (val){
 
@@ -914,7 +917,9 @@ export default {
             this.espesor=''; 
             this.distancia_fuente_pelicula='';   
             this.tecnica ='';      
-            this.$store.dispatch('loadEspesores',this.diametro.diametro_code);
+            if(this.diametro){    
+               this.$store.dispatch('loadEspesores',this.diametro.diametro_code);
+             }
         },
         
 
@@ -1278,8 +1283,8 @@ export default {
                         'procedimiento' : this.procedimiento,           
                         'observaciones':  this.observaciones,
                         'material':       this.material,
-                        'diametro':       this.diametro.diametro,
-                        'espesor':        this.espesor.espesor,
+                        'diametro':       this.diametro,
+                        'espesor':        this.espesor,
                         'espesor_chapa' :  this.espesor_chapa, 
                         'interno_equipo'   :  this.interno_equipo,  
                         'kv'               :this.kv,
@@ -1364,8 +1369,8 @@ export default {
                         'procedimiento' : this.procedimiento,           
                         'observaciones':  this.observaciones,
                         'material':       this.material,
-                        'diametro':       this.diametro.diametro,
-                        'espesor':        this.espesor.espesor,
+                        'diametro':       this.diametro,
+                        'espesor':        this.espesor,
                         'espesor_chapa'    :this.espesor_chapa, 
                         'interno_equipo'   :this.interno_equipo,   
                         'kv'               :this.kv,

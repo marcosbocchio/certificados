@@ -23,21 +23,15 @@ class AddForeignKeyDetalleUsPaUsTable extends Migration
                 ->references('id')
                 ->on('informes_us');
                 
-            $table->bigInteger('detalle_us_referencia_id')
+            $table->bigInteger('detalle_us_pa_us_referencia_id')
                 ->unsigned()
+                ->nullable()
                 ->after('informe_us_id');
 
-            $table->foreign('detalle_us_referencia_id')
+            $table->foreign('detalle_us_pa_us_referencia_id')
                 ->references('id')
                 ->on('detalles_us_referencias');
-
-            $table->bigInteger('diametro_id')
-                ->unsigned()
-                ->after('detalle_us_referencia_id');
-
-            $table->foreign('diametro_id')
-                ->references('id')
-                ->on('diametros_espesor');
+      
                   
         });
     }
@@ -56,9 +50,7 @@ class AddForeignKeyDetalleUsPaUsTable extends Migration
 
            $table->dropForeign(['detalle_us_referencia_id']);
            $table->dropColumn('detalle_us_referencia_id');
-
-           $table->dropForeign(['diametro_id']);
-           $table->dropColumn('diametro_id');
+  
 
         });
     }

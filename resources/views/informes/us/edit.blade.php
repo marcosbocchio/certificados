@@ -19,6 +19,20 @@
      metodo ="{{$metodo}}"
      :otdata  ="{{$ot}}"
      :informedata ="{{$informe}}"    
+     :informe_usdata ="{{$informe_us}}"
+     :materialdata="{{$informe_material}}"
+     :diametrodata="{{$informe_diametro}}"
+     :diametro_espesordata="{{$informe_diametroEspesor}}"
+     :interno_equipodata="{{$informe_interno_equipo}}"
+     :tecnicadata="{{$informe_tecnica}}" 
+     :procedimientodata="{{$informe_procedimiento}}" 
+     :norma_evaluaciondata="{{$informe_norma_evaluacion}}"
+     :norma_ensayodata="{{$informe_norma_ensayo}}"
+     :ejecutor_ensayodata="{{$informe_ejecutor_ensayo}}"
+     :estado_superficiedata="{{$informe_estado_superficie}}"
+     :calibraciones_data = "{{ $calibraciones}}"
+     :tabla_us_pa_data = "{{ $tabla_us_pa}}"
+     :tabla_me_data = "{{ $tabla_me}}"
      editmode  
     
   ></informe-us>

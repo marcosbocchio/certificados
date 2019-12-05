@@ -101,7 +101,18 @@ desired effect
 <script src="{{asset('js/adminlte.min.js')}}"></script>
 @yield('script')
 
- <script type="text/javascript" src="{{mix('js/app.js')}}"></script>  
-  
+<script type="text/javascript" src="{{mix('js/app.js')}}"></script>  
+<script>
+
+  $(document).ready(function() {
+  $(window).keydown(function(event){
+    if(event.keyCode == 13) {
+      event.preventDefault();
+      return false;
+    }
+  });
+});
+
+</script>
 </body>
 </html>

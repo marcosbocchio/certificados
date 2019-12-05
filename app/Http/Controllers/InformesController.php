@@ -103,6 +103,10 @@ class InformesController extends Controller
          case 'LP':
             return redirect()->route('InformeLpEdit',array('ot_id' => $ot_id, 'id' => $id));
             break;
+
+        case 'US':
+            return redirect()->route('InformeUsEdit',array('ot_id' => $ot_id, 'id' => $id));
+            break;
      
     }
   
@@ -153,18 +157,22 @@ class InformesController extends Controller
                  $informe->procedimiento_informe_id = $request->procedimiento['ot_procedimientos_propios_id'];
           }
 
-        if ($request->diametro =='CHAPA'){
+        if ($request->diametro['diametro'] =='CHAPA' || 'VARIOS'){
     
-          $diametro_espesor = DiametrosEspesor::where('diametro',$request->diametro)                                 
+          $diametro_espesor = DiametrosEspesor::where('diametro',$request->diametro['diametro'])                                 
                                               ->first(); 
     
           $informe->diametro_espesor_id = $diametro_espesor['id'];
-          $informe->espesor_chapa       = $request->espesor_chapa;
+
+          if($request->diametro['diametro'] =='CHAPA'){
+
+             $informe->espesor_chapa       = $request->espesor_chapa;
+          }
     
         }else{
     
-          $diametro_espesor = DiametrosEspesor::where('diametro',$request->diametro) 
-                                              ->where('espesor',$request->espesor)
+          $diametro_espesor = DiametrosEspesor::where('diametro',$request->diametro['diametro']) 
+                                              ->where('espesor',$request->espesor['espesor'])
                                               ->first();
     
           $informe->diametro_espesor_id = $diametro_espesor['id'];

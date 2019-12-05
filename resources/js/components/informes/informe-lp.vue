@@ -558,8 +558,9 @@ data() {return {
     
         diametro : function(val){
 
-            this.isChapa = (val.diametro =='CHAPA') ? true : false;
-                
+           if(val){
+                 this.isChapa = (val.diametro =='CHAPA') ? true : false;
+            }   
         },     
 
     },
@@ -649,8 +650,10 @@ data() {return {
 
     getEspesores : function(){
             this.espesor=''; 
-            this.tecnica ='';      
-            this.$store.dispatch('loadEspesores',this.diametro.diametro_code);
+            this.tecnica ='';     
+            if(this.diametro){    
+                this.$store.dispatch('loadEspesores',this.diametro.diametro_code);
+            }
         },
 
     getFuente : function(){
@@ -746,8 +749,8 @@ data() {return {
                 'procedimiento' : this.procedimiento,           
                 'observaciones':  this.observaciones,
                 'material':       this.material,
-                'diametro':       this.diametro.diametro,
-                'espesor':        this.espesor.espesor,
+                'diametro':       this.diametro,
+                'espesor':        this.espesor,
                 'espesor_chapa'  :  this.espesor_chapa, 
                 'interno_equipo'        :  this.interno_equipo,               
                 'procedimiento_soldadura': this.procedimiento_soldadura,
@@ -815,8 +818,8 @@ data() {return {
                 'procedimiento' : this.procedimiento,           
                 'observaciones':  this.observaciones,
                 'material':       this.material,
-                'diametro':       this.diametro.diametro,
-                'espesor':        this.espesor.espesor,
+                'diametro':       this.diametro,
+                'espesor':        this.espesor,
                 'espesor_chapa'  :  this.espesor_chapa, 
                 'interno_equipo'     :  this.interno_equipo,               
                 'procedimiento_soldadura': this.procedimiento_soldadura,
@@ -848,20 +851,20 @@ data() {return {
        
         }).catch(error => {
                
-               this.errors = error.response.data.errors;
-                console.log(error.response);
-               $.each( this.errors, function( key, value ) {
-                   toastr.error(value);
-                   console.log( key + ": " + value );
-               });
+            this.errors = error.response.data.errors;
+            console.log(error.response);
+            $.each( this.errors, function( key, value ) {
+                toastr.error(value);
+                console.log( key + ": " + value );
+            });
 
-               if((typeof(this.errors)=='undefined') && (error)){
+            if((typeof(this.errors)=='undefined') && (error)){
 
-                     toastr.error("Ocurrió un error al procesar la solicitud");                     
-                  
-                }
+                    toastr.error("Ocurrió un error al procesar la solicitud");                     
+                
+            }
 
-           }); 
+        }); 
 
         }
     }

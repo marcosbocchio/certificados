@@ -16,6 +16,7 @@ class CreateInformesUsMeTable extends Migration
         Schema::create('informes_us_me', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('elemento',10);
+            $table->string('diametro',10);
             $table->integer('cantidad_posiciones');
             $table->integer('cantidad_generatrices');
             $table->timestamps();

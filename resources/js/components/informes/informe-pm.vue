@@ -287,7 +287,8 @@
                                                 </div>  
                                             </td>    
                                             <td> 
-                                                <input type="checkbox" id="checkbox" v-model="inputPiezasFalla[k].aceptable_sn">  </td>
+                                                <input type="checkbox" id="checkbox" v-model="inputPiezasFalla[k].aceptable_sn"> 
+                                            </td>
                                             <td> 
                                                 <span :class="{ existe : (inputPiezaFalla.observaciones ||
                                                                             inputPiezaFalla.path1 ||
@@ -508,6 +509,7 @@ export default {
         inputPiezasFalla:[],
         indexPosDetalle:0,
 
+        // referencias
         index_referencias:'',
         tabla:'',
         inputsData:{},
@@ -556,8 +558,9 @@ export default {
     
         diametro : function(val){
 
-            this.isChapa = (val.diametro =='CHAPA') ? true : false;
-                
+             if(val){
+                     this.isChapa = (val.diametro =='CHAPA') ? true : false;
+             }    
         },
 
         metodo_trabajo_pm : function(val){
@@ -656,7 +659,9 @@ export default {
         getEspesores : function(){
             this.espesor='';          
             this.tecnica ='';      
-            this.$store.dispatch('loadEspesores',this.diametro.diametro_code);
+            if(this.diametro){    
+                 this.$store.dispatch('loadEspesores',this.diametro.diametro_code);
+             }
         },
 
         getTecnicas: function(){
@@ -756,7 +761,7 @@ export default {
             
         },
 
-        OpenReferencias(event,index,tabla,inputsReferencia){
+        OpenReferencias(event,index,tabla,inputsReferencia){    
 
           this.index_referencias = index ;
           this.tabla = tabla;
@@ -764,18 +769,18 @@ export default {
           eventSetReferencia.$emit('open');
       },
 
-      AddReferencia(Ref){      
+        AddReferencia(Ref){      
 
+            
+            this.inputPiezasFalla[this.index_referencias].observaciones = Ref.observaciones;
+            this.inputPiezasFalla[this.index_referencias].path1 = Ref.path1;
+            this.inputPiezasFalla[this.index_referencias].path2 = Ref.path2;
+            this.inputPiezasFalla[this.index_referencias].path3 = Ref.path3;
+            this.inputPiezasFalla[this.index_referencias].path4 = Ref.path4;
         
-           this.inputPiezasFalla[this.index_referencias].observaciones = Ref.observaciones;
-           this.inputPiezasFalla[this.index_referencias].path1 = Ref.path1;
-           this.inputPiezasFalla[this.index_referencias].path2 = Ref.path2;
-           this.inputPiezasFalla[this.index_referencias].path3 = Ref.path3;
-           this.inputPiezasFalla[this.index_referencias].path4 = Ref.path4;
-      
-        
-           $('#nuevo').modal('hide');     
-      },
+            
+            $('#nuevo').modal('hide');     
+        },
 
          Store : function(){
          
@@ -803,8 +808,8 @@ export default {
                 'procedimiento' : this.procedimiento,           
                 'observaciones':  this.observaciones,
                 'material':       this.material,
-                'diametro':       this.diametro.diametro,
-                'espesor':        this.espesor.espesor,
+                'diametro':       this.diametro,
+                'espesor':        this.espesor,
                 'espesor_chapa' :  this.espesor_chapa, 
                 'interno_equipo'        :  this.interno_equipo,               
                 'procedimiento_soldadura': this.procedimiento_soldadura,
@@ -878,8 +883,8 @@ export default {
                 'procedimiento' : this.procedimiento,           
                 'observaciones':  this.observaciones,
                 'material':       this.material,
-                'diametro':       this.diametro.diametro,
-                'espesor':        this.espesor.espesor,
+                'diametro':       this.diametro,
+                'espesor':        this.espesor,
                 'espesor_chapa' :  this.espesor_chapa, 
                 'interno_equipo'        :  this.interno_equipo,          
                 'procedimiento_soldadura': this.procedimiento_soldadura,

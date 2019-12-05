@@ -107,4 +107,38 @@ class StorageController extends Controller
       } 
      
     }
+
+    public function saveCalibraciones(Request $request){
+
+     
+      if ($request->hasFile('archivo')){
+
+      
+          $path = Storage::disk('public')->putFile('calibraciones_us',$request->file('archivo'));  
+    
+        return $path;
+      }
+      else
+      {
+        return "Seleccione un archivo";
+      } 
+     
+    }
+
+    public function saveIndicacionesUs(Request $request){
+
+     
+      if ($request->hasFile('archivo')){
+
+      
+          $path = Storage::disk('public')->putFile('indicaciones_us',$request->file('archivo'));  
+    
+        return $path;
+      }
+      else
+      {
+        return "Seleccione un archivo";
+      } 
+     
+    }
 }

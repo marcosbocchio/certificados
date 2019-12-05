@@ -168,10 +168,10 @@ class InformesPmController extends Controller
         $informe_diametroEspesor = DiametrosEspesor::find($informe->diametro_espesor_id);
         $informe_diametro = DiametroView::where('diametro',$informe_diametroEspesor->diametro)->first();       
         $informe_interno_equipo = internoEquipos::where('id',$informe->interno_equipo_id)->with('equipo')->first();
+        $informe_tecnica = Tecnicas::find($informe->tecnica_id);
         $documetacionesRepository = new DocumentacionesRepository;
         $informe_procedimiento = (new DocumentacionesController($documetacionesRepository))->ProcedimientoInformeId($informe->procedimiento_informe_id);    
         $informe_norma_evaluacion = NormaEvaluaciones::find($informe->norma_evaluacion_id);
-        $informe_tecnica = Tecnicas::find($informe->tecnica_id);
         $informe_norma_ensayo = NormaEnsayos::find($informe->norma_ensayo_id);
         $informe_ejecutor_ensayo =(new OtOperariosController())->getEjecutorEnsayo($informe->ejecutor_ensayo_id);
         $informe_pm_metodo_trabajo_pm = MetodosTrabajoPm::find($informe_pm->metodo_trabajo_pm_id);

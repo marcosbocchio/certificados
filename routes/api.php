@@ -78,6 +78,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('tecnica_distancias/{id}/diametro/{diametro}', 'TecnicaDistanciasController@TecnicaDistanciasDiametro');
     Route::resource('estados_superficies', 'EstadosSuperficiesController');
     Route::resource('palpadores', 'PalpadoresController');
+    Route::resource('generatrices', 'GeneratricesController');
 
     Route::get('roles/paginate', 'RolesController@paginate');      
     Route::resource('roles', 'RolesController');
@@ -115,6 +116,9 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::post('storage/referencia', 'StorageController@saveReferencia');
     Route::post('storage/documento', 'StorageController@saveDocumento');
     Route::post('storage/placas', 'StorageController@savePlacas');
+    Route::post('storage/calibraciones_us', 'StorageController@saveCalibraciones');
+    Route::post('storage/indicaciones_us', 'StorageController@saveIndicacionesUs');
+
 
     Route::post('storage/logo-cliente', 'StorageController@saveLogoCliente');
     Route::post('storage/logo-contratista', 'StorageController@saveLogoContratista');
@@ -157,6 +161,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('informes_ri','InformesRiController');    
     Route::resource('informes_pm','InformesPmController');
     Route::resource('informes_lp','InformesLpController');
+    Route::resource('informes_us','InformesUsController');
 
     //Remito  
     Route::get('remitos/ot/{ot_id}/total','RemitosController@RemitosTotal');
