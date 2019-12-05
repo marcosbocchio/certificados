@@ -30,7 +30,7 @@ class AddForeignKeyDetalleUsPaUsTable extends Migration
 
             $table->foreign('detalle_us_pa_us_referencia_id')
                 ->references('id')
-                ->on('detalles_us_referencias');
+                ->on('detalle_us_pa_us_referencias');
       
                   
         });
@@ -48,8 +48,8 @@ class AddForeignKeyDetalleUsPaUsTable extends Migration
            $table->dropForeign(['informe_us_id']);
            $table->dropColumn('informe_us_id');
 
-           $table->dropForeign(['detalle_us_referencia_id']);
-           $table->dropColumn('detalle_us_referencia_id');
+           $table->dropForeign(['detalle_us_pa_us_referencia_id']);
+           $table->dropColumn('detalle_us_pa_us_referencia_id');
   
 
         });
