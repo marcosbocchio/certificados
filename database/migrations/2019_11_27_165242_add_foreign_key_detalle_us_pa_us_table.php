@@ -30,7 +30,7 @@ class AddForeignKeyDetalleUsPaUsTable extends Migration
 
             $table->foreign('detalle_us_pa_us_referencia_id')
                 ->references('id')
-                ->on('detalle_us_pa_us_referencias');
+                ->on('detalles_us_pa_us_referencias');
       
                   
         });
