@@ -143,7 +143,7 @@ class OtsRepository extends BaseRepository
     $ot->proyecto          = $request->proyecto;
     $ot->cliente_id        = $request->cliente;
     $ot->logo_cliente_sn   = $request->logo_cliente_sn;
-    $ot->contratista_id    = $request->contratista['id'];
+    $ot->contratista_id    = $request->contratista ? $request->contratista['id'] : null;
     $ot->logo_contratista_sn   = $request->logo_contratista_sn;
     $ot->obra              = $request->obra;
     $ot->fecha             = $fecha;

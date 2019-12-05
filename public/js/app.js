@@ -16181,7 +16181,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       required: false
     },
     contratistadata: {
-      type: Object,
+      type: [Object, Array],
       required: false
     },
     ot_serviciosdata: {
@@ -16659,7 +16659,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           data: {
             'cliente': this.cliente.id,
             'logo_cliente_sn': this.logo_cliente_sn,
-            'contratista': this.contratista ? this.contratista : null,
+            'contratista': this.contratista,
             'logo_contratista_sn': this.logo_contratista_sn,
             'proyecto': this.proyecto,
             'fecha': this.fecha,
@@ -16710,7 +16710,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             'id': this.otdata.id,
             'cliente': this.cliente.id,
             'logo_cliente_sn': this.logo_cliente_sn,
-            'contratista': this.contratista ? this.contratista : null,
+            'contratista': this.contratista,
             'logo_contratista_sn': this.logo_contratista_sn,
             'proyecto': this.proyecto,
             'fecha': this.fecha,
@@ -19002,7 +19002,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.form-control[disabled][data-v-dce134bc], .form-control[readonly][data-v-dce134bc], fieldset[disabled] .form-control[data-v-dce134bc] {\r\n     background-color: #eee;\n}\r\n\r\n\r\n", ""]);
+exports.push([module.i, "\n.form-control[disabled][data-v-dce134bc], .form-control[readonly][data-v-dce134bc], fieldset[disabled] .form-control[data-v-dce134bc] {\n     background-color: #eee;\n}\n\n\n", ""]);
 
 // exports
 
@@ -104244,8 +104244,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_lazyload__WEBPACK_IMPORTED_MO
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuejs_progress_bar__WEBPACK_IMPORTED_MODULE_5___default.a);
 var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
   state: {
-    url:  false ? undefined : "http://certificados.test/api",
-    AppUrl:  false ? undefined : "http://certificados.test",
+    url:  false ? undefined : "http://localhost:8000/api",
+    AppUrl:  false ? undefined : "http://localhost:8000",
     contratistas: [],
     provincias: [],
     localidades: [],
@@ -110582,8 +110582,8 @@ var toastrDefault = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\bocch\code\certificados\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\bocch\code\certificados\resources\sass\toastr.scss */"./resources/sass/toastr.scss");
+__webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/sass/toastr.scss */"./resources/sass/toastr.scss");
 
 
 /***/ })

@@ -452,7 +452,7 @@ export default {
        required : false
      },
      contratistadata : {
-       type : Object,
+       type : [Object,Array],
        required : false
      },
      ot_serviciosdata : {
@@ -1010,7 +1010,7 @@ export default {
             
               'cliente'             : this.cliente.id,
               'logo_cliente_sn'     : this.logo_cliente_sn,
-              'contratista'         : (this.contratista ? this.contratista : null ),
+              'contratista'         : this.contratista,
               'logo_contratista_sn' : this.logo_contratista_sn,
               'proyecto'      : this.proyecto,
               'fecha'         : this.fecha,
@@ -1072,7 +1072,7 @@ export default {
               'id'                  : this.otdata.id,
               'cliente'             : this.cliente.id,
               'logo_cliente_sn'     : this.logo_cliente_sn,
-              'contratista'         : (this.contratista ? this.contratista : null ),
+              'contratista'         : this.contratista,
               'logo_contratista_sn' : this.logo_contratista_sn,
               'proyecto'      : this.proyecto,
               'fecha'         : this.fecha,
