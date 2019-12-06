@@ -63,7 +63,7 @@ class PdfInformesUsController extends Controller
                                 informes_pm.id =:id',['id' => $informe_us->id ]);
         
         */
-        //  dd($calibraciones_us);
+        //  dd($informe_us);
            $pdf = PDF::loadView('reportes.informes.us',compact('ot',
                                                                 'norma_ensayo',
                                                                 'norma_evaluacion',
@@ -79,6 +79,7 @@ class PdfInformesUsController extends Controller
                                                                 'informe_us',
                                                                 'material',
                                                                 'estado_superficie',
+                                                                'calibraciones_us',
                                                                 'evaluador'
                                                         
                                                                 ))->setPaper('a4','portrait')->setWarnings(false);

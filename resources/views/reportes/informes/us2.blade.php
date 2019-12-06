@@ -7,7 +7,7 @@
   <style type='text/css'>
 #rotate
 {
-  height:125px;
+  height:155px;
 }
 
 #vertical
@@ -28,10 +28,10 @@
   </style>
 </head>
 <body>
-<table id="codexpl" class="bordered">
+<table id="codexpl">
     <tr >
         <th >#</th>
-        <th class="bordered"><span >98</span></th>
+        <th><span >98</span></th>
         <th id="rotate" class="bordered"><div id="vertical">A_LONG_HEADER</div></th>
     </tr>
     <tr>
@@ -57,10 +57,56 @@
     <tr>
         <td>5</td>
         <td>first</td>
-        <td id="rotate" class="bordered">One</td>
+        <td>One</td>
     </tr>
 </table>
 <p>TEST</p>
 
 </body>
 </html>
+
+
+    <!--
+    <table style="text-align: center;" width="100%">
+        <tbody>            
+                <tr>
+                    <td>                     
+                        <table>    
+                            <tbody>
+                                <tr>
+                                    <td style="text-align: center; width: 330px;height: 275px;">
+                                           
+                                            @if ($informe_us->path1_calibracion)
+                                                <img src="{{ public_path($informe_us->path1_calibracion) }}" alt="" style="height: 160px; width: 234px;">
+                                             @endif  
+                       
+                                    </td>
+                              
+                                    <td style="text-align: center; width: 330px;height: 275px;">
+                                            @if ($informe_us->path2_calibracion)
+                                                <img src="{{ public_path($informe_us->path2_calibracion')}}" alt="" style="height: 160px; width: 234px;">
+                                            @endif  
+                                    </td>
+                              
+                                </tr>
+                               
+                                <tr>
+                                    <td style="text-align: center; width: 330px;height: 275px;">
+                                            @if ($informe_us->path3_calibracion)
+                                                 <img src="{{ public_path($informe_us->path3_calibracion) }}" alt="" style="height: 160px; width: 234px;">
+                                           @endif  
+                                    </td>
+
+                                    <td style="text-align: center; width: 330px;height: 275px;">
+                                            @if ($informe_us->path4_calibracion)
+                                                <img src="{{ public_path($informe_us->path4_calibracion) }}" alt="" style="height: 160px; width: 234px;">
+                                            @endif  
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+     </table>
+    -->

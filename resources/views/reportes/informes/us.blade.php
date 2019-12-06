@@ -5,14 +5,14 @@
     <title>Informe {{FormatearNumeroInforme($informe->numero,'US')}}</title>
 </head>
 
-<style>
+<style  type='text/css'>
 
-@page { margin: 365px 30px 192px 60px !important;
+@page { margin: 287px 30px 130px 60px !important;
         padding: 0px 0px 0px 0px !important; }
 
 header {
     position:fixed;
-    top: -326px;    
+    top: -250px;    
     }
 
 main{
@@ -62,7 +62,7 @@ b {
 
 #rotate
 {
-  height:125px;
+  height:170px;
 }
 
 #vertical
@@ -70,8 +70,6 @@ b {
     -webkit-transform:rotate(-90deg);
     -moz-transform:rotate(-90deg);
     -o-transform: rotate(-90deg);
-    margin-left: -50px;
-    margin-right: -50px;
 }
 </style>
 
@@ -156,20 +154,20 @@ b {
                         <tr>
                             <td style="font-size: 11px; width: 200px;border-right: 1px solid #000;" colspan="2"><b>Componente: </b>{{$informe->componente}}</td>
                             <td style="font-size: 11px;width: 50px;border-right: 1px solid #000; " colspan="4" ><b>Equipo: </b>{{$interno_equipo->equipo->codigo}}</td>
-                            <td style="font-size: 11px;border-left: 1px solid #000;" colspan="2" ><b>EPS: </b>{{$informe->eps}}</td>
+                            <td style="font-size: 11px;  " colspan="2"  ><b style="font-size: 11px;">Norma Evaluación: </b>{{$norma_evaluacion->descripcion}}</td> 
                            
                         </tr>
                         <tr>                
                             
                             <td style="font-size: 11px;border-right: 1px solid #000;" colspan="2" ><b>Material: </b>{{$material->codigo}}</td>
                             <td style="font-size: 11px;  width: 270px; border-right: 1px solid #000;" colspan="4"  ><b>Encoder:{{$informe_us->encoder}} </b></td>
-                            <td style="font-size: 11px;border-left: 1px solid #000;" colspan="2"><b>PQR: </b>{{$informe->pqr}}</td>
+                            <td style="font-size: 11px; " colspan="2"  ><b>Norma Ensayo: </b>{{$norma_ensayo->descripcion}}</td>     
            
                         </tr>
                         <tr>
                             <td style="font-size: 11px;border-right: 1px solid #000;" colspan="2" ><b>Plano / Isom :</b>{{$informe->plano_isom}}</td>
                             <td style="font-size: 11px; border-right: 1px solid #000;" colspan="4"  ><b>Estado Superficie: </b>{{$estado_superficie->codigo}}</td>                            
-                            <td style="font-size: 11px;  " colspan="2"  ><b style="font-size: 11px;">Norma Evaluación: </b>{{$norma_evaluacion->descripcion}}</td> 
+                            <td style="font-size: 11px; " colspan="2" ><b>Tecnica: </b>{{$tecnica->descripcion}}</td>
                         
                         </tr>
                         <tr>
@@ -186,138 +184,182 @@ b {
                             
                             </td>
                             <td style="font-size: 11px;border-right: 1px solid #000;" colspan="4"  ><b>Agente Acoplamiento : </b>{{$informe_us->agente_acoplamiento}}</td>
-                            <td style="font-size: 11px; " colspan="2"  ><b>Norma Ensayo: </b>{{$norma_ensayo->descripcion}}</td>     
+                            <td style="font-size: 11px;  " colspan="2" ><b>Ejecutor Ensayo : </b>{{$ejecutor_ensayo->name}}</td>  
 
                         </tr>
                         <tr>
                             <td style="font-size: 11px;border-right: 1px solid #000;" colspan="2"><b>Proc. Sold. : </b>{{$informe->procedimiento_soldadura}}</td>                            
-                            <td style="font-size: 11px; border-right: 1px solid #000;" colspan="4" ><b>Proc. US: </b>{{$procedimiento_inf->titulo}} </td>
-                            <td style="font-size: 11px;  " colspan="2" ><b>Ejecutor Ensayo : </b>{{$ejecutor_ensayo->name}}</td>  
+                            <td style="font-size: 11px;border-right: 1px solid #000;" colspan="4" ><b>EPS: </b>{{$informe->eps}}</td>
+                            <td style="font-size: 11px;" colspan="2" >&nbsp;</td>
                         </tr>  
+                        <tr>
+                            <td style="font-size: 11px; border-right: 1px solid #000;" colspan="2" ><b>Proc. US: </b>{{$procedimiento_inf->titulo}} </td>
+                            <td style="font-size: 11px;border-right: 1px solid #000;" colspan="4"><b>PQR: </b>{{$informe->pqr}}</td>
+                            <td style="font-size: 11px;" colspan="2" >&nbsp;</td>
+                        </tr>
                         </tbody>
                     </table>   
                 </td>
             </tr>
-            <tr >
-                <td >
-                    <table  width="100%" style="text-align: center;border-collapse: collapse;">
-                        <tbody>
-                            <tr>
-                                
-                                <td style="font-size: 11px; height:20px;border-right: 1px solid #000;" id="rotate"> <div id="vertical">ZAPATA</div></td>
-                                <td style="font-size: 11px; height:20px;border-right: 1px solid #000;" id="rotate"> <div id="vertical">PALPADOR</div></td>
-                                <td style="font-size: 11px; height:20px;border-right: 1px solid #000;" id="rotate"> <div id="vertical">FRECUENCIA</div></td>
-                                <td style="font-size: 11px; height:20px;border-right: 1px solid #000;" id="rotate"> <div id="vertical">ANGULO APERTURA</div></td>
 
-                                <td style="font-size: 11px; height:20px;border-right: 1px solid #000;" id="rotate"> <div id="vertical">JUNTA</div></td>
-
-                                <td style="font-size: 11px; height:20px;border-right: 1px solid #000;" id="rotate"> <div id="vertical">JUNTA</div></td>
-
-                                <td style="font-size: 11px; height:20px;border-right: 1px solid #000;" id="rotate"> <div id="vertical">Elemento</div></td>
-
-                                <td style="font-size: 11px; height:20px;border-right: 1px solid #000;" id="rotate"> <div id="vertical">JUNTA</div></td>
-
-                                <td style="font-size: 11px; height:20px;border-right: 1px solid #000;" id="rotate"> <div id="vertical">JUNTA</div></td>
-
-                                <td id="rotate" class="bordered"><div id="vertical"></div></td>
-                                
-                            </tr>
-                        </tbody>
-                    </table> 
-                </td>
-            </tr>
-            
         </tbody>
     </table>
-    
+
 </header>
 
 <footer>
-    <table style="text-align: center" width="100%" class="bordered">
+        <table style="text-align: center" width="100%" class="bordered">
+            <tbody>
+                <tr> 
+                    <td>
+                        <table width="100%" style="border-collapse: collapse;" >
+                            <tbody>                           
+                                <tr>                                
+                                    <td style="font-size: 11px;" colspan="6" class="bordered-td"><b>Observaciones: </b>{{$informe->observaciones}}</td>                                  
+                                </tr>                         
+                            </tbody>
+                        </table>
+                    </td>               
+                </tr>
+                <tr>
+                    <td>
+                        <table width="100%" style="border-collapse: collapse;" >
+                            <tbody>
+                                <tr>                               
+                                   <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>EVALUADOR </b></td>   
+                                   <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>CONTRATISTA </b></td> 
+                                   <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>CLIENTE </b></td>                              
+                                </tr>
+                                
+                                <tr>                               
+                                    <td style="font-size: 11px; text-align: left; height: 25px;width:75px;"><span style="margin-left: 2px">FIRMA:</span></td>   
+    
+                                    <td style="text-align:left ;font-size: 11px; border-right: 1px solid #000;width: 150px;margin-left: 15px;" rowspan="2">
+                                        @if($evaluador && $evaluador->path)
+                                            <img src="{{ public_path($evaluador->path)}}" alt="" style="width: 100px;">
+                                        @endif
+                                    </td> 
+    
+                                    <td style="font-size: 11px; text-align: left; height: 25px; border-right: 1px solid #000;" colspan="2"> <span style="margin-left: 2px">FIRMA:</span></td> 
+                                    
+                                    <td style="font-size: 11px; text-align: left; height: 25px; border-right: 1px solid #000;" colspan="2"><span style="margin-left: 2px">FIRMA:</span></td>
+                                                            
+                                </tr>
+                               
+                                <tr>                               
+                                    <td style="font-size: 11px; text-align: left; height: 25px;width:75px;"><span style="margin-left: 2px">ACLARACIÓN:</span></td>   
+                                    <td style="font-size: 11px; text-align: left; height: 25px; border-right: 1px solid #000;" colspan="2"><span style="margin-left: 2px">ACLARACIÓN:</span></td>
+                                    <td style="font-size: 11px; text-align: left; height: 25px; border-right: 1px solid #000;" colspan="2"><span style="margin-left: 2px">ACLARACIÓN:</span></td>                       
+                                </tr>
+                            </tbody>
+                        </table> 
+                    </td>
+                </tr>      
+            </tbody>
+        </table>
+    </footer>
+
+<main>
+    <table style="text-align: center;border-collapse: collapse;">
+        <tbody>
+            <tr>
+                
+                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: 15.7px;margin-right: 15.7px;">ZAPATA</div></td>
+                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: 6px;margin-right: 6px;">PALPADOR</div></td>
+                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: 13px;margin-right: 13px;">N° SERIE</div></td>
+                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -48px;margin-right: -48px;">FRECUENCIA (Mhz)</div></td>
+                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -30px;margin-right: -30px;">ANG. APERTURA</div></td>
+                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -3px;margin-right:  -3px;">RANGO</div></td>
+                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -12px;margin-right: -12px;">POSICIÓN</div></td>
+                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -45px;margin-right: -45px;">CURVA ELEVACION</div></td>
+                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -55px;margin-right: -55px;">BLOCK CALIBRACIÓN</div></td>
+                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -50px;margin-right: -50px;">BLOCK SENSIBILIDAD</div></td>
+                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -60px;margin-right: -60px;">REFLECTOR REFERENCIA</div></td>
+                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -63px;margin-right: -63px;">GANANCIA REFERENCIA</div></td>
+                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -38px;margin-right: -38px;">NIVEL REGISTRO</div></td>
+                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -60px;margin-right: -60px;">CORRECCIOÓN TRANSF</div></td>
+                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -54px;margin-right: -54px;">ADICIONAL BARRIDO</div></td>
+                <td id="rotate" style="font-size: 13px;"><div id="vertical" style="margin-left: -60px;margin-right: -60px;">AMPLIFICACIÓN TOTAL</div></td>
+
+            </tr>
+            
+        </tbody>
+    </table> 
+    <table width="100%" class="bordered">
+        <tbody>
+            @foreach ($calibraciones_us as $calibracion)
+                <tr>
+                    <td style="font-size: 10px; width:80px;text-align: center;"class="bordered-td">{{ strtoupper($calibracion->zapata) }}</td>
+                    <td style="font-size: 10px; width:80px;text-align: center;" class="bordered-td">{{$calibracion->palpador->codigo}}</td>
+                    <td style="font-size: 10px; width:79.7px;text-align: center;" class="bordered-td">{{$calibracion->palpador->nro_serie}}</td>
+                    <td style="font-size: 10px; width:20.9px;  text-align: center;" class="bordered-td">{{$calibracion->frecuencia}}</td> 
+                    <td style="font-size: 10px; width:42.8px;text-align: center;" class="bordered-td">{{$calibracion->angulo_apertura}}</td>          
+                    <td style="font-size: 10px; width:39.7px;text-align: center;" class="bordered-td">{{$calibracion->rango}}</td>               
+                    <td style="font-size: 10px; width:35.5px;text-align: center;" class="bordered-td">{{strtoupper($calibracion->posicion)}}</td>               
+                    <td style="font-size: 10px; width:32.8px;text-align:   center;" class="bordered-td">{{$calibracion->curva_elevacion}}</td>               
+                    <td style="font-size: 10px; width:25.5px;text-align: center;" class="bordered-td">{{$calibracion->block_calibracion}}</td>               
+                    <td style="font-size: 10px; width:36.5px;text-align: center;" class="bordered-td">{{$calibracion->block_sensibilidad}}</td>               
+                    <td style="font-size: 10px; width:37.5px;text-align: center;" class="bordered-td">{{$calibracion->tipo_reflector}} &nbsp; {{$calibracion->reflector_referencia}}</td>               
+                    <td style="font-size: 10px; width:26px;text-align: center;" class="bordered-td">{{$calibracion->ganancia_referencia}}</td>               
+                    <td style="font-size: 10px; width:29.3px;text-align: center;" class="bordered-td">%&nbsp;{{$calibracion->nivel_registro}}</td>               
+                    <td style="font-size: 10px; width:25.5px;text-align: center;" class="bordered-td">{{$calibracion->correccion_transferencia}}</td>               
+                    <td style="font-size: 10px; width:25.7px;text-align: center;" class="bordered-td">{{$calibracion->adicional_barrido}}</td>               
+                    <td style="font-size: 11px;text-align: center" class="bordered-td">&nbsp; {{$calibracion->amplificacion_total}}</td>               
+
+                </tr>                
+            @endforeach    
+              
+        </tbody>
+    </table>
+    
+    <table style="text-align: center;" width="100%">
         <tbody>
             <tr>
                 <td>
-                    <table width="100%" style="border-collapse: collapse;" >
+                    <table>
                         <tbody>
                             <tr>
-                                <td style="font-size: 10px; " class="bordered-td"><b>F: </b>Fisura</td>
-                                <td style="font-size: 10px; " class="bordered-td"><b>FF: </b>Falta de fusion</td>
-                                <td style="font-size: 10px; " class="bordered-td"><b>FP: </b>Falta de Penetración</td>
-                                <td style="font-size: 10px; " class="bordered-td"><b>FPD: </b>FP por Desalineación</td>
-                                <td style="font-size: 10px; " class="bordered-td"><b>FFP: </b>FF por Pasadas</td>
-                                <td style="font-size: 10px; " class="bordered-td"><b>HL: </b>Desalineación</td>
+                                <td style="text-align: center; width: 330px;height: 200px;">
+                                        
+                                    @if ($informe_us->path1_calibracion)
+                                        <img src="{{ public_path($informe_us->path1_calibracion) }}" alt="" style="height: 160px; width: 234px;">
+                                    @endif  
+                    
+                                </td>
+
+                                <td style="text-align: center; width: 330px;height: 200px;">
+                                        
+                                    @if ($informe_us->path2_calibracion)
+                                        <img src="{{ public_path($informe_us->path2_calibracion) }}" alt="" style="height: 160px; width: 234px;">
+                                    @endif  
+                    
+                                </td>  
                             </tr>
                             <tr>
-                                <td style="font-size: 10px; " class="bordered-td"><b>PE: </b>Penetración Excesiva</td>
-                                <td style="font-size: 10px; " class="bordered-td"><b>Q: </b>Quemaduras</td>
-                                <td style="font-size: 10px; " class="bordered-td"><b>CI: </b>Concavidad Interna</td>
-                                <td style="font-size: 10px; " class="bordered-td"><b>CE: </b>Concavidad Externa</td>
-                                <td style="font-size: 10px; " class="bordered-td"><b>SI: </b>Socavado Interior</td>
-                                <td style="font-size: 10px; " class="bordered-td"><b>SE: </b>Socavado Exterior</td>                                
+                                <td style="text-align: center; width: 330px;height: 200px;">
+                                    
+                                    @if ($informe_us->path3_calibracion)
+                                        <img src="{{ public_path($informe_us->path3_calibracion) }}" alt="" style="height: 160px; width: 234px;">
+                                    @endif  
+                        
+                                </td>
+
+                                <td style="text-align: center; width: 330px;height: 200px;">
+                                    
+                                    @if ($informe_us->path4_calibracion)
+                                        <img src="{{ public_path($informe_us->path4_calibracion) }}" alt="" style="height: 160px; width: 234px;">
+                                    @endif  
+                        
+                                </td>
                             </tr>
-                            <tr>
-                                <td style="font-size: 10px; " class="bordered-td"><b>ME: </b>Escoria Aislada</td>
-                                <td style="font-size: 10px; " class="bordered-td"><b>MEL: </b>Socavado Lineal</td>
-                                <td style="font-size: 10px; " class="bordered-td"><b>P: </b>Poros</td>
-                                <td style="font-size: 10px; " class="bordered-td"><b>NP: </b>Nido de Poros</td>
-                                <td style="font-size: 10px; " class="bordered-td"><b>PV: </b>Poro Vermicular</td>
-                                <td style="font-size: 10px; " class="bordered-td"><b>CH: </b>Cordón Hueco</td>                                
-                            </tr>
-                            <tr>
-                                <td style="font-size: 10px; " class="bordered-td"><b>IT: </b>Inclusión de Tungteno</td>
-                                <td style="font-size: 10px; " class="bordered-td"><b>SA: </b>Salto de Arco</td>
-                                <td style="font-size: 10px; " colspan="2" class="bordered-td"><b>AD: </b>Acumulación de Discontinuidades</td>
-                                <td style="font-size: 10px; " class="bordered-td"><b>DP: </b>Defecto de Placa</td>
-                                <td style="font-size: 10px; " class="bordered-td"><b>RP: </b>Repetir Placa</td>
-                            </tr>
-                            <tr>
-                                 <td style="font-size: 10px; " colspan="3" class="bordered-td"><b>AP: </b>Aprobado</td>                          
-                                 <td style="font-size: 10px; " colspan="3" class="bordered-td"><b>RZ: </b>Rechazado</td>
-                            </tr>
-                            <tr>                                
-                                <td style="font-size: 10px;" colspan="6" class="bordered-td"><b>Observaciones: </b>{{$informe->observaciones}}</td>                                  
-                            </tr>                         
                         </tbody>
                     </table>
-                </td>               
-            </tr>
-            <tr>
-                <td>
-                    <table width="100%" style="border-collapse: collapse;" >
-                        <tbody>
-                            <tr>                               
-                               <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>EVALUADOR </b></td>   
-                               <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>CONTRATISTA </b></td> 
-                               <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>CLIENTE </b></td>                              
-                            </tr>
-                            
-                            <tr>                               
-                                <td style="font-size: 11px; text-align: left; height: 25px;width:75px;"><span style="margin-left: 2px">FIRMA:</span></td>   
-
-                                <td style="text-align:left ;font-size: 11px; border-right: 1px solid #000;width: 150px;margin-left: 15px;" rowspan="2">
-                                    @if($evaluador && $evaluador->path)
-                                        <img src="{{ public_path($evaluador->path)}}" alt="" style="width: 100px;">
-                                    @endif
-                                </td> 
-
-                                <td style="font-size: 11px; text-align: left; height: 25px; border-right: 1px solid #000;" colspan="2"> <span style="margin-left: 2px">FIRMA:</span></td> 
-                                
-                                <td style="font-size: 11px; text-align: left; height: 25px; border-right: 1px solid #000;" colspan="2"><span style="margin-left: 2px">FIRMA:</span></td>
-                                                        
-                            </tr>
-                           
-                            <tr>                               
-                                <td style="font-size: 11px; text-align: left; height: 25px;width:75px;"><span style="margin-left: 2px">ACLARACIÓN:</span></td>   
-                                <td style="font-size: 11px; text-align: left; height: 25px; border-right: 1px solid #000;" colspan="2"><span style="margin-left: 2px">ACLARACIÓN:</span></td>
-                                <td style="font-size: 11px; text-align: left; height: 25px; border-right: 1px solid #000;" colspan="2"><span style="margin-left: 2px">ACLARACIÓN:</span></td>                       
-                            </tr>
-                        </tbody>
-                    </table> 
                 </td>
-            </tr>      
+            </tr>
         </tbody>
+
     </table>
-</footer>
+</main>
      
 <script type="text/php">
 
@@ -336,7 +378,7 @@ b {
 
     $pdf->line(46.5,130,46.5,800,array(0,0,0),1.5);
     $pdf->line(571.3,130,571.3,800,array(0,0,0),1.5);
-
+ 
 </script>
 
 

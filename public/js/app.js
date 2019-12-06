@@ -15171,7 +15171,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       if (this.zapata.length > 20) {
-        toastr.error('El campo zapata no debe contener más de 10 caracteres');
+        toastr.error('El campo zapata no debe contener más de 20 caracteres');
         return;
       }
 
@@ -15185,8 +15185,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return;
       }
 
-      if (this.frecuencia > 9999) {
-        toastr.error('El campo frecuencia no debe ser mayor a 9999');
+      if (this.frecuencia > 999) {
+        toastr.error('El campo frecuencia no debe ser mayor a 999');
         return;
       }
 
@@ -15245,8 +15245,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return;
       }
 
-      if (this.block_sensibilidad > 9999) {
-        toastr.error('El campo block sensibilidad no debe ser mayor a 9999');
+      if (this.block_sensibilidad > 999) {
+        toastr.error('El campo block sensibilidad no debe ser mayor a 999');
         return;
       }
 
@@ -15265,8 +15265,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return;
       }
 
-      if (this.reflector_referencia > 9999.99) {
-        toastr.error('El campo reflector referencia no debe ser mayor a 9999.99');
+      if (this.reflector_referencia > 99.99) {
+        toastr.error('El campo reflector referencia no debe ser mayor a 99.99');
         return;
       }
 
@@ -15275,8 +15275,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return;
       }
 
-      if (this.ganancia_referencia > 9999) {
-        toastr.error('El campo ganancia referencia no debe ser mayor a 9999');
+      if (this.ganancia_referencia > 999) {
+        toastr.error('El campo ganancia referencia no debe ser mayor a 999');
         return;
       }
 
@@ -15285,8 +15285,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return;
       }
 
-      if (this.nivel_registro > 9999) {
-        toastr.error('El campo nivel registro no debe ser mayor a 9999');
+      if (this.nivel_registro > 999) {
+        toastr.error('El campo nivel registro no debe ser mayor a 999');
         return;
       }
 
@@ -15295,8 +15295,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return;
       }
 
-      if (this.correccion_transferencia > 9999) {
-        toastr.error('El campo correccion_transferencia no debe ser mayor a 9999');
+      if (this.correccion_transferencia > 999) {
+        toastr.error('El campo correccion_transferencia no debe ser mayor a 999');
         return;
       }
 
@@ -15305,8 +15305,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return;
       }
 
-      if (this.adicional_barrido > 9999) {
-        toastr.error('El campo adicional barrido no debe ser mayor a 9999');
+      if (this.adicional_barrido > 999) {
+        toastr.error('El campo adicional barrido no debe ser mayor a 999');
         return;
       }
 
@@ -15315,8 +15315,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return;
       }
 
-      if (this.amplificacion_total > 9999) {
-        toastr.error('El campo amplificacion total no debe ser mayor a 9999');
+      if (this.amplificacion_total > 999) {
+        toastr.error('El campo amplificacion total no debe ser mayor a 999');
         return;
       }
 
@@ -76014,7 +76014,11 @@ var render = function() {
                         }
                       ],
                       staticClass: "form-control",
-                      attrs: { type: "text", id: "reflector_referencia" },
+                      attrs: {
+                        type: "number",
+                        id: "reflector_referencia",
+                        step: "0.01"
+                      },
                       domProps: { value: _vm.reflector_referencia },
                       on: {
                         input: function($event) {

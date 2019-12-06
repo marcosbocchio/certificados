@@ -253,7 +253,7 @@
                         <div class="col-md-1">                       
                             <div class="form-group" >
                                 <label for="reflector_referencia" title="Reflector Referencia">Re. Ref.*</label>
-                                <input type="text" v-model="reflector_referencia" class="form-control" id="reflector_referencia">
+                                <input type="number" v-model="reflector_referencia" class="form-control" id="reflector_referencia" step="0.01">
                             </div>         
                         </div>
 
@@ -1174,7 +1174,7 @@ export default {
 
             if(this.zapata.length  > 20){
 
-                toastr.error('El campo zapata no debe contener más de 10 caracteres'); 
+                toastr.error('El campo zapata no debe contener más de 20 caracteres'); 
                 return ;
              }
 
@@ -1190,9 +1190,9 @@ export default {
                  return ;            
             }
 
-            if(this.frecuencia  > 9999 ){
+            if(this.frecuencia  > 999 ){
 
-                toastr.error('El campo frecuencia no debe ser mayor a 9999'); 
+                toastr.error('El campo frecuencia no debe ser mayor a 999'); 
                 return ;
              }
 
@@ -1262,9 +1262,9 @@ export default {
                  return ;            
             }
 
-            if(this.block_sensibilidad  > 9999){
+            if(this.block_sensibilidad  > 999){
 
-                toastr.error('El campo block sensibilidad no debe ser mayor a 9999'); 
+                toastr.error('El campo block sensibilidad no debe ser mayor a 999'); 
                 return ;
              }
 
@@ -1286,9 +1286,9 @@ export default {
                  return ;            
             }
 
-            if(this.reflector_referencia  > 9999.99){
+            if(this.reflector_referencia  > 99.99){
 
-                toastr.error('El campo reflector referencia no debe ser mayor a 9999.99'); 
+                toastr.error('El campo reflector referencia no debe ser mayor a 99.99'); 
                 return ;
              }
 
@@ -1298,9 +1298,9 @@ export default {
                  return ;            
             }
 
-            if(this.ganancia_referencia  > 9999){
+            if(this.ganancia_referencia  > 999){
 
-                toastr.error('El campo ganancia referencia no debe ser mayor a 9999'); 
+                toastr.error('El campo ganancia referencia no debe ser mayor a 999'); 
                 return ;
              }            
             
@@ -1310,9 +1310,9 @@ export default {
                  return ;            
             }
 
-            if(this.nivel_registro  > 9999){
+            if(this.nivel_registro  > 999){
 
-                toastr.error('El campo nivel registro no debe ser mayor a 9999'); 
+                toastr.error('El campo nivel registro no debe ser mayor a 999'); 
                 return ;
              }          
 
@@ -1322,9 +1322,9 @@ export default {
                  return ;            
             }
 
-            if(this.correccion_transferencia  > 9999){
+            if(this.correccion_transferencia  > 999){
 
-                toastr.error('El campo correccion_transferencia no debe ser mayor a 9999'); 
+                toastr.error('El campo correccion_transferencia no debe ser mayor a 999'); 
                 return ;
              }   
              
@@ -1334,9 +1334,9 @@ export default {
                  return ;            
             }
 
-            if(this.adicional_barrido  > 9999){
+            if(this.adicional_barrido  > 999){
 
-                toastr.error('El campo adicional barrido no debe ser mayor a 9999'); 
+                toastr.error('El campo adicional barrido no debe ser mayor a 999'); 
                 return ;
              }     
 
@@ -1346,9 +1346,9 @@ export default {
                  return ;            
             }
 
-            if(this.amplificacion_total  > 9999){
+            if(this.amplificacion_total  > 999){
 
-                toastr.error('El campo amplificacion total no debe ser mayor a 9999'); 
+                toastr.error('El campo amplificacion total no debe ser mayor a 999'); 
                 return ;
              }  
 
