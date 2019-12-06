@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Informe {{FormatearNumeroInforme($informe->numero,'RI')}}</title>
+    <title>Informe {{FormatearNumeroInforme($informe->numero,'US')}}</title>
 </head>
 
 <style>
@@ -59,6 +59,20 @@ b {
 
     margin-left: 2px;
 }
+
+#rotate
+{
+  height:125px;
+}
+
+#vertical
+{
+    -webkit-transform:rotate(-90deg);
+    -moz-transform:rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    margin-left: -50px;
+    margin-right: -50px;
+}
 </style>
 
 <body>   
@@ -74,7 +88,7 @@ b {
                                 <td rowspan="4" style="text-align: right;width: 240px;">
                                     <img src="{{ public_path('img/logo-enod-web.jpg')}}" alt="" style="height: 60px; margin-right: 25px;">
                                 </td>   
-                                <td style="font-size: 19px; height: 30px;width: 200px; text-align: center;margin-left: 0px" rowspan="3"><b>RADIOGRAFIA INDUSTRIAL</b></td>
+                                <td style="font-size: 19px; height: 30px;width: 200px; text-align: center;margin-left: 0px" rowspan="3"><b>INFORME DE ULTRASONIDO</b></td>
                                 <td style="font-size: 11px;"><b ></b></td>                         
                             </tr>
                             <tr>
@@ -141,24 +155,22 @@ b {
                         <tbody>                 
                         <tr>
                             <td style="font-size: 11px; width: 200px;border-right: 1px solid #000;" colspan="2"><b>Componente: </b>{{$informe->componente}}</td>
-                            <td style="font-size: 11px;width: 50px; " colspan="4" ><b>Equipo: </b>{{$interno_equipo->equipo->codigo}}</td>
-                            <td style="font-size: 11px;  " colspan="2"  ><b style="font-size: 11px;">Norma Evaluación: </b>{{$norma_evaluacion->descripcion}}</td>                            
+                            <td style="font-size: 11px;width: 50px;border-right: 1px solid #000; " colspan="4" ><b>Equipo: </b>{{$interno_equipo->equipo->codigo}}</td>
+                            <td style="font-size: 11px;border-left: 1px solid #000;" colspan="2" ><b>EPS: </b>{{$informe->eps}}</td>
+                           
                         </tr>
                         <tr>                
                             
                             <td style="font-size: 11px;border-right: 1px solid #000;" colspan="2" ><b>Material: </b>{{$material->codigo}}</td>
-                            <td style="font-size: 11px;  width: 270px; border-right: 1px solid #000;" colspan="4"  ><b>encoder: </b>     
-
-                            xxxx
-                            
-                            
-                            </td>
-                            <td style="font-size: 11px; " colspan="2"  ><b>Norma Ensayo: </b>{{$norma_ensayo->descripcion}}</td>                
+                            <td style="font-size: 11px;  width: 270px; border-right: 1px solid #000;" colspan="4"  ><b>Encoder:{{$informe_us->encoder}} </b></td>
+                            <td style="font-size: 11px;border-left: 1px solid #000;" colspan="2"><b>PQR: </b>{{$informe->pqr}}</td>
+           
                         </tr>
                         <tr>
                             <td style="font-size: 11px;border-right: 1px solid #000;" colspan="2" ><b>Plano / Isom :</b>{{$informe->plano_isom}}</td>
-                            <td style="font-size: 11px; border-right: 1px solid #000;" colspan="4"  ><b>Estado Superficie: </b>xxxx</td>                            
-                            <td style="font-size: 11px;  " colspan="2" ><b>Ejecutor Ensayo : </b>{{$ejecutor_ensayo->name}}</td>                          
+                            <td style="font-size: 11px; border-right: 1px solid #000;" colspan="4"  ><b>Estado Superficie: </b>{{$estado_superficie->codigo}}</td>                            
+                            <td style="font-size: 11px;  " colspan="2"  ><b style="font-size: 11px;">Norma Evaluación: </b>{{$norma_evaluacion->descripcion}}</td> 
+                        
                         </tr>
                         <tr>
                             <td style="font-size: 11px;" colspan="1"  ><b>Diametro: </b>{{$diametro_espesor->diametro}}</td>    
@@ -173,32 +185,15 @@ b {
                                 @endif                       
                             
                             </td>
-                            <td style="font-size: 11px;" colspan="4"  ><b>Agente Acoplamiento : </b>xxxx</td>   
+                            <td style="font-size: 11px;border-right: 1px solid #000;" colspan="4"  ><b>Agente Acoplamiento : </b>{{$informe_us->agente_acoplamiento}}</td>
+                            <td style="font-size: 11px; " colspan="2"  ><b>Norma Ensayo: </b>{{$norma_ensayo->descripcion}}</td>     
+
                         </tr>
                         <tr>
                             <td style="font-size: 11px;border-right: 1px solid #000;" colspan="2"><b>Proc. Sold. : </b>{{$informe->procedimiento_soldadura}}</td>                            
-                            <td style="font-size: 11px; width: 75px"   >xxxx</td>
-                            <td style="font-size: 11px; width: 15px"  >xxxx</td>
-                            <td style="font-size: 11px; width: 15px"  >xxxx</td>
-                            <td style="font-size: 11px; width: 1px; border-right: 1px solid #000;"  >xxxx</td>      
-                            <td style="text-align: center; " colspan="2" rowspan="4" >xxxx</td>                  
-                        </tr>
-                        <tr>                           
-                            <td style="font-size: 11px;border-right: 1px solid #000;" colspan="2" ><b>EPS: </b>{{$informe->eps}}</td>
-                            <td style="font-size: 11px; border-right: 1px solid #000;" colspan="4" >xxxx</td>                            
-                        </tr>
-                        <tr>
-                            <td style="font-size: 11px;border-right: 1px solid #000;" colspan="2"><b>PQR: </b>{{$informe->pqr}}</td>
-                            <td style="font-size: 11px;" colspan="2" >xxxx</td>
-                            <td style="font-size: 11px;border-right: 1px solid #000;" colspan="2" >xxxx</td>  
-                           
-                        </tr>
-                        <tr>                           
-                            <td style="font-size: 11px; border-right: 1px solid #000;" colspan="2" ><b>Proc. US: </b>{{$procedimiento_inf->titulo}} </td>
-                             <td style="font-size: 11px;border-right: 1px solid #000;" colspan="4" >xxxx</td>
-
-
-                        </tr>                
+                            <td style="font-size: 11px; border-right: 1px solid #000;" colspan="4" ><b>Proc. US: </b>{{$procedimiento_inf->titulo}} </td>
+                            <td style="font-size: 11px;  " colspan="2" ><b>Ejecutor Ensayo : </b>{{$ejecutor_ensayo->name}}</td>  
+                        </tr>  
                         </tbody>
                     </table>   
                 </td>
@@ -208,17 +203,25 @@ b {
                     <table  width="100%" style="text-align: center;border-collapse: collapse;">
                         <tbody>
                             <tr>
-                                <td style="font-size: 11px; width:65px;  text-align: center " rowspan="2" class="bordered-td" >JUNTA</td>
-                                <td style="font-size: 11px; width:65px;  text-align: center;" rowspan="2" class="bordered-td">CUÑO</td>
-                                <td style="font-size: 11px; width:64.5px; text-align: center;" rowspan="2" class="bordered-td">POSICIÓN</td>
-                                <td style="font-size: 11px; width:201.5px;  text-align: center;" rowspan="2" class="bordered-td">DEFECTOS</td>  
-                                <td style="font-size: 11px; width:80px; text-align: center;" colspan="2" class="bordered-td">RESULTADO</td>  
-                                <td style="font-size: 11px; text-align: center" rowspan="2" class="bordered-td">OBSERVACIÓN</td>                     
+                                
+                                <td style="font-size: 11px; height:20px;border-right: 1px solid #000;" id="rotate"> <div id="vertical">ZAPATA</div></td>
+                                <td style="font-size: 11px; height:20px;border-right: 1px solid #000;" id="rotate"> <div id="vertical">PALPADOR</div></td>
+                                <td style="font-size: 11px; height:20px;border-right: 1px solid #000;" id="rotate"> <div id="vertical">FRECUENCIA</div></td>
+                                <td style="font-size: 11px; height:20px;border-right: 1px solid #000;" id="rotate"> <div id="vertical">ANGULO APERTURA</div></td>
+
+                                <td style="font-size: 11px; height:20px;border-right: 1px solid #000;" id="rotate"> <div id="vertical">JUNTA</div></td>
+
+                                <td style="font-size: 11px; height:20px;border-right: 1px solid #000;" id="rotate"> <div id="vertical">JUNTA</div></td>
+
+                                <td style="font-size: 11px; height:20px;border-right: 1px solid #000;" id="rotate"> <div id="vertical">Elemento</div></td>
+
+                                <td style="font-size: 11px; height:20px;border-right: 1px solid #000;" id="rotate"> <div id="vertical">JUNTA</div></td>
+
+                                <td style="font-size: 11px; height:20px;border-right: 1px solid #000;" id="rotate"> <div id="vertical">JUNTA</div></td>
+
+                                <td id="rotate" class="bordered"><div id="vertical"></div></td>
+                                
                             </tr>
-                            <tr>
-                                <td style="font-size: 11px; text-align: center;" class="bordered-td">AP</td>
-                                <td style="font-size: 11px; text-align: center;" class="bordered-td">RZ</td>                            
-                            </tr>  
                         </tbody>
                     </table> 
                 </td>

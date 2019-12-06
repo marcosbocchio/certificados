@@ -20,6 +20,8 @@ use App\Iluminaciones;
 use App\DiametrosEspesor;
 use App\Contratistas;
 use App\Tecnicas;
+use App\EstadosSuperficies;
+use App\CalibracionesUs;
 use App\User;
 
 class PdfInformesUsController extends Controller
@@ -45,8 +47,8 @@ class PdfInformesUsController extends Controller
          $ejecutor_ensayo = User::findOrFail($ot_operador->user_id);
          $evaluador = User::find($informe->firma);
          $contratista = Contratistas::find($ot->contratista_id);
-
-       // dd($desmagnetizacion_sn);
+         $estado_superficie = EstadosSuperficies::find($informe_us->estado_superficie_id);
+         $calibraciones_us = CalibracionesUs::where('informe_us_id',$informe_us->id)->with('Palpador')->get();
       /*   $detalles =  DB::select('SELECT 
                                 detalles_pm.pieza as pieza,
                                 detalles_pm.numero as numero,
@@ -61,7 +63,7 @@ class PdfInformesUsController extends Controller
                                 informes_pm.id =:id',['id' => $informe_us->id ]);
         
         */
- 
+        //  dd($calibraciones_us);
            $pdf = PDF::loadView('reportes.informes.us',compact('ot',
                                                                 'norma_ensayo',
                                                                 'norma_evaluacion',
@@ -76,6 +78,7 @@ class PdfInformesUsController extends Controller
                                                                 'informe',
                                                                 'informe_us',
                                                                 'material',
+                                                                'estado_superficie',
                                                                 'evaluador'
                                                         
                                                                 ))->setPaper('a4','portrait')->setWarnings(false);
