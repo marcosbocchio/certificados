@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Informe {{FormatearNumeroInforme($informe->numero,'US')}}</title>
 </head>
 
 <style  type='text/css'>
+
+.EspecialCaracter {
+    font-family: DejaVu Sans;
+}
 
 @page { margin: 287px 30px 130px 60px !important;
         padding: 0px 0px 0px 0px !important; }
@@ -299,7 +303,7 @@ b {
                     <td style="font-size: 10px; width:32.8px;text-align:   center;" class="bordered-td">{{$calibracion->curva_elevacion}}</td>               
                     <td style="font-size: 10px; width:25.5px;text-align: center;" class="bordered-td">{{$calibracion->block_calibracion}}</td>               
                     <td style="font-size: 10px; width:36.5px;text-align: center;" class="bordered-td">{{$calibracion->block_sensibilidad}}</td>               
-                    <td style="font-size: 10px; width:37.5px;text-align: center;" class="bordered-td">{{$calibracion->tipo_reflector}} &nbsp; {{$calibracion->reflector_referencia}}</td>               
+                    <td style="font-size: 10px; width:37.5px;text-align: center;" class="bordered-td"><span class="EspecialCaracter">{{$calibracion->tipo_reflector}}</span> &nbsp; {{$calibracion->reflector_referencia}}</td>               
                     <td style="font-size: 10px; width:26px;text-align: center;" class="bordered-td">{{$calibracion->ganancia_referencia}}</td>               
                     <td style="font-size: 10px; width:29.3px;text-align: center;" class="bordered-td">%&nbsp;{{$calibracion->nivel_registro}}</td>               
                     <td style="font-size: 10px; width:25.5px;text-align: center;" class="bordered-td">{{$calibracion->correccion_transferencia}}</td>               

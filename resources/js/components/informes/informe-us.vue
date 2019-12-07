@@ -225,14 +225,14 @@
                         <div class="col-md-1">                       
                             <div class="form-group" >
                                 <label for="curva_elevacion" title="Curva Elevación">Curva. Elav.*</label>
-                                <input type="text" v-model="curva_elevacion" class="form-control" id="curva_elevacion">
+                                 <v-select v-model="curva_elevacion" :options="['DAC', 'TCG']"></v-select>
                             </div>         
                         </div>
 
                         <div class="col-md-1">                       
                             <div class="form-group" >
                                 <label for="block_calibracion" title="Block Calibración">Block. cal.*</label>
-                                <input type="text" v-model="block_calibracion" class="form-control" id="block_calibracion">
+                                 <v-select v-model="block_calibracion" :options="['V1', 'V2']"></v-select>
                             </div>         
                         </div>
 
@@ -246,14 +246,14 @@
                         <div class="col-md-1">                       
                             <div class="form-group" >
                                 <label for="tipo_reflector" title="Tipo Reflector">Tipo Re.*</label>
-                                <input type="text" v-model="tipo_reflector" class="form-control" id="tipo_reflector">
+                                 <v-select v-model="tipo_reflector" :options="['Ø', 'Ħ']"></v-select>
                             </div>         
                         </div>
 
                         <div class="col-md-1">                       
                             <div class="form-group" >
                                 <label for="reflector_referencia" title="Reflector Referencia">Re. Ref.*</label>
-                                <input type="number" v-model="reflector_referencia" class="form-control" id="reflector_referencia" step="0.01">
+                                <input type="number" v-model="reflector_referencia" class="form-control" id="reflector_referencia" step="0.1">
                             </div>         
                         </div>
 
@@ -1286,9 +1286,9 @@ export default {
                  return ;            
             }
 
-            if(this.reflector_referencia  > 99.99){
+            if(this.reflector_referencia  > 99.9){
 
-                toastr.error('El campo reflector referencia no debe ser mayor a 99.99'); 
+                toastr.error('El campo reflector referencia no debe ser mayor a 99.9'); 
                 return ;
              }
 

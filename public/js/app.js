@@ -15265,8 +15265,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return;
       }
 
-      if (this.reflector_referencia > 99.99) {
-        toastr.error('El campo reflector referencia no debe ser mayor a 99.99');
+      if (this.reflector_referencia > 99.9) {
+        toastr.error('El campo reflector referencia no debe ser mayor a 99.9');
         return;
       }
 
@@ -75844,77 +75844,65 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-1" }, [
-                  _c("div", { staticClass: "form-group" }, [
-                    _c(
-                      "label",
-                      {
-                        attrs: {
-                          for: "curva_elevacion",
-                          title: "Curva Elevación"
-                        }
-                      },
-                      [_vm._v("Curva. Elav.*")]
-                    ),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
+                  _c(
+                    "div",
+                    { staticClass: "form-group" },
+                    [
+                      _c(
+                        "label",
                         {
-                          name: "model",
-                          rawName: "v-model",
+                          attrs: {
+                            for: "curva_elevacion",
+                            title: "Curva Elevación"
+                          }
+                        },
+                        [_vm._v("Curva. Elav.*")]
+                      ),
+                      _vm._v(" "),
+                      _c("v-select", {
+                        attrs: { options: ["DAC", "TCG"] },
+                        model: {
                           value: _vm.curva_elevacion,
+                          callback: function($$v) {
+                            _vm.curva_elevacion = $$v
+                          },
                           expression: "curva_elevacion"
                         }
-                      ],
-                      staticClass: "form-control",
-                      attrs: { type: "text", id: "curva_elevacion" },
-                      domProps: { value: _vm.curva_elevacion },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.curva_elevacion = $event.target.value
-                        }
-                      }
-                    })
-                  ])
+                      })
+                    ],
+                    1
+                  )
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-1" }, [
-                  _c("div", { staticClass: "form-group" }, [
-                    _c(
-                      "label",
-                      {
-                        attrs: {
-                          for: "block_calibracion",
-                          title: "Block Calibración"
-                        }
-                      },
-                      [_vm._v("Block. cal.*")]
-                    ),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
+                  _c(
+                    "div",
+                    { staticClass: "form-group" },
+                    [
+                      _c(
+                        "label",
                         {
-                          name: "model",
-                          rawName: "v-model",
+                          attrs: {
+                            for: "block_calibracion",
+                            title: "Block Calibración"
+                          }
+                        },
+                        [_vm._v("Block. cal.*")]
+                      ),
+                      _vm._v(" "),
+                      _c("v-select", {
+                        attrs: { options: ["V1", "V2"] },
+                        model: {
                           value: _vm.block_calibracion,
+                          callback: function($$v) {
+                            _vm.block_calibracion = $$v
+                          },
                           expression: "block_calibracion"
                         }
-                      ],
-                      staticClass: "form-control",
-                      attrs: { type: "text", id: "block_calibracion" },
-                      domProps: { value: _vm.block_calibracion },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.block_calibracion = $event.target.value
-                        }
-                      }
-                    })
-                  ])
+                      })
+                    ],
+                    1
+                  )
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-2" }, [
@@ -75955,40 +75943,34 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-1" }, [
-                  _c("div", { staticClass: "form-group" }, [
-                    _c(
-                      "label",
-                      {
-                        attrs: {
-                          for: "tipo_reflector",
-                          title: "Tipo Reflector"
-                        }
-                      },
-                      [_vm._v("Tipo Re.*")]
-                    ),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
+                  _c(
+                    "div",
+                    { staticClass: "form-group" },
+                    [
+                      _c(
+                        "label",
                         {
-                          name: "model",
-                          rawName: "v-model",
+                          attrs: {
+                            for: "tipo_reflector",
+                            title: "Tipo Reflector"
+                          }
+                        },
+                        [_vm._v("Tipo Re.*")]
+                      ),
+                      _vm._v(" "),
+                      _c("v-select", {
+                        attrs: { options: ["Ø", "Ħ"] },
+                        model: {
                           value: _vm.tipo_reflector,
+                          callback: function($$v) {
+                            _vm.tipo_reflector = $$v
+                          },
                           expression: "tipo_reflector"
                         }
-                      ],
-                      staticClass: "form-control",
-                      attrs: { type: "text", id: "tipo_reflector" },
-                      domProps: { value: _vm.tipo_reflector },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.tipo_reflector = $event.target.value
-                        }
-                      }
-                    })
-                  ])
+                      })
+                    ],
+                    1
+                  )
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-1" }, [
@@ -76017,7 +75999,7 @@ var render = function() {
                       attrs: {
                         type: "number",
                         id: "reflector_referencia",
-                        step: "0.01"
+                        step: "0.1"
                       },
                       domProps: { value: _vm.reflector_referencia },
                       on: {
