@@ -274,12 +274,12 @@ b {
                 <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -45px;margin-right: -45px;">CURVA ELEVACION</div></td>
                 <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -55px;margin-right: -55px;">BLOCK CALIBRACIÓN</div></td>
                 <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -50px;margin-right: -50px;">BLOCK SENSIBILIDAD</div></td>
-                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -60px;margin-right: -60px;">REFLECTOR REFERENCIA</div></td>
-                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -63px;margin-right: -63px;">GANANCIA REFERENCIA</div></td>
+                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -49.5px;margin-right: -49.5px;">REFLECTOR REF. (mm)</div></td>
+                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -50px;margin-right: -50px;">GANANCIA REF. (dB)</div></td>
                 <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -38px;margin-right: -38px;">NIVEL REGISTRO</div></td>
-                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -60px;margin-right: -60px;">CORRECCIOÓN TRANSF</div></td>
-                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -54px;margin-right: -54px;">ADICIONAL BARRIDO</div></td>
-                <td id="rotate" style="font-size: 13px;"><div id="vertical" style="margin-left: -60px;margin-right: -60px;">AMPLIFICACIÓN TOTAL</div></td>
+                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -54.5px;margin-right: -54.5px;">CORREC. TRANSF (dB)</div></td>
+                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -67.5px;margin-right: -67.5px;">ADICIONAL BARRIDO (dB)</div></td>
+                <td id="rotate" style="font-size: 13px;"><div id="vertical" style="margin-left: -45px;margin-right: -45px;">AMPLIF. TOTAL (dB)</div></td>
 
             </tr>
             
@@ -304,11 +304,33 @@ b {
                     <td style="font-size: 10px; width:29.3px;text-align: center;" class="bordered-td">%&nbsp;{{$calibracion->nivel_registro}}</td>               
                     <td style="font-size: 10px; width:25.5px;text-align: center;" class="bordered-td">{{$calibracion->correccion_transferencia}}</td>               
                     <td style="font-size: 10px; width:25.7px;text-align: center;" class="bordered-td">{{$calibracion->adicional_barrido}}</td>               
-                    <td style="font-size: 11px;text-align: center" class="bordered-td">&nbsp; {{$calibracion->amplificacion_total}}</td>               
+                    <td style="font-size: 11px;text-align: center" class="bordered-td">{{$calibracion->amplificacion_total}}</td>               
 
-                </tr>                
-            @endforeach    
-              
+                </tr>     
+            @endforeach
+          
+            {{ $filasACompletar = 4 - count($calibraciones_us) }}  
+            @for ( $x=0 ;  $x < $filasACompletar ; $x++)
+                <tr>
+                    <td style="font-size: 10px; width:80px;text-align: center;"class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 10px; width:80px;text-align: center;" class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 10px; width:79.7px;text-align: center;" class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 10px; width:20.9px;  text-align: center;" class="bordered-td">&nbsp;</td> 
+                    <td style="font-size: 10px; width:42.8px;text-align: center;" class="bordered-td">&nbsp;</td>          
+                    <td style="font-size: 10px; width:39.7px;text-align: center;" class="bordered-td">&nbsp;</td>               
+                    <td style="font-size: 10px; width:35.5px;text-align: center;" class="bordered-td">&nbsp;</td>               
+                    <td style="font-size: 10px; width:32.8px;text-align:   center;" class="bordered-td">&nbsp;</td>               
+                    <td style="font-size: 10px; width:25.5px;text-align: center;" class="bordered-td">&nbsp;</td>               
+                    <td style="font-size: 10px; width:36.5px;text-align: center;" class="bordered-td">&nbsp;</td>               
+                    <td style="font-size: 10px; width:37.5px;text-align: center;" class="bordered-td">&nbsp;</td>               
+                    <td style="font-size: 10px; width:26px;text-align: center;" class="bordered-td">&nbsp;</td>               
+                    <td style="font-size: 10px; width:29.3px;text-align: center;" class="bordered-td">&nbsp;</td>               
+                    <td style="font-size: 10px; width:25.5px;text-align: center;" class="bordered-td">&nbsp;</td>               
+                    <td style="font-size: 10px; width:25.7px;text-align: center;" class="bordered-td">&nbsp;</td>               
+                    <td style="font-size: 11px;text-align: center" class="bordered-td">&nbsp;</td>
+                </tr>
+            @endfor
+       
         </tbody>
     </table>
     

@@ -110,3 +110,28 @@
             </tbody>
      </table>
     -->
+
+
+           <!--      
+            {{ $filasACompletar = 4 - count($calibraciones_us) }}  
+            @for ( $x=0 ;  $x < $filasACompletar ; $x++)
+                <tr>
+                    <td style="font-size: 10px; width:80px;text-align: center;"class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 10px; width:80px;text-align: center;" class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 10px; width:79.7px;text-align: center;" class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 10px; width:20.9px;  text-align: center;" class="bordered-td">&nbsp;</td> 
+                    <td style="font-size: 10px; width:42.8px;text-align: center;" class="bordered-td">&nbsp;</td>          
+                    <td style="font-size: 10px; width:39.7px;text-align: center;" class="bordered-td">&nbsp;</td>               
+                    <td style="font-size: 10px; width:35.5px;text-align: center;" class="bordered-td">&nbsp;</td>               
+                    <td style="font-size: 10px; width:32.8px;text-align:   center;" class="bordered-td">&nbsp;</td>               
+                    <td style="font-size: 10px; width:25.5px;text-align: center;" class="bordered-td">&nbsp;</td>               
+                    <td style="font-size: 10px; width:36.5px;text-align: center;" class="bordered-td">&nbsp;</td>               
+                    <td style="font-size: 10px; width:37.5px;text-align: center;" class="bordered-td">&nbsp;</td>               
+                    <td style="font-size: 10px; width:26px;text-align: center;" class="bordered-td">&nbsp;</td>               
+                    <td style="font-size: 10px; width:29.3px;text-align: center;" class="bordered-td">&nbsp;</td>               
+                    <td style="font-size: 10px; width:25.5px;text-align: center;" class="bordered-td">&nbsp;</td>               
+                    <td style="font-size: 10px; width:25.7px;text-align: center;" class="bordered-td">&nbsp;</td>               
+                    <td style="font-size: 11px;text-align: center" class="bordered-td">&nbsp;</td>
+                </tr>
+            @endfor
+        -->
