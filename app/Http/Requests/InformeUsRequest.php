@@ -23,7 +23,32 @@ class InformeUsRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+     
+        $condicional_espesor='';
+
+        if($this->diametro['diametro'] == 'CHAPA'){
+
+            $condicional_espesor = [      
+           
+                'espesor'                    => '',       
+                'espesor_chapa'              => 'required',      
+                              
+                ];           
+    
+        }else {
+    
+            $condicional_espesor = [      
+           
+                'espesor'                     => 'required',       
+                'espesor_chapa'               =>  '',
+                              
+                ];
+    
+        }   
+
+       
+
+        $validacion = [
 
             'fecha'                     => 'required',
             'componente'                => 'required|Max:20',
@@ -42,5 +67,10 @@ class InformeUsRequest extends FormRequest
             'encoder'                   => 'required|max:15',
             'agente_acoplamiento'       => 'required|max:10',
         ];
+
+        $validacion_completa =array_merge($condicional_espesor,$validacion);
+
+        return $validacion_completa;
+
     }
 }

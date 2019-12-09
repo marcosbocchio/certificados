@@ -29,7 +29,7 @@ class InformeRiRequest extends FormRequest
     $condicion_dist_fuente_pelicula ='';
     $condicion_componente='';   
 
-    if($this->diametro == 'CHAPA'){
+    if($this->diametro['diametro'] == 'CHAPA'){
 
         $condicion_espesor_chapa = 'required';
         $condicion_dist_fuente_pelicula = 'required';
@@ -45,7 +45,7 @@ class InformeRiRequest extends FormRequest
     }
 
 
-    $condicional = [      
+        $condicional = [      
            
            'espesor'                     => $condicion_espesor_no_chapa,
            'espesor_chapa'               => $condicion_espesor_chapa,
