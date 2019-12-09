@@ -11,17 +11,24 @@
     font-family: DejaVu Sans;
 }
 
-@page { margin: 350px 30px 122px 60px !important;
+@page { margin: 305px 30px 122px 60px !important;
         padding: 0px 0px 0px 0px !important; }
 
 header {
     position:fixed;
-    top: -313px;    
+    top: -268px;    
     }
 
 main{
    
     margin-top: -2px;
+}
+
+table {page-break-before:auto;}
+
+.tableMain {
+
+    height:700px;
 }
 
 
@@ -246,24 +253,24 @@ b {
 
 
 <main>
-    @foreach ($informes_us_me as $infome_us_me)
-        <table>
-            <tbody>
-                 <tr>
-                  <td>{{ $infome_us_me->elemento}} </td>   
-                 </tr>
+    <table width="100%">
+        <tbody>
+            @foreach ($informes_us_me as $infome_us_me)
+                <tr>
+                  <td style="font-size: 14px;height:30px;"><span style="margin-left: 35px;">Elemento : {{ strtoupper($infome_us_me->elemento)}}</span></td>   
+                </tr>
                 <tr>
                     {{ $pos_gen = 1 }} 
                     {{$max_cant_genetratices_fila = 20}}
                     {{ $genetratrices_fila = $max_cant_genetratices_fila }}
                     <td>                 
                         @while($pos_gen <= $infome_us_me->cantidad_generatrices)
-                            <table  style="text-align: center;"  class="bordered">
+                            <table  style="text-align: center;margin-left:23px;margin-top: 10px;;"  class="bordered">
                                 <tbody>
                                     <tr>  
-                                        <td style="font-size: 14px; text-align: left;width:28px;text-align: center;background:#D8D8D8">&nbsp;</td>
+                                        <td style="font-size: 13px; text-align: left;width:28px;text-align: center;background:#D8D8D8">&nbsp;</td>
                                         @while( ($pos_gen <= $genetratrices_fila) && ($pos_gen <= $infome_us_me->cantidad_generatrices))   
-                                            <td style="font-size: 14px; text-align: left;width:28px;text-align: center;background:#D8D8D8">
+                                            <td style="font-size: 13px; text-align: left;width:28px;text-align: center;background:#D8D8D8">
                                                 @foreach ($generatrices as $generatriz )
                                                         
                                                     @if($generatriz->nro == $pos_gen)
@@ -272,50 +279,49 @@ b {
 
                                                 @endforeach
 
-                                            <td
+                                            </td>
                                             {{ $pos_gen = $pos_gen + 1}}
                                         @endwhile   
                                         {{ $genetratrices_fila = $genetratrices_fila + $max_cant_genetratices_fila }}                                
-                                     </tr>
+                                    </tr>
 
                                     @for ( $pos_pos= 1 ;  $pos_pos <= $infome_us_me->cantidad_posiciones ; $pos_pos++)
-                                         <tr> 
-                                            <td style="font-size: 14px; text-align: left;width:28px;text-align: center;background:#D8D8D8">{{$pos_pos}}</td>
-                                            @for ($pos_gen_fila = ($genetratrices_fila - (2*$max_cant_genetratices_fila)+1) ; $pos_gen_fila <= $pos_gen - 1 ; $pos_gen_fila++)
+                                            <tr> 
+                                              <td style="font-size: 13px; text-align: left;width:28px;text-align: center;background:#D8D8D8">{{$pos_pos}}</td>
+                                              @for ($pos_gen_fila = ($genetratrices_fila - (2*$max_cant_genetratices_fila)+1) ; $pos_gen_fila <= $pos_gen - 1 ; $pos_gen_fila++)
 
-                                             {{ $x =0  }}
+                                                {{ $x =0  }}
                                             
-                                                 @foreach ($infome_us_me->detalle_us_me as $item_detalle )
+                                                    @foreach ($infome_us_me->detalle_us_me as $item_detalle )
 
                                                         @foreach ($generatrices as $generatriz)
                                                             
                                                             @if ($pos_pos==$item_detalle->posicion && $pos_gen_fila == $generatriz->nro && $item_detalle->generatriz==$generatriz->valor)  
 
-                                                                <td style="font-size: 14px; text-align: left;width:28px;text-align: center">{{$item_detalle->valor}}</td>
-                                                                  {{ $x =1  }}
+                                                                <td style="font-size: 13px; text-align: left;width:28px;text-align: center">{{$item_detalle->valor}}</td>
+                                                                    {{ $x =1  }}
                                                             @endif
 
                                                         @endforeach                                                                                            
                                                     
                                                 @endforeach                                                                             
-                                            
-                                            @if ($x==0)
-                                                 <td style="font-size: 14px; text-align: left;width:28px;text-align: center">X</td>
-                                            @endif
+                                                
+                                                @if ($x==0)
+                                                        <td style="font-size: 13px; text-align: left;width:28px;text-align: center">X</td>
+                                                @endif
 
-                                            @endfor
-                                         </tr>
-                                       
-                                    @endfor
-
+                                                @endfor
+                                            </tr>                                        
+                                        @endfor
+                                    </tr>       
                                 </tbody>
                             </table>                               
                         @endwhile          
                     </td>                  
-                 </tr>
-            </tbody>
-        </table>
-    @endforeach
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
 </main>
 
      
