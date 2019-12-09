@@ -135,3 +135,41 @@
                 </tr>
             @endfor
         -->
+
+        <main>
+  <table>
+    <tbody>
+        <tr>  
+            <td>
+                @foreach ($informes_us_me as $infome_us_me)
+                
+                    {{ $pos_gen = 1 }} 
+                    {{ $cant_genetratrices_file = 27}}
+                      {{ $filasPage = 35}}
+                    
+                    
+                    @while($pos_gen <= $infome_us_me->cantidad_generatrices)
+                        <table>
+                            <tbody>
+                                <tr>  
+                                    @while( ($pos_gen <= $cant_genetratrices_file) && ($pos_gen <= $infome_us_me->cantidad_generatrices))   
+                                            @foreach ($generatrices as $generatriz )
+                                                    
+                                                @if($generatriz->nro == $pos_gen)
+                                                    <td style="font-size: 11px; text-align: left;width:22px;text-align: center"> {{  $generatriz->valor }}</td>
+                                                @endif
+
+                                            @endforeach
+
+                                            {{ $pos_gen = $pos_gen + 1}}
+                                    @endwhile
+                                </tr>
+                            </tbody>
+                        </table>
+                    @endwhile          
+                @endforeach  
+               </td>
+            </tr>
+        </tbody>
+    </table>      
+</main>

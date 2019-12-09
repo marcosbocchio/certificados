@@ -21,12 +21,13 @@ use App\DiametrosEspesor;
 use App\Contratistas;
 use App\Tecnicas;
 use App\EstadosSuperficies;
-use App\CalibracionesUs;
+use App\InformesUsMe;
+use App\DetalleUsMe;
+use App\Generatrices;
 use App\User;
 
-class PdfInformesUsController extends Controller
+class PdfInformesUsIndicacionesMeController extends Controller
 {
-
     public function imprimir($id){      
 
         /* header */
@@ -48,9 +49,11 @@ class PdfInformesUsController extends Controller
          $evaluador = User::find($informe->firma);
          $contratista = Contratistas::find($ot->contratista_id);
          $estado_superficie = EstadosSuperficies::find($informe_us->estado_superficie_id);
-         $calibraciones_us = CalibracionesUs::where('informe_us_id',$informe_us->id)->with('Palpador')->get();
+         $generatrices = Generatrices::all();
+         $informes_us_me = InformesUsMe::where('informe_us_id',$informe_us->id)->with('detalle_us_me')->get();   
 
-        $pdf = PDF::loadView('reportes.informes.us',compact('ot',
+     //    dd($informes_us_me);
+        $pdf = PDF::loadView('reportes.informes.us-indicaciones-me',compact('ot',
                                                                 'norma_ensayo',
                                                                 'norma_evaluacion',
                                                                 'procedimiento_inf',                                                               
@@ -65,13 +68,13 @@ class PdfInformesUsController extends Controller
                                                                 'informe_us',
                                                                 'material',
                                                                 'estado_superficie',
-                                                                'calibraciones_us',
+                                                                'generatrices',
+                                                                'informes_us_me',
                                                                 'evaluador'
                                                         
                                                                 ))->setPaper('a4','portrait')->setWarnings(false);
 
 
            return $pdf->stream(); 
-    
-     }
+}
 }

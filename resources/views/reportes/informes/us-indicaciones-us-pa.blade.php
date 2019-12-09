@@ -11,12 +11,12 @@
     font-family: DejaVu Sans;
 }
 
-@page { margin: 287px 30px 145px 60px !important;
+@page { margin: 476px 30px 122px 60px !important;
         padding: 0px 0px 0px 0px !important; }
 
 header {
     position:fixed;
-    top: -250px;    
+    top: -439px;    
     }
 
 main{
@@ -26,10 +26,9 @@ main{
 
 
 footer {
-    position: fixed; bottom:6px; 
-    padding-top: 0px;
+    position: fixed; bottom: 7px; 
+    padding-top: -7.3px;
 }
-
 .pagenum:before {
     content: counter(page);
 }
@@ -66,7 +65,7 @@ b {
 
 #rotate
 {
-  height:170px;
+  height:165px;
 }
 
 #vertical
@@ -204,8 +203,33 @@ b {
                         </tbody>
                     </table>   
                 </td>
+            </tr>
+            <tr>
+                <td style="border-bottom: 2px solid #000;background:#D8D8D8" >REGISTRO DE INDICACIONES</td>
+            </tr>
+            <tr>
+                <td>
+                    <table style="text-align: center;border-collapse: collapse;">
+                        <tbody>
+                            <tr>                                
+                                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: 15.7px;margin-right: 15.7px;">ELEMENTO</div></td>
+                                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: 6px;margin-right: 6px;">DIAMETRO</div></td>
+                                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -30px;margin-right: -30px;">N° INDICACIÓN</div></td>
+                                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -38px;margin-right: -38px;">POSICION EXAMEN</div></td>
+                                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -25px;margin-right: -25px;">ANG. INCIDENCIA</div></td>
+                                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -33px;margin-right:  -33px;">CAMINO SONICO</div></td>
+                                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: 7.2px;margin-right: 7.2px;">X (cm)</div></td>
+                                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: 5px;margin-right: 5px;">Y (mm)</div></td>
+                                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: 5.7px;margin-right: 5.7px;">Z (mm)</div></td>
+                                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -34px;margin-right: -34px;">LONGITUD (mm)</div></td>
+                                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -37.8px;margin-right: -37.8px;">NIVEL REGISTRO</div></td>
+                                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;" ><div id="vertical" style="margin-left: -5px;margin-right: -5px;">RESULTADO</div></td>
+                                <td id="rotate" style="font-size: 13px;" ><div id="vertical" style="margin-left: -30px;margin-right: -30px;">REFERENCIA</div></td>  
+                            </tr>            
+                        </tbody>
+                    </table>
+                </td>
             </tr>  
-            
         </tbody>
     </table>
 
@@ -213,18 +237,7 @@ b {
 
 <footer>
         <table style="text-align: center" width="100%" class="bordered">
-            <tbody>
-                <tr> 
-                    <td>
-                        <table width="100%" style="border-collapse: collapse;" >
-                            <tbody>                           
-                                <tr>                                
-                                    <td style="font-size: 11px;height: 30px;" colspan="6" rowspan="2" class="bordered-td"><b>Observaciones: </b>{{$informe->observaciones}}</td>                                  
-                                </tr>                         
-                            </tbody>
-                        </table>
-                    </td>               
-                </tr>
+            <tbody>             
                 <tr>
                     <td>
                         <table width="100%" style="border-collapse: collapse;" >
@@ -264,141 +277,61 @@ b {
     </footer>
 
 <main>
-    <table style="text-align: center;border-collapse: collapse;">
+    <table style="text-align: center;border-collapse: collapse;" class="bordered">
         <tbody>
-        <tr>
-            <td style="border-bottom: 2px solid #000;background:#D8D8D8" colspan="16">DATOS DE CALIBRACIÓN</td>
-        </tr>
-            <tr>
-                
-                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: 15.7px;margin-right: 15.7px;">ZAPATA</div></td>
-                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: 6px;margin-right: 6px;">PALPADOR</div></td>
-                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: 13px;margin-right: 13px;">N° SERIE</div></td>
-                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -48px;margin-right: -48px;">FRECUENCIA (Mhz)</div></td>
-                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -30px;margin-right: -30px;">ANG. APERTURA</div></td>
-                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -3px;margin-right:  -3px;">RANGO</div></td>
-                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -12px;margin-right: -12px;">POSICIÓN</div></td>
-                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -45px;margin-right: -45px;">CURVA ELEVACION</div></td>
-                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -55px;margin-right: -55px;">BLOCK CALIBRACIÓN</div></td>
-                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -50px;margin-right: -50px;">BLOCK SENSIBILIDAD</div></td>
-                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -49.5px;margin-right: -49.5px;">REFLECTOR REF. (mm)</div></td>
-                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -50px;margin-right: -50px;">GANANCIA REF. (dB)</div></td>
-                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -38px;margin-right: -38px;">NIVEL REGISTRO</div></td>
-                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -54.5px;margin-right: -54.5px;">CORREC. TRANSF (dB)</div></td>
-                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -67.5px;margin-right: -67.5px;">ADICIONAL BARRIDO (dB)</div></td>
-                <td id="rotate" style="font-size: 13px;"><div id="vertical" style="margin-left: -45px;margin-right: -45px;">AMPLIF. TOTAL (dB)</div></td>
+            @foreach ($indicaciones_us_pa  as $indicacion)
+            <tr>                
+                  <td style="font-size: 10px; width:101.7px;height: 16px;text-align: center;" class="bordered-td">{{ strtoupper($indicacion->elemento) }}</td>
+                  <td style="font-size: 10px; width:80px;text-align: center;" class="bordered-td">ø {{ $indicacion->diametro }}</td>
+                  <td style="font-size: 10px; width:34.5px;text-align: center;" class="bordered-td">{{ $indicacion->nro_indicacion }}</td>
+                  <td style="font-size: 10px; width:42.5px;text-align: center;" class="bordered-td">{{ strtoupper($indicacion->posicion_examen) }}</td>
+                  <td style="font-size: 10px; width:59.7px;text-align: center;" class="bordered-td">{{ strtoupper($indicacion->angulo_incidencia) }}</td>
+                  <td style="font-size: 10px; width:38px;text-align: center;" class="bordered-td">{{ $indicacion->camino_sonico }}</td>
+                  <td style="font-size: 10px; width:51px;text-align: center;" class="bordered-td">{{ $indicacion->x }}</td>
+                  <td style="font-size: 10px; width:51px;text-align: center;" class="bordered-td">{{ $indicacion->y }}</td>
+                  <td style="font-size: 10px; width:51px;text-align: center;" class="bordered-td">{{ $indicacion->z }}</td>
+                  <td style="font-size: 10px; width:31px;text-align: center;" class="bordered-td">{{ $indicacion->longitud }}</td>
+                  <td style="font-size: 10px; width:29.3px;text-align: center;" class="bordered-td">{{ strtoupper($indicacion->nivel_registro)}}</td>
 
-            </tr>
-            
-        </tbody>
-    </table> 
-    <table width="100%" class="bordered">
-        <tbody>
-            @foreach ($calibraciones_us as $calibracion)
-                <tr>
-                    <td style="font-size: 10px; width:80px;text-align: center;"class="bordered-td">{{ strtoupper($calibracion->zapata) }}</td>
-                    <td style="font-size: 10px; width:80px;text-align: center;" class="bordered-td">{{$calibracion->palpador->codigo}}</td>
-                    <td style="font-size: 10px; width:79.7px;text-align: center;" class="bordered-td">{{$calibracion->palpador->nro_serie}}</td>
-                    <td style="font-size: 10px; width:20.9px;  text-align: center;" class="bordered-td">{{$calibracion->frecuencia}}</td> 
-                    <td style="font-size: 10px; width:42.8px;text-align: center;" class="bordered-td">{{$calibracion->angulo_apertura}}</td>          
-                    <td style="font-size: 10px; width:39.7px;text-align: center;" class="bordered-td">{{$calibracion->rango}}</td>               
-                    <td style="font-size: 10px; width:35.5px;text-align: center;" class="bordered-td">{{strtoupper($calibracion->posicion)}}</td>               
-                    <td style="font-size: 10px; width:32.8px;text-align:   center;" class="bordered-td">{{$calibracion->curva_elevacion}}</td>               
-                    <td style="font-size: 10px; width:25.5px;text-align: center;" class="bordered-td">{{$calibracion->block_calibracion}}</td>               
-                    <td style="font-size: 10px; width:36.5px;text-align: center;" class="bordered-td">{{$calibracion->block_sensibilidad}}</td>               
-                    <td style="font-size: 10px; width:37.5px;text-align: center;" class="bordered-td"><span class="EspecialCaracter">{{$calibracion->tipo_reflector}}</span> &nbsp; {{$calibracion->reflector_referencia}}</td>               
-                    <td style="font-size: 10px; width:26px;text-align: center;" class="bordered-td">{{$calibracion->ganancia_referencia}}</td>               
-                    <td style="font-size: 10px; width:29.3px;text-align: center;" class="bordered-td">{{$calibracion->nivel_registro}}&nbsp;%</td>               
-                    <td style="font-size: 10px; width:25.5px;text-align: center;" class="bordered-td">{{$calibracion->correccion_transferencia}}</td>               
-                    <td style="font-size: 10px; width:25.7px;text-align: center;" class="bordered-td">{{$calibracion->adicional_barrido}}</td>               
-                    <td style="font-size: 11px;text-align: center" class="bordered-td">{{$calibracion->amplificacion_total}}</td>               
+                  <td style="font-size: 10px; width:67px;text-align: center;" class="bordered-td">
+                  @if($indicacion->aceptable_sn)
+                      APROBADO
+                   @else
+                      RECHAZADO
+                  @endif
+                  </td>
+                  <td style="font-size: 10px; width:24px;text-align: center;" class="bordered-td">
 
-                </tr>     
-            @endforeach
-          
-            {{ $filasACompletar = 4 - count($calibraciones_us) }}  
+                   @if ($indicacion->detalle_us_pa_us_referencia_id)
+                        <a href="{{ route('InformeUsDetalleUsPaUsReferencias',$indicacion->detalle_us_pa_us_referencia_id)}}"><img src="{{ public_path('img/fa-file-pdf.jpg')}}" alt="" style="height: 15px;margin-left:3px;;margin-top:2px;text-align: center;"></a>                                                       
+                    @endif
+                  
+                  </td>
+        
+            </tr>        
+            @endforeach   
+
+            {{ $cantFilasTotal = count($indicaciones_us_pa) }}
+            {{ $filasPage = 27}}
+            {{ $filasACompletar = pdfCantFilasACompletar($filasPage,$cantFilasTotal) }}
+
             @for ( $x=0 ;  $x < $filasACompletar ; $x++)
                 <tr>
-                    <td style="font-size: 10px; width:80px;text-align: center;"class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 10px; width:101.7px;height: 16px;text-align: center;" class="bordered-td">&nbsp;</td>
                     <td style="font-size: 10px; width:80px;text-align: center;" class="bordered-td">&nbsp;</td>
-                    <td style="font-size: 10px; width:79.7px;text-align: center;" class="bordered-td">&nbsp;</td>
-                    <td style="font-size: 10px; width:20.9px;  text-align: center;" class="bordered-td">&nbsp;</td> 
-                    <td style="font-size: 10px; width:42.8px;text-align: center;" class="bordered-td">&nbsp;</td>          
-                    <td style="font-size: 10px; width:39.7px;text-align: center;" class="bordered-td">&nbsp;</td>               
-                    <td style="font-size: 10px; width:35.5px;text-align: center;" class="bordered-td">&nbsp;</td>               
-                    <td style="font-size: 10px; width:32.8px;text-align:   center;" class="bordered-td">&nbsp;</td>               
-                    <td style="font-size: 10px; width:25.5px;text-align: center;" class="bordered-td">&nbsp;</td>               
-                    <td style="font-size: 10px; width:36.5px;text-align: center;" class="bordered-td">&nbsp;</td>               
-                    <td style="font-size: 10px; width:37.5px;text-align: center;" class="bordered-td">&nbsp;</td>               
-                    <td style="font-size: 10px; width:26px;text-align: center;" class="bordered-td">&nbsp;</td>               
-                    <td style="font-size: 10px; width:29.3px;text-align: center;" class="bordered-td">&nbsp;</td>               
-                    <td style="font-size: 10px; width:25.5px;text-align: center;" class="bordered-td">&nbsp;</td>               
-                    <td style="font-size: 10px; width:25.7px;text-align: center;" class="bordered-td">&nbsp;</td>               
-                    <td style="font-size: 11px;text-align: center" class="bordered-td">&nbsp;</td>
-                </tr>
+                    <td style="font-size: 10px; width:34.5px;text-align: center;" class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 10px; width:42.5px;text-align: center;" class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 10px; width:59.7px;text-align: center;" class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 10px; width:38px;text-align: center;" class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 10px; width:51px;text-align: center;" class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 10px; width:51px;text-align: center;" class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 10px; width:51px;text-align: center;" class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 10px; width:31px;text-align: center;" class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 10px; width:29.3px;text-align: center;" class="bordered-td">&nbsp;</td>      
+                    <td style="font-size: 10px; width:67px;text-align: center;" class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 10px; width:24px;text-align: center;" class="bordered-td">&nbsp;</td>
+               </tr>
             @endfor
-       
-        </tbody>
-    </table>
-    
-    <table style="text-align: center;" width="100%">
-        <tbody>
-            <tr>
-                <td>
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td style="text-align: center; width: 340px;height: 190px;">
-                                        
-                                    @if ($informe_us->path1_calibracion)
-                                        <img src="{{ public_path($informe_us->path1_calibracion) }}" alt="" style="height: 180px; width: 263px;">
-                                    @endif  
-                    
-                                </td>
-
-                                <td style="text-align: center; width: 340px;height: 190px;">
-                                        
-                                    @if ($informe_us->path2_calibracion)
-                                        <img src="{{ public_path($informe_us->path2_calibracion) }}" alt="" style="height: 180px; width: 263px;">
-                                    @endif  
-                    
-                                </td>  
-                            </tr>
-                            <tr>
-                                <td style="text-align: center; width: 340px;height: 190px;">
-                                    
-                                    @if ($informe_us->path3_calibracion)
-                                        <img src="{{ public_path($informe_us->path3_calibracion) }}" alt="" style="height: 180px; width: 263px;">
-                                    @endif  
-                        
-                                </td>
-
-                                <td style="text-align: center; width: 340px;height: 190px;">
-
-                                    @if ($informe_us->path4_calibracion)
-                                        <img src="{{ public_path($informe_us->path4_calibracion) }}" alt="" style="height: 180px; width: 263px;">
-                                    @endif  
-                        
-                                </td>
-                            </tr>                        
-                        </tbody>
-                    </table>             
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table style="margin-top: 0px; border-collapse: collapse;" class="bordered"  width="100%">
-        <tbody>
-             <tr>
-                 <td style="border-bottom: 2px solid #000;background:#D8D8D8;text-align: center;" >
-                    REGISTRO DE INDICACIONES
-                    @if($tecnica->codigo == 'US' || $tecnica->codigo=='PA')
-                    <a href="{{ route('InformeUsIndicacionesUsPa',$informe->id)}}"><img src="{{ public_path('img/fa-file-pdf.jpg')}}" style="height: 15px;margin-left:3px;;margin-top:2px;text-align: center;"></a>
-                    @elseif($tecnica->codigo ='ME')
-                    <a href="{{ route('InformeUsIndicacionesMe',$informe->id)}}"><img src="{{ public_path('img/fa-file-pdf.jpg')}}" style="height: 15px;margin-left:3px;;margin-top:2px;text-align: center;"></a>
-                    @endif
-                </td>
-             </tr>
         </tbody>
     </table>
 </main>

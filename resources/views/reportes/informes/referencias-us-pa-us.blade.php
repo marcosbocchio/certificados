@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Referencia Informe N°: {{FormatearNumeroInforme($informe->numero,'PM')}} - Pieza N°: {{$detalle_pm->numero}}</title></head>
+    <title>Referencia Informe N°: {{FormatearNumeroInforme($informe->numero,'US')}} - Elemento :  {{$detalle_us_pa_us->elemento}}</title>
 <style>
  
  @page { margin: 193px 30px 194px 60px !important;
@@ -52,11 +52,11 @@ b {
                                     <td rowspan="4" style="text-align: right;width: 240px;">
                                         <img src="{{ public_path('img/logo-enod-web.jpg')}}" alt="" style="height: 60px; margin-right: 25px;">
                                     </td>   
-                                    <td style="font-size: 19px; height: 30px;width: 200px; text-align: center;margin-left: 0px" rowspan="3"><b>PARTÍCULAS MAGNETIZABLES</b></td>
+                                    <td style="font-size: 19px; height: 30px;width: 200px; text-align: center;margin-left: 0px" rowspan="3"><b>INFORME DE ULTRASONIDO</b></td>
                                     <td style="font-size: 11px;"><b ></b></td>                         
                                 </tr>
                                 <tr>
-                                    <td style="font-size: 11px;" ><b style="margin-left: 131px;">INFORME N°: </b>{{FormatearNumeroInforme($informe->numero,'PM')}}</td>                      
+                                    <td style="font-size: 11px;" ><b style="margin-left: 131px;">INFORME N°: </b>{{FormatearNumeroInforme($informe->numero,'US')}}</td>                      
                                 </tr>
                                 <tr>
                                     <td style="font-size: 11px;"><b style="margin-left: 131px;">FECHA: </b>{{ date('d-m-Y', strtotime($ot->fecha_hora)) }}</td>
@@ -109,22 +109,23 @@ b {
                                 <td style="font-size: 11px;"><b>OBRA: </b>{{$ot->obra}}</td>     
                                 <td style="font-size: 11px;"><b>OT N°: </b>{{$ot->numero}}</td>     
                             </tr>   
+                           
                         </tbody>
                     </table>          
                 </td>
-            </tr>
-            <tr>
+            </tr>        
+             <tr>
                 <td class="bordered">
                     <table>
                         <tbody>
                             <tr>
-                                <td style="font-size: 13px;" > <b>PIEZA: </b>  {{$detalle_pm->pieza}} &nbsp;&nbsp; <b>N°: </b>{{$detalle_pm->numero}}</td>  
+                                <td style="font-size: 13px;" > <b>ELEMENTO: </b> {{$detalle_us_pa_us->elemento}}</title></td>  
                             </tr>
                         </tbody>
                     </table>
                 </td>
-            </tr>                 
-            </tbody>
+            </tr>                         
+           </tbody>
         </table>
     </header>
     
@@ -136,7 +137,7 @@ b {
                     <table width="100%" style="border-collapse: collapse;" >
                         <tbody>                           
                             <tr>                                
-                                <td style="font-size: 12px;" colspan="6" class="bordered-td"><b>Observaciones: </b>{{$detalle_pm_referencia->descripcion}}</td>                                  
+                                <td style="font-size: 12px;" colspan="6" class="bordered-td"><b>Observaciones: </b>{{$detalle_us_pa_us_referencia->descripcion}}</td>                                  
                             </tr>                         
                         </tbody>
                     </table>
@@ -190,26 +191,26 @@ b {
                             <tbody>
                                 <tr>
                                     <td style="text-align: center; width: 330px;height: 275px">
-                                            @if ($detalle_pm_referencia->path1!='/img/imagen1.jpg')
-                                                <img src="{{ public_path($detalle_pm_referencia->path1) }}" alt="" style="height: 160; width: 234;">
+                                            @if ($detalle_us_pa_us_referencia->path1!='/img/imagen1.jpg')
+                                                <img src="{{ public_path($detalle_us_pa_us_referencia->path1) }}" alt="" style="height: 160; width: 234;">
                                             @endif  
                                             
                                     </td>
                                     <td style="text-align: center;width: 330px;height: 275px">
-                                        @if ($detalle_pm_referencia->path2!='/img/imagen2.jpg')
-                                            <img src="{{  public_path($detalle_pm_referencia->path2) }}" alt="" style="height: 160; width: 234;">
+                                        @if ($detalle_us_pa_us_referencia->path2!='/img/imagen2.jpg')
+                                            <img src="{{  public_path($detalle_us_pa_us_referencia->path2) }}" alt="" style="height: 160; width: 234;">
                                         @endif  
                                     </td>
                                 </tr>
                                 <tr>
                                     <td style="text-align: center; width: 330px;height: 275px">
-                                        @if ($detalle_pm_referencia->path3!='/img/imagen3.jpg')
-                                            <img src="{{  public_path($detalle_pm_referencia->path3) }}" alt="" style="height: 160; width: 234;">
+                                        @if ($detalle_us_pa_us_referencia->path3!='/img/imagen3.jpg')
+                                            <img src="{{  public_path($detalle_us_pa_us_referencia->path3) }}" alt="" style="height: 160; width: 234;">
                                     @endif  
                                     </td>
                                     <td style="text-align: center; width: 330px;height: 275px">
-                                        @if ($detalle_pm_referencia->path4!='/img/imagen4.jpg')
-                                            <img src="{{  public_path($detalle_pm_referencia->path4) }}" alt="" style="height: 160; width: 234;">
+                                        @if ($detalle_us_pa_us_referencia->path4!='/img/imagen4.jpg')
+                                            <img src="{{  public_path($detalle_us_pa_us_referencia->path4) }}" alt="" style="height: 160; width: 234;">
                                     @endif  
                                     </td>
                                 </tr>

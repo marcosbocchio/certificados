@@ -13,14 +13,14 @@ const mix = require('laravel-mix');
 
 
 mix.js([
-    'resources/js/app.js',
+  'resources/js/app.js',
 
-  ], 'public/js')
+], 'public/js')
 
-  mix.version();
+mix.version();
 
-  mix.styles([
-    'resources/css/app.css'  
+mix.styles([
+  'resources/css/app.css'  
 ], 'public/css/custom.css')
 .sass('resources/sass/toastr.scss', 'public/css')
 

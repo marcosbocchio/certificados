@@ -22,11 +22,11 @@ use App\Contratistas;
 use App\Tecnicas;
 use App\EstadosSuperficies;
 use App\CalibracionesUs;
+use App\DetalleUsPaUs;
 use App\User;
 
-class PdfInformesUsController extends Controller
+class PdfInformesUsIndicacionesUsPaController extends Controller
 {
-
     public function imprimir($id){      
 
         /* header */
@@ -48,9 +48,9 @@ class PdfInformesUsController extends Controller
          $evaluador = User::find($informe->firma);
          $contratista = Contratistas::find($ot->contratista_id);
          $estado_superficie = EstadosSuperficies::find($informe_us->estado_superficie_id);
-         $calibraciones_us = CalibracionesUs::where('informe_us_id',$informe_us->id)->with('Palpador')->get();
-
-        $pdf = PDF::loadView('reportes.informes.us',compact('ot',
+         $indicaciones_us_pa = DetalleUsPaUs::where('informe_us_id',$informe_us->id)->get();
+       
+        $pdf = PDF::loadView('reportes.informes.us-indicaciones-us-pa',compact('ot',
                                                                 'norma_ensayo',
                                                                 'norma_evaluacion',
                                                                 'procedimiento_inf',                                                               
@@ -65,13 +65,12 @@ class PdfInformesUsController extends Controller
                                                                 'informe_us',
                                                                 'material',
                                                                 'estado_superficie',
-                                                                'calibraciones_us',
+                                                                'indicaciones_us_pa',
                                                                 'evaluador'
                                                         
                                                                 ))->setPaper('a4','portrait')->setWarnings(false);
 
 
            return $pdf->stream(); 
-    
-     }
+}
 }
