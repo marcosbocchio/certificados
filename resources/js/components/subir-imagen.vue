@@ -9,7 +9,15 @@
             </div>   
             <div  v-if="mostrar_formatos_soportados">
              
-                 <p>Formatos soportados :  <div style="display:inline" v-for="(formato,k) in tipos_archivo_soportados" :key="k"> {{formato}} </div> </p> 
+                 <p style="display:inline">Formatos soportados : </p> 
+                 <div style="display:inline" v-for="(formato,k) in tipos_archivo_soportados" :key="k">
+
+                      {{formato}}
+                      
+                     <div style="display:inline" v-if="k < tipos_archivo_soportados.length-1">
+                         ,
+                     </div>
+                  </div>  
              
             </div>
             <div v-if="path">

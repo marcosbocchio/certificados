@@ -87,7 +87,7 @@ b {
                                 <td rowspan="4" style="text-align: right;width: 240px;">
                                     <img src="{{ public_path('img/logo-enod-web.jpg')}}" alt="" style="height: 60px; margin-right: 25px;">
                                 </td>   
-                                <td style="font-size: 19px; height: 30px;width: 295px; text-align: center;margin-left: 0px" rowspan="4"><b>INFORME DE ULTRASONIDO ({{strtoupper($tecnica->descripcion)}})</b></td>
+                                <td style="font-size: 19px; height: 30px;width: 295px; text-align: center;margin-left: 0px" rowspan="4"><b>INFORME DE ULTRASONIDO ({{mb_strtoupper($tecnica->descripcion,"UTF-8")}})</b></td>
                                 <td style="font-size: 11px;">&nbsp;</td>                         
                             </tr>
                             <tr>

@@ -18456,6 +18456,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 __webpack_require__(/*! vue-image-lightbox/dist/vue-image-lightbox.min.css */ "./node_modules/vue-image-lightbox/dist/vue-image-lightbox.min.css");
 
 
@@ -76395,7 +76403,7 @@ var render = function() {
                           path_inicial: _vm.path1_calibracion,
                           tipos_archivo_soportados:
                             _vm.tipos_archivo_soportados,
-                          mostrar_formatos_soportados: false
+                          mostrar_formatos_soportados: true
                         },
                         on: {
                           path: function($event) {
@@ -76420,7 +76428,7 @@ var render = function() {
                           path_inicial: _vm.path2_calibracion,
                           tipos_archivo_soportados:
                             _vm.tipos_archivo_soportados,
-                          mostrar_formatos_soportados: false
+                          mostrar_formatos_soportados: true
                         },
                         on: {
                           path: function($event) {
@@ -76445,7 +76453,7 @@ var render = function() {
                           path_inicial: _vm.path3_calibracion,
                           tipos_archivo_soportados:
                             _vm.tipos_archivo_soportados,
-                          mostrar_formatos_soportados: false
+                          mostrar_formatos_soportados: true
                         },
                         on: {
                           path: function($event) {
@@ -76470,7 +76478,7 @@ var render = function() {
                           path_inicial: _vm.path4_calibracion,
                           tipos_archivo_soportados:
                             _vm.tipos_archivo_soportados,
-                          mostrar_formatos_soportados: false
+                          mostrar_formatos_soportados: true
                         },
                         on: {
                           path: function($event) {
@@ -77746,7 +77754,7 @@ var render = function() {
                           path_inicial: _vm.path2_indicacion,
                           tipos_archivo_soportados:
                             _vm.tipos_archivo_soportados,
-                          mostrar_formatos_soportados: false
+                          mostrar_formatos_soportados: true
                         },
                         on: {
                           path: function($event) {
@@ -77771,7 +77779,7 @@ var render = function() {
                           path_inicial: _vm.path3_indicacion,
                           tipos_archivo_soportados:
                             _vm.tipos_archivo_soportados,
-                          mostrar_formatos_soportados: false
+                          mostrar_formatos_soportados: true
                         },
                         on: {
                           path: function($event) {
@@ -77796,7 +77804,7 @@ var render = function() {
                           path_inicial: _vm.path4_indicacion,
                           tipos_archivo_soportados:
                             _vm.tipos_archivo_soportados,
-                          mostrar_formatos_soportados: false
+                          mostrar_formatos_soportados: true
                         },
                         on: {
                           path: function($event) {
@@ -82300,16 +82308,28 @@ var render = function() {
         ? _c(
             "div",
             [
-              _c("p", [_vm._v("Formatos soportados :  ")]),
+              _c("p", { staticStyle: { display: "inline" } }, [
+                _vm._v("Formatos soportados : ")
+              ]),
+              _vm._v(" "),
               _vm._l(_vm.tipos_archivo_soportados, function(formato, k) {
                 return _c(
                   "div",
                   { key: k, staticStyle: { display: "inline" } },
-                  [_vm._v(" " + _vm._s(formato) + " ")]
+                  [
+                    _vm._v(
+                      "\n\n                  " +
+                        _vm._s(formato) +
+                        "\n                  \n                 "
+                    ),
+                    k < _vm.tipos_archivo_soportados.length - 1
+                      ? _c("div", { staticStyle: { display: "inline" } }, [
+                          _vm._v("\n                     ,\n                 ")
+                        ])
+                      : _vm._e()
+                  ]
                 )
-              }),
-              _vm._v(" "),
-              _c("p")
+              })
             ],
             2
           )

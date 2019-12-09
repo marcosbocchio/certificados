@@ -376,7 +376,7 @@
                                     :max_size="max_size"
                                     :path_inicial="path1_calibracion"
                                     :tipos_archivo_soportados ="tipos_archivo_soportados"
-                                    :mostrar_formatos_soportados="false"
+                                    :mostrar_formatos_soportados="true"
                                     @path="path1_calibracion = $event"
                                 ></subir-imagen> 
                             </div>         
@@ -388,7 +388,7 @@
                                     :max_size="max_size"
                                     :path_inicial="path2_calibracion"
                                     :tipos_archivo_soportados ="tipos_archivo_soportados"    
-                                    :mostrar_formatos_soportados="false"                          
+                                    :mostrar_formatos_soportados="true"                          
                                     @path="path2_calibracion = $event"
                                 ></subir-imagen> 
                             </div>         
@@ -400,7 +400,7 @@
                                     :max_size="max_size"
                                     :path_inicial="path3_calibracion"
                                     :tipos_archivo_soportados ="tipos_archivo_soportados"      
-                                    :mostrar_formatos_soportados="false"                       
+                                    :mostrar_formatos_soportados="true"                       
                                     @path="path3_calibracion = $event"
                                 ></subir-imagen> 
                             </div>         
@@ -412,7 +412,7 @@
                                     :max_size="max_size"
                                     :path_inicial="path4_calibracion"
                                     :tipos_archivo_soportados ="tipos_archivo_soportados"   
-                                    :mostrar_formatos_soportados="false"                           
+                                    :mostrar_formatos_soportados="true"                           
                                     @path="path4_calibracion = $event"
                                 ></subir-imagen> 
                             </div>         
@@ -716,7 +716,7 @@
                                     :max_size="max_size"
                                     :path_inicial="path2_indicacion"
                                     :tipos_archivo_soportados ="tipos_archivo_soportados"    
-                                    :mostrar_formatos_soportados="false"                          
+                                    :mostrar_formatos_soportados="true"                          
                                     @path="path2_indicacion = $event"
                                 ></subir-imagen> 
                             </div>         
@@ -728,7 +728,7 @@
                                     :max_size="max_size"
                                     :path_inicial="path3_indicacion"
                                     :tipos_archivo_soportados ="tipos_archivo_soportados"      
-                                    :mostrar_formatos_soportados="false"                       
+                                    :mostrar_formatos_soportados="true"                       
                                     @path="path3_indicacion = $event"
                                 ></subir-imagen> 
                             </div>         
@@ -740,7 +740,7 @@
                                     :max_size="max_size"
                                     :path_inicial="path4_indicacion"
                                     :tipos_archivo_soportados ="tipos_archivo_soportados"   
-                                    :mostrar_formatos_soportados="false"                           
+                                    :mostrar_formatos_soportados="true"                           
                                     @path="path4_indicacion = $event"
                                 ></subir-imagen> 
                             </div>         
