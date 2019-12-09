@@ -269,7 +269,7 @@ b {
                 </tbody>
             </table>            
             @while($pos_gen <= $infome_us_me->cantidad_generatrices)
-                <table  style="text-align: center;margin-left:23px;border-collapse: collapse;"  class="bordered">
+                <table  style="text-align: center;margin-left:23px;margin-bottom: 10px;border-collapse: collapse;"  class="bordered">
                     <thead>                    
                         <tr>  
                             <th style="font-size: 13px; text-align: left;width:28px;text-align: center;background:#D8D8D8"  class="bordered-1">&nbsp;</th>
