@@ -14835,6 +14835,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 
 
@@ -15350,12 +15353,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return;
       }
 
-      if (!this.diametro_us_pa) {
-        toastr.error('El campo diametro es obligatorio');
-        return;
-      }
-
-      if (this.diametro_us_pa.length > 10) {
+      if (this.diametro_us_pa && this.diametro_us_pa.length > 10) {
         toastr.error('El campo diametro no debe contener más de 10 caracteres');
         return;
       }
@@ -15452,7 +15450,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.Tabla_us_pa.push({
         elemento_us_pa: this.elemento_us_pa,
-        diametro_us_pa: this.diametro_us_pa.diametro,
+        diametro_us_pa: this.diametro_us_pa ? this.diametro_us_pa.diametro : '',
         nro_indicacion_us_pa: this.nro_indicacion_us_pa,
         posicion_examen_us_pa: this.posicion_examen_us_pa,
         angulo_incidencia_us_pa: this.angulo_incidencia_us_pa,
@@ -75712,7 +75710,7 @@ var render = function() {
                   )
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-md-2" }, [
+                _c("div", { staticClass: "col-md-1" }, [
                   _c("div", { staticClass: "form-group" }, [
                     _c(
                       "label",
@@ -75754,7 +75752,7 @@ var render = function() {
                           title: "Ángulo Apertura"
                         }
                       },
-                      [_vm._v("Ang. Ap. *")]
+                      [_vm._v("Ang. A.*")]
                     ),
                     _vm._v(" "),
                     _c("input", {
@@ -75856,7 +75854,7 @@ var render = function() {
                             title: "Curva Elevación"
                           }
                         },
-                        [_vm._v("Curva. Elav.*")]
+                        [_vm._v("C.E.*")]
                       ),
                       _vm._v(" "),
                       _c("v-select", {
@@ -75941,6 +75939,8 @@ var render = function() {
                     })
                   ])
                 ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "clearfix" }),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-1" }, [
                   _c(
@@ -76051,7 +76051,7 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-md-2" }, [
+                _c("div", { staticClass: "col-md-1" }, [
                   _c("div", { staticClass: "form-group" }, [
                     _c(
                       "label",
@@ -76088,7 +76088,7 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-md-2" }, [
+                _c("div", { staticClass: "col-md-1" }, [
                   _c("div", { staticClass: "form-group" }, [
                     _c(
                       "label",
@@ -76098,7 +76098,7 @@ var render = function() {
                           title: "Corrección Transferencia"
                         }
                       },
-                      [_vm._v("Correc. Trans*")]
+                      [_vm._v("CT*")]
                     ),
                     _vm._v(" "),
                     _c("input", {
@@ -76125,7 +76125,7 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-md-2" }, [
+                _c("div", { staticClass: "col-md-1" }, [
                   _c("div", { staticClass: "form-group" }, [
                     _c(
                       "label",
@@ -76135,7 +76135,7 @@ var render = function() {
                           title: "Adicional Baarrido"
                         }
                       },
-                      [_vm._v("Adic. Barrido*")]
+                      [_vm._v("AB*")]
                     ),
                     _vm._v(" "),
                     _c("input", {
@@ -76162,14 +76162,17 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-md-2" }, [
+                _c("div", { staticClass: "col-md-1" }, [
                   _c("div", { staticClass: "form-group" }, [
                     _c(
                       "label",
                       {
-                        attrs: { for: "amplificacion_total", title: "Zapata" }
+                        attrs: {
+                          for: "amplificacion_total",
+                          title: "Amplificación Total"
+                        }
                       },
-                      [_vm._v("Ampli. Total*")]
+                      [_vm._v("AT*")]
                     ),
                     _vm._v(" "),
                     _c("input", {
@@ -76911,193 +76914,234 @@ var render = function() {
                         ])
                       ]),
                       _vm._v(" "),
-                      _c("div", { staticClass: "col-md-12" }, [
-                        _c("div", { staticClass: "table-responsive" }, [
-                          _c(
-                            "table",
-                            { staticClass: "table table-hover table-striped" },
-                            [
-                              _vm._m(6),
-                              _vm._v(" "),
-                              _c(
-                                "tbody",
-                                _vm._l(_vm.Tabla_us_pa, function(item, k) {
-                                  return _c(
-                                    "tr",
-                                    {
-                                      key: k,
-                                      class: {
-                                        selected: _vm.indexPosTabla_us_pa === k
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.selectPosTabla_us_pa(k)
-                                        }
-                                      }
-                                    },
-                                    [
-                                      _c("td", [
-                                        _vm._v(_vm._s(item.elemento_us_pa))
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("td", [
-                                        _vm._v(_vm._s(item.diametro_us_pa))
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("td", [
-                                        _vm._v(
-                                          _vm._s(item.nro_indicacion_us_pa)
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("td", [
-                                        _vm._v(
-                                          _vm._s(item.posicion_examen_us_pa)
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("td", [
-                                        _vm._v(
-                                          _vm._s(item.angulo_incidencia_us_pa)
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("td", [
-                                        _vm._v(_vm._s(item.camino_sonico_us_pa))
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("td", [_vm._v(_vm._s(item.x_us_pa))]),
-                                      _vm._v(" "),
-                                      _c("td", [_vm._v(_vm._s(item.y_us_pa))]),
-                                      _vm._v(" "),
-                                      _c("td", [_vm._v(_vm._s(item.z_us_pa))]),
-                                      _vm._v(" "),
-                                      _c("td", [
-                                        _vm._v(_vm._s(item.longitud_us_pa))
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("td", [
-                                        _vm._v(
-                                          _vm._s(item.nivel_registro_us_pa)
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("td", [
-                                        _c("input", {
-                                          directives: [
-                                            {
-                                              name: "model",
-                                              rawName: "v-model",
-                                              value:
-                                                _vm.Tabla_us_pa[k]
-                                                  .aceptable_sn_us_pa,
-                                              expression:
-                                                "Tabla_us_pa[k].aceptable_sn_us_pa"
-                                            }
-                                          ],
-                                          attrs: {
-                                            type: "checkbox",
-                                            id: "checkbox"
-                                          },
-                                          domProps: {
-                                            checked: Array.isArray(
-                                              _vm.Tabla_us_pa[k]
-                                                .aceptable_sn_us_pa
-                                            )
-                                              ? _vm._i(
-                                                  _vm.Tabla_us_pa[k]
-                                                    .aceptable_sn_us_pa,
-                                                  null
-                                                ) > -1
-                                              : _vm.Tabla_us_pa[k]
-                                                  .aceptable_sn_us_pa
-                                          },
-                                          on: {
-                                            change: function($event) {
-                                              var $$a =
-                                                  _vm.Tabla_us_pa[k]
-                                                    .aceptable_sn_us_pa,
-                                                $$el = $event.target,
-                                                $$c = $$el.checked
-                                                  ? true
-                                                  : false
-                                              if (Array.isArray($$a)) {
-                                                var $$v = null,
-                                                  $$i = _vm._i($$a, $$v)
-                                                if ($$el.checked) {
-                                                  $$i < 0 &&
-                                                    _vm.$set(
-                                                      _vm.Tabla_us_pa[k],
-                                                      "aceptable_sn_us_pa",
-                                                      $$a.concat([$$v])
-                                                    )
-                                                } else {
-                                                  $$i > -1 &&
-                                                    _vm.$set(
-                                                      _vm.Tabla_us_pa[k],
-                                                      "aceptable_sn_us_pa",
-                                                      $$a
-                                                        .slice(0, $$i)
-                                                        .concat(
-                                                          $$a.slice($$i + 1)
-                                                        )
-                                                    )
-                                                }
-                                              } else {
-                                                _vm.$set(
-                                                  _vm.Tabla_us_pa[k],
-                                                  "aceptable_sn_us_pa",
-                                                  $$c
+                      _vm.Tabla_us_pa.length
+                        ? _c("div", [
+                            _c("div", { staticClass: "col-md-12" }, [
+                              _c("div", { staticClass: "table-responsive" }, [
+                                _c(
+                                  "table",
+                                  {
+                                    staticClass:
+                                      "table table-hover table-striped"
+                                  },
+                                  [
+                                    _vm._m(6),
+                                    _vm._v(" "),
+                                    _c(
+                                      "tbody",
+                                      _vm._l(_vm.Tabla_us_pa, function(
+                                        item,
+                                        k
+                                      ) {
+                                        return _c(
+                                          "tr",
+                                          {
+                                            key: k,
+                                            class: {
+                                              selected:
+                                                _vm.indexPosTabla_us_pa === k
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.selectPosTabla_us_pa(
+                                                  k
                                                 )
                                               }
                                             }
-                                          }
-                                        })
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("td", [
-                                        _c("span", {
-                                          staticClass: "fa fa-file-archive-o",
-                                          class: {
-                                            existe:
-                                              item.observaciones ||
-                                              item.path1 ||
-                                              item.path2 ||
-                                              item.path3 ||
-                                              item.path4
                                           },
-                                          on: {
-                                            click: function($event) {
-                                              return _vm.OpenReferencias_us_pa(
-                                                $event,
-                                                k,
-                                                "Informe US",
-                                                item
+                                          [
+                                            _c("td", [
+                                              _vm._v(
+                                                _vm._s(item.elemento_us_pa)
                                               )
-                                            }
-                                          }
-                                        })
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("td", [
-                                        _c("span", {
-                                          staticClass: "fa fa-minus-circle",
-                                          on: {
-                                            click: function($event) {
-                                              return _vm.removeTabla_us_pa(k)
-                                            }
-                                          }
-                                        })
-                                      ])
-                                    ]
-                                  )
-                                }),
-                                0
-                              )
-                            ]
-                          )
-                        ])
-                      ])
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("td", [
+                                              _vm._v(
+                                                _vm._s(item.diametro_us_pa)
+                                              )
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("td", [
+                                              _vm._v(
+                                                _vm._s(
+                                                  item.nro_indicacion_us_pa
+                                                )
+                                              )
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("td", [
+                                              _vm._v(
+                                                _vm._s(
+                                                  item.posicion_examen_us_pa
+                                                )
+                                              )
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("td", [
+                                              _vm._v(
+                                                _vm._s(
+                                                  item.angulo_incidencia_us_pa
+                                                )
+                                              )
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("td", [
+                                              _vm._v(
+                                                _vm._s(item.camino_sonico_us_pa)
+                                              )
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("td", [
+                                              _vm._v(_vm._s(item.x_us_pa))
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("td", [
+                                              _vm._v(_vm._s(item.y_us_pa))
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("td", [
+                                              _vm._v(_vm._s(item.z_us_pa))
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("td", [
+                                              _vm._v(
+                                                _vm._s(item.longitud_us_pa)
+                                              )
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("td", [
+                                              _vm._v(
+                                                _vm._s(
+                                                  item.nivel_registro_us_pa
+                                                )
+                                              )
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("td", [
+                                              _c("input", {
+                                                directives: [
+                                                  {
+                                                    name: "model",
+                                                    rawName: "v-model",
+                                                    value:
+                                                      _vm.Tabla_us_pa[k]
+                                                        .aceptable_sn_us_pa,
+                                                    expression:
+                                                      "Tabla_us_pa[k].aceptable_sn_us_pa"
+                                                  }
+                                                ],
+                                                attrs: {
+                                                  type: "checkbox",
+                                                  id: "checkbox"
+                                                },
+                                                domProps: {
+                                                  checked: Array.isArray(
+                                                    _vm.Tabla_us_pa[k]
+                                                      .aceptable_sn_us_pa
+                                                  )
+                                                    ? _vm._i(
+                                                        _vm.Tabla_us_pa[k]
+                                                          .aceptable_sn_us_pa,
+                                                        null
+                                                      ) > -1
+                                                    : _vm.Tabla_us_pa[k]
+                                                        .aceptable_sn_us_pa
+                                                },
+                                                on: {
+                                                  change: function($event) {
+                                                    var $$a =
+                                                        _vm.Tabla_us_pa[k]
+                                                          .aceptable_sn_us_pa,
+                                                      $$el = $event.target,
+                                                      $$c = $$el.checked
+                                                        ? true
+                                                        : false
+                                                    if (Array.isArray($$a)) {
+                                                      var $$v = null,
+                                                        $$i = _vm._i($$a, $$v)
+                                                      if ($$el.checked) {
+                                                        $$i < 0 &&
+                                                          _vm.$set(
+                                                            _vm.Tabla_us_pa[k],
+                                                            "aceptable_sn_us_pa",
+                                                            $$a.concat([$$v])
+                                                          )
+                                                      } else {
+                                                        $$i > -1 &&
+                                                          _vm.$set(
+                                                            _vm.Tabla_us_pa[k],
+                                                            "aceptable_sn_us_pa",
+                                                            $$a
+                                                              .slice(0, $$i)
+                                                              .concat(
+                                                                $$a.slice(
+                                                                  $$i + 1
+                                                                )
+                                                              )
+                                                          )
+                                                      }
+                                                    } else {
+                                                      _vm.$set(
+                                                        _vm.Tabla_us_pa[k],
+                                                        "aceptable_sn_us_pa",
+                                                        $$c
+                                                      )
+                                                    }
+                                                  }
+                                                }
+                                              })
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("td", [
+                                              _c("span", {
+                                                staticClass:
+                                                  "fa fa-file-archive-o",
+                                                class: {
+                                                  existe:
+                                                    item.observaciones ||
+                                                    item.path1 ||
+                                                    item.path2 ||
+                                                    item.path3 ||
+                                                    item.path4
+                                                },
+                                                on: {
+                                                  click: function($event) {
+                                                    return _vm.OpenReferencias_us_pa(
+                                                      $event,
+                                                      k,
+                                                      "Informe US",
+                                                      item
+                                                    )
+                                                  }
+                                                }
+                                              })
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("td", [
+                                              _c("span", {
+                                                staticClass:
+                                                  "fa fa-minus-circle",
+                                                on: {
+                                                  click: function($event) {
+                                                    return _vm.removeTabla_us_pa(
+                                                      k
+                                                    )
+                                                  }
+                                                }
+                                              })
+                                            ])
+                                          ]
+                                        )
+                                      }),
+                                      0
+                                    )
+                                  ]
+                                )
+                              ])
+                            ])
+                          ])
+                        : _vm._e()
                     ])
                   ])
                 ])
@@ -77117,7 +77161,7 @@ var render = function() {
                               {
                                 attrs: { for: "elemento_me", title: "Elemento" }
                               },
-                              [_vm._v("Elemento*")]
+                              [_vm._v("Elemento *")]
                             ),
                             _vm._v(" "),
                             _c("input", {
@@ -77189,7 +77233,7 @@ var render = function() {
                                   title: "Cantidad Posiciones"
                                 }
                               },
-                              [_vm._v("Pos.*")]
+                              [_vm._v("Posición *")]
                             ),
                             _vm._v(" "),
                             _c("input", {
@@ -77230,7 +77274,7 @@ var render = function() {
                                   title: "Cantidad Generatrices"
                                 }
                               },
-                              [_vm._v("Gen.*")]
+                              [_vm._v("Generatrices *")]
                             ),
                             _vm._v(" "),
                             _c("input", {

@@ -194,7 +194,7 @@
                             </div>      
                         </div>  
 
-                        <div class="col-md-2">                       
+                        <div class="col-md-1">                       
                             <div class="form-group" >
                                 <label for="frecuencia" title="Frecuencia">Frec.*</label>
                                 <input type="number" v-model="frecuencia" class="form-control" id="frecuencia">
@@ -203,7 +203,7 @@
 
                         <div class="col-md-1">                       
                             <div class="form-group" >
-                                <label for="angulo_apertura" title="Ángulo Apertura">Ang. Ap. *</label>
+                                <label for="angulo_apertura" title="Ángulo Apertura">Ang. A.*</label>
                                 <input type="text" v-model="angulo_apertura" class="form-control" id="angulo_apertura">
                             </div>         
                         </div>
@@ -224,7 +224,7 @@
 
                         <div class="col-md-1">                       
                             <div class="form-group" >
-                                <label for="curva_elevacion" title="Curva Elevación">Curva. Elav.*</label>
+                                <label for="curva_elevacion" title="Curva Elevación">C.E.*</label>
                                  <v-select v-model="curva_elevacion" :options="['DAC', 'TCG']"></v-select>
                             </div>         
                         </div>
@@ -243,12 +243,15 @@
                             </div>         
                         </div>
 
+                        <div class="clearfix"></div>    
+
                         <div class="col-md-1">                       
                             <div class="form-group" >
                                 <label for="tipo_reflector" title="Tipo Reflector">Tipo Re.*</label>
                                  <v-select v-model="tipo_reflector" :options="['Ø', 'Ħ']"></v-select>
                             </div>         
                         </div>
+
 
                         <div class="col-md-1">                       
                             <div class="form-group" >
@@ -264,30 +267,30 @@
                             </div>         
                         </div>
 
-                        <div class="col-md-2">                       
+                        <div class="col-md-1">                       
                             <div class="form-group" >
                                 <label for="nivel_registro" title="Nivel Registro">Nivel. Reg.*</label>
                                 <input type="number" v-model="nivel_registro" class="form-control" id="nivel_registro">
                             </div>         
                         </div>
 
-                        <div class="col-md-2">                       
+                        <div class="col-md-1">                       
                             <div class="form-group" >
-                                <label for="correccion_transferencia" title="Corrección Transferencia">Correc. Trans*</label>
+                                <label for="correccion_transferencia" title="Corrección Transferencia">CT*</label>
                                 <input type="number" v-model="correccion_transferencia" class="form-control" id="correccion_transferencia">
                             </div>         
                         </div>
 
-                        <div class="col-md-2">                       
+                        <div class="col-md-1">                       
                             <div class="form-group" >
-                                <label for="adicional_barrido" title="Adicional Baarrido">Adic. Barrido*</label>
+                                <label for="adicional_barrido" title="Adicional Baarrido">AB*</label>
                                 <input type="number" v-model="adicional_barrido" class="form-control" id="adicional_barrido">
                             </div>         
                         </div>
 
-                        <div class="col-md-2">                       
+                        <div class="col-md-1">                       
                             <div class="form-group" >
-                                <label for="amplificacion_total" title="Zapata">Ampli. Total*</label>
+                                <label for="amplificacion_total" title="Amplificación Total">AT*</label>
                                 <input type="number" v-model="amplificacion_total" class="form-control" id="amplificacion_total">
                             </div>         
                         </div>
@@ -507,7 +510,7 @@
                                     <i class="fa fa-plus-circle" @click="addTabla_us_pa()"></i>
                                 </span>                            
                            </div>
-
+                            <div v-if="Tabla_us_pa.length">
                             <div class="col-md-12">
                                 <div class="table-responsive">
                                     <table class="table table-hover table-striped">
@@ -561,8 +564,8 @@
                                         </tbody>
                                     </table>
                                 </div>
-                        </div> 
-                           
+                              </div> 
+                            </div>
 
                         </div>
                     </div>   
@@ -579,7 +582,7 @@
                             
                                 <div class="col-md-12">                       
                                     <div class="form-group" >
-                                        <label for="elemento_me" title="Elemento">Elemento*</label>
+                                        <label for="elemento_me" title="Elemento">Elemento *</label>
                                         <input type="text" v-model="elemento_me" class="form-control" id="elemento_me">
                                     </div>         
                                 </div>
@@ -593,14 +596,14 @@
 
                                 <div class="col-md-12">                       
                                     <div class="form-group" >
-                                        <label for="cantidad_posiciones_me" title="Cantidad Posiciones">Pos.*</label>
+                                        <label for="cantidad_posiciones_me" title="Cantidad Posiciones">Posición *</label>
                                         <input type="number" v-model="cantidad_posiciones_me" class="form-control" id="cantidad_posiciones_me">
                                     </div>         
                                 </div>
 
                                 <div class="col-md-12">                       
                                     <div class="form-group" >
-                                        <label for="cantidad_generatrices_me" title="Cantidad Generatrices">Gen.*</label>
+                                        <label for="cantidad_generatrices_me" title="Cantidad Generatrices">Generatrices *</label>
                                         <input type="number" v-model="cantidad_generatrices_me" class="form-control" id="cantidad_generatrices_me">
                                     </div>         
                                 </div>
@@ -1387,15 +1390,9 @@ export default {
 
                 toastr.error('El campo elemento no debe contener más de 10 caracteres'); 
                 return ;
-             }
+             }       
 
-            if (!this.diametro_us_pa){
-
-                 toastr.error('El campo diametro es obligatorio'); 
-                 return ;            
-            }
-
-            if(this.diametro_us_pa.length  > 10){
+            if(this.diametro_us_pa && this.diametro_us_pa.length  > 10){
 
                 toastr.error('El campo diametro no debe contener más de 10 caracteres'); 
                 return ;
@@ -1512,7 +1509,7 @@ export default {
 
                 this.Tabla_us_pa.push({
                     elemento_us_pa: this.elemento_us_pa,
-                    diametro_us_pa: this.diametro_us_pa.diametro,
+                    diametro_us_pa: this.diametro_us_pa ? this.diametro_us_pa.diametro : '',
                     nro_indicacion_us_pa:this.nro_indicacion_us_pa,
                     posicion_examen_us_pa:this.posicion_examen_us_pa,
                     angulo_incidencia_us_pa:this.angulo_incidencia_us_pa,

@@ -145,7 +145,7 @@
                 
                     {{ $pos_gen = 1 }} 
                     {{ $cant_genetratrices_file = 27}}
-                      {{ $filasPage = 35}}
+                    
                     
                     
                     @while($pos_gen <= $infome_us_me->cantidad_generatrices)
@@ -173,3 +173,13 @@
         </tbody>
     </table>      
 </main>
+
+        @foreach ($infome_us_me->detalle_us_me as $item_detalle )
+            <tr>
+            @foreach($generatrices as $generatriz)
+                @if($item_detalle->posicion == ($loop->parent + 1))
+                <td>{{$item_detalle->valor}}<td
+                @endif
+            @endforeach
+            </tr>
+        @endforeach

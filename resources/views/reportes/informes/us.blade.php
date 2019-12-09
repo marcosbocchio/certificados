@@ -11,7 +11,7 @@
     font-family: DejaVu Sans;
 }
 
-@page { margin: 287px 30px 145px 60px !important;
+@page { margin: 287px 30px 144px 60px !important;
         padding: 0px 0px 0px 0px !important; }
 
 header {
@@ -27,7 +27,7 @@ main{
 
 footer {
     position: fixed; bottom:6px; 
-    padding-top: 0px;
+    padding-top: 2px;
 }
 
 .pagenum:before {
@@ -311,7 +311,7 @@ b {
                     <td style="font-size: 10px; width:29.3px;text-align: center;" class="bordered-td">{{$calibracion->nivel_registro}}&nbsp;%</td>               
                     <td style="font-size: 10px; width:25.5px;text-align: center;" class="bordered-td">{{$calibracion->correccion_transferencia}}</td>               
                     <td style="font-size: 10px; width:25.7px;text-align: center;" class="bordered-td">{{$calibracion->adicional_barrido}}</td>               
-                    <td style="font-size: 11px;text-align: center" class="bordered-td">{{$calibracion->amplificacion_total}}</td>               
+                    <td style="font-size: 10px;text-align: center" class="bordered-td">{{$calibracion->amplificacion_total}}</td>               
 
                 </tr>     
             @endforeach
@@ -319,7 +319,7 @@ b {
             {{ $filasACompletar = 4 - count($calibraciones_us) }}  
             @for ( $x=0 ;  $x < $filasACompletar ; $x++)
                 <tr>
-                    <td style="font-size: 10px; width:80px;text-align: center;"class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 10px; width:80px;height: 15.2px; text-align: center;"class="bordered-td">&nbsp;</td>
                     <td style="font-size: 10px; width:80px;text-align: center;" class="bordered-td">&nbsp;</td>
                     <td style="font-size: 10px; width:79.7px;text-align: center;" class="bordered-td">&nbsp;</td>
                     <td style="font-size: 10px; width:20.9px;  text-align: center;" class="bordered-td">&nbsp;</td> 
@@ -334,7 +334,7 @@ b {
                     <td style="font-size: 10px; width:29.3px;text-align: center;" class="bordered-td">&nbsp;</td>               
                     <td style="font-size: 10px; width:25.5px;text-align: center;" class="bordered-td">&nbsp;</td>               
                     <td style="font-size: 10px; width:25.7px;text-align: center;" class="bordered-td">&nbsp;</td>               
-                    <td style="font-size: 11px;text-align: center" class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 10px;text-align: center" class="bordered-td">&nbsp;</td>
                 </tr>
             @endfor
        
