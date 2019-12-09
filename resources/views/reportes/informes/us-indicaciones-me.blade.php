@@ -265,12 +265,12 @@ b {
                     {{ $genetratrices_fila = $max_cant_genetratices_fila }}
                     <td>                 
                         @while($pos_gen <= $infome_us_me->cantidad_generatrices)
-                            <table  style="text-align: center;margin-left:23px;margin-top: 10px;;"  class="bordered">
+                            <table  style="text-align: center;margin-left:23px;margin-top: 10px;border-collapse: collapse;"  class="bordered">
                                 <tbody>
                                     <tr>  
-                                        <td style="font-size: 13px; text-align: left;width:28px;text-align: center;background:#D8D8D8">&nbsp;</td>
+                                        <td style="font-size: 13px; text-align: left;width:28px;text-align: center;background:#D8D8D8"  class="bordered-1">&nbsp;</td>
                                         @while( ($pos_gen <= $genetratrices_fila) && ($pos_gen <= $infome_us_me->cantidad_generatrices))   
-                                            <td style="font-size: 13px; text-align: left;width:28px;text-align: center;background:#D8D8D8">
+                                            <td style="font-size: 13px; text-align: left;width:28px;text-align: center;background:#D8D8D8" class="bordered-1">
                                                 @foreach ($generatrices as $generatriz )
                                                         
                                                     @if($generatriz->nro == $pos_gen)
@@ -287,7 +287,7 @@ b {
 
                                     @for ( $pos_pos= 1 ;  $pos_pos <= $infome_us_me->cantidad_posiciones ; $pos_pos++)
                                             <tr> 
-                                              <td style="font-size: 13px; text-align: left;width:28px;text-align: center;background:#D8D8D8">{{$pos_pos}}</td>
+                                              <td style="font-size: 13px; text-align: left;width:28px;text-align: center;background:#D8D8D8" class="bordered-1">{{$pos_pos}}</td>
                                               @for ($pos_gen_fila = ($genetratrices_fila - (2*$max_cant_genetratices_fila)+1) ; $pos_gen_fila <= $pos_gen - 1 ; $pos_gen_fila++)
 
                                                 {{ $x =0  }}
@@ -298,7 +298,7 @@ b {
                                                             
                                                             @if ($pos_pos==$item_detalle->posicion && $pos_gen_fila == $generatriz->nro && $item_detalle->generatriz==$generatriz->valor)  
 
-                                                                <td style="font-size: 13px; text-align: left;width:28px;text-align: center">{{$item_detalle->valor}}</td>
+                                                                <td style="font-size: 13px; text-align: left;width:28px;text-align: center" class="bordered-1">{{$item_detalle->valor}}</td>
                                                                     {{ $x =1  }}
                                                             @endif
 
@@ -307,7 +307,7 @@ b {
                                                 @endforeach                                                                             
                                                 
                                                 @if ($x==0)
-                                                        <td style="font-size: 13px; text-align: left;width:28px;text-align: center">X</td>
+                                                        <td style="font-size: 13px; text-align: left;width:28px;text-align: center" class="bordered-1">X</td>
                                                 @endif
 
                                                 @endfor
