@@ -196,7 +196,7 @@
 
                         <div class="col-md-1">                       
                             <div class="form-group" >
-                                <label for="frecuencia" title="Frecuencia">Frec.*</label>
+                                <label for="frecuencia" title="Frecuencia (Mhz)">Frec.*</label>
                                 <input type="number" v-model="frecuencia" class="form-control" id="frecuencia">
                             </div>         
                         </div>
@@ -262,7 +262,7 @@
 
                         <div class="col-md-1">                       
                             <div class="form-group" >
-                                <label for="ganancia_referencia" title="Ganancia Referencia">Gan. Ref.*</label>
+                                <label for="ganancia_referencia" title="Ganancia Referencia (dB)">Gan. Ref.*</label>
                                 <input type="number" v-model="ganancia_referencia" class="form-control" id="ganancia_referencia">
                             </div>         
                         </div>
@@ -276,21 +276,21 @@
 
                         <div class="col-md-1">                       
                             <div class="form-group" >
-                                <label for="correccion_transferencia" title="Corrección Transferencia">CT*</label>
+                                <label for="correccion_transferencia" title="Corrección Transferencia (dB)">CT*</label>
                                 <input type="number" v-model="correccion_transferencia" class="form-control" id="correccion_transferencia">
                             </div>         
                         </div>
 
                         <div class="col-md-1">                       
                             <div class="form-group" >
-                                <label for="adicional_barrido" title="Adicional Baarrido">AB*</label>
+                                <label for="adicional_barrido" title="Adicional Barrido (dB)">AB*</label>
                                 <input type="number" v-model="adicional_barrido" class="form-control" id="adicional_barrido">
                             </div>         
                         </div>
 
                         <div class="col-md-1">                       
                             <div class="form-group" >
-                                <label for="amplificacion_total" title="Amplificación Total">AT*</label>
+                                <label for="amplificacion_total" title="Amplificación Total (dB)">AT*</label>
                                 <input type="number" v-model="amplificacion_total" class="form-control" id="amplificacion_total">
                             </div>         
                         </div>
@@ -704,7 +704,7 @@
                                     :max_size="max_size"
                                     :path_inicial="path1_indicacion"
                                     :tipos_archivo_soportados ="tipos_archivo_soportados"
-                                    :mostrar_formatos_soportados="false"
+                                    :mostrar_formatos_soportados="true"
                                     @path="path1_indicacion = $event"
                                 ></subir-imagen> 
                             </div>         
@@ -876,7 +876,7 @@ export default {
         ruta_calibraciones_us: 'calibraciones_us',
         ruta_indicaciones_us:'indicaciones_us',
         max_size :500, //KB
-        tipos_archivo_soportados:['jpg','bmp','jpeg'],
+        tipos_archivo_soportados:['jpg','bmp','jpeg','png'],
 
         errors:[],
         en: en,

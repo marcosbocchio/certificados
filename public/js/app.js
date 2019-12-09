@@ -14928,7 +14928,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       ruta_indicaciones_us: 'indicaciones_us',
       max_size: 500,
       //KB
-      tipos_archivo_soportados: ['jpg', 'bmp', 'jpeg'],
+      tipos_archivo_soportados: ['jpg', 'bmp', 'jpeg', 'png'],
       errors: [],
       en: vuejs_datepicker_dist_locale__WEBPACK_IMPORTED_MODULE_3__["en"],
       es: vuejs_datepicker_dist_locale__WEBPACK_IMPORTED_MODULE_3__["es"],
@@ -75722,7 +75722,9 @@ var render = function() {
                   _c("div", { staticClass: "form-group" }, [
                     _c(
                       "label",
-                      { attrs: { for: "frecuencia", title: "Frecuencia" } },
+                      {
+                        attrs: { for: "frecuencia", title: "Frecuencia (Mhz)" }
+                      },
                       [_vm._v("Frec.*")]
                     ),
                     _vm._v(" "),
@@ -76029,7 +76031,7 @@ var render = function() {
                       {
                         attrs: {
                           for: "ganancia_referencia",
-                          title: "Ganancia Referencia"
+                          title: "Ganancia Referencia (dB)"
                         }
                       },
                       [_vm._v("Gan. Ref.*")]
@@ -76103,7 +76105,7 @@ var render = function() {
                       {
                         attrs: {
                           for: "correccion_transferencia",
-                          title: "Corrección Transferencia"
+                          title: "Corrección Transferencia (dB)"
                         }
                       },
                       [_vm._v("CT*")]
@@ -76140,7 +76142,7 @@ var render = function() {
                       {
                         attrs: {
                           for: "adicional_barrido",
-                          title: "Adicional Baarrido"
+                          title: "Adicional Barrido (dB)"
                         }
                       },
                       [_vm._v("AB*")]
@@ -76177,7 +76179,7 @@ var render = function() {
                       {
                         attrs: {
                           for: "amplificacion_total",
-                          title: "Amplificación Total"
+                          title: "Amplificación Total (dB)"
                         }
                       },
                       [_vm._v("AT*")]
@@ -77729,7 +77731,7 @@ var render = function() {
                           path_inicial: _vm.path1_indicacion,
                           tipos_archivo_soportados:
                             _vm.tipos_archivo_soportados,
-                          mostrar_formatos_soportados: false
+                          mostrar_formatos_soportados: true
                         },
                         on: {
                           path: function($event) {
