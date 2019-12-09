@@ -84,7 +84,7 @@ b {
                                 <td style="font-size: 13px;" colspan="2" ><b style="margin-left: 80px">PARTE N°: </b>{{$parte->id}}</td>                                        
                             </tr>
                             <tr>
-                                <td style="font-size: 13px;" colspan="2"><b style="margin-left: 80px">FECHA: </b>{{ date('d-m-Y', strtotime($parte->fecha_hora)) }}</td>
+                                <td style="font-size: 13px;" colspan="2"><b style="margin-left: 80px">FECHA: </b>{{ date('d-m-Y', strtotime($parte->fecha)) }}</td>
                             </tr>                         
                             <tr>
                                 <td style="font-size: 12px;"><b style="margin-left: 80px"></b></td>                     

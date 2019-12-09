@@ -75990,7 +75990,7 @@ var render = function() {
                       {
                         attrs: {
                           for: "reflector_referencia",
-                          title: "Reflector Referencia"
+                          title: "Reflector Referencia (mm)"
                         }
                       },
                       [_vm._v("Re. Ref.*")]
@@ -76740,7 +76740,7 @@ var render = function() {
                         _c("div", { staticClass: "form-group" }, [
                           _c(
                             "label",
-                            { attrs: { for: "x_us_pa", title: "X" } },
+                            { attrs: { for: "x_us_pa", title: "X (cm)" } },
                             [_vm._v("X *")]
                           ),
                           _vm._v(" "),
@@ -76772,7 +76772,7 @@ var render = function() {
                         _c("div", { staticClass: "form-group" }, [
                           _c(
                             "label",
-                            { attrs: { for: "y_us_pa", title: "Y" } },
+                            { attrs: { for: "y_us_pa", title: "Y (mm)" } },
                             [_vm._v("Y *")]
                           ),
                           _vm._v(" "),
@@ -76804,7 +76804,7 @@ var render = function() {
                         _c("div", { staticClass: "form-group" }, [
                           _c(
                             "label",
-                            { attrs: { for: "z_us_pa", title: "Z" } },
+                            { attrs: { for: "z_us_pa", title: "Z (mm)" } },
                             [_vm._v("Z *")]
                           ),
                           _vm._v(" "),
@@ -76839,7 +76839,7 @@ var render = function() {
                             {
                               attrs: {
                                 for: "longitud_us_pa",
-                                title: "Longitud"
+                                title: "Longitud (mm)"
                               }
                             },
                             [_vm._v("Log. *")]

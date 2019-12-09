@@ -84,7 +84,7 @@ b {
                                 <td style="font-size: 13px;" colspan="2" ><b style="margin-left: 80px">REMITO N°: </b>{{FormatearNumeroConCeros($remito->prefijo,'4')}} - {{FormatearNumeroConCeros($remito->numero,'8')}}</td>                                        
                             </tr>
                             <tr>
-                                <td style="font-size: 13px;" colspan="2"><b style="margin-left: 80px">FECHA: </b>{{ date('d-m-Y', strtotime($remito->fecha_hora)) }}</td>
+                                <td style="font-size: 13px;" colspan="2"><b style="margin-left: 80px">FECHA: </b>{{ date('d-m-Y', strtotime($remito->fecha)) }}</td>
                             </tr>                         
                             <tr>
                                 <td style="font-size: 12px;"><b style="margin-left: 80px"></b></td>                     

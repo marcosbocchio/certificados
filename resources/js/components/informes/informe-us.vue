@@ -255,7 +255,7 @@
 
                         <div class="col-md-1">                       
                             <div class="form-group" >
-                                <label for="reflector_referencia" title="Reflector Referencia">Re. Ref.*</label>
+                                <label for="reflector_referencia" title="Reflector Referencia (mm)">Re. Ref.*</label>
                                 <input type="number" v-model="reflector_referencia" class="form-control" id="reflector_referencia" step="0.1">
                             </div>         
                         </div>
@@ -471,28 +471,28 @@
 
                             <div class="col-md-1">                       
                                 <div class="form-group" >
-                                    <label for="x_us_pa" title="X">X *</label>
+                                    <label for="x_us_pa" title="X (cm)">X *</label>
                                     <input type="number" v-model="x_us_pa" class="form-control" id="x_us_pa">
                                 </div>         
                             </div>
 
                             <div class="col-md-1">                       
                                 <div class="form-group" >
-                                    <label for="y_us_pa" title="Y">Y *</label>
+                                    <label for="y_us_pa" title="Y (mm)">Y *</label>
                                     <input type="number" v-model="y_us_pa" class="form-control" id="y_us_pa">
                                 </div>         
                             </div>
 
                             <div class="col-md-1">                       
                                 <div class="form-group" >
-                                    <label for="z_us_pa" title="Z">Z *</label>
+                                    <label for="z_us_pa" title="Z (mm)">Z *</label>
                                     <input type="number" v-model="z_us_pa" class="form-control" id="z_us_pa">
                                 </div>         
                             </div>
 
                             <div class="col-md-1">                       
                                 <div class="form-group" >
-                                    <label for="longitud_us_pa" title="Longitud">Log. *</label>
+                                    <label for="longitud_us_pa" title="Longitud (mm)">Log. *</label>
                                     <input type="number" v-model="longitud_us_pa" class="form-control" id="longitud_us_pa">
                                 </div>         
                             </div>
