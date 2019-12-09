@@ -264,7 +264,10 @@ b {
             <table>
                 <tbody>
                     <tr>
-                         <td style="font-size: 14px;height:30px;"><span style="margin-left: 22px;">Elemento : {{ strtoupper($infome_us_me->elemento)}}</span><span style="margin-left: 10px;">Ø : {{ $infome_us_me->diametro}}</span></td>  
+                         <td style="font-size: 14px;height:30px;"><span style="margin-left: 22px;">Elemento : {{ strtoupper($infome_us_me->elemento)}}</span></td> 
+                    </tr>
+                    <tr>
+                        <td style="font-size: 14px;height:30px;"><span style="margin-left: 22px;">Ø : {{ $infome_us_me->diametro}}</span></td>  
                     </tr>
                 </tbody>
             </table>            
