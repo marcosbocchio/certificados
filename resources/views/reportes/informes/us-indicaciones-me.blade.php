@@ -11,25 +11,25 @@
     font-family: DejaVu Sans;
 }
 
-@page { margin: 320px 30px 122px 60px !important;
+@page { margin: 306px 30px 120px 60px !important;
         padding: 0px 0px 0px 0px !important; }
 
+
+body {
+    margin: 0 1px 6px 1px;
+    padding: 10px 0 0 0;
+}
 header {
     position:fixed;
-    top: -283px;    
+    top: -269px;    
     }
 
 main{
    
-    margin-top: -2px;
+    margin-top: 9px;
 }
 
 table {page-break-before:auto;}
-
-.tableMain {
-
-    height:700px;
-}
 
 
 footer {
@@ -74,7 +74,7 @@ b {
 
 </style>
 
-<body>   
+<body class="bordered">   
 
 <header>
     <table style="text-align: center" width="100%" class="bordered">
@@ -269,7 +269,7 @@ b {
                 </tbody>
             </table>            
             @while($pos_gen <= $infome_us_me->cantidad_generatrices)
-                <table  style="text-align: center;margin-left:23px;margin-top: 10px;border-collapse: collapse;"  class="bordered">
+                <table  style="text-align: center;margin-left:23px;border-collapse: collapse;"  class="bordered">
                     <thead>                    
                         <tr>  
                             <th style="font-size: 13px; text-align: left;width:28px;text-align: center;background:#D8D8D8"  class="bordered-1">&nbsp;</th>
@@ -325,7 +325,6 @@ b {
     @endforeach
     
 </main>
-
      
 <script type="text/php">
 
@@ -341,10 +340,10 @@ b {
         $char_space = 0.0;  //  default
         $angle = 0.0;   //  default
         $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
+     
+       
     }
 
-    $pdf->line(46.5,130,46.5,800,array(0,0,0),1.5);
-    $pdf->line(571.3,130,571.3,800,array(0,0,0),1.5);
  
 </script>
 

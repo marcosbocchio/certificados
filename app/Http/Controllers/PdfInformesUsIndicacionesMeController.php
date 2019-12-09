@@ -73,8 +73,8 @@ class PdfInformesUsIndicacionesMeController extends Controller
                                                                 'evaluador'
                                                         
                                                                 ))->setPaper('a4','portrait')->setWarnings(false);
-
-
+       
+         
            return $pdf->stream(); 
 }
 }
