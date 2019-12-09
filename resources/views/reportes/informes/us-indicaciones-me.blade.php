@@ -264,12 +264,12 @@ b {
             <table>
                 <tbody>
                     <tr>
-                         <td style="font-size: 14px;height:30px;"><span style="margin-left: 35px;">Elemento : {{ strtoupper($infome_us_me->elemento)}}</span></td>  
+                         <td style="font-size: 14px;height:30px;"><span style="margin-left: 22px;">Elemento : {{ strtoupper($infome_us_me->elemento)}}</span></td>  
                     </tr>
                 </tbody>
             </table>            
             @while($pos_gen <= $infome_us_me->cantidad_generatrices)
-                <table  style="text-align: center;margin-left:23px;margin-bottom: 10px;border-collapse: collapse;"  class="bordered">
+                <table  style="text-align: center;margin-left:18px;margin-bottom: 10px;border-collapse: collapse;"  class="bordered">
                     <thead>                    
                         <tr>  
                             <th style="font-size: 13px; text-align: left;width:28px;text-align: center;background:#D8D8D8"  class="bordered-1">&nbsp;</th>
