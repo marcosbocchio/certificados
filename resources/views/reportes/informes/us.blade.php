@@ -296,7 +296,7 @@ b {
         <tbody>
             @foreach ($calibraciones_us as $calibracion)
                 <tr>
-                    <td style="font-size: 10px; width:80px;text-align: center;"class="bordered-td">{{ strtoupper($calibracion->zapata) }}</td>
+                    <td style="font-size: 10px; width:80px;height: 15.2px;text-align: center;"class="bordered-td">{{ strtoupper($calibracion->zapata) }}</td>
                     <td style="font-size: 10px; width:80px;text-align: center;" class="bordered-td">{{$calibracion->palpador->codigo}}</td>
                     <td style="font-size: 10px; width:79.7px;text-align: center;" class="bordered-td">{{$calibracion->palpador->nro_serie}}</td>
                     <td style="font-size: 10px; width:20.9px;  text-align: center;" class="bordered-td">{{$calibracion->frecuencia}}</td> 

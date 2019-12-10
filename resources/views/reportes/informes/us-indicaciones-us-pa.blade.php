@@ -11,12 +11,16 @@
     font-family: DejaVu Sans;
 }
 
-@page { margin: 476px 30px 122px 60px !important;
+.page-break {
+    page-break-after: always;
+}
+
+@page { margin: 308px 30px 120px 60px !important;
         padding: 0px 0px 0px 0px !important; }
 
 header {
     position:fixed;
-    top: -439px;    
+    top: -271px;    
     }
 
 main{
@@ -26,8 +30,8 @@ main{
 
 
 footer {
-    position: fixed; bottom: 7px; 
-    padding-top: -7.3px;
+    position: fixed; bottom: 0px; 
+    padding-top: 0px;
 }
 .pagenum:before {
     content: counter(page);
@@ -207,32 +211,8 @@ b {
             <tr>
                 <td style="border-bottom: 2px solid #000;background:#D8D8D8" >REGISTRO DE INDICACIONES</td>
             </tr>
-            <tr>
-                <td>
-                    <table style="text-align: center;border-collapse: collapse;">
-                        <tbody>
-                            <tr>                                
-                                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: 15.7px;margin-right: 15.7px;">ELEMENTO</div></td>
-                                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: 6px;margin-right: 6px;">DIAMETRO</div></td>
-                                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -30px;margin-right: -30px;">N° INDICACIÓN</div></td>
-                                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -38px;margin-right: -38px;">POSICION EXAMEN</div></td>
-                                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -25px;margin-right: -25px;">ANG. INCIDENCIA</div></td>
-                                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -33px;margin-right:  -33px;">CAMINO SONICO</div></td>
-                                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: 7.2px;margin-right: 7.2px;">X (cm)</div></td>
-                                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: 5px;margin-right: 5px;">Y (mm)</div></td>
-                                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: 5.7px;margin-right: 5.7px;">Z (mm)</div></td>
-                                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -34px;margin-right: -34px;">LONGITUD (mm)</div></td>
-                                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -37.8px;margin-right: -37.8px;">NIVEL REGISTRO</div></td>
-                                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;" ><div id="vertical" style="margin-left: -5px;margin-right: -5px;">RESULTADO</div></td>
-                                <td id="rotate" style="font-size: 13px;" ><div id="vertical" style="margin-left: -30px;margin-right: -30px;">REFERENCIA</div></td>  
-                            </tr>            
-                        </tbody>
-                    </table>
-                </td>
-            </tr>  
         </tbody>
     </table>
-
 </header>
 
 <footer>
@@ -277,30 +257,48 @@ b {
     </footer>
 
 <main>
-    <table style="text-align: center;border-collapse: collapse;" class="bordered">
+
+    <table style="text-align: center;border-collapse: collapse;" class="bordered" >
+        <thead>
+            <tr>
+                <th id="rotate" style="border-right: 1px solid #000;font-size: 13px;font-weight: normal;"><div id="vertical" style="margin-left: 17px;margin-right: 17px;">ELEMENTO</div></th>
+                <th id="rotate" style="border-right: 1px solid #000;font-size: 13px;font-weight: normal;"><div id="vertical" style="margin-left: 6px;margin-right: 6px;">DIAMETRO</div></th>
+                <th id="rotate" style="border-right: 1px solid #000;font-size: 13px;font-weight: normal;"><div id="vertical" style="margin-left: -30px;margin-right: -30px;">N° INDICACIÓN</div></th>
+                <th id="rotate" style="border-right: 1px solid #000;font-size: 13px;font-weight: normal;"><div id="vertical" style="margin-left: -38px;margin-right: -38px;">POSICION EXAMEN</div></th>
+                <th id="rotate" style="border-right: 1px solid #000;font-size: 13px;font-weight: normal;"><div id="vertical" style="margin-left: -25px;margin-right: -25px;">ANG. INCIDENCIA</div></th>
+                <th id="rotate" style="border-right: 1px solid #000;font-size: 13px;font-weight: normal;"><div id="vertical" style="margin-left: -33px;margin-right:  -33px;">CAMINO SONICO</div></th>
+                <th id="rotate" style="border-right: 1px solid #000;font-size: 13px;font-weight: normal;"><div id="vertical" style="margin-left: 7.2px;margin-right: 7.2px;">X (cm)</div></th>
+                <th id="rotate" style="border-right: 1px solid #000;font-size: 13px;font-weight: normal;"><div id="vertical" style="margin-left: 5px;margin-right: 5px;">Y (mm)</div></th>
+                <th id="rotate" style="border-right: 1px solid #000;font-size: 13px;font-weight: normal;"><div id="vertical" style="margin-left: 5.7px;margin-right: 5.7px;">Z (mm)</div></th>
+                <th id="rotate" style="border-right: 1px solid #000;font-size: 13px;font-weight: normal;"><div id="vertical" style="margin-left: -34px;margin-right: -34px;">LONGITUD (mm)</div></th>
+                <th id="rotate" style="border-right: 1px solid #000;font-size: 13px;font-weight: normal;"><div id="vertical" style="margin-left: -37.8px;margin-right: -37.8px;">NIVEL REGISTRO</div></th>
+                <th id="rotate" style="border-right: 1px solid #000;font-size: 13px;font-weight: normal;" ><div id="vertical" style="margin-left: -4px;margin-right: -4px;">RESULTADO</div></th>
+                <th id="rotate" style="font-size: 13px;font-weight: normal;" ><div id="vertical" style="margin-left: -30px;margin-right: -30px;">REFERENCIA</div></th>
+            </tr>
+        </thead>
         <tbody>
             @foreach ($indicaciones_us_pa  as $indicacion)
             <tr>                
-                  <td style="font-size: 10px; width:101.7px;height: 16px;text-align: center;" class="bordered-td">{{ strtoupper($indicacion->elemento) }}</td>
-                  <td style="font-size: 10px; width:80px;text-align: center;" class="bordered-td">ø {{ $indicacion->diametro }}</td>
-                  <td style="font-size: 10px; width:34.5px;text-align: center;" class="bordered-td">{{ $indicacion->nro_indicacion }}</td>
-                  <td style="font-size: 10px; width:42.5px;text-align: center;" class="bordered-td">{{ strtoupper($indicacion->posicion_examen) }}</td>
-                  <td style="font-size: 10px; width:59.7px;text-align: center;" class="bordered-td">{{ strtoupper($indicacion->angulo_incidencia) }}</td>
-                  <td style="font-size: 10px; width:38px;text-align: center;" class="bordered-td">{{ $indicacion->camino_sonico }}</td>
-                  <td style="font-size: 10px; width:51px;text-align: center;" class="bordered-td">{{ $indicacion->x }}</td>
-                  <td style="font-size: 10px; width:51px;text-align: center;" class="bordered-td">{{ $indicacion->y }}</td>
-                  <td style="font-size: 10px; width:51px;text-align: center;" class="bordered-td">{{ $indicacion->z }}</td>
-                  <td style="font-size: 10px; width:31px;text-align: center;" class="bordered-td">{{ $indicacion->longitud }}</td>
-                  <td style="font-size: 10px; width:29.3px;text-align: center;" class="bordered-td">{{ strtoupper($indicacion->nivel_registro)}}</td>
+                  <td style="font-size: 10px;height: 16px;text-align: center;" class="bordered-td">{{ strtoupper($indicacion->elemento) }}</td>
+                  <td style="font-size: 10px;text-align: center;" class="bordered-td">ø {{ $indicacion->diametro }}</td>
+                  <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ $indicacion->nro_indicacion }}</td>
+                  <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ strtoupper($indicacion->posicion_examen) }}</td>
+                  <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ strtoupper($indicacion->angulo_incidencia) }}</td>
+                  <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ $indicacion->camino_sonico }}</td>
+                  <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ $indicacion->x }}</td>
+                  <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ $indicacion->y }}</td>
+                  <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ $indicacion->z }}</td>
+                  <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ $indicacion->longitud }}</td>
+                  <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ strtoupper($indicacion->nivel_registro)}}</td>
 
-                  <td style="font-size: 10px; width:67px;text-align: center;" class="bordered-td">
+                  <td style="font-size: 10px;text-align: center;" class="bordered-td">
                   @if($indicacion->aceptable_sn)
                       APROBADO
                    @else
                       RECHAZADO
                   @endif
                   </td>
-                  <td style="font-size: 10px; width:24px;text-align: center;" class="bordered-td">
+                  <td style="font-size: 10px;text-align: center;" class="bordered-td">
 
                    @if ($indicacion->detalle_us_pa_us_referencia_id)
                         <a href="{{ route('InformeUsDetalleUsPaUsReferencias',$indicacion->detalle_us_pa_us_referencia_id)}}"><img src="{{ public_path('img/fa-file-pdf.jpg')}}" alt="" style="height: 15px;margin-left:3px;;margin-top:2px;text-align: center;"></a>                                                       
@@ -317,23 +315,74 @@ b {
 
             @for ( $x=0 ;  $x < $filasACompletar ; $x++)
                 <tr>
-                    <td style="font-size: 10px; width:101.7px;height: 16px;text-align: center;" class="bordered-td">&nbsp;</td>
-                    <td style="font-size: 10px; width:80px;text-align: center;" class="bordered-td">&nbsp;</td>
-                    <td style="font-size: 10px; width:34.5px;text-align: center;" class="bordered-td">&nbsp;</td>
-                    <td style="font-size: 10px; width:42.5px;text-align: center;" class="bordered-td">&nbsp;</td>
-                    <td style="font-size: 10px; width:59.7px;text-align: center;" class="bordered-td">&nbsp;</td>
-                    <td style="font-size: 10px; width:38px;text-align: center;" class="bordered-td">&nbsp;</td>
-                    <td style="font-size: 10px; width:51px;text-align: center;" class="bordered-td">&nbsp;</td>
-                    <td style="font-size: 10px; width:51px;text-align: center;" class="bordered-td">&nbsp;</td>
-                    <td style="font-size: 10px; width:51px;text-align: center;" class="bordered-td">&nbsp;</td>
-                    <td style="font-size: 10px; width:31px;text-align: center;" class="bordered-td">&nbsp;</td>
-                    <td style="font-size: 10px; width:29.3px;text-align: center;" class="bordered-td">&nbsp;</td>      
-                    <td style="font-size: 10px; width:67px;text-align: center;" class="bordered-td">&nbsp;</td>
-                    <td style="font-size: 10px; width:24px;text-align: center;" class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 10px; height: 16px;text-align: center;" class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 10px; text-align: center;" class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 10px; text-align: center;" class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 10px; text-align: center;" class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 10px; text-align: center;" class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 10px; text-align: center;" class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 10px; text-align: center;" class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 10px; text-align: center;" class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 10px; text-align: center;" class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 10px; text-align: center;" class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 10px; text-align: center;" class="bordered-td">&nbsp;</td>      
+                    <td style="font-size: 10px; text-align: center;" class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 10px; text-align: center;" class="bordered-td">&nbsp;</td>
                </tr>
             @endfor
         </tbody>
     </table>
+
+    <!--
+    <div class="page-break"></div>
+
+   <table style="text-align: center;" width="100%">
+        <tbody>
+            <tr>
+                <td>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td style="text-align: center; width: 340px;height: 190px;">
+                                        
+                                    @if ($informe_us->path1_indicacion)
+                                        <img src="{{ public_path($informe_us->path1_indicacion) }}" alt="" style="height: 180px; width: 263px;">
+                                    @endif  
+                    
+                                </td>
+
+                                <td style="text-align: center; width: 340px;height: 190px;">
+                                        
+                                    @if ($informe_us->path2_indicacion)
+                                        <img src="{{ public_path($informe_us->path2_indicacion) }}" alt="" style="height: 180px; width: 263px;">
+                                    @endif  
+                    
+                                </td>  
+                            </tr>
+                            <tr>
+                                <td style="text-align: center; width: 340px;height: 190px;">
+                                    
+                                    @if ($informe_us->path3_indicacion)
+                                        <img src="{{ public_path($informe_us->path3_indicacion) }}" alt="" style="height: 180px; width: 263px;">
+                                    @endif  
+                        
+                                </td>
+
+                                <td style="text-align: center; width: 340px;height: 190px;">
+
+                                    @if ($informe_us->path4_indicacion)
+                                        <img src="{{ public_path($informe_us->path4_indicacion) }}" alt="" style="height: 180px; width: 263px;">
+                                    @endif  
+                        
+                                </td>
+                            </tr>                        
+                        </tbody>
+                    </table>             
+                </td>
+            </tr>
+        </tbody>
+    </table>
+-->
 </main>
      
 <script type="text/php">
