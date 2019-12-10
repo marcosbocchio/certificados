@@ -589,6 +589,13 @@
 
                                 <div class="col-md-12">                       
                                     <div class="form-group" >
+                                        <label for="umbral" title="Umbral">Umbral</label>
+                                        <input type="number" v-model="umbral_me" class="form-control" id="umbral_me" step="0,01">
+                                    </div>         
+                                </div>
+
+                                <div class="col-md-12">                       
+                                    <div class="form-group" >
                                         <label for="diametro_me" title="Diametro">ø</label>
                                         <v-select v-model="diametro_me" label="diametro" :options="diametros" id="diametro_me"></v-select>
                                     </div>         
@@ -621,6 +628,7 @@
                                             <thead>
                                                 <tr>
                                                     <th  class="col-lg-1">Elemento</th>
+                                                    <th  class="col-lg-1">Umbral</th>
                                                     <th  class="col-lg-1">ø</th> 
                                                     <th  class="col-lg-1">Pos.</th>
                                                     <th  class="col-lg-1">Gen.</th>                                                                                               
@@ -629,7 +637,8 @@
                                             </thead>                         
                                             <tbody>
                                                 <tr v-for="(item,k) in (Tabla_me)" :key="k" @click="selectPosTabla_me(k)" :class="{selected: indexPosTabla_me === k}" >
-                                                    <td>{{ item.elemento_me }}</td>                                        
+                                                    <td>{{ item.elemento_me }}</td>  
+                                                    <td>{{ item.umbral_me }}</td>                                       
                                                     <td>{{ item.diametro_me }}</td>
                                                     <td>{{ item.cantidad_posiciones_me}}</td>    
                                                     <td>{{ item.cantidad_generatrices_me}}</td>                               
@@ -951,6 +960,7 @@ export default {
         //detalle me
 
         elemento_me:'',
+        umbral_me:'',
         diametro_me:'',
         cantidad_posiciones_me:'',
         cantidad_generatrices_me:'',
@@ -1543,6 +1553,13 @@ export default {
                 toastr.error('El campo elemento no debe contener más de 10 caracteres'); 
                 return ;
              }   
+
+            if(this.umbral_me && this.umbral_me  > 99.99){
+
+                toastr.error('El campo umbral no debe ser mayor a 99,99');    
+                return ;
+             }
+
             
 
             if (!this.diametro_me){
@@ -1598,6 +1615,7 @@ export default {
 
             this.Tabla_me.push({
                 elemento_me:               this.elemento_me,
+                umbral_me:                 this.umbral_me,
                 diametro_me:               this.diametro_me.diametro,
                 cantidad_posiciones_me  :  this.cantidad_posiciones_me,
                 cantidad_generatrices_me:  this.cantidad_generatrices_me,   

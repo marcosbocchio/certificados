@@ -14838,6 +14838,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -14996,6 +15005,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       aceptable_sn_us_pa: '',
       //detalle me
       elemento_me: '',
+      umbral_me: '',
       diametro_me: '',
       cantidad_posiciones_me: '',
       cantidad_generatrices_me: '',
@@ -15479,6 +15489,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return;
       }
 
+      if (this.umbral_me && this.umbral_me > 99.99) {
+        toastr.error('El campo umbral no debe ser mayor a 99,99');
+        return;
+      }
+
       if (!this.diametro_me) {
         toastr.error('El campo diametro es obligatorio');
         return;
@@ -15521,6 +15536,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.Tabla_me.push({
         elemento_me: this.elemento_me,
+        umbral_me: this.umbral_me,
         diametro_me: this.diametro_me.diametro,
         cantidad_posiciones_me: this.cantidad_posiciones_me,
         cantidad_generatrices_me: this.cantidad_generatrices_me,
@@ -77199,6 +77215,42 @@ var render = function() {
                         ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "col-md-12" }, [
+                          _c("div", { staticClass: "form-group" }, [
+                            _c(
+                              "label",
+                              { attrs: { for: "umbral", title: "Umbral" } },
+                              [_vm._v("Umbral")]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.umbral_me,
+                                  expression: "umbral_me"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: {
+                                type: "number",
+                                id: "umbral_me",
+                                step: "0,01"
+                              },
+                              domProps: { value: _vm.umbral_me },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.umbral_me = $event.target.value
+                                }
+                              }
+                            })
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-md-12" }, [
                           _c(
                             "div",
                             { staticClass: "form-group" },
@@ -77358,6 +77410,10 @@ var render = function() {
                                       [
                                         _c("td", [
                                           _vm._v(_vm._s(item.elemento_me))
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _vm._v(_vm._s(item.umbral_me))
                                         ]),
                                         _vm._v(" "),
                                         _c("td", [
@@ -78042,6 +78098,8 @@ var staticRenderFns = [
     return _c("thead", [
       _c("tr", [
         _c("th", { staticClass: "col-lg-1" }, [_vm._v("Elemento")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "col-lg-1" }, [_vm._v("Umbral")]),
         _vm._v(" "),
         _c("th", { staticClass: "col-lg-1" }, [_vm._v("ø")]),
         _vm._v(" "),
@@ -104296,8 +104354,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_lazyload__WEBPACK_IMPORTED_MO
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuejs_progress_bar__WEBPACK_IMPORTED_MODULE_5___default.a);
 var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
   state: {
-    url:  false ? undefined : "http://certificados.test/api",
-    AppUrl:  false ? undefined : "http://certificados.test",
+    url:  false ? undefined : "http://localhost:8000/api",
+    AppUrl:  false ? undefined : "http://localhost:8000",
     contratistas: [],
     provincias: [],
     localidades: [],
@@ -110634,8 +110692,8 @@ var toastrDefault = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\bocch\code\certificados\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\bocch\code\certificados\resources\sass\toastr.scss */"./resources/sass/toastr.scss");
+__webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/sass/toastr.scss */"./resources/sass/toastr.scss");
 
 
 /***/ })

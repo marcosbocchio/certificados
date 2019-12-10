@@ -254,7 +254,7 @@ b {
 
 <main>
 
-    @foreach ($informes_us_me as $infome_us_me)   
+    @foreach ($informes_us_me as $informe_us_me)   
 
             @php 
                 $pos_gen = 1;
@@ -264,19 +264,19 @@ b {
             <table>
                 <tbody>
                     <tr>
-                         <td style="font-size: 14px;height:20px;"><span style="margin-left: 22px;">Elemento : {{ strtoupper($infome_us_me->elemento)}}</span></td> 
+                         <td style="font-size: 14px;height:20px;"><span style="margin-left: 22px;">Elemento : {{ strtoupper($informe_us_me->elemento)}}</span></td> 
                     </tr>
                     <tr>
-                        <td style="font-size: 14px;height:20px;"><span style="margin-left: 22px;">Ø : {{ $infome_us_me->diametro}}</span></td>  
+                        <td style="font-size: 14px;height:20px;"><span style="margin-left: 22px;">Ø : {{ $informe_us_me->diametro}}</span></td>  
                     </tr>
                 </tbody>
             </table>            
-            @while($pos_gen <= $infome_us_me->cantidad_generatrices)
+            @while($pos_gen <= $informe_us_me->cantidad_generatrices)
                 <table  style="text-align: center;margin-left:18px;margin-bottom: 10px;border-collapse: collapse;"  class="bordered">
                     <thead>                    
                         <tr>  
                             <th style="font-size: 13px; text-align: left;width:28px;text-align: center;background:#D8D8D8"  class="bordered-1">&nbsp;</th>
-                            @while( ($pos_gen <= $genetratrices_fila) && ($pos_gen <= $infome_us_me->cantidad_generatrices))   
+                            @while( ($pos_gen <= $genetratrices_fila) && ($pos_gen <= $informe_us_me->cantidad_generatrices))   
                                 <th style="font-size: 13px; text-align: left;width:28px;text-align: center;background:#D8D8D8" class="bordered-1">
                                     @foreach ($generatrices as $generatriz )
                                             
@@ -293,21 +293,31 @@ b {
                         </tr>
                       </thead>
                       <tbody>
-                        @for ( $pos_pos= 1 ;  $pos_pos <= $infome_us_me->cantidad_posiciones ; $pos_pos++)
+                        @for ( $pos_pos= 1 ;  $pos_pos <= $informe_us_me->cantidad_posiciones ; $pos_pos++)
                                 <tr> 
                                     <td style="font-size: 13px; text-align: left;width:28px;text-align: center;background:#D8D8D8" class="bordered-1">{{$pos_pos}}</td>
                                     @for ($pos_gen_fila = ($genetratrices_fila - (2*$max_cant_genetratices_fila)+1) ; $pos_gen_fila <= $pos_gen - 1 ; $pos_gen_fila++)
 
                                     {{ $x =0  }}
                                 
-                                        @foreach ($infome_us_me->detalle_us_me as $item_detalle )
+                                        @foreach ($informe_us_me->detalle_us_me as $item_detalle )
 
                                             @foreach ($generatrices as $generatriz)
                                                 
                                                 @if ($pos_pos==$item_detalle->posicion && $pos_gen_fila == $generatriz->nro && $item_detalle->generatriz==$generatriz->valor)  
 
-                                                    <td style="font-size: 13px; text-align: left;width:28px;text-align: center" class="bordered-1">{{$item_detalle->valor}}</td>
-                                                        {{ $x =1  }}
+                                                    @if($informe_us_me->umbral && $item_detalle->valor > $informe_us_me->umbral)
+
+                                                       <td style="font-size: 13px; text-align: left;width:28px;text-align: center;color:red" class="bordered-1">{{$item_detalle->valor}}</td>
+
+                                                    @else
+
+                                                        <td style="font-size: 13px; text-align: left;width:28px;text-align: center" class="bordered-1">{{$item_detalle->valor}}</td>
+                                                    
+                                                    @endif
+
+                                                    {{ $x =1  }}
+
                                                 @endif
 
                                             @endforeach                                                                                            

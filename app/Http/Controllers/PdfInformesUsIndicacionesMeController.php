@@ -52,7 +52,7 @@ class PdfInformesUsIndicacionesMeController extends Controller
          $generatrices = Generatrices::all();
          $informes_us_me = InformesUsMe::where('informe_us_id',$informe_us->id)->with('detalle_us_me')->get();   
 
-     //    dd($informes_us_me);
+       // dd($informes_us_me);
         $pdf = PDF::loadView('reportes.informes.us-indicaciones-me',compact('ot',
                                                                 'norma_ensayo',
                                                                 'norma_evaluacion',
