@@ -78103,9 +78103,9 @@ var staticRenderFns = [
       _c("tr", [
         _c("th", { staticClass: "col-lg-1" }, [_vm._v("Elemento")]),
         _vm._v(" "),
-        _c("th", { staticClass: "col-lg-1" }, [_vm._v("Umbral")]),
+        _c("th", { staticClass: "col-lg-1" }, [_vm._v("Umbral.")]),
         _vm._v(" "),
-        _c("th", { staticClass: "col-lg-1" }, [_vm._v("ø")]),
+        _c("th", { staticClass: "col-lg-2" }, [_vm._v("ø")]),
         _vm._v(" "),
         _c("th", { staticClass: "col-lg-1" }, [_vm._v("Pos.")]),
         _vm._v(" "),

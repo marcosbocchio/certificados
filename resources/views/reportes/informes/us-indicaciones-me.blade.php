@@ -306,7 +306,7 @@ b {
                                                 
                                                 @if ($pos_pos==$item_detalle->posicion && $pos_gen_fila == $generatriz->nro && $item_detalle->generatriz==$generatriz->valor)  
 
-                                                    @if($informe_us_me->umbral && strval($item_detalle->valor) > strval($informe_us_me->umbral))
+                                                    @if($informe_us_me->umbral && strval($item_detalle->valor) < strval($informe_us_me->umbral))
 
                                                        <td style="font-size: 13px; text-align: left;width:28px;text-align: center;color:red" class="bordered-1">{{$item_detalle->valor}}</td>
 

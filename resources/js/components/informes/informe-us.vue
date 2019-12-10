@@ -628,8 +628,8 @@
                                             <thead>
                                                 <tr>
                                                     <th  class="col-lg-1">Elemento</th>
-                                                    <th  class="col-lg-1">Umbral</th>
-                                                    <th  class="col-lg-1">ø</th> 
+                                                    <th  class="col-lg-1">Umbral.</th>
+                                                    <th  class="col-lg-2">ø</th> 
                                                     <th  class="col-lg-1">Pos.</th>
                                                     <th  class="col-lg-1">Gen.</th>                                                                                               
                                                     <th  class="col-lg-1">&nbsp;</th>
