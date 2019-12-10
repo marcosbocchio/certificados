@@ -15,7 +15,7 @@
     page-break-after: always;
 }
 
-@page { margin: 308px 30px 120px 60px !important;
+@page { margin: 308px 30px 125px 60px !important;
         padding: 0px 0px 0px 0px !important; }
 
 header {
@@ -30,8 +30,8 @@ main{
 
 
 footer {
-    position: fixed; bottom: 0px; 
-    padding-top: 0px;
+    position: fixed; bottom: 6px; 
+    padding-top: -5px;
 }
 .pagenum:before {
     content: counter(page);
@@ -333,8 +333,8 @@ b {
         </tbody>
     </table>
 
-    <!--
-    <div class="page-break"></div>
+   
+  <div class="page-break"></div>
 
    <table style="text-align: center;" width="100%">
         <tbody>
@@ -382,7 +382,7 @@ b {
             </tr>
         </tbody>
     </table>
--->
+
 </main>
      
 <script type="text/php">
@@ -401,8 +401,8 @@ b {
         $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
     }
 
-    $pdf->line(46.5,130,46.5,800,array(0,0,0),1.5);
-    $pdf->line(571.3,130,571.3,800,array(0,0,0),1.5);
+    $pdf->line(46.5,130,46.5,780,array(0,0,0),1.5);
+    $pdf->line(571.3,130,571.3,780,array(0,0,0),1.5);
  
 </script>
 
