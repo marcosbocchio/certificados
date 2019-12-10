@@ -15489,8 +15489,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return;
       }
 
-      if (this.umbral_me && this.umbral_me > 99.99) {
-        toastr.error('El campo umbral no debe ser mayor a 99,99');
+      if (this.umbral_me && this.umbral_me > 99.9) {
+        toastr.error('El campo umbral no debe ser mayor a 99,9');
         return;
       }
 
@@ -77235,7 +77235,7 @@ var render = function() {
                               attrs: {
                                 type: "number",
                                 id: "umbral_me",
-                                step: "0,01"
+                                step: "0,1"
                               },
                               domProps: { value: _vm.umbral_me },
                               on: {
@@ -77610,8 +77610,12 @@ var render = function() {
                                                                   width: "40px"
                                                                 },
                                                                 attrs: {
-                                                                  type: "text",
-                                                                  maxlength: "4"
+                                                                  type:
+                                                                    "number",
+                                                                  maxlength:
+                                                                    "4",
+                                                                  step: "0.1",
+                                                                  max: "99.9"
                                                                 },
                                                                 domProps: {
                                                                   value:

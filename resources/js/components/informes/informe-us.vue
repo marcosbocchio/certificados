@@ -590,7 +590,7 @@
                                 <div class="col-md-12">                       
                                     <div class="form-group" >
                                         <label for="umbral" title="Umbral">Umbral</label>
-                                        <input type="number" v-model="umbral_me" class="form-control" id="umbral_me" step="0,01">
+                                        <input type="number" v-model="umbral_me" class="form-control" id="umbral_me" step="0,1">
                                     </div>         
                                 </div>
 
@@ -669,7 +669,7 @@
                                                         <td style="min-width:60px;min-height:60px" v-for="(g) in parseInt(Tabla_me[indexPosTabla_me].cantidad_generatrices_me)" :key="g" @click="selectPosGeneratriz(g)"  >
 
                                                             <div v-if="indexPosPos == p && indexPosGeneratriz == g">
-                                                                <input style="width:40px;" type="text" v-model="Tabla_me[indexPosTabla_me].mediciones[g-1][p-1]" maxlength="4" :ref="'refInputMediciones'" @keyup.enter="getFocus(g,Tabla_me[indexPosTabla_me].cantidad_generatrices_me,p,Tabla_me[indexPosTabla_me].cantidad_posiciones_me)">    
+                                                                <input style="width:40px;" type="number" v-model="Tabla_me[indexPosTabla_me].mediciones[g-1][p-1]" maxlength="4" :ref="'refInputMediciones'" @keyup.enter="getFocus(g,Tabla_me[indexPosTabla_me].cantidad_generatrices_me,p,Tabla_me[indexPosTabla_me].cantidad_posiciones_me)" step="0.1" max="99.9">    
                                                             </div>
                                                             <div v-else>
 
@@ -1554,9 +1554,9 @@ export default {
                 return ;
              }   
 
-            if(this.umbral_me && this.umbral_me  > 99.99){
+            if(this.umbral_me && this.umbral_me  > 99.9){
 
-                toastr.error('El campo umbral no debe ser mayor a 99,99');    
+                toastr.error('El campo umbral no debe ser mayor a 99,9');    
                 return ;
              }
 
