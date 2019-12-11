@@ -215,7 +215,8 @@ class InformesController extends Controller
                                         ->join('metodo_ensayos','metodo_ensayos.id','=','informes.metodo_ensayo_id')
                                         ->where('parte_id',null)
                                         ->where('ot_id',$ot_id)
-                                        ->selectRaw('informes.* , 0 as informe_sel,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada');
+                                        ->selectRaw('informes.* , 0 as informe_sel,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada')
+                                        ->orderBy('informes.id','desc');
                                         
         $infomes = informe::with('metodoEnsayos')
                                     ->join('metodo_ensayos','metodo_ensayos.id','=','informes.metodo_ensayo_id')
@@ -223,6 +224,7 @@ class InformesController extends Controller
                                     ->where('parte_id',$parte_id)
                                     ->where('ot_id',$ot_id)
                                     ->selectRaw('informes.* , 0 as informe_sel,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada')
+                                    ->orderBy('informes.id','desc')
                                     ->union($infomes_pendientes)
                                     ->get();
 
