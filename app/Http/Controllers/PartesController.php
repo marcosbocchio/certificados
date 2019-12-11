@@ -12,7 +12,8 @@ use App\Medidas;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Collection as Collection;
-use App\Informes;
+use App\Informe;
+use App\Tecnicas;
 use \stdClass;
 
 
@@ -91,6 +92,7 @@ class PartesController extends Controller
           $this->saveParteDetalleRi($request->informes_ri,$parte);
           $this->saveParteDetallePm($request->informes_pm,$parte);
           $this->saveParteDetalleLp($request->informes_lp,$parte);
+          $this->saveParteDetalleUs($request->informes_us,$parte);
          
           DB::commit(); 
     
@@ -226,6 +228,27 @@ class PartesController extends Controller
             (new \App\Http\Controllers\InformesController)->setParteId($parte->id,$informe['id']);
            
         }
+    }
+    
+    public function saveParteDetalleUs($informes_us,$parte){
+
+    
+        foreach ($informes_us as $informe) {
+            
+            $parteDetalle  = new ParteDetalles;
+            $parteDetalle->parte_id = $parte->id;            
+            $parteDetalle->informe_id =$informe['id'];   
+            $parteDetalle->pieza_original = $informe['pieza_original'];      
+            $parteDetalle->pieza_final = $informe['pieza_final'];
+            $parteDetalle->costura_original = $informe['costura_original'];      
+            $parteDetalle->costura_final = $informe['costura_final'];   
+            $parteDetalle->pulgadas_original = $informe['pulgadas_original'];
+            $parteDetalle->pulgadas_final = $informe['pulgadas_final'];               
+            $parteDetalle->save();
+
+            (new \App\Http\Controllers\InformesController)->setParteId($parte->id,$informe['id']);
+            
+        }
 
     }
 
@@ -284,6 +307,15 @@ class PartesController extends Controller
                                ->where('parte_detalles.parte_id',$id)
                                ->selectRaw('parte_detalles.* , 0 as informe_sel,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada')
                                ->get();
+
+       $informes_us  = DB::table('parte_detalles')
+                               ->join('informes','informes.id','=','parte_detalles.informe_id')          
+                               ->join('metodo_ensayos','metodo_ensayos.id','=','informes.metodo_ensayo_id')   
+                               ->join('tecnicas','tecnicas.id','=','informes.tecnica_id') 
+                               ->where('metodo_ensayos.metodo','US')                                              
+                                ->where('parte_detalles.parte_id',$id)
+                                ->selectRaw('parte_detalles.* , 0 as informe_sel,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada,tecnicas.codigo as tecnica')
+                                ->get();
                              
          foreach ($informes_ri as $informe_ri) {
 
@@ -299,6 +331,7 @@ class PartesController extends Controller
                                             'informes_ri',
                                             'informes_pm',
                                             'informes_lp',
+                                            'informes_us',
                                             'ot',                                            
                                             'user',                                              
                                             'header_titulo',
@@ -326,6 +359,7 @@ class PartesController extends Controller
             $this->saveParteDetalleRi($request->informes_ri,$parte);
             $this->saveParteDetallePm($request->informes_pm,$parte);
             $this->saveParteDetalleLp($request->informes_lp,$parte);
+            $this->saveParteDetalleUs($request->informes_us,$parte);
             
             DB::commit();
             
@@ -412,31 +446,39 @@ class PartesController extends Controller
     }
 
     public function getInformeUsParte($id){
+   
+        $informe =  Informe::find($id);
+        $tecnica = Tecnicas::find($informe->tecnica_id);
+       
+        if($tecnica->codigo == 'US' || $tecnica->codigo =='PA')
+        {
+            $informe_us= Informe:: join('informes_us','informes.id','=','informes_us.informe_id')
+                                   ->leftJoin('detalle_us_pa_us','detalle_us_pa_us.informe_us_id','=','informes_us.id')
+                                   ->where('informes.id',$id)
+                                   ->selectRaw('  COUNT(detalle_us_pa_us.elemento) as costuras,
+                                                detalle_us_pa_us.diametro as pulgadas,  
+                                                "US" as metodo')                               
+                                ->groupBy('diametro')                                                       
+                                ->get();
 
-        $informe_us= DB::select('select
-                                    COUNT(detalle_us_pa_us.elemento) as costuras,
-                                    detalle_us_pa_us.diametro as pulgadas,       
-                                    "US" as metodo
-                                    FROM informes 
-                                
-                                    inner join informes_us on informes.id = informes_us.informe_id
-                                    left join detalle_us_pa_us on detalle_us_pa_us.informe_us_id = informes_us.id
-                                    WHERE
-                                    informes.id=:id group by diametro',['id' => $id ]);
+        }elseif($tecnica->codigo == 'ME'){
 
-       $informe_us= DB::select('select
-                                    informes_us_me.elemento as pieza,
-                                    informes_us_me.diametro as pulgadas,       
-                                    "US" as metodo
-                                    FROM informes 
-                                
-                                    inner join informes_us on informes.id = informes_us.informe_id
-                                    left join informes_us_me on informes_us_me.informe_us_id = informes_us.id
-                                    WHERE
-                                    informes.id=:id ',['id' => $id ]);
+            $informe_us= Informe::join('informes_us','informes.id','=','informes_us.informe_id')
+                                  ->leftJoin('informes_us_me','informes_us_me.informe_us_id','=','informes_us.id')
+                                  ->where('informes.id',$id)
+                                  ->selectRaw('   informes_us_me.elemento as pieza,
+                                                  informes_us_me.diametro as pulgadas, 
+                                                  "US" as metodo')            
+                                 
+                                  ->get();
 
-      $informe_us = Collection::make($informe_us);
 
+        }
+
+        foreach ($informe_us as $item) {
+            
+             $item->tecnica = $tecnica;
+        } 
 
       return $informe_us;
 

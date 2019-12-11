@@ -178,7 +178,9 @@
                                             <tbody>
                                                 <tr v-for="(item,k) in TablaInformesRi" :key="k"  @click="selectPosTablaInformesRi(k)">     
                                                     <td v-if="item.visible"> {{ item.numero_formateado}}</td>   
-                                                    <td v-if="item.visible">
+                                                  
+                                                    <td v-if="item.visible">    
+                                                                                                            
                                                         <div v-if="indexTablaInformesRi == k ">       
                                                           <input type="number" v-model="TablaInformesRi[k].costura_final" maxlength="4">        
                                                         </div>   
@@ -284,6 +286,7 @@
                         </div>
                     </div>
                 </div>
+                <!--Informe Lp -->
                 <div v-show="TablaInformesLp.length">
                     <div class="box box-danger" >
                         <div class="box-header with-border">
@@ -353,8 +356,82 @@
                         </div>
                     </div>
                 </div>
-               <!--Informe Lp -->
+                <!--Informe Us -->
+                <div v-show="TablaInformesUs.length">
+                    <div class="box box-danger" >
+                        <div class="box-header with-border">
+                        <h3 class="box-title">Informes US</h3>
 
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                </button>                       
+                            </div>
+                        </div>
+                        <div class="box-body"> 
+                            
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>INFORME</th>       
+                                                    <th>COSTURA</th>                                         
+                                                    <th>ELEMENTO</th>                                                                                                
+                                                    <th>DIAMETRO</th>
+                                                    <th colspan="2">&nbsp;</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr v-for="(item,k) in TablaInformesUs" :key="k"  @click="selectPosTablaInformesUs(k)">    
+
+                                                    <td v-if="item.visible"> {{ item.numero_formateado}}</td> 
+          
+                                                    <td v-if="item.visible">
+                                                        <div v-if="(item.tecnica =='US' || item.tecnica =='PA')">
+                                                            <div v-if="indexTablaInformesUs == k ">       
+                                                                <input type="number" v-model="TablaInformesUs[k].costura_final" maxlength="4">   
+                                                            </div>   
+                                                            <div v-else>
+                                                                {{ item.costura_final }}
+                                                            </div>  
+                                                        </div>   
+                                                        <div v-else>
+                                                            <td> &nbsp;</td>
+                                                        </div>                                      
+                                                    </td>                                     
+                                                    
+                                                    <td v-if="item.visible">
+                                                        <div v-if="(item.tecnica =='ME')">
+                                                            <div v-if="indexTablaInformesUs == k ">       
+                                                                <input type="text" v-model="TablaInformesUs[k].pieza_final" maxlength="10">        
+                                                            </div>   
+                                                            <div v-else>
+                                                                {{ item.pieza_final }}
+                                                            </div>   
+                                                        </div>  
+                                                        <div v-else>
+                                                            <td> &nbsp;</td>
+                                                        </div>   
+                                    
+                                                    </td>
+                                                    
+                                            
+                                                    <td v-if="item.visible"> {{ item.pulgadas_final}}</td>
+                                                                                                                                                            
+                                                    <td v-if="item.visible"> <a  @click="RemoveTablaInformeUs(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a></td>
+                                                    
+                                                </tr>   
+                                                <tr v-for="fila in 4" >
+                                                    <td colspan="6" style="background: #FFFFFF"> &nbsp;</td>                                                  
+                                                </tr>                                             
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                        
+                        </div>
+                    </div>
+                </div>
                 <div class="box box-danger">
                     <div class="box-body">
                         <div class="form-group">
@@ -415,6 +492,11 @@ export default {
       },
 
       informes_lp_data : {
+      type : [ Array ],  
+      required : false
+      },
+
+      informes_us_data : {
       type : [ Array ],  
       required : false
       },
@@ -547,6 +629,12 @@ export default {
         selectPosTablaInformesLp :function(index){
 
             this.indexTablaInformesLp = index ;            
+
+        },
+
+        selectPosTablaInformesUs :function(index){
+
+            this.indexTablaInformesUs = index ;            
 
         },
                 
@@ -690,7 +778,9 @@ export default {
                             pieza_original: item.pieza_original,
                             pieza_final: item.pieza_final,
                             nro_original : item.nro_original,    
-                            nro_final : item.nro_final,          
+                            nro_final : item.nro_final,    
+                            pieza_original: item.pieza_original,
+                            pieza_final: item.pieza_final,      
                             id      : item.informe_id,
                             visible : visible_sn,   
                             metros_lineales: item.metros_lineales             
@@ -715,25 +805,31 @@ export default {
 
                         this.informes_us_data.forEach(function(item){
 
-                        let visible_sn = true;
-                        if( !item.costura_final  &&  !item.pulgadas_final){
+                            let visible_sn = true;
 
-                            visible_sn = false
+                          
+                            if( !item.costura_final  &&  !item.pulgadas_final && !item.pieza_final){
 
-                        }
+                                visible_sn = false
 
-                        this.TablaInformesUs.push({ 
+                            }
 
-                            numero_formateado  : item.numero_formateado,              
-                            costura_original: item.costura_original,
-                            pulgadas_original: item.pulgadas_original,         
-                            id      : item.informe_id,
-                            visible : visible_sn,   
-                            costura_final: item.costura_final,
-                            pulgadas_final: item.pulgadas_final,
-                            placas_final : item.placas_final,       
+                            this.TablaInformesUs.push({ 
 
-                            }); 
+                                numero_formateado  : item.numero_formateado,              
+                                costura_original: item.costura_original,
+                                costura_final: item.costura_final,
+                                pieza_original: item.pieza_original,
+                                pieza_final: item.pieza_final,      
+                                pulgadas_final: item.pulgadas_final,
+                                pulgadas_original: item.pulgadas_original,  
+                                tecnica     : item.tecnica,                        
+                                id      : item.informe_id,
+                                visible : visible_sn,   
+                            
+
+                                }); 
+
                         }.bind(this));
 
              });
@@ -790,7 +886,17 @@ export default {
 
         },
 
+        RemoveTablaInformeUs(index){
+            
+            this.TablaInformesUs[index].visible = false;
+            this.TablaInformesUs[index].pieza_final='';
+            this.TablaInformesUs[index].costura_final='';    
+            this.TablaInformesUs[index].pulgadas_final=''          
+
+        },
+
         getInforme(index){
+            console.log(this.informes[index]);
 
             if(this.informes[index].informe_sel){
 
@@ -801,6 +907,8 @@ export default {
                   case 'PM' : this.getInformePM(this.informes[index].id,index);break;
 
                   case 'LP' : this.getInformeLP(this.informes[index].id,index);break;
+
+                  case 'US' : this.getInformeUs(this.informes[index].id,index);break;
 
                 }
 
@@ -825,6 +933,13 @@ export default {
                 for( var i = 0; i < this.TablaInformesLp.length; i++){ 
                     if (this.TablaInformesLp[i].id == id) {
                          this.TablaInformesLp.splice(i, 1); 
+                        i--;
+                    }
+                } 
+
+                for( var i = 0; i < this.TablaInformesUs.length; i++){ 
+                    if (this.TablaInformesUs[i].id == id) {
+                         this.TablaInformesUs.splice(i, 1); 
                         i--;
                     }
                 } 
@@ -916,6 +1031,60 @@ export default {
                 }.bind(this));
            
             });
+        },
+
+        getInformeUs(id,index){
+
+            axios.defaults.baseURL = this.url ;
+            var urlRegistros = 'partes/informe_us/' + id + '?api_token=' + Laravel.user.api_token;        
+            axios.get(urlRegistros).then(response =>{
+            console.log(urlRegistros);
+            console.log(response.data);
+            this.informe_us_parte = response.data 
+            
+            this.informe_us_parte.forEach(function(item){                    
+
+                if(item.tecnica.codigo =='US' || item.tecnica.codigo =='PA'){
+
+                        this.TablaInformesUs.push({ 
+                           id      : id,
+                           numero_formateado  : this.informes[index].numero_formateado,               
+                           visible : true,
+                           metodo : item.metodo,
+                           tecnica : item.tecnica.codigo,
+                           costura_original: item.costuras,
+                           costura_final: item.costuras,
+                           pulgadas_original: item.pulgadas,
+                           pulgadas_final: item.pulgadas,
+                           pieza_original : '',
+                           pieza_final : '',
+                        
+                        });  
+
+                }else if(item.tecnica.codigo =='ME'){
+
+                         this.TablaInformesUs.push({ 
+
+                            id      : id,
+                            numero_formateado  : this.informes[index].numero_formateado,               
+                            visible : true,
+                            costura_original: '',
+                            costura_final:'',
+                            metodo : item.metodo,
+                            tecnica : item.tecnica.codigo,
+                            pieza_original : item.pieza,
+                            pieza_final : item.pieza,
+                            pulgadas_original: item.pulgadas,
+                            pulgadas_final: item.pulgadas,                      
+                        
+                        });
+               }  
+                                     
+          
+
+            }.bind(this));
+           
+            });
 
             },
 
@@ -983,7 +1152,8 @@ export default {
                 'responsables'         :this.TablaResponsables, 
                 'informes_ri'          :this.TablaInformesRi,
                 'informes_pm'          :this.TablaInformesPm,
-                'informes_lp'          :this.TablaInformesLp           
+                'informes_lp'          :this.TablaInformesLp,     
+                'informes_us'          :this.TablaInformesUs       
     
           }
           
@@ -1041,17 +1211,18 @@ export default {
                 'km_inicial'           : this.km_inicial,    
                 'km_final'             : this.km_final,
                 'observaciones'        : this.observaciones, 
-                'responsables'         :this.TablaResponsables, 
+                'responsables'         :this.TablaResponsables,
                 'informes_ri'          :this.TablaInformesRi,
                 'informes_pm'          :this.TablaInformesPm,        
-                'informes_lp'          :this.TablaInformesLp           
+                'informes_lp'          :this.TablaInformesLp,
+                'informes_us'          :this.TablaInformesUs                  
           }}
           
       
         ).then(response => {
           this.response = response.data
           toastr.success('Parte Diario con fecha' +  this.fecha + ' fue actualizado con éxito ');
-       console.log(response.data);  
+           console.log(response.data);  
         }).catch(error => {
                
                this.errors = error.response.data.errors;

@@ -189,6 +189,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('partes/informe_ri/{id}','PartesController@getInformeRiParte');
     Route::get('partes/informe_pm/{id}','PartesController@getInformePmParte');
     Route::get('partes/informe_lp/{id}','PartesController@getInformeLpParte');    
+    Route::get('partes/informe_us/{id}','PartesController@getInformeUsParte');
 
 });
 

@@ -20,6 +20,7 @@
   :informes_ri_data="{{$informes_ri}}"
   :informes_pm_data="{{$informes_pm}}"
   :informes_lp_data="{{$informes_lp}}"
+  :informes_us_data="{{$informes_us}}"
   :responsables_data="{{$responsables}}"
   editmode  
   

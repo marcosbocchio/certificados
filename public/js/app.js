@@ -17453,6 +17453,83 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -17487,6 +17564,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       required: false
     },
     informes_lp_data: {
+      type: [Array],
+      required: false
+    },
+    informes_us_data: {
       type: [Array],
       required: false
     },
@@ -17578,6 +17659,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     selectPosTablaInformesLp: function selectPosTablaInformesLp(index) {
       this.indexTablaInformesLp = index;
     },
+    selectPosTablaInformesUs: function selectPosTablaInformesUs(index) {
+      this.indexTablaInformesUs = index;
+    },
     getCms: function getCms() {
       var _this2 = this;
 
@@ -17668,22 +17752,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }.bind(_this4));
 
         _this4.informes_lp_data.forEach(function (item) {
+          var _this$TablaInformesLp;
+
           var visible_sn = true;
 
           if (!item.pieza_final && !item.nro_final && !item.metros_lineales) {
             visible_sn = false;
           }
 
-          this.TablaInformesLp.push({
+          this.TablaInformesLp.push((_this$TablaInformesLp = {
             numero_formateado: item.numero_formateado,
             pieza_original: item.pieza_original,
             pieza_final: item.pieza_final,
             nro_original: item.nro_original,
-            nro_final: item.nro_final,
-            id: item.informe_id,
-            visible: visible_sn,
-            metros_lineales: item.metros_lineales
-          });
+            nro_final: item.nro_final
+          }, _defineProperty(_this$TablaInformesLp, "pieza_original", item.pieza_original), _defineProperty(_this$TablaInformesLp, "pieza_final", item.pieza_final), _defineProperty(_this$TablaInformesLp, "id", item.informe_id), _defineProperty(_this$TablaInformesLp, "visible", visible_sn), _defineProperty(_this$TablaInformesLp, "metros_lineales", item.metros_lineales), _this$TablaInformesLp));
         }.bind(_this4)); //Informe Us 
 
 
@@ -17696,19 +17779,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this4.informes_us_data.forEach(function (item) {
           var visible_sn = true;
 
-          if (!item.costura_final && !item.pulgadas_final) {
+          if (!item.costura_final && !item.pulgadas_final && !item.pieza_final) {
             visible_sn = false;
           }
 
           this.TablaInformesUs.push({
             numero_formateado: item.numero_formateado,
             costura_original: item.costura_original,
-            pulgadas_original: item.pulgadas_original,
-            id: item.informe_id,
-            visible: visible_sn,
             costura_final: item.costura_final,
+            pieza_original: item.pieza_original,
+            pieza_final: item.pieza_final,
             pulgadas_final: item.pulgadas_final,
-            placas_final: item.placas_final
+            pulgadas_original: item.pulgadas_original,
+            tecnica: item.tecnica,
+            id: item.informe_id,
+            visible: visible_sn
           });
         }.bind(_this4));
       });
@@ -17747,7 +17832,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.TablaInformesPm[index].nro_final = '';
       this.TablaInformesPm[index].metros_lineales = '';
     },
+    RemoveTablaInformeUs: function RemoveTablaInformeUs(index) {
+      this.TablaInformesUs[index].visible = false;
+      this.TablaInformesUs[index].pieza_final = '';
+      this.TablaInformesUs[index].costura_final = '';
+      this.TablaInformesUs[index].pulgadas_final = '';
+    },
     getInforme: function getInforme(index) {
+      console.log(this.informes[index]);
+
       if (this.informes[index].informe_sel) {
         switch (this.informes[index].metodo_ensayos.metodo) {
           case 'RI':
@@ -17760,6 +17853,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
           case 'LP':
             this.getInformeLP(this.informes[index].id, index);
+            break;
+
+          case 'US':
+            this.getInformeUs(this.informes[index].id, index);
             break;
         }
       } else {
@@ -17782,6 +17879,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         for (var i = 0; i < this.TablaInformesLp.length; i++) {
           if (this.TablaInformesLp[i].id == id) {
             this.TablaInformesLp.splice(i, 1);
+            i--;
+          }
+        }
+
+        for (var i = 0; i < this.TablaInformesUs.length; i++) {
+          if (this.TablaInformesUs[i].id == id) {
+            this.TablaInformesUs.splice(i, 1);
             i--;
           }
         }
@@ -17858,6 +17962,49 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }.bind(_this7));
       });
     },
+    getInformeUs: function getInformeUs(id, index) {
+      var _this8 = this;
+
+      axios.defaults.baseURL = this.url;
+      var urlRegistros = 'partes/informe_us/' + id + '?api_token=' + Laravel.user.api_token;
+      axios.get(urlRegistros).then(function (response) {
+        console.log(urlRegistros);
+        console.log(response.data);
+        _this8.informe_us_parte = response.data;
+
+        _this8.informe_us_parte.forEach(function (item) {
+          if (item.tecnica.codigo == 'US' || item.tecnica.codigo == 'PA') {
+            this.TablaInformesUs.push({
+              id: id,
+              numero_formateado: this.informes[index].numero_formateado,
+              visible: true,
+              metodo: item.metodo,
+              tecnica: item.tecnica.codigo,
+              costura_original: item.costuras,
+              costura_final: item.costuras,
+              pulgadas_original: item.pulgadas,
+              pulgadas_final: item.pulgadas,
+              pieza_original: '',
+              pieza_final: ''
+            });
+          } else if (item.tecnica.codigo == 'ME') {
+            this.TablaInformesUs.push({
+              id: id,
+              numero_formateado: this.informes[index].numero_formateado,
+              visible: true,
+              costura_original: '',
+              costura_final: '',
+              metodo: item.metodo,
+              tecnica: item.tecnica.codigo,
+              pieza_original: item.pieza,
+              pieza_final: item.pieza,
+              pulgadas_original: item.pulgadas,
+              pulgadas_final: item.pulgadas
+            });
+          }
+        }.bind(_this8));
+      });
+    },
     validarCmsRi: function validarCmsRi() {
       var valido = true;
       this.TablaInformesRi.forEach(function (item) {
@@ -17878,7 +18025,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return valido;
     },
     Store: function Store() {
-      var _this8 = this;
+      var _this9 = this;
 
       if (!this.validarCmsRi()) {
         toastr.error('EL campo CM en los informes RI asignados al Parte son obligatorios');
@@ -17910,27 +18057,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           'responsables': this.TablaResponsables,
           'informes_ri': this.TablaInformesRi,
           'informes_pm': this.TablaInformesPm,
-          'informes_lp': this.TablaInformesLp
+          'informes_lp': this.TablaInformesLp,
+          'informes_us': this.TablaInformesUs
         }
       }).then(function (response) {
-        _this8.response = response.data;
-        toastr.success('Parte Diario con fecha' + _this8.fecha + ' fue creado con éxito ');
+        _this9.response = response.data;
+        toastr.success('Parte Diario con fecha' + _this9.fecha + ' fue creado con éxito ');
         console.log(response.data);
       })["catch"](function (error) {
-        _this8.errors = error.response.data.errors;
+        _this9.errors = error.response.data.errors;
         console.log(error.response);
-        $.each(_this8.errors, function (key, value) {
+        $.each(_this9.errors, function (key, value) {
           toastr.error(value);
           console.log(key + ": " + value);
         });
 
-        if (typeof _this8.errors == 'undefined' && error) {
+        if (typeof _this9.errors == 'undefined' && error) {
           toastr.error("Ocurrió un error al procesar la solicitud");
         }
       });
     },
     Update: function Update() {
-      var _this9 = this;
+      var _this10 = this;
 
       if (!this.validarCmsRi()) {
         toastr.error('EL campo CM en los informes RI asignados al Parte son obligatorios');
@@ -17961,21 +18109,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           'responsables': this.TablaResponsables,
           'informes_ri': this.TablaInformesRi,
           'informes_pm': this.TablaInformesPm,
-          'informes_lp': this.TablaInformesLp
+          'informes_lp': this.TablaInformesLp,
+          'informes_us': this.TablaInformesUs
         }
       }).then(function (response) {
-        _this9.response = response.data;
-        toastr.success('Parte Diario con fecha' + _this9.fecha + ' fue actualizado con éxito ');
+        _this10.response = response.data;
+        toastr.success('Parte Diario con fecha' + _this10.fecha + ' fue actualizado con éxito ');
         console.log(response.data);
       })["catch"](function (error) {
-        _this9.errors = error.response.data.errors;
+        _this10.errors = error.response.data.errors;
         console.log(error.response);
-        $.each(_this9.errors, function (key, value) {
+        $.each(_this10.errors, function (key, value) {
           toastr.error(value);
           console.log(key + ": " + value);
         });
 
-        if (typeof _this9.errors == 'undefined' && error) {
+        if (typeof _this10.errors == 'undefined' && error) {
           toastr.error("Ocurrió un error al procesar la solicitud");
         }
       });
@@ -81464,6 +81613,254 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.TablaInformesUs.length,
+                  expression: "TablaInformesUs.length"
+                }
+              ]
+            },
+            [
+              _c("div", { staticClass: "box box-danger" }, [
+                _vm._m(11),
+                _vm._v(" "),
+                _c("div", { staticClass: "box-body" }, [
+                  _c("div", { staticClass: "col-md-12" }, [
+                    _c("div", { staticClass: "table-responsive" }, [
+                      _c(
+                        "table",
+                        { staticClass: "table table-hover table-striped" },
+                        [
+                          _vm._m(12),
+                          _vm._v(" "),
+                          _c(
+                            "tbody",
+                            [
+                              _vm._l(_vm.TablaInformesUs, function(item, k) {
+                                return _c(
+                                  "tr",
+                                  {
+                                    key: k,
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.selectPosTablaInformesUs(k)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    item.visible
+                                      ? _c("td", [
+                                          _vm._v(
+                                            " " + _vm._s(item.numero_formateado)
+                                          )
+                                        ])
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    item.visible
+                                      ? _c("td", [
+                                          item.tecnica == "US" ||
+                                          item.tecnica == "PA"
+                                            ? _c("div", [
+                                                _vm.indexTablaInformesUs == k
+                                                  ? _c("div", [
+                                                      _c("input", {
+                                                        directives: [
+                                                          {
+                                                            name: "model",
+                                                            rawName: "v-model",
+                                                            value:
+                                                              _vm
+                                                                .TablaInformesUs[
+                                                                k
+                                                              ].costura_final,
+                                                            expression:
+                                                              "TablaInformesUs[k].costura_final"
+                                                          }
+                                                        ],
+                                                        attrs: {
+                                                          type: "number",
+                                                          maxlength: "4"
+                                                        },
+                                                        domProps: {
+                                                          value:
+                                                            _vm.TablaInformesUs[
+                                                              k
+                                                            ].costura_final
+                                                        },
+                                                        on: {
+                                                          input: function(
+                                                            $event
+                                                          ) {
+                                                            if (
+                                                              $event.target
+                                                                .composing
+                                                            ) {
+                                                              return
+                                                            }
+                                                            _vm.$set(
+                                                              _vm
+                                                                .TablaInformesUs[
+                                                                k
+                                                              ],
+                                                              "costura_final",
+                                                              $event.target
+                                                                .value
+                                                            )
+                                                          }
+                                                        }
+                                                      })
+                                                    ])
+                                                  : _c("div", [
+                                                      _vm._v(
+                                                        "\n                                                               " +
+                                                          _vm._s(
+                                                            item.costura_final
+                                                          ) +
+                                                          "\n                                                           "
+                                                      )
+                                                    ])
+                                              ])
+                                            : _c("div", [
+                                                _c("td", [_vm._v("  ")])
+                                              ])
+                                        ])
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    item.visible
+                                      ? _c("td", [
+                                          item.tecnica == "ME"
+                                            ? _c("div", [
+                                                _vm.indexTablaInformesUs == k
+                                                  ? _c("div", [
+                                                      _c("input", {
+                                                        directives: [
+                                                          {
+                                                            name: "model",
+                                                            rawName: "v-model",
+                                                            value:
+                                                              _vm
+                                                                .TablaInformesUs[
+                                                                k
+                                                              ].pieza_final,
+                                                            expression:
+                                                              "TablaInformesUs[k].pieza_final"
+                                                          }
+                                                        ],
+                                                        attrs: {
+                                                          type: "text",
+                                                          maxlength: "10"
+                                                        },
+                                                        domProps: {
+                                                          value:
+                                                            _vm.TablaInformesUs[
+                                                              k
+                                                            ].pieza_final
+                                                        },
+                                                        on: {
+                                                          input: function(
+                                                            $event
+                                                          ) {
+                                                            if (
+                                                              $event.target
+                                                                .composing
+                                                            ) {
+                                                              return
+                                                            }
+                                                            _vm.$set(
+                                                              _vm
+                                                                .TablaInformesUs[
+                                                                k
+                                                              ],
+                                                              "pieza_final",
+                                                              $event.target
+                                                                .value
+                                                            )
+                                                          }
+                                                        }
+                                                      })
+                                                    ])
+                                                  : _c("div", [
+                                                      _vm._v(
+                                                        "\n                                                               " +
+                                                          _vm._s(
+                                                            item.pieza_final
+                                                          ) +
+                                                          "\n                                                           "
+                                                      )
+                                                    ])
+                                              ])
+                                            : _c("div", [
+                                                _c("td", [_vm._v("  ")])
+                                              ])
+                                        ])
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    item.visible
+                                      ? _c("td", [
+                                          _vm._v(
+                                            " " + _vm._s(item.pulgadas_final)
+                                          )
+                                        ])
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    item.visible
+                                      ? _c("td", [
+                                          _c(
+                                            "a",
+                                            {
+                                              on: {
+                                                click: function($event) {
+                                                  return _vm.RemoveTablaInformeUs(
+                                                    k
+                                                  )
+                                                }
+                                              }
+                                            },
+                                            [
+                                              _c("app-icon", {
+                                                attrs: {
+                                                  img: "minus-circle",
+                                                  color: "black"
+                                                }
+                                              })
+                                            ],
+                                            1
+                                          )
+                                        ])
+                                      : _vm._e()
+                                  ]
+                                )
+                              }),
+                              _vm._v(" "),
+                              _vm._l(4, function(fila) {
+                                return _c("tr", [
+                                  _c(
+                                    "td",
+                                    {
+                                      staticStyle: { background: "#FFFFFF" },
+                                      attrs: { colspan: "6" }
+                                    },
+                                    [_vm._v("  ")]
+                                  )
+                                ])
+                              })
+                            ],
+                            2
+                          )
+                        ]
+                      )
+                    ])
+                  ])
+                ])
+              ])
+            ]
+          ),
+          _vm._v(" "),
           _c("div", { staticClass: "box box-danger" }, [
             _c("div", { staticClass: "box-body" }, [
               _c("div", { staticClass: "form-group" }, [
@@ -81692,6 +82089,43 @@ var staticRenderFns = [
         _c("th", [_vm._v("NÚMERO")]),
         _vm._v(" "),
         _c("th", [_vm._v("METROS LINEALES")]),
+        _vm._v(" "),
+        _c("th", { attrs: { colspan: "2" } }, [_vm._v(" ")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "box-header with-border" }, [
+      _c("h3", { staticClass: "box-title" }, [_vm._v("Informes US")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "box-tools pull-right" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-box-tool",
+            attrs: { type: "button", "data-widget": "collapse" }
+          },
+          [_c("i", { staticClass: "fa fa-minus" })]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("INFORME")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("COSTURA")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("ELEMENTO")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("DIAMETRO")]),
         _vm._v(" "),
         _c("th", { attrs: { colspan: "2" } }, [_vm._v(" ")])
       ])
@@ -104386,8 +104820,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_lazyload__WEBPACK_IMPORTED_MO
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuejs_progress_bar__WEBPACK_IMPORTED_MODULE_5___default.a);
 var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
   state: {
-    url:  false ? undefined : "http://localhost:8000/api",
-    AppUrl:  false ? undefined : "http://localhost:8000",
+    url:  false ? undefined : "http://certificados.test/api",
+    AppUrl:  false ? undefined : "http://certificados.test",
     contratistas: [],
     provincias: [],
     localidades: [],
@@ -110724,8 +111158,8 @@ var toastrDefault = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/sass/toastr.scss */"./resources/sass/toastr.scss");
+__webpack_require__(/*! C:\Users\bocch\code\certificados\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\bocch\code\certificados\resources\sass\toastr.scss */"./resources/sass/toastr.scss");
 
 
 /***/ })
