@@ -205,6 +205,7 @@ class InformesController extends Controller
                          ->where('parte_id',null)
                          ->where('ot_id',$ot_id)
                          ->selectRaw('informes.* , 0 as informe_sel,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada')
+                         ->orderBy('informes.fecha','desc')
                          ->get();
      }
 
