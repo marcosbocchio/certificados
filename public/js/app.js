@@ -17519,9 +17519,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       TablaInformesRi: [],
       TablaInformesPm: [],
       TablaInformesLp: [],
+      TablaInformesUs: [],
       indexTablaInformesRi: '0',
       indexTablaInformesPm: '0',
       indexTablaInformesLp: '0',
+      indexTablaInformesUs: '0',
       cms: []
     };
   },
@@ -17681,6 +17683,32 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             id: item.informe_id,
             visible: visible_sn,
             metros_lineales: item.metros_lineales
+          });
+        }.bind(_this4)); //Informe Us 
+
+
+        _this4.informes_us_data.forEach(function (item_data) {
+          this.informes.forEach(function (item_informe) {
+            if (item_data.informe_id == item_informe.id) item_informe.informe_sel = true;
+          });
+        }.bind(_this4));
+
+        _this4.informes_us_data.forEach(function (item) {
+          var visible_sn = true;
+
+          if (!item.costura_final && !item.pulgadas_final) {
+            visible_sn = false;
+          }
+
+          this.TablaInformesUs.push({
+            numero_formateado: item.numero_formateado,
+            costura_original: item.costura_original,
+            pulgadas_original: item.pulgadas_original,
+            id: item.informe_id,
+            visible: visible_sn,
+            costura_final: item.costura_final,
+            pulgadas_final: item.pulgadas_final,
+            placas_final: item.placas_final
           });
         }.bind(_this4));
       });
@@ -104358,8 +104386,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_lazyload__WEBPACK_IMPORTED_MO
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuejs_progress_bar__WEBPACK_IMPORTED_MODULE_5___default.a);
 var store = new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
   state: {
-    url:  false ? undefined : "http://certificados.test/api",
-    AppUrl:  false ? undefined : "http://certificados.test",
+    url:  false ? undefined : "http://localhost:8000/api",
+    AppUrl:  false ? undefined : "http://localhost:8000",
     contratistas: [],
     provincias: [],
     localidades: [],
@@ -110696,8 +110724,8 @@ var toastrDefault = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\bocch\code\certificados\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\bocch\code\certificados\resources\sass\toastr.scss */"./resources/sass/toastr.scss");
+__webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/sofia-battafarano/laravel/certificados/resources/sass/toastr.scss */"./resources/sass/toastr.scss");
 
 
 /***/ })

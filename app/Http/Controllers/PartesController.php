@@ -411,6 +411,37 @@ class PartesController extends Controller
 
     }
 
+    public function getInformeUsParte($id){
+
+        $informe_us= DB::select('select
+                                    COUNT(detalle_us_pa_us.elemento) as costuras,
+                                    detalle_us_pa_us.diametro as pulgadas,       
+                                    "US" as metodo
+                                    FROM informes 
+                                
+                                    inner join informes_us on informes.id = informes_us.informe_id
+                                    left join detalle_us_pa_us on detalle_us_pa_us.informe_us_id = informes_us.id
+                                    WHERE
+                                    informes.id=:id group by diametro',['id' => $id ]);
+
+       $informe_us= DB::select('select
+                                    informes_us_me.elemento as pieza,
+                                    informes_us_me.diametro as pulgadas,       
+                                    "US" as metodo
+                                    FROM informes 
+                                
+                                    inner join informes_us on informes.id = informes_us.informe_id
+                                    left join informes_us_me on informes_us_me.informe_us_id = informes_us.id
+                                    WHERE
+                                    informes.id=:id ',['id' => $id ]);
+
+      $informe_us = Collection::make($informe_us);
+
+
+      return $informe_us;
+
+    }
+
     public function PartesTotal($ot_id){
 
         return Partes::where('ot_id',$ot_id)->count(); 

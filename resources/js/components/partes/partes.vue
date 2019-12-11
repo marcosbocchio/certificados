@@ -454,9 +454,12 @@ export default {
         TablaInformesRi:[],
         TablaInformesPm:[],
         TablaInformesLp:[],
+        TablaInformesUs:[],
         indexTablaInformesRi:'0',
         indexTablaInformesPm:'0',
         indexTablaInformesLp:'0',
+        indexTablaInformesUs:'0',
+
         cms:[],
 
     }},
@@ -695,6 +698,44 @@ export default {
                             }); 
                         }.bind(this));
 
+                       //Informe Us 
+
+                       this.informes_us_data.forEach(function(item_data){
+
+
+                            this.informes.forEach(function(item_informe){                         
+
+                                if(item_data.informe_id == item_informe.id)
+
+                                    item_informe.informe_sel = true;
+
+                                });                    
+                        
+                        }.bind(this)); 
+
+                        this.informes_us_data.forEach(function(item){
+
+                        let visible_sn = true;
+                        if( !item.costura_final  &&  !item.pulgadas_final){
+
+                            visible_sn = false
+
+                        }
+
+                        this.TablaInformesUs.push({ 
+
+                            numero_formateado  : item.numero_formateado,              
+                            costura_original: item.costura_original,
+                            pulgadas_original: item.pulgadas_original,         
+                            id      : item.informe_id,
+                            visible : visible_sn,   
+                            costura_final: item.costura_final,
+                            pulgadas_final: item.pulgadas_final,
+                            placas_final : item.placas_final,       
+
+                            }); 
+                        }.bind(this));
+
              });
                 
  
@@ -923,7 +964,6 @@ export default {
                 }
 
             this.errors =[];
-
 
           
             var urlRegistros = 'partes' ;      
