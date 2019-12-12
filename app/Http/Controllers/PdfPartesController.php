@@ -26,9 +26,9 @@ class PdfPartesController extends Controller
                           ->select('users.name as nombre','parte_operadores.responsabilidad')
                           ->get();     
         
-        //    dd($responsables);
+        
         $parte_detalle = DB::select('CALL ParteDetalle(?,?)',array($id,$estado));
-        //  dd($parte_detalle);
+       
         $metodos_informe = DB::table('metodo_ensayos') 
                         ->join('informes','metodo_ensayos.id','=','informes.metodo_ensayo_id')  
                         ->join('parte_detalles','parte_detalles.informe_id','=','informes.id')
@@ -46,7 +46,7 @@ class PdfPartesController extends Controller
                         ->groupBy('informes.id','metodo','numero_formateado')                      
                         ->get();
 
-        //dd($parte);    
+      //  dd($parte_detalle);    
 
         $pdf = \PDF::loadView('reportes.partes.parte',compact('ot',
                                                             'cliente', 
