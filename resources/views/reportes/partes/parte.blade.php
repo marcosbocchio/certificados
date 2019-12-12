@@ -250,7 +250,7 @@ b {
                             <td style="font-size: 12px;height: 20px;" colspan="5"><b style="margin-left: 8px;">{{$item->numero_formateado}} </b></td>                                         
                         </tr>   
                         <tr>    
-                            <td style="font-size: 12px; "><b&nbsp;></b></td>  
+                            <td style="font-size: 12px;width: 100px; "><b&nbsp;></b></td>  
                             <td style="font-size: 12px;width: 150px;  text-align: center; "><b>Costuras </b></td>                        
                             <td style="font-size: 12px;width: 150px;  text-align: center;"><b>Pulgadas </b></td>                         
                             <td style="font-size: 12px;width: 150px;  text-align: center;"><b>Placas </b></td>    
@@ -287,9 +287,9 @@ b {
                             <td style="font-size: 12px;height: 20px;" colspan="5"><b style="margin-left: 8px;">{{$item->numero_formateado}} </b></td>                                         
                         </tr>  
                         <tr> 
-                            <td style="font-size: 12px;text-align: center;"><b>&nbsp;</b></td>  
-                            <td style="font-size: 12px;text-align: center; "><b>Pieza </b></td>                        
-                            <td style="font-size: 12px;text-align: center; "><b>Número </b></td>                         
+                            <td style="font-size: 12px;text-align: center;width: 100px;"><b>&nbsp;</b></td>  
+                            <td style="font-size: 12px;text-align: center;width: 150px; "><b>Pieza </b></td>                        
+                            <td style="font-size: 12px;text-align: center;width: 150px; "><b>Número </b></td>                         
                             <td style="font-size: 12px;text-align: center;"><b>Metros Lineales </b></td>                                            
                         </tr> 
                         @foreach ($parte_detalle as $item_pm)
@@ -326,9 +326,9 @@ b {
                             <td style="font-size: 12px;height: 20px;" colspan="5"><b style="margin-left: 8px;">{{$item->numero_formateado}} </b></td>                                         
                         </tr>  
                         <tr> 
-                            <td style="font-size: 12px;text-align: center;"><b>&nbsp;</b></td>  
-                            <td style="font-size: 12px;text-align: center; "><b>Pieza </b></td>                        
-                            <td style="font-size: 12px;text-align: center; "><b>Número </b></td>                         
+                            <td style="font-size: 12px;text-align: center;width: 100px;"><b>&nbsp;</b></td>  
+                            <td style="font-size: 12px;text-align: center;width: 150px; "><b>Pieza </b></td>                        
+                            <td style="font-size: 12px;text-align: center;width: 150px; "><b>Número </b></td>                         
                             <td style="font-size: 12px;text-align: center;"><b>Metros Lineales </b></td>                                            
                         </tr> 
                         @foreach ($parte_detalle as $item_lp)
@@ -365,10 +365,10 @@ b {
                             <td style="font-size: 12px;height: 20px;" colspan="5"><b style="margin-left: 8px;">{{$item->numero_formateado}} </b></td>                                         
                         </tr>  
                         <tr> 
-                            <td style="font-size: 12px;text-align: center;"><b>&nbsp;</b></td>  
-                            <td style="font-size: 12px;text-align: center; "><b>Costura </b></td>    
-                            <td style="font-size: 12px;text-align: center; "><b>Pieza </b></td>                        
-                            <td style="font-size: 12px;text-align: center;"><b>Diametro </b></td>                                            
+                            <td style="font-size: 12px;text-align: center;width: 100px;"><b>&nbsp;</b></td>  
+                            <td style="font-size: 12px;text-align: center;width: 150px; "><b>Costura </b></td>    
+                            <td style="font-size: 12px;text-align: center;width: 150px; "><b>Pieza </b></td>                        
+                            <td style="font-size: 12px;text-align: center;width: 150px;"><b>Diametro </b></td>                                            
                         </tr> 
                         @foreach ($parte_detalle as $item_us)
                             @if ($item->informe_id == $item_us->informe_id)      
