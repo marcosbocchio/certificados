@@ -42,7 +42,7 @@ class PartesController extends Controller
 
      return DB::table('partes')
                     ->where('ot_id','=',$ot_id)
-                    ->selectRaw('id,ot_id,DATE_FORMAT(partes.created_at,"%d/%m/%Y")as fecha,tipo_servicio,firma')
+                    ->selectRaw('id,ot_id,DATE_FORMAT(partes.fecha,"%d/%m/%Y")as fecha,tipo_servicio,firma')
                     ->orderBy('id','DESC')           
                     ->paginate(10);
       }
@@ -52,7 +52,7 @@ class PartesController extends Controller
 
         return DB::table('partes')
                    ->where('ot_id','=',$ot_id)
-                   ->selectRaw('id,ot_id,DATE_FORMAT(partes.created_at,"%d/%m/%Y")as fecha,tipo_servicio,firma')
+                   ->selectRaw('id,ot_id,DATE_FORMAT(partes.fecha,"%d/%m/%Y")as fecha,tipo_servicio,firma')
                    ->get();
       }
 
@@ -517,7 +517,7 @@ class PartesController extends Controller
                          ->limit('1')
                          ->first();
 
-        if($parte != null){
+        if($parte != null && $ddppi!=null){
 
             $parte->fecha;
 
