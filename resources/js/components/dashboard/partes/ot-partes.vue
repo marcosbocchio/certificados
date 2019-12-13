@@ -15,7 +15,7 @@
           </div>
         </div>
         <div class="col-sm-12">
-            <a :href="AppUrl + '/area/enod/ot/' + ot_id_data + '/parte' " class="btn btn-primary pull-left">Nuevo</a>
+           <a :href="AppUrl + '/area/enod/ot/' + ot_id_data + '/parte' " class="btn btn-primary pull-left">Nuevo</a>      
         </div>
         <div class="clearfix"></div>
         <div class="col-md-12">
@@ -76,6 +76,7 @@ export default {
 
       this.getResults();
       this.$store.dispatch('loadContarPartes',this.ot_id_data);
+     
   },
   
   computed :{
@@ -87,13 +88,13 @@ export default {
 
       getResults :function(page = 1){
 
-                axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'partes/ot/' + this.ot_id_data + '/paginate' + '?page='+ page;   
-                axios.get(urlRegistros).then(response =>{
-                this.ot_partes = response.data
-                });
+            axios.defaults.baseURL = this.url ;
+            var urlRegistros = 'partes/ot/' + this.ot_id_data + '/paginate' + '?page='+ page;   
+            axios.get(urlRegistros).then(response =>{
+            this.ot_partes = response.data
+            });
 
-        },
+        },       
 
         firmar : function(index){
 

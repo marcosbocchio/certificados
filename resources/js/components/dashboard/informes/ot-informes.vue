@@ -28,7 +28,8 @@
                         </div> 
                         <div class="form-group">                    
                             <span>
-                                <a :href="AppUrl + '/area/enod/ot/' + ot_id_data + '/informe/metodo/' + metodo_ensayo.metodo + '/create' " ><button class="btn btn-primary" :disabled="!metodo_selected">Nuevo</button></a>                              
+                            <!--     <a :href="AppUrl + '/area/enod/ot/' + ot_id_data + '/informe/metodo/' + metodo_ensayo.metodo + '/create' " ><button class="btn btn-primary" :disabled="!metodo_selected">Nuevo</button></a> -->                             
+                                <a  @click="NuevoInforme(ot_id_data)" ><button class="btn btn-primary" :disabled="!metodo_selected">Nuevo</button></a>                              
                             </span>
                         </div>
                     </div>
@@ -127,7 +128,7 @@ export default {
 
   created : function() {
 
-     // this.ot_informes =  JSON.parse(JSON.stringify(this.ot_informes_data)); 
+     // this.ot_informes =  JSON.parse(JSON.stringify(this.ot_informes_data));       
   },
 
   mounted : function(){
@@ -138,7 +139,7 @@ export default {
 
   computed :{
 
-       ...mapState(['url','AppUrl','CantInformes'])
+       ...mapState(['url','AppUrl','CantInformes','DDPPI','ParametroGeneral'])
      },  
 
     methods : {
@@ -150,6 +151,28 @@ export default {
                 axios.get(urlRegistros).then(response =>{
                 this.ot_informes = response.data
                 });
+
+        },
+
+        NuevoInforme: function(ot_id){
+
+            this.$store.dispatch('loadParametrosGenerales','ddppi').then(response => {
+
+                this.$store.dispatch('loadDDPPI',this.ot_id_data).then(response => {
+        
+                    if(this.DDPPI ){
+                    
+                    window.location.href= this.AppUrl + '/area/enod/ot/' + this.ot_id_data + '/informe/metodo/' + this.metodo_ensayo.metodo + '/create' ;
+                    }
+                    else
+                    {
+                        toastr.error('No se puede crear un informe si se deben los partes de ' + this.ParametroGeneral.valor + ' días');
+                        
+                    }                      
+
+                });
+
+            });
 
         },
 

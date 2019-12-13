@@ -15,6 +15,7 @@ use Illuminate\Support\Collection as Collection;
 use App\Informe;
 use App\Tecnicas;
 use \stdClass;
+use App\ParametrosGenerales;
 
 
 class PartesController extends Controller
@@ -506,5 +507,34 @@ class PartesController extends Controller
         return $parte;
 
     } 
+
+    public function ddppi($ot_id){
+
+        $ddppi = ParametrosGenerales::where('codigo','DDPPI')->first();
+
+        $parte = Partes::where('ot_id',$ot_id)
+                         ->orderBy('fecha','desc')
+                         ->limit('1')
+                         ->first();
+
+        if($parte != null){
+
+            $parte->fecha;
+
+            $Ti = strtotime( $parte->fecha);
+            $Tf = strtotime(date('Y-m-d',strtotime('now')));
+            $t  = intval(($Tf-$Ti)/60/60/24);
+        
+            return ($t <= $ddppi->valor) ? 1 : 0;
+        }
+
+        else{
+
+            return 1;
+        }
+        
+     
+       
+    }
 
 }

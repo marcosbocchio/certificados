@@ -19,6 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::group(['middleware' => 'auth:api'], function()
 {   
+    Route::resource('parametros_generales', 'ParametrosGeneralesController');
     Route::get('clientes/paginate', 'ClientesController@paginate'); 
     Route::resource('clientes', 'ClientesController'); 
     Route::get('contratistas/paginate', 'ContratistasController@paginate'); 
@@ -182,7 +183,8 @@ Route::group(['middleware' => 'auth:api'], function()
 
     //parte diario
 
-    Route::get('partes/ot/{ot_id}/paginate', 'PartesController@paginate');   
+    Route::get('partes/ot/{ot_id}/paginate', 'PartesController@paginate');       
+    Route::get('partes/ot/{ot_id}/ddppi', 'PartesController@ddppi');   
     Route::get('partes/ot/{ot_id}/total','PartesController@PartesTotal');
     Route::put('partes/{id}/firmar', 'PartesController@firmar');
     Route::resource('partes', 'PartesController');

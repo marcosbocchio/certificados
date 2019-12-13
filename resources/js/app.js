@@ -284,10 +284,40 @@ state: {
         CantProcedimientos:'0',
         CantUsuariosCliente:'0',
         curie:'0',
+        ParametroGeneral:{},
+        DDPPI:false,
 
     },
 
 actions : {
+
+        loadParametrosGenerales({
+          commit},codigo) {
+          axios.defaults.baseURL = store.state.url ;
+          var urlRegistros = 'parametros_generales/' + codigo + '?api_token=' + Laravel.user.api_token;   
+          return new Promise((resolve, reject) => {          
+          axios.get(urlRegistros).then((response) => {     
+
+          commit('getParametroGeneral', response.data)   
+
+          resolve()       
+          })
+        })
+        },
+
+        loadDDPPI({
+          commit},ot_id) {
+          axios.defaults.baseURL = store.state.url ;
+          var urlRegistros = 'partes/'+ 'ot/' + ot_id + '/ddppi' +'?api_token=' + Laravel.user.api_token;   
+          return new Promise((resolve, reject) => {          
+          axios.get(urlRegistros).then((response) => {     
+
+          commit('getDDPPI', response.data)   
+
+          resolve()       
+          })
+        })
+        },
 
         loadContratistas({
           commit
@@ -628,6 +658,10 @@ actions : {
     },
     mutations: {
 
+      getParametroGeneral(state, ParametroGeneral) {
+        state.ParametroGeneral = ParametroGeneral
+      },
+
       getContratistas(state, contratistas) {
         state.contratistas = contratistas
       },
@@ -696,10 +730,7 @@ actions : {
         state.fuentePorInterno = fuentePorInterno
       },
 
-      getTipoLiquidos(state, tipo_liquidos) {
-
-        console.log('tipo_liquido:');
-        console.log(tipo_liquidos);
+      getTipoLiquidos(state, tipo_liquidos) {       
 
         switch (tipo_liquidos.tipo) {
 
@@ -777,6 +808,12 @@ actions : {
 
       CalcularCurie(state, curie) {
         state.curie = curie
+      },
+
+      getDDPPI(state, DDPPI) {
+      
+        state.DDPPI = DDPPI ? true : false ;  
+
       },
 
     
