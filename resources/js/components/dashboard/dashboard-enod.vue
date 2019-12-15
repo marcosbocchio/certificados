@@ -1,171 +1,172 @@
 <template>
-<div>  
-  <div class="row">
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-aqua">
-            <div class="inner">
-              <h3>{{ CantOperadores }}</h3>
-              <p>Operadores</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-person-add"></i>
-            </div>
-            <a :href="AppUrl + '/operadores/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+  <div>  
+    <div class="row">
+      <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-aqua">
+          <div class="inner">
+            <h3>{{ CantOperadores }}</h3>
+            <p>Operadores</p>
           </div>
-        </div>
-
-         <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-yellow">
-            <div class="inner">
-              <h3>{{ CantInternoEquipos }}</h3>
-              <p>Equipos</p>
-            </div>
-            <div class="icon">
-              <i class="fa fa-wrench"></i>
-            </div>
-            <a :href="AppUrl + '/interno_equipos/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          <div class="icon">
+            <i class="ion ion-person-add"></i>
           </div>
+          <a :href="AppUrl + '/operadores/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
         </div>
+      </div>
 
         <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-yellow">
-            <div class="inner">
-              <h3>{{ CantProcedimientos }}</h3>
-
-              <p>Procedimientos</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-person-add"></i>
-            </div>
-            <a :href="AppUrl + '/procedimientos/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+      <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-yellow">
+          <div class="inner">
+            <h3>{{ CantInternoEquipos }}</h3>
+            <p>Equipos</p>
           </div>
-        </div>
-
-        <!-- ./col -->       
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-yellow">
-            <div class="inner">
-              <h3>{{ CantDocumentaciones }}</h3>
-              <p>Documentaciones</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-person-add"></i>
-            </div>
-            <a :href="AppUrl + '/documentaciones/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          <div class="icon">
+            <i class="fa fa-wrench"></i>
           </div>
+          <a :href="AppUrl + '/interno_equipos/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
         </div>
+      </div>
 
+      <!-- ./col -->
+      <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-yellow">
+          <div class="inner">
+            <h3>{{ CantProcedimientos }}</h3>
 
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-gray">
-            <div class="inner">
-              <h3>{{ CantRemitos }}</h3>
-
-              <p>Remitos</p>
-            </div>
-            <div class="icon">
-              <i class="fa fa-tasks"></i>
-            </div>
-            <a :href="AppUrl + '/remitos/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <p>Procedimientos</p>
           </div>
-        </div>
-    
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-red">
-            <div class="inner">
-              <h3>{{ CantInformes }} </h3>
-
-              <p>Informes</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-pie-graph"></i>
-            </div>
-              <a :href="AppUrl + '/informes/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          <div class="icon">
+            <i class="ion ion-person-add"></i>
           </div>
+          <a :href="AppUrl + '/procedimientos/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
         </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-blue">
-            <div class="inner">
-              <h3>{{CantPartes}}</h3>
+      </div>
 
-              <p>Partes Diarios</p>
-            </div>
-            <div class="icon">
-              <i class="fa fa-file-pdf-o"></i>
-            </div>
-            <a :href="AppUrl + '/partes/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+      <!-- ./col -->       
+      <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-yellow">
+          <div class="inner">
+            <h3>{{ CantDocumentaciones }}</h3>
+            <p>Documentaciones</p>
           </div>
+          <div class="icon">
+            <i class="ion ion-person-add"></i>
+          </div>
+          <a :href="AppUrl + '/documentaciones/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
         </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-green">
-            <div class="inner">
-              <h3>0</h3>
+      </div>
 
-              <p>Certificados</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-pie-graph"></i>
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+
+      <!-- ./col -->
+      <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-gray">
+          <div class="inner">
+            <h3>{{ CantRemitos }}</h3>
+
+            <p>Remitos</p>
           </div>
+          <div class="icon">
+            <i class="fa fa-tasks"></i>
+          </div>
+          <a :href="AppUrl + '/remitos/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
         </div>
-             
-    </div>  
-        <div class="col-md-12">
-            <div class="box box-primary top-buffer">
-               <div class="box-body">
-                    <div class="table-responsive">          
-                        <table class="table table-hover table-striped">
-                            <thead>
-                                <tr>
-                                    <th class="col-lg-1">OT N°</th>
-                                    <th class="col-lg-3" >CLIENTE</th>    
-                                    <th class="col-lg-3">PROYECTO</th>  
-                                    <th class="col-lg-1">OBRA N°</th>     
-                                    <th class="col-lg-2">FECHA</th>     
-                                    <th class="col-lg-1">ESTADO</th>                        
-                                    <th class="col-lg-1" colspan="4">ACCIÓN</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="(ot,k) in ots.data" :key="k" @click="selectOt(k)" :class="{selected: ot_id_selected === ots.data[k].id}" >
-                                    <td> {{ot.numero}}</td>     
-                                    <td> {{ot.cliente.nombre_fantasia}}</td>         
-                                    <td> {{ot.proyecto}}</td>         
-                                    <td> {{ot.obra}}</td>         
-                                    <td> {{ot.fecha_formateada}}</td>         
-                                    <td> {{ot.estado}}</td>                                
-                                    <td width="10px"> <a :href="AppUrl + '/area/enod/ots/' + ot.id + '/edit' "   class="btn btn-warning btn-sm" title="Editar"><span class="fa fa-edit"></span></a></td>
-                                    <td width="10px"> <a :href="AppUrl + '/soldadores/ot/' + ot_id_selected"   class="btn btn-default btn-sm" title="Soldadores/Usuarios Cliente"><span class="fa fa-user"></span></a></td>
-                                    <td width="10px"> <a :href="AppUrl + '/api/pdf/ot/' + ot.id " target="_blank"  class="btn btn-default btn-sm" title="Informe"><span class="fa fa-file-pdf-o"></span></a></td>
-                                    <td v-if="!ot.firma" width="10px"> <a  @click="firmar(k)"  class="btn btn-default btn-sm" title="Firmar"><span class="glyphicon glyphicon-pencil"></span> </a></td>   
-                                    <td v-else> <a class="btn btn-default btn-sm" title="Cerrar"><span class="glyphicon glyphicon-arrow-right"></span></a></td>
-                                  
-                                </tr>
+      </div>
+
+      <!-- ./col -->
+      <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-red">
+          <div class="inner">
+            <h3>{{ CantInformes }} </h3>
+
+            <p>Informes</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-pie-graph"></i>
+          </div>
+            <a :href="AppUrl + '/informes/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <!-- ./col -->
+      <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-blue">
+          <div class="inner">
+            <h3>{{CantPartes}}</h3>
+
+            <p>Partes Diarios</p>
+          </div>
+          <div class="icon">
+            <i class="fa fa-file-pdf-o"></i>
+          </div>
+          <a :href="AppUrl + '/partes/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <!-- ./col -->
+      <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-green">
+          <div class="inner">
+            <h3>0</h3>
+
+            <p>Certificados</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-pie-graph"></i>
+          </div>
+          <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+      </div>      
+  </div> 
+  <div class="row"> 
+    <div class="col-md-12">
+        <div class="box box-primary top-buffer">
+            <div class="box-body">
+                <div class="table-responsive">          
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th class="col-lg-1">OT N°</th>
+                                <th class="col-lg-3" >CLIENTE</th>    
+                                <th class="col-lg-3">PROYECTO</th>  
+                                <th class="col-lg-1">OBRA N°</th>     
+                                <th class="col-lg-2">FECHA</th>     
+                                <th class="col-lg-1">ESTADO</th>                        
+                                <th class="col-lg-1" colspan="4">ACCIÓN</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(ot,k) in ots.data" :key="k" @click="selectOt(k)" :class="{selected: ot_id_selected === ots.data[k].id}" >
+                                <td> {{ot.numero}}</td>     
+                                <td> {{ot.cliente.nombre_fantasia}}</td>         
+                                <td> {{ot.proyecto}}</td>         
+                                <td> {{ot.obra}}</td>         
+                                <td> {{ot.fecha_formateada}}</td>         
+                                <td> {{ot.estado}}</td>                                
+                                <td width="10px"> <a :href="AppUrl + '/area/enod/ots/' + ot.id + '/edit' "   class="btn btn-warning btn-sm" title="Editar"><span class="fa fa-edit"></span></a></td>
+                                <td width="10px"> <a :href="AppUrl + '/soldadores/ot/' + ot_id_selected"   class="btn btn-default btn-sm" title="Soldadores/Usuarios Cliente"><span class="fa fa-user"></span></a></td>
+                                <td width="10px"> <a :href="AppUrl + '/api/pdf/ot/' + ot.id " target="_blank"  class="btn btn-default btn-sm" title="Informe"><span class="fa fa-file-pdf-o"></span></a></td>
+                                <td v-if="!ot.firma" width="10px"> <a  @click="firmar(k)"  class="btn btn-default btn-sm" title="Firmar"><span class="glyphicon glyphicon-pencil"></span> </a></td>   
+                                <td v-else> <a class="btn btn-default btn-sm" title="Cerrar"><span class="glyphicon glyphicon-arrow-right"></span></a></td>
+                              
+                            </tr>
                         </tbody>
-                        </table>
-          
-                    </div>     
-                  
-                   <pagination :data="ots" @pagination-change-page="getResults" ><span slot="prev-nav">&lt; Previous</span>
-                   <span slot="next-nav">Next &gt;</span> </pagination>
-                </div> 
-            </div>       
+                    </table>
+                </div>     
+              
+                <pagination :data="ots" @pagination-change-page="getResults" ><span slot="prev-nav">&lt; Previous</span>
+                <span slot="next-nav">Next &gt;</span> </pagination>
+            </div> 
         </div> 
+      </div> 
+    </div>
+    <div class="clearfix"></div>    
 </div>
 
 </template>

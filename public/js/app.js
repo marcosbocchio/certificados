@@ -8938,6 +8938,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -9022,6 +9023,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
 //
 //
 //
@@ -9291,6 +9293,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -9441,6 +9444,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -9510,7 +9514,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
 //
 //
 //
@@ -10275,6 +10278,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
 //
 //
 //
@@ -67495,147 +67499,167 @@ var render = function() {
       _vm._m(7)
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "col-md-12" }, [
-      _c("div", { staticClass: "box box-primary top-buffer" }, [
-        _c(
-          "div",
-          { staticClass: "box-body" },
-          [
-            _c("div", { staticClass: "table-responsive" }, [
-              _c("table", { staticClass: "table table-hover table-striped" }, [
-                _vm._m(8),
-                _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c("div", { staticClass: "box box-primary top-buffer" }, [
+          _c(
+            "div",
+            { staticClass: "box-body" },
+            [
+              _c("div", { staticClass: "table-responsive" }, [
                 _c(
-                  "tbody",
-                  _vm._l(_vm.ots.data, function(ot, k) {
-                    return _c(
-                      "tr",
-                      {
-                        key: k,
-                        class: {
-                          selected: _vm.ot_id_selected === _vm.ots.data[k].id
-                        },
-                        on: {
-                          click: function($event) {
-                            return _vm.selectOt(k)
-                          }
-                        }
-                      },
-                      [
-                        _c("td", [_vm._v(" " + _vm._s(ot.numero))]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _vm._v(" " + _vm._s(ot.cliente.nombre_fantasia))
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(" " + _vm._s(ot.proyecto))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(" " + _vm._s(ot.obra))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(" " + _vm._s(ot.fecha_formateada))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(" " + _vm._s(ot.estado))]),
-                        _vm._v(" "),
-                        _c("td", { attrs: { width: "10px" } }, [
-                          _c(
-                            "a",
-                            {
-                              staticClass: "btn btn-warning btn-sm",
-                              attrs: {
-                                href:
-                                  _vm.AppUrl +
-                                  "/area/enod/ots/" +
-                                  ot.id +
-                                  "/edit",
-                                title: "Editar"
-                              }
+                  "table",
+                  { staticClass: "table table-hover table-striped" },
+                  [
+                    _vm._m(8),
+                    _vm._v(" "),
+                    _c(
+                      "tbody",
+                      _vm._l(_vm.ots.data, function(ot, k) {
+                        return _c(
+                          "tr",
+                          {
+                            key: k,
+                            class: {
+                              selected:
+                                _vm.ot_id_selected === _vm.ots.data[k].id
                             },
-                            [_c("span", { staticClass: "fa fa-edit" })]
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("td", { attrs: { width: "10px" } }, [
-                          _c(
-                            "a",
-                            {
-                              staticClass: "btn btn-default btn-sm",
-                              attrs: {
-                                href:
-                                  _vm.AppUrl +
-                                  "/soldadores/ot/" +
-                                  _vm.ot_id_selected,
-                                title: "Soldadores/Usuarios Cliente"
+                            on: {
+                              click: function($event) {
+                                return _vm.selectOt(k)
                               }
-                            },
-                            [_c("span", { staticClass: "fa fa-user" })]
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("td", { attrs: { width: "10px" } }, [
-                          _c(
-                            "a",
-                            {
-                              staticClass: "btn btn-default btn-sm",
-                              attrs: {
-                                href: _vm.AppUrl + "/api/pdf/ot/" + ot.id,
-                                target: "_blank",
-                                title: "Informe"
-                              }
-                            },
-                            [_c("span", { staticClass: "fa fa-file-pdf-o" })]
-                          )
-                        ]),
-                        _vm._v(" "),
-                        !ot.firma
-                          ? _c("td", { attrs: { width: "10px" } }, [
+                            }
+                          },
+                          [
+                            _c("td", [_vm._v(" " + _vm._s(ot.numero))]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _vm._v(" " + _vm._s(ot.cliente.nombre_fantasia))
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(" " + _vm._s(ot.proyecto))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(" " + _vm._s(ot.obra))]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _vm._v(" " + _vm._s(ot.fecha_formateada))
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(" " + _vm._s(ot.estado))]),
+                            _vm._v(" "),
+                            _c("td", { attrs: { width: "10px" } }, [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "btn btn-warning btn-sm",
+                                  attrs: {
+                                    href:
+                                      _vm.AppUrl +
+                                      "/area/enod/ots/" +
+                                      ot.id +
+                                      "/edit",
+                                    title: "Editar"
+                                  }
+                                },
+                                [_c("span", { staticClass: "fa fa-edit" })]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("td", { attrs: { width: "10px" } }, [
                               _c(
                                 "a",
                                 {
                                   staticClass: "btn btn-default btn-sm",
-                                  attrs: { title: "Firmar" },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.firmar(k)
-                                    }
+                                  attrs: {
+                                    href:
+                                      _vm.AppUrl +
+                                      "/soldadores/ot/" +
+                                      _vm.ot_id_selected,
+                                    title: "Soldadores/Usuarios Cliente"
+                                  }
+                                },
+                                [_c("span", { staticClass: "fa fa-user" })]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("td", { attrs: { width: "10px" } }, [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "btn btn-default btn-sm",
+                                  attrs: {
+                                    href: _vm.AppUrl + "/api/pdf/ot/" + ot.id,
+                                    target: "_blank",
+                                    title: "Informe"
                                   }
                                 },
                                 [
                                   _c("span", {
-                                    staticClass: "glyphicon glyphicon-pencil"
+                                    staticClass: "fa fa-file-pdf-o"
                                   })
                                 ]
                               )
-                            ])
-                          : _c("td", [_vm._m(9, true)])
-                      ]
+                            ]),
+                            _vm._v(" "),
+                            !ot.firma
+                              ? _c("td", { attrs: { width: "10px" } }, [
+                                  _c(
+                                    "a",
+                                    {
+                                      staticClass: "btn btn-default btn-sm",
+                                      attrs: { title: "Firmar" },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.firmar(k)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("span", {
+                                        staticClass:
+                                          "glyphicon glyphicon-pencil"
+                                      })
+                                    ]
+                                  )
+                                ])
+                              : _c("td", [_vm._m(9, true)])
+                          ]
+                        )
+                      }),
+                      0
                     )
-                  }),
-                  0
+                  ]
                 )
-              ])
-            ]),
-            _vm._v(" "),
-            _c(
-              "pagination",
-              {
-                attrs: { data: _vm.ots },
-                on: { "pagination-change-page": _vm.getResults }
-              },
-              [
-                _c("span", { attrs: { slot: "prev-nav" }, slot: "prev-nav" }, [
-                  _vm._v("< Previous")
-                ]),
-                _vm._v(" "),
-                _c("span", { attrs: { slot: "next-nav" }, slot: "next-nav" }, [
-                  _vm._v("Next >")
-                ])
-              ]
-            )
-          ],
-          1
-        )
+              ]),
+              _vm._v(" "),
+              _c(
+                "pagination",
+                {
+                  attrs: { data: _vm.ots },
+                  on: { "pagination-change-page": _vm.getResults }
+                },
+                [
+                  _c(
+                    "span",
+                    { attrs: { slot: "prev-nav" }, slot: "prev-nav" },
+                    [_vm._v("< Previous")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    { attrs: { slot: "next-nav" }, slot: "next-nav" },
+                    [_vm._v("Next >")]
+                  )
+                ]
+              )
+            ],
+            1
+          )
+        ])
       ])
-    ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "clearfix" })
   ])
 }
 var staticRenderFns = [
@@ -67911,7 +67935,9 @@ var render = function() {
         },
         [_vm._v("Actualizar")]
       )
-    ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "clearfix" })
   ])
 }
 var staticRenderFns = [
@@ -68238,7 +68264,9 @@ var render = function() {
           1
         )
       ])
-    ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "clearfix" })
   ])
 }
 var staticRenderFns = [
@@ -68379,22 +68407,24 @@ var render = function() {
             ])
           ])
         ])
-      ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          staticClass: "btn btn-primary",
+          on: {
+            click: function($event) {
+              $event.preventDefault()
+              return _vm.submit()
+            }
+          }
+        },
+        [_vm._v("Actualizar")]
+      )
     ]),
     _vm._v(" "),
-    _c(
-      "a",
-      {
-        staticClass: "btn btn-primary",
-        on: {
-          click: function($event) {
-            $event.preventDefault()
-            return _vm.submit()
-          }
-        }
-      },
-      [_vm._v("Actualizar")]
-    )
+    _c("div", { staticClass: "clearfix" })
   ])
 }
 var staticRenderFns = [
@@ -68632,7 +68662,9 @@ var render = function() {
           ])
         ])
       ])
-    ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "clearfix" })
   ])
 }
 var staticRenderFns = [
@@ -68901,7 +68933,9 @@ var render = function() {
           1
         )
       ])
-    ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "clearfix" })
   ])
 }
 var staticRenderFns = [
@@ -68980,6 +69014,8 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
+      _c("div", { staticClass: "clearfix" }),
+      _vm._v(" "),
       _c(
         "div",
         { staticClass: "col-sm-10" },
@@ -69004,6 +69040,8 @@ var render = function() {
         ],
         1
       ),
+      _vm._v(" "),
+      _c("div", { staticClass: "clearfix" }),
       _vm._v(" "),
       _c(
         "form",
@@ -69571,7 +69609,9 @@ var render = function() {
           1
         )
       ])
-    ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "clearfix" })
   ])
 }
 var staticRenderFns = [

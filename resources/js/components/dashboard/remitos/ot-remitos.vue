@@ -57,7 +57,8 @@
                     </pagination>
                 </div>
             </div>
-        </div>    
+        </div> 
+        <div class="clearfix"></div>   
  </div>
     
 </template>

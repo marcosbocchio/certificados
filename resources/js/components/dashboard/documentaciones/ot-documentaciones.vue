@@ -67,7 +67,8 @@
                 </div> 
                 <a class="btn btn-primary" v-on:click.prevent="submit()" >Actualizar</a>      
             </div>           
-    </div>    
+    <div class="clearfix"></div> 
+    </div>   
 </template>
 
 <script>
