@@ -3,13 +3,14 @@
         <div class="col-sm-10">
             <a href="#" class="btn btn-primary pull-right" v-on:click.prevent="openNuevoRegistro()" >Nuevo</a>
         </div>
-        
+        <div class="clearfix"></div>    
         <div class="col-sm-10">
             <component :is= setTablaComponente :registros="registros"  @confirmarDelete="confirmDeleteRegistro" @editRegistroEvent="editRegistro"/>    
             <delete-registro :datoDelete="datoDelete" :fillRegistro="fillRegistro" @close-modal="getRegistros" :modelo="modelo"></delete-registro>  
 
         </div>         
- 
+        <div class="clearfix"></div>    
+
         <!--  Modal -->
         <form v-on:submit.prevent="editmode ? updateRegistro() : storeRegistro()">
             <div class="modal fade" id="nuevo">

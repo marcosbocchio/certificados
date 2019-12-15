@@ -3,6 +3,7 @@
     <div class="col-sm-10">
         <a href="#" class="btn btn-primary pull-right" v-on:click.prevent="openNuevoRegistro()" >Nuevo</a>
     </div>    
+    <div class="clearfix"></div>    
     <div class="col-sm-10">
         <component :is= setTablaComponente :registros="registros.data" @confirmarDelete="confirmDeleteRegistro" @editar="editRegistro"/>               
         <delete-registro :datoDelete="datoDelete" :fillRegistro="fillRegistro" @close-modal="getResults" :modelo="modelo"></delete-registro>  
@@ -14,6 +15,7 @@
                   <span slot="next-nav">Next &gt;</span> 
         </pagination>    
     </div> 
+    <div class="clearfix"></div>    
 
 </div> 
 </template>
