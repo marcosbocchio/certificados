@@ -71,8 +71,8 @@ desired effect
 <body @can('enod') class="sidebar-mini skin-yellow" @else class="hold-transition skin-blue sidebar-boxed" @endcan >
 
 @include('layouts.enod.partials.header')
-@include('layouts.enod.partials.content-header')
 @include('layouts.enod.partials.sidebar-menu')
+@include('layouts.enod.partials.content-header')
 
 
 
