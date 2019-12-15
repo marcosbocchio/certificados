@@ -20,7 +20,7 @@ class RedirectIfAuthenticated
     {
         if (Auth::guard($guard)->check()) {
           
-          if (auth()->user()->hasAnyRole(['Super Admin','Admin','Operador']))         
+          if (auth()->user()->hasAnyRole(['Super Admin','Admin','Operador','Usuario Enod']))         
              $View = '/area/enod';
           else
             $View = '/area/cliente' ;

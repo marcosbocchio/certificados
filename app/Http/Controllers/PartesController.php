@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\ParteRequest;
+use App\helpers;
 use App\Ots;
 use App\Partes;
 use App\ParteDetalles;
@@ -510,31 +511,8 @@ class PartesController extends Controller
 
     public function ddppi($ot_id){
 
-        $ddppi = ParametrosGenerales::where('codigo','DDPPI')->first();
-
-        $parte = Partes::where('ot_id',$ot_id)
-                         ->orderBy('fecha','desc')
-                         ->limit('1')
-                         ->first();
-
-        if($parte != null && $ddppi!=null){
-
-            $parte->fecha;
-
-            $Ti = strtotime( $parte->fecha);
-            $Tf = strtotime(date('Y-m-d',strtotime('now')));
-            $t  = intval(($Tf-$Ti)/60/60/24);
+        return PuedeCrearInforme($ot_id);
         
-            return ($t <= $ddppi->valor) ? 1 : 0;
-        }
-
-        else{
-
-            return 1;
-        }
-        
-     
-       
     }
 
 }

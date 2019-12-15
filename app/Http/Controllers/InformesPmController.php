@@ -27,6 +27,12 @@ use App\DetallesPmReferencias;
 
 class InformesPmController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('ddppi')->only('create');
+    }
+
+
     public function create($ot_id)
     {
         $metodo = 'PM';    

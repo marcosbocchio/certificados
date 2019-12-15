@@ -28,6 +28,10 @@ use \stdClass;
 
 class InformesUsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('ddppi')->only('create');
+    }
 
     public function create($ot_id)
     {
@@ -36,7 +40,6 @@ class InformesUsController extends Controller
         $header_titulo = "Informe";
         $header_descripcion ="Crear";         
         $ot = Ots::findOrFail($ot_id);      
-
         return view('informes.us.index', compact('ot',
                                                  'metodo',
                                                  'user',                                              

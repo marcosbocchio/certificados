@@ -24,6 +24,11 @@ use App\DetallesLpReferencias;
 
 class InformesLpController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('ddppi')->only('create');
+    }
     /**
      * Display a listing of the resource.
      *

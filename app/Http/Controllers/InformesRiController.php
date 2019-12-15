@@ -35,6 +35,8 @@ class InformesRiController extends Controller
 
     public function __construct(InformesRiRepository $informesRiRepository)
     {
+      $this->middleware('ddppi')->only('create');  
+      
       $this->informesRi = $informesRiRepository;
     }
     /**
