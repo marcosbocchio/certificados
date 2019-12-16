@@ -10259,7 +10259,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -10667,6 +10666,11 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
 //
 //
 //
@@ -69407,6 +69411,7 @@ var render = function() {
                   _c(
                     "a",
                     {
+                      staticClass: "btn btn-default btn-sm",
                       attrs: {
                         href: _vm.AppUrl + "/" + registro.path,
                         target: "_blank",
@@ -69478,9 +69483,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Metodo")]),
         _vm._v(" "),
-        _c("th", [_vm._v("PDF")]),
-        _vm._v(" "),
-        _c("th", { attrs: { colspan: "2" } }, [_vm._v("Acción")])
+        _c("th", { attrs: { colspan: "3" } }, [_vm._v("Acción")])
       ])
     ])
   }
@@ -70382,7 +70385,15 @@ var render = function() {
                     )
                   ]),
                   _vm._v(" "),
-                  _c("p", [_vm._v("Formatos soportados : jpg, bmp, pdf.")]),
+                  _vm.newRegistro.tipo == "PROCEDIMIENTO"
+                    ? _c("div", [
+                        _c("p", [_vm._v("Formatos soportados : pdf.")])
+                      ])
+                    : _c("div", [
+                        _c("p", [
+                          _vm._v("Formatos soportados : jpg, bmp, pdf.")
+                        ])
+                      ]),
                   _vm._v(" "),
                   _c(
                     "div",

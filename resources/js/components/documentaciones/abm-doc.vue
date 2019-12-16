@@ -73,8 +73,13 @@
                             <div class="form-group">                           
                                <input type="file" class="form-control" id="inputFile" ref="inputFile1" name="file" @change="onFileSelected($event)">
                                <button class="hide" @click.prevent="onUpload()" >upload</button>                            
-                            </div>   
-                            <p>Formatos soportados : jpg, bmp, pdf.</p>
+                            </div>  
+                            <div v-if="newRegistro.tipo =='PROCEDIMIENTO'">
+                                <p>Formatos soportados : pdf.</p>
+                            </div> 
+                            <div v-else>
+                                <p>Formatos soportados : jpg, bmp, pdf.</p>
+                            </div>
                              <div class="form-group">  
                                  <div v-if="isPdf">
                                     <a :href="AppUrl + '/' + newRegistro.path" target="_blank" class="btn btn-default btn-sm" title="pdf"><span class="fa fa-file-pdf-o"></span></a>

@@ -9,8 +9,7 @@
             <th>Título</th>
             <th>Descripción</th>
             <th>Metodo</th>  
-            <th>PDF</th>  
-            <th colspan="2">Acción</th>
+            <th colspan="3">Acción</th>
           </tr>
         </thead>
         <tbody>
@@ -19,7 +18,7 @@
             <td>{{ registro.titulo}}</td>
             <td>{{ registro.descripcion }}</td>
             <td>{{ registro.metodo_ensayo['metodo']}}</td>    
-            <td width="10px"> <a :href="AppUrl + '/' + registro.path " target="_blank" title="Imagen"><span class="fa fa-file-pdf-o"></span></a></td>
+            <td width="10px"> <a :href="AppUrl + '/' + registro.path " target="_blank" title="Imagen" class="btn btn-default btn-sm"><span class="fa fa-file-pdf-o"></span></a></td>
             <td width="10px">
               <a href="#" class="btn btn-warning btn-sm" title="Editar" v-on:click.prevent="$emit('editRegistroEvent',registro)"><span class="fa fa-edit"></span></a>  
             </td>
