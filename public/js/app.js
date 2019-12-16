@@ -10219,6 +10219,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -10253,13 +10258,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     registros: {
       type: Array,
       required: true
     }
-  }
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['url', 'AppUrl']))
 });
 
 /***/ }),
@@ -69388,6 +69397,20 @@ var render = function() {
                   _c(
                     "a",
                     {
+                      attrs: {
+                        href: _vm.AppUrl + "/" + registro.path,
+                        target: "_blank",
+                        title: "Imagen"
+                      }
+                    },
+                    [_c("span", { staticClass: "fa fa-file-image-o" })]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("td", { attrs: { width: "10px" } }, [
+                  _c(
+                    "a",
+                    {
                       staticClass: "btn btn-warning btn-sm",
                       attrs: { href: "#", title: "Editar" },
                       on: {
@@ -69444,6 +69467,8 @@ var staticRenderFns = [
         _c("th", [_vm._v("Descripción")]),
         _vm._v(" "),
         _c("th", [_vm._v("Metodo")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("IMG")]),
         _vm._v(" "),
         _c("th", { attrs: { colspan: "2" } }, [_vm._v("Acción")])
       ])
