@@ -9,7 +9,7 @@
             <delete-registro :datoDelete="datoDelete" :fillRegistro="fillRegistro" @close-modal="getRegistros" :modelo="modelo"></delete-registro>  
 
         </div>   
-              
+
         <div class="clearfix"></div>    
 
         <!--  Modal -->
@@ -310,16 +310,30 @@ export default {
             let FileType=this.selectedFile.type;         
             console.log(FileType);
 
-          if (FileType == 'application/pdf') {
-              this.isPdf = true;
-          }else if(FileType == 'image/jpeg' || FileType == 'image/bmp') {
-                this.isPdf = false;
-          }else {
-                toastr.error('El tipo de archivo no es aceptado ');
-                 this.$refs.inputFile1.type = 'text';
-                 this.$refs.inputFile1.type = 'file';  
-                 this.selectedFile = null;
-                return;          }
+            if(this.newRegistro.tipo == 'PROCEDIMIENTO') {
+
+                if (FileType != 'application/pdf') {
+               
+                        toastr.error('El tipo de archivo no es aceptado ');
+                        this.$refs.inputFile1.type = 'text';
+                        this.$refs.inputFile1.type = 'file';  
+                        this.selectedFile = null;
+                        return;     
+                }
+
+            }
+
+            if (FileType == 'application/pdf') {
+                this.isPdf = true;
+            }else if(FileType == 'image/jpeg' || FileType == 'image/bmp') {
+                    this.isPdf = false;
+            }else {
+                    toastr.error('El tipo de archivo no es aceptado ');
+                    this.$refs.inputFile1.type = 'text';
+                    this.$refs.inputFile1.type = 'file';  
+                    this.selectedFile = null;
+                    return;     
+             }
           
             console.log(this.selectedFile);
 

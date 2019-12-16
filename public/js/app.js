@@ -10943,6 +10943,16 @@ __webpack_require__(/*! vue-image-lightbox/dist/vue-image-lightbox.min.css */ ".
       var FileType = this.selectedFile.type;
       console.log(FileType);
 
+      if (this.newRegistro.tipo == 'PROCEDIMIENTO') {
+        if (FileType != 'application/pdf') {
+          toastr.error('El tipo de archivo no es aceptado ');
+          this.$refs.inputFile1.type = 'text';
+          this.$refs.inputFile1.type = 'file';
+          this.selectedFile = null;
+          return;
+        }
+      }
+
       if (FileType == 'application/pdf') {
         this.isPdf = true;
       } else if (FileType == 'image/jpeg' || FileType == 'image/bmp') {
@@ -69403,7 +69413,7 @@ var render = function() {
                         title: "Imagen"
                       }
                     },
-                    [_c("span", { staticClass: "fa fa-file-image-o" })]
+                    [_c("span", { staticClass: "fa fa-file-pdf-o" })]
                   )
                 ]),
                 _vm._v(" "),
@@ -69468,7 +69478,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Metodo")]),
         _vm._v(" "),
-        _c("th", [_vm._v("IMG")]),
+        _c("th", [_vm._v("PDF")]),
         _vm._v(" "),
         _c("th", { attrs: { colspan: "2" } }, [_vm._v("Acción")])
       ])
