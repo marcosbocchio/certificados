@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddColumnUmbralToInformesUsMeTable extends Migration
+class AddColumnCuadranteToDiametroEspesorTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class AddColumnUmbralToInformesUsMeTable extends Migration
      */
     public function up()
     {
-        Schema::table('informes_us_me', function (Blueprint $table) {
+        Schema::table('diametros_espesor', function (Blueprint $table) {
 
-            $table->float('umbral')
+            $table->string('cuadrante',10)
                    ->nullable()
-                   ->after('elemento');
+                   ->after('espesor');
         });
     }
 
@@ -28,10 +28,10 @@ class AddColumnUmbralToInformesUsMeTable extends Migration
      */
     public function down()
     {
-        Schema::table('informes_us_me', function (Blueprint $table) {
+        Schema::table('diametros_espesor', function (Blueprint $table) {
+           
+            $table->dropColumn(['cuadrante']);      
 
-            $table->dropColumn(['umbral']);      
-                  
         });
     }
 }

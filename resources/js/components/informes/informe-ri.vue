@@ -74,7 +74,12 @@
                                 <div v-else>
                                      <label for="espesor">Espesor (*)</label> 
                                 </div>                             
-                                <v-select v-model="espesor" label="espesor" :options="espesores" :disabled="isChapa"></v-select>   
+                                <v-select v-model="espesor" label="espesor" :options="espesores" :disabled="isChapa">
+                                    <template slot="option" slot-scope="option">
+                                        <span class="upSelect">{{ option.espesor }} </span> <br> 
+                                        <span class="downSelect"> {{ option.cuadrante }} </span>
+                                    </template>
+                                </v-select>   
                             </div>                            
                         </div>
                       

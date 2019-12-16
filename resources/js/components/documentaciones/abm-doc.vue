@@ -8,7 +8,8 @@
             <component :is= setTablaComponente :registros="registros"  @confirmarDelete="confirmDeleteRegistro" @editRegistroEvent="editRegistro"/>    
             <delete-registro :datoDelete="datoDelete" :fillRegistro="fillRegistro" @close-modal="getRegistros" :modelo="modelo"></delete-registro>  
 
-        </div>         
+        </div>   
+              
         <div class="clearfix"></div>    
 
         <!--  Modal -->

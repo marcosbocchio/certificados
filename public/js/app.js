@@ -10771,6 +10771,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 __webpack_require__(/*! vue-image-lightbox/dist/vue-image-lightbox.min.css */ "./node_modules/vue-image-lightbox/dist/vue-image-lightbox.min.css");
 
 
@@ -11189,6 +11190,11 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
 //
 //
 //
@@ -11990,6 +11996,11 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
 //
 //
 //
@@ -13386,6 +13397,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -14094,6 +14110,11 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
 //
 //
 //
@@ -70817,6 +70838,24 @@ var render = function() {
                           options: _vm.espesores,
                           disabled: _vm.isChapa
                         },
+                        scopedSlots: _vm._u([
+                          {
+                            key: "option",
+                            fn: function(option) {
+                              return [
+                                _c("span", { staticClass: "upSelect" }, [
+                                  _vm._v(_vm._s(option.espesor) + " ")
+                                ]),
+                                _vm._v(" "),
+                                _c("br"),
+                                _vm._v(" "),
+                                _c("span", { staticClass: "downSelect" }, [
+                                  _vm._v(" " + _vm._s(option.cuadrante) + " ")
+                                ])
+                              ]
+                            }
+                          }
+                        ]),
                         model: {
                           value: _vm.espesor,
                           callback: function($$v) {
@@ -72143,6 +72182,24 @@ var render = function() {
                           options: _vm.espesores,
                           disabled: _vm.isChapa
                         },
+                        scopedSlots: _vm._u([
+                          {
+                            key: "option",
+                            fn: function(option) {
+                              return [
+                                _c("span", { staticClass: "upSelect" }, [
+                                  _vm._v(_vm._s(option.espesor) + " ")
+                                ]),
+                                _vm._v(" "),
+                                _c("br"),
+                                _vm._v(" "),
+                                _c("span", { staticClass: "downSelect" }, [
+                                  _vm._v(" " + _vm._s(option.cuadrante) + " ")
+                                ])
+                              ]
+                            }
+                          }
+                        ]),
                         model: {
                           value: _vm.espesor,
                           callback: function($$v) {
@@ -73475,6 +73532,24 @@ var render = function() {
                           options: _vm.espesores,
                           disabled: _vm.isChapa
                         },
+                        scopedSlots: _vm._u([
+                          {
+                            key: "option",
+                            fn: function(option) {
+                              return [
+                                _c("span", { staticClass: "upSelect" }, [
+                                  _vm._v(_vm._s(option.espesor) + " ")
+                                ]),
+                                _vm._v(" "),
+                                _c("br"),
+                                _vm._v(" "),
+                                _c("span", { staticClass: "downSelect" }, [
+                                  _vm._v(" " + _vm._s(option.cuadrante) + " ")
+                                ])
+                              ]
+                            }
+                          }
+                        ]),
                         model: {
                           value: _vm.espesor,
                           callback: function($$v) {
@@ -75506,6 +75581,30 @@ var render = function() {
                                 options: _vm.espesores,
                                 disabled: _vm.isChapa || _vm.isVarios
                               },
+                              scopedSlots: _vm._u([
+                                {
+                                  key: "option",
+                                  fn: function(option) {
+                                    return [
+                                      _c("span", { staticClass: "upSelect" }, [
+                                        _vm._v(_vm._s(option.espesor) + " ")
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("br"),
+                                      _vm._v(" "),
+                                      _c(
+                                        "span",
+                                        { staticClass: "downSelect" },
+                                        [
+                                          _vm._v(
+                                            " " + _vm._s(option.cuadrante) + " "
+                                          )
+                                        ]
+                                      )
+                                    ]
+                                  }
+                                }
+                              ]),
                               model: {
                                 value: _vm.espesor,
                                 callback: function($$v) {
