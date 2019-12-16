@@ -9341,7 +9341,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           if (_this2.DDPPI) {
             window.location.href = _this2.AppUrl + '/area/enod/ot/' + _this2.ot_id_data + '/informe/metodo/' + _this2.metodo_ensayo.metodo + '/create';
           } else {
-            toastr.error('No se puede crear un informe si se deben los partes de ' + _this2.ParametroGeneral.valor + ' días');
+            toastr.error('No se puede crear el informe. Existen informes de hace ' + _this2.ParametroGeneral.valor + ' días' + ' sin parte asociado');
           }
         });
       });

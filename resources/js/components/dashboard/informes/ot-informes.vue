@@ -167,7 +167,7 @@ export default {
                     }
                     else
                     {
-                        toastr.error('No se puede crear un informe si se deben los partes de ' + this.ParametroGeneral.valor + ' días');
+                        toastr.error('No se puede crear el informe. Existen informes de hace ' + this.ParametroGeneral.valor + ' días' + ' sin parte asociado' );
                         
                     }                      
 

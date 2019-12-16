@@ -61,16 +61,20 @@ function PuedeCrearInforme($ot_id){
 
     $ddppi = ParametrosGenerales::where('codigo','DDPPI')->first();
 
-    $parte = Partes::where('ot_id',$ot_id)
-                    ->orderBy('fecha','desc')
-                    ->limit('1')
-                    ->first();
 
-    if($parte != null && $ddppi!=null){
+    if($ddppi!=null){
 
-        $T = CalcularDiasHastaFechaActual($parte->fecha);
-    
-        return ($T <= $ddppi->valor) ? 1 : 0;
+      $informes_demorados_parte = DB::select('CALL InfomesSinPartePorLimiteDias(?,?)',array($ot_id,$ddppi->valor));  
+      
+      if(count($informes_demorados_parte) == 0){
+
+        return 1;
+      }
+      else{
+
+        return 0;
+      }
+
     }
 
     else{
