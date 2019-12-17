@@ -17,6 +17,7 @@ class CreateMetodoEnsayosTable extends Migration
             $table->bigIncrements('id');
             $table->string('metodo','4');
             $table->string('descripcion','100');
+            $table->boolan('importable_sn')->default(0);
             $table->timestamps();
         });
     }

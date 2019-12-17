@@ -36,5 +36,11 @@ class MetodoEnsayoTableSeeder extends Seeder
             'metodo'            =>'US',
             'descripcion'       =>'Descripción metodo de ensayo US',          
         ]);
+        
+        MetodoEnsayos::create([
+            'metodo'            =>'II',
+            'descripcion'       =>'Descripción metodo de ensayo II',          
+        ]);
+
     }
 }

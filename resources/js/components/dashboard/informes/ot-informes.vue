@@ -90,11 +90,13 @@
             </div>   
         </div>    
         <div class="clearfix"></div>
+        <informes-importables></informes-importables>
     </div>    
 </template>
 
 <script>
 import {mapState} from 'vuex'
+import { eventNewRegistro } from '../../event-bus';
 export default {
 
     props :{
@@ -157,16 +159,28 @@ export default {
 
         NuevoInforme: function(ot_id){
 
+            
             this.$store.dispatch('loadParametrosGenerales','ddppi').then(response => {
 
                 this.$store.dispatch('loadDDPPI',this.ot_id_data).then(response => {
         
                     if(this.DDPPI ){
+
+                        if(this.metodo_ensayo.importable_sn){
+
+                            console.log('el metodo es importable');
+                             eventNewRegistro.$emit('open',this.modelo);
+
+                        }else{
+
+                            window.location.href= this.AppUrl + '/area/enod/ot/' + this.ot_id_data + '/informe/metodo/' + this.metodo_ensayo.metodo + '/create' ;
+
+                        }     
                     
-                    window.location.href= this.AppUrl + '/area/enod/ot/' + this.ot_id_data + '/informe/metodo/' + this.metodo_ensayo.metodo + '/create' ;
                     }
                     else
                     {
+
                         toastr.error('No se puede crear el informe. Existen informes de hace ' + this.ParametroGeneral.valor + ' días' + ' sin parte asociado' );
                         
                     }                      
