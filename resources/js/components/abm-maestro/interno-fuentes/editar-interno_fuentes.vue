@@ -33,7 +33,7 @@
                     <div class="col-md-6">
                             <div class="form-group">
                                 <label for="curie">Curie</label>
-                                <input v-model="curie" type="number" name="curie" class="form-control" value="" step="0.01" disabled> 
+                                <input v-model="editRegistro.curie" type="number" name="curie" class="form-control" value="" step="0.01" disabled> 
                             </div>
                     </div>
 
@@ -106,7 +106,7 @@ export default {
   
     computed :{
     
-         ...mapState(['url','fuentes','curie'])
+         ...mapState(['url','fuentes'])
     }, 
 
     
@@ -119,9 +119,9 @@ export default {
                 this.editRegistro.nro_serie = this.selectRegistro.nro_serie;
                 this.editRegistro.activo_sn = this.selectRegistro.activo_sn;  
                 this.editRegistro.fecha_evaluacion = this.selectRegistro.fecha_evaluacion;
-                this.editRegistro.curie = ''; 
+                this.editRegistro.curie = this.selectRegistro.curie_actual; 
                 this.fuente = this.selectRegistro.fuente;               
-                this.$store.dispatch('loadCurie',this.selectRegistro.id);
+               // this.$store.dispatch('loadCurie',this.selectRegistro.id);
 
                 this.$forceUpdate();
             })
