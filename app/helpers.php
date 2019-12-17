@@ -2,6 +2,7 @@
 
 use App\ParametrosGenerales;
 use App\Partes;
+use App\InternoFuentes;
 
 /* pdfCantFilasACompletar()  : Funcion que retorna la cantidad de filas en blanco de una tabla que nos hace falta para completar un pdf.
 
@@ -40,18 +41,34 @@ function FormatearNumeroConCeros(int $numero,$ceros){
 
 }
 
-function CalcularDiasHastaFechaActual($fecha_inicial){
-
+function CalcularDiasEntreFechas($fecha_inicial, $fecha_final = null){
+  
   $Ti = strtotime($fecha_inicial);
-  $Tf = strtotime(date('Y-m-d',strtotime('now')));
+  $Tf = null; 
+
+  if($fecha_final){
+
+    $Tf = strtotime($fecha_final);
+
+  }else{
+
+    $Tf = strtotime(date('Y-m-d',strtotime('now')));
+
+  }
+ 
   $T  = intval(($Tf-$Ti)/60/60/24);
 
   return $T;
 }
 
-function curie($curie,$fecha_evaluacion,$const_t){
+function curie($interno_fuente_id, $fecha_final = null){
 
-  $T = CalcularDiasHastaFechaActual($fecha_evaluacion);
+  $interno_fuente = InternoFuentes::where('id',$interno_fuente_id)->with('fuente')->first();
+  //return $fecha_final;
+  $fecha_evaluacion = $interno_fuente->fecha_evaluacion;
+  $T = CalcularDiasEntreFechas($fecha_evaluacion,$fecha_final);
+  $const_t = $interno_fuente->fuente->const_t;
+  $curie = $interno_fuente->curie;
   $curie_actual = round(($curie)  /(pow(2,(($T)/$const_t))),1);
   return $curie_actual;  
 

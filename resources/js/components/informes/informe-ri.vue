@@ -135,7 +135,7 @@
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label>Equipo (*)</label>
-                                    <v-select  v-model="interno_equipo" :options="interno_equipos_activos" label="nro_interno" @input="getFuente(interno_equipo.interno_fuente_id)">
+                                    <v-select  v-model="interno_equipo" :options="interno_equipos_activos" label="nro_interno" @input="getFuente()">
                                         <template slot="option" slot-scope="option">
                                             <span class="upSelect">{{ option.nro_interno }}</span> <br> 
                                             <span class="downSelect"> {{ option.equipo.codigo }} </span>
@@ -564,6 +564,8 @@ import {mapState} from 'vuex';
 import {en, es} from 'vuejs-datepicker/dist/locale'
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
+import moment from 'moment'
+
 export default {
 
     components: {
@@ -825,6 +827,19 @@ export default {
       
               this.fuente = val;
         
+        },
+
+       fecha : function(val) {
+
+              if(this.interno_fuente){
+                  let fecha_mysql = moment(this.fecha).format('MMMM Do YYYY, h:mm:ss a');
+                  this.$store.dispatch('loadCurie',{ 'interno_fuente_id' : this.interno_fuente.id, 'fecha_final': fecha_mysql }).then(response => {
+
+                         this.actividad = this.curie;
+
+                   });
+              }
+
         }
        
     },
@@ -884,11 +899,17 @@ export default {
                this.distancia_fuente_pelicula = this.informe_ridata.distancia_fuente_pelicula;
                this.ejecutor_ensayo = this.ejecutor_ensayodata;          
                this.TablaDetalle = this.detalledata,  
-               this.observaciones = this.informedata.observaciones            
-               this.$store.dispatch('loadCurie',this.interno_fuentedata.id).then(response => {
+               this.observaciones = this.informedata.observaciones 
 
-                     this.actividad = this.curie;
-                  });
+               console.log('este es el interno fuente:' + this.interno_fuentedata + 'este es el final');
+               if (this.interno_fuentedata.id != undefined){
+
+                   this.$store.dispatch('loadCurie', { 'interno_fuente_id' : this.interno_fuentedata.id, 'fecha_final': this.informedata.fecha }).then(response => {
+    
+                         this.actividad = this.curie;
+    
+                   }); 
+               }        
 
             }
 
@@ -928,16 +949,33 @@ export default {
         },
         
 
-        getFuente : function(interno_fuente_id){
+        getFuente : function(){
             
-            console.log(interno_fuente_id);
+            if(this.interno_equipo.interno_fuente){
 
-            this.interno_fuente = this.interno_equipo.interno_fuente;
-            this.$store.dispatch('loadFuentePorInterno',interno_fuente_id);
-            this.$store.dispatch('loadCurie',interno_fuente_id).then(response => {
+               this.interno_fuente = this.interno_equipo.interno_fuente;
 
-                this.actividad = this.curie;
-            });
+               this.$store.dispatch('loadFuentePorInterno',this.interno_equipo.interno_fuente.id).then(response => {
+
+                   this.fuente = this.fuentePorInterno;
+                
+               });      
+
+                if(this.fuentePorInterno) {
+                    this.$store.dispatch('loadCurie',{ 'interno_fuente_id' : this.interno_equipo.interno_fuente.id, 'fecha_final': this.informedata.fecha }).then(response => {
+        
+                        this.actividad = this.curie;
+                    
+                    });
+                }
+
+               
+            }else{
+
+                this.interno_fuente = {} ;
+                this.actividad = '';
+            }
+
 
             this.resetInputsEquipos();
 

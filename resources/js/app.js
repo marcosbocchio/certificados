@@ -496,11 +496,14 @@ actions : {
         loadFuentePorInterno({
           commit},interno_fuente_id) {
           axios.defaults.baseURL = store.state.url ;
-          var urlRegistros = 'fuentes/interno_fuente/' + interno_fuente_id  + '?api_token=' + Laravel.user.api_token;         
+          var urlRegistros = 'fuentes/interno_fuente/' + interno_fuente_id  + '?api_token=' + Laravel.user.api_token;     
+          return new Promise((resolve, reject) => {          
           console.log(urlRegistros);
           axios.get(urlRegistros).then((response) => {
             console.log(response.data);
-            commit('getFuentePorInterno', response.data)           
+            commit('getFuentePorInterno', response.data)     
+            resolve()       
+          })      
           })
         },  
         
@@ -619,9 +622,11 @@ actions : {
         },
 
         loadCurie({
-          commit},interno_fuente_id) {
+          commit},payload ) {
            axios.defaults.baseURL = store.state.url ;
-           var urlRegistros = 'interno_fuentes/' + interno_fuente_id +'/curie' + '?api_token=' + Laravel.user.api_token;   
+           console.log(payload);
+           var urlRegistros = 'interno_fuentes/' + payload.interno_fuente_id + '/fecha_final/' + payload.fecha_final + '/curie' + '?api_token=' + Laravel.user.api_token;   
+           console.log(urlRegistros);
            return new Promise((resolve, reject) => {          
            axios.get(urlRegistros).then((response) => {
            console.log(response.data);

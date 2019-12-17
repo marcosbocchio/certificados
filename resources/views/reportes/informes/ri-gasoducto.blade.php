@@ -172,7 +172,7 @@ b {
                               @endif                          
                             
                             </td>
-                            <td style="font-size: 11px;width: 100px;border-right: 1px solid #000;" ><b>Act: </b>{{$informe_ri->actividad}}</td>
+                            <td style="font-size: 11px;width: 100px;border-right: 1px solid #000;" ><b>Act: </b>{{$actividad}}</td>
                             <td style="font-size: 11px;width: 280px; border-right: 1px solid #000;"  colspan="3" ><b>Proc. Sold. : </b>{{$informe->procedimiento_soldadura}}</td>                        
                         </tr>
                         <tr>

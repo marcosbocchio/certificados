@@ -25,7 +25,6 @@ class InformesRiRepository extends BaseRepository
 
   public function store($request){
 
-  
     $informe  = new Informe;
     $informeRi  = new InformesRi;  
     
@@ -52,6 +51,7 @@ class InformesRiRepository extends BaseRepository
 
     $informe  = Informe::find($id);
     $informeRi =InformesRi::where('informe_id',$informe->id)->first();
+   
     DB::beginTransaction();
     try {
 
@@ -77,7 +77,7 @@ class InformesRiRepository extends BaseRepository
     $informeRi->informe_id = $informe->id;
     $informeRi->kv = $request->kv;
     $informeRi->ma = $request->ma;
-    $informeRi->interno_fuente_id = $request->interno_fuente['id'];
+    $informeRi->interno_fuente_id =  $request->interno_fuente ? $request->interno_fuente['id'] : null;
     $informeRi->tipo_pelicula_id = $request->tipo_pelicula['id'];
     $informeRi->ici_id  = $request->ici['id'];
     $informeRi->gasoducto_sn = $request->gasoducto_sn;

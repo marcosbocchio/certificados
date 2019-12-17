@@ -114,13 +114,6 @@ class FuentesController extends Controller
         //
     }
 
-    public function CalcularCurie($fuente_id){
-
-      $fuente = Fuentes::find($fuente_id);
-      return 99;
-
-    }
-
     /**
      * Show the form for editing the specified resource.
      *

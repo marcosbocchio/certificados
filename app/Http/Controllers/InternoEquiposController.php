@@ -25,15 +25,13 @@ class InternoEquiposController extends Controller
       
         $interno_equipos = InternoEquipos::orderBy('id','DESC')->with('ot.localidad.provincia','ot.cliente')->with('equipo')->with('internoFuente.fuente')->paginate(10);
 
- 
-
         foreach ( $interno_equipos as $interno_equipo) {
           
           if($interno_equipo->internoFuente){
 
             $interno_fuente = $interno_equipo->internoFuente;
             $fuente = $interno_fuente->fuente;         
-            $curie_actual = curie( $interno_fuente->curie, $interno_fuente->fecha_evaluacion,$fuente->const_t);
+            $curie_actual = curie($interno_fuente->id);
             $interno_fuente->curie_actual = $curie_actual;
           
           }

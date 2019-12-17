@@ -26,7 +26,7 @@ class InternoFuentesController extends Controller
 
         foreach ($interno_fuentes as $interno_fuente) {
           
-          $interno_fuente->curie_actual = curie($interno_fuente->curie,$interno_fuente->fecha_evaluacion,$interno_fuente->fuente->const_t);
+          $interno_fuente->curie_actual = curie($interno_fuente->id);
         }
         
         return $interno_fuentes;
@@ -159,11 +159,11 @@ class InternoFuentesController extends Controller
         $interno_fuente->delete();
     }
 
-    public function CalcularCurie($interno_fuente_id){
+    public function CalcularCurie($interno_fuente_id, $fecha_final = null){
 
-      $interno_fuente = InternoFuentes::where('id',$interno_fuente_id)->with('fuente')->first();  
-
-      $curie_actual =  curie($interno_fuente->curie,$interno_fuente->fecha_evaluacion,$interno_fuente->fuente->const_t);
+     // $interno_fuente = InternoFuentes::where('id',$interno_fuente_id)->with('fuente')->first();  
+      
+      $curie_actual =  curie($interno_fuente_id,$fecha_final);
 
       return  $curie_actual;
 

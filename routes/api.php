@@ -56,7 +56,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('riesgos', 'RiesgosController');
     Route::resource('ot_riesgos', 'OtRiesgosController');
     Route::get('fuentes/interno_fuente/{interno_fuente_id}', 'FuentesController@getFuentePorInterno');
-    Route::get('interno_fuentes/{interno_fuente_id}/curie', 'InternoFuentesController@CalcularCurie');
+    Route::get('interno_fuentes/{interno_fuente_id}/fecha_final/{fecha_final}/curie', 'InternoFuentesController@CalcularCurie');
     Route::get('interno_fuentes/activos', 'InternoFuentesController@getFuentesActivos');  
     Route::get('interno_fuentes/paginate', 'InternoFuentesController@paginate');
     Route::resource('interno_fuentes', 'InternoFuentesController');

@@ -39,5 +39,7 @@ class CreateInformesSinPartePorLimiteDiasProcedure extends Migration
      */
     public function down()
     {
+
+    }
       
 }

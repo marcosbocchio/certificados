@@ -10,7 +10,7 @@ class InternoFuentes extends Model
 
     public function fuente(){
 
-        return $this->belongsTo('App\Fuentes','fuente_id','id');
+        return $this->belongsTo('App\Fuentes','fuente_id','id')->withDefault();
       
       }  
 }

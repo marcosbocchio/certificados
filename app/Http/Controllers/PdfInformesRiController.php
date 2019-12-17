@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use App\helpers;
 use App\Informe;
 use App\InformesRi;
 use App\Ots;
@@ -49,7 +50,8 @@ class PdfInformesRiController extends Controller
         $ot_procedimiento_propio = OtProcedimientosPropios::findOrFail($informe->procedimiento_informe_id);
         $procedimiento_inf = Documentaciones::findOrFail($ot_procedimiento_propio->documentacion_id);
         $interno_equipo = InternoEquipos::where('id',$informe->interno_equipo_id)->with('equipo')->first();
-        $interno_fuente = InternoFuentes::where('id',$informe_ri->interno_fuente_id)->with('fuente')->first();              
+        $interno_fuente = InternoFuentes::where('id',$informe_ri->interno_fuente_id)->first();   
+        $actividad = $interno_fuente ? curie($interno_fuente->id,$informe->fecha) : '';
         $tipo_pelicula = TipoPeliculas::findOrFail($informe_ri->tipo_pelicula_id);     
         $diametro_espesor = DiametrosEspesor::findOrFail($informe->diametro_espesor_id);
         $ici = Icis::findOrFail($informe_ri->ici_id);
@@ -60,7 +62,6 @@ class PdfInformesRiController extends Controller
         $evaluador = User::find($informe->firma);
         $contratista = Contratistas::find($ot->contratista_id);
         
-      //   dd($contratista);
       //  dd($informe);
        
 
@@ -80,6 +81,7 @@ class PdfInformesRiController extends Controller
           'norma_evaluacion',
           'procedimiento_inf',
           'interno_equipo',
+          'actividad',
           'interno_fuente',
           'tipo_pelicula',
           'diametro_espesor',
@@ -117,6 +119,7 @@ class PdfInformesRiController extends Controller
                                                               'norma_evaluacion',
                                                               'procedimiento_inf',
                                                               'interno_equipo',
+                                                              'actividad',
                                                               'interno_fuente',
                                                               'tipo_pelicula',
                                                               'diametro_espesor',

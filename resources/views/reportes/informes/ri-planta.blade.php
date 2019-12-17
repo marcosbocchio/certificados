@@ -198,7 +198,7 @@ b {
                         </tr>
                         <tr>
                             <td style="font-size: 11px;border-right: 1px solid #000;" colspan="2"><b>PQR: </b>{{$informe->pqr}}</td>
-                            <td style="font-size: 11px;" colspan="2" ><b>Actividad: </b>{{$informe_ri->actividad}}</td>
+                            <td style="font-size: 11px;" colspan="2" ><b>Actividad: </b>{{$actividad}}</td>
                             <td style="font-size: 11px;border-right: 1px solid #000;" colspan="2" ><b>N° Exp. : </b>{{$informe_ri->exposicion}}</td>  
                            
                         </tr>
