@@ -90,7 +90,7 @@
             </div>   
         </div>    
         <div class="clearfix"></div>
-        <informes-importables></informes-importables>
+        <informes-importables :metodo_ensayo="metodo_ensayo" :ot_id="ot_id_data"></informes-importables>
     </div>    
 </template>
 
@@ -112,7 +112,7 @@ export default {
     data () { return {
 
       ot_informes :{},
-      metodo_ensayo:'',  
+      metodo_ensayo:{},  
       metodo_selected:false
     
     }    
@@ -176,7 +176,6 @@ export default {
                             window.location.href= this.AppUrl + '/area/enod/ot/' + this.ot_id_data + '/informe/metodo/' + this.metodo_ensayo.metodo + '/create' ;
 
                         }     
-                    
                     }
                     else
                     {

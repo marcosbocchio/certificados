@@ -46,8 +46,9 @@
 
 <script>
 require('vue-image-lightbox/dist/vue-image-lightbox.min.css')
-import {mapState} from 'vuex'
-import LightBox from 'vue-image-lightbox'
+import {mapState} from 'vuex';
+import LightBox from 'vue-image-lightbox';
+import { eventDeleteFile } from '../components/event-bus';
 
 export default {
 
@@ -127,6 +128,8 @@ export default {
     },   
 
    created :function(){
+
+      eventDeleteFile.$on('delete', this.DeleteArchivo);
 
        this.images[0].src ='/' + this.path_inicial;
        this.images[0].thumb  ='/' + this.path_inicial;

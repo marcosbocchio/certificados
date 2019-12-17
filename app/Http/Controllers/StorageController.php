@@ -141,4 +141,21 @@ class StorageController extends Controller
       } 
      
     }
+
+    public function saveinformesImportados(Request $request){
+
+     
+      if ($request->hasFile('archivo')){
+
+      
+          $path = Storage::disk('public')->putFile('informes_importados',$request->file('archivo'));  
+    
+        return $path;
+      }
+      else
+      {
+        return "Seleccione un archivo";
+      } 
+     
+    }
 }

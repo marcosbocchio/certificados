@@ -115,15 +115,32 @@ class InformesController extends Controller
 
     public function GenerarNumeroInforme($ot_id,$metodo){
 
+        $metodo_ensayo = MetodoEnsayos::where('metodo',$metodo)->first();
 
-        $numero_informe = DB::table('informes')                        
-                          ->join('metodo_ensayos','metodo_ensayos.id','=','informes.metodo_ensayo_id')
-                          ->where('informes.ot_id',$ot_id)
-                          ->where('metodo_ensayos.metodo',$metodo)
-                          ->orderBy('informes.numero', 'DESC')   
-                          ->limit(1)   
-                          ->selectRaw('informes.numero + 1 as numero_informe')                    
-                          ->get();    
+        if ($metodo_ensayo->importable_sn){
+
+            $numero_informe = DB::table('informes_importados')                        
+                                ->join('metodo_ensayos','metodo_ensayos.id','=','informes_importados.metodo_ensayo_id')
+                                ->where('informes_importados.ot_id',$ot_id)
+                                ->where('metodo_ensayos.metodo',$metodo)
+                                ->orderBy('informes_importados.numero', 'DESC')   
+                                ->limit(1)   
+                                ->selectRaw('informes_importados.numero + 1 as numero_informe')                    
+                                ->get();    
+
+        }else{
+    
+            $numero_informe = DB::table('informes')                        
+                                ->join('metodo_ensayos','metodo_ensayos.id','=','informes.metodo_ensayo_id')
+                                ->where('informes.ot_id',$ot_id)
+                                ->where('metodo_ensayos.metodo',$metodo)
+                                ->orderBy('informes.numero', 'DESC')   
+                                ->limit(1)   
+                                ->selectRaw('informes.numero + 1 as numero_informe')                    
+                                ->get();    
+
+
+        }
 
         return  $numero_informe;                 
 
@@ -139,11 +156,8 @@ class InformesController extends Controller
              $user_id = $userId = Auth::id();    
         }
        
-        
-
         $metodo_ensayo = MetodoEnsayos::where('metodo',$request->metodo_ensayo)->first();
       
-        
         $informe->ot_id  = $request->ot['id'];
 
         If(!isset($request->procedimiento['ot_procedimientos_propios_id'])){

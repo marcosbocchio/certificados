@@ -776,7 +776,7 @@
         <create-referencias :index="index_referencias" :tabla="tabla" :inputsData="inputsData" @setReferencia="AddReferencia_us_pa"></create-referencias>
     </div>
 </template>
-
+s
 <script>
 import uniq from 'lodash/uniq';
 import Datepicker from 'vuejs-datepicker';

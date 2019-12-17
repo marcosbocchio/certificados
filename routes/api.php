@@ -119,7 +119,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::post('storage/placas', 'StorageController@savePlacas');
     Route::post('storage/calibraciones_us', 'StorageController@saveCalibraciones');
     Route::post('storage/indicaciones_us', 'StorageController@saveIndicacionesUs');
-
+    Route::post('storage/informes_importados', 'StorageController@saveinformesImportados');
 
     Route::post('storage/logo-cliente', 'StorageController@saveLogoCliente');
     Route::post('storage/logo-contratista', 'StorageController@saveLogoContratista');
@@ -163,6 +163,10 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('informes_pm','InformesPmController');
     Route::resource('informes_lp','InformesLpController');
     Route::resource('informes_us','InformesUsController');
+
+     /*  informes importados */ 
+
+    Route::resource('informes_importados','informesImportadosController');
 
     //Remito  
     Route::get('remitos/ot/{ot_id}/total','RemitosController@RemitosTotal');
