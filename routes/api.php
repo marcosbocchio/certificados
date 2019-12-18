@@ -166,7 +166,7 @@ Route::group(['middleware' => 'auth:api'], function()
 
      /*  informes importados */ 
 
-    Route::resource('informes_importados','informesImportadosController');
+    Route::resource('informes_importados','InformesImportadosController');
 
     //Remito  
     Route::get('remitos/ot/{ot_id}/total','RemitosController@RemitosTotal');
