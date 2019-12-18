@@ -29,7 +29,7 @@
                             <div class="col-md-6">
                                 <div class="form-group" >
                                     <label for="numero_inf">Informe N° *</label>
-                                    <input type="text" v-model="numero_inf_code" class="form-control" id="numero_inf">
+                                    <input type="text" v-model="numero_inf_code" class="form-control" id="numero_inf" disabled>
                                 </div>                            
                             </div>
                             <div class="col-md-12">                       
@@ -162,6 +162,19 @@ components: {
          $('#nuevo').modal('show');
         },
 
+        EditRegistro : function(informe_id){
+
+            console.log('estoy dentro del modal edit:' + informe_id);
+            axios.defaults.baseURL = this.url ;
+            var urlRegistros = 'informes_importados/'+ informe_id + '/edit'  + '?api_token=' + Laravel.user.api_token;  
+            $('#nuevo').modal('show');       
+            axios.get(urlRegistros).then(response =>{
+                console.log(response.data );
+                this.Registro = response.data;
+            
+            });  
+        },
+
         getNumeroInforme:function(){            
            
             if(!this.editmode) {
@@ -216,3 +229,11 @@ components: {
     }
 }
 </script>
+
+<style scoped>
+
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+     background-color: #eee;
+}
+
+</style>

@@ -96,7 +96,8 @@ class InformesImportadosController extends Controller
      */
     public function edit($id)
     {
-        //
+        
+        return InformesImportados::where('id',$id)->with('metodoEnsayos')->with('ejecutorEnsayo')->first();
     }
 
     /**

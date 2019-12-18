@@ -9,6 +9,7 @@ use App\DiametrosEspesor;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\OtProcedimientosPropios;
+use App\InformesView;
 
 
 
@@ -40,13 +41,20 @@ class InformesController extends Controller
 
     public function paginate(Request $request,$id){
 
-        return  DB::table('informes')
+      /*  return  DB::table('informes')
                     ->join('users','users.id','=','informes.user_id')
                     ->join('metodo_ensayos','metodo_ensayos.id','=','informes.metodo_ensayo_id')
                     ->where('informes.ot_id',$id)
                     ->selectRaw('informes.numero,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha,informes.id,metodo_ensayos.metodo as metodo,users.name,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado,informes.prefijo as prefijo,firma')      
                     ->orderBy('id','DESC')           
                     ->paginate(10);
+      */
+
+          return DB::table('informes_view')
+                     ->where('ot_id',$id) 
+                     ->orderBy('id','DESC')           
+                     ->paginate(10);
+      
 
 
     }
@@ -54,7 +62,7 @@ class InformesController extends Controller
     public function OtInformesTotal($ot_id){
 
 
-        return Informe::where('ot_id',$ot_id)->count(); 
+        return InformesView::where('ot_id',$ot_id)->count(); 
 
     }
 

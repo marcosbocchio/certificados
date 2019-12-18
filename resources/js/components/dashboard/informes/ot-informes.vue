@@ -70,11 +70,12 @@
                                     </td>     
                                     <td> {{ot_informe.name}}</td>     
                                     <td> {{ot_informe.fecha}}</td>              
-                                    <td width="10px"> <a :href="AppUrl + '/area/enod/ot/' + ot_id_data + '/informe/' + ot_informe.id +'/edit' "   class="btn btn-warning btn-sm" title="Editar"><span class="fa fa-edit"></span></a></td>
+                                    <td v-if="!ot_informe.importable_sn" width="10px"> <a :href="AppUrl + '/area/enod/ot/' + ot_id_data + '/informe/' + ot_informe.id +'/edit' "   class="btn btn-warning btn-sm" title="Editar"><span class="fa fa-edit"></span></a></td>
+                                    <td v-else width="10px"> <a @click="EditInformeImportable(ot_informe.id)"   class="btn btn-warning btn-sm" title="Editar"><span class="fa fa-edit"></span></a></td>
                                     <td v-if="ot_informe.metodo == 'RI'"> <a :href="AppUrl + '/placas/informe/' + ot_informe.id"   class="btn btn-default btn-sm" title="Placas informe"><img width="16px" :src="AppUrl + '/img/carestream.ico'"></a></td> 
-                                    <td width="10px"> <a :href="AppUrl + '/api/pdf/informe/' + ot_informe.id " target="_blank"  class="btn btn-default btn-sm" title="Informe"><span class="fa fa-file-pdf-o"></span></a></td>  
-                                    <td v-if="!ot_informe.firma" width="10px"> <a  @click="firmar(k)"  class="btn btn-default btn-sm" title="Firmar"><span class="glyphicon glyphicon-pencil"></span></a></td>   
-                                    <td v-else><a class="btn btn-default btn-sm" title="Firmado"><img width="16px" :src="AppUrl + '/img/firma.png'"></a></td>
+                                    <td v-if="!ot_informe.importable_sn" width="10px"> <a :href="AppUrl + '/api/pdf/informe/' + ot_informe.id " target="_blank"  class="btn btn-default btn-sm" title="Informe"><span class="fa fa-file-pdf-o"></span></a></td>  
+                                    <td v-if="!ot_informe.firma && !ot_informe.importable_sn" width="10px"> <a  @click="firmar(k)"  class="btn btn-default btn-sm" title="Firmar"><span class="glyphicon glyphicon-pencil"></span></a></td>   
+                                    <td v-else-if="!ot_informe.importable_sn"><a class="btn btn-default btn-sm" title="Firmado"><img width="16px" :src="AppUrl + '/img/firma.png'"></a></td>
 
                                 </tr>                       
                                  
@@ -96,7 +97,7 @@
 
 <script>
 import {mapState} from 'vuex'
-import { eventNewRegistro } from '../../event-bus';
+import { eventNewRegistro, eventEditRegistro } from '../../event-bus';
 export default {
 
     props :{
@@ -195,6 +196,13 @@ export default {
                 this.$store.dispatch('loadContarInformes',this.ot_id_data);
 
             },
+
+        EditInformeImportable : function(informe_id){
+
+            console.log('Edit informe importable:' + informe_id);
+            eventEditRegistro.$emit('edit',informe_id);
+
+        },
 
         firmar : function(index){
 
