@@ -1,8 +1,6 @@
 <template>
     <div>       
-        <form>
-           
-               
+        <form> 
             <div class="form-group">                           
                 <input type="file" class="form-control" id="inputFile" ref="inputFile1" name="file" @change="onFileSelected($event)">
                 <button class="hide" @click.prevent="onUpload()" >upload</button>                            
@@ -20,18 +18,21 @@
                   </div>  
              
             </div>
-            <div v-if="path">
+            <div v-if="!isPdf && path">
                 
-                 <a class="btn btn-default btn-xs" @click="DeleteArchivo">X</a> 
+                 <a class="btn btn-default btn-xs" @click="DeleteArchivo">x</a> 
 
             </div>
             <div class="form-group">  
-                <div v-if="isPdf">
-                <a :href="AppUrl + '/' + path" target="_blank" class="btn btn-default btn-sm" title="pdf"><span class="fa fa-file-pdf-o"></span></a>
+                <div v-if="isPdf && path">
+
+                    <a v-if="!path_requerido_sn"  class="btn btn-default btn-xs" @click="DeleteArchivo"><span>x</span ></a><br>
+                    <a style="margin-top: 5px;" :href="AppUrl + '/' + path" target="_blank" class="btn btn-default btn-sm" title="pdf"><span class="fa fa-file-pdf-o"></span></a>
                 </div> 
                 <div v-else-if="path">                            
                     <img :src="'/' + path" class="margin zoom-in"  @click="openGallery()" alt="..." width="140" >
-                    <LightBox :images="images"  ref="lightbox"  :show-light-box="false" ></LightBox>                </div>                                                     
+                    <LightBox :images="images"  ref="lightbox"  :show-light-box="false" ></LightBox>    
+                </div>                                                     
             
             <progress-bar
             :options="options"
@@ -85,6 +86,13 @@ export default {
              type: Boolean,
              required : false,
              default : true,   
+          },
+
+          path_requerido_sn : {
+
+            type:Boolean,
+            require:true,
+            default:false,
 
           }
        
@@ -138,6 +146,20 @@ export default {
 
       
     watch : {
+
+        path_inicial : function(val){
+            
+            this.path = val;
+
+            if(val){
+
+                let extension = (val.substring(val.lastIndexOf(".") + 1)).toLowerCase();
+                if(extension =='pdf'){
+                    this.isPdf = true;
+                }
+
+            }
+        },
         
         path : function(val) {
 

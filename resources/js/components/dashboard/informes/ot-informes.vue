@@ -73,7 +73,9 @@
                                     <td v-if="!ot_informe.importable_sn" width="10px"> <a :href="AppUrl + '/area/enod/ot/' + ot_id_data + '/informe/' + ot_informe.id +'/edit' "   class="btn btn-warning btn-sm" title="Editar"><span class="fa fa-edit"></span></a></td>
                                     <td v-else width="10px"> <a @click="EditInformeImportable(ot_informe.id)"   class="btn btn-warning btn-sm" title="Editar"><span class="fa fa-edit"></span></a></td>
                                     <td v-if="ot_informe.metodo == 'RI'"> <a :href="AppUrl + '/placas/informe/' + ot_informe.id"   class="btn btn-default btn-sm" title="Placas informe"><img width="16px" :src="AppUrl + '/img/carestream.ico'"></a></td> 
-                                    <td v-if="!ot_informe.importable_sn" width="10px"> <a :href="AppUrl + '/api/pdf/informe/' + ot_informe.id " target="_blank"  class="btn btn-default btn-sm" title="Informe"><span class="fa fa-file-pdf-o"></span></a></td>  
+                                  
+                                    <td v-if="!ot_informe.importable_sn" width="10px"> <a :href="AppUrl + '/api/pdf/informe/' + ot_informe.id " target="_blank"  class="btn btn-default btn-sm" title="Informe"><span class="fa fa-file-pdf-o"></span></a></td> 
+                                    <td v-else><a :href="AppUrl + '/' + ot_informe.path " target="_blank" title="Informe" class="btn btn-default btn-sm"><span class="fa fa-file-pdf-o"></span></a></td> 
                                     <td v-if="!ot_informe.firma && !ot_informe.importable_sn" width="10px"> <a  @click="firmar(k)"  class="btn btn-default btn-sm" title="Firmar"><span class="glyphicon glyphicon-pencil"></span></a></td>   
                                     <td v-else-if="!ot_informe.importable_sn"><a class="btn btn-default btn-sm" title="Firmado"><img width="16px" :src="AppUrl + '/img/firma.png'"></a></td>
 
@@ -91,7 +93,7 @@
             </div>   
         </div>    
         <div class="clearfix"></div>
-        <informes-importables :metodo_ensayo="metodo_ensayo" :ot_id="ot_id_data"></informes-importables>
+        <informes-importables :metodo_ensayo="metodo_ensayo" :ot_id="ot_id_data" @store="getResults(ot_informes.current_page)"></informes-importables>
     </div>    
 </template>
 

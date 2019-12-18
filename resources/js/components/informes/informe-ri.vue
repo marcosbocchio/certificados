@@ -680,7 +680,7 @@ export default {
 
            // Formulario encabezado
 
-            fecha:'',
+            fecha: new Date(),
             numero_inf:'',
             numero_inf_generado:'',
             prefijo:'',

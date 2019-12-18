@@ -5,7 +5,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Crear</h4>
+                        <h4 class="modal-title">Importar Informe</h4>
                     </div>
                     <div class="modal-body">
                         <div class="row">
@@ -14,9 +14,9 @@
                                     <label for="fecha">Fecha *</label>
                                     <div class="input-group date">
                                         <div class="input-group-addon">
-                                        <i class="fa fa-calendar"></i>
+                                              <i class="fa fa-calendar"></i>
                                         </div>
-                                            <Datepicker v-model="Registro.fecha" :input-class="'form-control pull-right'" :language="es"></Datepicker>   
+                                            <Datepicker v-model="Registro.fecha" :input-class="'form-control pull-right'" :language="es" ></Datepicker>   
                                     </div>
                                 </div>
                             </div>
@@ -27,10 +27,13 @@
                                 </div>                            
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group" >
-                                    <label for="numero_inf">Informe N° *</label>
-                                    <input type="text" v-model="numero_inf_code" class="form-control" id="numero_inf" disabled>
-                                </div>                            
+                               <div class="form-group" > 
+                                    <label for="numero">Informe N° *</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon" style=" background-color: #eee;">{{Registro.metodo_ensayo.metodo}}</i></span>
+                                        <input type="text" v-model="Registro.numero" class="form-control" id="numero" @change="formatearNumero(Registro.numero,3)" min="1" max="999">
+                                    </div>
+                               </div>                      
                             </div>
                             <div class="col-md-12">                       
                                 <div class="form-group" >
@@ -53,6 +56,7 @@
                                         :tipos_archivo_soportados ="tipos_archivo_soportados"    
                                         :mostrar_formatos_soportados="true"                          
                                         @path="Registro.path = $event"
+                                        :path_requerido_sn="true"
                                     ></subir-imagen> 
                                 </div>   
                             </div>
@@ -85,6 +89,7 @@ components: {
     },
 
     props :{
+
         metodo_ensayo: {
         type : Object,
         required : false
@@ -98,20 +103,22 @@ components: {
 
         en: en,
         es: es,
-
+        editmode : false, 
         ruta: 'informes_importados',
         max_size :50000, //KB
         tipos_archivo_soportados:['pdf'],
     
          Registro : {
             'ot_id':'',
-            'numero_inf': '',
+            'fecha':new Date(),
+            'numero': '',
             'prefijo'  : '',
             'observaciones':'',
             'path':'',
             'metodo_ensayo' : {},     
             'ejecutor_ensayo' :{}
          },
+         numero_generado:'',
 
         errors: {}
       
@@ -122,56 +129,54 @@ components: {
 
     eventNewRegistro.$on('open', this.nuevoRegistro);
     eventEditRegistro.$on('edit', this.EditRegistro);
-    
     this.$store.dispatch('loadEjecutorEnsayo', this.ot_id); 
 
-
     },
-
 
 
     computed :{
     
         ...mapState(['url','AppUrl','ejecutor_ensayos']),   
         
-        numero_inf_code : function()  {
-
-            if(this.Registro.numero_inf)
-
-                    return this.metodo_ensayo.metodo + (this.Registro.numero_inf <10? '00' : this.Registro.numero_inf<100? '0' : '') + this.Registro.numero_inf ;
-    },
     },
  
     methods: {
 
        nuevoRegistro : function(){      
-            
+        
            this.editmode = false; 
            this.uploadPercentage = 0;   
            this.Registro = {
+
             'ot_id' : this.ot_id,
-            'numero_inf': '',
+            'fecha':new Date(),
+            'numero': '',
             'prefijo'  : '',
             'observaciones':'',
             'path':'',
             'metodo_ensayo' : this.metodo_ensayo,
             'ejecutor_ensayo' :{}
+
          }
          this.getNumeroInforme();
          eventDeleteFile.$emit('delete');
          $('#nuevo').modal('show');
+         console.log(this.f);
         },
 
         EditRegistro : function(informe_id){
 
             console.log('estoy dentro del modal edit:' + informe_id);
+            this.editmode = true; 
             axios.defaults.baseURL = this.url ;
             var urlRegistros = 'informes_importados/'+ informe_id + '/edit'  + '?api_token=' + Laravel.user.api_token;  
             $('#nuevo').modal('show');       
             axios.get(urlRegistros).then(response =>{
                 console.log(response.data );
                 this.Registro = response.data;
-            
+                this.formatearNumero(this.Registro.numero,3);
+                this.$forceUpdate();
+              
             });  
         },
 
@@ -182,20 +187,32 @@ components: {
                     axios.defaults.baseURL = this.url ;
                         var urlRegistros = 'informes/ot/' + this.ot_id + '/metodo/' + this.metodo_ensayo.metodo + '/generar-numero-informe'  + '?api_token=' + Laravel.user.api_token;         
                         axios.get(urlRegistros).then(response =>{
-                        this.numero_inf_generado = response.data 
-                        
-                        if(this.numero_inf_generado.length){
+                        this.numero_generado = response.data 
+                        console.log('el numero generado es:' + this.numero_generado);
+                        if(this.numero_generado.length){
 
-                            this.Registro.numero_inf =  this.numero_inf_generado[0].numero_informe
+                            this.Registro.numero =  this.numero_generado[0].numero_informe
                         }else{
 
-                            this.Registro.numero_inf = 1;
+                            this.Registro.numero = 1;
                         }
                         
+                       this.formatearNumero(this.Registro.numero,3);
                         
                         });   
              }
         },   
+
+        formatearNumero : function ( number, width )
+            {
+                
+                width -= number.toString().length;
+                if ( width > 0 )
+                {
+                    this.Registro.numero=  new Array( width + (/\./.test( number ) ? 2 : 1) ).join( '0' ) + number;
+                }
+                
+            },
 
 
         storeRegistro: function(){
@@ -207,7 +224,6 @@ components: {
                 
                 ...this.Registro
                 
-
             }).then(response => {
                 this.$emit('store');
                 this.errors=[];
@@ -225,6 +241,33 @@ components: {
 
             });
 
+        },
+
+        updateRegistro: function(){
+
+            axios.defaults.baseURL = this.url ;
+            var urlRegistros = 'informes_importados/' + this.Registro.id ;  
+            console.log('entro en el store de informes importados');        
+            axios.put(urlRegistros, {   
+                
+                ...this.Registro
+                
+            }).then(response => {
+                this.$emit('store');
+                this.errors=[];
+                $('#nuevo').modal('hide');               
+                toastr.success('El informe fue editado con éxito');
+                      
+            }).catch(error => {
+               
+                this.errors = error.response.data.errors;
+
+                $.each( this.errors, function( key, value ) {
+                    toastr.error(value,key);
+                    console.log( key + ": " + value );
+                });
+
+            });
         }
     }
 }

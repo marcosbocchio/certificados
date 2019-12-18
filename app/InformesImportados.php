@@ -8,7 +8,7 @@ class InformesImportados extends Model
 {
     protected $table="informes_importados";
 
-    public function metodoEnsayos(){
+    public function metodo_ensayo(){
 
          return $this->belongsTo('App\MetodoEnsayos','metodo_ensayo_id','id');
     

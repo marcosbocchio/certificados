@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\InformeImportadosRequest;
 use App\InformesImportados;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -36,7 +37,7 @@ class InformesImportadosController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(InformeImportadosRequest $request)
     {
               
         $informe_importados  = new InformesImportados;  
@@ -68,7 +69,7 @@ class InformesImportadosController extends Controller
         $informe_importados->ot_id = $request->ot_id;
         $informe_importados->metodo_ensayo_id = $request->metodo_ensayo['id'];
         $informe_importados->fecha =date('Y-m-d',strtotime($request->fecha)); 
-        $informe_importados->numero = $request->numero_inf;
+        $informe_importados->numero = $request->numero;
         $informe_importados->prefijo = $request->prefijo;
         $informe_importados->observaciones = $request->observaciones;
         $informe_importados->path = $request->path;
@@ -97,7 +98,10 @@ class InformesImportadosController extends Controller
     public function edit($id)
     {
         
-        return InformesImportados::where('id',$id)->with('metodoEnsayos')->with('ejecutorEnsayo')->first();
+        return InformesImportados::where('id',$id)
+                                  ->with('metodo_ensayo')
+                                  ->with('ejecutorEnsayo')
+                                  ->first();
     }
 
     /**
@@ -107,9 +111,24 @@ class InformesImportadosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(InformeImportadosRequest $request, $id)
     {
-        //
+                      
+        $informe_importados =InformesImportados::find($id);
+
+        DB::beginTransaction();
+        try {          
+        
+          $this->saveInformeImportados($request,$informe_importados);
+       
+          DB::commit(); 
+    
+        } catch (Exception $e) {
+    
+          DB::rollback();
+          throw $e;      
+          
+        }
     }
 
     /**

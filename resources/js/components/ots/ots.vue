@@ -535,7 +535,7 @@ export default {
             heading: 0,
           },        
           proyecto:'',
-          fecha:'',        
+          fecha:new Date(),     
           fecha_ensayo:'',
           hora: '',
           clientes:[],

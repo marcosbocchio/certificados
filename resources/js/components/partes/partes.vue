@@ -512,7 +512,7 @@ export default {
         errors:[],
         en: en,
         es: es,      
-        fecha:'',     
+        fecha:new Date(),   
         tipo_servicio:'',
         horario:'',
         movilidad_propia_sn:false,
@@ -549,7 +549,6 @@ export default {
     created : function() {
 
         this.getOperadoresOt();
-      
         this.getCms();
         this.setEdit();   
 

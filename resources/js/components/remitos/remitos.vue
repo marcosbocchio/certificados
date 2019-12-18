@@ -211,7 +211,7 @@ export default {
          en: en,
          es: es, 
         interno_sn :true, 
-        fecha:'',
+        fecha:new Date(), 
         numero:'',
         prefijo:'1',
         receptor:'',

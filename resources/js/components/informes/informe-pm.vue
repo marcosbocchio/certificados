@@ -466,7 +466,7 @@ export default {
         es: es, 
 
         cliente:'',
-        fecha:'',
+        fecha: new Date(),
         observaciones:'',
         numero_inf:'',
         numero_inf_generado:'',

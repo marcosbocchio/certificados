@@ -52,7 +52,7 @@ class InformesController extends Controller
 
           return DB::table('informes_view')
                      ->where('ot_id',$id) 
-                     ->orderBy('id','DESC')           
+                     ->orderBy('fecha','ASC')           
                      ->paginate(10);
       
 

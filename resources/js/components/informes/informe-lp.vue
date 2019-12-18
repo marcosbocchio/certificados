@@ -486,7 +486,7 @@ data() {return {
         en: en,
         es: es,
 
-        fecha:'',
+        fecha: new Date(),
         numero_inf:'',
         numero_inf_generado:'',
         componente:'',
