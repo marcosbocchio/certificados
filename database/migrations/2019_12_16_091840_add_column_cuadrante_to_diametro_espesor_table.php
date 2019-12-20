@@ -18,7 +18,7 @@ class AddColumnCuadranteToDiametroEspesorTable extends Migration
             $table->string('cuadrante',10)
                    ->nullable()
                    ->after('espesor');
-        });
+              });
     }
 
     /**

@@ -47,6 +47,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('norma_evaluaciones', 'NormaEvaluacionesController');
     Route::put('ots/{id}/firmar', 'OtsController@firmar');
     Route::resource('ots', 'OtsController');
+    Route::get('ot_servicios/ot/{ot_id}/metodo_ensayo/{metodo_ensayo_id}', 'OtServiciosController@getOtServiciosMetodo');
     Route::resource('ot_servicios', 'OtServiciosController');
     Route::get('productos/ots', 'ProductosController@ProductosOts');
     Route::get('productos/paginate', 'ProductosController@paginate');
@@ -192,6 +193,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('partes/ot/{ot_id}/total','PartesController@PartesTotal');
     Route::put('partes/{id}/firmar', 'PartesController@firmar');
     Route::resource('partes', 'PartesController');
+    Route::get('partes/informe_importado/{id}','PartesController@getInformeImportado');
     Route::get('partes/informe_ri/{id}','PartesController@getInformeRiParte');
     Route::get('partes/informe_pm/{id}','PartesController@getInformePmParte');
     Route::get('partes/informe_lp/{id}','PartesController@getInformeLpParte');    

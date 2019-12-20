@@ -17,7 +17,7 @@ use App\Informe;
 use App\Tecnicas;
 use \stdClass;
 use App\ParametrosGenerales;
-
+use App\informesImportados;
 
 class PartesController extends Controller
 {
@@ -95,6 +95,7 @@ class PartesController extends Controller
           $this->saveParteDetallePm($request->informes_pm,$parte);
           $this->saveParteDetalleLp($request->informes_lp,$parte);
           $this->saveParteDetalleUs($request->informes_us,$parte);
+          $this->saveParteDetalleInformesImportados($request->informes_importados,$parte);
          
           DB::commit(); 
     
@@ -163,13 +164,11 @@ class PartesController extends Controller
         $parte->observaciones = $request->observaciones;
         $parte->save();
 
-       
         return $parte;
     }
 
     public function saveParteDetalleRi($informes_ri,$parte){
 
-        
         foreach ($informes_ri as $informe) {
             
             $parteDetalle  = new ParteDetalles;
@@ -254,6 +253,25 @@ class PartesController extends Controller
 
     }
 
+    public function saveParteDetalleInformesImportados($informes_importados,$parte){
+
+    
+        foreach ($informes_importados as $informe) {
+            
+            $parteDetalle  = new ParteDetalles;
+            $parteDetalle->parte_id = $parte->id;            
+            $parteDetalle->informe_importado_id =$informe['id'];   
+            $parteDetalle->observaciones_original = $informe['observaciones_original'];      
+            $parteDetalle->observaciones_final = $informe['observaciones_final'];
+            
+            $parteDetalle->save();
+
+            (new \App\Http\Controllers\InformesImportadosController)->setParteId($parte->id,$informe['id']);
+            
+        }
+
+    }
+
     /**
      * Display the specified resource.
      *
@@ -293,7 +311,9 @@ class PartesController extends Controller
                              ->where('metodo_ensayos.metodo','RI')
                              ->selectRaw('parte_detalles.* , 0 as informe_sel,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada')
                              ->get();
-
+        
+      
+    
         $informes_pm  = DB::table('parte_detalles')
                              ->join('informes','informes.id','=','parte_detalles.informe_id')          
                              ->join('metodo_ensayos','metodo_ensayos.id','=','informes.metodo_ensayo_id')    
@@ -315,9 +335,17 @@ class PartesController extends Controller
                                ->join('metodo_ensayos','metodo_ensayos.id','=','informes.metodo_ensayo_id')   
                                ->join('tecnicas','tecnicas.id','=','informes.tecnica_id') 
                                ->where('metodo_ensayos.metodo','US')                                              
-                                ->where('parte_detalles.parte_id',$id)
-                                ->selectRaw('parte_detalles.* , 0 as informe_sel,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada,tecnicas.codigo as tecnica')
-                                ->get();
+                               ->where('parte_detalles.parte_id',$id)
+                               ->selectRaw('parte_detalles.* , 0 as informe_sel,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada,tecnicas.codigo as tecnica')
+                               ->get();
+                               
+
+        $informes_importados = DB::table('parte_detalles')
+                                        ->join('informes_importados','informes_importados.id','=','parte_detalles.informe_importado_id')          
+                                        ->join('metodo_ensayos','metodo_ensayos.id','=','informes_importados.metodo_ensayo_id')                                  
+                                        ->where('parte_detalles.parte_id',$id)
+                                        ->selectRaw('parte_detalles.* , 0 as informe_sel,CONCAT(metodo_ensayos.metodo,LPAD(informes_importados.numero, 3, "0")) as numero_formateado,DATE_FORMAT(informes_importados.fecha,"%d/%m/%Y")as fecha_formateada,metodo_ensayos.metodo as metodo')
+                                        ->get();
                              
          foreach ($informes_ri as $informe_ri) {
 
@@ -334,6 +362,7 @@ class PartesController extends Controller
                                             'informes_pm',
                                             'informes_lp',
                                             'informes_us',
+                                            'informes_importados',
                                             'ot',                                            
                                             'user',                                              
                                             'header_titulo',
@@ -351,6 +380,7 @@ class PartesController extends Controller
     {
         $parte  = Partes::find($id);  
         DB::beginTransaction();
+      
         try {    
            
             $parte  = $this->saveParte($request,$parte);
@@ -358,10 +388,12 @@ class PartesController extends Controller
             $this->saveParteDetalleRi($request->informes_ri,$parte);
             ParteDetalles::where('parte_id',$parte->id)->delete();
             (new \App\Http\Controllers\InformesController)->deleteParteId($parte->id);
+            (new \App\Http\Controllers\InformesImportadosController)->deleteParteId($parte->id);
             $this->saveParteDetalleRi($request->informes_ri,$parte);
             $this->saveParteDetallePm($request->informes_pm,$parte);
             $this->saveParteDetalleLp($request->informes_lp,$parte);
             $this->saveParteDetalleUs($request->informes_us,$parte);
+            $this->saveParteDetalleInformesImportados($request->informes_importados,$parte);
             
             DB::commit();
             
@@ -383,6 +415,12 @@ class PartesController extends Controller
     {
         //
     }
+
+    public function getInformeImportado($id){
+
+        return InformesImportados::find($id);
+    }
+    
 
     public function getInformeRiParte($id){
 

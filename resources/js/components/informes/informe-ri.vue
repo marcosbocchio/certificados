@@ -973,6 +973,7 @@ export default {
             }else{
 
                 this.interno_fuente = {} ;
+                this.fuente ='';
                 this.actividad = '';
             }
 

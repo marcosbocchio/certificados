@@ -44,6 +44,18 @@ class OtServiciosController extends Controller
         //
     }
 
+    public function getOtServiciosMetodo($ot_id,$metodo_ensayo_id){
+
+        $ot_servicios = OtServicios::join('servicios','servicios.id','=','ot_servicios.servicio_id')
+                                     ->join('metodo_ensayos','metodo_ensayos.id','=','servicios.metodo_ensayo_id')
+                                     ->where('ot_id',$ot_id)
+                                     ->where('metodo_ensayos.id',$metodo_ensayo_id)
+                                     ->SelectRaw('ot_servicios.*,servicios.descripcion as servicio_descripcion,metodo_ensayos.metodo as metodo')
+                                     ->get();
+
+        return $ot_servicios;
+    }
+
     /**
      * Display the specified resource.
      *

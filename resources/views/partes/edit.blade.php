@@ -21,6 +21,8 @@
   :informes_pm_data="{{$informes_pm}}"
   :informes_lp_data="{{$informes_lp}}"
   :informes_us_data="{{$informes_us}}"
+  :informes_importados_data="{{$informes_importados}}"
+
   :responsables_data="{{$responsables}}"
   editmode  
   

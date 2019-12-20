@@ -23,9 +23,17 @@ class AddForeignKeysInformesImportadosTable extends Migration
                    ->references('id')
                    ->on('ots');
 
-            $table->bigInteger('metodo_ensayo_id')
+            $table->bigInteger('parte_id')
                    ->unsigned()
                    ->after('ot_id');
+                   
+            $table->foreign('parte_id')
+                   ->references('id')
+                   ->on('partes');
+
+            $table->bigInteger('metodo_ensayo_id')
+                   ->unsigned()
+                   ->after('parte_id');
                   
             $table->foreign('metodo_ensayo_id')
                   ->references('id')
@@ -70,6 +78,9 @@ class AddForeignKeysInformesImportadosTable extends Migration
 
             $table->dropForeign(['ejecutor_ensayo_id']);
             $table->dropColumn('ejecutor_ensayo_id');
+
+            $table->dropForeign(['parte_id']);
+            $table->dropColumn('parte_id');
 
         });
     }

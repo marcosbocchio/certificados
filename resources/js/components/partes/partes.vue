@@ -139,7 +139,7 @@
                                             <td>
                                                 <input type="checkbox" id="informe_sel" v-model="informes[k].informe_sel" @change="getInforme(k)" >
                                             </td>
-                                            <td> {{ informe.metodo_ensayos.metodo}}</td>                                                        
+                                            <td> {{ informe.metodo}}</td>                                                        
                                             <td> {{ informe.numero_formateado}}</td>     
                                             <td> {{ informe.fecha_formateada}}</td>                                                                                                                      
                                         </tr>
@@ -149,7 +149,56 @@
                         </div>                     
                     </div>
                 </div>
-                
+                 <!-- Servicios  -->
+                <div v-show="TablaServicios.length">
+                    <div class="box box-danger" >
+                        <div class="box-header with-border">
+                        <h3 class="box-title">Servicios</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                </button>                       
+                            </div>
+                        </div>
+                        <div class="box-body"> 
+                            
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-lg-1">METODO</th>
+                                                    <th class="col-lg-8">DESCRIPCIÓN</th>       
+                                                    <th class="col-lg-1">CANT</th>                                                                                                                                       
+                                                    <th colspan="2">&nbsp;</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr v-for="(item,k) in TablaServicios" :key="k"  @click="selectPosTablaServicios(k)">     
+                                                    <td v-if="item.visible"> {{ item.metodo}}</td>  
+                                                    <td v-if="item.visible"> {{ item.descripcion}}</td>   
+                                                    <td v-if="item.visible">
+                                                        <div v-if="indexTablaServicios == k ">       
+                                                          <input type="number" v-model="TablaServicios[k].cant" maxlength="3">        
+                                                        </div>   
+                                                        <div v-else>
+                                                           {{ item.cant }}
+                                                        </div>                                   
+                                                    </td>                                                                                                                    
+                                                    <td v-if="item.visible"> <a  @click="RemoveTablaServicios(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a></td>
+                                                    
+                                                </tr>   
+                                                <tr v-for="fila in 4" >
+                                                    <td colspan="5" style="background: #FFFFFF"> &nbsp;</td>                                                  
+                                                </tr>                                             
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                        
+                        </div>
+                    </div>
+                </div>
+                  <!--Informe RI -->
                 <div v-show="TablaInformesRi.length">
                     <div class="box box-danger" >
                         <div class="box-header with-border">
@@ -253,7 +302,6 @@
                                                         </div>                                   
                                                     </td>           
                                                                                                         
-                                                  
                                                     <td v-if="item.visible">
                                                         <div v-if="indexTablaInformesPm == k ">       
                                                           <input type="number" v-model="TablaInformesPm[k].nro_final" maxlength="11">        
@@ -415,9 +463,7 @@
                                     
                                                     </td>
                                                     
-                                            
-                                                    <td v-if="item.visible"> {{ item.pulgadas_final}}</td>
-                                                                                                                                                            
+                                                    <td v-if="item.visible"> {{ item.pulgadas_final}}</td>                                                                                                           
                                                     <td v-if="item.visible"> <a  @click="RemoveTablaInformeUs(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a></td>
                                                     
                                                 </tr>   
@@ -432,6 +478,56 @@
                         </div>
                     </div>
                 </div>
+
+                <div v-for="(itemMetodo,m) in TablaMetodosImportados" :key="m">
+                       <!--Informes IMPORTADOS -->
+                        <div class="box box-danger" >
+                            <div class="box-header with-border">
+                            <h3 class="box-title">Informes {{itemMetodo}}</h3>
+
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                    </button>                       
+                                </div>
+                            </div>
+                            <div class="box-body">  
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>INFORME</th>       
+                                                    <th>OBSERVACIONES</th>                                                                                                                                      
+                                                    <th colspan="2">&nbsp;</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr v-for="(item,k) in TablaInformesImportados" :key="k"  @click="selectPosTablaInformesImportables(k)">     
+                                                    <td v-if="item.visible && itemMetodo == item.metodo"> {{ item.numero_formateado}}</td>   
+                                                    <td v-if="item.visible && itemMetodo == item.metodo">
+                                                        <div v-if="indexTablaInformesImportados == k && itemMetodo == item.metodo">       
+                                                              <input type="text" v-model="TablaInformesImportados[k].observaciones_final" maxlength="10">        
+                                                        </div>   
+                                                        <div v-else-if="itemMetodo == item.metodo">
+                                                               {{ item.observaciones_final }}
+                                                        </div>                                   
+                                                    </td>          
+                                                                                                                                                                
+                                                    <td v-if="item.visible && itemMetodo == item.metodo"> <a  @click="RemoveTablaInformeiImportable(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a></td>
+                                                    
+                                                </tr>   
+                                                <tr v-for="fila in 4" >
+                                                    <td colspan="6" style="background: #FFFFFF"> &nbsp;</td>                                                  
+                                                </tr>                                             
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            
+                            </div>
+                        </div>
+                </div>
+                <!-- / Informes importados -->
                 <div class="box box-danger">
                     <div class="box-body">
                         <div class="form-group">
@@ -501,6 +597,11 @@ export default {
       required : false
       },
 
+      informes_importados_data : {
+      type : [ Array ],  
+      required : false
+      },
+
       responsables_data : {
       type : [ Array ],  
       required : false
@@ -531,17 +632,20 @@ export default {
         informes:[],
         informe_sel:false,
 
-        filasBlanco:'5',
         informe_ri_parte:'',
         TablaInformesRi:[],
         TablaInformesPm:[],
         TablaInformesLp:[],
         TablaInformesUs:[],
-        indexTablaInformesRi:'0',
-        indexTablaInformesPm:'0',
-        indexTablaInformesLp:'0',
-        indexTablaInformesUs:'0',
-
+        TablaInformesImportados:[],
+        TablaMetodosImportados:[],
+        TablaServicios:[],
+        indexTablaInformesRi:'-1',
+        indexTablaInformesPm:'-1',
+        indexTablaInformesLp:'-1',
+        indexTablaInformesUs:'-1',
+        indexTablaInformesImportados:'-1',
+        indexTablaServicios:'-1',
         cms:[],
 
     }},
@@ -619,6 +723,12 @@ export default {
 
         },
 
+       selectPosTablaInformesImportables :function(index){
+
+            this.indexTablaInformesImportados = index ;            
+
+        },
+
         selectPosTablaInformesPm :function(index){
 
             this.indexTablaInformesPm = index ;            
@@ -636,6 +746,11 @@ export default {
             this.indexTablaInformesUs = index ;            
 
         },
+
+        selectPosTablaServicios : function(index){
+
+            this.indexTablaServicios = index;
+        },
                 
         getCms: function(){
              
@@ -652,11 +767,10 @@ export default {
             axios.defaults.baseURL = this.url ;
             var urlRegistros = 'informes/ot/' + this.otdata.id + '/pendientes_parte_diario' + '?api_token=' + Laravel.user.api_token;        
             axios.get(urlRegistros).then(response =>{
+            console.log(response.data);
             this.informes = response.data
-            console.log('trajo los informes pendiente partes');
             });
                
-
         },
 
         getInformesPendientesYEditableParte: function(){
@@ -666,6 +780,42 @@ export default {
              axios.get(urlRegistros).then(response =>{
              this.informes = response.data
              console.log(this.informes_ri_data)   
+
+                // Informes importados
+
+                this.informes_importados_data.forEach(function(item_data){
+
+
+                    this.informes.forEach(function(item_informe){                         
+
+                        if(item_data.informe_importado_id == item_informe.id)
+
+                                item_informe.informe_sel = true;
+
+                        });                    
+                    
+                    }.bind(this));
+
+                    this.informes_importados_data.forEach(function(item){
+
+                        let visible_sn = true;
+                        this.AddMetodoImportados(item.metodo);
+                        if( !item.observaciones_final){
+
+                            visible_sn = false
+
+                        }
+
+                        this.TablaInformesImportados.push({ 
+
+                            id  : item.informe_importado_id,
+                            metodo             :item.metodo,
+                            numero_formateado  : item.numero_formateado,              
+                            observaciones_original: item.observaciones_original, 
+                            observaciones_final: item.observaciones_final,            
+                            visible : visible_sn,   
+                            }); 
+                        }.bind(this));  
 
                     // Informe Ri
 
@@ -681,8 +831,6 @@ export default {
                             });                    
                       
                     }.bind(this));
-
-
 
                     this.informes_ri_data.forEach(function(item){
 
@@ -791,7 +939,6 @@ export default {
 
                        this.informes_us_data.forEach(function(item_data){
 
-
                             this.informes.forEach(function(item_informe){                         
 
                                 if(item_data.informe_id == item_informe.id)
@@ -826,19 +973,15 @@ export default {
                                 id      : item.informe_id,
                                 visible : visible_sn,   
                             
-
                                 }); 
 
                         }.bind(this));
-
              });
                 
- 
          },
 
         addResponsable(index) {
 
-            
             if(!this.operador){
                 toastr.error("El campo Operador es obligatorio");         
                  return;            
@@ -857,13 +1000,19 @@ export default {
                 this.operador='';      
                 this.responsabilidad ='';  
             
-
             },
 
         RemoveResponsable(index) {
           
            this.TablaResponsables.splice(index, 1);               
             
+        },
+
+        RemoveTablaInformeiImportable(index){
+            
+            this.TablaInformesImportados[index].visible = false;
+            this.TablaInformesImportados[index].observaciones_final=''; 
+
         },
 
         RemoveTablaInformeRi(index){
@@ -895,54 +1044,161 @@ export default {
         },
 
         getInforme(index){
+
             console.log(this.informes[index]);
 
             if(this.informes[index].informe_sel){
+               
+                if(this.informes[index].importable_sn){
+                    this.getInformesImportado(this.informes[index].id,index);
 
-                switch  (this.informes[index].metodo_ensayos.metodo){
+                }else{
+                    
+                    switch  (this.informes[index].metodo){
+    
+                      case 'RI' : this.getInformeRI(this.informes[index].id,index);break;
+    
+                      case 'PM' : this.getInformePM(this.informes[index].id,index);break;
+    
+                      case 'LP' : this.getInformeLP(this.informes[index].id,index);break;
+    
+                      case 'US' : this.getInformeUs(this.informes[index].id,index);break;
 
-                  case 'RI' : this.getInformeRI(this.informes[index].id,index);break;
+                    }
+  
+                }
+                 this.getOtServicio(this.informes[index].metodo_ensayo_id);
 
-                  case 'PM' : this.getInformePM(this.informes[index].id,index);break;
+            } else{
 
-                  case 'LP' : this.getInformeLP(this.informes[index].id,index);break;
+                if(this.informes[index].importable_sn){
 
-                  case 'US' : this.getInformeUs(this.informes[index].id,index);break;
+                    let id  = this.informes[index].id ;   
+    
+                    for( var i = 0; i < this.TablaInformesImportados.length; i++){ 
+                        if (this.TablaInformesImportados[i].id == id) {
+                                let metodo = this.TablaInformesImportados[i].metodo;
+                                let existeMetodo = false;
+                                this.TablaInformesImportados.splice(i, 1); 
+                                this.TablaInformesImportados.forEach(function(item){
+                                  if(item.metodo == metodo){
+                                        existeMetodo = true;
+                                  }
+
+                                });
+                                if(!existeMetodo){
+
+                                    this.TablaMetodosImportados.splice(this.TablaMetodosImportados.indexOf(metodo),1);
+                                }
+
+                            i--;
+                        }
+                    }  
+
+                }else{
+
+                    let id  = this.informes[index].id ;   
+    
+                    for( var i = 0; i < this.TablaInformesRi.length; i++){ 
+                        if (this.TablaInformesRi[i].id == id) {
+                                this.TablaInformesRi.splice(i, 1); 
+                            i--;
+                        }
+                    }  
+    
+                    for( var i = 0; i < this.TablaInformesPm.length; i++){ 
+                        if (this.TablaInformesPm[i].id == id) {
+                                this.TablaInformesPm.splice(i, 1); 
+                            i--;
+                        }
+                    }   
+                    
+                    for( var i = 0; i < this.TablaInformesLp.length; i++){ 
+                        if (this.TablaInformesLp[i].id == id) {
+                                this.TablaInformesLp.splice(i, 1); 
+                            i--;
+                        }
+                    } 
+    
+                    for( var i = 0; i < this.TablaInformesUs.length; i++){ 
+                        if (this.TablaInformesUs[i].id == id) {
+                                this.TablaInformesUs.splice(i, 1); 
+                            i--;
+                        }
+                    } 
 
                 }
-
-            }  else{
                 
-                let id  = this.informes[index].id ;   
-
-                for( var i = 0; i < this.TablaInformesRi.length; i++){ 
-                    if (this.TablaInformesRi[i].id == id) {
-                         this.TablaInformesRi.splice(i, 1); 
-                        i--;
-                    }
-                }  
-
-                for( var i = 0; i < this.TablaInformesPm.length; i++){ 
-                    if (this.TablaInformesPm[i].id == id) {
-                         this.TablaInformesPm.splice(i, 1); 
-                        i--;
-                    }
-                }   
-                
-                for( var i = 0; i < this.TablaInformesLp.length; i++){ 
-                    if (this.TablaInformesLp[i].id == id) {
-                         this.TablaInformesLp.splice(i, 1); 
-                        i--;
-                    }
-                } 
-
-                for( var i = 0; i < this.TablaInformesUs.length; i++){ 
-                    if (this.TablaInformesUs[i].id == id) {
-                         this.TablaInformesUs.splice(i, 1); 
-                        i--;
-                    }
-                } 
             }
+
+        },
+
+        getInformesImportado(id,index){
+
+            axios.defaults.baseURL = this.url ;
+            var urlRegistros = 'partes/informe_importado/' + id + '?api_token=' + Laravel.user.api_token;        
+            axios.get(urlRegistros).then(response =>{
+
+                console.log(response.data);
+                console.log('entro en informes importados');
+                let informe_importado_parte = response.data;
+            
+                this.TablaInformesImportados.push({
+                    
+                    id:id,
+                    numero_formateado : this.informes[index].numero_formateado,
+                    visible: true,
+                    metodo:this.informes[index].metodo,
+                    observaciones_original:informe_importado_parte.observaciones,
+                    observaciones_final:informe_importado_parte.observaciones
+
+                })
+
+               this.AddMetodoImportados(this.informes[index].metodo);
+
+            })
+
+        },
+
+        getOtServicio(metodo_ensayo_id){
+
+            axios.defaults.baseURL = this.url ;
+            var urlRegistros = 'ot_servicios/ot/' + this.otdata.id + '/metodo_ensayo/' + metodo_ensayo_id + '?api_token=' + Laravel.user.api_token;        
+            axios.get(urlRegistros).then(response =>{
+                
+                let ot_servicios = response.data;
+                console.log('ot_servicios:' ,ot_servicios);
+              
+
+                ot_servicios.forEach(function(item) {
+
+                    console.log(this.TablaServicios.indexOf(item.id));
+
+                   if(this.TablaServicios.findIndex(elemento => elemento.id === item.id) != -1){
+                       this.TablaServicios[this.TablaServicios.findIndex(elemento => elemento.id ===item.id)].cant +=1; 
+                   }else{
+                       console.log(item.id);
+                       console.log(item.id);
+                       this.TablaServicios.push({
+
+                           id : item.id,
+                           metodo: item.metodo,
+                           descripcion:item.servicio_descripcion,
+                           visible : true,
+                           cant: 1,
+
+                       })
+                   }
+                    
+                }.bind(this));
+                
+            });
+
+        },
+
+        AddMetodoImportados(metodo){
+
+            this.TablaMetodosImportados.indexOf(metodo) === -1 ? this.TablaMetodosImportados.push(metodo) : console.log("This item already exists");
 
         },
 
@@ -969,7 +1225,6 @@ export default {
 
              });  
                     
-             
             });
            
         },
@@ -1037,8 +1292,6 @@ export default {
             axios.defaults.baseURL = this.url ;
             var urlRegistros = 'partes/informe_us/' + id + '?api_token=' + Laravel.user.api_token;        
             axios.get(urlRegistros).then(response =>{
-            console.log(urlRegistros);
-            console.log(response.data);
             this.informe_us_parte = response.data 
             
             this.informe_us_parte.forEach(function(item){                    
@@ -1096,13 +1349,9 @@ export default {
                     if((item.costura_final || item.pulgadas_final || item.placas_final) && !item.cm ){
 
                         valido =  false;
-                        console.log(item.costura_final);
-                        console.log(item.pulgadas_final);
-                        console.log(item.placas_final);
-                        console.log(item.cm);
                     }
                 })
-                console.log('valido cms');
+             
                 return valido;
 
             },
@@ -1152,7 +1401,8 @@ export default {
                 'informes_ri'          :this.TablaInformesRi,
                 'informes_pm'          :this.TablaInformesPm,
                 'informes_lp'          :this.TablaInformesLp,     
-                'informes_us'          :this.TablaInformesUs       
+                'informes_us'          :this.TablaInformesUs,
+                'informes_importados'  :this.TablaInformesImportados       
     
           }
           
@@ -1214,10 +1464,10 @@ export default {
                 'informes_ri'          :this.TablaInformesRi,
                 'informes_pm'          :this.TablaInformesPm,        
                 'informes_lp'          :this.TablaInformesLp,
-                'informes_us'          :this.TablaInformesUs                  
+                'informes_us'          :this.TablaInformesUs,
+                'informes_importados'  :this.TablaInformesImportados                   
           }}
-          
-      
+           
         ).then(response => {
           this.response = response.data
           toastr.success('Parte Diario con fecha' +  this.fecha + ' fue actualizado con éxito ');

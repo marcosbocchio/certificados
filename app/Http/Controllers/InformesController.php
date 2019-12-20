@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\OtProcedimientosPropios;
 use App\InformesView;
-
-
+use App\InformesImportados;
+use \stdClass;
 
 class InformesController extends Controller
 {
@@ -55,8 +55,6 @@ class InformesController extends Controller
                      ->orderBy('fecha','DESC')           
                      ->paginate(10);
       
-
-
     }
 
     public function OtInformesTotal($ot_id){
@@ -222,35 +220,18 @@ class InformesController extends Controller
 
      public function OtInformesPendienteParteDiario($ot_id){
 
-        return  informe::with('metodoEnsayos')
-                         ->join('metodo_ensayos','metodo_ensayos.id','=','informes.metodo_ensayo_id')
-                         ->where('parte_id',null)
-                         ->where('ot_id',$ot_id)
-                         ->selectRaw('informes.* , 0 as informe_sel,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada')
-                         ->orderBy('informes.id','desc')
-                         ->get();
+        $informes = DB::select('CALL InformesPendientesSinParteDiario(?,?)',array($ot_id,0));
+        
+        return $informes;
+
+
      }
 
      public function OtInformesPendienteEditableParteDiario($ot_id,$parte_id){
 
-        $infomes_pendientes =informe::with('metodoEnsayos')
-                                        ->join('metodo_ensayos','metodo_ensayos.id','=','informes.metodo_ensayo_id')
-                                        ->where('parte_id',null)
-                                        ->where('ot_id',$ot_id)
-                                        ->selectRaw('informes.* , 0 as informe_sel,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada')
-                                        ->orderBy('informes.id','desc');
+        $infomes_pendientes = DB::select('CALL InformesPendientesSinParteDiario(?,?)',array($ot_id,$parte_id));
                                         
-        $infomes = informe::with('metodoEnsayos')
-                                    ->join('metodo_ensayos','metodo_ensayos.id','=','informes.metodo_ensayo_id')
-                                   
-                                    ->where('parte_id',$parte_id)
-                                    ->where('ot_id',$ot_id)
-                                    ->selectRaw('informes.* , 0 as informe_sel,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada')
-                                    ->orderBy('informes.id','desc')
-                                    ->union($infomes_pendientes)
-                                    ->get();
-
-        return $infomes;
+        return $infomes_pendientes;
      }
 
 

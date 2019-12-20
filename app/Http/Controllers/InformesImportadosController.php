@@ -131,6 +131,23 @@ class InformesImportadosController extends Controller
         }
     }
 
+    public function setParteId($parte_id,$informe_importado_id){
+
+      $informe_importado  = InformesImportados::find($informe_importado_id);
+      $informe_importado->parte_id = $parte_id;
+      $informe_importado->save();
+   }
+
+   public function deleteParteId($parte_id){
+
+    $informes_importados  = InformesImportados::where('parte_id',$parte_id)->get();
+    foreach ($informes_importados as $informe_importado) {
+        $informe_importado->parte_id = null;
+        $informe_importado->save();
+    }
+   
+ }
+
     /**
      * Remove the specified resource from storage.
      *
