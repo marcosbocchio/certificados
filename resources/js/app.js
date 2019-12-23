@@ -251,6 +251,7 @@ state: {
         process.env.MIX_URL_PRO :
         process.env.MIX_URL_DEV,
         
+        obra_informe:'',
         contratistas:[],
         provincias:[],
         localidades:[],
@@ -291,6 +292,19 @@ state: {
     },
 
 actions : {
+
+        loadObraInformes({
+          commit},payload) {
+          axios.defaults.baseURL = store.state.url ;
+          var urlRegistros = 'informes/' + payload.informe_id + '/importado_sn/' + payload.importado_sn  +'?api_token=' + Laravel.user.api_token;        
+          return new Promise((resolve, reject) => {         
+          axios.get(urlRegistros).then((response) => {
+            console.log(response.data);
+            commit('getObraInforme', response.data)   
+            resolve()       
+            })        
+          })
+        },
 
         loadParametrosGenerales({
           commit},codigo) {
@@ -663,6 +677,10 @@ actions : {
 
     },
     mutations: {
+
+      getObraInforme(state, obra_informe) {
+        state.obra_informe = obra_informe
+      },
 
       getParametroGeneral(state, ParametroGeneral) {
         state.ParametroGeneral = ParametroGeneral

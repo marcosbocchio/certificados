@@ -30,7 +30,7 @@
                                <div class="form-group" > 
                                     <label for="numero">Informe N° *</label>
                                     <div class="input-group">
-                                        <span class="input-group-addon" style=" background-color: #eee;">{{Registro.metodo_ensayo.metodo}}</i></span>
+                                        <span class="input-group-addon" style=" background-color: #eee;">{{Registro.metodo_ensayos.metodo}}</span>
                                         <input type="text" v-model="Registro.numero" class="form-control" id="numero" @change="formatearNumero(Registro.numero,3)" min="1" max="999">
                                     </div>
                                </div>                      
@@ -115,7 +115,7 @@ components: {
             'prefijo'  : '',
             'observaciones':'',
             'path':'',
-            'metodo_ensayo' : {},     
+            'metodo_ensayos' : {},     
             'ejecutor_ensayo' :{}
          },
          numero_generado:'',
@@ -154,7 +154,7 @@ components: {
             'prefijo'  : '',
             'observaciones':'',
             'path':'',
-            'metodo_ensayo' : this.metodo_ensayo,
+            'metodo_ensayos' : this.metodo_ensayo,
             'ejecutor_ensayo' :{}
 
          }

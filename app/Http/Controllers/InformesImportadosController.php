@@ -67,7 +67,7 @@ class InformesImportadosController extends Controller
         }
 
         $informe_importados->ot_id = $request->ot_id;
-        $informe_importados->metodo_ensayo_id = $request->metodo_ensayo['id'];
+        $informe_importados->metodo_ensayo_id = $request->metodo_ensayos['id'];
         $informe_importados->fecha =date('Y-m-d',strtotime($request->fecha)); 
         $informe_importados->numero = $request->numero;
         $informe_importados->prefijo = $request->prefijo;
@@ -99,7 +99,7 @@ class InformesImportadosController extends Controller
     {
         
         return InformesImportados::where('id',$id)
-                                  ->with('metodo_ensayo')
+                                  ->with('metodoEnsayos')
                                   ->with('ejecutorEnsayo')
                                   ->first();
     }

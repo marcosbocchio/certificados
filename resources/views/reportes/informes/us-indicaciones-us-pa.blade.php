@@ -334,7 +334,9 @@ b {
     </table>
 
    
-  <div class="page-break"></div>
+    @if($informe_us->path1_indicacion || $informe_us->path2_indicacion || $informe_us->path2_indicacion || $informe_us->path2_indicacion)
+        <div class="page-break"></div>
+    @endif
 
    <table style="text-align: center;" width="100%">
         <tbody>

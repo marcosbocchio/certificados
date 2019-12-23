@@ -22,7 +22,7 @@ class AddColumnsObservacionesInicialFinalToParteDetalleTable extends Migration
             $table->string('observaciones_final',250)
                 ->nullable()
                 ->after('observaciones_original');
-       });
+        });
       
     }
 

@@ -257,7 +257,7 @@ b {
 
 
 <main>
-
+    
     @foreach ($informes_us_me as $informe_us_me)   
 
             @php 
@@ -341,7 +341,11 @@ b {
             @endwhile           
     @endforeach
 
-   <div class="page-break"></div>
+
+  @if($informe_us->path1_indicacion || $informe_us->path2_indicacion || $informe_us->path2_indicacion || $informe_us->path2_indicacion)
+       
+        <div class="page-break"></div>
+  @endif
    
    <table style="text-align: center;" width="100%">
         <tbody>

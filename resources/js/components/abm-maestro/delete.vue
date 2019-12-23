@@ -21,7 +21,7 @@
 </template>
 
 <script>
- import {mapState} from 'vuex'
+import {mapState} from 'vuex'
 export default {
   props: {
       fillRegistro: {'id':'','registro':''},
@@ -48,8 +48,6 @@ export default {
       }).catch(error => {
         this.errors = error.response.data
         toastr.error("No se pudo eliminar el registro seleccionado.", "Error al eliminar :");
-        console.log('hubo un error');
-         console.log(error);
       });
       $('#delete-registro').modal('hide');
     },

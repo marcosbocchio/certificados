@@ -8,7 +8,7 @@
             <th>N° Int.</th>
             <th>Equipo</th>
             <th>Fuente</th>
-            <th>Curie</th>
+            <th>Actividad</th>
             <th>N° OT</th>
             <th>Cliente</th>
             <th>Ubicación</th>
@@ -21,7 +21,7 @@
             <td>{{ registro.equipo.codigo }}</td>  
             <td v-if="registro.interno_fuente" >{{ registro.interno_fuente.nro_serie }} - {{registro.interno_fuente.fuente.codigo}}</td>   
             <td v-else ></td> 
-            <td v-if="registro.interno_fuente">{{ registro.interno_fuente.curie_actual }}</td>
+            <td v-if="registro.interno_fuente">{{ registro.interno_fuente.curie_actual }}&nbsp; Ci</td>
             <td v-else></td>
             <td v-if="registro.ot" >{{ registro.ot.numero }}</td>   
             <td v-else ></td> 

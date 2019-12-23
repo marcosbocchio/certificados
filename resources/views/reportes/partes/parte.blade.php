@@ -7,17 +7,17 @@
 
 <style>
 
-@page { margin:272px 30px 120px 60px !important;
+@page { margin:191px 30px 140px 60px !important;
         padding: 0px 0px 0px 0px !important; }
 
 body {
-    margin: -1px 1px 0px 1px;
+    margin: 0px 1px 0px 1px;
     padding: 0 0 0 0;
 }
 
 header {
     position:fixed;
-    top: -244px; 
+    top: -163px; 
    
     }
 
@@ -62,8 +62,7 @@ b {
     margin-left: 2px;
 }
 </style>
-
-<body class="bordered" style="border-top: none;">   
+ <body class="bordered" style="border-top: none;">  
 
 <header>
     <table style="text-align: center;" width="100%" class="bordered">
@@ -128,57 +127,7 @@ b {
                         </tbody>
                     </table>          
                 </td>
-            </tr> 
-            <tr>
-                <td style="border-bottom: 2px solid black">
-                    <table width="100%"  >
-                        <tbody> 
-                            <tr>                         
-                                <td style="font-size: 14px;height: 20px; text-align: center;" colspan="2"><b>RESPONSABLES</td>                                       
-                            </tr>   
-                                @foreach ($responsables as $responsable)
-
-                                    @if($loop->odd)
-                                    
-                                        <tr>                                      
-                                         <td style="font-size: 12px;height: 20px; width: 450px;" ><b>{{$responsable->responsabilidad}}: </b>{{$responsable->nombre}}</td>      
-                                    @else
-                                         <td style="font-size: 12px;height: 20px;" ><b>{{$responsable->responsabilidad}}: </b>{{$responsable->nombre}}</td>         
-                                        </tr>  
-
-                                    @endif                                                           
-
-                                    @if ($loop->last && $loop->odd)
-                                        <td style="font-size: 12px;height: 20px;"></td> 
-                                        </tr>                                         
-                                    @endif  
-                                @endforeach               
-                        </tbody>
-                    </table>
-                </td>
-            </tr> 
-            <tr>
-                <td >
-                    <table width="100%" >
-                        <tbody>
-                            <td style="font-size: 12px;height: 20px; width: 233px;"><b>INFORMES DEL PARTE: </b>
-
-                                @foreach ($metodos_informe as $item)
-
-                                    @if (!$loop->first)
-                                    ,
-                                    @endif 
-
-                                    {{$item->numero_formateado}}
-                                    
-                                @endforeach
-
-                            </td> 
-                        </tbody>
-                    </table>
-                </td>
-            </tr>  
-                   
+            </tr>                    
         </tbody>
     </table>    
 </header>
@@ -186,12 +135,12 @@ b {
 <footer>
     <table style="text-align: center" width="100%" class="bordered">
         <tbody>
-            <tr>
+            <tr> 
                 <td>
                     <table width="100%" style="border-collapse: collapse;" >
-                        <tbody>                        
+                        <tbody>                           
                             <tr>                                
-                                <td style="font-size: 12px;"  class="bordered-td"><b>OBSERVACIONES: </b>{{$parte->observaciones}}</td>                                  
+                                <td style="font-size: 12px;height: 30px;" colspan="6" rowspan="2" class="bordered-td"><b>Observaciones: </b>{{$parte->observaciones}}</td>                                  
                             </tr>                         
                         </tbody>
                     </table>
@@ -228,9 +177,67 @@ b {
 </footer>
 
 <main>
-    <table width="100%" style="margin: -1px -3px 0px -2px;">
-        <tbody>                    
+ 
+    <table width="100%" style="padding: 0 -4px 0 -4px;">
+        <tbody>
+             <tr>
+                <td>
+                    <table width="100%" style="border-collapse: collapse;">
+                        <tbody> 
+                            <tr>                         
+                                <td style="font-size: 14px;height: 20px; text-align: center;" colspan="2"><b>RESPONSABLES</td>                                       
+                            </tr>   
+                            
+                                @foreach ($responsables as $responsable)
 
+                                    @if($loop->odd)
+                                    
+                                        <tr>                                      
+                                        <td style="font-size: 12px;height: 20px; width: 450px;"><b style="margin-left: 6px;">{{$responsable->responsabilidad}}: </b>{{$responsable->nombre}}</td>      
+                                    @else
+                                        <td style="font-size: 12px;height: 20px;"><b>{{$responsable->responsabilidad}}: </b>{{$responsable->nombre}}</td>         
+                                        </tr>  
+
+                                    @endif                                                           
+
+                                    @if ($loop->last && $loop->odd)
+                                        <td style="font-size: 12px;height: 20px;">&nbsp;</td> 
+                                        </tr>                                         
+                                    @endif  
+                                @endforeach   
+                                        
+                        </tbody>
+                    </table>
+                </td>
+             </tr>
+             <tr>
+                 <td class="bordered">
+                    <table width="100%">
+                        <tbody>
+                            <tr>
+                                <td style="font-size: 12px;height: 20px; width: 233px;"><b>INFORMES DEL PARTE: </b>
+
+                                    @foreach ($metodos_informe as $item)
+
+                                        @if (!$loop->first)
+                                        ,
+                                        @endif 
+
+                                        {{$item->numero_formateado}}
+                                        
+                                    @endforeach
+
+                                </td> 
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+             </tr>
+        </tbody>
+    </table>
+ 
+    <table width="100%" style="margin-top: -5px;">
+        <tbody>                          
             {{$ExisteRI = false}} 
             @foreach ($parte_detalle as $item)
 
@@ -242,7 +249,7 @@ b {
 
             @if ($ExisteRI)       
                 <tr>                         
-                    <td style="font-size: 13px;height: 30px;border-top: 1px dashed black;" colspan="5"><b style="margin-left: 8px;">METODO ENSAYO: RI </b></td>                                         
+                    <td style="font-size: 13px;height: 30px;border-top: 1px dashed black;" colspan="5"><b style="margin-left: 6px;">METODO ENSAYO: RI </b></td>                                         
                 </tr>  
                 @foreach ($parte_detalle as $item)
                     @if ($item->metodo == 'RI')                               

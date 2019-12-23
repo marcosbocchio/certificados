@@ -17,7 +17,7 @@
                 <div class="col-md-6">
                     <div class="form-group" >
                         <label for="obra">Obra N°</label>
-                        <input type="number" v-model="otdata.obra" class="form-control" id="obra" disabled>
+                        <input type="number" v-model="obra" class="form-control" id="obra" :disabled="otdata.obra">
                     </div>                            
                 </div>
                 <div class="col-md-6">
@@ -32,19 +32,40 @@
 </template>
 
 <script>
+
 import {mapState} from 'vuex';
 export default {
     
     props :{
+
       otdata : {
-      type : Object,
-      required : true
+        type : Object,
+        required : true
       },
+
+      informedata: { 
+
+          type :Object,
+          required:true
+      },
+    
+     editmode : {
+        type : Boolean,
+        required : false,    
+        default : false
     },
+     
+     importado_sn : {
+        type : Boolean,
+        required : false,    
+        default : false
+     }
+     },
 
     data() {return {
 
-        cliente:''
+        cliente:'',
+        obra:'',
 
     }},
 
@@ -53,13 +74,46 @@ export default {
       this.getCliente();  
     },
 
+    mounted : function() {
+
+        this.setObra()
+
+    },
+
+    watch :{
+
+      obra : function(val){
+
+          this.$emit('set-obra',val)
+
+      }
+    },
+
     computed :{
 
-        ...mapState(['url','AppUrl']),     
+        ...mapState(['url','AppUrl','obra_informe']),     
        
      },
 
     methods : {
+
+        setObra : function(){
+
+       if(this.editmode){
+           console.log(this.importado_sn);
+           this.$store.dispatch('loadObraInformes',{ informe_id: this.informedata.id , importado_sn: this.importado_sn}).then(response => {
+
+               this.obra = this.obra_informe
+               
+           })
+
+       }else{
+
+           this.obra =  this.otdata.obra
+
+       }
+
+        },
 
         getCliente : function(){
            

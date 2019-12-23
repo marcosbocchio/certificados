@@ -2,7 +2,7 @@
     <div class="row">
        <div class="col-md-12">
            <form @submit.prevent="editmode ?  Update() : Store()"  method="post">
-               <informe-header :otdata="otdata"></informe-header>
+               <informe-header :otdata="otdata" @set-obra="setObra($event)"></informe-header>
                <div class="box box-danger">
                   <div class="box-body">
                        <div class="col-md-3">
@@ -486,6 +486,7 @@ data() {return {
         en: en,
         es: es,
 
+        obra:'',
         fecha: new Date(),
         numero_inf:'',
         numero_inf_generado:'',
@@ -629,6 +630,11 @@ data() {return {
 
         },      
 
+    setObra : function(value){
+
+            this.obra = value;
+        },
+
      getNumeroInforme:function(){            
            
             if(!this.editmode) {
@@ -745,6 +751,7 @@ data() {return {
               url : urlRegistros,    
               data : {             
                 'ot'              : this.otdata,
+                'obra'            : this.obra,
                 'ejecutor_ensayo' : this.ejecutor_ensayo,  
                 'metodo_ensayo'   : this.metodo,  
                 'fecha':          this.fecha,
@@ -814,6 +821,7 @@ data() {return {
               url : urlRegistros,    
               data : {
                'ot'              : this.otdata,
+                'obra'            : this.obra,
                 'ejecutor_ensayo' : this.ejecutor_ensayo,  
                 'metodo_ensayo'   : this.metodo,  
                 'fecha':          this.fecha,

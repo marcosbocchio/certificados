@@ -7,7 +7,7 @@
 <div id="app">
 
    <ot-informes
-    :ot_id_data = "{{$id}}"
+    :ot_data = '{{$ot}}'
     :ot_metodos_ensayos_data ="{{$ot_metodos_ensayos}}"
    
    ></ot-informes>

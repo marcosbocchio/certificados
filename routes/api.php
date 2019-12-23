@@ -108,6 +108,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('procedimientos_informes/ot/{id_ot}/metodo/{metodo}', 'DocumentacionesController@ProcedimientosMetodo');
     Route::get('informes/ot/{ot_id}/total', 'InformesController@OtInformesTotal');   
     Route::get('informes/ot/{ot_id}/paginate', 'InformesController@paginate');   
+    Route::get('informes/{id}/importado_sn/{importado_sn}', 'InformesController@getObraInforme');   
     Route::put('informes/{id}/firmar', 'InformesController@firmar');   
     Route::get('informes/ot/{ot_id}/pendientes_parte_diario', 'InformesController@OtInformesPendienteParteDiario');
     Route::get('informes/ot/{ot_id}/parte/{parte_id}/pendientes_editables_parte_diario', 'InformesController@OtInformesPendienteEditableParteDiario');

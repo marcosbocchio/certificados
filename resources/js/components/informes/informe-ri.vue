@@ -2,7 +2,7 @@
    <div class="row">
        <div class="col-md-12">
            <form @submit.prevent="editmode ?  Update() : Store()"  method="post">
-               <informe-header :otdata="otdata"></informe-header>
+               <informe-header :otdata="otdata" :informedata="informedata" :editmode="editmode" @set-obra="setObra($event)"></informe-header>
                <div class="box box-danger">
                   <div class="box-body">
                         <div class="col-md-3">
@@ -594,7 +594,8 @@ export default {
 
       informedata : {
       type : Object,
-      required : false
+      required : false,
+      default : function () { return {}}
       },
 
       informe_ridata : {
@@ -679,7 +680,7 @@ export default {
             fullPage: false,         
 
            // Formulario encabezado
-
+            obra:'',
             fecha: new Date(),
             numero_inf:'',
             numero_inf_generado:'',
@@ -832,8 +833,8 @@ export default {
        fecha : function(val) {
 
               if(this.interno_fuente){
-                  let fecha_mysql = moment(this.fecha).format('MMMM Do YYYY, h:mm:ss a');
-                  this.$store.dispatch('loadCurie',{ 'interno_fuente_id' : this.interno_fuente.id, 'fecha_final': fecha_mysql }).then(response => {
+                
+                  this.$store.dispatch('loadCurie',{ 'interno_fuente_id' : this.interno_fuente.id, 'fecha_final': this.fecha_mysql }).then(response => {
 
                          this.actividad = this.curie;
 
@@ -850,7 +851,12 @@ export default {
 
            HabilitarClonarPasadas(){
                 this.EnableClonarPasadas = (this.isGasoducto && this.pasada=='1' && this.TablaDetalle.length);
-           },   
+           },  
+           
+           fecha_mysql : function(){
+
+               return moment(this.fecha).format('MMMM Do YYYY, h:mm:ss a');
+           },
            
            numero_inf_code : function()  {
 
@@ -915,6 +921,11 @@ export default {
 
         },       
 
+        setObra : function(value){
+
+            this.obra = value;
+        },
+
         getNumeroInforme:function(){            
            
             if(!this.editmode) {
@@ -961,13 +972,13 @@ export default {
                 
                });      
 
-                if(this.fuentePorInterno) {
-                    this.$store.dispatch('loadCurie',{ 'interno_fuente_id' : this.interno_equipo.interno_fuente.id, 'fecha_final': this.informedata.fecha }).then(response => {
+               if(this.fuentePorInterno) {
+                    this.$store.dispatch('loadCurie',{ 'interno_fuente_id' : this.interno_equipo.interno_fuente.id, 'fecha_final': this.fecha_mysql }).then(response => {
         
                         this.actividad = this.curie;
                     
                     });
-                }
+            }
 
                
             }else{
@@ -1316,6 +1327,7 @@ export default {
                     data : {
                         
                         'ot'              : this.otdata,
+                        'obra'            : this.obra,
                         'ejecutor_ensayo' : this.ejecutor_ensayo,  
                         'metodo_ensayo'   : this.metodo,  
                         'fecha':          this.fecha,
@@ -1402,6 +1414,7 @@ export default {
                     data : {
                         
                         'ot'              : this.otdata,
+                        'obra'            : this.obra,
                         'ejecutor_ensayo' : this.ejecutor_ensayo,  
                         'metodo_ensayo'   : this.metodo,  
                         'fecha':          this.fecha,

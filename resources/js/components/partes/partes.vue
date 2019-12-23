@@ -84,7 +84,7 @@
                             <div class="form-group">  
                                  <p>&nbsp;</p>                  
                                 <span>
-                                  <a title="Agregar responsables" @click="addResponsable()"> <app-icon img="plus-circle" color="black"></app-icon> </a>                        
+                                  <a title="Agregar responsables" @click="addResponsable(operador.id)"> <app-icon img="plus-circle" color="black"></app-icon> </a>                        
                                 </span>
                             </div>
                         </div>  
@@ -980,7 +980,22 @@ export default {
                 
          },
 
-        addResponsable(index) {
+        existeResponsable : function(id){
+
+            let existe = false;
+            this.TablaResponsables.forEach(function (responsable) {           
+               
+                if(responsable.user.id == id){              
+                    existe = true ;
+                }
+                
+            });
+
+            return existe;
+        },
+
+
+        addResponsable(id) {
 
             if(!this.operador){
                 toastr.error("El campo Operador es obligatorio");         
@@ -988,17 +1003,23 @@ export default {
             }
 
             if(!this.responsabilidad){
-                    toastr.error("El campo Responsabilidad es obligatorio");         
-                    return;            
-            }        
+                toastr.error("El campo Responsabilidad es obligatorio");         
+                return;            
+            }     
+            
+            if(this.existeResponsable(id)){
 
-                this.TablaResponsables.push({ 
-                    user :this.operador,             
-                    responsabilidad  : this.responsabilidad,           
-                        
-                    });
-                this.operador='';      
-                this.responsabilidad ='';  
+                toastr.error('El responsable ya existe en el parte');  
+                return;      
+            }
+
+            this.TablaResponsables.push({ 
+                user :this.operador,             
+                responsabilidad  : this.responsabilidad,           
+                    
+                });
+            this.operador='';      
+            this.responsabilidad ='';  
             
             },
 

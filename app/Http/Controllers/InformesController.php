@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Ots;
 use App\Informe;
 use App\MetodoEnsayos;
 use App\DiametrosEspesor;
@@ -21,6 +22,8 @@ class InformesController extends Controller
         $header_titulo = "Informes OT";
         $header_descripcion ="Alta | Modificación";    
         $user = auth()->user()->name;
+
+        $ot = Ots::find($id);
         
         $ot_metodos_ensayos = DB::table('ots')
                                    ->join('ot_servicios','ot_servicios.ot_id','=','ots.id')
@@ -31,7 +34,7 @@ class InformesController extends Controller
                                    ->distinct()
                                    ->get();
 
-        return view('ot-informes.index',compact('id',
+        return view('ot-informes.index',compact('ot',
                                         'ot_metodos_ensayos',                                   
                                         'user',                                       
                                         'header_titulo',
@@ -161,11 +164,12 @@ class InformesController extends Controller
         {
              $user_id = $userId = Auth::id();    
         }
-       
+        
         $metodo_ensayo = MetodoEnsayos::where('metodo',$request->metodo_ensayo)->first();
       
         $informe->ot_id  = $request->ot['id'];
-
+        $informe->obra + $request->obra;
+        
         If(!isset($request->procedimiento['ot_procedimientos_propios_id'])){
         
         $ot_procedimieto_propio = new OtProcedimientosPropios;
@@ -268,5 +272,15 @@ class InformesController extends Controller
         return $informe;
 
     } 
+
+    public function getObraInforme($informe_id,$importado_sn){
+       
+    
+       $valor = DB::select('CALL getObraInforme(?,?)',array($informe_id,($importado_sn ? 1 : 0)));
+    
+       return $valor[0]->valor;
+       
+
+    }
    
 }

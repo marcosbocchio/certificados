@@ -28,8 +28,8 @@
                         </div> 
                         <div class="form-group">                    
                             <span>
-                            <!--     <a :href="AppUrl + '/area/enod/ot/' + ot_id_data + '/informe/metodo/' + metodo_ensayo.metodo + '/create' " ><button class="btn btn-primary" :disabled="!metodo_selected">Nuevo</button></a> -->                             
-                                <a  @click="NuevoInforme(ot_id_data)" ><button class="btn btn-primary" :disabled="!metodo_selected">Nuevo</button></a>                              
+                            <!--     <a :href="AppUrl + '/area/enod/ot/' + this.ot_data.id + '/informe/metodo/' + metodo_ensayo.metodo + '/create' " ><button class="btn btn-primary" :disabled="!metodo_selected">Nuevo</button></a> -->                             
+                                <a  @click="NuevoInforme(ot_data.id)" ><button class="btn btn-primary" :disabled="!metodo_selected">Nuevo</button></a>                              
                             </span>
                         </div>
                     </div>
@@ -52,7 +52,8 @@
                                 <tr>
                                     <th class="col-lg-1">TIPO</th>   
                                     <th class="col-lg-2">N°</th>
-                                    <th class="col-lg-6">USUARIO ALTA</th> 
+                                    <th class="col-lg-1">OBRA</th>
+                                    <th class="col-lg-5">USUARIO ALTA</th> 
                                     <th class="col-lg-2" >FECHA</th>                                                  
                                     <th class="col-lg-1" colspan="4">ACCIÓN</th>
                                 </tr>
@@ -67,10 +68,11 @@
                                         <div v-else>
                                              {{ot_informe.numero_formateado}}       
                                         </div>        
-                                    </td>     
+                                    </td>   
+                                    <td>{{ot_data.obra}}</td>  
                                     <td> {{ot_informe.name}}</td>     
                                     <td> {{ot_informe.fecha}}</td>              
-                                    <td v-if="!ot_informe.importable_sn" width="10px"> <a :href="AppUrl + '/area/enod/ot/' + ot_id_data + '/informe/' + ot_informe.id +'/edit' "   class="btn btn-warning btn-sm" title="Editar"><span class="fa fa-edit"></span></a></td>
+                                    <td v-if="!ot_informe.importable_sn" width="10px"> <a :href="AppUrl + '/area/enod/ot/' + ot_data.id + '/informe/' + ot_informe.id +'/edit' "   class="btn btn-warning btn-sm" title="Editar"><span class="fa fa-edit"></span></a></td>
                                     <td v-else width="10px"> <a @click="EditInformeImportable(ot_informe.id)"   class="btn btn-warning btn-sm" title="Editar"><span class="fa fa-edit"></span></a></td>
                                     <td v-if="ot_informe.metodo == 'RI'"> <a :href="AppUrl + '/placas/informe/' + ot_informe.id"   class="btn btn-default btn-sm" title="Placas informe"><img width="16px" :src="AppUrl + '/img/carestream.ico'"></a></td> 
                                   
@@ -93,7 +95,7 @@
             </div>   
         </div>    
         <div class="clearfix"></div>
-        <informes-importables :metodo_ensayo="metodo_ensayo" :ot_id="ot_id_data" @store="getResults(ot_informes.current_page)"></informes-importables>
+        <informes-importables :metodo_ensayo="metodo_ensayo" :ot_id="this.ot_data.id" @store="getResults(ot_informes.current_page)"></informes-importables>
     </div>    
 </template>
 
@@ -108,7 +110,10 @@ export default {
     required : false
     },    
 
-    ot_id_data : '',
+    ot_data : {
+        type: Object,
+        required:true,
+    },
     
   },
 
@@ -128,7 +133,7 @@ export default {
           if (val == null)
             this.metodo_ensayo = '';
           else  
-          this.metodo_selected = val == '' ? false : true
+            this.metodo_selected = val == '' ? false : true
       }
   },
 
@@ -153,7 +158,7 @@ export default {
         getResults :function(page = 1){
 
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'informes/ot/' + this.ot_id_data + '/paginate' + '?page='+ page;   
+                var urlRegistros = 'informes/ot/' + this.ot_data.id + '/paginate' + '?page='+ page;   
                 axios.get(urlRegistros).then(response =>{
                 this.ot_informes = response.data
                 });
@@ -165,7 +170,7 @@ export default {
             
             this.$store.dispatch('loadParametrosGenerales','ddppi').then(response => {
 
-                this.$store.dispatch('loadDDPPI',this.ot_id_data).then(response => {
+                this.$store.dispatch('loadDDPPI',this.ot_data.id).then(response => {
         
                     if(this.DDPPI ){
 
@@ -176,7 +181,7 @@ export default {
 
                         }else{
 
-                            window.location.href= this.AppUrl + '/area/enod/ot/' + this.ot_id_data + '/informe/metodo/' + this.metodo_ensayo.metodo + '/create' ;
+                            window.location.href= this.AppUrl + '/area/enod/ot/' + this.ot_data.id + '/informe/metodo/' + this.metodo_ensayo.metodo + '/create' ;
 
                         }     
                     }
@@ -195,13 +200,12 @@ export default {
 
         ContarInformes : function(){
                 
-                this.$store.dispatch('loadContarInformes',this.ot_id_data);
+                this.$store.dispatch('loadContarInformes',this.ot_data.id);
 
             },
 
         EditInformeImportable : function(informe_id){
 
-            console.log('Edit informe importable:' + informe_id);
             eventEditRegistro.$emit('edit',informe_id);
 
         },

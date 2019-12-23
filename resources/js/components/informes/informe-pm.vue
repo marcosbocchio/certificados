@@ -2,7 +2,7 @@
   <div class="row">
        <div class="col-md-12">
            <form @submit.prevent="editmode ?  Update() : Store()"  method="post">        
-               <informe-header :otdata="otdata"></informe-header>
+               <informe-header :otdata="otdata" @set-obra="setObra($event)"></informe-header>
                 <div class="box box-danger">
                   <div class="box-body">                  
                     <div class="col-md-3">
@@ -465,6 +465,7 @@ export default {
         en: en,
         es: es, 
 
+        obra:'',
         cliente:'',
         fecha: new Date(),
         observaciones:'',
@@ -625,7 +626,12 @@ export default {
 
             }         
 
-        },       
+        },   
+        
+        setObra : function(value){
+
+            this.obra = value;
+        },
 
         getCliente : function(){
            
@@ -804,6 +810,7 @@ export default {
               url : urlRegistros,    
               data : {             
                 'ot'              : this.otdata,
+                'obra'            : this.obra,
                 'ejecutor_ensayo' : this.ejecutor_ensayo,  
                 'metodo_ensayo'   : this.metodo,  
                 'fecha':          this.fecha,
@@ -879,6 +886,7 @@ export default {
               url : urlRegistros,    
               data : {
                 'ot'              : this.otdata,
+                'obra'            : this.obra,
                 'ejecutor_ensayo' : this.ejecutor_ensayo,  
                 'metodo_ensayo'   : this.metodo,  
                 'fecha':          this.fecha,
