@@ -32,7 +32,7 @@
 </template>
 
 <script>
-
+import {eventEditRegistro} from '../event-bus';
 import {mapState} from 'vuex';
 export default {
     
@@ -43,10 +43,10 @@ export default {
         required : true
       },
 
-      informedata: { 
-
-          type :Object,
-          required:true
+      informe_id: { 
+          type :Number,
+          required:true,
+          default:0,
       },
     
      editmode : {
@@ -71,7 +71,9 @@ export default {
 
     created : function() {
 
-      this.getCliente();  
+      this.getCliente(); 
+      eventEditRegistro.$on('refreshObra', this.setObra); 
+      
     },
 
     mounted : function() {
@@ -99,20 +101,22 @@ export default {
 
         setObra : function(){
 
-       if(this.editmode){
-           console.log(this.importado_sn);
-           this.$store.dispatch('loadObraInformes',{ informe_id: this.informedata.id , importado_sn: this.importado_sn}).then(response => {
+           this.$forceUpdate();
+           console.log('entro en set obra:' + this.editmode);
 
-               this.obra = this.obra_informe
-               
-           })
+            if(this.editmode){
+                console.log(this.importado_sn);
+                this.$store.dispatch('loadObraInformes',{ informe_id: this.informe_id , importado_sn: this.importado_sn}).then(response => {
 
-       }else{
+                    this.obra = this.obra_informe
+                    
+                })
 
-           this.obra =  this.otdata.obra
+            }else{
 
-       }
+                this.obra =  this.otdata.obra
 
+            }
         },
 
         getCliente : function(){

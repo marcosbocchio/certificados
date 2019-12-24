@@ -106,7 +106,7 @@ b {
                             </tr>            
                             <tr>                                                  
                                 <td style="font-size: 11px; width: 253px;" colspan="2"><b>PROYECTO: </b>{{$ot->proyecto}}</td>                            
-                                <td style="font-size: 11px;"><b>OBRA: </b>{{$ot->obra}}</td>     
+                                <td style="font-size: 11px;"><b>OBRA: </b>{{$informe->obra}}</td>     
                                 <td style="font-size: 11px;"><b>OT N°: </b>{{$ot->numero}}</td>     
                             </tr>   
                         </tbody>

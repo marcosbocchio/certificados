@@ -2,7 +2,7 @@
    <div class="row">
        <div class="col-md-12">
            <form @submit.prevent="editmode ?  Update() : Store()"  method="post">
-               <informe-header :otdata="otdata" :informedata="informedata" :editmode="editmode" @set-obra="setObra($event)"></informe-header>
+               <informe-header :otdata="otdata" :informe_id="informedata.id" :editmode="editmode" @set-obra="setObra($event)"></informe-header>
                <div class="box box-danger">
                   <div class="box-body">
                         <div class="col-md-3">

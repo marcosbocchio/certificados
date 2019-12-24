@@ -168,7 +168,7 @@ class InformesController extends Controller
         $metodo_ensayo = MetodoEnsayos::where('metodo',$request->metodo_ensayo)->first();
       
         $informe->ot_id  = $request->ot['id'];
-        $informe->obra + $request->obra;
+        $informe->obra = $request->obra;
         
         If(!isset($request->procedimiento['ot_procedimientos_propios_id'])){
         
@@ -275,12 +275,11 @@ class InformesController extends Controller
 
     public function getObraInforme($informe_id,$importado_sn){
        
+        
+       $valor = DB::select('CALL getObraInforme(?,?)',array($informe_id,$importado_sn));
     
-       $valor = DB::select('CALL getObraInforme(?,?)',array($informe_id,($importado_sn ? 1 : 0)));
-    
-       return $valor[0]->valor;
+       return $valor[0]->obra;
        
-
     }
    
 }

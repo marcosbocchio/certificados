@@ -31,7 +31,6 @@ class AddColumnObraInformesTable extends Migration
         Schema::table('informes', function (Blueprint $table) {
             
             $table->dropColumn(['obra']);      
-            $table->dropColumn(['obra']);      
 
         });
     }

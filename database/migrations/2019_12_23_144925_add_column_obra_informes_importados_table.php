@@ -13,7 +13,12 @@ class AddColumnObraInformesImportadosTable extends Migration
      */
     public function up()
     {
-        //
+        Schema::table('informes_importados', function (Blueprint $table) {
+            
+            $table->integer('obra')
+                ->after('numero');
+
+        });
     }
 
     /**
@@ -23,6 +28,10 @@ class AddColumnObraInformesImportadosTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('informes_importados', function (Blueprint $table) {
+            
+            $table->dropColumn(['obra']);      
+
+        });
     }
 }

@@ -70,6 +70,7 @@ class InformesImportadosController extends Controller
         $informe_importados->metodo_ensayo_id = $request->metodo_ensayos['id'];
         $informe_importados->fecha =date('Y-m-d',strtotime($request->fecha)); 
         $informe_importados->numero = $request->numero;
+        $informe_importados->obra = $request->obra;
         $informe_importados->prefijo = $request->prefijo;
         $informe_importados->observaciones = $request->observaciones;
         $informe_importados->path = $request->path;

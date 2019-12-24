@@ -69,7 +69,7 @@
                                              {{ot_informe.numero_formateado}}       
                                         </div>        
                                     </td>   
-                                    <td>{{ot_data.obra}}</td>  
+                                    <td> {{ot_informe.obra}}</td>  
                                     <td> {{ot_informe.name}}</td>     
                                     <td> {{ot_informe.fecha}}</td>              
                                     <td v-if="!ot_informe.importable_sn" width="10px"> <a :href="AppUrl + '/area/enod/ot/' + ot_data.id + '/informe/' + ot_informe.id +'/edit' "   class="btn btn-warning btn-sm" title="Editar"><span class="fa fa-edit"></span></a></td>
@@ -95,7 +95,7 @@
             </div>   
         </div>    
         <div class="clearfix"></div>
-        <informes-importables :metodo_ensayo="metodo_ensayo" :ot_id="this.ot_data.id" @store="getResults(ot_informes.current_page)"></informes-importables>
+        <informes-importables :metodo_ensayo="metodo_ensayo" :otdata="this.ot_data" @store="getResults(ot_informes.current_page)"></informes-importables>
     </div>    
 </template>
 

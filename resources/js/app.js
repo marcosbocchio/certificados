@@ -296,9 +296,11 @@ actions : {
         loadObraInformes({
           commit},payload) {
           axios.defaults.baseURL = store.state.url ;
-          var urlRegistros = 'informes/' + payload.informe_id + '/importado_sn/' + payload.importado_sn  +'?api_token=' + Laravel.user.api_token;        
+          var urlRegistros = 'informes/' + payload.informe_id + '/importado_sn/' + (payload.importado_sn ? 1 : 0 )  +'?api_token=' + Laravel.user.api_token;        
           return new Promise((resolve, reject) => {         
           axios.get(urlRegistros).then((response) => {
+            console.log('la obra es :');
+            console.log(urlRegistros);
             console.log(response.data);
             commit('getObraInforme', response.data)   
             resolve()       

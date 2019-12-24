@@ -122,7 +122,7 @@ b {
                                         @endif
                                     </td>              
                                     
-                                    <td style="font-size: 11px;width: 100px;"><b>OBRA: </b>{{$ot->obra}}</td>
+                                    <td style="font-size: 11px;width: 100px;"><b>OBRA: </b>{{$informe->obra}}</td>
                                     <td style="font-size: 11px;"><b>OT N°: </b>{{$ot->numero}}</td>     
                                 </tr>               
                            </tbody>

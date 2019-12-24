@@ -38,8 +38,6 @@ class CreateDiametroViewTable extends Migration
     public function down()
     {
         DB::statement(" DROP VIEW diametros_view ");
-
-
     
     }
 }

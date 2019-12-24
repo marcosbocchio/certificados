@@ -62,7 +62,7 @@ class PdfInformesRiController extends Controller
         $evaluador = User::find($informe->firma);
         $contratista = Contratistas::find($ot->contratista_id);
         
-      //  dd($informe);
+       // dd($informe);
        
 
         if ($informe_ri->gasoducto_sn){

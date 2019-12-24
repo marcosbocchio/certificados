@@ -9,6 +9,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
+                         <informe-header :otdata="otdata" :informe_id="informe_id" :editmode="editmode" :importado_sn="true" @set-obra="setObra($event)"></informe-header>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="fecha">Fecha *</label>
@@ -95,7 +96,11 @@ components: {
         required : false
         },   
 
-        ot_id : '',
+        otdata : {
+            type : Object,
+            required : true
+        },
+
     
   },
 
@@ -107,11 +112,13 @@ components: {
         ruta: 'informes_importados',
         max_size :50000, //KB
         tipos_archivo_soportados:['pdf'],
-    
+
+         informe_id : 0,
          Registro : {
             'ot_id':'',
             'fecha':new Date(),
             'numero': '',
+            'obra' : '',
             'prefijo'  : '',
             'observaciones':'',
             'path':'',
@@ -129,7 +136,7 @@ components: {
 
     eventNewRegistro.$on('open', this.nuevoRegistro);
     eventEditRegistro.$on('edit', this.EditRegistro);
-    this.$store.dispatch('loadEjecutorEnsayo', this.ot_id); 
+    this.$store.dispatch('loadEjecutorEnsayo', this.otdata.id); 
 
     },
 
@@ -148,9 +155,10 @@ components: {
            this.uploadPercentage = 0;   
            this.Registro = {
 
-            'ot_id' : this.ot_id,
+            'ot_id' : this.otdata.id,
             'fecha':new Date(),
             'numero': '',
+            'obra' : '',
             'prefijo'  : '',
             'observaciones':'',
             'path':'',
@@ -158,14 +166,22 @@ components: {
             'ejecutor_ensayo' :{}
 
          }
+
          this.getNumeroInforme();
          eventDeleteFile.$emit('delete');
+
+          this.$nextTick(function(){
+
+              this.$forceUpdate();
+              eventEditRegistro.$emit('refreshObra');
+              
+           });
          $('#nuevo').modal('show');
-         console.log(this.f);
+         
         },
 
         EditRegistro : function(informe_id){
-
+            this.informe_id = informe_id;
             console.log('estoy dentro del modal edit:' + informe_id);
             this.editmode = true; 
             axios.defaults.baseURL = this.url ;
@@ -176,7 +192,7 @@ components: {
                 this.Registro = response.data;
                 this.formatearNumero(this.Registro.numero,3);
                 this.$forceUpdate();
-              
+                eventEditRegistro.$emit('refreshObra');
             });  
         },
 
@@ -185,7 +201,7 @@ components: {
             if(!this.editmode) {
            
                     axios.defaults.baseURL = this.url ;
-                        var urlRegistros = 'informes/ot/' + this.ot_id + '/metodo/' + this.metodo_ensayo.metodo + '/generar-numero-informe'  + '?api_token=' + Laravel.user.api_token;         
+                        var urlRegistros = 'informes/ot/' + this.otdata.id + '/metodo/' + this.metodo_ensayo.metodo + '/generar-numero-informe'  + '?api_token=' + Laravel.user.api_token;         
                         axios.get(urlRegistros).then(response =>{
                         this.numero_generado = response.data 
                         console.log('el numero generado es:' + this.numero_generado);
@@ -241,6 +257,11 @@ components: {
 
             });
 
+        },
+
+        setObra : function(value){
+
+            this.Registro.obra = value;
         },
 
         updateRegistro: function(){
