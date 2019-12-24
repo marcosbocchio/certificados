@@ -23,7 +23,7 @@ class AddGetObraInformes extends Migration
                         
                     ELSE
                     
-                        SELECT informes.obra FROM Informes WHERE informes.id = informe_id ;
+                        SELECT informes.obra FROM informes WHERE informes.id = informe_id ;
                     END IF;
                     
                     END  
