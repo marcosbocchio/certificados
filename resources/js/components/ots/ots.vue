@@ -688,7 +688,7 @@ export default {
                 this.id              = this.otdata.id,
                 this.proyecto        = this.otdata.proyecto;
                 this.fecha           = this.otdata.fecha;
-                this.d = new Date(this.otdata.fecha_hora_estimada_ensayo);
+                this.d               = new Date(this.otdata.fecha_hora_estimada_ensayo);
                 this.hora            = this.d;
                 this.cliente         = this.clientedata;
                 this.logo_cliente_sn =this.otdata.logo_cliente_sn,

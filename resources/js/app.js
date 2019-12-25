@@ -131,7 +131,6 @@ Vue.component('table-equipos', require('./components/abm-maestro/equipos/table-e
 Vue.component('editar-equipos', require('./components/abm-maestro/equipos/editar-equipos.vue').default);
 Vue.component('nuevo-equipos', require('./components/abm-maestro/equipos/nuevo-equipos.vue').default);
 
-
 Vue.component('table-interno_equipos', require('./components/abm-maestro/interno-equipos/table-interno_equipos.vue').default);
 Vue.component('editar-interno_equipos', require('./components/abm-maestro/interno-equipos/editar-interno_equipos.vue').default);
 Vue.component('nuevo-interno_equipos', require('./components/abm-maestro/interno-equipos/nuevo-interno_equipos.vue').default);
@@ -140,8 +139,6 @@ Vue.component('soldadores', require('./components/abm-maestro/soldadores/soldado
 Vue.component('table-soldadores', require('./components/abm-maestro/soldadores/table-soldadores.vue').default);
 Vue.component('nuevo-soldadores', require('./components/abm-maestro/soldadores/nuevo-soldadores.vue').default);
 Vue.component('editar-soldadores', require('./components/abm-maestro/soldadores/editar-soldadores.vue').default);
-
-
 
 Vue.component('table-materiales', require('./components/abm-maestro/materiales/table-materiales.vue').default);
 Vue.component('nuevo-materiales', require('./components/abm-maestro/materiales/nuevo-materiales.vue').default);
@@ -177,25 +174,21 @@ Vue.component('table-ot_procedimientos_propios', require('./components/dashboard
 Vue.component('table-placas_ri', require('./components/dashboard/placas-ri/table-placas_ri').default);
 
 Vue.component('partes', require('./components/partes/partes.vue').default);
+Vue.component('parte-header', require('./components/partes/parte-header.vue').default);
 
 Vue.component('ots', require('./components/ots/ots.vue').default);
 Vue.component('create-referencias', require('./components/ots/referencias/create.vue').default);
 
-
 Vue.component('remitos', require('./components/remitos/remitos.vue').default);
 
-
-
-  /* Infomres    */
-  Vue.component('informe-ri', require('./components/informes/informe-ri.vue').default);
-  Vue.component('informe-pm', require('./components/informes/informe-pm.vue').default);
-  Vue.component('informe-lp', require('./components/informes/informe-lp.vue').default);
-  Vue.component('informe-us', require('./components/informes/informe-us.vue').default);
-  Vue.component('informe-header', require('./components/informes/informe-header.vue').default);
-
+/* Informes    */
+Vue.component('informe-ri', require('./components/informes/informe-ri.vue').default);
+Vue.component('informe-pm', require('./components/informes/informe-pm.vue').default);
+Vue.component('informe-lp', require('./components/informes/informe-lp.vue').default);
+Vue.component('informe-us', require('./components/informes/informe-us.vue').default);
+Vue.component('informe-header', require('./components/informes/informe-header.vue').default);
 
 Vue.prototype.Laravel = window.Laravel;
-
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

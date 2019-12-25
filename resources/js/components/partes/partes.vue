@@ -2,7 +2,7 @@
  <div class="row">
        <div class="col-md-12">
             <form @submit.prevent="editmode ?  Update() : Store()"  method="post">
-                <informe-header :otdata="otdata"></informe-header>
+                <parte-header :otdata="otdata" @set-obra="setObra($event)" ></parte-header>
                  <div class="box box-danger">
                     <div class="box-body">                               
                         <div class="col-md-3">
@@ -138,7 +138,7 @@
                                     <tbody>
                                         <tr v-for="(informe,k) in informes" :key="k">
                                             <td>
-                                                <input type="checkbox" id="informe_sel" v-model="informes[k].informe_sel" @change="getInforme(k)" :disabled="fecha_mysql != informe.fecha_formateada" >
+                                                <input type="checkbox" id="informe_sel" v-model="informes[k].informe_sel" @change="getInforme(k)" :disabled="(fecha_mysql != informe.fecha_formateada) || (obra != informe.obra)" >
                                             </td>
                                             <td> {{ informe.metodo}}</td>                                                        
                                             <td> {{ informe.numero_formateado}}</td>
@@ -616,7 +616,8 @@ export default {
 
         errors:[],
         en: en,
-        es: es,      
+        es: es,
+        obra:'',      
         fecha:'',   
         tipo_servicio:'',
         horario:'',
@@ -724,6 +725,11 @@ export default {
 
         },
 
+        setObra : function(value){
+
+            this.obra = value;
+        },
+
         resetInformesSelect : function(){
 
             this.informes.forEach(function(item){
@@ -820,7 +826,7 @@ export default {
 
                     this.informes.forEach(function(item_informe){                         
 
-                        if(item_data.informe_importado_id == item_informe.id)
+                        if((item_data.informe_importado_id == item_informe.id) && (item_informe.importable_sn))
 
                                 item_informe.informe_sel = true;
 
@@ -856,7 +862,7 @@ export default {
 
                         this.informes.forEach(function(item_informe){                         
 
-                            if(item_data.informe_id == item_informe.id)
+                            if((item_data.informe_id == item_informe.id) && (!item_informe.importable_sn))
 
                                   item_informe.informe_sel = true;
 
@@ -896,7 +902,7 @@ export default {
 
                             this.informes.forEach(function(item_informe){                         
 
-                                if(item_data.informe_id == item_informe.id)
+                                if((item_data.informe_id == item_informe.id) && (!item_informe.importable_sn))
 
                                     item_informe.informe_sel = true;
 
@@ -934,7 +940,7 @@ export default {
 
                             this.informes.forEach(function(item_informe){                         
 
-                                if(item_data.informe_id == item_informe.id)
+                                if((item_data.informe_id == item_informe.id) && (!item_informe.importable_sn))
 
                                     item_informe.informe_sel = true;
 
@@ -973,7 +979,7 @@ export default {
 
                             this.informes.forEach(function(item_informe){                         
 
-                                if(item_data.informe_id == item_informe.id)
+                                if((item_data.informe_id == item_informe.id) && (!item_informe.importable_sn))
 
                                     item_informe.informe_sel = true;
 
