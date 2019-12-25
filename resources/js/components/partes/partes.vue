@@ -129,7 +129,8 @@
                                         <tr>
                                             <th>SEL.</th>
                                             <th>TIPO</th>                                         
-                                            <th>INFORME</th>   
+                                            <th>INFORME</th>  
+                                            <th>OBRA</th> 
                                             <th>FECHA</th>                                                 
                                           
                                         </tr>
@@ -137,10 +138,11 @@
                                     <tbody>
                                         <tr v-for="(informe,k) in informes" :key="k">
                                             <td>
-                                                <input type="checkbox" id="informe_sel" v-model="informes[k].informe_sel" @change="getInforme(k)" >
+                                                <input type="checkbox" id="informe_sel" v-model="informes[k].informe_sel" @change="getInforme(k)" :disabled="fecha_mysql != informe.fecha_formateada" >
                                             </td>
                                             <td> {{ informe.metodo}}</td>                                                        
-                                            <td> {{ informe.numero_formateado}}</td>     
+                                            <td> {{ informe.numero_formateado}}</td>
+                                            <td>{{ informe.obra}}</td>  
                                             <td> {{ informe.fecha_formateada}}</td>                                                                                                                      
                                         </tr>
                                     </tbody>
@@ -545,7 +547,9 @@
 <script>
 import Datepicker from 'vuejs-datepicker';
 import {mapState} from 'vuex';
-import {en, es} from 'vuejs-datepicker/dist/locale'
+import {en, es} from 'vuejs-datepicker/dist/locale';
+import moment from 'moment';
+
 export default {
     components: {
 
@@ -613,7 +617,7 @@ export default {
         errors:[],
         en: en,
         es: es,      
-        fecha:new Date(),   
+        fecha:'',   
         tipo_servicio:'',
         horario:'',
         movilidad_propia_sn:false,
@@ -674,12 +678,24 @@ export default {
                 this.km_final = '';            
             
             }
-        }
+        },
+
+        fecha : function(){
+
+            this.resetInformesSelect();
+
+        },
+        
 },
 
     computed :{
 
-        ...mapState(['url','AppUrl']),                  
+        ...mapState(['url','AppUrl']),     
+        
+        fecha_mysql : function(){
+
+            return moment(this.fecha).format('DD/MM/YYYY');
+        },
        
      },
 
@@ -705,6 +721,22 @@ export default {
 
                 this.getInformesPendientesParte(); 
             }      
+
+        },
+
+        resetInformesSelect : function(){
+
+            this.informes.forEach(function(item){
+
+                item.informe_sel = false;
+            });
+
+            this.TablaInformesRi=[];
+            this.TablaInformesLp=[];
+            this.TablaInformesPm=[];
+            this.TablaInformesUs=[];
+            this.TablaInformesImportados=[];
+            this.TablaMetodosImportados=[];
 
         },
         
@@ -1088,7 +1120,7 @@ export default {
                     }
   
                 }
-                 this.getOtServicio(this.informes[index].metodo_ensayo_id);
+               //  this.getOtServicio(this.informes[index].metodo_ensayo_id);
 
             } else{
 

@@ -564,7 +564,7 @@ import {mapState} from 'vuex';
 import {en, es} from 'vuejs-datepicker/dist/locale'
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
-import moment from 'moment'
+import moment from 'moment';
 
 export default {
 

@@ -17,6 +17,7 @@ class CreateProcedureInformesPendientesSinParteDiario extends Migration
                         CREATE DEFINER=`root`@`localhost` PROCEDURE `InformesPendientesSinParteDiario`(IN pOt_id BIGINT(10), IN pParte_id BIGINT(20))
                         (SELECT 
                         informes.id as id, 
+                        informes.obra as obra,
                         informes.fecha as fecha,
                         0 as informe_sel,
                         CONCAT(metodo_ensayos.metodo,
@@ -37,6 +38,7 @@ class CreateProcedureInformesPendientesSinParteDiario extends Migration
                         
                         (SELECT 
                         informes_importados.id as id, 
+                        informes_importados.obra as obra,
                         informes_importados.fecha as fecha,
                         0 as informe_sel,
                         CONCAT(metodo_ensayos.metodo,
