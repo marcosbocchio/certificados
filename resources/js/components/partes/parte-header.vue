@@ -33,6 +33,7 @@
 
 <script>
 import {eventEditRegistro} from '../event-bus';
+import {eventHeaderParte} from '../event-bus';
 import {mapState} from 'vuex';
 export default {
     
@@ -56,6 +57,7 @@ export default {
 
       this.getCliente(); 
       eventEditRegistro.$on('refreshObra', this.setObra); 
+      eventHeaderParte.$on('set-obra-header',function(payload){this.obra = payload;console.log(payload)}.bind(this));
       
     },
 

@@ -545,6 +545,7 @@
 </template>
 
 <script>
+import {eventHeaderParte} from '../event-bus';
 import Datepicker from 'vuejs-datepicker';
 import {mapState} from 'vuex';
 import {en, es} from 'vuejs-datepicker/dist/locale';
@@ -664,7 +665,7 @@ export default {
     },
 
     mounted : function() {
-
+        
      
     },   
 
@@ -686,6 +687,7 @@ export default {
             this.resetInformesSelect();
 
         },
+
         
 },
 
@@ -818,18 +820,19 @@ export default {
              axios.get(urlRegistros).then(response =>{
              this.informes = response.data
              console.log(this.informes_ri_data)   
-
+            
                 // Informes importados
-
+                
                 this.informes_importados_data.forEach(function(item_data){
 
 
                     this.informes.forEach(function(item_informe){                         
 
-                        if((item_data.informe_importado_id == item_informe.id) && (item_informe.importable_sn))
+                        if((item_data.informe_importado_id == item_informe.id) && (item_informe.importable_sn)){
 
                                 item_informe.informe_sel = true;
-
+                                eventHeaderParte.$emit('set-obra-header',item_informe.obra);
+                            }
                         });                    
                     
                     }.bind(this));
@@ -862,9 +865,11 @@ export default {
 
                         this.informes.forEach(function(item_informe){                         
 
-                            if((item_data.informe_id == item_informe.id) && (!item_informe.importable_sn))
+                            if((item_data.informe_id == item_informe.id) && (!item_informe.importable_sn)){
 
                                   item_informe.informe_sel = true;
+                                  eventHeaderParte.$emit('set-obra-header',item_informe.obra);
+                                }
 
                             });                    
                       
@@ -902,10 +907,12 @@ export default {
 
                             this.informes.forEach(function(item_informe){                         
 
-                                if((item_data.informe_id == item_informe.id) && (!item_informe.importable_sn))
+                                if((item_data.informe_id == item_informe.id) && (!item_informe.importable_sn)){
 
                                     item_informe.informe_sel = true;
+                                    eventHeaderParte.$emit('set-obra-header',item_informe.obra);
 
+                                    }
                                 });                    
                         
                         }.bind(this)); 
@@ -940,10 +947,12 @@ export default {
 
                             this.informes.forEach(function(item_informe){                         
 
-                                if((item_data.informe_id == item_informe.id) && (!item_informe.importable_sn))
+                                if((item_data.informe_id == item_informe.id) && (!item_informe.importable_sn)){
 
                                     item_informe.informe_sel = true;
+                                    eventHeaderParte.$emit('set-obra-header',item_informe.obra);
 
+                                    }
                                 });                    
                         
                         }.bind(this)); 
@@ -979,10 +988,11 @@ export default {
 
                             this.informes.forEach(function(item_informe){                         
 
-                                if((item_data.informe_id == item_informe.id) && (!item_informe.importable_sn))
+                                if((item_data.informe_id == item_informe.id) && (!item_informe.importable_sn)){
 
                                     item_informe.informe_sel = true;
-
+                                    eventHeaderParte.$emit('set-obra-header',item_informe.obra);
+                                 }
                                 });                    
                         
                         }.bind(this)); 
@@ -1015,7 +1025,7 @@ export default {
 
                         }.bind(this));
              });
-                
+       
          },
 
         existeResponsable : function(id){
