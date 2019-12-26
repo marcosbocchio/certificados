@@ -53,9 +53,9 @@
                                     <th class="col-lg-1">TIPO</th>   
                                     <th class="col-lg-2">N°</th>
                                     <th class="col-lg-1">OBRA</th>
-                                    <th class="col-lg-5">USUARIO ALTA</th> 
+                                    <th class="col-lg-4">USUARIO ALTA</th> 
                                     <th class="col-lg-2" >FECHA</th>                                                  
-                                    <th class="col-lg-1" colspan="4">ACCIÓN</th>
+                                    <th class="col-lg-2" colspan="5">ACCIÓN</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -74,8 +74,9 @@
                                     <td> {{ot_informe.fecha}}</td>              
                                     <td v-if="!ot_informe.importable_sn" width="10px"> <a :href="AppUrl + '/area/enod/ot/' + ot_data.id + '/informe/' + ot_informe.id +'/edit' "   class="btn btn-warning btn-sm" title="Editar"><span class="fa fa-edit"></span></a></td>
                                     <td v-else width="10px"> <a @click="EditInformeImportable(ot_informe.id)"   class="btn btn-warning btn-sm" title="Editar"><span class="fa fa-edit"></span></a></td>
+
+                                    <td v-if="!ot_informe.importable_sn" width="10px"> <a @click="ClonarInforme(k)"   class="btn btn-default btn-sm" title="Clonar"><app-icon img="clone" color="black"></app-icon></a></td>
                                     <td v-if="ot_informe.metodo == 'RI'"> <a :href="AppUrl + '/placas/informe/' + ot_informe.id"   class="btn btn-default btn-sm" title="Placas informe"><img width="16px" :src="AppUrl + '/img/carestream.ico'"></a></td> 
-                                  
                                     <td v-if="!ot_informe.importable_sn" width="10px"> <a :href="AppUrl + '/api/pdf/informe/' + ot_informe.id " target="_blank"  class="btn btn-default btn-sm" title="Informe"><span class="fa fa-file-pdf-o"></span></a></td> 
                                     <td v-else><a :href="AppUrl + '/' + ot_informe.path " target="_blank" title="Informe" class="btn btn-default btn-sm"><span class="fa fa-file-pdf-o"></span></a></td> 
                                     <td v-if="!ot_informe.firma && !ot_informe.importable_sn" width="10px"> <a  @click="firmar(k)"  class="btn btn-default btn-sm" title="Firmar"><span class="glyphicon glyphicon-pencil"></span></a></td>   
@@ -207,6 +208,31 @@ export default {
         EditInformeImportable : function(informe_id){
 
             eventEditRegistro.$emit('edit',informe_id);
+
+        },
+
+        ClonarInforme : function (index){
+
+            axios.defaults.baseURL = this.url ;
+                var urlRegistros = 'informes/' + this.ot_informes.data[index].id + '/clonar';                      
+                axios.put(urlRegistros).then(response => {
+                  this.getResults();
+                  toastr.success('El Informe N°' + (this.ot_informes.data[index].prefijo ? this.ot_informes.data[index].prefijo : '') +'-'+ this.ot_informes.data[index].numero_formateado + ' fue clonado con éxito');                
+                  
+                }).catch(error => {                   
+                    this.errors = error.response.data.errors;
+                    $.each( this.errors, function( key, value ) {
+                        toastr.error(value);
+                        console.log( key + ": " + value );
+                    });
+
+                     if((typeof(this.errors)=='undefined') && (error)){
+
+                     toastr.error("Ocurrió un error al procesar la solicitud");                     
+                  
+                }
+                });
+
 
         },
 

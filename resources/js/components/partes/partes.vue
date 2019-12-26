@@ -868,10 +868,10 @@ export default {
                             if((item_data.informe_id == item_informe.id) && (!item_informe.importable_sn)){
 
                                   item_informe.informe_sel = true;
-                                  eventHeaderParte.$emit('set-obra-header',item_informe.obra);
+                                 this.obra = item_informe.obra;
                                 }
 
-                            });                    
+                            }.bind(this));                    
                       
                     }.bind(this));
 

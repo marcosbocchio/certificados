@@ -110,6 +110,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('informes/ot/{ot_id}/paginate', 'InformesController@paginate');   
     Route::get('informes/{id}/importado_sn/{importado_sn}', 'InformesController@getObraInforme');   
     Route::put('informes/{id}/firmar', 'InformesController@firmar');   
+    Route::put('informes/{id}/clonar', 'InformesController@clonar');   
     Route::get('informes/ot/{ot_id}/pendientes_parte_diario', 'InformesController@OtInformesPendienteParteDiario');
     Route::get('informes/ot/{ot_id}/parte/{parte_id}/pendientes_editables_parte_diario', 'InformesController@OtInformesPendienteEditableParteDiario');
 

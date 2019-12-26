@@ -55,7 +55,8 @@ class InformesController extends Controller
 
           return DB::table('informes_view')
                      ->where('ot_id',$id) 
-                     ->orderBy('fecha','DESC')           
+                     ->orderBy('fecha','DESC')     
+                     ->orderBy('id','DESC')           
                      ->paginate(10);
       
     }
@@ -270,6 +271,21 @@ class InformesController extends Controller
         $informe->save();
 
         return $informe;
+
+    } 
+
+    public function clonar($id){
+
+        $user_id = null;
+        
+        if (Auth::check())
+        {
+             $user_id = $userId = Auth::id();    
+        }
+
+        $clonar = DB::select('CALL ClonarInforme(?,?)',array($id,$user_id));
+
+        return $clonar;
 
     } 
 
