@@ -35,6 +35,7 @@ class InformePmRequest extends FormRequest
         $validacion = [
             
             'fecha'                     => 'required',
+            'obra'                      => 'required|min:1', 
             'componente'                => 'required|Max:20',
             'material'                  => 'required',
             'plano_isom'                => 'required|Max:10',

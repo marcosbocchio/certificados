@@ -59,6 +59,7 @@ class InformeRiRequest extends FormRequest
                 'numero_inf'                =>'required | integer| digits_between:1,3',
                 'gasoducto_sn'              => 'required',
                 'fecha'                     => 'required',
+                'obra'                      => 'required|min:1', 
                 'componente'                => $condicion_componente . 'Max:20',
                 'material'                  => 'required',
                 'plano_isom'                => 'required|Max:10',

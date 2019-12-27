@@ -40,7 +40,7 @@
         <div class="col-md-2">
           <div class="form-group">
             <label for="fst">Obra Nº</label>
-            <input v-model="obra" type="number" class="form-control" id="obra" placeholder="">
+            <input v-model="obra" type="number" class="form-control" id="obra" placeholder="" min="0">
           </div>
         </div>        
         <div class="col-md-2">

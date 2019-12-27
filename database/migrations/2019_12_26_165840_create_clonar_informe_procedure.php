@@ -120,7 +120,6 @@ class CreateClonarInformeProcedure extends Migration
                      pos_pos,
                      lado,
                      distancia_fuente_pelicula,
-                     actividad,
                      exposicion
                     )
                 SELECT 
@@ -138,7 +137,6 @@ class CreateClonarInformeProcedure extends Migration
                      pos_pos,
                      lado,
                      distancia_fuente_pelicula,
-                     actividad,
                      exposicion
                 FROM 
                    informes_ri

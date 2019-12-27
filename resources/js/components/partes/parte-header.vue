@@ -17,7 +17,7 @@
                 <div class="col-md-6">
                     <div class="form-group" >
                         <label for="obra">Obra N°</label>
-                        <input type="number" v-model="obra" class="form-control" id="obra" :disabled="otdata.obra">
+                        <input type="number" v-model="obra" class="form-control" id="obra" min="0" :disabled="otdata.obra">
                     </div>                            
                 </div>
                 <div class="col-md-6">
