@@ -216,7 +216,8 @@ export default {
 
             console.log('entro en getResults : ' + page);
             axios.defaults.baseURL = this.url ;     
-            axios.defaults.headers.common['Content-Type'] = 'application/json';          
+            axios.defaults.headers.get['Content-Type'] = 'application/json';
+            console.log(axios.defaults);          
             var urlRegistros = 'ots?page='+ page + '&api_token=' + Laravel.user.api_token;      
             console.log(urlRegistros);        
             axios.get(urlRegistros).then(response =>{
