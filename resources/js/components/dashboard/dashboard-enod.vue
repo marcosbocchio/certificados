@@ -218,7 +218,11 @@ export default {
             axios.defaults.baseURL = this.url ;                
             var urlRegistros = 'ots?page='+ page + '&api_token=' + Laravel.user.api_token;      
             console.log(urlRegistros);        
-            axios.get(urlRegistros).then(response =>{
+            axios.get(urlRegistros, {
+    headers: {
+        'Content-Type': 'application/json'
+    }, data : null
+}).then(response =>{
             this.ots = response.data    
             console.log('response en getResults');       
             this.ot_id_selected = this.ots.data[0].id;    
