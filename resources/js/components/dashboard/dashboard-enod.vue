@@ -217,10 +217,10 @@ export default {
             console.log('entro en getResults : ' + page);
          // axios.defaults.baseURL = this.url ;
             axios.defaults.baseURL = 'http://www.desarrollorusoft.com.ar/api' ;     
-            console.log(axios.defaults,{headers: {'Content-type': 'application/json'}});          
+            console.log(axios.defaults);          
             var urlRegistros = 'ots?page='+ page + '&api_token=' + Laravel.user.api_token;      
             console.log(urlRegistros);        
-            axios.get(urlRegistros).then(response =>{
+            axios.get(urlRegistros,{headers: {'Content-type': 'application/json'}}).then(response =>{
             this.ots = response.data    
             console.log('response en getResults');       
             this.ot_id_selected = this.ots.data[0].id;    
