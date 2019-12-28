@@ -215,9 +215,9 @@ export default {
         getResults : function(page = 1){
 
             console.log('entro en getResults : ' + page);
-            axios.defaults.baseURL = this.url ;     
-            axios.defaults.headers.get['Content-Type'] = 'application/json';
-            console.log(axios.defaults);          
+         // axios.defaults.baseURL = this.url ;
+            axios.defaults.baseURL = 'http://www.desarrollorusoft.com.ar/api' ;     
+            console.log(axios.defaults,{headers: {'Content-type': 'application/json'}});          
             var urlRegistros = 'ots?page='+ page + '&api_token=' + Laravel.user.api_token;      
             console.log(urlRegistros);        
             axios.get(urlRegistros).then(response =>{
