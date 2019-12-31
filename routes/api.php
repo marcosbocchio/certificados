@@ -187,6 +187,10 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('placas_ri','PlacasRiController');
     Route::get('placas_ri/informe/{id}','PlacasRiController@PlacasInforme');
 
+    // Dosimetría
+
+    Route::resource('dosimetria_operador','DosimetriaOperadorController');
+    Route::get('dosimetria_operador/operador/{operador_id}/year/{year}/month/{month}','DosimetriaOperadorController@getDosimetriaOperador');
 
     //parte diario
 
@@ -223,5 +227,11 @@ Route::get('/pdf/informe/us/{informe}','PdfInformesUsController@imprimir')->name
 Route::get('/pdf/informe/us/indicaciones/referencia/{id}','PdfInformesUsReferenciaController@imprimir')->name('InformeUsDetalleUsPaUsReferencias');
 Route::get('/pdf/informe/us/{informe}/indicaciones_us_pa','PdfInformesUsIndicacionesUsPaController@imprimir')->name('InformeUsIndicacionesUsPa');
 Route::get('/pdf/informe/us/{informe}/indicaciones_me','PdfInformesUsIndicacionesMeController@imprimir')->name('InformeUsIndicacionesMe');
+
+Route::get('/fecha_actual',function(){
+
+    return date("Y-m-d H:i:s");
+ 
+});
 
 

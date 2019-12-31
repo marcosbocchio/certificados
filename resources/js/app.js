@@ -188,6 +188,9 @@ Vue.component('informe-lp', require('./components/informes/informe-lp.vue').defa
 Vue.component('informe-us', require('./components/informes/informe-us.vue').default);
 Vue.component('informe-header', require('./components/informes/informe-header.vue').default);
 
+/* Dosimetria */
+Vue.component('dosimetria-operador', require('./components/dosimetria/dosimetria-operador.vue').default);
+
 Vue.prototype.Laravel = window.Laravel;
 
 /**
@@ -244,6 +247,8 @@ state: {
         process.env.MIX_URL_PRO :
         process.env.MIX_URL_DEV,
         
+        fecha :'',
+        operadores:[],
         obra_informe:'',
         contratistas:[],
         provincias:[],
@@ -281,10 +286,23 @@ state: {
         curie:'0',
         ParametroGeneral:{},
         DDPPI:false,
+        DiasDelMes:'0',
+        dosimetria_operador:[],
 
     },
 
 actions : {
+
+        loadFechaActual({
+          commit}) {
+          axios.defaults.baseURL = store.state.url ;
+          var urlRegistros = 'fecha_actual'  + '?api_token=' + Laravel.user.api_token;      
+          axios.get(urlRegistros).then((response) => {     
+          console.log(response.data);
+          commit('getFechaActual', response.data)   
+
+        })
+        },
 
         loadObraInformes({
           commit},payload) {
@@ -292,8 +310,6 @@ actions : {
           var urlRegistros = 'informes/' + payload.informe_id + '/importado_sn/' + (payload.importado_sn ? 1 : 0 )  +'?api_token=' + Laravel.user.api_token;        
           return new Promise((resolve, reject) => {         
           axios.get(urlRegistros).then((response) => {
-            console.log('la obra es :');
-            console.log(urlRegistros);
             console.log(response.data);
             commit('getObraInforme', response.data)   
             resolve()       
@@ -550,6 +566,29 @@ actions : {
           })
         },
 
+        loadOperadores({
+          commit}) {
+           axios.defaults.baseURL = store.state.url ;
+           var urlRegistros ='ot-operarios/users' + '?api_token=' + Laravel.user.api_token;                
+           axios.get(urlRegistros).then((response) => {
+           commit('getOperadores', response.data)           
+          })
+        },
+
+        loadDosimetriaOperador({
+          commit},payload) {
+           axios.defaults.baseURL = store.state.url ;
+           var urlRegistros ='dosimetria_operador/operador/' + payload.operador_id + '/year/' + payload.year + '/month/' + payload.month + '?api_token=' + Laravel.user.api_token;   
+           return new Promise((resolve, reject) => {             
+           axios.get(urlRegistros).then((response) => {
+           console.log(response.data);
+           commit('getDosimetriaOperador', response.data)  
+           resolve()       
+          })
+
+          })
+        },
+
         loadContarInformes({
           commit},ot_id) {
            axios.defaults.baseURL = store.state.url ;
@@ -622,6 +661,12 @@ actions : {
           })
         },
 
+        loadDiasDelMes({
+          commit},payload) {
+            
+            commit('DiasDelMes', payload)           
+       
+         },
         loadContarPartes({
           commit},ot_id) {
            axios.defaults.baseURL = store.state.url ;
@@ -672,6 +717,10 @@ actions : {
 
     },
     mutations: {
+
+      getFechaActual(state, fecha) {
+        state.fecha = fecha
+      },
 
       getObraInforme(state, obra_informe) {
         state.obra_informe = obra_informe
@@ -793,6 +842,10 @@ actions : {
         state.CantInformes = CantInformes
       },
 
+      getOperadores(state, operadores) {
+        state.operadores = operadores
+      },
+
       ContarOperadores(state, CantOperadores) {
         state.CantOperadores = CantOperadores
       },
@@ -835,7 +888,17 @@ actions : {
 
       },
 
-    
+      DiasDelMes(state, payload) {
+
+        state.DiasDelMes =  new Date(payload.year, payload.month, 0).getDate(); 
+
+      },
+
+      getDosimetriaOperador(state, dosimetria_operador){
+
+        state.dosimetria_operador = dosimetria_operador;
+
+      }
 
     }
 

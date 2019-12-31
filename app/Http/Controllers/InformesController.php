@@ -154,7 +154,6 @@ class InformesController extends Controller
 
         return  $numero_informe;                 
 
-       
     }
 
     public function saveInforme($request,$informe){

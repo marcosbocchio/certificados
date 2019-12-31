@@ -770,7 +770,7 @@
                     </div>
                 </div>                 
                
-                  <button class="btn btn-primary" type="submit">Guardar</button> 
+            <button class="btn btn-primary" type="submit">Guardar</button> 
            </form>
         </div>
         <create-referencias :index="index_referencias" :tabla="tabla" :inputsData="inputsData" @setReferencia="AddReferencia_us_pa"></create-referencias>
@@ -1663,7 +1663,7 @@ export default {
                     this.indexPosPos = p + 1;
                 }
             }else{
-                     this.indexPosGeneratriz = g +1;
+                     this.indexPosGeneratriz = g + 1;
 
             }
 

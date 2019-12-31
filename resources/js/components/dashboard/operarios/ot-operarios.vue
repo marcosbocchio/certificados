@@ -20,7 +20,7 @@
                 <div class="box-body">  
                     <div class="form-group">
                         <label>Operadores</label>
-                        <v-select v-model="usuario" label="name" :options="usuarios" ></v-select>
+                        <v-select v-model="usuario" label="name" :options="operadores" ></v-select>
                     </div> 
                     <div class="form-group">                    
                         <span>
@@ -129,28 +129,16 @@ export default {
   },
   created : function() {
       
-      this.getUsuarios();
+      this.$store.dispatch('loadOperadores'); 
       this.users_ot_operarios =  JSON.parse(JSON.stringify(this.ot_operarios_data));  
-    
      
-     
-      
   },
   computed :{
 
-       ...mapState(['url','AppUrl'])
+       ...mapState(['url','AppUrl','operadores'])
      },
   methods :{
  
-    getUsuarios: function(){
-             
-        axios.defaults.baseURL = this.url ;
-        var urlRegistros = 'ot-operarios/users' + '?api_token=' + Laravel.user.api_token;        
-        axios.get(urlRegistros).then(response =>{
-        this.usuarios = response.data
-        });
-    },  
-
     addOperario : function(id){
       
 
