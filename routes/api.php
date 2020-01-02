@@ -230,7 +230,7 @@ Route::get('/pdf/informe/us/{informe}/indicaciones_me','PdfInformesUsIndicacione
 
 Route::get('/fecha_actual',function(){
 
-    return date("Y-m-d H:i:s");
+    return date("Y/m/d H:i:s");
  
 });
 
