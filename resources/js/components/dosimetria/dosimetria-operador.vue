@@ -12,7 +12,7 @@
                      <div class="col-md-3">
                         <div class="form-group">
                             <label>Año</label>
-                            <v-select v-model="year" label="name" :options="years" :disabled="!operador_data.can.dosimetria" @input="setMonth()" ></v-select>
+                            <v-select v-model="year" label="name" :options="years" @input="setMonth()" ></v-select>
                         </div>   
                     </div>   
                      <div class="col-md-3">
@@ -99,9 +99,15 @@ export default {
     }    
   },
 
+  beforeCreate : function(){
+
+             console.log('before create');
+
+  },
+
   created : function() {
  
-    
+        console.log('entro en create');
         this.$store.dispatch('loadFechaActual').then(response => {
 
             this.$store.dispatch('loadOperadores'); 
@@ -109,6 +115,8 @@ export default {
             this.setYears();
             this.year = new Date(this.fecha).getFullYear();
             this.month = new Date(this.fecha).getMonth() + 1;
+            console.log(this.year);
+            console.log(this.month);
             this.setMonths();
             
        })
@@ -127,11 +135,15 @@ export default {
 
               if(val) { 
                   
-                if(val != new Date(this.fecha).getMonth() + 1){
+                if((this.year!=new Date(this.fecha).getFullYear()) || (val != new Date(this.fecha).getMonth() + 1)){
 
                       this.indexPosTablaDosimetria = '0'
 
-                }  
+                } else{
+                    
+                     this.indexPosTablaDosimetria = this.dia_actual-1;
+
+                }
                 
                 this.$store.dispatch('loadDiasDelMes',{year : this.year , month : this.month}).then(response =>{
 

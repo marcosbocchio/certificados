@@ -82,7 +82,7 @@ td b,td span {
                                 <td style="font-size: 11px;" ><b style="margin-left: 131px;">OT N°: </b>{{$ot->numero}}</td>                      
                             </tr>
                             <tr>
-                                <td style="font-size: 11px;"><b style="margin-left: 131px;">FECHA: </b>{{ date('d-m-Y', strtotime($ot->fecha_hora)) }}</td>
+                                <td style="font-size: 11px;"><b style="margin-left: 131px;">FECHA: </b>{{ date('d-m-Y', strtotime($ot->fecha)) }}</td>
                             </tr>
                             <tr>
                                 <td style="font-size: 11px;"><b></b></td>                     
