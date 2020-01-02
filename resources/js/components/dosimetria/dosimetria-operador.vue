@@ -107,20 +107,13 @@ export default {
 
   created : function() {
  
-        console.log('entro en create');
-
-        this.$store.dispatch('loadOperadores'); 
         this.$store.dispatch('loadFechaActual').then(response => {
-
+            
+            this.$store.dispatch('loadOperadores'); 
             this.indexPosTablaDosimetria = this.dia_actual-1;
             this.setYears();
             this.year = new Date(this.fecha).getFullYear();
             this.month = new Date(this.fecha).getMonth() + 1;
-            console.log(this.fecha);
-            console.log(new Date(this.fecha));
-            console.log(new Date(this.fecha).getFullYear());
-            console.log(this.year);
-            console.log(this.month);
             this.setMonths();
             
        })
