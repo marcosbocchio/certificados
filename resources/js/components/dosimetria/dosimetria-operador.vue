@@ -41,7 +41,7 @@
                                                     
                                         <td style="text-align:center;" bgcolor="#bee5eb"> {{item.day}} </td>    
                                         <td style="text-align:center;">
-                                            <div v-if="(indexPosTablaDosimetria == k) && ((k + 1) <= dia_actual)">       
+                                            <div v-if="(indexPosTablaDosimetria == k) && (((k + 1) <= dia_actual) || (year < anio_actual))">       
                                                 <input type="number" :ref="'refInputMediciones'" v-model="TablaDosimetria[k].microsievert">        
                                             </div>   
                                             <div v-else>
@@ -49,7 +49,7 @@
                                             </div>
                                         </td>
                                         <td>
-                                             <div v-if="(indexPosTablaDosimetria == k) && ((k + 1) <= dia_actual)">       
+                                             <div v-if="(indexPosTablaDosimetria == k) && (((k + 1) <= dia_actual) || (year < anio_actual))">  
                                                 <input type="text" v-model="TablaDosimetria[k].observaciones" size="65" maxlength="100">        
                                             </div>   
                                             <div v-else>
@@ -97,12 +97,6 @@ export default {
       indexPosTablaDosimetria : '0',
      
     }    
-  },
-
-  beforeCreate : function(){
-
-             console.log('before create');
-
   },
 
   created : function() {
@@ -165,6 +159,16 @@ export default {
        dia_actual : function(){
 
            return new Date(this.fecha).getDate();
+       },
+
+       mes_actual : function(){
+
+           return new Date(this.fecha).getMonth() + 1;
+       },
+
+       anio_actual : function(){
+
+           return new Date(this.fecha).getFullYear();
        }
 
     },
