@@ -6,7 +6,7 @@
                      <div class="col-md-6">
                         <div class="form-group">
                             <label>Operadores</label>
-                            <v-select v-model="operador" label="name" :options="operadores" :disabled="!operador_data.can.dosimetria" ></v-select>
+                            <v-select v-model="operador" label="name" :options="operadores_dosimetria" :disabled="!operador_data.can.dosimetria" ></v-select>
                         </div>   
                     </div>      
                      <div class="col-md-3">
@@ -103,7 +103,7 @@ export default {
  
         this.$store.dispatch('loadFechaActual').then(response => {
             
-            this.$store.dispatch('loadOperadores'); 
+            this.$store.dispatch('loadOperadoresDisometria'); 
             this.indexPosTablaDosimetria = this.dia_actual-1;
             this.setYears();
             this.year = new Date(this.fecha).getFullYear();
@@ -154,7 +154,7 @@ export default {
   
   computed :{
 
-       ...mapState(['url','AppUrl','operadores','DiasDelMes','dosimetria_operador','fecha']),
+       ...mapState(['url','AppUrl','operadores_dosimetria','DiasDelMes','dosimetria_operador','fecha']),
 
        dia_actual : function(){
 

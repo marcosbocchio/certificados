@@ -79,6 +79,15 @@ class DosimetriaOperadorController extends Controller
 
     }
 
+    public function getDosimetriaOperadores(){
+
+      return User::whereNull('cliente_id')
+                   ->whereNotNull('film')
+                   ->get();
+
+
+    }
+
     public function deleteDosimetriaOperador($request){
 
 
