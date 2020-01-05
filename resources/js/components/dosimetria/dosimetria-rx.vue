@@ -14,7 +14,16 @@
                             <label>Mes</label>
                             <v-select v-model="month" label="name" :options="months" ></v-select>
                         </div>   
-                    </div>    
+                    </div>  
+                     <div class="col-md-3">
+                        <div class="form-group"> 
+                            <label>Operador</label>
+                            <div class="input-group">
+                                <input type="text" v-model="search" class="form-control">
+                                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                            </div>  
+                        </div>
+                     </div>
                 </div>
             </div>
        
@@ -32,15 +41,20 @@
                                 <tbody>
                                     <tr v-for="(item,k) in TablaDosimetriaRx" :key="k" @click="selectPosTablaDosimetria(k)"> 
                                                     
-                                        <td bgcolor="#bee5eb"> {{item.operador}} </td>    
-                                        <td style="text-align:center;">
-                                            <div v-if="(indexPosTablaDosimetria == k)">       
-                                                <input type="number" :ref="'refInputMediciones'" v-model="TablaDosimetriaRx[k].milisievert" @keyup.enter="getFocus(k)" step="0.01">        
-                                            </div>   
-                                            <div v-else>
-                                              {{item.milisievert}} 
-                                            </div>
-                                        </td>                                                                                         
+                                    
+                                            <td v-if="(!filtro(k))" bgcolor="#bee5eb">
+                                                {{item.operador}}
+                                            </td>    
+                                     
+                                            <td v-if="(!filtro(k))" style="text-align:center;">
+                                                <div v-if="(indexPosTablaDosimetria == k)">       
+                                                    <input type="number" :ref="'refInputMediciones'" v-model="TablaDosimetriaRx[k].milisievert" @keyup.enter="getFocus(k)" step="0.01">        
+                                                </div>   
+                                                <div v-else>
+                                                    {{item.milisievert}} 
+                                                </div>
+                                            </td>                                                                                         
+                                       
                                     </tr>                       
                                     
                                 </tbody>
@@ -78,6 +92,7 @@ export default {
       years:[],
       months :[],
       indexPosTablaDosimetria : '-1',
+      search:'',
      
     }    
   },
@@ -107,9 +122,7 @@ export default {
                         this.ResetTabla();
 
                     }
-                );  
-
-               
+                );   
              }
         }
   },
@@ -131,7 +144,8 @@ export default {
        anio_actual : function(){
 
            return new Date(this.fecha).getFullYear();
-       }
+       },
+
 
     },
  
@@ -145,6 +159,21 @@ export default {
          }
 
      },
+
+       filtro : function(index){
+            console.log('el indice es',index);
+            if(this.search){
+
+                if(this.TablaDosimetriaRx[index].operador.toLowerCase().includes(this.search.toLowerCase()))
+                {
+                    return false
+
+                }else{
+                    return true
+                }
+            }
+     
+        },
 
      setMonths : function(){
 
