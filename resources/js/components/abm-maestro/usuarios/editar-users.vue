@@ -39,6 +39,22 @@
                                 </div>
                             </div>              
                         </div>
+
+                        <div v-if="isEnod">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="name">DNI</label>
+                                    <input autocomplete="off" v-model="editRegistro.dni" type="number" name="dni" class="form-control" value="">
+                                </div>
+                            </div>    
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="name">film</label>
+                                    <input autocomplete="off" v-model="editRegistro.film" type="number" name="film" class="form-control" value="">
+                                </div>
+                            </div>   
+                        </div>
+                    
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="usuario">email</label>
@@ -98,7 +114,7 @@
                                 <div v-for="(rol,k) in roles" :key="k" >
 
                                     <div class="col-sm-4 col-xs-12">
-                                        <input type="checkbox" :id=" rol.name " :value="rol.name" v-model="user_rol" style="float:left" :disabled="(rol.name=='Usuario Cliente') || (rol.name == 'Usuario Enod')" > 
+                                        <input type="checkbox" :id="rol.name " :value="rol.name" v-model="user_rol" style="float:left" :disabled="(rol.name == 'Usuario Cliente') || (rol.name == 'Usuario Enod')" > 
                                         <label for="tipo" style="float:left;margin-left: 5px;">{{ rol.name }}</label>         
                                     </div>     
                                 </div>
@@ -143,6 +159,8 @@ export default {
         editRegistro : {           
             'name'  : '',
             'email' : '',
+            'dni'   : '',
+            'film'  : '',
             'password' : '',
             'path':''
          },
@@ -233,6 +251,8 @@ export default {
                console.log('entro en open modal');            
             this.$nextTick(function () { 
                 this.editRegistro.name = this.selectRegistro.name;
+                this.editRegistro.dni  = this.selectRegistro.dni,
+                this.editRegistro.film = this.selectRegistro.film,
                 this.editRegistro.email = this.selectRegistro.email;                
                 this.editRegistro.password = '********';
                 this.password2 = '********';
@@ -340,47 +360,6 @@ export default {
                 })
 
             },  
-
-            storeRegistro: function(){
-
-                if(this.editRegistro.password != this.password2){
-                      toastr.error("Las contreseñas ingresadas no coinciden");
-                      return;
-                }    
-
-                axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'users';                         
-                axios.post(urlRegistros, {   
-                    
-                'name'      : this.editRegistro.name,                
-                'email'     : this.editRegistro.email,
-                'password'  : this.editRegistro.password,
-                'cliente'   : this.cliente,
-                'isEnod'    : this.isEnod,
-                'path'      : this.editRegistro.path,
-                'roles'     :this.user_rol,
-                  
-                }).then(response => {
-                  this.$emit('store');
-                  this.errors=[];
-                  $('#nuevo').modal('hide');
-                  toastr.success('Nuevo usuario creado con éxito');               
-                  this.editRegistro={}
-                  
-                }).catch(error => {                   
-                    console.log(error);    
-                    this.errors = error.response.data.errors;
-                    $.each( this.errors, function( key, value ) {
-                        toastr.error(value);
-                        console.log( key + ": " + value );
-                    });
-
-                     if((typeof(this.errors)=='undefined') && (error)){
-                     toastr.error("Ocurrió un error al procesar la solicitud");                     
-                  
-                }
-                });
-              },
             storeRegistro: function(){
 
                 if(this.editRegistro.password != this.password2){
@@ -394,6 +373,8 @@ export default {
                     
                     'name'      : this.editRegistro.name,                
                     'email'     : this.editRegistro.email,
+                    'dni'       : this.editRegistro.dni,
+                    'film'      : this.editRegistro.film,
                     'password'  : this.editRegistro.password,
                     'cliente'   : this.cliente,
                     'isEnod'    : this.isEnod,

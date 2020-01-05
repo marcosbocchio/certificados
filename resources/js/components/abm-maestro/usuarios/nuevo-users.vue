@@ -39,6 +39,20 @@
                                 </div>
                             </div>              
                         </div>
+                        <div v-if="isEnod">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="name">DNI</label>
+                                    <input autocomplete="off" v-model="newRegistro.dni" type="number" name="dni" class="form-control" value="">
+                                </div>
+                            </div>    
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="name">film</label>
+                                    <input autocomplete="off" v-model="newRegistro.film" type="number" name="film" class="form-control" value="">
+                                </div>
+                            </div>   
+                        </div>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="usuario">email</label>
@@ -129,6 +143,8 @@ export default {
     
         newRegistro : {           
             'name'  : '',
+            'dni'   :'',
+            'film'  :'',
             'email' : '',
             'password' : '',
             'path':''
@@ -212,6 +228,8 @@ export default {
            openModal : function(){
                 this.newRegistro = {           
                         'name'  : '',
+                        'dni'   :'',
+                        'film'  :'',
                         'email' : '',
                         'password' : '',
                         'path':''                 
@@ -322,6 +340,8 @@ export default {
                     
                 'name'      : this.newRegistro.name,                
                 'email'     : this.newRegistro.email,
+                'dni'       : this.newRegistro.dni,
+                'film'      : this.newRegistro.film,
                 'password'  : this.newRegistro.password,
                 'cliente'   : this.cliente,
                 'isEnod'    : this.isEnod,

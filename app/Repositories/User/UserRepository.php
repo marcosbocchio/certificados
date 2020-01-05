@@ -34,6 +34,8 @@ class UserRepository extends BaseRepository
     if ($request['isEnod']) {
 
       $User->cliente_id = null ;   
+      $User->dni   = $request['dni'];
+      $User->film  = $request['film'];
       
     }else {
       
@@ -49,7 +51,12 @@ class UserRepository extends BaseRepository
       $User->password = bcrypt($request['password']);
 
     }
-    $User->api_token = str_random(60);
+
+    if(!$User->api_token){
+      
+      $User->api_token = str_random(60);
+      
+    }
     $User->path = $request['path'];
     $User->syncRoles($request['roles']);
     $User->save();
