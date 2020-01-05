@@ -177,13 +177,6 @@ export default {
 
         this.TablaDosimetriaRx = [];
         this.TablaDosimetriaRx = this.dosimetria_rx ;
-
-       setTimeout(x => {
-
-        this.$nextTick(() => {                
-            this.$refs['refInputMediciones'][0].focus();
-            });  
-        },250);
  
      },
 
