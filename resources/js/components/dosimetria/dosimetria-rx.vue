@@ -35,7 +35,7 @@
                                         <td bgcolor="#bee5eb"> {{item.operador}} </td>    
                                         <td style="text-align:center;">
                                             <div v-if="(indexPosTablaDosimetria == k)">       
-                                                <input type="number" :ref="'refInputMediciones'" v-model="TablaDosimetriaRx[k].milisievert" step="0.01">        
+                                                <input type="number" :ref="'refInputMediciones'" v-model="TablaDosimetriaRx[k].milisievert" @keyup.enter="getFocus(k)" step="0.01">        
                                             </div>   
                                             <div v-else>
                                               {{item.milisievert}} 
@@ -171,6 +171,25 @@ export default {
          this.TablaDosimetria = [];
          this.setMonths();
    
+     },
+
+     getFocus(index){
+
+            if(index < this.TablaDosimetriaRx.length - 1){
+
+                this.indexPosTablaDosimetria = index + 1;
+                
+            }else 
+            {
+                 this.indexPosTablaDosimetria = 0;
+            }
+
+            setTimeout(x => {
+
+                    this.$nextTick(() => {                
+                        this.$refs['refInputMediciones'][0].focus();
+                        });  
+            }, 250);
      },
 
      ResetTabla : function() {
