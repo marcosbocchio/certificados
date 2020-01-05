@@ -41,7 +41,7 @@
                                                     
                                         <td style="text-align:center;" bgcolor="#bee5eb"> {{item.day}} </td>    
                                         <td style="text-align:center;">
-                                            <div v-if="(indexPosTablaDosimetria == k) && (((k + 1) <= dia_actual) || (year < anio_actual))">       
+                                            <div v-if="(indexPosTablaDosimetria == k) && ((year < anio_actual) || ( (year == anio_actual) && (month < mes_actual)) || ((k + 1) <= dia_actual))">       
                                                 <input type="number" :ref="'refInputMediciones'" v-model="TablaDosimetria[k].microsievert">        
                                             </div>   
                                             <div v-else>
@@ -49,7 +49,7 @@
                                             </div>
                                         </td>
                                         <td>
-                                             <div v-if="(indexPosTablaDosimetria == k) && (((k + 1) <= dia_actual) || (year < anio_actual))">  
+                                            <div v-if="(indexPosTablaDosimetria == k) && ((year < anio_actual) || ( (year == anio_actual) && (month < mes_actual)) || ((k + 1) <= dia_actual))">       
                                                 <input type="text" v-model="TablaDosimetria[k].observaciones" size="65" maxlength="100">        
                                             </div>   
                                             <div v-else>

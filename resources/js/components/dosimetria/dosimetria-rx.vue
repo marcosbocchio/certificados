@@ -2,13 +2,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="box box-danger">
-                <div class="box-body">
-                     <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Operadores</label>
-                            <v-select v-model="operador" label="name" :options="operadores" :disabled="!operador_data.can.dosimetria" ></v-select>
-                        </div>   
-                    </div>      
+                <div class="box-body">    
                      <div class="col-md-3">
                         <div class="form-group">
                             <label>Año</label>
@@ -20,7 +14,7 @@
                             <label>Mes</label>
                             <v-select v-model="month" label="name" :options="months" ></v-select>
                         </div>   
-                    </div>     
+                    </div>    
                 </div>
             </div>
        
@@ -31,32 +25,22 @@
                             <table class="table table-hover table-striped">
                                 <thead>
                                     <tr>                                     
-                                        <th style="text-align: center; min-width: 25px;" class="col-md-1" >DÍA</th>     
-                                        <th style="text-align:center;" class="col-md-1">MICROSIEVERT</th>
-                                        <th style="text-align:center;" class="col-md-6">OBSERVACIONES</th>                                                       
+                                        <th class="col-md-6">OPERADOR</th>
+                                        <th style="text-align:center;" class="col-md-1">MILISIEVERT</th>                                                       
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="(item,k) in TablaDosimetria" :key="k" @click="selectPosTablaDosimetria(k)"> 
+                                    <tr v-for="(item,k) in TablaDosimetriaRx" :key="k" @click="selectPosTablaDosimetria(k)"> 
                                                     
-                                        <td style="text-align:center;" bgcolor="#bee5eb"> {{item.day}} </td>    
+                                        <td bgcolor="#bee5eb"> {{item.operador}} </td>    
                                         <td style="text-align:center;">
-                                            <div v-if="(indexPosTablaDosimetria == k) && (((k + 1) <= dia_actual) || (year < anio_actual))">       
-                                                <input type="number" :ref="'refInputMediciones'" v-model="TablaDosimetria[k].microsievert">        
+                                            <div v-if="(indexPosTablaDosimetria == k)">       
+                                                <input type="number" :ref="'refInputMediciones'" v-model="TablaDosimetriaRx[k].milisievert" step="0.01">        
                                             </div>   
                                             <div v-else>
-                                              {{item.microsievert}} 
+                                              {{item.milisievert}} 
                                             </div>
-                                        </td>
-                                        <td>
-                                             <div v-if="(indexPosTablaDosimetria == k) && (((k + 1) <= dia_actual) || (year < anio_actual))">  
-                                                <input type="text" v-model="TablaDosimetria[k].observaciones" size="65" maxlength="100">        
-                                            </div>   
-                                            <div v-else>
-                                              {{item.observaciones}} 
-                                            </div>                                           
-                                        </td>
-                                                                                         
+                                        </td>                                                                                         
                                     </tr>                       
                                     
                                 </tbody>
@@ -88,13 +72,12 @@ export default {
 
   data () { return {
 
-      TablaDosimetria:[],
-      operador : JSON.parse(JSON.stringify(this.operador_data)),
+      TablaDosimetriaRx:[],
       year: '',
       month:'',
       years:[],
       months :[],
-      indexPosTablaDosimetria : '0',
+      indexPosTablaDosimetria : '-1',
      
     }    
   },
@@ -103,8 +86,6 @@ export default {
  
         this.$store.dispatch('loadFechaActual').then(response => {
             
-            this.$store.dispatch('loadOperadores'); 
-            this.indexPosTablaDosimetria = this.dia_actual-1;
             this.setYears();
             this.year = new Date(this.fecha).getFullYear();
             this.month = new Date(this.fecha).getMonth() + 1;
@@ -115,46 +96,27 @@ export default {
 
   watch : {
 
-        operador : function(){
-
-            this.year='';
-            this.month='';
-            this.TablaDosimetria = []
-
-        },
-
         month : function(val){
 
               if(val) { 
-                  
-                if((this.year!=new Date(this.fecha).getFullYear()) || (val != new Date(this.fecha).getMonth() + 1)){
 
-                      this.indexPosTablaDosimetria = '0'
+                this.indexPosTablaDosimetria = '-1';        
+                this.$store.dispatch('loadDosimetriaRx',{year : this.year , month : this.month}).then(
+                    response => {
+                        
+                        this.ResetTabla();
 
-                } else{
-                    
-                     this.indexPosTablaDosimetria = this.dia_actual-1;
+                    }
+                );  
 
-                }
-                
-                this.$store.dispatch('loadDiasDelMes',{year : this.year , month : this.month}).then(response =>{
-
-                    this.$store.dispatch('loadDosimetriaOperador',{operador_id : this.operador.id, year : this.year , month : this.month}).then(
-                        response => {
-                            
-                            this.ResetTabla();
-    
-                        }
-                    );  
-
-                }); 
+               
              }
         }
   },
   
   computed :{
 
-       ...mapState(['url','AppUrl','operadores','DiasDelMes','dosimetria_operador','fecha']),
+       ...mapState(['url','AppUrl','dosimetria_rx','fecha']),
 
        dia_actual : function(){
 
@@ -213,32 +175,16 @@ export default {
 
      ResetTabla : function() {
 
-        this.TablaDosimetria = [];
-     
-        for (let index = 0; index < this.DiasDelMes; index++) {
-            this.TablaDosimetria.push({
+        this.TablaDosimetriaRx = [];
+        this.TablaDosimetriaRx = this.dosimetria_rx ;
 
-                day : index + 1,
-                microsievert : '',
-                observaciones : '',
+       setTimeout(x => {
 
-            });
-        }
-
-        this.dosimetria_operador.forEach(function(item) {
-            
-           this.TablaDosimetria[item.day-1].microsievert = item.microsievert;
-           this.TablaDosimetria[item.day-1].observaciones = item.observaciones;
-
-        }.bind(this));
-
-            setTimeout(x => {
-
-            this.$nextTick(() => {                
-                this.$refs['refInputMediciones'][0].focus();
-                });  
-            },250);
-
+        this.$nextTick(() => {                
+            this.$refs['refInputMediciones'][0].focus();
+            });  
+        },250);
+ 
      },
 
     selectPosTablaDosimetria :function(index){
@@ -249,37 +195,36 @@ export default {
 
      submit :function () {
        
-            axios.defaults.baseURL = this.url ;
-            var urlRegistros = 'dosimetria_operador';  
-                        
-            axios.post(urlRegistros, {   
-            
-            operador : this.operador,  
+        axios.defaults.baseURL = this.url ;
+        var urlRegistros = 'dosimetria_rx';  
+                    
+        axios.post(urlRegistros, {   
+        
             year : this.year,
             month : this.month, 
-            dosimetria_operadores : this.TablaDosimetria,              
+            dosimetria_rx : this.TablaDosimetriaRx,              
 
-            }).then(response => {            
-                this.errors=[];     
-                console.log(response);                  
-                toastr.success('dosimetrīa  actualizado con éxito');                
-                
-            }).catch(error => {
-               
-                this.errors = error.response.data.errors;                 
-                $.each( this.errors, function( key, value ) {
-                    toastr.error(value,key);
-                    console.log( key + ": " + value );
-                });
-                
-                if(this.errors = [] && error){
-
-                     toastr.error("Ocurrio un error al procesar la solicitud");                     
-                     this.users_ot_operarios = this.ot_operarios_data;   
-                }
-  
+        }).then(response => {            
+            this.errors=[];     
+            console.log(response);                  
+            toastr.success('dosimetrīa  actualizado con éxito');                
+            
+        }).catch(error => {
+            
+            this.errors = error.response.data.errors;                 
+            $.each( this.errors, function( key, value ) {
+                toastr.error(value,key);
+                console.log( key + ": " + value );
             });
-        }
+            
+            if(this.errors = [] && error){
+
+                    toastr.error("Ocurrio un error al procesar la solicitud");                     
+                    this.users_ot_operarios = this.ot_operarios_data;   
+            }
+
+        });
+    }
 
  },
   

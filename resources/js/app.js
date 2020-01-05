@@ -190,6 +190,7 @@ Vue.component('informe-header', require('./components/informes/informe-header.vu
 
 /* Dosimetria */
 Vue.component('dosimetria-operador', require('./components/dosimetria/dosimetria-operador.vue').default);
+Vue.component('dosimetria-rx', require('./components/dosimetria/dosimetria-rx.vue').default);
 
 Vue.prototype.Laravel = window.Laravel;
 
@@ -288,6 +289,7 @@ state: {
         DDPPI:false,
         DiasDelMes:'0',
         dosimetria_operador:[],
+        dosimetria_rx:[],
 
     },
 
@@ -586,6 +588,20 @@ actions : {
            axios.get(urlRegistros).then((response) => {
            console.log(response.data);
            commit('getDosimetriaOperador', response.data)  
+           resolve()       
+          })
+
+          })
+        },
+
+        loadDosimetriaRx({
+          commit},payload) {
+           axios.defaults.baseURL = store.state.url ;
+           var urlRegistros ='dosimetria_rx/year/' + payload.year + '/month/' + payload.month + '?api_token=' + Laravel.user.api_token;   
+           return new Promise((resolve, reject) => {             
+           axios.get(urlRegistros).then((response) => {
+           console.log(response.data);
+           commit('getDosimetriaRx', response.data)  
            resolve()       
           })
 
@@ -900,6 +916,12 @@ actions : {
       getDosimetriaOperador(state, dosimetria_operador){
 
         state.dosimetria_operador = dosimetria_operador;
+
+      },
+
+      getDosimetriaRx(state, dosimetria_rx){
+
+        state.dosimetria_rx = dosimetria_rx;
 
       }
 

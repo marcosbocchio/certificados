@@ -190,7 +190,10 @@ Route::group(['middleware' => 'auth:api'], function()
     // Dosimetría
 
     Route::resource('dosimetria_operador','DosimetriaOperadorController');
+    Route::resource('dosimetria_rx','DosimetriaRxController');
+
     Route::get('dosimetria_operador/operador/{operador_id}/year/{year}/month/{month}','DosimetriaOperadorController@getDosimetriaOperador');
+    Route::get('dosimetria_rx/year/{year}/month/{month}','DosimetriaRxController@getDosimetriaRx');
 
     //parte diario
 

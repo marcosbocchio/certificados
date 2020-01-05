@@ -15,10 +15,8 @@ class CreateDosimetriaRxTable extends Migration
     {
         Schema::create('dosimetria_rx', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->smallInteger('año');
-            $table->smallInteger('mes');
+            $table->datetime('fecha');
             $table->float('milisievert');
-            
             $table->timestamps();
         });
     }
