@@ -42,16 +42,16 @@
                 <div class="box-body">
                      <div class="col-md-9">
                         <div class="table-responsive">          
-                            <table class="table table-hover table-striped">
+                            <table class="table table-hover table-striped table-border">
                                 <thead>
                                     <tr>                                     
                                         <th class="col-md-5">OPERADOR</th>
                                         <th class="col-md-1">FILM</th>
                                         <th style="text-align:center;" class="col-md-1">MILISIEVERT</th>  
                                         <th style="text-align:center;" class="col-md-1"> PERIODO</th>
-                                        <th style="text-align:center;" class="col-md-2">
+                                        <th class="col-md-2">
                                            <input type="checkbox" id="checkbox" v-model="sel_checkbox"> 
-                                           <button title="Borrar Periodos" @click="DeletePeriodos()" style="display:inline-block;margin-left:5px;" class="btn btn-xs btn-Primary"><app-icon img="trash" color="black"></app-icon></button>
+                                       <!--    <button title="Borrar Periodos" @click="DeletePeriodos()" style="display:inline-block;margin-left:5px;" class="btn btn-xs btn-Primary"><app-icon img="trash" color="black"></app-icon></button> -->
                                            <button title="Setear Periodos" @click="SetearPeriodos()" style="display:inline-block;margin-left:5px;" class="btn btn-xs btn-Primary"><app-icon img="edit" color="black"></app-icon></button>
 
                                         </th>                                                     
@@ -81,7 +81,7 @@
                                                 {{ periodo_dosimetria(item.periodo) }}
                                              
                                             </td>  
-                                            <td style="text-align:center;">
+                                            <td>
 
                                                   <input type="checkbox" id="checkbox" v-model="TablaDosimetriaRx[k].sel">                     
 
