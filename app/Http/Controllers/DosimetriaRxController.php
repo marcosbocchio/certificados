@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\DosimetriaRxRequest;
 use App\DosimetriaRx;
 use App\User;
 use Illuminate\Support\Facades\DB;
@@ -54,9 +55,8 @@ class DosimetriaRxController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(DosimetriaRxRequest $request)
     {
-
         DB::beginTransaction();
         try
         {
@@ -76,10 +76,14 @@ class DosimetriaRxController extends Controller
 
     public function deleteDosimetriaRx($request){
 
+        $periodo_year = date('Y',strtotime($request->periodo)); 
+        $periodo_month = date('m',strtotime($request->periodo)); 
 
         $dosimetria_operador = DosimetriaRx::whereRaw('YEAR(fecha) = ?',[$request->year])
-                                ->whereRaw('MONTH(fecha) = ?',[$request->month])
-                                ->delete();
+                                            ->whereRaw('MONTH(fecha) = ?',[$request->month])
+                                       //     ->whereRaw('YEAR(periodo) = ?',[$periodo_year])
+                                       //     ->whereRaw('MONTH(periodo) = ?',[$periodo_month])
+                                            ->delete();
 
     }
 
@@ -98,12 +102,13 @@ class DosimetriaRxController extends Controller
             if($dosimetria['milisievert']) {
 
                 $fecha = $request->year . '-' . $request->month . '-1';
-               
+              
                 $dosimetria_operador = new DosimetriaRx;
                 $dosimetria_operador->fecha = $fecha;
                 $dosimetria_operador->operador_id = $dosimetria['operador_id'];
                 $dosimetria_operador->user_id = $user_id;
                 $dosimetria_operador->milisievert = $dosimetria['milisievert'];
+                $dosimetria_operador->periodo =date('Y-m-d',strtotime($dosimetria['periodo'])); 
                 $dosimetria_operador->save();
 
             }

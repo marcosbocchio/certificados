@@ -94,7 +94,8 @@ Route::group(['middleware' => ['permission:enod']], function () {
   Route::get('/area/enod/permisos','PermissionsController@callView')->name('permisos');  
   Route::get('/area/enod/dosimetria-operador','DosimetriaOperadorController@callView')->name('dosimetria-operador');
   Route::get('/area/enod/dosimetria-rx','DosimetriaRxController@callView')->name('dosimetria-rx');  
-  
+  Route::get('/area/enod/dosimetria/estados','DosimetriaEstadosController@callView')->name('dosimetria-estados');  
+
 
 });
 

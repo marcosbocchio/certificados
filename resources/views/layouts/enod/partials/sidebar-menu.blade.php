@@ -75,6 +75,8 @@
             <ul class="treeview-menu">
               <li><a href="{{ route('dosimetria-operador') }}"><i class="fa fa-circle-o"></i>Operador</a></li>
               <li><a href="{{ route('dosimetria-rx') }}"><i class="fa fa-circle-o"></i>RX</a></li>
+              <li><a href="{{ route('dosimetria-estados') }}"><i class="fa fa-circle-o"></i>Estados</a></li>
+
             </ul>
           </li>
       

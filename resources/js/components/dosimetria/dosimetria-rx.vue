@@ -9,12 +9,23 @@
                             <v-select v-model="year" label="name" :options="years" @input="setMonth()" ></v-select>
                         </div>   
                     </div>   
-                     <div class="col-md-3">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label>Mes</label>
                             <v-select v-model="month" label="name" :options="months" ></v-select>
                         </div>   
                     </div>  
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="fecha">Período</label>
+                            <div class="input-group date">
+                                <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                                </div>
+                                    <Datepicker v-model="periodo" :input-class="'form-control pull-right'" :language="es"></Datepicker>   
+                            </div>
+                        </div>
+                    </div>
                      <div class="col-md-3">
                         <div class="form-group"> 
                             <label>Operador</label>
@@ -34,8 +45,16 @@
                             <table class="table table-hover table-striped">
                                 <thead>
                                     <tr>                                     
-                                        <th class="col-md-6">OPERADOR</th>
-                                        <th style="text-align:center;" class="col-md-1">MILISIEVERT</th>                                                       
+                                        <th class="col-md-5">OPERADOR</th>
+                                        <th class="col-md-1">FILM</th>
+                                        <th style="text-align:center;" class="col-md-1">MILISIEVERT</th>  
+                                        <th style="text-align:center;" class="col-md-1"> PERIODO</th>
+                                        <th style="text-align:center;" class="col-md-2">
+                                           <input type="checkbox" id="checkbox" v-model="sel_checkbox"> 
+                                           <button title="Borrar Periodos" @click="DeletePeriodos()" style="display:inline-block;margin-left:5px;" class="btn btn-xs btn-Primary"><app-icon img="trash" color="black"></app-icon></button>
+                                           <button title="Setear Periodos" @click="SetearPeriodos()" style="display:inline-block;margin-left:5px;" class="btn btn-xs btn-Primary"><app-icon img="edit" color="black"></app-icon></button>
+
+                                        </th>                                                     
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -45,18 +64,29 @@
                                             <td v-if="(!filtro(k))" bgcolor="#bee5eb">
                                                 {{item.operador}}
                                             </td>    
+                                             <td v-if="(!filtro(k))" bgcolor="#bee5eb">
+                                                {{item.film}}
+                                            </td>                                             
                                      
                                             <td v-if="(!filtro(k))" style="text-align:center;">
-                                                <div v-if="(indexPosTablaDosimetria == k)">       
-                                                    <input type="number" :ref="'refInputMediciones'" v-model="TablaDosimetriaRx[k].milisievert" @keyup.enter="getFocus(k)" step="0.01">        
+                                                <div v-if="(indexPosTablaDosimetria == k) && (periodo)">       
+                                                    <input type="number" :ref="'refInputMediciones'" v-model="TablaDosimetriaRx[k].milisievert" @keyup.enter="getFocus(k)" @input="setPeriodo(k)" step="0.01">        
                                                 </div>   
                                                 <div v-else>
                                                     {{item.milisievert}} 
                                                 </div>
-                                            </td>                                                                                         
-                                       
-                                    </tr>                       
-                                    
+                                            </td>   
+                                             <td v-if="(!filtro(k))" style="text-align:center;">
+
+                                                {{ periodo_dosimetria(item.periodo) }}
+                                             
+                                            </td>  
+                                            <td style="text-align:center;">
+
+                                                  <input type="checkbox" id="checkbox" v-model="TablaDosimetriaRx[k].sel">                     
+
+                                            </td>                                                                                    
+                                    </tr>                          
                                 </tbody>
                             </table>                     
                        </div>
@@ -71,9 +101,15 @@
 
 <script>
 import {mapState} from 'vuex'
-
+import Datepicker from 'vuejs-datepicker';
+import {en, es} from 'vuejs-datepicker/dist/locale'
 export default {
 
+    components: {
+
+      Datepicker
+      
+    },
    props :{
 
        operador_data : {
@@ -86,13 +122,17 @@ export default {
 
   data () { return {
 
+      en: en,
+      es: es,
       TablaDosimetriaRx:[],
       year: '',
       month:'',
+      periodo:'',
       years:[],
       months :[],
       indexPosTablaDosimetria : '-1',
       search:'',
+      sel_checkbox:false
      
     }    
   },
@@ -124,7 +164,16 @@ export default {
                     }
                 );   
              }
+        },
+
+        sel_checkbox : function(val){
+
+            this.TablaDosimetriaRx.forEach(function(item){
+                
+                item.sel = val;
+            });
         }
+
   },
   
   computed :{
@@ -146,7 +195,6 @@ export default {
            return new Date(this.fecha).getFullYear();
        },
 
-
     },
  
  methods : {
@@ -160,20 +208,55 @@ export default {
 
      },
 
-       filtro : function(index){
-            console.log('el indice es',index);
-            if(this.search){
+     periodo_dosimetria : function(fecha){
 
-                if(this.TablaDosimetriaRx[index].operador.toLowerCase().includes(this.search.toLowerCase()))
-                {
-                    return false
+         if(fecha){
 
-                }else{
-                    return true
-                }
+            return (new Date(fecha).getMonth() + 1) + '-' + new Date(fecha).getFullYear();
+
+         }else{
+
+             return null
+         }
+
+     },
+    DeletePeriodos: function(){
+
+        this.TablaDosimetriaRx.forEach(function(item){
+
+            if(item.sel){
+
+                item.periodo = '';
             }
-     
-        },
+        }.bind(this))
+
+    },
+
+    SetearPeriodos : function(){
+
+        this.TablaDosimetriaRx.forEach(function(item){
+
+            if(item.sel){
+
+                item.periodo = this.periodo;
+            }
+        }.bind(this))
+    },
+
+    filtro : function(index){
+   
+        if(this.search){
+
+            if(this.TablaDosimetriaRx[index].operador.toLowerCase().includes(this.search.toLowerCase()))
+            {
+                return false
+
+            }else{
+                return true
+            }
+        }
+    
+    },
 
      setMonths : function(){
 
@@ -200,6 +283,11 @@ export default {
          this.TablaDosimetria = [];
          this.setMonths();
    
+     },
+
+     setPeriodo : function(index){
+
+         this.TablaDosimetriaRx[index].periodo = this.periodo;
      },
 
      getFocus(index){
@@ -243,6 +331,7 @@ export default {
         
             year : this.year,
             month : this.month, 
+            periodo : this.periodo,
             dosimetria_rx : this.TablaDosimetriaRx,              
 
         }).then(response => {            
