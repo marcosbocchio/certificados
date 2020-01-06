@@ -24,8 +24,6 @@ class DosimetriaRxRequest extends FormRequest
     public function rules()
     {
         return [
-
-            'periodo'     => 'required',
           
         ];
     }

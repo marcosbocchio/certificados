@@ -81,7 +81,7 @@
                                                 {{ periodo_dosimetria(item.periodo) }}
                                              
                                             </td>  
-                                            <td>
+                                            <td v-if="(!filtro(k))" >
 
                                                   <input type="checkbox" id="checkbox" v-model="TablaDosimetriaRx[k].sel">                     
 
@@ -234,9 +234,16 @@ export default {
 
     SetearPeriodos : function(){
 
+        if(!this.periodo){
+
+          toastr.error('El campo período es obligatorio para esta operación');
+          return 
+
+        }
+
         this.TablaDosimetriaRx.forEach(function(item){
 
-            if(item.sel){
+            if(item.sel && item.milisievert){
 
                 item.periodo = this.periodo;
             }
