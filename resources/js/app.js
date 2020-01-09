@@ -191,10 +191,15 @@ Vue.component('informe-header', require('./components/informes/informe-header.vu
 /* Dosimetria */
 Vue.component('dosimetria-operador', require('./components/dosimetria/dosimetria-operador.vue').default);
 Vue.component('dosimetria-rx', require('./components/dosimetria/dosimetria-rx.vue').default);
+Vue.component('dosimetria-estados', require('./components/dosimetria/dosimetria-estados.vue').default);
+Vue.component('operador-periodo', require('./components/dosimetria/operador-periodo.vue').default);
+Vue.component('dosimetria-resumen', require('./components/dosimetria/dosimetria-resumen.vue').default);
+
+
 
 Vue.prototype.Laravel = window.Laravel;
 
-/**
+/**loadOperadoresDisometria
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
@@ -243,7 +248,6 @@ state: {
         url:process.env.NODE_ENV == 'production' ? 
         process.env.MIX_API_URL_PRO :
         process.env.MIX_API_URL_DEV,
-
         AppUrl:process.env.NODE_ENV == 'production' ? 
         process.env.MIX_URL_PRO :
         process.env.MIX_URL_DEV,
@@ -291,6 +295,8 @@ state: {
         operadores_dosimetria:[],
         dosimetria_operador:[],
         dosimetria_rx:[],
+        dosimetria_estados:[],
+        dosimetria_resumen:[],
 
     },
 
@@ -591,6 +597,19 @@ actions : {
           })
         },
 
+        loadDosimetriaResumen({
+          commit},year) {
+           axios.defaults.baseURL = store.state.url ;
+           var urlRegistros ='dosimetria_resumen/year/'+ year + '?api_token=' + Laravel.user.api_token;    
+           return new Promise((resolve, reject) => {   
+           axios.get(urlRegistros).then((response) => {
+           console.log(response.data);          
+           commit('getDosimetriaResumen', response.data)  
+           resolve()       
+          })         
+          })
+        },
+
         loadDosimetriaOperador({
           commit},payload) {
            axios.defaults.baseURL = store.state.url ;
@@ -613,6 +632,20 @@ actions : {
            axios.get(urlRegistros).then((response) => {
            console.log(response.data);
            commit('getDosimetriaRx', response.data)  
+           resolve()       
+          })
+
+          })
+        },
+
+        loadDosimetriaEstados({
+          commit},payload) {
+           axios.defaults.baseURL = store.state.url ;
+           var urlRegistros ='dosimetria_estados/year/' + payload.year + '/month/' + payload.month + '?api_token=' + Laravel.user.api_token;   
+           return new Promise((resolve, reject) => {             
+           axios.get(urlRegistros).then((response) => {
+           console.log(response.data);
+           commit('getDosimetriaEstados', response.data)  
            resolve()       
           })
 
@@ -937,7 +970,21 @@ actions : {
 
         state.dosimetria_rx = dosimetria_rx;
 
+      },
+
+      getDosimetriaEstados(state, dosimetria_estados){
+
+        state.dosimetria_estados = dosimetria_estados;
+
+      },
+
+      getDosimetriaResumen(state, dosimetria_resumen){
+
+        state.dosimetria_resumen = dosimetria_resumen;
+
       }
+
+      
 
     }
 

@@ -73,13 +73,15 @@
               </span>
             </a>
             <ul class="treeview-menu">
+
+              <li><a href="{{ route('operador-periodo-rx') }}"><i class="fa fa-circle-o"></i>Activar Operador</a></li> 
               <li><a href="{{ route('dosimetria-operador') }}"><i class="fa fa-circle-o"></i>Operador</a></li>
               <li><a href="{{ route('dosimetria-rx') }}"><i class="fa fa-circle-o"></i>RX</a></li>
               <li><a href="{{ route('dosimetria-estados') }}"><i class="fa fa-circle-o"></i>Estados</a></li>
+              <li><a href="{{ route('dosimetria-resumen') }}"><i class="fa fa-circle-o"></i>Resumen</a></li>
 
             </ul>
           </li>
-      
       
         <li class="treeview">
           <a href="#">

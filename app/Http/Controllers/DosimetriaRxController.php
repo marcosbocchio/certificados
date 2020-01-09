@@ -81,8 +81,6 @@ class DosimetriaRxController extends Controller
 
         $dosimetria_operador = DosimetriaRx::whereRaw('YEAR(fecha) = ?',[$request->year])
                                             ->whereRaw('MONTH(fecha) = ?',[$request->month])
-                                       //     ->whereRaw('YEAR(periodo) = ?',[$periodo_year])
-                                       //     ->whereRaw('MONTH(periodo) = ?',[$periodo_month])
                                             ->delete();
 
     }

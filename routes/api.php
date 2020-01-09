@@ -192,11 +192,15 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('dosimetria_operador/operador/{operador_id}/year/{year}/month/{month}','DosimetriaOperadorController@getDosimetriaOperador');
     Route::get('dosimetria_operador/operadores','DosimetriaOperadorController@getDosimetriaOperadores');
     Route::get('dosimetria_rx/year/{year}/month/{month}','DosimetriaRxController@getDosimetriaRx');
-    Route::get('dosimetria/estados','DosimetriaEstadosController@getEstados');
+    Route::get('dosimetria_estados/year/{year}/month/{month}','DosimetriaEstadosController@getDosimetriaEstados');
+    Route::get('estados_operador_rx/estados','EstadosOperadorRxController@getEstados');
+    Route::get('operador_periodo_rx/periodos/operador/{id}','OperadorPeriodoRxController@getOperadorPeriodos');
+    Route::get('dosimetria_resumen/year/{year}','DosimetriaResumenController@getResumen');
 
     Route::resource('dosimetria_operador','DosimetriaOperadorController');
     Route::resource('dosimetria_rx','DosimetriaRxController');
-
+    Route::resource('dosimetria_estados','DosimetriaEstadosController');
+    Route::resource('operador_periodo_rx','OperadorPeriodoRxController');
 
     //parte diario
 

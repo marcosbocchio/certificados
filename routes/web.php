@@ -95,7 +95,8 @@ Route::group(['middleware' => ['permission:enod']], function () {
   Route::get('/area/enod/dosimetria-operador','DosimetriaOperadorController@callView')->name('dosimetria-operador');
   Route::get('/area/enod/dosimetria-rx','DosimetriaRxController@callView')->name('dosimetria-rx');  
   Route::get('/area/enod/dosimetria/estados','DosimetriaEstadosController@callView')->name('dosimetria-estados');  
-
+  Route::get('/area/enod/dosimetria/operador_periodo_rx','OperadorPeriodoRxController@callView')->name('operador-periodo-rx');  
+  Route::get('/area/enod/dosimetria/resumen','DosimetriaResumenController@callView')->name('dosimetria-resumen');  
 
 });
 
