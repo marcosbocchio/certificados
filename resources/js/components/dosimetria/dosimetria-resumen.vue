@@ -16,12 +16,12 @@
                 <div class="box-body">
                      <div class="col-md-12">
                         <div class="table-responsive">          
-                            <table class="table table-hover table-striped table-bordered">
+                            <table class="table table-hover table-bordered">
                                 <thead>
                                     <tr>                                     
-                                        <th style="text-align:center;">OPERADOR</th>     
-                                        <th style="text-align:center;">DNI</th>
-                                        <th style="text-align:center;">FILM</th>  
+                                        <th style="text-align:center;min-width:250px;" rowspan="2" >OPERADOR</th>     
+                                        <th style="text-align:center;" rowspan="2">DNI</th>
+                                        <th style="text-align:center;" rowspan="2">FILM</th>  
                                         <th style="text-align:center;" colspan="3">ENERO</th>  
                                         <th style="text-align:center;" colspan="3">FEBRERO</th>                                                     
                                         <th style="text-align:center;" colspan="3">MARZO</th>                                                     
@@ -33,52 +33,94 @@
                                         <th style="text-align:center;" colspan="3">SEPTIEMBRE</th>                                                     
                                         <th style="text-align:center;" colspan="3">OCTUBRE</th>                                                     
                                         <th style="text-align:center;" colspan="3">NOVIEMBRE</th>                                                     
-                                        <th style="text-align:center;" colspan="3">DICIEMBRE</th>                                                     
-                                                                                           
+                                        <th style="text-align:center;" colspan="3">DICIEMBRE</th>  
+                                        <th style="text-align:center;" colspan="2">ACUMULADO</th>                                                                                
+                                    </tr>
+                                    <tr>   
+                                        <th style="text-align:center;">OP</th>     
+                                        <th style="text-align:center;">RX</th>
+                                        <th style="text-align:center;">E</th>   
+                                        <th style="text-align:center;">OP</th>     
+                                        <th style="text-align:center;">RX</th>
+                                        <th style="text-align:center;">E</th>  
+                                        <th style="text-align:center;">OP</th>     
+                                        <th style="text-align:center;">RX</th>
+                                        <th style="text-align:center;">E</th>   
+                                        <th style="text-align:center;">OP</th>     
+                                        <th style="text-align:center;">RX</th>
+                                        <th style="text-align:center;">E</th>
+                                        <th style="text-align:center;">OP</th>     
+                                        <th style="text-align:center;">RX</th>
+                                        <th style="text-align:center;">E</th>   
+                                        <th style="text-align:center;">OP</th>     
+                                        <th style="text-align:center;">RX</th>
+                                        <th style="text-align:center;">E</th> 
+                                        <th style="text-align:center;">OP</th>     
+                                        <th style="text-align:center;">RX</th>
+                                        <th style="text-align:center;">E</th>   
+                                        <th style="text-align:center;">OP</th>     
+                                        <th style="text-align:center;">RX</th>
+                                        <th style="text-align:center;">E</th>
+                                        <th style="text-align:center;">OP</th>     
+                                        <th style="text-align:center;">RX</th>
+                                        <th style="text-align:center;">E</th>   
+                                        <th style="text-align:center;">OP</th>     
+                                        <th style="text-align:center;">RX</th>
+                                        <th style="text-align:center;">E</th>
+                                        <th style="text-align:center;">OP</th>     
+                                        <th style="text-align:center;">RX</th>
+                                        <th style="text-align:center;">E</th>   
+                                        <th style="text-align:center;">OP</th>     
+                                        <th style="text-align:center;">RX</th>
+                                        <th style="text-align:center;">E</th>
+                                        <th style="text-align:center;">OP</th>     
+                                        <th style="text-align:center;">RX</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr v-for="(item,k) in TablaResumen" :key="k"> 
                                                     
-                                        <td bgcolor="#bee5eb"> {{item.operador}} </td>    
+                                        <td bgcolor="#bee5eb" @mouseover="mouseOver(item.operador_id)" > {{item.operador}} </td>    
                                         <td style="text-align:center;"> {{item.dni}} </td>
                                         <td style="text-align:center;"> {{item.film}} </td>
-                                        <td style="text-align:center;" :class="{maxRxMensual : (item.DOM1 > max_rx_mensual)}"> {{item.DOM1}} </td>
-                                        <td style="text-align:center;" :class="{maxRxMensual : (item.DRXM1 > max_rx_mensual)}"> {{item.DRXM1}} </td>
-                                        <td style="text-align:center;"> {{item.EM1}} </td>
-                                        <td style="text-align:center;" :class="{maxRxMensual : (item.DOM2 > max_rx_mensual)}"> {{item.DOM2}} </td>
-                                        <td style="text-align:center;" :class="{maxRxMensual : (item.DRXM2 > max_rx_mensual)}"> {{item.DRXM2}} </td>   
-                                        <td style="text-align:center;"> {{item.EM2}} </td>    
-                                        <td style="text-align:center;" :class="{maxRxMensual : (item.DOM3 > max_rx_mensual)}"> {{item.DOM3}} </td>
-                                        <td style="text-align:center;" :class="{maxRxMensual : (item.DRXM3 > max_rx_mensual)}"> {{item.DRXM3}} </td>     
-                                        <td style="text-align:center;"> {{item.EM3}} </td>
-                                        <td style="text-align:center;" :class="{maxRxMensual : (item.DOM4 > max_rx_mensual)}"> {{item.DOM4}} </td>
-                                        <td style="text-align:center;" :class="{maxRxMensual : (item.DRXM4 > max_rx_mensual)}"> {{item.DRXM4}} </td>
-                                        <td style="text-align:center;"> {{item.EM4}} </td>                                                                                    
-                                        <td style="text-align:center;" :class="{maxRxMensual : (item.DOM5 > max_rx_mensual)}"> {{item.DOM5}} </td>
-                                        <td style="text-align:center;" :class="{maxRxMensual : (item.DRXM5 > max_rx_mensual)}"> {{item.DRXM5}} </td>
-                                        <td style="text-align:center;"> {{item.EM5}} </td>                                                                                    
-                                        <td style="text-align:center;" :class="{maxRxMensual : (item.DOM6 > max_rx_mensual)}"> {{item.DOM6}} </td>
-                                        <td style="text-align:center;" :class="{maxRxMensual : (item.DRXM6 > max_rx_mensual)}"> {{item.DRXM6}} </td>     
-                                        <td style="text-align:center;"> {{item.EM6}} </td>                                                                               
-                                        <td style="text-align:center;" :class="{maxRxMensual : (item.DOM7 > max_rx_mensual)}"> {{item.DOM7}} </td>
-                                        <td style="text-align:center;" :class="{maxRxMensual : (item.DRXM7 > max_rx_mensual)}"> {{item.DRXM7}} </td>    
-                                        <td style="text-align:center;"> {{item.EM7}} </td>                                                                                
-                                        <td style="text-align:center;" :class="{maxRxMensual : (item.DOM8 > max_rx_mensual)}"> {{item.DOM8}} </td>
-                                        <td style="text-align:center;" :class="{maxRxMensual : (item.DRXM8 > max_rx_mensual)}"> {{item.DRXM8}} </td>    
-                                        <td style="text-align:center;"> {{item.EM8}} </td>                                                                                
-                                        <td style="text-align:center;" :class="{maxRxMensual : (item.DOM9 > max_rx_mensual)}"> {{item.DOM9}} </td>
-                                        <td style="text-align:center;" :class="{maxRxMensual : (item.DRXM9 > max_rx_mensual)}"> {{item.DRXM9}} </td>   
-                                        <td style="text-align:center;"> {{item.EM9}} </td>                                                                                 
-                                        <td style="text-align:center;" :class="{maxRxMensual : (item.DOM10 > max_rx_mensual)}"> {{item.DOM10}} </td>
-                                        <td style="text-align:center;" :class="{maxRxMensual : (item.DRXM10 > max_rx_mensual)}"> {{item.DRXM10}} </td>                                                                                    
-                                        <td style="text-align:center;"> {{item.EM10}} </td>
-                                        <td style="text-align:center;" :class="{maxRxMensual : (item.DOM11 > max_rx_mensual)}"> {{item.DOM11}} </td>
-                                        <td style="text-align:center;" :class="{maxRxMensual : (item.DRXM11 > max_rx_mensual)}"> {{item.DRXM11}} </td>                                                                                    
-                                        <td style="text-align:center;"> {{item.EM11}} </td>
-                                        <td style="text-align:center;" :class="{maxRxMensual : (item.DOM12 > max_rx_mensual)}"> {{item.DOM12}} </td>
-                                        <td style="text-align:center;" :class="{maxRxMensual : (item.DRXM12 > max_rx_mensual)}"> {{item.DRXM12}} </td>                                                                                    
-                                        <td style="text-align:center;"> {{item.EM12}} </td>
+                                        <td style="text-align:center;" :class="[{maxRxMensual : (parseFloat(item.DOM1) > max_rx_mensual)},{MaxDifOpRx : (Math.abs(parseFloat(item.DOM1) -parseFloat(item.DRXM1))) > max_dif_op_rx}]">  {{item.DOM1}} </td>
+                                        <td style="text-align:center;" :class="[{maxRxMensual : (parseFloat(item.DRXM1) > max_rx_mensual)},{MaxDifOpRx : (Math.abs(parseFloat(item.DOM1) -parseFloat(item.DRXM1))) > max_dif_op_rx}]"> {{item.DRXM1}} </td>
+                                        <td style="text-align:center;" :style="{color:item.CM1}" > {{item.EM1}} </td>
+                                        <td style="text-align:center;" :class="[{maxRxMensual : (parseFloat(item.DOM2) > max_rx_mensual)},{MaxDifOpRx : (Math.abs(parseFloat(item.DOM2) -parseFloat(item.DRXM2))) > max_dif_op_rx}]">  {{item.DOM2}} </td>
+                                        <td style="text-align:center;" :class="[{maxRxMensual : (parseFloat(item.DRXM2) > max_rx_mensual)},{MaxDifOpRx : (Math.abs(parseFloat(item.DOM2) -parseFloat(item.DRXM2))) > max_dif_op_rx}]"> {{item.DRXM2}} </td>   
+                                        <td style="text-align:center;" :style="{color:item.CM2}"> {{item.EM2}} </td>    
+                                        <td style="text-align:center;" :class="[{maxRxMensual : (parseFloat(item.DOM3) > max_rx_mensual)},{MaxDifOpRx : (Math.abs(parseFloat(item.DOM3) -parseFloat(item.DRXM3))) > max_dif_op_rx}]"> {{item.DOM3}} </td>
+                                        <td style="text-align:center;" :class="[{maxRxMensual : (parseFloat(item.DRXM3) > max_rx_mensual)},{MaxDifOpRx : (Math.abs(parseFloat(item.DOM3) -parseFloat(item.DRXM3))) > max_dif_op_rx}]"> {{item.DRXM3}} </td>     
+                                        <td style="text-align:center;" :style="{color:item.CM3}"> {{item.EM3}} </td>
+                                        <td style="text-align:center;" :class="[{maxRxMensual : (parseFloat(item.DOM4) > max_rx_mensual)},{MaxDifOpRx : (Math.abs(parseFloat(item.DOM4) -parseFloat(item.DRXM4))) > max_dif_op_rx}]"> {{item.DOM4}} </td>
+                                        <td style="text-align:center;" :class="[{maxRxMensual : (parseFloat(item.DRXM4) > max_rx_mensual)},{MaxDifOpRx : (Math.abs(parseFloat(item.DOM4) -parseFloat(item.DRXM4))) > max_dif_op_rx}]"> {{item.DRXM4}} </td>
+                                        <td style="text-align:center;" :style="{color:item.CM4}"> {{item.EM4}} </td>                                                                                    
+                                        <td style="text-align:center;" :class="[{maxRxMensual : (parseFloat(item.DOM5) > max_rx_mensual)},{MaxDifOpRx : (Math.abs(parseFloat(item.DOM5) - parseFloat(item.DRXM5))) > max_dif_op_rx}]">  {{item.DOM5}} </td>
+                                        <td style="text-align:center;" :class="[{maxRxMensual : (parseFloat(item.DRXM5) > max_rx_mensual)},{MaxDifOpRx : (Math.abs(parseFloat(item.DOM5) - parseFloat(item.DRXM5))) > max_dif_op_rx}]"> {{item.DRXM5}} </td>
+                                        <td style="text-align:center;" :style="{color:item.CM5}"> {{item.EM5}} </td>                                                                                    
+                                        <td style="text-align:center;" :class="[{maxRxMensual : (parseFloat(item.DOM6) > max_rx_mensual)},{MaxDifOpRx : (Math.abs(parseFloat(item.DOM6) -parseFloat(item.DRXM6))) > max_dif_op_rx}]">  {{item.DOM6}} </td>
+                                        <td style="text-align:center;" :class="[{maxRxMensual : (parseFloat(item.DRXM6) > max_rx_mensual)},{MaxDifOpRx : (Math.abs(parseFloat(item.DOM6) -parseFloat(item.DRXM6))) > max_dif_op_rx}]"> {{item.DRXM6}} </td>     
+                                        <td style="text-align:center;" :style="{color:item.CM6}" > {{item.EM6}} </td>                                                                               
+                                        <td style="text-align:center;" :class="[{maxRxMensual : (parseFloat(item.DOM7) > max_rx_mensual)},{MaxDifOpRx : (Math.abs(parseFloat(item.DOM7) -parseFloat(item.DRXM7))) > max_dif_op_rx}]"> {{item.DOM7}} </td>
+                                        <td style="text-align:center;" :class="[{maxRxMensual : (parseFloat(item.DRXM7) > max_rx_mensual)},{MaxDifOpRx : (Math.abs(parseFloat(item.DOM7) -parseFloat(item.DRXM7))) > max_dif_op_rx}]"> {{item.DRXM7}} </td>    
+                                        <td style="text-align:center;" :style="{color:item.CM7}"> {{item.EM7}} </td>                                                                                
+                                        <td style="text-align:center;" :class="[{maxRxMensual : (parseFloat(item.DOM8) > max_rx_mensual)},{MaxDifOpRx : (Math.abs(parseFloat(item.DOM8) -parseFloat(item.DRXM8))) > max_dif_op_rx}]"> {{item.DOM8}} </td>
+                                        <td style="text-align:center;" :class="[{maxRxMensual : (parseFloat(item.DRXM8) > max_rx_mensual)},{MaxDifOpRx : (Math.abs(parseFloat(item.DOM8) -parseFloat(item.DRXM8))) > max_dif_op_rx}]"> {{item.DRXM8}} </td>    
+                                        <td style="text-align:center;" :style="{color:item.CM8}"> {{item.EM8}} </td>                                                                                
+                                        <td style="text-align:center;" :class="[{maxRxMensual : (parseFloat(item.DOM9) > max_rx_mensual)},{MaxDifOpRx : (Math.abs(parseFloat(item.DOM9) -parseFloat(item.DRXM9))) > max_dif_op_rx}]"> {{item.DOM9}} </td>
+                                        <td style="text-align:center;" :class="[{maxRxMensual : (parseFloat(item.DRXM9) > max_rx_mensual)},{MaxDifOpRx : (Math.abs(parseFloat(item.DOM9) -parseFloat(item.DRXM9))) > max_dif_op_rx}]"> {{item.DRXM9}} </td>   
+                                        <td style="text-align:center;" :style="{color:item.CM9}"> {{item.EM9}} </td>                                                                                 
+                                        <td style="text-align:center;" :class="[{maxRxMensual : (parseFloat(item.DOM10) > max_rx_mensual)},{MaxDifOpRx : (Math.abs(parseFloat(item.DOM10) -parseFloat(item.DRXM10))) > max_dif_op_rx}]"> {{item.DOM10}} </td>
+                                        <td style="text-align:center;" :class="[{maxRxMensual : (parseFloat(item.DRXM10) > max_rx_mensual)},{MaxDifOpRx : (Math.abs(parseFloat(item.DOM10) -parseFloat(item.DRXM10))) > max_dif_op_rx}]"> {{item.DRXM10}} </td>                                                                                    
+                                        <td style="text-align:center;" :style="{color:item.CM10}"> {{item.EM10}} </td>
+                                        <td style="text-align:center;" :class="[{maxRxMensual : (parseFloat(item.DOM11) > max_rx_mensual)},{MaxDifOpRx : (Math.abs(parseFloat(item.DOM11) -parseFloat(item.DRXM11))) > max_dif_op_rx}]"> {{item.DOM11}} </td>
+                                        <td style="text-align:center;" :class="[{maxRxMensual : (parseFloat(item.DRXM11) > max_rx_mensual)},{MaxDifOpRx : (Math.abs(parseFloat(item.DOM11) -parseFloat(item.DRXM11))) > max_dif_op_rx}]"> {{item.DRXM11}} </td>                                                                                    
+                                        <td style="text-align:center;" :style="{color:item.CM11}"> {{item.EM11}} </td>
+                                        <td style="text-align:center;" :class="[{maxRxMensual : (parseFloat(item.DOM12) > max_rx_mensual)},{MaxDifOpRx : (Math.abs(parseFloat(item.DOM12) -parseFloat(item.DRXM12))) > max_dif_op_rx}]"> {{item.DOM12}} </td>
+                                        <td style="text-align:center;" :class="[{maxRxMensual : (parseFloat(item.DRXM12) > max_rx_mensual)},{MaxDifOpRx : (Math.abs(parseFloat(item.DOM12) -parseFloat(item.DRXM12))) > max_dif_op_rx}]"> {{item.DRXM12}} </td>                                                                                    
+                                        <td style="text-align:center;" :style="{color:item.CM12}"> {{item.EM12}} </td>
+                                        <td style="text-align:center;">{{item.ACUMULADO_OP}}</td>
+                                        <td style="text-align:center;">{{item.ACUMULADO_RX}}</td>
                                                                                  
                                     </tr>                       
                                     
@@ -91,12 +133,14 @@
         </div>
         <a class="btn btn-primary" v-on:click="submit()" >Actualizar</a> 
       </div>
+      <modal-periodos></modal-periodos>
     </div>
 </template>
 
 <script>
-import {mapState} from 'vuex'
 
+import {mapState} from 'vuex'
+import { eventModal } from '../event-bus';
 export default {
 
    props :{
@@ -108,7 +152,6 @@ export default {
 
      },
 
-
   data () { return {
 
       TablaResumen:[],
@@ -117,6 +160,8 @@ export default {
       years:[], 
       max_rx_mensual:'',
       max_dif_op_rx:'',
+      estados:[],
+  
      
     }    
   },
@@ -141,12 +186,14 @@ export default {
           this.max_dif_op_rx = this.ParametroGeneral.valor;
             
        })
+
+      
   },   
 
   watch : {
 
         year : function(val){
-
+          
             this.TablaResumen = []      
             console.log('el año es:',this.year);
             this.$store.dispatch('loadDosimetriaResumen', val).then(
@@ -169,11 +216,17 @@ export default {
        anio_actual : function(){
 
            return new Date(this.fecha).getFullYear();
-       }
+       },
 
     },
  
  methods : {
+
+     mouseOver:function(){
+
+           eventModal.$emit('open');
+
+     },
 
      setYears : function(){
 
@@ -183,6 +236,7 @@ export default {
          }
 
      },
+
  },
   
 }
@@ -194,4 +248,11 @@ export default {
 
     color: red;
 }
+
+.MaxDifOpRx {
+
+    text-decoration: underline;
+}
+
+
 </style>
