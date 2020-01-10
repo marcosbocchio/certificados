@@ -25,7 +25,7 @@ class AddForeignKeyDosimetriaEstadosTable extends Migration
 
             $table->bigInteger('user_id')
                 ->unsigned()
-                ->after('estado_id');
+                ->after('operador_id');
 
             $table->foreign('user_id')
                 ->references('id')
