@@ -194,7 +194,6 @@ Vue.component('dosimetria-rx', require('./components/dosimetria/dosimetria-rx.vu
 Vue.component('dosimetria-estados', require('./components/dosimetria/dosimetria-estados.vue').default);
 Vue.component('operador-periodo', require('./components/dosimetria/operador-periodo.vue').default);
 Vue.component('dosimetria-resumen', require('./components/dosimetria/dosimetria-resumen.vue').default);
-Vue.component('modal-periodos', require('./components/dosimetria/modal-periodos.vue').default);
 
 
 

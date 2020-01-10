@@ -28,39 +28,40 @@
                     </div>   
                     
                 </div>
-            </div>   
-            <div class="box box-danger">
-                <div class="box-body">
-                     <div class="col-md-4">
-                        <div class="table-responsive">          
-                            <table class="table table-hover table-striped table-border table-bordered">
-                                <thead>
-                                    <tr>                                     
-                                        <th class="col-md-2">ALTA</th>
-                                        <th class="col-md-2">BAJA</th>                                    
-                                                    
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="(item,k) in TablaPeriodos" :key="k" @click="selectPosTablaDosimetria(k)"> 
-                                                    
-                                            <td>
-                                                {{item.alta}}
-                                            </td>    
-                                             <td>
-                                                {{item.baja}}
-                                            </td>                                            
-                                                                      
-                                    </tr>  
-                                                           
-                                </tbody>
-                            </table>                     
-                       </div>
+            </div>  
+            <div v-if="TablaPeriodos.length"> 
+                <div class="box box-danger">
+                    <div class="box-body">
+                        <div class="col-md-4">
+                            <div class="table-responsive">          
+                                <table class="table table-hover table-striped table-border table-bordered">
+                                    <thead>
+                                        <tr>                                     
+                                            <th class="col-md-2">ALTA</th>
+                                            <th class="col-md-2">BAJA</th>                                    
+                                                        
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="(item,k) in TablaPeriodos" :key="k" @click="selectPosTablaDosimetria(k)"> 
+                                                        
+                                                <td>
+                                                    {{item.alta}}
+                                                </td>    
+                                                <td>
+                                                    {{item.baja}}
+                                                </td>                                            
+                                                                        
+                                        </tr>  
+                                                            
+                                    </tbody>
+                                </table>                     
+                        </div>
+                    </div>
                 </div>
-             </div>
-            <div class="clearfix"></div>    
+                <div class="clearfix"></div>    
+            </div>
         </div>
-
         
       </div>
     </div>
