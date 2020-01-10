@@ -80,7 +80,35 @@
                                 <tbody>
                                     <tr v-for="(item,k) in TablaResumen" :key="k"> 
                                                     
-                                        <td bgcolor="#bee5eb" @mouseover="mouseOver(item.operador_id)" > {{item.operador}} </td>    
+                                        <td bgcolor="#bee5eb" @mouseover="getPeriodos(item.operador_id)">
+                                            <popper trigger="hover" :options="{placement: 'top'}">
+                                                <div class="popper">
+                                                  
+                                                        <table class="table table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th style="width:100px;max-height: 30px;">Alta</th>
+                                                                    <th style="width:100px;">Baja</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr v-for="(item,k) in TablaPeriodos" :key="k">
+                                                                    <td>{{item.alta}}</td>  
+                                                                    <td>{{item.baja}}</td>          
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                              
+                                                    
+                                                  
+                                                   
+                                                </div>
+
+                                                <a href="#" slot="reference" class="top">
+                                                {{item.operador}}
+                                                </a>  
+                                            </popper>                                              
+                                            </td>    
                                         <td style="text-align:center;"> {{item.dni}} </td>
                                         <td style="text-align:center;"> {{item.film}} </td>
                                         <td style="text-align:center;" :class="[{maxRxMensual : (parseFloat(item.DOM1) > max_rx_mensual)},{MaxDifOpRx : (Math.abs(parseFloat(item.DOM1) -parseFloat(item.DRXM1))) > max_dif_op_rx}]">  {{item.DOM1}} </td>
@@ -125,7 +153,7 @@
                                     </tr>                       
                                     
                                 </tbody>
-                            </table>                     
+                            </table>                   
                        </div>
                 </div>
              </div>
@@ -133,7 +161,6 @@
         </div>
         <a class="btn btn-primary" v-on:click="submit()" >Actualizar</a> 
       </div>
-      <modal-periodos></modal-periodos>
     </div>
 </template>
 
@@ -141,7 +168,13 @@
 
 import {mapState} from 'vuex'
 import { eventModal } from '../event-bus';
+import Popper from 'vue-popperjs';
+
 export default {
+
+      components: {
+        	'popper': Popper
+  },
 
    props :{
 
@@ -161,6 +194,7 @@ export default {
       max_rx_mensual:'',
       max_dif_op_rx:'',
       estados:[],
+      TablaPeriodos:[],
   
      
     }    
@@ -220,13 +254,18 @@ export default {
 
     },
  
- methods : {
+ methods : {    
 
-     mouseOver:function(){
-
-           eventModal.$emit('open');
-
+       getPeriodos(operador_id){
+            this.TablaPeriodos = [];
+            axios.defaults.baseURL = this.url ;
+            var urlRegistros = 'operador_periodo_rx/periodos/operador/' + operador_id  +'?api_token=' + Laravel.user.api_token;         
+            axios.get(urlRegistros).then(response =>{
+            this.TablaPeriodos = response.data
+            
+            });   
      },
+    
 
      setYears : function(){
 
@@ -252,6 +291,11 @@ export default {
 .MaxDifOpRx {
 
     text-decoration: underline;
+}
+
+.top {
+  margin: 0 auto;
+  display: table;
 }
 
 

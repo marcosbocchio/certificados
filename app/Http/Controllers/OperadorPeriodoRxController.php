@@ -34,8 +34,11 @@ class OperadorPeriodoRxController extends Controller
 
     public function getOperadorPeriodos($id){
 
-        return OperadorPeriodoRx::where('operador_id',$id)->orderBy('alta','asc')->get();
-      //  $operador_periodos = DB::select('CALL OperadorPeriodosRx(?)',array($id));
+        return OperadorPeriodoRx::where('operador_id',$id)
+                                  ->orderBy('alta','asc')
+                                  ->SelectRaw('CONCAT(MONTH(alta),"-",YEAR(alta)) as alta,CONCAT(MONTH(baja),"-",YEAR(baja)) as baja,id,operador_id,user_id')
+                                  ->get();
+     
     }
 
     /**
