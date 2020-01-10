@@ -34,13 +34,13 @@ class DosimetriaOperadorController extends Controller
     public function  getDosimetriaOperador($operador_id,$year,$month){
 
         $disometrias = DosimetriaOperador::whereRaw('YEAR(fecha) = ?',[$year])
-                                   ->whereRaw('MONTH(fecha) = ?',[$month])
-                                   ->where('operador_id',$operador_id)
-                                   ->selectRaw('DAY(fecha) as day,microsievert, observaciones')
-                                   ->orderBy('day','ASC')
-                                   ->get();
+                                        ->whereRaw('MONTH(fecha) = ?',[$month])
+                                        ->where('operador_id',$operador_id)
+                                        ->selectRaw('DAY(fecha) as day,microsievert, observaciones')
+                                        ->orderBy('day','ASC')
+                                        ->get();
     
-         $dias = cal_days_in_month(CAL_GREGORIAN, $month, $year); 
+       //  $dias = cal_days_in_month(CAL_GREGORIAN, $month, $year); 
     
          return $disometrias;
     }
