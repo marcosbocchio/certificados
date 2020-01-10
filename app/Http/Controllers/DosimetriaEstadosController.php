@@ -123,7 +123,7 @@ class DosimetriaEstadosController extends Controller
 
                 if($estado['estado']['baja_sn']){
 
-                    $baja = date('Y-m',strtotime($dosimetria_estado->created_at)) . -1;
+                    $baja = date('Y-m',strtotime($dosimetria_estado->fecha)) . -1;
                     $operadorPeriodoRx = OperadorPeriodoRx::where('operador_id',$estado['operador_id'])->orderBy('id','desc')->limit(1)->first();
                     $operadorPeriodoRx->baja = $baja;
                     $operadorPeriodoRx->save();

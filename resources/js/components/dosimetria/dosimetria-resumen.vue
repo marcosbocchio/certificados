@@ -80,10 +80,9 @@
                                     <tbody>
                                         <tr v-for="(item,k) in TablaResumen" :key="k"> 
                                                         
-                                            <td bgcolor="#bee5eb" @mouseover="getPeriodos(item.operador_id)">
-                                                <popper trigger="hover" :options="{placement: 'top'}">
+                                            <td bgcolor="#bee5eb" @click="getPeriodos(item.operador_id)">
+                                                <popper trigger="click" :options="{placement: 'top'}">
                                                     <div class="popper">
-                                                    
                                                             <table class="table table-bordered">
                                                                 <thead>
                                                                     <tr>
@@ -97,11 +96,8 @@
                                                                         <td>{{item.baja}}</td>          
                                                                     </tr>
                                                                 </tbody>
-                                                            </table>
+                                                            </table> 
                                                 
-                                                        
-                                                    
-                                                    
                                                     </div>
 
                                                     <a href="#" slot="reference" class="top">
