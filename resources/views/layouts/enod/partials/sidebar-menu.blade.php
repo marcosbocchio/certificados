@@ -67,7 +67,7 @@
       
           <li class="treeview">
             <a href="#">
-              <i class="fas fa-radiation"></i> <span>DOSIMETRIA</span>
+              <i class="fa fa-bar-chart"></i> <span>DOSIMETRIA</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>

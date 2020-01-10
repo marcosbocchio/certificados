@@ -26,52 +26,54 @@
                      </div>
                 </div>
             </div>
-       
-            <div class="box box-danger">
-                <div class="box-body">
-                     <div class="col-md-9">
-                        <div class="table-responsive">          
-                            <table class="table table-hover table-striped table-border">
-                                <thead>
-                                    <tr>                                     
-                                        <th class="col-md-5">OPERADOR</th>
-                                        <th class="col-md-1">FILM</th>
-                                        <th style="text-align:center;" class="col-md-2">ESTADO</th> 
-                                                    
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="(item,k) in TablaDosimetriaEstados" :key="k" @click="selectPosTablaDosimetria(k)"> 
-                                                    
-                                            <td v-if="(!filtro(k))" bgcolor="#bee5eb">
-                                                {{item.operador}}
-                                            </td>    
-                                             <td v-if="(!filtro(k))" bgcolor="#bee5eb">
-                                                {{item.film}}
-                                            </td>                                             
-                                     
-                                            <td v-if="(!filtro(k))" style="text-align:center;">
-                                                <div v-if="(indexPosTablaDosimetria == k)">      
-                                                    <v-select v-model="TablaDosimetriaEstados[k].estado" :reduce="descripcion => descripcion" label="descripcion" :options="estados" ></v-select> 
-                                                </div>
-                                                <div v-else-if="item.estado">
-                                                    {{item.estado.descripcion}}
-                                                </div>
-                                                <div v-else>
-                                                    {{item.estado}}
-                                                </div>
-                                            </td>                                                                           
-                                    </tr>   
-                                    <tr v-for="fila in 8" >
-                                        <td colspan="3" style="border:none; background: #FFFFFF"> &nbsp;</td>                                                  
-                                    </tr>                                                               
-                                </tbody>
-                            </table>                     
-                       </div>
+
+            <div v-if="TablaDosimetriaEstados.length">
+                <div class="box box-danger">
+                    <div class="box-body">
+                        <div class="col-md-9">
+                            <div class="table-responsive">          
+                                <table class="table table-hover table-striped table-border">
+                                    <thead>
+                                        <tr>                                     
+                                            <th class="col-md-5">OPERADOR</th>
+                                            <th class="col-md-1">FILM</th>
+                                            <th style="text-align:center;" class="col-md-2">ESTADO</th> 
+                                                        
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="(item,k) in TablaDosimetriaEstados" :key="k" @click="selectPosTablaDosimetria(k)"> 
+                                                        
+                                                <td v-if="(!filtro(k))" bgcolor="#bee5eb">
+                                                    {{item.operador}}
+                                                </td>    
+                                                <td v-if="(!filtro(k))" bgcolor="#bee5eb">
+                                                    {{item.film}}
+                                                </td>                                             
+                                        
+                                                <td v-if="(!filtro(k))" style="text-align:center;">
+                                                    <div v-if="(indexPosTablaDosimetria == k)">      
+                                                        <v-select v-model="TablaDosimetriaEstados[k].estado" :reduce="descripcion => descripcion" label="descripcion" :options="estados" ></v-select> 
+                                                    </div>
+                                                    <div v-else-if="item.estado">
+                                                        {{item.estado.descripcion}}
+                                                    </div>
+                                                    <div v-else>
+                                                        {{item.estado}}
+                                                    </div>
+                                                </td>                                                                           
+                                        </tr>   
+                                        <tr v-for="fila in 8" >
+                                            <td colspan="3" style="border:none; background: #FFFFFF"> &nbsp;</td>                                                  
+                                        </tr>                                                               
+                                    </tbody>
+                                </table>                     
+                        </div>
+                    </div>
                 </div>
-             </div>
-            <div class="clearfix"></div>    
-        </div>
+                <div class="clearfix"></div>    
+                </div>
+            </div>
         <a class="btn btn-primary" v-on:click="submit()" >Actualizar</a> 
       </div>
     </div>
