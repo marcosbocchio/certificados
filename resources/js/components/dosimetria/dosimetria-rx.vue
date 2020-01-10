@@ -37,64 +37,67 @@
                      </div>
                 </div>
             </div>
-       
-            <div class="box box-danger">
-                <div class="box-body">
-                     <div class="col-md-9">
-                        <div class="table-responsive">          
-                            <table class="table table-hover table-striped table-border">
-                                <thead>
-                                    <tr>                                     
-                                        <th class="col-md-5">OPERADOR</th>
-                                        <th class="col-md-1">FILM</th>
-                                        <th style="text-align:center;" class="col-md-1">MILISIEVERT</th>  
-                                        <th style="text-align:center;" class="col-md-1"> PERIODO</th>
-                                        <th class="col-md-2">
-                                           <input type="checkbox" id="checkbox" v-model="sel_checkbox"> 
-                                       <!--    <button title="Borrar Periodos" @click="DeletePeriodos()" style="display:inline-block;margin-left:5px;" class="btn btn-xs btn-Primary"><app-icon img="trash" color="black"></app-icon></button> -->
-                                           <button title="Setear Periodos" @click="SetearPeriodos()" style="display:inline-block;margin-left:5px;" class="btn btn-xs btn-Primary"><app-icon img="edit" color="black"></app-icon></button>
+            <div v-if="TablaDosimetriaRx.length">
+                <div class="box box-danger">
+                    <div class="box-body">
+                        <div class="col-md-9">
+                            <div class="table-responsive">          
+                                <table class="table table-hover table-striped table-border">
+                                    <thead>
+                                        <tr>                                     
+                                            <th class="col-md-5">OPERADOR</th>
+                                            <th class="col-md-1">FILM</th>
+                                            <th style="text-align:center;" class="col-md-1">MILISIEVERT</th>  
+                                            <th style="text-align:center;" class="col-md-1"> PERIODO</th>
+                                            <th class="col-md-2">
+                                            <input type="checkbox" id="checkbox" v-model="sel_checkbox"> 
+                                        <!--    <button title="Borrar Periodos" @click="DeletePeriodos()" style="display:inline-block;margin-left:5px;" class="btn btn-xs btn-Primary"><app-icon img="trash" color="black"></app-icon></button> -->
+                                            <button title="Setear Periodos" @click="SetearPeriodos()" style="display:inline-block;margin-left:5px;" class="btn btn-xs btn-Primary"><app-icon img="edit" color="black"></app-icon></button>
 
-                                        </th>                                                     
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="(item,k) in TablaDosimetriaRx" :key="k" @click="selectPosTablaDosimetria(k)"> 
-                                                    
-                                    
-                                            <td v-if="(!filtro(k))" bgcolor="#bee5eb">
-                                                {{item.operador}}
-                                            </td>    
-                                             <td v-if="(!filtro(k))" bgcolor="#bee5eb">
-                                                {{item.film}}
-                                            </td>                                             
-                                     
-                                            <td v-if="(!filtro(k))" style="text-align:center;">
-                                                <div v-if="(indexPosTablaDosimetria == k) && (periodo)">       
-                                                    <input type="number" :ref="'refInputMediciones'" v-model="TablaDosimetriaRx[k].milisievert" @keyup.enter="getFocus(k)" @input="setPeriodo(k)" step="0.01">        
-                                                </div>   
-                                                <div v-else>
-                                                    {{item.milisievert}} 
-                                                </div>
-                                            </td>   
-                                             <td v-if="(!filtro(k))" style="text-align:center;">
+                                            </th>                                                     
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="(item,k) in TablaDosimetriaRx" :key="k" @click="selectPosTablaDosimetria(k)"> 
+                                                        
+                                        
+                                                <td v-if="(!filtro(k))" bgcolor="#bee5eb">
+                                                    {{item.operador}}
+                                                </td>    
+                                                <td v-if="(!filtro(k))" bgcolor="#bee5eb">
+                                                    {{item.film}}
+                                                </td>                                             
+                                        
+                                                <td v-if="(!filtro(k))" style="text-align:center;">
+                                                    <div v-if="(indexPosTablaDosimetria == k) && (periodo)">       
+                                                        <input type="number" :ref="'refInputMediciones'" v-model="TablaDosimetriaRx[k].milisievert" @keyup.enter="getFocus(k)" @input="setPeriodo(k)" step="0.01">        
+                                                    </div>   
+                                                    <div v-else>
+                                                        {{item.milisievert}} 
+                                                    </div>
+                                                </td>   
+                                                <td v-if="(!filtro(k))" style="text-align:center;">
 
-                                                {{ periodo_dosimetria(item.periodo) }}
-                                             
-                                            </td>  
-                                            <td v-if="(!filtro(k))" >
+                                                    {{ periodo_dosimetria(item.periodo) }}
+                                                
+                                                </td>  
+                                                <td v-if="(!filtro(k))" >
 
-                                                  <input type="checkbox" id="checkbox" v-model="TablaDosimetriaRx[k].sel">                     
+                                                    <input type="checkbox" id="checkbox" v-model="TablaDosimetriaRx[k].sel">                     
 
-                                            </td>                                                                                    
-                                    </tr>                          
-                                </tbody>
-                            </table>                     
-                       </div>
+                                                </td>                                                                                    
+                                        </tr>                          
+                                    </tbody>
+                                </table>                     
+                        </div>
+                    </div>
                 </div>
-             </div>
-            <div class="clearfix"></div>    
+                <div class="clearfix"></div>    
+            </div>
         </div>
-        <a class="btn btn-primary" v-on:click="submit()" >Actualizar</a> 
+        <div v-if="TablaDosimetriaRx.length">
+            <a class="btn btn-primary" v-on:click="submit()" >Actualizar</a> 
+        </div>
       </div>
     </div>
 </template>
