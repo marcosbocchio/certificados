@@ -62,7 +62,7 @@ class PdfInformesRiController extends Controller
         $evaluador = User::find($informe->firma);
         $contratista = Contratistas::find($ot->contratista_id);
         
-       // dd($informe);
+      
        
 
         if ($informe_ri->gasoducto_sn){
@@ -73,7 +73,7 @@ class PdfInformesRiController extends Controller
 
        
 
-      //    dd($juntas_posiciones);
+     
       
 
           $pdf = PDF::loadView('reportes.informes.ri-gasoducto',compact('ot',
@@ -111,8 +111,6 @@ class PdfInformesRiController extends Controller
       $juntas_posiciones = DB::select('CALL InformeRiPlantaJuntaPosicion(?)',array($informe_ri->id));
       $defectos_posiciones = DB::select('CALL InformeRiPlantaDefectosPasadaPosicion(?)',array($informe_ri->id));                                          
       
-   // dd($cliente);
-   //   dd($defectos_posiciones);
 
           $pdf = PDF::loadView('reportes.informes.ri-planta',compact('ot',
                                                               'norma_ensayo',
@@ -134,7 +132,7 @@ class PdfInformesRiController extends Controller
                                                               'tecnicas_grafico',
                                                               'juntas_posiciones',
                                                               'defectos_posiciones',
-                                                              'evaluador'))->setPaper('a4','portrait')->setWarnings(false);;
+                                                              'evaluador'))->setPaper('a4','portrait')->setWarnings(false);
 
                                                     
           return $pdf->stream();

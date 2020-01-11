@@ -80,7 +80,7 @@
       </div>
     </div>
 </template>
-
+ 
 <script>
 import {mapState} from 'vuex'
 import Datepicker from 'vuejs-datepicker';
