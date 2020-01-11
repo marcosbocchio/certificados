@@ -12,10 +12,12 @@ class PdfDosimetriaController extends Controller
 
         $fecha = date("Y/m/d H:i:s");
         $resumen = DB::select('CALL DosimetriaResumen(?)',array($year));   
+        $Max_Rx_Mensual = (new ParametrosGeneralesController())->show('Max_Rx_Mensual'); 
+        $Max_dif_op_rx = (new ParametrosGeneralesController())->show('Max_dif_op_rx');    
 
-       // return $resumen;
+        //return $Max_dif_op_rx;
 
-        $pdf = PDF::loadView('reportes.dosimetria.resumen',compact('fecha','year','resumen'))->setPaper('a4','landscape')->setWarnings(false);
+        $pdf = PDF::loadView('reportes.dosimetria.resumen',compact('fecha','year','resumen','Max_Rx_Mensual','Max_dif_op_rx'))->setPaper('a4','landscape')->setWarnings(false);
         return $pdf->stream();
                                                             }
 }

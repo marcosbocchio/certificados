@@ -63,6 +63,16 @@ b {
     margin-left: 2px;
 }
 
+.maxRxMensual {
+
+color: red;
+}
+
+.MaxDifOpRx {
+
+text-decoration: underline;
+}
+
 </style>
 
 <body>   
@@ -142,53 +152,53 @@ b {
                     <td style="font-size: 10px;">{{ $item->dni }}</td>
                     <td style="font-size: 10px;">{{ $item->film }}</td>   
 
-                    <td style="font-size: 10px;">{{ $item->DOM1 }}</td>
-                    <td style="font-size: 10px;">{{ $item->DRXM1 }}</td>
-                    <td style="font-size: 10px;">{{ $item->EM1 }}</td>
+                    <td style="font-size: 10px;" @if($item->DOM1 > $Max_Rx_Mensual->valor) class="maxRxMensual" @endif> {{ $item->DOM1 }}</td>
+                    <td style="font-size: 10px;" @if($item->DRXM1 > $Max_Rx_Mensual->valor) class="maxRxMensual" @endif>{{ $item->DRXM1 }}</td>
+                    <td style="font-size: 10px;"><span style="color: {{$item->CM1}}"> {{ $item->EM1 }}</span></td>
 
-                    <td style="font-size: 10px;">{{ $item->DOM2 }}</td>
-                    <td style="font-size: 10px;">{{ $item->DRXM2 }}</td>
-                    <td style="font-size: 10px;">{{ $item->EM2 }}</td>
+                    <td style="font-size: 10px;" @if($item->DOM2 > $Max_Rx_Mensual->valor) class="maxRxMensual" @endif>{{ $item->DOM2 }}</td>
+                    <td style="font-size: 10px;" @if($item->DRXM2 > $Max_Rx_Mensual->valor) class="maxRxMensual" @endif>{{ $item->DRXM2 }}</td>
+                    <td style="font-size: 10px;"><span style="color: {{$item->CM2}}"> {{ $item->EM2 }}</span></td>
 
-                    <td style="font-size: 10px;">{{ $item->DOM3 }}</td>
-                    <td style="font-size: 10px;">{{ $item->DRXM3 }}</td>
-                    <td style="font-size: 10px;">{{ $item->EM3 }}</td>
+                    <td style="font-size: 10px;" @if($item->DOM3 > $Max_Rx_Mensual->valor) class="maxRxMensual" @endif>{{ $item->DOM3 }}</td>
+                    <td style="font-size: 10px;" @if($item->DRXM3 > $Max_Rx_Mensual->valor) class="maxRxMensual" @endif>{{ $item->DRXM3 }}</td>
+                    <td style="font-size: 10px;"><span style="color: {{$item->CM3}}"> {{ $item->EM3 }}</span></td>
 
-                    <td style="font-size: 10px;">{{ $item->DOM4 }}</td>
-                    <td style="font-size: 10px;">{{ $item->DRXM4 }}</td>
-                    <td style="font-size: 10px;">{{ $item->EM4 }}</td>
+                    <td style="font-size: 10px;" @if($item->DOM4 > $Max_Rx_Mensual->valor) class="maxRxMensual" @endif>{{ $item->DOM4 }}</td>
+                    <td style="font-size: 10px;" @if($item->DRXM4 > $Max_Rx_Mensual->valor) class="maxRxMensual" @endif>{{ $item->DRXM4 }}</td>
+                    <td style="font-size: 10px;"><span style="color: {{$item->CM4}}"> {{ $item->EM4 }}</span></td>
 
-                    <td style="font-size: 10px;">{{ $item->DOM5 }}</td>
-                    <td style="font-size: 10px;">{{ $item->DRXM5 }}</td>
-                    <td style="font-size: 10px;">{{ $item->EM5 }}</td>
+                    <td style="font-size: 10px;" @if($item->DOM5 > $Max_Rx_Mensual->valor) class="maxRxMensual" @endif>{{ $item->DOM5 }}</td>
+                    <td style="font-size: 10px;" @if($item->DRXM5 > $Max_Rx_Mensual->valor) class="maxRxMensual" @endif>{{ $item->DRXM5 }}</td>
+                    <td style="font-size: 10px;"><span style="color: {{$item->CM5}}"> {{ $item->EM5 }}</span></td>
 
-                    <td style="font-size: 10px;">{{ $item->DOM6 }}</td>
-                    <td style="font-size: 10px;">{{ $item->DRXM6 }}</td>
-                    <td style="font-size: 10px;">{{ $item->EM6 }}</td>
+                    <td style="font-size: 10px;" @if($item->DOM6 > $Max_Rx_Mensual->valor) class="maxRxMensual" @endif>{{ $item->DOM6 }}</td>
+                    <td style="font-size: 10px;" @if($item->DRXM6 > $Max_Rx_Mensual->valor) class="maxRxMensual" @endif>{{ $item->DRXM6 }}</td>
+                    <td style="font-size: 10px;"><span style="color: {{$item->CM6}}"> {{ $item->EM6 }}</span></td>
 
-                    <td style="font-size: 10px;">{{ $item->DOM7 }}</td>
-                    <td style="font-size: 10px;">{{ $item->DRXM7 }}</td>
-                    <td style="font-size: 10px;">{{ $item->EM7 }}</td>
+                    <td style="font-size: 10px;" @if($item->DOM7 > $Max_Rx_Mensual->valor) class="maxRxMensual" @endif>{{ $item->DOM7 }}</td>
+                    <td style="font-size: 10px;" @if($item->DRXM7 > $Max_Rx_Mensual->valor) class="maxRxMensual" @endif>{{ $item->DRXM7 }}</td>
+                    <td style="font-size: 10px;"><span style="color: {{$item->CM7}}"> {{ $item->EM7 }}</span></td>
 
-                    <td style="font-size: 10px;">{{ $item->DOM8 }}</td>
-                    <td style="font-size: 10px;">{{ $item->DRXM8 }}</td>
-                    <td style="font-size: 10px;">{{ $item->EM8 }}</td>
+                    <td style="font-size: 10px;" @if($item->DOM1 > $Max_Rx_Mensual->valor) class="maxRxMensual" @endif>{{ $item->DOM8 }}</td>
+                    <td style="font-size: 10px;" @if($item->DOM1 > $Max_Rx_Mensual->valor) class="maxRxMensual" @endif>{{ $item->DRXM8 }}</td>
+                    <td style="font-size: 10px;"><span style="color: {{$item->CM8}}"> {{ $item->EM8 }}</span></td>
 
-                    <td style="font-size: 10px;">{{ $item->DOM9 }}</td>
-                    <td style="font-size: 10px;">{{ $item->DRXM9 }}</td>
-                    <td style="font-size: 10px;">{{ $item->EM9 }}</td>
+                    <td style="font-size: 10px;" @if($item->DOM9 > $Max_Rx_Mensual->valor) class="maxRxMensual" @endif>{{ $item->DOM9 }}</td>
+                    <td style="font-size: 10px;" @if($item->DRXM9 > $Max_Rx_Mensual->valor) class="maxRxMensual" @endif>{{ $item->DRXM9 }}</td>
+                    <td style="font-size: 10px;"><span style="color: {{$item->CM9}}"> {{ $item->EM9 }}</span></td>
 
-                    <td style="font-size: 10px;">{{ $item->DOM10 }}</td>
-                    <td style="font-size: 10px;">{{ $item->DRXM10 }}</td>
-                    <td style="font-size: 10px;">{{ $item->EM10 }}</td>
+                    <td style="font-size: 10px;" @if($item->DOM10 > $Max_Rx_Mensual->valor) class="maxRxMensual" @endif>{{ $item->DOM10 }}</td>
+                    <td style="font-size: 10px;" @if($item->DRXM10 > $Max_Rx_Mensual->valor) class="maxRxMensual" @endif>{{ $item->DRXM10 }}</td>
+                    <td style="font-size: 10px;"><span style="color:{{$item->CM10}}"></span {{ $item->EM10 }}</td>
 
-                    <td style="font-size: 10px;">{{ $item->DOM11 }}</td>
-                    <td style="font-size: 10px;">{{ $item->DRXM11 }}</td>
-                    <td style="font-size: 10px;">{{ $item->EM11 }}</td>
+                    <td style="font-size: 10px;" @if($item->DOM11 > $Max_Rx_Mensual->valor) class="maxRxMensual" @endif>{{ $item->DOM11 }}</td>
+                    <td style="font-size: 10px;" @if($item->DRXM11 > $Max_Rx_Mensual->valor) class="maxRxMensual" @endif>{{ $item->DRXM11 }}</td>
+                    <td style="font-size: 10px;"><span style="color:{{$item->CM11}}"></span {{ $item->EM11 }}</td>
 
-                    <td style="font-size: 10px;">{{ $item->DOM12 }}</td>
-                    <td style="font-size: 10px;">{{ $item->DRXM12 }}</td>
-                    <td style="font-size: 10px;">{{ $item->EM12 }}</td>
+                    <td style="font-size: 10px;" @if($item->DOM12 > $Max_Rx_Mensual->valor) class="maxRxMensual" @endif>{{ $item->DOM12 }}</td>
+                    <td style="font-size: 10px;" @if($item->DRXM12 > $Max_Rx_Mensual->valor) class="maxRxMensual" @endif>{{ $item->DRXM12 }}</td>
+                    <td style="font-size: 10px;"><span style="color:{{$item->CM12}}"></span {{ $item->EM12 }}</td>
 
                     <td style="font-size: 10px;">{{ $item->ACUMULADO_OP }}</td>
                     <td style="font-size: 10px;">{{ $item->ACUMULADO_RX }}</td>
