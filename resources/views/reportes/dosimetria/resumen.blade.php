@@ -137,7 +137,7 @@ text-decoration: underline;
                     
                 <th style="font-size: 10px;">OP</th>     
                 <th style="font-size: 10px;">RX</th>             
-                <th style="font-size: 10px;">ES</th>   
+                <th style="font-size: 10px;">E</th>   
 
             @endfor  
 
@@ -154,51 +154,51 @@ text-decoration: underline;
 
                     <td style="font-size: 10px;" class="@if($item->DOM1 > $Max_Rx_Mensual->valor) maxRxMensual  @endif @if(abs($item->DOM1 - $item->DRXM1) > $Max_dif_op_rx->valor)  maxDifOpRx @endif"> {{ $item->DOM1 }}</td>
                     <td style="font-size: 10px;" class="@if($item->DRXM1 > $Max_Rx_Mensual->valor) maxRxMensual  @endif @if(abs($item->DOM1 - $item->DRXM1) > $Max_dif_op_rx->valor)  maxDifOpRx @endif" >{{ $item->DRXM1 }}</td>
-                    <td style="font-size: 10px;"><span style="color: {{$item->CM1}}"> {{ $item->EM1 }}</span></td>
+                    <td style="font-size: 10px;"><span style="color: {{$item->CM1}}"> {{ $item->EM1[0] }}</span></td>
 
                     <td style="font-size: 10px;" class="@if($item->DOM2 > $Max_Rx_Mensual->valor) maxRxMensual @endif  @if(abs($item->DOM2 - $item->DRXM2) > $Max_dif_op_rx->valor)  maxDifOpRx @endif">{{ $item->DOM2 }}</td>
                     <td style="font-size: 10px;" class="@if($item->DRXM2 > $Max_Rx_Mensual->valor) maxRxMensual @endif  @if(abs($item->DOM2 - $item->DRXM2) > $Max_dif_op_rx->valor)  maxDifOpRx @endif">{{ $item->DRXM2 }}</td>
-                    <td style="font-size: 10px;"><span style="color: {{$item->CM2}}"> {{ $item->EM2 }}</span></td>
+                    <td style="font-size: 10px;"><span style="color: {{$item->CM2}}"> {{ $item->EM2[0] }}</span></td>
 
                     <td style="font-size: 10px;" class="@if($item->DOM3 > $Max_Rx_Mensual->valor) maxRxMensual @endif  @if(abs($item->DOM3 - $item->DRXM3) > $Max_dif_op_rx->valor)  maxDifOpRx @endif">{{ $item->DOM3 }}</td>
                     <td style="font-size: 10px;" class="@if($item->DRXM3 > $Max_Rx_Mensual->valor) maxRxMensual @endif  @if(abs($item->DOM3 - $item->DRXM3) > $Max_dif_op_rx->valor)  maxDifOpRx @endif">{{ $item->DRXM3 }}</td>
-                    <td style="font-size: 10px;"><span style="color: {{$item->CM3}}"> {{ $item->EM3 }}</span></td>
+                    <td style="font-size: 10px;"><span style="color: {{$item->CM3}}"> {{ $item->EM3[0] }}</span></td>
 
                     <td style="font-size: 10px;" class="@if($item->DOM4 > $Max_Rx_Mensual->valor) maxRxMensual @endif  @if(abs($item->DOM4 - $item->DRXM4) > $Max_dif_op_rx->valor)  maxDifOpRx @endif">{{ $item->DOM4 }}</td>
                     <td style="font-size: 10px;" class="@if($item->DRXM4 > $Max_Rx_Mensual->valor) maxRxMensual @endif  @if(abs($item->DOM4 - $item->DRXM4) > $Max_dif_op_rx->valor)  maxDifOpRx @endif">{{ $item->DRXM4 }}</td>
-                    <td style="font-size: 10px;"><span style="color: {{$item->CM4}}"> {{ $item->EM4 }}</span></td>
+                    <td style="font-size: 10px;"><span style="color: {{$item->CM4}}"> {{ $item->EM4[0] }}</span></td>
 
                     <td style="font-size: 10px;" class="@if($item->DOM5 > $Max_Rx_Mensual->valor) maxRxMensual @endif  @if(abs($item->DOM5 - $item->DRXM5) > $Max_dif_op_rx->valor)  maxDifOpRx @endif">{{ $item->DOM5 }}</td>
                     <td style="font-size: 10px;" class="@if($item->DRXM5 > $Max_Rx_Mensual->valor) maxRxMensual @endif  @if(abs($item->DOM5 - $item->DRXM5) > $Max_dif_op_rx->valor)  maxDifOpRx @endif">{{ $item->DRXM5 }}</td>
-                    <td style="font-size: 10px;"><span style="color: {{$item->CM5}}"> {{ $item->EM5 }}</span></td>
+                    <td style="font-size: 10px;"><span style="color: {{$item->CM5}}"> {{ $item->EM5[0] }}</span></td>
 
                     <td style="font-size: 10px;" class="@if($item->DOM6 > $Max_Rx_Mensual->valor) maxRxMensual @endif  @if(abs($item->DOM6 - $item->DRXM6) > $Max_dif_op_rx->valor)  maxDifOpRx @endif">{{ $item->DOM6 }}</td>
                     <td style="font-size: 10px;" class="@if($item->DRXM6 > $Max_Rx_Mensual->valor) maxRxMensual @endif  @if(abs($item->DOM6 - $item->DRXM6) > $Max_dif_op_rx->valor)  maxDifOpRx @endif">{{ $item->DRXM6 }}</td>
-                    <td style="font-size: 10px;"><span style="color: {{$item->CM6}}"> {{ $item->EM6 }}</span></td>
+                    <td style="font-size: 10px;"><span style="color: {{$item->CM6}}"> {{ $item->EM6[0] }}</span></td>
 
                     <td style="font-size: 10px;" class="@if($item->DOM7 > $Max_Rx_Mensual->valor) maxRxMensual @endif  @if(abs($item->DOM7 - $item->DRXM7) > $Max_dif_op_rx->valor)  maxDifOpRx @endif">{{ $item->DOM7 }}</td>
                     <td style="font-size: 10px;" class="@if($item->DRXM7 > $Max_Rx_Mensual->valor) maxRxMensual @endif  @if(abs($item->DOM7 - $item->DRXM7) > $Max_dif_op_rx->valor)  maxDifOpRx @endif">{{ $item->DRXM7 }}</td>
-                    <td style="font-size: 10px;"><span style="color: {{$item->CM7}}"> {{ $item->EM7 }}</span></td>
+                    <td style="font-size: 10px;"><span style="color: {{$item->CM7}}"> {{ $item->EM7[0] }}</span></td>
 
                     <td style="font-size: 10px;" class="@if($item->DOM8 > $Max_Rx_Mensual->valor) maxRxMensual @endif  @if(abs($item->DOM8 - $item->DRXM8) > $Max_dif_op_rx->valor)  maxDifOpRx @endif">{{ $item->DOM8 }}</td>
                     <td style="font-size: 10px;" class="@if($item->DOM8 > $Max_Rx_Mensual->valor) maxRxMensual @endif  @if(abs($item->DOM8 - $item->DRXM8) > $Max_dif_op_rx->valor)  maxDifOpRx @endif">{{ $item->DRXM8 }}</td>
-                    <td style="font-size: 10px;"><span style="color: {{$item->CM8}}"> {{ $item->EM8 }}</span></td>
+                    <td style="font-size: 10px;"><span style="color: {{$item->CM8}}"> {{ $item->EM8[0] }}</span></td>
 
                     <td style="font-size: 10px;" class="@if($item->DOM9 > $Max_Rx_Mensual->valor) maxRxMensual @endif  @if(abs($item->DOM9 - $item->DRXM9) > $Max_dif_op_rx->valor)  maxDifOpRx @endif">{{ $item->DOM9 }}</td>
                     <td style="font-size: 10px;" class="@if($item->DRXM9 > $Max_Rx_Mensual->valor) maxRxMensual @endif  @if(abs($item->DOM9 - $item->DRXM9) > $Max_dif_op_rx->valor)  maxDifOpRx @endif">{{ $item->DRXM9 }}</td>
-                    <td style="font-size: 10px;"><span style="color: {{$item->CM9}}"> {{ $item->EM9 }}</span></td>
+                    <td style="font-size: 10px;"><span style="color: {{$item->CM9}}"> {{ $item->EM9[0] }}</span></td>
 
                     <td style="font-size: 10px;" class="@if($item->DOM10 > $Max_Rx_Mensual->valor) maxRxMensual @endif  @if(abs($item->DOM10 - $item->DRXM10) > $Max_dif_op_rx->valor)  maxDifOpRx @endif">{{ $item->DOM10 }}</td>
                     <td style="font-size: 10px;" class="@if($item->DRXM10 > $Max_Rx_Mensual->valor) maxRxMensual @endif  @if(abs($item->DOM10 - $item->DRXM10) > $Max_dif_op_rx->valor)  maxDifOpRx @endif">{{ $item->DRXM10 }}</td>
-                    <td style="font-size: 10px;"><span style="color:{{$item->CM10}}"></span> {{ $item->EM10 }}</td>
+                    <td style="font-size: 10px;"><span style="color:{{$item->CM10}}"> {{ $item->EM10[0] }}</span></td>
 
                     <td style="font-size: 10px;" class="@if($item->DOM11 > $Max_Rx_Mensual->valor) maxRxMensual @endif  @if(abs($item->DOM11 - $item->DRXM11) > $Max_dif_op_rx->valor)  maxDifOpRx @endif">{{ $item->DOM11 }}</td>
                     <td style="font-size: 10px;" class="@if($item->DRXM11 > $Max_Rx_Mensual->valor) maxRxMensual @endif  @if(abs($item->DOM11 - $item->DRXM11) > $Max_dif_op_rx->valor)  maxDifOpRx @endif">{{ $item->DRXM11 }}</td>
-                    <td style="font-size: 10px;"><span style="color:{{$item->CM11}}"></span> {{ $item->EM11 }}</td>
+                    <td style="font-size: 10px;"><span style="color:{{$item->CM11}}"> {{ $item->EM11[0] }}</span></td>
 
                     <td style="font-size: 10px;" class="@if($item->DOM12 > $Max_Rx_Mensual->valor) maxRxMensual @endif  @if(abs($item->DOM12 - $item->DRXM12) > $Max_dif_op_rx->valor)  maxDifOpRx @endif">{{ $item->DOM12 }}</td>
                     <td style="font-size: 10px;" class="@if($item->DRXM12 > $Max_Rx_Mensual->valor) maxRxMensual @endif  @if(abs($item->DOM12 - $item->DRXM12) > $Max_dif_op_rx->valor)  maxDifOpRx @endif">{{ $item->DRXM12 }}</td>
-                    <td style="font-size: 10px;"><span style="color:{{$item->CM12}}"></span> {{ $item->EM12 }}</td>
+                    <td style="font-size: 10px;"><span style="color:{{$item->CM12}}"> {{ $item->EM12[0] }}</span></td>
 
                     <td style="font-size: 10px;">{{ $item->ACUMULADO_OP }}</td>
                     <td style="font-size: 10px;">{{ $item->ACUMULADO_RX }}</td>
