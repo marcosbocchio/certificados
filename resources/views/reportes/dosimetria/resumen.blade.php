@@ -180,8 +180,8 @@ text-decoration: underline;
                     <td style="font-size: 10px;" class="@if($item->DRXM7 > $Max_Rx_Mensual->valor) maxRxMensual @endif  @if(abs($item->DOM7 - $item->DRXM7) > $Max_dif_op_rx->valor)  maxDifOpRx @endif">{{ $item->DRXM7 }}</td>
                     <td style="font-size: 10px;"><span style="color: {{$item->CM7}}"> {{ $item->EM7 }}</span></td>
 
-                    <td style="font-size: 10px;" class="@if($item->DOM1 > $Max_Rx_Mensual->valor) maxRxMensual @endif  @if(abs($item->DOM8 - $item->DRXM8) > $Max_dif_op_rx->valor)  maxDifOpRx @endif">{{ $item->DOM8 }}</td>
-                    <td style="font-size: 10px;" class="@if($item->DOM1 > $Max_Rx_Mensual->valor) maxRxMensual @endif  @if(abs($item->DOM8 - $item->DRXM8) > $Max_dif_op_rx->valor)  maxDifOpRx @endif">{{ $item->DRXM8 }}</td>
+                    <td style="font-size: 10px;" class="@if($item->DOM8 > $Max_Rx_Mensual->valor) maxRxMensual @endif  @if(abs($item->DOM8 - $item->DRXM8) > $Max_dif_op_rx->valor)  maxDifOpRx @endif">{{ $item->DOM8 }}</td>
+                    <td style="font-size: 10px;" class="@if($item->DOM8 > $Max_Rx_Mensual->valor) maxRxMensual @endif  @if(abs($item->DOM8 - $item->DRXM8) > $Max_dif_op_rx->valor)  maxDifOpRx @endif">{{ $item->DRXM8 }}</td>
                     <td style="font-size: 10px;"><span style="color: {{$item->CM8}}"> {{ $item->EM8 }}</span></td>
 
                     <td style="font-size: 10px;" class="@if($item->DOM9 > $Max_Rx_Mensual->valor) maxRxMensual @endif  @if(abs($item->DOM9 - $item->DRXM9) > $Max_dif_op_rx->valor)  maxDifOpRx @endif">{{ $item->DOM9 }}</td>
