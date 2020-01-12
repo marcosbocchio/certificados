@@ -204,6 +204,22 @@ text-decoration: underline;
                     <td style="font-size: 10px;">{{ $item->ACUMULADO_RX }}</td>
                 </tr>
             @endforeach
+
+            
+            {{ $cantFilasTotal = count($resumen) }}
+            {{ $filasPage = 40}}
+            {{ $filasACompletar = pdfCantFilasACompletar($filasPage,$cantFilasTotal) }}
+
+            @for ( $x=0 ;  $x < $filasACompletar ; $x++)
+                <tr>
+                    @for ($c = 1; $c <= 41; $c++)
+                        
+                         <td style="font-size: 10px;">&nbsp;</td>
+
+                    @endfor
+         
+                </tr>
+            @endfor
     </tbody>
 </table>
 </main>  
