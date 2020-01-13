@@ -100,6 +100,6 @@ Route::group(['middleware' => ['permission:enod']], function () {
 
 });
 
- Route::get('test', function () {
-  return Auth::id();
+ Route::get('php', function () {
+   phpinfo();
 }); 

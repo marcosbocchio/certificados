@@ -81,12 +81,16 @@ class User extends Authenticatable
     }
   */
 
-  public function cliente(){
+    public function cliente(){
 
     return $this->belongsTo('App\Clientes','cliente_id','id');
     
     }
 
+    public function periodos()
+    {
+        return $this->hasMAny('App\OperadorPeriodoRx','operador_id','id');
+    }
 
   
 }

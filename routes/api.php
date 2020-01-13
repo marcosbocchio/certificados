@@ -229,6 +229,8 @@ Route::get('/pdf/productos/referencias/informe/lp/{id}','PdfInformesLpReferencia
 
 
 Route::get('/pdf/dosimetria/year/{year}','PdfDosimetriaController@imprimir')->name('pdfDosimetriaAnual');
+Route::get('/pdf/dosimetria/periodos','PdfDosimetriaPeriodosController@imprimir')->name('pdfDosimetriaPeriodos');
+
 Route::get('/pdf/informe/{id}','PdfInformesController@index')->name('pdfInformes');
 Route::get('/pdf/informe/lp/{informe}','PdfInformesLpController@imprimir')->name('pdfInformeLp');
 Route::get('/pdf/informe/ri/{informe}','PdfInformesRiController@imprimir')->name('pdfInformeRi');
