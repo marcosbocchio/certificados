@@ -79,6 +79,7 @@
               <li><a href="{{ route('dosimetria-rx') }}"><i class="fa fa-circle-o"></i>RX</a></li>
               <li><a href="{{ route('dosimetria-estados') }}"><i class="fa fa-circle-o"></i>Estados</a></li>
               <li><a href="{{ route('dosimetria-resumen') }}"><i class="fa fa-circle-o"></i>Resumen</a></li>
+              <li><a href="{{ route('pdfDosimetriaPeriodos') }}" target="_blank" ><i class="fa fa-circle-o"></i>Reporte Alta/Baja</a></li>
 
             </ul>
           </li>

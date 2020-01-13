@@ -15,6 +15,10 @@
                 <div class="box box-danger">
                     <div class="box-body">
                         <div class="col-md-12">
+                           <a :href="url + '/pdf/dosimetria/year/' + year "  target="_blank">Exportar Resumen PDF</a>
+                           <p>&nbsp;</p>
+                        </div>    
+                        <div class="col-md-12">
                             <div class="table-responsive">          
                                 <table class="table table-hover table-bordered">
                                     <thead>

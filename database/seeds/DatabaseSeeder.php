@@ -48,7 +48,7 @@ class DatabaseSeeder extends Seeder
         $this->call(EstadosOperadorRxSeederTable::class);            
       
         
-      // factory('App\Clientes', 2500)->create();
+      // factory('App\Clientes', 250)->create();
      
       
     }
