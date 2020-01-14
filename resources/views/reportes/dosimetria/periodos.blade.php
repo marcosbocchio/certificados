@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Dodimetria: Períodos Operadores</title>
+    <title>DOSIMETRIA: ALTAS Y BAJAS</title>
 </head>
 
 <style>  
@@ -88,7 +88,7 @@ text-decoration: underline;
                                 <td rowspan="4" style="text-align: right; width:253px">
                                     <img src="{{ public_path('img/logo-enod-web.jpg')}}" alt="" style="height: 60px; margin-right: 25px;">
                                 </td>   
-                                <td style="font-size: 18px; height: 30px; text-align: center;width:520px;" rowspan="3"><b>DISOMETRIA: OPERADORES PERÍODOS</b></td>
+                                <td style="font-size: 18px; height: 30px; text-align: center;width:520px;" rowspan="3"><b>DOSIMETRIA: ALTAS Y BAJAS</b></td>
                                 <td style="font-size: 11px;"><b style="margin-left: 40px"></b></td>                         
                             </tr>
                             <tr>
