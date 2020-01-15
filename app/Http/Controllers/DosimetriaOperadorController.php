@@ -31,7 +31,7 @@ class DosimetriaOperadorController extends Controller
   
       }
 
-    public function  getDosimetriaOperador($operador_id,$year,$month){
+    public function  getDosimetriaOperador($operador_id,$year,$month){        
 
         $disometrias = DosimetriaOperador::whereRaw('YEAR(fecha) = ?',[$year])
                                         ->whereRaw('MONTH(fecha) = ?',[$month])
@@ -40,7 +40,7 @@ class DosimetriaOperadorController extends Controller
                                         ->orderBy('day','ASC')
                                         ->get();
     
-       //  $dias = cal_days_in_month(CAL_GREGORIAN, $month, $year); 
+         $dias = cal_days_in_month(CAL_GREGORIAN, $month, $year); 
     
          return $disometrias;
     }
@@ -80,8 +80,10 @@ class DosimetriaOperadorController extends Controller
     }
 
     public function getDosimetriaOperadores(){
-
-      return User::whereNull('cliente_id')
+        
+        
+    
+        return User::whereNull('cliente_id')
                    ->whereNotNull('film')
                    ->get();
 

@@ -591,9 +591,11 @@ actions : {
         loadOperadoresDisometria({
           commit}) {
            axios.defaults.baseURL = store.state.url ;
-           var urlRegistros ='dosimetria_operador/operadores  ' + '?api_token=' + Laravel.user.api_token;      
+           var urlRegistros ='dosimetria_operador/operadores' + '?api_token=' + Laravel.user.api_token;      
            axios.get(urlRegistros).then((response) => {
-            console.log(response.data);          
+            console.log(urlRegistros);
+            console.log(response.data);       
+            console.log('entro en operadores dosimetria');  
            commit('getOperadoresDosimetria', response.data)           
           })
         },

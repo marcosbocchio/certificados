@@ -87,10 +87,10 @@ class User extends Authenticatable
     
     }
 
+    
     public function periodos()
     {
         return $this->hasMAny('App\OperadorPeriodoRx','operador_id','id');
     }
-
   
 }

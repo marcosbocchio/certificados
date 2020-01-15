@@ -35,25 +35,25 @@
                             <v-select v-model="material" label="codigo" :options="materiales" id="materiales"></v-select>   
                         </div>      
                     </div>
-
+                    
                     <div class="clearfix"></div>    
 
-                    <div class="col-md-1 size-1-5">
+                    <div class="col-md-3">
                         <div class="form-group" >
                             <label for="plano_isom">Plano / Isom *</label>
                             <input type="text" v-model="plano_isom" class="form-control" id="plano_isom">
                         </div>                            
                     </div>
 
-                    <div class="col-md-3 size-1-5">
+                    <div class="col-md-3">
                             <div class="form-group" >
-                                <label for="Diametro">Diametro *</label>
+                                <label for="Diametro">ø *</label>
                                 <v-select v-model="diametro" label="diametro" :options="diametros" @input="getEspesores()"></v-select>   
                             </div>                            
                         </div>                       
 
                     <div v-if="isVarios">
-                        <div class="col-md-1 size-1-5">
+                        <div class="col-md-3">
                             <div class="form-group" >
                                 <label>Espesor</label>
                                 <input  type="text" class="form-control" id="espesor_varios" value="VARIOS" >   
@@ -61,7 +61,7 @@
                         </div>
                     </div>  
                     <div v-else>
-                        <div class="col-md-1 size-1-5">
+                        <div class="col-md-3">
                             <div class="form-group" >
                                 <label>Espesor</label>
                                 <v-select v-model="espesor" label="espesor" :options="espesores" :disabled="isChapa || isVarios">
@@ -73,7 +73,7 @@
                             </div>                            
                         </div>
                     </div>  
-                    <div class="col-md-1 size-1-5">    
+                    <div class="col-md-3">    
                         <div class="form-group" >                         
                         <label for="espesor_chapa">Espesor Chapa</label>
                         <input  type="text" class="form-control" v-model="espesor_chapa"  id="espesor_chapa" :disabled="!isChapa" > 
@@ -108,6 +108,8 @@
                         </div>      
                     </div>
 
+                    <div class="clearfix"></div>  
+
                     <div class="col-md-3">
                         <div class="form-group">
                             <label>Equipo *</label>
@@ -127,8 +129,6 @@
                         </div>      
                     </div>
 
-                     <div class="clearfix"></div>    
-
                     <div class="col-md-3">                       
                         <div class="form-group">
                             <label>Norma Evaluación *</label>
@@ -145,7 +145,7 @@
 
                     <div class="col-md-3">                       
                         <div class="form-group">
-                            <label>Estado Superf. *</label>
+                            <label>Estado Superficie *</label>
                             <v-select v-model="estado_superficie" label="codigo" :options="estados_superficies"></v-select>   
                         </div>      
                     </div>
@@ -159,7 +159,7 @@
 
                     <div class="col-md-3">                       
                         <div class="form-group" >
-                            <label for="agente_acoplamiento">Agente Acopla. *</label>
+                            <label for="agente_acoplamiento">Agente Acoplamiento *</label>
                             <input type="text" v-model="agente_acoplamiento" class="form-control" id="agente_acoplamiento">
                         </div>         
                     </div>
@@ -185,149 +185,153 @@
                         </div>
                             <div>&nbsp;</div>
 
-                        <div class="col-md-2">                       
+                        <div class="col-md-3">                       
                             <div class="form-group" >
-                                <label for="zapata" title="Zapata">Zapata*</label>
+                                <label for="zapata" title="Zapata">Zapata *</label>
                                 <input type="text" v-model="zapata" class="form-control" id="zapata">
                             </div>         
                         </div>
 
-                        <div class="col-md-2" >                       
+                        <div class="col-md-3" >                       
                             <div class="form-group">
-                                <label for="palpador" title="Palpador">Palpador*</label>
+                                <label for="palpador" title="Palpador">Palpado *</label>
                                 <v-select v-model="palpador" label="codigo" :options="palpadores" id="palpador"></v-select>   
                             </div>      
                         </div>  
 
-                        <div class="col-md-1">                       
+                        <div class="col-md-3">                       
                             <div class="form-group" >
-                                <label for="frecuencia" title="Frecuencia (Mhz)">Frec.*</label>
+                                <label for="frecuencia" title="Frecuencia (Mhz)">Frecuencia (Mhz) *</label>
                                 <input type="number" v-model="frecuencia" class="form-control" id="frecuencia">
                             </div>         
                         </div>
 
-                        <div class="col-md-1">                       
+                        <div class="col-md-3">                       
                             <div class="form-group" >
-                                <label for="angulo_apertura" title="Ángulo Apertura">Ang. A.*</label>
+                                <label for="angulo_apertura" title="Ángulo Apertura">Angulo Apertura *</label>
                                 <input type="text" v-model="angulo_apertura" class="form-control" id="angulo_apertura">
                             </div>         
                         </div>
 
-                        <div class="col-md-1">                       
+                        <div class="col-md-3">                       
                             <div class="form-group" >
                                 <label for="rango">Rango *</label>
                                 <input type="text" v-model="rango" class="form-control" id="rango">
                             </div>         
                         </div>
 
-                        <div class="col-md-1">                       
+                        <div class="col-md-3">                       
                             <div class="form-group" >
-                                <label for="posicion" title="Posición">Pos.*</label>
+                                <label for="posicion" title="Posición">Posición *</label>
                                 <input type="text" v-model="posicion" class="form-control" id="posicion">
                             </div>         
                         </div>
 
-                        <div class="col-md-1">                       
+                        <div class="col-md-3">                       
                             <div class="form-group" >
-                                <label for="curva_elevacion" title="Curva Elevación">C.E.*</label>
+                                <label for="curva_elevacion" title="Curva Elevación">Curva Elevación *</label>
                                  <v-select v-model="curva_elevacion" :options="['DAC', 'TCG']"></v-select>
                             </div>         
                         </div>
 
-                        <div class="col-md-1">                       
+                        <div class="col-md-3">                       
                             <div class="form-group" >
-                                <label for="block_calibracion" title="Block Calibración">Block. cal.*</label>
+                                <label for="block_calibracion" title="Block Calibración">Block Calibración *</label>
                                  <v-select v-model="block_calibracion" :options="['V1', 'V2']"></v-select>
                             </div>         
                         </div>
 
-                        <div class="col-md-2">                       
+                       <div class="clearfix"></div>  
+
+                        <div class="col-md-3">                       
                             <div class="form-group" >
-                                <label for="block_sensibilidad" title="Block Sensibilidad">Block. Sen.*</label>
+                                <label for="block_sensibilidad" title="Block Sensibilidad">Block Sensibilidad *</label>
                                 <input type="number" v-model="block_sensibilidad" class="form-control" id="block_sensibilidad">
                             </div>         
-                        </div>
+                        </div>                     
 
-                        <div class="clearfix"></div>    
-
-                        <div class="col-md-1">                       
+                        <div class="col-md-3">                       
                             <div class="form-group" >
-                                <label for="tipo_reflector" title="Tipo Reflector">Tipo Re.*</label>
+                                <label for="tipo_reflector" title="Tipo Reflector">Tipo Reflector *</label>
                                  <v-select v-model="tipo_reflector" :options="['Ø', 'Ħ']"></v-select>
                             </div>         
                         </div>
 
 
-                        <div class="col-md-1">                       
+                        <div class="col-md-3">                       
                             <div class="form-group" >
-                                <label for="reflector_referencia" title="Reflector Referencia (mm)">Re. Ref.*</label>
+                                <label for="reflector_referencia" title="Reflector Referencia (mm)">Reflector Referencia (mm) *</label>
                                 <input type="number" v-model="reflector_referencia" class="form-control" id="reflector_referencia" step="0.1">
                             </div>         
                         </div>
 
-                        <div class="col-md-1">                       
+                        <div class="col-md-3">                       
                             <div class="form-group" >
-                                <label for="ganancia_referencia" title="Ganancia Referencia (dB)">Gan. Ref.*</label>
+                                <label for="ganancia_referencia" title="Ganancia Referencia (dB)">Ganancia Referencia (dB) *</label>
                                 <input type="number" v-model="ganancia_referencia" class="form-control" id="ganancia_referencia">
                             </div>         
                         </div>
 
-                        <div class="col-md-1">                       
+                        <div class="col-md-3">                       
                             <div class="form-group" >
-                                <label for="nivel_registro" title="Nivel Registro">Nivel. Reg.*</label>
+                                <label for="nivel_registro" title="Nivel Registro">Nivel Registro *</label>
                                 <input type="number" v-model="nivel_registro" class="form-control" id="nivel_registro">
                             </div>         
                         </div>
 
-                        <div class="col-md-1">                       
+                        <div class="col-md-3">                       
                             <div class="form-group" >
-                                <label for="correccion_transferencia" title="Corrección Transferencia (dB)">CT*</label>
+                                <label for="correccion_transferencia" title="Corrección Transferencia (dB)">Corrección Transferencia (dB) *</label>
                                 <input type="number" v-model="correccion_transferencia" class="form-control" id="correccion_transferencia">
                             </div>         
                         </div>
 
-                        <div class="col-md-1">                       
+                        <div class="col-md-3">                       
                             <div class="form-group" >
-                                <label for="adicional_barrido" title="Adicional Barrido (dB)">AB*</label>
+                                <label for="adicional_barrido" title="Adicional Barrido (dB)">Adicional Barrido (dB) *</label>
                                 <input type="number" v-model="adicional_barrido" class="form-control" id="adicional_barrido">
                             </div>         
                         </div>
 
-                        <div class="col-md-1">                       
+                        <div class="col-md-3">                       
                             <div class="form-group" >
-                                <label for="amplificacion_total" title="Amplificación Total (dB)">AT*</label>
+                                <label for="amplificacion_total" title="Amplificación Total (dB)">Amplificación Total (dB) *</label>
                                 <input type="number" v-model="amplificacion_total" class="form-control" id="amplificacion_total">
                             </div>         
                         </div>
+                        
+                       <div class="clearfix"></div>  
 
-                        <div class="col-md-1">   
-                             <p>&nbsp;</p>                          
+                        <div class="col-md-1">                                               
                             <span>
-                                <i class="fa fa-plus-circle" @click="addCalibraciones()"></i>
+                              <button type="button" @click="addCalibraciones"><span class="fa fa-plus-circle"></span></button> 
                             </span>                            
                          </div>
+                         <div class="form-group">
+                            &nbsp;
+                        </div>
                         <div v-if="calibraciones.length">
                             <div class="col-md-12">
                                 <div class="table-responsive">
-                                    <table class="table table-hover table-striped">
+                                    <table class="table table-hover table-striped table-bordered">
                                         <thead>
                                             <tr>                                  
-                                                <th>Zapata</th>                                  
-                                                <th>Palpador</th>
-                                                <th>Frec</th>
-                                                <th>Ang. Ap.</th> 
-                                                <th>Rango</th>  
-                                                <th>Pos</th>  
-                                                <th>Curva. Elav.</th>  
-                                                <th>Block. cal.</th>  
-                                                <th>Block. Sen.</th>  
-                                                <th>Tipo Re.</th>  
-                                                <th>Re. Ref.</th>  
-                                                <th>Gan. Ref.</th>  
-                                                <th>Nivel. Reg.</th>  
-                                                <th>Correc. Trans</th>  
-                                                <th>Adic. Barrido</th>  
-                                                <th>Ampli. Total</th> 
+                                                <th class="col-md-1">Zapata</th>                                  
+                                                <th class="col-md-1">Palpador</th>
+                                                <th class="col-md-1">Frec</th>
+                                                <th class="col-md-1">A.P.</th> 
+                                                <th class="col-md-1">Rango</th>  
+                                                <th class="col-md-1">Pos</th>  
+                                                <th class="col-md-1">C.E.</th>  
+                                                <th class="col-md-1">B.C.</th>  
+                                                <th class="col-md-1">B.S.</th>  
+                                                <th class="col-md-1">T.R.</th>  
+                                                <th class="col-md-1">R.R.</th>  
+                                                <th class="col-md-1">G.R.</th>  
+                                                <th class="col-md-1">N.R.</th>  
+                                                <th class="col-md-1">C.T.</th>  
+                                                <th class="col-md-1">A.B.</th>  
+                                                <th class="col-md-1">A.T.</th> 
                                                 <th colspan="2" style="width:30px;">&nbsp;</th>                                            
                                             </tr>
                                         </thead>                         
@@ -426,112 +430,117 @@
                </div>
                         
               <div v-if="tecnica.codigo == 'US' || tecnica.codigo == 'PA'"> 
-                    <div class="box box-danger">
+                    <div class="box box-danger">                
+
+                        <div class="box-header with-border">
+                            <h5 class="box-title">Registro de indicaciones</h5>
+                        </div>
                         <div class="box-body">   
-                            <div class="box-header with-border">
-                                <h5 class="box-title">Registro de indicaciones</h5>                                
-                            </div>
                             <div>&nbsp;</div>
-                            <div class="col-md-1">                       
+                            <div class="col-md-3">                       
                                 <div class="form-group" >
-                                    <label for="elemento_us_pa" title="Elemento">Elemento*</label>
+                                    <label for="elemento_us_pa" title="Elemento">Elemento *</label>
                                     <input type="text" v-model="elemento_us_pa" class="form-control" id="elemento_us_pa">
                                 </div>         
                             </div>
 
-                            <div class="col-md-1">                       
+                            <div class="col-md-3">                       
                                 <div class="form-group" >
                                     <label for="diametro_us_pa" title="Diametro">ø</label>
                                     <v-select v-model="diametro_us_pa" label="diametro" :options="diametros" id="diametro_us_pa"></v-select>
                                 </div>         
                             </div>
 
-                            <div class="col-md-1">                       
+                            <div class="col-md-3">                       
                                 <div class="form-group" >
-                                    <label for="nro_indicacion_up_pa" title="Número Indicación">N° ind.*</label>
+                                    <label for="nro_indicacion_up_pa" title="Número Indicación">N° Indicación *</label>
                                     <input type="number" v-model="nro_indicacion_us_pa" class="form-control" id="nro_indicacion_us_pa">
                                 </div>         
                             </div>
 
-                            <div class="col-md-1">                       
+                            <div class="col-md-3">                       
                                 <div class="form-group" >
-                                    <label for="posicion_examen_up_pa" title="Posición Examen">Pos. Exa.*</label>
+                                    <label for="posicion_examen_up_pa" title="Posición Examen">Posición Examen *</label>
                                     <input type="text" v-model="posicion_examen_us_pa" class="form-control" id="posicion_examen_up_pa">
                                 </div>         
                             </div>
 
-                            <div class="col-md-1">                       
+                            <div class="col-md-3">                       
                                 <div class="form-group" >
-                                    <label for="angulo_incidencia_us_pa" title="Ángulo Incidencia">Ang. Inc.*</label>
+                                    <label for="angulo_incidencia_us_pa" title="Ángulo Incidencia">Ángulo Incidencia *</label>
                                     <input type="text" v-model="angulo_incidencia_us_pa" class="form-control" id="angulo_incidencia_us_pa">
                                 </div>         
                             </div>
 
-                            <div class="col-md-1">                       
+                            <div class="col-md-3">                       
                                 <div class="form-group" >
-                                    <label for="camino_sonico_us_pa" title="Camino sónico">Cam. Son *</label>
+                                    <label for="camino_sonico_us_pa" title="Camino sónico">Camino Sónico *</label>
                                     <input type="number" v-model="camino_sonico_us_pa" class="form-control" id="camino_sonico_us_pa">
                                 </div>         
                             </div>
 
-                            <div class="col-md-1">                       
+                            <div class="col-md-3">                       
                                 <div class="form-group" >
                                     <label for="x_us_pa" title="X (cm)">X *</label>
                                     <input type="number" v-model="x_us_pa" class="form-control" id="x_us_pa">
                                 </div>         
                             </div>
 
-                            <div class="col-md-1">                       
+                            <div class="col-md-3">                       
                                 <div class="form-group" >
                                     <label for="y_us_pa" title="Y (mm)">Y *</label>
                                     <input type="number" v-model="y_us_pa" class="form-control" id="y_us_pa">
                                 </div>         
                             </div>
 
-                            <div class="col-md-1">                       
+                            <div class="col-md-3">                       
                                 <div class="form-group" >
                                     <label for="z_us_pa" title="Z (mm)">Z *</label>
                                     <input type="number" v-model="z_us_pa" class="form-control" id="z_us_pa">
                                 </div>         
                             </div>
 
-                            <div class="col-md-1">                       
+                            <div class="col-md-3">                       
                                 <div class="form-group" >
-                                    <label for="longitud_us_pa" title="Longitud (mm)">Log. *</label>
+                                    <label for="longitud_us_pa" title="Longitud (mm)">Longitud (mm) *</label>
                                     <input type="number" v-model="longitud_us_pa" class="form-control" id="longitud_us_pa">
                                 </div>         
                             </div>
 
-                            <div class="col-md-1">                       
+                            <div class="col-md-3">                       
                                 <div class="form-group" >
-                                    <label for="nivel_registro_us_pa" title="Nivel Registro">Niv. Reg. *</label>
+                                    <label for="nivel_registro_us_pa" title="Nivel Registro">Nivel Registro *</label>
                                     <input type="number" v-model="nivel_registro_us_pa" class="form-control" id="nivel_registro_us_pa">
                                 </div>         
                             </div>
 
-                            <div class="col-md-1">   
-                                <p>&nbsp;</p>                          
+                           <div class="clearfix"></div>  
+
+                            <div class="col-md-1">                                                       
                                 <span>
-                                    <i class="fa fa-plus-circle" @click="addTabla_us_pa()"></i>
+                                  <button type="button"  @click="addTabla_us_pa()"><span class="fa fa-plus-circle"></span></button>  
                                 </span>                            
                            </div>
+
+                            <div class="clearfix"></div>  
+
                             <div v-if="Tabla_us_pa.length">
                             <div class="col-md-12">
                                 <div class="table-responsive">
-                                    <table class="table table-hover table-striped">
+                                    <table class="table table-hover table-striped table-bordered">
                                         <thead>
                                             <tr>
                                                 <th  class="col-lg-1">Elemento</th>
                                                 <th  class="col-lg-1">ø</th> 
                                                 <th  class="col-lg-1">N° Ind.</th>
-                                                <th  class="col-lg-1">Pos. Exa.</th>    
-                                                <th  class="col-lg-1">Ang. Inc.</th>                                                  
-                                                <th  class="col-lg-1">Cam. Son</th> 
+                                                <th  class="col-lg-1">P.E.</th>    
+                                                <th  class="col-lg-1">A.I.</th>                                                  
+                                                <th  class="col-lg-1">C.S.</th> 
                                                 <th  class="col-lg-1">X</th> 
                                                 <th  class="col-lg-1">Y</th> 
                                                 <th  class="col-lg-1">Z</th> 
                                                 <th  class="col-lg-1">Log.</th> 
-                                                <th  class="col-lg-1">Niv. Reg. </th>  
+                                                <th  class="col-lg-1">N.R. </th>  
                                                 <th  class="col-lg-1">Aceptable</th>   
                                                 <th  class="col-lg-1">Ref</th>                                                       
                                                 <th  class="col-lg-1">&nbsp;</th>
@@ -583,7 +592,7 @@
                             </div>
                             <div>&nbsp;</div>
 
-                            <div class="col-lg-4">
+                            <div class="col-lg-5">
                             
                                 <div class="col-md-12">                       
                                     <div class="form-group" >
@@ -654,7 +663,8 @@
                                     </div>
                                 </div> 
                             </div>
-                            <div class="col-lg-8"> 
+
+                            <div class="col-lg-7"> 
 
                                 <!-- tabla mediciones -->    
                                 <div v-if="Tabla_me[indexPosTabla_me]">
@@ -1190,7 +1200,7 @@ export default {
 
         addCalibraciones : function () {   
             
-            
+            console.log('entro en add calibraciones');
             
             if (!this.zapata){
 

@@ -1512,13 +1512,5 @@ table .selected{
     width: 12.499999995%;
 }
 
-.box-title {
-
-    font-size: 15px;
-    font-style: italic;
-    font-weight: bold;
-    color : #6E6A6A;
-}
-
 }
 </style>

@@ -31,7 +31,7 @@ class UserRequest extends FormRequest
         return [
             'name' => 'required',
             'dni'  =>'nullable|unique:users|numeric|digits_between:7,8',
-            'film' => 'nullable|unique:users.film|max:6',
+            'film' => 'nullable|unique:users.film|max:3',
             'email'  =>'required|unique:users|email',
             'password' =>'required|Min:8',
             'cliente'  =>$condicion_cliente
