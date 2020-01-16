@@ -306,7 +306,7 @@
                             <span>
                               <button type="button" @click="addCalibraciones"><span class="fa fa-plus-circle"></span></button> 
                             </span>                            
-                         </div>
+                        </div>
                          <div class="form-group">
                             &nbsp;
                         </div>
