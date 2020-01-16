@@ -21,7 +21,7 @@ mix.version();
 
 mix.styles([
   'resources/css/app.css'  
-, 'public/css/custom.css'])
+], 'public/css/custom.css')
 .sass('resources/sass/toastr.scss', 'public/css')
 
 mix.version();
