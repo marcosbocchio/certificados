@@ -328,49 +328,50 @@
 
                     <div class="form-group">
                         &nbsp;
-                    </div>                    
+                    </div>           
 
-                    <div class="col-md-12">
+                    <div v-if="TablaDetalle.length">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-hover table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th class="col-md-1">Pk</th>
+                                            <th class="col-md-1">TIPO SOL.</th>                                     
+                                            <th class="col-md-1">JUNTA</th>                                       
+                                            <th class="col-md-1">POS</th>  
+                                            <th class="col-md-1">ACEPTABLE</th>    
+                                            <th class="col-md-1">OBSERVACIÓN</th>        
+                                                                        
+                                            <th colspan="1" class="col-md-1">&nbsp;</th>
+                                        </tr>
+                                    </thead>                         
+                                    <tbody>
+                                        <tr v-for="(FIlaTabla,k) in (TablaDetalle)" :key="k" @click="selectPosDetalle(k)" :class="{selected: indexDetalle === k}">
+                                            <td>{{ FIlaTabla.pk }}</td>
+                                            <td>{{ FIlaTabla.tipo_soldadura.codigo }}</td>                                 
+                                            <td>{{ FIlaTabla.junta }}</td>                                      
+                                            <td>{{ FIlaTabla.posicion }} </td>   
+                                            <td> <input type="checkbox" id="checkbox" v-model="TablaDetalle[k].aceptable_sn">  </td>                                 
+                                            <td>
+                                                <div v-if="indexDetalle == k ">       
+                                                <input type="text" v-model="TablaDetalle[k].observacion" maxlength="50" size="60">        
+                                                </div>   
+                                                <div v-else>
+                                                {{ TablaDetalle[k].observacion }}
+                                                </div>                                   
+                                            </td>
 
-                        <div class="table-responsive">
-                            <table class="table table-hover table-striped">
-                                <thead>
-                                    <tr>
-                                        <th style="width:30px;">Pk</th>
-                                        <th style="width:80px;">TIPO SOL.</th>                                     
-                                        <th style="width:90px;">JUNTA</th>                                       
-                                        <th style="width:90px;">POS</th>  
-                                        <th style="width:80px;">ACEPTABLE</th>    
-                                        <th style="width:300px;">OBSERVACIÓN</th>        
-                                                                       
-                                        <th colspan="1" style="width:30px;">&nbsp;</th>
-                                    </tr>
-                                </thead>                         
-                                <tbody>
-                                    <tr v-for="(FIlaTabla,k) in (TablaDetalle)" :key="k" @click="selectPosDetalle(k)" :class="{selected: indexDetalle === k}">
-                                        <td>{{ FIlaTabla.pk }}</td>
-                                        <td>{{ FIlaTabla.tipo_soldadura.codigo }}</td>                                 
-                                        <td>{{ FIlaTabla.junta }}</td>                                      
-                                        <td>{{ FIlaTabla.posicion }} </td>   
-                                        <td> <input type="checkbox" id="checkbox" v-model="TablaDetalle[k].aceptable_sn">  </td>                                 
-                                        <td>
-                                            <div v-if="indexDetalle == k ">       
-                                              <input type="text" v-model="TablaDetalle[k].observacion" maxlength="50" size="60">        
-                                            </div>   
-                                            <div v-else>
-                                               {{ TablaDetalle[k].observacion }}
-                                            </div>                                   
-                                        </td>
+                                        
+                                            <td> <a  @click="RemoveDetalle(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a> 
+                                            </td>          
 
-                                      
-                                        <td> <a  @click="RemoveDetalle(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a> 
-                                        </td>          
-
-                                    </tr>
-                                </tbody>
-                            </table>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                       </div>
+                       </div>   
                     </div>
                    </div>
 
@@ -417,35 +418,35 @@
 
                          <div class="form-group">
                             &nbsp;
-                        </div>                        
-                                          
-                        <div class="col-md-12">
-                            <div class="table-responsive">
-                                <table class="table table-hover table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th style="width:90px;">CÓDIGO</th>                                                                                  
-                                            <th style="width:250px;">DESCRIPCIÓN</th>
-                                            <th style="width:90px;">POSICIÓN</th>                                                                 
-                                            <th style="width:30px;" colspan="2">&nbsp;</th>
-                                        </tr>
-                                    </thead>                         
-                                    <tbody>
-                                        <tr v-for="(defectoPasada,k) in 
-                                         ( (TablaDetalle.length > 0 )  ? TablaDetalle[indexDetalle].defectos : [])"  :key="k">
-                                            <td>{{ defectoPasada.codigo }}</td>    
-                                            <td>{{ defectoPasada.descripcion }}</td>   
-                                            <td>{{ defectoPasada.posicion }}</td>              
-                                        
-                                            <td>
-                                                <a  @click="RemoveDefectos(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a> 
-                                            </td> 
-                                        </tr>
-                                    </tbody>
-                                 </table>
-                                </div>
-                           </div>                                
+                        </div>   
 
+                         <div v-if="TablaDetalle.length && TablaDetalle[indexDetalle].defectos.length">                 
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:90px;">CÓDIGO</th>                                                                                  
+                                                <th style="width:250px;">DESCRIPCIÓN</th>
+                                                <th style="width:90px;">POSICIÓN</th>                                                                 
+                                                <th style="width:30px;" colspan="2">&nbsp;</th>
+                                            </tr>
+                                        </thead>                         
+                                        <tbody>
+                                            <tr v-for="(defectoPasada,k) in ( (TablaDetalle.length > 0 )  ? TablaDetalle[indexDetalle].defectos : [])"  :key="k">
+                                                <td>{{ defectoPasada.codigo }}</td>    
+                                                <td>{{ defectoPasada.descripcion }}</td>   
+                                                <td>{{ defectoPasada.posicion }}</td>              
+                                            
+                                                <td>
+                                                    <a  @click="RemoveDefectos(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a> 
+                                                </td> 
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    </div>
+                            </div>                                
+                         </div>
                        </div> 
                       </div>
                       
@@ -518,9 +519,10 @@
                     <div class="form-group">
                         &nbsp;
                     </div>
-                        <div class="col-md-12">
+                    <div v-if="TablaDetalle.length && TablaDetalle[indexDetalle].pasadas.length">
+                           <div class="col-md-12">
                                 <div class="table-responsive">
-                                    <table class="table table-hover table-striped">
+                                    <table class="table table-hover table-striped table-bordered">
                                         <thead>
                                             <tr>                                  
                                                 <th style="width:90px;">N° PASADA</th>                                  
@@ -544,7 +546,8 @@
                                         </tbody>
                                     </table>
                                 </div>
-                        </div>               
+                            </div>               
+                        </div>
                   </div>  
                 </div>
                 
