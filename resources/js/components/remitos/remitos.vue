@@ -90,23 +90,23 @@
                             <div v-show="inputsProductos.length">
                                 <div class="col-md-12">
                                     <div class="table-responsive">
-                                        <table class="table table-hover table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th class="col-md-7">Productos</th>                                         
-                                                <th class="col-md-2">Medidas</th>                     
-                                                <th class="col-md-2">cant</th>                    
-                                                <th class="col-md-1">&nbsp;</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr v-for="(inputsProducto,k) in inputsProductos" :key="k">
-                                                <td> {{ inputsProducto.producto.descripcion}}</td>                                                        
-                                                <td> {{ inputsProducto.medida.descripcion}}&nbsp; &nbsp; {{inputsProducto.medida.codigo }}</td>  
-                                                <td> {{ inputsProducto.cantidad_productos}}</td>                                  
-                                                <td style="text-align:center"> <i class="fa fa-minus-circle" @click="removeProducto(k)" ></i></td>
-                                            </tr>
-                                        </tbody>
+                                        <table class="table table-hover table-striped table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-md-7">Productos</th>                                         
+                                                    <th class="col-md-2">Medidas</th>                     
+                                                    <th class="col-md-2">cant</th>                    
+                                                    <th class="col-md-1">&nbsp;</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr v-for="(inputsProducto,k) in inputsProductos" :key="k">
+                                                    <td> {{ inputsProducto.producto.descripcion}}</td>                                                        
+                                                    <td> {{ inputsProducto.medida.descripcion}}&nbsp; &nbsp; {{inputsProducto.medida.codigo }}</td>  
+                                                    <td> {{ inputsProducto.cantidad_productos}}</td>                                  
+                                                    <td style="text-align:center"> <i class="fa fa-minus-circle" @click="removeProducto(k)" ></i></td>
+                                                </tr>
+                                            </tbody>
                                         </table>
                                     </div>
                                 </div>

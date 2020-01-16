@@ -227,30 +227,30 @@
         <div v-show="inputsServicios.length">
           <div class="col-md-12">
             <div class="table-responsive">
-              <table class="table table-hover table-striped">
+              <table class="table table-hover table-striped table-bordered">
                 <thead>
                   <tr>
-                    <th style="width: 500px" >Servicio</th>
-                    <th>Ref</th>
-                    <th>Norma Ensayo</th>
-                    <th>Norma Evaluacion</th>
-                    <th>Proc.</th>
-                    <th>Cant Placas</th>
-                    <th>Cant Serv</th>
-                    <th colspan="2">&nbsp;</th>
+                    <th class="col-md-5">Servicio</th>
+                    <th style="text-align:center">Ref</th>
+                    <th >Norma Ensayo</th>
+                    <th >Norma Evaluacion</th>
+                    <th >Proc.</th>
+                    <th >Cant Placas</th>
+                    <th >Cant Serv</th>
+                    <th class="col-md-1">&nbsp;</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr v-for="(inputsServicio,k) in inputsServicios" :key="k">
                     <td> {{ inputsServicio.servicio}}</td>
-                    <td> <span :class="{existe : (inputsServicio.observaciones || 
+                    <td style="text-align:center"> <span :class="{existe : (inputsServicio.observaciones || 
                     inputsServicio.path1 || 
                     inputsServicio.path2 || 
                     inputsServicio.path3 || 
                     inputsServicio.path4)  }" class="fa fa-file-archive-o" @click="OpenReferencias($event,k,'servicios',inputsServicio)" ></span></td>      
                     <td> {{ inputsServicio.norma_ensayo}}</td>
                     <td> {{ inputsServicio.norma_evaluacion}}</td>
-                    <td>  
+                    <td style="text-align:center">  
                       <input type="checkbox" id="checkbox" v-model="inputsServicios[k].procedimiento_sn">                     
                     </td>
                     <td> {{ inputsServicio.cantidad_placas}}</td>
@@ -326,20 +326,20 @@
           <div v-show="inputsProductos.length">
             <div class="col-md-12">
               <div class="table-responsive">
-                <table class="table table-hover table-striped">
+                <table class="table table-hover table-striped table-bordered">
                   <thead>
                     <tr>
-                      <th style="width: 500px">Productos</th>
-                      <th>Ref</th>
-                      <th>Medidas</th>                     
-                      <th>cant</th>                    
-                      <th>&nbsp;</th>
+                      <th class="col-md-7">Productos</th>
+                      <th class="col-md-1" style="text-align:center">Ref</th>
+                      <th class="col-md-1">Medidas</th>                     
+                      <th class="col-md-1">cant</th>                    
+                      <th class="col-md-1">&nbsp;</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr v-for="(inputsProducto,k) in inputsProductos" :key="k">
                       <td> {{ inputsProducto.producto}}</td>
-                      <td> <span :class="{ existe : (inputsProducto.observaciones ||
+                      <td style="text-align:center"> <span :class="{ existe : (inputsProducto.observaciones ||
                                           inputsProducto.path1 ||
                                           inputsProducto.path2 ||
                                           inputsProducto.path3 ||
@@ -377,7 +377,7 @@
 
           <div v-show="inputsEpps.length">           
               <div class="table-responsive">
-                <table class="table table-hover table-striped">
+                <table class="table table-hover table-striped table-bordered">
                   <thead>
                     <tr>
                       <th class="col-md-11">EPPS</th>                                   
@@ -414,7 +414,7 @@
 
           <div v-show="inputsRiesgos.length">           
               <div class="table-responsive">
-                <table class="table table-hover table-striped">
+                <table class="table table-hover table-striped table-bordered">
                   <thead>
                     <tr>
                       <th class="col-md-11">Riesgos</th>                                   
