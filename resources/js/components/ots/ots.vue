@@ -255,7 +255,7 @@
                     </td>
                     <td> {{ inputsServicio.cantidad_placas}}</td>
                     <td> {{ inputsServicio.cantidad_servicios}}</td>
-                    <td> <i class="fa fa-minus-circle" @click="removeServicio(k)" ></i></td>
+                    <td style="text-align:center"> <i class="fa fa-minus-circle" @click="removeServicio(k)" ></i></td>
                   </tr>
                 </tbody>
               </table>
@@ -333,7 +333,7 @@
                       <th>Ref</th>
                       <th>Medidas</th>                     
                       <th>cant</th>                    
-                      <th colspan="2">&nbsp;</th>
+                      <th>&nbsp;</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -347,7 +347,7 @@
                       }" class="fa fa-file-archive-o" @click="OpenReferencias($event,k,'productos',inputsProducto)" ></span></td>                       
                       <td> {{ inputsProducto.medida}}&nbsp; &nbsp; {{inputsProducto.unidad_medida_codigo }}</td>  
                       <td> {{ inputsProducto.cantidad_productos}}</td>                                  
-                      <td> <i class="fa fa-minus-circle" @click="removeProducto(k)" ></i></td>
+                      <td style="text-align:center"> <i class="fa fa-minus-circle" @click="removeProducto(k)" ></i></td>
                     </tr>
                   </tbody>
                 </table>

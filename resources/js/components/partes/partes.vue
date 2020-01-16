@@ -7,7 +7,7 @@
                     <div class="box-body">                               
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="fecha">Fecha (*)</label>
+                                <label for="fecha">Fecha *</label>
                                 <div class="input-group date">
                                     <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
@@ -18,13 +18,13 @@
                         </div>  
                         <div class="col-md-3">
                             <div class="form-group" >
-                                <label for="tipo_servicio">Tipo Servicio (*)</label>
+                                <label for="tipo_servicio">Tipo Servicio *</label>
                                 <v-select type="text" v-model="tipo_servicio"  id="tipo_servicio" :options="['Diurno', 'Nocturno']" ></v-select>
                             </div>                            
                         </div>
                         <div class="col-md-3">
                             <div class="form-group" >
-                                <label for="horario">Horario (*)</label>
+                                <label for="horario">Horario *</label>
                                 <input type="text" v-model="horario" class="form-control" maxlength="5" id="horario">
                             </div>                            
                         </div>
@@ -84,7 +84,7 @@
                             <div class="form-group">  
                                  <p>&nbsp;</p>                  
                                 <span>
-                                  <a title="Agregar responsables" @click="addResponsable(operador.id)"> <app-icon img="plus-circle" color="black"></app-icon> </a>                        
+                                  <button type="button" @click="addResponsable(operador.id)"><span class="fa fa-plus-circle"></span></button>                        
                                 </span>
                             </div>
                         </div>  
@@ -94,16 +94,16 @@
                                     <table class="table table-hover table-striped">
                                     <thead>
                                         <tr>
-                                        <th>Operador</th>                                         
-                                        <th>Responsabilidad</th>                                                 
-                                        <th colspan="2">&nbsp;</th>
+                                            <th class="col-md-7">Operador</th>                                         
+                                            <th class="col-md-4">Responsabilidad</th>                                                 
+                                            <th class="col-md-1">&nbsp;</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr v-for="(item,k) in TablaResponsables" :key="k">
                                             <td> {{ item.user.name}}</td>                                                        
                                             <td> {{ item.responsabilidad}}</td>                                                                                                                     
-                                            <td> <a  @click="RemoveResponsable(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a></td>
+                                            <td style="text-align:center"> <a  @click="RemoveResponsable(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a></td>
                                         </tr>
                                     </tbody>
                                     </table>

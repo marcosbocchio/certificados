@@ -8,7 +8,7 @@
                              
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="fecha">Fecha (*)</label>
+                                <label for="fecha">Fecha *</label>
                                 <div class="input-group date">
                                     <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
@@ -19,13 +19,13 @@
                         </div>  
                         <div class="col-md-3">
                             <div class="form-group" >
-                                <label for="prefijo">Prefijo N° (*)</label>
+                                <label for="prefijo">Prefijo N° *</label>
                                 <input type="number" v-model="prefijo" class="form-control" id="prefijo" @change="formatearPrefijo(prefijo,4)" min="1" max="9999" :disabled="interno_sn"/>
                             </div>                            
                         </div>  
                         <div class="col-md-3">
                             <div class="form-group" >
-                                <label for="numero">Remito N° (*)</label>
+                                <label for="numero">Remito N° *</label>
                                
                                 <input type="checkbox" id="checkbox" v-model="interno_sn" style="float:right"> 
                                 <label for="tipo" style="float:right;margin-right: 5px;">INTERNO</label>             
@@ -35,13 +35,13 @@
                         </div>  
                         <div class="col-md-6">
                             <div class="form-group" >
-                                <label for="receptor">Receptor (*)</label>
+                                <label for="receptor">Receptor *</label>
                                 <input type="text" v-model="receptor" class="form-control" id="receptor" maxlength="45">
                             </div>                            
                         </div>
                         <div class="col-md-6">
                             <div class="form-group" >
-                                <label for="destino">Lugar Destino (*)</label>
+                                <label for="destino">Lugar Destino *</label>
                                 <input type="text" v-model="destino" class="form-control" id="destino" maxlength="100">
                             </div>                            
                         </div>
@@ -67,30 +67,36 @@
                             </v-select>
                             </div>
                         </div> 
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <div class="form-group"> 
                                 <label>Cant.</label>                 
                                 <input v-model="cantidad_productos" type="number" class="form-control" id="cantidad_productos" placeholder="">
                             </div>
-                        </div>                     
-                        <div class="col-md-1"> 
-                                <div class="form-group">  
-                                    <p>&nbsp;</p>                  
-                                    <span>
-                                    <a title="Agregar Profucto" @click="addProducto()"> <app-icon img="plus-circle" color="black"></app-icon> </a>                        
-                                    </span>
-                                </div>
-                            </div>
+                        </div>      
+
+                       <div class="clearfix"></div>  
+
+                        <div class="col-md-1">                                               
+                            <span>
+                              <button type="button" @click="addProducto()"><span class="fa fa-plus-circle"></span></button> 
+                            </span>                            
+                        </div>
+                        
+                         <div class="form-group">
+                            &nbsp;
+                        </div>        
+
+ 
                             <div v-show="inputsProductos.length">
                                 <div class="col-md-12">
                                     <div class="table-responsive">
                                         <table class="table table-hover table-striped">
                                         <thead>
                                             <tr>
-                                            <th style="width: 500px">Productos</th>                                         
-                                            <th>Medidas</th>                     
-                                            <th>cant</th>                    
-                                            <th colspan="2">&nbsp;</th>
+                                                <th class="col-md-7">Productos</th>                                         
+                                                <th class="col-md-2">Medidas</th>                     
+                                                <th class="col-md-2">cant</th>                    
+                                                <th class="col-md-1">&nbsp;</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -98,7 +104,7 @@
                                                 <td> {{ inputsProducto.producto.descripcion}}</td>                                                        
                                                 <td> {{ inputsProducto.medida.descripcion}}&nbsp; &nbsp; {{inputsProducto.medida.codigo }}</td>  
                                                 <td> {{ inputsProducto.cantidad_productos}}</td>                                  
-                                                <td> <i class="fa fa-minus-circle" @click="removeProducto(k)" ></i></td>
+                                                <td style="text-align:center"> <i class="fa fa-minus-circle" @click="removeProducto(k)" ></i></td>
                                             </tr>
                                         </tbody>
                                         </table>
@@ -111,7 +117,7 @@
                         <div class="box-body">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label>Equipo (*)</label>
+                                    <label>Equipo *</label>
                                     <v-select  v-model="interno_equipo" :options="interno_equipos_activos" label="nro_interno">
                                         <template slot="option" slot-scope="option">
                                             <span class="upSelect">{{ option.nro_interno }}</span> <br> 
@@ -120,14 +126,20 @@
                                     </v-select>
                                 </div>
                             </div>
-                           <div class="col-md-1"> 
-                                <div class="form-group">  
-                                    <p>&nbsp;</p>                  
-                                    <span>
-                                    <a title="Agregar Equipo" @click="addEquipo(interno_equipo.id)"> <app-icon img="plus-circle" color="black"></app-icon> </a>                        
-                                    </span>
-                                </div>
-                            </div>                           
+
+                       <div class="clearfix"></div>  
+
+                        <div class="col-md-1">                                               
+                            <span>
+                              <button type="button" @click="addEquipo(interno_equipo.id)"><span class="fa fa-plus-circle"></span></button> 
+                            </span>                            
+                        </div>
+                        
+                         <div class="form-group">
+                            &nbsp;
+                        </div>           
+
+                        
                        
                             <div v-show="inputsEquipos.length">
                                 <div class="col-md-12">
@@ -135,16 +147,16 @@
                                         <table class="table table-hover table-striped">
                                         <thead>
                                             <tr>
-                                                <th>N° Int.</th>                                         
-                                                <th>Equipo</th>                                                             
-                                                <th colspan="2">&nbsp;</th>
+                                                <th class="col-md-2">N° Int.</th>                                         
+                                                <th class="col-md-9">Equipo</th>                                                             
+                                                <th class="col-md-1">&nbsp;</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr v-for="(inputsEquipo,k) in inputsEquipos" :key="k">
                                                 <td> {{ inputsEquipo.nro_interno}}</td>                                                        
                                                 <td> {{ inputsEquipo.equipo.codigo}}</td>                                                                          
-                                                <td> <i class="fa fa-minus-circle" @click="removeEquipo(k)" ></i></td>
+                                                <td style="text-align:center"> <i class="fa fa-minus-circle" @click="removeEquipo(k)" ></i></td>
                                             </tr>
                                         </tbody>
                                         </table>
