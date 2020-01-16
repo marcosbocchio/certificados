@@ -24,7 +24,7 @@
                     </div> 
                     <div class="form-group">                    
                         <span>
-                            <i class="fa fa-plus-circle" @click="addOperario(usuario.id)"></i>
+                            <button type="button" @click="addOperario(usuario.id)"><span class="fa fa-plus-circle"></span></button>                            
                         </span>
                     </div>
                  </div>

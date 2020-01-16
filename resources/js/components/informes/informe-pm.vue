@@ -7,7 +7,7 @@
                   <div class="box-body">                  
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="fecha">Fecha (*)</label>
+                            <label for="fecha">Fecha *</label>
                             <div class="input-group date">
                                 <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
@@ -24,35 +24,35 @@
                     </div>    
                     <div class="col-md-3">
                         <div class="form-group" >
-                            <label for="componente">Componente (*)</label>
+                            <label for="componente">Componente *</label>
                             <input type="text" v-model="componente" class="form-control" id="componente">
                         </div>                            
                     </div>
 
                     <div class="col-md-3" >                       
                         <div class="form-group">
-                            <label for="materiales">Material (*)</label>
+                            <label for="materiales">Material *</label>
                             <v-select v-model="material" label="codigo" :options="materiales" id="materiales"></v-select>   
                         </div>      
                     </div>      
 
                     <div class="clearfix"></div>    
 
-                    <div class="col-md-1 size-1-5">
+                    <div class="col-md-3">
                         <div class="form-group" >
-                            <label for="plano_isom">Plano / Isom (*)</label>
+                            <label for="plano_isom">Plano / Isom *</label>
                             <input type="text" v-model="plano_isom" class="form-control" id="plano_isom">
                         </div>                            
                     </div>
 
                        <div class="col-md-3 size-1-5">
                             <div class="form-group" >
-                                <label for="Diametro">Diametro (*)</label>
+                                <label for="Diametro">Diametro *</label>
                                 <v-select v-model="diametro" label="diametro" :options="diametros" @input="getEspesores()"></v-select>   
                             </div>                            
                         </div>                       
                         
-                        <div class="col-md-1 size-1-5">
+                        <div class="col-md-3">
                             <div class="form-group" >
                                 <label>Espesor</label>
                                 <v-select v-model="espesor" label="espesor" :options="espesores" :disabled="isChapa">
@@ -64,7 +64,7 @@
                             </div>                            
                         </div>
                       
-                        <div class="col-md-1 size-1-5">    
+                        <div class="col-md-3">    
                              <div class="form-group" >                         
                                 <label for="espesor_chapa">Espesor Chapa</label>
                                 <input  type="text" class="form-control" v-model="espesor_chapa"  id="espesor_chapa" :disabled="!isChapa" > 
@@ -73,7 +73,7 @@
 
                         <div class="col-md-3">
                             <div class="form-group" >
-                                <label for="procedimientos_soldadura">Procedimiento Soldadura (*)</label>
+                                <label for="procedimientos_soldadura">Procedimiento Soldadura *</label>
                                 <input type="text" v-model="procedimiento_soldadura" class="form-control" id="procedimientos_soldadura">
                             </div>                            
                         </div>  
@@ -94,14 +94,16 @@
 
                         <div class="col-md-3" >                       
                             <div class="form-group">
-                                <label for="tecnicas">Tecnica (*)</label>
+                                <label for="tecnicas">Tecnica *</label>
                                 <v-select v-model="tecnica" label="descripcion" :options="tecnicas" id="tecnicas"></v-select>   
                             </div>      
-                         </div>                   
+                         </div>             
+
+                        <div class="clearfix"></div>    
 
                          <div class="col-md-3">
                             <div class="form-group">
-                                <label>Equipo (*)</label>
+                                <label>Equipo *</label>
                                 <v-select  v-model="interno_equipo" :options="interno_equipos_activos" label="nro_interno">
                                     <template slot="option" slot-scope="option">
                                         <span class="upSelect">{{ option.nro_interno }}</span> <br> 
@@ -113,30 +115,28 @@
 
                         <div class="col-md-3">                       
                             <div class="form-group">
-                                <label for="procRadio">Procedimiento PM (*)</label>
+                                <label for="procRadio">Procedimiento PM *</label>
                                 <v-select v-model="procedimiento" label="titulo" :options="procedimientos" id="procRadio"></v-select>   
                             </div>      
                         </div>
 
-                        <div class="clearfix"></div>    
-
                         <div class="col-md-3">                       
                             <div class="form-group">
-                                <label>Norma Evaluación (*)</label>
+                                <label>Norma Evaluación *</label>
                                 <v-select v-model="norma_evaluacion" label="descripcion" :options="norma_evaluaciones"></v-select>   
                             </div>      
                         </div>
                         
                         <div class="col-md-3">                       
                             <div class="form-group">
-                                <label>Norma Ensayo (*)</label>
+                                <label>Norma Ensayo *</label>
                                 <v-select v-model="norma_ensayo" label="descripcion" :options="norma_ensayos"></v-select>   
                             </div>      
                         </div>
 
                         <div class="col-md-3">                       
                             <div class="form-group">
-                                <label>Método (*)</label>
+                                <label>Método *</label>
                                 <v-select v-model="metodo_trabajo_pm" label="codigo" :options="metodos_trabajo_pm"></v-select>   
                             </div>      
                         </div>
@@ -144,7 +144,7 @@
                          <div class="col-md-3">
                             <div class="form-group" >  
                                 <div v-if="requiereVehiculoAditivo">
-                                    <label for="vehiculo">Vehículo (*)</label> 
+                                    <label for="vehiculo">Vehículo *</label> 
                                 </div>
                                 <div v-else>
                                      <label for="vehiculo">Vehículo</label> 
@@ -156,7 +156,7 @@
                          <div class="col-md-3">
                             <div class="form-group" >
                                 <div v-if="requiereVehiculoAditivo">
-                                    <label for="aditivo">Aditivo (*)</label> 
+                                    <label for="aditivo">Aditivo *</label> 
                                 </div>
                                 <div v-else>
                                      <label for="aditivo">Aditivo</label>       
@@ -167,39 +167,41 @@
 
                         <div class="col-md-3">
                             <div class="form-group" >                        
-                                <label for="concentracion">Concentración (*)</label>
+                                <label for="concentracion">Concentración *</label>
                                 <input  type="number" class="form-control" v-model="concentracion" id="concentracion" step=".01"> 
                             </div>                             
                         </div>                        
 
                         <div class="col-md-3">                       
                             <div class="form-group">
-                                <label>Tipo Magnetización (*)</label>
+                                <label>Tipo Magnetización *</label>
                                 <v-select v-model="tipo_magnetizacion" label="codigo" :options="tipos_magnetizacion"></v-select>   
                             </div>      
                         </div>
 
                          
-                        <div class="col-md-1 size-1-5">
+                        <div class="col-md-3">
                             <div class="form-group" >                        
-                                <label for="v">Voltaje (*)</label>
+                                <label for="v">Voltaje *</label>
                                 <input  type="number" class="form-control" v-model="voltaje" id="v" max="999"> 
                             </div>                             
                         </div> 
 
-                        <div class="col-md-1 size-1-5">
+                        <div class="col-md-3">
                             <div class="form-group" >                        
-                                <label for="am">Am (*)</label>
+                                <label for="am">Am *</label>
                                 <input  type="number" class="form-control" v-model="am" id="am" max="99"> 
                             </div>                             
                         </div> 
 
                         <div class="col-md-3">                       
                             <div class="form-group">
-                                <label>Magnetización (*)</label>
+                                <label>Magnetización *</label>
                                 <v-select v-model="magnetizacion" label="codigo" :options="corrientes"></v-select>   
                             </div>      
                         </div>
+
+                       <div class="clearfix"></div>    
 
                         <div class="col-md-3">
                             <div class="form-group" >                        
@@ -210,30 +212,30 @@
 
                         <div class="col-md-3">                       
                             <div class="form-group" >
-                                <label for="color_particulas">Color Particulas (*)</label>
+                                <label for="color_particulas">Color Particulas *</label>
                                 <v-select v-model="color_partula" label="codigo" :options="color_particulas"></v-select>   
                             </div>         
                         </div>  
 
                         <div class="col-md-3">                       
                             <div class="form-group" >
-                                <label for="iluminaciones">Iluminaciones (*)</label>
+                                <label for="iluminaciones">Iluminaciones *</label>
                                 <v-select v-model="iluminacion" label="codigo" :options="iluminaciones"></v-select>   
                             </div>         
                         </div>  
 
-                        <div class="clearfix"></div>    
-
                         <div class="col-md-3">                       
                             <div class="form-group">
-                                <label>Desmagnetización (*)</label>
+                                <label>Desmagnetización *</label>
                                 <v-select v-model="desmagnetizacion" :options="['SI','NO']"></v-select>   
                             </div>      
                         </div>
 
+                        <div class="clearfix"></div>    
+
                         <div class="col-md-3">                       
                             <div class="form-group" >
-                                <label for="ejecutor_ensayo">Ejecutor Ensayo (*)</label>
+                                <label for="ejecutor_ensayo">Ejecutor Ensayo *</label>
                                 <v-select v-model="ejecutor_ensayo" label="name" :options="ejecutor_ensayos"></v-select>   
                             </div>         
                         </div>                         
@@ -244,7 +246,7 @@
                 <div class="box box-danger">
                     <div class="box-body">
 
-                        <div class="col-md-2">                       
+                        <div class="col-md-3">                       
                             <div class="form-group" >                            
                                 <label for="pieza">Pieza</label>
                                 <input type="text" v-model="pieza" class="form-control" id="pieza">                           
@@ -252,65 +254,72 @@
                         </div>                
 
             
-                        <div class="col-md-2">                       
+                        <div class="col-md-3">                       
                             <div class="form-group" >                            
                                 <label for="numero_piezas">N°</label>
                                 <input type="number" v-model="numero_pieza" class="form-control" id="numero_piezas">                           
                             </div>     
                         </div>  
 
-                         <div class="col-md-1">                             
+                       <div class="clearfix"></div>  
+
+                        <div class="col-md-1">                                               
                             <span>
-                                <i class="fa fa-plus-circle" @click="addDetalle()"></i>
+                              <button type="button" @click="addDetalle()"><span class="fa fa-plus-circle"></span></button> 
                             </span>                            
-                         </div>  
+                        </div>
+                        
+                         <div class="form-group">
+                            &nbsp;
+                        </div>
+  
+                        <div v-if="inputPiezasFalla.length">
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th class="col-md-2">PIEZA</th>
+                                                <th class="col-md-1">N°</th> 
+                                                <th class="col-md-5">DETALLE</th>
+                                                <th class="col-md-1">ACEPTABLE </th>    
+                                                <th class="col-md-1">REFERENCIA </th>                                                                      
+                                                <th class="col-md-2">&nbsp;</th>
+                                            </tr>
+                                        </thead>                         
+                                        <tbody>
+                                            <tr v-for="(inputPiezaFalla,k) in (inputPiezasFalla)" :key="k" @click="selectPosDetalle(k)" :class="{selected: indexPosDetalle === k}" >
+                                                <td>{{ inputPiezaFalla.pieza }}</td>                                        
+                                                <td>{{ inputPiezaFalla.numero }}</td>
+                                                <td>   
+                                                    <div v-if="indexPosDetalle == k ">       
+                                                    <input type="text" v-model="inputPiezasFalla[k].detalle" maxlength="50" size="100%">        
+                                                    </div>   
+                                                    <div v-else>
+                                                    {{ inputPiezasFalla[k].detalle }}
+                                                    </div>  
+                                                </td>    
+                                                <td style="text-align:center"> 
+                                                    <input type="checkbox" id="checkbox" v-model="inputPiezasFalla[k].aceptable_sn"> 
+                                                </td>
+                                                <td style="text-align:center"> 
+                                                    <span :class="{ existe : (inputPiezaFalla.observaciones ||
+                                                                                inputPiezaFalla.path1 ||
+                                                                                inputPiezaFalla.path2 ||
+                                                                                inputPiezaFalla.path3 ||
+                                                                                inputPiezaFalla.path4 )                      
+                                                }" class="fa fa-file-archive-o" @click="OpenReferencias($event,k,'Informe PM',inputPiezaFalla)" ></span>
+                                                </td>                                
 
-                         <div class="col-md-12">
-                            <div class="table-responsive">
-                                <table class="table table-hover table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th style="width:100px;">PIEZA</th>
-                                            <th style="width:50px;">N°</th> 
-                                            <th style="width:400px;">DETALLE</th>
-                                            <th style="width:80px;">ACEPTABLE </th>    
-                                            <th style="width:80px;">REFERENCIA </th>                                                  
-                                                                        
-                                            <th  style="width:30px;"  colspan="1">&nbsp;</th>
-                                        </tr>
-                                    </thead>                         
-                                    <tbody>
-                                        <tr v-for="(inputPiezaFalla,k) in (inputPiezasFalla)" :key="k" @click="selectPosDetalle(k)" :class="{selected: indexPosDetalle === k}" >
-                                            <td>{{ inputPiezaFalla.pieza }}</td>                                        
-                                            <td>{{ inputPiezaFalla.numero }}</td>
-                                            <td>   
-                                                <div v-if="indexPosDetalle == k ">       
-                                                <input type="text" v-model="inputPiezasFalla[k].detalle" maxlength="50" size="120">        
-                                                </div>   
-                                                <div v-else>
-                                                {{ inputPiezasFalla[k].detalle }}
-                                                </div>  
-                                            </td>    
-                                            <td> 
-                                                <input type="checkbox" id="checkbox" v-model="inputPiezasFalla[k].aceptable_sn"> 
-                                            </td>
-                                            <td> 
-                                                <span :class="{ existe : (inputPiezaFalla.observaciones ||
-                                                                            inputPiezaFalla.path1 ||
-                                                                            inputPiezaFalla.path2 ||
-                                                                            inputPiezaFalla.path3 ||
-                                                                            inputPiezaFalla.path4 )                      
-                                            }" class="fa fa-file-archive-o" @click="OpenReferencias($event,k,'Informe PM',inputPiezaFalla)" ></span>
-                                            </td>                                
+                                            
+                                                <td style="text-align:center"><span class="fa fa-minus-circle" @click="removeDetalle(k)"></span></td>          
 
-                                        
-                                            <td><span class="fa fa-minus-circle" @click="removeDetalle(k)"></span></td>          
-
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                       </div>              
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                        </div>      
+                       </div>        
                  
                   </div>    
                 </div>    
@@ -954,6 +963,7 @@ export default {
 
 
 <style scoped>
+
  .existe {
 
     color: blue ;
@@ -962,20 +972,6 @@ export default {
 
 .checkbox-inline {
     margin-left: 0px;
-}
-
-.col-md-1-5 {
-
-    width: 12.499999995%
-   
-}
-
-@media (min-width: 768px)  { 
-    
-    .size-1-5 {
-
-        width: 12.499999995%;
-    }
 }
 
 .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {

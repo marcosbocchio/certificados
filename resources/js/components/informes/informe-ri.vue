@@ -1505,13 +1505,9 @@ export default {
 .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
      background-color: #eee;
 }
+
 .checkbox-inline {
     margin-left: 0px;
-}
-.col-md-1-5 {
-
-    width: 12.499999995%
-   
 }
 
 table .selected{
@@ -1520,12 +1516,5 @@ table .selected{
 
 } 
 
-@media (min-width: 768px)  { 
-    
-.size-1-5 {
 
-    width: 12.499999995%;
-}
-
-}
 </style>

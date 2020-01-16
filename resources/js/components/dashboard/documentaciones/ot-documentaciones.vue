@@ -28,7 +28,7 @@
                     </div> 
                     <div class="form-group">                    
                         <span>
-                            <i class="fa fa-plus-circle" @click="addDocumentacion(documentacion.id)"></i>
+                          <button type="button" @click="addDocumentacion(documentacion.id)"><span class="fa fa-plus-circle"></span></button> 
                         </span>
                     </div>
                  </div>                

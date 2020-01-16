@@ -6,7 +6,7 @@
       <div class="box-body">
         <div class="col-md-6">
           <div class="form-group">
-            <label for="proyecto">Proyecto (*)</label>
+            <label for="proyecto">Proyecto *</label>
             <input type="text" v-model="proyecto" class="form-control" id="proyecto" placeholder="">
           </div>
         </div>
@@ -16,19 +16,19 @@
       <div class="box-body">
       <div class="col-md-2">
         <div class="form-group">
-          <label for="fst">FST Nº (*)</label>
+          <label for="fst">FST Nº *</label>
           <input v-model="fst" type="number" class="form-control" id="fst" placeholder="">
         </div>
       </div>
         <div class="col-md-2">
           <div class="form-group">
-            <label for="ot">OT Nº (*)</label>
+            <label for="ot">OT Nº *</label>
             <input v-model="ot" type="number" class="form-control" id="ot" placeholder="">
           </div>
         </div>
       <div class="col-md-2">
         <div class="form-group">
-          <label for="fecha">Fecha (*)</label>
+          <label for="fecha">Fecha *</label>
             <div class="input-group date">
                 <div class="input-group-addon">
                   <i class="fa fa-calendar"></i>
@@ -45,7 +45,7 @@
         </div>        
         <div class="col-md-2">
           <div class="form-group">
-            <label for="fecha">Fecha estimada(*)</label>
+            <label for="fecha">Fecha estimada*</label>
               <div class="input-group date">
                 <div class="input-group-addon">
                   <i class="fa fa-calendar"></i>
@@ -57,7 +57,7 @@
        <div class="col-md-2">
         <div class="bootstrap-timepicker">
               <div class="form-group">
-                <label>Hora (*)</label>
+                <label>Hora *</label>
 
                 <div class="input-group">
                   <div class="input-group-addon">
@@ -70,7 +70,7 @@
         </div> 
         <div class="col-md-6">                       
           <div class="form-group">
-              <label>Cliente (*)</label>
+              <label>Cliente *</label>
                <input type="checkbox" id="checkbox" v-model="logo_cliente_sn" style="float:right"> 
                <label for="tipo" style="float:right;margin-right: 5px;">Mostrar logo</label>    
               <v-select v-model="cliente" label="nombre_fantasia" :options="clientes" @input="getContactos()"></v-select>   
@@ -88,7 +88,7 @@
         
         <div class="col-md-6">
           <div class="form-group">
-              <label>Contacto 1 (*)</label>
+              <label>Contacto 1 *</label>
               <v-select v-model="contacto1" name="contacto_1" label="nombre" :options="contactos"></v-select>   
             </div>
         </div>
@@ -106,7 +106,7 @@
         </div>
         <div class="col-md-6">
           <div class="form-group">
-              <label>Responsable OT (*)</label>
+              <label>Responsable OT *</label>
               <v-select v-model="user_empresa" name="respontable_ot" label="name" :options="users_empresa"></v-select>   
           </div>
         </div>
@@ -116,15 +116,15 @@
       <div class="box-body">
         <div class="col-md-6">
           <div class="form-group">
-            <label for="lugar_ensayo">Lugar de ensayo (*)</label>
+            <label for="lugar_ensayo">Lugar de ensayo *</label>
             <input v-model="lugar_ensayo" type="text" class="form-control" id="lugar_ensayo" placeholder="">
           </div>        
           <div class="form-group">
-            <label>Provincia (*)</label>
+            <label>Provincia *</label>
             <v-select v-model="provincia" label="provincia" :options="provincias" @input="getLocalidades()"></v-select>   
           </div>
           <div class="form-group">
-            <label>Localidad (*)</label>
+            <label>Localidad *</label>
             <v-select v-model="localidad" label="localidad" :options="localidades" @input="sync()"></v-select>   
           </div>
           <div class="form-group">
@@ -214,11 +214,16 @@
         </div>   
         <div class="col-md-1"> 
             <div class="form-group">                    
-          <span>
-              <i class="fa fa-plus-circle" @click="addServicio()"></i>
-          </span>
+              <span>
+                  <button type="button" @click="addServicio()"><span class="fa fa-plus-circle"></span></button> 
+              </span>
             </div>
         </div>
+
+        <div class="form-group">
+          &nbsp;
+        </div>
+
         <div v-show="inputsServicios.length">
           <div class="col-md-12">
             <div class="table-responsive">
@@ -307,12 +312,17 @@
             </div>
           </div>  
           <div class="col-md-1"> 
-            <div class="form-group">                    
-              <span>
-                  <i class="fa fa-plus-circle" @click="addProducto()"></i>
-              </span>
-            </div>
-          </div> 
+              <div class="form-group">                    
+                <span>
+                    <button type="button" @click="addProducto()"><span class="fa fa-plus-circle"></span></button> 
+                </span>
+              </div>
+          </div>
+          
+          <div class="form-group">
+            &nbsp;
+          </div>
+
           <div v-show="inputsProductos.length">
             <div class="col-md-12">
               <div class="table-responsive">
@@ -353,25 +363,31 @@
             <label>Elementos de seguridad</label>
             <v-select v-model="epp" label="descripcion" :options="epps" id="epps"></v-select>
           </div> 
-         
-            <div class="form-group">                    
-              <span>
-                  <i class="fa fa-plus-circle" @click="addEpp()"></i>
-              </span>
-            </div>
+          
+              <div class="form-group">                    
+                <span>
+                    <button type="button" @click="addEpp()"><span class="fa fa-plus-circle"></span></button> 
+                </span>
+              </div>
+          
+          
+          <div class="form-group">
+            &nbsp;
+          </div>            
+
           <div v-show="inputsEpps.length">           
               <div class="table-responsive">
                 <table class="table table-hover table-striped">
                   <thead>
                     <tr>
-                      <th>EPPS</th>                                   
-                      <th colspan="2">&nbsp;</th>
+                      <th class="col-md-11">EPPS</th>                                   
+                      <th class="col-md-1">&nbsp;</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr v-for="(inputsEpp,k) in inputsEpps" :key="k">
                       <td> {{ inputsEpp.descripcion}}</td>                                  
-                      <td> <i class="fa fa-minus-circle" @click="removeEpp(k)" ></i></td>
+                      <td style="text-align:center"> <i class="fa fa-minus-circle" @click="removeEpp(k)" ></i></td>
                     </tr>
                   </tbody>
                 </table>
@@ -383,25 +399,32 @@
             <label>Riesgos</label>
             <v-select v-model="riesgo" label="descripcion" :options="riesgos" id="riesgos"></v-select>
           </div> 
-         
-            <div class="form-group">                    
-              <span>
-                  <i class="fa fa-plus-circle" @click="addRiesgo()"></i>
-              </span>
-            </div>
+
+      
+              <div class="form-group">                    
+                <span>
+                    <button type="button" @click="addRiesgo()"><span class="fa fa-plus-circle"></span></button> 
+                </span>
+              </div>
+       
+          
+          <div class="form-group">
+            &nbsp;
+          </div>         
+
           <div v-show="inputsRiesgos.length">           
               <div class="table-responsive">
                 <table class="table table-hover table-striped">
                   <thead>
                     <tr>
-                      <th>Riesgos</th>                                   
-                      <th colspan="2">&nbsp;</th>
+                      <th class="col-md-11">Riesgos</th>                                   
+                      <th class="col-md-1">&nbsp;</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr v-for="(inputsRiesgo,k) in inputsRiesgos" :key="k">
                       <td> {{ inputsRiesgo.descripcion}}</td>                                  
-                      <td> <i class="fa fa-minus-circle" @click="removeRiesgo(k)" ></i></td>
+                      <td style="text-align:center"> <i class="fa fa-minus-circle" @click="removeRiesgo(k)" ></i></td>
                     </tr>
                   </tbody>
                 </table>

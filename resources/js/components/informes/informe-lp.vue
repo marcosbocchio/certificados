@@ -7,7 +7,7 @@
                   <div class="box-body">
                        <div class="col-md-3">
                             <div class="form-group">
-                                <label for="fecha">Fecha (*)</label>
+                                <label for="fecha">Fecha *</label>
                                 <div class="input-group date">
                                     <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
@@ -24,33 +24,33 @@
                         </div>
                         <div class="col-md-3">
                             <div class="form-group" >
-                                <label for="componente">Componente (*)</label>
+                                <label for="componente">Componente *</label>
                                 <input type="text" v-model="componente" class="form-control" id="componente">
                             </div>                            
                         </div>
                         <div class="col-md-3" >                       
                             <div class="form-group">
-                                <label for="materiales">Material (*)</label>
+                                <label for="materiales">Material *</label>
                                 <v-select v-model="material" label="codigo" :options="materiales" id="materiales"></v-select>   
                             </div>      
                         </div>
 
                         <div class="clearfix"></div>    
 
-                        <div class="col-md-1 size-1-5">
+                        <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="plano_isom">Plano/Isom *</label>
                                 <input type="text" v-model="plano_isom" class="form-control" id="plano_isom">
                             </div>                            
                         </div>
-                        <div class="col-md-3 size-1-5">
+                        <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="Diametro">Ø *</label>
                                 <v-select v-model="diametro" label="diametro" :options="diametros" @input="getEspesores()"></v-select>   
                             </div>                            
                         </div>                       
                         
-                        <div class="col-md-1 size-1-5">
+                        <div class="col-md-3">
                             <div class="form-group" >
                                 <label>Espesor</label>
                                 <v-select v-model="espesor" label="espesor" :options="espesores" :disabled="isChapa">
@@ -62,7 +62,7 @@
                             </div>                            
                         </div>
                       
-                        <div class="col-md-1 size-1-5">    
+                        <div class="col-md-3">    
                              <div class="form-group" >                         
                                 <label for="espesor_chapa">Esp. Chapa</label>
                                 <input  type="text" class="form-control" v-model="espesor_chapa"  id="espesor_chapa" :disabled="!isChapa" > 
@@ -71,7 +71,7 @@
 
                         <div class="col-md-3">
                             <div class="form-group" >
-                                <label for="procedimientos_soldadura">Proc. Soldadura (*)</label>
+                                <label for="procedimientos_soldadura">Proc. Soldadura *</label>
                                 <input type="text" v-model="procedimiento_soldadura" class="form-control" id="procedimientos_soldadura">
                             </div>                            
                         </div>  
@@ -90,10 +90,10 @@
                             </div>         
                         </div>
                        
-                        
+
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label>Equipo (*)</label>
+                                <label>Equipo *</label>
                                     <v-select  v-model="interno_equipo" :options="interno_equipos_activos" label="nro_interno" @input="getFuente()">
                                         <template slot="option" slot-scope="option">
                                             <span class="upSelect">{{ option.nro_interno }}</span> <br> 
@@ -103,6 +103,7 @@
                             </div>
                         </div>                       
 
+                        <div class="clearfix"></div>    
 
                         <div class="col-md-3">
                             <div class="form-group" >
@@ -113,16 +114,15 @@
                         
                         <div class="col-md-3">                       
                             <div class="form-group">
-                                <label for="procRadio">Procedimiento LP (*)</label>
+                                <label for="procRadio">Procedimiento LP *</label>
                                 <v-select v-model="procedimiento" label="titulo" :options="procedimientos" id="procRadio"></v-select>   
                             </div>      
                         </div>
-
-                        <div class="clearfix"></div>    
+                       
 
                         <div class="col-md-3">                       
                             <div class="form-group">
-                                <label>Norma Evaluación (*)</label>
+                                <label>Norma Evaluación *</label>
                                 <v-select v-model="norma_evaluacion" label="descripcion" :options="norma_evaluaciones"></v-select>   
                             </div>      
                         </div>
@@ -130,15 +130,16 @@
 
                         <div class="col-md-3">                       
                             <div class="form-group">
-                                <label>Norma Ensayo (*)</label>
+                                <label>Norma Ensayo *</label>
                                 <v-select v-model="norma_ensayo" label="descripcion" :options="norma_ensayos"></v-select>   
                             </div>      
                         </div>
 
+                        <div class="clearfix"></div>    
 
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label>Metodo Trabajo (*)</label>
+                                <label>Metodo Trabajo *</label>
                                     <v-select  v-model="metodo_trabajo_lp" :options="metodos_trabajo_lp" label="tipo_metodo">
                                         <template slot="option" slot-scope="option">
                                             <span class="upSelect">{{ option.tipo }}</span> <br> 
@@ -150,14 +151,14 @@
 
                         <div class="col-md-3">                       
                             <div class="form-group">
-                                <label> Tipo Penetrante (*)</label>
+                                <label> Tipo Penetrante *</label>
                                 <v-select v-model="tipo_penetrante" label="codigo" :options="['VISIBLE','FLUORESCENTE']"></v-select>   
                             </div>      
                         </div> 
 
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label>Líquido Penetrante (*)</label>
+                                <label>Líquido Penetrante *</label>
                                     <v-select  v-model="penetrante_tipo_liquido" :options="penetrantes_tipo_liquido" label="tipo">
                                         <template slot="option" slot-scope="option">
                                             <span class="upSelect">{{ option.tipo }}</span> <br> 
@@ -184,7 +185,7 @@
 
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label>Líquido Revelador (*)</label>
+                                <label>Líquido Revelador *</label>
                                     <v-select  v-model="revelador_tipo_liquido" :options="reveladores_tipo_liquido" label="tipo">
                                         <template slot="option" slot-scope="option">
                                             <span class="upSelect">{{ option.tipo }}</span> <br> 
@@ -194,11 +195,11 @@
                             </div>
                         </div>
 
-                        <div class="clearfix"></div>   
+                      
 
                         <div class="col-md-3">                       
                             <div class="form-group">
-                                <label>Aplicación  Revelador (*)</label>
+                                <label>Aplicación  Revelador *</label>
                                 <v-select v-model="revelador_aplicacion" label="codigo" :options="aplicaciones_lp"></v-select>   
                             </div>      
                         </div>
@@ -206,7 +207,7 @@
 
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label>Líquido Removedor (*)</label>
+                                <label>Líquido Removedor *</label>
                                     <v-select  v-model="removedor_tipo_liquido" :options="removedores_tipo_liquido" label="tipo">
                                         <template slot="option" slot-scope="option">
                                             <span class="upSelect">{{ option.tipo }}</span> <br> 
@@ -216,10 +217,11 @@
                             </div>
                         </div>
 
-                         
+                       <div class="clearfix"></div>    
+
                         <div class="col-md-3">                       
                             <div class="form-group">
-                                <label>Aplicación  Removedor (*)</label>
+                                <label>Aplicación  Removedor *</label>
                                 <v-select v-model="removedor_aplicacion" label="codigo" :options="aplicaciones_lp"></v-select>   
                             </div>      
                         </div>
@@ -248,14 +250,14 @@
 
                         <div class="col-md-3">                       
                             <div class="form-group" >
-                                <label for="iluminaciones">Iluminaciones (*)</label>
+                                <label for="iluminaciones">Iluminaciones *</label>
                                 <v-select v-model="iluminacion" label="codigo" :options="iluminaciones"></v-select>   
                             </div>         
                         </div>
 
                         <div class="col-md-3">                       
                             <div class="form-group" >
-                                <label for="ejecutor_ensayo">Ejecutor Ensayo (*)</label>
+                                <label for="ejecutor_ensayo">Ejecutor Ensayo *</label>
                                 <v-select v-model="ejecutor_ensayo" label="name" :options="ejecutor_ensayos"></v-select>   
                             </div>         
                         </div> 
@@ -266,7 +268,7 @@
                <div class="box box-danger">
                     <div class="box-body">
 
-                        <div class="col-md-2">                       
+                        <div class="col-md-3">                       
                             <div class="form-group" >                            
                                 <label for="pieza">Pieza</label>
                                 <input type="text" v-model="pieza" class="form-control" id="pieza">                           
@@ -274,64 +276,71 @@
                         </div>                
 
             
-                        <div class="col-md-2">                       
+                        <div class="col-md-3">                       
                             <div class="form-group" >                            
                                 <label for="numero_piezas">N°</label>
                                 <input type="number" v-model="numero_pieza" class="form-control" id="numero_piezas">                           
                             </div>     
                         </div>  
 
-                         <div class="col-md-1">                             
+                       <div class="clearfix"></div>  
+
+                        <div class="col-md-1">                                               
                             <span>
-                                <i class="fa fa-plus-circle" @click="addDetalle()"></i>
+                              <button type="button" @click="addDetalle()"><span class="fa fa-plus-circle"></span></button> 
                             </span>                            
-                         </div>  
+                        </div>
+                        
+                         <div class="form-group">
+                            &nbsp;
+                        </div>
 
-                         <div class="col-md-12">
-                            <div class="table-responsive">
-                                <table class="table table-hover table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th style="width:100px;">PIEZA</th>
-                                            <th style="width:50px;">N°</th> 
-                                            <th style="width:400px;">DETALLE</th>
-                                            <th style="width:80px;">ACEPTABLE </th>    
-                                            <th style="width:80px;">REFERENCIA </th>                                                  
-                                                                        
-                                            <th  style="width:30px;"  colspan="1">&nbsp;</th>
-                                        </tr>
-                                    </thead>                         
-                                    <tbody>
-                                        <tr v-for="(inputPiezaFalla,k) in (inputPiezasFalla)" :key="k" @click="selectPosDetalle(k)" :class="{selected: indexPosDetalle === k}" >
-                                            <td>{{ inputPiezaFalla.pieza }}</td>                                        
-                                            <td>{{ inputPiezaFalla.numero }}</td>
-                                            <td>   
-                                                <div v-if="indexPosDetalle == k ">       
-                                                <input type="text" v-model="inputPiezasFalla[k].detalle" maxlength="50" size="120">        
-                                                </div>   
-                                                <div v-else>
-                                                {{ inputPiezasFalla[k].detalle }}
-                                                </div>  
-                                            </td>    
-                                            <td> 
-                                                <input type="checkbox" id="checkbox" v-model="inputPiezasFalla[k].aceptable_sn">  </td>
-                                            <td> 
-                                                <span :class="{ existe : (inputPiezaFalla.observaciones ||
-                                                                            inputPiezaFalla.path1 ||
-                                                                            inputPiezaFalla.path2 ||
-                                                                            inputPiezaFalla.path3 ||
-                                                                            inputPiezaFalla.path4 )                      
-                                            }" class="fa fa-file-archive-o" @click="OpenReferencias($event,k,'Informe PM',inputPiezaFalla)" ></span>
-                                            </td>                                
+                        <div v-if="inputPiezasFalla.length">
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th class="col-md-2">PIEZA</th>
+                                                <th class="col-md-1">N°</th> 
+                                                <th class="col-md-5">DETALLE</th>
+                                                <th class="col-md-1">ACEPTABLE </th>    
+                                                <th class="col-md-1">REFERENCIA </th>                                                                      
+                                                <th class="col-md-2">&nbsp;</th>
+                                            </tr>
+                                        </thead>                         
+                                        <tbody>
+                                            <tr v-for="(inputPiezaFalla,k) in (inputPiezasFalla)" :key="k" @click="selectPosDetalle(k)" :class="{selected: indexPosDetalle === k}" >
+                                                <td>{{ inputPiezaFalla.pieza }}</td>                                        
+                                                <td>{{ inputPiezaFalla.numero }}</td>
+                                                <td>   
+                                                    <div v-if="indexPosDetalle == k ">       
+                                                    <input type="text" v-model="inputPiezasFalla[k].detalle" maxlength="50" size="100%">        
+                                                    </div>   
+                                                    <div v-else>
+                                                    {{ inputPiezasFalla[k].detalle }}
+                                                    </div>  
+                                                </td>    
+                                                <td style="text-align:center"> 
+                                                    <input type="checkbox" id="checkbox" v-model="inputPiezasFalla[k].aceptable_sn">  </td>
+                                                <td style="text-align:center"> 
+                                                    <span :class="{ existe : (inputPiezaFalla.observaciones ||
+                                                                                inputPiezaFalla.path1 ||
+                                                                                inputPiezaFalla.path2 ||
+                                                                                inputPiezaFalla.path3 ||
+                                                                                inputPiezaFalla.path4 )                      
+                                                }" class="fa fa-file-archive-o" @click="OpenReferencias($event,k,'Informe PM',inputPiezaFalla)" ></span>
+                                                </td>                                
 
-                                        
-                                            <td><span class="fa fa-minus-circle" @click="removeDetalle(k)"></span></td>          
+                                            
+                                                <td style="text-align:center"><span class="fa fa-minus-circle" @click="removeDetalle(k)"></span></td>          
 
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                       </div>              
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                        </div>       
+                    </div>       
                  
                   </div>    
                 </div>
@@ -885,6 +894,7 @@ data() {return {
 }
 </script>
 <style scoped>
+
  .existe {
 
     color: blue ;
@@ -895,19 +905,6 @@ data() {return {
     margin-left: 0px;
 }
 
-.col-md-1-5 {
-
-    width: 12.499999995%
-   
-}
-
-@media (min-width: 768px)  { 
-    
-    .size-1-5 {
-
-        width: 12.499999995%;
-    }
-}
 
 .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
      background-color: #eee;
