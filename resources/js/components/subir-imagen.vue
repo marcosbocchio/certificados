@@ -7,7 +7,7 @@
             </div>   
             <div  v-if="mostrar_formatos_soportados">
              
-                 <p style="display:inline">Formatos soportados : </p> 
+                 <p style="display:inline">Formatos: </p> 
                  <div style="display:inline" v-for="(formato,k) in tipos_archivo_soportados" :key="k">
 
                       {{formato}}
@@ -39,8 +39,7 @@
             :value="uploadPercentage"
             style="margin-top:5px;"
             /> <br/>
-            </div>                
-      
+            </div>
         </form>        
     </div>    
 </template>
@@ -121,16 +120,17 @@ export default {
         fullPage: false,     
         uploadPercentage: 0,
         isPdf: false,            
-         errors:[],   
-         selectedFile : null,        
+        errors:[],   
+        selectedFile : null,        
 
          options: {
             
             layout: {
                 height: 20,
                 width: 150,    
-                verticalTextAlign: 74,        
-                }
+                verticalTextAlign: 74,    
+                progressPadding: 0,               
+                },            
             },
         }
     },   

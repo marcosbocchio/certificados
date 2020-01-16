@@ -52,21 +52,23 @@
                             </div>      
                         </div>                      
                         
-                        <div class="col-md-1 size-1-5">
+                        <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="plano_isom">Plano / Isom (*)</label>
                                 <input type="text" v-model="plano_isom" class="form-control" id="plano_isom">
                             </div>                            
                         </div>
 
-                        <div class="col-md-3 size-1-5">
+                        <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="Diametro">Diametro (*)</label>
                                 <v-select v-model="diametro" label="diametro" :options="diametros" @input="getEspesores()"></v-select>   
                             </div>                            
-                        </div>                       
+                        </div>      
+
+                        <div class="clearfix"></div>                 
                         
-                        <div class="col-md-1 size-1-5">
+                        <div class="col-md-3">
                             <div class="form-group" >
                                <div v-if="isChapa">
                                     <label for="espesor">Espesor</label> 
@@ -83,7 +85,7 @@
                             </div>                            
                         </div>
                       
-                        <div class="col-md-1 size-1-5">    
+                        <div class="col-md-3">    
                              <div class="form-group" >   
                                 <div v-if="isChapa">
                                     <label for="espesor_chapa">Espesor Chapa (*)</label> 
@@ -130,9 +132,9 @@
                             </div>      
                         </div>
 
-                        <div class="clearfix"></div>
+                      
 
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label>Equipo (*)</label>
                                     <v-select  v-model="interno_equipo" :options="interno_equipos_activos" label="nro_interno" @input="getFuente()">
@@ -144,34 +146,34 @@
                             </div>
                         </div>
                        
-                        <div class="col-md-1">
+                        <div class="col-md-3">
                             <div class="form-group" >                   
                                 <label for="kv">Kv</label>
                                 <input  type="text" class="form-control" v-model="kv" id="kv">     
                             </div>                         
                         </div>
-                        <div class="col-md-1">
+                        <div class="col-md-3">
                             <div class="form-group" >                        
                                 <label for="ma">mA</label>
                                 <input  type="text" class="form-control" v-model="ma" id="ma"> 
                             </div>                             
                         </div>                       
                       
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="fuente">Fuente</label>
                                  <input type="text" v-model="fuente.codigo" class="form-control" id="fuente" disabled>
                             </div>                            
                         </div>
 
-                        <div class="col-md-1 size-1-5">
+                        <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="foco">Foco (*)</label>
                                 <input type="text" v-model="foco" class="form-control" id="foco">
                             </div>                            
                         </div>
 
-                        <div class="col-md-1 size-1-5">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label>Calidad de placas (*)</label>
                                     <v-select  v-model="tipo_pelicula" :options="tipo_peliculas" label="codigo">
@@ -183,6 +185,9 @@
                             </div>
                         </div>
 
+                        <div class="clearfix"></div>
+
+
                         <div class="col-md-3">                       
                             <div class="form-group">
                                 <label for="procRadio">Procedimiento RI (*)</label>
@@ -190,36 +195,35 @@
                             </div>      
                         </div>
 
-                        <div class="clearfix"></div>    
 
-                        <div class="col-md-1">
+                        <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="pantalla">Pantalla</label>
                                 <input type="text" v-model="pantalla" class="form-control" id="pantalla" disabled>
                             </div>                            
                         </div>
                         
-                            <div class="col-md-1">
+                            <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="pos_ant">Ant (*)</label>
                                 <input type="number" v-model="pos_ant" class="form-control" id="pos_ant" step=".01">
                             </div>                            
                         </div>
-                        <div class="col-md-1">
+                        <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="pos_pos">Pos (*)</label>
                                 <input type="number" v-model="pos_pos" class="form-control" id="pos_pos" step=".01">
                             </div>                            
                         </div>
 
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="ici">Ici (*)</label>
                                 <v-select v-model="ici" label="codigo" :options="icis"></v-select>   
                             </div>                            
                         </div>    
 
-                        <div class="col-md-1">
+                        <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="pos_pos">lado (*)</label>
                                 <input type="text" v-model="lado" class="form-control" id="lado">
@@ -243,6 +247,7 @@
 
                         <div class="clearfix"></div>
 
+                        
                         <div class="col-md-3">                       
                             <div class="form-group" >
                                 <label for="actividad">Actividad</label>
@@ -285,14 +290,14 @@
                     </div>
                 <div class="box-body">
 
-                    <div class="col-md-1">                       
+                    <div class="col-md-2">                       
                         <div class="form-group" >                            
                             <label for="pk">Pk</label>
                             <input type="number" v-model="pk" class="form-control" id="pk" :disabled="(!isGasoducto)">                           
                         </div>     
                     </div>   
 
-                    <div class="col-md-1">                      
+                    <div class="col-md-2">                      
                         <div class="form-group" >
                            <label>Tipo Sol.</label>
                            <v-select v-model="tipo_soldadura" label="codigo" :options="tipo_soldaduras" :disabled="(!isGasoducto)"></v-select>
@@ -305,10 +310,8 @@
                             <input type="text" v-model="junta" class="form-control" id="junta">
                         </div>
                     </div>     
-                  
-
-
-                    <div class="col-md-1">                       
+                    
+                   <div class="col-md-2">                       
                         <div class="form-group" >                            
                         <label for="posicion">Posición</label>
                         <input type="text" v-model="posicion" class="form-control" id="posicion">                           
@@ -316,15 +319,17 @@
                     </div>   
 
                     <div class="col-md-2">                       
-                             <p>&nbsp;</p>                                        
-                             <i title="Agregar Junta/Posición" @click="AddDetalle()" style="display:inline-block;margin-left:15px;"> <app-icon img="plus-circle" color="black"></app-icon> </i>                
-                         
-                             <i title="Clonar Posición" @click="ClonarPosPlanta()" style="display:inline-block;margin-left:15px;"> <app-icon img="clone" color="black"></app-icon> </i>                      
-                          
-                             <i title="Limpiar Todo" @click="resetDetalle()" style="display:inline-block;margin-left:15px;"> <app-icon img="trash" color="black"></app-icon> </i>                                             
+                             <p>&nbsp;</p>         
+                             <button type="button" @click="AddDetalle()" title="Agregar Junta/Posición"><app-icon img="plus-circle" color="black"></app-icon></button> 
+                             <button type="button" @click="ClonarPosPlanta()" title="Clonar Posición"><app-icon img="clone" color="black"></app-icon></button>                               
+                             <button type="button" @click="resetDetalle()" title="Limpiar Todo"><app-icon img="trash" color="black"></app-icon></button>                
                    
-                    </div>         
-                    
+                    </div>      
+
+                    <div class="form-group">
+                        &nbsp;
+                    </div>                    
+
                     <div class="col-md-12">
 
                         <div class="table-responsive">
@@ -405,10 +410,14 @@
                             <div class="form-group">  
                                  <p>&nbsp;</p>                  
                                 <span>
-                                  <a title="Agregar Defecto" @click="addDefectos()"> <app-icon img="plus-circle" color="black"></app-icon> </a>                        
+                                  <button type="button" @click="addDefectos()" title="Agregar Defecto"><app-icon img="plus-circle" color="black"></app-icon></button>                    
                                 </span>
                             </div>
                         </div>  
+
+                         <div class="form-group">
+                            &nbsp;
+                        </div>                        
                                           
                         <div class="col-md-12">
                             <div class="table-responsive">
@@ -451,7 +460,7 @@
                         </div>
                     </div>
                 <div class="box-body">
-                    <div class="col-md-1">
+                    <div class="col-md-2">
                         <div class="form-group" >                            
                             <label for="pasada">N° Pasada</label>
                             <input type="number" v-model="pasada" class="form-control" id="pasada" :disabled="(!isGasoducto || !TablaDetalle.length)">                           
@@ -501,10 +510,13 @@
                     
                      <div class="col-md-2"> 
                           <p>&nbsp;</p>
-                          <span>                             
-                             <i title="Recargar Cuños" @click="getSoldadores()" style="display:inline-block;margin-left:15px;"> <app-icon img="refresh" color="black"></app-icon> </i>
-                             <i title="Agregar Pasada" @click="AddPasadas()" style="display:inline-block;margin-left:15px;"> <app-icon img="plus-circle" color="black"></app-icon> </i>
+                          <span>       
+                            <button type="button" @click="AddPasadas()" title="Agregar Pasada"><app-icon img="plus-circle" color="black"></app-icon></button>        
+                            <button type="button" @click="getSoldadores()" title="Recargar Cuños"><app-icon img="refresh" color="black"></app-icon></button>     
                           </span>
+                    </div>
+                    <div class="form-group">
+                        &nbsp;
                     </div>
                         <div class="col-md-12">
                                 <div class="table-responsive">
