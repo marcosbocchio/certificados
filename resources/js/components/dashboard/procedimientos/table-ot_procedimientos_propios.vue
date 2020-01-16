@@ -9,7 +9,7 @@
             <th>Título</th>
             <th>Descripción</th>
             <th>Metodo</th>  
-            <th colspan="3">Acción</th>
+            <th colspan="3">&nbsp;</th>
           </tr>
         </thead>
         <tbody>

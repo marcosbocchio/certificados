@@ -30,7 +30,7 @@
                                     <th>DESTINO</th> 
                                     <th style="text-align: center;">INTERNO S/N</th> 
                                     <th>FECHA</th>                                                
-                                    <th colspan="2">ACCIÓN</th>
+                                    <th colspan="2">&nbsp;</th>
                                 </tr>
                             </thead>
                             <tbody>

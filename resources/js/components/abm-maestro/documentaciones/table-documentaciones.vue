@@ -10,7 +10,7 @@
             <th>Descripción</th>
             <th>Metodo</th>
             <th>Usuario</th>
-            <th colspan="2">Acción</th>
+            <th colspan="2">&nbsp;</th>
           </tr>
         </thead>
         <tbody>

@@ -138,7 +138,7 @@
                                 <th class="col-lg-1">OBRA N°</th>     
                                 <th class="col-lg-2">FECHA</th>     
                                 <th class="col-lg-1">ESTADO</th>                        
-                                <th class="col-lg-1" colspan="4">ACCIÓN</th>
+                                <th class="col-lg-1" colspan="4">&nbsp;</th>
                             </tr>
                         </thead>
                         <tbody>

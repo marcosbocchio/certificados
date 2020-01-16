@@ -28,7 +28,7 @@
                                     <th>N°</th>
                                     <th>Tipo Servicio</th> 
                                     <th>FECHA</th>                                                
-                                    <th colspan="4">ACCIÓN</th>
+                                    <th colspan="4">&nbsp;</th>
                                 </tr>
                             </thead>
                             <tbody>

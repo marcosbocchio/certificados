@@ -32,7 +32,7 @@
                                         <th>N° Serie</th>     
                                         <th>N° Int.</th> 
                                         <th>Equipo</th>                                                      
-                                        <th colspan="1"></th>
+                                        <th colspan="1">&nbsp;</th>
                                     </tr>
                                 </thead>
                                 <tbody>

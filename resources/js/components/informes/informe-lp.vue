@@ -193,9 +193,7 @@
                                         </template>
                                     </v-select>
                             </div>
-                        </div>
-
-                      
+                        </div>                      
 
                         <div class="col-md-3">                       
                             <div class="form-group">
@@ -203,7 +201,6 @@
                                 <v-select v-model="revelador_aplicacion" label="codigo" :options="aplicaciones_lp"></v-select>   
                             </div>      
                         </div>
-
 
                         <div class="col-md-3">
                             <div class="form-group">

@@ -49,7 +49,7 @@
                                 <tr>
                                     <th>CODIGO</th>                                                     
                                     <th>NOMBRE</th>
-                                    <th colspan="2">ACCIÓN</th>
+                                    <th colspan="2">&nbsp;</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -94,7 +94,7 @@
                                 <tr>
                                     <th>NOMBRE</th>
                                     <th>EMAIL</th>                                                     
-                                    <th colspan="2">ACCIÓN</th>
+                                    <th colspan="2">&nbsp;</th>
                                 </tr>
                             </thead>
                             <tbody>

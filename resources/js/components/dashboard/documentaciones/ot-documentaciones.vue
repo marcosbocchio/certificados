@@ -49,7 +49,7 @@
                                     <tr>
                                         <th>TÍTULO</th>                                                     
                                         <th>DESCRIPCIÓN</th>
-                                        <th colspan="2">ACCIÓN</th>
+                                        <th colspan="2">&nbsp;</th>
                                     </tr>
                                 </thead>
                                 <tbody>

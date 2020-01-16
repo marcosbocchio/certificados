@@ -55,7 +55,7 @@
                                     <th class="col-lg-1">OBRA</th>
                                     <th class="col-lg-4">USUARIO ALTA</th> 
                                     <th class="col-lg-2" >FECHA</th>                                                  
-                                    <th class="col-lg-2" colspan="5">ACCIÓN</th>
+                                    <th class="col-lg-2" colspan="5">&nbsp;</th>
                                 </tr>
                             </thead>
                             <tbody>
