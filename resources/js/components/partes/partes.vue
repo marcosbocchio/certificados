@@ -726,8 +726,6 @@ export default {
                this.getInformesPendientesYEditableParte(); 
                this.setServiciosParte(); 
 
-               
-
             }else{
 
                 this.getInformesPendientesParte(); 
@@ -1241,7 +1239,6 @@ export default {
 
 
 
-                
             }
 
         },
@@ -1292,15 +1289,33 @@ export default {
                        this.TablaServicios[this.TablaServicios.findIndex(elemento => elemento.servicio_descripcion ==item.servicio_descripcion)].cant_original+=item.cantidad; 
                        this.TablaServicios[this.TablaServicios.findIndex(elemento => elemento.servicio_descripcion ==item.servicio_descripcion)].cant_final +=item.cantidad; 
 
-                   }else{            
+                   }else{                       
+
+                       let cantidad = item.cantidad;
+
+                       if (item.servicio_descripcion.includes('Kms')){
+
+                           cantidad = this.km_final - this.km_inicial;
+
+                       }else if (item.servicio_descripcion.includes('Hora')) {
+
+
+                           let hora_inicial =  this.horario.substring(0, (this.horario.indexOf("-") >-1) ? this.horario.indexOf("-") : 0) ;
+
+                           let hora_final = this.horario.substring( (this.horario.indexOf("-") >-1) ? this.horario.indexOf("-") + 1: this.horario.length-1, this.horario.length) ;                     
+
+                           cantidad = hora_final - hora_inicial;
+
+
+                       }                     
                   
                        this.TablaServicios.push({
 
                            servicio_id : item.servicio_id,
                            metodo: item.metodo,
                            servicio_descripcion:item.servicio_descripcion,
-                           cant_original : item.cantidad,
-                           cant_final: item.cantidad,
+                           cant_original : cantidad,
+                           cant_final: cantidad,
                            visible : true,
 
                        })
@@ -1448,8 +1463,6 @@ export default {
                         });
                }  
                                      
-          
-
             }.bind(this));
            
             });
