@@ -368,7 +368,7 @@ class PartesController extends Controller
                                ->join('metodo_ensayos','metodo_ensayos.id','=','servicios.metodo_ensayo_id')   
                                 ->join('unidades_medidas','unidades_medidas.id','=','servicios.unidades_medida_id')
                                 ->where('parte_servicios.parte_id',$id)
-                                ->selectRaw('metodo_ensayos.id as metodo_ensayo_id,metodo_ensayos.metodo,unidades_medidas.id as unidad_medida_id,servicios.id as servicio_id,servicios.descripcion as servicio_descripcion,cant_original,cant_final,true as visible')
+                                ->selectRaw('metodo_ensayos.id as metodo_ensayo_id,metodo_ensayos.metodo,unidades_medidas.id as unidad_medida_id,servicios.id as servicio_id,servicios.descripcion as servicio_descripcion,cant_original,cant_final')
                                 ->get();
                              
          foreach ($informes_ri as $informe_ri) {

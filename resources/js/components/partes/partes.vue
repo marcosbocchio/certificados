@@ -186,7 +186,7 @@
                                                            {{ item.cant_final }}
                                                         </div>                                   
                                                     </td>                                                                                                                    
-                                                    <td style="text-align:center" v-if="item.visible"> <a  @click="RemoveTablaServicios(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a></td>
+                                                    <td style="text-align:center" v-if="item.visible"> <a  @click="RemoveTablaServicio(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a></td>
                                                     
                                                 </tr>   
                                                 <tr v-for="fila in 4" >
@@ -722,9 +722,10 @@ export default {
                this.patente = this.parte_data.patente;
                this.km_final = this.parte_data.km_final;
                this.km_inicial = this.parte_data.km_inicial;
-               this.observaciones = this.parte_data.observaciones;
-               this.TablaServicios = this.servicios_data;
+               this.observaciones = this.parte_data.observaciones;              
                this.getInformesPendientesYEditableParte(); 
+               this.setServiciosParte(); 
+
                
 
             }else{
@@ -818,6 +819,21 @@ export default {
             this.informes = response.data
             });
                
+        },
+
+        setServiciosParte : function(){
+
+            this.TablaServicios = this.servicios_data;
+
+            this.TablaServicios.forEach(function(item) {
+
+                if(item.cant_final == null){
+                    item.visible = false;
+                }else{
+                     item.visible = true;
+                }
+            }.bind(this))
+
         },
 
         getInformesPendientesYEditableParte: function(){
@@ -1110,6 +1126,15 @@ export default {
 
         },
 
+        RemoveTablaInformeLP(index){
+            
+            this.TablaInformesLp[index].visible = false;
+            this.TablaInformesLp[index].pieza_final='';
+            this.TablaInformesLp[index].nro_final='';
+            this.TablaInformesLp[index].metros_lineales=''       
+
+        },
+
         RemoveTablaInformeUs(index){
             
             this.TablaInformesUs[index].visible = false;
@@ -1117,6 +1142,13 @@ export default {
             this.TablaInformesUs[index].costura_final='';    
             this.TablaInformesUs[index].pulgadas_final=''          
 
+        },
+
+        RemoveTablaServicio(index){
+            
+            this.TablaServicios[index].visible = false;
+            this.TablaServicios[index].cant_final='';
+         
         },
 
         getInforme(index){
@@ -1255,7 +1287,8 @@ export default {
 
                     console.log(this.TablaServicios.indexOf(item.servicio_descripcion));
 
-                   if(this.TablaServicios.findIndex(elemento => elemento.servicio_descripcion == item.servicio_descripcion) != -1){
+                   if(this.TablaServicios.findIndex(elemento => elemento.servicio_descripcion == item.servicio_descripcion) != -1 && this.TablaServicios[this.TablaServicios.findIndex(elemento => elemento.servicio_descripcion ==item.servicio_descripcion)].visible){
+
                        this.TablaServicios[this.TablaServicios.findIndex(elemento => elemento.servicio_descripcion ==item.servicio_descripcion)].cant_original+=item.cantidad; 
                        this.TablaServicios[this.TablaServicios.findIndex(elemento => elemento.servicio_descripcion ==item.servicio_descripcion)].cant_final +=item.cantidad; 
 
