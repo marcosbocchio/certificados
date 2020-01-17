@@ -22,6 +22,7 @@
   :informes_lp_data="{{$informes_lp}}"
   :informes_us_data="{{$informes_us}}"
   :informes_importados_data="{{$informes_importados}}"
+  :servicios_data="{{$servicios}}"
 
   :responsables_data="{{$responsables}}"
   editmode  

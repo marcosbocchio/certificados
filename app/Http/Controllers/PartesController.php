@@ -18,6 +18,7 @@ use App\Tecnicas;
 use \stdClass;
 use App\ParametrosGenerales;
 use App\informesImportados;
+use App\ParteServicios;
 
 class PartesController extends Controller
 {
@@ -96,6 +97,7 @@ class PartesController extends Controller
           $this->saveParteDetalleLp($request->informes_lp,$parte);
           $this->saveParteDetalleUs($request->informes_us,$parte);
           $this->saveParteDetalleInformesImportados($request->informes_importados,$parte);
+          $this->saveParteServicios($request->servicios,$parte);
          
           DB::commit(); 
     
@@ -272,6 +274,20 @@ class PartesController extends Controller
 
     }
 
+    public function saveParteServicios($servicios,$parte){
+
+        foreach ($servicios as $servicio) {
+           
+            $parteServicio = new ParteServicios;
+            $parteServicio->parte_id = $parte->id;
+            $parteServicio->servicio_id = $servicio['servicio_id'];       
+            $parteServicio->cant_original = $servicio['cant_original'];
+            $parteServicio->cant_final = $servicio['cant_final'];
+            $parteServicio->save();
+        }
+
+    }
+
     /**
      * Display the specified resource.
      *
@@ -346,6 +362,14 @@ class PartesController extends Controller
                                         ->where('parte_detalles.parte_id',$id)
                                         ->selectRaw('parte_detalles.* , 0 as informe_sel,CONCAT(metodo_ensayos.metodo,LPAD(informes_importados.numero, 3, "0")) as numero_formateado,DATE_FORMAT(informes_importados.fecha,"%d/%m/%Y")as fecha_formateada,metodo_ensayos.metodo as metodo')
                                         ->get();
+
+        $servicios = DB::table('parte_servicios')
+                               ->join('servicios','servicios.id','=','parte_servicios.servicio_id')
+                               ->join('metodo_ensayos','metodo_ensayos.id','=','servicios.metodo_ensayo_id')   
+                                ->join('unidades_medidas','unidades_medidas.id','=','servicios.unidades_medida_id')
+                                ->where('parte_servicios.parte_id',$id)
+                                ->selectRaw('metodo_ensayos.id as metodo_ensayo_id,metodo_ensayos.metodo,unidades_medidas.id as unidad_medida_id,servicios.id as servicio_id,servicios.descripcion as servicio_descripcion,cant_original,cant_final,true as visible')
+                                ->get();
                              
          foreach ($informes_ri as $informe_ri) {
 
@@ -363,6 +387,7 @@ class PartesController extends Controller
                                             'informes_lp',
                                             'informes_us',
                                             'informes_importados',
+                                            'servicios',
                                             'ot',                                            
                                             'user',                                              
                                             'header_titulo',
@@ -387,6 +412,7 @@ class PartesController extends Controller
             $this->saveResponsables($request->responsables,$parte);
             $this->saveParteDetalleRi($request->informes_ri,$parte);
             ParteDetalles::where('parte_id',$parte->id)->delete();
+            ParteServicios::where('parte_id',$parte->id)->delete();
             (new \App\Http\Controllers\InformesController)->deleteParteId($parte->id);
             (new \App\Http\Controllers\InformesImportadosController)->deleteParteId($parte->id);
             $this->saveParteDetalleRi($request->informes_ri,$parte);
@@ -394,7 +420,8 @@ class PartesController extends Controller
             $this->saveParteDetalleLp($request->informes_lp,$parte);
             $this->saveParteDetalleUs($request->informes_us,$parte);
             $this->saveParteDetalleInformesImportados($request->informes_importados,$parte);
-            
+            $this->saveParteServicios($request->servicios,$parte);
+
             DB::commit();
             
             } catch (Exception $e) {

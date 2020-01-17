@@ -7,13 +7,13 @@
                   <div class="box-body">
                         <div class="col-md-3">
                             <div class="form-group" >
-                                <label for="formato">Tipo informe RI (*)</label>
+                                <label for="formato">Tipo informe RI *</label>
                                 <v-select v-model="formato" :options="['PLANTA', 'GASODUCTO']"></v-select>
                             </div>                            
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                 <label for="fecha">Fecha (*)</label>
+                                 <label for="fecha">Fecha *</label>
                                 <div class="input-group date">
                                     <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
@@ -25,7 +25,7 @@
                         <div class="col-md-3">
                             <div class="form-group" >
                                 <div v-if="isGasoducto">
-                                    <label for="prefijo">Prefijo (*)</label> 
+                                    <label for="prefijo">Prefijo *</label> 
                                 </div>
                                 <div v-else>
                                      <label for="prefijo">Prefijo</label> 
@@ -41,27 +41,27 @@
                         </div>
                         <div class="col-md-3">
                             <div class="form-group" >
-                                <label for="componente">Componente (*)</label>
+                                <label for="componente">Componente *</label>
                                 <input type="text" v-model="componente" class="form-control" id="componente">
                             </div>                            
                         </div>
                         <div class="col-md-3" >                       
                             <div class="form-group">
-                                <label for="materiales">Material (*)</label>
+                                <label for="materiales">Material *</label>
                                 <v-select v-model="material" label="codigo" :options="materiales" id="materiales"></v-select>   
                             </div>      
                         </div>                      
                         
                         <div class="col-md-3">
                             <div class="form-group" >
-                                <label for="plano_isom">Plano / Isom (*)</label>
+                                <label for="plano_isom">Plano / Isom *</label>
                                 <input type="text" v-model="plano_isom" class="form-control" id="plano_isom">
                             </div>                            
                         </div>
 
                         <div class="col-md-3">
                             <div class="form-group" >
-                                <label for="Diametro">Diametro (*)</label>
+                                <label for="Diametro">Diametro *</label>
                                 <v-select v-model="diametro" label="diametro" :options="diametros" @input="getEspesores()"></v-select>   
                             </div>                            
                         </div>      
@@ -74,7 +74,7 @@
                                     <label for="espesor">Espesor</label> 
                                 </div>
                                 <div v-else>
-                                     <label for="espesor">Espesor (*)</label> 
+                                     <label for="espesor">Espesor *</label> 
                                 </div>                             
                                 <v-select v-model="espesor" label="espesor" :options="espesores" :disabled="isChapa">
                                     <template slot="option" slot-scope="option">
@@ -88,10 +88,10 @@
                         <div class="col-md-3">    
                              <div class="form-group" >   
                                 <div v-if="isChapa">
-                                    <label for="espesor_chapa">Espesor Chapa (*)</label> 
+                                    <label for="espesor_chapa">Espesor Chapa *</label> 
                                 </div>
                                 <div v-else>
-                                     <label for="espesor_chapa">Espesor Chapa (*)</label> 
+                                     <label for="espesor_chapa">Espesor Chapa *</label> 
                                 </div>                        
                             
                                 <input  type="text" class="form-control" v-model="espesor_chapa"  id="espesor_chapa" :disabled="!isChapa" > 
@@ -100,7 +100,7 @@
 
                         <div class="col-md-3">
                             <div class="form-group" >
-                                <label for="procedimientos_soldadura">Procedimiento Soldadura (*)</label>
+                                <label for="procedimientos_soldadura">Procedimiento Soldadura *</label>
                                 <input type="text" v-model="procedimiento_soldadura" class="form-control" id="procedimientos_soldadura">
                             </div>                            
                         </div>  
@@ -121,7 +121,7 @@
 
                         <div class="col-md-3">                       
                             <div class="form-group">
-                                <label>Técnica (*)</label>
+                                <label>Técnica *</label>
                                     
                                 <v-select v-model="tecnica" label="codigo_grafico_id" :options="tecnicas" @input="ActualizarDistFuentePelicula()">  
                                     <template slot="option" slot-scope="option">
@@ -136,7 +136,7 @@
 
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label>Equipo (*)</label>
+                                <label>Equipo *</label>
                                     <v-select  v-model="interno_equipo" :options="interno_equipos_activos" label="nro_interno" @input="getFuente()">
                                         <template slot="option" slot-scope="option">
                                             <span class="upSelect">{{ option.nro_interno }}</span> <br> 
@@ -168,14 +168,14 @@
 
                         <div class="col-md-3">
                             <div class="form-group" >
-                                <label for="foco">Foco (*)</label>
+                                <label for="foco">Foco *</label>
                                 <input type="text" v-model="foco" class="form-control" id="foco">
                             </div>                            
                         </div>
 
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label>Calidad de placas (*)</label>
+                                <label>Calidad de placas *</label>
                                     <v-select  v-model="tipo_pelicula" :options="tipo_peliculas" label="codigo">
                                         <template slot="option" slot-scope="option">
                                             <span class="upSelect">{{ option.codigo }}</span> <br> 
@@ -190,7 +190,7 @@
 
                         <div class="col-md-3">                       
                             <div class="form-group">
-                                <label for="procRadio">Procedimiento RI (*)</label>
+                                <label for="procRadio">Procedimiento RI *</label>
                                 <v-select v-model="procedimiento" label="titulo" :options="procedimientos" id="procRadio"></v-select>   
                             </div>      
                         </div>
@@ -205,27 +205,27 @@
                         
                             <div class="col-md-3">
                             <div class="form-group" >
-                                <label for="pos_ant">Ant (*)</label>
+                                <label for="pos_ant">Ant *</label>
                                 <input type="number" v-model="pos_ant" class="form-control" id="pos_ant" step=".01">
                             </div>                            
                         </div>
                         <div class="col-md-3">
                             <div class="form-group" >
-                                <label for="pos_pos">Pos (*)</label>
+                                <label for="pos_pos">Pos *</label>
                                 <input type="number" v-model="pos_pos" class="form-control" id="pos_pos" step=".01">
                             </div>                            
                         </div>
 
                         <div class="col-md-3">
                             <div class="form-group" >
-                                <label for="ici">Ici (*)</label>
+                                <label for="ici">Ici *</label>
                                 <v-select v-model="ici" label="codigo" :options="icis"></v-select>   
                             </div>                            
                         </div>    
 
                         <div class="col-md-3">
                             <div class="form-group" >
-                                <label for="pos_pos">lado (*)</label>
+                                <label for="pos_pos">lado *</label>
                                 <input type="text" v-model="lado" class="form-control" id="lado">
                             </div>                            
                         </div>
@@ -233,14 +233,14 @@
                            
                         <div class="col-md-3">                       
                             <div class="form-group">
-                                <label>Norma Evaluación (*)</label>
+                                <label>Norma Evaluación *</label>
                                 <v-select v-model="norma_evaluacion" label="descripcion" :options="norma_evaluaciones"></v-select>   
                             </div>      
                         </div>
                         
                         <div class="col-md-3">                       
                             <div class="form-group">
-                                <label>Norma Ensayo (*)</label>
+                                <label>Norma Ensayo *</label>
                                 <v-select v-model="norma_ensayo" label="descripcion" :options="norma_ensayos"></v-select>   
                             </div>      
                         </div>
@@ -256,7 +256,7 @@
                         </div>       
                         <div class="col-md-3">                       
                             <div class="form-group" >
-                                <label for="exposicion">N° Exposiciones (*)</label>
+                                <label for="exposicion">N° Exposiciones *</label>
                                 <input type="number" v-model="exposicion" class="form-control" id="exposicion">
                             </div>         
                         </div>                                            
@@ -264,14 +264,14 @@
                         
                         <div class="col-md-3">
                             <div class="form-group" >
-                                <label for="distancia_fuente_pelicula">Dist. Fuente (*)</label>
+                                <label for="distancia_fuente_pelicula">Dist. Fuente *</label>
                                 <input type="text" v-model="distancia_fuente_pelicula" class="form-control" :disabled="!isChapa" id="distancia_fuente_pelicula">
                             </div>                            
                         </div>  
 
                         <div class="col-md-3">                       
                             <div class="form-group" >
-                                <label for="ejecutor_ensayo">Ejecutor Ensayo (*)</label>
+                                <label for="ejecutor_ensayo">Ejecutor Ensayo *</label>
                                 <v-select v-model="ejecutor_ensayo" label="name" :options="ejecutor_ensayos"></v-select>   
                             </div>         
                         </div>                                                                

@@ -165,28 +165,28 @@
                             
                                 <div class="col-md-12">
                                     <div class="table-responsive">
-                                        <table class="table table-hover table-striped">
+                                        <table class="table table-hover table-striped table-bordered">
                                             <thead>
                                                 <tr>
-                                                    <th class="col-lg-1">METODO</th>
-                                                    <th class="col-lg-8">DESCRIPCIÓN</th>       
-                                                    <th class="col-lg-1">CANT</th>                                                                                                                                       
-                                                    <th colspan="2">&nbsp;</th>
+                                                    <th class="col-md-1">METODO</th>
+                                                    <th class="col-md-9">DESCRIPCIÓN</th>       
+                                                    <th class="col-md-1">CANT</th>                                                                                                                                       
+                                                    <th class="col-md-1">&nbsp;</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr v-for="(item,k) in TablaServicios" :key="k"  @click="selectPosTablaServicios(k)">     
                                                     <td v-if="item.visible"> {{ item.metodo}}</td>  
-                                                    <td v-if="item.visible"> {{ item.descripcion}}</td>   
+                                                    <td v-if="item.visible"> {{ item.servicio_descripcion}}</td>   
                                                     <td v-if="item.visible">
                                                         <div v-if="indexTablaServicios == k ">       
-                                                          <input type="number" v-model="TablaServicios[k].cant" maxlength="3">        
+                                                          <input type="number" v-model="TablaServicios[k].cant_final" maxlength="3">        
                                                         </div>   
                                                         <div v-else>
-                                                           {{ item.cant }}
+                                                           {{ item.cant_final }}
                                                         </div>                                   
                                                     </td>                                                                                                                    
-                                                    <td v-if="item.visible"> <a  @click="RemoveTablaServicios(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a></td>
+                                                    <td style="text-align:center" v-if="item.visible"> <a  @click="RemoveTablaServicios(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a></td>
                                                     
                                                 </tr>   
                                                 <tr v-for="fila in 4" >
@@ -215,7 +215,7 @@
                             
                                 <div class="col-md-12">
                                     <div class="table-responsive">
-                                        <table class="table table-hover table-striped">
+                                        <table class="table table-hover table-striped table-bordered">
                                             <thead>
                                                 <tr>
                                                     <th>INFORME</th>       
@@ -253,7 +253,7 @@
                                                         <v-select type="text" v-model="TablaInformesRi[k].cm" label="codigo" id="cm" :options="cms" style="display: block"></v-select>                            
                                                        
                                                     </td>                                                                                                                  
-                                                    <td v-if="item.visible"> <a  @click="RemoveTablaInformeRi(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a></td>
+                                                    <td style="text-align:center" v-if="item.visible"> <a  @click="RemoveTablaInformeRi(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a></td>
                                                     
                                                 </tr>   
                                                 <tr v-for="fila in 4" >
@@ -282,7 +282,7 @@
                             
                                 <div class="col-md-12">
                                     <div class="table-responsive">
-                                        <table class="table table-hover table-striped">
+                                        <table class="table table-hover table-striped table-bordered">
                                             <thead>
                                                 <tr>
                                                     <th>INFORME</th>       
@@ -322,7 +322,7 @@
                                                         </div>                                   
                                                     </td>
                                                                                                                                                                 
-                                                    <td v-if="item.visible"> <a  @click="RemoveTablaInformePm(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a></td>
+                                                    <td style="text-align:center" v-if="item.visible"> <a  @click="RemoveTablaInformePm(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a></td>
                                                     
                                                 </tr>   
                                                 <tr v-for="fila in 4" >
@@ -351,7 +351,7 @@
                             
                                 <div class="col-md-12">
                                     <div class="table-responsive">
-                                        <table class="table table-hover table-striped">
+                                        <table class="table table-hover table-striped table-bordered">
                                             <thead>
                                                 <tr>
                                                     <th>INFORME</th>       
@@ -392,7 +392,7 @@
                                                         </div>                                   
                                                     </td>
                                                                                                                                                                 
-                                                    <td v-if="item.visible"> <a  @click="RemoveTablaInformeLp(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a></td>
+                                                    <td style="text-align:center" v-if="item.visible"> <a  @click="RemoveTablaInformeLp(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a></td>
                                                     
                                                 </tr>   
                                                 <tr v-for="fila in 4" >
@@ -421,7 +421,7 @@
                             
                                 <div class="col-md-12">
                                     <div class="table-responsive">
-                                        <table class="table table-hover table-striped">
+                                        <table class="table table-hover table-striped table-bordered">
                                             <thead>
                                                 <tr>
                                                     <th>INFORME</th>       
@@ -466,7 +466,7 @@
                                                     </td>
                                                     
                                                     <td v-if="item.visible"> {{ item.pulgadas_final}}</td>                                                                                                           
-                                                    <td v-if="item.visible"> <a  @click="RemoveTablaInformeUs(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a></td>
+                                                    <td style="text-align:center" v-if="item.visible"> <a  @click="RemoveTablaInformeUs(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a></td>
                                                     
                                                 </tr>   
                                                 <tr v-for="fila in 4" >
@@ -495,7 +495,7 @@
                             <div class="box-body">  
                                 <div class="col-md-12">
                                     <div class="table-responsive">
-                                        <table class="table table-hover table-striped">
+                                        <table class="table table-hover table-striped table-bordered">
                                             <thead>
                                                 <tr>
                                                     <th>INFORME</th>       
@@ -515,7 +515,7 @@
                                                         </div>                                   
                                                     </td>          
                                                                                                                                                                 
-                                                    <td v-if="item.visible && itemMetodo == item.metodo"> <a  @click="RemoveTablaInformeiImportable(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a></td>
+                                                    <td style="text-align:center" v-if="item.visible && itemMetodo == item.metodo"> <a  @click="RemoveTablaInformeiImportable(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a></td>
                                                     
                                                 </tr>   
                                                 <tr v-for="fila in 4" >
@@ -603,6 +603,11 @@ export default {
       },
 
       informes_importados_data : {
+      type : [ Array ],  
+      required : false
+      },
+
+      servicios_data : {
       type : [ Array ],  
       required : false
       },
@@ -718,7 +723,9 @@ export default {
                this.km_final = this.parte_data.km_final;
                this.km_inicial = this.parte_data.km_inicial;
                this.observaciones = this.parte_data.observaciones;
+               this.TablaServicios = this.servicios_data;
                this.getInformesPendientesYEditableParte(); 
+               
 
             }else{
 
@@ -1136,7 +1143,7 @@ export default {
                     }
   
                 }
-               //  this.getOtServicio(this.informes[index].metodo_ensayo_id);
+                this.getServiciosInformes(this.informes[index].id);
 
             } else{
 
@@ -1197,6 +1204,11 @@ export default {
                     } 
 
                 }
+
+                //borro los servicios
+
+
+
                 
             }
 
@@ -1229,32 +1241,34 @@ export default {
 
         },
 
-        getOtServicio(metodo_ensayo_id){
+        getServiciosInformes(informe_id){
 
             axios.defaults.baseURL = this.url ;
-            var urlRegistros = 'ot_servicios/ot/' + this.otdata.id + '/metodo_ensayo/' + metodo_ensayo_id + '?api_token=' + Laravel.user.api_token;        
+            var urlRegistros = 'ot_servicios/informe/' + informe_id + '?api_token=' + Laravel.user.api_token;        
             axios.get(urlRegistros).then(response =>{
                 
-                let ot_servicios = response.data;
-                console.log('ot_servicios:' ,ot_servicios);
+                let informe_servicios = response.data;
+                console.log('ot_servicios:' ,informe_servicios);
               
 
-                ot_servicios.forEach(function(item) {
+                informe_servicios.forEach(function(item) {
 
-                    console.log(this.TablaServicios.indexOf(item.id));
+                    console.log(this.TablaServicios.indexOf(item.servicio_descripcion));
 
-                   if(this.TablaServicios.findIndex(elemento => elemento.id === item.id) != -1){
-                       this.TablaServicios[this.TablaServicios.findIndex(elemento => elemento.id ===item.id)].cant +=1; 
-                   }else{
-                       console.log(item.id);
-                       console.log(item.id);
+                   if(this.TablaServicios.findIndex(elemento => elemento.servicio_descripcion == item.servicio_descripcion) != -1){
+                       this.TablaServicios[this.TablaServicios.findIndex(elemento => elemento.servicio_descripcion ==item.servicio_descripcion)].cant_original+=item.cantidad; 
+                       this.TablaServicios[this.TablaServicios.findIndex(elemento => elemento.servicio_descripcion ==item.servicio_descripcion)].cant_final +=item.cantidad; 
+
+                   }else{            
+                  
                        this.TablaServicios.push({
 
-                           id : item.id,
+                           servicio_id : item.servicio_id,
                            metodo: item.metodo,
-                           descripcion:item.servicio_descripcion,
+                           servicio_descripcion:item.servicio_descripcion,
+                           cant_original : item.cantidad,
+                           cant_final: item.cantidad,
                            visible : true,
-                           cant: 1,
 
                        })
                    }
@@ -1471,7 +1485,8 @@ export default {
                 'informes_pm'          :this.TablaInformesPm,
                 'informes_lp'          :this.TablaInformesLp,     
                 'informes_us'          :this.TablaInformesUs,
-                'informes_importados'  :this.TablaInformesImportados       
+                'informes_importados'  :this.TablaInformesImportados,
+                'servicios'            :this.TablaServicios,              
     
           }
           
@@ -1534,7 +1549,8 @@ export default {
                 'informes_pm'          :this.TablaInformesPm,        
                 'informes_lp'          :this.TablaInformesLp,
                 'informes_us'          :this.TablaInformesUs,
-                'informes_importados'  :this.TablaInformesImportados                   
+                'informes_importados'  :this.TablaInformesImportados,
+                'servicios'            :this.TablaServicios,                    
           }}
            
         ).then(response => {

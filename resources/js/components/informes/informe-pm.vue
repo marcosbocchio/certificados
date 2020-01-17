@@ -276,7 +276,7 @@
                         <div v-if="inputPiezasFalla.length">
                             <div class="col-md-12">
                                 <div class="table-responsive">
-                                    <table class="table table-hover table-striped">
+                                    <table class="table table-hover table-striped table-bordered">
                                         <thead>
                                             <tr>
                                                 <th class="col-md-2">PIEZA</th>

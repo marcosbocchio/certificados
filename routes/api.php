@@ -47,7 +47,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('norma_evaluaciones', 'NormaEvaluacionesController');
     Route::put('ots/{id}/firmar', 'OtsController@firmar');
     Route::resource('ots', 'OtsController');
-    Route::get('ot_servicios/ot/{ot_id}/metodo_ensayo/{metodo_ensayo_id}', 'OtServiciosController@getOtServiciosMetodo');
+    Route::get('ot_servicios/informe/{informe_id}', 'OtServiciosController@getOtServiciosInforme');
     Route::resource('ot_servicios', 'OtServiciosController');
     Route::get('productos/ots', 'ProductosController@ProductosOts');
     Route::get('productos/paginate', 'ProductosController@paginate');
