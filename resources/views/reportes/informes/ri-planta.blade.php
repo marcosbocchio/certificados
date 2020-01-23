@@ -217,7 +217,7 @@ b {
                     <table  width="100%" style="text-align: center;border-collapse: collapse;">
                         <tbody>
                             <tr>
-                                <td style="font-size: 11px; width:65px;  text-align: center " rowspan="2" class="bordered-td" >JUNTA</td>
+                                <td style="font-size: 11px; width:65px;  text-align: center " rowspan="2" class="bordered-td" >ELEM.</td>
                                 <td style="font-size: 11px; width:65px;  text-align: center;" rowspan="2" class="bordered-td">CUÑO</td>
                                 <td style="font-size: 11px; width:64.5px; text-align: center;" rowspan="2" class="bordered-td">POSICIÓN</td>
                                 <td style="font-size: 11px; width:201.5px;  text-align: center;" rowspan="2" class="bordered-td">DEFECTOS</td>  

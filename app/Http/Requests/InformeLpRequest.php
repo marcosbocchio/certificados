@@ -55,7 +55,7 @@ class InformeLpRequest extends FormRequest
             'observaciones'             => 'Max:250',  
             'detalles.*.detalle'        => 'required|Max:250',         
             'detalles.*.pieza'          => 'required|Max:10',
-            'detalles.*.numero'         => 'required|integer',
+            'detalles.*.cm'             => 'nullable|integer',
 
         ];
     }
@@ -71,7 +71,7 @@ class InformeLpRequest extends FormRequest
             'tipo_magnetizacion'          => 'tipo magnetización',
             'detalles.*.detalle'          => 'detalle',
             'detalles.*.pieza'            => 'pieza',
-            'detalles.*.numero'           => 'número', 
+            'detalles.*.cm'               => 'cm', 
            
             ];
     }

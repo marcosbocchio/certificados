@@ -243,14 +243,14 @@
                                                     <td v-if="item.visible"> {{ item.pulgadas_final}}</td> 
                                                     <td v-if="item.visible">
                                                         <div v-if="indexTablaInformesRi == k ">       
-                                                          <input type="number" v-model="TablaInformesRi[k].placas_final" maxlength="4" step="0.1">        
+                                                          <input type="number" v-model="TablaInformesRi[k].placas_final" maxlength="4" step="0.1" @input="RecalcularMetros('RI')">        
                                                         </div>   
                                                         <div v-else>
                                                            {{ item.placas_final }}
                                                         </div>                                   
                                                     </td>                                                  
                                                     <td  v-if="item.visible" >                                                                                                            
-                                                        <v-select type="text" v-model="TablaInformesRi[k].cm" label="codigo" id="cm" :options="cms" style="display: block"></v-select>                            
+                                                        <v-select type="text" v-model="TablaInformesRi[k].cm" label="codigo" id="cm" :options="cms" style="display: block" taggable  @input="RecalcularMetros('RI')"></v-select>                            
                                                        
                                                     </td>                                                                                                                  
                                                     <td style="text-align:center" v-if="item.visible"> <a  @click="RemoveTablaInformeRi(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a></td>
@@ -286,8 +286,7 @@
                                             <thead>
                                                 <tr>
                                                     <th>INFORME</th>       
-                                                    <th>PIEZA</th>                                         
-                                                    <th>NÚMERO</th>
+                                                    <th>PIEZA</th>                                           
                                                     <th>METROS LINEALES</th>                                                                                                
                                                     <th colspan="2">&nbsp;</th>
                                                 </tr>
@@ -302,20 +301,10 @@
                                                         <div v-else>
                                                            {{ item.pieza_final }}
                                                         </div>                                   
-                                                    </td>           
-                                                                                                        
+                                                    </td>                                                    
                                                     <td v-if="item.visible">
                                                         <div v-if="indexTablaInformesPm == k ">       
-                                                          <input type="number" v-model="TablaInformesPm[k].nro_final" maxlength="11">        
-                                                        </div>   
-                                                        <div v-else>
-                                                           {{ item.nro_final }}
-                                                        </div>                                   
-                                                    </td>   
-                                                    
-                                                    <td v-if="item.visible">
-                                                        <div v-if="indexTablaInformesPm == k ">       
-                                                          <input type="number" v-model="TablaInformesPm[k].metros_lineales" maxlength="4">        
+                                                          <input type="number" v-model="TablaInformesPm[k].metros_lineales" maxlength="4"  @input="RecalcularMetros('PM')">        
                                                         </div>   
                                                         <div v-else>
                                                            {{ item.metros_lineales }}
@@ -356,7 +345,6 @@
                                                 <tr>
                                                     <th>INFORME</th>       
                                                     <th>PIEZA</th>                                         
-                                                    <th>NÚMERO</th>
                                                     <th>METROS LINEALES</th>                                                                                                
                                                     <th colspan="2">&nbsp;</th>
                                                 </tr>
@@ -371,21 +359,11 @@
                                                         <div v-else>
                                                            {{ item.pieza_final }}
                                                         </div>                                   
-                                                    </td>           
-                                                                                                        
-                                                  
+                                                    </td>     
+
                                                     <td v-if="item.visible">
                                                         <div v-if="indexTablaInformesLp == k ">       
-                                                          <input type="number" v-model="TablaInformesLp[k].nro_final" maxlength="11">        
-                                                        </div>   
-                                                        <div v-else>
-                                                           {{ item.nro_final }}
-                                                        </div>                                   
-                                                    </td>   
-                                                    
-                                                    <td v-if="item.visible">
-                                                        <div v-if="indexTablaInformesLp == k ">       
-                                                          <input type="number" v-model="TablaInformesLp[k].metros_lineales" maxlength="4">        
+                                                          <input type="number" v-model="TablaInformesLp[k].metros_lineales" maxlength="4" @input="RecalcularMetros('LP')">        
                                                         </div>   
                                                         <div v-else>
                                                            {{ item.metros_lineales }}
@@ -416,6 +394,7 @@
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                                 </button>                       
                             </div>
+
                         </div>
                         <div class="box-body"> 
                             
@@ -424,31 +403,17 @@
                                         <table class="table table-hover table-striped table-bordered">
                                             <thead>
                                                 <tr>
-                                                    <th>INFORME</th>       
-                                                    <th>COSTURA</th>                                         
+                                                    <th>INFORME</th>                                                                                       
                                                     <th>ELEMENTO</th>                                                                                                
                                                     <th>DIAMETRO</th>
-                                                    <th colspan="2">&nbsp;</th>
+                                                    <th>METROS LINEALES</th>
+                                                    <th>&nbsp;</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr v-for="(item,k) in TablaInformesUs" :key="k"  @click="selectPosTablaInformesUs(k)">    
 
-                                                    <td v-if="item.visible"> {{ item.numero_formateado}}</td> 
-          
-                                                    <td v-if="item.visible">
-                                                        <div v-if="(item.tecnica =='US' || item.tecnica =='PA')">
-                                                            <div v-if="indexTablaInformesUs == k ">       
-                                                                <input type="number" v-model="TablaInformesUs[k].costura_final" maxlength="4">   
-                                                            </div>   
-                                                            <div v-else>
-                                                                {{ item.costura_final }}
-                                                            </div>  
-                                                        </div>   
-                                                        <div v-else>
-                                                            <td> &nbsp;</td>
-                                                        </div>                                      
-                                                    </td>                                     
+                                                    <td v-if="item.visible"> {{ item.numero_formateado}}</td>                         
                                                     
                                                     <td v-if="item.visible">
                                                         <div v-if="(item.tecnica =='ME')">
@@ -465,7 +430,17 @@
                                     
                                                     </td>
                                                     
-                                                    <td v-if="item.visible"> {{ item.pulgadas_final}}</td>                                                                                                           
+                                                    <td v-if="item.visible"> {{ item.pulgadas_final}}</td>   
+
+                                                    <td v-if="item.visible">
+                                                        <div v-if="indexTablaInformesUs == k ">       
+                                                          <input type="number" v-model="TablaInformesUs[k].metros_lineales" maxlength="4" @input="RecalcularMetros('US')">        
+                                                        </div>   
+                                                        <div v-else>
+                                                           {{ item.metros_lineales }}
+                                                        </div>                                   
+                                                    </td>    
+
                                                     <td style="text-align:center" v-if="item.visible"> <a  @click="RemoveTablaInformeUs(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a></td>
                                                     
                                                 </tr>   
@@ -821,7 +796,7 @@ export default {
 
         setServiciosParte : function(){
 
-            this.TablaServicios = this.servicios_data;
+            this.TablaServicios =  JSON.parse(JSON.stringify(this.servicios_data));  
 
             this.TablaServicios.forEach(function(item) {
 
@@ -1041,6 +1016,7 @@ export default {
                                 tecnica     : item.tecnica,                        
                                 id      : item.informe_id,
                                 visible : visible_sn,   
+                                metros_lineales: item.metros_lineales
                             
                                 }); 
 
@@ -1237,7 +1213,20 @@ export default {
 
                 //borro los servicios
 
+                let metodo_ensayo_id = this.informes[index].metodo_ensayo_id;
 
+                 this.TablaServicios = this.TablaServicios.filter(function(item) {
+                     return item.metodo_ensayo_id != metodo_ensayo_id; 
+                    });
+
+                this.informes.forEach(function(item){
+
+                    if(item.metodo_ensayo_id == metodo_ensayo_id && item.informe_sel ){
+
+                        this.getServiciosInformes(item.id)
+
+                    }
+                }.bind(this));
 
             }
 
@@ -1281,23 +1270,47 @@ export default {
               
 
                 informe_servicios.forEach(function(item) {
-
-                    console.log(this.TablaServicios.indexOf(item.servicio_descripcion));
+                    
 
                    if(this.TablaServicios.findIndex(elemento => elemento.servicio_descripcion == item.servicio_descripcion) != -1 && this.TablaServicios[this.TablaServicios.findIndex(elemento => elemento.servicio_descripcion ==item.servicio_descripcion)].visible){
 
-                       this.TablaServicios[this.TablaServicios.findIndex(elemento => elemento.servicio_descripcion ==item.servicio_descripcion)].cant_original+=item.cantidad; 
-                       this.TablaServicios[this.TablaServicios.findIndex(elemento => elemento.servicio_descripcion ==item.servicio_descripcion)].cant_final +=item.cantidad; 
+                       if(item.unidad_medida == 'Dia' || item.unidad_medida == 'Mes'){
+
+                            this.TablaServicios[this.TablaServicios.findIndex(elemento => elemento.servicio_descripcion ==item.servicio_descripcion)].cant_original = 1;
+                            this.TablaServicios[this.TablaServicios.findIndex(elemento => elemento.servicio_descripcion ==item.servicio_descripcion)].cant_final = 1;
+
+                       }else if(item.unidad_medida == 'Metro' && item.metodo == 'RI'){                               
+
+                            let metros = this.CalcularMetrosRI(item);
+                            this.TablaServicios[this.TablaServicios.findIndex(elemento => elemento.servicio_descripcion == item.servicio_descripcion)].cant_final = metros;                           
+
+                       }else if(item.unidad_medida == 'Metro' && item.metodo == 'LP'){     
+
+                            let metros = this.CalcularMetrosLP(item);
+                            this.TablaServicios[this.TablaServicios.findIndex(elemento => elemento.servicio_descripcion == item.servicio_descripcion)].cant_final = metros;   
+                    
+                       }else if(item.unidad_medida == 'Metro' && item.metodo == 'PM'){     
+
+                            let metros = this.CalcularMetrosPM(item);
+                            this.TablaServicios[this.TablaServicios.findIndex(elemento => elemento.servicio_descripcion == item.servicio_descripcion)].cant_final = metros;   
+                     
+                       }else if(item.unidad_medida == 'Metro' && item.metodo == 'US'){     
+
+                            let metros = this.CalcularMetrosUS(item);
+                            this.TablaServicios[this.TablaServicios.findIndex(elemento => elemento.servicio_descripcion == item.servicio_descripcion)].cant_final = metros;   
+                       }                    
+                       else{
+                           
+                           this.TablaServicios[this.TablaServicios.findIndex(elemento => elemento.servicio_descripcion ==item.servicio_descripcion)].cant_original+=item.cantidad; 
+                           this.TablaServicios[this.TablaServicios.findIndex(elemento => elemento.servicio_descripcion ==item.servicio_descripcion)].cant_final +=item.cantidad; 
+                       }                       
+                      
 
                    }else{                       
 
                        let cantidad = item.cantidad;
 
-                       if (item.servicio_descripcion.includes('Kms')){
-
-                           cantidad = this.km_final - this.km_inicial;
-
-                       }else if (item.servicio_descripcion.includes('Hora')) {
+                       if (item.unidad_medida == 'Hora') {
 
 
                            let hora_inicial =  this.horario.substring(0, (this.horario.indexOf("-") >-1) ? this.horario.indexOf("-") : 0) ;
@@ -1307,15 +1320,39 @@ export default {
                            cantidad = hora_final - hora_inicial;
 
 
-                       }                     
+                       }
+
+                       if(item.unidad_medida == 'Metro'){
+
+                           if(item.metodo == 'RI'){
+
+                                cantidad = this.CalcularMetrosRI(item)
+
+                           }else if(item.metodo == 'LP'){
+
+                                cantidad = this.CalcularMetrosLP(item)
+
+                           }else if(item.metodo == 'PM'){
+
+                                cantidad = this.CalcularMetrosPM(item)
+
+                          }else if(item.metodo == 'US'){
+
+                                cantidad = this.CalcularMetrosUS(item)
+
+                         }
+                       }
+                                      
                   
                        this.TablaServicios.push({
-
+                           
+                           metodo_ensayo_id : item.metodo_ensayo_id,
                            servicio_id : item.servicio_id,
                            metodo: item.metodo,
                            servicio_descripcion:item.servicio_descripcion,
                            cant_original : cantidad,
                            cant_final: cantidad,
+                           unidad_medida : item.unidad_medida,
                            visible : true,
 
                        })
@@ -1325,6 +1362,111 @@ export default {
                 
             });
 
+        },
+
+        RecalcularMetros(metodo){
+
+            console.log('entro en recalcular metros :' + metodo);
+
+          if(this.TablaServicios.findIndex(elemento => elemento.unidad_medida == 'Metro' && elemento.metodo == metodo) != -1){       
+           
+           switch (metodo) {
+
+               case 'RI':
+
+                   this.TablaServicios[this.TablaServicios.findIndex(elemento => elemento.unidad_medida == 'Metro' && elemento.metodo =='RI')].cant_final = this.CalcularMetrosRI();                           
+                   
+                   break;
+
+               case 'LP':
+
+                   this.TablaServicios[this.TablaServicios.findIndex(elemento => elemento.unidad_medida == 'Metro' && elemento.metodo =='LP')].cant_final = this.CalcularMetrosLP();                           
+                   
+                   break;
+
+               case 'PM':
+
+                   this.TablaServicios[this.TablaServicios.findIndex(elemento => elemento.unidad_medida == 'Metro' && elemento.metodo =='PM')].cant_final = this.CalcularMetrosPM();                           
+                   
+                   break;
+
+               case 'US':
+
+                   this.TablaServicios[this.TablaServicios.findIndex(elemento => elemento.unidad_medida == 'Metro' && elemento.metodo =='US')].cant_final = this.CalcularMetrosUS();                           
+                   
+                   break;              
+           
+               default:
+                   break;
+           }
+
+          }
+        },
+
+        CalcularMetrosRI : function(){
+
+            let largo = 0 ; 
+            let placas = 0; 
+            let metros = 0 ;  
+
+            this.TablaInformesRi.forEach(function(item){
+
+                if(item.cm){
+
+                    largo = parseFloat(item.cm.codigo.substring( (item.cm.codigo.indexOf("x") >-1) ? item.cm.codigo.indexOf("x") + 1: item.cm.codigo.length-1, item.cm.codigo.length)) ;                  
+                    placas = parseInt(item.placas_final);  
+                    metros += parseFloat(largo/100) * parseFloat(placas);
+             
+                    
+                }
+
+            }.bind(this))   
+
+            return parseFloat(metros);
+        },
+
+        CalcularMetrosLP : function(){
+
+           let metros = 0 ;  
+           this.TablaInformesLp.forEach(function(item){
+
+               if(item.metros_lineales){
+
+                   metros += parseInt(item.metros_lineales);
+               }
+
+           }.bind(this))
+
+           return metros;
+        },
+        CalcularMetrosPM : function(){
+
+           let metros = 0 ;  
+           this.TablaInformesPm.forEach(function(item){
+
+               if(item.metros_lineales){
+
+                   metros += parseInt(item.metros_lineales);
+               }
+
+           }.bind(this))
+
+           return metros;
+
+        },
+        CalcularMetrosUS : function(){
+
+           let metros = 0 ;  
+           this.TablaInformesUs.forEach(function(item){
+
+               if(item.metros_lineales){
+
+                   metros += parseInt(item.metros_lineales);
+               }
+
+           }.bind(this))
+
+           return metros;
         },
 
         AddMetodoImportados(metodo){
@@ -1352,8 +1494,8 @@ export default {
                 pulgadas_final: this.informe_ri_parte[0].pulgadas,
                 placas_final : this.informe_ri_parte[0].placas, 
                 cm: '', 
-                metodo : this.informe_ri_parte[0].metodo
-
+                metodo : this.informe_ri_parte[0].metodo,
+               
              });  
                     
             });
@@ -1376,8 +1518,6 @@ export default {
                     visible : true,
                     pieza_original : item.pieza,
                     pieza_final : item.pieza,
-                    nro_original : item.numero,
-                    nro_final : item.numero,
                     metros_lineales : '', 
                     metodo : item.metodo
                     
@@ -1406,8 +1546,6 @@ export default {
                     visible : true,
                     pieza_original : item.pieza,
                     pieza_final : item.pieza,
-                    nro_original : item.numero,
-                    nro_final : item.numero,
                     metros_lineales : '', 
                     metodo : item.metodo
                     
@@ -1435,13 +1573,11 @@ export default {
                            visible : true,
                            metodo : item.metodo,
                            tecnica : item.tecnica.codigo,
-                           costura_original: item.costuras,
-                           costura_final: item.costuras,
                            pulgadas_original: item.pulgadas,
                            pulgadas_final: item.pulgadas,
                            pieza_original : '',
                            pieza_final : '',
-                        
+                           metros_lineales: '' 
                         });  
 
                 }else if(item.tecnica.codigo =='ME'){
@@ -1451,14 +1587,13 @@ export default {
                             id      : id,
                             numero_formateado  : this.informes[index].numero_formateado,               
                             visible : true,
-                            costura_original: '',
-                            costura_final:'',
                             metodo : item.metodo,
                             tecnica : item.tecnica.codigo,
                             pieza_original : item.pieza,
                             pieza_final : item.pieza,
                             pulgadas_original: item.pulgadas,
-                            pulgadas_final: item.pulgadas,                      
+                            pulgadas_final: item.pulgadas,     
+                             metros_lineales: ''                 
                         
                         });
                }  

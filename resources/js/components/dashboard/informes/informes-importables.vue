@@ -158,7 +158,7 @@ components: {
             'ot_id' : this.otdata.id,
             'fecha':new Date(),
             'numero': '',
-            'obra' : '',
+            'obra' : this.Registro.obra,
             'prefijo'  : '',
             'observaciones':'',
             'path':'',
@@ -260,7 +260,7 @@ components: {
         },
 
         setObra : function(value){
-
+         
             this.Registro.obra = value;
         },
 

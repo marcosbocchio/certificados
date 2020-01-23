@@ -16,7 +16,7 @@ class CreateDetallesLpTable extends Migration
         Schema::create('detalles_lp', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('pieza',10);
-            $table->integer('numero');
+            $table->integer('cm')->nullable();
             $table->string('detalle');
             $table->boolean('aceptable_sn');
             $table->timestamps();

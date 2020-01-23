@@ -85,7 +85,7 @@ export default {
     watch :{
 
       obra : function(val){
-
+        
           this.$emit('set-obra',val)
 
       }
@@ -100,12 +100,11 @@ export default {
     methods : {
 
         setObra : function(){
-
+          console.log('entro en set obra desde el refresh');      
            this.$forceUpdate();
-           console.log('entro en set obra:' + this.editmode);
-
-            if(this.editmode){
-                console.log(this.importado_sn);
+           this.obra = ''; 
+           if(this.editmode){
+            
                 this.$store.dispatch('loadObraInformes',{ informe_id: this.informe_id , importado_sn: this.importado_sn}).then(response => {
 
                     this.obra = this.obra_informe
@@ -117,6 +116,7 @@ export default {
                 this.obra =  this.otdata.obra
 
             }
+             
         },
 
         getCliente : function(){

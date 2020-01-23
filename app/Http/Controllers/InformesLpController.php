@@ -122,7 +122,7 @@ class InformesLpController extends Controller
           $detalleLp  = new DetallesLp; 
           $detalleLp->informe_lp_id = $informeLp->id;
           $detalleLp->pieza = $detalle['pieza'];
-          $detalleLp->numero = $detalle['numero'];
+          $detalleLp->cm = $detalle['cm'];
           $detalleLp->detalle = $detalle['detalle'];
           $detalleLp->aceptable_sn = $detalle['aceptable_sn'];
           $detalleLp->detalle_lp_referencia_id = $referencia_id;
@@ -238,7 +238,7 @@ class InformesLpController extends Controller
                              ->leftjoin('detalles_lp_referencias','detalles_lp_referencias.id','=','detalles_lp.detalle_lp_referencia_id')                      
                              ->where('detalles_lp.informe_lp_id',$id)
                              ->selectRaw('detalles_lp.detalle as detalle,
-                                        detalles_lp.numero as numero,
+                                        detalles_lp.cm as cm,
                                         detalles_lp.pieza as pieza,
                                         detalles_lp.aceptable_sn as aceptable_sn,
                                         detalles_lp_referencias.descripcion as observaciones,

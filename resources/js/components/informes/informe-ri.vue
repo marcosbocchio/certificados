@@ -8,7 +8,7 @@
                         <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="formato">Tipo informe RI *</label>
-                                <v-select v-model="formato" :options="['PLANTA', 'GASODUCTO']"></v-select>
+                                <v-select v-model="formato" :options="['PLANTA', 'DUCTO']"></v-select>
                             </div>                            
                         </div>
                         <div class="col-md-3">
@@ -282,7 +282,7 @@
                <!-- Detalle RI -->
                <div class="box box-danger">
                      <div class="box-header with-border">
-                        <h3 class="box-title">JUNTAS/POSICIONES</h3>
+                        <h3 class="box-title">ELEMENTOS/POSICIONES</h3>
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                             </button>                       
@@ -306,7 +306,7 @@
                   
                     <div class="col-md-2">                      
                         <div class="form-group" >
-                            <label for="junta">Junta</label>
+                            <label for="junta">Elemento</label>
                             <input type="text" v-model="junta" class="form-control" id="junta">
                         </div>
                     </div>     
@@ -338,7 +338,7 @@
                                         <tr>
                                             <th class="col-md-1">Pk</th>
                                             <th class="col-md-1">TIPO SOL.</th>                                     
-                                            <th class="col-md-1">JUNTA</th>                                       
+                                            <th class="col-md-1">ELEMENTO</th>                                       
                                             <th class="col-md-1">POS</th>  
                                             <th class="col-md-1">ACEPTABLE</th>    
                                             <th class="col-md-1">OBSERVACIÓN</th>        
@@ -778,11 +778,9 @@ export default {
              
              junta_posicion_selected : '',
              clonando : false,
-             validoPasadas : true,
+             validoPasadas : true,  
              
-
-
-    }},
+             }},
 
     created : function(){       
         
@@ -829,7 +827,7 @@ export default {
         },
         formato : function (val){
 
-            this.isGasoducto =  (val == 'GASODUCTO') ? true : false;        
+            this.isGasoducto =  (val == 'DUCTO') ? true : false;        
             
 
         },
@@ -888,7 +886,7 @@ export default {
 
             if(this.editmode) {
                
-               this.formato = this.informe_ridata.gasoducto_sn ? 'GASODUCTO' : 'PLANTA';
+               this.formato = this.informe_ridata.gasoducto_sn ? 'DUCTO' : 'PLANTA';
                this.fecha   = this.informedata.fecha;
                this.prefijo = this.informedata.prefijo;
                this.numero_inf = this.informedata.numero;
@@ -1184,10 +1182,10 @@ export default {
 
             }
 
-            if(this.formato == 'GASODUCTO'){
+            if(this.formato == 'DUCTO'){
 
                 if(this.TablaDetalle[this.indexDetalle].pasadas.length == 6) {
-                    toastr.error('Error : Formato GASODUCTO acepta 6 pasadas');       
+                    toastr.error('Error : Formato DUCTO acepta 6 pasadas');       
                      return;
                 }
 
@@ -1327,7 +1325,7 @@ export default {
                     this.errors =[];
                     let gasoducto_sn ;
 
-                    if(this.formato =='GASODUCTO')
+                    if(this.formato =='DUCTO')
                         gasoducto_sn = true;
                     else if(this.formato =='PLANTA')
                         gasoducto_sn = false;
@@ -1415,7 +1413,7 @@ export default {
                     console.log('entro para actualizar' );
                     this.errors =[];
                     let gasoducto_sn ;
-                    if(this.formato =='GASODUCTO')
+                    if(this.formato =='DUCTO')
                         gasoducto_sn = true;
                     else if(this.formato =='PLANTA')
                         gasoducto_sn = false;

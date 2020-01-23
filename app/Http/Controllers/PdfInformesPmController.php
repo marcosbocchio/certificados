@@ -62,7 +62,7 @@ class PdfInformesPmController extends Controller
        // dd($desmagnetizacion_sn);
          $detalles =  DB::select('SELECT 
                                 detalles_pm.pieza as pieza,
-                                detalles_pm.numero as numero,
+                                detalles_pm.cm as cm,
                                 detalles_pm.detalle as detalle,
                                 detalles_pm.aceptable_sn as aceptable_sn,
                                 detalles_pm_referencias.id as referencia_id

@@ -125,7 +125,7 @@ class InformesPmController extends Controller
         $detallePm  = new DetallesPm; 
         $detallePm->informe_pm_id = $informePm->id;
         $detallePm->pieza = $detalle['pieza'];
-        $detallePm->numero = $detalle['numero'];
+        $detallePm->cm = $detalle['cm'];
         $detallePm->detalle = $detalle['detalle'];
         $detallePm->aceptable_sn = $detalle['aceptable_sn'];
         $detallePm->detalle_pm_referencia_id = $referencia_id;
@@ -221,7 +221,7 @@ class InformesPmController extends Controller
                              ->leftjoin('detalles_pm_referencias','detalles_pm_referencias.id','=','detalles_pm.detalle_pm_referencia_id')                      
                              ->where('detalles_pm.informe_pm_id',$id)
                              ->selectRaw('detalles_pm.detalle as detalle,
-                                        detalles_pm.numero as numero,
+                                        detalles_pm.cm as cm,
                                         detalles_pm.pieza as pieza,
                                         detalles_pm.aceptable_sn as aceptable_sn,
                                         detalles_pm_referencias.descripcion as observaciones,

@@ -267,7 +267,7 @@
 
                         <div class="col-md-3">                       
                             <div class="form-group" >                            
-                                <label for="pieza">Pieza</label>
+                                <label for="pieza">ELEMENTO</label>
                                 <input type="text" v-model="pieza" class="form-control" id="pieza">                           
                             </div>     
                         </div>                
@@ -275,8 +275,8 @@
             
                         <div class="col-md-3">                       
                             <div class="form-group" >                            
-                                <label for="numero_piezas">N°</label>
-                                <input type="number" v-model="numero_pieza" class="form-control" id="numero_piezas">                           
+                                <label for="cm">CM</label>
+                                <input type="number" v-model="cm" class="form-control" id="cm">                           
                             </div>     
                         </div>  
 
@@ -292,14 +292,14 @@
                             &nbsp;
                         </div>
 
-                        <div v-if="inputPiezasFalla.length">
+                        <div v-if="TablaLp.length">
                             <div class="col-md-12">
                                 <div class="table-responsive">
                                     <table class="table table-hover table-striped table-bordered">
                                         <thead>
                                             <tr>
-                                                <th class="col-md-2">PIEZA</th>
-                                                <th class="col-md-1">N°</th> 
+                                                <th class="col-md-2">ELEMENTO</th>
+                                                <th class="col-md-1">CM</th> 
                                                 <th class="col-md-5">DETALLE</th>
                                                 <th class="col-md-1">ACEPTABLE </th>    
                                                 <th class="col-md-1">REFERENCIA </th>                                                                      
@@ -307,26 +307,26 @@
                                             </tr>
                                         </thead>                         
                                         <tbody>
-                                            <tr v-for="(inputPiezaFalla,k) in (inputPiezasFalla)" :key="k" @click="selectPosDetalle(k)" :class="{selected: indexPosDetalle === k}" >
-                                                <td>{{ inputPiezaFalla.pieza }}</td>                                        
-                                                <td>{{ inputPiezaFalla.numero }}</td>
+                                            <tr v-for="(item,k) in (TablaLp)" :key="k" @click="selectPosDetalle(k)" :class="{selected: indexPosDetalle === k}" >
+                                                <td>{{ item.pieza }}</td>                                        
+                                                <td>{{ item.cm }}</td>
                                                 <td>   
                                                     <div v-if="indexPosDetalle == k ">       
-                                                    <input type="text" v-model="inputPiezasFalla[k].detalle" maxlength="50" size="100%">        
+                                                    <input type="text" v-model="TablaLp[k].detalle" maxlength="50" size="100%">        
                                                     </div>   
                                                     <div v-else>
-                                                    {{ inputPiezasFalla[k].detalle }}
+                                                    {{ TablaLp[k].detalle }}
                                                     </div>  
                                                 </td>    
                                                 <td style="text-align:center"> 
-                                                    <input type="checkbox" id="checkbox" v-model="inputPiezasFalla[k].aceptable_sn">  </td>
+                                                    <input type="checkbox" id="checkbox" v-model="TablaLp[k].aceptable_sn">  </td>
                                                 <td style="text-align:center"> 
-                                                    <span :class="{ existe : (inputPiezaFalla.observaciones ||
-                                                                                inputPiezaFalla.path1 ||
-                                                                                inputPiezaFalla.path2 ||
-                                                                                inputPiezaFalla.path3 ||
-                                                                                inputPiezaFalla.path4 )                      
-                                                }" class="fa fa-file-archive-o" @click="OpenReferencias($event,k,'Informe PM',inputPiezaFalla)" ></span>
+                                                    <span :class="{ existe : (item.observaciones ||
+                                                                                item.path1 ||
+                                                                                item.path2 ||
+                                                                                item.path3 ||
+                                                                                item.path4 )                      
+                                                }" class="fa fa-file-archive-o" @click="OpenReferencias($event,k,'Informe PM',item)" ></span>
                                                 </td>                                
 
                                             
@@ -530,10 +530,10 @@ data() {return {
 
         //detalle
         pieza:'',
-        numero_pieza:'',
+        cm:'',
         metodos_trabajo_lp:[],
         aplicaciones_lp:[],
-        inputPiezasFalla:[],
+        TablaLp:[],
         indexPosDetalle:0,
 
         index_referencias:'',
@@ -630,7 +630,7 @@ data() {return {
                this.limpieza_intermedia     = this.informe_lpdata.limpieza_intermedia; 
                this.limpieza_final          = this.informe_lpdata.limpieza_final;
                this.iluminacion = this.iluminacion_data;
-               this.inputPiezasFalla = this.detalledata;
+               this.TablaLp = this.detalledata;
  
  
             }         
@@ -707,9 +707,9 @@ data() {return {
 
     addDetalle : function () {     
 
-        this.inputPiezasFalla.push({ 
+        this.TablaLp.push({ 
             pieza : this.pieza,
-            numero:this.numero_pieza,
+            cm:this.cm,
             detalle : '',
             aceptable_sn : 1 ,
             observaciones : '',                
@@ -723,7 +723,7 @@ data() {return {
 
     removeDetalle(index) {
         this.indexPosDetalle = 0;   
-        this.inputPiezasFalla.splice(index, 1);
+        this.TablaLp.splice(index, 1);
     
     },
 
@@ -738,11 +738,11 @@ data() {return {
     AddReferencia(Ref){      
 
     
-        this.inputPiezasFalla[this.index_referencias].observaciones = Ref.observaciones;
-        this.inputPiezasFalla[this.index_referencias].path1 = Ref.path1;
-        this.inputPiezasFalla[this.index_referencias].path2 = Ref.path2;
-        this.inputPiezasFalla[this.index_referencias].path3 = Ref.path3;
-        this.inputPiezasFalla[this.index_referencias].path4 = Ref.path4;
+        this.TablaLp[this.index_referencias].observaciones = Ref.observaciones;
+        this.TablaLp[this.index_referencias].path1 = Ref.path1;
+        this.TablaLp[this.index_referencias].path2 = Ref.path2;
+        this.TablaLp[this.index_referencias].path3 = Ref.path3;
+        this.TablaLp[this.index_referencias].path4 = Ref.path4;
     
     
         $('#nuevo').modal('hide');     
@@ -791,7 +791,7 @@ data() {return {
                 'limpieza_previa'               :this.limpieza_previa,   
                 'limpieza_intermedia'           :this.limpieza_intermedia,   
                 'limpieza_final'                :this.limpieza_final,   
-                'detalles'                      :this.inputPiezasFalla,     
+                'detalles'                      :this.TablaLp,     
           }
           
           }).then(response => {
@@ -861,7 +861,7 @@ data() {return {
                 'limpieza_previa'               :this.limpieza_previa,   
                 'limpieza_intermedia'           :this.limpieza_intermedia,   
                 'limpieza_final'                :this.limpieza_final,   
-                'detalles'                      :this.inputPiezasFalla,                     
+                'detalles'                      :this.TablaLp,                     
           }}
           
       

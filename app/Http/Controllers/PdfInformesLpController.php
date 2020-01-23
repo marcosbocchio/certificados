@@ -58,7 +58,7 @@ class PdfInformesLpController extends Controller
 
          $detalles =  DB::select('SELECT 
                                 detalles_lp.pieza as pieza,
-                                detalles_lp.numero as numero,
+                                detalles_lp.cm as cm,
                                 detalles_lp.detalle as detalle,
                                 detalles_lp.aceptable_sn as aceptable_sn,
                                 detalles_lp_referencias.id as referencia_id

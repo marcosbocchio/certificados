@@ -603,7 +603,7 @@
 
                                 <div class="col-md-12">                       
                                     <div class="form-group" >
-                                        <label for="umbral" title="Umbral">Umbral</label>
+                                        <label for="umbral" title="Umbral">Espesor nominal</label>
                                         <input type="number" v-model="umbral_me" class="form-control" id="umbral_me" step="0,1">
                                     </div>         
                                 </div>
@@ -642,7 +642,7 @@
                                             <thead>
                                                 <tr>
                                                     <th  class="col-lg-1">Elemento</th>
-                                                    <th  class="col-lg-1">Umbral.</th>
+                                                    <th  class="col-lg-1">Nominal</th>
                                                     <th  class="col-lg-2">ø</th> 
                                                     <th  class="col-lg-1">Pos.</th>
                                                     <th  class="col-lg-1">Gen.</th>                                                                                               

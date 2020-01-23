@@ -60,7 +60,14 @@
                             </thead>
                             <tbody>
                                 <tr v-for="(ot_informe,k) in ot_informes.data" :key="k">                                 
-                                    <td> {{ot_informe.metodo}}</td>
+                                    <td> 
+                                        <div v-if="ot_informe.metodo != 'US'">
+                                           {{ot_informe.metodo}}
+                                        </div>
+                                        <div v-else>
+                                            {{ot_informe.tecnica}}
+                                        </div>
+                                    </td>
                                     <td>
                                         <div v-if="ot_informe.prefijo != null">
                                              {{ot_informe.prefijo}}-{{ot_informe.numero_formateado}}

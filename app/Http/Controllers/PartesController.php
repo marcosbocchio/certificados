@@ -17,7 +17,7 @@ use App\Informe;
 use App\Tecnicas;
 use \stdClass;
 use App\ParametrosGenerales;
-use App\informesImportados;
+use App\InformesImportados;
 use App\ParteServicios;
 
 class PartesController extends Controller
@@ -182,7 +182,7 @@ class PartesController extends Controller
             $parteDetalle->pulgadas_final = $informe['pulgadas_final'];          
             $parteDetalle->placas_original = $informe['placas_original']; 
             $parteDetalle->placas_final = $informe['placas_final'];            
-            $parteDetalle->cm = $informe['cm']['id'];      
+            $parteDetalle->cm = $informe['cm']['codigo'];      
      
             $parteDetalle->save();
 
@@ -201,9 +201,7 @@ class PartesController extends Controller
             $parteDetalle->parte_id = $parte->id;            
             $parteDetalle->informe_id =$informe['id'];   
             $parteDetalle->pieza_original = $informe['pieza_original'];      
-            $parteDetalle->pieza_final = $informe['pieza_final'];
-            $parteDetalle->nro_original = $informe['nro_original'];
-            $parteDetalle->nro_final = $informe['nro_final'];          
+            $parteDetalle->pieza_final = $informe['pieza_final'];      
             $parteDetalle->metros_lineales = $informe['metros_lineales'];
             $parteDetalle->save();
 
@@ -222,9 +220,7 @@ class PartesController extends Controller
             $parteDetalle->parte_id = $parte->id;            
             $parteDetalle->informe_id =$informe['id'];   
             $parteDetalle->pieza_original = $informe['pieza_original'];      
-            $parteDetalle->pieza_final = $informe['pieza_final'];
-            $parteDetalle->nro_original = $informe['nro_original'];
-            $parteDetalle->nro_final = $informe['nro_final'];          
+            $parteDetalle->pieza_final = $informe['pieza_final'];       
             $parteDetalle->metros_lineales = $informe['metros_lineales'];
             $parteDetalle->save();
 
@@ -368,14 +364,18 @@ class PartesController extends Controller
                                ->join('metodo_ensayos','metodo_ensayos.id','=','servicios.metodo_ensayo_id')   
                                 ->join('unidades_medidas','unidades_medidas.id','=','servicios.unidades_medida_id')
                                 ->where('parte_servicios.parte_id',$id)
-                                ->selectRaw('metodo_ensayos.id as metodo_ensayo_id,metodo_ensayos.metodo,unidades_medidas.id as unidad_medida_id,servicios.id as servicio_id,servicios.descripcion as servicio_descripcion,cant_original,cant_final')
+                                ->selectRaw('metodo_ensayos.id as metodo_ensayo_id,metodo_ensayos.metodo,unidades_medidas.id as unidad_medida_id,unidades_medidas.codigo as unidad_medida,servicios.id as servicio_id,servicios.descripcion as servicio_descripcion,cant_original,cant_final')
                                 ->get();
                              
          foreach ($informes_ri as $informe_ri) {
 
             $obj = new stdClass();
-            $obj = Medidas::find($informe_ri->cm);
-            $informe_ri->cm = $obj;
+            $obj = Medidas::where('codigo',$informe_ri->cm)->first();
+            if($obj){
+                $informe_ri->cm = $obj;
+            }else if($informe_ri->cm){
+                $informe_ri->cm = $informe_ri->cm;
+            }
             
          }               
         
@@ -476,7 +476,7 @@ class PartesController extends Controller
 
         $informe_pm = DB::select('select
                                     detalles_pm.pieza ,
-                                    detalles_pm.numero,
+                                    detalles_pm.cm,
                                     "PM" as metodo
                                     FROM informes
                                     
@@ -496,7 +496,7 @@ class PartesController extends Controller
 
         $informe_lp = DB::select('select
                                     detalles_lp.pieza ,
-                                    detalles_lp.numero,
+                                    detalles_lp.cm,
                                     "LP" as metodo
                                     FROM informes
                                     
