@@ -50,14 +50,6 @@ class AddForeignParteDetallesTable extends Migration
                     ->references('id')
                     ->on('ot_servicios');
 
-            $table->bigInteger('cm')
-                    ->unsigned()
-                    ->nullable()
-                    ->after('placas_final');
-            
-            $table->foreign('cm')
-                    ->references('id')
-                    ->on('medidas');
            });
     }
 
@@ -80,11 +72,7 @@ class AddForeignParteDetallesTable extends Migration
             $table->dropColumn('ot_servicio_id');
 
             $table->dropForeign(['informe_importado_id']);
-            $table->dropColumn('informe_importado_id');  
-            
-            $table->dropForeign(['cm']);
-            $table->dropColumn('cm'); 
-
+            $table->dropColumn('informe_importado_id'); 
 
         });
     }
