@@ -376,9 +376,10 @@ class PartesController extends Controller
                 $informe_ri->cm = $obj;
                 
             }else if($informe_ri->cm){
-
-                $obj->codigo = $informe_ri->cm;
-                $informe_ri->cm = '20';
+                
+                $obj = new stdClass();
+                $obj->codigo = $informe_ri->cm; 
+                $informe_ri->cm = $obj;
             }
             
          }               
