@@ -47,13 +47,13 @@
                         <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="km_inicial">Km Inicial </label>
-                                <input type="number" v-model="km_inicial" class="form-control" id="km_inicial" step="0.1" :disabled="!movilidad_propia_sn">
+                                <input type="number" v-model="km_inicial" class="form-control" id="km_inicial" step="0.1" :disabled="!movilidad_propia_sn" @input="RecalcularKms()">
                             </div>                            
                         </div>  
                         <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="km_final">Km Final </label>
-                                <input type="number" v-model="km_final" class="form-control" id="km_final" step="0.1" :disabled="!movilidad_propia_sn">
+                                <input type="number" v-model="km_final" class="form-control" id="km_final" step="0.1" :disabled="!movilidad_propia_sn" @input="RecalcularKms()">
                             </div>                            
                         </div>  
                     </div>
@@ -613,7 +613,6 @@ export default {
 
         responsabilidad:'',
         TablaResponsables:[],
-
       
         informes:[],
         informe_sel:false,
@@ -666,9 +665,14 @@ export default {
 
             this.resetInformesSelect();
 
-        },
-
+        },  
         
+        TablaResponsables : function(){
+            
+            this.RecalcularViaticos();
+            this.RecalcularHospedaje();
+
+        }
 },
 
     computed :{
@@ -686,6 +690,8 @@ export default {
 
         setEdit : function(){
 
+         
+
             if(this.editmode) {
                 
             
@@ -697,13 +703,13 @@ export default {
                this.patente = this.parte_data.patente;
                this.km_final = this.parte_data.km_final;
                this.km_inicial = this.parte_data.km_inicial;
-               this.observaciones = this.parte_data.observaciones;              
+               this.observaciones = this.parte_data.observaciones;                       
                this.getInformesPendientesYEditableParte(); 
                this.setServiciosParte(); 
 
             }else{
-
-                this.getInformesPendientesParte(); 
+                 this.getServiciosGenerales(); 
+                 this.getInformesPendientesParte(); 
             }      
 
         },
@@ -1259,6 +1265,52 @@ export default {
 
         },
 
+        getServiciosGenerales: function(){
+             
+            axios.defaults.baseURL = this.url ;
+            var urlRegistros = 'ot_servicios/ot/' + this.otdata.id + '/generales' + '?api_token=' + Laravel.user.api_token;        
+            axios.get(urlRegistros).then(response =>{
+     
+              let informe_servicios = response.data;
+              let cantidad = 0;  
+              informe_servicios.forEach(function(item) {
+
+                   if(item.unidad_medida == 'Visita'){
+
+                        cantidad = 1;
+
+                   }else if(item.unidad_medida =='Km'){
+
+                        cantidad = 0;
+
+                   }else if(item.unidad_medida == 'Dia' && item.servicio_descripcion.includes('VIATICOS')){
+
+                         cantidad = 0;   
+
+                   }else if(item.unidad_medida == 'Dia' && item.servicio_descripcion.includes('HOSPEDAJE')){
+
+                         cantidad = 0;   
+
+                  }          
+
+                    this.TablaServicios.push({
+                        
+                        metodo_ensayo_id : item.metodo_ensayo_id,
+                        servicio_id : item.servicio_id,
+                        metodo: item.metodo,
+                        servicio_descripcion:item.servicio_descripcion,
+                        cant_original : 0,
+                        cant_final: cantidad,
+                        unidad_medida : item.unidad_medida,
+                        visible : true,
+
+                    })
+
+              }.bind(this));
+            
+            });
+        },
+
         getServiciosInformes(informe_id){
 
             axios.defaults.baseURL = this.url ;
@@ -1403,6 +1455,35 @@ export default {
           }
         },
 
+
+        RecalcularKms()  {
+
+            let index = this.TablaServicios.findIndex(elemento => (elemento.unidad_medida == 'Km' && elemento.metodo =='GRAL'))      
+            console.log(index);         
+            if(index > -1){
+                let kms = parseFloat(this.km_final) - parseFloat(this.km_inicial);
+                this.TablaServicios[index].cant_final = parseFloat(kms);
+            }
+        },
+        
+        RecalcularViaticos()  {
+
+            let index = this.TablaServicios.findIndex(elemento => (elemento.unidad_medida == 'Dia' && elemento.servicio_descripcion.includes('VIATICOS')))      
+            if(index > -1){
+               
+                this.TablaServicios[index].cant_final = this.TablaResponsables.length;
+            }
+        },
+
+      RecalcularHospedaje()  {
+
+            let index = this.TablaServicios.findIndex(elemento => (elemento.unidad_medida == 'Dia' && elemento.servicio_descripcion.includes('HOSPEDAJE')))      
+            if(index > -1){
+               
+                this.TablaServicios[index].cant_final = this.TablaResponsables.length;
+            }
+        },
+
         CalcularMetrosRI : function(){
 
             let largo = 0 ; 
@@ -1415,8 +1496,7 @@ export default {
 
                     largo = parseFloat(item.cm.codigo.substring( (item.cm.codigo.indexOf("x") >-1) ? item.cm.codigo.indexOf("x") + 1: item.cm.codigo.length-1, item.cm.codigo.length)) ;                  
                     placas = parseInt(item.placas_final);  
-                    metros += parseFloat(largo/100) * parseFloat(placas);
-             
+                    metros += parseFloat(largo/100) * parseFloat(placas);             
                     
                 }
 

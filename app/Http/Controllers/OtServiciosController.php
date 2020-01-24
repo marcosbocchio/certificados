@@ -52,6 +52,13 @@ class OtServiciosController extends Controller
         return $servicio;
     }
 
+    public function getOtServiciosGenerales($ot_id){
+
+        $servicio_generales =  DB::select('CALL getServiciosGenerales(?)',array($ot_id));
+
+        return  $servicio_generales;
+    }
+
     /**
      * Display the specified resource.
      *

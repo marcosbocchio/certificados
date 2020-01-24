@@ -24,7 +24,7 @@ class ServicioRequest extends FormRequest
     public function rules()
     {
         return [
-            'codigo' => 'required|Max:10',
+            'codigo' => 'required|Max:20',
             'descripcion'  =>'nullable|Max:100',
             'unidad_medida' => 'required',
             'metodo_ensayo' => 'required',
