@@ -47,13 +47,13 @@
                         <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="km_inicial">Km Inicial </label>
-                                <input type="number" v-model="km_inicial" class="form-control" id="km_inicial" step="0.1" :disabled="!movilidad_propia_sn" @input="RecalcularKms()">
+                                <input type="number" v-model="km_inicial" class="form-control" id="km_inicial" min="0" step="0.1" :disabled="!movilidad_propia_sn" @input="RecalcularKms()">
                             </div>                            
                         </div>  
                         <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="km_final">Km Final </label>
-                                <input type="number" v-model="km_final" class="form-control" id="km_final" step="0.1" :disabled="!movilidad_propia_sn" @input="RecalcularKms()">
+                                <input type="number" v-model="km_final" class="form-control" id="km_final" min="0" step="0.1" :disabled="!movilidad_propia_sn" @input="RecalcularKms()">
                             </div>                            
                         </div>  
                     </div>
@@ -1494,10 +1494,17 @@ export default {
 
                 if(item.cm){
 
-                    largo = parseFloat(item.cm.codigo.substring( (item.cm.codigo.indexOf("x") >-1) ? item.cm.codigo.indexOf("x") + 1: item.cm.codigo.length-1, item.cm.codigo.length)) ;                  
+                    if(item.cm.codigo.indexOf("x") > -1){
+
+                        largo = parseFloat(item.cm.codigo.substring( (item.cm.codigo.indexOf("x") >-1) ? item.cm.codigo.indexOf("x") + 1: item.cm.codigo.length-1, item.cm.codigo.length)) ;                  
+                 
+                    }else{
+
+                        largo = parseFloat(item.cm.codigo)
+                    }
+
                     placas = parseInt(item.placas_final);  
-                    metros += parseFloat(largo/100) * parseFloat(placas);             
-                    
+                    metros += parseFloat(largo/100) * parseFloat(placas);     
                 }
 
             }.bind(this))   

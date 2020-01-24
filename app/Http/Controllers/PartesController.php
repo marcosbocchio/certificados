@@ -372,9 +372,13 @@ class PartesController extends Controller
             $obj = new stdClass();
             $obj = Medidas::where('codigo',$informe_ri->cm)->first();
             if($obj){
+
                 $informe_ri->cm = $obj;
+                
             }else if($informe_ri->cm){
-                $informe_ri->cm = $informe_ri->cm;
+
+                $obj->codigo = $informe_ri->cm;
+                $informe_ri->cm = '20';
             }
             
          }               
