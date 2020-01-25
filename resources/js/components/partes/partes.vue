@@ -287,7 +287,7 @@
                                                 <tr>
                                                     <th>INFORME</th>       
                                                     <th>PIEZA</th>                                           
-                                                    <th>METROS LINEALES</th>                                                                                                
+                                                    <th>CM</th>                                                                                                
                                                     <th colspan="2">&nbsp;</th>
                                                 </tr>
                                             </thead>
@@ -304,10 +304,10 @@
                                                     </td>                                                    
                                                     <td v-if="item.visible">
                                                         <div v-if="indexTablaInformesPm == k ">       
-                                                          <input type="number" v-model="TablaInformesPm[k].metros_lineales" maxlength="4"  @input="RecalcularMetros('PM')">        
+                                                          <input type="number" v-model="TablaInformesPm[k].cm" maxlength="4"  @input="RecalcularMetros('PM')">        
                                                         </div>   
                                                         <div v-else>
-                                                           {{ item.metros_lineales }}
+                                                           {{ item.cm }}
                                                         </div>                                   
                                                     </td>
                                                                                                                                                                 
@@ -345,7 +345,7 @@
                                                 <tr>
                                                     <th>INFORME</th>       
                                                     <th>PIEZA</th>                                         
-                                                    <th>METROS LINEALES</th>                                                                                                
+                                                    <th>CM</th>                                                                                                
                                                     <th colspan="2">&nbsp;</th>
                                                 </tr>
                                             </thead>
@@ -363,10 +363,10 @@
 
                                                     <td v-if="item.visible">
                                                         <div v-if="indexTablaInformesLp == k ">       
-                                                          <input type="number" v-model="TablaInformesLp[k].metros_lineales" maxlength="4" @input="RecalcularMetros('LP')">        
+                                                          <input type="number" v-model="TablaInformesLp[k].cm" maxlength="4" @input="RecalcularMetros('LP')">        
                                                         </div>   
                                                         <div v-else>
-                                                           {{ item.metros_lineales }}
+                                                           {{ item.cm }}
                                                         </div>                                   
                                                     </td>
                                                                                                                                                                 
@@ -643,7 +643,10 @@ export default {
 
     },
 
-    mounted : function() {
+    updated : function() {
+        
+        console.log(this.TablaInformesLp);
+        this.CalcularMetrosLP()
         
      
     },   
@@ -667,11 +670,11 @@ export default {
 
         },  
         
-        TablaResponsables : function(){
-            
+      TablaResponsables : function(){    
+
             this.RecalcularViaticos();
             this.RecalcularHospedaje();
-
+ 
         }
 },
 
@@ -688,15 +691,12 @@ export default {
 
     methods : {
 
-        setEdit : function(){
+        setEdit : function(){         
 
-         
-
-            if(this.editmode) {
-                
+            if(this.editmode) {                
             
                this.TablaResponsables =  JSON.parse(JSON.stringify(this.responsables_data));  
-               this.fecha   = this.parte_data.fecha;   
+               this.fecha  = this.parte_data.fecha;   
                this.tipo_servicio = this.parte_data.tipo_servicio;         
                this.horario = this.parte_data.horario;   
                this.movilidad_propia_sn = this.parte_data.movilidad_propia_sn;
@@ -708,8 +708,9 @@ export default {
                this.setServiciosParte(); 
 
             }else{
-                 this.getServiciosGenerales(); 
+                 
                  this.getInformesPendientesParte(); 
+                 
             }      
 
         },
@@ -740,7 +741,7 @@ export default {
             axios.defaults.baseURL = this.url ;
             var urlRegistros = 'ot-operarios/ot/' + this.otdata.id + '?api_token=' + Laravel.user.api_token;        
             axios.get(urlRegistros).then(response =>{
-            this.operadores = response.data
+            this.operadores = JSON.parse(JSON.stringify(response.data));       
             });
         },
 
@@ -795,7 +796,7 @@ export default {
             var urlRegistros = 'informes/ot/' + this.otdata.id + '/pendientes_parte_diario' + '?api_token=' + Laravel.user.api_token;        
             axios.get(urlRegistros).then(response =>{
             console.log(response.data);
-            this.informes = response.data
+            this.informes = response.data  
             });
                
         },
@@ -936,8 +937,8 @@ export default {
                             nro_original : item.nro_original,    
                             nro_final : item.nro_final,          
                             id      : item.informe_id,
-                            visible : visible_sn,   
-                            metros_lineales: item.metros_lineales             
+                            visible : visible_sn,                        
+                            cm: item.cm               
 
                             }); 
                         }.bind(this));   
@@ -962,7 +963,7 @@ export default {
                         this.informes_lp_data.forEach(function(item){
 
                         let visible_sn = true;
-                        if( !item.pieza_final  &&  !item.nro_final && !item.metros_lineales){
+                        if( !item.pieza_final  &&  !item.nro_final && !item.cm){
 
                             visible_sn = false
 
@@ -978,8 +979,8 @@ export default {
                             pieza_original: item.pieza_original,
                             pieza_final: item.pieza_final,      
                             id      : item.informe_id,
-                            visible : visible_sn,   
-                            metros_lineales: item.metros_lineales             
+                            visible : visible_sn,                               
+                            cm: item.cm               
 
                             }); 
                         }.bind(this));
@@ -1026,7 +1027,7 @@ export default {
                             
                                 }); 
 
-                        }.bind(this));
+                        }.bind(this));             
              });
        
          },
@@ -1272,6 +1273,7 @@ export default {
             axios.get(urlRegistros).then(response =>{
      
               let informe_servicios = response.data;
+              console.log(response.data);
               let cantidad = 0;  
               informe_servicios.forEach(function(item) {
 
@@ -1319,7 +1321,8 @@ export default {
                 
                 let informe_servicios = response.data;
                 console.log('ot_servicios:' ,informe_servicios);
-              
+                console.log(informe_servicios);
+
 
                 informe_servicios.forEach(function(item) {
                     
@@ -1515,29 +1518,32 @@ export default {
         CalcularMetrosLP : function(){
 
            let metros = 0 ;  
+           let cms = 0;
            this.TablaInformesLp.forEach(function(item){
 
-               if(item.metros_lineales){
+               if(item.cm){
 
-                   metros += parseInt(item.metros_lineales);
+                   cms += parseFloat(item.cm);
                }
 
            }.bind(this))
-
+           metros = parseFloat(cms/100) ; 
            return metros;
         },
+
         CalcularMetrosPM : function(){
 
            let metros = 0 ;  
+           let cms = 0;
            this.TablaInformesPm.forEach(function(item){
 
-               if(item.metros_lineales){
+               if(item.cm){
 
-                   metros += parseInt(item.metros_lineales);
+                   cms += parseFloat(item.cm);
                }
 
            }.bind(this))
-
+           metros = parseFloat(cms/100) ; 
            return metros;
 
         },
@@ -1606,14 +1612,14 @@ export default {
                     pieza_original : item.pieza,
                     pieza_final : item.pieza,
                     metros_lineales : '', 
-                    metodo : item.metodo
-                    
+                    metodo : item.metodo,
+                    cm : item.cm
                     });                       
 
                 }.bind(this));
            
             });
-
+            this.CalcularMetrosPM();
             },
 
         getInformeLP(id,index){
@@ -1623,23 +1629,24 @@ export default {
             axios.get(urlRegistros).then(response =>{
             console.log(urlRegistros);
             console.log(response.data);
-            this.informe_lp_parte = response.data   
+            this.informe_lp_parte = response.data 
 
-            this.informe_lp_parte.forEach(function(item){
+                this.informe_lp_parte.forEach(function(item){
+    
+                    this.TablaInformesLp.push({ 
+                        id      : id,
+                        numero_formateado  : this.informes[index].numero_formateado,               
+                        visible : true,
+                        pieza_original : item.pieza,
+                        pieza_final : item.pieza,
+                        metros_lineales : '', 
+                        metodo : item.metodo,
+                        cm : item.cm
+                        
+                        });                       
+    
+                    }.bind(this));                
 
-                this.TablaInformesLp.push({ 
-                    id      : id,
-                    numero_formateado  : this.informes[index].numero_formateado,               
-                    visible : true,
-                    pieza_original : item.pieza,
-                    pieza_final : item.pieza,
-                    metros_lineales : '', 
-                    metodo : item.metodo
-                    
-                    });                       
-
-                }.bind(this));
-           
             });
         },
 

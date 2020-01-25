@@ -202,7 +202,7 @@ class PartesController extends Controller
             $parteDetalle->informe_id =$informe['id'];   
             $parteDetalle->pieza_original = $informe['pieza_original'];      
             $parteDetalle->pieza_final = $informe['pieza_final'];      
-            $parteDetalle->metros_lineales = $informe['metros_lineales'];
+            $parteDetalle->cm = $informe['cm'];
             $parteDetalle->save();
 
             (new \App\Http\Controllers\InformesController)->setParteId($parte->id,$informe['id']);
@@ -221,7 +221,7 @@ class PartesController extends Controller
             $parteDetalle->informe_id =$informe['id'];   
             $parteDetalle->pieza_original = $informe['pieza_original'];      
             $parteDetalle->pieza_final = $informe['pieza_final'];       
-            $parteDetalle->metros_lineales = $informe['metros_lineales'];
+            $parteDetalle->cm = $informe['cm'];
             $parteDetalle->save();
 
             (new \App\Http\Controllers\InformesController)->setParteId($parte->id,$informe['id']);
@@ -376,7 +376,7 @@ class PartesController extends Controller
                 $informe_ri->cm = $obj;
                 
             }else if($informe_ri->cm){
-                
+
                 $obj = new stdClass();
                 $obj->codigo = $informe_ri->cm; 
                 $informe_ri->cm = $obj;
