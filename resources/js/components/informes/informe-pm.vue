@@ -759,7 +759,18 @@ export default {
         },
 
           addDetalle : function () {             
-         
+              
+            if (!this.pieza){
+
+                 toastr.error('El campo elemento es obligatorio'); 
+                 return ;            
+            }
+
+            if (!this.cm){
+
+                 toastr.error('El campo cm es obligatorio'); 
+                 return ;            
+            }
 
             this.TablaLp.push({ 
                 pieza : this.pieza,
