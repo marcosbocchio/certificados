@@ -25,7 +25,7 @@
                         <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="horario">Horario *</label>
-                                <input type="text" v-model="horario" class="form-control" maxlength="5" id="horario">
+                                <input type="text" v-model="horario" class="form-control" maxlength="5" id="horario" v-on:keyup="FormatearHorario">
                             </div>                            
                         </div>
                         <div class="clearfix"></div>
@@ -40,7 +40,7 @@
 
                         <div class="col-md-3">
                             <div class="form-group" >
-                                <label for="horario">Patente </label>
+                                <label for="patente">Patente </label>
                                 <input type="text" v-model="patente" class="form-control" maxlength="10" id="patente" :disabled="!movilidad_propia_sn">
                             </div>                            
                         </div> 
@@ -674,15 +674,14 @@ export default {
 
         },  
         
-      TablaResponsables : function(){    
+        TablaResponsables : function(){    
 
             this.RecalcularViaticos();
             this.RecalcularHospedaje();
  
         }
+       
 },
-
-
 
     computed :{
 
@@ -788,6 +787,36 @@ export default {
         selectPosTablaServicios : function(index){
 
             this.indexTablaServicios = index;
+        },
+
+        FormatearHorario: function(event){
+
+            if(this.horario.length == 2 && event.keyCode !=8){
+
+               if(!isNaN(this.horario) && parseInt(this.horario)>=0 && parseInt(this.horario)<=24){
+
+                    this.horario += '-';
+
+                }else{
+
+                    this.horario = '';
+                }
+
+            }else if(this.horario.length == 5){
+
+                let srtHoraFinal = this.horario.substring(3,5);
+
+                if(isNaN(srtHoraFinal) || parseInt(srtHoraFinal)<0 || parseInt(srtHoraFinal)>24){
+
+                    this.horario = this.horario.slice(0,3)
+                }
+
+            }
+
+      
+
+            console.log(event.keyCode);
+
         },
                 
         getCms: function(){
@@ -1521,7 +1550,7 @@ export default {
 
             }.bind(this))   
 
-            return parseFloat(metros);
+            return parseFloat(metros).toFixed(2);
         },
 
         setMetrosLP : function(){
@@ -1541,7 +1570,7 @@ export default {
                }
 
            }.bind(this))
-           metros = parseFloat(cms/100) ; 
+           metros = parseFloat(cms/100).toFixed(2); 
            return metros;
         },
 
@@ -1557,7 +1586,7 @@ export default {
                }
 
            }.bind(this))
-           metros = parseFloat(cms/100) ; 
+           metros = parseFloat(cms/100).toFixed(2); 
            return metros;
 
         },
@@ -1573,7 +1602,7 @@ export default {
 
            }.bind(this))
 
-           return metros;
+           return metros.toFixed(2);
         },
 
         AddMetodoImportados(metodo){
