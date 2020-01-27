@@ -21,7 +21,8 @@ class CreateParteDetallesTable extends Migration
             $table->string('pulgadas_final',5)->nullable();
             $table->float('placas_original')->nullable();
             $table->float('placas_final')->nullable();   
-            $table->string('cm',10)->nulllable();
+            $table->string('cm_original',15)->nulllable();
+            $table->string('cm_final',15)->nulllable();
             $table->string('pieza_original',10)->nullable();
             $table->string('pieza_final',10)->nullable();   
             $table->integer('nro_original')->nullable();   

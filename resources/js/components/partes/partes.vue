@@ -638,7 +638,7 @@ export default {
 
         this.getOperadoresOt();
         this.getCms();
-        this.setEdit();   
+        this.setEdit();  
 
     },
 
@@ -716,7 +716,7 @@ export default {
                });                     
 
             }else{
-                 
+                 this.getServiciosGenerales(); 
                  this.getInformesPendientesParte(); 
                  
             }      
@@ -1317,6 +1317,7 @@ export default {
             axios.get(urlRegistros).then(response =>{
      
               let informe_servicios = response.data;
+              console.log('entro en servicios generales');
               console.log(response.data);
               let cantidad = 0;  
               informe_servicios.forEach(function(item) {
