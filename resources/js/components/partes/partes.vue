@@ -250,8 +250,7 @@
                                                         </div>                                   
                                                     </td>                                                  
                                                     <td  v-if="item.visible" >                                                                                                            
-                                                        <v-select type="text" v-model="TablaInformesRi[k].cm" label="codigo" id="cm" :options="cms" style="display: block" taggable  @input="RecalcularMetros('RI')"></v-select>                            
-                                                       
+                                                        <v-select type="text" v-model="TablaInformesRi[k].cm_final" label="codigo" id="cm" :options="cms" style="display: block" taggable  @input="RecalcularMetros('RI')"></v-select>                              
                                                     </td>                                                                                                                  
                                                     <td style="text-align:center" v-if="item.visible"> <a  @click="RemoveTablaInformeRi(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a></td>
                                                     
@@ -304,10 +303,10 @@
                                                     </td>                                                    
                                                     <td v-if="item.visible">
                                                         <div v-if="indexTablaInformesPm == k ">       
-                                                          <input type="number" v-model="TablaInformesPm[k].cm" maxlength="4"  @input="RecalcularMetros('PM')">        
+                                                          <input type="number" v-model="TablaInformesPm[k].cm_final" maxlength="4"  @input="RecalcularMetros('PM')">        
                                                         </div>   
                                                         <div v-else>
-                                                           {{ item.cm }}
+                                                           {{ item.cm_final }}
                                                         </div>                                   
                                                     </td>
                                                                                                                                                                 
@@ -363,10 +362,10 @@
 
                                                     <td v-if="item.visible">
                                                         <div v-if="indexTablaInformesLp == k ">       
-                                                          <input type="number" v-model="TablaInformesLp[k].cm" maxlength="4" @input="RecalcularMetros('LP')">        
+                                                          <input type="number" v-model="TablaInformesLp[k].cm_final" maxlength="4" @input="RecalcularMetros('LP')">        
                                                         </div>   
                                                         <div v-else>
-                                                           {{ item.cm }}
+                                                           {{ item.cm_final }}
                                                         </div>                                   
                                                     </td>
                                                                                                                                                                 
@@ -406,7 +405,7 @@
                                                     <th>INFORME</th>                                                                                       
                                                     <th>ELEMENTO</th>                                                                                                
                                                     <th>DIAMETRO</th>
-                                                    <th>METROS LINEALES</th>
+                                                    <th>CM</th>
                                                     <th>&nbsp;</th>
                                                 </tr>
                                             </thead>
@@ -434,10 +433,10 @@
 
                                                     <td v-if="item.visible">
                                                         <div v-if="indexTablaInformesUs == k ">       
-                                                          <input type="number" v-model="TablaInformesUs[k].metros_lineales" maxlength="4" @input="RecalcularMetros('US')">        
+                                                          <input type="number" v-model="TablaInformesUs[k].cm_final" maxlength="4" @input="RecalcularMetros('US')">        
                                                         </div>   
                                                         <div v-else>
-                                                           {{ item.metros_lineales }}
+                                                           {{ item.cm_final }}
                                                         </div>                                   
                                                     </td>    
 
@@ -937,9 +936,11 @@ export default {
                             costura_final: item.costura_final,
                             pulgadas_final: item.pulgadas_final,
                             placas_final : item.placas_final, 
-                            cm: item.cm  
+                            cm_original : item.cm_original,
+                            cm_final: item.cm_final,  
 
                             }); 
+
                         }.bind(this));  
                         
                         //Informe Pm
@@ -962,7 +963,7 @@ export default {
                         this.informes_pm_data.forEach(function(item){
 
                         let visible_sn = true;
-                        if( !item.pieza_final  &&  !item.nro_final && !item.metros_lineales){
+                        if( !item.pieza_final  &&  !item.nro_final && !item.cm_final){
 
                             visible_sn = false
 
@@ -977,7 +978,8 @@ export default {
                             nro_final : item.nro_final,          
                             id      : item.informe_id,
                             visible : visible_sn,                        
-                            cm: item.cm               
+                            cm_original : item.cm_original,
+                            cm_final: item.cm_final,              
 
                             }); 
                         }.bind(this));   
@@ -1002,7 +1004,7 @@ export default {
                         this.informes_lp_data.forEach(function(item){
 
                         let visible_sn = true;
-                        if( !item.pieza_final  &&  !item.nro_final && !item.cm){
+                        if( !item.pieza_final  &&  !item.nro_final && !item.cm_final){
 
                             visible_sn = false
 
@@ -1019,7 +1021,8 @@ export default {
                             pieza_final: item.pieza_final,      
                             id      : item.informe_id,
                             visible : visible_sn,                               
-                            cm: item.cm               
+                            cm_original : item.cm_original,
+                            cm_final: item.cm_final,              
 
                             }); 
                         }.bind(this));
@@ -1062,7 +1065,8 @@ export default {
                                 tecnica     : item.tecnica,                        
                                 id      : item.informe_id,
                                 visible : visible_sn,   
-                                metros_lineales: item.metros_lineales
+                                cm_original : item.cm_original,
+                                cm_final: item.cm_final,  
                             
                                 }); 
 
@@ -1133,7 +1137,7 @@ export default {
             this.TablaInformesRi[index].costura_final='';
             this.TablaInformesRi[index].placas_final='';
             this.TablaInformesRi[index].pulgadas_final=''
-            this.TablaInformesRi[index].cm=''
+            this.TablaInformesRi[index].cm_final=''
 
         },
 
@@ -1142,7 +1146,7 @@ export default {
             this.TablaInformesPm[index].visible = false;
             this.TablaInformesPm[index].pieza_final='';
             this.TablaInformesPm[index].nro_final='';
-            this.TablaInformesPm[index].metros_lineales=''       
+            this.TablaInformesPm[index].cm_final=''       
 
         },
 
@@ -1151,7 +1155,7 @@ export default {
             this.TablaInformesLp[index].visible = false;
             this.TablaInformesLp[index].pieza_final='';
             this.TablaInformesLp[index].nro_final='';
-            this.TablaInformesLp[index].metros_lineales=''       
+            this.TablaInformesLp[index].cm_final=''       
 
         },
 
@@ -1160,7 +1164,8 @@ export default {
             this.TablaInformesUs[index].visible = false;
             this.TablaInformesUs[index].pieza_final='';
             this.TablaInformesUs[index].costura_final='';    
-            this.TablaInformesUs[index].pulgadas_final=''          
+            this.TablaInformesUs[index].pulgadas_final='';
+            this.TablaInformesUs[index].cm_final='';          
 
         },
 
@@ -1533,15 +1538,15 @@ export default {
 
             this.TablaInformesRi.forEach(function(item){
 
-                if(item.cm){
+                if(item.cm_final){
 
-                    if(item.cm.codigo.indexOf("x") > -1){
+                    if(item.cm_final.codigo.indexOf("x") > -1){
 
-                        largo = parseFloat(item.cm.codigo.substring( (item.cm.codigo.indexOf("x") >-1) ? item.cm.codigo.indexOf("x") + 1: item.cm.codigo.length-1, item.cm.codigo.length)) ;                  
+                        largo = parseFloat(item.cm_final.codigo.substring( (item.cm_final.codigo.indexOf("x") >-1) ? item.cm_final.codigo.indexOf("x") + 1: item.cm_final.codigo.length-1, item.cm_final.codigo.length)) ;                  
                  
                     }else{
 
-                        largo = parseFloat(item.cm.codigo)
+                        largo = parseFloat(item.cm_final.codigo)
                     }
 
                     placas = parseInt(item.placas_final);  
@@ -1553,20 +1558,15 @@ export default {
             return parseFloat(metros).toFixed(2);
         },
 
-        setMetrosLP : function(){
-
-             
-        },
-
         CalcularMetrosLP : function(){
 
            let metros = 0 ;  
            let cms = 0;
            this.TablaInformesLp.forEach(function(item){
 
-               if(item.cm){
+               if(item.cm_final){
 
-                   cms += parseFloat(item.cm);
+                   cms += parseFloat(item.cm_final);
                }
 
            }.bind(this))
@@ -1580,9 +1580,9 @@ export default {
            let cms = 0;
            this.TablaInformesPm.forEach(function(item){
 
-               if(item.cm){
+               if(item.cm_final){
 
-                   cms += parseFloat(item.cm);
+                   cms += parseFloat(item.cm_final);
                }
 
            }.bind(this))
@@ -1593,16 +1593,17 @@ export default {
         CalcularMetrosUS : function(){
 
            let metros = 0 ;  
+           let cms = 0;
            this.TablaInformesUs.forEach(function(item){
 
-               if(item.metros_lineales){
+               if(item.cm_final){
 
-                   metros += parseInt(item.metros_lineales);
+                    cms += parseFloat(item.cm_final);
                }
 
            }.bind(this))
-
-           return metros.toFixed(2);
+           metros = parseFloat(cms/100).toFixed(2); 
+           return metros;
         },
 
         AddMetodoImportados(metodo){
@@ -1629,7 +1630,8 @@ export default {
                 costura_final: this.informe_ri_parte[0].costuras,
                 pulgadas_final: this.informe_ri_parte[0].pulgadas,
                 placas_final : this.informe_ri_parte[0].placas, 
-                cm: '', 
+                cm_original: '', 
+                cm_final:'',
                 metodo : this.informe_ri_parte[0].metodo,
                
              });  
@@ -1656,7 +1658,8 @@ export default {
                     pieza_final : item.pieza,
                     metros_lineales : '', 
                     metodo : item.metodo,
-                    cm : item.cm
+                    cm_original : item.cm,
+                    cm_final : item.cm,
                     });                       
 
                 }.bind(this));
@@ -1683,7 +1686,8 @@ export default {
                         pieza_final : item.pieza,
                         metros_lineales : '', 
                         metodo : item.metodo,
-                        cm : item.cm
+                        cm_original : item.cm,
+                        cm_final : item.cm
                         
                         });                       
     
@@ -1713,7 +1717,8 @@ export default {
                            pulgadas_final: item.pulgadas,
                            pieza_original : '',
                            pieza_final : '',
-                           metros_lineales: '' 
+                           cm_original: '',
+                           cm_final:'', 
                         });  
 
                 }else if(item.tecnica.codigo =='ME'){
@@ -1729,7 +1734,8 @@ export default {
                             pieza_final : item.pieza,
                             pulgadas_original: item.pulgadas,
                             pulgadas_final: item.pulgadas,     
-                             metros_lineales: ''                 
+                            cm_original: '',
+                            cm_final:'',                 
                         
                         });
                }  
@@ -1746,7 +1752,7 @@ export default {
 
                 this.TablaInformesRi.forEach(function(item){
 
-                    if((item.costura_final || item.pulgadas_final || item.placas_final) && !item.cm ){
+                    if((item.costura_final || item.pulgadas_final || item.placas_final) && !item.cm_final ){
 
                         valido =  false;
                     }

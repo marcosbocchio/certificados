@@ -182,7 +182,7 @@ class PartesController extends Controller
             $parteDetalle->pulgadas_final = $informe['pulgadas_final'];          
             $parteDetalle->placas_original = $informe['placas_original']; 
             $parteDetalle->placas_final = $informe['placas_final'];            
-            $parteDetalle->cm = $informe['cm']['codigo'];      
+            $parteDetalle->cm_final = $informe['cm_final']['codigo'];      
      
             $parteDetalle->save();
 
@@ -201,8 +201,9 @@ class PartesController extends Controller
             $parteDetalle->parte_id = $parte->id;            
             $parteDetalle->informe_id =$informe['id'];   
             $parteDetalle->pieza_original = $informe['pieza_original'];      
-            $parteDetalle->pieza_final = $informe['pieza_final'];      
-            $parteDetalle->cm = $informe['cm'];
+            $parteDetalle->pieza_final = $informe['pieza_final'];   
+            $parteDetalle->cm_original = $informe['cm_original'];   
+            $parteDetalle->cm_final = $informe['cm_final'];
             $parteDetalle->save();
 
             (new \App\Http\Controllers\InformesController)->setParteId($parte->id,$informe['id']);
@@ -220,8 +221,9 @@ class PartesController extends Controller
             $parteDetalle->parte_id = $parte->id;            
             $parteDetalle->informe_id =$informe['id'];   
             $parteDetalle->pieza_original = $informe['pieza_original'];      
-            $parteDetalle->pieza_final = $informe['pieza_final'];       
-            $parteDetalle->cm = $informe['cm'];
+            $parteDetalle->pieza_final = $informe['pieza_final'];    
+            $parteDetalle->cm_original = $informe['cm_original'];   
+            $parteDetalle->cm_final = $informe['cm_final'];
             $parteDetalle->save();
 
             (new \App\Http\Controllers\InformesController)->setParteId($parte->id,$informe['id']);
@@ -239,6 +241,7 @@ class PartesController extends Controller
             $parteDetalle->informe_id =$informe['id'];   
             $parteDetalle->pieza_original = $informe['pieza_original'];      
             $parteDetalle->pieza_final = $informe['pieza_final'];
+            $parteDetalle->cm_final = $informe['cm_final'];   
             $parteDetalle->pulgadas_original = $informe['pulgadas_original'];
             $parteDetalle->pulgadas_final = $informe['pulgadas_final'];               
             $parteDetalle->save();
@@ -368,16 +371,16 @@ class PartesController extends Controller
          foreach ($informes_ri as $informe_ri) {
 
             $obj = new stdClass();
-            $obj = Medidas::where('codigo',$informe_ri->cm)->first();
+            $obj = Medidas::where('codigo',$informe_ri->cm_final)->first();
             if($obj){
 
-                $informe_ri->cm = $obj;
+                $informe_ri->cm_final= $obj;
                 
-            }else if($informe_ri->cm){
+            }else if($informe_ri->cm_final){
 
                 $obj = new stdClass();
-                $obj->codigo = $informe_ri->cm; 
-                $informe_ri->cm = $obj;
+                $obj->codigo = $informe_ri->cm_final; 
+                $informe_ri->cm_final = $obj;
             }
             
          }               
