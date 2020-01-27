@@ -25,7 +25,7 @@ class UserController extends Controller
 
     public function paginate(Request $request){
 
-      return User::with('cliente')->with('roles')->orderBy('id','DESC')->paginate(10);
+      return User::with('cliente')->with('roles')->orderBy('name','ASC')->paginate(10);
 
     }
 

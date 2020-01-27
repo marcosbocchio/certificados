@@ -644,11 +644,15 @@ export default {
     },
 
     updated : function() {
-        
-        console.log(this.TablaInformesLp);
-        this.CalcularMetrosLP()
-        
-     
+
+        this.$nextTick(function () {
+
+            this.RecalcularMetros('LP');
+            this.RecalcularMetros('PM');
+            this.RecalcularMetros('RI');
+            this.RecalcularMetros('US');
+
+        })     
     },   
 
     watch :{
@@ -678,6 +682,8 @@ export default {
         }
 },
 
+
+
     computed :{
 
         ...mapState(['url','AppUrl']),     
@@ -703,9 +709,13 @@ export default {
                this.patente = this.parte_data.patente;
                this.km_final = this.parte_data.km_final;
                this.km_inicial = this.parte_data.km_inicial;
-               this.observaciones = this.parte_data.observaciones;                       
-               this.getInformesPendientesYEditableParte(); 
-               this.setServiciosParte(); 
+               this.observaciones = this.parte_data.observaciones;  
+               this.$nextTick(function(){
+
+                   this.setServiciosParte(); 
+                   this.getInformesPendientesYEditableParte(); 
+
+               });                     
 
             }else{
                  
@@ -1391,14 +1401,13 @@ export default {
 
                                 cantidad = this.CalcularMetrosPM(item)
 
-                          }else if(item.metodo == 'US'){
+                           }else if(item.metodo == 'US'){
 
                                 cantidad = this.CalcularMetrosUS(item)
 
                          }
                        }
                                       
-                  
                        this.TablaServicios.push({
                            
                            metodo_ensayo_id : item.metodo_ensayo_id,
@@ -1421,7 +1430,7 @@ export default {
 
         RecalcularMetros(metodo){
 
-            console.log('entro en recalcular metros :' + metodo);
+         console.log('entro en recalcular metros :' + metodo);
 
           if(this.TablaServicios.findIndex(elemento => elemento.unidad_medida == 'Metro' && elemento.metodo == metodo) != -1){       
            
@@ -1515,6 +1524,11 @@ export default {
             return parseFloat(metros);
         },
 
+        setMetrosLP : function(){
+
+             
+        },
+
         CalcularMetrosLP : function(){
 
            let metros = 0 ;  
@@ -1601,7 +1615,7 @@ export default {
             var urlRegistros = 'partes/informe_pm/' + id + '?api_token=' + Laravel.user.api_token;        
             axios.get(urlRegistros).then(response =>{
 
-            this.informe_pm_parte = response.data   
+            this.informe_pm_parte = JSON.parse(JSON.stringify(response.data))
 
             this.informe_pm_parte.forEach(function(item){
 
@@ -1619,7 +1633,6 @@ export default {
                 }.bind(this));
            
             });
-            this.CalcularMetrosPM();
             },
 
         getInformeLP(id,index){
@@ -1629,7 +1642,7 @@ export default {
             axios.get(urlRegistros).then(response =>{
             console.log(urlRegistros);
             console.log(response.data);
-            this.informe_lp_parte = response.data 
+            this.informe_lp_parte = JSON.parse(JSON.stringify(response.data))
 
                 this.informe_lp_parte.forEach(function(item){
     
