@@ -239,8 +239,6 @@ class PartesController extends Controller
             $parteDetalle->informe_id =$informe['id'];   
             $parteDetalle->pieza_original = $informe['pieza_original'];      
             $parteDetalle->pieza_final = $informe['pieza_final'];
-            $parteDetalle->costura_original = $informe['costura_original'];      
-            $parteDetalle->costura_final = $informe['costura_final'];   
             $parteDetalle->pulgadas_original = $informe['pulgadas_original'];
             $parteDetalle->pulgadas_final = $informe['pulgadas_final'];               
             $parteDetalle->save();
