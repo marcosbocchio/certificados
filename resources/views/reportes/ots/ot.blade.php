@@ -312,7 +312,7 @@ td b,td span {
                         <span style="margin-left: 30px; font-size:11px;">Norma de evaluación:</span><span style="font-size: 9px;color:#808080;">{{$ot_servicio->norma_evaluacion}}</span>
                       </td>
                       <td style="font-size: 12px; width:80px;text-align: center;" >{{$ot_servicio->cantidad_servicios}}</td>
-                      <td style="font-size: 12px; width:80px;text-align: center;" >Días</td>
+                      <td style="font-size: 12px; width:80px;text-align: center;" >{{$ot_servicio->unidad_medida}}</td>
                       
                   </tr>
                       

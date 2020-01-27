@@ -84,11 +84,14 @@ class OtServiciosController extends Controller
                                     ot_referencias.path1 as path1,
                                     ot_referencias.path2 as path2,
                                     ot_referencias.path3 as path3,
-                                    ot_referencias.path4 as path4
+                                    ot_referencias.path4 as path4,
+                                    unidades_medidas.codigo as unidad_medida
                                     
                                     from ot_servicios
                                     inner join servicios on 
                                     servicios.id = ot_servicios.servicio_id
+                                    inner join unidades_medidas on 
+                                    unidades_medidas.id = servicios.unidades_medida_id
                                     left join ot_referencias on
                                     ot_referencias.id = ot_servicios.ot_referencia_id
                                     left join norma_ensayos on

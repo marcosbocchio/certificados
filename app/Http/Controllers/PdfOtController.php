@@ -46,6 +46,7 @@ class PdfOtController extends Controller
         $evaluador = User::find($ot->firma);  
         $contratista = Contratistas::find($ot->contratista_id);
 
+      //  dd($ot_servicios);
         $pdf = \PDF::loadView('reportes.ots.ot',compact('ot',
                                                         'cliente',
                                                         'contratista',
