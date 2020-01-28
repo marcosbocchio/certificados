@@ -295,17 +295,15 @@ b {
                         </tr>  
                         <tr> 
                             <td style="font-size: 12px;text-align: center;width: 100px;"><b>&nbsp;</b></td>  
-                            <td style="font-size: 12px;text-align: center;width: 150px; "><b>Pieza </b></td>                        
-                            <td style="font-size: 12px;text-align: center;width: 150px; "><b>Número </b></td>                         
-                            <td style="font-size: 12px;text-align: center;"><b>Metros Lineales </b></td>                                            
+                            <td style="font-size: 12px;text-align: center;width: 150px; "><b>Elemento </b></td>                        
+                            <td style="font-size: 12px;text-align: center;"><b>Cm</b></td>                                            
                         </tr> 
                         @foreach ($parte_detalle as $item_pm)
                             @if ($item->informe_id == $item_pm->informe_id)      
                                 <tr> 
                                     <td style="font-size: 12px;text-align: center;"><b>&nbsp;</b></td>  
                                     <td style="font-size: 12px;text-align: center; ">{{$item_pm->pieza}}</td>                        
-                                    <td style="font-size: 12px;text-align: center; ">{{$item_pm->nro}}</td>                         
-                                    <td style="font-size: 12px;text-align: center;">{{$item_pm->metros_lineales}}</td>                                            
+                                    <td style="font-size: 12px;text-align: center;">{{$item_pm->cm}}</td>                                            
                                 </tr>
                                 @endif
                             @endforeach      
@@ -334,17 +332,15 @@ b {
                         </tr>  
                         <tr> 
                             <td style="font-size: 12px;text-align: center;width: 100px;"><b>&nbsp;</b></td>  
-                            <td style="font-size: 12px;text-align: center;width: 150px; "><b>Pieza </b></td>                        
-                            <td style="font-size: 12px;text-align: center;width: 150px; "><b>Número </b></td>                         
-                            <td style="font-size: 12px;text-align: center;"><b>Metros Lineales </b></td>                                            
+                            <td style="font-size: 12px;text-align: center;width: 150px; "><b>Elemento </b></td>                                            
+                            <td style="font-size: 12px;text-align: center;"><b>Cm</b></td>                                            
                         </tr> 
                         @foreach ($parte_detalle as $item_lp)
                             @if ($item->informe_id == $item_lp->informe_id)      
                                 <tr> 
                                     <td style="font-size: 12px;text-align: center;"><b>&nbsp;</b></td>  
                                     <td style="font-size: 12px;text-align: center; ">{{$item_lp->pieza}}</td>                        
-                                    <td style="font-size: 12px;text-align: center; ">{{$item_lp->nro}}</td>                         
-                                    <td style="font-size: 12px;text-align: center;">{{$item_lp->metros_lineales}}</td>                                            
+                                    <td style="font-size: 12px;text-align: center;">{{$item_lp->cm}}</td>                                            
                                 </tr>
                                 @endif
                             @endforeach      
@@ -373,17 +369,17 @@ b {
                         </tr>  
                         <tr> 
                             <td style="font-size: 12px;text-align: center;width: 100px;"><b>&nbsp;</b></td>  
-                            <td style="font-size: 12px;text-align: center;width: 150px; "><b>Costura </b></td>    
-                            <td style="font-size: 12px;text-align: center;width: 150px; "><b>Pieza </b></td>                        
-                            <td style="font-size: 12px;text-align: center;width: 150px;"><b>Diametro </b></td>                                            
+                            <td style="font-size: 12px;text-align: center;width: 150px; "><b>Elemento </b></td>                        
+                            <td style="font-size: 12px;text-align: center;width: 150px;"><b>Diametro </b></td>   
+                            <td style="font-size: 12px;text-align: center;"><b>Cm</b></td>                                           
                         </tr> 
                         @foreach ($parte_detalle as $item_us)
                             @if ($item->informe_id == $item_us->informe_id)      
                                 <tr> 
                                     <td style="font-size: 12px;text-align: center;"><b>&nbsp;</b></td>  
-                                    <td style="font-size: 12px;text-align: center; ">{{$item_us->costura}}</td>                         
                                     <td style="font-size: 12px;text-align: center; ">{{$item_us->pieza}}</td>                        
-                                    <td style="font-size: 12px;text-align: center;">{{$item_us->pulgadas}}</td>                                            
+                                    <td style="font-size: 12px;text-align: center;">{{$item_us->pulgadas}}</td> 
+                                    <td style="font-size: 12px;text-align: center;">{{$item_us->cm}}</td>                                               
                                 </tr>
                                 @endif
                             @endforeach      

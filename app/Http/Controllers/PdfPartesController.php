@@ -28,12 +28,26 @@ class PdfPartesController extends Controller
         
         
         $parte_detalle = DB::select('CALL ParteDetalle(?,?)',array($id,$estado));
-       
-        $metodos_informe = DB::table('metodo_ensayos') 
-                        ->join('informes','metodo_ensayos.id','=','informes.metodo_ensayo_id')  
-                        ->join('parte_detalles','parte_detalles.informe_id','=','informes.id')
+
+        $servicios = DB::table('parte_servicios')
+                                ->join('servicios','servicios.id','=','parte_servicios.servicio_id')
+                                ->join('metodo_ensayos','metodo_ensayos.id','=','servicios.metodo_ensayo_id')   
+                                ->join('unidades_medidas','unidades_medidas.id','=','servicios.unidades_medida_id')
+                                ->where('parte_servicios.parte_id',$id)
+                                ->selectRaw('metodo_ensayos.id as metodo_ensayo_id,metodo_ensayos.metodo,unidades_medidas.id as unidad_medida_id,unidades_medidas.codigo as unidad_medida,servicios.id as servicio_id,servicios.descripcion as servicio_descripcion,cant_original,cant_final')
+                                ->get();
+       dd($servicios);
+        $metodos_informe = DB::table('parte_detalles') 
+                        ->leftjoin('informes','parte_detalles.informe_id','=','informes.id')
+                        ->leftjoin('informes_importados','parte_detalles.informe_importado_id','=','informes_importados.id')
+                        ->join('metodo_ensayos',function($join){
+                            
+                            $join->on('metodo_ensayos.id','=','informes.metodo_ensayo_id');
+                            $join->orOn('metodo_ensayos.id','=','informes_importados.metodo_ensayo_id');
+
+                        })  
                         ->where('parte_detalles.parte_id',$id)
-                        ->selectRaw('metodo_ensayos.metodo as metodo,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado')
+                        ->selectRaw('metodo_ensayos.metodo as metodo,IF(informes_importados.numero,CONCAT(metodo_ensayos.metodo,LPAD(informes_importados.numero, 3, "0")),CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0"))) as numero_formateado')
                         ->groupBy('metodo','numero_formateado')
                         ->orderBy('numero_formateado','ASC')
                         ->get();

@@ -361,8 +361,8 @@ class PartesController extends Controller
                                         ->get();
 
         $servicios = DB::table('parte_servicios')
-                               ->join('servicios','servicios.id','=','parte_servicios.servicio_id')
-                               ->join('metodo_ensayos','metodo_ensayos.id','=','servicios.metodo_ensayo_id')   
+                                ->join('servicios','servicios.id','=','parte_servicios.servicio_id')
+                                ->join('metodo_ensayos','metodo_ensayos.id','=','servicios.metodo_ensayo_id')   
                                 ->join('unidades_medidas','unidades_medidas.id','=','servicios.unidades_medida_id')
                                 ->where('parte_servicios.parte_id',$id)
                                 ->selectRaw('metodo_ensayos.id as metodo_ensayo_id,metodo_ensayos.metodo,unidades_medidas.id as unidad_medida_id,unidades_medidas.codigo as unidad_medida,servicios.id as servicio_id,servicios.descripcion as servicio_descripcion,cant_original,cant_final')

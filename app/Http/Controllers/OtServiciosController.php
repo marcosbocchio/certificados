@@ -44,9 +44,9 @@ class OtServiciosController extends Controller
         //
     }
 
-    public function getOtServiciosInforme($informe_id){
+    public function getOtServiciosInforme($informe_id,$importado_sn){
 
-        $servicio =  DB::select('CALL getServiciosInforme(?)',array($informe_id));
+        $servicio =  DB::select('CALL getServiciosInforme(?,?)',array($informe_id,$importado_sn));
 
 
         return $servicio;

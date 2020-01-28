@@ -285,7 +285,7 @@
                                             <thead>
                                                 <tr>
                                                     <th>INFORME</th>       
-                                                    <th>PIEZA</th>                                           
+                                                    <th>ELEMENTO</th>                                           
                                                     <th>CM</th>                                                                                                
                                                     <th colspan="2">&nbsp;</th>
                                                 </tr>
@@ -343,7 +343,7 @@
                                             <thead>
                                                 <tr>
                                                     <th>INFORME</th>       
-                                                    <th>PIEZA</th>                                         
+                                                    <th>ELEMENTO</th>                                         
                                                     <th>CM</th>                                                                                                
                                                     <th colspan="2">&nbsp;</th>
                                                 </tr>
@@ -472,9 +472,9 @@
                                         <table class="table table-hover table-striped table-bordered">
                                             <thead>
                                                 <tr>
-                                                    <th>INFORME</th>       
-                                                    <th>OBSERVACIONES</th>                                                                                                                                      
-                                                    <th colspan="2">&nbsp;</th>
+                                                    <th class="col-md-1">INFORME</th>       
+                                                    <th class="col-md-10">OBSERVACIONES</th>                                                                                                                                      
+                                                    <th class="col-md-1">&nbsp;</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -482,7 +482,7 @@
                                                     <td v-if="item.visible && itemMetodo == item.metodo"> {{ item.numero_formateado}}</td>   
                                                     <td v-if="item.visible && itemMetodo == item.metodo">
                                                         <div v-if="indexTablaInformesImportados == k && itemMetodo == item.metodo">       
-                                                              <input type="text" v-model="TablaInformesImportados[k].observaciones_final" maxlength="10">        
+                                                              <input type="text" v-model="TablaInformesImportados[k].observaciones_final" maxlength="10" size="100%">        
                                                         </div>   
                                                         <div v-else-if="itemMetodo == item.metodo">
                                                                {{ item.observaciones_final }}
@@ -1184,6 +1184,8 @@ export default {
                
                 if(this.informes[index].importable_sn){
                     this.getInformesImportado(this.informes[index].id,index);
+                    this.getServiciosInformes(this.informes[index].id,1);
+
 
                 }else{
                     
@@ -1199,8 +1201,8 @@ export default {
 
                     }
   
+                    this.getServiciosInformes(this.informes[index].id,0);
                 }
-                this.getServiciosInformes(this.informes[index].id);
 
             } else{
 
@@ -1358,20 +1360,20 @@ export default {
             });
         },
 
-        getServiciosInformes(informe_id){
+        getServiciosInformes(informe_id,importado_sn){
 
             axios.defaults.baseURL = this.url ;
-            var urlRegistros = 'ot_servicios/informe/' + informe_id + '?api_token=' + Laravel.user.api_token;        
+            var urlRegistros = 'ot_servicios/informe/' + informe_id + '/importado_sn/' + importado_sn + '?api_token=' + Laravel.user.api_token;        
             axios.get(urlRegistros).then(response =>{
                 
                 let informe_servicios = response.data;
+                console.log(urlRegistros);
                 console.log('ot_servicios:' ,informe_servicios);
                 console.log(informe_servicios);
 
-
+            
                 informe_servicios.forEach(function(item) {
                     
-
                    if(this.TablaServicios.findIndex(elemento => elemento.servicio_descripcion == item.servicio_descripcion) != -1 && this.TablaServicios[this.TablaServicios.findIndex(elemento => elemento.servicio_descripcion ==item.servicio_descripcion)].visible){
 
                        if(item.unidad_medida == 'Dia' || item.unidad_medida == 'Mes'){
