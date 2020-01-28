@@ -36,7 +36,7 @@ class PdfPartesController extends Controller
                                 ->where('parte_servicios.parte_id',$id)
                                 ->selectRaw('metodo_ensayos.id as metodo_ensayo_id,metodo_ensayos.metodo,unidades_medidas.id as unidad_medida_id,unidades_medidas.codigo as unidad_medida,servicios.id as servicio_id,servicios.descripcion as servicio_descripcion,cant_original,cant_final')
                                 ->get();
-       dd($servicios);
+    //   dd($servicios);
         $metodos_informe = DB::table('parte_detalles') 
                         ->leftjoin('informes','parte_detalles.informe_id','=','informes.id')
                         ->leftjoin('informes_importados','parte_detalles.informe_importado_id','=','informes_importados.id')
