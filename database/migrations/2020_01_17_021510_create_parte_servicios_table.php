@@ -15,8 +15,8 @@ class CreateParteServiciosTable extends Migration
     {
         Schema::create('parte_servicios', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('cant_original')->nullable();   
-            $table->integer('cant_final')->nullable(); 
+            $table->float('cant_original',8,2)->nullable();   
+            $table->float('cant_final',8,2)->nullable(); 
             $table->timestamps();
         });
     }

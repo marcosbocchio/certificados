@@ -235,9 +235,38 @@ b {
              </tr>
         </tbody>
     </table>
+    
  
     <table width="100%" style="margin-top: -5px;">
-        <tbody>                          
+        <tbody>        
+
+            <tr> 
+                <td style="font-size: 13px;height: 30px;" colspan="5"><b style="margin-left: 6px;">SERVICIOS: </b></td>                                             
+            </tr>  
+            <tr>
+                <td style="font-size: 12px;width: 100px; "><b&nbsp;></b></td>  
+                <td style="font-size: 12px;width: 100px; "><b>Metodo Ensayo: </b></td>                        
+                <td style="font-size: 12px;width: 350px; " colspan="2"><b>Descripción </b></td>                         
+                <td style="font-size: 12px;text-align: center;"><b>Cantidad </b></td>        
+            </tr>    
+            @foreach($servicios as $servicio)
+                <tr>
+                    <td style="font-size: 12px;width: 100px; ">&nbsp;</td>  
+                    <td style="font-size: 12px;width: 100px;">{{$servicio->metodo}}</td>                        
+                    <td style="font-size: 12px;width: 350px; " colspan="2">{{$servicio->servicio_descripcion}}</td>                         
+                    <td style="font-size: 12px;text-align: center;text-align: center;">
+
+                        @if($estado == 'original')
+                            {{$servicio->cant_original}}
+                        @else
+                            {{$servicio->cant_final}}
+                        @endif
+                    
+                    </td>        
+                </tr>                 
+            @endforeach
+
+
             {{$ExisteRI = false}} 
             @foreach ($parte_detalle as $item)
 
@@ -253,9 +282,9 @@ b {
                 </tr>  
                 @foreach ($parte_detalle as $item)
                     @if ($item->metodo == 'RI')                               
-                        <tr>                         
+                         <tr>                         
                             <td style="font-size: 12px;height: 20px;" colspan="5"><b style="margin-left: 8px;">{{$item->numero_formateado}} </b></td>                                         
-                        </tr>   
+                        </tr> 
                         <tr>    
                             <td style="font-size: 12px;width: 100px; "><b&nbsp;></b></td>  
                             <td style="font-size: 12px;width: 150px;  text-align: center; "><b>Costuras </b></td>                        
@@ -272,7 +301,7 @@ b {
                         </tr>
                     @endif
                 @endforeach                     
-               
+
             @endif
 
             {{$ExistePM = false}} 
@@ -309,7 +338,7 @@ b {
                             @endforeach      
                     @endif
                 @endforeach                             
-              
+             
             @endif
 
             {{$ExisteLP = false}} 
@@ -346,7 +375,7 @@ b {
                             @endforeach      
                     @endif
                 @endforeach                             
-            
+  
             @endif
 
             {{$ExisteUS = false}} 
@@ -384,7 +413,8 @@ b {
                                 @endif
                             @endforeach      
                     @endif
-                @endforeach            
+                @endforeach  
+         
             @endif
         </tbody>
     </table>
