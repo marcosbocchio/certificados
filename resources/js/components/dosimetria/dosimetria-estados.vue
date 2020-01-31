@@ -17,7 +17,7 @@
                     </div> 
                      <div class="col-md-3">
                         <div class="form-group"> 
-                            <label>Operador</label>
+                            <label>Operador / Film</label>
                             <div class="input-group">
                                 <input type="text" v-model="search" class="form-control">
                                 <span class="input-group-addon"><i class="fa fa-search"></i></span>
@@ -206,7 +206,7 @@ export default {
    
         if(this.search){
 
-            if(this.TablaDosimetriaEstados[index].operador.toLowerCase().includes(this.search.toLowerCase()))
+            if(this.TablaDosimetriaEstados[index].operador.toLowerCase().includes(this.search.toLowerCase())||this.TablaDosimetriaEstados[index].film.toString().includes(this.search))
             {
                 return false
 

@@ -49,6 +49,8 @@ class UserController extends Controller
       $request->validate([
     
         'name' => 'required',
+        'dni'  =>'nullable|unique:users|numeric|digits_between:7,8',
+        'film' => 'nullable|numeric|unique:users|digits_between:1,3',
         'email'  =>'required|unique:users|email',
         'password' =>'required|Min:8',
         'cliente'  =>$condicion_cliente
@@ -88,6 +90,8 @@ class UserController extends Controller
       $request->validate([
     
         'name' => 'required',
+        'dni'  =>'nullable|unique:users|numeric|digits_between:7,8',
+        'film' => 'nullable|numeric|unique:users||digits_between:1,3',
         'email'  =>'required|email|' . $condicion_email,
         'password' =>'required|Min:8',
         'cliente'  =>$condicion_cliente

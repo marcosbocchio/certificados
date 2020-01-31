@@ -17,10 +17,12 @@ class AddColumnFilmDniUsersTable extends Migration
             
             $table->integer('film')
                 ->nullable()
+                ->unique()
                 ->after('cliente_id');
 
             $table->integer('dni')
                 ->nullable()
+                ->unique()
                 ->after('name');
         });
     }
