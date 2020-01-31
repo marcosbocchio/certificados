@@ -7,7 +7,9 @@
 
 <div id="app">
 
-   <dosimetria-operador></dosimetria-operador>
+   <dosimetria-operador
+         :operador_data= "{{ $operador }}"
+   ></dosimetria-operador>
 
 </div>
 @endsection

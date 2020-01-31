@@ -6,13 +6,13 @@
                      <div class="col-md-6">
                         <div class="form-group">
                             <label>Operadores</label>
-                            <v-select v-model="operador" label="name" :options="operadores" ></v-select>
+                            <v-select v-model="operador" label="name" :options="operadores" :disabled="!operador_data.can.dosimetria" ></v-select>
                         </div>   
                     </div>      
                      <div class="col-md-3">
                         <div class="form-group">
                             <label>Año</label>
-                            <v-select v-model="year" label="name" :options="years" ></v-select>
+                            <v-select v-model="year" label="name" :options="years" :disabled="!operador_data.can.dosimetria" @input="setMonth()" ></v-select>
                         </div>   
                     </div>   
                      <div class="col-md-3">
@@ -41,7 +41,7 @@
                                                     
                                         <td style="text-align:center;" bgcolor="#bee5eb"> {{item.day}} </td>    
                                         <td style="text-align:center;">
-                                            <div v-if="(indexPosTablaDosimetria) == k && ((k + 1) <= dia_actual)">       
+                                            <div v-if="(indexPosTablaDosimetria == k) && ((k + 1) <= dia_actual)">       
                                                 <input type="number" :ref="'refInputMediciones'" v-model="TablaDosimetria[k].microsievert">        
                                             </div>   
                                             <div v-else>
@@ -76,12 +76,23 @@ import {mapState} from 'vuex'
 
 export default {
 
+   props :{
+
+       operador_data : {
+       type : Object,
+       required : true 
+       }
+
+     },
+
+
   data () { return {
 
       TablaDosimetria:[],
-      operador :{},
-      year:{},
-      month:{},
+      operador : JSON.parse(JSON.stringify(this.operador_data)),
+      year: '',
+      month:'',
+
       years:['2019',
              '2020',
              '2021',
@@ -89,48 +100,56 @@ export default {
              '2023',
              '2024' ],
       months :['1','2','3','4','5','6','7','8','9','10','11','12'],
-      indexPosTablaDosimetria : '-1',
+      indexPosTablaDosimetria : '0',
      
     }    
   },
 
   created : function() {
-      
-      this.$store.dispatch('loadFechaActual'); 
-      this.$store.dispatch('loadOperadores'); 
-     
+ 
+    
+        this.$store.dispatch('loadFechaActual').then(response => {
+
+            this.$store.dispatch('loadOperadores'); 
+            this.indexPosTablaDosimetria = this.dia_actual-1;
+            this.setYearMonth();
+       })
   },   
 
   watch : {
 
         operador : function(){
 
-            this.month ='';
-            this.year ='';
+            this.year='';
             this.TablaDosimetria = []
 
-        },
-
-        year : function(){
-
-            this.month ='';
-            this.TablaDosimetria = []
         },
 
         month : function(val){
 
-              if(val) {  
-                this.$store.dispatch('loadDiasDelMes',{year : this.year , month : this.month}); 
-                this.$store.dispatch('loadDosimetriaOperador',{operador_id : this.operador.id, year : this.year , month : this.month}).then(
-                    response => {
-                        
-                        this.ResetTabla();
+              if(val) { 
+                  
+                if(val != new Date(this.fecha).getMonth() + 1){
 
-                    }
-                );  
+                      this.indexPosTablaDosimetria = '0'
+
+                }  
+                
+                this.$store.dispatch('loadDiasDelMes',{year : this.year , month : this.month}).then(response =>{
+
+                    this.$store.dispatch('loadDosimetriaOperador',{operador_id : this.operador.id, year : this.year , month : this.month}).then(
+                        response => {
+                            
+                            this.ResetTabla();
+    
+                        }
+                    );  
+
+                }); 
              }
         }
   },
+  
   computed :{
 
        ...mapState(['url','AppUrl','operadores','DiasDelMes','dosimetria_operador','fecha']),
@@ -143,6 +162,20 @@ export default {
     },
  
  methods : {
+
+     setYearMonth : function () {
+        
+        this.year = new Date(this.fecha).getFullYear();
+        this.month = new Date(this.fecha).getMonth() + 1;
+
+     },
+
+     setMonth :  function (){
+
+         this.month = '';
+         this.TablaDosimetria = [];
+        
+     },
 
      ResetTabla : function() {
 
@@ -162,16 +195,15 @@ export default {
             
            this.TablaDosimetria[item.day-1].microsievert = item.microsievert;
            this.TablaDosimetria[item.day-1].observaciones = item.observaciones;
-        }.bind(this));
 
-        this.indexPosTablaDosimetria = this.dia_actual-1;
+        }.bind(this));
 
             setTimeout(x => {
 
             this.$nextTick(() => {                
                 this.$refs['refInputMediciones'][0].focus();
                 });  
-            }, 250);
+            },250);
 
      },
 
@@ -183,7 +215,6 @@ export default {
 
      submit :function () {
        
-
             axios.defaults.baseURL = this.url ;
             var urlRegistros = 'dosimetria_operador';  
                         
@@ -217,9 +248,7 @@ export default {
         }
 
  },
-
-
-    
+  
 }
 </script>
 

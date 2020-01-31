@@ -296,10 +296,13 @@ actions : {
         loadFechaActual({
           commit}) {
           axios.defaults.baseURL = store.state.url ;
-          var urlRegistros = 'fecha_actual'  + '?api_token=' + Laravel.user.api_token;      
+          var urlRegistros = 'fecha_actual'  + '?api_token=' + Laravel.user.api_token;     
+          return new Promise((resolve, reject) => {          
           axios.get(urlRegistros).then((response) => {     
           console.log(response.data);
-          commit('getFechaActual', response.data)   
+          commit('getFechaActual', response.data) 
+          resolve()       
+        })    
 
         })
         },

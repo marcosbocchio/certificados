@@ -24,9 +24,10 @@ class DosimetriaOperadorController extends Controller
       {   
           $user = auth()->user()->name; 
           $header_titulo = "Dosimetria Operador";
-          $header_descripcion ="Alta | Baja | Modificación"; 
+          $header_descripcion ="Alta | Baja | Modificación";    
         
-          return view('dosimetria.dosimetria_operador',compact('user','header_titulo','header_descripcion'));
+          $operador = auth()->user();
+          return view('dosimetria.dosimetria_operador',compact('user','operador','header_titulo','header_descripcion'));
   
       }
 
@@ -40,8 +41,7 @@ class DosimetriaOperadorController extends Controller
                                    ->get();
     
          $dias = cal_days_in_month(CAL_GREGORIAN, $month, $year); 
-         
-
+    
          return $disometrias;
     }
     /**
