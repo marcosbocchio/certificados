@@ -2,7 +2,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-          <strong>  {{$header_titulo}} </strong>
+            {{$header_titulo}} 
             <small>{{ $header_descripcion }}</small>
         </h1>
         <ol class="breadcrumb">

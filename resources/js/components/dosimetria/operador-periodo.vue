@@ -6,7 +6,12 @@
                      <div class="col-md-6">
                         <div class="form-group">
                             <label>Operadores</label>
-                            <v-select v-model="operador" label="name" :options="operadores_dosimetria" ></v-select>
+                            <v-select v-model="operador" :options="operadores_dosimetria" :getOptionLabel="getLabel">
+                                <template slot="option" slot-scope="option">
+                                    <span class="upSelect">{{ option.name }} </span> <br> 
+                                    <span class="downSelect"> {{ option.film }} </span>
+                                </template>
+                            </v-select> 
                         </div>   
                     </div>      
                     <div class="col-md-3">
@@ -98,9 +103,8 @@ export default {
       operador : '',
       fecha_alta:'',
       TablaPeriodos:[],
-     }
+  }
   },
-
   created : function() {
  
         this.$store.dispatch('loadFechaActual').then(response => {
@@ -153,6 +157,12 @@ export default {
             
             });   
      },
+
+    getLabel(option) {
+
+      return `${option.name} ${option.film}`
+      
+    },
 
      submit :function () {
        

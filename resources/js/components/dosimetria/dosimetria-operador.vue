@@ -6,7 +6,12 @@
                      <div class="col-md-6">
                         <div class="form-group">
                             <label>Operadores</label>
-                            <v-select v-model="operador" label="name" :options="operadores_dosimetria" :disabled="!operador_data.can.dosimetria" ></v-select>
+                            <v-select v-model="operador" :options="operadores_dosimetria" :getOptionLabel="getLabel" :disabled="!operador_data.can.dosimetria">
+                                <template slot="option" slot-scope="option">
+                                    <span class="upSelect">{{ option.name }} </span> <br> 
+                                    <span class="downSelect"> {{ option.film }} </span>
+                                </template>
+                            </v-select> 
                         </div>   
                     </div>      
                      <div class="col-md-3">
@@ -174,6 +179,11 @@ export default {
     },
  
  methods : {
+
+
+   getLabel(option) {
+      return `${option.name} ${option.film}`
+    },
 
      setYears : function(){
 

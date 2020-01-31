@@ -28,12 +28,6 @@ Route::get('operadores/ot/{id}','OtOperariosController@index')
 
 */
 
-Route::group(['middleware' => ['permission:cliente']], function () {
-
-  Route::get('/area/cliente', 'dashboardClientesController@index')->name('dashboardC');
-
-});
-
 Route::group(['middleware' => ['auth']], function () {
 
   Route::get('institucionales/{id}','DocumentacionesController@institucionales')->name('institucionales');
@@ -67,7 +61,7 @@ Route::group(['middleware' => ['auth']], function () {
   
 });
 
-Route::get('/area/enod','dashboardOperadoresController@index')->name('dashboardO');
+Route::get('/area/enod','DashboardController@index')->name('dashboard');
 
 Route::group(['middleware' => ['permission:enod']], function () {
 

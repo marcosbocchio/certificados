@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Documentaciones;
 
-class dashboardOperadoresController extends Controller
+class dashboardController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -28,8 +28,8 @@ class dashboardOperadoresController extends Controller
        
          $user = $Request->user()->name;
          $title = 'Area Enod' ;
-         $header_titulo = "Dashboard";
-         $header_descripcion ="Control panel";     
-         return view('testoperador',compact('user','title','header_titulo','header_descripcion','documentos'));
+         $header_titulo = "Tablero Principal";
+         $header_descripcion ="";     
+         return view('dashboard',compact('user','title','header_titulo','header_descripcion','documentos'));
      }
 }

@@ -14,7 +14,7 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu tree" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>       
-        <li><a href="{{ route('dashboardO')}}" ><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>   
+        <li><a href="{{ route('dashboard')}}" ><i class="fa fa-dashboard"></i> <span>Tablero Principal</span></a></li>   
         @can('enod')  
           <li class="treeview">
             <a href="#">

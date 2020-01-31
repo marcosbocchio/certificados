@@ -1334,11 +1334,11 @@ export default {
 
                    }else if(item.unidad_medida == 'Dia' && item.servicio_descripcion.includes('VIATICOS')){
 
-                         cantidad = 1;   
+                         cantidad = 0;   
 
                    }else if(item.unidad_medida == 'Dia' && item.servicio_descripcion.includes('HOSPEDAJE')){
 
-                         cantidad = 1;   
+                         cantidad = 0;   
 
                   }          
 

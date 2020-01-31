@@ -138,7 +138,13 @@
                                 <th class="col-lg-1">OBRA N°</th>     
                                 <th class="col-lg-2">FECHA</th>     
                                 <th class="col-lg-1">ESTADO</th>                        
-                                <th class="col-lg-1" colspan="4">&nbsp;</th>
+                                <th class="col-lg-1" colspan="4">
+                                 <small style="margin-left: 2px;">Editar</small style="margin-left: 6px;">
+                                 <small style="margin-left: 19px;">Usuario</small>
+                                 <small style="margin-left: 19px;">Pdf</small>
+                                 <small style="margin-left: 19px;">Estados</small>
+
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -273,4 +279,5 @@ table .selected{
   background-color: rgb(220, 198, 241)!important;
 
 } 
+
 </style>
