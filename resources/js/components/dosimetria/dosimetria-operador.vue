@@ -92,14 +92,8 @@ export default {
       operador : JSON.parse(JSON.stringify(this.operador_data)),
       year: '',
       month:'',
-
-      years:['2019',
-             '2020',
-             '2021',
-             '2022',
-             '2023',
-             '2024' ],
-      months :['1','2','3','4','5','6','7','8','9','10','11','12'],
+      years:[],
+      months :[],
       indexPosTablaDosimetria : '0',
      
     }    
@@ -112,7 +106,11 @@ export default {
 
             this.$store.dispatch('loadOperadores'); 
             this.indexPosTablaDosimetria = this.dia_actual-1;
-            this.setYearMonth();
+            this.setYears();
+            this.year = new Date(this.fecha).getFullYear();
+            this.month = new Date(this.fecha).getMonth() + 1;
+            this.setMonths();
+            
        })
   },   
 
@@ -163,18 +161,40 @@ export default {
  
  methods : {
 
-     setYearMonth : function () {
-        
-        this.year = new Date(this.fecha).getFullYear();
-        this.month = new Date(this.fecha).getMonth() + 1;
+     setYears : function(){
 
+         for (let year = 2019; year <= new Date(this.fecha).getFullYear();year++) {
+          
+             this.years.push(year);       
+         }
+
+     },
+
+     setMonths : function(){
+
+         this.months = [];
+         
+         if(this.year < new Date(this.fecha).getFullYear()){
+
+             this.months = ['1','2','3','4','5','6','7','8','9','10','11','12']
+             
+         }else{
+     
+            for (let month = 1; month <= new Date(this.fecha).getMonth() + 1; month++) {
+                
+                this.months.push(month);
+                
+            }
+
+         }
      },
 
      setMonth :  function (){
 
          this.month = '';
          this.TablaDosimetria = [];
-        
+         this.setMonths();
+   
      },
 
      ResetTabla : function() {
