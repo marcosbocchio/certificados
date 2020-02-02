@@ -2,7 +2,7 @@
  <div>
      <div class="col-md-12">
           <!-- small box -->
-          <div class="small-box bg-aqua">
+          <div class="small-box bg-custom-5">
             <div class="inner">
               <h3>{{CantRemitos}}</h3>
 

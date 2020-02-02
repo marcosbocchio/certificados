@@ -2,7 +2,7 @@
     <div>
         <div class="col-md-12">
             <!-- small box -->
-            <div class="small-box bg-red">
+            <div class="small-box bg-custom-6">
             <div class="inner">
 
                 <h3 >{{CantInformes}}</h3>

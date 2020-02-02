@@ -2,7 +2,7 @@
  <div>
      <div class="col-md-12">
           <!-- small box -->
-          <div class="small-box bg-blue">
+          <div class="small-box bg-custom-7">
             <div class="inner">
               <h3>{{CantPartes}}</h3>
 

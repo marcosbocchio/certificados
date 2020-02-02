@@ -2,7 +2,7 @@
     <div>
          <div class="col-md-12">
           <!-- small box -->
-          <div class="small-box bg-aqua">
+          <div class="small-box bg-custom-1">
             <div class="inner">
               <h3>{{users_ot_operarios.length}}</h3>
 

@@ -2,7 +2,7 @@
     <div>
         <div class="col-md-12">
           <!-- small box -->
-          <div class="small-box bg-yellow">
+          <div class="small-box bg-custom-2">
             <div class="inner">
               <h3>{{ interno_equipos.length }}</h3>
               <p>Equipos </p>
