@@ -35,7 +35,7 @@ class PersonaController extends Controller
      */
     public function store(Request $request)
     {
-      
+        return $request;
         $p = new Persona;
         $p->nombre = $request->nombre;
         $p->email = $request->email;
