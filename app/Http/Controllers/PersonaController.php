@@ -37,7 +37,7 @@ class PersonaController extends Controller
     {
       
         $p = new Persona;
-      
+        return $request;
         $p->nombre = $request->input('persona.nombre');
         $p->email = $request->input('persona.email');
         $p->save();
