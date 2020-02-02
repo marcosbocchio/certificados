@@ -3,13 +3,13 @@
     <div class="row">
       <div class="col-lg-3 col-xs-6">
         <!-- small box -->
-        <div class="small-box bg-aqua">
+        <div class="small-box bg-custom-1">
           <div class="inner">
             <h3>{{ CantOperadores }}</h3>
             <p>Operadores</p>
           </div>
           <div class="icon">
-            <i class="ion ion-person-add"></i>
+            <i class="fa fa-users"></i>
           </div>
           <a :href="AppUrl + '/operadores/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
         </div>
@@ -18,7 +18,7 @@
         <!-- ./col -->
       <div class="col-lg-3 col-xs-6">
         <!-- small box -->
-        <div class="small-box bg-yellow">
+        <div class="small-box bg-custom-2">
           <div class="inner">
             <h3>{{ CantInternoEquipos }}</h3>
             <p>Equipos</p>
@@ -33,14 +33,14 @@
       <!-- ./col -->
       <div class="col-lg-3 col-xs-6">
         <!-- small box -->
-        <div class="small-box bg-yellow">
+        <div class="small-box bg-custom-3">
           <div class="inner">
             <h3>{{ CantProcedimientos }}</h3>
 
             <p>Procedimientos</p>
           </div>
           <div class="icon">
-            <i class="ion ion-person-add"></i>
+            <i class="fas fa-radiation-alt"></i>
           </div>
           <a :href="AppUrl + '/procedimientos/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
         </div>
@@ -49,13 +49,13 @@
       <!-- ./col -->       
       <div class="col-lg-3 col-xs-6">
         <!-- small box -->
-        <div class="small-box bg-yellow">
+        <div class="small-box bg-custom-4">
           <div class="inner">
             <h3>{{ CantDocumentaciones }}</h3>
             <p>Documentaciones</p>
           </div>
           <div class="icon">
-            <i class="ion ion-person-add"></i>
+              <i class="fa fa-file-pdf-o"></i>
           </div>
           <a :href="AppUrl + '/documentaciones/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
         </div>
@@ -65,14 +65,14 @@
       <!-- ./col -->
       <div class="col-lg-3 col-xs-6">
         <!-- small box -->
-        <div class="small-box bg-gray">
+        <div class="small-box bg-custom-5">
           <div class="inner">
             <h3>{{ CantRemitos }}</h3>
 
             <p>Remitos</p>
           </div>
           <div class="icon">
-            <i class="fa fa-tasks"></i>
+            <i class="fa fa-clipboard"></i>
           </div>
           <a :href="AppUrl + '/remitos/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
         </div>
@@ -81,14 +81,14 @@
       <!-- ./col -->
       <div class="col-lg-3 col-xs-6">
         <!-- small box -->
-        <div class="small-box bg-red">
+        <div class="small-box bg-custom-6">
           <div class="inner">
             <h3>{{ CantInformes }} </h3>
 
             <p>Informes</p>
           </div>
           <div class="icon">
-            <i class="ion ion-pie-graph"></i>
+              <i class="fa fa-list-alt"></i>
           </div>
             <a :href="AppUrl + '/informes/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
         </div>
@@ -96,14 +96,14 @@
       <!-- ./col -->
       <div class="col-lg-3 col-xs-6">
         <!-- small box -->
-        <div class="small-box bg-blue">
+        <div class="small-box bg-custom-7">
           <div class="inner">
             <h3>{{CantPartes}}</h3>
 
             <p>Partes Diarios</p>
           </div>
           <div class="icon">
-            <i class="fa fa-file-pdf-o"></i>
+            <i class="fa fa-calendar-o"></i>
           </div>
           <a :href="AppUrl + '/partes/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
         </div>
@@ -111,14 +111,14 @@
       <!-- ./col -->
       <div class="col-lg-3 col-xs-6">
         <!-- small box -->
-        <div class="small-box bg-green">
+        <div class="small-box bg-custom-8">
           <div class="inner">
             <h3>0</h3>
 
             <p>Certificados</p>
           </div>
           <div class="icon">
-            <i class="ion ion-pie-graph"></i>
+            <i class="fa fa-check-square-o"></i>
           </div>
           <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
         </div>
@@ -126,7 +126,7 @@
   </div> 
   <div class="row"> 
     <div class="col-md-12">
-        <div class="box box-primary top-buffer">
+        <div class="box box-custom top-buffer">
             <div class="box-body">
                 <div class="table-responsive">          
                     <table class="table table-hover table-striped">
@@ -139,10 +139,10 @@
                                 <th class="col-lg-2">FECHA</th>     
                                 <th class="col-lg-1">ESTADO</th>                        
                                 <th class="col-lg-1" colspan="4">
-                                 <small style="margin-left: 2px;">Editar</small style="margin-left: 6px;">
-                                 <small style="margin-left: 19px;">Usuario</small>
-                                 <small style="margin-left: 19px;">Pdf</small>
-                                 <small style="margin-left: 19px;">Estados</small>
+                                 <small style="margin-left: 2px;">Editar</small>
+                                 <small style="margin-left: 12px;">Usuario</small>
+                                 <small style="margin-left: 10px;">Informe</small>
+                                 <small style="margin-left: 10px;">Estados</small>
 
                                 </th>
                             </tr>
@@ -274,10 +274,6 @@ export default {
 
 
 
-table .selected{
 
-  background-color: rgb(220, 198, 241)!important;
-
-} 
 
 </style>

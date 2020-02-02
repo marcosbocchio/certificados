@@ -48,7 +48,9 @@
                             </div>    
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="name">film</label>
+                                    <label for="name">Film</label>
+                                    <input type="checkbox" id="checkbox" v-model="newRegistro.habilitado_arn_sn" style="float:right"> 
+                                    <label for="tipo" style="float:right;margin-right: 5px;">Habilitado Arn</label>   
                                     <input autocomplete="off" v-model="newRegistro.film" type="number" name="film" class="form-control" value="">
                                 </div>
                             </div>   
@@ -145,6 +147,7 @@ export default {
             'name'  : '',
             'dni'   :'',
             'film'  :'',
+            'habilitado_arn_sn':false,
             'email' : '',
             'password' : '',
             'path':''
@@ -230,6 +233,7 @@ export default {
                         'name'  : '',
                         'dni'   :'',
                         'film'  :'',
+                        'habilitado_arn_sn':false,
                         'email' : '',
                         'password' : '',
                         'path':''                 
@@ -342,6 +346,7 @@ export default {
                 'email'     : this.newRegistro.email,
                 'dni'       : this.newRegistro.dni,
                 'film'      : this.newRegistro.film,
+                'habilitado_arn_sn': this.newRegistro.habilitado_arn_sn,
                 'password'  : this.newRegistro.password,
                 'cliente'   : this.cliente,
                 'isEnod'    : this.isEnod,

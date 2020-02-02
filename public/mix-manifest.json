@@ -1,5 +1,7 @@
 {
-    "/js/app.js": "/js/app.js?id=ac5a79e320b3be28df66",
+    "/js/app.js": "/js/app.js?id=00c988a4dce8706fb3f4",
     "/css/toastr.css": "/css/toastr.css?id=f9c2bf8c049fd325139d",
-    "/css/custom.css": "/css/custom.css?id=a0da934cd58225f66a43"
+    "/css/custom.css": "/css/custom.css?id=d822d9f3a6a6ee8caf9d",
+    "/css/AdminLTE.min.css": "/css/AdminLTE.min.css?id=e2951237b57875d5cede",
+    "/css/_all-skins.min.css": "/css/_all-skins.min.css?id=bc17ec69aecbe413355d"
 }

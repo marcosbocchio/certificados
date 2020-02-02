@@ -64,7 +64,6 @@ function CalcularDiasEntreFechas($fecha_inicial, $fecha_final = null){
 function curie($interno_fuente_id, $fecha_final = null){
 
   $interno_fuente = InternoFuentes::where('id',$interno_fuente_id)->with('fuente')->first();
-  //return $fecha_final;
   $fecha_evaluacion = $interno_fuente->fecha_evaluacion;
   $T = CalcularDiasEntreFechas($fecha_evaluacion,$fecha_final);
   $const_t = $interno_fuente->fuente->const_t;

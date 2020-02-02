@@ -49,7 +49,9 @@
                             </div>    
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="name">film</label>
+                                    <label for="name">Film</label>
+                                    <input type="checkbox" id="checkbox" v-model="editRegistro.habilitado_arn_sn" style="float:right"> 
+                                    <label for="tipo" style="float:right;margin-right: 5px;">Habilitado Arn</label>   
                                     <input autocomplete="off" v-model="editRegistro.film" type="number" name="film" class="form-control" value="">
                                 </div>
                             </div>   
@@ -161,6 +163,7 @@ export default {
             'email' : '',
             'dni'   : '',
             'film'  : '',
+            'habilitado_arn_sn':false,
             'password' : '',
             'path':''
          },
@@ -253,6 +256,7 @@ export default {
                 this.editRegistro.name = this.selectRegistro.name;
                 this.editRegistro.dni  = this.selectRegistro.dni,
                 this.editRegistro.film = this.selectRegistro.film,
+                this.editRegistro.habilitado_arn_sn = this.selectRegistro.habilitado_arn_sn,
                 this.editRegistro.email = this.selectRegistro.email;                
                 this.editRegistro.password = '********';
                 this.password2 = '********';
@@ -371,10 +375,12 @@ export default {
                 var urlRegistros = 'users/' + this.selectRegistro.id;                         
                 axios.put(urlRegistros, {   
                     
+                    'id'        :this.selectRegistro.id,
                     'name'      : this.editRegistro.name,                
                     'email'     : this.editRegistro.email,
                     'dni'       : this.editRegistro.dni,
                     'film'      : this.editRegistro.film,
+                    'habilitado_arn_sn': this.editRegistro.habilitado_arn_sn,
                     'password'  : this.editRegistro.password,
                     'cliente'   : this.cliente,
                     'isEnod'    : this.isEnod,

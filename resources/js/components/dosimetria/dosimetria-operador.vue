@@ -37,7 +37,7 @@
                                 <thead>
                                     <tr>                                     
                                         <th style="text-align: center; min-width: 25px;" class="col-md-1" >DÍA</th>     
-                                        <th style="text-align:center;" class="col-md-1">MICROSIEVERT</th>
+                                        <th style="text-align:center;" class="col-md-1">μSv</th>
                                         <th style="text-align:center;" class="col-md-6">OBSERVACIONES</th>                                                       
                                     </tr>
                                 </thead>

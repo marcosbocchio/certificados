@@ -20,8 +20,15 @@ mix.js([
 mix.version();
 
 mix.styles([
-  'resources/css/app.css'  
+  'resources/css/app.css',  
 ], 'public/css/custom.css')
+.styles([
+  'resources/css/AdminLTE.css',
+],'public/css/AdminLTE.min.css')
+.styles([
+  'resources/css/_all-skins.css',
+],'public/css/_all-skins.min.css')
 .sass('resources/sass/toastr.scss', 'public/css')
 
 mix.version();
+

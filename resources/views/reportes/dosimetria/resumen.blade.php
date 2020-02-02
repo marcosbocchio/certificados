@@ -73,6 +73,11 @@ color: red;
 text-decoration: underline;
 }
 
+.habilitadoArn { 
+
+color: #808080;
+}
+
 </style>
 
 <body>   
@@ -148,7 +153,7 @@ text-decoration: underline;
     <tbody>
             @foreach ($resumen as $item)
                 <tr>
-                    <td style="font-size: 10px;"><span style="float: left;margin-left: 5px;"> {{ $item->operador }}</span> </td>
+                    <td style="font-size: 10px;"><span style="float: left;margin-left: 5px;" class="@if($item->habilitado_arn_sn) habilitadoArn @endif"> {{ $item->operador }}</span> </td>
                     <td style="font-size: 10px;">{{ $item->dni }}</td>
                     <td style="font-size: 10px;">{{ $item->film }}</td>   
 

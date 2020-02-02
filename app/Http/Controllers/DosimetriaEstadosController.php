@@ -118,6 +118,7 @@ class DosimetriaEstadosController extends Controller
                 $dosimetria_estado->operador_id = $estado['operador_id'];
                 $dosimetria_estado->fecha = $fecha;  
                 $dosimetria_estado->estado_id = $estado['estado']['id']; 
+                $dosimetria_estado->fecha_envio = date('Y-m-d',strtotime($estado['fecha_envio']));
                 $dosimetria_estado->user_id = $user_id;
                 $dosimetria_estado->save();    
 

@@ -84,7 +84,7 @@
                                     <tbody>
                                         <tr v-for="(item,k) in TablaResumen" :key="k"> 
                                                         
-                                            <td bgcolor="#bee5eb" @click="getPeriodos(item.operador_id)">
+                                            <td bgcolor="#bee5eb"  @click="getPeriodos(item.operador_id)">
                                                 <popper trigger="click" :options="{placement: 'top'}">
                                                     <div class="popper">
                                                             <table class="table table-bordered">
@@ -104,7 +104,7 @@
                                                 
                                                     </div>
 
-                                                    <a href="#" slot="reference" class="top">
+                                                    <a href="#" slot="reference" class="top" :class="{habilitadoArn : item.habilitado_arn_sn}">
                                                     {{item.operador}}
                                                     </a>  
                                                 </popper>                                              
@@ -296,6 +296,11 @@ export default {
 .top {
   margin: 0 auto;
   display: table;
+}
+
+.habilitadoArn { 
+
+    color:#808080;
 }
 
 

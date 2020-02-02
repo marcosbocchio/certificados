@@ -36,6 +36,7 @@ class UserRepository extends BaseRepository
       $User->cliente_id = null ;   
       $User->dni   = $request['dni'];
       $User->film  = $request['film'];
+      $User->habilitado_arn_sn = $request['habilitado_arn_sn'];
       
     }else {
       

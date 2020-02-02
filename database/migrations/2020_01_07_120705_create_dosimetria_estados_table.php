@@ -15,7 +15,8 @@ class CreateDosimetriaEstadosTable extends Migration
     {
         Schema::create('dosimetria_estados', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->datetime('fecha');           
+            $table->datetime('fecha');
+            $table->datetime('fecha_envio');     
             $table->timestamps();
         });
     }

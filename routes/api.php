@@ -250,4 +250,3 @@ Route::get('/fecha_actual',function(){
 Route::resource('personas', 'PersonaController');
 
 
-

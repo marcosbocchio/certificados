@@ -1,14 +1,29 @@
+.treeview-menu li a {
+  margin-left: 20px;
+}
+
+.content-header h1 {
+
+font-family: 'Montserrat',sans-serif;
+font-size: 21px;
+font-weight: 500;
+}
+
+.box-header h5 {
+
+  font-family: 'Montserrat',sans-serif;
+  font-weight: bold;
+  font-style: italic;
+}
 .noresize {
     resize: none; 
   }
 
 .top-buffer { margin-top:20px; }
 
-.box-title {
 
-  font-size: 15px;
-  font-style: italic;
-  color : #6E6A6A;
+.table-responsive, .table-responsive td {
+  overflow: visible !important
 }
 
 table th {
@@ -21,4 +36,58 @@ table thead tr th small {
  color: gray;
  font-style: oblique;
 
+}
+
+.table > tbody > tr > td {
+  vertical-align: middle;
+}
+
+label {
+
+  font-family: 'Open Sans',sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+
+}
+
+table .selected{
+
+  background-color: #FDEDB6!important;
+
+} 
+
+.bg-custom-1 {
+
+  background-color: #CFCFCA;
+
+}
+
+.bg-custom-2 {
+
+  background-color: #F29C33
+}
+.bg-custom-3 {
+
+  background-color: #F7C133;
+  ;
+}
+.bg-custom-4 {
+
+  background-color: #B7440C;
+}
+.bg-custom-5 {
+
+  background-color: #A8CBF2;
+}
+.bg-custom-6 {
+
+  background-color: #5AC7E0;
+}
+.bg-custom-7 {
+
+  background-color: #3A8EB6
+}
+.bg-custom-8 {
+
+  background-color: #54A75C;
 }

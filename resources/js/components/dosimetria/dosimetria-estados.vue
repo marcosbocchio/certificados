@@ -1,4 +1,5 @@
 <template>
+<div>
     <div class="row">
         <div class="col-md-12">
             <div class="box box-danger">
@@ -26,18 +27,21 @@
                      </div>
                 </div>
             </div>
-
+        </div>
+    </div>
+      <div class="row"> 
+          <div class="col-md-12">
             <div v-if="TablaDosimetriaEstados.length">
                 <div class="box box-danger">
                     <div class="box-body">
-                        <div class="col-md-9">
                             <div class="table-responsive">          
                                 <table class="table table-hover table-striped table-border">
                                     <thead>
                                         <tr>                                     
-                                            <th class="col-md-5">OPERADOR</th>
+                                            <th class="col-md-4">OPERADOR</th>
                                             <th class="col-md-1">FILM</th>
-                                            <th style="text-align:center;" class="col-md-2">ESTADO</th> 
+                                            <th class="col-md-3" >FECHA ENVÍO</th>
+                                            <th class="col-md-4" style="text-align:center;" >ESTADO</th> 
                                                         
                                         </tr>
                                     </thead>
@@ -50,7 +54,19 @@
                                                 <td v-if="(!filtro(k))" bgcolor="#bee5eb">
                                                     {{item.film}}
                                                 </td>                                             
+                                                  <td v-if="(!filtro(k))" style="text-align:center;">
+                                                      <div v-if="(indexPosTablaDosimetria == k)">    
+                                                       <div class="col-md-12">
+                                                        <div class="input-group date">
+                                                           <Datepicker v-model="TablaDosimetriaEstados[k].fecha_envio" :input-class="'form-control pull-right'" :language="es" width="100%"></Datepicker>   
+                                                        </div>
+                                                        </div>
                                         
+                                                      </div>
+                                                      <div v-else>
+                                                      {{ fecha_formateada(item.fecha_envio) }}
+                                                      </div>
+                                                </td>
                                                 <td v-if="(!filtro(k))" style="text-align:center;">
                                                     <div v-if="(indexPosTablaDosimetria == k)">      
                                                         <v-select v-model="TablaDosimetriaEstados[k].estado" :reduce="descripcion => descripcion" label="descripcion" :options="estados" ></v-select> 
@@ -62,14 +78,10 @@
                                                         {{item.estado}}
                                                     </div>
                                                 </td>                                                                           
-                                        </tr>   
-                                        <tr v-for="fila in 8" >
-                                            <td colspan="3" style="border:none; background: #FFFFFF"> &nbsp;</td>                                                  
                                         </tr>                                                               
                                     </tbody>
                                 </table>                     
                         </div>
-                    </div>
                 </div>
                 <div class="clearfix"></div>    
                 </div>
@@ -77,8 +89,9 @@
                     <a class="btn btn-primary" v-on:click="submit()" >Actualizar</a> 
                 </div>
             </div>
+          </div>
       </div>
-    </div>
+</div>
 </template>
  
 <script>
@@ -179,9 +192,18 @@ export default {
            return new Date(this.fecha).getFullYear();
        },
 
+
+
     },
  
  methods : {
+
+    fecha_formateada : function(val){
+
+        let date = new Date(val);
+        return ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear();
+
+    },
 
      getEstados : function(){      
              

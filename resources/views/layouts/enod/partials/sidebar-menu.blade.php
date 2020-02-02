@@ -14,7 +14,7 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu tree" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>       
-        <li><a href="{{ route('dashboard')}}" ><i class="fa fa-dashboard"></i> <span>Tablero Principal</span></a></li>   
+        <li><a href="{{ route('dashboard')}}" ><i class="fa fa-dashboard"></i> <span>TABLERO PRINCIPAL</span></a></li>   
         @can('enod')  
           <li class="treeview">
             <a href="#">
@@ -25,7 +25,7 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li><a href="{{ route('ots.create') }}"><i class="fa fa-circle-o"></i> Alta</a></li>                      
+              <li><a href="{{ route('ots.create') }}"> Alta</a></li>                      
             </ul>
           </li>
         @endcan
@@ -38,27 +38,27 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li><a href="{{ route('usuarios') }}"><i class="fa fa-circle-o"></i>Usuarios</a></li>
-              <li><a href="{{ route('clientes') }}"><i class="fa fa-circle-o"></i>Clientes</a></li>
-              <li><a href="{{ route('contratistas') }}"><i class="fa fa-circle-o"></i>Contratistas</a></li>
-              <li><a href="{{ route('materiales')}}"><i class="fa fa-circle-o"></i>Materiales</a></li>
-              <li><a href="{{ route('norma-ensayos') }}"><i class="fa fa-circle-o"></i>Norma ensayos</a></li>
-              <li><a href="{{ route('norma-evaluaciones') }}"><i class="fa fa-circle-o"></i>Norma Evaluaciones</a></li>
-              <li><a href="{{ route('documentaciones')}}"><i class="fa fa-circle-o"></i>Documentaciones</a></li>
-              <li><a href="{{ route('unidades-medidas') }}"><i class="fa fa-circle-o"></i>Unidades de Medidas</a></li>
-              <li><a href="{{ route('medidas') }}"><i class="fa fa-circle-o"></i>Medidas</a></li>
-              <li><a href="{{ route('productos') }}"><i class="fa fa-circle-o"></i>Productos</a></li>
-              <li><a href="{{ route('servicios') }}"><i class="fa fa-circle-o"></i>Servicios</a></li>
-              <li><a href="{{ route('soldadores') }}"><i class="fa fa-circle-o"></i>Soldadores</a></li>
-              <li><a href="{{ route('equipos') }}"><i class="fa fa-circle-o"></i>Equipos</a></li>
-              <li><a href="{{ route('Interno-equipos') }}"><i class="fa fa-circle-o"></i>Interno Equipos</a></li>
-              <li><a href="{{ route('fuentes') }}"><i class="fa fa-circle-o"></i>Fuentes</a></li>
-              <li><a href="{{ route('Interno-fuentes') }}"><i class="fa fa-circle-o"></i>Interno Fuentes</a></li>
+              <li><a href="{{ route('usuarios') }}">Usuarios</a></li>
+              <li><a href="{{ route('clientes') }}">Clientes</a></li>
+              <li><a href="{{ route('contratistas') }}">Contratistas</a></li>
+              <li><a href="{{ route('materiales')}}">Materiales</a></li>
+              <li><a href="{{ route('norma-ensayos') }}">Norma ensayos</a></li>
+              <li><a href="{{ route('norma-evaluaciones') }}">Norma Evaluaciones</a></li>
+              <li><a href="{{ route('documentaciones')}}">Documentaciones</a></li>
+              <li><a href="{{ route('unidades-medidas') }}">Unidades de Medidas</a></li>
+              <li><a href="{{ route('medidas') }}">Medidas</a></li>
+              <li><a href="{{ route('productos') }}">Productos</a></li>
+              <li><a href="{{ route('servicios') }}">Servicios</a></li>
+              <li><a href="{{ route('soldadores') }}">Soldadores</a></li>
+              <li><a href="{{ route('equipos') }}">Equipos</a></li>
+              <li><a href="{{ route('Interno-equipos') }}">Interno Equipos</a></li>
+              <li><a href="{{ route('fuentes') }}">Fuentes</a></li>
+              <li><a href="{{ route('Interno-fuentes') }}">Interno Fuentes</a></li>
               @can('roles')
-              <li><a href="{{ route('roles') }}"><i class="fa fa-circle-o"></i>Roles</a></li>
+              <li><a href="{{ route('roles') }}">Roles</a></li>
               @endcan
                @can('permisos')
-               <li><a href="{{ route('permisos') }}"><i class="fa fa-circle-o"></i>Permisos</a></li>
+               <li><a href="{{ route('permisos') }}">Permisos</a></li>
                @endcan
             </ul>
           </li>
@@ -74,19 +74,19 @@
             </a>
             <ul class="treeview-menu">
 
-              <li><a href="{{ route('operador-periodo-rx') }}"><i class="fa fa-circle-o"></i>Activar Operador</a></li> 
-              <li><a href="{{ route('dosimetria-operador') }}"><i class="fa fa-circle-o"></i>Operador</a></li>
-              <li><a href="{{ route('dosimetria-rx') }}"><i class="fa fa-circle-o"></i>RX</a></li>
-              <li><a href="{{ route('dosimetria-estados') }}"><i class="fa fa-circle-o"></i>Estados</a></li>
-              <li><a href="{{ route('dosimetria-resumen') }}"><i class="fa fa-circle-o"></i>Resumen</a></li>
-              <li><a href="{{ route('pdfDosimetriaPeriodos') }}" target="_blank" ><i class="fa fa-circle-o"></i>Reporte Alta/Baja</a></li>
+              <li><a href="{{ route('operador-periodo-rx') }}">Activar Operador</a></li> 
+              <li><a href="{{ route('dosimetria-operador') }}">Operador</a></li>
+              <li><a href="{{ route('dosimetria-rx') }}">RX</a></li>
+              <li><a href="{{ route('dosimetria-estados') }}">Estados</a></li>
+              <li><a href="{{ route('dosimetria-resumen') }}">Resumen</a></li>
+              <li><a href="{{ route('pdfDosimetriaPeriodos') }}" target="_blank" >Reporte Alta/Baja</a></li>
 
             </ul>
           </li>
       
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-book"></i> <span>Institucionales</span>
+            <i class="fa fa-book"></i> <span>INSTITUCIONALES</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -108,7 +108,7 @@
         <li class="treeview">
           <a href="#">
             <i class="fa  fa-cloud-download"></i>
-            <span>Download</span>
+            <span>DOWNLOAD</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>

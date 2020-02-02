@@ -24,8 +24,6 @@ class OtsRequest extends FormRequest
     public function rules()
     {       
              
-     
-
          return [
             'ot'                       => 'required|digits_between:1,11|integer|unique:ots,numero,'. $this->id,
             'fst'                      => 'required|digits_between:1,11|integer|unique:ots,presupuesto,'. $this->id,

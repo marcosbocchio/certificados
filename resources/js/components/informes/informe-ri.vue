@@ -1508,11 +1508,4 @@ export default {
     margin-left: 0px;
 }
 
-table .selected{
-
-  background-color: rgb(243, 200, 126)!important;
-
-} 
-
-
 </style>

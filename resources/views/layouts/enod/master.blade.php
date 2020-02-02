@@ -20,13 +20,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="{{asset('adminlte/bower_components/font-awesome/css/font-awesome.min.css')}}">
     <!-- Ionicons -->
     <link  rel="stylesheet" href="{{asset('adminlte/bower_components/Ionicons/css/ionicons.min.css')}}">
+    
+    <script src="https://kit.fontawesome.com/2740e8ca64.js" crossorigin="anonymous"></script>
 
     <!-- message -->
     <link href="{{ asset('css/toastr.css') }}" rel="stylesheet">
   
 
     <!-- Theme style -->
-    <link rel="stylesheet" href="{{asset('css/AdminLTE.min.css')}}">
+    <link rel="stylesheet" href="{{mix('css/AdminLTE.min.css')}}">
 
     <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
         page. However, you can choose any other skin. Make sure you

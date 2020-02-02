@@ -38,8 +38,9 @@ class UserController extends Controller
 
     }
 
-    public function store(request $request){     
+    public function store(UserRequest $request){     
       
+  /*
       $condicion_cliente ='';
         if(!$request->isEnod) {
             $condicion_cliente ='required';
@@ -56,7 +57,7 @@ class UserController extends Controller
         'cliente'  =>$condicion_cliente
       
       ]);
-     
+*/  
     $this->users->create($request->all()) ;      
     
     }
@@ -73,31 +74,34 @@ class UserController extends Controller
 
   }
 
-  public function update(request $request,$id){
+  public function update(UserRequest $request,$id){
 
+/*
     $condicion_cliente ='';
         if(!$request->isEnod) {
             $condicion_cliente ='required';
         }
-    
+
     $User = user::find($id);
-    $condicion_email ='';
+        
+        $condicion_email ='';
         if($request->email != $User->email) {
-            $condicion_email ='unique:users';
+          $condicion_email ='unique:users';
         }
-
-      
-      $request->validate([
-    
-        'name' => 'required',
-        'dni'  =>'nullable|numeric|digits_between:7,8',
-        'film' => 'nullable|numeric|digits_between:1,3',
-        'email'  =>'required|email|' . $condicion_email,
-        'password' =>'required|Min:8',
-        'cliente'  =>$condicion_cliente
-      
-      ]);
-
+        
+        $request->validate([
+          
+          'name' => 'required',
+          'dni'  =>'nullable|numeric|digits_between:7,8 | unique:users,dni'.$this->user()->id,
+          'film' => 'nullable|numeric|unique:users|digits_between:1,3',
+          'email'  =>'required|email|' . $condicion_email,
+          'password' =>'required|Min:8',
+          'cliente'  =>$condicion_cliente
+          
+          ]);
+          
+  */   
+     
     return $this->users->updateUser($request,$id);
 
   }

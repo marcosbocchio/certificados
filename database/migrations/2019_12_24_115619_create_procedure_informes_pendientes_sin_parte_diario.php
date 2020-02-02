@@ -21,8 +21,8 @@ class CreateProcedureInformesPendientesSinParteDiario extends Migration
                         informes.fecha as fecha,
                         0 as informe_sel,
                         CONCAT(metodo_ensayos.metodo,
-                        LPAD(informes.numero, 3, "0")) as numero_formateado,
-                        DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada,
+                        LPAD(informes.numero, 3, '0')) as numero_formateado,
+                        DATE_FORMAT(informes.fecha,'%d/%m/%Y')as fecha_formateada,
                         0 as importable_sn,
                         metodo_ensayos.id as metodo_ensayo_id,
                         metodo_ensayos.metodo as metodo
@@ -42,8 +42,8 @@ class CreateProcedureInformesPendientesSinParteDiario extends Migration
                         informes_importados.fecha as fecha,
                         0 as informe_sel,
                         CONCAT(metodo_ensayos.metodo,
-                        LPAD(informes_importados.numero, 3, "0")) as numero_formateado,
-                        DATE_FORMAT(informes_importados.fecha,"%d/%m/%Y")as fecha_formateada,
+                        LPAD(informes_importados.numero, 3, '0')) as numero_formateado,
+                        DATE_FORMAT(informes_importados.fecha,'%d/%m/%Y')as fecha_formateada,
                         1 as importable_sn,
                         metodo_ensayos.id as metodo_ensayo_id,
                         metodo_ensayos.metodo as metodo

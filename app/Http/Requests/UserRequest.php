@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Http\Requests;
-
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UserRequest extends FormRequest
 {
@@ -30,9 +30,9 @@ class UserRequest extends FormRequest
 
         return [
             'name' => 'required',
-            'dni'  =>'nullable|unique:users|numeric|digits_between:7,8',
-            'film' => 'nullable|numeric|unique:users|max:3',
-            'email'  =>'required|unique:users|email',
+            'dni'  =>'nullable|numeric|digits_between:7,8|unique:users,dni,'. $this->id,
+            'film' => 'nullable|numeric|digits_between:1,3|unique:users,film,'. $this->id,
+             'email'  =>'required|email|unique:users,email,'. $this->id,
             'password' =>'required|Min:8',
             'cliente'  =>$condicion_cliente
         ];

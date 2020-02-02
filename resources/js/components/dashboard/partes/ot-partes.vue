@@ -9,7 +9,7 @@
               <p>Partes</p>
             </div>
             <div class="icon">
-              <i class="fa fa-file-pdf-o"></i>
+                <i class="fa fa-calendar-o"></i>
             </div>
             <a href="#" class="small-box-footer">Detail <i class="fa  fa-arrow-circle-down"></i></a>
           </div>
