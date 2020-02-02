@@ -40,7 +40,7 @@ class PersonaController extends Controller
         $data = $request->json()->all();
         $p->nombre = $data['nombre'];
         $p->email = $data['email'];
-        $p->lon = $data['lon'];
+        $p->log = $data['log'];
         $p->lat = $data['lat'];
         $p->save();
 
