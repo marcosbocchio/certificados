@@ -36,13 +36,13 @@ class PersonaController extends Controller
     public function store(Request $request)
     {
       
-        $p = new Persona;
+        $persona = new Persona;
         $data = $request->json()->all();
-        $p->nombre = $data['nombre'];
-        $p->email = $data['email'];
-        $p->log = $data['log'];
-        $p->lat = $data['lat'];
-        $p->save();
+        $persona->nombre = $data['nombre'];
+        $persona->email = $data['email'];
+        $persona->log = $data['log'];
+        $persona->lat = $data['lat'];
+        $persona->save();
 
     }
 
@@ -77,7 +77,13 @@ class PersonaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $persona = Persona::find($id);
+        $data = $request->json()->all();
+        $persona->nombre = $data['nombre'];
+        $persona->email = $data['email'];
+        $persona->log = $data['log'];
+        $persona->lat = $data['lat'];
+        $persona->save();
     }
 
     /**
@@ -88,6 +94,7 @@ class PersonaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $persona = Persona::find($id);
+        $persona->delete();
     }
 }
