@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Ots;
 use Illuminate\Support\Facades\DB;
 use App\User;
 use App\OtOperarios;
@@ -17,10 +18,13 @@ class OtOperariosController extends Controller
      */
     public function index($id)
     {
-        $header_titulo = "Operadores OT";
+        $header_titulo = "Operadores";
         $header_descripcion ="Alta | Baja | Modificación";      
         $accion = 'edit';      
         $user = auth()->user()->name;
+
+        $ot = Ots::where('id',$id)->with('cliente')->first();
+        $header_sub_titulo =' / ' .$ot->cliente->nombre_fantasia . ' / OT N°: ' . $ot->numero;
 
         $users_ot_operarios = $this->getOperadoresOt($id);
  
@@ -29,6 +33,7 @@ class OtOperariosController extends Controller
                                         'users_ot_operarios',                                   
                                         'user',                                       
                                         'header_titulo',
+                                        'header_sub_titulo',
                                         'header_descripcion'));
 
     }

@@ -17,11 +17,15 @@ class OtProcedimientosPropiosController extends Controller
      */
     public function index($ot_id)
     {
-        $header_titulo = "Procedimientos OT";
+        $header_titulo = "Procedimientos";
         $header_descripcion ="Alta | Baja | Modificación";      
         $accion = 'edit';      
         $user = auth()->user()->name;
         $ot = Ots::findOrFail($ot_id);
+
+        $ot = Ots::where('id',$ot_id)->with('cliente')->first();
+        $header_sub_titulo =' / ' .$ot->cliente->nombre_fantasia . ' / OT N°: ' . $ot->numero;
+
         $ot_procedimientos = $this->ProcedimientosPropiosOt($ot_id);
  
 
@@ -29,6 +33,7 @@ class OtProcedimientosPropiosController extends Controller
                                         'ot_procedimientos',                                   
                                         'user',                                       
                                         'header_titulo',
+                                        'header_sub_titulo',
                                         'header_descripcion'));
     }
 

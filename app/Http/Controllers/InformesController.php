@@ -24,7 +24,6 @@ class InformesController extends Controller
         $user = auth()->user()->name;
 
         $ot = Ots::where('id',$id)->with('cliente')->first();
-      
         $header_sub_titulo =' / ' .$ot->cliente->nombre_fantasia . ' / OT N°: ' . $ot->numero;
 
         $ot_metodos_ensayos = DB::table('ots')

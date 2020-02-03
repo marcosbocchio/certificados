@@ -22,13 +22,17 @@ class RemitosController extends Controller
      */
     public function index($ot_id)
     {
-      $header_titulo = "Remitos OT";
+      $header_titulo = "Remitos";
       $header_descripcion ="Alta | Modificación";          
       $user = auth()->user()->name;
+
+      $ot = Ots::where('id',$ot_id)->with('cliente')->first();
+      $header_sub_titulo =' / ' .$ot->cliente->nombre_fantasia . ' / OT N°: ' . $ot->numero;
 
       return view('ot-remitos.index',compact('ot_id',
                                              'user',                                            
                                              'header_titulo',
+                                             'header_sub_titulo',
                                              'header_descripcion'));
 
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Ots;
 use App\InternoEquipos;
 use App\Http\Requests\InternoEquipoRequest;
 use Illuminate\Support\Facades\DB;
@@ -212,6 +213,9 @@ class InternoEquiposController extends Controller
         $accion = 'edit';      
         $user = auth()->user()->name;
 
+        $ot = Ots::where('id',$ot_id)->with('cliente')->first();
+        $header_sub_titulo =' / ' .$ot->cliente->nombre_fantasia . ' / OT N°: ' . $ot->numero;
+
         $interno_equipos = $this->getInternoEquiposOt($ot_id);
  
 
@@ -219,6 +223,7 @@ class InternoEquiposController extends Controller
                                         'interno_equipos',                                   
                                         'user',                                       
                                         'header_titulo',
+                                        'header_sub_titulo',
                                         'header_descripcion'));
 
 

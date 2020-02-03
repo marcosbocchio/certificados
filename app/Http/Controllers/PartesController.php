@@ -29,13 +29,17 @@ class PartesController extends Controller
      */
     public function index($ot_id)
     {
-      $header_titulo = "Partes OT";
+      $header_titulo = "Partes";
       $header_descripcion ="Alta | Modificación";          
       $user = auth()->user()->name;
 
+      $ot = Ots::where('id',$ot_id)->with('cliente')->first();
+      $header_sub_titulo =' / ' .$ot->cliente->nombre_fantasia . ' / OT N°: ' . $ot->numero;
+      
       return view('ot-partes.index',compact('ot_id',
                                              'user',                                                                   
                                              'header_titulo',
+                                             'header_sub_titulo',
                                              'header_descripcion'));
 
     }

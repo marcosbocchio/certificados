@@ -16,7 +16,7 @@ class OtDocumentacionesController extends Controller
      */
     public function index($ot_id)
     {
-        $header_titulo = "Documentaciones OT";
+        $header_titulo = "Documentaciones";
         $header_descripcion ="Alta | Baja | Modificación";      
         $accion = 'edit';      
         $user = auth()->user()->name;
@@ -24,10 +24,14 @@ class OtDocumentacionesController extends Controller
         $ot_documentaciones = $this->getdocumentacionesOt($ot_id);
         $ot = Ots::find($ot_id);
 
+        $ot = Ots::where('id',$ot_id)->with('cliente')->first();
+        $header_sub_titulo =' / ' .$ot->cliente->nombre_fantasia . ' / OT N°: ' . $ot->numero;
+        
         return view('ot-documentaciones.index',compact('ot',
                                         'ot_documentaciones',                                   
                                         'user',                                       
                                         'header_titulo',
+                                        'header_sub_titulo',
                                         'header_descripcion'));
     }
 
