@@ -25,7 +25,7 @@ class InformesController extends Controller
 
         $ot = Ots::where('id',$id)->with('cliente')->first();
       
-        $header_sub_titulo =$ot->cliente->nombre_fantasia . ' / OT N°: ' . $ot->numero;
+        $header_sub_titulo =' / ' .$ot->cliente->nombre_fantasia . ' / OT N°: ' . $ot->numero;
 
         $ot_metodos_ensayos = DB::table('ots')
                                    ->join('ot_servicios','ot_servicios.ot_id','=','ots.id')
