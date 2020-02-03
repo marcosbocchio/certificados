@@ -14,7 +14,7 @@ class PdfDosimetriaPeriodosController extends Controller
         $operadores = User::whereNull('cliente_id')
                                         ->whereNotNull('film')
                                         ->with('periodos')
-                                        ->orderBy('film','desc')
+                                        ->orderBy('film','asc')
                                         ->get();
    
       //  dd($operadores);

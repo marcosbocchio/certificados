@@ -130,7 +130,7 @@
           <div class="form-group">
             <label for="search">Buscar Ubicación</label>
             <div class="input-group">
-                <div class="input-group-addon">
+                <div class="input-group-addon"  style="background-color: #F9CA33;">
                   <i class="fa fa-search"></i>
                 </div>
                 <gmap-autocomplete class="form-control"

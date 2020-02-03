@@ -21,7 +21,7 @@
                             <label>Operador / Film</label>
                             <div class="input-group">
                                 <input type="text" v-model="search" class="form-control">
-                                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                                <span class="input-group-addon"  style="background-color: #F9CA33;"><i class="fa fa-search"></i></span>
                             </div>  
                         </div>
                      </div>
@@ -40,7 +40,7 @@
                                         <tr>                                     
                                             <th class="col-md-4">OPERADOR</th>
                                             <th class="col-md-1">FILM</th>
-                                            <th class="col-md-3" >FECHA ENVÍO</th>
+                                            <th class="col-md-3" style="text-align:center;" >FECHA ENVÍO</th>
                                             <th class="col-md-4" style="text-align:center;" >ESTADO</th> 
                                                         
                                         </tr>
@@ -200,9 +200,13 @@ export default {
 
     fecha_formateada : function(val){
 
-        let date = new Date(val);
-        return ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear();
-
+        if(val) {
+            let date = new Date(val);
+            return ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear();
+        }else
+        {
+            return null;
+        }
     },
 
      getEstados : function(){      
@@ -298,46 +302,68 @@ export default {
            
         },
 
-     submit :function () {
-       
-        axios.defaults.baseURL = this.url ;
-        var urlRegistros = 'dosimetria_estados';  
-                    
-        axios.post(urlRegistros, {   
-        
-            year : this.year,
-            month : this.month,          
-            dosimetria_estados : this.TablaDosimetriaEstados,              
+    validarEstados : function(){
 
-        }).then(response => {            
-            this.errors=[];     
-            console.log(response);    
+        let valido = true;
+        this.TablaDosimetriaEstados.forEach(function(item){
 
-            this.$store.dispatch('loadDosimetriaEstados',{year : this.year , month : this.month}).then(
-                response => {
-                    
-                    this.ResetTabla();
+            if(item.estado && !item.fecha_envio){
 
-                }
-            );   
-              
-            toastr.success('Estados actualizado con éxito');                
-            
-        }).catch(error => {
-            
-            this.errors = error.response.data.errors;                 
-            $.each( this.errors, function( key, value ) {
-                toastr.error(value,key);
-                console.log( key + ": " + value );
-            });
-            
-            if(this.errors = [] && error){
-
-                    toastr.error("Ocurrio un error al procesar la solicitud");                     
-                    this.users_ot_operarios = this.ot_operarios_data;   
+                toastr.error('La fecha de envío es obligatoria en los estados');
+                valido = false;
+                      
             }
 
         });
+
+        return valido;
+    },
+
+     submit :function () {
+
+        if(this.validarEstados()){
+
+            axios.defaults.baseURL = this.url ;
+            var urlRegistros = 'dosimetria_estados';  
+                        
+            axios.post(urlRegistros, {   
+            
+                year : this.year,
+                month : this.month,          
+                dosimetria_estados : this.TablaDosimetriaEstados,              
+    
+            }).then(response => {            
+                this.errors=[];     
+                console.log(response);    
+    
+                this.$store.dispatch('loadDosimetriaEstados',{year : this.year , month : this.month}).then(
+                    response => {
+                        
+                        this.ResetTabla();
+    
+                    }
+                );   
+                  
+                toastr.success('Estados actualizado con éxito');                
+                
+            }).catch(error => {
+                
+                this.errors = error.response.data.errors;                 
+                $.each( this.errors, function( key, value ) {
+                    toastr.error(value,key);
+                    console.log( key + ": " + value );
+                });
+                
+                if(this.errors = [] && error){
+    
+                        toastr.error("Ocurrio un error al procesar la solicitud");                     
+                        this.users_ot_operarios = this.ot_operarios_data;   
+                }
+    
+            });
+          
+        }
+       
     }
 
  },

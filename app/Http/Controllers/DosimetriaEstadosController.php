@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\DosimetriaEstadosRequest;
 use App\DosimetriaEstados;
 use App\User;
 use Illuminate\Support\Facades\DB;
@@ -67,7 +68,7 @@ class DosimetriaEstadosController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(DosimetriaEstadosRequest $request)
     {
       
         DB::beginTransaction();
@@ -98,7 +99,7 @@ class DosimetriaEstadosController extends Controller
 
     }
 
-    public function saveEstado(Request $request){
+    public function saveEstado($request){
 
         $user_id = null;
         
@@ -108,16 +109,20 @@ class DosimetriaEstadosController extends Controller
         }
 
         foreach ($request->dosimetria_estados as $estado) {
-
             
-            if($estado['estado']) {
+            
+            if(($estado['estado']) || $estado['fecha_envio']) {
                 
                 $fecha = $request->year . '-' . $request->month . '-1';
                 $dosimetria_estado = new DosimetriaEstados;
                 
                 $dosimetria_estado->operador_id = $estado['operador_id'];
                 $dosimetria_estado->fecha = $fecha;  
-                $dosimetria_estado->estado_id = $estado['estado']['id']; 
+                if($estado['estado']){
+
+                    $dosimetria_estado->estado_id = $estado['estado']['id']; 
+
+                }
                 $dosimetria_estado->fecha_envio = date('Y-m-d',strtotime($estado['fecha_envio']));
                 $dosimetria_estado->user_id = $user_id;
                 $dosimetria_estado->save();    
