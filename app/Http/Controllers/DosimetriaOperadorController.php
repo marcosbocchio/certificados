@@ -22,7 +22,7 @@ class DosimetriaOperadorController extends Controller
 
     public function callView()
       {   
-          $user = auth()->user()->name; 
+          $user = auth()->user(); 
           $header_titulo = "Dosimetria Operador";
           $header_descripcion ="Alta | Baja | Modificación";    
         

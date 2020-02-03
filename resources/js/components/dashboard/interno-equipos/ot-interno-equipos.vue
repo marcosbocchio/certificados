@@ -1,17 +1,17 @@
 <template>
     <div>
        
-          <!-- small box -->
-          <div class="small-box bg-custom-2">
-            <div class="inner">
-              <h3>{{ interno_equipos.length }}</h3>
-              <p>Equipos </p>
-            </div>
-            <div class="icon">
-              <i class="fa fa-wrench"></i>
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
+        <!-- small box -->
+        <div class="small-box bg-custom-2">
+        <div class="inner">
+            <h3>{{ interno_equipos.length }}</h3>
+            <p>Equipos </p>
+        </div>
+        <div class="icon">
+            <i class="fa fa-wrench"></i>
+        </div>
+        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
        
         <div class="clearfix"></div>
             <div class="top-buffer" >
@@ -51,7 +51,7 @@
                 </div> 
             <a class="btn btn-primary" v-on:click.prevent="submit()" >Actualizar</a>
             </div>  
-            <div class="clearfix"></div>
+        <div class="clearfix"></div>
     </div>
 </template>
 <script>

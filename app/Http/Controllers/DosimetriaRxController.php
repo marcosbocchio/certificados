@@ -23,7 +23,7 @@ class DosimetriaRxController extends Controller
 
     public function callView()
     {   
-        $user = auth()->user()->name; 
+        $user = auth()->user(); 
         $header_titulo = "Dosimetria Rx";
         $header_descripcion ="Alta | Baja | Modificación";    
       

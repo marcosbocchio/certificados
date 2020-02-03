@@ -35,7 +35,7 @@ class NormaEvaluacionesController extends Controller
 
     public function callView()
     {   
-        $user = auth()->user()->name; 
+        $user = auth()->user(); 
         $header_titulo = "Normas Evaluaciones";
         $header_descripcion ="Alta | Baja | Modificación";  
         return view('norma-evaluaciones',compact('user','modelo','header_titulo','header_descripcion'));

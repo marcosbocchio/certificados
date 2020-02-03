@@ -21,7 +21,7 @@ class PlacasRiController extends Controller
         $header_titulo = "Placas Informes";
         $header_descripcion ="Alta | Baja | Modificación";      
         $accion = 'edit';      
-        $user = auth()->user()->name;
+        $user = auth()->user();
         $informe = informe::findOrFail($informe_id);
         $placas_informe = $this->PlacasInforme($informe_id);
  

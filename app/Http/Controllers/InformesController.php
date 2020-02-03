@@ -21,7 +21,7 @@ class InformesController extends Controller
     {
         $header_titulo = "Informes";
         $header_descripcion ="Alta | Modificación";    
-        $user = auth()->user()->name;
+        $user = auth()->user();
 
         $ot = Ots::where('id',$id)->with('cliente')->first();
         $header_sub_titulo =' / ' .$ot->cliente->nombre_fantasia . ' / OT N°: ' . $ot->numero;

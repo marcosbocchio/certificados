@@ -47,7 +47,7 @@ class InformesLpController extends Controller
     public function create($ot_id)
     {
         $metodo = 'LP';    
-        $user = auth()->user()->name;
+        $user = auth()->user();
         $header_titulo = "Informe";
         $header_descripcion ="Crear";         
         $ot = Ots::findOrFail($ot_id);      
@@ -179,7 +179,7 @@ class InformesLpController extends Controller
         $header_descripcion ="Editar";  
         $metodo = 'LP';    
         $accion = 'edit';      
-        $user = auth()->user()->name;
+        $user = auth()->user();
         $ot = Ots::findOrFail($ot_id);
         $informe = Informe::findOrFail($id);
         $informe_lp =InformesLp::where('informe_id',$informe->id)->first();     

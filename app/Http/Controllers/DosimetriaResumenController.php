@@ -18,7 +18,7 @@ class DosimetriaResumenController extends Controller
 
     public function callView()
     {   
-        $user = auth()->user()->name; 
+        $user = auth()->user(); 
         $header_titulo = "Dosimetria Resumen";
         $header_descripcion ="Resumen Anual";    
       

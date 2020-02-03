@@ -26,7 +26,7 @@ class dashboardController extends Controller
      public function index(Request $Request )
      {        
        
-         $user = $Request->user()->name;
+         $user = $Request->user();
          $title = 'Area Enod' ;
          $header_titulo = "Tablero Principal";
          $header_descripcion ="";     

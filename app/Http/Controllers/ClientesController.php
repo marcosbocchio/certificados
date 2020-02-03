@@ -53,7 +53,7 @@ class ClientesController extends Controller
 
     public function callView()
     {   
-        $user = auth()->user()->name;
+        $user = auth()->user();
         $header_titulo = "Clientes";
         $header_descripcion ="Alta | Baja | Modificación";      
         return view('clientes',compact('user','header_titulo','header_descripcion'));

@@ -26,7 +26,7 @@ class UnidadesMedidasController extends Controller
 
     public function callView()
     {   
-        $user = auth()->user()->name;
+        $user = auth()->user();
         $header_titulo = "Unidades Medidas";
         $header_descripcion ="Alta | Baja | Modificación";      
         return view('unidades_medidas',compact('user','header_titulo','header_descripcion'));

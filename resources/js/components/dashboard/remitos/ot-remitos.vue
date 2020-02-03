@@ -1,6 +1,5 @@
 <template>
  <div>
-     <div class="col-md-12">
           <!-- small box -->
           <div class="small-box bg-custom-5">
             <div class="inner">
@@ -13,12 +12,10 @@
             </div>
             <a href="#" class="small-box-footer">Detail <i class="fa  fa-arrow-circle-down"></i></a>
           </div>
-        </div>
-        <div class="col-sm-12">
+
             <a :href="AppUrl + '/area/enod/ot/' + ot_id_data + '/remito' " class="btn btn-primary pull-left">Nuevo</a>
-        </div>
+       
         <div class="clearfix"></div>
-        <div class="col-md-12">
             <div class="box box-custom-enod top-buffer">
                 <div class="box-header with-border">
                     <div class="table-responsive">          
@@ -57,7 +54,7 @@
                     </pagination>
                 </div>
             </div>
-        </div> 
+      
         <div class="clearfix"></div>   
  </div>
     

@@ -36,7 +36,7 @@ class InformesPmController extends Controller
     public function create($ot_id)
     {
         $metodo = 'PM';    
-        $user = auth()->user()->name;
+        $user = auth()->user();
         $header_titulo = "Informe";
         $header_descripcion ="Crear";         
         $ot = Ots::findOrFail($ot_id);      
@@ -166,7 +166,7 @@ class InformesPmController extends Controller
         $header_descripcion ="Editar";  
         $metodo = 'PM';    
         $accion = 'edit';      
-        $user = auth()->user()->name;
+        $user = auth()->user();
         $ot = Ots::findOrFail($ot_id);
         $informe = Informe::findOrFail($id);
         $informe_pm =InformesPm::where('informe_id',$informe->id)->first();     

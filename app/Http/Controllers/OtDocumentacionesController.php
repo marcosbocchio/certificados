@@ -19,7 +19,7 @@ class OtDocumentacionesController extends Controller
         $header_titulo = "Documentaciones";
         $header_descripcion ="Alta | Baja | Modificación";      
         $accion = 'edit';      
-        $user = auth()->user()->name;
+        $user = auth()->user();
 
         $ot_documentaciones = $this->getdocumentacionesOt($ot_id);
         $ot = Ots::find($ot_id);

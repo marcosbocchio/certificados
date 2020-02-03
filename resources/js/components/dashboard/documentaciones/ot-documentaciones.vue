@@ -1,6 +1,6 @@
 <template>
     <div>
-       <div class="col-md-12">
+     
           <!-- small box -->
           <div class="small-box bg-custom-4">
             <div class="inner">
@@ -12,9 +12,7 @@
             </div>
             <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
-        </div>
           <div class="clearfix"></div>
-        <div class="col-md-12">
             <div class="box box-custom-enod">
                 <div class="box-body">  
                     <div class="form-group">
@@ -65,8 +63,7 @@
                        </div>
                     </div> 
                 </div> 
-                <a class="btn btn-primary" v-on:click.prevent="submit()" >Actualizar</a>      
-            </div>           
+                <a class="btn btn-primary" v-on:click.prevent="submit()" >Actualizar</a>           
     <div class="clearfix"></div> 
     </div>   
 </template>
@@ -112,13 +109,13 @@ methods : {
 
   getDocumentaciones : function(){
              
-                axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'documentaciones/ot?api_token=' + Laravel.user.api_token;        
-                axios.get(urlRegistros).then(response =>{
-                this.documentaciones = response.data
-                });
+        axios.defaults.baseURL = this.url ;
+        var urlRegistros = 'documentaciones/ot?api_token=' + Laravel.user.api_token;        
+        axios.get(urlRegistros).then(response =>{
+        this.documentaciones = response.data
+        });
              
-        },
+  },
 
   addDocumentacion : function(id){
 

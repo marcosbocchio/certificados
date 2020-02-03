@@ -48,7 +48,11 @@ class OtsController extends Controller
         
              return ots::whereRaw(' CASE :tipoUsuario WHEN "ENOD" THEN 1=1
                                     ELSE ots.id IN (Select ot_id FROM ot_usuarios_clientes where user_id = :user_id) 
-                                    END',[$tipoUsuario,$user_id])->selectRaw('ots.*,DATE_FORMAT(ots.fecha,"%d/%m/%Y")as fecha_formateada')->with('cliente')->orderBy('id','DESC')->paginate(5); 
+                                    END',[$tipoUsuario,$user_id])
+                                    ->selectRaw('ots.*,DATE_FORMAT(ots.fecha,"%d/%m/%Y")as fecha_formateada')
+                                    ->with('cliente')
+                                    ->orderBy('id','DESC')
+                                    ->paginate(5); 
     }
     
     /**
@@ -58,9 +62,8 @@ class OtsController extends Controller
      */
     public function create()
     {
-        
         $accion = 'create';      
-        $user = auth()->user()->name;
+        $user = auth()->user();
         $header_titulo = "Orden de trabajo";
         $header_descripcion ="Crear";  
         return view('ots.index', compact('user','accion','header_titulo','header_descripcion'));
@@ -99,7 +102,7 @@ class OtsController extends Controller
         $header_titulo = "Orden de trabajo";
         $header_descripcion ="Editar";      
         $accion = 'edit';      
-        $user = auth()->user()->name;
+        $user = auth()->user();
         $ot = $this->ot->find($id);
         $cliente = Clientes::find($ot->cliente_id);    
        $contratista = Contratistas::find($ot->contratista_id);      

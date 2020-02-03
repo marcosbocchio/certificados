@@ -20,7 +20,7 @@ class OtProcedimientosPropiosController extends Controller
         $header_titulo = "Procedimientos";
         $header_descripcion ="Alta | Baja | Modificación";      
         $accion = 'edit';      
-        $user = auth()->user()->name;
+        $user = auth()->user();
         $ot = Ots::findOrFail($ot_id);
 
         $ot = Ots::where('id',$ot_id)->with('cliente')->first();

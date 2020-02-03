@@ -32,7 +32,7 @@ class PermissionsController extends Controller
     public function callView()
     
     {   
-        $user = auth()->user()->name; 
+        $user = auth()->user(); 
         $header_titulo = "Permisos";
         $header_descripcion ="Alta | Baja | Modificación";  
         return view('permisos',compact('user','header_titulo','header_descripcion'));

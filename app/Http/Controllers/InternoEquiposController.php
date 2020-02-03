@@ -46,7 +46,7 @@ class InternoEquiposController extends Controller
 
     public function callView()
       {   
-          $user = auth()->user()->name; 
+          $user = auth()->user(); 
           $header_titulo = "Interno Equipos";
           $header_descripcion ="Alta | Baja | Modificación"; 
         
@@ -211,7 +211,7 @@ class InternoEquiposController extends Controller
         $header_titulo = "Equipos OT";
         $header_descripcion ="Baja";      
         $accion = 'edit';      
-        $user = auth()->user()->name;
+        $user = auth()->user();
 
         $ot = Ots::where('id',$ot_id)->with('cliente')->first();
         $header_sub_titulo =' / ' .$ot->cliente->nombre_fantasia . ' / OT N°: ' . $ot->numero;

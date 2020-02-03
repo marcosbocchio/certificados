@@ -24,7 +24,7 @@ class RemitosController extends Controller
     {
       $header_titulo = "Remitos";
       $header_descripcion ="Alta | Modificación";          
-      $user = auth()->user()->name;
+      $user = auth()->user();
 
       $ot = Ots::where('id',$ot_id)->with('cliente')->first();
       $header_sub_titulo =' / ' .$ot->cliente->nombre_fantasia . ' / OT N°: ' . $ot->numero;
@@ -62,7 +62,7 @@ class RemitosController extends Controller
      */
     public function create($ot_id)
     {      
-        $user = auth()->user()->name;
+        $user = auth()->user();
         $header_titulo = "Remito";
         $header_descripcion ="Crear";         
         $ot = Ots::findOrFail($ot_id);      
@@ -201,7 +201,7 @@ class RemitosController extends Controller
     {
         $header_titulo = "Remitos";
         $header_descripcion ="Editar";  
-        $user = auth()->user()->name;
+        $user = auth()->user();
         $ot = Ots::findOrFail($ot_id);
         $remito = Remitos::findOrFail($id);
 

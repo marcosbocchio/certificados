@@ -36,7 +36,7 @@ class RolesController extends Controller
     public function callView()
 
     {   
-        $user = auth()->user()->name; 
+        $user = auth()->user(); 
         $header_titulo = "Roles";
         $header_descripcion ="Alta | Baja | Modificación";  
         return view('roles',compact('user','header_titulo','header_descripcion'));

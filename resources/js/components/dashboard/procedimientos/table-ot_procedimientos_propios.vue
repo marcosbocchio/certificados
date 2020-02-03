@@ -1,6 +1,4 @@
-<template>  
-  <div>
-  
+<template>    
     <div class="box box-custom-enod top-buffer">
       <div class="box-body">
         <div class="table-responsive">
@@ -33,7 +31,6 @@
         </div>  
       </div>
     </div>
-  </div>
 </template>
 
 <script>

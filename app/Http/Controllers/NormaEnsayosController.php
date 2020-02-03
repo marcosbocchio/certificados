@@ -36,7 +36,7 @@ class NormaEnsayosController extends Controller
 
     public function callView()
     {   
-        $user = auth()->user()->name; 
+        $user = auth()->user(); 
         $header_titulo = "Normas Ensayos";
         $header_descripcion ="Alta | Baja | Modificación";  
         return view('norma-ensayos',compact('user','modelo','header_titulo','header_descripcion'));

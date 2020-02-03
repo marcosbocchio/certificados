@@ -27,7 +27,7 @@ class DosimetriaEstadosController extends Controller
     public function callView()
     {      
 
-        $user = auth()->user()->name; 
+        $user = auth()->user(); 
         $header_titulo = "Dosimetria Estados";
         $header_descripcion ="Alta | Baja | Modificación";    
       

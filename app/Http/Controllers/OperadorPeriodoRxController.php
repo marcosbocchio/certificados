@@ -23,7 +23,7 @@ class OperadorPeriodoRxController extends Controller
     public function callView()
     {      
 
-        $user = auth()->user()->name; 
+        $user = auth()->user(); 
         $header_titulo = "Activación Operador";
         $header_descripcion ="";    
       

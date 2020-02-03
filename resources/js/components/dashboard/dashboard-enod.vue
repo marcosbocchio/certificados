@@ -219,13 +219,11 @@ export default {
 
         getResults : function(page = 1){
 
-            console.log('entro en getResults : ' + page);
             axios.defaults.baseURL = this.url ;                
             var urlRegistros = 'ots?page='+ page + '&api_token=' + Laravel.user.api_token;      
             console.log(urlRegistros);        
             axios.get(urlRegistros).then(response =>{
-            this.ots = response.data    
-            console.log('response en getResults');       
+            this.ots = response.data         
             this.ot_id_selected = this.ots.data[0].id;    
             });
 

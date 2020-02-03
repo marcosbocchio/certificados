@@ -29,7 +29,7 @@ class ServiciosController extends Controller
 
     public function callView()
     {   
-        $user = auth()->user()->name; 
+        $user = auth()->user(); 
         $header_titulo = "Servicios";
         $header_descripcion ="Alta | Baja | Modificación";  
         return view('servicios',compact('user','header_titulo','header_descripcion'));

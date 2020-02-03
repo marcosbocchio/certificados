@@ -28,7 +28,7 @@ class EquiposController extends Controller
 
     public function callView()
       {   
-          $user = auth()->user()->name; 
+          $user = auth()->user(); 
           $header_titulo = "Equipos";
           $header_descripcion ="Alta | Baja | Modificación"; 
         

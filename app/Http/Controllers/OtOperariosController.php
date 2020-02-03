@@ -21,7 +21,7 @@ class OtOperariosController extends Controller
         $header_titulo = "Operadores";
         $header_descripcion ="Alta | Baja | Modificación";      
         $accion = 'edit';      
-        $user = auth()->user()->name;
+        $user = auth()->user();
 
         $ot = Ots::where('id',$id)->with('cliente')->first();
         $header_sub_titulo =' / ' .$ot->cliente->nombre_fantasia . ' / OT N°: ' . $ot->numero;

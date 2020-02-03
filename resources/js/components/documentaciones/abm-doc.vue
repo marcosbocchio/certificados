@@ -1,28 +1,24 @@
 <template>
     <div>
-        <div class="col-sm-10">
-            <a href="#" class="btn btn-primary pull-right" v-on:click.prevent="openNuevoRegistro()" >Nuevo</a>
+        <!-- small box -->
+        <div class="small-box bg-custom-3">
+            <div class="inner">
+                <h3>{{ registros.length }}</h3>
+                <p>Procedimientos </p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-radiation-alt"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
         </div>
 
-             <!-- small box -->
-            <div class="small-box bg-custom-3">
-                <div class="inner">
-                    <h3>{{ registros.length }}</h3>
-                    <p>Equipos </p>
-                </div>
-                <div class="icon">
-                    <i class="fas fa-radiation-alt"></i>
-                </div>
-                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-            </div>
+        <a href="#" class="btn btn-primary pull-left" v-on:click.prevent="openNuevoRegistro()" >Nuevo</a>
+      
         <div class="clearfix"></div>    
-        <div class="col-sm-10">
+       
             <component :is= setTablaComponente :registros="registros"  @confirmarDelete="confirmDeleteRegistro" @editRegistroEvent="editRegistro"/>    
             <delete-registro :datoDelete="datoDelete" :fillRegistro="fillRegistro" @close-modal="getRegistros" :modelo="modelo"></delete-registro>  
-
-        </div>   
-
-
+     
         <div class="clearfix"></div>    
 
         <!--  Modal -->

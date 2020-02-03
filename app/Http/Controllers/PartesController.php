@@ -31,7 +31,7 @@ class PartesController extends Controller
     {
       $header_titulo = "Partes";
       $header_descripcion ="Alta | Modificación";          
-      $user = auth()->user()->name;
+      $user = auth()->user();
 
       $ot = Ots::where('id',$ot_id)->with('cliente')->first();
       $header_sub_titulo =' / ' .$ot->cliente->nombre_fantasia . ' / OT N°: ' . $ot->numero;
@@ -69,7 +69,7 @@ class PartesController extends Controller
      */
     public function create($ot_id)
     {
-        $user = auth()->user()->name;
+        $user = auth()->user();
         $header_titulo = "Parte Diario";
         $header_descripcion ="Crear";         
         $ot = Ots::findOrFail($ot_id);      
@@ -311,7 +311,7 @@ class PartesController extends Controller
         $header_titulo = "Parte Diario";
         $header_descripcion ="Editar";       
         $accion = 'edit';      
-        $user = auth()->user()->name;
+        $user = auth()->user();
         $parte = Partes::findOrFail($id);
         $ot = Ots::findOrFail($ot_id);
 

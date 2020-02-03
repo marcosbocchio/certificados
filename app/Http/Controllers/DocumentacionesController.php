@@ -67,7 +67,7 @@ class DocumentacionesController extends Controller
 
     public function callView()
     {
-        $user = auth()->user()->name;
+        $user = auth()->user();
         $header_titulo = "Documentaciones";
         $header_descripcion ="Alta | Baja | Modificación";      
         return view('abm.documentaciones',compact('user','header_titulo','header_descripcion'));

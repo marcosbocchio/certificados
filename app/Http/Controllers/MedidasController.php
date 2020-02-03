@@ -39,7 +39,7 @@ class MedidasController extends Controller
 
     public function callView()
     {   
-        $user = auth()->user()->name; 
+        $user = auth()->user(); 
         $header_titulo = "Medidas";
         $header_descripcion ="Alta | Baja | Modificación";  
         return view('medidas',compact('user','modelo','header_titulo','header_descripcion'));

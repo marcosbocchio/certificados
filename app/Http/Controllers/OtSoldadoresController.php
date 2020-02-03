@@ -20,7 +20,7 @@ class OtSoldadoresController extends Controller
         $header_titulo = "Soldadores OT";
         $header_descripcion ="Alta | Baja | Modificación";      
         $accion = 'edit';      
-        $user = auth()->user()->name;
+        $user = auth()->user();
 
         $ot_soldadores = $this->getSoldadoresOt($id);
         $ot_usuarios_cliente = $this->getUsuariosCliente($id);

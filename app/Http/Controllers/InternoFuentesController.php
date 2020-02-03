@@ -34,7 +34,7 @@ class InternoFuentesController extends Controller
 
       public function callView()
       {   
-          $user = auth()->user()->name; 
+          $user = auth()->user(); 
           $header_titulo = "Interno Fuentes";
           $header_descripcion ="Alta | Baja | Modificación"; 
         

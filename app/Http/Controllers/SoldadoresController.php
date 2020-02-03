@@ -17,7 +17,7 @@ class SoldadoresController extends Controller
      */
     public function index()
     {
-        $user = auth()->user()->name;      
+        $user = auth()->user();      
         $header_titulo = "Soldadores ";
         $header_descripcion ="Alta | Baja | Modificación";        
      
@@ -38,7 +38,7 @@ class SoldadoresController extends Controller
 
     public function callView($cliente_id)
     {   
-        $user = auth()->user()->name; 
+        $user = auth()->user(); 
         $cliente = Clientes::findOrFail($cliente_id);
         $header_titulo = "Soldadores del Cliente ". $cliente->nombre_fantasia;
         $header_descripcion ="Alta | Baja | Modificación";          
