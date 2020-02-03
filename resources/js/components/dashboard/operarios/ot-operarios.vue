@@ -30,7 +30,7 @@
                  </div>
             </div>
 
-                <div class="box box-info top-buffer">
+                <div class="box box-custom-enod top-buffer">
                     <div class="box-header with-border">
                     <h3 class="box-title">Operarios Asignados Orden de Trabajo</h3>
 
@@ -65,7 +65,7 @@
             </div>
             <div class="clearfix"></div>
             <div class="col-md-12 top-buffer" >
-                <div class="box box-danger">
+                <div class="box box-custom-enod">
                     <div class="box-header with-border">
                     <h3 class="box-title">Documentación</h3>
 

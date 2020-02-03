@@ -140,8 +140,8 @@
                                 <th class="col-lg-1" colspan="4">
                                  <small style="margin-left: 2px;">Editar</small>
                                  <small style="margin-left: 16px;">Usuario</small>
-                                 <small style="margin-left: 12px;">Informe</small>
-                                 <small style="margin-left: 10px;">Estados</small>
+                                 <small style="margin-left: 13spx;">Informe</small>
+                                 <small style="margin-left: 13px;">Estados</small>
 
                                 </th>
                             </tr>
