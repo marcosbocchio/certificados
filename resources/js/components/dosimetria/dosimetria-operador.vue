@@ -1,7 +1,7 @@
 <template>
     <div class="row">
         <div class="col-md-12">
-            <div class="box box-danger">
+            <div class="box box-custom-enod">
                 <div class="box-body">
                      <div class="col-md-6">
                         <div class="form-group">
@@ -29,7 +29,7 @@
                 </div>
             </div>
        
-            <div class="box box-danger">
+            <div class="box box-custom-enod">
                 <div class="box-body">
                      <div class="col-md-9">
                         <div class="table-responsive">          

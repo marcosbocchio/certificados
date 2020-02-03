@@ -3,7 +3,7 @@
        <div class="col-md-12">
             <form @submit.prevent="editmode ?  Update() : Store()"  method="post">
                 <informe-header :otdata="otdata"></informe-header>
-                 <div class="box box-danger">
+                 <div class="box box-custom-enod">
                     <div class="box-body"> 
                              
                         <div class="col-md-6">
@@ -47,7 +47,7 @@
                         </div>
                     </div>
                  </div>   
-                 <div class="box box-danger">
+                 <div class="box box-custom-enod">
                     <div class="box-body">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -113,7 +113,7 @@
                             </div>   
                        </div>
                     </div>    
-                    <div class="box box-danger">
+                    <div class="box box-custom-enod">
                         <div class="box-body">
                             <div class="col-md-3">
                                 <div class="form-group">

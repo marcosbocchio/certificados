@@ -1553,9 +1553,7 @@ a:focus {
 .box.box-warning {
   border-top-color: #f39c12;
 }
-.box.box-custom {
-  border-top-color: #F9CA33;
-}
+
 .box.box-success {
   border-top-color: #00a65a;
 }

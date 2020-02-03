@@ -19,7 +19,7 @@
         </div>
         <div class="clearfix"></div>
         <div class="col-md-12">
-            <div class="box box-danger top-buffer">
+            <div class="box box-custom-enod top-buffer">
                 <div class="box-header with-border">
                     <div class="table-responsive">          
                         <table class="table table-hover table-striped">

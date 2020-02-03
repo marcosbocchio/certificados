@@ -9,7 +9,7 @@
                     </div>
                     <div class="modal-body">   
                         <div class="col-md-12">
-                            <div class="box box-danger">
+                            <div class="box box-custom-enod">
                                 <div class="box-header with-border">
                                     <h3 class="box-title">Datos Cliente</h3>
                                     <div class="box-tools pull-right">
@@ -100,7 +100,7 @@
                     </div>
                     <!-- contacto -->  
                         <div class="col-md-12">
-                            <div class="box box-danger ">
+                            <div class="box box-custom-enod">
                                 <div class="box-header with-border">
                                     <h3 class="box-title">Contacto</h3>                            
                                 </div>

@@ -17,7 +17,7 @@
         </div>  
         <div class="clearfix"></div>
         <div class="col-md-12">
-            <div class="box box-danger top-buffer">
+            <div class="box box-custom-enod top-buffer">
                 <div class="box-header with-border">
                     <h3 class="box-title">Agregar Informe</h3>
               

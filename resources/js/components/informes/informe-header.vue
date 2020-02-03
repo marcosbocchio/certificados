@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="box box-danger">
+        <div class="box box-custom-enod">
             <div class="box-body"> 
                 <div class="col-md-6">
                     <div class="form-group" >

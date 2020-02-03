@@ -8,14 +8,14 @@
               <p>Soldadores / Usuarios Cliente </p>
             </div>
             <div class="icon">
-              <i class="ion ion-person-add"></i>
+              <i class="fa fa-users"></i>
             </div>
             <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <div class="clearfix"></div>
         <div class="col-md-12">
-            <div class="box box-danger">
+            <div class="box box-custom-enod">
                 <div class="box-body">  
                     <div class="form-group">
                         <label>Soldadores</label>           
@@ -33,7 +33,7 @@
                     </div>
                  </div>                
             </div>
-            <div class="box box-info top-buffer">
+            <div class="box box-custom-enod top-buffer">
                 <div class="box-header with-border">
                 <h3 class="box-title">Soldadores Asignados Orden de Trabajo</h3>
 
@@ -65,7 +65,7 @@
                 </div> 
             </div> 
 
-             <div class="box box-danger">
+             <div class="box box-custom-enod">
                 <div class="box-body">  
                     <div class="form-group">
                         <label>Usuarios Cliente</label>           
@@ -78,7 +78,7 @@
                     </div>
                  </div>                
             </div>
-            <div class="box box-info top-buffer">
+            <div class="box box-custom-enod top-buffer">
                 <div class="box-header with-border">
                 <h3 class="box-title">Usurios del Cliente Asignados Orden de Trabajo</h3>
 

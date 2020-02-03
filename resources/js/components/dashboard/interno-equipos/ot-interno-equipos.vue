@@ -15,7 +15,7 @@
         </div>
         <div class="clearfix"></div>
             <div class="col-md-12 top-buffer" >
-                <div class="box box-danger">
+                <div class="box box-custom-enod">
                     <div class="box-header with-border">
                     <h3 class="box-title">Equipos</h3>
 

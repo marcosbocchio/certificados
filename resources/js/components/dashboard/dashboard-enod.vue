@@ -9,7 +9,7 @@
             <p>Operadores</p>
           </div>
           <div class="icon">
-            <i class="fa fa-users"></i>
+            <i class="fa ion-person-add"></i>
           </div>
           <a :href="AppUrl + '/operadores/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
         </div>
@@ -125,7 +125,7 @@
   </div> 
   <div class="row"> 
     <div class="col-md-12">
-        <div class="box box-custom top-buffer">
+        <div class="box box-custom-enod top-buffer">
             <div class="box-body">
                 <div class="table-responsive">          
                     <table class="table table-hover table-striped">

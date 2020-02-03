@@ -2,7 +2,7 @@
 <div>
     <div class="row">
         <div class="col-md-12">
-            <div class="box box-danger">
+            <div class="box box-custom-enod">
                 <div class="box-body">    
                      <div class="col-md-3">
                         <div class="form-group">
@@ -32,7 +32,7 @@
       <div class="row"> 
           <div class="col-md-12">
             <div v-if="TablaDosimetriaEstados.length">
-                <div class="box box-danger">
+                <div class="box box-custom-enod">
                     <div class="box-body">
                             <div class="table-responsive">          
                                 <table class="table table-hover table-striped table-border">

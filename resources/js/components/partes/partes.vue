@@ -3,7 +3,7 @@
        <div class="col-md-12">
             <form @submit.prevent="editmode ?  Update() : Store()"  method="post">
                 <parte-header :otdata="otdata" @set-obra="setObra($event)" ></parte-header>
-                 <div class="box box-danger">
+                 <div class="box box-custom-enod">
                     <div class="box-body">                               
                         <div class="col-md-3">
                             <div class="form-group">
@@ -58,7 +58,7 @@
                         </div>  
                     </div>
                 </div>   
-                <div class="box box-danger">
+                <div class="box box-custom-enod">
                     <div class="box-header with-border">
                     <h3 class="box-title">Responsabilidades</h3>
 
@@ -112,7 +112,7 @@
                         </div>
                   </div>
                 </div>  
-                <div class="box box-danger">
+                <div class="box box-custom-enod">
                     <div class="box-header with-border">
                     <h3 class="box-title">Informes sin Parte Diario</h3>
 
@@ -153,7 +153,7 @@
                 </div>
                  <!-- Servicios  -->
                 <div v-show="TablaServicios.length">
-                    <div class="box box-danger" >
+                    <div class="box box-custom-enod" >
                         <div class="box-header with-border">
                         <h3 class="box-title">Servicios</h3>
                             <div class="box-tools pull-right">
@@ -202,7 +202,7 @@
                 </div>
                   <!--Informe RI -->
                 <div v-show="TablaInformesRi.length">
-                    <div class="box box-danger" >
+                    <div class="box box-custom-enod" >
                         <div class="box-header with-border">
                         <h3 class="box-title">Informes RI</h3>
 
@@ -268,7 +268,7 @@
                 </div>
                 <!--Informe Pm -->
                 <div v-show="TablaInformesPm.length">
-                    <div class="box box-danger" >
+                    <div class="box box-custom-enod" >
                         <div class="box-header with-border">
                         <h3 class="box-title">Informes PM</h3>
 
@@ -326,7 +326,7 @@
                 </div>
                 <!--Informe Lp -->
                 <div v-show="TablaInformesLp.length">
-                    <div class="box box-danger" >
+                    <div class="box box-custom-enod" >
                         <div class="box-header with-border">
                         <h3 class="box-title">Informes LP</h3>
 
@@ -385,7 +385,7 @@
                 </div>
                 <!--Informe Us -->
                 <div v-show="TablaInformesUs.length">
-                    <div class="box box-danger" >
+                    <div class="box box-custom-enod" >
                         <div class="box-header with-border">
                         <h3 class="box-title">Informes US</h3>
 
@@ -457,7 +457,7 @@
 
                 <div v-for="(itemMetodo,m) in TablaMetodosImportados" :key="m">
                        <!--Informes IMPORTADOS -->
-                        <div class="box box-danger" >
+                        <div class="box box-custom-enod" >
                             <div class="box-header with-border">
                             <h3 class="box-title">Informes {{itemMetodo}}</h3>
 
@@ -504,7 +504,7 @@
                         </div>
                 </div>
                 <!-- / Informes importados -->
-                <div class="box box-danger">
+                <div class="box box-custom-enod">
                     <div class="box-body">
                         <div class="form-group">
                         <label>Observaciones</label>

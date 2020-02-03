@@ -1,7 +1,7 @@
 <template>
     <div class="row">
         <div class="col-md-12">
-            <div class="box box-danger">
+            <div class="box box-custom-enod">
                 <div class="box-body">   
                      <div class="col-md-3">
                         <div class="form-group">
@@ -12,7 +12,7 @@
                 </div>
             </div>
             <div v-if="TablaResumen.length">
-                <div class="box box-danger">
+                <div class="box box-custom-enod">
                     <div class="box-body">
                         <div class="col-md-12">
                            <a :href="url + '/pdf/dosimetria/year/' + year "  target="_blank">Exportar Resumen PDF</a>

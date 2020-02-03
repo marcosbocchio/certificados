@@ -56,6 +56,10 @@ table .selected{
 
 } 
 
+.box.box-custom-enod {
+  border-top-color: #F9CA33;
+}
+
 .bg-custom-1 {
 
   background-color: #CFCFCA;

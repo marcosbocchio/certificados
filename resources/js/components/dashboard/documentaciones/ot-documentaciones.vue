@@ -15,7 +15,7 @@
         </div>
           <div class="clearfix"></div>
         <div class="col-md-12">
-            <div class="box box-danger">
+            <div class="box box-custom-enod">
                 <div class="box-body">  
                     <div class="form-group">
                         <label>Documentaciones</label>             
@@ -33,7 +33,7 @@
                     </div>
                  </div>                
             </div>
-                <div class="box box-info top-buffer">
+                <div class="box box-custom-enod top-buffer">
                     <div class="box-header with-border">
                     <h3 class="box-title">Documentaciones Asignadas Orden de Trabajo</h3>
 

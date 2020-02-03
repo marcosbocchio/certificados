@@ -3,7 +3,7 @@
        <div class="col-md-12">
            <form @submit.prevent="editmode ?  Update() : Store()"  method="post">
                <informe-header :otdata="otdata" :informe_id="informedata.id" :editmode="editmode" @set-obra="setObra($event)"></informe-header>
-               <div class="box box-danger">
+               <div class="box box-custom-enod">
                   <div class="box-body">
                         <div class="col-md-3">
                             <div class="form-group" >
@@ -280,7 +280,7 @@
                </div>
 
                <!-- Detalle RI -->
-               <div class="box box-danger">
+               <div class="box box-custom-enod">
                      <div class="box-header with-border">
                         <h3 class="box-title">ELEMENTOS/POSICIONES</h3>
                         <div class="box-tools pull-right">
@@ -377,7 +377,7 @@
 
                    <!-- DEFECTOS RI -->
 
-                    <div class="box box-danger">
+                    <div class="box box-custom-enod">
                         
                         <div class="box-header with-border">
                             <h5 class="box-title">DEFECTOS</h5>
@@ -452,7 +452,7 @@
                       
 
                 <!-- PASADAS RI -->
-               <div class="box box-danger">
+               <div class="box box-custom-enod">
                    <div class="box-header with-border">
                         <h5 class="box-title">PASADAS</h5>
                         <div class="box-tools pull-right">
@@ -551,7 +551,7 @@
                   </div>  
                 </div>
                 
-                <div class="box box-danger">
+                <div class="box box-custom-enod">
                     <div class="box-body">
                         <div class="form-group">
                             <label>Observaciones</label>
