@@ -2,13 +2,16 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            {{$header_titulo}} 
+            {{$header_titulo}} <span class="sub-titulo" >
+                
+                @isset($header_sub_titulo)
+                        {{$header_sub_titulo}}
+                @endisset
+                </span>
+        
             <small>{{ $header_descripcion }}</small>
         </h1>
-        <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-            <li class="active">Here</li>
-        </ol>
+
     </section>
 
 

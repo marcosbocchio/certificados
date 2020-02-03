@@ -19,12 +19,14 @@ class InformesController extends Controller
 
     public function index($id)
     {
-        $header_titulo = "Informes OT";
+        $header_titulo = "Informes";
         $header_descripcion ="Alta | Modificación";    
         $user = auth()->user()->name;
 
-        $ot = Ots::find($id);
-        
+        $ot = Ots::where('id',$id)->with('cliente')->first();
+      
+        $header_sub_titulo =$ot->cliente->nombre_fantasia . ' / OT N°: ' . $ot->numero;
+
         $ot_metodos_ensayos = DB::table('ots')
                                    ->join('ot_servicios','ot_servicios.ot_id','=','ots.id')
                                    ->join('servicios','servicios.id','=','ot_servicios.servicio_id') 
@@ -38,6 +40,7 @@ class InformesController extends Controller
                                         'ot_metodos_ensayos',                                   
                                         'user',                                       
                                         'header_titulo',
+                                        'header_sub_titulo',
                                         'header_descripcion'));
 
     }

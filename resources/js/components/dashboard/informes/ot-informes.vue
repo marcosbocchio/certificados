@@ -1,22 +1,19 @@
 <template>
     <div>
-        <div class="col-md-12">
-            <!-- small box -->
-            <div class="small-box bg-custom-6">
-            <div class="inner">
+        <!-- small box -->
+        <div class="small-box bg-custom-6">
+        <div class="inner">
 
-                <h3 >{{CantInformes}}</h3>
+            <h3 >{{CantInformes}}</h3>
 
-                <p>Informes</p>
-            </div>
-            <div class="icon">
-                <i class="fa fa-list-alt"></i>
-            </div>
-            <a href="#" class="small-box-footer">Detail <i class="fa  fa-arrow-circle-down"></i></a>
-            </div>
-        </div>  
+            <p>Informes</p>
+        </div>
+        <div class="icon">
+            <i class="fa fa-list-alt"></i>
+        </div>
+        <a href="#" class="small-box-footer">Detail <i class="fa  fa-arrow-circle-down"></i></a>
+        </div>
         <div class="clearfix"></div>
-        <div class="col-md-12">
             <div class="box box-custom-enod top-buffer">
                 <div class="box-header with-border">
                     <h3 class="box-title">Agregar Informe</h3>
@@ -100,8 +97,7 @@
                         <span slot="next-nav">Next &gt;</span> 
                     </pagination>
                 </div> 
-            </div>   
-        </div>    
+            </div>    
         <div class="clearfix"></div>
         <informes-importables :metodo_ensayo="metodo_ensayo" :otdata="this.ot_data" @store="getResults(ot_informes.current_page)"></informes-importables>
     </div>    
