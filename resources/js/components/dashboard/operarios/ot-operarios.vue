@@ -1,6 +1,6 @@
 <template>
     <div>
-         <div class="col-md-12">
+       
           <!-- small box -->
           <div class="small-box bg-custom-1">
             <div class="inner">
@@ -13,9 +13,9 @@
             </div>
             <a href="#" class="small-box-footer">Detail <i class="fa  fa-arrow-circle-down"></i></a>
           </div>
-        </div>
+        
         <div class="clearfix"></div>
-        <div class="col-md-12">
+      
             <div class="box box-custom-enod">
                 <div class="box-body">  
                     <div class="form-group">
@@ -62,9 +62,9 @@
                     </div> 
                 </div> 
                 <a class="btn btn-primary" v-on:click.prevent="submit()" >Actualizar</a>      
-            </div>
+           
             <div class="clearfix"></div>
-            <div class="col-md-12 top-buffer" >
+            <div class="top-buffer" >
                 <div class="box box-custom-enod">
                     <div class="box-header with-border">
                     <h3 class="box-title">Documentación</h3>
@@ -98,7 +98,7 @@
                        </div>
                     </div> 
                 </div> 
-            </div>    
+            </div>
         <div class="clearfix"></div>
     </div>    
 </template>

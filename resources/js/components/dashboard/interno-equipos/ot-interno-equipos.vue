@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="col-md-12">
+       
           <!-- small box -->
           <div class="small-box bg-custom-2">
             <div class="inner">
@@ -12,9 +12,9 @@
             </div>
             <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
-        </div>
+       
         <div class="clearfix"></div>
-            <div class="col-md-12 top-buffer" >
+            <div class="top-buffer" >
                 <div class="box box-custom-enod">
                     <div class="box-header with-border">
                     <h3 class="box-title">Equipos</h3>

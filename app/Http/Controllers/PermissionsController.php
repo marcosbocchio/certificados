@@ -19,13 +19,13 @@ class PermissionsController extends Controller
      */
     public function index()
     {
-        return  Permissions::all();
+        return  Permissions::orderBy('name','ASC')->get();
     }
 
     public function paginate(Request $request){
       
   
-        return Permissions::orderBy('id','DESC')->paginate(10);
+        return Permissions::orderBy('name','ASC')->paginate(10);
     
     }
     
