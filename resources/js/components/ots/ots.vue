@@ -2,7 +2,7 @@
 <div class="row">
  <div class="col-md-12">
   <form @submit.prevent="submit"  method="post">
-    <div class="box box-danger">
+    <div class="box box-custom-enod">
       <div class="box-body">
         <div class="col-md-6">
           <div class="form-group">
@@ -12,7 +12,7 @@
         </div>
       </div>
     </div>    
-    <div class="box box-danger">
+    <div class="box box-custom-enod">
       <div class="box-body">
       <div class="col-md-2">
         <div class="form-group">
@@ -112,7 +112,7 @@
         </div>
       </div>
     </div>
-    <div class="box box-danger">
+    <div class="box box-custom-enod">
       <div class="box-body">
         <div class="col-md-6">
           <div class="form-group">
@@ -179,7 +179,7 @@
         </div>
       </div>
     </div>
-    <div class="box box-danger">
+    <div class="box box-custom-enod">
       <div class="box-body">       
              
         <div class="col-md-6">
@@ -265,7 +265,7 @@
       </div>
     </div>
     <div v-show ="Ri">
-      <div class="box box-danger">
+      <div class="box box-custom-enod">
         <div class="box-body">
           <div class="col-md-6">
             <div class="form-group">
@@ -284,7 +284,7 @@
       </div>
     </div>
 
-    <div class="box box-danger">
+    <div class="box box-custom-enod">
       <div class="box-body">
         <div class="col-md-6">
           <div class="form-group">
@@ -356,7 +356,7 @@
           </div>            
       </div>
     </div>
-    <div class="box box-danger">
+    <div class="box box-custom-enod">
       <div class="box-body">
         <div class="col-md-6">
           <div class="form-group">
@@ -433,7 +433,7 @@
         </div>
       </div>
     </div>
-    <div class="box box-danger">
+    <div class="box box-custom-enod">
       <div class="box-body">
         <div class="form-group">
           <label>Observaciones</label>
