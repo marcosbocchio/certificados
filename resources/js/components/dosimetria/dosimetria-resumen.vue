@@ -116,8 +116,8 @@
                                             <td style="text-align:center;" :style="{color:item.CM1}" > 
 
                                                     <popper trigger="hover" :options="{placement: 'top'}">
-                                                        <div class="popper" style="background-color:#ECF0F6; color: #0000;" >
-                                                            <div style="width: 200px;">
+                                                        <div class="popper" style="background-color:#ECF0F6;" >
+                                                            <div style="width: 200px;color: black;">
                                                                 <strong style="float: left;">Fecha Estado : </strong> {{ item.FEM1 }}<br>
                                                                 <strong style="float: left;">Fecha Envío : </strong>  {{ item.FENEM1 }}
                                                             </div>        
@@ -133,8 +133,8 @@
                                             <td style="text-align:center;" :style="{color:item.CM2}">
 
                                                     <popper trigger="hover" :options="{placement: 'top'}">
-                                                        <div class="popper" style="background-color:#ECF0F6; color: #0000;" >
-                                                            <div style="width: 200px;">
+                                                        <div class="popper" style="background-color:#ECF0F6;" >
+                                                            <div style="width: 200px;color: #0000;">
                                                                 <strong style="float: left;">Fecha Estado : </strong> {{ item.FEM2}}<br>
                                                                 <strong style="float: left;">Fecha Envío : </strong> {{item.FENEM2}}
                                                             </div>        
