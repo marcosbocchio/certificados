@@ -476,5 +476,9 @@ export default {
     color:#808080;
 }
 
+.popper  {
+
+    color: black;
+}
 
 </style>
