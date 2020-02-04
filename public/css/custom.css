@@ -29,14 +29,12 @@ font-weight: 400;
 .top-buffer { margin-top:20px; }
 
 
-.table-responsive, .table-responsive td {
-  overflow: visible !important
-}
+
 
 table th {
 
   font-size: 12px;;
-}
+} 
 
 table thead tr th small {
 
