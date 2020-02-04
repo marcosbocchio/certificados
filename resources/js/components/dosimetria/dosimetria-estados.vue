@@ -78,7 +78,10 @@
                                                         {{item.estado}}
                                                     </div>
                                                 </td>                                                                           
-                                        </tr>                                                               
+                                        </tr>     
+                                        <tr v-for="fila in 8" >
+                                              <td colspan="4" style="background: #FFFFFF"> &nbsp;</td>                                                  
+                                         </tr>                                                              
                                     </tbody>
                                 </table>                     
                         </div>
