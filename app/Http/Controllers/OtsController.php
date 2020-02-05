@@ -35,7 +35,7 @@ class OtsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {       
+    {       DB::enableQueryLog();
             $user_id = null;
             
             if (Auth::check())
@@ -48,9 +48,10 @@ class OtsController extends Controller
             return ots:: whereRaw('CASE :tipoUsuario WHEN "ENOD" THEN 1=1
                             ELSE ots.id IN (Select ot_id FROM ot_usuarios_clientes where user_id = :user_id) 
                             END',[$tipoUsuario,$user_id])
+                            ->join('clientes','clientes.id','=','ots.cliente_id')
                             ->selectRaw('ots.*,DATE_FORMAT(ots.fecha,"%d/%m/%Y")as fecha_formateada')
                             ->with('cliente')
-                            ->proyecto($filtro)
+                            ->otfiltro($filtro)
                             ->orderBy('id','DESC')
                             ->paginate(5); 
     }

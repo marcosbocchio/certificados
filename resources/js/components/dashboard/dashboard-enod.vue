@@ -134,6 +134,7 @@
       </div>
     </div>
   </div>
+  <div v-if="ots.data && ots.data.length">
   <div class="row"> 
     <div class="col-md-12">
         <div class="box box-custom-enod">
@@ -182,6 +183,7 @@
         </div> 
       </div> 
     </div>
+  </div>
     <div class="clearfix"></div>    
 </div>
 

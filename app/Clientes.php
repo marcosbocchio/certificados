@@ -21,4 +21,14 @@ class Clientes extends Model
         return $this->belongsTo('App\Localidades','localidad_id','id');
         
     }
+
+    public function scopeName($query, $name=''){
+
+        if (trim($name) != '') {
+           
+            $query->where('nombre_fantasias',"LIKE","'%$name%'");
+  
+      }
+      
+    }
 }

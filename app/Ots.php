@@ -19,42 +19,19 @@ class Ots extends Model
       
     }
 
-    public function scopeProyecto($query, $filtro='') {
+    public function scopeOtfiltro($query, $filtro='') {
 
         if (trim($filtro) != '') {
            
               $query->WhereRaw("proyecto LIKE '%" . $filtro . "%'")
                     ->orWhereRaw("numero LIKE '%" . $filtro . "%'")    
-                    ->orWhereRaw("obra LIKE '%" . $filtro . "%'");
+                    ->orWhereRaw("obra LIKE '%" . $filtro . "%'")
+                    ->orWhereRaw("clientes.nombre_fantasia LIKE '%" . $filtro . "%'");
     
        
         }
      
     }
 
-    /*
-    public function scopeNumeroOt($query, $filtro='') {
-
-        if (trim($filtro) != '') {
-           
-              $query->WhereRaw("numero LIKE '%" . $filtro . "%'");
-    
-       
-        }
-     
-    }
-
-    public function scopeObraOt($query, $filtro='') {
-
-        if (trim($filtro) != '') {
-           
-              $query->WhereRaw("obra LIKE '%" . $filtro . "%'");
-    
-       
-        }
-     
-    }
-
-*/
 
 }
