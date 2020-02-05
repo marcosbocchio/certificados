@@ -31,14 +31,14 @@
        
             <div class="box box-custom-enod">
                 <div class="box-body">
-                     <div class="col-md-9">
+                     <div class="col-md-12">
                         <div class="table-responsive">          
                             <table class="table table-hover table-striped">
                                 <thead>
                                     <tr>                                     
-                                        <th style="text-align: center; min-width: 25px;" class="col-md-1" >DÍA</th>     
-                                        <th style="text-align:center;" class="col-md-1">μSv</th>
-                                        <th style="text-align:center;" class="col-md-6">OBSERVACIONES</th>                                                       
+                                        <th style="text-align: center; min-width: 25px;" class="col-lg-1" >DÍA</th>     
+                                        <th style="text-align:center;" class="col-lg-2">μSv</th>
+                                        <th style="text-align:center;" class="col-lg-9">OBSERVACIONES</th>                                                       
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -47,7 +47,7 @@
                                         <td style="text-align:center;" bgcolor="#bee5eb"> {{item.day}} </td>    
                                         <td style="text-align:center;">
                                             <div v-if="(indexPosTablaDosimetria == k) && ((year < anio_actual) || ( (year == anio_actual) && (month < mes_actual)) || ((k + 1) <= dia_actual))">       
-                                                <input type="number" :ref="'refInputMediciones'" v-model="TablaDosimetria[k].microsievert" :disabled="EditaMismoDia(TablaDosimetria[k].created_at) || (!operador_data.can.D_Operador_Admin)">        
+                                                <input type="number" :ref="'refInputMediciones'" v-model="TablaDosimetria[k].microsievert" :disabled="(deshabilitarInput(TablaDosimetria[k].created_at))">        
                                             </div>   
                                             <div v-else>
                                               {{item.microsievert}} 
@@ -225,6 +225,25 @@ export default {
    
      },
 
+    deshabilitarInput(val){
+        
+        if(!this.operador_data.can.D_Operador_Admin){
+
+            if(this.EditaMismoDia(val)){
+
+                return false;
+
+            }else{
+
+                return true;
+            }
+        }else{
+
+            return false;
+        }
+
+    },
+
      EditaMismoDia : function(val){
 
          console.log('editamismodia');
@@ -239,10 +258,11 @@ export default {
          console.log(this.year);
          console.log(this.month);
          console.log(this.day);
-         
-         if(this.year != year_val || this.month !=month_val || this.day!=day_val){
 
-             console.log('la fecha es distinta');
+       
+         
+         if( (val) && (this.year != year_val || this.month !=month_val || this.day!=day_val)){
+
              return false
 
          }else{
