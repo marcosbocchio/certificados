@@ -226,24 +226,48 @@ export default {
     deshabilitarInput(val){
 
         
-            let deshabilitar = false;
-            let esMismoDia = this.ComprobarMismoDia(val);
-            if(!this.operador_data.can.D_Operador_Admin || val==''){
-    
-                if(esMismoDia){
-                    deshabilitar = false;
-    
-                }else{
-                    deshabilitar = true;
-                }
-            }else{      
+    let deshabilitar = false;
+    let esMismoDia = this.ComprobarMismoDia(val);
+
+    console.log(val);
+     console.log(val);
+      console.log(val);
+        console.log(val);
+         console.log(val);
+          console.log(val);
+
+          let $con = ((!this.operador_data.can.D_Operador_Admin) );
+          console.log('$con');
+          console.log($con);
+          console.log($con);
+          console.log($con);
+          console.log($con);
+
+        if((this.operador_data.can.D_Operador_Admin) || (val=='')){
+
+            console.log('el val es vacio');
+
+              deshabilitar = false;
+
+        }else{
+
+            if(esMismoDia){
+
                 deshabilitar = false;
-            }     
-                return deshabilitar;
+
+            }else{
+
+                deshabilitar = true;
+            }
+
+
+        } 
+
+    return deshabilitar;
 
     },
 
-     ComprobarMismoDia : function(val){
+    ComprobarMismoDia : function(val){
 
          let dateTimeParts= val.split(/[- :]/); 
          let val2 = dateTimeParts[0] + '/' + dateTimeParts[1] + '/' + dateTimeParts[2];
@@ -251,22 +275,12 @@ export default {
          let month_val = new Date(val2).getMonth() + 1;
          let day_val = new Date(val2).getDate();
 
-         console.log(year_val);
-         console.log(month_val);
-         console.log(day_val);
-         console.log(this.year);
-         console.log(this.month);
-         console.log(this.day);
-     
          if(this.year != year_val || this.month !=month_val || this.day!=day_val){
 
-             console.log('comprobo el if del mismo dia false');
              return false
 
          }else{
-             console.log('comprobo el if del mismo dia true');
              return true;
-
          }
 
      },
