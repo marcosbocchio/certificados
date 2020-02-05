@@ -47,7 +47,7 @@
                                         <td style="text-align:center;" bgcolor="#bee5eb"> {{item.day}} </td>    
                                         <td style="text-align:center;">
                                             <div v-if="(indexPosTablaDosimetria == k) && ((year < anio_actual) || ( (year == anio_actual) && (month < mes_actual)) || ((k + 1) <= dia_actual))">       
-                                                <input type="number" :ref="'refInputMediciones'" v-model="TablaDosimetria[k].microsievert" :disabled="(deshabilitarInput(TablaDosimetria[k].created_at))">        
+                                                <input type="number" :ref="'refInputMediciones'" v-model="TablaDosimetria[k].microsievert" :disabled="deshabilitarInput(item.created_at)">        
                                             </div>   
                                             <div v-else>
                                               {{item.microsievert}} 
@@ -87,9 +87,7 @@ export default {
        type : Object,
        required : true 
        }
-
      },
-
 
   data () { return {
 
@@ -114,7 +112,7 @@ export default {
             this.setYears();
             this.year = new Date(this.fecha).getFullYear();
             this.month = new Date(this.fecha).getMonth() + 1;
-            this.day = new Date(this.fecha).getDay();
+            this.day = new Date(this.fecha).getDate();
             console.log('el dia de hoy es:');
             console.log(this.day);
             this.setMonths();
@@ -226,51 +224,50 @@ export default {
      },
 
     deshabilitarInput(val){
+
         
-        if(!this.operador_data.can.D_Operador_Admin){
-
-            if(this.EditaMismoDia(val)){
-
-                return false;
-
-            }else{
-
-                return true;
-            }
-        }else{
-
-            return false;
-        }
+            let deshabilitar = false;
+            let esMismoDia = this.ComprobarMismoDia(val);
+            if(!this.operador_data.can.D_Operador_Admin || val==''){
+    
+                if(esMismoDia){
+                    deshabilitar = false;
+    
+                }else{
+                    deshabilitar = true;
+                }
+            }else{      
+                deshabilitar = false;
+            }     
+                return deshabilitar;
 
     },
 
-     EditaMismoDia : function(val){
+     ComprobarMismoDia : function(val){
 
-         console.log('editamismodia');
+         let dateTimeParts= val.split(/[- :]/); 
+         let val2 = dateTimeParts[0] + '/' + dateTimeParts[1] + '/' + dateTimeParts[2];
+         let year_val = new Date(val2).getFullYear();
+         let month_val = new Date(val2).getMonth() + 1;
+         let day_val = new Date(val2).getDate();
 
-         let year_val = new Date(val).getFullYear();
-         let month_val = new Date(val).getMonth() + 1;
-         let day_val = new Date(val).getDay();
-    
          console.log(year_val);
          console.log(month_val);
          console.log(day_val);
          console.log(this.year);
          console.log(this.month);
          console.log(this.day);
+     
+         if(this.year != year_val || this.month !=month_val || this.day!=day_val){
 
-       
-         
-         if( (val) && (this.year != year_val || this.month !=month_val || this.day!=day_val)){
-
+             console.log('comprobo el if del mismo dia false');
              return false
 
          }else{
-
+             console.log('comprobo el if del mismo dia true');
              return true;
 
          }
-
 
      },
 
