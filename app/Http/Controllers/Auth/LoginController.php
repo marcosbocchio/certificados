@@ -37,19 +37,5 @@ class LoginController extends Controller
 
         $User = auth()->user();
 
-        /* Si tiene el permiso "Navegar operador" es Administrador u operador */
-
-        /*
-
-        if($User->hasPermissionTo('Navegar operador')){
-
-            return '/area/enod';
-
-         }elseif($User->hasPermissionTo('Navegar cliente')){
-
-            return '/area/enod';
-        }
-
-        */
       }
 }

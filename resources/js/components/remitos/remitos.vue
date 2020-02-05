@@ -86,7 +86,6 @@
                             &nbsp;
                         </div>        
 
- 
                             <div v-show="inputsProductos.length">
                                 <div class="col-md-12">
                                     <div class="table-responsive">

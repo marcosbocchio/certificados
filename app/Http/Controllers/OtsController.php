@@ -43,16 +43,16 @@ class OtsController extends Controller
                 $user_id = Auth::id();  
                 $user = Auth::user(); 
            }
-            
             $tipoUsuario =  $user->cliente_id ? 'CLIENTE' : 'ENOD';
-        
-             return ots::whereRaw(' CASE :tipoUsuario WHEN "ENOD" THEN 1=1
-                                    ELSE ots.id IN (Select ot_id FROM ot_usuarios_clientes where user_id = :user_id) 
-                                    END',[$tipoUsuario,$user_id])
-                                    ->selectRaw('ots.*,DATE_FORMAT(ots.fecha,"%d/%m/%Y")as fecha_formateada')
-                                    ->with('cliente')
-                                    ->orderBy('id','DESC')
-                                    ->paginate(5); 
+            $filtro = $request->search;
+            return ots:: whereRaw('CASE :tipoUsuario WHEN "ENOD" THEN 1=1
+                            ELSE ots.id IN (Select ot_id FROM ot_usuarios_clientes where user_id = :user_id) 
+                            END',[$tipoUsuario,$user_id])
+                            ->selectRaw('ots.*,DATE_FORMAT(ots.fecha,"%d/%m/%Y")as fecha_formateada')
+                            ->with('cliente')
+                            ->proyecto($filtro)
+                            ->orderBy('id','DESC')
+                            ->paginate(5); 
     }
     
     /**
@@ -105,7 +105,7 @@ class OtsController extends Controller
         $user = auth()->user();
         $ot = $this->ot->find($id);
         $cliente = Clientes::find($ot->cliente_id);    
-       $contratista = Contratistas::find($ot->contratista_id);      
+        $contratista = Contratistas::find($ot->contratista_id);      
 
         $ot_servicios = (new OtServiciosController)->show($ot->id);
         $ot_productos = (new OtProductosController)->show($ot->id);

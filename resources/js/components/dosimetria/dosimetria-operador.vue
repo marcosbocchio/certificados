@@ -6,7 +6,7 @@
                      <div class="col-md-6">
                         <div class="form-group">
                             <label>Operadores</label>
-                            <v-select v-model="operador" :options="operadores_dosimetria" :getOptionLabel="getLabel" :disabled="!operador_data.can.dosimetria">
+                            <v-select v-model="operador" :options="operadores_dosimetria" :getOptionLabel="getLabel" :disabled="!operador_data.can.D_Operador_Admin">
                                 <template slot="option" slot-scope="option">
                                     <span class="upSelect">{{ option.name }} </span> <br> 
                                     <span class="downSelect"> {{ option.film }} </span>
@@ -47,7 +47,7 @@
                                         <td style="text-align:center;" bgcolor="#bee5eb"> {{item.day}} </td>    
                                         <td style="text-align:center;">
                                             <div v-if="(indexPosTablaDosimetria == k) && ((year < anio_actual) || ( (year == anio_actual) && (month < mes_actual)) || ((k + 1) <= dia_actual))">       
-                                                <input type="number" :ref="'refInputMediciones'" v-model="TablaDosimetria[k].microsievert">        
+                                                <input type="number" :ref="'refInputMediciones'" v-model="TablaDosimetria[k].microsievert" :disabled="EditaMismoDia(TablaDosimetria[k].created_at) || (!operador_data.can.D_Operador_Admin)">        
                                             </div>   
                                             <div v-else>
                                               {{item.microsievert}} 
@@ -97,6 +97,7 @@ export default {
       operador : JSON.parse(JSON.stringify(this.operador_data)),
       year: '',
       month:'',
+      day :'',
       years:[],
       months :[],
       indexPosTablaDosimetria : '0',
@@ -113,6 +114,9 @@ export default {
             this.setYears();
             this.year = new Date(this.fecha).getFullYear();
             this.month = new Date(this.fecha).getMonth() + 1;
+            this.day = new Date(this.fecha).getDay();
+            console.log('el dia de hoy es:');
+            console.log(this.day);
             this.setMonths();
             
        })
@@ -214,11 +218,40 @@ export default {
      },
 
      setMonth :  function (){
-
+         
          this.month = '';
          this.TablaDosimetria = [];
          this.setMonths();
    
+     },
+
+     EditaMismoDia : function(val){
+
+         console.log('editamismodia');
+
+         let year_val = new Date(val).getFullYear();
+         let month_val = new Date(val).getMonth() + 1;
+         let day_val = new Date(val).getDay();
+    
+         console.log(year_val);
+         console.log(month_val);
+         console.log(day_val);
+         console.log(this.year);
+         console.log(this.month);
+         console.log(this.day);
+         
+         if(this.year != year_val || this.month !=month_val || this.day!=day_val){
+
+             console.log('la fecha es distinta');
+             return false
+
+         }else{
+
+             return true;
+
+         }
+
+
      },
 
      ResetTabla : function() {
@@ -231,6 +264,7 @@ export default {
                 day : index + 1,
                 microsievert : '',
                 observaciones : '',
+                created_at : '',
 
             });
         }
@@ -239,6 +273,7 @@ export default {
             
            this.TablaDosimetria[item.day-1].microsievert = item.microsievert;
            this.TablaDosimetria[item.day-1].observaciones = item.observaciones;
+            this.TablaDosimetria[item.day-1].created_at = item.created_at;
 
         }.bind(this));
 

@@ -36,7 +36,7 @@ class DosimetriaOperadorController extends Controller
         $disometrias = DosimetriaOperador::whereRaw('YEAR(fecha) = ?',[$year])
                                         ->whereRaw('MONTH(fecha) = ?',[$month])
                                         ->where('operador_id',$operador_id)
-                                        ->selectRaw('DAY(fecha) as day,microsievert, observaciones')
+                                        ->selectRaw('DAY(fecha) as day,microsievert, observaciones,created_at')
                                         ->orderBy('day','ASC')
                                         ->get();
     
@@ -81,13 +81,9 @@ class DosimetriaOperadorController extends Controller
 
     public function getDosimetriaOperadores(){
         
-        
-    
         return User::whereNull('cliente_id')
                    ->whereNotNull('film')
                    ->get();
-
-
     }
 
     public function deleteDosimetriaOperador($request){

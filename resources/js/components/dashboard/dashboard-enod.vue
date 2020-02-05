@@ -123,9 +123,20 @@
         </div>
       </div>      
   </div> 
+
+  <div class="row"> 
+    <div class="col-md-3 col-md-offset-9">
+      <div class="form-group"> 
+          <div class="input-group">
+              <input type="text" v-model="search" class="form-control" @input="aplicarFiltro()"  placeholder="Buscar...">
+              <span class="input-group-addon"  style="background-color: #F9CA33;"><i class="fa fa-search"></i></span>
+          </div>  
+      </div>
+    </div>
+  </div>
   <div class="row"> 
     <div class="col-md-12">
-        <div class="box box-custom-enod top-buffer">
+        <div class="box box-custom-enod">
             <div class="box-body">
                 <div class="table-responsive">          
                     <table class="table table-hover table-striped">
@@ -183,7 +194,8 @@ export default {
     data() { return {
 
         ots :{},       
-        ot_id_selected : ''
+        ot_id_selected : '',
+        search:'',
         }
 
     },
@@ -217,14 +229,31 @@ export default {
 
     methods : {
 
-        getResults : function(page = 1){
+        aplicarFiltro : function(){
+
+          console.log(this.search);
+          this.getResults(1,this.search);
+
+        },
+
+        getResults : function(page = 1,filtro =''){
 
             axios.defaults.baseURL = this.url ;                
-            var urlRegistros = 'ots?page='+ page + '&api_token=' + Laravel.user.api_token;      
+            var urlRegistros = 'ots?page='+ page + '&search=' + filtro + '&api_token=' + Laravel.user.api_token;      
             console.log(urlRegistros);        
             axios.get(urlRegistros).then(response =>{
-            this.ots = response.data         
-            this.ot_id_selected = this.ots.data[0].id;    
+            console.log(response.data);  
+            this.ots = response.data   
+            console.log(this.ots.length);
+            if(this.ots.data.length){
+              
+              this.ot_id_selected = this.ots.data[0].id; 
+
+            }else{
+              this.ot_id_selected = -1;
+
+            }      
+
             });
 
        

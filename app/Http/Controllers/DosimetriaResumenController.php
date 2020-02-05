@@ -30,6 +30,7 @@ class DosimetriaResumenController extends Controller
     public function getResumen($year){
 
         $resumen = DB::select('CALL DosimetriaResumen(?)',array($year));   
+        
 
         return $resumen;
 

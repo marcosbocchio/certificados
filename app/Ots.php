@@ -17,8 +17,44 @@ class Ots extends Model
 
         return $this->belongsTo('App\Localidades','localidad_id','id');
       
-      }
+    }
 
+    public function scopeProyecto($query, $filtro='') {
 
+        if (trim($filtro) != '') {
+           
+              $query->WhereRaw("proyecto LIKE '%" . $filtro . "%'")
+                    ->orWhereRaw("numero LIKE '%" . $filtro . "%'")    
+                    ->orWhereRaw("obra LIKE '%" . $filtro . "%'");
+    
+       
+        }
+     
+    }
+
+    /*
+    public function scopeNumeroOt($query, $filtro='') {
+
+        if (trim($filtro) != '') {
+           
+              $query->WhereRaw("numero LIKE '%" . $filtro . "%'");
+    
+       
+        }
+     
+    }
+
+    public function scopeObraOt($query, $filtro='') {
+
+        if (trim($filtro) != '') {
+           
+              $query->WhereRaw("obra LIKE '%" . $filtro . "%'");
+    
+       
+        }
+     
+    }
+
+*/
 
 }
