@@ -28,7 +28,9 @@
                     </div>     
                 </div>
             </div>
-       
+
+        <div v-if="show_tabla">
+
             <div class="box box-custom-enod">
                 <div class="box-body">
                      <div class="col-md-12">
@@ -55,7 +57,7 @@
                                         </td>
                                         <td>
                                             <div v-if="(indexPosTablaDosimetria == k) && ((year < anio_actual) || ( (year == anio_actual) && (month < mes_actual)) || ((k + 1) <= dia_actual))">       
-                                                <input type="text" v-model="TablaDosimetria[k].observaciones" size="65" maxlength="100">        
+                                                <input type="text" v-model="TablaDosimetria[k].observaciones" size="65" maxlength="100" :disabled="deshabilitarInput(item.created_at)">        
                                             </div>   
                                             <div v-else>
                                               {{item.observaciones}} 
@@ -72,6 +74,8 @@
             <div class="clearfix"></div>    
         </div>
         <a class="btn btn-primary" v-on:click="submit()" >Actualizar</a> 
+        </div>
+
       </div>
     </div>
 </template>
@@ -92,7 +96,7 @@ export default {
   data () { return {
 
       TablaDosimetria:[],
-      operador : JSON.parse(JSON.stringify(this.operador_data)),
+      operador :'',
       year: '',
       month:'',
       day :'',
@@ -104,6 +108,10 @@ export default {
   },
 
   created : function() {
+
+        if(this.operador_data.film){
+            this.operador = JSON.parse(JSON.stringify(this.operador_data));
+        }
  
         this.$store.dispatch('loadFechaActual').then(response => {
             
@@ -176,6 +184,12 @@ export default {
        anio_actual : function(){
 
            return new Date(this.fecha).getFullYear();
+       },
+
+       show_tabla : function(){
+
+        return (!this.operador || !this.year || !this.month) ? false : true;
+
        }
 
     },
@@ -223,45 +237,32 @@ export default {
    
      },
 
+
     deshabilitarInput(val){
 
         
     let deshabilitar = false;
     let esMismoDia = this.ComprobarMismoDia(val);
 
-    console.log(val);
-     console.log(val);
-      console.log(val);
-        console.log(val);
-         console.log(val);
-          console.log(val);
+    if((this.operador_data.can.D_Operador_Admin) || (val=='')){
 
-          let $con = ((!this.operador_data.can.D_Operador_Admin) );
-          console.log('$con');
-          console.log($con);
-          console.log($con);
-          console.log($con);
-          console.log($con);
+        console.log('el val es vacio');
 
-        if((this.operador_data.can.D_Operador_Admin) || (val=='')){
+            deshabilitar = false;
 
-            console.log('el val es vacio');
+    }else{
 
-              deshabilitar = false;
+        if(esMismoDia){
+
+            deshabilitar = false;
 
         }else{
 
-            if(esMismoDia){
-
-                deshabilitar = false;
-
-            }else{
-
-                deshabilitar = true;
-            }
+            deshabilitar = true;
+        }
 
 
-        } 
+    } 
 
     return deshabilitar;
 
