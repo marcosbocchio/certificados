@@ -123,7 +123,7 @@
                                                             </div>        
                                                          </div>
                                                         <a href="#" slot="reference" class="top">
-                                                            {{item.EM1}} 
+                                                            <span :style="{color:item.CM1}">{{item.EM1}}</span> 
                                                         </a>  
                                                     </popper>
                                                       
@@ -141,7 +141,7 @@
                                                          </div>
 
                                                     <a href="#" slot="reference" class="top">
-                                                        {{item.EM2}} 
+                                                        <span :style="{color:item.CM2}">{{item.EM2}}</span> 
                                                     </a>  
                                                     </popper>     
 
@@ -159,8 +159,7 @@
                                                          </div>
 
                                                     <a href="#" slot="reference" class="top" >
-                                                        {{item.EM3}} 
-                                                    </a>  
+                                                        <span :style="{color:item.CM3}">{{item.EM3}}</span>                                                     </a>  
                                                     </popper>
                                                 
                                              </td>
@@ -177,8 +176,7 @@
                                                          </div>
 
                                                     <a href="#" slot="reference" class="top" >
-                                                        {{item.EM4}} 
-                                                    </a>  
+                                                        <span :style="{color:item.CM4}">{{item.EM4}}</span>                                                     </a>  
                                                     </popper>
                                              </td>                                                                                    
                                             <td style="text-align:center;" :class="[{maxRxMensual : (parseFloat(item.DOM5) > max_rx_mensual)},{MaxDifOpRx : (Math.abs(parseFloat(item.DOM5) - parseFloat(item.DRXM5))) > max_dif_op_rx}]">  {{item.DOM5}} </td>
@@ -194,8 +192,7 @@
                                                          </div>
 
                                                     <a href="#" slot="reference" class="top" >
-                                                        {{item.EM5}} 
-                                                    </a>  
+                                                        <span :style="{color:item.CM5}">{{item.EM5}}</span>                                                     </a>  
                                                     </popper>
                                                 
                                             </td>                                                                                    
@@ -212,8 +209,7 @@
                                                  </div>
 
                                                     <a href="#" slot="reference" class="top" >
-                                                        {{item.EM6}} 
-                                                    </a>  
+                                                        <span :style="{color:item.CM6}">{{item.EM6}}</span>                                                     </a>  
                                                     </popper>
                                                 
                                             </td>                                                                               
@@ -230,8 +226,7 @@
                                                          </div>
 
                                                         <a href="#" slot="reference" class="top" >
-                                                            {{item.EM7}} 
-                                                        </a>  
+                                                            <span :style="{color:item.CM7}">{{item.EM7}}</span>                                                         </a>  
                                                     </popper>
                                             </td>                                                                                
                                             <td style="text-align:center;" :class="[{maxRxMensual : (parseFloat(item.DOM8) > max_rx_mensual)},{MaxDifOpRx : (Math.abs(parseFloat(item.DOM8) -parseFloat(item.DRXM8))) > max_dif_op_rx}]"> {{item.DOM8}} </td>
@@ -247,8 +242,7 @@
                                                          </div>
 
                                                     <a href="#" slot="reference" class="top" >
-                                                        {{item.EM8}} 
-                                                    </a>  
+                                                        <span :style="{color:item.CM8}">{{item.EM8}}</span>                                                     </a>  
                                                     </popper>
                                                 
                                             </td>                                                                                
@@ -265,8 +259,7 @@
                                                          </div>
 
                                                     <a href="#" slot="reference" class="top" >
-                                                        {{item.EM9}} 
-                                                    </a>  
+                                                        <span :style="{color:item.CM9}">{{item.EM9}}</span>                                                     </a>  
                                                     </popper>
                                             </td>                                                                                 
                                             <td style="text-align:center;" :class="[{maxRxMensual : (parseFloat(item.DOM10) > max_rx_mensual)},{MaxDifOpRx : (Math.abs(parseFloat(item.DOM10) -parseFloat(item.DRXM10))) > max_dif_op_rx}]"> {{item.DOM10}} </td>
@@ -282,8 +275,7 @@
                                                          </div>
 
                                                     <a href="#" slot="reference" class="top" >
-                                                        {{item.EM10}} 
-                                                    </a>  
+                                                        <span :style="{color:item.CM10}">{{item.EM10}}</span>                                                     </a>  
                                                     </popper>
                                             </td>
                                             <td style="text-align:center;" :class="[{maxRxMensual : (parseFloat(item.DOM11) > max_rx_mensual)},{MaxDifOpRx : (Math.abs(parseFloat(item.DOM11) -parseFloat(item.DRXM11))) > max_dif_op_rx}]"> {{item.DOM11}} </td>
@@ -299,8 +291,7 @@
                                                          </div>
 
                                                     <a href="#" slot="reference" class="top" >
-                                                        {{item.EM11}} 
-                                                    </a>  
+                                                        <span :style="{color:item.CM11}">{{item.EM11}}</span>                                                     </a>  
                                                     </popper>
                                             </td>
                                             <td style="text-align:center;" :class="[{maxRxMensual : (parseFloat(item.DOM12) > max_rx_mensual)},{MaxDifOpRx : (Math.abs(parseFloat(item.DOM12) -parseFloat(item.DRXM12))) > max_dif_op_rx}]"> {{item.DOM12}} </td>
@@ -316,8 +307,7 @@
                                                          </div>
 
                                                     <a href="#" slot="reference" class="top" >
-                                                        {{item.EM12}} 
-                                                    </a>  
+                                                        <span :style="{color:item.CM12}">{{item.EM12}}</span>                                                     </a>  
                                                     </popper>
                                             </td>
                                             <td style="text-align:center;">{{item.ACUMULADO_OP}}</td>
@@ -479,6 +469,6 @@ export default {
 .popper  {
 
     color: black;
-}
+} 
 
 </style>
