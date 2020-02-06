@@ -15,7 +15,7 @@
                 <div class="box box-custom-enod">
                     <div class="box-body">
                         <div class="col-md-12">
-                           <a :href="url + '/pdf/dosimetria/year/' + year "  target="_blank">Exportar Resumen PDF</a>
+                           <a :href="url + '/pdf/dosimetria/year/' + year + '/operadores/' + str_list_of_ids"  target="_blank">Exportar Resumen PDF</a>
                            <p>&nbsp;</p>
                         </div>    
                         <div class="col-md-12">
@@ -23,7 +23,10 @@
                                 <table class="table table-hover table-bordered">
                                     <thead>
                                         <tr>                                     
-                                            <th style="text-align:center;min-width:250px;" rowspan="2" >OPERADOR</th>     
+                                            <th style="text-align:center;" rowspan="2">
+                                                <input type="checkbox" id="checkbox" @change="cambiarCheck" v-model="check_all">                  
+                                            </th> 
+                                            <th style="text-align:center;min-width:250px;" rowspan="2" >OPERADOR</th>    
                                             <th style="text-align:center;" rowspan="2">DNI</th>
                                             <th style="text-align:center;" rowspan="2">FILM</th>  
                                             <th style="text-align:center;" colspan="3">ENERO</th>  
@@ -84,6 +87,9 @@
                                     <tbody>
                                         <tr v-for="(item,k) in TablaResumen" :key="k"> 
                                                         
+                                            <td style="text-align:center;">
+                                                <input type="checkbox" id="checkbox" v-model="item.sel" @input="EditListIds(!item.sel,item.operador_id)">
+                                            </td>
                                             <td bgcolor="#bee5eb"  @click="getPeriodos(item.operador_id)">
                                                 <popper trigger="click" :options="{placement: 'top'}">
                                                     <div class="popper">
@@ -108,7 +114,7 @@
                                                     {{item.operador}}
                                                     </a>  
                                                 </popper>                                              
-                                                </td>    
+                                             </td>    
                                             <td style="text-align:center;"> {{item.dni}} </td>
                                             <td style="text-align:center;"> {{item.film}} </td>
                                             <td style="text-align:center;" :class="[{maxRxMensual : (parseFloat(item.DOM1) > max_rx_mensual)},{MaxDifOpRx : (Math.abs(parseFloat(item.DOM1) -parseFloat(item.DRXM1))) > max_dif_op_rx}]">  {{item.DOM1}} </td>
@@ -357,7 +363,10 @@ export default {
       max_rx_mensual:'',
       max_dif_op_rx:'',
       estados:[],
+      check_all : true,
       TablaPeriodos:[],
+      array_of_ids :[],
+      str_list_of_ids:''
   
      
     }    
@@ -390,13 +399,14 @@ export default {
   watch : {
 
         year : function(val){
-          
+            this.check_all=true;
             this.TablaResumen = []      
             console.log('el año es:',this.year);
             this.$store.dispatch('loadDosimetriaResumen', val).then(
                 response => {
                   this.TablaResumen = [];         
                   this.TablaResumen = this.dosimetria_resumen;
+                  this.CargarIds();
 
                 }
             );          
@@ -439,7 +449,53 @@ export default {
 
      },
 
+     cambiarCheck : function(){
+
+        this.TablaResumen.forEach(function(item) {
+
+          item.sel = this.check_all;
+             
+        }.bind(this));
+
+        this.array_of_ids = [];
+        this.TablaResumen.forEach(function(item){
+
+            this.EditListIds(item.sel,item.operador_id)
+
+        }.bind(this));
+
+     },
+
+    CargarIds : function(){
+
+        this.dosimetria_resumen.forEach(function(item){
+
+            this.array_of_ids.push(item.operador_id) ;               
+
+        }.bind(this));
+
+        this.str_list_of_ids = this.array_of_ids.toString();
+        
+    },
+
+    EditListIds : function(check_value,id){
+
+            if(check_value){
+
+                this.array_of_ids.push(id);
+
+            }else{
+
+                this.array_of_ids.splice(this.array_of_ids.indexOf(id), 1 );
+            }
+
+            this.str_list_of_ids = this.array_of_ids.toString();
+
+    },
+
+    
  },
+ 
   
 }
 </script>

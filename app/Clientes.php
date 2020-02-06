@@ -22,13 +22,4 @@ class Clientes extends Model
         
     }
 
-    public function scopeName($query, $name=''){
-
-        if (trim($name) != '') {
-           
-            $query->where('nombre_fantasias',"LIKE","'%$name%'");
-  
-      }
-      
-    }
 }
