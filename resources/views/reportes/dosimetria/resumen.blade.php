@@ -8,7 +8,7 @@
 <style>  
 
 @page {    
-        margin: 123px 15px 30px 15px !important;
+        margin: 123px 15px 40px 15px !important;
         padding: 0px 0px 0px 0px !important;
        }
 
@@ -19,7 +19,7 @@ header {
 }
 
 footer {
-    position: fixed; bottom:33px; 
+    position: fixed; bottom:8px; 
     padding-top: 0px;
 
 }
@@ -128,28 +128,20 @@ footer table tbody tr td .abreviaturas{
     <table style="text-align: center" width="100%" class="bordered">
         <tbody>
             <tr>
-                <!--
-                    <td style="font-size: 10px;height: 20px;" class="bordered-td"><strong>O:</strong> Ok</td>
-                    <td style="font-size: 10px;height: 20px;" class="bordered-td"><strong>B:</strong> Baja</td>
-                    <td style="font-size: 10px;height: 20px;" class="bordered-td"><strong>N:</strong> No vinculado</td>
-                    <td style="font-size: 10px;height: 20px;" class="bordered-td"><strong>P:</strong> Perdido</td>
-                    <td style="font-size: 10px;height: 20px;" class="bordered-td"><strong>D:</strong> Deteriorado</td>
-                -->
-              
-                    <td style="font-size: 10px;height: 18px;" class="bordered-td">
-                        <div class="abreviaturas">
-                            <strong>O:</strong> Ok
-                            &nbsp;&nbsp;&nbsp;&nbsp;
-                            <strong>B:</strong> Baja
-                            &nbsp;&nbsp;&nbsp;&nbsp;
-                            <strong>N:</strong> No vinculado 
-                            &nbsp;&nbsp;&nbsp;&nbsp;
-                            <strong>P:</strong> Perdido
-                            &nbsp;&nbsp;&nbsp;&nbsp;
-                            <strong>D:</strong> Deteriorado
-                        </div>
-                    </td>
-               
+                <td style="font-size: 10px;height: 18px;width: 100px;" class="bordered-td"><strong style="margin-left: 10px;"> ESTADOS </strong></td>
+                <td style="font-size: 10px;height: 18px;" class="bordered-td">
+                    <div class="abreviaturas">
+                        <strong>O:</strong> Ok
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <strong>B:</strong> Baja
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <strong>N:</strong> No vinculado 
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <strong>P:</strong> Perdido
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <strong>D:</strong> Deteriorado
+                    </div>
+                </td>     
             </tr>      
         </tbody>
     </table>
@@ -251,7 +243,7 @@ footer table tbody tr td .abreviaturas{
 
             
             {{ $cantFilasTotal = count($resumen) }}
-            {{ $filasPage = 39}}
+            {{ $filasPage = 40}}
             {{ $filasACompletar = pdfCantFilasACompletar($filasPage,$cantFilasTotal) }}
 
             @for ( $x=0 ;  $x < $filasACompletar ; $x++)
