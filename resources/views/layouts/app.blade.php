@@ -26,6 +26,15 @@
     <link href="{{ asset('css/AdminLTE.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/login.css') }}" rel="stylesheet">
     <link href="{{ asset('adminlte/plugins/iCheck/square/blue.css')}}" rel="stylesheet">
+
+    <style>
+
+          input:focus  {
+
+            border-color:#F9CA33 !important;
+        }
+
+    </style>
 </head>
 <body class="{{ Request::path() == 'login' ? 'background-image' : '' }}"">
 
