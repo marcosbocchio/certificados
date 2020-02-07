@@ -297,15 +297,17 @@ export default {
                 microsievert : '',
                 observaciones : '',
                 created_at : '',
+                id :'',
 
             });
         }
 
         this.dosimetria_operador.forEach(function(item) {
-            
+
+           this.TablaDosimetria[item.day-1].id = item.id; 
            this.TablaDosimetria[item.day-1].microsievert = item.microsievert;
            this.TablaDosimetria[item.day-1].observaciones = item.observaciones;
-            this.TablaDosimetria[item.day-1].created_at = item.created_at;
+           this.TablaDosimetria[item.day-1].created_at = item.created_at;
 
         }.bind(this));
 
@@ -338,7 +340,14 @@ export default {
 
             }).then(response => {            
                 this.errors=[];     
-                console.log(response);                  
+                console.log(response);         
+                this.$store.dispatch('loadDosimetriaOperador',{operador_id : this.operador.id, year : this.year , month : this.month}).then(
+                        response => {
+                            
+                            this.ResetTabla();
+    
+                        }
+                    );           
                 toastr.success('dosimetrīa  actualizado con éxito');                
                 
             }).catch(error => {

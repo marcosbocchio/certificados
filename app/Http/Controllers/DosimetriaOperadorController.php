@@ -36,7 +36,7 @@ class DosimetriaOperadorController extends Controller
         $disometrias = DosimetriaOperador::whereRaw('YEAR(fecha) = ?',[$year])
                                         ->whereRaw('MONTH(fecha) = ?',[$month])
                                         ->where('operador_id',$operador_id)
-                                        ->selectRaw('DAY(fecha) as day,microsievert, observaciones,created_at')
+                                        ->selectRaw('id,DAY(fecha) as day,microsievert, observaciones,created_at')
                                         ->orderBy('day','ASC')
                                         ->get();
     
@@ -67,7 +67,7 @@ class DosimetriaOperadorController extends Controller
         try
         {
         
-            $this->deleteDosimetriaOperador($request);  
+          //  $this->deleteDosimetriaOperador($request);  
             $this->saveDosimetriaOperador($request);  
             DB::commit();
 
@@ -108,20 +108,40 @@ class DosimetriaOperadorController extends Controller
 
         foreach ($request->dosimetria_operadores as $dosimetria) {
 
-            if($dosimetria['microsievert']) {
+            $fecha = $request->year . '-' . $request->month . '-' . $dosimetria['day'];
+            $item = DosimetriaOperador::where('id',$dosimetria['id'])
+                                        ->first();
+            
+            if(!$item){
+        
+                if($dosimetria['microsievert']) {
 
-                $fecha = $request->year . '-' . $request->month . '-' . $dosimetria['day'];
-               
-                $dosimetria_operador = new DosimetriaOperador;
-                $dosimetria_operador->fecha = $fecha;
-                $dosimetria_operador->operador_id = $request->operador['id'];
-                $dosimetria_operador->user_id = $user_id;
-                $dosimetria_operador->microsievert = $dosimetria['microsievert'];
-                $dosimetria_operador->observaciones = $dosimetria['observaciones'];
-                $dosimetria_operador->save();
+                    $dosimetria_operador = new DosimetriaOperador;
+                    $dosimetria_operador->fecha = $fecha;
+                    $dosimetria_operador->operador_id = $request->operador['id'];
+                    $dosimetria_operador->user_id = $user_id;
+                    $dosimetria_operador->microsievert = $dosimetria['microsievert'];
+                    $dosimetria_operador->observaciones = $dosimetria['observaciones'];
+                    $dosimetria_operador->save();
+
+                }
+
+            }else{
+
+                if($dosimetria['microsievert']){
+
+                    $item->microsievert = $dosimetria['microsievert'];
+                    $item->observaciones = $dosimetria['observaciones'];
+                    $item->user_id = $user_id;
+                    $item->save();
+
+                }else{
+
+                    $item->delete();
+                }
 
             }
-
+          
         }
 
     }
