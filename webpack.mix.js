@@ -20,8 +20,11 @@ mix.js([
 mix.version();
 
 mix.styles([
-  'resources/css/app.css',  
+  'resources/css/custom.css',  
 ], 'public/css/custom.css')
+.styles([
+  'resources/css/login.css',
+],'public/css/login.css')
 .styles([
   'resources/css/AdminLTE.css',
 ],'public/css/AdminLTE.min.css')

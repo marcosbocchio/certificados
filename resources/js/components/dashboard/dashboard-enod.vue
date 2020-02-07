@@ -268,8 +268,6 @@ export default {
 
             });
            
-
-       
         },
 
          selectOt : function(index){
