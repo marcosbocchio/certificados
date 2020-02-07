@@ -180,6 +180,12 @@
                 <pagination :data="ots" @pagination-change-page="getResults" ><span slot="prev-nav">&lt; Previous</span>
                 <span slot="next-nav">Next &gt;</span> </pagination>
             </div> 
+
+             
+            <div v-if="loading" class="overlay">
+                <i class="fa fa-refresh fa-spin" style="color:#F9CA33"></i>
+            </div>
+          
         </div> 
       </div> 
     </div>
@@ -198,6 +204,7 @@ export default {
         ots :{},       
         ot_id_selected : '',
         search:'',
+        loading:false,
         }
 
     },
@@ -240,23 +247,27 @@ export default {
 
         getResults : function(page = 1,filtro =''){
 
+            this.loading = true;
             axios.defaults.baseURL = this.url ;                
             var urlRegistros = 'ots?page='+ page + '&search=' + filtro + '&api_token=' + Laravel.user.api_token;      
             console.log(urlRegistros);        
             axios.get(urlRegistros).then(response =>{
-            console.log(response.data);  
-            this.ots = response.data   
-            console.log(this.ots.length);
-            if(this.ots.data.length){
-              
-              this.ot_id_selected = this.ots.data[0].id; 
 
-            }else{
-              this.ot_id_selected = -1;
+              console.log(response.data);  
+              this.ots = response.data   
+              console.log(this.ots.length);
+              if(this.ots.data.length){
+                
+                this.ot_id_selected = this.ots.data[0].id; 
 
-            }      
+              }else{
+                this.ot_id_selected = -1;
+
+              }     
+             this.loading = false; 
 
             });
+           
 
        
         },

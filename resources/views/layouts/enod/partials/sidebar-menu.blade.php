@@ -15,7 +15,7 @@
       <ul class="sidebar-menu tree" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>       
         <li><a href="{{ route('dashboard')}}" ><i class="fa fa-dashboard"></i> <span>TABLERO PRINCIPAL</span></a></li>   
-        @can('enod')  
+        @can('OT')  
           <li class="treeview">
             <a href="#">
               <i class="fa fa-laptop"></i>
@@ -29,7 +29,7 @@
             </ul>
           </li>
         @endcan
-        @can('enod')
+        @can('MAESTROS')
           <li class="treeview">
             <a href="#">
               <i class="fa fa-th"></i> <span>MAESTROS</span>
@@ -55,16 +55,16 @@
               <li><a href="{{ route('fuentes') }}">Fuentes</a></li>
               <li><a href="{{ route('Interno-fuentes') }}">Interno Fuentes</a></li>
               @can('roles')
-              <li><a href="{{ route('roles') }}">Roles</a></li>
+                  <li><a href="{{ route('roles') }}">Roles</a></li>
               @endcan
-               @can('permisos')
-               <li><a href="{{ route('permisos') }}">Permisos</a></li>
-               @endcan
+              @can('permisos')
+                  <li><a href="{{ route('permisos') }}">Permisos</a></li>
+              @endcan
             </ul>
           </li>
         @endcan
 
-      
+        @can('DOSIMETRIA')
           <li class="treeview">
             <a href="#">
               <i class="fa fa-bar-chart"></i> <span>DOSIMETRIA</span>
@@ -73,17 +73,29 @@
               </span>
             </a>
             <ul class="treeview-menu">
-
-              <li><a href="{{ route('operador-periodo-rx') }}">Activar Operador</a></li> 
-              <li><a href="{{ route('dosimetria-operador') }}">Operador</a></li>
-              <li><a href="{{ route('dosimetria-rx') }}">RX</a></li>
-              <li><a href="{{ route('dosimetria-estados') }}">Estados</a></li>
-              <li><a href="{{ route('dosimetria-resumen') }}">Resumen</a></li>
-              <li><a href="{{ route('pdfDosimetriaPeriodos') }}" target="_blank" >Reporte Alta/Baja</a></li>
+              @can('D_activa-operador')
+                  <li><a href="{{ route('operador-periodo-rx') }}">Activar Operador</a></li> 
+              @endcan
+              @can('D_operador')
+                  <li><a href="{{ route('dosimetria-operador') }}">Operador</a></li>
+              @endcan
+              @can('D_rx')
+                  <li><a href="{{ route('dosimetria-rx') }}">RX</a></li>
+              @endcan
+              @can('D_estados')
+                  <li><a href="{{ route('dosimetria-estados') }}">Estados</a></li>
+              @endcan
+              @can('D_resumen')
+                  <li><a href="{{ route('dosimetria-resumen') }}">Resumen</a></li>
+              @endcan
+              @can('D_reporte_alta_baja')
+                  <li><a href="{{ route('pdfDosimetriaPeriodos') }}" target="_blank" >Reporte Alta/Baja</a></li>
+              @endcan
 
             </ul>
           </li>
-      
+        @endcan
+
         <li class="treeview">
           <a href="#">
             <i class="fa fa-book"></i> <span>INSTITUCIONALES</span>
