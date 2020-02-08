@@ -17,19 +17,19 @@
       <div class="form-group has-feedback">
       <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" placeholder="Email" value="{{ old('email') }}" required autocomplete="email" autofocus>
             @error('email')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
+                <span class="invalid-feedback" role="alert" >
+                    <strong style="color: red;">{{ $message }}</strong>
                 </span>
             @enderror
 
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="Password" required autocomplete="current-password">
+        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="contraseña" required autocomplete="current-password">
 
         @error('password')
             <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
+                <strong style="color: red;">{{ $message }}</strong>
             </span>
         @enderror     
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
@@ -38,8 +38,11 @@
         <div class="col-xs-12">
           <div class="checkbox icheck" >
             <label>
-              <input style="background-color: chartreuse;" class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }} >
-             Remember Me</label>
+              <div class="icheckbox_square-yellow" aria-checked="false" aria-disabled="false" style="position: relative;">
+              <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }} >
+              <ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
+             Remember Me
+            </label>
           </div>
         </div>
        </div>
