@@ -4,13 +4,12 @@
 <div class="container">
     <div class="row justify-content-center">
     <div class="login-box">
-
+      <div class="login-logo" style="margin-bottom: -10px;">
+        <a href="{{ route('login') }}"><img src="{{asset('img/logo-enod.png')}}"  height="120px"  alt="Logo Enod"> </a>
+      </div>
    <!-- /.login-logo -->
   <div class="login-box-body">
-    <div class="login-logo" >
-      <a href="{{ route('login') }}"><img src="{{asset('img/logo-enod-web.jpg')}}"  height="60px"  alt="Logo Enod"> </a>
-    </div>
-    <p class="login-box-msg" >Login para iniciar sesión</p>
+    <p class="login-box-msg">Login para iniciar sesión</p>
 
      <form method="POST" action="{{ route('login') }}">
       @csrf
@@ -65,11 +64,9 @@
           </div>     
       </div>
     </form>
+
   </div>
   <!-- /.login-box-body -->
-  <div class="login-logo">
-    <a href="{{ route('login') }}"><img src="{{asset('img/redes.png')}}"  height="90px"  alt="Redes Enod"> </a>
-  </div>
 </div>
 
     </div>

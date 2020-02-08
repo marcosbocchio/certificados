@@ -30,13 +30,24 @@
     <style>
 
           input:focus  {
-
-            border-color:#F9CA33 !important;
+            border-color:#F9CA33 !important;          
         }
+        .login-box-body {
+          
+              border : solid 1px;             
+          }
+
+        .login-box {   
+            margin-top: 110px;         
+            padding-bottom: 0px;
+            margin-bottom: 0px;
+        }
+
+       
 
     </style>
 </head>
-<body class="{{ Request::path() == 'login' ? 'background-image' : '' }}"">
+<body class="{{ Request::path() == 'login' ? 'background-image hold-transition login-page' : '' }} ">
 
     <div id="app">
 {{--         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
