@@ -36,30 +36,26 @@
       </div>
       <div class="row">
         <div class="col-xs-12">
-          <div class="checkbox icheck">
-            <label class="">
-              <div class="icheckbox_square-blue" aria-checked="false" aria-disabled="false" style="position: relative;">
-    
-              <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }} style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">
-
-              <ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">
-              </ins>
-      
-              </div> Remember Me</label>
+          <div class="checkbox icheck" >
+            <label>
+              <input style="background-color: chartreuse;" class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }} >
+             Remember Me</label>
           </div>
         </div>
        </div>
      
        <div class="row" style="margin-top:10px">
-          <div class="col-xs-4">
+          <div class="col-xs-12">
               <button type="submit" class="btn btn-primary btn-block btn-flat">
-                  {{ __('Login') }}
+                <strong> {{ __('iniciar sesión') }}</strong> 
               </button>
           </div>
-          <div class="col-xs-8" >
+        </div>
+        <div class="row" style="padding-bottom: 0;">
+          <div class="col-xs-12"  style="text-align: center;margin-top: 11px;" >
               @if (Route::has('password.request'))
-                  <a class="btn btn-link" href="{{ route('password.request') }}" style="float: right;">
-                      {{ __('Forgot Your Password?') }}
+                  <a class="btn btn-link" href="{{ route('password.request') }}">
+                      {{ __('Olvidó su contraseña?') }}
                   </a>
               @endif        
           </div>     

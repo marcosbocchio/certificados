@@ -25,25 +25,28 @@
     <link  rel="stylesheet" href="{{asset('adminlte/bower_components/Ionicons/css/ionicons.min.css')}}">
     <link href="{{ asset('css/AdminLTE.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/login.css') }}" rel="stylesheet">
-    <link href="{{ asset('adminlte/plugins/iCheck/square/blue.css')}}" rel="stylesheet">
+    <link href="{{ asset('adminlte/plugins/iCheck/square/yellow.css')}}" rel="stylesheet">
 
     <style>
 
-          input:focus  {
+          input:focus {
             border-color:#F9CA33 !important;          
+        }
+
+        button {
+            border-color:  #F9CA33 !important;
+            background-color: #F9CA33 !important;
         }
         .login-box-body {
           
               border : solid 1px;             
           }
-
+   
         .login-box {   
-            margin-top: 110px;         
+            margin-top: 10%;         
             padding-bottom: 0px;
             margin-bottom: 0px;
-        }
-
-       
+        }       
 
     </style>
 </head>
@@ -116,8 +119,8 @@
 <script>
   $(function () {
     $('input').iCheck({
-      checkboxClass: 'icheckbox_square-blue',
-      radioClass: 'iradio_square-blue',
+      checkboxClass: 'icheckbox_square-yellow',
+      radioClass: 'iradio_square-yellow',
       increaseArea: '20%' /* optional */
     });
   });
