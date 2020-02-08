@@ -39,7 +39,7 @@
           <div class="checkbox icheck" >
             <label>
               <div class="icheckbox_square-yellow" aria-checked="false" aria-disabled="false" style="position: relative;">
-              <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }} >
+              <input name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}  type="checkbox" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">
               <ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
              Remember Me
             </label>
@@ -67,7 +67,7 @@
   </div>
   <!-- /.login-box-body -->
   <div class="login-logo">
-    <a href="{{ route('login') }}"><img src="{{asset('img/redes.png')}}"  height="90px"  alt="Redes Enod"> </a>
+    <a href="http://www.enodndt.com.ar/"><img src="{{asset('img/redes.png')}}"  height="90px"  alt="Redes Enod"> </a>
   </div>
 </div>
 
