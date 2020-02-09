@@ -50,7 +50,7 @@
 
     </style>
 </head>
-<body class="{{ Request::path() == 'login' ? 'background-image hold-transition login-page' : '' }} ">
+<body class="{{ Request::path() == 'login' || Request::path() == 'password/reset' ? 'background-image hold-transition login-page' : '' }} ">
 
     <div id="app">
 {{--         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
