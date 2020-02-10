@@ -12,6 +12,13 @@ use App\User;
 class MaterialesController extends Controller
 {
 
+    public function __construct()
+    {
+
+    $this->middleware(['role_or_permission:Super Admin|M_materiales']);  
+    
+    }
+
     public function index()
     {   
          return  Materiales::all();
@@ -26,10 +33,10 @@ class MaterialesController extends Controller
 
     public function callView()
     {   
-        $user = auth()->user();
-        $header_titulo = "Materiales";
-        $header_descripcion ="Alta | Baja | Modificación";      
-        return view('materiales',compact('user','header_titulo','header_descripcion'));
+      $user = auth()->user();
+      $header_titulo = "Materiales";
+      $header_descripcion ="Alta | Baja | Modificación";      
+      return view('materiales',compact('user','header_titulo','header_descripcion'));
 
     }
 

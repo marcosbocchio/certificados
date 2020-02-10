@@ -5,12 +5,14 @@ use App\Http\Requests\PermisoRequest;
 use Illuminate\Http\Request;
 use App\Permissions;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+
 
 class PermissionsController extends Controller
 {
   public function __construct()
   {
-    $this->middleware(['role_or_permission:Super Admin|permisos']);
+    $this->middleware(['role_or_permission:Super Admin|M_permisos']);
   }
     /**
      * Display a listing of the resource.
@@ -20,6 +22,18 @@ class PermissionsController extends Controller
     public function index()
     {
         return  Permissions::orderBy('name','ASC')->get();
+    }
+
+    public function GetPermissionsUser(){
+
+          $permissions = [];
+    foreach (Permission::all() as $permission) {
+        if (Auth::user()->can($permission->name)) {
+            $permissions[] = $permission->name;
+        }
+    }
+    return $permissions;
+
     }
 
     public function paginate(Request $request){

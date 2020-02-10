@@ -11,6 +11,12 @@ use Illuminate\Support\Facades\Auth;
 
 class DosimetriaRxController extends Controller
 {
+    public function __construct()
+    {
+  
+          $this->middleware(['role_or_permission:Super Admin|D_rx']);  
+    
+    }
     /**
      * Display a listing of the resource.
      *

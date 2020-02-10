@@ -16,19 +16,9 @@ Route::redirect('/', '/login',301)->name('login');
 
 Auth::routes();
 
-/*
-Route::get('institucionales/{id}','DocumentacionesController@institucionales')
-->middleware('auth')
-->name('institucionales');
-
-Route::get('operadores/ot/{id}','OtOperariosController@index')
-->middleware('auth')
-->name('otOperadores');
-
-
-*/
-
 Route::group(['middleware' => ['auth']], function () {
+
+  Route::get('/area/enod','DashboardController@index')->name('dashboard');
 
   Route::get('institucionales/{id}','DocumentacionesController@institucionales')->name('institucionales');
   Route::get('download/{name}','SoftwareDownloadController@software_download')->name('software_download');
@@ -52,19 +42,12 @@ Route::group(['middleware' => ['auth']], function () {
   Route::get('/area/enod/ot/{ot_id}/informe/{id}/edit/pm','InformesPmController@edit')->name('InformePmEdit');
   Route::get('/area/enod/ot/{ot_id}/informe/{id}/edit/lp','InformesLpController@edit')->name('InformeLpEdit');
   Route::get('/area/enod/ot/{ot_id}/informe/{id}/edit/us','InformesUsController@edit')->name('InformeUsEdit');
-
   Route::get('/area/enod/ot/{ot_id}/remito','RemitosController@create')->name('RemitoCreate');
   Route::get('/area/enod/ot/{ot_id}/remito/{id}/edit','RemitosController@edit')->name('RemitoEdit');
-
   Route::get('/area/enod/ot/{ot_id}/parte','PartesController@create')->name('ParteCreate');
   Route::get('/area/enod/ot/{ot_id}/parte/{id}/edit','PartesController@edit')->name('ParteEdit');
+
   
-});
-
-Route::get('/area/enod','DashboardController@index')->name('dashboard');
-
-Route::group(['middleware' => ['permission:enod']], function () {
-
   Route::get('/area/enod/usuarios', 'UserController@callView')->name('usuarios');
   Route::get('/area/enod/materiales', 'MaterialesController@callView')->name('materiales');
   Route::get('/area/enod/clientes', 'ClientesController@callView')->name('clientes');
@@ -92,7 +75,12 @@ Route::group(['middleware' => ['permission:enod']], function () {
   Route::get('/area/enod/dosimetria/operador_periodo_rx','OperadorPeriodoRxController@callView')->name('operador-periodo-rx');  
   Route::get('/area/enod/dosimetria/resumen','DosimetriaResumenController@callView')->name('dosimetria-resumen');  
 
+   // reportes
+
+ Route::get('/pdf/dosimetria/periodos','PdfDosimetriaPeriodosController@imprimir')->name('pdfDosimetriaPeriodos');
+
 });
+
 
  Route::get('php', function () {
    phpinfo();

@@ -7,6 +7,12 @@ use Illuminate\Support\Facades\DB;
 use App\User;
 class DosimetriaResumenController extends Controller
 {
+    public function __construct()
+    {
+  
+        $this->middleware(['role_or_permission:Super Admin|D_resumen']);  
+    
+    }
     /**
      * Display a listing of the resource.
      *

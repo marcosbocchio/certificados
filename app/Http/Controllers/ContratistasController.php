@@ -7,6 +7,13 @@ use App\Http\Requests\ContratistaRequest;
 use App\Contratistas;
 class ContratistasController extends Controller
 {
+
+    public function __construct()
+    {
+
+    $this->middleware(['role_or_permission:Super Admin|M_contratistas']);  
+    
+    }
     /**
      * Display a listing of the resource.
      *
@@ -18,8 +25,8 @@ class ContratistasController extends Controller
     }
 
     public function paginate(Request $request){
-      
-        return Contratistas::orderBy('id','DESC')->paginate(10);
+
+      return Contratistas::orderBy('id','DESC')->paginate(10);
   
       }
 

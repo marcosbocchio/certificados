@@ -298,10 +298,21 @@ state: {
         dosimetria_rx:[],
         dosimetria_estados:[],
         dosimetria_resumen:[],
+        user_permission : [],
 
     },
 
 actions : {
+
+        loadPermissions({
+          commit
+        }) {
+          axios.defaults.baseURL = store.state.url ;
+          var urlRegistros = 'permissions/user' + '?api_token=' + Laravel.user.api_token;  
+          axios.get(urlRegistros).then((response) => {
+            commit('getPermissions', response.data)           
+          })
+        },
 
         loadFechaActual({
           commit}) {

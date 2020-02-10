@@ -9,6 +9,13 @@ use Illuminate\Support\Facades\DB;
 
 class FuentesController extends Controller
 {
+
+  public function __construct()
+  {
+
+        $this->middleware(['role_or_permission:Super Admin|M_fuentes']);  
+  
+  }
     /**
      * Display a listing of the resource.
      *

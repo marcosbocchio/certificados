@@ -25,7 +25,11 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li><a href="{{ route('ots.create') }}"> Alta</a></li>                      
+
+             @can('O_alta')
+              <li><a href="{{ route('ots.create') }}"> Alta</a></li>  
+             @endcan                    
+
             </ul>
           </li>
         @endcan
@@ -38,33 +42,77 @@
               </span>
             </a>
             <ul class="treeview-menu">
-         
-              <li><a href="{{ route('usuarios') }}">Usuarios</a></li>
-          
-              <li><a href="{{ route('clientes') }}">Clientes</a></li>
-        
-              <li><a href="{{ route('contratistas') }}">Contratistas</a></li>
-          
-              <li><a href="{{ route('materiales')}}">Materiales</a></li>
-          
-              <li><a href="{{ route('norma-ensayos') }}">Norma ensayos</a></li>
-              <li><a href="{{ route('norma-evaluaciones') }}">Norma Evaluaciones</a></li>
-              <li><a href="{{ route('documentaciones')}}">Documentaciones</a></li>
-              <li><a href="{{ route('unidades-medidas') }}">Unidades de Medidas</a></li>
-              <li><a href="{{ route('medidas') }}">Medidas</a></li>
-              <li><a href="{{ route('productos') }}">Productos</a></li>
-              <li><a href="{{ route('servicios') }}">Servicios</a></li>
-              <li><a href="{{ route('soldadores') }}">Soldadores</a></li>
-              <li><a href="{{ route('equipos') }}">Equipos</a></li>
-              <li><a href="{{ route('Interno-equipos') }}">Interno Equipos</a></li>
-              <li><a href="{{ route('fuentes') }}">Fuentes</a></li>
-              <li><a href="{{ route('Interno-fuentes') }}">Interno Fuentes</a></li>
-              @can('roles')
+                @can('M_usuarios')
+                  <li><a href="{{ route('usuarios') }}">Usuarios</a></li>
+                @endcan
+
+                @can('M_clientes')
+                  <li><a href="{{ route('clientes') }}">Clientes</a></li>
+                @endcan
+
+                @can('M_contratistas')
+                  <li><a href="{{ route('contratistas') }}">Contratistas</a></li>
+                @endcan
+
+                @can('M_materiales')
+                  <li><a href="{{ route('materiales')}}">Materiales</a></li>
+                @endcan
+
+                @can('M_normas_ensayo')
+                  <li><a href="{{ route('norma-ensayos') }}">Norma ensayos</a></li>
+                @endcan
+
+                @can('M_normas_eval')
+                  <li><a href="{{ route('norma-evaluaciones') }}">Norma Evaluaciones</a></li>
+                @endcan
+
+                @can('M_documentaciones')              
+                  <li><a href="{{ route('documentaciones')}}">Documentaciones</a></li>
+                @endcan
+
+                @can('M_unidades_medida')              
+                  <li><a href="{{ route('unidades-medidas') }}">Unidades de Medidas</a></li>
+                @endcan
+
+                @can('M_medidas')
+                  <li><a href="{{ route('medidas') }}">Medidas</a></li>
+                @endcan
+
+                @can('M_productos')
+                  <li><a href="{{ route('productos') }}">Productos</a></li>
+                @endcan
+
+                @can('M_servicios')
+                  <li><a href="{{ route('servicios') }}">Servicios</a></li>
+                @endcan
+
+                @can('M_soldadores')
+                  <li><a href="{{ route('soldadores') }}">Soldadores</a></li>
+                @endcan
+
+                @can('M_equipos')
+                  <li><a href="{{ route('equipos') }}">Equipos</a></li>
+                @endcan
+
+                @can('M_interno_equipos')
+                  <li><a href="{{ route('Interno-equipos') }}">Interno Equipos</a></li>
+                @endcan
+
+                @can('M_fuentes')
+                  <li><a href="{{ route('fuentes') }}">Fuentes</a></li>
+                @endcan
+
+                @can('M_interno_fuentes')
+                  <li><a href="{{ route('Interno-fuentes') }}">Interno Fuentes</a></li>
+                @endcan
+    
+                @can('M_roles')
                   <li><a href="{{ route('roles') }}">Roles</a></li>
-              @endcan
-              @can('permisos')
+                @endcan
+
+                @can('M_permisos')
                   <li><a href="{{ route('permisos') }}">Permisos</a></li>
-              @endcan
+                @endcan
             </ul>
           </li>
         @endcan
@@ -78,7 +126,7 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              @can('D_activa-operador')
+              @can('D_activa_operador')
                   <li><a href="{{ route('operador-periodo-rx') }}">Activar Operador</a></li> 
               @endcan
               @can('D_operador')

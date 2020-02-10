@@ -10,6 +10,13 @@ use App\Productos;
 class ProductosController extends Controller
 {
 
+    public function __construct()
+    {
+
+          $this->middleware(['role_or_permission:Super Admin|M_productos']);  
+    
+    }
+
     /**
      * Display a listing of the resource.
      *

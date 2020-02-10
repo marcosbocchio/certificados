@@ -10,6 +10,13 @@ use App\Clientes;
 
 class SoldadoresController extends Controller
 {
+
+    public function __construct()
+    {
+
+          $this->middleware(['role_or_permission:Super Admin|M_soldadores']);  
+    
+    }
     /**
      * Display a listing of the resource.
      *

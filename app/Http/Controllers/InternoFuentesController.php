@@ -10,6 +10,12 @@ use Illuminate\Support\Facades\DB;
 
 class InternoFuentesController extends Controller
 {
+  public function __construct()
+  {
+
+        $this->middleware(['role_or_permission:Super Admin|M_interno_fuentes']);  
+  
+  }
     /**
      * Display a listing of the resource.
      *

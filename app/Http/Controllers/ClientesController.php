@@ -19,6 +19,8 @@ class ClientesController extends Controller
 
     public function __construct(ClientesRepository $clientesRepository)
     {
+
+     $this->middleware(['role_or_permission:Super Admin|M_clientes']);  
       $this->clientes = $clientesRepository;
     }
     /**

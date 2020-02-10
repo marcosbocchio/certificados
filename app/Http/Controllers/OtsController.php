@@ -27,7 +27,10 @@ class OtsController extends Controller
 
     public function __construct(OtsRepository $otRepository)
     {
+     
+      $this->middleware(['role_or_permission:Super Admin|O_alta'],['only' => ['create']]);  
       $this->ot = $otRepository;
+      
     }
     /**
      * Display a listing of the resource.
@@ -35,7 +38,7 @@ class OtsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {       DB::enableQueryLog();
+    {    
             $user_id = null;
             
             if (Auth::check())
@@ -62,7 +65,8 @@ class OtsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
+    {        
+
         $accion = 'create';      
         $user = auth()->user();
         $header_titulo = "Orden de trabajo";

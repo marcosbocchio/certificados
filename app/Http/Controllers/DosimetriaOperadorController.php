@@ -10,6 +10,12 @@ use App\DosimetriaOperador;
 
 class DosimetriaOperadorController extends Controller
 {
+    public function __construct()
+    {
+  
+          $this->middleware(['role_or_permission:Super Admin|D_operador']);  
+    
+    }
     /**
      * Display a listing of the resource.
      *

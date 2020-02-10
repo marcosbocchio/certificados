@@ -10,6 +10,13 @@ use Illuminate\Support\Facades\Auth;
 
 class OperadorPeriodoRxController extends Controller
 {
+
+    public function __construct()
+    {
+  
+          $this->middleware(['role_or_permission:Super Admin|D_activa_operador']);  
+    
+    }
     /**
      * Display a listing of the resource.
      *
