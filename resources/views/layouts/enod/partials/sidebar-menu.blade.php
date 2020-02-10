@@ -38,10 +38,15 @@
               </span>
             </a>
             <ul class="treeview-menu">
+         
               <li><a href="{{ route('usuarios') }}">Usuarios</a></li>
+          
               <li><a href="{{ route('clientes') }}">Clientes</a></li>
+        
               <li><a href="{{ route('contratistas') }}">Contratistas</a></li>
+          
               <li><a href="{{ route('materiales')}}">Materiales</a></li>
+          
               <li><a href="{{ route('norma-ensayos') }}">Norma ensayos</a></li>
               <li><a href="{{ route('norma-evaluaciones') }}">Norma Evaluaciones</a></li>
               <li><a href="{{ route('documentaciones')}}">Documentaciones</a></li>
