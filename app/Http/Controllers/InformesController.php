@@ -95,6 +95,7 @@ class InformesController extends Controller
               ->first();      
     
     switch ($metodo_ensayo->metodo) {
+        
         case 'RI':
             return redirect()->route('InformeRiEdit',array('ot_id' => $ot_id, 'id' => $id));
             break; 

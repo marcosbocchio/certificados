@@ -151,12 +151,12 @@
                                 <th class="col-lg-1">ESTADO</th>                        
                                 <th class="col-lg-1" colspan="4">
                                  <small style="margin-left: 2px;">Editar</small>
-                                 <small style="margin-left: 13px;">Usuario</small>
+                                 <small style="margin-left: 13px;">Usuarios</small>
                                  <small style="margin-left: 16px;">Informe</small>
-                                 <small style="margin-left: 13px;">Estados</small>
+                                 <small style="margin-left: 13px;">Acción</small>
 
                                 </th>
-                            </tr>
+                            </tr>S
                         </thead>
                         <tbody>
                             <tr v-for="(ot,k) in ots.data" :key="k" @click="selectOt(k)" :class="{selected: ot_id_selected === ots.data[k].id}" >
@@ -165,11 +165,29 @@
                                 <td> {{ot.proyecto}}</td>         
                                 <td> {{ot.obra}}</td>         
                                 <td> {{ot.fecha_formateada}}</td>         
-                                <td> {{ot.estado}}</td>                                
-                                <td width="10px"> <a :href="AppUrl + '/area/enod/ots/' + ot.id + '/edit' "   class="btn btn-warning btn-sm" title="Editar"><span class="fa fa-edit"></span></a></td>
-                                <td width="10px"> <a :href="AppUrl + '/soldadores/ot/' + ot_id_selected"   class="btn btn-default btn-sm" title="Soldadores/Usuarios Cliente"><span class="fa fa-user"></span></a></td>
+                                <td> {{ot.estado}}</td>   
+
+                                <td width="10px">                                   
+                                  <button class="btn btn-warning btn-sm" title="Editar" @click="openEditar" :disabled="!$can('T_edita')">
+                                    <span class="fa fa-edit">
+                                    </span>
+                                  </button>                              
+                                </td>
+
+                                <td width="10px">                                  
+                                  <button class="btn btn-default btn-sm" title="Soldadores/Usuarios Cliente" @click="openUsuarios" :disabled="!$can('T_usuarios')">
+                                    <span class="fa fa-user">
+                                    </span>
+                                  </button>                                 
+                                </td>
+
                                 <td width="10px"> <a :href="AppUrl + '/api/pdf/ot/' + ot.id " target="_blank"  class="btn btn-default btn-sm" title="Informe"><span class="fa fa-file-pdf-o"></span></a></td>
-                                <td v-if="!ot.firma" width="10px"> <a  @click="firmar(k)"  class="btn btn-default btn-sm" title="Firmar"><span class="glyphicon glyphicon-pencil"></span> </a></td>   
+
+                                <td v-if="!ot.firma" width="10px"> 
+                                  <button class="btn btn-default btn-sm" title="Firmar" @click="firmar(k)" :disabled="!$can('T_accion')">
+                                    <span class="glyphicon glyphicon-pencil"></span> 
+                                  </button>                                 
+                                </td>   
                                 <td v-else> <a class="btn btn-default btn-sm" title="Cerrar"><span class="glyphicon glyphicon-arrow-right"></span></a></td>
                               
                             </tr>
@@ -180,8 +198,7 @@
                 <pagination :data="ots" @pagination-change-page="getResults" ><span slot="prev-nav">&lt; Previous</span>
                 <span slot="next-nav">Next &gt;</span> </pagination>
             </div> 
-
-             
+            
             <div v-if="loading" class="overlay">
                 <i class="fa fa-refresh fa-spin" style="color:#F9CA33"></i>
             </div>
@@ -300,7 +317,21 @@ export default {
                 }
                 });
 
-        }
+        },
+      
+      openEditar: function(){
+
+        window.location.href = this.AppUrl + '/area/enod/ots/' + this.ot_id_selected + '/edit';
+
+      },
+
+      openUsuarios: function(){
+
+        window.location.href = this.AppUrl + '/soldadores/ot/' + this.ot_id_selected;
+
+      }
+
+
     }
 }
     

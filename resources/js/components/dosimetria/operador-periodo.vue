@@ -22,13 +22,13 @@
                                 <i class="fa fa-calendar"></i>
                                 </div>
                                     <Datepicker v-model="fecha_alta" :minimumView="'month'" :maximumView="'month'" :input-class="'form-control pull-right'" :language="es"></Datepicker>   
-                            </div>
+                            </div>v 
                         </div>
                     </div>
                      <div class="col-md-3">
                         <div class="form-group">
                             <label>&nbsp;</label>
-                            <button class="btn btn-primary" style="display: block;" @click="submit()" :disabled="!permitir_alta">ALTA</button>                         
+                            <button class="btn btn-primary" style="display: block;" @click="submit()" :disabled="!permitir_alta || $can('D_activa_operador_Admin')">ALTA</button>                         
                         </div>   
                     </div>   
                     
@@ -160,7 +160,7 @@ export default {
 
     getLabel(option) {
 
-      return `${option.name} ${option.film}`
+      return `${option.name}  -  ${option.film}`
       
     },
 

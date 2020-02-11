@@ -27,7 +27,9 @@ class InformesLpController extends Controller
 
     public function __construct()
     {
-        $this->middleware('ddppi')->only('create');
+       // $this->middleware('ddppi')->only('create');
+        $this->middleware(['role_or_permission:Super Admin|T_informes_edita'],['only' => ['create,edit']]);  
+
     }
     /**
      * Display a listing of the resource.

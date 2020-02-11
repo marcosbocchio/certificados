@@ -6,7 +6,7 @@
                      <div class="col-md-6">
                         <div class="form-group">
                             <label>Operadores</label>
-                            <v-select v-model="operador" :options="operadores_dosimetria" :getOptionLabel="getLabel" :disabled="!operador_data.can.D_Operador_Admin">
+                            <v-select v-model="operador" :options="operadores_dosimetria" :getOptionLabel="getLabel" :disabled="!$can('D_Operador_Admin')">
                                 <template slot="option" slot-scope="option">
                                     <span class="upSelect">{{ option.name }} </span> <br> 
                                     <span class="downSelect"> {{ option.film }} </span>

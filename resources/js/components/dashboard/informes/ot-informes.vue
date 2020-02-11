@@ -25,8 +25,11 @@
                         </div> 
                         <div class="form-group">                    
                             <span>
-                            <!--     <a :href="AppUrl + '/area/enod/ot/' + this.ot_data.id + '/informe/metodo/' + metodo_ensayo.metodo + '/create' " ><button class="btn btn-primary" :disabled="!metodo_selected">Nuevo</button></a> -->                             
-                                <a  @click="NuevoInforme(ot_data.id)" ><button class="btn btn-primary" :disabled="!metodo_selected">Nuevo</button></a>                              
+                                <a  @click="NuevoInforme(ot_data.id)">
+                                    <button class="btn btn-primary" :disabled="!metodo_selected">
+                                        Nuevo
+                                   </button>
+                                </a>                              
                             </span>
                         </div>
                     </div>
