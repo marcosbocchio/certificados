@@ -217,30 +217,30 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('partes/informe_lp/{id}','PartesController@getInformeLpParte');    
     Route::get('partes/informe_us/{id}','PartesController@getInformeUsParte');
 
-    //reportes 
     
-    Route::get('/pdf/remito/{id}','PdfRemitosController@imprimir')->name('pdfRemito');
-    Route::get('/pdf/parte/{id}/{estado}','PdfPartesController@imprimir')->name('pdfParteOriginal');
-    Route::get('/pdf/parte/{id}/{estado}','PdfPartesController@imprimir')->name('pdfParteFinal');
-    Route::get('/pdf/ot/{id}','PdfOtController@imprimir')->name('pdfot');
-    Route::get('/pdf/servicios/referencias/{id}','PdfServiciosReferenciasController@imprimir')->name('ServiciosReferencias');
-    Route::get('/pdf/productos/referencias/{id}','PdfProductosReferenciasController@imprimir')->name('ProductosReferencias');
-    Route::get('/pdf/productos/referencias/informe/pm/{id}','PdfInformesPmReferenciasController@imprimir')->name('InformePmReferencias');
-    Route::get('/pdf/productos/referencias/informe/lp/{id}','PdfInformesLpReferenciasController@imprimir')->name('InformeLpReferencias');    
-    
-    Route::get('/pdf/dosimetria/year/{year}/operadores/{str_list_of_ids?}','PdfDosimetriaController@imprimir')->name('pdfDosimetriaAnual');
-    
-    Route::get('/pdf/informe/{id}','PdfInformesController@index')->name('pdfInformes');
-    Route::get('/pdf/informe/lp/{informe}','PdfInformesLpController@imprimir')->name('pdfInformeLp');
-    Route::get('/pdf/informe/ri/{informe}','PdfInformesRiController@imprimir')->name('pdfInformeRi');
-    Route::get('/pdf/informe/pm/{informe}','PdfInformesPmController@imprimir')->name('pdfInformePm');
-    Route::get('/pdf/informe/us/{informe}','PdfInformesUsController@imprimir')->name('pdfInformeUs');
-    Route::get('/pdf/informe/us/indicaciones/referencia/{id}','PdfInformesUsReferenciaController@imprimir')->name('InformeUsDetalleUsPaUsReferencias');
-    Route::get('/pdf/informe/us/{informe}/indicaciones_us_pa','PdfInformesUsIndicacionesUsPaController@imprimir')->name('InformeUsIndicacionesUsPa');
-    Route::get('/pdf/informe/us/{informe}/indicaciones_me','PdfInformesUsIndicacionesMeController@imprimir')->name('InformeUsIndicacionesMe');
-
 });
 
+//reportes 
+
+Route::get('/pdf/remito/{id}','PdfRemitosController@imprimir')->name('pdfRemito');
+Route::get('/pdf/parte/{id}/{estado}','PdfPartesController@imprimir')->name('pdfParteOriginal');
+Route::get('/pdf/parte/{id}/{estado}','PdfPartesController@imprimir')->name('pdfParteFinal');
+Route::get('/pdf/ot/{id}','PdfOtController@imprimir')->name('pdfot');
+Route::get('/pdf/servicios/referencias/{id}','PdfServiciosReferenciasController@imprimir')->name('ServiciosReferencias');
+Route::get('/pdf/productos/referencias/{id}','PdfProductosReferenciasController@imprimir')->name('ProductosReferencias');
+Route::get('/pdf/productos/referencias/informe/pm/{id}','PdfInformesPmReferenciasController@imprimir')->name('InformePmReferencias');
+Route::get('/pdf/productos/referencias/informe/lp/{id}','PdfInformesLpReferenciasController@imprimir')->name('InformeLpReferencias');    
+
+Route::get('/pdf/dosimetria/year/{year}/operadores/{str_list_of_ids?}','PdfDosimetriaController@imprimir')->name('pdfDosimetriaAnual');
+
+Route::get('/pdf/informe/{id}','PdfInformesController@index')->name('pdfInformes');
+Route::get('/pdf/informe/lp/{informe}','PdfInformesLpController@imprimir')->name('pdfInformeLp');
+Route::get('/pdf/informe/ri/{informe}','PdfInformesRiController@imprimir')->name('pdfInformeRi');
+Route::get('/pdf/informe/pm/{informe}','PdfInformesPmController@imprimir')->name('pdfInformePm');
+Route::get('/pdf/informe/us/{informe}','PdfInformesUsController@imprimir')->name('pdfInformeUs');
+Route::get('/pdf/informe/us/indicaciones/referencia/{id}','PdfInformesUsReferenciaController@imprimir')->name('InformeUsDetalleUsPaUsReferencias');
+Route::get('/pdf/informe/us/{informe}/indicaciones_us_pa','PdfInformesUsIndicacionesUsPaController@imprimir')->name('InformeUsIndicacionesUsPa');
+Route::get('/pdf/informe/us/{informe}/indicaciones_me','PdfInformesUsIndicacionesMeController@imprimir')->name('InformeUsIndicacionesMe');
 
 Route::get('/fecha_actual',function(){
 

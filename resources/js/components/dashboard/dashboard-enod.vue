@@ -156,7 +156,7 @@
                                  <small style="margin-left: 13px;">Acción</small>
 
                                 </th>
-                            </tr>S
+                            </tr>
                         </thead>
                         <tbody>
                             <tr v-for="(ot,k) in ots.data" :key="k" @click="selectOt(k)" :class="{selected: ot_id_selected === ots.data[k].id}" >
@@ -198,7 +198,7 @@
                 <pagination :data="ots" @pagination-change-page="getResults" ><span slot="prev-nav">&lt; Previous</span>
                 <span slot="next-nav">Next &gt;</span> </pagination>
             </div> 
-            
+
             <div v-if="loading" class="overlay">
                 <i class="fa fa-refresh fa-spin" style="color:#F9CA33"></i>
             </div>
