@@ -10,7 +10,7 @@ class DosimetriaResumenController extends Controller
     public function __construct()
     {
   
-        $this->middleware(['role_or_permission:Super Admin|D_resumen']);  
+        $this->middleware(['role_or_permission:Super Admin|D_resumen'],['only' => ['callView']]);   
     
     }
     /**

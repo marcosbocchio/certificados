@@ -13,7 +13,7 @@ class DosimetriaOperadorController extends Controller
     public function __construct()
     {
   
-          $this->middleware(['role_or_permission:Super Admin|D_operador']);  
+          $this->middleware(['role_or_permission:Super Admin|D_operador'],['only' => ['callView']]);  
     
     }
     /**
