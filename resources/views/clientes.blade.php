@@ -4,7 +4,7 @@
 
 <div id="app">
 
-   <abm-maestro modelo= "clientes" ></abm-maestro>
+   <abm-maestro modelo= "clientes" permiso_create="M_clientes_edita"></abm-maestro>
 
 </div>
 @endsection

@@ -1,8 +1,7 @@
 <template>
 <div>
-  <div v-if="$can('dosimetria')"> <h3>tiene el permiso</h3></div>
     <div class="col-sm-10">
-      <button class="btn btn-primary pull-right" v-on:click.prevent="openNuevoRegistro()" :disabled="!$can('dosimetria')">Nuevo</button>
+      <button class="btn btn-primary pull-right" v-on:click.prevent="openNuevoRegistro()" :disabled="!$can(permiso_create)">Nuevo</button>
     </div>    
     <div class="clearfix"></div>    
     <div class="col-sm-10">
@@ -30,6 +29,11 @@
             type : String,
             required : true,
             default : ''
+          },
+          permiso_create : {
+           type : String,
+           required : true
+  
           }
       },
 
@@ -112,8 +116,6 @@
              $('#delete-registro').modal('show');
           }
       }
-
-
     }
 </script>
 

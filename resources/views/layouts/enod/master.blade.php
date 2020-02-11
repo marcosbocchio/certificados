@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+@php
+use Spatie\Permission\Models\Permission;
+@endphp
 <!--
 This is a starter template page. Use this page to start your new project from
 scratch. This page gets rid of all links and provides the needed markup only.
@@ -20,12 +23,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="{{asset('adminlte/bower_components/font-awesome/css/font-awesome.min.css')}}">
     <!-- Ionicons -->
     <link  rel="stylesheet" href="{{asset('adminlte/bower_components/Ionicons/css/ionicons.min.css')}}">
-    
+
     <script src="https://kit.fontawesome.com/2740e8ca64.js" crossorigin="anonymous"></script>
 
     <!-- message -->
     <link href="{{ asset('css/toastr.css') }}" rel="stylesheet">
-  
+
 
     <!-- Theme style -->
     <link rel="stylesheet" href="{{mix('css/AdminLTE.min.css')}}">
@@ -45,7 +48,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     @yield('stylesheet')
     <![endif]-->
-    @yield('css')  
+    @yield('css')
     <!-- Google Font -->
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
@@ -80,13 +83,13 @@ desired effect
 
         <!-- Main content -->
         <section class="content">
-        
-               
+
+
 
             @yield('contenido')
-                        
-                
-        
+
+
+
         </section>
 
         <!-- /.content -->
@@ -105,15 +108,13 @@ desired effect
 
 <script>
   window.Laravel = {!! json_encode([
-        'permissions' =>Auth::user()->allPermissions,
+        'permissions' => ( Auth::user()->hasRole('Super Admin') ? Permission::all() : Auth::user()->allPermissions),
         'csrfToken' => csrf_token(),
         'user' => Auth::user()
     ]) !!};
 </script>
 
-<script type="text/javascript" src="{{mix('js/app.js')}}"></script>  
-
-
+<script type="text/javascript" src="{{mix('js/app.js')}}"></script>
 
 <script>
 
