@@ -1,7 +1,8 @@
 <template>
 <div>
+  <div v-if="$can('dosimetria')"> <h3>tiene el permiso</h3></div>
     <div class="col-sm-10">
-        <a href="#" class="btn btn-primary pull-right" v-on:click.prevent="openNuevoRegistro()" >Nuevo</a>
+      <button class="btn btn-primary pull-right" v-on:click.prevent="openNuevoRegistro()" :disabled="!$can('dosimetria')">Nuevo</button>
     </div>    
     <div class="clearfix"></div>    
     <div class="col-sm-10">
@@ -15,8 +16,7 @@
                   <span slot="next-nav">Next &gt;</span> 
         </pagination>    
     </div> 
-    <div class="clearfix"></div>    
-
+    <div class="clearfix"></div>   
 </div> 
 </template>
 
@@ -36,6 +36,7 @@
       created : function(){
 
         this.getResults();
+  
 
       }, 
 
@@ -76,7 +77,7 @@
              return 'editar-' + this.modelo.substring(0, (this.modelo.indexOf("/") >-1) ? this.modelo.indexOf("/") : this.modelo.length) ;
          },
          
-         ...mapState(['url'])
+         ...mapState(['url','permissions'])
      },  
 
       methods: {

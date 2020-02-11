@@ -17,6 +17,7 @@ class UserController extends Controller
       $this->middleware(['role_or_permission:Super Admin|M_usuarios']);    
 
       $this->users = $userRepository;
+      
     }
 
     public function index(Request $request)

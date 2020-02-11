@@ -17,8 +17,8 @@ class UserRepository extends BaseRepository
   public function create(Array $request){
 
 
-        $User = $this->getModel();   
-        $this->saveUser($request,$User);      
+    $User = $this->getModel();   
+    $this->saveUser($request,$User);      
 
   }
 

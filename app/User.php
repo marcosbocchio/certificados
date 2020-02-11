@@ -10,9 +10,6 @@ use Spatie\Permission\Traits\HasRoles;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Auth;
 
-
-
-
 class User extends Authenticatable
 {
 
@@ -74,12 +71,6 @@ class User extends Authenticatable
         }
         return $permissions;
     }
-    /*
-    public function cliente(){
-        $cliente = App\Clientes ::find($this->cliente_id);
-        return $cliente;
-    }
-  */
 
     public function cliente(){
 

@@ -298,21 +298,10 @@ state: {
         dosimetria_rx:[],
         dosimetria_estados:[],
         dosimetria_resumen:[],
-        user_permission : [],
 
     },
 
 actions : {
-
-        loadPermissions({
-          commit
-        }) {
-          axios.defaults.baseURL = store.state.url ;
-          var urlRegistros = 'permissions/user' + '?api_token=' + Laravel.user.api_token;  
-          axios.get(urlRegistros).then((response) => {
-            commit('getPermissions', response.data)           
-          })
-        },
 
         loadFechaActual({
           commit}) {
@@ -323,7 +312,7 @@ actions : {
           console.log(response.data);
           commit('getFechaActual', response.data) 
           resolve()       
-        })    
+             })    
 
         })
         },
@@ -996,9 +985,7 @@ actions : {
 
         state.dosimetria_resumen = dosimetria_resumen;
 
-      }
-
-      
+      },
 
     }
 
@@ -1007,6 +994,9 @@ actions : {
 export const eventNewRegistro = new Vue();
 export const eventSetReferencia = new Vue();
 export const eventEditRegistro = new Vue();
+
+import Permissions from './mixins/Permissions';
+Vue.mixin(Permissions);
 
 const app = new Vue({
     el: '#app',   

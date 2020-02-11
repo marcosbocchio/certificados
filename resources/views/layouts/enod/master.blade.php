@@ -103,7 +103,18 @@ desired effect
 <script src="{{asset('js/adminlte.min.js')}}"></script>
 @yield('script')
 
+<script>
+  window.Laravel = {!! json_encode([
+        'permissions' =>Auth::user()->allPermissions,
+        'csrfToken' => csrf_token(),
+        'user' => Auth::user()
+    ]) !!};
+</script>
+
 <script type="text/javascript" src="{{mix('js/app.js')}}"></script>  
+
+
+
 <script>
 
   $(document).ready(function() {
