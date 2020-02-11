@@ -35,10 +35,10 @@
               </td>
             <td v-else >Enod</td>     
             <td width="10px">
-              <a href="#" class="btn btn-warning btn-sm" title="Editar" v-on:click.prevent="updateValue(registro)"><span class="fa fa-edit"></span></a>
+              <button class="btn btn-warning btn-sm" title="Editar" v-on:click.prevent="updateValue(registro)" :disabled="!$can('M_interno_equipos_edita')"><span class="fa fa-edit"></span></button>
             </td>
             <td width="10px">
-              <a href="#" class="btn btn-danger btn-sm" title="Eliminar " v-on:click.prevent="$emit('confirmarDelete',registro,registro.nombre_fantasia)"><span class="fa fa-trash"></span></a>
+              <button class="btn btn-danger btn-sm" title="Eliminar" v-on:click.prevent="$emit('confirmarDelete',registro,registro.codigo)" :disabled="!$can('M_interno_equipos_edita')"><span class="fa fa-trash"></span></button>
             </td>
           </tr>
         </tbody>

@@ -12,7 +12,7 @@
             <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
         </div>
 
-        <a href="#" class="btn btn-primary pull-left" v-on:click.prevent="openNuevoRegistro()" >Nuevo</a>
+        <button class="btn btn-primary pull-left" v-on:click.prevent="openNuevoRegistro()" :disabled="!$can('M_documentaciones_edita')">Nuevo</button>      
       
         <div class="clearfix"></div>    
        
