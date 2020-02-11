@@ -995,8 +995,8 @@ export const eventNewRegistro = new Vue();
 export const eventSetReferencia = new Vue();
 export const eventEditRegistro = new Vue();
 
-import Permissions from './mixins/Permissions';
-Vue.mixin(Permissions);
+import Permissions from './mixins/permissions';
+Vue.mixin(permissions);
 
 const app = new Vue({
     el: '#app',   
