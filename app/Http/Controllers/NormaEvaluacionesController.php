@@ -15,7 +15,7 @@ class NormaEvaluacionesController extends Controller
 
     public function __construct(NormaEvaluacionesRepository $normaEvaluacionesRepository)
     {
-      $this->middleware(['role_or_permission:Super Admin|M_normas_eval']);  
+      $this->middleware(['role_or_permission:Super Admin|M_normas_eval'],['only' => ['callView']]);  
 
       $this->normaEvaluacion = $normaEvaluacionesRepository;
     }

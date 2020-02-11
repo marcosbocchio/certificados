@@ -12,7 +12,7 @@ class UnidadesMedidasController extends Controller
     public function __construct()
     {
 
-    $this->middleware(['role_or_permission:Super Admin|M_unidades_medida']);  
+    $this->middleware(['role_or_permission:Super Admin|M_unidades_medida'],['only' => ['callView']]);  
     
     }
     /**

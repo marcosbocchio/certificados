@@ -14,7 +14,7 @@ class UserController extends Controller
 
     public function __construct(UserRepository $userRepository)
     {
-      $this->middleware(['role_or_permission:Super Admin|M_usuarios']);    
+      $this->middleware(['role_or_permission:Super Admin|M_usuarios'], ['only' => ['callView']]);    
 
       $this->users = $userRepository;
       

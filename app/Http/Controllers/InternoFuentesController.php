@@ -13,7 +13,7 @@ class InternoFuentesController extends Controller
   public function __construct()
   {
 
-        $this->middleware(['role_or_permission:Super Admin|M_interno_fuentes']);  
+        $this->middleware(['role_or_permission:Super Admin|M_interno_fuentes'],['only' => ['callView']]);  
   
   }
     /**

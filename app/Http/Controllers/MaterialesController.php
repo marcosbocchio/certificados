@@ -15,7 +15,7 @@ class MaterialesController extends Controller
     public function __construct()
     {
 
-    $this->middleware(['role_or_permission:Super Admin|M_materiales']);  
+    $this->middleware(['role_or_permission:Super Admin|M_materiales'],['only' => ['callView']]);  
     
     }
 

@@ -11,7 +11,7 @@ class ContratistasController extends Controller
     public function __construct()
     {
 
-    $this->middleware(['role_or_permission:Super Admin|M_contratistas']);  
+    $this->middleware(['role_or_permission:Super Admin|M_contratistas'],['only' => ['callView']]);  
     
     }
     /**

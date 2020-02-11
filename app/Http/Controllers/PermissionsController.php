@@ -11,7 +11,7 @@ class PermissionsController extends Controller
 {
   public function __construct()
   {
-    $this->middleware(['role_or_permission:Super Admin|M_permisos']);
+    $this->middleware(['role_or_permission:Super Admin|M_permisos'],['only' => ['callView']]);  
   }
     /**
      * Display a listing of the resource.

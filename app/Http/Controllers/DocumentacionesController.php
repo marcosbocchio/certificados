@@ -22,7 +22,7 @@ class DocumentacionesController extends Controller
     public function __construct(DocumentacionesRepository $documentacionesRepository)
     {
 
-     $this->middleware(['role_or_permission:Super Admin|M_documentaciones']);  
+     $this->middleware(['role_or_permission:Super Admin|M_documentaciones'],['only' => ['callView']]);   
      $this->documentaciones = $documentacionesRepository;
      
     }

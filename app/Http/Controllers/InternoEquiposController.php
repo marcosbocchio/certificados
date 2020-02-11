@@ -16,7 +16,7 @@ class InternoEquiposController extends Controller
   public function __construct()
   {
 
-        $this->middleware(['role_or_permission:Super Admin|M_interno_equipos']);  
+        $this->middleware(['role_or_permission:Super Admin|M_interno_equipos'],['only' => ['callView']]);  
   
   }
     /**

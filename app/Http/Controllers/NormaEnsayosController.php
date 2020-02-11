@@ -16,7 +16,7 @@ class NormaEnsayosController extends Controller
 
     public function __construct(NormaEnsayosRepository $normaEnsayosRepository)
     {
-      $this->middleware(['role_or_permission:Super Admin|M_normas_ensayo']);  
+      $this->middleware(['role_or_permission:Super Admin|M_normas_ensayo'],['only' => ['callView']]);  
 
       $this->normaEnsayo = $normaEnsayosRepository;
     }
