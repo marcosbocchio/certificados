@@ -28,8 +28,7 @@ class InformesLpController extends Controller
     public function __construct()
     {
         $this->middleware('ddppi')->only('create');
-        $this->middleware(['role_or_permission:Super Admin|T_informes_edita'],['only' => ['create','edit']]);  
-
+        $this->middleware(['role_or_permission:Super Admin|T_informes_edita'],['only' => ['create','edit']]);
     }
     /**
      * Display a listing of the resource.
@@ -90,8 +89,7 @@ class InformesLpController extends Controller
         }
     }
 
-    public function saveInformeLp($request,$informe,$informeLp){      
-
+    public function saveInformeLp($request,$informe,$informeLp){    
    
         $informeLp->informe_id = $informe->id;
         $informeLp->metodo_trabajo_lp_id = $request->metodo_trabajo_lp['id'];
@@ -115,7 +113,6 @@ class InformesLpController extends Controller
       }
 
     public function saveDetalle($request,$informeLp){
-
 
         foreach ($request->detalles as $detalle){    
           
