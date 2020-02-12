@@ -16,6 +16,10 @@ use \stdClass;
 
 class InformesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['role_or_permission:Super Admin|T_informes_acceder'],['only' => ['index']]);
+    }
 
     public function index($id)
     {
