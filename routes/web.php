@@ -65,7 +65,7 @@ Route::group(['middleware' => ['auth']], function () {
   Route::get('/area/enod/interno_fuentes', 'InternoFuentesController@callView')->name('Interno-fuentes');
   Route::get('/area/enod/interno_equipos', 'InternoEquiposController@callView')->name('Interno-equipos');
   Route::get('/area/enod/ots','OtsController@create')->name('ots.create')->middleware('auth');
-  Route::get('/area/enod/ots/{id}/edit','OtsController@Edit')->name('ots.edit');
+  Route::get('/area/enod/ots/{id}/edit','OtsController@edit')->name('ots.edit');
   Route::get('/area/enod/documentaciones','DocumentacionesController@callView')->name('documentaciones');
   Route::get('/area/enod/roles','RolesController@callView')->name('roles');  
   Route::get('/area/enod/permisos','PermissionsController@callView')->name('permisos');  

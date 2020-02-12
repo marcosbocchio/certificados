@@ -13,7 +13,9 @@
             <a href="#" class="small-box-footer">Detail <i class="fa  fa-arrow-circle-down"></i></a>
           </div>
 
+        <div v-show="$can('T_remitos_edita')">
             <a :href="AppUrl + '/area/enod/ot/' + ot_id_data + '/remito' " class="btn btn-primary pull-left">Nuevo</a>
+        </div>
        
         <div class="clearfix"></div>
             <div class="box box-custom-enod top-buffer">
@@ -38,7 +40,9 @@
                                     <td v-if="ot_remito.interno_sn" style="text-align: center;"> SI </td>   
                                     <td v-if="!ot_remito.interno_sn"  style="text-align: center;"> NO </td>  
                                     <td> {{ot_remito.fecha}}</td>              
-                                    <td width="10px"> <a :href="AppUrl + '/area/enod/ot/' + ot_id_data + '/remito/' + ot_remito.id +'/edit' "   class="btn btn-warning btn-sm" title="Editar"><span class="fa fa-edit"></span></a></td>
+                                    <td width="10px"> 
+                                        <button @click.prevent="editRemito(k)" class="btn btn-warning btn-sm" title="Editar" :disabled="!$can('T_remitos_edita')"><span class="fa fa-edit"></span></button>
+                                    </td>
                                     <td v-if="ot_remito.interno_sn" width="10px"> <a :href="AppUrl + '/api/pdf/remito/' + ot_remito.id " target="_blank"  class="btn btn-default btn-sm" title="Informe"><span class="fa fa-file-pdf-o"></span></a></td>
                                     <td v-else width="10px"> <a :href="AppUrl + '/api/pdf/remito/' + ot_remito.id " target="_blank"  class="btn btn-default btn-sm" title="Imprimir"><span class="fa fa-print"></span></a></td>                                  
                                     
@@ -97,6 +101,12 @@ export default {
                 });
 
         },
+
+    editRemito : function(index){
+
+        window.location.href = this.AppUrl + '/area/enod/ot/' + this.ot_id_data + '/remito/' + this.ot_remitos.data[index].id +'/edit'
+
+    }
 
  }
 }

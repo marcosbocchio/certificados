@@ -33,6 +33,8 @@
                                 <input type="number" v-model="numero" class="form-control" id="numero"  @change="formatearNumero(numero,8)" min="1" max="99999999" :disabled="interno_sn"/>
                             </div>                            
                         </div>  
+                         <div class="clearfix"></div>  
+
                         <div class="col-md-6">
                             <div class="form-group" >
                                 <label for="receptor">Receptor *</label>

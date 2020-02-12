@@ -16,6 +16,7 @@
         
         <div class="clearfix"></div>
       
+        <div v-show="$can('T_operador_actualiza')">
             <div class="box box-custom-enod">
                 <div class="box-body">  
                     <div class="form-group">
@@ -29,39 +30,42 @@
                     </div>
                  </div>
             </div>
+        </div>
 
-                <div class="box box-custom-enod top-buffer">
-                    <div class="box-header with-border">
-                    <h3 class="box-title">Operarios Asignados Orden de Trabajo</h3>
+        <div class="box box-custom-enod top-buffer">
+            <div class="box-header with-border">
+            <h3 class="box-title">Operarios Asignados Orden de Trabajo</h3>
 
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                        </button>                       
-                    </div>
-                    </div>
-                    <div class="box-body">                        
-                        <div class="table-responsive">          
-                            <table class="table table-hover table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>NOMBRE</th>
-                                        <th>EMAIL</th>                                                     
-                                        <th colspan="2">&nbsp;</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="(users_ot_operario,k) in users_ot_operarios" :key="k" @click="selectDoc(users_ot_operario.id)">                                 
-                                        <td> {{users_ot_operario.name}}</td>     
-                                        <td> {{users_ot_operario.email}}</td>         
-                                        <td> <i class="fa fa-minus-circle" @click="removeOperarios(k)" ></i></td>
-                                    </tr>                       
-                                    
-                                </tbody>
-                            </table>                     
-                       </div>
-                    </div> 
-                </div> 
-                <a class="btn btn-primary" v-on:click.prevent="submit()" >Actualizar</a>      
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>                       
+            </div>
+            </div>
+            <div class="box-body">                        
+                <div class="table-responsive">          
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>NOMBRE</th>
+                                <th>EMAIL</th>                                                     
+                                <th colspan="2">&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(users_ot_operario,k) in users_ot_operarios" :key="k" @click="selectDoc(users_ot_operario.id)">                                 
+                                <td> {{users_ot_operario.name}}</td>     
+                                <td> {{users_ot_operario.email}}</td>         
+                                <td> <i class="fa fa-minus-circle" @click="removeOperarios(k)" ></i></td>
+                            </tr>                       
+                            
+                        </tbody>
+                    </table>                     
+                </div>
+            </div> 
+        </div> 
+        <div v-show="$can('T_operador_actualiza')">
+            <button class="btn btn-primary" v-on:click.prevent="submit()">Actualizar</button>               
+        </div>
            
             <div class="clearfix"></div>
             <div class="top-buffer" >

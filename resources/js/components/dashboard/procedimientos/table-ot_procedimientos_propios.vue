@@ -20,10 +20,10 @@
                 <td>{{ registro.metodo_ensayo['metodo']}}</td>    
                 <td width="10px"> <a :href="AppUrl + '/' + registro.path " target="_blank" title="Imagen" class="btn btn-default btn-sm"><span class="fa fa-file-pdf-o"></span></a></td>
                 <td width="10px">
-                  <a href="#" class="btn btn-warning btn-sm" title="Editar" v-on:click.prevent="$emit('editRegistroEvent',registro)"><span class="fa fa-edit"></span></a>  
+                  <button class="btn btn-warning btn-sm" title="Editar" v-on:click.prevent="$emit('editRegistroEvent',registro)" :disabled="!$can('T_proc_edita')"><span class="fa fa-edit"></span> </button>                  
                 </td>
                 <td width="10px">
-                  <a href="#" class="btn btn-danger btn-sm" title="Eliminar" v-on:click.prevent="$emit('confirmarDelete',registro,registro.titulo)"><span class="fa fa-trash"></span></a>
+                  <button class="btn btn-danger btn-sm" title="Eliminar" v-on:click.prevent="$emit('confirmarDelete',registro,registro.titulo)" :disabled="!$can('T_proc_edita')"><span class="fa fa-trash"></span></button>
                 </td>
               </tr>
             </tbody>

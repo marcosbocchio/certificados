@@ -12,8 +12,10 @@
             <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
         </div>
 
-        <button class="btn btn-primary pull-left" v-on:click.prevent="openNuevoRegistro()" :disabled="!$can('M_documentaciones_edita')">Nuevo</button>      
-      
+         <div v-show="$can('M_documentaciones_edita')">
+              <button class="btn btn-primary pull-left" v-on:click.prevent="openNuevoRegistro()">Nuevo</button>      
+         </div>
+
         <div class="clearfix"></div>    
        
             <component :is= setTablaComponente :registros="registros"  @confirmarDelete="confirmDeleteRegistro" @editRegistroEvent="editRegistro"/>    

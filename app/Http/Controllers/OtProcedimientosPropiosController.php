@@ -10,6 +10,14 @@ use App\Ots;
 
 class OtProcedimientosPropiosController extends Controller
 {
+    public function __construct()
+    {
+
+        $this->middleware(['role_or_permission:Super Admin|T_proc_acceder'],['only' => ['index']]);  
+        $this->middleware(['role_or_permission:Super Admin|T_proc_edita'],['only' => ['store','destroy']]);  
+
+    
+    }
     /**
      * Display a listing of the resource.
      *
@@ -98,8 +106,7 @@ class OtProcedimientosPropiosController extends Controller
      */
 
 
-    public function store($documento_id,$ot_procedimieto_propio,$ot_id){
-    
+    public function store($documento_id,$ot_procedimieto_propio,$ot_id){    
 
         $ot_procedimieto_propio->documentacion_id = $documento_id;
         $ot_procedimieto_propio->ot_id = $ot_id;   

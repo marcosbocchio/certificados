@@ -15,6 +15,14 @@ use App\RemitoInternoEquipos;
 
 class RemitosController extends Controller
 {
+  public function __construct()
+  {
+
+      $this->middleware(['role_or_permission:Super Admin|T_remitos_acceder'],['only' => ['index']]);  
+      $this->middleware(['role_or_permission:Super Admin|T_remitos_edita'],['only' => ['store','edit','update']]);  
+
+  
+  }
     /**
      * Display a listing of the resource.
      *
@@ -80,9 +88,7 @@ class RemitosController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(RemitoRequest $request)
-    {
-     
-
+    {    
      
       $detalles = $request->detalles;
       $interno_equipos = $request->interno_equipos;

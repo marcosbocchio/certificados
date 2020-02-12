@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\DB;
 
 class InformesImportadosController extends Controller
 {
+    public function __construct()
+    {     
+      $this->middleware(['role_or_permission:Super Admin|T_informes_edita'],['only' => ['store','edit','update']]);  
+
+    }
     /**
      * Display a listing of the resource.
      *

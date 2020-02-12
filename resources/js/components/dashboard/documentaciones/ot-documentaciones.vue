@@ -13,24 +13,28 @@
             <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
           <div class="clearfix"></div>
-            <div class="box box-custom-enod">
-                <div class="box-body">  
-                    <div class="form-group">
-                        <label>Documentaciones</label>             
-                        <v-select v-model="documentacion" :options="documentaciones" label="titulo">
-                            <template slot="option" slot-scope="option">
-                                <span class="upSelect">{{ option.titulo }} </span> <br> 
-                                <span class="downSelect"> {{ option.descripcion }} </span>
-                            </template>
-                        </v-select>        
-                    </div> 
-                    <div class="form-group">                    
-                        <span>
-                          <button type="button" @click="addDocumentacion(documentacion.id)"><span class="fa fa-plus-circle"></span></button> 
-                        </span>
-                    </div>
-                 </div>                
-            </div>
+
+           <div v-show="$can('T_doc_edita')">
+                <div class="box box-custom-enod">
+                    <div class="box-body">  
+                        <div class="form-group">
+                            <label>Documentaciones</label>             
+                            <v-select v-model="documentacion" :options="documentaciones" label="titulo">
+                                <template slot="option" slot-scope="option">
+                                    <span class="upSelect">{{ option.titulo }} </span> <br> 
+                                    <span class="downSelect"> {{ option.descripcion }} </span>
+                                </template>
+                            </v-select>        
+                        </div> 
+                        <div class="form-group">                    
+                            <span>
+                            <button type="button" @click="addDocumentacion(documentacion.id)"><span class="fa fa-plus-circle"></span></button> 
+                            </span>
+                        </div>
+                    </div>                
+                </div>
+           </div>
+
                 <div class="box box-custom-enod top-buffer">
                     <div class="box-header with-border">
                     <h3 class="box-title">Documentaciones Asignadas Orden de Trabajo</h3>
@@ -63,7 +67,9 @@
                        </div>
                     </div> 
                 </div> 
-                <a class="btn btn-primary" v-on:click.prevent="submit()" >Actualizar</a>           
+                <div v-show="$can('T_doc_actualiza')">
+                    <button class="btn btn-primary" v-on:click.prevent="submit()">Actualizar</button>                     
+                </div>    
     <div class="clearfix"></div> 
     </div>   
 </template>

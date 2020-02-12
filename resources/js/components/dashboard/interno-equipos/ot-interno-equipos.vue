@@ -49,7 +49,10 @@
                        </div>
                     </div> 
                 </div> 
-            <a class="btn btn-primary" v-on:click.prevent="submit()" >Actualizar</a>
+
+                <div v-show="$can('T_equipos_actualiza')">    
+                    <button class="btn btn-primary" v-on:click.prevent="submit()">Actualizar</button>                
+                </div>
             </div>  
         <div class="clearfix"></div>
     </div>

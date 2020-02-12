@@ -17,6 +17,9 @@ class InternoEquiposController extends Controller
   {
 
         $this->middleware(['role_or_permission:Super Admin|M_interno_equipos'],['only' => ['callView']]);  
+        $this->middleware(['role_or_permission:Super Admin|T_equipos'],['only' => ['OtInternoEquipos']]);   
+        $this->middleware(['role_or_permission:Super Admin|T_equipos_actualiza'],['only' => ['store','destroy']]);
+
   
   }
     /**
@@ -42,8 +45,7 @@ class InternoEquiposController extends Controller
             $curie_actual = curie($interno_fuente->id);
             $interno_fuente->curie_actual = $curie_actual;
           
-          }
-       
+          }      
      
         }
 

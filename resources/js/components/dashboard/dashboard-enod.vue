@@ -11,7 +11,8 @@
           <div class="icon">
             <i class="fa ion-person-add"></i>
           </div>
-          <a :href="AppUrl + '/operadores/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a v-if="$can('T_operador_acceder')"  :href="AppUrl + '/operadores/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a v-else href="#" class="small-box-footer" >More info <i class="fa fa-arrow-circle-right"></i></a>   
         </div>
       </div>
 
@@ -26,7 +27,8 @@
           <div class="icon">
             <i class="fa fa-wrench"></i>
           </div>
-          <a :href="AppUrl + '/interno_equipos/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a v-if="$can('T_equipos_acceder')"  :href="AppUrl + '/interno_equipos/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a v-else href="#" class="small-box-footer" >More info <i class="fa fa-arrow-circle-right"></i></a>
         </div>
       </div>
 
@@ -42,7 +44,8 @@
           <div class="icon">
             <i class="fas fa-radiation-alt"></i>
           </div>
-          <a :href="AppUrl + '/procedimientos/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+              <a v-if="$can('T_proc_acceder')"  :href="AppUrl + '/procedimientos/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+              <a v-else href="#" class="small-box-footer" >More info <i class="fa fa-arrow-circle-right"></i></a>
         </div>
       </div>
 
@@ -57,7 +60,8 @@
           <div class="icon">
               <i class="fa fa-file-pdf-o"></i>
           </div>
-          <a :href="AppUrl + '/documentaciones/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a v-if="$can('T_doc_acceder')" :href="AppUrl + '/documentaciones/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a v-else href="#" class="small-box-footer" >More info <i class="fa fa-arrow-circle-right"></i></a>
         </div>
       </div>
 
@@ -73,7 +77,8 @@
           <div class="icon">
             <i class="fa fa-clipboard"></i>
           </div>
-          <a :href="AppUrl + '/remitos/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a v-if="$can('T_remitos_acceder')" :href="AppUrl + '/remitos/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a v-else href="#" class="small-box-footer" >More info <i class="fa fa-arrow-circle-right"></i></a>
         </div>
       </div>
 
@@ -88,8 +93,9 @@
           </div>
           <div class="icon">
               <i class="fa fa-list-alt"></i>
-          </div>
-            <a :href="AppUrl + '/informes/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>        
+            <a v-if="$can('T_informes_acceder')"  :href="AppUrl + '/informes/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a v-else href="#" class="small-box-footer" >More info <i class="fa fa-arrow-circle-right"></i></a>
         </div>
       </div>
       <!-- ./col -->
@@ -104,7 +110,8 @@
           <div class="icon">
             <i class="fa fa-calendar-o"></i>
           </div>
-          <a :href="AppUrl + '/partes/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a v-if="$can('T_partes_acceder')"  :href="AppUrl + '/partes/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a v-else href="#" class="small-box-footer" >More info <i class="fa fa-arrow-circle-right"></i></a>          
         </div>
       </div>
       <!-- ./col -->
@@ -119,7 +126,8 @@
           <div class="icon">
             <i class="fa fa-check-square-o"></i>
           </div>
-          <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a v-if="$can('T_certif_acceder')"  href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a v-else href="#" class="small-box-footer" >More info <i class="fa fa-arrow-circle-right"></i></a>     
         </div>
       </div>      
   </div> 
@@ -168,14 +176,14 @@
                                 <td> {{ot.estado}}</td>   
 
                                 <td width="10px">                                   
-                                  <button class="btn btn-warning btn-sm" title="Editar" @click="openEditar" :disabled="!$can('T_edita')">
+                                  <button class="btn btn-warning btn-sm" title="Editar" @click="openEditarOt" :disabled="!$can('T_edita')">
                                     <span class="fa fa-edit">
                                     </span>
                                   </button>                              
                                 </td>
 
                                 <td width="10px">                                  
-                                  <button class="btn btn-default btn-sm" title="Soldadores/Usuarios Cliente" @click="openUsuarios" :disabled="!$can('T_usuarios')">
+                                  <button class="btn btn-default btn-sm" title="Soldadores/Usuarios Cliente" @click="openUsuariosOt" :disabled="!$can('T_usuarios')">
                                     <span class="fa fa-user">
                                     </span>
                                   </button>                                 
@@ -319,13 +327,13 @@ export default {
 
         },
       
-      openEditar: function(){
+      openEditarOt: function(){
 
         window.location.href = this.AppUrl + '/area/enod/ots/' + this.ot_id_selected + '/edit';
 
       },
 
-      openUsuarios: function(){
+      openUsuariosOt: function(){
 
         window.location.href = this.AppUrl + '/soldadores/ot/' + this.ot_id_selected;
 

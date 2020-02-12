@@ -13,8 +13,10 @@
             </div>
             <a href="#" class="small-box-footer">Detail <i class="fa  fa-arrow-circle-down"></i></a>
           </div>
-      
-           <a :href="AppUrl + '/area/enod/ot/' + ot_id_data + '/parte' " class="btn btn-primary pull-left">Nuevo</a>      
+                  
+           <div v-show="$can('T_partes_edita')">        
+                <a :href="AppUrl + '/area/enod/ot/' + ot_id_data + '/parte' " class="btn btn-primary pull-left">Nuevo</a>     
+           </div> 
      
         <div class="clearfix"></div>
     
@@ -35,12 +37,15 @@
                                     <td> {{ot_parte.id}}</td>
                                     <td> {{ot_parte.tipo_servicio}} </td>     
                                     <td> {{ot_parte.fecha}}</td>              
-                                    <td width="10px"> <a :href="AppUrl + '/area/enod/ot/' + ot_id_data + '/parte/' + ot_parte.id +'/edit' "   class="btn btn-warning btn-sm" title="Editar"><span class="fa fa-edit"></span></a></td>
+                                    <td width="10px"> 
+                                        <button @click.prevent="editParte(ot_parte.id)" class="btn btn-warning btn-sm" title="Editar" :disabled="!$can('T_partes_edita')"><span class="fa fa-edit"></span></button>
+                                    </td>
                                     <td width="10px"> <a :href="AppUrl + '/api/pdf/parte/' + ot_parte.id + '/original' " target="_blank"  class="btn btn-default btn-sm" title="Informe original"><span class="fa fa-file-pdf-o"></span></a></td>             
                                     <td width="10px"> <a :href="AppUrl + '/api/pdf/parte/' + ot_parte.id + '/final' " target="_blank"  class="btn btn-default btn-sm" title="Informe"><span class="fa fa-file-pdf-o"></span></a></td> 
-                                    <td v-if="!ot_parte.firma" width="10px"> <a  @click="firmar(k)"  class="btn btn-default btn-sm" title="Firmar"><span class="glyphicon glyphicon-pencil"></span> </a></td>                                   
-
-                                </tr>                      
+                                    <td v-if="!ot_parte.firma" width="10px">
+                                        <button @click="firmar(k)" class="btn btn-default btn-sm" title="Firmar" :disabled="!$can('T_partes_edita')"><span class="glyphicon glyphicon-pencil"></span></button>                                       
+                                   </td>
+                               </tr>                      
                             </tbody>
                         </table>                     
                     </div>
@@ -93,7 +98,12 @@ export default {
             this.ot_partes = response.data
             });
 
-        },       
+        },      
+        
+        editParte : function(id){
+
+            window.location.href = this.AppUrl + '/area/enod/ot/' + this.ot_id_data + '/parte/' + id +'/edit'
+        },
 
         firmar : function(index){
 

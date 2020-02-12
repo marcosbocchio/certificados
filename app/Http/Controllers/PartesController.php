@@ -22,6 +22,14 @@ use App\ParteServicios;
 
 class PartesController extends Controller
 {
+    public function __construct()
+    {
+  
+        $this->middleware(['role_or_permission:Super Admin|T_partes_acceder'],['only' => ['index']]);  
+        $this->middleware(['role_or_permission:Super Admin|T_partes_edita'],['only' => ['create','store','update','edit']]);  
+
+    
+    }
     /**
      * Display a listing of the resource.
      *

@@ -9,6 +9,13 @@ use App\OtDocumentaciones;
 
 class OtDocumentacionesController extends Controller
 {
+    public function __construct()
+    {
+
+        $this->middleware(['role_or_permission:Super Admin|T_doc_acceder'],['only' => ['index']]);  
+        $this->middleware(['role_or_permission:Super Admin|T_doc_actualiza'],['only' => ['store']]);  
+    
+    }
     /**
      * Display a listing of the resource.
      *
