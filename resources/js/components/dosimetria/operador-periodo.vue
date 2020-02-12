@@ -14,23 +14,25 @@
                             </v-select> 
                         </div>   
                     </div>      
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="fecha">Fecha Alta</label>
-                            <div class="input-group date">
-                                <div class="input-group-addon">
-                                <i class="fa fa-calendar"></i>
+                    
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="fecha">Fecha Alta</label>
+                                <div class="input-group date">
+                                    <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                    </div>
+                                        <Datepicker v-model="fecha_alta" :minimumView="'month'" :maximumView="'month'" :input-class="'form-control pull-right'" :language="es" :disabled="!$can('D_activa_operador_Admin')" ></Datepicker>   
                                 </div>
-                                    <Datepicker v-model="fecha_alta" :minimumView="'month'" :maximumView="'month'" :input-class="'form-control pull-right'" :language="es"></Datepicker>   
-                            </div>v 
+                            </div>
                         </div>
-                    </div>
-                     <div class="col-md-3">
-                        <div class="form-group">
-                            <label>&nbsp;</label>
-                            <button class="btn btn-primary" style="display: block;" @click="submit()" :disabled="!permitir_alta || $can('D_activa_operador_Admin')">ALTA</button>                         
-                        </div>   
-                    </div>   
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>&nbsp;</label>
+                                <button class="btn btn-primary" style="display: block;" @click="submit()" :disabled="!permitir_alta">ALTA</button>                         
+                            </div>   
+                        </div> 
+                   
                     
                 </div>
             </div>  

@@ -399,20 +399,30 @@ export default {
   watch : {
 
         year : function(val){
+
+            let ids ;
+
+            if(this.$can('D_resumen_Admin')){
+
+                ids = 0; 
+
+            }else{
+                
+                ids =  this.operador_data.id;
+            }
+
             this.check_all=true;
-            this.TablaResumen = []      
-            console.log('el año es:',this.year);
-            this.$store.dispatch('loadDosimetriaResumen', val).then(
+            this.TablaResumen = []                
+            this.$store.dispatch('loadDosimetriaResumen',{ year:this.year , operadores: ids }).then(
                 response => {
                   this.TablaResumen = [];         
                   this.TablaResumen = this.dosimetria_resumen;
                   this.CargarIds();
 
                 }
-            );          
+            ); 
             
-
-        },
+    },
 
   },
   

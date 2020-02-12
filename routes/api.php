@@ -197,7 +197,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('dosimetria_estados/year/{year}/month/{month}','DosimetriaEstadosController@getDosimetriaEstados');
     Route::get('estados_operador_rx/estados','EstadosOperadorRxController@getEstados');
     Route::get('operador_periodo_rx/periodos/operador/{id}','OperadorPeriodoRxController@getOperadorPeriodos');
-    Route::get('dosimetria_resumen/year/{year}','DosimetriaResumenController@getResumen');
+    Route::get('dosimetria_resumen/year/{year}/operadores/{id}','DosimetriaResumenController@getResumen');
 
     Route::resource('dosimetria_operador','DosimetriaOperadorController');
     Route::resource('dosimetria_rx','DosimetriaRxController');

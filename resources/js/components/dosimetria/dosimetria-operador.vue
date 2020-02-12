@@ -348,7 +348,7 @@ export default {
     
                         }
                     );           
-                toastr.success('dosimetrīa  actualizado con éxito');                
+                toastr.success('dosimetrīa actualizado con éxito');                
                 
             }).catch(error => {
                

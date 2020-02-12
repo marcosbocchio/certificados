@@ -601,9 +601,10 @@ actions : {
         },
 
         loadDosimetriaResumen({
-          commit},year) {
+          commit},payload) {
+            console.log(payload);
            axios.defaults.baseURL = store.state.url ;
-           var urlRegistros ='dosimetria_resumen/year/'+ year + '?api_token=' + Laravel.user.api_token;    
+           var urlRegistros ='dosimetria_resumen/year/'+ payload.year + '/operadores/' + payload.operadores + '?api_token=' + Laravel.user.api_token;    
            return new Promise((resolve, reject) => {   
            axios.get(urlRegistros).then((response) => {
            console.log(response.data);          
