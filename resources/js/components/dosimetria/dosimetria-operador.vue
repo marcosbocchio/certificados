@@ -6,7 +6,7 @@
                      <div class="col-md-6">
                         <div class="form-group">
                             <label>Operadores</label>
-                            <v-select v-model="operador" :options="operadores_dosimetria" :getOptionLabel="getLabel" :disabled="!$can('D_Operador_Admin')">
+                            <v-select v-model="operador" :options="operadores_dosimetria" :getOptionLabel="getLabel" :disabled="!$can('D_operador_Admin')">
                                 <template slot="option" slot-scope="option">
                                     <span class="upSelect">{{ option.name }} </span> <br> 
                                     <span class="downSelect"> {{ option.film }} </span>
@@ -244,7 +244,7 @@ export default {
     let deshabilitar = false;
     let esMismoDia = this.ComprobarMismoDia(val);
 
-    if((this.operador_data.can.D_Operador_Admin) || (val=='')){
+    if((this.operador_data.can.D_operador_Admin) || (val=='')){
 
         console.log('el val es vacio');
 
