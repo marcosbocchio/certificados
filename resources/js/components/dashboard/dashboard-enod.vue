@@ -208,7 +208,7 @@
             </div> 
 
             <div v-if="loading" class="overlay">
-                <i class="fa fa-refresh fa-spin" style="color:#F9CA33"></i>
+                <i class="fa fa-radiation-alt fa-spin" style="color:#F9CA33"></i>
             </div>
           
         </div> 

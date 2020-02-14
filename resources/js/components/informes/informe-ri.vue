@@ -39,6 +39,8 @@
                                 <input type="text" v-model="numero_inf_code" class="form-control" id="numero_inf" disabled>
                             </div>                            
                         </div>
+
+                        <div class="clearfix"></div>    
                         <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="componente">Componente *</label>
