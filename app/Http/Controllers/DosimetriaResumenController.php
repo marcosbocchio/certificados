@@ -13,6 +13,7 @@ class DosimetriaResumenController extends Controller
         $this->middleware(['role_or_permission:Super Admin|D_resumen'],['only' => ['callView']]);   
     
     }
+    
     /**
      * Display a listing of the resource.
      *

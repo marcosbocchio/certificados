@@ -648,21 +648,21 @@ data() {return {
            
                     console.log('entro en getnumeroinforme');
                     axios.defaults.baseURL = this.url ;
-                        var urlRegistros = 'informes/ot/' + this.otdata.id + '/metodo/' + this.metodo + '/generar-numero-informe'  + '?api_token=' + Laravel.user.api_token;         
-                        axios.get(urlRegistros).then(response =>{
+                    var urlRegistros = 'informes/ot/' + this.otdata.id + '/metodo/' + this.metodo + '/generar-numero-informe'  + '?api_token=' + Laravel.user.api_token;         
+                    axios.get(urlRegistros).then(response =>{
 
-                        this.numero_inf_generado = response.data                      
-                   
-                        if(this.numero_inf_generado.length){
+                    this.numero_inf_generado = response.data                      
+                
+                    if(this.numero_inf_generado.length){
 
-                            this.numero_inf =  this.numero_inf_generado[0].numero_informe
-                        }else{
+                        this.numero_inf =  this.numero_inf_generado[0].numero_informe
+                    }else{
 
-                            this.numero_inf = 1;
-                        }
-                        
-                        
-                        });   
+                        this.numero_inf = 1;
+                    }
+                    
+                    
+                    });   
              }
         },
 

@@ -27,9 +27,9 @@ class PartesController extends Controller
   
         $this->middleware(['role_or_permission:Super Admin|T_partes_acceder'],['only' => ['index']]);  
         $this->middleware(['role_or_permission:Super Admin|T_partes_edita'],['only' => ['create','store','update','edit']]);  
-
     
     }
+    
     /**
      * Display a listing of the resource.
      *
@@ -596,6 +596,14 @@ class PartesController extends Controller
 
         return PuedeCrearInforme($ot_id);
         
+    }
+
+    public function OtPartesPendienteCertificado($ot_id){
+
+        $partes = DB::select('CALL PartesPendientesSinCertificados(?,?)',array($ot_id,0));
+        
+        return $partes;
+
     }
 
 }

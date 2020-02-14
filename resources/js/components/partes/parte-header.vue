@@ -17,7 +17,7 @@
                 <div class="col-md-6">
                     <div class="form-group" >
                         <label for="obra">Obra N°</label>
-                        <input type="number" v-model="obra" class="form-control" id="obra" min="0" :disabled="otdata.obra">
+                        <input type="number" v-model="obra" class="form-control" id="obra" min="0" :disabled="otdata.obra || certificado_sn">
                     </div>                            
                 </div>
                 <div class="col-md-6">
@@ -42,6 +42,12 @@ export default {
       otdata : {
         type : Object,
         required : true
+      },
+
+      certificado_sn : {
+        type : Boolean,
+        required : false,
+        default : false,
       },
 
      },

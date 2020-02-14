@@ -31,6 +31,7 @@ Route::group(['middleware' => ['auth']], function () {
   Route::get('informes/ot/{id}','InformesController@index')->name('otInformes');
   Route::get('remitos/ot/{id}','RemitosController@index')->name('otRemitos');
   Route::get('partes/ot/{id}','PartesController@index')->name('otPartes');
+  Route::get('certificados/ot/{id}','CertificadosController@index')->name('otCertificados');
   Route::get('documentaciones/operador/{id}', 'DocumentacionesController@operarios');
   Route::get('/area/enod/ot/{ot_id}/informe/metodo/{metodo}/create','InformesController@create');
   Route::get('/area/enod/ot/{ot_id}/informe/metodo/ri','InformesRiController@create')->name('InformeRiCreate');
@@ -46,8 +47,9 @@ Route::group(['middleware' => ['auth']], function () {
   Route::get('/area/enod/ot/{ot_id}/remito/{id}/edit','RemitosController@edit')->name('RemitoEdit');
   Route::get('/area/enod/ot/{ot_id}/parte','PartesController@create')->name('ParteCreate');
   Route::get('/area/enod/ot/{ot_id}/parte/{id}/edit','PartesController@edit')->name('ParteEdit');
+  Route::get('/area/enod/ot/{ot_id}/certificado','CertificadosController@create')->name('CertificadoCreate');
+  Route::get('/area/enod/ot/{ot_id}/certificado/{id}/edit','CertificadosController@edit')->name('CertificadoEdit');
 
-  
   Route::get('/area/enod/usuarios', 'UserController@callView')->name('usuarios');
   Route::get('/area/enod/materiales', 'MaterialesController@callView')->name('materiales');
   Route::get('/area/enod/clientes', 'ClientesController@callView')->name('clientes');

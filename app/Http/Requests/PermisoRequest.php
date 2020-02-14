@@ -24,7 +24,7 @@ class PermisoRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|Max:20',
+            'name' => 'required|Max:50',
             'guard_name'  =>'required',       
         ];
     }

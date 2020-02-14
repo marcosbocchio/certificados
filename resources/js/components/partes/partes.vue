@@ -548,8 +548,7 @@ export default {
       parte_data : {
         type : Object,
         required : false
-      },
-      
+      },      
 
       informes_data : {
         type : [ Array ],  
@@ -638,7 +637,7 @@ export default {
 
         this.getOperadoresOt();
         this.getCms();
-        this.setEdit();  
+        this.CargaDeDatos();  
 
     },
 
@@ -695,7 +694,7 @@ export default {
 
     methods : {
 
-        setEdit : function(){         
+        CargaDeDatos : function(){         
 
             if(this.editmode) {                
             
@@ -831,7 +830,7 @@ export default {
         getInformesPendientesParte: function(){
              
             axios.defaults.baseURL = this.url ;
-            var urlRegistros = 'informes/ot/' + this.otdata.id + '/pendientes_parte_diario' + '?api_token=' + Laravel.user.api_token;        
+            var urlRegistros = 'partes/ot/' + this.otdata.id + '/pendientes_parte_diario' + '?api_token=' + Laravel.user.api_token;        
             axios.get(urlRegistros).then(response =>{
             console.log(response.data);
             this.informes = response.data  

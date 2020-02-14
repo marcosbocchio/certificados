@@ -118,6 +118,8 @@ Route::group(['middleware' => 'auth:api'], function()
 
   
     Route::get('informes/ot/{ot_id}/metodo/{metodo}/generar-numero-informe', 'InformesController@GenerarNumeroInforme');   
+    Route::get('certificados/generar-numero-certificado', 'CertificadosController@GenerarNumeroCertificado');   
+
 
     Route::post('storage/referencia', 'StorageController@saveReferencia');
     Route::post('storage/documento', 'StorageController@saveDocumento');
@@ -206,6 +208,7 @@ Route::group(['middleware' => 'auth:api'], function()
 
     //parte diario
 
+    Route::get('partes/ot/{ot_id}/pendientes_certificados', 'PartesController@OtPartesPendienteCertificado');
     Route::get('partes/ot/{ot_id}/paginate', 'PartesController@paginate');       
     Route::get('partes/ot/{ot_id}/ddppi', 'PartesController@ddppi');   
     Route::get('partes/ot/{ot_id}/total','PartesController@PartesTotal');
@@ -216,8 +219,12 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('partes/informe_pm/{id}','PartesController@getInformePmParte');
     Route::get('partes/informe_lp/{id}','PartesController@getInformeLpParte');    
     Route::get('partes/informe_us/{id}','PartesController@getInformeUsParte');
-
     
+
+    //certificados
+
+    Route::resource('certificados', 'CertificadosController');
+
 });
 
 //reportes 
