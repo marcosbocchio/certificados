@@ -225,8 +225,7 @@ class InformesController extends Controller
         $informes = DB::select('CALL InformesPendientesSinParteDiario(?,?)',array($ot_id,0));
         
         return $informes;
-
-
+        
      }
 
      public function OtInformesPendienteEditableParteDiario($ot_id,$parte_id){
