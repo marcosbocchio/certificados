@@ -830,7 +830,7 @@ export default {
         getInformesPendientesParte: function(){
              
             axios.defaults.baseURL = this.url ;
-            var urlRegistros = 'partes/ot/' + this.otdata.id + '/pendientes_parte_diario' + '?api_token=' + Laravel.user.api_token;        
+            var urlRegistros = 'informes/ot/' + this.otdata.id + '/pendientes_parte_diario' + '?api_token=' + Laravel.user.api_token;        
             axios.get(urlRegistros).then(response =>{
             console.log(response.data);
             this.informes = response.data  
