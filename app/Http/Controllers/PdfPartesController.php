@@ -14,6 +14,13 @@ class PdfPartesController extends Controller
  
 
     public function imprimir($id,$estado){ 
+
+        
+        if($estado == 'original'){
+
+            $this->middleware(['role_or_permission:Super Admin|T_partes_edita']);  
+
+        }
     
         
         $parte = Partes::find($id);             
@@ -59,9 +66,6 @@ class PdfPartesController extends Controller
                         ->selectRaw('metodo_ensayos.metodo as metodo,informes.id as informe_id,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado')
                         ->groupBy('informes.id','metodo','numero_formateado')                      
                         ->get();
-
-      // dd($parte_detalle);  
-      // dd($servicios);  
 
         $pdf = \PDF::loadView('reportes.partes.parte',compact('ot',
                                                             'cliente', 

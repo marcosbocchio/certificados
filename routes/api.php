@@ -227,6 +227,7 @@ Route::group(['middleware' => 'auth:api'], function()
 
 });
 
+
 //reportes 
 
 Route::get('/pdf/remito/{id}','PdfRemitosController@imprimir')->name('pdfRemito');
@@ -248,6 +249,7 @@ Route::get('/pdf/informe/us/{informe}','PdfInformesUsController@imprimir')->name
 Route::get('/pdf/informe/us/indicaciones/referencia/{id}','PdfInformesUsReferenciaController@imprimir')->name('InformeUsDetalleUsPaUsReferencias');
 Route::get('/pdf/informe/us/{informe}/indicaciones_us_pa','PdfInformesUsIndicacionesUsPaController@imprimir')->name('InformeUsIndicacionesUsPa');
 Route::get('/pdf/informe/us/{informe}/indicaciones_me','PdfInformesUsIndicacionesMeController@imprimir')->name('InformeUsIndicacionesMe');
+
 
 Route::get('/fecha_actual',function(){
 

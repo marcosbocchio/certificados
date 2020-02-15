@@ -41,6 +41,7 @@
                         </div>
 
                         <div class="clearfix"></div>    
+
                         <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="componente">Componente *</label>
@@ -133,8 +134,6 @@
                                 </v-select>
                             </div>      
                         </div>
-
-                      
 
                         <div class="col-md-3">
                             <div class="form-group">
@@ -450,8 +449,7 @@
                             </div>                                
                          </div>
                        </div> 
-                      </div>
-                      
+                      </div>                     
 
                 <!-- PASADAS RI -->
                <div class="box box-custom-enod">

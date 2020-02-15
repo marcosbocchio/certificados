@@ -18,7 +18,7 @@
 
         <div class="clearfix"></div>    
        
-            <component :is= setTablaComponente :registros="registros"  @confirmarDelete="confirmDeleteRegistro" @editRegistroEvent="editRegistro"/>    
+            <component :is= setTablaComponente :registros="registros"  @confirmarDelete="confirmDeleteRegistro" @editRegistroEvent="editRegistro" :loading="isLoading"/>    
             <delete-registro :datoDelete="datoDelete" :fillRegistro="fillRegistro" @close-modal="getRegistros" :modelo="modelo"></delete-registro>  
      
         <div class="clearfix"></div>    
@@ -113,18 +113,10 @@
                        
                         </div>
                     </div>
-                    <!-- End Modal     
-                    <loading :active.sync="isLoading_file"           
-                             :is-full-page="fullPage">
-                     </loading> -->   
+
                 </div>
             </div>
-
         </form>
-
-        <loading :active.sync="isLoading"           
-                :is-full-page="fullPage">
-        </loading>
     </div>    
 </template>
 
@@ -133,8 +125,6 @@ require('vue-image-lightbox/dist/vue-image-lightbox.min.css')
 import {mapState} from 'vuex'
 import Datepicker from 'vuejs-datepicker';
 import {en, es} from 'vuejs-datepicker/dist/locale'
-import Loading from 'vue-loading-overlay';
-import 'vue-loading-overlay/dist/vue-loading.css';
 import LightBox from 'vue-image-lightbox'
 
 export default {
@@ -152,21 +142,19 @@ export default {
       },
 
       components: {
-            Datepicker,
-            Loading,
+            Datepicker,       
             LightBox,
         },
 
       data() { return {
 
        images:[
-            {
-              
-                src: '',
-                thumb: '',
-                caption: 'caption to display. receive <html> <b>tag</b>', // Optional
-              
-            }
+                {              
+                    src: '',
+                    thumb: '',
+                    caption: 'caption to display. receive <html> <b>tag</b>', // Optional
+                
+                }
             ]   ,
 
         editmode: false,

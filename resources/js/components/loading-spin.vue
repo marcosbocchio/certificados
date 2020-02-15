@@ -1,19 +1,7 @@
 <template>
-    <div>
-         <i class="fa fa-refresh fa-spin"></i>
-    </div>
+  
+    <i class="fa fas fa-radiation-alt fa-spin" style="color:#F9CA33"></i>
+  
 </template>
 
-<script>
 
-
-
-</script>
-
-<style scoped>
-   
- i .fa {
-
-     color: #F9CA33;
- }  
-</style>

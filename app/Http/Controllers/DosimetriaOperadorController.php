@@ -89,6 +89,7 @@ class DosimetriaOperadorController extends Controller
         
         return User::whereNull('cliente_id')
                    ->whereNotNull('film')
+                   ->orderBy('film','ASC')
                    ->get();
     }
 

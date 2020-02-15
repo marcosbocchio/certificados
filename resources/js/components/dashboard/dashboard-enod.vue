@@ -208,7 +208,7 @@
             </div> 
 
             <div v-if="loading" class="overlay">
-                <i class="fa fas fa-radiation-alt fa-spin" style="color:#F9CA33"></i>             
+               <loading-spin></loading-spin>
             </div>
           
         </div> 
@@ -288,10 +288,9 @@ export default {
               }else{
                 this.ot_id_selected = -1;
 
-              }     
-             this.loading = false; 
+              }              
 
-            });
+            }).finally(() => this.loading = false)
            
         },
 

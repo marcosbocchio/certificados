@@ -33,6 +33,10 @@
         </tbody>
       </table>
     </div>
+
+  </div>
+  <div v-if="loading" class="overlay">
+     <loading-spin></loading-spin>
   </div>
  </div>
 </template>
@@ -48,7 +52,12 @@
       registros : {
         type : Array,
         required : true        
-      }    
+      },    
+
+      loading : {
+        type : Boolean,
+        required : true
+      },
     },
 
     methods: {

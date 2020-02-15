@@ -92,9 +92,7 @@ export default {
 
         setObra : function(){
 
-           this.$forceUpdate();
-           console.log('entro en set obra:' + this.otdata.obra);
-
+           this.$forceUpdate();          
             if(this.otdata.obra ){
 
                this.obra =  this.otdata.obra ;

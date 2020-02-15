@@ -1,11 +1,22 @@
 <template>
-<div>
-    <div class="col-sm-10">
-      <button class="btn btn-primary pull-right" v-on:click.prevent="openNuevoRegistro()" :disabled="!$can(permiso_create)">Nuevo</button>
-    </div>    
+<div>     <div class="form-group"> 
+    <div class="col-md-1 col-xs-3">
+      <button class="btn btn-primary" v-on:click.prevent="openNuevoRegistro()" :disabled="!$can(permiso_create)">Nuevo</button>
+    </div>
+  
+      <div class="col-md-3 col-md-offset-6 col-xs-9">
+       
+            <div class="input-group">
+                <input type="text" v-model="search" class="form-control" @input="aplicarFiltro()"  placeholder="Buscar...">
+                <span class="input-group-addon"  style="background-color: #F9CA33;"><i class="fa fa-search"></i></span>
+            </div>  
+        </div>
+      </div>     
+   
     <div class="clearfix"></div>    
-    <div class="col-sm-10">
-        <component :is= setTablaComponente :registros="registros.data" @confirmarDelete="confirmDeleteRegistro" @editar="editRegistro"/>               
+
+    <div class="col-md-10">
+        <component :is= setTablaComponente :registros="registros.data" @confirmarDelete="confirmDeleteRegistro" @editar="editRegistro" :loading="loading"/>               
         <delete-registro :datoDelete="datoDelete" :fillRegistro="fillRegistro" @close-modal="getResults" :modelo="modelo"></delete-registro>  
         <component :is= setNuevoComponente :modelo ="modelo" @store="getResults"/>
         <component :is= setEditarComponente :selectRegistro="selectRegistro" @update="getResults"/>  
@@ -13,7 +24,8 @@
                   :data="registros" @pagination-change-page="getResults" :limit="3" >
                   <span slot="prev-nav">&lt; Previous</span>
                   <span slot="next-nav">Next &gt;</span> 
-        </pagination>    
+        </pagination>          
+             
     </div> 
     <div class="clearfix"></div>   
 </div> 
@@ -52,7 +64,8 @@
         obj :'',
         registro_id: '',
         registro: {},       
-        selectRegistro: {},        
+        selectRegistro: {},  
+        loading : false,      
    
         }
       },    
@@ -95,11 +108,12 @@
 
                 console.log('entro en getResult');
                 console.log(this.modelo);
+                this.loading = true;
                 axios.defaults.baseURL = this.url ;
                 var urlRegistros = this.modelo + '/paginate' + '?page='+ page;   
                 axios.get(urlRegistros).then(response =>{
                 this.registros = response.data                       
-                });
+                }).finally(() => this.loading = false)
               },
             
             editRegistro : function(item){

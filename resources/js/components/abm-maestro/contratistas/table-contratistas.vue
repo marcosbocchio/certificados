@@ -23,6 +23,9 @@
       </table>
     </div>
   </div>
+  <div class="overlay">
+      <loading-spin></loading-spin>
+  </div> 
  </div>
 </template>
 
@@ -37,7 +40,12 @@
       registros : {
         type : Array,
         required : true        
-      }    
+      },    
+
+      loading : {
+        type : Boolean,
+        required : true
+      },    
     },
 
     methods: {
