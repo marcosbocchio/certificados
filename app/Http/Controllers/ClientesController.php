@@ -42,7 +42,11 @@ class ClientesController extends Controller
 
     public function paginate(Request $request){
 
-        $clientes =  Clientes::with('contactos')->with('localidad')->orderBy('id','DESC')->paginate(10);
+        $filtro = $request->search;
+        $clientes =  Clientes::with('contactos')
+                                ->with('localidad')
+                                ->orderBy('id','DESC')
+                                ->paginate(10);
         foreach ($clientes as $cliente) {
 
             $provincia = Provincias::find($cliente->localidad['provincia_id']);

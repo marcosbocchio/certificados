@@ -78,7 +78,7 @@ class User extends Authenticatable
 
     public function cliente(){
 
-    return $this->belongsTo('App\Clientes','cliente_id','id');
+        return $this->belongsTo('App\Clientes','cliente_id','id');
     
     }
 
@@ -86,6 +86,20 @@ class User extends Authenticatable
     public function periodos()
     {
         return $this->hasMAny('App\OperadorPeriodoRx','operador_id','id');
+    }
+
+    public function scopeFiltro($query, $filtro='') {
+
+        if (trim($filtro) != '') {
+           
+              $query->WhereRaw("users.name LIKE '%" . $filtro . "%'")
+                    ->orWhereRaw("users.email LIKE '%" . $filtro . "%'")                 
+                    ->orWhereHas('cliente', function ($q) use($filtro) {
+                        $q->WhereRaw("clientes.nombre_fantasia LIKE '%" . $filtro . "%'");
+                    });         
+       
+        }
+     
     }
   
 }

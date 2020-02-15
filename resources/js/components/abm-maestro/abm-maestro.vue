@@ -65,6 +65,7 @@
         registro_id: '',
         registro: {},       
         selectRegistro: {},  
+        search:'',
         loading : false,      
    
         }
@@ -104,16 +105,25 @@
              eventNewRegistro.$emit('open',this.modelo);
            }, 
 
-            getResults : function(page = 1){
+           aplicarFiltro : function(){
+
+              console.log(this.search);
+              this.getResults(1,this.search);
+
+            },
+
+            getResults : function(page = 1,filtro =''){
 
                 console.log('entro en getResult');
                 console.log(this.modelo);
                 this.loading = true;
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = this.modelo + '/paginate' + '?page='+ page;   
+                var urlRegistros = this.modelo + '/paginate' + '?page='+ page + '&search=' + filtro;   
                 axios.get(urlRegistros).then(response =>{
                 this.registros = response.data                       
-                }).finally(() => this.loading = false)
+                }).finally(() => 
+                    this.loading = false,                  
+                    )
               },
             
             editRegistro : function(item){

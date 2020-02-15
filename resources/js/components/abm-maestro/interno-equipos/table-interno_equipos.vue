@@ -62,7 +62,8 @@ import {mapState} from 'vuex'
     props : {
       registros : {
         type : Array,
-        required : true        
+        required : true,
+        default:[]                
       },    
 
       loading : {

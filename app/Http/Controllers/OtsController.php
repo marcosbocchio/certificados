@@ -56,7 +56,7 @@ class OtsController extends Controller
                             ->with('cliente')
                             ->otfiltro($filtro)
                             ->orderBy('id','DESC')
-                            ->paginate(5); 
+                            ->paginate(10); 
     }
     
     /**

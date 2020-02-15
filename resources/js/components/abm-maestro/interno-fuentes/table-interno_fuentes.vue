@@ -53,7 +53,8 @@
     props : {
       registros : {
         type : Array,
-        required : true        
+        required : true,
+        default:[]                
       },    
 
       loading : {
