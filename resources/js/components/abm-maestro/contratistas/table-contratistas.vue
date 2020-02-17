@@ -23,7 +23,7 @@
       </table>
     </div>
   </div>
-  <div class="overlay">
+  <div v-if="loading" class="overlay">
       <loading-spin></loading-spin>
   </div> 
  </div>
@@ -40,7 +40,7 @@
       registros : {
         type : Array,
         required : true,
-        default:[]                
+       default:function () { return [] }    
       },    
 
       loading : {

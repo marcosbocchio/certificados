@@ -50,7 +50,7 @@
       registros : {
         type : Array,
         required : true,
-        default:[]                
+        default:function () { return [] }    
       },    
 
       loading : {
