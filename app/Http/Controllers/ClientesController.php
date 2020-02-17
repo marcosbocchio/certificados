@@ -43,17 +43,19 @@ class ClientesController extends Controller
     public function paginate(Request $request){
 
         $filtro = $request->search;
-        $clientes =  Clientes::with('contactos')
-                                ->with('localidad')
+        $clientes =  Clientes:: with('contactos')
+                             //   ->with('localidad')                                
+                                ->Filtro($filtro)
                                 ->orderBy('id','DESC')
-                                ->paginate(10);
+                                ->paginate(10);        
+    
         foreach ($clientes as $cliente) {
 
             $provincia = Provincias::find($cliente->localidad['provincia_id']);
             $cliente->provincia = $provincia;
         }
 
-        return $clientes;
+      return $clientes;
 
     }
 

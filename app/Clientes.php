@@ -18,8 +18,21 @@ class Clientes extends Model
 
     public function localidad(){
 
-        return $this->belongsTo('App\Localidades','localidad_id','id');
+      return $this->belongsTo('App\Localidades','localidad_id','id');
         
+    }
+
+    public function scopeFiltro($query, $filtro='') {
+
+        if (trim($filtro) != '') {
+           
+              $query->WhereRaw("clientes.nombre_fantasia LIKE '%" . $filtro . "%'")
+                    ->orWhereRaw("clientes.razon_social LIKE '%" . $filtro . "%'")    
+                    ->orWhereRaw("clientes.email LIKE '%" . $filtro . "%'")
+                    ->orWhereRaw("localidades.localidad LIKE '%" . $filtro . "%'");  
+       
+        }
+     
     }
 
 }

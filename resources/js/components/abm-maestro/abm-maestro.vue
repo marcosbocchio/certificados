@@ -1,17 +1,21 @@
 <template>
-<div>     <div class="form-group"> 
+<div> 
+    <div class="form-group"> 
+
     <div class="col-md-1 col-xs-3">
       <button class="btn btn-primary" v-on:click.prevent="openNuevoRegistro()" :disabled="!$can(permiso_create)">Nuevo</button>
     </div>
-  
-      <div class="col-md-3 col-md-offset-6 col-xs-9">
-       
-            <div class="input-group">
-                <input type="text" v-model="search" class="form-control" @input="aplicarFiltro()"  placeholder="Buscar...">
-                <span class="input-group-addon"  style="background-color: #F9CA33;"><i class="fa fa-search"></i></span>
-            </div>  
-        </div>
-      </div>     
+
+    <div v-show="modelo=='users'">
+      <div class="col-md-3 col-md-offset-6 col-xs-9">       
+        <div class="input-group">
+            <input type="text" v-model="search" class="form-control" @input="aplicarFiltro()"  placeholder="Buscar...">
+            <span class="input-group-addon"  style="background-color: #F9CA33;"><i class="fa fa-search"></i></span>
+        </div>  
+      </div>
+    </div>
+
+    </div>     
    
     <div class="clearfix"></div>    
 
