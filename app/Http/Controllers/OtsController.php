@@ -116,8 +116,7 @@ class OtsController extends Controller
         $ot_productos = (new OtProductosController)->show($ot->id);
         $ot_epps = (new OtEppsController)->show($ot->id);
         $ot_riesgos = (new OtRiesgosController)->show($ot->id);
-        $ot_calidad_placas = (new OtCalidadPlacasController)->show($ot->id);  
-        
+        $ot_calidad_placas = (new OtCalidadPlacasController)->show($ot->id);          
       
         $ot_servicios = Collection::make($ot_servicios);
         $ot_calidad_placas = Collection::make($ot_calidad_placas);
@@ -131,7 +130,7 @@ class OtsController extends Controller
         $ot_localidad = Localidades::find($ot->localidad_id);
         $ot_provincia = Provincias::find($ot_localidad->provincia_id);
         $responsable_ot = User::find($ot->responsable_ot_id);       
-     
+        
         
         if ($ot_contacto2 == null)
                 $ot_contacto2 = new Contactos();

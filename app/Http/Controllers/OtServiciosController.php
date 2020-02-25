@@ -78,6 +78,7 @@ class OtServiciosController extends Controller
                                     norma_evaluaciones.id as norma_evaluacion_id,
                                     ot_servicios.cantidad as cantidad_servicios,
                                     ot_servicios.cant_max_placas as cantidad_placas,
+                                    ot_servicios.combinado_sn as combinado_sn,
                                     ot_servicios.procedimiento_sn as procedimiento_sn,
                                     ot_servicios.ot_referencia_id as ot_referencia_id,
                                     ot_referencias.descripcion as observaciones,

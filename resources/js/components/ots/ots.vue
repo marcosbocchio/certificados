@@ -230,11 +230,12 @@
               <table class="table table-hover table-striped table-bordered">
                 <thead>
                   <tr>
+                    <th style="text-align:center">Comb.</th>
                     <th class="col-md-5">Servicio</th>
                     <th style="text-align:center">Ref</th>
                     <th >Norma Ensayo</th>
                     <th >Norma Evaluacion</th>
-                    <th >Proc.</th>
+                    <th style="text-align:center">Proc.</th>
                     <th >Cant Placas</th>
                     <th >Cant Serv</th>
                     <th class="col-md-1">&nbsp;</th>
@@ -242,6 +243,9 @@
                 </thead>
                 <tbody>
                   <tr v-for="(inputsServicio,k) in inputsServicios" :key="k">
+                    <td style="text-align:center">  
+                      <input type="checkbox" id="checkbox" v-model="inputsServicios[k].combinado_sn">                     
+                    </td>
                     <td> {{ inputsServicio.servicio}}</td>
                     <td style="text-align:center"> <span :class="{existe : (inputsServicio.observaciones || 
                     inputsServicio.path1 || 
@@ -923,6 +927,7 @@ export default {
                 cantidad_placas:this.cantidad_placas,
                 cantidad_servicios:this.cantidad_servicios,
                 metodo : this.var_metodo,
+                combinado_sn : false,
                 procedimiento_sn : false ,
                 observaciones : '',                
                 path1:null,

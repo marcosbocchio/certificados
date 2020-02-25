@@ -220,7 +220,7 @@ b {
             <tr>
                <th style="font-size: 12px; width:60px" class="bordered"  rowspan="2">Día</th>
                <th style="font-size: 12px;width:60px" class="bordered" rowspan="2">Parte</th>
-               @if($ot->obra)
+               @if(!$ot->obra)
                     <th style="font-size: 12px;width:40px" class="bordered" rowspan="2">Obra</th>
                @endif
                <th style="font-size: 12px;" class="bordered" colspan="9" >SERVICIOS</th>
@@ -258,7 +258,7 @@ b {
                 <tr>
                     <td style="font-size: 12px;" class="bordered">{{$item_partes_certificado->fecha_formateada}}</td>                        
                     <td style="font-size: 12px;" class="bordered">{{$item_partes_certificado->parte_numero}}</td>
-                    @if ($ot->obra)
+                    @if (!$ot->obra)
 
                         <td style="font-size: 12px;" class="bordered">{{$item_partes_certificado->obra}}</td>
                         
@@ -324,7 +324,69 @@ b {
 
         </tbody>
     </table>
+    
+    <!-- AGREGO LOS CUADROS POR OBRA -->
+    @php
 
+        $cant_obras = count($obras);
+        $filasObras = intdiv($cant_obras,3);
+        $resto = $cant_obras % 3;
+        if($resto > 0){
+            $filasObras++;
+        }
+      
+    @endphp
+    <table>
+        <tbody>
+            @for ($x =0 ; $x < $filasObras ; $x++)
+                
+                <tr>
+                    <td width="400px">
+                        <table class="bordered">
+                            <thead>
+                                <tr>                                   
+                                    <th style="font-size: 12px; width:60px" class="bordered"  colspan="2">Obra : {{ $obras[$x*3] }}</th>                          
+                                </tr>
+                                <tr>                            
+                                    <th style="font-size: 12px; width:60px" class="bordered">Servicios</th>
+                                    <th style="font-size: 12px; width:60px" class="bordered">Costuras</th>                            
+                                </tr>                         
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </td>
+                    <td width="400px">
+                        <table class="bordered">
+                            <thead>
+                                <tr>                                   
+                                    <th style="font-size: 12px; width:60px" class="bordered"  colspan="2">Obra : {{ $obras[($x*3)+1] }}</th>                     
+                                </tr>
+                                <tr>                            
+                                    <th style="font-size: 12px; width:60px" class="bordered">Servicios</th>
+                                    <th style="font-size: 12px; width:60px" class="bordered">Costuras</th>                            
+                                </tr>                         
+                            </thead>
+                        </table>
+                    </td>
+                    <td width="400px">
+                        <table class="bordered">
+                            <thead>
+                                <tr>                                   
+                                    <th style="font-size: 12px; width:60px" class="bordered"  colspan="2">Obra : {{ $obras[($x*3)+2] }}</th>                     
+                                </tr>
+                                <tr>                            
+                                    <th style="font-size: 12px; width:60px" class="bordered">Servicios</th>
+                                    <th style="font-size: 12px; width:60px" class="bordered">Costuras</th>                            
+                                </tr>                       
+                            </thead>
+                        </table>
+                    </td>
+                </tr>
+            @endfor
+        </tbody>
+    </table>
 </main>  
 
 <script type="text/php">
