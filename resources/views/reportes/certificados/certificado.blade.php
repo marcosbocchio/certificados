@@ -218,9 +218,9 @@ b {
     <table width="100%" class="bordered" style="text-align: center;padding: 0 -3px 0 -3px;" >
         <thead>
             <tr>
-               <th style="font-size: 12px;" class="bordered"  rowspan="2">Día</th>
-               <th style="font-size: 12px;" class="bordered" rowspan="2">Parte</th>
-               <th style="font-size: 12px;" class="bordered" rowspan="2">Obra</th>
+               <th style="font-size: 12px; width:60px" class="bordered"  rowspan="2">Día</th>
+               <th style="font-size: 12px;width:60px" class="bordered" rowspan="2">Parte</th>
+               <th style="font-size: 12px;width:40px" class="bordered" rowspan="2">Obra</th>
                <th style="font-size: 12px;" class="bordered" colspan="9" >SERVICIOS</th>
                <th style="font-size: 12px;" class="bordered" colspan="17">
                      {{ $modalidadCobro }}               
