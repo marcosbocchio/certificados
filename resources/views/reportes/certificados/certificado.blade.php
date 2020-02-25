@@ -160,15 +160,23 @@ b {
                             <tr>
 
                                 @for ( $x=0 ; $x< 5 ;$x++)
-                                    <td style="font-size: 11px; " class="bordered-td"><b>{{ $servicios_parte[$x]->abreviatura }} </b>{{ $servicios_parte[$x]->descripcion_servicio }}</td>
+                                    @if(isset($servicios_parte[$x]))
+                                          <td style="font-size: 11px; width:213px " class="bordered-td"><b>{{ $servicios_parte[$x]->abreviatura }} </b>{{ $servicios_parte[$x]->descripcion_servicio }}</td>
+                                    @else
+                                          <td style="font-size: 11px; " class="bordered-td">&nbsp;</td>    
+                                    @endif
                                 @endfor
 
                             </tr>
                             <tr>
-                                @for ( $x=5 ; $x< 9 ;$x++)
-                                    <td style="font-size: 11px; " class="bordered-td"><b>{{ $servicios_parte[$x]->abreviatura }} </b>{{ $servicios_parte[$x]->descripcion_servicio }}</td>
+                                @for ( $x=5 ; $x< 10 ;$x++)
+                                    @if(isset($servicios_parte[$x]))
+                                        <td style="font-size: 11px; " class="bordered-td"><b>{{ $servicios_parte[$x]->abreviatura }} </b>{{ $servicios_parte[$x]->descripcion_servicio }}</td>
+                                    @else
+                                        <td style="font-size: 11px; " class="bordered-td">&nbsp;</td>    
+                                    @endif
                                 @endfor   
-                                <td style="font-size: 11px; " class="bordered-td"><b>&nbsp;</b>&nbsp;</td>                            
+                                                        
                             </tr>                 
                         </tbody>
                     </table>
