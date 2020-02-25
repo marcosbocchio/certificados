@@ -194,7 +194,6 @@ class OtsRepository extends BaseRepository
       $ot_servicios->norma_ensayo_id      = $servicio['norma_ensayo_id'];
       $ot_servicios->norma_evaluacion_id  = $servicio['norma_evaluacion_id'];
       $ot_servicios->cantidad             = $servicio['cantidad_servicios'];
-      $ot_servicios->cant_max_placas      = $servicio['cantidad_placas'];
       $ot_servicios->procedimiento_sn     = $servicio['procedimiento_sn'];
       $ot_servicios->combinado_sn         = $servicio['combinado_sn'];
       $ot_servicios->ot_referencia_id     = $referencia_id;

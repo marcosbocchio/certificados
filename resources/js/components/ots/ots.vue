@@ -201,17 +201,12 @@
           </div>   
         </div> 
         <div class="col-md-3">
-          <div class="form-group">
-              <label>Max N° Placas</label>                  
-              <input  v-model="cantidad_placas" type="number" class="form-control" id="cantidad_placas" placeholder="">
-          </div>
-        </div>
-        <div class="col-md-3">
           <div class="form-group"> 
               <label>Cant.</label>                 
               <input v-model="cantidad_servicios" type="number" class="form-control" id="cantidad_servicios" placeholder="">
           </div>
         </div>   
+         <div class="clearfix"></div>
         <div class="col-md-1"> 
             <div class="form-group">                    
               <span>
@@ -222,7 +217,7 @@
 
         <div class="form-group">
           &nbsp;
-        </div>
+        </div>       
 
         <div v-show="inputsServicios.length">
           <div class="col-md-12">
@@ -230,35 +225,33 @@
               <table class="table table-hover table-striped table-bordered">
                 <thead>
                   <tr>
-                    <th style="text-align:center">Comb.</th>
-                    <th class="col-md-5">Servicio</th>
-                    <th style="text-align:center">Ref</th>
-                    <th >Norma Ensayo</th>
-                    <th >Norma Evaluacion</th>
-                    <th style="text-align:center">Proc.</th>
-                    <th >Cant Placas</th>
-                    <th >Cant Serv</th>
+                    <th class="col-md-6">Servicio</th>
+                    <th class="col-md-3">Norma Ensayo</th>
+                    <th class="col-md-3">Norma Evaluacion</th>
+                    <th class="col-md-1" style="text-align:center">Ref</th>
+                    <th class="col-md-1" style="text-align:center">Proc.</th>                   
+                    <th class="col-md-1">Cant</th>
+                    <th class="col-md-1" style="text-align:center">C</th>
                     <th class="col-md-1">&nbsp;</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr v-for="(inputsServicio,k) in inputsServicios" :key="k">
-                    <td style="text-align:center">  
-                      <input type="checkbox" id="checkbox" v-model="inputsServicios[k].combinado_sn">                     
-                    </td>
                     <td> {{ inputsServicio.servicio}}</td>
+                    <td> {{ inputsServicio.norma_ensayo}}</td>
+                    <td> {{ inputsServicio.norma_evaluacion}}</td>
                     <td style="text-align:center"> <span :class="{existe : (inputsServicio.observaciones || 
                     inputsServicio.path1 || 
                     inputsServicio.path2 || 
                     inputsServicio.path3 || 
                     inputsServicio.path4)  }" class="fa fa-file-archive-o" @click="OpenReferencias($event,k,'servicios',inputsServicio)" ></span></td>      
-                    <td> {{ inputsServicio.norma_ensayo}}</td>
-                    <td> {{ inputsServicio.norma_evaluacion}}</td>
                     <td style="text-align:center">  
                       <input type="checkbox" id="checkbox" v-model="inputsServicios[k].procedimiento_sn">                     
-                    </td>
-                    <td> {{ inputsServicio.cantidad_placas}}</td>
+                    </td>                   
                     <td> {{ inputsServicio.cantidad_servicios}}</td>
+                    <td style="text-align:center">  
+                      <input type="checkbox" id="checkbox" v-model="inputsServicios[k].combinado_sn">                     
+                    </td>
                     <td style="text-align:center"> <i class="fa fa-minus-circle" @click="removeServicio(k)" ></i></td>
                   </tr>
                 </tbody>
@@ -333,9 +326,9 @@
                 <table class="table table-hover table-striped table-bordered">
                   <thead>
                     <tr>
-                      <th class="col-md-7">Productos</th>
+                      <th class="col-md-10">Productos</th>
+                      <th class="col-md-2">Medidas</th>                     
                       <th class="col-md-1" style="text-align:center">Ref</th>
-                      <th class="col-md-1">Medidas</th>                     
                       <th class="col-md-1">cant</th>                    
                       <th class="col-md-1">&nbsp;</th>
                     </tr>
@@ -343,13 +336,13 @@
                   <tbody>
                     <tr v-for="(inputsProducto,k) in inputsProductos" :key="k">
                       <td> {{ inputsProducto.producto}}</td>
+                      <td> {{ inputsProducto.medida}}&nbsp; &nbsp; {{inputsProducto.unidad_medida_codigo }}</td>  
                       <td style="text-align:center"> <span :class="{ existe : (inputsProducto.observaciones ||
                                           inputsProducto.path1 ||
                                           inputsProducto.path2 ||
                                           inputsProducto.path3 ||
                                           inputsProducto.path4 )                      
                       }" class="fa fa-file-archive-o" @click="OpenReferencias($event,k,'productos',inputsProducto)" ></span></td>                       
-                      <td> {{ inputsProducto.medida}}&nbsp; &nbsp; {{inputsProducto.unidad_medida_codigo }}</td>  
                       <td> {{ inputsProducto.cantidad_productos}}</td>                                  
                       <td style="text-align:center"> <i class="fa fa-minus-circle" @click="removeProducto(k)" ></i></td>
                     </tr>
@@ -924,7 +917,6 @@ export default {
                 norma_ensayo_id : (this.norma_ensayo ? this.norma_ensayo.id : null),
                 norma_evaluacion :(this.norma_evaluacion ? this.norma_evaluacion.descripcion : null),
                 norma_evaluacion_id :(this.norma_evaluacion ? this.norma_evaluacion.id : null),
-                cantidad_placas:this.cantidad_placas,
                 cantidad_servicios:this.cantidad_servicios,
                 metodo : this.var_metodo,
                 combinado_sn : false,
