@@ -220,7 +220,9 @@ b {
             <tr>
                <th style="font-size: 12px; width:60px" class="bordered"  rowspan="2">Día</th>
                <th style="font-size: 12px;width:60px" class="bordered" rowspan="2">Parte</th>
-               <th style="font-size: 12px;width:40px" class="bordered" rowspan="2">Obra</th>
+               @if($ot->obra)
+                    <th style="font-size: 12px;width:40px" class="bordered" rowspan="2">Obra</th>
+               @endif
                <th style="font-size: 12px;" class="bordered" colspan="9" >SERVICIOS</th>
                <th style="font-size: 12px;" class="bordered" colspan="17">
                      {{ $modalidadCobro }}               
@@ -256,7 +258,11 @@ b {
                 <tr>
                     <td style="font-size: 12px;" class="bordered">{{$item_partes_certificado->fecha_formateada}}</td>                        
                     <td style="font-size: 12px;" class="bordered">{{$item_partes_certificado->parte_numero}}</td>
-                    <td style="font-size: 12px;" class="bordered">{{$item_partes_certificado->obra}}</td>
+                    @if ($ot->obra)
+
+                        <td style="font-size: 12px;" class="bordered">{{$item_partes_certificado->obra}}</td>
+                        
+                    @endif
 
                <!-- INSERTO LOS SERVICIOS EN LA TABLA -->           
               
