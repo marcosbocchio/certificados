@@ -56,7 +56,7 @@ class PartesController extends Controller
 
      return DB::table('partes')
                     ->where('ot_id','=',$ot_id)
-                    ->selectRaw('id,ot_id,DATE_FORMAT(partes.fecha,"%d/%m/%Y")as fecha,tipo_servicio,firma')
+                    ->selectRaw('id,ot_id,DATE_FORMAT(partes.fecha,"%d/%m/%Y")as fecha,tipo_servicio,firma,LPAD(partes.id, 8, "0") as numero_formateado')
                     ->orderBy('id','DESC')           
                     ->paginate(10);
       }
@@ -244,7 +244,6 @@ class PartesController extends Controller
     }
     
     public function saveParteDetalleUs($informes_us,$parte){
-
     
         foreach ($informes_us as $informe) {
             
@@ -336,8 +335,6 @@ class PartesController extends Controller
                              ->where('metodo_ensayos.metodo','RI')
                              ->selectRaw('parte_detalles.* , 0 as informe_sel,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada')
                              ->get();
-        
-      
     
         $informes_pm  = DB::table('parte_detalles')
                              ->join('informes','informes.id','=','parte_detalles.informe_id')          
@@ -605,5 +602,31 @@ class PartesController extends Controller
         return $partes;
 
     }
+
+    public function OtPartesPendienteEditableCertificado($ot_id,$certificado_id){
+
+        $partes_pendiente = DB::select('CALL PartesPendientesSinCertificados(?,?)',array($ot_id,$certificado_id));
+                                        
+        return $partes_pendiente;
+     }
+
+     public function setCertificadoId($certificado_id,$parte_id){
+
+        $parte = Partes::find($parte_id);
+        $parte->certificado_id = $certificado_id;
+        $parte->save();
+
+     }
+
+
+     public function deleteCertificadosId($certificado_id){
+
+        $partes  = Partes::where('certificado_id',$certificado_id)->get();
+        foreach ($partes as $parte) {
+            $parte->certificado_id = null;
+            $parte->save();
+        }
+       
+     }
 
 }

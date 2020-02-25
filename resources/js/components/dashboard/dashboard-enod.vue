@@ -119,14 +119,14 @@
         <!-- small box -->
         <div class="small-box bg-custom-8">
           <div class="inner">
-            <h3>0</h3>
+            <h3>{{CantCertificados}}</h3>
 
             <p>Certificados</p>
           </div>
           <div class="icon">
             <i class="fa fa-check-square-o"></i>
           </div>
-            <a v-if="$can('T_certif_acceder')"  href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a v-if="$can('T_certif_acceder')"  :href="AppUrl + '/certificados/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
             <a v-else href="#" class="small-box-footer" >More info <i class="fa fa-arrow-circle-right"></i></a>     
         </div>
       </div>      
@@ -236,7 +236,7 @@ export default {
 
     computed :{
 
-        ...mapState(['url','AppUrl','CantInformes','CantInternoEquipos','CantOperadores','CantRemitos','CantProcedimientos','CantPartes','CantDocumentaciones'])
+        ...mapState(['url','AppUrl','CantInformes','CantInternoEquipos','CantOperadores','CantRemitos','CantProcedimientos','CantPartes','CantDocumentaciones','CantCertificados'])
         
      },
     
@@ -251,6 +251,7 @@ export default {
         this.$store.dispatch('loadContarRemitos',ot_id);
         this.$store.dispatch('loadContarInformes',ot_id);
         this.$store.dispatch('loadContarPartes',ot_id);
+        this.$store.dispatch('loadContarCertificados',ot_id);
 
     }
   },

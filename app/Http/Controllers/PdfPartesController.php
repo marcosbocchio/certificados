@@ -11,17 +11,23 @@ use App\User;
 
 class PdfPartesController extends Controller
 {
+
+    public function __construct()
+    {
+  
+
+    }
+
  
 
-    public function imprimir($id,$estado){ 
+    public function imprimir($id,$estado){        
+    
 
-        
         if($estado == 'original'){
 
             $this->middleware(['role_or_permission:Super Admin|T_partes_edita']);  
 
         }
-    
         
         $parte = Partes::find($id);             
         $ot = Ots::find($parte->ot_id);   

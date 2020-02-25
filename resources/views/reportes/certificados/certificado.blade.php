@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>certificado {{FormatearNumeroConCeros($certificado->numero,8)}}</title>
+</head>
+
+<style>  
+
+@page {    
+        margin: 201px 15px 150px 15px !important;
+        padding: 0px 0px 0px 0px !important;
+       }
+
+body {
+    margin: 0px 1px 0px 1px;
+    padding: 0 0 0 0;
+}
+
+header {
+    position:fixed;
+    top: -162px;    
+}
+
+footer {
+    position: fixed; bottom:5.5px; 
+    padding-top: 0px;
+
+}
+
+main {
+      margin-top: -2px;
+}
+
+.pagenum:before {
+    content: counter(page);
+}
+
+.bordered {
+    border-color: #000000;
+    border-style: solid;
+    border-width: 2px; 
+    border-collapse: collapse;   
+}
+
+.bordered-td {
+    border-color: #000000;
+    border-style: solid;
+    border-width: 1px; 
+    border-collapse: collapse; 
+}
+
+b {
+
+    margin-left: 2px;
+}
+
+</style>
+
+ <body class="bordered" style="border-top: none;">  
+
+<header>
+    <table style="text-align: center" width="100%" class="bordered">
+        <tbody>
+            <tr>
+                 <td>
+                    <table width="100%">
+                        <tbody>
+                            <tr>
+                                <td rowspan="4" style="text-align: right; width:253px">
+                                    <img src="{{ public_path('img/logo-enod-web.jpg')}}" alt="" style="height: 60px; margin-right: 25px;">
+                                </td>   
+                                <td style="font-size: 18px; height: 30px; text-align: center;width:534px;" rowspan="3"><b>CERTIFICADOS</b></td>
+                                <td style="font-size: 11px;"><b style="margin-left: 40px"></b></td>                         
+                            </tr>
+                            <tr>
+                                <td style="font-size: 11px;" ><b style="margin-left: 120px" >CERTIFICADO N°: </b>{{FormatearNumeroConCeros($certificado->numero,8)}}</td>                      
+                            </tr>
+                            <tr>
+                                <td style="font-size: 11px;"><b style="margin-left: 120px">FECHA: </b>{{ date('d-m-Y', strtotime($certificado->fecha)) }}</td>
+                            </tr>
+                            <tr>
+                                <td style="font-size: 11px;"><b style="margin-left: 120px"></b></td>                     
+                                <td style="font-size: 11px;"><b style="margin-left: 120px"></td>            
+                            </tr>               
+                        </tbody>
+                    </table>          
+                </td>
+            </tr>
+            <tr >
+                <td class="bordered">
+                    <table width="100%" >
+                        <tbody>                        
+                                <tr>                                                
+                                    <td style="font-size: 11px;width: 220px"><b>PROYECTO: </b>{{$ot->proyecto}}</td>
+                                    <td style="font-size: 11px;height: 45px;width: 220px"><span style="margin-top: -20px;"><b>CLIENTE: </b>{{$cliente->nombre_fantasia}}</span>
+                                    
+                                    </td> 
+                                    <td>
+                                        <span>
+                                            @if($ot->logo_cliente_sn && $cliente->path)
+                                                <img  src="{{ public_path($cliente->path)}}" alt=""  style="height: 40px;margin-top: 5px;">
+                                            @else
+                                                <img  src="{{ public_path('img/blank.png')}}" alt=""  style="height: 40px;margin-top: 5px;">
+                                            @endif
+                                        </span>
+                                    </td>                                     
+                                
+                                    <td style="font-size: 11px;width: 220px">
+                                        @if($contratista)
+                                            <b>CONTRATISTA: </b>{{$contratista->nombre}}
+                                        @endif                         
+                                        
+                                    </td>  
+                                    <td>
+                                        @if($ot->logo_contratista_sn && $contratista->path_logo)
+                                            <img  src="{{ public_path($contratista->path_logo)}}" alt="" style="height: 40px;margin-top: 5px;">
+                                        @else
+                                            <img  src="{{ public_path('img/blank.png')}}" alt=""  style="height: 40px;margin-top: 5px;">
+                                        @endif
+                                    </td>              
+
+                                    @if($ot->obra)
+
+                                         <td style="font-size: 11px;width: 90px;"><b>OBRA: </b>{{$ot->obra}}</td>
+
+                                    @endif
+                                    <td style="font-size: 11px;"><b>OT N°: </b>{{$ot->numero}}</td>  
+                                    <td style="font-size: 11px;"><b>FTS N°: </b>{{$ot->presupuesto}}</td>   
+                                </tr>  
+                           </tbody>
+                    </table>          
+                </td>
+            </tr>     
+            <tr>
+                <td class="bordered">
+                    <table width="100%" style="background:#D8D8D8;text-align: left;font-size: 13px;">
+                        <tbody>    
+                            <tr>
+                                <td >
+                                 Información a pedido del cliente :
+                                </td>
+                            </tr>  
+                        </tbody>
+                    </table>
+                </td>  
+            </tr>    
+        </tbody>
+    </table>
+    
+</header>
+
+<footer>
+    <table style="text-align: center" width="100%" class="bordered">
+        <tbody>
+            <tr>
+                <td>
+                    <table width="100%" style="border-collapse: collapse;" >
+                        <tbody>
+                            <tr>
+
+                                @for ( $x=0 ; $x< 5 ;$x++)
+                                    <td style="font-size: 11px; " class="bordered-td"><b>{{ $servicios_parte[$x]->abreviatura }} </b>{{ $servicios_parte[$x]->descripcion_servicio }}</td>
+                                @endfor
+
+                            </tr>
+                            <tr>
+                                @for ( $x=5 ; $x< 9 ;$x++)
+                                    <td style="font-size: 11px; " class="bordered-td"><b>{{ $servicios_parte[$x]->abreviatura }} </b>{{ $servicios_parte[$x]->descripcion_servicio }}</td>
+                                @endfor   
+                                <td style="font-size: 11px; " class="bordered-td"><b>&nbsp;</b>&nbsp;</td>                            
+                            </tr>                 
+                        </tbody>
+                    </table>
+                </td>               
+            </tr>
+            <tr>
+                <td>
+                    <table width="100%" style="border-collapse: collapse;" >
+                        <tbody>
+                            <tr>                               
+                               <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>EVALUADOR </b></td>   
+                               <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>CONTRATISTA </b></td> 
+                            </tr>
+                            <tr>                               
+                                <td style="font-size: 11px; text-align: left; height: 25px;width:100px;"><span style="margin-left: 2px">FIRMA:</span></td>  
+                                <td style="font-size: 11px; border-right: 1px solid #000;" rowspan="2">
+                                @if($evaluador && $evaluador->path)
+                                     <img src="{{ public_path($evaluador->path)}}" alt="" style="height: 70px;margin-left:40px ">
+                                @endif
+                                </td> 
+                                <td style="font-size: 11px; text-align: left; height: 25px;width:100px;"><span style="margin-left: 2px">FIRMA:</span></td> 
+                                <td style="font-size: 11px; border-right: 1px solid #000;" rowspan="2"></td>                    
+                            </tr>
+                            <tr>                               
+                                <td style="font-size: 11px; text-align: left; height: 25px;"><span style="margin-left: 2px">ACLARACIÓN:</span></td>   
+                                <td style="font-size: 11px; text-align: left; height: 25px;"><span style="margin-left: 2px">ACLARACIÓN:</span></td>                                             
+                            </tr>
+                        </tbody>
+                    </table> 
+                </td>
+            </tr>      
+        </tbody>
+    </table>
+</footer>
+
+
+<main>
+    
+    <table width="100%" class="bordered" style="text-align: center;padding: 0 -3px 0 -3px;" >
+        <thead>
+            <tr>
+               <th style="font-size: 12px;" class="bordered"  rowspan="2">Día</th>
+               <th style="font-size: 12px;" class="bordered" rowspan="2">Parte</th>
+               <th style="font-size: 12px;" class="bordered" rowspan="2">Obra</th>
+               <th style="font-size: 12px;" class="bordered" colspan="9" >SERVICIOS</th>
+               <th style="font-size: 12px;" class="bordered" colspan="17">
+                     {{ $modalidadCobro }}               
+               </th>
+            </tr>
+            <tr>
+            {{ $cant_servicios = count($servicios_parte) }}
+            {{ $cant_productos = count($productos_parte) }}
+
+            @foreach ($servicios_abreviaturas as $item)
+                <th style="font-size: 10px;width: 33px;" class="bordered">{{ $item }}</th>
+            @endforeach
+
+            @for ($x =$cant_servicios ; $x <9 ; $x++)
+               <th style="font-size: 11px;" class="bordered">&nbsp;</th>
+            @endfor
+            
+            @foreach ($productos_parte as $producto)
+                <th style="font-size: 12px;" class="bordered">{{ $producto->unidad_medida_producto }}</th>
+            @endforeach
+
+            @for ($x =$cant_productos ; $x <17 ; $x++)
+               <th style="font-size: 12px;" class="bordered">&nbsp;</th>
+            @endfor
+             
+            </tr>
+        </thead>
+        <tbody>
+            {{ $cant_servicios_parte = count($servicios_abreviaturas) }}    
+            {{ $cant_productos_parte = count($productos_unidades_medidas) }} 
+            @foreach ($partes_certificado as $item_partes_certificado )
+
+                <tr>
+                    <td style="font-size: 12px;" class="bordered">{{$item_partes_certificado->fecha_formateada}}</td>                        
+                    <td style="font-size: 12px;" class="bordered">{{$item_partes_certificado->parte_numero}}</td>
+                    <td style="font-size: 12px;" class="bordered">{{$item_partes_certificado->obra}}</td>
+
+               <!-- INSERTO LOS SERVICIOS EN LA TABLA -->           
+              
+                @foreach ($servicios_abreviaturas as $item_servicios_abreviaturas)
+                    {{ $existeServicioEnParte = false }}
+
+                    @foreach ($servicios_parte as $item_servicios_parte)
+                        
+                        @if (($item_servicios_abreviaturas == $item_servicios_parte->abreviatura)&&($item_servicios_parte->parte_numero == $item_partes_certificado->parte_numero))
+                                 <td style="font-size: 12px;" class="bordered">{{$item_servicios_parte->cantidad}}</td>
+                               
+                                 {{ $existeServicioEnParte = true }}
+                        @endif
+
+                    @endforeach
+
+                    @if (!$existeServicioEnParte)
+                        
+                        <td style="font-size: 12px;" class="bordered">&nbsp;</td>
+
+                    @endif    
+
+
+                @endforeach                   
+
+                @for ( $x=$cant_servicios_parte  ;  $x < 9 ; $x++)
+                    <td style="font-size: 12px;" class="bordered">&nbsp;</td>
+                @endfor
+            <!-- INSERTO LOS PRODUCTOS EN LA TABLA --> 
+          
+                @foreach ($productos_unidades_medidas as $item_productos_unidades_medidas)
+                    {{ $existeProdutoEnParte = false }}
+
+                    @foreach ($productos_parte as $item_productos_parte)
+
+                        @if (($item_productos_unidades_medidas == $item_productos_parte->unidad_medida_producto)&&($item_productos_parte->parte_numero == $item_partes_certificado->parte_numero))
+                                 <td style="font-size: 12px;" class="bordered">{{$item_productos_parte->cantidad}}</td>
+                                 {{ $existeProdutoEnParte = true }}
+                        @endif
+
+
+                    @endforeach
+
+                    @if (!$existeProdutoEnParte)
+                        
+                        <td style="font-size: 12px;" class="bordered">&nbsp;</td>
+
+                    @endif    
+
+                @endforeach   
+
+                
+                @for ( $x=$cant_productos_parte ;  $x < 17 ; $x++)
+                    <td style="font-size: 12px;" class="bordered">&nbsp;</td>
+                @endfor      
+
+              </tr>         
+            @endforeach
+
+        </tbody>
+    </table>
+
+</main>  
+
+<script type="text/php">
+
+    if ( isset($pdf) ) {
+        $x = 702;
+        $y = 77;
+        $text = "PÁGINA: {PAGE_NUM} de {PAGE_COUNT}";
+        $font = $fontMetrics->get_font("serif", "bold");
+        $size = 9;
+        $color = array(0,0,0);
+        $word_space = 0.0;  //  default
+        $char_space = 0.0;  //  default
+        $angle = 0.0;   //  default
+        $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
+    }
+
+</script>
+</body>
+</html>
+

@@ -169,6 +169,8 @@ Vue.component('ot-informes', require('./components/dashboard/informes/ot-informe
 Vue.component('informes-importables', require('./components/dashboard/informes/informes-importables').default);
 Vue.component('ot-remitos', require('./components/dashboard/remitos/ot-remitos').default);
 Vue.component('ot-partes', require('./components/dashboard/partes/ot-partes').default);
+Vue.component('ot-certificados', require('./components/dashboard/certificados/ot-certificados').default);
+
 Vue.component('ot-soldadores', require('./components/dashboard/soldadores/ot-soldadores').default);
 Vue.component('ot-documentaciones', require('./components/dashboard/documentaciones/ot-documentaciones').default);
 Vue.component('table-ot_procedimientos_propios', require('./components/dashboard/procedimientos/table-ot_procedimientos_propios').default);
@@ -288,6 +290,7 @@ state: {
         CantRemitos:'0',
         CantInternoEquipos:'0',
         CantPartes:'0',
+        CantCertificados:'0',
         CantSoldadores:'0',
         CantDocumentaciones:'0',
         CantProcedimientos:'0',
@@ -746,6 +749,17 @@ actions : {
           })
         },
 
+        loadContarCertificados({
+          commit},ot_id) {
+           axios.defaults.baseURL = store.state.url ;
+           var urlRegistros = 'certificados/ot/' + ot_id +'/total' + '?api_token=' + Laravel.user.api_token;             
+           axios.get(urlRegistros).then((response) => {
+            console.log(urlRegistros);
+            console.log(response.data);
+           commit('ContarCertificados', response.data)           
+          })
+        },
+
         loadCurie({
           commit},payload ) {
            axios.defaults.baseURL = store.state.url ;
@@ -945,6 +959,10 @@ actions : {
 
       ContarPartes(state, CantPartes) {
         state.CantPartes = CantPartes
+      },
+
+      ContarCertificados(state, CantCertificados) {
+        state.CantCertificados = CantCertificados
       },
 
       ContarRemitos(state, CantRemitos) {

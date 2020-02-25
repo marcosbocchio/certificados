@@ -677,8 +677,7 @@ export default {
             this.RecalcularViaticos();
             this.RecalcularHospedaje();
  
-        }
-       
+        }       
 },
 
     computed :{
@@ -718,8 +717,7 @@ export default {
                  this.getServiciosGenerales(); 
                  this.getInformesPendientesParte(); 
                  
-            }      
-
+            }  
         },
 
         setObra : function(value){
@@ -809,11 +807,7 @@ export default {
                     this.horario = this.horario.slice(0,3)
                 }
 
-            }
-
-      
-
-            console.log(event.keyCode);
+            }    
 
         },
                 
@@ -1182,9 +1176,9 @@ export default {
             if(this.informes[index].informe_sel){
                
                 if(this.informes[index].importable_sn){
+
                     this.getInformesImportado(this.informes[index].id,index);
                     this.getServiciosInformes(this.informes[index].id,1);
-
 
                 }else{
                     
@@ -1366,10 +1360,6 @@ export default {
             axios.get(urlRegistros).then(response =>{
                 
                 let informe_servicios = response.data;
-                console.log(urlRegistros);
-                console.log('ot_servicios:' ,informe_servicios);
-                console.log(informe_servicios);
-
             
                 informe_servicios.forEach(function(item) {
                     

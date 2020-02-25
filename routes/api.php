@@ -117,9 +117,13 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('informes/ot/{ot_id}/parte/{parte_id}/pendientes_editables_parte_diario', 'InformesController@OtInformesPendienteEditableParteDiario');
 
   
+    Route::get('certificados/parte/{parte_id}/servicios', 'CertificadosController@getParteServicios');
+    Route::get('certificados/parte/{parte_id}/modo_cobro/{modo_cobro}/productos', 'CertificadosController@getParteProductos');   
+    Route::get('certificados/ot/{ot_id}/modalidad_cobro', 'CertificadosController@getModalidadCobro');   
+
+   
     Route::get('informes/ot/{ot_id}/metodo/{metodo}/generar-numero-informe', 'InformesController@GenerarNumeroInforme');   
     Route::get('certificados/generar-numero-certificado', 'CertificadosController@GenerarNumeroCertificado');   
-
 
     Route::post('storage/referencia', 'StorageController@saveReferencia');
     Route::post('storage/documento', 'StorageController@saveDocumento');
@@ -207,7 +211,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('operador_periodo_rx','OperadorPeriodoRxController');
 
     //parte diario
-
+    Route::get('partes/ot/{ot_id}/certificado/{certificado_id}/pendientes_editables_certificado', 'PartesController@OtPartesPendienteEditableCertificado');
     Route::get('partes/ot/{ot_id}/pendientes_certificados', 'PartesController@OtPartesPendienteCertificado');
     Route::get('partes/ot/{ot_id}/paginate', 'PartesController@paginate');       
     Route::get('partes/ot/{ot_id}/ddppi', 'PartesController@ddppi');   
@@ -223,6 +227,8 @@ Route::group(['middleware' => 'auth:api'], function()
 
     //certificados
 
+    Route::get('certificados/ot/{ot_id}/total','CertificadosController@CertificadosTotal');
+    Route::get('certificados/ot/{ot_id}/paginate', 'CertificadosController@paginate');       
     Route::resource('certificados', 'CertificadosController');
 
 });
@@ -231,8 +237,9 @@ Route::group(['middleware' => 'auth:api'], function()
 //reportes 
 
 Route::get('/pdf/remito/{id}','PdfRemitosController@imprimir')->name('pdfRemito');
-Route::get('/pdf/parte/{id}/{estado}','PdfPartesController@imprimir')->name('pdfParteOriginal');
-Route::get('/pdf/parte/{id}/{estado}','PdfPartesController@imprimir')->name('pdfParteFinal');
+Route::get('/pdf/parte/{id}/{estado}','PdfPartesController@imprimir');
+Route::get('/pdf/certificado/{id}/{estado}','PdfCertificadoController@imprimir');
+
 Route::get('/pdf/ot/{id}','PdfOtController@imprimir')->name('pdfot');
 Route::get('/pdf/servicios/referencias/{id}','PdfServiciosReferenciasController@imprimir')->name('ServiciosReferencias');
 Route::get('/pdf/productos/referencias/{id}','PdfProductosReferenciasController@imprimir')->name('ProductosReferencias');

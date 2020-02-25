@@ -100,3 +100,7 @@ function PuedeCrearInforme($ot_id){
 
 }
 
+
+
+
+

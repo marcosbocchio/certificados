@@ -2,16 +2,16 @@
     <div>
         <!-- small box -->
         <div class="small-box bg-custom-6">
-        <div class="inner">
+            <div class="inner">
 
-            <h3 >{{CantInformes}}</h3>
+                <h3 >{{CantInformes}}</h3>
 
-            <p>Informes</p>
-        </div>
-        <div class="icon">
-            <i class="fa fa-list-alt"></i>
-        </div>
-        <a href="#" class="small-box-footer">Detail <i class="fa  fa-arrow-circle-down"></i></a>
+                <p>Informes</p>
+            </div>
+            <div class="icon">
+                <i class="fa fa-list-alt"></i>
+            </div>
+            <a href="#" class="small-box-footer">Detail <i class="fa  fa-arrow-circle-down"></i></a>
         </div>
         <div class="clearfix"></div>
 

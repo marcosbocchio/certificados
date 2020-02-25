@@ -13,22 +13,16 @@
  
  <div id="app">
 
-  <partes  
+  <certificados  
   
   :otdata="{{$ot}}" 
-  :parte_data="{{$parte}}" 
-  :informes_ri_data="{{$informes_ri}}"
-  :informes_pm_data="{{$informes_pm}}"
-  :informes_lp_data="{{$informes_lp}}"
-  :informes_us_data="{{$informes_us}}"
-  :informes_importados_data="{{$informes_importados}}"
+  :certificado_data="{{$certificado}}" 
   :servicios_data="{{$servicios}}"
-
-  :responsables_data="{{$responsables}}"
-  editmode  
+  :productos_placas_data="{{$productos_placas}}"
+  :productos_costura_data="{{$productos_costuras}}" 
+   editmode    
   
-  
-  ></partes>
+  ></certificados>
 
  </div>
 
