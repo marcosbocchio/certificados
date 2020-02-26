@@ -341,21 +341,24 @@ export default {
 
             if(!this.partes[index].parte_sel){
 
-                for ( let x = index ; x >= 0; x--) {
-                    
-                    if(!this.partes[x].parte_sel){
+                if(index > 0){
 
-                        this.$nextTick(function(){
+                    for ( let x = index-1 ; x >= 0; x--) {
+                        
+                        if(!this.partes[x].parte_sel){
 
-                        this.partes[x].parte_sel = true;
-                        this.getParte(x);
+                            this.$nextTick(function(){
 
-                        });
-    
+                                this.partes[x].parte_sel = true;
+                                this.getParte(x);
+
+                            });
+        
+                        }
+                        
                     }
-                    
-                }
 
+                }
             }
 
         },

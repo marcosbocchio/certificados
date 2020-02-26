@@ -33,11 +33,11 @@ class PdfCertificadoController extends Controller
 
             $obras = $this->getObrasPartes($partes_certificado);
             $tablas_por_obras = $this->generarTablasPorObras($servicios_parte,$servicios_abreviaturas,$productos_parte,$productos_unidades_medidas,$obras);           
-             dd($tablas_por_obras);
+          //  dd($tablas_por_obras);
         }
         //dd($productos_parte);
         $evaluador = User::find($certificado->firma);
-        $pdf = PDF::loadView('reportes.certificados.certificado',compact('fecha','certificado','ot','cliente','contratista','servicios_parte','productos_parte','modalidadCobro','partes_certificado','servicios_abreviaturas','productos_unidades_medidas','evaluador','obras'))->setPaper('a4','landscape')->setWarnings(false);
+        $pdf = PDF::loadView('reportes.certificados.certificado',compact('fecha','certificado','ot','cliente','contratista','servicios_parte','productos_parte','modalidadCobro','partes_certificado','servicios_abreviaturas','productos_unidades_medidas','evaluador','obras','tablas_por_obras'))->setPaper('a4','landscape')->setWarnings(false);
       
         return $pdf->stream();
 

@@ -343,18 +343,36 @@ b {
                         <table class="bordered">
                             <thead>
                                 <tr>                                   
-                                    <th style="font-size: 12px; width:250px;text-align: center;" class="bordered"  colspan="2">Obra : {{ $obras[$x*3] }}</th>                          
+                                    <th style="font-size: 12px; width:255px;text-align: center;" class="bordered"  colspan="2">Obra : {{ $obras[$x*3] }}</th>                          
                                 </tr>
                                 <tr>                            
                                     <th style="font-size: 12px; width:125px;text-align: center;"class="bordered">Servicios</th>
-                                    <th style="font-size: 12px; width:125px;text-align: center;" class="bordered">Costuras</th>                            
+                                    <th style="font-size: 12px; width:125px;text-align: center;" class="bordered">{{ $modalidadCobro }}</th>                            
                                 </tr>                         
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td style="font-size: 12px;" class="bordered">Costuras</td>
-                                    <td style="font-size: 12px;" class="bordered">Costuras</td>
-                                </tr>
+                                {{ $cant_total_servicio = count($tablas_por_obras[$x*3]->servicios) }}
+                                {{ $cant_total_producto = count($tablas_por_obras[$x*3]->productos) }}
+
+                                {{ $filas_total = $cant_total_servicio > $cant_total_producto ? $cant_total_servicio : $cant_total_producto }}
+
+                                @for ( $z=0 ;  $z< $filas_total  ; $z++)
+                                    
+                                    <tr>
+                                        @if (isset($tablas_por_obras[$x*3]->servicios[$z]))
+                                             <td style="font-size: 12px;" class="bordered"> {{$tablas_por_obras[$x*3]->servicios[$z]->servicio }} : {{$tablas_por_obras[$x*3]->servicios[$z]->cant_total_servicio }} </td>   
+                                        @else    
+                                         <td style="font-size: 12px;" class="bordered">&nbsp;</td>
+                                        @endif
+
+                                       @if (isset($tablas_por_obras[$x*3]->productos[$z]))
+                                       <td style="font-size: 12px;" class="bordered"> {{$tablas_por_obras[$x*3]->productos[$z]->producto }} : {{$tablas_por_obras[$x*3]->productos[$z]->cant_total_producto }} </td>                                  
+                                        @else    
+                                         <td style="font-size: 12px;" class="bordered">&nbsp;</td>
+                                        @endif
+                                
+                                    </tr>
+                                @endfor                 
                             </tbody>
                         </table>
                     </td>
@@ -362,26 +380,74 @@ b {
                         <table class="bordered">
                             <thead>
                                 <tr>                                   
-                                    <th style="font-size: 12px; width:250px;text-align: center;" class="bordered"  colspan="2">Obra : {{ $obras[($x*3)+1] }}</th>                     
+                                    <th style="font-size: 12px; width:255px;text-align: center;" class="bordered"  colspan="2">Obra : {{ $obras[($x*3)+1] }}</th>                     
                                 </tr>
                                 <tr>                            
                                     <th style="font-size: 12px; width:125px;text-align: center;" class="bordered">Servicios</th>
-                                    <th style="font-size: 12px; width:125px;text-align: center;" class="bordered">Costuras</th>                           
+                                    <th style="font-size: 12px; width:125px;text-align: center;" class="bordered">{{ $modalidadCobro }}</th>                           
                                 </tr>                         
                             </thead>
+                            <tbody>
+                                {{ $cant_total_servicio = count($tablas_por_obras[($x*3)+1]->servicios) }}
+                                {{ $cant_total_producto = count($tablas_por_obras[($x*3)+1]->productos) }}
+
+                                {{ $filas_total = $cant_total_servicio > $cant_total_producto ? $cant_total_servicio : $cant_total_producto }}
+
+                                @for ( $z=0 ;  $z< $filas_total  ; $z++)
+                                    
+                                    <tr>
+                                        @if (isset($tablas_por_obras[($x*3)+1]->servicios[$z]))
+                                             <td style="font-size: 12px;" class="bordered"> {{$tablas_por_obras[($x*3)+1]->servicios[$z]->servicio }} : {{$tablas_por_obras[($x*3)+1]->servicios[$z]->cant_total_servicio }} </td>   
+                                        @else    
+                                         <td style="font-size: 12px;" class="bordered">&nbsp;</td>
+                                        @endif
+
+                                       @if (isset($tablas_por_obras[($x*3)+1]->productos[$z]))
+                                       <td style="font-size: 12px;" class="bordered"> {{$tablas_por_obras[($x*3)+1]->productos[$z]->producto }} : {{$tablas_por_obras[($x*3)+1]->productos[$z]->cant_total_producto }} </td>                                  
+                                        @else    
+                                         <td style="font-size: 12px;" class="bordered">&nbsp;</td>
+                                        @endif
+                                
+                                    </tr>
+                                @endfor      
+                            </tbody>
                         </table>
                     </td>
                     <td width="400px">
                         <table class="bordered">
                             <thead>
                                 <tr>                                   
-                                    <th style="font-size: 12px; width:250px;text-align: center;" class="bordered"  colspan="2">Obra : {{ $obras[($x*3)+2] }}</th>                     
+                                    <th style="font-size: 12px; width:255px;text-align: center;" class="bordered"  colspan="2">Obra : {{ $obras[($x*3)+2] }}</th>                     
                                 </tr>
                                 <tr>                            
                                     <th style="font-size: 12px; width:125px;text-align: center;" class="bordered">Servicios</th>
-                                    <th style="font-size: 12px; width:125px;text-align: center;" class="bordered">Costuras</th>                       
+                                    <th style="font-size: 12px; width:125px;text-align: center;" class="bordered">{{ $modalidadCobro }}</th>                       
                                 </tr>                       
                             </thead>
+                            <tbody>
+                                {{ $cant_total_servicio = count($tablas_por_obras[($x*3)+2]->servicios) }}
+                                {{ $cant_total_producto = count($tablas_por_obras[($x*3)+2]->productos) }}
+
+                                {{ $filas_total = $cant_total_servicio > $cant_total_producto ? $cant_total_servicio : $cant_total_producto }}
+
+                                @for ( $z=0 ;  $z< $filas_total  ; $z++)
+                                    
+                                    <tr>
+                                        @if (isset($tablas_por_obras[($x*3)+2]->servicios[$z]))
+                                             <td style="font-size: 12px;" class="bordered"> {{$tablas_por_obras[($x*3)+2]->servicios[$z]->servicio }} : {{$tablas_por_obras[($x*3)+2]->servicios[$z]->cant_total_servicio }} </td>   
+                                        @else    
+                                         <td style="font-size: 12px;" class="bordered">&nbsp;</td>
+                                        @endif
+
+                                       @if (isset($tablas_por_obras[($x*3)+2]->productos[$z]))
+                                       <td style="font-size: 12px;" class="bordered"> {{$tablas_por_obras[($x*3)+2]->productos[$z]->producto }} : {{$tablas_por_obras[($x*3)+2]->productos[$z]->cant_total_producto }} </td>                                  
+                                        @else    
+                                         <td style="font-size: 12px;" class="bordered">&nbsp;</td>
+                                        @endif
+                                
+                                    </tr>
+                                @endfor      
+                            </tbody>
                         </table>
                     </td>
                 </tr>
