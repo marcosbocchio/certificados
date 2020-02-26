@@ -346,7 +346,7 @@ b {
                             <table class="bordered">
                                 <thead>
                                     <tr>                                   
-                                        <th style="font-size: 12px; width:255px;text-align: center;" class="bordered"  colspan="2">Obra : {{ $obras[$x*3] }}</th>                          
+                                        <th style="font-size: 12px; width:255px;text-align: center;" class="bordered"  colspan="2">Obra : {{ $tablas_por_obras[$x*3]->obra }}</th>                          
                                     </tr>
                                     <tr>                            
                                         <th style="font-size: 12px; width:125px;text-align: center;"class="bordered">Servicios</th>
@@ -388,7 +388,7 @@ b {
                             <table class="bordered">
                                 <thead>
                                     <tr>                                   
-                                        <th style="font-size: 12px; width:255px;text-align: center;" class="bordered"  colspan="2">Obra : {{ $obras[($x*3)+1] }}</th>                     
+                                        <th style="font-size: 12px; width:255px;text-align: center;" class="bordered"  colspan="2">Obra : {{ $tablas_por_obras[($x*3)+1]->obra }}</th>                     
                                     </tr>
                                     <tr>                            
                                         <th style="font-size: 12px; width:125px;text-align: center;" class="bordered">Servicios</th>
@@ -430,7 +430,7 @@ b {
                             <table class="bordered">
                                 <thead>
                                     <tr>                                   
-                                        <th style="font-size: 12px; width:255px;text-align: center;" class="bordered"  colspan="2">Obra : {{ $obras[($x*3)+2] }}</th>                     
+                                        <th style="font-size: 12px; width:255px;text-align: center;" class="bordered"  colspan="2">Obra : {{ $tablas_por_obras[($x*3)+2]->obra }}</th>                     
                                     </tr>
                                     <tr>                            
                                         <th style="font-size: 12px; width:125px;text-align: center;" class="bordered">Servicios</th>
