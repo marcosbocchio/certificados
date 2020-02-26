@@ -10,6 +10,7 @@ use App\Ots;
 use App\Clientes;
 use App\Contratistas;
 use App\User;
+use \stdClass;
 
 class PdfCertificadoController extends Controller
 {
@@ -23,24 +24,63 @@ class PdfCertificadoController extends Controller
         $productoCosturaOt = (new \App\Http\Controllers\CertificadosController)->getModalidadCobro($certificado->ot_id);
         $modalidadCobro = $productoCosturaOt->count() > 0 ? 'COSTURAS' : 'PLACAS';   
         $partes_certificado =DB::select('CALL PartesCertificadoReporte(?)',array($id));      
-        $obras=[];  
-        if(!$ot->obra){
-
-            $obras = $this->getObrasPartes($partes_certificado);
-           
-        }
-     //   dd($obras);
         $servicios_parte = DB::select('CALL getServiciosCertificados(?,?)',array($id,$estado));
         $servicios_abreviaturas = $this->convertToarrayServicios($servicios_parte);
         $productos_parte = DB::select('CALL getProductosCertificados(?,?,?)',array($id,$estado,$modalidadCobro));     
         $productos_unidades_medidas = $this->convertToarrayProductos($productos_parte);     
-    
+        $obras=[];  
+        if(!$ot->obra){
+
+            $obras = $this->getObrasPartes($partes_certificado);
+            $tablas_por_obras = $this->generarTablasPorObras($servicios_parte,$servicios_abreviaturas,$productos_parte,$productos_unidades_medidas,$obras);           
+           dd($tablas_por_obras);
+        }
+        //dd($productos_parte);
         $evaluador = User::find($certificado->firma);
         $pdf = PDF::loadView('reportes.certificados.certificado',compact('fecha','certificado','ot','cliente','contratista','servicios_parte','productos_parte','modalidadCobro','partes_certificado','servicios_abreviaturas','productos_unidades_medidas','evaluador','obras'))->setPaper('a4','landscape')->setWarnings(false);
       
         return $pdf->stream();
 
     }
+
+    public function generarTablasPorObras($servicios_parte,$servicios_abreviaturas,$productos_parte,$productos_unidades_medidas,$obras){
+
+        $array_temp =[];
+
+    
+        dd($obras,$servicios_abreviaturas,$servicios_parte);
+
+        foreach ($obras as $obra) {
+            
+            $obj = new stdClass();
+            $obj->obra = $obra;
+
+            foreach ($servicios_abreviaturas as $abreviatura) {
+                
+                $obj->servicio = $abreviatura;
+
+                    $cant_total_servicio = 0;
+                    
+                    foreach ($servicios_parte as $servicio) {                
+                        
+                        if( ($servicio->obra == $obra) && ($servicio->abreviatura == $abreviatura)){
+                  
+                            $cant_total_servicio = $cant_total_servicio + $servicio->cantidad;
+                            
+                        }                        
+                    }
+                    
+                    $obj->cant_total_servicio = $cant_total_servicio;
+                    $array_temp[]=$obj;
+                }
+                    
+                }
+                
+        return $array_temp;
+
+    }
+
+
 
     public function convertToarrayServicios($servicios_parte){
 
@@ -52,7 +92,7 @@ class PdfCertificadoController extends Controller
 
         }
 
-        return $array_temp;
+        return array_unique($array_temp);
 
     }
 
@@ -66,7 +106,7 @@ class PdfCertificadoController extends Controller
 
         }
 
-        return $array_temp;
+        return array_unique($array_temp);
 
     }
 

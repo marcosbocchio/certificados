@@ -70,7 +70,7 @@ b {
                                 <td rowspan="4" style="text-align: right; width:253px">
                                     <img src="{{ public_path('img/logo-enod-web.jpg')}}" alt="" style="height: 60px; margin-right: 25px;">
                                 </td>   
-                                <td style="font-size: 18px; height: 30px; text-align: center;width:534px;" rowspan="3"><b>CERTIFICADOS</b></td>
+                                <td style="font-size: 20px; height: 30px; text-align: center;width:534px;" rowspan="3"><b>CERTIFICADO</b></td>
                                 <td style="font-size: 11px;"><b style="margin-left: 40px"></b></td>                         
                             </tr>
                             <tr>
@@ -228,15 +228,15 @@ b {
                      {{ $modalidadCobro }}               
                </th>
             </tr>
-            <tr>
-            {{ $cant_servicios = count($servicios_parte) }}
-            {{ $cant_productos = count($productos_parte) }}
+            <tr>    
+            {{ $cant_servicios_parte = count($servicios_abreviaturas) }}    
+            {{ $cant_productos_parte = count($productos_unidades_medidas) }} 
 
             @foreach ($servicios_abreviaturas as $item)
                 <th style="font-size: 10px;width: 33px;" class="bordered">{{ $item }}</th>
             @endforeach
 
-            @for ($x =$cant_servicios ; $x <9 ; $x++)
+            @for ($x =$cant_servicios_parte ; $x <9 ; $x++)
                <th style="font-size: 11px;" class="bordered">&nbsp;</th>
             @endfor
             
@@ -244,15 +244,13 @@ b {
                 <th style="font-size: 12px;" class="bordered">{{ $producto->unidad_medida_producto }}</th>
             @endforeach
 
-            @for ($x =$cant_productos ; $x <17 ; $x++)
+            @for ($x =$cant_productos_parte ; $x <17 ; $x++)
                <th style="font-size: 12px;" class="bordered">&nbsp;</th>
             @endfor
              
             </tr>
         </thead>
         <tbody>
-            {{ $cant_servicios_parte = count($servicios_abreviaturas) }}    
-            {{ $cant_productos_parte = count($productos_unidades_medidas) }} 
             @foreach ($partes_certificado as $item_partes_certificado )
 
                 <tr>
@@ -345,15 +343,18 @@ b {
                         <table class="bordered">
                             <thead>
                                 <tr>                                   
-                                    <th style="font-size: 12px; width:60px" class="bordered"  colspan="2">Obra : {{ $obras[$x*3] }}</th>                          
+                                    <th style="font-size: 12px; width:250px;text-align: center;" class="bordered"  colspan="2">Obra : {{ $obras[$x*3] }}</th>                          
                                 </tr>
                                 <tr>                            
-                                    <th style="font-size: 12px; width:60px" class="bordered">Servicios</th>
-                                    <th style="font-size: 12px; width:60px" class="bordered">Costuras</th>                            
+                                    <th style="font-size: 12px; width:125px;text-align: center;"class="bordered">Servicios</th>
+                                    <th style="font-size: 12px; width:125px;text-align: center;" class="bordered">Costuras</th>                            
                                 </tr>                         
                             </thead>
                             <tbody>
-
+                                <tr>
+                                    <td style="font-size: 12px;" class="bordered">Costuras</td>
+                                    <td style="font-size: 12px;" class="bordered">Costuras</td>
+                                </tr>
                             </tbody>
                         </table>
                     </td>
@@ -361,11 +362,11 @@ b {
                         <table class="bordered">
                             <thead>
                                 <tr>                                   
-                                    <th style="font-size: 12px; width:60px" class="bordered"  colspan="2">Obra : {{ $obras[($x*3)+1] }}</th>                     
+                                    <th style="font-size: 12px; width:250px;text-align: center;" class="bordered"  colspan="2">Obra : {{ $obras[($x*3)+1] }}</th>                     
                                 </tr>
                                 <tr>                            
-                                    <th style="font-size: 12px; width:60px" class="bordered">Servicios</th>
-                                    <th style="font-size: 12px; width:60px" class="bordered">Costuras</th>                            
+                                    <th style="font-size: 12px; width:125px;text-align: center;" class="bordered">Servicios</th>
+                                    <th style="font-size: 12px; width:125px;text-align: center;" class="bordered">Costuras</th>                           
                                 </tr>                         
                             </thead>
                         </table>
@@ -374,11 +375,11 @@ b {
                         <table class="bordered">
                             <thead>
                                 <tr>                                   
-                                    <th style="font-size: 12px; width:60px" class="bordered"  colspan="2">Obra : {{ $obras[($x*3)+2] }}</th>                     
+                                    <th style="font-size: 12px; width:250px;text-align: center;" class="bordered"  colspan="2">Obra : {{ $obras[($x*3)+2] }}</th>                     
                                 </tr>
                                 <tr>                            
-                                    <th style="font-size: 12px; width:60px" class="bordered">Servicios</th>
-                                    <th style="font-size: 12px; width:60px" class="bordered">Costuras</th>                            
+                                    <th style="font-size: 12px; width:125px;text-align: center;" class="bordered">Servicios</th>
+                                    <th style="font-size: 12px; width:125px;text-align: center;" class="bordered">Costuras</th>                       
                                 </tr>                       
                             </thead>
                         </table>
