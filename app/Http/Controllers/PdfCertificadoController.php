@@ -33,7 +33,7 @@ class PdfCertificadoController extends Controller
 
             $obras = $this->getObrasPartes($partes_certificado);
             $tablas_por_obras = $this->generarTablasPorObras($servicios_parte,$servicios_abreviaturas,$productos_parte,$productos_unidades_medidas,$obras);           
-           dd($tablas_por_obras);
+         //  dd($tablas_por_obras);
         }
         //dd($productos_parte);
         $evaluador = User::find($certificado->firma);
@@ -71,8 +71,8 @@ class PdfCertificadoController extends Controller
                     }
                     
                     $obj->cant_total_servicio = $cant_total_servicio;
-                    $array_temp[]=$obj;
                 }
+                $array_temp[]=$obj;
                     
                 }
                 
