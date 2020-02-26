@@ -48,7 +48,7 @@ class PdfCertificadoController extends Controller
         $array_temp =[];
 
     
-        dd($obras,$servicios_abreviaturas,$servicios_parte);
+     //   dd($obras,$servicios_abreviaturas,$servicios_parte);
 
         foreach ($obras as $obra) {
             
