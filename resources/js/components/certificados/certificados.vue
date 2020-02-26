@@ -341,12 +341,16 @@ export default {
 
             if(!this.partes[index].parte_sel){
 
-                for ( let x = index ; x => 0; x--) {
+                for ( let x = index ; x >= 0; x--) {
                     
                     if(!this.partes[x].parte_sel){
-    
+
+                        this.$nextTick(function(){
+
                         this.partes[x].parte_sel = true;
                         this.getParte(x);
+
+                        });
     
                     }
                     
