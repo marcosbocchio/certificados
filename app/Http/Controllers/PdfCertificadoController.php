@@ -33,7 +33,7 @@ class PdfCertificadoController extends Controller
 
             $obras = $this->getObrasPartes($partes_certificado);
             $tablas_por_obras = $this->generarTablasPorObras($servicios_parte,$servicios_abreviaturas,$productos_parte,$productos_unidades_medidas,$obras);           
-         //  dd($tablas_por_obras);
+             dd($tablas_por_obras);
         }
         //dd($productos_parte);
         $evaluador = User::find($certificado->firma);
@@ -44,39 +44,66 @@ class PdfCertificadoController extends Controller
     }
 
     public function generarTablasPorObras($servicios_parte,$servicios_abreviaturas,$productos_parte,$productos_unidades_medidas,$obras){
+        
+        $array_obra = [];
+        $array_temp =[];    
+     //  dd($obras,$servicios_abreviaturas,$servicios_parte,$productos_parte);
 
-        $array_temp =[];
+        foreach ($obras as $obra) {    
 
-    
-     //   dd($obras,$servicios_abreviaturas,$servicios_parte);
+            $objObra = new stdClass();
+            $objObra->obra = $obra;
+            $array_temp =[];    
+            $array_productos = [];
+            foreach ($servicios_abreviaturas as $abreviatura) {                
 
-        foreach ($obras as $obra) {
-            
-            $obj = new stdClass();
-            $obj->obra = $obra;
-
-            foreach ($servicios_abreviaturas as $abreviatura) {
+                $obj = new stdClass();                
                 
-                $obj->servicio = $abreviatura;
-
-                    $cant_total_servicio = 0;
+                
+                $cant_total_servicio = 0;
+                foreach ($servicios_parte as $servicio) {                
                     
-                    foreach ($servicios_parte as $servicio) {                
+                    if( ($servicio->obra == $obra) && ($servicio->abreviatura == $abreviatura)){
                         
-                        if( ($servicio->obra == $obra) && ($servicio->abreviatura == $abreviatura)){
-                  
-                            $cant_total_servicio = $cant_total_servicio + $servicio->cantidad;
-                            
-                        }                        
-                    }
-                    
-                    $obj->cant_total_servicio = $cant_total_servicio;
-                }
-                $array_temp[]=$obj;
-                    
+                        $cant_total_servicio = $cant_total_servicio + $servicio->cantidad;
+                        
+                    }            
+                }                    
+                
+                    $obj->servicio = $abreviatura;
+                    $obj->cant_total_servicio = $cant_total_servicio;                    
+                    $array_temp[]=$obj;
+
                 }
                 
-        return $array_temp;
+            foreach ($productos_unidades_medidas as $unidad_medida) {
+
+                $objProducto = new stdClass();                    
+                
+                $cant_total_producto = 0;
+                foreach ($productos_parte as $producto) {                
+                    
+                    if( ($producto->obra == $obra) && ($producto->unidad_medida_producto == $unidad_medida)){
+                        
+                        $cant_total_producto = $cant_total_producto + $producto->cantidad;
+                        
+                    }            
+                }                    
+                
+                    $objProducto->producto = $unidad_medida;
+                    $objProducto->cant_total_producto = $cant_total_producto;                    
+                    $array_productos[]=$objProducto;                  
+            }          
+                     
+
+
+                $objObra->productos = $array_productos;
+                $objObra->servicios = $array_temp;
+                $array_obra[]= $objObra;
+                    
+         }
+                
+        return $array_obra;
 
     }
 

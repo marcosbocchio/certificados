@@ -51,7 +51,7 @@
                                     <tbody>
                                         <tr v-for="(parte,k) in partes" :key="k">
                                             <td>
-                                                <input type="checkbox" id="informe_sel" v-model="partes[k].parte_sel" @change="getParte(k)">
+                                                <input type="checkbox" id="informe_sel" v-model="partes[k].parte_sel" @change="getParte(k)" @click="seleccinarAnteriores(k)">
                                             </td>                                                                                          
                                             <td>{{ parte.numero_formateado}}</td>
                                             <td>{{ parte.obra}}</td>  
@@ -337,6 +337,25 @@ export default {
             });
         },
 
+        seleccinarAnteriores :function(index){
+
+            if(!this.partes[index].parte_sel){
+
+                for ( let x = index ; x => 0; x--) {
+                    
+                    if(!this.partes[x].parte_sel){
+    
+                        this.partes[x].parte_sel = true;
+                        this.getParte(x);
+    
+                    }
+                    
+                }
+
+            }
+
+        },
+
         setCerficadoServicios : function(){
 
             this.TablaPartesServicios =  JSON.parse(JSON.stringify(this.servicios_data));  
@@ -410,8 +429,7 @@ export default {
                     this.getProductosParte(this.partes[index].id);
             }else{
                     this.deleteServiciosParte(this.partes[index].id)   
-                    this.deleteProductosParte(this.partes[index].id)   
-                 
+                    this.deleteProductosParte(this.partes[index].id)                   
 
             }
         },
