@@ -138,7 +138,7 @@ b {
                         <tbody>    
                             <tr>
                                 <td >
-                                 Información a pedido del cliente :
+                                     {{$certificado->info_pedido_cliente}} &nbsp;
                                 </td>
                             </tr>  
                         </tbody>

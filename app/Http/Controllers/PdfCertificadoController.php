@@ -26,18 +26,16 @@ class PdfCertificadoController extends Controller
         $partes_certificado =DB::select('CALL PartesCertificadoReporte(?)',array($id));      
         $servicios_parte = DB::select('CALL getServiciosCertificados(?,?)',array($id,$estado));
         $servicios_abreviaturas = $this->convertToarrayServicios($servicios_parte);
-        $productos_parte = DB::select('CALL getProductosCertificados(?,?,?)',array($id,$estado,$modalidadCobro));     
+        $productos_parte = DB::select('CALL getProductosCertificados(?,?,?)',array($id,$estado,$modalidadCobro));    
+      
         $productos_unidades_medidas = $this->convertToarrayProductos($productos_parte);     
-        $obras=[];  
-        
-
-            $obras = $this->getObrasPartes($partes_certificado);
-            $tablas_por_obras = $this->generarTablasPorObras($servicios_parte,$servicios_abreviaturas,$productos_parte,$productos_unidades_medidas,$obras);           
-         // dd($obras);
-       
-        //dd($productos_parte);
+        $obras=[];
+        $obras = $this->getObrasPartes($partes_certificado);
+        $tablas_por_obras = $this->generarTablasPorObras($servicios_parte,$servicios_abreviaturas,$productos_parte,$productos_unidades_medidas,$obras);    
+        $fechas_correlativas = $this->generarFechaCorrelativa($partes_certificado);
+       // dd($fechas_correlativas);
         $evaluador = User::find($certificado->firma);
-        $pdf = PDF::loadView('reportes.certificados.certificado',compact('fecha','certificado','ot','cliente','contratista','servicios_parte','productos_parte','modalidadCobro','partes_certificado','servicios_abreviaturas','productos_unidades_medidas','evaluador','obras','tablas_por_obras'))->setPaper('a4','landscape')->setWarnings(false);
+        $pdf = PDF::loadView('reportes.certificados.certificado',compact('fecha','certificado','ot','cliente','contratista','servicios_parte','productos_parte','modalidadCobro','partes_certificado','servicios_abreviaturas','productos_unidades_medidas','evaluador','obras','tablas_por_obras','fechas_correlativas'))->setPaper('a4','landscape')->setWarnings(false);
       
         return $pdf->stream();
 
@@ -107,7 +105,68 @@ class PdfCertificadoController extends Controller
 
     }
 
+    public function generarFechaCorrelativa($partes_certificado){
 
+
+     $long_partes = count($partes_certificado);   
+
+     if($long_partes == 0){ 
+
+         return null ;
+
+    }else{
+
+        $fecha_inicial_formateada = $partes_certificado[0]->fecha_formateada;
+        $fecha_final_formateada = $partes_certificado[0]->fecha_formateada;
+        $fecha_inicial= $partes_certificado[0]->fecha;
+        $fecha_final = $partes_certificado[0]->fecha;
+
+        foreach ($partes_certificado as $parte) {
+            
+            if( $this->EsFechaIgualoSiguiente($parte->fecha,$fecha_final) ) {             
+            
+                $fecha_final =  $parte->fecha;
+                $fecha_final_formateada =$parte->fecha_formateada;
+    
+            }else{
+    
+                return null;
+                break;
+            }
+    
+        }
+    
+        return  ($fecha_inicial_formateada . '-' . $fecha_final_formateada);
+
+    }   
+
+    }
+
+    public function EsFechaIgualoSiguiente($fecha1,$fecha2){
+
+        $result = false;
+
+        if($fecha1 == $fecha2){
+
+            $result = true;
+        }else{
+
+            $fecha1 = date('d-m-Y',strtotime($fecha1));
+            $fecha2 = date('d-m-Y',strtotime($fecha2));
+
+            // Sumo uno a la fecha que tenia para comparar con la seguiente del parte
+
+            $fecha2 = strtotime ( '+1 day' , strtotime ( $fecha2 ) );
+            $fecha2 = date('d-m-Y',strtotime($fecha2));
+
+            if($fecha1 == $fecha2) {
+
+                $result = true;
+            }
+        }
+
+        return $result;
+    }
 
     public function convertToarrayServicios($servicios_parte){
 

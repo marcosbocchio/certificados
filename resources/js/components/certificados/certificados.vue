@@ -6,6 +6,7 @@
 
                     <div class="box box-custom-enod">
                          <div class="box-body"> 
+
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="fecha">Fecha *</label>
@@ -17,6 +18,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="col-md-3">
                                 <div class="form-group" >
                                     <label for="numero">Certificado N° </label>
@@ -24,8 +26,17 @@
                                 </div>                            
                             </div>
 
-                        </div>
-                    </div>
+                            <div class="clearfix"></div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Info a Pedido del Cliente</label>
+                                    <textarea v-model="info_pedido_cliente" class="form-control noresize" rows="2" placeholder="" maxlength="100"></textarea>
+                                </div>
+                            </div>                    
+
+                         </div>
+                     </div>
 
                     <div class="box box-custom-enod">
                         <div class="box-header with-border">
@@ -260,7 +271,8 @@ export default {
         en: en,
         es: es,
         numero:'',      
-        fecha:'',   
+        fecha:new Date(),  
+        info_pedido_cliente:'',
         partes:[],
         modo_cobro:'',
         TablaPartesServicios:[],
@@ -308,6 +320,7 @@ export default {
 
                 this.fecha  = this.certificado_data.fecha;   
                 this.numero = this.certificado_data.numero;
+                this.info_pedido_cliente = this.certificado_data.info_pedido_cliente;
 
                 this.$nextTick(function(){
 
@@ -463,7 +476,8 @@ export default {
                             cant_original: cantidad,                       
                             cant_final: cantidad,   
                             abreviatura :item.abreviatura,               
-                            visible : true
+                            visible : true,
+                            combinado_sn :item.combinado_sn
 
                         });             
 
@@ -611,6 +625,7 @@ export default {
                 'ot'                                 : this.otdata, 
                 'numero'                             : this.numero,                  
                 'fecha'                              : this.fecha,
+                'info_pedido_cliente'                : this.info_pedido_cliente,
                 'TablaPartesServicios'               : this.TablaPartesServicios,
                 'TablaPartesProductosPorPlacas'      : this.TablaPartesProductosPorPlacas,     
                 'TablaPartesProductosPorCosturas'    : this.TablaPartesProductosPorCosturas,
@@ -651,6 +666,7 @@ export default {
                 'ot'                   : this.otdata, 
                 'numero'                             : this.numero,                  
                 'fecha'                              : this.fecha,
+                'info_pedido_cliente'                : this.info_pedido_cliente,
                 'TablaPartesServicios'               : this.TablaPartesServicios,
                 'TablaPartesProductosPorPlacas'      : this.TablaPartesProductosPorPlacas,     
                 'TablaPartesProductosPorCosturas'    : this.TablaPartesProductosPorCosturas,               

@@ -144,6 +144,7 @@ class CertificadosController extends Controller
         $certificado->ot_id = $request->ot['id'];
         $certificado->fecha = date('Y-m-d',strtotime($request->fecha));
         $certificado->numero = $request->numero;
+        $certificado->info_pedido_cliente = $request->info_pedido_cliente;
         $certificado->user_id = $user_id;
         $certificado->save();
      
