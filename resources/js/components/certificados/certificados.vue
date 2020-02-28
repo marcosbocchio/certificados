@@ -53,17 +53,17 @@
                                     <table class="table table-hover table-striped">
                                     <thead>
                                         <tr>
-                                            <th class="col-md-2">SEL.</th>                                                                
+                                            <th class="col-md-1">SEL.</th>                                                                                                  
                                             <th class="col-md-3">PARTE N°</th>  
                                             <th class="col-md-3">OBRA</th> 
-                                            <th class="col-md-4">FECHA</th>                                      
+                                            <th class="col-md-3">FECHA</th>                                      
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr v-for="(parte,k) in partes" :key="k">
                                             <td>
-                                                <input type="checkbox" id="informe_sel" v-model="partes[k].parte_sel" @change="getParte(k)" @click="seleccinarAnteriores(k)">
-                                            </td>                                                                                          
+                                                <input type="checkbox" id="informe_sel" v-model="partes[k].parte_sel" @change="getPartes(k)">
+                                            </td>                                                                                    
                                             <td>{{ parte.numero_formateado}}</td>
                                             <td>{{ parte.obra}}</td>  
                                             <td>{{ parte.fecha_formateada}}</td>                                                                                                                      
@@ -91,10 +91,13 @@
                                         <table class="table table-hover table-striped">
                                         <thead>
                                             <tr>                                                                                                      
-                                                <th class="col-md-3">PARTE N°</th>  
-                                                <th class="col-md-3">SERVICIO</th> 
+                                                <th class="col-md-2">PARTE N°</th>  
+                                                <th class="col-md-1">FECHA</th>     
+                                                <th class="col-md-1">OBRA</th>     
+                                                <th class="col-md-1">C.</th>          
+                                                <th class="col-md-2">SERVICIO</th> 
                                                 <th class="col-md-3">DESCRIPCIÓN</th>
-                                                <th class="col-md-2">CANTIDAD</th>     
+                                                <th class="col-md-1">CANTIDAD</th>     
                                             <th class="col-md-1">&nbsp;</th>                                                                             
                                             </tr>
                                         </thead>
@@ -102,6 +105,11 @@
                                             <tr v-for="(item,k) in TablaPartesServicios" :key="k" @click="selectPosTablaPartesServicios(k)">                                        
 
                                                 <td v-if="item.visible">{{ item.numero_formateado}}</td>
+                                                <td v-if="item.visible">{{ item.fecha_formateada}}</td>
+                                                <td v-if="item.visible">{{ item.obra}}</td>
+                                                <td  v-if="item.visible">
+                                                  <input type="number" id="nroCombinacion" v-model="TablaPartesServicios[k].nroCombinacion">
+                                                </td>     
                                                 <td v-if="item.visible">{{ item.abreviatura}}</td> 
                                                 <td v-if="item.visible">{{ item.servicio_descripcion}}</td>  
 
@@ -350,30 +358,42 @@ export default {
             });
         },
 
-        seleccinarAnteriores :function(index){
+         getPartes(index){ 
 
-            if(!this.partes[index].parte_sel){
+           if(this.partes[index].parte_sel){               
+                     
+                this.partes.forEach(function(item){
+                    
+                    item.parte_sel = false ;
 
-                if(index > 0){
-
-                    for ( let x = index-1 ; x >= 0; x--) {
-                        
-                        if(!this.partes[x].parte_sel){
-
-                            this.$nextTick(function(){
-
-                                this.partes[x].parte_sel = true;
-                                this.getParte(x);
-
-                            });
-        
-                        }
-                        
-                    }
-
-                }
+                }.bind(this));
+                this.TablaPartesServicios = [];
+                this.TablaPartesProductosPorPlacas = [];
+                this.TablaPartesProductosPorCosturas = [];                  
+                this.seleccionarAnteriores(index);              
+                   
+         
+                
+            }else{
+                    
+                    this.deleteServiciosParte(this.partes[index].id)   
+                    this.deleteProductosParte(this.partes[index].id)                  
+                    
             }
+        },
 
+        seleccionarAnteriores :function(index){                    
+        
+
+            for ( let x = 0 ; x <= index; x++ ) {                          
+
+                this.partes[x].parte_sel = true;                                
+                this.getServiciosParte(this.partes[x].id);
+                this.getProductosParte(this.partes[x].id);                
+                
+            }                      
+              
+         
         },
 
         setCerficadoServicios : function(){
@@ -441,50 +461,93 @@ export default {
 
         },
 
-        getParte : function(index){ 
 
-           if(this.partes[index].parte_sel){               
-              
-                    this.getServiciosParte(this.partes[index].id);
-                    this.getProductosParte(this.partes[index].id);
-            }else{
-                    this.deleteServiciosParte(this.partes[index].id)   
-                    this.deleteProductosParte(this.partes[index].id)                   
+
+        combinarServicios : function(){
+            
+            let index = 0;
+            let contador = 1;
+            let longServicios = this.TablaPartesServicios.length;
+            console.log('entro a combinar,',this.TablaPartesServicios.length);
+
+            this.TablaPartesServicios.forEach(function(item)  {
+                item.nroCombinacion = '';
+            });
+
+            while ((index + 1 <= longServicios - 1)) {
+/*
+                    console.log(this.TablaPartesServicios[index].fecha_formateada);
+                    console.log(this.TablaPartesServicios[index +1].fecha_formateada);
+                    console.log(this.TablaPartesServicios[index].obra);
+                    console.log(this.TablaPartesServicios[index+1].obra);
+                    console.log(this.TablaPartesServicios[index].abreviatura);
+                    console.log(this.TablaPartesServicios[index+1].abreviatura);
+                    console.log(this.TablaPartesServicios[index].combinado_sn);
+                    console.log(this.TablaPartesServicios[index+1].combinado_sn);
+                    console.log('paso el while de combinar, el valor de contador es : ',contador);
+                    console.log('el valor de longServicios es: ' + longServicios);
+*/
+                        console.log('paso el if de combinar');                                 
+                        console.log('el valor de index es:',index);
+                    if((this.TablaPartesServicios[index].fecha_formateada == this.TablaPartesServicios[index + 1].fecha_formateada) &&
+                       (this.TablaPartesServicios[index].obra == this.TablaPartesServicios[index + 1].obra) &&
+                       (this.TablaPartesServicios[index].abreviatura != this.TablaPartesServicios[index + 1].abreviatura) &&
+                       (this.TablaPartesServicios[index].combinado_sn) && (this.TablaPartesServicios[index + 1].combinado_sn) &&
+                       (this.TablaPartesServicios[index].visible) && (this.TablaPartesServicios[index + 1].visible)
+                    ){
+
+                      this.TablaPartesServicios[index].combinacion =   this.TablaPartesServicios[index].abreviatura + "+" + this.TablaPartesServicios[index + 1].abreviatura
+                      this.TablaPartesServicios[index].nroCombinacion = contador ;
+                      this.TablaPartesServicios[index + 1].combinacion =   this.TablaPartesServicios[index].abreviatura + "+" + this.TablaPartesServicios[index + 1].abreviatura
+                      this.TablaPartesServicios[index + 1].nroCombinacion = contador ;
+                      contador++;
+                    
+                      while((index + 1 <= longServicios - 1)&&(this.TablaPartesServicios[index].fecha_formateada == this.TablaPartesServicios[index + 1].fecha_formateada)){
+
+                          index++; 
+
+                      }  
+
+
+                    }
+
+                  index++;
 
             }
-        },
+       },
 
-        getServiciosParte : function(id){
+        async getServiciosParte(id){
 
-            axios.defaults.baseURL = this.url ;
-            var urlRegistros = 'certificados/parte/' + id + '/servicios' + '?api_token=' + Laravel.user.api_token;  
-            axios.get(urlRegistros).then(response =>{
-             
-                let parte_servicios = response.data  
+        axios.defaults.baseURL = this.url ;
+        var urlRegistros = 'certificados/parte/' + id + '/servicios' + '?api_token=' + Laravel.user.api_token;  
+        let res = await axios.get(urlRegistros);
 
-                    parte_servicios.forEach(function(item) {          
+        let parte_servicios = res.data; 
+        parte_servicios.forEach(function(item) {          
 
-                        let cantidad = (Math.round(item.cantidad * 100) / 100).toFixed(2);
-                        this.TablaPartesServicios.push({                           
-                        
-                            parte_id : item.parte_id,
-                            numero_formateado : item.numero_formateado,
-                            unidades_medidas_id : item.unidad_medida_id, 
-                            unidad_medida_codigo:item.unidad_medida_codigo,  
-                            servicio_id : item.servicio_id,
-                            servicio_descripcion : item.servicio_descripcion,
-                            cant_original: cantidad,                       
-                            cant_final: cantidad,   
-                            abreviatura :item.abreviatura,               
-                            visible : true,
-                            combinado_sn :item.combinado_sn
+            let cantidad = (Math.round(item.cantidad * 100) / 100).toFixed(2);
+            this.TablaPartesServicios.push({                           
+            
+                parte_id : item.parte_id,
+                numero_formateado : item.numero_formateado,
+                unidades_medidas_id : item.unidad_medida_id, 
+                unidad_medida_codigo:item.unidad_medida_codigo,  
+                servicio_id : item.servicio_id,
+                servicio_descripcion : item.servicio_descripcion,
+                cant_original: cantidad,                       
+                cant_final: cantidad,   
+                abreviatura :item.abreviatura,               
+                visible : true,
+                nroCombinacion : 0,
+                combinado_sn :item.combinado_sn,
+                combinacion : '',
+                obra : item.obra,
+                fecha_formateada : item.fecha_formateada
 
-                        });             
+            });     
+        }.bind(this));           
+        this.combinarServicios();      
 
-                   }.bind(this));
-        
-             });
-           
         },
 
         getProductosParte : function(id){
@@ -524,8 +587,7 @@ export default {
                             costuras_final:item.cantidad,              
                             visible : true
     
-                        });  
-                        
+                        });                         
 
                     }
 
@@ -536,11 +598,11 @@ export default {
         },
 
         deleteServiciosParte : function(id){
+            
 
             this.TablaPartesServicios = this.TablaPartesServicios.filter(function(item) {
                 return item.parte_id != id; 
-            });
-
+            });                     
         },
 
         
@@ -610,6 +672,7 @@ export default {
 
            this.TablaPartesServicios[index].visible = false;
            this.TablaPartesServicios[index].cant_final=''; 
+           this.combinarServicios();
        },  
 
         Store : function(){

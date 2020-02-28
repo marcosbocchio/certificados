@@ -278,23 +278,29 @@ class CertificadosController extends Controller
 
         $ot = Ots::findOrFail($ot_id);
 
-        $servicios= CertificadoServicios::where('certificado_servicios.certificado_id',$id)
-                                            ->join('partes','partes.id','=','certificado_servicios.parte_id')  
-                                            ->join('servicios','servicios.id','=','certificado_servicios.servicio_id')
-                                            ->selectRaw('certificado_servicios.*,LPAD(partes.id, 4, "0") as numero_formateado,servicios.abreviatura,servicios.descripcion as servicio_descripcion')                                       
-                                            ->get();
+     //   DB::enableQueryLog();
+        $servicios= CertificadoServicios::join('certificados','certificados.id','=','certificado_servicios.certificado_id')
+                                          ->join('ots','ots.id','=','certificados.ot_id')
+                                          ->join('partes','partes.id','=','certificado_servicios.parte_id')  
+                                          ->join('servicios','servicios.id','=','certificado_servicios.servicio_id')                                           
+                                          ->where('certificados.id',$id)
+                                          ->selectRaw('certificado_servicios.*,LPAD(partes.id, 8, "0") as numero_formateado,DATE_FORMAT(partes.fecha,"%d/%m/%Y")as fecha_formateada,
+                                          servicios.abreviatura,servicios.descripcion as servicio_descripcion,(SELECT DISTINCT(informes.obra) from informes WHERE informes.parte_id =partes.id ) as obra')                                       
+                                          ->get();
+
+     //   dd(DB::getQueryLog()); 
 
         $productos_placas=CertificadoProductos::where('certificado_productos.certificado_id',$id)
                                                 ->join('partes','partes.id','=','certificado_productos.parte_id')
                                                 ->whereNotNull('certificado_productos.cm')    
-                                                ->selectRaw('certificado_productos.*,LPAD(partes.id, 4, "0") as numero_formateado')                                       
+                                                ->selectRaw('certificado_productos.*,LPAD(partes.id, 8, "0") as numero_formateado')                                       
                                                 ->get();
 
        
         $productos_costuras=CertificadoProductos::where('certificado_productos.certificado_id',$id)
                                                ->join('partes','partes.id','=','certificado_productos.parte_id')
                                                 ->whereNotNull('certificado_productos.pulgadas')    
-                                                ->selectRaw('certificado_productos.*,LPAD(partes.id, 4, "0") as numero_formateado')                                       
+                                                ->selectRaw('certificado_productos.*,LPAD(partes.id, 8, "0") as numero_formateado')                                       
                                                 ->get();    
 
         return view('certificados.edit', compact('certificado',                       
