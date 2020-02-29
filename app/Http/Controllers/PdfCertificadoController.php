@@ -25,15 +25,14 @@ class PdfCertificadoController extends Controller
         $modalidadCobro = $productoCosturaOt->count() > 0 ? 'COSTURAS' : 'PLACAS';   
         $partes_certificado =DB::select('CALL PartesCertificadoReporte(?)',array($id));      
         $servicios_parte = DB::select('CALL getServiciosCertificados(?,?)',array($id,$estado));
-        $servicios_abreviaturas = $this->convertToarrayServicios($servicios_parte);
+        $servicios_abreviaturas = $this->abreviaturasUnicas($servicios_parte);
+        $servicios_combinaciones = $this->combinacionesUnicas($servicios_parte);
         $productos_parte = DB::select('CALL getProductosCertificados(?,?,?)',array($id,$estado,$modalidadCobro));    
       
-        $productos_unidades_medidas = $this->convertToarrayProductos($productos_parte);     
+        $productos_unidades_medidas = $this->productosUnicos($productos_parte);     
         $obras=[];
-        $obras = $this->getObrasPartes($partes_certificado);
-        $tablas_por_obras = $this->generarTablasPorObras($servicios_parte,$servicios_abreviaturas,$productos_parte,$productos_unidades_medidas,$obras);    
-      //  $fechas_correlativas = $this->generarFechaCorrelativa($partes_certificado);
-       // dd($fechas_correlativas);
+        $obras = $this->obrasUnicas($partes_certificado);
+        $tablas_por_obras = $this->generarTablasPorObras($servicios_parte,$servicios_combinaciones,$productos_parte,$productos_unidades_medidas,$obras);  
         $evaluador = User::find($certificado->firma);
         $pdf = PDF::loadView('reportes.certificados.certificado',compact('fecha','certificado','ot','cliente','contratista','servicios_parte','productos_parte','modalidadCobro','partes_certificado','servicios_abreviaturas','productos_unidades_medidas','evaluador','obras','tablas_por_obras'))->setPaper('a4','landscape')->setWarnings(false);
       
@@ -41,66 +40,74 @@ class PdfCertificadoController extends Controller
 
     }
 
-    public function generarTablasPorObras($servicios_parte,$servicios_abreviaturas,$productos_parte,$productos_unidades_medidas,$obras){
+    public function generarTablasPorObras($servicios_parte,$servicios_combinaciones,$productos_parte,$productos_unidades_medidas,$obras){
         
         $array_obra = [];
         $array_temp =[];    
-     //  dd($obras,$servicios_abreviaturas,$servicios_parte,$productos_parte);
-
+     //  dd($obras,$servicios_combinaciones,$servicios_parte,$productos_parte);
         foreach ($obras as $obra) {    
 
             $objObra = new stdClass();
             $objObra->obra = $obra;
             $array_temp =[];    
             $array_productos = [];
-            foreach ($servicios_abreviaturas as $abreviatura) {                
+
+            foreach ($servicios_combinaciones as $combinacion) {                
 
                 $obj = new stdClass();                
-                
-                
                 $cant_total_servicio = 0;
+
                 foreach ($servicios_parte as $servicio) {                
                     
-                    if( ($servicio->obra == $obra) && ($servicio->abreviatura == $abreviatura)){
+                    if( ($servicio->obra == $obra) && ($servicio->combinacion == $combinacion)){                        
                         
                         $cant_total_servicio = $cant_total_servicio + $servicio->cantidad;
                         
                     }            
                 }                    
                 
-                    $obj->servicio = $abreviatura;
+                    $obj->servicio = $combinacion;
                     $obj->cant_total_servicio = $cant_total_servicio;                    
                     $array_temp[]=$obj;
 
                 }
                 
-            foreach ($productos_unidades_medidas as $unidad_medida) {
+                foreach ($productos_unidades_medidas as $unidad_medida) {
 
-                $objProducto = new stdClass();                    
-                
-                $cant_total_producto = 0;
-                foreach ($productos_parte as $producto) {                
+                    $objProducto = new stdClass();                    
                     
-                    if( ($producto->obra == $obra) && ($producto->unidad_medida_producto == $unidad_medida)){
+                    $cant_total_producto = 0;
+                    foreach ($productos_parte as $producto) {                
                         
-                        $cant_total_producto = $cant_total_producto + $producto->cantidad;
-                        
-                    }            
-                }                    
-                
-                    $objProducto->producto = $unidad_medida;
-                    $objProducto->cant_total_producto = $cant_total_producto;                    
-                    $array_productos[]=$objProducto;                  
-            }          
-                     
-
+                        if( ($producto->obra == $obra) && ($producto->unidad_medida_producto == $unidad_medida)){
+                            
+                            $cant_total_producto = $cant_total_producto + $producto->cantidad;
+                            
+                        }            
+                    }                    
+                    
+                        $objProducto->producto = $unidad_medida;
+                        $objProducto->cant_total_producto = $cant_total_producto;                    
+                        $array_productos[]=$objProducto;                  
+                }             
 
                 $objObra->productos = $array_productos;
                 $objObra->servicios = $array_temp;
                 $array_obra[]= $objObra;
                     
          }
-                
+      
+     // dd($array_obra);  
+
+       foreach ($array_obra as $obra) {
+           
+            foreach($obra->servicios as $servicio){
+
+                $servicio->cant_total_servicio = ($servicio->cant_total_servicio) / (substr_count($servicio->servicio,'+') + 1);
+
+            }
+       }
+     //  dd($array_obra);  
         return $array_obra;
 
     }
@@ -168,7 +175,7 @@ class PdfCertificadoController extends Controller
         return $result;
     }
 
-    public function convertToarrayServicios($servicios_parte){
+    public function abreviaturasUnicas($servicios_parte){
 
         $array_temp = [];
 
@@ -182,7 +189,22 @@ class PdfCertificadoController extends Controller
 
     }
 
-    public function convertToarrayProductos($productos_parte){
+    public function combinacionesUnicas($servicios_parte){
+
+        $array_temp = [];
+
+        foreach ($servicios_parte as $servicio) {
+            
+            $array_temp[] = $servicio->combinacion;
+
+        }
+
+        return array_unique($array_temp);
+
+    }
+    
+
+    public function productosUnicos($productos_parte){
 
         $array_temp = [];
 
@@ -196,7 +218,7 @@ class PdfCertificadoController extends Controller
 
     }
 
-    public function getObrasPartes($partes_certificado){
+    public function obrasUnicas($partes_certificado){
 
         $array_temp = [];
 

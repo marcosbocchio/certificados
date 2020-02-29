@@ -70,13 +70,15 @@ b {
                                 <td rowspan="4" style="text-align: right; width:253px">
                                     <img src="{{ public_path('img/logo-enod-web.jpg')}}" alt="" style="height: 60px; margin-right: 25px;">
                                 </td>   
-                                <td style="font-size: 20px; height: 30px; text-align: center;width:534px;" rowspan="3"><b>CERTIFICADO</b></td>
-                                <td style="font-size: 11px;"><b style="margin-left: 40px"></b></td>                         
+                               
+                                <td style="font-size: 22px; height: 30px; text-align: center;width:534px;" rowspan="2"><b>CERTIFICADO</b></td>
+                                <td style="font-size: 11px;">&nbsp;</td>                         
                             </tr>
                             <tr>
                                 <td style="font-size: 11px;" ><b style="margin-left: 120px" >CERTIFICADO N°: </b>{{FormatearNumeroConCeros($certificado->numero,8)}}</td>                      
                             </tr>
                             <tr>
+                                <td style="font-size: 15px;text-align: center;"><b style="margin-left: 120px"></b>{{ $certificado->titulo }}</td>
                                 <td style="font-size: 11px;"><b style="margin-left: 120px">FECHA: </b>{{ date('d-m-Y', strtotime($certificado->fecha)) }}</td>
                             </tr>
                             <tr>

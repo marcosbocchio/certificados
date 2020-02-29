@@ -25,12 +25,18 @@
                                     <input type="number" v-model="numero_code" class="form-control" id="numero" disabled>
                                 </div>                            
                             </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Título</label>
+                                    <input v-model="titulo" class="form-control" placeholder="" maxlength="25">
+                                </div>
+                            </div>  
 
                             <div class="clearfix"></div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label>Info a Pedido del Cliente</label>
+                                    <label>Información adicional</label>
                                     <textarea v-model="info_pedido_cliente" class="form-control noresize" rows="2" placeholder="" maxlength="100"></textarea>
                                 </div>
                             </div>                    
@@ -88,15 +94,16 @@
                             <div class="box-body">
                                 <div class="col-md-12">
                                     <div class="table-responsive">
-                                        <table class="table table-hover table-striped">
+                                        <table class="table table-hover table-striped table-bordered">
                                         <thead>
                                             <tr>                                                                                                      
-                                                <th class="col-md-2">PARTE N°</th>  
-                                                <th class="col-md-1">FECHA</th>     
+                                                <th class="col-md-1">PARTE N°</th>  
                                                 <th class="col-md-1">OBRA</th>     
-                                                <th class="col-md-1">C.</th>          
                                                 <th class="col-md-2">SERVICIO</th> 
-                                                <th class="col-md-3">DESCRIPCIÓN</th>
+                                                <th class="col-md-4">DESCRIPCIÓN</th>
+                                                <th class="col-md-1">FECHA</th>     
+                                                <th class="col-md-1" >COMBINACIÓN</th>  
+                                                <th class="col-md-1" >&nbsp;</th>                                                      
                                                 <th class="col-md-1">CANTIDAD</th>     
                                             <th class="col-md-1">&nbsp;</th>                                                                             
                                             </tr>
@@ -105,17 +112,35 @@
                                             <tr v-for="(item,k) in TablaPartesServicios" :key="k" @click="selectPosTablaPartesServicios(k)">                                        
 
                                                 <td v-if="item.visible">{{ item.numero_formateado}}</td>
-                                                <td v-if="item.visible">{{ item.fecha_formateada}}</td>
                                                 <td v-if="item.visible">{{ item.obra}}</td>
-                                                <td  v-if="item.visible">
-                                                  <input type="number" id="nroCombinacion" v-model="TablaPartesServicios[k].nroCombinacion">
-                                                </td>     
                                                 <td v-if="item.visible">{{ item.abreviatura}}</td> 
                                                 <td v-if="item.visible">{{ item.servicio_descripcion}}</td>  
 
-                                                <td v-if="item.visible">                                                                                                                                                                     
+                                                <td v-if="item.visible">{{ item.fecha_formateada}}</td>
+                                                <td  v-if="item.visible">
+
+
+                                                    <div class="input-group col-xs-12">                                                      
+                                                        <input type="number" id="nro_combinacion" class="form-control form-group-xs text-center"  maxlength="2" v-model="TablaPartesServicios[k].nro_combinacion" disabled >
+
+                                                        <span class="input-group-btn">
+                                                            <button type="button"  class="btn btn-md btn-default" @click="borrarCombinacion(TablaPartesServicios[k].nro_combinacion)">X</button>
+                                                         
+                                                        </span>
+                                                        
+                                                    </div>                                                     
+                                                </td>
+                                                <td  v-if="item.visible">
+                                                    <span style="display: inline-block;">
+                                                        {{ item.combinacion}}   
+                                                    </span>
+
+                                                </td>                                                   
+                                                   
+                                                   
+                                                <td v-if="item.visible" style="text-align: center;">                                                                                                                                                                     
                                                     <div v-if="indexTablaPartesServicios == k ">      
-                                                        <input type="number" v-model="TablaPartesServicios[k].cant_final" maxlength="10">  
+                                                        <input type="number" v-model="TablaPartesServicios[k].cant_final"  maxlength="2" style="width: 50px;">  
                                                     </div>                                             
                                                     <div v-else>
                                                         {{ item.cant_final }}
@@ -279,6 +304,7 @@ export default {
         en: en,
         es: es,
         numero:'',      
+        titulo :'',
         fecha:new Date(),  
         info_pedido_cliente:'',
         partes:[],
@@ -328,6 +354,7 @@ export default {
 
                 this.fecha  = this.certificado_data.fecha;   
                 this.numero = this.certificado_data.numero;
+                this.titulo = this.certificado_data.titulo;
                 this.info_pedido_cliente = this.certificado_data.info_pedido_cliente;
 
                 this.$nextTick(function(){
@@ -382,18 +409,25 @@ export default {
             }
         },
 
-        seleccionarAnteriores :function(index){                    
+        async  seleccionarAnteriores(index){                    
         
-
+            this.partes[index].parte_sel = false; 
             for ( let x = 0 ; x <= index; x++ ) {                          
 
-                this.partes[x].parte_sel = true;                                
-                this.getServiciosParte(this.partes[x].id);
+                await this.getServiciosParte(this.partes[x].id);
                 this.getProductosParte(this.partes[x].id);                
+                this.partes[x].parte_sel = true;                                
                 
             }                      
-              
+
+            this.completarTitulo(index);
          
+        },
+
+        completarTitulo :  function(index){
+
+           this.titulo = this.partes[0].fecha_formateada + ' - ' + this.partes[index].fecha_formateada ;
+
         },
 
         setCerficadoServicios : function(){
@@ -469,37 +503,29 @@ export default {
             let contador = 1;
             let longServicios = this.TablaPartesServicios.length;
             console.log('entro a combinar,',this.TablaPartesServicios.length);
-
             this.TablaPartesServicios.forEach(function(item)  {
-                item.nroCombinacion = '';
+                item.nro_combinacion = '';
             });
 
             while ((index + 1 <= longServicios - 1)) {
-/*
-                    console.log(this.TablaPartesServicios[index].fecha_formateada);
-                    console.log(this.TablaPartesServicios[index +1].fecha_formateada);
-                    console.log(this.TablaPartesServicios[index].obra);
-                    console.log(this.TablaPartesServicios[index+1].obra);
-                    console.log(this.TablaPartesServicios[index].abreviatura);
-                    console.log(this.TablaPartesServicios[index+1].abreviatura);
-                    console.log(this.TablaPartesServicios[index].combinado_sn);
-                    console.log(this.TablaPartesServicios[index+1].combinado_sn);
-                    console.log('paso el while de combinar, el valor de contador es : ',contador);
-                    console.log('el valor de longServicios es: ' + longServicios);
-*/
-                        console.log('paso el if de combinar');                                 
-                        console.log('el valor de index es:',index);
+
+                    console.log('paso el if de combinar');                                 
+                    console.log('el valor de index es:',index);
+
                     if((this.TablaPartesServicios[index].fecha_formateada == this.TablaPartesServicios[index + 1].fecha_formateada) &&
                        (this.TablaPartesServicios[index].obra == this.TablaPartesServicios[index + 1].obra) &&
                        (this.TablaPartesServicios[index].abreviatura != this.TablaPartesServicios[index + 1].abreviatura) &&
                        (this.TablaPartesServicios[index].combinado_sn) && (this.TablaPartesServicios[index + 1].combinado_sn) &&
                        (this.TablaPartesServicios[index].visible) && (this.TablaPartesServicios[index + 1].visible)
                     ){
-
-                      this.TablaPartesServicios[index].combinacion =   this.TablaPartesServicios[index].abreviatura + "+" + this.TablaPartesServicios[index + 1].abreviatura
-                      this.TablaPartesServicios[index].nroCombinacion = contador ;
-                      this.TablaPartesServicios[index + 1].combinacion =   this.TablaPartesServicios[index].abreviatura + "+" + this.TablaPartesServicios[index + 1].abreviatura
-                      this.TablaPartesServicios[index + 1].nroCombinacion = contador ;
+                      let abreviaturas  = [];
+                      abreviaturas.push(this.TablaPartesServicios[index].abreviatura);
+                      abreviaturas.push(this.TablaPartesServicios[index + 1].abreviatura);                 
+                      abreviaturas.sort(function(a, b){return a.toLowerCase().localeCompare(b.toLowerCase());});                    
+                      this.TablaPartesServicios[index].combinacion =   abreviaturas[1] + " + " + abreviaturas[0]
+                      this.TablaPartesServicios[index].nro_combinacion = contador ;
+                      this.TablaPartesServicios[index + 1].combinacion =   abreviaturas[1] + " + " + abreviaturas[0]
+                      this.TablaPartesServicios[index + 1].nro_combinacion = contador ;
                       contador++;
                     
                       while((index + 1 <= longServicios - 1)&&(this.TablaPartesServicios[index].fecha_formateada == this.TablaPartesServicios[index + 1].fecha_formateada)){
@@ -508,21 +534,48 @@ export default {
 
                       }  
 
-
                     }
 
                   index++;
 
             }
+
+         this.CompletarNoCombinados();
+       },
+
+       CompletarNoCombinados : function(){
+
+        this.TablaPartesServicios.forEach(function(item){
+                if(item.nro_combinacion == ''){
+                    item.combinacion = item.abreviatura;
+                }
+            });  
+       },
+
+       borrarCombinacion : function(nro){
+
+           this.TablaPartesServicios.forEach(function(item){
+
+               if(item.nro_combinacion == nro){
+
+                   item.combinacion = '';
+                   item.nro_combinacion = '';
+               }
+
+           });
+
+           this.CompletarNoCombinados();
+
        },
 
         async getServiciosParte(id){
-
+        
+        console.log('voy a traer los servicios del parte:',id);
         axios.defaults.baseURL = this.url ;
         var urlRegistros = 'certificados/parte/' + id + '/servicios' + '?api_token=' + Laravel.user.api_token;  
         let res = await axios.get(urlRegistros);
 
-        let parte_servicios = res.data; 
+        let parte_servicios = await res.data; 
         parte_servicios.forEach(function(item) {          
 
             let cantidad = (Math.round(item.cantidad * 100) / 100).toFixed(2);
@@ -538,7 +591,7 @@ export default {
                 cant_final: cantidad,   
                 abreviatura :item.abreviatura,               
                 visible : true,
-                nroCombinacion : 0,
+                nro_combinacion : 0,
                 combinado_sn :item.combinado_sn,
                 combinacion : '',
                 obra : item.obra,
@@ -686,7 +739,8 @@ export default {
               url : urlRegistros,    
               data : {     
                 'ot'                                 : this.otdata, 
-                'numero'                             : this.numero,                  
+                'numero'                             : this.numero,     
+                'titulo'                             : this.titulo,             
                 'fecha'                              : this.fecha,
                 'info_pedido_cliente'                : this.info_pedido_cliente,
                 'TablaPartesServicios'               : this.TablaPartesServicios,
@@ -729,6 +783,7 @@ export default {
                 'ot'                   : this.otdata, 
                 'numero'                             : this.numero,                  
                 'fecha'                              : this.fecha,
+                'titulo'                             : this.titulo,
                 'info_pedido_cliente'                : this.info_pedido_cliente,
                 'TablaPartesServicios'               : this.TablaPartesServicios,
                 'TablaPartesProductosPorPlacas'      : this.TablaPartesProductosPorPlacas,     

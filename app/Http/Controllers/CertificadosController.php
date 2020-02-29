@@ -144,6 +144,7 @@ class CertificadosController extends Controller
         $certificado->ot_id = $request->ot['id'];
         $certificado->fecha = date('Y-m-d',strtotime($request->fecha));
         $certificado->numero = $request->numero;
+        $certificado->titulo = $request->titulo;
         $certificado->info_pedido_cliente = $request->info_pedido_cliente;
         $certificado->user_id = $user_id;
         $certificado->save();
@@ -162,6 +163,8 @@ class CertificadosController extends Controller
             $certificadoServicios->servicio_id = $servicio['servicio_id'];
             $certificadoServicios->cant_original = $servicio['cant_original'];
             $certificadoServicios->cant_final = $servicio['cant_final'];
+            $certificadoServicios->nro_combinacion = $servicio['nro_combinacion'];
+            $certificadoServicios->combinacion = $servicio['combinacion'];
             $certificadoServicios->save();
 
             (new \App\Http\Controllers\PartesController)->setCertificadoId($certificado->id,$servicio['parte_id']);
@@ -278,17 +281,20 @@ class CertificadosController extends Controller
 
         $ot = Ots::findOrFail($ot_id);
 
-     //   DB::enableQueryLog();
+      //  DB::enableQueryLog();
         $servicios= CertificadoServicios::join('certificados','certificados.id','=','certificado_servicios.certificado_id')
                                           ->join('ots','ots.id','=','certificados.ot_id')
                                           ->join('partes','partes.id','=','certificado_servicios.parte_id')  
-                                          ->join('servicios','servicios.id','=','certificado_servicios.servicio_id')                                           
+                                          ->join('servicios','servicios.id','=','certificado_servicios.servicio_id')     
+                                          ->join('ot_servicios','ot_servicios.servicio_id','=','servicios.id')                                      
                                           ->where('certificados.id',$id)
-                                          ->selectRaw('certificado_servicios.*,LPAD(partes.id, 8, "0") as numero_formateado,DATE_FORMAT(partes.fecha,"%d/%m/%Y")as fecha_formateada,
+                                          ->whereRaw('ot_servicios.ot_id = ots.id')
+                                          ->selectRaw('certificado_servicios.*,LPAD(partes.id, 8, "0") as numero_formateado,DATE_FORMAT(partes.fecha,"%d/%m/%Y")as fecha_formateada,ot_servicios.combinado_sn,
                                           servicios.abreviatura,servicios.descripcion as servicio_descripcion,(SELECT DISTINCT(informes.obra) from informes WHERE informes.parte_id =partes.id ) as obra')                                       
+                                          ->orderBy('certificado_servicios.id','ASC')
                                           ->get();
 
-     //   dd(DB::getQueryLog()); 
+       // dd(DB::getQueryLog()); 
 
         $productos_placas=CertificadoProductos::where('certificado_productos.certificado_id',$id)
                                                 ->join('partes','partes.id','=','certificado_productos.parte_id')
