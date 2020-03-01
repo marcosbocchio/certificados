@@ -159,7 +159,7 @@
                         </div>
                     </div>
 
-                    <div v-show="TablaPartesProductosPorCosturas.length">
+                    <div v-show="TablaPartesProductosPorCosturas.length && modo_cobro=='COSTURAS'">
                         <div class="box box-custom-enod">
                             <div class="box-header with-border">
                                 <h3 class="box-title">Productos</h3>
@@ -202,7 +202,7 @@
                         </div>
                     </div>
 
-                    <div v-show="TablaPartesProductosPorPlacas.length">
+                    <div v-show="TablaPartesProductosPorPlacas.length && modo_cobro=='PLACAS'">
                         <div class="box box-custom-enod">
                             <div class="box-header with-border">
                                 <h3 class="box-title">Productos</h3>
