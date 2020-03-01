@@ -82,7 +82,7 @@
                                     </td>   
                                     <td> {{ot_informe.obra}}</td>  
                                     <td> {{ot_informe.name}}</td>     
-                                    <td> {{ot_informe.fecha}}</td>              
+                                    <td> {{ot_informe.fecha_formateada}}</td>              
                                     <td v-if="!ot_informe.importable_sn" width="10px"> 
                                         <button   @click.prevent="EditInforme(ot_informe.id)" class="btn btn-warning btn-sm" title="Editar" :disabled="!$can('T_informes_edita')"><span class="fa fa-edit"></span></button>
                                     </td>
