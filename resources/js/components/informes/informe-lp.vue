@@ -880,12 +880,12 @@ data() {return {
           }}
           
       
-        ).then(response => {
-        
-          toastr.success('informe N°' + this.numero_inf + ' fue actualizado con éxito ');
-          let informe = response.data;      
+        ).then( () => {    
+
+          toastr.success('informe N°' + this.numero_inf + ' fue actualizado con éxito ');               
           window.open( this.AppUrl + '/api/pdf/informe/lp/' + this.informedata.id,'_blank');
           window.location.href = this.AppUrl + '/informes/ot/' + this.otdata.id;
+
         }).catch(error => {
                
             this.errors = error.response.data.errors;

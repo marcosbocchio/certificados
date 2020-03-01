@@ -299,7 +299,7 @@ b {
                     @foreach ($productos_parte as $item_productos_parte)
 
                         @if (($item_productos_unidades_medidas == $item_productos_parte->unidad_medida_producto)&&($item_productos_parte->parte_numero == $item_partes_certificado->parte_numero))
-                                 <td style="font-size: 12px;" class="bordered">{{$item_productos_parte->cantidad}}</td>
+                                 <td style="font-size: 12px;" class="bordered">{{ $item_productos_parte->cantidad }}</td>
                                  {{ $existeProductoEnParte = true }}
                         @endif
 
@@ -314,13 +314,60 @@ b {
 
                 @endforeach   
 
-                
+
                 @for ( $x=$cant_productos_parte ;  $x < 17 ; $x++)
                     <td style="font-size: 12px;" class="bordered">&nbsp;</td>
-                @endfor      
+                @endfor     
+              </tr>     
 
-              </tr>         
+              <!-- TERMINÓ DE PONER LOS PRODUCTOS -->
+
             @endforeach
+
+              <!-- AGREGO LOS TOTALES -->
+              
+                <tr>
+
+                    <td style="font-size: 12px;" colspan='3' class="bordered">Total :</td>
+
+                    <!--SERVICIOS -->
+                
+                    @foreach ($servicios_abreviaturas as $item_servicios_abreviaturas)
+                        
+                        {{ $total_servicio = 0 }}
+
+                        @foreach ($servicios_parte as $item_servicios_parte)
+                            @if ($item_servicios_abreviaturas == $item_servicios_parte->abreviatura)
+                                {{ $total_servicio = $total_servicio + $item_servicios_parte->cantidad}}
+                            @endif
+                        @endforeach
+                        <td style="font-size: 12px;" class="bordered">{{ $total_servicio }}</td>
+                    @endforeach
+
+                    @for ( $x=$cant_servicios_parte  ;  $x < 9 ; $x++)
+                        <td style="font-size: 12px;" class="bordered">&nbsp;</td>
+                    @endfor
+
+              
+                    <!--PRODUCTOS -->
+                
+                    @foreach ($productos_unidades_medidas as $item_productos_unidades_medidas)
+                        
+                        {{ $total_producto = 0 }}
+
+                        @foreach ($productos_parte as $item_productos_parte)
+                            @if ($item_productos_unidades_medidas == $item_productos_parte->unidad_medida_producto)
+                                {{ $total_producto = $total_producto + $item_productos_parte->cantidad}}
+                            @endif
+                        @endforeach
+                        <td style="font-size: 12px;" class="bordered">{{ $total_producto }}</td>
+                    @endforeach
+
+                    @for ( $x=$cant_productos_parte  ;  $x < 17 ; $x++)
+                        <td style="font-size: 12px;" class="bordered">&nbsp;</td>
+                    @endfor
+
+                </tr>
 
         </tbody>
     </table>
