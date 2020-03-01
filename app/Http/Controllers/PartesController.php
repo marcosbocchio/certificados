@@ -363,11 +363,11 @@ class PartesController extends Controller
                                
 
         $informes_importados = DB::table('parte_detalles')
-                                        ->join('informes_importados','informes_importados.id','=','parte_detalles.informe_importado_id')          
-                                        ->join('metodo_ensayos','metodo_ensayos.id','=','informes_importados.metodo_ensayo_id')                                  
-                                        ->where('parte_detalles.parte_id',$id)
-                                        ->selectRaw('parte_detalles.* , 0 as informe_sel,CONCAT(metodo_ensayos.metodo,LPAD(informes_importados.numero, 3, "0")) as numero_formateado,DATE_FORMAT(informes_importados.fecha,"%d/%m/%Y")as fecha_formateada,metodo_ensayos.metodo as metodo')
-                                        ->get();
+                                ->join('informes_importados','informes_importados.id','=','parte_detalles.informe_importado_id')          
+                                ->join('metodo_ensayos','metodo_ensayos.id','=','informes_importados.metodo_ensayo_id')                                  
+                                ->where('parte_detalles.parte_id',$id)
+                                ->selectRaw('parte_detalles.* , 0 as informe_sel,CONCAT(metodo_ensayos.metodo,LPAD(informes_importados.numero, 3, "0")) as numero_formateado,DATE_FORMAT(informes_importados.fecha,"%d/%m/%Y")as fecha_formateada,metodo_ensayos.metodo as metodo')
+                                ->get();
 
         $servicios = DB::table('parte_servicios')
                                 ->join('servicios','servicios.id','=','parte_servicios.servicio_id')

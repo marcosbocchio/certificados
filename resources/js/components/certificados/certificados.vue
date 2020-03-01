@@ -28,7 +28,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Título</label>
-                                    <input v-model="titulo" class="form-control" placeholder="" maxlength="25">
+                                    <input v-model="titulo" class="form-control" placeholder="" maxlength="40">
                                 </div>
                             </div>  
 
