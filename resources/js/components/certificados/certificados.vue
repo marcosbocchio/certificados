@@ -750,9 +750,12 @@ export default {
           }
           
           }).then(response => {
-          this.response = response.data
+
+          let certificado = response.data;
           toastr.success('Certificado N°' +  this.numero_code + ' fue creado con éxito ');
-           console.log(response.data);  
+          window.open( this.AppUrl + '/api/pdf/certificado/' + certificado.id + '/final','_blank');
+          window.location.href = this.AppUrl + '/certificados/ot/' + this.otdata.id;
+         
         }).catch(error => {
                
                this.errors = error.response.data.errors;

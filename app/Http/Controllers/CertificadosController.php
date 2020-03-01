@@ -98,6 +98,8 @@ class CertificadosController extends Controller
           throw $e;      
           
         }
+
+        return $certificado;
     }
 
     /**
