@@ -783,7 +783,7 @@ export default {
               method: 'put',
               url : urlRegistros,    
               data : {
-                'ot'                   : this.otdata, 
+                'ot'                                 : this.otdata, 
                 'numero'                             : this.numero,                  
                 'fecha'                              : this.fecha,
                 'titulo'                             : this.titulo,
@@ -793,10 +793,12 @@ export default {
                 'TablaPartesProductosPorCosturas'    : this.TablaPartesProductosPorCosturas,               
           }}
            
-        ).then(response => {
-          this.response = response.data
+        ).then( () => {
+
           toastr.success('Certificado N°' +  this.numero_code + ' fue actualizado con éxito ');
-           console.log(response.data);  
+          window.open( this.AppUrl + '/api/pdf/certificado/' + this.certificado_data.id + '/final','_blank');
+          window.location.href = this.AppUrl + '/certificados/ot/' + this.otdata.id;
+
         }).catch(error => {
                
                this.errors = error.response.data.errors;

@@ -873,7 +873,7 @@ export default {
           toastr.success('informe N°' + this.numero_inf + ' fue creado con éxito ');
           window.open( this.AppUrl + '/api/pdf/informe/pm/' + informe.id,'_blank');
           window.location.href = this.AppUrl + '/informes/ot/' + this.otdata.id;
-          
+
         }).catch(error => {
                
                this.errors = error.response.data.errors;
@@ -947,10 +947,10 @@ export default {
           }}
           
       
-        ).then(response => {
-          this.response = response.data
-          toastr.success('informe N°' + this.numero_inf + ' fue actualizado con éxito ');
-       
+        ).then( () => {
+          toastr.success('informe N°' + this.numero_inf + ' fue actualizado con éxito ');               
+          window.open( this.AppUrl + '/api/pdf/informe/pm/' + this.informedata.id,'_blank');
+          window.location.href = this.AppUrl + '/informes/ot/' + this.otdata.id;
         }).catch(error => {
                
                this.errors = error.response.data.errors;

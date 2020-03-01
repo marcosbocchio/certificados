@@ -842,7 +842,7 @@ data() {return {
               method: 'put',
               url : urlRegistros,    
               data : {
-               'ot'              : this.otdata,
+                'ot'              : this.otdata,
                 'obra'            : this.obra,
                 'ejecutor_ensayo' : this.ejecutor_ensayo,  
                 'metodo_ensayo'   : this.metodo,  
@@ -881,9 +881,11 @@ data() {return {
           
       
         ).then(response => {
-          this.response = response.data
+        
           toastr.success('informe N°' + this.numero_inf + ' fue actualizado con éxito ');
-       
+          let informe = response.data;      
+          window.open( this.AppUrl + '/api/pdf/informe/lp/' + this.informedata.id,'_blank');
+          window.location.href = this.AppUrl + '/informes/ot/' + this.otdata.id;
         }).catch(error => {
                
             this.errors = error.response.data.errors;

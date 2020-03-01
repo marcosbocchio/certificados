@@ -1121,9 +1121,12 @@ export default {
               'riesgos'       : this.inputsRiesgos
             }
           }         
-          ).then(response => {
-          this.response = response
-         toastr.success('OT N° ' + this.ot + ' fue editada con éxito ');
+          ).then( () => {
+       
+            toastr.success('OT N° ' + this.ot + ' fue editada con éxito ');
+            window.open( this.AppUrl + '/api/pdf/ot/' + this.otdata.id,'_blank');
+            window.location.href = this.AppUrl;
+
         }).catch(error => {
                
                this.errors = error.response.data.errors;

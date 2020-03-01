@@ -515,10 +515,12 @@ export default {
           }}
           
       
-        ).then(response => {
-          this.response = response.data
-          toastr.success('Remito N° ' +  this.prefijo + '-' +this.numero + ' fue actualizado con éxito ');
-       console.log(response.data);  
+        ).then( () => {
+
+          toastr.success('Remito N° ' +  this.prefijo + '-' + this.numero + ' fue actualizado con éxito ');
+          window.open( this.AppUrl + '/api/pdf/remito/' + this.remitodata.id,'_blank');
+          window.location.href = this.AppUrl + '/remitos/ot/' + this.otdata.id;
+
         }).catch(error => {
                
                this.errors = error.response.data.errors;

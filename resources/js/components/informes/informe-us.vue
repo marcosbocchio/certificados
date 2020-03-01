@@ -1863,8 +1863,10 @@ export default {
           
       
         ).then(response => {
-          this.response = response.data
-          toastr.success('informe N°' + this.numero_inf + ' fue actualizado con éxito ');
+
+          toastr.success('informe N°' + this.numero_inf + ' fue actualizado con éxito ');               
+          window.open( this.AppUrl + '/api/pdf/informe/us/' + this.informedata.id,'_blank');
+          window.location.href = this.AppUrl + '/informes/ot/' + this.otdata.id;
        
         }).catch(error => {
                
