@@ -325,6 +325,7 @@ export default {
     },
 
       mounted : function() {    
+
         this.getModalidadCobro();
 
         this.getNumeroCertificado();
@@ -609,7 +610,7 @@ export default {
                 parte_productos.forEach(function(item) {
 
                     let cantidad = (Math.round(item.cantidad * 100) / 100).toFixed(2);
-                    console.log('modalidad de cobro:' , this.modo_cobro);
+                  //  console.log('modalidad de cobro:' , this.modo_cobro);
                     if(this.modo_cobro=='PLACAS'){
 
                         this.TablaPartesProductosPorPlacas.push({                           
