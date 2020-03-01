@@ -327,8 +327,11 @@ b {
               <!-- AGREGO LOS TOTALES -->
               
                 <tr>
-
-                    <td style="font-size: 12px;" colspan='3' class="bordered">Total :</td>
+                    @if (!$ot->obra)
+                        <td style="font-size: 12px;" colspan='3' class="bordered">Total </td>       
+                    @else
+                         <td style="font-size: 12px;" colspan='2' class="bordered">Total </td>    
+                    @endif
 
                     <!--SERVICIOS -->
                 
