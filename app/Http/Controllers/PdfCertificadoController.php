@@ -29,8 +29,7 @@ class PdfCertificadoController extends Controller
         $servicios_combinaciones = $this->combinacionesUnicas($servicios_parte);
         $productos_parte = DB::select('CALL getProductosCertificados(?,?,?)',array($id,$estado,$modalidadCobro));    
       
-        $productos_unidades_medidas = $this->productosUnicos($productos_parte);     
-        dd($productos_unidades_medidas);
+        $productos_unidades_medidas = $this->productosUnicos($productos_parte);            
         $obras=[];
         $obras = $this->obrasUnicas($partes_certificado);
         $tablas_por_obras = $this->generarTablasPorObras($servicios_parte,$servicios_combinaciones,$productos_parte,$productos_unidades_medidas,$obras);  

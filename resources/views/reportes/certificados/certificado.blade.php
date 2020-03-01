@@ -242,8 +242,8 @@ b {
                <th style="font-size: 11px;" class="bordered">&nbsp;</th>
             @endfor
             
-            @foreach ($productos_parte as $producto)
-                <th style="font-size: 12px;" class="bordered">{{ $producto->unidad_medida_producto }}</th>
+            @foreach ($productos_unidades_medidas as $item)
+                <th style="font-size: 12px;" class="bordered">{{ $item }}</th>
             @endforeach
 
             @for ($x =$cant_productos_parte ; $x <17 ; $x++)
@@ -294,19 +294,19 @@ b {
             <!-- INSERTO LOS PRODUCTOS EN LA TABLA --> 
           
                 @foreach ($productos_unidades_medidas as $item_productos_unidades_medidas)
-                    {{ $existeProdutoEnParte = false }}
+                    {{ $existeProductoEnParte = false }}
 
                     @foreach ($productos_parte as $item_productos_parte)
 
                         @if (($item_productos_unidades_medidas == $item_productos_parte->unidad_medida_producto)&&($item_productos_parte->parte_numero == $item_partes_certificado->parte_numero))
                                  <td style="font-size: 12px;" class="bordered">{{$item_productos_parte->cantidad}}</td>
-                                 {{ $existeProdutoEnParte = true }}
+                                 {{ $existeProductoEnParte = true }}
                         @endif
 
 
                     @endforeach
 
-                    @if (!$existeProdutoEnParte)
+                    @if (!$existeProductoEnParte)
                         
                         <td style="font-size: 12px;" class="bordered">&nbsp;</td>
 
