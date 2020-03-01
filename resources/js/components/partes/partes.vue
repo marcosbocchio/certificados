@@ -1805,10 +1805,13 @@ export default {
     
           }
           
-          }).then(response => {
-          this.response = response.data
-          toastr.success('Parte Diario con fecha' +  this.fecha + ' fue creado con éxito ');
-           console.log(response.data);  
+          }).then(response => {      
+                 
+          let parte = response.data;
+          toastr.success('Parte Diario con fecha' +  this.fecha + ' fue creado con éxito ');        
+          window.open( this.AppUrl + '/api/pdf/parte/' + parte.id + '/final','_blank');
+          window.location.href = this.AppUrl + '/partes/ot/' + this.otdata.id;
+
         }).catch(error => {
                
                this.errors = error.response.data.errors;

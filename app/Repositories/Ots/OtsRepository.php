@@ -34,9 +34,7 @@ class OtsRepository extends BaseRepository
   }
 
   public function store( $request)
-  {
-
-   
+  {  
 
     $ot = $this->getModel();
     $servicios = $request->servicios;
@@ -66,6 +64,7 @@ class OtsRepository extends BaseRepository
       
     }
 
+    return $ot;
 
   }
 

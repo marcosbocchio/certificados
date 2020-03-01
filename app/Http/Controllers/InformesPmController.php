@@ -71,6 +71,8 @@ class InformesPmController extends Controller
           throw $e;      
           
         }
+
+        return $informe;
     }
 
     public function update(InformePmRequest $request, $id){

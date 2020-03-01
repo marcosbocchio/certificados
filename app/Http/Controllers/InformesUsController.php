@@ -94,6 +94,8 @@ class InformesUsController extends Controller
           throw $e;      
           
         }
+
+        return $informe;
     }
 
     public function update(InformeUsRequest $request, $id){

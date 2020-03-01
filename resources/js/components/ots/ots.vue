@@ -661,7 +661,7 @@ export default {
     },
     computed :{
 
-        ...mapState(['url','provincias','localidades','contratistas'])
+        ...mapState(['AppUrl','url','provincias','localidades','contratistas'])
      },
     
 
@@ -1058,8 +1058,11 @@ export default {
           
       
         ).then(response => {
-          this.response = response.data
+
+          let ot = response.data;
           toastr.success('OT N° ' + this.ot + ' fue creada con éxito ');
+          window.open( this.AppUrl + '/api/pdf/ot/' + ot.id,'_blank');
+          window.location.href = this.AppUrl;
           console.log(response.data);
         }).catch(error => {
                

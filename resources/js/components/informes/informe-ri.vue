@@ -1380,9 +1380,12 @@ export default {
                 
             
                 ).then(response => {
-                this.response = response.data
-                toastr.success('informe N°' + this.numero_inf + ' fue creado con éxito ');
-                console.log(response);
+
+                    let informe = response.data;
+                    toastr.success('informe N°' + this.numero_inf + ' fue creado con éxito ');
+                    window.open( this.AppUrl + '/api/pdf/informe/ri/' + informe.id,'_blank');
+                    window.location.href = this.AppUrl + '/informes/ot/' + this.otdata.id;
+
                 }).catch(error => {
                     
                     this.errors = error.response.data.errors;

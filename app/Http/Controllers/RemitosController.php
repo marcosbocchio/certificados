@@ -111,6 +111,8 @@ class RemitosController extends Controller
           throw $e;      
           
         }
+
+        return $remito;
     }
 
     public function saveRemito($request,$remito){

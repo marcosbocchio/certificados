@@ -44,6 +44,8 @@ class InformesRiRepository extends BaseRepository
       throw $e;      
       
     }
+
+    return $informe;
    
   }
 

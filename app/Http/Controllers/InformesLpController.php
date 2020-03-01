@@ -87,6 +87,8 @@ class InformesLpController extends Controller
           throw $e;      
           
         }
+
+        return $informe;
     }
 
     public function saveInformeLp($request,$informe,$informeLp){    

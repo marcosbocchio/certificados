@@ -807,9 +807,12 @@ data() {return {
           }
           
           }).then(response => {
-          this.response = response.data
+         
+          let informe = response.data;
           toastr.success('informe N°' + this.numero_inf + ' fue creado con éxito ');
-           console.log(response.data);  
+          window.open( this.AppUrl + '/api/pdf/informe/lp/' + informe.id,'_blank');
+          window.location.href = this.AppUrl + '/informes/ot/' + this.otdata.id;
+
         }).catch(error => {
                
                this.errors = error.response.data.errors;

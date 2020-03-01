@@ -119,6 +119,8 @@ class PartesController extends Controller
           throw $e;      
           
         }
+
+        return $parte;
     }
 
     public function saveResponsables($responsables, $parte){

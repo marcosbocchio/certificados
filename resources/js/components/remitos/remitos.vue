@@ -468,9 +468,12 @@ export default {
           }
           
           }).then(response => {
-          this.response = response.data
+
+          let remito = response.data;
           toastr.success('Remito N° ' +  this.prefijo + '-' + this.numero + ' fue creado con éxito ');
-           console.log(response.data);  
+          window.open( this.AppUrl + '/api/pdf/remito/' + remito.id,'_blank');
+          window.location.href = this.AppUrl + '/remitos/ot/' + this.otdata.id;
+    
         }).catch(error => {
                
                this.errors = error.response.data.errors;
