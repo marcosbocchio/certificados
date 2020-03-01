@@ -321,11 +321,11 @@ export default {
     created : function() {
 
         this.CargaDeDatos();  
-        this.getModalidadCobro();
 
     },
 
       mounted : function() {    
+        this.getModalidadCobro();
 
         this.getNumeroCertificado();
        
@@ -451,7 +451,7 @@ export default {
              var urlRegistros = 'partes/ot/' + this.otdata.id + '/certificado/'+ this.certificado_data.id + '/pendientes_editables_certificado' + '?api_token=' + Laravel.user.api_token;        
              axios.get(urlRegistros).then(response =>{
              this.partes = JSON.parse(JSON.stringify(response.data));   
-             
+
                  this.servicios_data.forEach(function(item){
 
                      if(this.partes.map(x => x.id).indexOf(item.parte_id) !== -1){
