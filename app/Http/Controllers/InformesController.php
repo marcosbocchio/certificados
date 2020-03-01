@@ -52,7 +52,8 @@ class InformesController extends Controller
 
           return DB::table('informes_view')
                      ->where('ot_id',$id) 
-                     ->orderBy('fecha','DESC')                           
+                     ->orderBy('fecha','DESC')
+                     ->orderBy('id','DESC')                   
                      ->paginate(10);
       
     }
