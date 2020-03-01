@@ -321,13 +321,14 @@ export default {
     created : function() {
 
         this.CargaDeDatos();  
+        this.getModalidadCobro();
 
     },
 
       mounted : function() {    
 
         this.getNumeroCertificado();
-        this.getModalidadCobro();
+       
 
       },       
       
@@ -449,11 +450,8 @@ export default {
              axios.defaults.baseURL = this.url ;
              var urlRegistros = 'partes/ot/' + this.otdata.id + '/certificado/'+ this.certificado_data.id + '/pendientes_editables_certificado' + '?api_token=' + Laravel.user.api_token;        
              axios.get(urlRegistros).then(response =>{
-             console.log('certificados pendientes y editables')   
-             console.log(response.data)   
              this.partes = JSON.parse(JSON.stringify(response.data));   
-
-
+             
                  this.servicios_data.forEach(function(item){
 
                      if(this.partes.map(x => x.id).indexOf(item.parte_id) !== -1){
@@ -502,15 +500,13 @@ export default {
             let index = 0;
             let contador = 1;
             let longServicios = this.TablaPartesServicios.length;
-            console.log('entro a combinar,',this.TablaPartesServicios.length);
             this.TablaPartesServicios.forEach(function(item)  {
                 item.nro_combinacion = '';
             });
 
             while ((index + 1 <= longServicios - 1)) {
 
-                    console.log('paso el if de combinar');                                 
-                    console.log('el valor de index es:',index);
+ 
 
                     if((this.TablaPartesServicios[index].fecha_formateada == this.TablaPartesServicios[index + 1].fecha_formateada) &&
                        (this.TablaPartesServicios[index].obra == this.TablaPartesServicios[index + 1].obra) &&
@@ -570,7 +566,6 @@ export default {
 
         async getServiciosParte(id){
         
-        console.log('voy a traer los servicios del parte:',id);
         axios.defaults.baseURL = this.url ;
         var urlRegistros = 'certificados/parte/' + id + '/servicios' + '?api_token=' + Laravel.user.api_token;  
         let res = await axios.get(urlRegistros);
@@ -609,14 +604,12 @@ export default {
             var urlRegistros = 'certificados/parte/' + id + '/modo_cobro/'+ this.modo_cobro +'/productos' + '?api_token=' + Laravel.user.api_token;  
             axios.get(urlRegistros).then(response =>{ 
 
-                console.log(urlRegistros);
-                console.log(response.data);
                 let parte_productos = response.data    
                 
                 parte_productos.forEach(function(item) {
 
                     let cantidad = (Math.round(item.cantidad * 100) / 100).toFixed(2);
-                    
+                    console.log('modalidad de cobro:' , this.modo_cobro);
                     if(this.modo_cobro=='PLACAS'){
 
                         this.TablaPartesProductosPorPlacas.push({                           
