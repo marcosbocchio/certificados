@@ -214,7 +214,7 @@ b {
     <table width="100%" class="bordered" style="text-align: center;padding: 0 -3px 0 -3px;" >
         <thead>
             <tr>
-              {{ $unidad_medida = ($modalidadCobro == 'COSTURAS') ? '"' : 'CM'}}
+              {{ $unidad_medida = ($modalidadCobro == 'COSTURAS') ? '"' : 'Cm'}}
                <th style="font-size: 12px; width:60px" class="bordered"  rowspan="2">Día</th>
                <th style="font-size: 12px;width:60px" class="bordered" rowspan="2">Parte</th>
                @if(!$ot->obra)
@@ -294,7 +294,11 @@ b {
                     @foreach ($productos_parte as $item_productos_parte)
 
                         @if (($item_productos_unidades_medidas == $item_productos_parte->unidad_medida_producto)&&($item_productos_parte->parte_numero == $item_partes_certificado->parte_numero))
-                                 <td style="font-size: 12px;" class="bordered">{{ $item_productos_parte->cantidad }}</td>
+                                 <td style="font-size: 12px;" class="bordered">{{ $item_productos_parte->cantidad }}
+                                 @if ($modalidadCobro == 'COSTURAS')
+                                     {{ $unidad_medida}}
+                                 @endif
+                                 </td>
                                  {{ $existeProductoEnParte = true }}
                         @endif
 
@@ -358,7 +362,11 @@ b {
                                 {{ $total_producto = $total_producto + $item_productos_parte->cantidad}}
                             @endif
                         @endforeach
-                        <td style="font-size: 12px;" class="bordered">{{ $total_producto }}</td>
+                        <td style="font-size: 12px;" class="bordered">{{ $total_producto }}
+                           @if ($modalidadCobro == 'COSTURAS')
+                             {{ $unidad_medida}}
+                           @endif
+                        </td>
                     @endforeach
 
                     @for ( $x=$cant_productos_parte  ;  $x < 17 ; $x++)
@@ -416,7 +424,7 @@ b {
                                             @endif
 
                                         @if (isset($tablas_por_obras[$x*3]->productos[$z]))
-                                        <td style="font-size: 12px;" class="bordered">&nbsp;{{$tablas_por_obras[$x*3]->productos[$z]->producto }} : {{$tablas_por_obras[$x*3]->productos[$z]->cant_total_producto }} {{ $unidad_medida}}</td>                                  
+                                        <td style="font-size: 12px;" class="bordered">&nbsp;{{$tablas_por_obras[$x*3]->productos[$z]->producto }} {{ $unidad_medida}} : {{$tablas_por_obras[$x*3]->productos[$z]->cant_total_producto }}</td>                                  
                                             @else    
                                             <td style="font-size: 12px;" class="bordered">&nbsp;</td>
                                             @endif
@@ -458,7 +466,7 @@ b {
                                             @endif
 
                                         @if (isset($tablas_por_obras[($x*3)+1]->productos[$z]))
-                                        <td style="font-size: 12px;" class="bordered">&nbsp;{{$tablas_por_obras[($x*3)+1]->productos[$z]->producto }} : {{$tablas_por_obras[($x*3)+1]->productos[$z]->cant_total_producto }} {{ $unidad_medida}}</td>                                  
+                                        <td style="font-size: 12px;" class="bordered">&nbsp;{{$tablas_por_obras[($x*3)+1]->productos[$z]->producto }} {{ $unidad_medida}} : {{$tablas_por_obras[($x*3)+1]->productos[$z]->cant_total_producto }}</td>                                  
                                             @else    
                                             <td style="font-size: 12px;" class="bordered">&nbsp;</td>
                                             @endif
@@ -500,7 +508,7 @@ b {
                                             @endif
 
                                         @if (isset($tablas_por_obras[($x*3)+2]->productos[$z]))
-                                        <td style="font-size: 12px;" class="bordered">&nbsp;{{$tablas_por_obras[($x*3)+2]->productos[$z]->producto }} : {{$tablas_por_obras[($x*3)+2]->productos[$z]->cant_total_producto }} {{ $unidad_medida}}</td>                                  
+                                        <td style="font-size: 12px;" class="bordered">&nbsp;{{$tablas_por_obras[($x*3)+2]->productos[$z]->producto }} {{ $unidad_medida}} : {{$tablas_por_obras[($x*3)+2]->productos[$z]->cant_total_producto }}</td>                                  
                                             @else    
                                             <td style="font-size: 12px;" class="bordered">&nbsp;</td>
                                             @endif
