@@ -27,8 +27,7 @@ class PdfCertificadoController extends Controller
         $servicios_parte = DB::select('CALL getServiciosCertificados(?,?)',array($id,$estado));
         $servicios_abreviaturas = $this->abreviaturasUnicas($servicios_parte);
         $servicios_combinaciones = $this->combinacionesUnicas($servicios_parte);
-        $productos_parte = DB::select('CALL getProductosCertificados(?,?,?)',array($id,$estado,$modalidadCobro));    
-     // dd($modalidadCobro);
+        $productos_parte = DB::
         $productos_unidades_medidas = $this->productosUnicos($productos_parte);            
         $obras=[];
         $obras = $this->obrasUnicas($partes_certificado);

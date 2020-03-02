@@ -8,7 +8,7 @@
 <style>  
 
 @page {    
-        margin: 201px 15px 150px 15px !important;
+        margin: 198px 15px 150px 15px !important;
         padding: 0px 0px 0px 0px !important;
        }
 
@@ -19,7 +19,7 @@ body {
 
 header {
     position:fixed;
-    top: -162px;    
+    top: -159px;    
 }
 
 footer {
@@ -135,17 +135,11 @@ b {
                 </td>
             </tr>     
             <tr>
-                <td class="bordered">
-                    <table width="100%" style="background:#D8D8D8;text-align: left;font-size: 13px;">
-                        <tbody>    
-                            <tr>
-                                <td >
-                                     {{$certificado->info_pedido_cliente}} &nbsp;
-                                </td>
-                            </tr>  
-                        </tbody>
-                    </table>
-                </td>  
+
+                <td style="background:#D8D8D8;text-align: left;font-size: 13px;" class="bordered">
+                        {{$certificado->info_pedido_cliente}} &nbsp;
+                </td>
+    
             </tr>    
         </tbody>
     </table>

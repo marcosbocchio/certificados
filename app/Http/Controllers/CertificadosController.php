@@ -257,11 +257,11 @@ class CertificadosController extends Controller
         // SI LA OT TIENE UN PRODUCTO RALACIONADO A PLACAS DEFINIDO POR " (PULGADAS) SE COBRA POR COSTURAS, SINO SE COBRA POR PLACAS
 
         return Productos::join('ot_productos','ot_productos.producto_id','=','productos.id')       
-                               ->join('unidades_medidas','unidades_medidas.id','=','productos.unidades_medida_id')                        
-                               ->Where('ot_productos.ot_id',$ot_id)                               
-                               ->Where('relacionado_a_placas_sn',1)
-                               ->Where('unidades_medidas.codigo','"')
-                               ->get();
+                            ->join('unidades_medidas','unidades_medidas.id','=','productos.unidades_medida_id')                        
+                            ->Where('ot_productos.ot_id',$ot_id)                               
+                            ->Where('relacionado_a_placas_sn',1)
+                            ->Where('unidades_medidas.codigo','"')
+                            ->get();
        
     }
 
