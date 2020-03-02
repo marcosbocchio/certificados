@@ -22,13 +22,13 @@ class PdfCertificadoController extends Controller
         $contratista = Contratistas::find($ot->contratista_id);
         $fecha = date("Y/m/d H:i:s");     
         $productoCosturaOt = (new \App\Http\Controllers\CertificadosController)->getModalidadCobro($certificado->ot_id);
-        $modalidadCobro = $productoCosturaOt->count() > 0 ? 'COSTURAS' : 'PLACAS';   
+        $modalidadCobro = ( $productoCosturaOt->count() > 0 ) ? 'COSTURAS' : 'PLACAS';   
         $partes_certificado =DB::select('CALL PartesCertificadoReporte(?)',array($id));      
         $servicios_parte = DB::select('CALL getServiciosCertificados(?,?)',array($id,$estado));
         $servicios_abreviaturas = $this->abreviaturasUnicas($servicios_parte);
         $servicios_combinaciones = $this->combinacionesUnicas($servicios_parte);
         $productos_parte = DB::select('CALL getProductosCertificados(?,?,?)',array($id,$estado,$modalidadCobro));    
-      
+     // dd($modalidadCobro);
         $productos_unidades_medidas = $this->productosUnicos($productos_parte);            
         $obras=[];
         $obras = $this->obrasUnicas($partes_certificado);
