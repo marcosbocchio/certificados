@@ -399,9 +399,7 @@ export default {
                 this.TablaPartesServicios = [];
                 this.TablaPartesProductosPorPlacas = [];
                 this.TablaPartesProductosPorCosturas = [];                  
-                this.seleccionarAnteriores(index);              
-                   
-         
+                this.seleccionarAnteriores(index);  
                 
             }else{
                     
@@ -822,4 +820,11 @@ export default {
 .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
      background-color: #eee;
 }
+
+input[type='number']::-webkit-inner-spin-button, 
+input[type='number']::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 </style>
