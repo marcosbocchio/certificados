@@ -363,9 +363,6 @@ b {
                             @endif
                         @endforeach
                         <td style="font-size: 12px;" class="bordered">{{ $total_producto }}
-                           @if ($modalidadCobro == 'COSTURAS')
-                             {{ $unidad_medida}}
-                           @endif
                         </td>
                     @endforeach
 
