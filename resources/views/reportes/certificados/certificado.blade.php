@@ -78,8 +78,8 @@ b {
                                 <td style="font-size: 11px;" ><b style="margin-left: 120px" >CERTIFICADO N°: </b>{{FormatearNumeroConCeros($certificado->numero,8)}}</td>                      
                             </tr>
                             <tr>
-                                <td style="font-size: 15px;text-align: center;"><b style="margin-left: 120px"></b>{{ $certificado->titulo }}</td>
-                                <td style="font-size: 11px;"><b style="margin-left: 120px">FECHA: </b>{{ date('d-m-Y', strtotime($certificado->fecha)) }}</td>
+                                <td style="font-size: 15px;text-align: center;height: 20px;"><b style="margin-left: 120px"></b>{{ $certificado->titulo }}</td>
+                                <td style="font-size: 11px;height: 15px;"><b style="margin-left: 120px">FECHA: </b>{{ date('d-m-Y', strtotime($certificado->fecha)) }}</td>
                             </tr>
                             <tr>
                                 <td style="font-size: 11px;"><b style="margin-left: 120px"></b></td>                     
@@ -108,7 +108,7 @@ b {
                                         </span>
                                     </td>                                     
                                 
-                                    <td style="font-size: 11px;width: 220px">
+                                    <td style="font-size: 11px;width: 200px">
                                         @if($contratista)
                                             <b>CONTRATISTA: </b>{{$contratista->nombre}}
                                         @endif                         
@@ -124,7 +124,7 @@ b {
 
                                     @if($ot->obra)
 
-                                         <td style="font-size: 11px;width: 90px;"><b>OBRA: </b>{{$ot->obra}}</td>
+                                         <td style="font-size: 11px;"><b>OBRA: </b>{{$ot->obra}}</td>
 
                                     @endif
                                     <td style="font-size: 11px;"><b>OT N°: </b>{{$ot->numero}}</td>  
@@ -238,7 +238,11 @@ b {
             @endfor
             
             @foreach ($productos_unidades_medidas as $item)
-                <th style="font-size: 12px;" class="bordered">{{ $item }}</th>
+                <th style="font-size: 12px;" class="bordered">{{ $item }}
+                    @if ($modalidadCobro == 'COSTURAS')
+                        {{ $unidad_medida}}
+                    @endif
+                </th>
             @endforeach
 
             @for ($x =$cant_productos_parte ; $x <17 ; $x++)
@@ -294,11 +298,7 @@ b {
                     @foreach ($productos_parte as $item_productos_parte)
 
                         @if (($item_productos_unidades_medidas == $item_productos_parte->unidad_medida_producto)&&($item_productos_parte->parte_numero == $item_partes_certificado->parte_numero))
-                                 <td style="font-size: 12px;" class="bordered">{{ $item_productos_parte->cantidad }}
-                                 @if ($modalidadCobro == 'COSTURAS')
-                                     {{ $unidad_medida}}
-                                 @endif
-                                 </td>
+                                 <td style="font-size: 12px;" class="bordered">{{ $item_productos_parte->cantidad }} </td>
                                  {{ $existeProductoEnParte = true }}
                         @endif
 
@@ -530,7 +530,7 @@ b {
 
     if ( isset($pdf) ) {
         $x = 702;
-        $y = 77;
+        $y = 81;
         $text = "PÁGINA: {PAGE_NUM} de {PAGE_COUNT}";
         $font = $fontMetrics->get_font("serif", "bold");
         $size = 9;
