@@ -5,7 +5,6 @@
       <table class="table table-hover table-striped">
         <thead>
           <tr>
-            <th>ID</th>
             <th>Código</th>
             <th>Descripción</th>
             <th colspan="2">&nbsp;</th>
@@ -13,7 +12,6 @@
         </thead>
         <tbody>
           <tr v-for="registro in registros" :key="registro.id">
-            <td width="10px">{{ registro.id }}</td>
             <td>{{ registro.codigo }}</td>
             <td>{{ registro.descripcion }}</td>
              <td width="10px">

@@ -5,8 +5,7 @@
       <div class="table-responsive">
         <table class="table table-hover table-striped">
           <thead>
-            <tr>
-              <th>ID</th>           
+            <tr>            
               <th>Nombre</th>
               <th>Razon Social</th>
               <th>Email</th>
@@ -15,8 +14,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="registro in registros" :key="registro.id">
-              <td width="10px">{{ registro.id }}</td>            
+            <tr v-for="registro in registros" :key="registro.id">                
               <td>{{ registro.nombre_fantasia }}</td>
               <td>{{ registro.razon_social }}</td>
               <td>{{ registro.email }}</td>

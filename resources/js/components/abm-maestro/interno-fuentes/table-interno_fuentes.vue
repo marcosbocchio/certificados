@@ -4,8 +4,7 @@
     <div class="table-responsive">
       <table class="table table-hover table-striped">
         <thead>
-          <tr>
-                     
+          <tr>                     
             <th>N° Serie</th>
             <th>Fuente</th>
             <th>curie</th> 
