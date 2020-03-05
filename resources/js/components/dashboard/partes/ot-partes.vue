@@ -51,6 +51,8 @@
                                     <td v-if="!ot_parte.firma" width="10px">
                                         <button @click="firmar(k)" class="btn btn-default btn-sm" title="Firmar" :disabled="!$can('T_partes_edita')"><span class="glyphicon glyphicon-pencil"></span></button>                                       
                                    </td>
+                                   <td v-else><a class="btn btn-default btn-sm" title="Firmado"><img width="16px" :src="AppUrl + '/img/firma.png'"></a></td>
+
                                </tr>                      
                             </tbody>
                         </table>                     
@@ -114,11 +116,11 @@ export default {
         firmar : function(index){
 
             axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'partes/' + this.ot_partes[index].id + '/firmar';                      
+                var urlRegistros = 'partes/' + this.ot_partes.data[index].id + '/firmar';                      
                 axios.put(urlRegistros).then(response => {
                   console.log(response.data); 
-                  this.ot_partes[index].firma = response.data.firma;    
-                  toastr.success('El Parte N° ' +response.data.id + ' fue firmado con éxito');                
+                  this.ot_partes.data[index].firma = response.data.firma;    
+                  toastr.success('El Parte N° ' + response.data.id + ' fue firmado con éxito');                
                   
                 }).catch(error => {                   
                     this.errors = error.response.data.errors;

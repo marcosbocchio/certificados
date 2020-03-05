@@ -330,7 +330,7 @@ td b,td span {
                         @endif 
                       </td>
                       <td style="font-size: 12px; width:80px;text-align: center;" >{{$ot_producto->cantidad_productos}}</td>
-                      <td style="font-size: 12px; width:80px;text-align: center;" >Unidad</td>
+                      <td style="font-size: 12px; width:80px;text-align: center;" >{{$ot_producto->unidad_medida_codigo}}</td>
                   </tr>               
 
                   @endforeach  

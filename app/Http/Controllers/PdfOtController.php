@@ -32,21 +32,20 @@ class PdfOtController extends Controller
         $cliente = Clientes::find($ot->cliente_id);   
         $localidad = Localidades::find($ot->localidad_id);
         $provincia = Provincias::find($localidad->provincia_id); 
-        $geo = 'https://www.google.com/maps/search/?api=1&query='.$ot->lat.','.$ot->lon;
-      
+        $geo = 'https://www.google.com/maps/search/?api=1&query='.$ot->lat.','.$ot->lon;      
         
         $MetodoEnsayosRepository = new MetodoEnsayosRepository();
         $metodos_ensayos = (new MetodoEnsayosController($MetodoEnsayosRepository))->otMetodosEnsayo($ot->id);
         
         $ot_servicios = (new OtServiciosController)->show($ot->id);
         $ot_productos = (new OtProductosController)->show($ot->id);
+      //  dd($ot_servicios,$ot_productos);
         $ot_epps = (new OtEppsController)->show($ot->id);
         $ot_riesgos = (new OtRiesgosController)->show($ot->id);
         $ot_calidad_placas = (new OtCalidadPlacasController)->show($ot->id);    
         $evaluador = User::find($ot->firma);  
         $contratista = Contratistas::find($ot->contratista_id);
 
-      //  dd($ot_servicios);
         $pdf = \PDF::loadView('reportes.ots.ot',compact('ot',
                                                         'cliente',
                                                         'contratista',
@@ -60,11 +59,11 @@ class PdfOtController extends Controller
                                                         'contacto3',
                                                         'responsable_ot',
                                                         'generador_ot',
-                                                         'localidad',
-                                                         'provincia',
-                                                         'metodos_ensayos',
-                                                         'geo',
-                                                         'evaluador'))->setPaper('a4','portrait')->setWarnings(false);
+                                                        'localidad',
+                                                        'provincia',
+                                                        'metodos_ensayos',
+                                                        'geo',
+                                                        'evaluador'))->setPaper('a4','portrait')->setWarnings(false);
 
         return $pdf->stream();
         

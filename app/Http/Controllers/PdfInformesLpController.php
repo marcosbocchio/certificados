@@ -55,7 +55,7 @@ class PdfInformesLpController extends Controller
          $iluminacion = Iluminaciones::findOrFail($informe_lp->iluminacion_id);        
          $evaluador = User::find($informe->firma);
          $contratista = Contratistas::find($ot->contratista_id);
-
+        dd($evaluador);
          $detalles =  DB::select('SELECT 
                                 detalles_lp.pieza as pieza,
                                 detalles_lp.cm as cm,

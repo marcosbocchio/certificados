@@ -14,7 +14,7 @@
           </div>
           <div class="clearfix"></div>
 
-           <div v-show="$can('T_doc_edita')">
+           <div v-show="$can('T_doc_actualiza')">
                 <div class="box box-custom-enod">
                     <div class="box-body">  
                         <div class="form-group">

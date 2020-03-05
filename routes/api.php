@@ -226,7 +226,7 @@ Route::group(['middleware' => 'auth:api'], function()
     
 
     //certificados
-
+    Route::put('certificados/{id}/firmar', 'CertificadosController@firmar');
     Route::get('certificados/ot/{ot_id}/total','CertificadosController@CertificadosTotal');
     Route::get('certificados/ot/{ot_id}/paginate', 'CertificadosController@paginate');       
     Route::resource('certificados', 'CertificadosController');

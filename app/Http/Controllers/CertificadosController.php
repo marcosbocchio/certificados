@@ -337,4 +337,21 @@ class CertificadosController extends Controller
     {
         //
     }
+
+    public function firmar($id){
+
+        $user_id = null;
+        
+        if (Auth::check())
+        {
+                $user_id = $userId = Auth::id();    
+        }
+
+        $certificado = Certificados::findOrFail($id);
+        $certificado->firma =  $user_id;
+        $certificado->save();
+
+        return $certificado;
+
+    } 
 }

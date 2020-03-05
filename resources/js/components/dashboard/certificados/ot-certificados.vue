@@ -49,6 +49,8 @@
                                     <td v-if="!ot_certificado.firma" width="10px">
                                         <button @click="firmar(k)" class="btn btn-default btn-sm" title="Firmar" :disabled="!$can('T_certif_edita')"><span class="glyphicon glyphicon-pencil"></span></button>                                       
                                    </td>
+                                   <td v-else><a class="btn btn-default btn-sm" title="Firmado"><img width="16px" :src="AppUrl + '/img/firma.png'"></a></td>
+
                                </tr>                      
                             </tbody>
                         </table>                     
@@ -109,6 +111,32 @@ export default {
 
             window.location.href = this.AppUrl + '/area/enod/ot/' + this.ot_id_data + '/certificado/' + id +'/edit'
         },
+
+
+        firmar : function(index){
+
+            axios.defaults.baseURL = this.url ;
+                var urlRegistros = 'certificados/' + this.ot_certificados.data[index].id + '/firmar';                      
+                axios.put(urlRegistros).then(response => {
+                  console.log(response.data); 
+                  this.ot_certificados.data[index].firma = response.data.firma;    
+                  toastr.success('El Certificado N° ' + this.ot_certificados.data[index].numero_formateado + ' fue firmado con éxito');                
+                  
+                }).catch(error => {                   
+                    this.errors = error.response.data.errors;
+                    $.each( this.errors, function( key, value ) {
+                        toastr.error(value);
+                        console.log( key + ": " + value );
+                    });
+
+                     if((typeof(this.errors)=='undefined') && (error)){
+
+                     toastr.error("Ocurrió un error al procesar la solicitud");                     
+                  
+                }
+                });
+
+        }
         
     },
 

@@ -58,8 +58,7 @@ class PdfInformesPmController extends Controller
          $iluminacion = Iluminaciones::findOrFail($informe_pm->iluminacion_id);
          $evaluador = User::find($informe->firma);
          $contratista = Contratistas::find($ot->contratista_id);
-
-       // dd($desmagnetizacion_sn);
+         
          $detalles =  DB::select('SELECT 
                                 detalles_pm.pieza as pieza,
                                 detalles_pm.cm as cm,
@@ -71,9 +70,7 @@ class PdfInformesPmController extends Controller
                                 INNER JOIN informes_pm ON detalles_pm.informe_pm_id = informes_pm.id
                                 LEFT JOIN detalles_pm_referencias ON detalles_pm.detalle_pm_referencia_id = detalles_pm_referencias.id
                                 WHERE
-                                informes_pm.id =:id',['id' => $informe_pm->id ]);
-        
-        
+                                informes_pm.id =:id',['id' => $informe_pm->id ]);       
  
            $pdf = PDF::loadView('reportes.informes.pm',compact('ot',
                                                                 'norma_ensayo',
