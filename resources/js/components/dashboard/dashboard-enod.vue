@@ -11,7 +11,7 @@
           <div class="icon">
             <i class="fa ion-person-add"></i>
           </div>
-            <a v-if="$can('T_operador_acceder')"  :href="AppUrl + '/operadores/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a v-if="ot_id_selected > 0 && $can('T_operador_acceder')"  :href="AppUrl + '/operadores/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
             <a v-else href="#" class="small-box-footer" >More info <i class="fa fa-arrow-circle-right"></i></a>   
         </div>
       </div>
@@ -27,7 +27,7 @@
           <div class="icon">
             <i class="fa fa-wrench"></i>
           </div>
-            <a v-if="$can('T_equipos_acceder')"  :href="AppUrl + '/interno_equipos/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a v-if="ot_id_selected > 0 && $can('T_equipos_acceder')"  :href="AppUrl + '/interno_equipos/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
             <a v-else href="#" class="small-box-footer" >More info <i class="fa fa-arrow-circle-right"></i></a>
         </div>
       </div>
@@ -44,7 +44,7 @@
           <div class="icon">
             <i class="fas fa-radiation-alt"></i>
           </div>
-              <a v-if="$can('T_proc_acceder')"  :href="AppUrl + '/procedimientos/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+              <a v-if="ot_id_selected > 0 && $can('T_proc_acceder')"  :href="AppUrl + '/procedimientos/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
               <a v-else href="#" class="small-box-footer" >More info <i class="fa fa-arrow-circle-right"></i></a>
         </div>
       </div>
@@ -60,7 +60,7 @@
           <div class="icon">
               <i class="fa fa-file-pdf-o"></i>
           </div>
-            <a v-if="$can('T_doc_acceder')" :href="AppUrl + '/documentaciones/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a v-if="ot_id_selected > 0 && $can('T_doc_acceder')" :href="AppUrl + '/documentaciones/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
             <a v-else href="#" class="small-box-footer" >More info <i class="fa fa-arrow-circle-right"></i></a>
         </div>
       </div>
@@ -77,7 +77,7 @@
           <div class="icon">
             <i class="fa fa-clipboard"></i>
           </div>
-            <a v-if="$can('T_remitos_acceder')" :href="AppUrl + '/remitos/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a v-if="ot_id_selected > 0 && $can('T_remitos_acceder')" :href="AppUrl + '/remitos/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
             <a v-else href="#" class="small-box-footer" >More info <i class="fa fa-arrow-circle-right"></i></a>
         </div>
       </div>
@@ -94,7 +94,7 @@
           <div class="icon">
               <i class="fa fa-list-alt"></i>
           </div>        
-            <a v-if="$can('T_informes_acceder')"  :href="AppUrl + '/informes/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a v-if="ot_id_selected > 0 && $can('T_informes_acceder')"  :href="AppUrl + '/informes/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
             <a v-else href="#" class="small-box-footer" >More info <i class="fa fa-arrow-circle-right"></i></a>
         </div>
       </div>
@@ -110,7 +110,7 @@
           <div class="icon">
             <i class="fa fa-calendar-o"></i>
           </div>
-            <a v-if="$can('T_partes_acceder')"  :href="AppUrl + '/partes/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a v-if="ot_id_selected > 0 && $can('T_partes_acceder')"  :href="AppUrl + '/partes/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
             <a v-else href="#" class="small-box-footer" >More info <i class="fa fa-arrow-circle-right"></i></a>          
         </div>
       </div>
@@ -126,7 +126,7 @@
           <div class="icon">
             <i class="fa fa-check-square-o"></i>
           </div>
-            <a v-if="$can('T_certif_acceder')"  :href="AppUrl + '/certificados/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a v-if="ot_id_selected > 0 && $can('T_certif_acceder')"  :href="AppUrl + '/certificados/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
             <a v-else href="#" class="small-box-footer" >More info <i class="fa fa-arrow-circle-right"></i></a>     
         </div>
       </div>      
