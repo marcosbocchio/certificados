@@ -98,7 +98,7 @@ class StorageController extends Controller
       if ($request->hasFile('firma-digital')){
 
       
-          $path = Storage::disk('public')->putFile('storage/storage/firmas-digitales',$request->file('firma-digital'));  
+          $path = Storage::disk('public')->putFile('storage/firmas-digitales',$request->file('firma-digital'));  
     
         return $path;
       }
