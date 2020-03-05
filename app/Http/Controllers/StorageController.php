@@ -7,6 +7,24 @@ use Illuminate\Support\Facades\Storage;
 
 class StorageController extends Controller
 {
+
+   /* ver con tiempo usar esta funcion para todos los archivos */
+
+    public function storage(Request $request){
+    
+      if ($request->hasFile('archivo')){
+      
+          $path = Storage::disk('public')->put($request->path_storage,$request->file('archivo'));  
+    
+        return $path;
+      }
+      else
+      {
+        return "Seleccione un archivo";
+      } 
+     
+    }
+
     public function saveReferencia(Request $request){
 
     

@@ -79,7 +79,13 @@ export default {
             required : false,   
             default :'',       
           },
-
+/*
+          path_storage: {
+            type : String,
+            required : true,   
+            default :'',       
+          },
+*/
           mostrar_formatos_soportados :{
 
              type: Boolean,
@@ -94,6 +100,8 @@ export default {
             default:false,
 
           }
+
+
        
       },
    
@@ -234,10 +242,10 @@ export default {
               let settings = { headers: { 'content-type': 'multipart/form-data' }, onUploadProgress: function( progressEvent ) {
                                                                                     this.uploadPercentage = parseInt( Math.round( ( progressEvent.loaded * 100 ) / progressEvent.total ) );
                                                                                     }.bind(this) }
-               const fd = new FormData();
-               
-               fd.append('archivo',this.selectedFile);
-              
+               const fd = new FormData();               
+               fd.append('archivo',this.selectedFile);              
+              // fd.append('path',this.path_storage);
+
                axios.defaults.baseURL = this.url;     
                var url = 'storage/' + this.ruta;
                console.log(fd);

@@ -88,11 +88,12 @@ export default {
 
         options: {
             
-        layout: {
-            height: 20,
-            width: 150,    
-            verticalTextAlign: 74,        
-            }
+            layout: {
+                height: 20,
+                width: 150,    
+                verticalTextAlign: 74,    
+                progressPadding: 0,               
+                },    
         }  
             
       }

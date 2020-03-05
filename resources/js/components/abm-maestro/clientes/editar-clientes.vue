@@ -273,12 +273,13 @@ export default {
          indexDetalle:0,
 
         options: {
-            
-            layout: {
+
+           layout: {
                 height: 20,
                 width: 150,    
-                verticalTextAlign: 74,        
-                }
+                verticalTextAlign: 74,    
+                progressPadding: 0,               
+                },         
             }         
          }
     

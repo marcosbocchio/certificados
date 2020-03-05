@@ -122,8 +122,9 @@ export default {
             layout: {
                 height: 20,
                 width: 150,    
-                verticalTextAlign: 74,        
-                }
+                verticalTextAlign: 74,    
+                progressPadding: 0,               
+                },    
             }
 
         }
