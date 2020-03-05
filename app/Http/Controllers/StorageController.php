@@ -30,7 +30,7 @@ class StorageController extends Controller
     
       if ($request->hasFile('image')){
       
-          $path = Storage::disk('public')->put('referencias',$request->file('image'));  
+          $path = Storage::disk('public')->putFile('storage/referencias',$request->file('image'));  
     
         return $path;
       }
@@ -47,7 +47,7 @@ class StorageController extends Controller
       if ($request->hasFile('documento')){
 
       
-          $path = Storage::disk('public')->putFile('documentaciones',$request->file('documento'));  
+          $path = Storage::disk('public')->putFile('storage/documentaciones',$request->file('documento'));  
     
         return $path;
       }
@@ -64,7 +64,7 @@ class StorageController extends Controller
       if ($request->hasFile('logo-cliente')){
 
       
-          $path = Storage::disk('public')->putFile('logos-clientes',$request->file('logo-cliente'));  
+          $path = Storage::disk('public')->putFile('storage/logos-clientes',$request->file('logo-cliente'));  
     
         return $path;
       }
@@ -81,7 +81,7 @@ class StorageController extends Controller
       if ($request->hasFile('logo-contratista')){
 
       
-          $path = Storage::disk('public')->putFile('logos-contratistas',$request->file('logo-contratista'));  
+          $path = Storage::disk('public')->putFile('storage/logos-contratistas',$request->file('logo-contratista'));  
     
         return $path;
       }
@@ -98,7 +98,7 @@ class StorageController extends Controller
       if ($request->hasFile('firma-digital')){
 
       
-          $path = Storage::disk('public')->putFile('firmas-digitales',$request->file('firma-digital'));  
+          $path = Storage::disk('public')->putFile('storage/storage/firmas-digitales',$request->file('firma-digital'));  
     
         return $path;
       }
@@ -115,7 +115,7 @@ class StorageController extends Controller
       if ($request->hasFile('placas')){
 
       
-          $path = Storage::disk('public')->putFile('placas',$request->file('placas'));  
+          $path = Storage::disk('public')->putFile('storage/placas',$request->file('placas'));  
     
         return $path;
       }
@@ -132,7 +132,7 @@ class StorageController extends Controller
       if ($request->hasFile('archivo')){
 
       
-          $path = Storage::disk('public')->putFile('calibraciones_us',$request->file('archivo'));  
+          $path = Storage::disk('public')->putFile('storage/calibraciones_us',$request->file('archivo'));  
     
         return $path;
       }
@@ -149,7 +149,7 @@ class StorageController extends Controller
       if ($request->hasFile('archivo')){
 
       
-          $path = Storage::disk('public')->putFile('indicaciones_us',$request->file('archivo'));  
+          $path = Storage::disk('public')->putFile('storage/indicaciones_us',$request->file('archivo'));  
     
         return $path;
       }
@@ -166,7 +166,7 @@ class StorageController extends Controller
       if ($request->hasFile('archivo')){
 
       
-          $path = Storage::disk('public')->putFile('informes_importados',$request->file('archivo'));  
+          $path = Storage::disk('public')->putFile('storage/informes_importados',$request->file('archivo'));  
     
         return $path;
       }
