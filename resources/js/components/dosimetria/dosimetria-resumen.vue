@@ -124,7 +124,7 @@
                                                     <popper trigger="hover" :options="{placement: 'top'}">
                                                         <div class="popper" style="background-color:#ECF0F6;" >
                                                             <div style="width: 200px;">
-                                                                <strong style="float: left;">Fecha Estado : </strong> {{ item.FEM1 }}<br>
+                                                                <strong style="float: left;">Fecha Devolución : </strong> {{ item.FEM1 }}<br>
                                                                 <strong style="float: left;">Fecha Envío : </strong>  {{ item.FENEM1 }}
                                                             </div>        
                                                          </div>
@@ -141,7 +141,7 @@
                                                     <popper trigger="hover" :options="{placement: 'top'}">
                                                         <div class="popper" style="background-color:#ECF0F6;" >
                                                             <div style="width: 200px;">
-                                                                <strong style="float: left;">Fecha Estado : </strong> {{ item.FEM2}}<br>
+                                                                <strong style="float: left;">Fecha Devolución : </strong> {{ item.FEM2}}<br>
                                                                 <strong style="float: left;">Fecha Envío : </strong> {{item.FENEM2}}
                                                             </div>        
                                                          </div>
@@ -159,7 +159,7 @@
                                                     <popper trigger="hover" :options="{placement: 'top'}">
                                                         <div class="popper" style="background-color:#ECF0F6;" >
                                                             <div style="width: 200px;">
-                                                                <strong style="float: left;">Fecha Estado : </strong> {{ item.FEM3}}<br>
+                                                                <strong style="float: left;">Fecha Devolución : </strong> {{ item.FEM3}}<br>
                                                                 <strong style="float: left;">Fecha Envío : </strong> {{item.FENEM3}}
                                                             </div>        
                                                          </div>
@@ -176,7 +176,7 @@
                                                     <popper trigger="hover" :options="{placement: 'top'}">
                                                         <div class="popper" style="background-color:#ECF0F6;" >
                                                             <div style="width: 200px;">
-                                                                <strong style="float: left;">Fecha Estado : </strong> {{ item.FEM4}}<br>
+                                                                <strong style="float: left;">Fecha Devolución : </strong> {{ item.FEM4}}<br>
                                                                 <strong style="float: left;">Fecha Envío : </strong> {{item.FENEM4}}
                                                             </div>        
                                                          </div>
@@ -192,7 +192,7 @@
                                                     <popper trigger="hover" :options="{placement: 'top'}">
                                                         <div class="popper" style="background-color:#ECF0F6;" >
                                                             <div style="width: 200px;">
-                                                                <strong style="float: left;">Fecha Estado : </strong> {{ item.FEM5}} <br>
+                                                                <strong style="float: left;">Fecha Devolución : </strong> {{ item.FEM5}} <br>
                                                                 <strong style="float: left;">Fecha Envío : </strong> {{item.FENEM5}}
                                                             </div>        
                                                          </div>
@@ -209,7 +209,7 @@
                                                <popper trigger="hover" :options="{placement: 'top'}">
                                                 <div class="popper" style="background-color:#ECF0F6;" >
                                                     <div style="width: 200px;">
-                                                        <strong style="float: left;">Fecha Estado : </strong> {{ item.FEM6}}<br>
+                                                        <strong style="float: left;">Fecha Devolución : </strong> {{ item.FEM6}}<br>
                                                         <strong style="float: left;">Fecha Envío : </strong> {{item.FENEM6}}
                                                     </div>        
                                                  </div>
@@ -226,7 +226,7 @@
                                                     <popper trigger="hover" :options="{placement: 'top'}">
                                                         <div class="popper" style="background-color:#ECF0F6;" >
                                                             <div style="width: 200px;">
-                                                                <strong style="float: left;">Fecha Estado : </strong> {{ item.FEM7}}<br>
+                                                                <strong style="float: left;">Fecha Devolución : </strong> {{ item.FEM7}}<br>
                                                                 <strong style="float: left;">Fecha Envío : </strong> {{item.FENEM7}}
                                                             </div>        
                                                          </div>
@@ -242,7 +242,7 @@
                                                     <popper trigger="hover" :options="{placement: 'top'}">
                                                         <div class="popper" style="background-color:#ECF0F6;" >
                                                             <div style="width: 200px;">
-                                                                <strong style="float: left;">Fecha Estado : </strong> {{ item.FEM8}}<br>
+                                                                <strong style="float: left;">Fecha Devolución : </strong> {{ item.FEM8}}<br>
                                                                 <strong style="float: left;">Fecha Envío : </strong> {{item.FENEM8}}
                                                             </div>        
                                                          </div>
@@ -259,7 +259,7 @@
                                                     <popper trigger="hover" :options="{placement: 'top'}">
                                                         <div class="popper" style="background-color:#ECF0F6;" >
                                                             <div style="width: 200px;">
-                                                                <strong style="float: left;">Fecha Estado : </strong> {{ item.FEM9}}<br>
+                                                                <strong style="float: left;">Fecha Devolución : </strong> {{ item.FEM9}}<br>
                                                                 <strong style="float: left;">Fecha Envío : </strong> {{item.FENEM9}}
                                                             </div>        
                                                          </div>
@@ -275,7 +275,7 @@
                                                     <popper trigger="hover" :options="{placement: 'top'}">
                                                         <div class="popper" style="background-color:#ECF0F6;" >
                                                             <div style="width: 200px;">
-                                                                <strong style="float: left;">Fecha Estado : </strong> {{ item.FEM10}}<br>
+                                                                <strong style="float: left;">Fecha Devolución : </strong> {{ item.FEM10}}<br>
                                                                 <strong style="float: left;">Fecha Envío : </strong> {{item.FENEM10}}
                                                             </div>        
                                                          </div>
@@ -291,7 +291,7 @@
                                                     <popper trigger="hover" :options="{placement: 'top'}">
                                                         <div class="popper" style="background-color:#ECF0F6;" >
                                                             <div style="width: 200px;">
-                                                                <strong style="float: left;">Fecha Estado : </strong> {{ item.FEM11}}<br>
+                                                                <strong style="float: left;">Fecha Devolución : </strong> {{ item.FEM11}}<br>
                                                                 <strong style="float: left;">Fecha Envío : </strong> {{item.FENEM11}}
                                                             </div>        
                                                          </div>
@@ -307,7 +307,7 @@
                                                     <popper trigger="hover" :options="{placement: 'top'}">
                                                         <div class="popper" style="background-color:#ECF0F6;" >
                                                             <div style="width: 200px;">
-                                                                <strong style="float: left;">Fecha Estado : </strong> {{ item.FEM12}}<br>
+                                                                <strong style="float: left;">Fecha Devolución : </strong> {{ item.FEM12}}<br>
                                                                 <strong style="float: left;">Fecha Envío : </strong> {{item.FENEM12}}
                                                             </div>        
                                                          </div>
