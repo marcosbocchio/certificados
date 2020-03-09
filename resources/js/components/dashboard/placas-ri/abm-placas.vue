@@ -352,9 +352,8 @@ export default {
 
 <style scoped>
 
-.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
-     background-color: #eee;
-}
-
+    .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+        background-color: #eee;
+    }
 
 </style>

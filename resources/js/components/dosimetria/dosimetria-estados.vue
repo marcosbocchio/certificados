@@ -40,9 +40,9 @@
                                         <tr>                                     
                                             <th class="col-md-4">OPERADOR</th>
                                             <th class="col-md-1">FILM</th>
-                                            <th class="col-md-3" style="text-align:center;" >FECHA ENVÍO</th>
-                                            <th class="col-md-4" style="text-align:center;" >ESTADO</th> 
-                                                        
+                                            <th class="col-md-2" style="text-align:center;" >FECHA ENVÍO</th>
+                                            <th class="col-md-2" style="text-align:center;" >ESTADO</th>  
+                                            <th class="col-md-2" style="text-align:center;" >FECHA DEVOLUCIÓN</th>                                                       
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -54,14 +54,13 @@
                                                 <td v-if="(!filtro(k))" bgcolor="#bee5eb">
                                                     {{item.film}}
                                                 </td>                                             
-                                                  <td v-if="(!filtro(k))" style="text-align:center;">
+                                                <td v-if="(!filtro(k))" style="text-align:center;">
                                                       <div v-if="(indexPosTablaDosimetria == k)">    
                                                        <div class="col-md-12">
-                                                        <div class="input-group date">
-                                                           <Datepicker v-model="TablaDosimetriaEstados[k].fecha_envio" :input-class="'form-control pull-right'" :language="es" width="100%"></Datepicker>   
-                                                        </div>
-                                                        </div>
-                                        
+                                                            <div class="input-group date">
+                                                                 <Datepicker v-model="TablaDosimetriaEstados[k].fecha_envio" :input-class="'form-control pull-right'" :language="es" width="100%"></Datepicker>   
+                                                            </div>
+                                                        </div>                                        
                                                       </div>
                                                       <div v-else>
                                                       {{ fecha_formateada(item.fecha_envio) }}
@@ -69,7 +68,7 @@
                                                 </td>
                                                 <td v-if="(!filtro(k))" style="text-align:center;">
                                                     <div v-if="(indexPosTablaDosimetria == k)">      
-                                                        <v-select v-model="TablaDosimetriaEstados[k].estado" :reduce="descripcion => descripcion" label="descripcion" :options="estados" ></v-select> 
+                                                        <v-select v-model="TablaDosimetriaEstados[k].estado" :reduce="descripcion => descripcion" label="descripcion" :options="estados" @input="setearFechaDevolucion(k)" ></v-select> 
                                                     </div>
                                                     <div v-else-if="item.estado">
                                                         {{item.estado.descripcion}}
@@ -77,7 +76,19 @@
                                                     <div v-else>
                                                         {{item.estado}}
                                                     </div>
-                                                </td>                                                                           
+                                                </td>  
+                                                <td v-if="(!filtro(k))" style="text-align:center;">
+                                                      <div v-if="(indexPosTablaDosimetria == k)">    
+                                                       <div class="col-md-12">
+                                                            <div class="input-group date">
+                                                                 <Datepicker v-model="TablaDosimetriaEstados[k].fecha_devolucion" :input-class="'form-control pull-right'" :language="es" width="100%"></Datepicker>   
+                                                            </div>
+                                                        </div>                                        
+                                                      </div>
+                                                      <div v-else>
+                                                      {{ fecha_formateada(item.fecha_devolucion) }}
+                                                      </div>
+                                                </td>                                                                         
                                         </tr>     
                                         <tr v-for="fila in 8" >
                                               <td colspan="4" style="background: #FFFFFF"> &nbsp;</td>                                                  
@@ -320,6 +331,13 @@ export default {
         });
 
         return valido;
+    },
+
+    setearFechaDevolucion : function(index){
+
+        console.log('setearFechaDevolucion');
+        this.TablaDosimetriaEstados[index].fecha_devolucion = new Date() ;
+
     },
 
      submit :function () {
