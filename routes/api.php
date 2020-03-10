@@ -246,7 +246,7 @@ Route::get('/pdf/productos/referencias/{id}','PdfProductosReferenciasController@
 Route::get('/pdf/productos/referencias/informe/pm/{id}','PdfInformesPmReferenciasController@imprimir')->name('InformePmReferencias');
 Route::get('/pdf/productos/referencias/informe/lp/{id}','PdfInformesLpReferenciasController@imprimir')->name('InformeLpReferencias');    
 
-Route::get('/pdf/dosimetria/year/{year}/operadores/{str_list_of_ids?}','PdfDosimetriaController@imprimir')->name('pdfDosimetriaAnual');
+Route::get('/pdf/dosimetria/year/{year}/operadores/{str_list_of_ids?}/rs/{cliente_sn}/months/{str_list_of_months}','PdfDosimetriaController@imprimir')->name('pdfDosimetriaAnual');
 
 Route::get('/pdf/informe/{id}','PdfInformesController@index')->name('pdfInformes');
 Route::get('/pdf/informe/lp/{informe}','PdfInformesLpController@imprimir')->name('pdfInformeLp');

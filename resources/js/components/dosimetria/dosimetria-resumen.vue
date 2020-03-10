@@ -15,9 +15,17 @@
                 <div class="box box-custom-enod">
                     <div class="box-body">
                         <div class="col-md-12">
-                           <a :href="url + '/pdf/dosimetria/year/' + year + '/operadores/' + str_list_of_ids"  target="_blank">Exportar Resumen PDF</a>
-                           <p>&nbsp;</p>
+                           <div class="form-group" >
+                                <button @click="ExportarResumenPdf">Exportar Resumen PDF</button>
+                                <div class="checkbox" style="display: inline-block;">
+                                    <label style="margin-left: 20px;"><input type="checkbox" id="checkbox" v-model="rs">Exportar resumen cliente</label>   
+                                </div>
+                                 
+                                <p>&nbsp;</p>
+                            </div>
                         </div>    
+                       
+                    
                         <div class="col-md-12">
                             <div class="table-responsive">          
                                 <table class="table table-hover table-bordered">
@@ -26,22 +34,100 @@
                                             <th style="text-align:center;" rowspan="2">
                                                 <input type="checkbox" id="checkbox" @change="cambiarCheck" v-model="check_all">                  
                                             </th> 
-                                            <th style="text-align:center;min-width:250px;" rowspan="2" >OPERADOR</th>    
+                                            <th style="text-align:center;min-width:250px;" rowspan="2" >
+                                                <div class="checkbox">
+                                                    <label>OPERADOR</label>   
+                                                </div>   
+                                            </th>    
                                             <th style="text-align:center;" rowspan="2">DNI</th>
                                             <th style="text-align:center;" rowspan="2">FILM</th>  
-                                            <th style="text-align:center;" colspan="3">ENERO</th>  
-                                            <th style="text-align:center;" colspan="3">FEBRERO</th>                                                     
-                                            <th style="text-align:center;" colspan="3">MARZO</th>                                                     
-                                            <th style="text-align:center;" colspan="3">ABRIL</th>                                                     
-                                            <th style="text-align:center;" colspan="3">MAYO</th>                                                     
-                                            <th style="text-align:center;" colspan="3">JUNIO</th>                                                     
-                                            <th style="text-align:center;" colspan="3">JULIO</th>                                                     
-                                            <th style="text-align:center;" colspan="3">AGOSTO</th>                                                     
-                                            <th style="text-align:center;" colspan="3">SEPTIEMBRE</th>                                                     
-                                            <th style="text-align:center;" colspan="3">OCTUBRE</th>                                                     
-                                            <th style="text-align:center;" colspan="3">NOVIEMBRE</th>                                                     
-                                            <th style="text-align:center;" colspan="3">DICIEMBRE</th>  
-                                            <th style="text-align:center;" colspan="2">ACUMULADO</th>                                                                                
+                                            <th style="text-align:center;" colspan="3">
+                                                
+                                                <div class="checkbox">
+                                                    <label><input type="checkbox" id="checkbox" v-model="meses[0].check" :disabled="!rs">ENERO</label>   
+                                                </div>
+                                            
+                                            </th>  
+                                            <th style="text-align:center;" colspan="3">
+
+                                                <div class="checkbox">
+                                                    <label><input type="checkbox" id="checkbox" v-model="meses[1].check" :disabled="!rs">FEBRERO</label>   
+                                                </div>
+                                                
+                                            </th>                                                     
+                                            <th style="text-align:center;" colspan="3">
+                                                
+                                                <div class="checkbox">
+                                                    <label><input type="checkbox" id="checkbox" v-model="meses[2].check" :disabled="!rs">MARZO</label>   
+                                                </div>
+
+                                            </th>                                                     
+                                            <th style="text-align:center;" colspan="3">   
+
+                                                <div class="checkbox">
+                                                    <label><input type="checkbox" id="checkbox" v-model="meses[3].check" :disabled="!rs">ABRIL</label>   
+                                                </div>
+
+                                            </th>                                                     
+                                            <th style="text-align:center;" colspan="3">                  
+                                                <div class="checkbox">
+                                                    <label><input type="checkbox" id="checkbox" v-model="meses[4].check" :disabled="!rs">MAYO</label>   
+                                                </div>
+                                            </th>                                                     
+                                            <th style="text-align:center;" colspan="3">
+
+                                                <div class="checkbox">
+                                                    <label><input type="checkbox" id="checkbox" v-model="meses[5].check" :disabled="!rs">JUNIO</label>   
+                                                </div>
+
+                                            </th>                                                     
+                                            <th style="text-align:center;" colspan="3">
+
+                                                <div class="checkbox">
+                                                    <label><input type="checkbox" id="checkbox" v-model="meses[6].check" :disabled="!rs">JULIO</label>   
+                                                </div>
+
+                                            </th>                                                     
+                                            <th style="text-align:center;" colspan="3">
+
+                                                <div class="checkbox">
+                                                    <label><input type="checkbox" id="checkbox" v-model="meses[7].check" :disabled="!rs">AGOSTO</label>   
+                                                </div>
+                                                
+                                            </th>                                                     
+                                            <th style="text-align:center;" colspan="3">
+                                                
+                                                <div class="checkbox">
+                                                    <label><input type="checkbox" id="checkbox" v-model="meses[8].check" :disabled="!rs">SEPTIEMBRE</label>   
+                                                </div>
+
+                                            </th>                                                     
+                                            <th style="text-align:center;" colspan="3">
+
+                                                <div class="checkbox">
+                                                    <label><input type="checkbox" id="checkbox" v-model="meses[9].check" :disabled="!rs">OCTUBRE</label>   
+                                                </div>
+
+                                             </th>                                                     
+                                            <th style="text-align:center;" colspan="3">
+
+                                                <div class="checkbox">
+                                                    <label><input type="checkbox" id="checkbox" v-model="meses[10].check" :disabled="!rs">NOVIEMBRE</label>   
+                                                </div>
+
+                                            </th>                                                     
+                                            <th style="text-align:center;" colspan="3">
+
+                                                <div class="checkbox">
+                                                    <label><input type="checkbox" id="checkbox" v-model="meses[11].check" :disabled="!rs">DICIEMBRE</label>   
+                                                </div>
+
+                                            </th>  
+                                            <th style="text-align:center;" colspan="2">
+                                                <div class="checkbox">
+                                                    <label>ACUMULADO</label>   
+                                                </div>    
+                                            </th>                                                                                
                                         </tr>
                                         <tr>   
                                             <th style="text-align:center;">OP</th>     
@@ -124,8 +210,8 @@
                                                     <popper trigger="hover" :options="{placement: 'top'}">
                                                         <div class="popper" style="background-color:#ECF0F6;" >
                                                             <div style="width: 200px;">
-                                                                <strong style="float: left;">Fecha Devolución : </strong> {{ item.FEM1 }}<br>
                                                                 <strong style="float: left;">Fecha Envío : </strong>  {{ item.FENEM1 }}
+                                                                <strong style="float: left;">Fecha Devolución : </strong> {{ item.FEM1 }}<br>
                                                             </div>        
                                                          </div>
                                                         <a href="#" slot="reference" class="top">
@@ -141,8 +227,8 @@
                                                     <popper trigger="hover" :options="{placement: 'top'}">
                                                         <div class="popper" style="background-color:#ECF0F6;" >
                                                             <div style="width: 200px;">
-                                                                <strong style="float: left;">Fecha Devolución : </strong> {{ item.FEM2}}<br>
                                                                 <strong style="float: left;">Fecha Envío : </strong> {{item.FENEM2}}
+                                                                <strong style="float: left;">Fecha Devolución : </strong> {{ item.FEM2}}<br>
                                                             </div>        
                                                          </div>
 
@@ -159,8 +245,8 @@
                                                     <popper trigger="hover" :options="{placement: 'top'}">
                                                         <div class="popper" style="background-color:#ECF0F6;" >
                                                             <div style="width: 200px;">
-                                                                <strong style="float: left;">Fecha Devolución : </strong> {{ item.FEM3}}<br>
                                                                 <strong style="float: left;">Fecha Envío : </strong> {{item.FENEM3}}
+                                                                <strong style="float: left;">Fecha Devolución : </strong> {{ item.FEM3}}<br>
                                                             </div>        
                                                          </div>
 
@@ -176,8 +262,8 @@
                                                     <popper trigger="hover" :options="{placement: 'top'}">
                                                         <div class="popper" style="background-color:#ECF0F6;" >
                                                             <div style="width: 200px;">
-                                                                <strong style="float: left;">Fecha Devolución : </strong> {{ item.FEM4}}<br>
                                                                 <strong style="float: left;">Fecha Envío : </strong> {{item.FENEM4}}
+                                                                <strong style="float: left;">Fecha Devolución : </strong> {{ item.FEM4}}<br>
                                                             </div>        
                                                          </div>
 
@@ -192,8 +278,8 @@
                                                     <popper trigger="hover" :options="{placement: 'top'}">
                                                         <div class="popper" style="background-color:#ECF0F6;" >
                                                             <div style="width: 200px;">
-                                                                <strong style="float: left;">Fecha Devolución : </strong> {{ item.FEM5}} <br>
                                                                 <strong style="float: left;">Fecha Envío : </strong> {{item.FENEM5}}
+                                                                <strong style="float: left;">Fecha Devolución : </strong> {{ item.FEM5}} <br>
                                                             </div>        
                                                          </div>
 
@@ -209,8 +295,8 @@
                                                <popper trigger="hover" :options="{placement: 'top'}">
                                                 <div class="popper" style="background-color:#ECF0F6;" >
                                                     <div style="width: 200px;">
-                                                        <strong style="float: left;">Fecha Devolución : </strong> {{ item.FEM6}}<br>
                                                         <strong style="float: left;">Fecha Envío : </strong> {{item.FENEM6}}
+                                                        <strong style="float: left;">Fecha Devolución : </strong> {{ item.FEM6}}<br>
                                                     </div>        
                                                  </div>
 
@@ -226,8 +312,8 @@
                                                     <popper trigger="hover" :options="{placement: 'top'}">
                                                         <div class="popper" style="background-color:#ECF0F6;" >
                                                             <div style="width: 200px;">
-                                                                <strong style="float: left;">Fecha Devolución : </strong> {{ item.FEM7}}<br>
                                                                 <strong style="float: left;">Fecha Envío : </strong> {{item.FENEM7}}
+                                                                <strong style="float: left;">Fecha Devolución : </strong> {{ item.FEM7}}<br>
                                                             </div>        
                                                          </div>
 
@@ -242,8 +328,8 @@
                                                     <popper trigger="hover" :options="{placement: 'top'}">
                                                         <div class="popper" style="background-color:#ECF0F6;" >
                                                             <div style="width: 200px;">
-                                                                <strong style="float: left;">Fecha Devolución : </strong> {{ item.FEM8}}<br>
                                                                 <strong style="float: left;">Fecha Envío : </strong> {{item.FENEM8}}
+                                                                <strong style="float: left;">Fecha Devolución : </strong> {{ item.FEM8}}<br>
                                                             </div>        
                                                          </div>
 
@@ -259,8 +345,8 @@
                                                     <popper trigger="hover" :options="{placement: 'top'}">
                                                         <div class="popper" style="background-color:#ECF0F6;" >
                                                             <div style="width: 200px;">
-                                                                <strong style="float: left;">Fecha Devolución : </strong> {{ item.FEM9}}<br>
                                                                 <strong style="float: left;">Fecha Envío : </strong> {{item.FENEM9}}
+                                                                <strong style="float: left;">Fecha Devolución : </strong> {{ item.FEM9}}<br>
                                                             </div>        
                                                          </div>
 
@@ -275,8 +361,8 @@
                                                     <popper trigger="hover" :options="{placement: 'top'}">
                                                         <div class="popper" style="background-color:#ECF0F6;" >
                                                             <div style="width: 200px;">
-                                                                <strong style="float: left;">Fecha Devolución : </strong> {{ item.FEM10}}<br>
                                                                 <strong style="float: left;">Fecha Envío : </strong> {{item.FENEM10}}
+                                                                <strong style="float: left;">Fecha Devolución : </strong> {{ item.FEM10}}<br>
                                                             </div>        
                                                          </div>
 
@@ -291,8 +377,8 @@
                                                     <popper trigger="hover" :options="{placement: 'top'}">
                                                         <div class="popper" style="background-color:#ECF0F6;" >
                                                             <div style="width: 200px;">
-                                                                <strong style="float: left;">Fecha Devolución : </strong> {{ item.FEM11}}<br>
                                                                 <strong style="float: left;">Fecha Envío : </strong> {{item.FENEM11}}
+                                                                <strong style="float: left;">Fecha Devolución : </strong> {{ item.FEM11}}<br>
                                                             </div>        
                                                          </div>
 
@@ -307,8 +393,8 @@
                                                     <popper trigger="hover" :options="{placement: 'top'}">
                                                         <div class="popper" style="background-color:#ECF0F6;" >
                                                             <div style="width: 200px;">
-                                                                <strong style="float: left;">Fecha Devolución : </strong> {{ item.FEM12}}<br>
                                                                 <strong style="float: left;">Fecha Envío : </strong> {{item.FENEM12}}
+                                                                <strong style="float: left;">Fecha Devolución : </strong> {{ item.FEM12}}<br>
                                                             </div>        
                                                          </div>
 
@@ -366,9 +452,24 @@ export default {
       check_all : true,
       TablaPeriodos:[],
       array_of_ids :[],
-      str_list_of_ids:''
-  
-     
+      str_list_of_ids:'',
+      str_list_of_months:'',
+      meses : [
+          {check : true},
+          {check : true},
+          {check : true},
+          {check : true},
+          {check : true},
+          {check : true},
+          {check : true},
+          {check : true},
+          {check : true},
+          {check : true},
+          {check : true},
+          {check : true},
+
+      ],     
+      rs : false,      
     }    
   },
 
@@ -422,7 +523,18 @@ export default {
                 }
             ); 
             
-    },
+        },
+
+        rs : function(val){
+
+            if(!val){
+
+            this.meses.forEach(function(item){
+                item.check = true;
+            });
+            }
+
+        }
 
   },
   
@@ -456,6 +568,25 @@ export default {
           
              this.years.push(year);       
          }
+
+     },
+
+     ExportarResumenPdf : function(){
+
+         let array_list_of_months = [];
+
+         this.meses.forEach(function(item,index){
+
+             if(item.check){
+                array_list_of_months.push(1)
+             }else{
+                array_list_of_months.push(0)
+             }
+         })
+         this.str_list_of_months = array_list_of_months.toString();
+         console.log(this.str_list_of_months);
+         window.open(this.url + '/pdf/dosimetria/year/' + this.year + '/operadores/' + this.str_list_of_ids + '/rs/' + this.rs + '/months/' + this.str_list_of_months,'_blank');
+
 
      },
 
@@ -535,6 +666,12 @@ export default {
 .popper  {
 
     color: black;
+} 
+
+.checkbox label {
+
+    font-size: 12px;
+    font-weight: bold;
 } 
 
 </style>
