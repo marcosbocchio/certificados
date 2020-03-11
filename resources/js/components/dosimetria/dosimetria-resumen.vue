@@ -210,7 +210,7 @@
                                                     <popper trigger="hover" :options="{placement: 'top'}">
                                                         <div class="popper" style="background-color:#ECF0F6;" >
                                                             <div style="width: 200px;">
-                                                                <strong style="float: left;">Fecha Envío : </strong>{{ item.FENEM1 }}<br>
+                                                                <strong style="float: left;">Fecha Envío : </strong>    {{item.FENEM1 }}<br>
                                                                 <strong style="float: left;">Fecha Devolución : </strong> {{ item.FEM1 }}<br>
                                                             </div>        
                                                          </div>
