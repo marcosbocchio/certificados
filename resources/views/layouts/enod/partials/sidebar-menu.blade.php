@@ -51,7 +51,7 @@
                 @endcan
 
                 @can('M_contratistas')
-                  <li><a href="{{ route('contratistas') }}">Contratistas</a></li>
+                  <li><a href="{{ route('contratistas') }}">Comitente</a></li>
                 @endcan
 
                 @can('M_materiales')

@@ -151,22 +151,30 @@ b {
                     <table width="100%" style="border-collapse: collapse;" >
                         <tbody>
                             <tr>                               
-                               <td style="font-size: 13px; text-align: center" colspan="2" class="bordered-td" ><b>EVALUADOR </b></td>   
-                               <td style="font-size: 13px; text-align: center" colspan="2" class="bordered-td" ><b>CONTRATISTA </b></td>                            
+                               <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>RESPONSABLE </b></td>   
+                               <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>CLIENTE </b></td> 
+                               <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>COMITENTE </b></td>                              
                             </tr>
+                            
                             <tr>                               
-                                <td style="font-size: 12px; text-align: left; height: 25px;width:100px;"><span style="margin-left: 2px">FIRMA:</span></td>  
-                                <td style="font-size: 12px; border-right: 1px solid #000;width:253px;" rowspan="2">
+                                <td style="font-size: 11px; text-align: left; height: 25px;width:75px;"><span style="margin-left: 2px">FIRMA:</span></td>   
+
+                                <td style="text-align:left ;font-size: 11px; border-right: 1px solid #000;width: 150px;margin-left: 15px;" rowspan="2">
                                     @if($evaluador && $evaluador->path)
-                                        <img src="{{ public_path($evaluador->path)}}" alt="" style="height: 70px;">
+                                        <img src="{{ public_path($evaluador->path)}}" alt="" style="width: 100px;">
                                     @endif
-                                </td>  
-                                <td style="font-size: 12px; text-align: left; height: 25px;"><span style="margin-left: 2px">FIRMA:</span></td>    
-                                <td style="font-size: 12px; border-right: 1px solid #000;" rowspan="2"></td>                              
+                                </td> 
+
+                                <td style="font-size: 11px; text-align: left; height: 25px; border-right: 1px solid #000;" colspan="2"> <span style="margin-left: 2px">FIRMA:</span></td> 
+                                
+                                <td style="font-size: 11px; text-align: left; height: 25px; border-right: 1px solid #000;" colspan="2"><span style="margin-left: 2px">FIRMA:</span></td>
+                                                        
                             </tr>
+                           
                             <tr>                               
-                                <td style="font-size: 12px; text-align: left; height: 25px;"><span style="margin-left: 2px">ACLARACIÓN:</span></td>   
-                                <td style="font-size: 12px; text-align: left; height: 25px;"><span style="margin-left: 2px">ACLARACIÓN:</span></td>                 
+                                <td style="font-size: 11px; text-align: left; height: 25px;width:75px;"><span style="margin-left: 2px">ACLARACIÓN:</span></td>   
+                                <td style="font-size: 11px; text-align: left; height: 25px; border-right: 1px solid #000;" colspan="2"><span style="margin-left: 2px">ACLARACIÓN:</span></td>
+                                <td style="font-size: 11px; text-align: left; height: 25px; border-right: 1px solid #000;" colspan="2"><span style="margin-left: 2px">ACLARACIÓN:</span></td>                       
                             </tr>
                         </tbody>
                     </table> 
@@ -244,7 +252,7 @@ b {
                 <td style="font-size: 13px;height: 30px;" colspan="5"><b style="margin-left: 6px;">SERVICIOS: </b></td>                                             
             </tr>  
             <tr>
-                <td style="font-size: 12px;width: 100px; "><b&nbsp;></b></td>  
+                <td style="font-size: 12px;width: 100px; "><&nbsp;></b></td>  
                 <td style="font-size: 12px;width: 100px; "><b>Metodo Ensayo: </b></td>                        
                 <td style="font-size: 12px;width: 350px; " colspan="2"><b>Descripción </b></td>                         
                 <td style="font-size: 12px;text-align: center;"><b>Cantidad </b></td>        
@@ -286,7 +294,7 @@ b {
                             <td style="font-size: 12px;height: 20px;" colspan="5"><b style="margin-left: 8px;">{{$item->numero_formateado}} </b></td>                                         
                         </tr> 
                         <tr>    
-                            <td style="font-size: 12px;width: 100px; "><b&nbsp;></b></td>  
+                            <td style="font-size: 12px;width: 100px; "><&nbsp;></b></td>  
                             <td style="font-size: 12px;width: 150px;  text-align: center; "><b>Costuras </b></td>                        
                             <td style="font-size: 12px;width: 150px;  text-align: center;"><b>Pulgadas </b></td>                         
                             <td style="font-size: 12px;width: 150px;  text-align: center;"><b>Placas </b></td>    

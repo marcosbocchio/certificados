@@ -194,7 +194,7 @@
 
                         <div class="col-md-3" >                       
                             <div class="form-group">
-                                <label for="palpador" title="Palpador">Palpado *</label>
+                                <label for="palpador" title="Palpador">Palpador *</label>
                                 <v-select v-model="palpador" label="codigo" :options="palpadores" id="palpador"></v-select>   
                             </div>      
                         </div>  
@@ -588,7 +588,7 @@
                    <div class="box box-custom-enod">
                         <div class="box-body">   
                             <div class="box-header with-border">
-                                <h5 class="box-title">Registro de Mediciones</h5>                               
+                                <h5 class="box-title">Registro de Indicaciones</h5>                               
                             </div>
                             <div>&nbsp;</div>
 

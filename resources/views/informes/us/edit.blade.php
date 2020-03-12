@@ -11,9 +11,7 @@
 
 @section('contenido') 
  <div id="app">
-
-   
-
+ 
   <informe-us  
    
      metodo ="{{$metodo}}"

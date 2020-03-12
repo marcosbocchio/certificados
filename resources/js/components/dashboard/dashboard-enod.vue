@@ -243,7 +243,8 @@ export default {
      watch: {
  
       ot_id_selected: function (ot_id) {  
-              
+        
+        this.cambiarTituloHeader(ot_id);
         this.$store.dispatch('loadContarOperadores',ot_id);
         this.$store.dispatch('loadContarInternoEquipos',ot_id);
         this.$store.dispatch('loadContarProcedimientos',ot_id);
@@ -263,6 +264,21 @@ export default {
     },
 
     methods : {
+
+        cambiarTituloHeader : function(ot_id){          
+          
+          let numero='';
+          let estado='';
+          this.ots.data.forEach(function(item){          
+            if(item.id == ot_id){
+              numero = item.numero;
+              estado = item.estado;
+            }
+          }.bind(this));
+          if(numero && estado){
+            document.getElementsByClassName('sub-titulo')[0].innerHTML = '/ OT N°: ' + numero + ' / ESTADO: ' + estado;
+          }
+        },
 
         aplicarFiltro : function(){
 

@@ -90,7 +90,7 @@ b {
                                 <td style="font-size: 11px; width: 200px;">
                                   
                                         @if($contratista)
-                                            <b>CONTRATISTA: </b>{{$contratista->nombre}}
+                                            <b>COMITENTE: </b>{{$contratista->nombre}}
                                         @endif                                               
                                  
                                 </td> 
@@ -149,8 +149,8 @@ b {
                             <tbody>
                                 <tr>                               
                                 <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>EVALUADOR </b></td>   
-                                <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>CONTRATISTA </b></td> 
-                                <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>CLIENTE </b></td>                              
+                                <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>COMITENTE </b></td> 
+                                <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>COMITENTE </b></td>                              
                                 </tr>
                                 
                                 <tr>                               

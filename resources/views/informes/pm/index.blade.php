@@ -16,7 +16,7 @@
 
   <informe-pm     
    
-      metodo="{{$metodo}}"
+     metodo="{{$metodo}}"
      :otdata="{{$ot}}"
     
   ></informe-pm>

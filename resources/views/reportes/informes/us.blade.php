@@ -127,7 +127,7 @@ b {
                                 <td style="font-size: 11px; width: 200px;">
                                   
                                         @if($contratista)
-                                            <b>CONTRATISTA: </b>{{$contratista->nombre}}
+                                            <b>COMITENTE: </b>{{$contratista->nombre}}
                                         @endif                                               
                                  
                                 </td> 
@@ -231,8 +231,8 @@ b {
                             <tbody>
                                 <tr>                               
                                    <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>EVALUADOR </b></td>   
-                                   <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>CONTRATISTA </b></td> 
-                                   <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>CLIENTE </b></td>                              
+                                   <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>CLIENTE </b></td> 
+                                   <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>COMITENTE </b></td>                              
                                 </tr>
                                 
                                 <tr>                               
@@ -390,7 +390,7 @@ b {
         <tbody>
              <tr>
                  <td style="border-bottom: 2px solid #000;background:#D8D8D8;text-align: center;" >
-                    REGISTRO DE INDICACIONES
+                    REGISTRO DE MEDICIONES
                     @if($tecnica->codigo == 'US' || $tecnica->codigo=='PA')
                     <a href="{{ route('InformeUsIndicacionesUsPa',$informe->id)}}"><img src="{{ public_path('img/fa-file-pdf.jpg')}}" style="height: 15px;margin-left:3px;;margin-top:2px;text-align: center;"></a>
                     @elseif($tecnica->codigo ='ME')

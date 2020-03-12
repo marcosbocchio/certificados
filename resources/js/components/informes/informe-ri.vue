@@ -381,7 +381,7 @@
                     <div class="box box-custom-enod">
                         
                         <div class="box-header with-border">
-                            <h5 class="box-title">DEFECTOS</h5>
+                            <h5 class="box-title">INDICACIONES</h5>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                                 </button>                       
@@ -392,7 +392,7 @@
                                                    
                         <div class="col-md-3">                          
                            <div class="form-group" >
-                                <label>Defectos</label>           
+                                <label>Indicación</label>           
                                 <v-select v-model="defectoRiPlanta" :options="defectosRiPlanta" label="descripcion" :disabled="(!TablaDetalle.length)">
                                     <template slot="option" slot-scope="option">
                                         <span class="upSelect">{{ option.descripcion }} </span> <br> 
@@ -403,7 +403,7 @@
                         </div> 
                         <div class="col-md-2">                       
                             <div class="form-group" >                            
-                                <label for="posicionPlaca">Posición Defecto</label>
+                                <label for="posicionPlaca">Posición Indicación</label>
                                 <input type="text" v-model="posicionPlacaGosaducto" class="form-control" id="posicionPlacaGosaducto" :disabled="(!TablaDetalle.length)" maxlength="10">                           
                             </div>     
                         </div>    

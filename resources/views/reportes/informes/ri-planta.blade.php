@@ -111,7 +111,7 @@ b {
                                 <td style="font-size: 11px; width: 200px;">
                                   
                                         @if($contratista)
-                                            <b>CONTRATISTA: </b>{{$contratista->nombre}}
+                                            <b>COMITENTE: </b>{{$contratista->nombre}}
                                         @endif                                               
                                  
                                 </td> 
@@ -220,7 +220,7 @@ b {
                                 <td style="font-size: 11px; width:65px;  text-align: center " rowspan="2" class="bordered-td" >ELEM.</td>
                                 <td style="font-size: 11px; width:65px;  text-align: center;" rowspan="2" class="bordered-td">CUÑO</td>
                                 <td style="font-size: 11px; width:64.5px; text-align: center;" rowspan="2" class="bordered-td">POSICIÓN</td>
-                                <td style="font-size: 11px; width:201.5px;  text-align: center;" rowspan="2" class="bordered-td">DEFECTOS</td>  
+                                <td style="font-size: 11px; width:201.5px;  text-align: center;" rowspan="2" class="bordered-td">INDICACIONES</td>  
                                 <td style="font-size: 11px; width:80px; text-align: center;" colspan="2" class="bordered-td">RESULTADO</td>  
                                 <td style="font-size: 11px; text-align: center" rowspan="2" class="bordered-td">OBSERVACIÓN</td>                     
                             </tr>
@@ -293,8 +293,8 @@ b {
                         <tbody>
                             <tr>                               
                                <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>EVALUADOR </b></td>   
-                               <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>CONTRATISTA </b></td> 
-                               <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>CLIENTE </b></td>                              
+                               <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>CLIENTE </b></td> 
+                               <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>COMITENTE </b></td>                              
                             </tr>
                             
                             <tr>                               

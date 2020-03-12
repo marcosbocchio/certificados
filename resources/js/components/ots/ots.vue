@@ -79,7 +79,7 @@
 
         <div class="col-md-6">                       
           <div class="form-group">
-              <label>Contratista</label>
+              <label>Comitente</label>
                <input type="checkbox" id="checkbox" v-model="logo_contratista_sn" style="float:right"> 
                <label for="tipo" style="float:right;margin-right: 5px;">Mostrar logo</label>    
               <v-select v-model="contratista" label="nombre" :options="contratistas"></v-select>   

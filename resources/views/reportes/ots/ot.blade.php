@@ -111,7 +111,7 @@ td b,td span {
                                 <td style="font-size: 11px; width: 200px;">
                                   
                                         @if($contratista)
-                                            <b>CONTRATISTA: </b>{{$contratista->nombre}}
+                                            <b>COMITENTE: </b>{{$contratista->nombre}}
                                         @endif                                               
                                  
                                 </td> 

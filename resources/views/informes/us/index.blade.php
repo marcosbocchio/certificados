@@ -23,7 +23,6 @@
 
 @endsection
 
-
 @section('script')
 
 <script type="text/javascript" src="{{asset('adminlte/bower_components/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
