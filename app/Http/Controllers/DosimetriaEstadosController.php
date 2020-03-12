@@ -134,12 +134,8 @@ class DosimetriaEstadosController extends Controller
                         $dosimetria_estado->fecha_devolucion = date('Y-m-d',strtotime($estado['fecha_devolucion']));
                         
                     }
-
-                }else{
-                    
-                    $dosimetria_estado->fecha_devolucion = null;
-
                 }
+                
                 $dosimetria_estado->fecha_envio = date('Y-m-d',strtotime($estado['fecha_envio']));
                 $dosimetria_estado->user_id = $user_id;
                 $dosimetria_estado->save();    
