@@ -433,7 +433,7 @@
                     <div class="box box-custom-enod">                
 
                         <div class="box-header with-border">
-                            <h5 class="box-title">Registro de indicaciones</h5>
+                            <h5 class="box-title">Registro de Mediciones </h5>
                         </div>
                         <div class="box-body">   
                             <div>&nbsp;</div>
@@ -588,7 +588,7 @@
                    <div class="box box-custom-enod">
                         <div class="box-body">   
                             <div class="box-header with-border">
-                                <h5 class="box-title">Registro de Indicaciones</h5>                               
+                                <h5 class="box-title">Registro de Mediciones </h5>                               
                             </div>
                             <div>&nbsp;</div>
 
@@ -603,8 +603,15 @@
 
                                 <div class="col-md-12">                       
                                     <div class="form-group" >
-                                        <label for="umbral" title="Umbral">Espesor nominal</label>
-                                        <input type="number" v-model="umbral_me" class="form-control" id="umbral_me" step="0,1">
+                                        <label for="umbral" title="Umbral">Espesor Nominal</label>
+                                        <input type="number" v-model="umbral_me" class="form-control" id="umbral_me" min="0" step="0.1">
+                                    </div>         
+                                </div>
+
+                                <div class="col-md-12">                       
+                                    <div class="form-group" >
+                                        <label for="espesor_minimo_me" title="espesor_minimo_me">Espesor Mínimo</label>
+                                        <input type="number" v-model="espesor_minimo_me" class="form-control" id="espesor_minimo_me" min="0" step="0.1">
                                     </div>         
                                 </div>
 
@@ -643,6 +650,7 @@
                                                 <tr>
                                                     <th  class="col-lg-1">Elemento</th>
                                                     <th  class="col-lg-1">Nominal</th>
+                                                    <th  class="col-lg-1">Mínimo</th>
                                                     <th  class="col-lg-2">ø</th> 
                                                     <th  class="col-lg-1">Pos.</th>
                                                     <th  class="col-lg-1">Gen.</th>                                                                                               
@@ -652,7 +660,8 @@
                                             <tbody>
                                                 <tr v-for="(item,k) in (Tabla_me)" :key="k" @click="selectPosTabla_me(k)" :class="{selected: indexPosTabla_me === k}" >
                                                     <td>{{ item.elemento_me }}</td>  
-                                                    <td>{{ item.umbral_me }}</td>                                       
+                                                    <td>{{ item.umbral_me }}</td>  
+                                                    <td>{{ item.espesor_minimo_me }}</td>                                     
                                                     <td>{{ item.diametro_me }}</td>
                                                     <td>{{ item.cantidad_posiciones_me}}</td>    
                                                     <td>{{ item.cantidad_generatrices_me}}</td>                               
@@ -979,6 +988,7 @@ export default {
 
         elemento_me:'',
         umbral_me:'',
+        espesor_minimo_me:'',
         diametro_me:'',
         cantidad_posiciones_me:'',
         cantidad_generatrices_me:'',
@@ -1583,7 +1593,11 @@ export default {
                 return ;
              }
 
-            
+             if(this.espesor_minimo_me && this.espesor_minimo_me  > 99.9){
+
+                toastr.error('El campo espesor mínimo no debe ser mayor a 99,9');    
+                return ;
+                }
 
             if (!this.diametro_me){
 
@@ -1637,8 +1651,10 @@ export default {
             }
 
             this.Tabla_me.push({
+
                 elemento_me:               this.elemento_me,
                 umbral_me:                 this.umbral_me,
+                espesor_minimo_me:         this.espesor_minimo_me, 
                 diametro_me:               this.diametro_me.diametro,
                 cantidad_posiciones_me  :  this.cantidad_posiciones_me,
                 cantidad_generatrices_me:  this.cantidad_generatrices_me,   

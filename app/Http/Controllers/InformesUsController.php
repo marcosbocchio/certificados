@@ -262,6 +262,7 @@ class InformesUsController extends Controller
             $informe_us_me->informe_us_id = $informeUs->id;
             $informe_us_me->diametro = $detalle_informe_us_me['diametro_me'];
             $informe_us_me->umbral = $detalle_informe_us_me['umbral_me'];
+            $informe_us_me->espesor_minimo = $detalle_informe_us_me['espesor_minimo_me'];
             $informe_us_me->elemento = $detalle_informe_us_me['elemento_me'];
             $informe_us_me->cantidad_posiciones = $detalle_informe_us_me['cantidad_posiciones_me'];
             $informe_us_me->cantidad_generatrices = $detalle_informe_us_me['cantidad_generatrices_me'];
@@ -435,7 +436,8 @@ class InformesUsController extends Controller
                                     informes_us_me.cantidad_posiciones as cantidad_posiciones_me,  
                                     informes_us_me.diametro as diametro_me, 
                                     informes_us_me.elemento as elemento_me,
-                                    informes_us_me.umbral as umbral_me
+                                    informes_us_me.umbral as umbral_me,
+                                    informes_us_me.espesor_minimo as espesor_minimo_me
                                     ')
                         ->get();  
      
