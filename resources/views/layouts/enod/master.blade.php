@@ -73,7 +73,7 @@ desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body @can('enod') class="sidebar-mini skin-yellow fixed" @else class="hold-transition skin-blue fixed sidebar-boxed" @endcan >
+<body class="sidebar-mini skin-yellow fixed sidebar-mini-expand-feature"  style="height: auto; min-height: 100%;">
 
 @include('layouts.enod.partials.header')
 @include('layouts.enod.partials.sidebar-menu')

@@ -635,12 +635,15 @@
                                         <input type="number" v-model="cantidad_generatrices_me" class="form-control" id="cantidad_generatrices_me">
                                     </div>         
                                 </div>
-
-                                <div class="col-md-1">                                                         
+                                <div class="col-md-1">                                                       
                                     <span>
-                                        <i class="fa fa-plus-circle" @click="addTabla_me()"></i>
+                                      <button type="button"  @click="addTabla_me()"><span class="fa fa-plus-circle"></span></button>  
                                     </span>                            
-                                </div>
+                               </div>
+
+                               <div class="form-group">
+                                  &nbsp;
+                               </div>
                             
                                 <!-- tabla me -->
                                 <div class="col-md-12">
@@ -795,7 +798,7 @@
         <create-referencias :index="index_referencias" :tabla="tabla" :inputsData="inputsData" @setReferencia="AddReferencia_us_pa"></create-referencias>
     </div>
 </template>
-s
+
 <script>
 import uniq from 'lodash/uniq';
 import Datepicker from 'vuejs-datepicker';

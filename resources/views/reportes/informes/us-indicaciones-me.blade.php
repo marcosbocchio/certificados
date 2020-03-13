@@ -255,7 +255,6 @@ b {
     </table>
 </footer>
 
-
 <main>
     
     @foreach ($informes_us_me as $informe_us_me)   
@@ -270,6 +269,17 @@ b {
                     <tr>
                          <td style="font-size: 14px;height:20px;"><span style="margin-left: 22px;">Elemento : {{ strtoupper($informe_us_me->elemento)}}</span></td> 
                     </tr>
+                    @if ($informe_us_me->umbral)
+                        <tr>
+                             <td style="font-size: 14px;height:20px;"><span style="margin-left: 22px;">Umbral : {{ strtoupper($informe_us_me->umbral)}}</span></td> 
+                        </tr>                     
+                    @endif
+
+                    @if ($informe_us_me->espesor_minimo)
+                        <tr>
+                             <td style="font-size: 14px;height:20px;"><span style="margin-left: 22px;">Espesor Mínimo : {{ strtoupper($informe_us_me->espesor_minimo)}}</span></td> 
+                        </tr>
+                    @endif
                     <tr>
                         <td style="font-size: 14px;height:20px;"><span style="margin-left: 22px;">Ø : {{ $informe_us_me->diametro}}</span></td>  
                     </tr>
@@ -310,7 +320,7 @@ b {
                                                 
                                                 @if ($pos_pos==$item_detalle->posicion && $pos_gen_fila == $generatriz->nro && $item_detalle->generatriz==$generatriz->valor)  
 
-                                                    @if($informe_us_me->umbral && strval($item_detalle->valor) < strval($informe_us_me->umbral))
+                                                    @if(($informe_us_me->espesor_minimo) && (strval($item_detalle->valor) < strval($informe_us_me->espesor_minimo)))
 
                                                        <td style="font-size: 13px; text-align: left;width:28px;text-align: center;color:red" class="bordered-1">{{$item_detalle->valor}}</td>
 
@@ -413,10 +423,8 @@ b {
      
        
     }
-
  
 </script>
-
 
 </body>
 </html>
