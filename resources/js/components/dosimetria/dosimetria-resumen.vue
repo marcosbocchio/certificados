@@ -196,7 +196,7 @@
                                                 
                                                     </div>
 
-                                                    <a href="" slot="reference" class="top" :class="{habilitadoArn : item.habilitado_arn_sn}">
+                                                    <a href="" slot="reference" class="top" @click.prevent :class="{habilitadoArn : item.habilitado_arn_sn}">
                                                     {{item.operador}}
                                                     </a>  
                                                 </popper>                                              
@@ -214,7 +214,7 @@
                                                                 <strong style="float: left;">Fecha Devolución : </strong> {{ item.FEM1 }}<br>
                                                             </div>        
                                                          </div>
-                                                        <a href="" slot="reference" class="top">
+                                                        <a href="" @click.prevent slot="reference" class="top">
                                                             <span :style="{color:item.CM1}">{{item.EM1}}</span> 
                                                         </a>  
                                                     </popper>
@@ -232,7 +232,7 @@
                                                             </div>        
                                                          </div>
 
-                                                    <a href="" slot="reference" class="top">
+                                                    <a href="" @click.prevent slot="reference" class="top">
                                                         <span :style="{color:item.CM2}">{{item.EM2}}</span> 
                                                     </a>  
                                                     </popper>     
@@ -250,7 +250,7 @@
                                                             </div>        
                                                          </div>
 
-                                                    <a href="" slot="reference" class="top" >
+                                                    <a href="" @click.prevent slot="reference" class="top" >
                                                         <span :style="{color:item.CM3}">{{item.EM3}}</span>                                                     </a>  
                                                     </popper>
                                                 
@@ -267,7 +267,7 @@
                                                             </div>        
                                                          </div>
 
-                                                    <a href="" slot="reference" class="top" >
+                                                    <a href="" @click.prevent slot="reference" class="top" >
                                                         <span :style="{color:item.CM4}">{{item.EM4}}</span>                                                     </a>  
                                                     </popper>
                                              </td>                                                                                    
@@ -283,7 +283,7 @@
                                                             </div>        
                                                          </div>
 
-                                                    <a href="" slot="reference" class="top" >
+                                                    <a href="" @click.prevent slot="reference" class="top" >
                                                         <span :style="{color:item.CM5}">{{item.EM5}}</span>                                                     </a>  
                                                     </popper>
                                                 
@@ -300,7 +300,7 @@
                                                     </div>        
                                                  </div>
 
-                                                    <a href="" slot="reference" class="top" >
+                                                    <a href="" @click.prevent slot="reference" class="top" >
                                                         <span :style="{color:item.CM6}">{{item.EM6}}</span>                                                     </a>  
                                                     </popper>
                                                 
@@ -317,7 +317,7 @@
                                                             </div>        
                                                          </div>
 
-                                                        <a href="" slot="reference" class="top" >
+                                                        <a href="" @click.prevent slot="reference" class="top" >
                                                             <span :style="{color:item.CM7}">{{item.EM7}}</span>                                                         </a>  
                                                     </popper>
                                             </td>                                                                                
@@ -333,7 +333,7 @@
                                                             </div>        
                                                          </div>
 
-                                                    <a href="" slot="reference" class="top" >
+                                                    <a href="" @click.prevent slot="reference" class="top" >
                                                         <span :style="{color:item.CM8}">{{item.EM8}}</span>                                                     </a>  
                                                     </popper>
                                                 
@@ -350,7 +350,7 @@
                                                             </div>        
                                                          </div>
 
-                                                    <a href="" slot="reference" class="top" >
+                                                    <a href="" @click.prevent slot="reference" class="top" >
                                                         <span :style="{color:item.CM9}">{{item.EM9}}</span>                                                     </a>  
                                                     </popper>
                                             </td>                                                                                 
@@ -366,7 +366,7 @@
                                                             </div>        
                                                          </div>
 
-                                                    <a href="" slot="reference" class="top" >
+                                                    <a href="" @click.prevent slot="reference" class="top" >
                                                         <span :style="{color:item.CM10}">{{item.EM10}}</span>                                                     </a>  
                                                     </popper>
                                             </td>
@@ -382,7 +382,7 @@
                                                             </div>        
                                                          </div>
 
-                                                    <a href="" slot="reference" class="top" >
+                                                    <a href="" @click.prevent slot="reference" class="top" >
                                                         <span :style="{color:item.CM11}">{{item.EM11}}</span>                                                     </a>  
                                                     </popper>
                                             </td>
@@ -398,7 +398,7 @@
                                                             </div>        
                                                          </div>
 
-                                                    <a href="" slot="reference" class="top" >
+                                                    <a href="" @click.prevent slot="reference" class="top" >
                                                         <span :style="{color:item.CM12}">{{item.EM12}}</span>                                                     </a>  
                                                     </popper>
                                             </td>
