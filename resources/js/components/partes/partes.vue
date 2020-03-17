@@ -140,7 +140,7 @@
                                     <tbody>
                                         <tr v-for="(informe,k) in informes" :key="k">
                                             <td>
-                                                <input type="checkbox" id="informe_sel" v-model="informes[k].informe_sel" @change="getInforme(k)" :disabled="deshabilitarInformes(informe.fecha_formateada,informe.obra)">
+                                                <input type="checkbox" id="informe_sel" v-model="informes[k].informe_sel" @change="getInforme(k)" :disabled="deshabilitarInformes(informe.fecha_formateada,informe.obra) || loading">
                                             </td>
                                             <td> {{ informe.metodo}}</td>                                                        
                                             <td> {{ informe.numero_formateado}}</td>
@@ -608,6 +608,7 @@ export default {
         km_inicial:'',
         km_final:'',
         observaciones:'',
+        loading: false,
 
         operador:'',
         operadores:[],
@@ -618,7 +619,6 @@ export default {
         informes:[],
         informe_sel:false,
 
-        informe_ri_parte:'',
         TablaInformesRi:[],
         TablaInformesPm:[],
         TablaInformesLp:[],
@@ -1194,33 +1194,35 @@ export default {
          
         },
 
-        getInforme(index){
+       async getInforme(index){
 
-            console.log(this.informes[index]);
-
+          
             if(this.informes[index].informe_sel){
-               
+
+                this.loading = true;
+                console.log("el valor del loading es :" , this.loading);
                 if(this.informes[index].importable_sn){
 
-                    this.getInformesImportado(this.informes[index].id,index);
-                    this.getServiciosInformes(this.informes[index].id,1);
+                  await  this.getInformesImportado(this.informes[index].id,index);
+                  await  this.getServiciosInformes(this.informes[index].id,1);
 
                 }else{
                     
                     switch  (this.informes[index].metodo){
     
-                      case 'RI' : this.getInformeRI(this.informes[index].id,index);break;
+                      case 'RI' : await this.getInformeRI(this.informes[index].id,index);break;
     
-                      case 'PM' : this.getInformePM(this.informes[index].id,index);break;
+                      case 'PM' : await this.getInformePM(this.informes[index].id,index);break;
     
-                      case 'LP' : this.getInformeLP(this.informes[index].id,index);break;
+                      case 'LP' : await this.getInformeLP(this.informes[index].id,index);break;
     
-                      case 'US' : this.getInformeUs(this.informes[index].id,index);break;
+                      case 'US' : await this.getInformeUs(this.informes[index].id,index);break;
 
                     }
   
-                    this.getServiciosInformes(this.informes[index].id,0);
+                  await this.getServiciosInformes(this.informes[index].id,0);
                 }
+            this.loading = false;
 
             } else{
 
@@ -1294,7 +1296,7 @@ export default {
 
                     if(item.metodo_ensayo_id == metodo_ensayo_id && item.informe_sel ){
 
-                        this.getServiciosInformes(item.id)
+                        this.getServiciosInformes(item.id,item.importable_sn)
 
                     }
                 }.bind(this));
@@ -1303,30 +1305,25 @@ export default {
 
         },
 
-        getInformesImportado(id,index){
+        async getInformesImportado(id,index){
 
             axios.defaults.baseURL = this.url ;
-            var urlRegistros = 'partes/informe_importado/' + id + '?api_token=' + Laravel.user.api_token;        
-            axios.get(urlRegistros).then(response =>{
+            var urlRegistros = 'partes/informe_importado/' + id + '?api_token=' + Laravel.user.api_token;     
+            let res = await axios.get(urlRegistros);
+            let informe_importado_parte = await res.data;    
 
-                console.log(response.data);
-                console.log('entro en informes importados');
-                let informe_importado_parte = response.data;
-            
-                this.TablaInformesImportados.push({
-                    
-                    id:id,
-                    numero_formateado : this.informes[index].numero_formateado,
-                    visible: true,
-                    metodo:this.informes[index].metodo,
-                    observaciones_original:informe_importado_parte.observaciones,
-                    observaciones_final:informe_importado_parte.observaciones
-
-                })
-
-               this.AddMetodoImportados(this.informes[index].metodo);
+            this.TablaInformesImportados.push({
+                
+                id:id,
+                numero_formateado : this.informes[index].numero_formateado,
+                visible: true,
+                metodo:this.informes[index].metodo,
+                observaciones_original:informe_importado_parte.observaciones,
+                observaciones_final:informe_importado_parte.observaciones
 
             })
+
+            this.AddMetodoImportados(this.informes[index].metodo);
 
         },
 
@@ -1378,14 +1375,13 @@ export default {
             });
         },
 
-        getServiciosInformes(informe_id,importado_sn){
+        async getServiciosInformes(informe_id,importado_sn){
 
             axios.defaults.baseURL = this.url ;
-            var urlRegistros = 'ot_servicios/informe/' + informe_id + '/importado_sn/' + importado_sn + '?api_token=' + Laravel.user.api_token;        
-            axios.get(urlRegistros).then(response =>{
-                
-                let informe_servicios = response.data;
-            
+            var urlRegistros = 'ot_servicios/informe/' + informe_id + '/importado_sn/' + importado_sn + '?api_token=' + Laravel.user.api_token;    
+            let res = await axios.get(urlRegistros);
+            let informe_servicios = await res.data;      
+
                 informe_servicios.forEach(function(item) {
                     
                    if(this.TablaServicios.findIndex(elemento => elemento.servicio_descripcion == item.servicio_descripcion) != -1 && this.TablaServicios[this.TablaServicios.findIndex(elemento => elemento.servicio_descripcion ==item.servicio_descripcion)].visible){
@@ -1475,7 +1471,6 @@ export default {
                     
                 }.bind(this));
                 
-            });
 
         },
 
@@ -1629,43 +1624,42 @@ export default {
 
         },
 
-        getInformeRI(id,index){
+        async getInformeRI(id,index){
 
             axios.defaults.baseURL = this.url ;
-            var urlRegistros = 'partes/informe_ri/' + id + '?api_token=' + Laravel.user.api_token;        
-            axios.get(urlRegistros).then(response =>{
+            var urlRegistros = 'partes/informe_ri/' + id + '?api_token=' + Laravel.user.api_token;     
+            let res = await axios.get(urlRegistros);
+            let informe_ri_parte = await res.data;           
 
-            this.informe_ri_parte = response.data              
+            this.TablaInformesRi.push({ 
 
-                this.TablaInformesRi.push({ 
                 id      : id,
                 numero_formateado  : this.informes[index].numero_formateado,              
-                costura_original: this.informe_ri_parte[0].costuras,
-                pulgadas_original: this.informe_ri_parte[0].pulgadas,
-                placas_original : this.informe_ri_parte[0].placas,              
+                costura_original: informe_ri_parte[0].costuras,
+                pulgadas_original: informe_ri_parte[0].pulgadas,
+                placas_original : informe_ri_parte[0].placas,              
                 visible : true,   
-                costura_final: this.informe_ri_parte[0].costuras,
-                pulgadas_final: this.informe_ri_parte[0].pulgadas,
-                placas_final : this.informe_ri_parte[0].placas, 
+                costura_final: informe_ri_parte[0].costuras,
+                pulgadas_final: informe_ri_parte[0].pulgadas,
+                placas_final : informe_ri_parte[0].placas, 
                 cm_original: '', 
                 cm_final:'',
-                metodo : this.informe_ri_parte[0].metodo,
-               
-             });  
-                    
-            });
+                metodo : informe_ri_parte[0].metodo,
+            
+            });  
+                
+           
            
         },
 
-        getInformePM(id,index){
+        async getInformePM(id,index){
 
             axios.defaults.baseURL = this.url ;
             var urlRegistros = 'partes/informe_pm/' + id + '?api_token=' + Laravel.user.api_token;        
-            axios.get(urlRegistros).then(response =>{
+            let res = await axios.get(urlRegistros);
+            let informe_pm_parte = await res.data;  
 
-            this.informe_pm_parte = JSON.parse(JSON.stringify(response.data))
-
-            this.informe_pm_parte.forEach(function(item){
+            informe_pm_parte.forEach(function(item){
 
                 this.TablaInformesPm.push({ 
                     id      : id,
@@ -1679,48 +1673,45 @@ export default {
                     cm_final : item.cm,
                     });                       
 
-                }.bind(this));
-           
-            });
-            },
+                }.bind(this));           
+          
+         },
 
-        getInformeLP(id,index){
+        async getInformeLP(id,index){
 
             axios.defaults.baseURL = this.url ;
-            var urlRegistros = 'partes/informe_lp/' + id + '?api_token=' + Laravel.user.api_token;        
-            axios.get(urlRegistros).then(response =>{
-            console.log(urlRegistros);
-            console.log(response.data);
-            this.informe_lp_parte = JSON.parse(JSON.stringify(response.data))
+            var urlRegistros = 'partes/informe_lp/' + id + '?api_token=' + Laravel.user.api_token;    
+            let res = await axios.get(urlRegistros);
+            let informe_lp_parte = await res.data;         
 
-                this.informe_lp_parte.forEach(function(item){
-    
-                    this.TablaInformesLp.push({ 
-                        id      : id,
-                        numero_formateado  : this.informes[index].numero_formateado,               
-                        visible : true,
-                        pieza_original : item.pieza,
-                        pieza_final : item.pieza,
-                        metros_lineales : '', 
-                        metodo : item.metodo,
-                        cm_original : item.cm,
-                        cm_final : item.cm
-                        
-                        });                       
-    
-                    }.bind(this));                
+            informe_lp_parte.forEach(function(item){
 
-            });
+                this.TablaInformesLp.push({ 
+
+                    id      : id,
+                    numero_formateado  : this.informes[index].numero_formateado,               
+                    visible : true,
+                    pieza_original : item.pieza,
+                    pieza_final : item.pieza,
+                    metros_lineales : '', 
+                    metodo : item.metodo,
+                    cm_original : item.cm,
+                    cm_final : item.cm
+                    
+                    });                       
+
+                }.bind(this));                
+
         },
 
-        getInformeUs(id,index){
+        async getInformeUs(id,index){
 
             axios.defaults.baseURL = this.url ;
-            var urlRegistros = 'partes/informe_us/' + id + '?api_token=' + Laravel.user.api_token;        
-            axios.get(urlRegistros).then(response =>{
-            this.informe_us_parte = response.data 
+            var urlRegistros = 'partes/informe_us/' + id + '?api_token=' + Laravel.user.api_token;       
+            let res = await axios.get(urlRegistros);
+            let informe_us_parte = await res.data;          
             
-            this.informe_us_parte.forEach(function(item){                    
+            informe_us_parte.forEach(function(item){                    
 
                 if(item.tecnica.codigo =='US' || item.tecnica.codigo =='PA'){
 
@@ -1757,9 +1748,8 @@ export default {
                         });
                }  
                                      
-            }.bind(this));
-           
-            });
+            }.bind(this));         
+         
 
             },
 

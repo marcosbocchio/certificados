@@ -68,7 +68,7 @@
                                     <tbody>
                                         <tr v-for="(parte,k) in partes" :key="k">
                                             <td>
-                                                <input type="checkbox" id="informe_sel" v-model="partes[k].parte_sel" @change="getPartes(k)">
+                                                <input type="checkbox" id="informe_sel" v-model="partes[k].parte_sel" @change="getPartes(k)" :disabled="loading">
                                             </td>                                                                                    
                                             <td>{{ parte.numero_formateado}}</td>
                                             <td>{{ parte.obra}}</td>  
@@ -315,6 +315,7 @@ export default {
         indexTablaPartesProductosPorPlacas:-1,
         indexTablaPartesProductosPorCosturas:-1,
         indexTablaPartesServicios:-1,
+        loading : false,
        }
     },
 
@@ -387,8 +388,9 @@ export default {
             });
         },
 
-         getPartes(index){ 
-
+        async getPartes(index){ 
+        
+           this.loading = true;    
            if(this.partes[index].parte_sel){               
                      
                 this.partes.forEach(function(item){
@@ -399,7 +401,7 @@ export default {
                 this.TablaPartesServicios = [];
                 this.TablaPartesProductosPorPlacas = [];
                 this.TablaPartesProductosPorCosturas = [];                  
-                this.seleccionarAnteriores(index);  
+                await this.seleccionarAnteriores(index);  
                 
             }else{
                     
@@ -407,6 +409,7 @@ export default {
                     this.deleteProductosParte(this.partes[index].id)                  
                     
             }
+           this.loading = false;
         },
 
         async  seleccionarAnteriores(index){                    

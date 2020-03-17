@@ -29,8 +29,8 @@ class InformeImportadosRequest extends FormRequest
             'prefijo'                   => 'nullable|Max:10',  
             'numero'                    => 'required',
             'ejecutor_ensayo'           => 'required',
-            'path'                      =>'required',
-            'observaciones'             => 'nullable|Max:250',  
+            'path'                      => 'required',
+            'observaciones'             => 'required | Max:250',  
 
         ];
     }

@@ -44,7 +44,7 @@
                             </div> 
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label>Observaciones</label>
+                                    <label>Observaciones *</label>
                                     <textarea v-model="Registro.observaciones" class="form-control noresize" rows="3" placeholder="" maxlength="250"></textarea>
                                 </div>
                             </div>
