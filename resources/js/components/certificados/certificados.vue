@@ -571,7 +571,6 @@ export default {
         axios.defaults.baseURL = this.url ;
         var urlRegistros = 'certificados/parte/' + id + '/servicios' + '?api_token=' + Laravel.user.api_token;  
         let res = await axios.get(urlRegistros);
-
         let parte_servicios = await res.data; 
         parte_servicios.forEach(function(item) {          
 

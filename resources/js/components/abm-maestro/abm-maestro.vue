@@ -6,11 +6,11 @@
       <button class="btn btn-primary" v-on:click.prevent="openNuevoRegistro()" :disabled="!$can(permiso_create)">Nuevo</button>
     </div>
 
-    <div v-show="modelo=='users'">
+    <div v-show="modelo == 'users' || modelo == 'interno_equipos' || modelo == 'clientes'" >
       <div class="col-md-3 col-md-offset-6 col-xs-9">       
         <div class="input-group">
-            <input type="text" v-model="search" class="form-control" @input="aplicarFiltro()"  placeholder="Buscar...">
-            <span class="input-group-addon"  style="background-color: #F9CA33;"><i class="fa fa-search"></i></span>
+            <input type="text" v-model="search" class="form-control" placeholder="Buscar...">
+            <span class="input-group-addon btn" @click="aplicarFiltro()" style="background-color: #F9CA33;"><i class="fa fa-search"></i></span>
         </div>  
       </div>
     </div>
@@ -111,7 +111,6 @@
 
            aplicarFiltro : function(){
 
-              console.log(this.search);
               this.getResults(1,this.search);
 
             },

@@ -136,8 +136,8 @@
     <div class="col-md-3 col-md-offset-9">
       <div class="form-group"> 
           <div class="input-group">
-              <input type="text" v-model="search" class="form-control" @input="aplicarFiltro()"  placeholder="Buscar...">
-              <span class="input-group-addon"  style="background-color: #F9CA33;"><i class="fa fa-search"></i></span>
+              <input type="text" v-model="search" class="form-control" placeholder="Buscar...">
+              <span class="input-group-addon btn" @click="aplicarFiltro()" style="background-color: #F9CA33;"><i class="fa fa-search"></i></span>
           </div>  
       </div>
     </div>

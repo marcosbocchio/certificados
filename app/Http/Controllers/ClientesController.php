@@ -44,17 +44,17 @@ class ClientesController extends Controller
 
         $filtro = $request->search;
         $clientes =  Clientes:: with('contactos')
-                             //   ->with('localidad')                                
+                               ->with('localidad.provincia')                                
                                 ->Filtro($filtro)
                                 ->orderBy('id','DESC')
                                 ->paginate(10);        
-    
+    /*
         foreach ($clientes as $cliente) {
 
             $provincia = Provincias::find($cliente->localidad['provincia_id']);
             $cliente->provincia = $provincia;
         }
-
+*/
       return $clientes;
 
     }

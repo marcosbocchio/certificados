@@ -33,8 +33,15 @@ class InternoEquiposController extends Controller
     }
 
     public function paginate(Request $request){
-      
-        $interno_equipos = InternoEquipos::orderBy('id','DESC')->with('ot.localidad.provincia','ot.cliente')->with('equipo')->with('internoFuente.fuente')->paginate(10);
+
+        $filtro = $request->search;
+      //  return $filtro;
+        $interno_equipos = InternoEquipos::orderBy('id','DESC')
+                                          ->with('ot.localidad.provincia','ot.cliente')
+                                          ->with('equipo.metodoEnsayos')
+                                          ->with('internoFuente.fuente')
+                                          ->Filtro($filtro)
+                                          ->paginate(10);
 
         foreach ( $interno_equipos as $interno_equipo) {
           

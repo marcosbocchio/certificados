@@ -14,6 +14,7 @@ class UserController extends Controller
 
     public function __construct(UserRepository $userRepository)
     {
+
       $this->middleware(['role_or_permission:Super Admin|M_usuarios'], ['only' => ['callView']]);    
 
       $this->users = $userRepository;
@@ -22,6 +23,7 @@ class UserController extends Controller
 
     public function index(Request $request)
     {   
+
       return User::with('cliente')->get();
   
     }
@@ -49,7 +51,7 @@ class UserController extends Controller
 
     public function store(UserRequest $request){          
 
-    $this->users->create($request->all()) ;      
+        $this->users->create($request->all()) ;      
     
     }
 
@@ -63,16 +65,17 @@ class UserController extends Controller
 
       return User::where('cliente_id',null)->get();
 
-  }
+    }
 
-  public function update(UserRequest $request,$id){
-     
-    return $this->users->updateUser($request,$id);
+    public function update(UserRequest $request,$id){
+      
+      return $this->users->updateUser($request,$id);
 
-  }
+    }
 
-  public function UserCliente($id){
+    public function UserCliente($id){
 
-    return User::where('cliente_id',$id)->get();
-  }
+      return User::where('cliente_id',$id)->get();
+    }
+    
 }

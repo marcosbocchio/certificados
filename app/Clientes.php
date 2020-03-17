@@ -29,7 +29,9 @@ class Clientes extends Model
               $query->WhereRaw("clientes.nombre_fantasia LIKE '%" . $filtro . "%'")
                     ->orWhereRaw("clientes.razon_social LIKE '%" . $filtro . "%'")    
                     ->orWhereRaw("clientes.email LIKE '%" . $filtro . "%'")
-                    ->orWhereRaw("localidades.localidad LIKE '%" . $filtro . "%'");  
+                    ->orWhereHas('localidad', function ($q) use($filtro) {
+                        $q->WhereRaw("localidades.localidad LIKE '%" . $filtro . "%'");
+                    });  
        
         }
      

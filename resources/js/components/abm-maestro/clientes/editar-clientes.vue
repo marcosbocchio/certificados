@@ -328,7 +328,7 @@ export default {
                 this.newRegistro.direccion = this.selectRegistro.direccion;
                 this.newRegistro.cp = this.selectRegistro.cp;
                 this.newRegistro.path = this.selectRegistro.path;
-                this.provincia=this.selectRegistro.provincia;
+                this.provincia=this.selectRegistro.localidad.provincia;
                 this.localidad=this.selectRegistro.localidad;
                 this.contacto = {
                     'nombre'  : '',

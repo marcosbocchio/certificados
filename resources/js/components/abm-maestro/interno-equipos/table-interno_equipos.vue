@@ -7,6 +7,7 @@
           <tr>
             <th>N° Int.</th>
             <th>Equipo</th>
+            <th>Método</th>
             <th>Fuente</th>
             <th>Actividad</th>
             <th>N° OT</th>
@@ -19,6 +20,7 @@
           <tr v-for="registro in registros" :key="registro.id">                        
             <td>{{ registro.nro_interno }}</td>
             <td>{{ registro.equipo.codigo }}</td>  
+            <td>{{ registro.equipo.metodo_ensayos.metodo }}</td> 
             <td v-if="registro.interno_fuente" >{{ registro.interno_fuente.nro_serie }} - {{registro.interno_fuente.fuente.codigo}}</td>   
             <td v-else ></td> 
             <td v-if="registro.interno_fuente">{{ registro.interno_fuente.curie_actual }}&nbsp; Ci</td>
