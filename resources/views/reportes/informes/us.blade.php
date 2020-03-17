@@ -296,8 +296,16 @@ b {
             @foreach ($calibraciones_us as $calibracion)
                 <tr>
                     <td style="font-size: 10px; width:80px;text-align: center;"class="bordered-td">{{ strtoupper($calibracion->zapata) }}</td>
-                    <td style="font-size: 10px; width:80px;text-align: center;" class="bordered-td">{{$calibracion->palpador->codigo}}</td>
-                    <td style="font-size: 10px; width:79.7px;text-align: center;" class="bordered-td">{{$calibracion->palpador->nro_serie}}</td>
+                    <td style="font-size: 10px; width:80px;text-align: center;" class="bordered-td">
+                        @if ($calibracion->palpador)
+                          {{$calibracion->palpador->codigo}}    
+                        @endif
+                    </td>
+                    <td style="font-size: 10px; width:79.7px;text-align: center;" class="bordered-td">
+                        @if ($calibracion->palpador)
+                           {{$calibracion->palpador->nro_serie}}
+                        @endif
+                    </td>
                     <td style="font-size: 10px; width:20.9px;  text-align: center;" class="bordered-td">{{$calibracion->frecuencia}}</td> 
                     <td style="font-size: 10px; width:42.8px;text-align: center;" class="bordered-td">{{$calibracion->angulo_apertura}}</td>          
                     <td style="font-size: 10px; width:39.7px;text-align: center;" class="bordered-td">{{$calibracion->rango}}</td>               

@@ -127,6 +127,9 @@ footer table tbody tr td .abreviaturas{
 <footer>
     <table style="text-align: center" width="100%" class="bordered">
         <tbody>
+        {{ $cliente_sn = filter_var($resumen_cliente_sn,FILTER_VALIDATE_BOOLEAN) }}    
+        @if (!$cliente_sn)
+            
             <tr>
                 <td style="font-size: 10px;height: 18px;width: 100px;" class="bordered-td"><strong style="margin-left: 10px;"> ESTADOS </strong></td>
                 <td style="font-size: 10px;height: 18px;" class="bordered-td">
@@ -142,7 +145,9 @@ footer table tbody tr td .abreviaturas{
                         <strong>D:</strong> Deteriorado
                     </div>
                 </td>     
-            </tr>      
+            </tr> 
+
+        @endif
         </tbody>
     </table>
 </footer>

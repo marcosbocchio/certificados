@@ -73,7 +73,7 @@ desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class="sidebar-mini skin-yellow fixed sidebar-mini-expand-feature"  style="height: auto; min-height: 100%;">
+<body class="hold-transition skin-yellow fixed sidebar-mini">
 
 @include('layouts.enod.partials.header')
 @include('layouts.enod.partials.sidebar-menu')

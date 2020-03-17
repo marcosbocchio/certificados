@@ -173,200 +173,207 @@
 
                   </div>
                </div>
+               <div v-show="tecnica">
 
-               <div class="box box-custom-enod">
-                   <div class="box-body">
-                        <div class="box-header with-border">
-                            <h5 class="box-title">Calibraciones</h5>
-                            <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                                </button>                       
-                            </div>
-                        </div>
-                            <div>&nbsp;</div>
-
-                        <div class="col-md-3">                       
-                            <div class="form-group" >
-                                <label for="zapata" title="Zapata">Zapata *</label>
-                                <input type="text" v-model="zapata" class="form-control" id="zapata">
-                            </div>         
-                        </div>
-
-                        <div class="col-md-3" >                       
-                            <div class="form-group">
-                                <label for="palpador" title="Palpador">Palpador *</label>
-                                <v-select v-model="palpador" label="codigo" :options="palpadores" id="palpador"></v-select>   
-                            </div>      
-                        </div>  
-
-                        <div class="col-md-3">                       
-                            <div class="form-group" >
-                                <label for="frecuencia" title="Frecuencia (Mhz)">Frecuencia (Mhz) *</label>
-                                <input type="number" v-model="frecuencia" class="form-control" id="frecuencia">
-                            </div>         
-                        </div>
-
-                        <div class="col-md-3">                       
-                            <div class="form-group" >
-                                <label for="angulo_apertura" title="Ángulo Apertura">Angulo Apertura *</label>
-                                <input type="text" v-model="angulo_apertura" class="form-control" id="angulo_apertura">
-                            </div>         
-                        </div>
-
-                        <div class="col-md-3">                       
-                            <div class="form-group" >
-                                <label for="rango">Rango *</label>
-                                <input type="text" v-model="rango" class="form-control" id="rango">
-                            </div>         
-                        </div>
-
-                        <div class="col-md-3">                       
-                            <div class="form-group" >
-                                <label for="posicion" title="Posición">Posición *</label>
-                                <input type="text" v-model="posicion" class="form-control" id="posicion">
-                            </div>         
-                        </div>
-
-                        <div class="col-md-3">                       
-                            <div class="form-group" >
-                                <label for="curva_elevacion" title="Curva Elevación">Curva Elevación *</label>
-                                 <v-select v-model="curva_elevacion" :options="['DAC', 'TCG']"></v-select>
-                            </div>         
-                        </div>
-
-                        <div class="col-md-3">                       
-                            <div class="form-group" >
-                                <label for="block_calibracion" title="Block Calibración">Block Calibración *</label>
-                                 <v-select v-model="block_calibracion" :options="['V1', 'V2']"></v-select>
-                            </div>         
-                        </div>
-
-                       <div class="clearfix"></div>  
-
-                        <div class="col-md-3">                       
-                            <div class="form-group" >
-                                <label for="block_sensibilidad" title="Block Sensibilidad">Block Sensibilidad *</label>
-                                <input type="number" v-model="block_sensibilidad" class="form-control" id="block_sensibilidad">
-                            </div>         
-                        </div>                     
-
-                        <div class="col-md-3">                       
-                            <div class="form-group" >
-                                <label for="tipo_reflector" title="Tipo Reflector">Tipo Reflector *</label>
-                                 <v-select v-model="tipo_reflector" :options="['Ø', 'Ħ']"></v-select>
-                            </div>         
-                        </div>
-
-
-                        <div class="col-md-3">                       
-                            <div class="form-group" >
-                                <label for="reflector_referencia" title="Reflector Referencia (mm)">Reflector Referencia (mm) *</label>
-                                <input type="number" v-model="reflector_referencia" class="form-control" id="reflector_referencia" step="0.1">
-                            </div>         
-                        </div>
-
-                        <div class="col-md-3">                       
-                            <div class="form-group" >
-                                <label for="ganancia_referencia" title="Ganancia Referencia (dB)">Ganancia Referencia (dB) *</label>
-                                <input type="number" v-model="ganancia_referencia" class="form-control" id="ganancia_referencia">
-                            </div>         
-                        </div>
-
-                        <div class="col-md-3">                       
-                            <div class="form-group" >
-                                <label for="nivel_registro" title="Nivel Registro">Nivel Registro *</label>
-                                <input type="number" v-model="nivel_registro" class="form-control" id="nivel_registro">
-                            </div>         
-                        </div>
-
-                        <div class="col-md-3">                       
-                            <div class="form-group" >
-                                <label for="correccion_transferencia" title="Corrección Transferencia (dB)">Corrección Transferencia (dB) *</label>
-                                <input type="number" v-model="correccion_transferencia" class="form-control" id="correccion_transferencia">
-                            </div>         
-                        </div>
-
-                        <div class="col-md-3">                       
-                            <div class="form-group" >
-                                <label for="adicional_barrido" title="Adicional Barrido (dB)">Adicional Barrido (dB) *</label>
-                                <input type="number" v-model="adicional_barrido" class="form-control" id="adicional_barrido">
-                            </div>         
-                        </div>
-
-                        <div class="col-md-3">                       
-                            <div class="form-group" >
-                                <label for="amplificacion_total" title="Amplificación Total (dB)">Amplificación Total (dB) *</label>
-                                <input type="number" v-model="amplificacion_total" class="form-control" id="amplificacion_total">
-                            </div>         
-                        </div>
-                        
-                       <div class="clearfix"></div>  
-
-                        <div class="col-md-1">                                               
-                            <span>
-                              <button type="button" @click="addCalibraciones"><span class="fa fa-plus-circle"></span></button> 
-                            </span>                            
-                        </div>
-                         <div class="form-group">
-                            &nbsp;
-                        </div>
-                        <div v-if="calibraciones.length">
-                            <div class="col-md-12">
-                                <div class="table-responsive">
-                                    <table class="table table-hover table-striped table-bordered">
-                                        <thead>
-                                            <tr>                                  
-                                                <th class="col-md-1">Zapata</th>                                  
-                                                <th class="col-md-1">Palpador</th>
-                                                <th class="col-md-1">Frec</th>
-                                                <th class="col-md-1">A.P.</th> 
-                                                <th class="col-md-1">Rango</th>  
-                                                <th class="col-md-1">Pos</th>  
-                                                <th class="col-md-1">C.E.</th>  
-                                                <th class="col-md-1">B.C.</th>  
-                                                <th class="col-md-1">B.S.</th>  
-                                                <th class="col-md-1">T.R.</th>  
-                                                <th class="col-md-1">R.R.</th>  
-                                                <th class="col-md-1">G.R.</th>  
-                                                <th class="col-md-1">N.R.</th>  
-                                                <th class="col-md-1">C.T.</th>  
-                                                <th class="col-md-1">A.B.</th>  
-                                                <th class="col-md-1">A.T.</th> 
-                                                <th colspan="2" style="width:30px;">&nbsp;</th>                                            
-                                            </tr>
-                                        </thead>                         
-                                        <tbody>
-                                            <tr v-for="(calibracion,k) in  (calibraciones)" :key="k" >                                         
-                                                <td>{{ calibracion.zapata }}</td>                                            
-                                                <td>{{ calibracion.palpador.codigo }} </td>
-                                                <td>{{ calibracion.frecuencia }} </td>
-                                                <td>{{ calibracion.angulo_apertura }} </td>    
-                                                <td>{{ calibracion.rango }}</td>
-                                                <td>{{ calibracion.posicion }}</td>    
-                                                <td>{{ calibracion.curva_elevacion }}</td>
-                                                <td>{{ calibracion.block_calibracion }}</td> 
-                                                <td>{{ calibracion.block_sensibilidad }}</td>
-                                                <td>{{ calibracion.tipo_reflector }}</td> 
-                                                <td>{{ calibracion.reflector_referencia }}</td>
-                                                <td>{{ calibracion.ganancia_referencia }}</td> 
-                                                <td>{{ calibracion.nivel_registro }}</td>
-                                                <td>{{ calibracion.correccion_transferencia }}</td> 
-                                                <td>{{ calibracion.adicional_barrido }}</td>
-                                                <td>{{ calibracion.amplificacion_total }}</td>                                   
-                                                <td> 
-                                                    <a  @click="EditCalibraciones(k)"> <app-icon img="edit" color="black"></app-icon> </a>
-                                                </td>
-                                                <td>
-                                                    <a  @click="removeCalibraciones(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a>
-                                                </td>          
-
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                   <div class="box box-custom-enod">
+                       <div class="box-body">
+                            <div class="box-header with-border">
+                                <h5 class="box-title">Calibraciones</h5>
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                    </button>                       
                                 </div>
                             </div>
-                        </div>                 
-                    </div>                   
+                                <div>&nbsp;</div>
+    
+                            <div class="col-md-3">                       
+                                <div class="form-group" >
+                                    <label for="zapata" title="Zapata">Zapata *</label>
+                                    <input type="text" v-model="zapata" class="form-control" id="zapata">
+                                </div>         
+                            </div>
+    
+                            <div  v-show="tecnica.codigo !='ME'"  class="col-md-3" >                       
+                                <div class="form-group">
+                                    <label for="palpador" title="Palpador">Palpador *</label>
+                                    <v-select v-model="palpador" label="codigo" :options="palpadores" id="palpador"></v-select>   
+                                </div>      
+                            </div>  
+    
+                            <div v-show="tecnica.codigo !='ME'" class="col-md-3">                       
+                                <div class="form-group" >
+                                    <label for="frecuencia" title="Frecuencia (Mhz)">Frecuencia (Mhz) *</label>
+                                    <input type="number" v-model="frecuencia" class="form-control" id="frecuencia">
+                                </div>         
+                            </div>
+    
+                            <div v-show="tecnica.codigo !='ME'" class="col-md-3">                       
+                                <div class="form-group" >
+                                    <label for="angulo_apertura" title="Ángulo Apertura">Angulo Apertura *</label>
+                                    <input type="text" v-model="angulo_apertura" class="form-control" id="angulo_apertura">
+                                </div>         
+                            </div>
+    
+                            <div v-show="tecnica.codigo !='ME'" class="col-md-3">                       
+                                <div class="form-group" >
+                                    <label for="rango">Rango *</label>
+                                    <input type="text" v-model="rango" class="form-control" id="rango">
+                                </div>         
+                            </div>
+    
+                            <div v-show="tecnica.codigo !='ME'" class="col-md-3">                       
+                                <div class="form-group" >
+                                    <label for="posicion" title="Posición">Posición *</label>
+                                    <input type="text" v-model="posicion" class="form-control" id="posicion">
+                                </div>         
+                            </div>
+    
+                            <div class="col-md-3">                       
+                                <div class="form-group" >
+                                    <label for="curva_elevacion" title="Curva Elevación">Curva Elevación *</label>
+                                     <v-select v-model="curva_elevacion" :options="['DAC', 'TCG']"></v-select>
+                                </div>         
+                            </div>
+    
+                            <div v-show="tecnica.codigo !='ME'" class="col-md-3">                       
+                                <div class="form-group" >
+                                    <label for="block_calibracion" title="Block Calibración">Block Calibración *</label>
+                                     <v-select v-model="block_calibracion" :options="['V1', 'V2']"></v-select>
+                                </div>         
+                            </div>
+
+                            <div v-show="tecnica.codigo !='ME'">   
+                               <div class="clearfix"></div>  
+                            </div> 
+
+                            <div class="col-md-3">                       
+                                <div class="form-group" >
+                                    <label for="block_sensibilidad" title="Block Sensibilidad">Block Sensibilidad *</label>
+                                    <input type="number" v-model="block_sensibilidad" class="form-control" id="block_sensibilidad">
+                                </div>         
+                            </div>                     
+    
+                            <div class="col-md-3">                       
+                                <div class="form-group" >
+                                    <label for="tipo_reflector" title="Tipo Reflector">Tipo Reflector *</label>
+                                     <v-select v-model="tipo_reflector" :options="['Ø', 'Ħ']"></v-select>
+                                </div>         
+                            </div>
+
+                            <div v-show="tecnica.codigo =='ME'">   
+                                <div class="clearfix"></div>  
+                            </div> 
+    
+                            <div class="col-md-3">                       
+                                <div class="form-group" >
+                                    <label for="reflector_referencia" title="Reflector Referencia (mm)">Reflector Referencia (mm) *</label>
+                                    <input type="number" v-model="reflector_referencia" class="form-control" id="reflector_referencia" step="0.1">
+                                </div>         
+                            </div>
+    
+                            <div class="col-md-3">                       
+                                <div class="form-group" >
+                                    <label for="ganancia_referencia" title="Ganancia Referencia (dB)">Ganancia Referencia (dB) *</label>
+                                    <input type="number" v-model="ganancia_referencia" class="form-control" id="ganancia_referencia">
+                                </div>         
+                            </div>
+    
+                            <div class="col-md-3">                       
+                                <div class="form-group" >
+                                    <label for="nivel_registro" title="Nivel Registro">Nivel Registro *</label>
+                                    <input type="number" v-model="nivel_registro" class="form-control" id="nivel_registro">
+                                </div>         
+                            </div>
+    
+                            <div class="col-md-3">                       
+                                <div class="form-group" >
+                                    <label for="correccion_transferencia" title="Corrección Transferencia (dB)">Corrección Transferencia (dB) *</label>
+                                    <input type="number" v-model="correccion_transferencia" class="form-control" id="correccion_transferencia">
+                                </div>         
+                            </div>
+    
+                            <div class="col-md-3">                       
+                                <div class="form-group" >
+                                    <label for="adicional_barrido" title="Adicional Barrido (dB)">Adicional Barrido (dB) *</label>
+                                    <input type="number" v-model="adicional_barrido" class="form-control" id="adicional_barrido">
+                                </div>         
+                            </div>
+    
+                            <div class="col-md-3">                       
+                                <div class="form-group" >
+                                    <label for="amplificacion_total" title="Amplificación Total (dB)">Amplificación Total (dB) *</label>
+                                    <input type="number" v-model="amplificacion_total" class="form-control" id="amplificacion_total">
+                                </div>         
+                            </div>
+                            
+                           <div class="clearfix"></div>  
+    
+                            <div class="col-md-1">                                               
+                                <span>
+                                  <button type="button" @click="addCalibraciones"><span class="fa fa-plus-circle"></span></button> 
+                                </span>                            
+                            </div>
+                             <div class="form-group">
+                                &nbsp;
+                            </div>
+                            <div v-if="calibraciones.length">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-striped table-bordered">
+                                            <thead>
+                                                <tr>                                  
+                                                    <th class="col-md-1">Zapata</th>                                  
+                                                    <th class="col-md-1">Palpador</th>
+                                                    <th class="col-md-1">Frec</th>
+                                                    <th class="col-md-1">A.P.</th> 
+                                                    <th class="col-md-1">Rango</th>  
+                                                    <th class="col-md-1">Pos</th>  
+                                                    <th class="col-md-1">C.E.</th>  
+                                                    <th class="col-md-1">B.C.</th>  
+                                                    <th class="col-md-1">B.S.</th>  
+                                                    <th class="col-md-1">T.R.</th>  
+                                                    <th class="col-md-1">R.R.</th>  
+                                                    <th class="col-md-1">G.R.</th>  
+                                                    <th class="col-md-1">N.R.</th>  
+                                                    <th class="col-md-1">C.T.</th>  
+                                                    <th class="col-md-1">A.B.</th>  
+                                                    <th class="col-md-1">A.T.</th> 
+                                                    <th colspan="2" style="width:30px;">&nbsp;</th>                                            
+                                                </tr>
+                                            </thead>                         
+                                            <tbody>
+                                                <tr v-for="(calibracion,k) in  (calibraciones)" :key="k" >                                         
+                                                    <td>{{ calibracion.zapata }}</td>                                            
+                                                    <td>{{ calibracion.palpador.codigo }} </td>
+                                                    <td>{{ calibracion.frecuencia }} </td>
+                                                    <td>{{ calibracion.angulo_apertura }} </td>    
+                                                    <td>{{ calibracion.rango }}</td>
+                                                    <td>{{ calibracion.posicion }}</td>    
+                                                    <td>{{ calibracion.curva_elevacion }}</td>
+                                                    <td>{{ calibracion.block_calibracion }}</td> 
+                                                    <td>{{ calibracion.block_sensibilidad }}</td>
+                                                    <td>{{ calibracion.tipo_reflector }}</td> 
+                                                    <td>{{ calibracion.reflector_referencia }}</td>
+                                                    <td>{{ calibracion.ganancia_referencia }}</td> 
+                                                    <td>{{ calibracion.nivel_registro }}</td>
+                                                    <td>{{ calibracion.correccion_transferencia }}</td> 
+                                                    <td>{{ calibracion.adicional_barrido }}</td>
+                                                    <td>{{ calibracion.amplificacion_total }}</td>                                   
+                                                    <td> 
+                                                        <a  @click="EditCalibraciones(k)"> <app-icon img="edit" color="black"></app-icon> </a>
+                                                    </td>
+                                                    <td>
+                                                        <a  @click="removeCalibraciones(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a>
+                                                    </td>          
+    
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>                 
+                        </div>                   
+                   </div>
                </div>
                <div class="box box-custom-enod">
                    <div class="box-body">
@@ -429,7 +436,7 @@
                    </div>
                </div>
                         
-              <div v-if="tecnica.codigo == 'US' || tecnica.codigo == 'PA'"> 
+              <div v-if="tecnica && (tecnica.codigo == 'US' || tecnica.codigo == 'PA')"> 
                     <div class="box box-custom-enod">                
 
                         <div class="box-header with-border">
@@ -584,7 +591,7 @@
                         </div>
                     </div>   
                  </div> 
-               <div v-else-if="tecnica.codigo == 'ME' && generatrices.length > 0 ">
+               <div v-else-if="tecnica && (tecnica.codigo == 'ME' && generatrices.length > 0 )">
                    <div class="box box-custom-enod">
                         <div class="box-body">   
                             <div class="box-header with-border">
@@ -1088,8 +1095,6 @@ export default {
          setEdit : function(){
 
             if(this.editmode) {
-
-                console.log('entro en edit mode');
             
                this.fecha   = this.informedata.fecha;
                this.numero_inf = this.informedata.numero;
@@ -1151,17 +1156,15 @@ export default {
                 axios.defaults.baseURL = this.url ;
                     var urlRegistros = 'informes/ot/' + this.otdata.id + '/metodo/' + this.metodo + '/generar-numero-informe'  + '?api_token=' + Laravel.user.api_token;         
                     axios.get(urlRegistros).then(response =>{
-                    this.numero_inf_generado = response.data 
-                    
+                    this.numero_inf_generado = response.data                     
                 
-                    if(this.numero_inf_generado.length){
+                        if(this.numero_inf_generado.length){
 
-                        this.numero_inf =  this.numero_inf_generado[0].numero_informe
-                    }else{
+                            this.numero_inf =  this.numero_inf_generado[0].numero_informe
+                        }else{
 
-                        this.numero_inf = 1;
-                    }
-                    
+                            this.numero_inf = 1;
+                        }                    
                     
                     });   
              }
@@ -1227,55 +1230,55 @@ export default {
                 return ;
              }
 
-            if (!this.palpador){
+            if (this.tecnica.codigo !='ME' && !this.palpador){
 
                  toastr.error('El campo palpador es obligatorio'); 
                  return ;            
             }
 
-            if (!this.frecuencia){
+            if (this.tecnica.codigo !='ME' && !this.frecuencia){
 
                  toastr.error('El campo frecuencia es obligatorio'); 
                  return ;            
             }
 
-            if(this.frecuencia  > 999 ){
+            if(this.tecnica.codigo !='ME' && this.frecuencia  > 999 ){
 
                 toastr.error('El campo frecuencia no debe ser mayor a 999'); 
                 return ;
              }
 
-            if (!this.angulo_apertura){
+            if (this.tecnica.codigo !='ME' && !this.angulo_apertura){
 
                  toastr.error('El campo angulo apertura es obligatorio'); 
                  return ;            
             }
 
-            if(this.angulo_apertura.length  > 10){
+            if(this.tecnica.codigo !='ME' && this.angulo_apertura.length  > 10){
 
                 toastr.error('El campo angulo apertura no debe contener más de 10 caracteres'); 
                 return ;
              }
 
-            if (!this.rango){
+            if (this.tecnica.codigo !='ME' && !this.rango){
 
                  toastr.error('El campo rango es obligatorio'); 
                  return ;            
             }
 
-            if(this.rango.length  > 10){
+            if(this.tecnica.codigo !='ME' && this.rango.length  > 10){
 
                 toastr.error('El campo rango no debe contener más de 10 caracteres'); 
                 return ;
              }   
 
-            if (!this.posicion){
+            if (this.tecnica.codigo !='ME' && !this.posicion){
 
                  toastr.error('El campo posicion es obligatorio'); 
                  return ;            
             }
 
-            if(this.posicion.length  > 10){
+            if(this.tecnica.codigo !='ME' && this.posicion.length  > 10){
 
                 toastr.error('El campo posicion no debe contener más de 10 caracteres'); 
                 return ;
@@ -1293,13 +1296,13 @@ export default {
                 return ;
              }    
              
-            if (!this.block_calibracion){
+            if (this.tecnica.codigo !='ME' && !this.block_calibracion){
 
                  toastr.error('El campo block calibracion es obligatorio'); 
                  return ;            
             }
 
-            if(this.block_calibracion.length  > 2){
+            if(this.tecnica.codigo !='ME' && this.block_calibracion.length  > 2){
 
                 toastr.error('El campo block calibracion no debe contener más de 2 caracteres'); 
                 return ;
@@ -1418,10 +1421,9 @@ export default {
                 correccion_transferencia :this.correccion_transferencia,     
                 nivel_registro :this.nivel_registro ,     
                 adicional_barrido :this.adicional_barrido,     
-                amplificacion_total :this.amplificacion_total,     
-              
+                amplificacion_total :this.amplificacion_total,               
                     
-                 });          
+             });          
         },
 
          addTabla_us_pa : function () {
@@ -1648,8 +1650,7 @@ export default {
 
                    mediciones[g][p] = '';
                   
-              }
-             
+              }             
               
             }
 

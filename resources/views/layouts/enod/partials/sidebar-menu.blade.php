@@ -1,6 +1,6 @@
 <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
-    <section class="sidebar" style="height: auto;">
+    <section class="sidebar">
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
@@ -12,7 +12,7 @@
         </div>
       </div>
       <!-- sidebar menu: : style can be found in sidebar.less -->
-      <ul class="sidebar-menu tree" data-widget="tree">
+      <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>       
         <li><a href="{{ route('dashboard')}}" ><i class="fa fa-dashboard"></i> <span>TABLERO PRINCIPAL</span></a></li>   
         @can('OT')  

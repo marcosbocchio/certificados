@@ -8,12 +8,14 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="fecha">Fecha *</label>
+                                <input type="checkbox" id="checkbox_f" v-model="permitir_anteriores_sn" style="float:right"> 
+                                <label for="tipo" style="float:right;margin-right: 5px;">Permitir Anteriores</label>    
                                 <div class="input-group date">
                                     <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                     </div>
                                         <Datepicker v-model="fecha" :input-class="'form-control pull-right'" :language="es"></Datepicker>   
-                                </div>
+                                   </div>
                             </div>
                         </div>  
                         <div class="col-md-3">
@@ -138,11 +140,11 @@
                                     <tbody>
                                         <tr v-for="(informe,k) in informes" :key="k">
                                             <td>
-                                                <input type="checkbox" id="informe_sel" v-model="informes[k].informe_sel" @change="getInforme(k)" :disabled="(fecha_mysql != informe.fecha_formateada) || (obra != informe.obra)" >
+                                                <input type="checkbox" id="informe_sel" v-model="informes[k].informe_sel" @change="getInforme(k)" :disabled="deshabilitarInformes(informe.fecha_formateada,informe.obra)">
                                             </td>
                                             <td> {{ informe.metodo}}</td>                                                        
                                             <td> {{ informe.numero_formateado}}</td>
-                                            <td>{{ informe.obra}}</td>  
+                                            <td> {{ informe.obra}}</td>  
                                             <td> {{ informe.fecha_formateada}}</td>                                                                                                                      
                                         </tr>
                                     </tbody>
@@ -598,6 +600,7 @@ export default {
         es: es,
         obra:'',      
         fecha:'',   
+        permitir_anteriores_sn: false,
         tipo_servicio:'',
         horario:'',
         movilidad_propia_sn:false,
@@ -686,12 +689,34 @@ export default {
         
         fecha_mysql : function(){
 
-            return moment(this.fecha).format('DD/MM/YYYY');
+            return this.fecha ? moment(this.fecha).format('DD/MM/YYYY') : null;
         },
        
      },
 
     methods : {
+
+        deshabilitarInformes : function(fecha_informe,obra_informe){
+
+         
+            if(!this.fecha_mysql){
+
+                return true ;    
+
+            }else if(this.permitir_anteriores_sn){
+
+                return false;
+
+            }else if(this.fecha_mysql != fecha_informe || this.obra != obra_informe){
+
+                return true; 
+
+            }else{
+
+                return false;
+            }       
+          
+        },
 
         CargaDeDatos : function(){         
 
