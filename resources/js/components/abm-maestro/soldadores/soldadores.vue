@@ -7,9 +7,8 @@
                     <v-select class="style-chooser" v-model="cliente" label="nombre_fantasia" :options="clientes"></v-select>                  
                 </div>   
             </div>
-
-           <abm-maestro :modelo="modelo" ></abm-maestro> 
-      
+            <div class="clearfix"></div>
+            <abm-maestro :modelo="modelo" permiso_create="M_soldadores_edita"></abm-maestro> 
     </div>
 </template>
 
