@@ -22,7 +22,7 @@
                                 <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                                 </div>
-                                    <Datepicker v-model="periodo" :input-class="'form-control pull-right'" :language="es"></Datepicker>   
+                                    <Datepicker v-model="periodo" :minimumView="'month'" :maximumView="'month'" :input-class="'form-control pull-right'" :language="es"></Datepicker>   
                             </div>
                         </div>
                     </div>
@@ -49,11 +49,13 @@
                                             <th class="col-md-1">FILM</th>
                                             <th style="text-align:center;" class="col-md-1">mSv</th>  
                                             <th style="text-align:center;" class="col-md-1"> PERIODO</th>
-                                            <th class="col-md-2">
-                                            <input type="checkbox" id="checkbox" v-model="sel_checkbox"> 
-                                        <!--    <button title="Borrar Periodos" @click="DeletePeriodos()" style="display:inline-block;margin-left:5px;" class="btn btn-xs btn-Primary"><app-icon img="trash" color="black"></app-icon></button> -->
-                                            <button title="Setear Periodos" @click="SetearPeriodos()" style="display:inline-block;margin-left:5px;" class="btn btn-xs btn-Primary"><app-icon img="edit" color="black"></app-icon></button>
-
+                                            <th class="col-md-2">                                              
+                                                   
+                                                        <input type="checkbox" id="checkbox" v-model="sel_checkbox" style="vertical-align:middle"> 
+                                                        <span title="Setear Periodos" @click="SetearPeriodos()" style="display:inline-block;margin-left:11px;padding-top: 5px;" class="btn btn-xs btn-Primary"><app-icon img="edit" color="black"></app-icon></span>
+                                                        <span title="Borrar Periodos" @click="DeletePeriodos()" style="display:inline-block;margin-left:5px;padding-top: 5px;" class="btn btn-xs btn-Primary"><app-icon img="trash" color="black"></app-icon></span> 
+                                                 
+                                              
                                             </th>                                                     
                                         </tr>
                                     </thead>
