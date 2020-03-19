@@ -836,13 +836,14 @@ export default {
 
         },
                 
-        getCms: function(){
-             
-            console.log('medidas/cm');
+        getCms: function(){             
+           
             axios.defaults.baseURL = this.url ;
             var urlRegistros = 'medidas/cm/' + '?api_token=' + Laravel.user.api_token;        
             axios.get(urlRegistros).then(response =>{
+
             this.cms = response.data
+
             });
         }, 
 
@@ -1334,8 +1335,7 @@ export default {
             axios.get(urlRegistros).then(response =>{
      
               let informe_servicios = response.data;
-              console.log('entro en servicios generales');
-              console.log(response.data);
+
               let cantidad = 0;  
               informe_servicios.forEach(function(item) {
 

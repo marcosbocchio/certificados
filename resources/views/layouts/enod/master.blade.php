@@ -104,6 +104,8 @@ desired effect
 <script src="{{asset('adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('js/adminlte.min.js')}}"></script>
+<!-- SlimScroll -->
+<script src="{{asset('js/jquery.slimscroll.min.js')}}"></script>
 @yield('script')
 
 <script>

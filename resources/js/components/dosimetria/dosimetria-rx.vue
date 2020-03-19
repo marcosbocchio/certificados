@@ -49,13 +49,12 @@
                                             <th class="col-md-1">FILM</th>
                                             <th style="text-align:center;" class="col-md-1">mSv</th>  
                                             <th style="text-align:center;" class="col-md-1"> PERIODO</th>
-                                            <th class="col-md-2">                                              
+                                            <th class="col-md-2">                                          
                                                    
-                                                        <input type="checkbox" id="checkbox" v-model="sel_checkbox" style="vertical-align:middle"> 
-                                                        <span title="Setear Periodos" @click="SetearPeriodos()" style="display:inline-block;margin-left:11px;padding-top: 5px;" class="btn btn-xs btn-Primary"><app-icon img="edit" color="black"></app-icon></span>
-                                                        <span title="Borrar Periodos" @click="DeletePeriodos()" style="display:inline-block;margin-left:5px;padding-top: 5px;" class="btn btn-xs btn-Primary"><app-icon img="trash" color="black"></app-icon></span> 
+                                                <input type="checkbox" id="checkbox" v-model="sel_checkbox" style="vertical-align:middle"> 
+                                                <span title="Setear Períodos" @click="SetearPeriodos()" style="display:inline-block;margin-left:11px;padding-top: 5px;" class="btn btn-xs btn-Primary"><app-icon img="edit" color="black"></app-icon></span>
+                                                <span title="Borrar Períodos" @click="DeletePeriodos()" style="display:inline-block;margin-left:5px;padding-top: 5px;" class="btn btn-xs btn-Primary"><app-icon img="trash" color="black"></app-icon></span> 
                                                  
-                                              
                                             </th>                                                     
                                         </tr>
                                     </thead>
