@@ -311,7 +311,15 @@ b {
                     <td style="font-size: 10px; width:39.7px;text-align: center;" class="bordered-td">{{$calibracion->rango}}</td>               
                     <td style="font-size: 10px; width:35.5px;text-align: center;" class="bordered-td">{{strtoupper($calibracion->posicion)}}</td>               
                     <td style="font-size: 10px; width:32.8px;text-align:   center;" class="bordered-td">{{$calibracion->curva_elevacion}}</td>               
-                    <td style="font-size: 10px; width:25.5px;text-align: center;" class="bordered-td">{{$calibracion->block_calibracion}}</td>               
+                    <td style="font-size: 10px; width:25.5px;text-align: center;" class="bordered-td">
+                        @if ($calibracion->block_calibracion == 'Proveta')
+                            Pr
+                        @elseif(($calibracion->block_calibracion == 'Escalonado'))
+                            Es
+                        @else
+                              {{$calibracion->block_calibracion}}
+                        @endif
+                    </td>               
                     <td style="font-size: 10px; width:36.5px;text-align: center;" class="bordered-td">{{$calibracion->block_sensibilidad}}</td>               
                     <td style="font-size: 10px; width:37.5px;text-align: center;" class="bordered-td"><span class="EspecialCaracter">{{$calibracion->tipo_reflector}}</span> &nbsp; {{$calibracion->reflector_referencia}}</td>               
                     <td style="font-size: 10px; width:26px;text-align: center;" class="bordered-td">{{$calibracion->ganancia_referencia}}</td>               

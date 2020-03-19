@@ -104,7 +104,7 @@
                     <div class="col-md-3" >                       
                         <div class="form-group">
                             <label for="tecnicas">Tecnica *</label>
-                            <v-select v-model="tecnica" label="descripcion" :options="tecnicas" id="tecnicas"></v-select>   
+                            <v-select v-model="tecnica" label="descripcion" :options="tecnicas" id="tecnicas" @input="borrarTodasLasCalibraciones"></v-select>   
                         </div>      
                     </div>
 
@@ -184,76 +184,76 @@
                                     </button>                       
                                 </div>
                             </div>
-                                <div>&nbsp;</div>
+                            <div>&nbsp;</div>
     
-                            <div class="col-md-3">                       
+                            <div v-show="tecnica.codigo !='ME'" class="col-md-3">                       
                                 <div class="form-group" >
                                     <label for="zapata" title="Zapata">Zapata *</label>
                                     <input type="text" v-model="zapata" class="form-control" id="zapata">
                                 </div>         
                             </div>
     
-                            <div  v-show="tecnica.codigo !='ME'"  class="col-md-3" >                       
+                            <div class="col-md-3" >                       
                                 <div class="form-group">
                                     <label for="palpador" title="Palpador">Palpador *</label>
                                     <v-select v-model="palpador" label="codigo" :options="palpadores" id="palpador"></v-select>   
                                 </div>      
                             </div>  
     
-                            <div v-show="tecnica.codigo !='ME'" class="col-md-3">                       
+                            <div class="col-md-3">                       
                                 <div class="form-group" >
                                     <label for="frecuencia" title="Frecuencia (Mhz)">Frecuencia (Mhz) *</label>
                                     <input type="number" v-model="frecuencia" class="form-control" id="frecuencia">
                                 </div>         
                             </div>
     
-                            <div v-show="tecnica.codigo !='ME'" class="col-md-3">                       
+                            <div class="col-md-3">                       
                                 <div class="form-group" >
                                     <label for="angulo_apertura" title="Ángulo Apertura">Angulo Apertura *</label>
                                     <input type="text" v-model="angulo_apertura" class="form-control" id="angulo_apertura">
                                 </div>         
                             </div>
     
-                            <div v-show="tecnica.codigo !='ME'" class="col-md-3">                       
+                            <div class="col-md-3">                       
                                 <div class="form-group" >
                                     <label for="rango">Rango *</label>
                                     <input type="text" v-model="rango" class="form-control" id="rango">
                                 </div>         
                             </div>
     
-                            <div v-show="tecnica.codigo !='ME'" class="col-md-3">                       
+                            <div class="col-md-3">                       
                                 <div class="form-group" >
                                     <label for="posicion" title="Posición">Posición *</label>
                                     <input type="text" v-model="posicion" class="form-control" id="posicion">
                                 </div>         
                             </div>
     
-                            <div class="col-md-3">                       
+                            <div v-show="tecnica.codigo !='ME'" class="col-md-3">                       
                                 <div class="form-group" >
                                     <label for="curva_elevacion" title="Curva Elevación">Curva Elevación *</label>
                                      <v-select v-model="curva_elevacion" :options="['DAC', 'TCG']"></v-select>
                                 </div>         
                             </div>
     
-                            <div v-show="tecnica.codigo !='ME'" class="col-md-3">                       
+                            <div class="col-md-3">                       
                                 <div class="form-group" >
                                     <label for="block_calibracion" title="Block Calibración">Block Calibración *</label>
-                                     <v-select v-model="block_calibracion" :options="['V1', 'V2']"></v-select>
+                                     <v-select v-model="block_calibracion" :options="block_calibraciones"></v-select>
                                 </div>         
                             </div>
 
                             <div v-show="tecnica.codigo !='ME'">   
-                               <div class="clearfix"></div>  
-                            </div> 
+                                <div class="clearfix"></div>  
+                             </div> 
 
-                            <div class="col-md-3">                       
+                            <div v-show="tecnica.codigo !='ME'" class="col-md-3">                       
                                 <div class="form-group" >
                                     <label for="block_sensibilidad" title="Block Sensibilidad">Block Sensibilidad *</label>
                                     <input type="number" v-model="block_sensibilidad" class="form-control" id="block_sensibilidad">
                                 </div>         
                             </div>                     
     
-                            <div class="col-md-3">                       
+                            <div v-show="tecnica.codigo !='ME'" class="col-md-3">                       
                                 <div class="form-group" >
                                     <label for="tipo_reflector" title="Tipo Reflector">Tipo Reflector *</label>
                                      <v-select v-model="tipo_reflector" :options="['Ø', 'Ħ']"></v-select>
@@ -264,42 +264,42 @@
                                 <div class="clearfix"></div>  
                             </div> 
     
-                            <div class="col-md-3">                       
+                            <div v-show="tecnica.codigo !='ME'" class="col-md-3">                       
                                 <div class="form-group" >
                                     <label for="reflector_referencia" title="Reflector Referencia (mm)">Reflector Referencia (mm) *</label>
                                     <input type="number" v-model="reflector_referencia" class="form-control" id="reflector_referencia" step="0.1">
                                 </div>         
                             </div>
     
-                            <div class="col-md-3">                       
+                            <div v-show="tecnica.codigo !='ME'" class="col-md-3">                       
                                 <div class="form-group" >
                                     <label for="ganancia_referencia" title="Ganancia Referencia (dB)">Ganancia Referencia (dB) *</label>
                                     <input type="number" v-model="ganancia_referencia" class="form-control" id="ganancia_referencia">
                                 </div>         
                             </div>
     
-                            <div class="col-md-3">                       
+                            <div v-show="tecnica.codigo !='ME'" class="col-md-3">                       
                                 <div class="form-group" >
                                     <label for="nivel_registro" title="Nivel Registro">Nivel Registro *</label>
                                     <input type="number" v-model="nivel_registro" class="form-control" id="nivel_registro">
                                 </div>         
                             </div>
     
-                            <div class="col-md-3">                       
+                            <div v-show="tecnica.codigo !='ME'" class="col-md-3">                       
                                 <div class="form-group" >
                                     <label for="correccion_transferencia" title="Corrección Transferencia (dB)">Corrección Transferencia (dB) *</label>
                                     <input type="number" v-model="correccion_transferencia" class="form-control" id="correccion_transferencia">
                                 </div>         
                             </div>
     
-                            <div class="col-md-3">                       
+                            <div v-show="tecnica.codigo !='ME'" class="col-md-3">                       
                                 <div class="form-group" >
                                     <label for="adicional_barrido" title="Adicional Barrido (dB)">Adicional Barrido (dB) *</label>
                                     <input type="number" v-model="adicional_barrido" class="form-control" id="adicional_barrido">
                                 </div>         
                             </div>
     
-                            <div class="col-md-3">                       
+                            <div v-show="tecnica.codigo !='ME'" class="col-md-3">                       
                                 <div class="form-group" >
                                     <label for="amplificacion_total" title="Amplificación Total (dB)">Amplificación Total (dB) *</label>
                                     <input type="number" v-model="amplificacion_total" class="form-control" id="amplificacion_total">
@@ -322,23 +322,23 @@
                                         <table class="table table-hover table-striped table-bordered">
                                             <thead>
                                                 <tr>                                  
-                                                    <th class="col-md-1">Zapata</th>                                  
-                                                    <th class="col-md-1">Palpador</th>
-                                                    <th class="col-md-1">Frec</th>
-                                                    <th class="col-md-1">A.P.</th> 
-                                                    <th class="col-md-1">Rango</th>  
-                                                    <th class="col-md-1">Pos</th>  
-                                                    <th class="col-md-1">C.E.</th>  
-                                                    <th class="col-md-1">B.C.</th>  
-                                                    <th class="col-md-1">B.S.</th>  
-                                                    <th class="col-md-1">T.R.</th>  
-                                                    <th class="col-md-1">R.R.</th>  
-                                                    <th class="col-md-1">G.R.</th>  
-                                                    <th class="col-md-1">N.R.</th>  
-                                                    <th class="col-md-1">C.T.</th>  
-                                                    <th class="col-md-1">A.B.</th>  
-                                                    <th class="col-md-1">A.T.</th> 
-                                                    <th colspan="2" style="width:30px;">&nbsp;</th>                                            
+                                                    <th style="min-width:100px;">Zapata</th>                                  
+                                                    <th style="min-width:100px;">Palpador</th>
+                                                    <th style="min-width:60px;">Frec</th>
+                                                    <th style="min-width:60px;">A.P.</th> 
+                                                    <th style="min-width:60px;">Rango</th>  
+                                                    <th style="min-width:60px;">Pos</th>  
+                                                    <th style="min-width:60px;">C.E.</th>  
+                                                    <th style="min-width:60px;">B.C.</th>  
+                                                    <th style="min-width:60px;">B.S.</th>  
+                                                    <th style="min-width:60px;">T.R.</th>  
+                                                    <th style="min-width:60px;">R.R.</th>  
+                                                    <th style="min-width:60px;">G.R.</th>  
+                                                    <th style="min-width:60px;">N.R.</th>  
+                                                    <th style="min-width:60px;">C.T.</th>  
+                                                    <th style="min-width:60px;">A.B.</th>  
+                                                    <th style="min-width:60px;">A.T.</th> 
+                                                    <th colspan="1" style="width:30px;">&nbsp;</th>                                            
                                                 </tr>
                                             </thead>                         
                                             <tbody>
@@ -358,10 +358,7 @@
                                                     <td>{{ calibracion.nivel_registro }}</td>
                                                     <td>{{ calibracion.correccion_transferencia }}</td> 
                                                     <td>{{ calibracion.adicional_barrido }}</td>
-                                                    <td>{{ calibracion.amplificacion_total }}</td>                                   
-                                                    <td> 
-                                                        <a  @click="EditCalibraciones(k)"> <app-icon img="edit" color="black"></app-icon> </a>
-                                                    </td>
+                                                    <td>{{ calibracion.amplificacion_total }}</td>     
                                                     <td>
                                                         <a  @click="removeCalibraciones(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a>
                                                     </td>          
@@ -529,7 +526,9 @@
                                 </span>                            
                            </div>
 
-                            <div class="clearfix"></div>  
+                            <div class="form-group">
+                                &nbsp;
+                            </div>
 
                             <div v-if="Tabla_us_pa.length">
                             <div class="col-md-12">
@@ -642,16 +641,17 @@
                                         <input type="number" v-model="cantidad_generatrices_me" class="form-control" id="cantidad_generatrices_me">
                                     </div>         
                                 </div>
+
+                                <div class="clearfix"></div>  
+
                                 <div class="col-md-1">                                                       
                                     <span>
                                       <button type="button"  @click="addTabla_me()"><span class="fa fa-plus-circle"></span></button>  
                                     </span>                            
                                </div>
 
-                               <div class="form-group">
-                                  &nbsp;
-                               </div>
-                            
+                               <div class="clearfix"></div>  
+
                                 <!-- tabla me -->
                                 <div class="col-md-12">
                                     <div class="table-responsive">
@@ -970,6 +970,7 @@ export default {
         posicion:'',
         curva_elevacion:'',
         block_calibracion:'',
+        block_calibraciones:[],
         block_sensibilidad:'',
         tipo_reflector:'',
         reflector_referencia:'',
@@ -1128,7 +1129,7 @@ export default {
                this.calibraciones = this.calibraciones_data;
                this.Tabla_us_pa = this.tabla_us_pa_data; 
                this.Tabla_me = this.tabla_me_data; 
-
+               this.SetearBlockCalibraciones();
             }
 
         },       
@@ -1218,7 +1219,7 @@ export default {
             
             console.log('entro en add calibraciones');
             
-            if (!this.zapata){
+            if (this.tecnica.codigo !='ME' && !this.zapata){
 
                  toastr.error('El campo zapata es obligatorio'); 
                  return ;            
@@ -1230,175 +1231,169 @@ export default {
                 return ;
              }
 
-            if (this.tecnica.codigo !='ME' && !this.palpador){
+            if (!this.palpador){
 
                  toastr.error('El campo palpador es obligatorio'); 
                  return ;            
             }
 
-            if (this.tecnica.codigo !='ME' && !this.frecuencia){
+            if (!this.frecuencia){
 
                  toastr.error('El campo frecuencia es obligatorio'); 
                  return ;            
             }
 
-            if(this.tecnica.codigo !='ME' && this.frecuencia  > 999 ){
+            if(this.frecuencia  > 999 ){
 
                 toastr.error('El campo frecuencia no debe ser mayor a 999'); 
                 return ;
              }
 
-            if (this.tecnica.codigo !='ME' && !this.angulo_apertura){
+            if (!this.angulo_apertura){
 
                  toastr.error('El campo angulo apertura es obligatorio'); 
                  return ;            
             }
 
-            if(this.tecnica.codigo !='ME' && this.angulo_apertura.length  > 10){
+            if(this.angulo_apertura.length  > 10){
 
                 toastr.error('El campo angulo apertura no debe contener más de 10 caracteres'); 
                 return ;
              }
 
-            if (this.tecnica.codigo !='ME' && !this.rango){
+            if (!this.rango){
 
                  toastr.error('El campo rango es obligatorio'); 
                  return ;            
             }
 
-            if(this.tecnica.codigo !='ME' && this.rango.length  > 10){
+            if(this.rango.length  > 10){
 
                 toastr.error('El campo rango no debe contener más de 10 caracteres'); 
                 return ;
              }   
 
-            if (this.tecnica.codigo !='ME' && !this.posicion){
+            if (!this.posicion){
 
                  toastr.error('El campo posicion es obligatorio'); 
                  return ;            
             }
 
-            if(this.tecnica.codigo !='ME' && this.posicion.length  > 10){
+            if(this.posicion.length  > 10){
 
                 toastr.error('El campo posicion no debe contener más de 10 caracteres'); 
                 return ;
              }
 
-            if (!this.curva_elevacion){
+            if (this.tecnica.codigo !='ME' && !this.curva_elevacion){
 
                  toastr.error('El campo curva elevacion es obligatorio'); 
                  return ;            
             }
 
-            if(this.curva_elevacion.length  > 3){
+            if(this.tecnica.codigo !='ME' && this.curva_elevacion.length  > 3){
 
                 toastr.error('El campo curva elevacion no debe contener más de 3 caracteres'); 
                 return ;
              }    
              
-            if (this.tecnica.codigo !='ME' && !this.block_calibracion){
+            if (!this.block_calibracion){
 
                  toastr.error('El campo block calibracion es obligatorio'); 
                  return ;            
-            }
+            } 
 
-            if(this.tecnica.codigo !='ME' && this.block_calibracion.length  > 2){
-
-                toastr.error('El campo block calibracion no debe contener más de 2 caracteres'); 
-                return ;
-             }
-
-            if (!this.block_sensibilidad){
+            if (this.tecnica.codigo !='ME' && !this.block_sensibilidad){
 
                  toastr.error('El campo block sensibilidad es obligatorio'); 
                  return ;            
             }
 
-            if(this.block_sensibilidad  > 999){
+            if(this.tecnica.codigo !='ME' && this.block_sensibilidad  > 999){
 
                 toastr.error('El campo block sensibilidad no debe ser mayor a 999'); 
                 return ;
              }
 
-            if (!this.tipo_reflector){
+            if (this.tecnica.codigo !='ME' && !this.tipo_reflector){
 
                  toastr.error('El campo tipo reflector es obligatorio'); 
                  return ;            
             }
 
-            if(this.tipo_reflector.length  > 1){
+            if(this.tecnica.codigo !='ME' && this.tipo_reflector.length  > 1){
 
                 toastr.error('El campo tipo reflector no debe contener más de 1 caracteres'); 
                 return ;
              }
            
-            if (!this.reflector_referencia){
+            if (this.tecnica.codigo !='ME' && !this.reflector_referencia){
 
                  toastr.error('El campo reflector referencia es obligatorio'); 
                  return ;            
             }
 
-            if(this.reflector_referencia  > 99.9){
+            if(this.tecnica.codigo !='ME' && this.reflector_referencia  > 99.9){
 
                 toastr.error('El campo reflector referencia no debe ser mayor a 99.9'); 
                 return ;
              }
 
-            if (!this.ganancia_referencia){
+            if (this.tecnica.codigo !='ME' && !this.ganancia_referencia){
 
                  toastr.error('El campo ganancia referencia es obligatorio'); 
                  return ;            
             }
 
-            if(this.ganancia_referencia  > 999){
+            if(this.tecnica.codigo !='ME' && this.ganancia_referencia  > 999){
 
                 toastr.error('El campo ganancia referencia no debe ser mayor a 999'); 
                 return ;
              }            
             
-             if (!this.nivel_registro){
+             if (this.tecnica.codigo !='ME' && !this.nivel_registro){
 
                  toastr.error('El campo nivel registro es obligatorio'); 
                  return ;            
             }
 
-            if(this.nivel_registro  > 999){
+            if(this.tecnica.codigo !='ME' && this.nivel_registro  > 999){
 
                 toastr.error('El campo nivel registro no debe ser mayor a 999'); 
                 return ;
              }          
 
-            if (!this.correccion_transferencia){
+            if (this.tecnica.codigo !='ME' && !this.correccion_transferencia){
 
                  toastr.error('El campo correccion transferencia es obligatorio'); 
                  return ;            
             }
 
-            if(this.correccion_transferencia  > 999){
+            if(this.tecnica.codigo !='ME' && this.correccion_transferencia  > 999){
 
                 toastr.error('El campo correccion_transferencia no debe ser mayor a 999'); 
                 return ;
              }   
              
-            if (!this.adicional_barrido){
+            if (this.tecnica.codigo !='ME' && !this.adicional_barrido){
 
                  toastr.error('El campo adicional barrido es obligatorio'); 
                  return ;            
             }
 
-            if(this.adicional_barrido  > 999){
+            if(this.tecnica.codigo !='ME' && this.adicional_barrido  > 999){
 
                 toastr.error('El campo adicional barrido no debe ser mayor a 999'); 
                 return ;
              }     
 
-            if (!this.amplificacion_total){
+            if (this.tecnica.codigo !='ME' && !this.amplificacion_total){
 
                  toastr.error('El campo amplificacion total es obligatorio'); 
                  return ;            
             }
 
-            if(this.amplificacion_total  > 999){
+            if(this.tecnica.codigo !='ME' && this.amplificacion_total  > 999){
 
                 toastr.error('El campo amplificacion total no debe ser mayor a 999'); 
                 return ;
@@ -1720,6 +1715,23 @@ export default {
            
         },
 
+        borrarTodasLasCalibraciones(){
+
+            this.calibraciones = [];
+            this.SetearBlockCalibraciones();
+        },
+
+        SetearBlockCalibraciones(){
+
+            if(this.tecnica.codigo=='ME'){
+
+                this.block_calibraciones = ['Proveta', 'Escalonado'];
+            }else{
+
+                this.block_calibraciones = ['V1', 'V2'];
+            }
+        },
+
         removeCalibraciones(index) {
         
             this.calibraciones.splice(index, 1);               
@@ -1833,7 +1845,7 @@ export default {
          
         },
 
-                Update : function() {
+       Update : function() {
 
             console.log('entro para actualizar' );
             this.errors =[];          
