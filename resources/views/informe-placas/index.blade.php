@@ -7,7 +7,7 @@
 
 <div id="app">
 
-   <abm-placas  modelo= "placas_ri"
+   <abm-placas  modelo= "{{$modelo}}"
                 :informe_id_data = "{{$informe_id}}"
     ></abm-placas>
 

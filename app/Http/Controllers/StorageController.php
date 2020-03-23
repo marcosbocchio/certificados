@@ -109,13 +109,30 @@ class StorageController extends Controller
      
     }
 
-    public function savePlacas(Request $request){
+    public function savePlacasRi(Request $request){
 
      
-      if ($request->hasFile('placas')){
+      if ($request->hasFile('archivo')){
 
       
-          $path = Storage::disk('public')->putFile('storage/placas',$request->file('placas'));  
+          $path = Storage::disk('public')->putFile('storage/placas_ri',$request->file('archivo'));  
+    
+        return $path;
+      }
+      else
+      {
+        return "Seleccione un archivo";
+      } 
+     
+    }
+
+    public function savePlacasUs(Request $request){
+
+     
+      if ($request->hasFile('archivo')){
+
+      
+          $path = Storage::disk('public')->putFile('storage/placas_us',$request->file('archivo'));  
     
         return $path;
       }

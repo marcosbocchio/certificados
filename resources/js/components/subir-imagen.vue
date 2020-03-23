@@ -29,6 +29,9 @@
                     <a v-if="!path_requerido_sn"  class="btn btn-default btn-xs" @click="DeleteArchivo"><span>x</span ></a><br>
                     <a style="margin-top: 5px;" :href="AppUrl + '/' + path" target="_blank" class="btn btn-default btn-sm" title="pdf"><span class="fa fa-file-pdf-o"></span></a>
                 </div> 
+                <div v-else-if="!esImagen() && path">
+                      <a  style="margin-top: 5px;" :href="AppUrl + '/' + path" target="_blank" class="btn btn-default btn-xs" title="descargar"><span class="fa fa-download"></span></a>
+                </div>
                 <div v-else-if="path">                            
                     <img :src="'/' + path" class="margin zoom-in"  @click="openGallery()" alt="..." width="140" >
                     <LightBox :images="images"  ref="lightbox"  :show-light-box="false" ></LightBox>    
@@ -48,7 +51,7 @@
 require('vue-image-lightbox/dist/vue-image-lightbox.min.css')
 import {mapState} from 'vuex';
 import LightBox from 'vue-image-lightbox';
-import { eventDeleteFile } from '../components/event-bus';
+import {eventNewRegistro, eventDeleteFile } from '../components/event-bus';
 
 export default {
 
@@ -127,7 +130,8 @@ export default {
             
         fullPage: false,     
         uploadPercentage: 0,
-        isPdf: false,            
+        isPdf: false,    
+        extension : '',        
         errors:[],   
         selectedFile : null,        
 
@@ -145,8 +149,7 @@ export default {
 
    created :function(){
 
-      eventDeleteFile.$on('delete', this.DeleteArchivo);
-
+       eventDeleteFile.$on('delete', this.DeleteArchivo);     
        this.images[0].src ='/' + this.path_inicial;
        this.images[0].thumb  ='/' + this.path_inicial;
    },
@@ -162,8 +165,9 @@ export default {
             if(val){
 
                 let extension = (val.substring(val.lastIndexOf(".") + 1)).toLowerCase();
-                if(extension =='pdf'){
+                if(extension == 'pdf'){
                     this.isPdf = true;
+                    this.extension = extension;
                 }
 
             }
@@ -188,6 +192,15 @@ export default {
     openGallery(index) {
       this.$refs.lightbox.showImage(0)
     } , 
+
+    esImagen(){
+
+        if(this.extension == 'jpg' || this.extension == 'bmp' || this.extension == 'png' || this.extension == 'jpeg'){
+            return true;
+        }else{
+            return false;
+        }
+    },
   
 
     onFileSelected(event) {          

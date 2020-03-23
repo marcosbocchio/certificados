@@ -159,7 +159,7 @@ Vue.component('table-documentaciones', require('./components/abm-maestro/documen
 Vue.component('editar-documentaciones', require('./components/abm-maestro/documentaciones/editar-documentaciones.vue').default);
 
 Vue.component('abm-doc', require('./components/documentaciones/abm-doc.vue').default);
-Vue.component('abm-placas', require('./components/dashboard/placas-ri/abm-placas.vue').default);
+Vue.component('abm-placas', require('./components/dashboard/placas/abm-placas.vue').default);
 
 
 Vue.component('dashboard-enod', require('./components/dashboard/dashboard-enod').default);
@@ -174,7 +174,12 @@ Vue.component('ot-certificados', require('./components/dashboard/certificados/ot
 Vue.component('ot-soldadores', require('./components/dashboard/soldadores/ot-soldadores').default);
 Vue.component('ot-documentaciones', require('./components/dashboard/documentaciones/ot-documentaciones').default);
 Vue.component('table-ot_procedimientos_propios', require('./components/dashboard/procedimientos/table-ot_procedimientos_propios').default);
-Vue.component('table-placas_ri', require('./components/dashboard/placas-ri/table-placas_ri').default);
+/*
+Vue.component('table-placas_ri', require('./components/dashboard/placas/table-placas_ri').default);
+Vue.component('table-placas_us', require('./components/dashboard/placas/table-placas_us').default);
+*/
+Vue.component('table-placas', require('./components/dashboard/placas/table-placas').default);
+
 
 Vue.component('partes', require('./components/partes/partes.vue').default);
 Vue.component('parte-header', require('./components/partes/parte-header.vue').default);

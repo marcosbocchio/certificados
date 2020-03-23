@@ -127,7 +127,9 @@ Route::group(['middleware' => 'auth:api'], function()
 
     Route::post('storage/referencia', 'StorageController@saveReferencia');
     Route::post('storage/documento', 'StorageController@saveDocumento');
-    Route::post('storage/placas', 'StorageController@savePlacas');
+    Route::post('storage/placas_ri', 'StorageController@savePlacasRi');
+    Route::post('storage/placas_us', 'StorageController@savePlacasUs');
+
     Route::post('storage/calibraciones_us', 'StorageController@saveCalibraciones');
     Route::post('storage/indicaciones_us', 'StorageController@saveIndicacionesUs');
     Route::post('storage/informes_importados', 'StorageController@saveinformesImportados');
@@ -192,11 +194,14 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('ot_procedimientos_propios/ot/{id}/total','OtProcedimientosPropiosController@OtProcedimientosTotal');   
     
     //placas
+
     Route::resource('placas_ri','PlacasRiController');
     Route::get('placas_ri/informe/{id}','PlacasRiController@PlacasInforme');
 
-    // Dosimetría
+    Route::resource('placas_us','PlacasUsController');
+    Route::get('placas_us/informe/{id}','PlacasUsController@PlacasInforme');
 
+    // Dosimetría
     Route::get('dosimetria_operador/operador/{operador_id}/year/{year}/month/{month}','DosimetriaOperadorController@getDosimetriaOperador');
     Route::get('dosimetria_operador/operadores','DosimetriaOperadorController@getDosimetriaOperadores');
     Route::get('dosimetria_rx/year/{year}/month/{month}','DosimetriaRxController@getDosimetriaRx');

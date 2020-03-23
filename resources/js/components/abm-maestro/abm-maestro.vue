@@ -115,13 +115,13 @@
 
             },
 
-            getResults : function(page = 1,filtro =''){
+            getResults : function(page = 1){
 
                 console.log('entro en getResult');
                 console.log(this.modelo);
                 this.loading = true;
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = this.modelo + '/paginate' + '?page='+ page + '&search=' + filtro;   
+                var urlRegistros = this.modelo + '/paginate' + '?page='+ page + '&search=' + this.search;   
                 axios.get(urlRegistros).then(response =>{
                 this.registros = response.data                       
                 }).finally(() => 
