@@ -506,16 +506,15 @@ export default {
                 item.nro_combinacion = '';
             });
 
-            while ((index + 1 <= longServicios - 1)) {
-
- 
+            while ((index + 1 <= longServicios - 1)) { 
 
                     if((this.TablaPartesServicios[index].fecha_formateada == this.TablaPartesServicios[index + 1].fecha_formateada) &&
-                       (this.TablaPartesServicios[index].obra == this.TablaPartesServicios[index + 1].obra) &&
+                     //  (this.TablaPartesServicios[index].obra == this.TablaPartesServicios[index + 1].obra) &&
                        (this.TablaPartesServicios[index].abreviatura != this.TablaPartesServicios[index + 1].abreviatura) &&
                        (this.TablaPartesServicios[index].combinado_sn) && (this.TablaPartesServicios[index + 1].combinado_sn) &&
                        (this.TablaPartesServicios[index].visible) && (this.TablaPartesServicios[index + 1].visible)
                     ){
+
                       let abreviaturas  = [];
                       abreviaturas.push(this.TablaPartesServicios[index].abreviatura);
                       abreviaturas.push(this.TablaPartesServicios[index + 1].abreviatura);                 

@@ -7,7 +7,7 @@
           <tr>                     
             <th>N° Serie</th>
             <th>Fuente</th>
-            <th>curie</th> 
+            <th>Actividad</th> 
             <th style="text-align: center">Activo</th>  
             <th colspan="2">&nbsp;</th>
           </tr>
@@ -16,7 +16,7 @@
           <tr v-for="registro in registros" :key="registro.id">                        
             <td>{{ registro.nro_serie }}</td>
             <td>{{ registro.fuente.codigo }}</td>     
-            <td>{{ registro.curie_actual }}</td>         
+            <td>{{ registro.curie_actual }}&nbsp; Ci</td>         
             <td style="text-align: center">
               <div v-if="registro.activo_sn">
                   SI

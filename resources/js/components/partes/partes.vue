@@ -703,7 +703,7 @@ export default {
 
                 return true ;    
 
-            }else if(this.permitir_anteriores_sn){
+            }else if(this.permitir_anteriores_sn && this.obra == obra_informe){
 
                 return false;
 
@@ -1383,6 +1383,12 @@ export default {
             let informe_servicios = await res.data;      
 
                 informe_servicios.forEach(function(item) {
+
+                    if(this.TablaServicios.findIndex(elemento => elemento.servicio_descripcion == item.servicio_descripcion) != -1 && this.TablaServicios[this.TablaServicios.findIndex(elemento => elemento.servicio_descripcion ==item.servicio_descripcion)].visible == false){
+
+                       this.TablaServicios[this.TablaServicios.findIndex(elemento => elemento.servicio_descripcion ==item.servicio_descripcion)].visible=true;
+                    
+                    }
                     
                    if(this.TablaServicios.findIndex(elemento => elemento.servicio_descripcion == item.servicio_descripcion) != -1 && this.TablaServicios[this.TablaServicios.findIndex(elemento => elemento.servicio_descripcion ==item.servicio_descripcion)].visible){
 
@@ -1419,6 +1425,7 @@ export default {
                       
 
                    }else{                       
+
 
                        let cantidad = item.cantidad;
 

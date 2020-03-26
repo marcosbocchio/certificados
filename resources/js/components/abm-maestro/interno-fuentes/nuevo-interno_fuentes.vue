@@ -32,7 +32,7 @@
                         
                     <div class="col-md-6">
                             <div class="form-group">
-                                <label for="curie">Curie</label>
+                                <label for="curie">Actividad</label>
                                 <input v-model="newRegistro.curie" type="number" name="curie" class="form-control" value="" step="0.01"> 
                             </div>
                     </div>
