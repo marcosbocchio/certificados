@@ -27,14 +27,14 @@ class PdfCertificadoController extends Controller
         $servicios_parte = DB::select('CALL getServiciosCertificados(?,?)',array($id,$estado));
         $servicios_abreviaturas = $this->abreviaturasUnicas($servicios_parte);
         $servicios_combinaciones = $this->combinacionesUnicas($servicios_parte);
-       // dd($servicios_parte);
+        $servicios_footer = $this->ServiciosParteUnicas($servicios_parte);
         $productos_parte = DB::select('CALL getProductosCertificados(?,?,?)',array($id,$estado,$modalidadCobro));    
         $productos_unidades_medidas = $this->productosUnicos($productos_parte);            
         $obras=[];
         $obras = $this->obrasUnicas($partes_certificado);
         $tablas_por_obras = $this->generarTablasPorObras($servicios_parte,$servicios_combinaciones,$productos_parte,$productos_unidades_medidas,$obras);  
         $evaluador = User::find($certificado->firma);
-        $pdf = PDF::loadView('reportes.certificados.certificado',compact('fecha','certificado','ot','cliente','contratista','servicios_parte','productos_parte','modalidadCobro','partes_certificado','servicios_abreviaturas','productos_unidades_medidas','evaluador','obras','tablas_por_obras'))->setPaper('a4','landscape')->setWarnings(false);
+        $pdf = PDF::loadView('reportes.certificados.certificado',compact('fecha','certificado','ot','cliente','contratista','servicios_parte','productos_parte','modalidadCobro','partes_certificado','servicios_abreviaturas','productos_unidades_medidas','evaluador','obras','tablas_por_obras','servicios_footer'))->setPaper('a4','landscape')->setWarnings(false);
       
         return $pdf->stream();
 
@@ -44,7 +44,7 @@ class PdfCertificadoController extends Controller
         
         $array_obra = [];
         $array_temp =[];    
-     //  dd($obras,$servicios_combinaciones,$servicios_parte,$productos_parte);
+     //   dd($obras,$servicios_combinaciones,$servicios_parte,$productos_parte);
         foreach ($obras as $obra) {    
 
             $objObra = new stdClass();
@@ -66,9 +66,9 @@ class PdfCertificadoController extends Controller
                     }            
                 }                    
                 
-                    $obj->servicio = $combinacion;
-                    $obj->cant_total_servicio = $cant_total_servicio;                    
-                    $array_temp[]=$obj;
+                $obj->servicio = $combinacion;
+                $obj->cant_total_servicio = $cant_total_servicio;                    
+                $array_temp[]=$obj;
 
                 }
                 
@@ -86,9 +86,9 @@ class PdfCertificadoController extends Controller
                         }            
                     }                    
                     
-                        $objProducto->producto = $unidad_medida;
-                        $objProducto->cant_total_producto = $cant_total_producto;                    
-                        $array_productos[]=$objProducto;                  
+                    $objProducto->producto = $unidad_medida;
+                    $objProducto->cant_total_producto = $cant_total_producto;                    
+                    $array_productos[]=$objProducto;                  
                 }             
 
                 $objObra->productos = $array_productos;
@@ -107,7 +107,7 @@ class PdfCertificadoController extends Controller
 
             }
        }
-     //  dd($array_obra);  
+    //   dd($array_obra);  
         return $array_obra;
 
     }
@@ -231,6 +231,37 @@ class PdfCertificadoController extends Controller
         $array_temp = array_unique($array_temp);
 
         return $array_temp;        
+
+    }
+
+    public function ServiciosParteUnicas($servicios_parte){
+
+        $array_temp = [];
+
+        foreach ($servicios_parte as $servicio) {
+            
+            $array_temp[] = $servicio->abreviatura;
+
+        }
+
+        $array_temp = array_unique($array_temp);
+        $array_temp2 = [];
+        foreach ($array_temp as $item) {
+            
+            foreach ($servicios_parte as $servicio) {
+                
+                if($item == $servicio->abreviatura){
+
+                    $obj = new stdClass();
+                    $obj->abreviatura = $servicio->abreviatura;
+                    $obj->descripcion_servicio = $servicio->descripcion_servicio;
+                    $array_temp2[] = $obj;
+                break;
+                }
+            }
+        }
+
+        return $array_temp2;        
 
     }
 

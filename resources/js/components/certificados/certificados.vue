@@ -255,6 +255,7 @@ import {mapState} from 'vuex';
 import {en, es} from 'vuejs-datepicker/dist/locale';
 import Datepicker from 'vuejs-datepicker';
 import {sprintf} from '../../functions/sprintf.js'
+import moment from 'moment';
 
 export default {
 
@@ -495,50 +496,90 @@ export default {
 
         },
 
+        cargarCombinados : function(){
 
-
-        combinarServicios : function(){
-            
-            let index = 0;
-            let contador = 1;
             let longServicios = this.TablaPartesServicios.length;
-            this.TablaPartesServicios.forEach(function(item)  {
-                item.nro_combinacion = '';
-            });
+            
+            if(longServicios > 0 ){
 
-            while ((index + 1 <= longServicios - 1)) { 
+                let index = 0;
+                let contador = 1;  
+                let fecha_inicial = moment(this.TablaPartesServicios[index].fecha).format('DD/MM/YYYY'); 
+                let fecha_final =  moment(this.TablaPartesServicios[longServicios -1].fecha).format('DD/MM/YYYY');          
 
-                    if((this.TablaPartesServicios[index].fecha_formateada == this.TablaPartesServicios[index + 1].fecha_formateada) &&
-                     //  (this.TablaPartesServicios[index].obra == this.TablaPartesServicios[index + 1].obra) &&
-                       (this.TablaPartesServicios[index].abreviatura != this.TablaPartesServicios[index + 1].abreviatura) &&
-                       (this.TablaPartesServicios[index].combinado_sn) && (this.TablaPartesServicios[index + 1].combinado_sn) &&
-                       (this.TablaPartesServicios[index].visible) && (this.TablaPartesServicios[index + 1].visible)
-                    ){
+                this.TablaPartesServicios.forEach(function(item)  {
+                    item.nro_combinacion = '';
+                });        
 
-                      let abreviaturas  = [];
-                      abreviaturas.push(this.TablaPartesServicios[index].abreviatura);
-                      abreviaturas.push(this.TablaPartesServicios[index + 1].abreviatura);                 
-                      abreviaturas.sort(function(a, b){return a.toLowerCase().localeCompare(b.toLowerCase());});                    
-                      this.TablaPartesServicios[index].combinacion =   abreviaturas[1] + " + " + abreviaturas[0]
-                      this.TablaPartesServicios[index].nro_combinacion = contador ;
-                      this.TablaPartesServicios[index + 1].combinacion =   abreviaturas[1] + " + " + abreviaturas[0]
-                      this.TablaPartesServicios[index + 1].nro_combinacion = contador ;
-                      contador++;
-                    
-                      while((index + 1 <= longServicios - 1)&&(this.TablaPartesServicios[index].fecha_formateada == this.TablaPartesServicios[index + 1].fecha_formateada)){
+                console.log('Fechas iniciales y finales');
 
-                          index++; 
+                while ((fecha_inicial <= fecha_final)&&(index < longServicios)) {
 
-                      }  
+                    console.log(index);
+                    console.log(fecha_inicial);
+                    console.log(fecha_final);
+                    let abrev = this.getAbrevCombinadas(fecha_inicial);
+                    console.log(abrev);
+                    while ((index < longServicios) && (moment(this.TablaPartesServicios[index].fecha).format('DD/MM/YYYY') == fecha_inicial)) {
+                        
+                        if ((abrev.findIndex(elemento => elemento == this.TablaPartesServicios[index].abreviatura) != -1)&&(abrev.length > 2)) {
+                            
+                            let longAbrev = abrev.length;
+                            this.TablaPartesServicios[index].combinacion = abrev[longAbrev - 1];
+                            this.TablaPartesServicios[index].nro_combinacion = contador;
+                        }
+                        index++;
+                    }
+                    contador++;
+
+                    if(index < longServicios){
+
+                        fecha_inicial =  moment(this.TablaPartesServicios[index].fecha).format('DD/MM/YYYY');
 
                     }
+                }
 
-                  index++;
 
             }
 
-         this.CompletarNoCombinados();
-       },
+            this.CompletarNoCombinados();
+
+
+        },
+
+        getAbrevCombinadas : function(fecha_inicial){
+
+            let index = 0;
+            let longServicios = this.TablaPartesServicios.length;
+            let abreviaturas = [];
+            while(moment(this.TablaPartesServicios[index].fecha).format('DD/MM/YYYY') != fecha_inicial){
+                index++;
+            }     
+            
+            while((index < longServicios) && (moment(this.TablaPartesServicios[index].fecha).format('DD/MM/YYYY') == fecha_inicial) ){
+
+            if ((this.TablaPartesServicios[index].combinado_sn) && (abreviaturas.findIndex(elemento => elemento == this.TablaPartesServicios[index].abreviatura) == -1)){
+
+                    abreviaturas.push(this.TablaPartesServicios[index].abreviatura);
+                } 
+             index++;
+            }
+
+           
+            abreviaturas.sort(function(a, b){return a.toLowerCase().localeCompare(b.toLowerCase());});  
+            let longAbreviaturas = abreviaturas.length;
+            let concatenacion = '';
+            index = longAbreviaturas - 1;
+            while (index > -1 ) {
+                
+                concatenacion = !concatenacion ? abreviaturas[index] : (concatenacion + " + " + abreviaturas[index]);               
+                index = index - 1;
+            }                   
+
+            abreviaturas.push(concatenacion);
+
+            return abreviaturas;
+        },
 
        CompletarNoCombinados : function(){
 
@@ -548,7 +589,6 @@ export default {
                 }
             });  
        },
-
        borrarCombinacion : function(nro){
 
            this.TablaPartesServicios.forEach(function(item){
@@ -590,11 +630,12 @@ export default {
                 combinado_sn :item.combinado_sn,
                 combinacion : '',
                 obra : item.obra,
+                fecha : item.fecha,                
                 fecha_formateada : item.fecha_formateada
 
             });     
-        }.bind(this));           
-        this.combinarServicios();      
+        }.bind(this));     
+        this.cargarCombinados();      
 
         },
 
@@ -718,7 +759,8 @@ export default {
 
            this.TablaPartesServicios[index].visible = false;
            this.TablaPartesServicios[index].cant_final=''; 
-           this.combinarServicios();
+           this.cargarCombinados();
+
        },  
 
         Store : function(){
