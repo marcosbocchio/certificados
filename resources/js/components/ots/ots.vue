@@ -191,13 +191,23 @@
         <div class="col-md-6">
           <div class="form-group">  
               <label>Norma Ensayos</label>               
-            <v-select v-model="norma_ensayo" label="descripcion" :options="norma_ensayos"></v-select>
+              <v-select v-model="norma_ensayo" label="codigo" :options="norma_ensayos">
+                  <template slot="option" slot-scope="option">
+                      <span class="upSelect">{{ option.codigo }}</span> <br> 
+                      <span class="downSelect"> {{ option.descripcion }} </span>
+                  </template>              
+              </v-select>
           </div>
         </div>
         <div class="col-md-6">
           <div class="form-group"> 
              <label>Norma Evaluación</label>                   
-            <v-select v-model="norma_evaluacion" label="descripcion" :options="norma_evaluaciones"></v-select>
+            <v-select v-model="norma_evaluacion" label="codigo" :options="norma_evaluaciones">
+                  <template slot="option" slot-scope="option">
+                      <span class="upSelect">{{ option.codigo }}</span> <br> 
+                      <span class="downSelect"> {{ option.descripcion }} </span>
+                  </template>    
+            </v-select>
           </div>   
         </div> 
         <div class="col-md-3">
@@ -913,9 +923,9 @@ export default {
             this.inputsServicios.push({ 
                 id:this.servicio.id,
                 servicio:this.servicio.descripcion,            
-                norma_ensayo :(this.norma_ensayo ? this.norma_ensayo.descripcion : null),
+                norma_ensayo :(this.norma_ensayo ? this.norma_ensayo.codigo : null),
                 norma_ensayo_id : (this.norma_ensayo ? this.norma_ensayo.id : null),
-                norma_evaluacion :(this.norma_evaluacion ? this.norma_evaluacion.descripcion : null),
+                norma_evaluacion :(this.norma_evaluacion ? this.norma_evaluacion.codigo : null),
                 norma_evaluacion_id :(this.norma_evaluacion ? this.norma_evaluacion.id : null),
                 cantidad_servicios:this.cantidad_servicios,
                 metodo : this.var_metodo,
