@@ -144,7 +144,7 @@ b {
                             <td style="font-size: 11px;width: 50px; " colspan="2" ><b>Equipo: </b>{{$interno_equipo->equipo->codigo}}</td>
                             <td style="font-size: 11px;" ><b>Kv: </b>{{$interno_equipo->voltaje}}</td>
                             <td style="font-size: 11px; width: 50px; border-right: 1px solid #000;" ><b>mA: </b>{{$interno_equipo->amperaje}}</td>
-                            <td style="font-size: 11px;  " colspan="2"  ><b style="font-size: 11px;">Norma Evaluación: </b>{{$norma_evaluacion->descripcion}}</td>                            
+                            <td style="font-size: 11px;  " colspan="2"  ><b style="font-size: 11px;">Norma Evaluación: </b>{{$norma_evaluacion->codigo}}</td>                            
                         </tr>
                         <tr>                
                             
@@ -159,7 +159,7 @@ b {
                             
                             
                             </td>
-                            <td style="font-size: 11px; " colspan="2"  ><b>Norma Ensayo: </b>{{$norma_ensayo->descripcion}}</td>                
+                            <td style="font-size: 11px; " colspan="2"  ><b>Norma Ensayo: </b>{{$norma_ensayo->codigo}}</td>                
                         </tr>
                         <tr>
                             <td style="font-size: 11px;border-right: 1px solid #000;" colspan="2" ><b>Plano / Isom :</b>{{$informe->plano_isom}}</td>

@@ -167,9 +167,9 @@ export default {
                 let extension = (val.substring(val.lastIndexOf(".") + 1)).toLowerCase();
                 if(extension == 'pdf'){
                     this.isPdf = true;
-                    this.extension = extension;
+                    
                 }
-
+                this.extension = extension;
             }
         },
         
@@ -210,7 +210,7 @@ export default {
             let FileSize = this.selectedFile.size / 1024  // in KB           
             let FileType=this.selectedFile.type;      
             let extension = (fileName.substring(fileName.lastIndexOf(".") + 1)).toLowerCase();
-            
+            this.extension = extension;
             let aceptado = false;
             console.log(extension);
             this.tipos_archivo_soportados.forEach(function(item) {

@@ -205,8 +205,10 @@ Vue.component('dosimetria-estados', require('./components/dosimetria/dosimetria-
 Vue.component('operador-periodo', require('./components/dosimetria/operador-periodo.vue').default);
 Vue.component('dosimetria-resumen', require('./components/dosimetria/dosimetria-resumen.vue').default);
 
-
-
+/* Documementos escaneados*/
+Vue.component('abm-documentos-escaneados', require('./components/dashboard/documentos-escaneados/abm-documentos-escaneados.vue').default);
+Vue.component('table-documentos-escaneados', require('./components/dashboard/documentos-escaneados/table-documentos-escaneados.vue').default);
+Vue.component('form-documentos-escaneados', require('./components/dashboard/documentos-escaneados/form-documentos-escaneados.vue').default);
 
 Vue.prototype.Laravel = window.Laravel;
 

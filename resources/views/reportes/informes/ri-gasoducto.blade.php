@@ -176,13 +176,13 @@ b {
                             <td style="font-size: 11px;width: 280px; border-right: 1px solid #000;"  colspan="3" ><b>Proc. Sold. : </b>{{$informe->procedimiento_soldadura}}</td>                        
                         </tr>
                         <tr>
-                            <td style="font-size: 11px;width: 280px; border-right: 1px solid #000;" colspan="2"><b style="font-size: 11px;">Norma Evaluación: </b>{{$norma_evaluacion->descripcion}}</td>  
+                            <td style="font-size: 11px;width: 280px; border-right: 1px solid #000;" colspan="2"><b style="font-size: 11px;">Norma Evaluación: </b>{{$norma_evaluacion->codigo}}</td>  
                             <td style="font-size: 11px;"><b>Foco: </b>{{$informe_ri->foco}}</td>
                             <td style="font-size: 11px; border-right: 1px solid #000;"><b>N° Exp. : </b>{{$informe_ri->exposicion}}</td>
                             <td style="font-size: 11px; border-right: 1px solid #000;"  colspan="3"><b>Proc. RI: </b>{{$procedimiento_inf->titulo}} </td>                      
                         </tr>
                         <tr>
-                            <td style="font-size: 11px;border-right: 1px solid #000; " colspan="2"><b>Norma Ensayo: </b>{{$norma_ensayo->descripcion}}</td>
+                            <td style="font-size: 11px;border-right: 1px solid #000; " colspan="2"><b>Norma Ensayo: </b>{{$norma_ensayo->codigo}}</td>
                             <td style="font-size: 11px;"><b>Pelicula : </b>{{$tipo_pelicula->fabricante}}</td>   
                             <td style="font-size: 11px;border-right: 1px solid #000;"><b>Tipo: </b>{{$tipo_pelicula->codigo}}</td>    
                             <td style="font-size: 11px;border-right: 1px solid #000;" colspan="3" ><b>EPS: </b>{{$informe->eps}}</td>                    

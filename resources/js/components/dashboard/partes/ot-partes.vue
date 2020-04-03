@@ -48,6 +48,9 @@
                                     <td width="10px"> 
                                         <a :href="AppUrl + '/api/pdf/parte/' + ot_parte.id + '/final' " target="_blank"  class="btn btn-default btn-sm" title="Informe"><span class="fa fa-file-pdf-o"></span></a>
                                     </td> 
+                                    <td width="10px"> 
+                                        <button @click="informesEscaneados(ot_parte.id)" :disabled="!$can('T_partes_edita')" class="btn btn-default btn-sm" title="Informes escaneados"><span class="fa fa-cloud-upload"></span></button>
+                                    </td>  
                                     <td v-if="!ot_parte.firma" width="10px">
                                         <button @click="firmar(k)" class="btn btn-default btn-sm" title="Firmar" :disabled="!$can('T_partes_edita')"><span class="glyphicon glyphicon-pencil"></span></button>                                       
                                    </td>
@@ -135,6 +138,12 @@ export default {
                   
                 }
                 });
+
+        },
+
+        informesEscaneados(id){
+
+            window.location.href = this.AppUrl + '/documentos-escaneados/ot/' + this.ot_id_data + '/parte/' + id ;
 
         }
     },

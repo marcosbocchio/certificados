@@ -26,6 +26,7 @@ Route::group(['middleware' => ['auth']], function () {
   Route::get('interno_equipos/ot/{id}','InternoEquiposController@OtInternoEquipos')->name('otInternoEquipos');
   Route::get('soldadores/ot/{id}','OtSoldadoresController@index')->name('otSoldadores');
   Route::get('placas/informe/{id}','PlacasController@index')->name('placas');
+  Route::get('documentos-escaneados/ot/{ot_id}/{tipo_documento}/{id}','DocumentosEscaneadosController@index')->name('ddocumentosEscaneados');
   Route::get('procedimientos/ot/{id}','OtProcedimientosPropiosController@index')->name('otProcedimientos');
   Route::get('documentaciones/ot/{id}','OtDocumentacionesController@index')->name('otDocumentaciones');
   Route::get('informes/ot/{id}','InformesController@index')->name('otInformes');

@@ -123,7 +123,12 @@
                         <div class="col-md-3">                       
                             <div class="form-group">
                                 <label>Norma Evaluación *</label>
-                                <v-select v-model="norma_evaluacion" label="descripcion" :options="norma_evaluaciones"></v-select>   
+                                <v-select v-model="norma_evaluacion" label="codigo" :options="norma_evaluaciones">
+                                    <template slot="option" slot-scope="option">
+                                        <span class="upSelect">{{ option.codigo }}</span> <br> 
+                                        <span class="downSelect"> {{ option.descripcion }} </span>
+                                    </template>    
+                                </v-select>   
                             </div>      
                         </div>
                         
@@ -131,7 +136,12 @@
                         <div class="col-md-3">                       
                             <div class="form-group">
                                 <label>Norma Ensayo *</label>
-                                <v-select v-model="norma_ensayo" label="descripcion" :options="norma_ensayos"></v-select>   
+                                <v-select v-model="norma_ensayo" label="codigo" :options="norma_ensayos">
+                                    <template slot="option" slot-scope="option">
+                                        <span class="upSelect">{{ option.codigo }}</span> <br> 
+                                        <span class="downSelect"> {{ option.descripcion }} </span>
+                                    </template>    
+                                </v-select>   
                             </div>      
                         </div>
 

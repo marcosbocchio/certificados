@@ -15,7 +15,7 @@ use \stdClass;
 class PdfCertificadoController extends Controller
 {
     public function imprimir($id,$estado){      
-
+       ;
         $certificado = Certificados::findOrFail($id);
         $ot = Ots::find($certificado->ot_id);
         $cliente = Clientes::find($ot->cliente_id);
@@ -32,7 +32,10 @@ class PdfCertificadoController extends Controller
         $productos_unidades_medidas = $this->productosUnicos($productos_parte);            
         $obras=[];
         $obras = $this->obrasUnicas($partes_certificado);
-        $tablas_por_obras = $this->generarTablasPorObras($servicios_parte,$servicios_combinaciones,$productos_parte,$productos_unidades_medidas,$obras);  
+        $fechas = $this->getCombinados($servicios_parte);   
+        $servicios_obras =  DB::select('CALL getServiciosObrasCertificado(?,?)',array($id,$estado));
+      //  dd($tablas_por_obras);
+        $tablas_por_obras = $this->generarTablasPorObras($servicios_obras,$servicios_combinaciones,$productos_parte,$productos_unidades_medidas,$obras,$fechas);  
         $evaluador = User::find($certificado->firma);
         $pdf = PDF::loadView('reportes.certificados.certificado',compact('fecha','certificado','ot','cliente','contratista','servicios_parte','productos_parte','modalidadCobro','partes_certificado','servicios_abreviaturas','productos_unidades_medidas','evaluador','obras','tablas_por_obras','servicios_footer'))->setPaper('a4','landscape')->setWarnings(false);
       
@@ -40,11 +43,59 @@ class PdfCertificadoController extends Controller
 
     }
 
-    public function generarTablasPorObras($servicios_parte,$servicios_combinaciones,$productos_parte,$productos_unidades_medidas,$obras){
+    public function getCombinados($servicios_parte){
+
+        $array_fechas = [];
+
+        foreach ($servicios_parte as $item) {
+
+           $fechas[] = $item->fecha_formateada ;
+        }
+
+        $temp_fechas = array_unique($fechas);
+
+
+        foreach ($temp_fechas as $item) {
+
+           $obj = new stdClass();
+           $obras = []; 
+           foreach ($servicios_parte as $servicio) {
+
+                if($item == $servicio->fecha_formateada && $servicio->nro_combinacion)
+
+                    $obras[] = $servicio->obra;
+               
+           }
+
+           $temp_obras = array_unique($obras);
+           $obj->fecha = $item;
+           $obj->cantidad_obras_combinadas = count($temp_obras);
+           $array_fechas[] = $obj;
+
+        }
+
+        return $array_fechas;
+
+    }
+
+    public function getCantidadCombinados($fechas,$fecha_formateada){
+
+        foreach ($fechas as $item) {
+            
+            if($item->fecha == $fecha_formateada){
+
+                return $item->cantidad_obras_combinadas ;
+                break ;
+            }
+        }
+
+    }
+
+    public function generarTablasPorObras($servicios_obras,$servicios_combinaciones,$productos_parte,$productos_unidades_medidas,$obras,$fechas){
         
         $array_obra = [];
         $array_temp =[];    
-     //   dd($obras,$servicios_combinaciones,$servicios_parte,$productos_parte);
+     //  dd($obras,$servicios_combinaciones,$servicios_obras,$productos_parte);
         foreach ($obras as $obra) {    
 
             $objObra = new stdClass();
@@ -57,12 +108,14 @@ class PdfCertificadoController extends Controller
                 $obj = new stdClass();                
                 $cant_total_servicio = 0;
 
-                foreach ($servicios_parte as $servicio) {                
+                foreach ($servicios_obras as $servicio) {                   
                     
+
                     if( ($servicio->obra == $obra) && ($servicio->combinacion == $combinacion)){                        
-                        
-                        $cant_total_servicio = $cant_total_servicio + $servicio->cantidad;
-                        
+
+                             $cant_total_servicio =  $servicio->cantidad_total_servicio;
+
+                            // dd($cant_total_servicio);
                     }            
                 }                    
                 
@@ -99,15 +152,7 @@ class PdfCertificadoController extends Controller
       
      // dd($array_obra);  
 
-       foreach ($array_obra as $obra) {
-           
-            foreach($obra->servicios as $servicio){
-
-                $servicio->cant_total_servicio = ($servicio->cant_total_servicio) / (substr_count($servicio->servicio,'+') + 1);
-
-            }
-       }
-    //   dd($array_obra);  
+     //   dd($array_obra);  
         return $array_obra;
 
     }

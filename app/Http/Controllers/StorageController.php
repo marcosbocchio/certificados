@@ -193,4 +193,21 @@ class StorageController extends Controller
       } 
      
     }
+
+    public function saveDocumentosEscaneados(Request $request){
+
+     
+      if ($request->hasFile('archivo')){
+
+      
+          $path = Storage::disk('public')->putFile('storage/documentos_escaneados',$request->file('archivo'));  
+    
+        return $path;
+      }
+      else
+      {
+        return "Seleccione un archivo";
+      } 
+     
+    }
 }

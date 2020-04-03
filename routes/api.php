@@ -132,8 +132,9 @@ Route::group(['middleware' => 'auth:api'], function()
 
     Route::post('storage/calibraciones_us', 'StorageController@saveCalibraciones');
     Route::post('storage/indicaciones_us', 'StorageController@saveIndicacionesUs');
-    Route::post('storage/informes_importados', 'StorageController@saveinformesImportados');
-
+    Route::post('storage/informes_importados', 'StorageController@saveInformesImportados');
+    
+    Route::post('storage/documentos_escaneados', 'StorageController@saveDocumentosEscaneados');
     Route::post('storage/logo-cliente', 'StorageController@saveLogoCliente');
     Route::post('storage/logo-contratista', 'StorageController@saveLogoContratista');
 
@@ -187,7 +188,6 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('remitos','RemitosController');
     Route::get('remitos/ot/{ot_id}/generar-numero-remito', 'RemitosController@GenerarNumeroRemito');   
 
-
     //procedimientos
     Route::resource('ot_procedimientos_propios','OtProcedimientosPropiosController');
     Route::get('ot_procedimientos_propios/ot/{id}','OtProcedimientosPropiosController@ProcedimientosPropiosOt');
@@ -200,6 +200,13 @@ Route::group(['middleware' => 'auth:api'], function()
 
     Route::resource('placas_us','PlacasUsController');
     Route::get('placas_us/informe/{id}','PlacasUsController@PlacasInforme');
+
+    //Documentos Escaneados
+
+    Route::resource('documentos_escaneados','DocumentosEscaneadosController');
+    //Route::post('documentos_escaneados/ot/{ot_id}/{tipo_documento}/{id}','DocumentosEscaneadosController@store');
+    //Route::post('documentos_escaneados/{tipo_documento}/{id}','DocumentosEscaneadosController@update');
+    Route::get('documentos_escaneados/ot/{ot_id}/tipo_documento/{tipo_documento}/{id}','DocumentosEscaneadosController@DocumentosEscaneadosOt');
 
     // Dosimetría
     Route::get('dosimetria_operador/operador/{operador_id}/year/{year}/month/{month}','DosimetriaOperadorController@getDosimetriaOperador');

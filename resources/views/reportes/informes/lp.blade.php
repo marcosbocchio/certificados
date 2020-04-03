@@ -184,14 +184,14 @@ b {
                              @endif
                             
                             </td>                         
-                            <td style="font-size: 11px;" colspan="2"  ><b style="font-size: 11px;">Norma Evaluación: </b>{{$norma_evaluacion->descripcion}}</td>                            
+                            <td style="font-size: 11px;" colspan="2"  ><b style="font-size: 11px;">Norma Evaluación: </b>{{$norma_evaluacion->codigo}}</td>                            
                         
                         </tr>
                         <tr>                           
                            <td style="font-size: 11px;border-right: 1px solid #000;" ><b>Proc. Sold. : </b>{{$informe->procedimiento_soldadura}}</td>
                            <td style="font-size: 11px;width: 150px" colspan="2" ><b>Aplic Pen.: </b>{{$penetrante_aplicacion->codigo}}</td>  
                            <td style="font-size: 11px;border-right: 1px solid #000;" colspan="2"  ><b>Tiempo Pen.: </b> {{$informe_lp->tiempo_penetracion}} Min.</td>
-                           <td style="font-size: 11px; " colspan="2" ><b>Norma Ensayo: </b>{{$norma_ensayo->descripcion}}</td>                
+                           <td style="font-size: 11px; " colspan="2" ><b>Norma Ensayo: </b>{{$norma_ensayo->codigo}}</td>                
                         </tr>
                         <tr>
                             <td style="font-size: 11px;border-right: 1px solid #000;" ><b>EPS: </b>{{$informe->eps}}</td>
