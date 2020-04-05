@@ -17,7 +17,7 @@ class PdfDosimetriaPeriodosController extends Controller
 
     public function imprimir(){
 
-        $fecha = date("Y/m/d H:i:s")     
+        $fecha = date("Y/m/d H:i:s");     
         $operadores = User::whereNull('cliente_id')
                                         ->whereNotNull('film')
                                         ->with('periodos')
