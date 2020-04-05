@@ -46,7 +46,7 @@ class User extends Authenticatable
         return $this->id;
     }    
 
-    protected $appends = ['all_permissions','can'];
+   // protected $appends = ['all_permissions','can'];
 
     public function getAllPermissionsAttribute()
     {

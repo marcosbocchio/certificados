@@ -247,6 +247,7 @@ Vue.use(VueGoogleMaps, {
     ////then disable the following:
      installComponents: true,
 })
+
 Vue.use(VueLazyLoad);
 import Vuex from 'vuex' ;
 import vSelect from 'vue-select';
@@ -1016,7 +1017,8 @@ actions : {
 
       },
 
-    }
+    },
+
 
 })
 

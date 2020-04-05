@@ -5,14 +5,22 @@
       <table class="table table-hover table-striped">
         <thead>
           <tr>
-            <th>Descripción</th>           
+            <th>Descripción</th>  
+            <th>Usuario</th>     
+            <th>Fecha</th>    
             <th colspan="2">&nbsp;</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="registro in registros" :key="registro.id">           
-            <td> {{ registro.descripcion }} <a :href="AppUrl + '/' + registro.path" target="_blank" class="btn btn-default btn-xs" title="descargar"><span class="fa fa-download"></span></a>    
-           
+            <td> 
+              {{ registro.descripcion }} <a :href="AppUrl + '/' + registro.path" target="_blank" class="btn btn-default btn-xs" title="descargar"><span class="fa fa-download"></span></a>    
+            </td>
+            <td>
+              {{registro.usuario.name}}
+            </td>
+            <td> 
+            {{ fecha_formateada(registro.updated_at) }}
             </td>
             <td width="10px">
               <button class="btn btn-warning btn-sm" title="Editar" v-on:click.prevent="$emit('editRegistroEvent',registro)" :disabled="!$can('T_informes_edita')"><span class="fa fa-edit"></span> </button>             
@@ -29,6 +37,7 @@
 </template>
 
 <script>
+import moment from 'moment';
 import {mapState} from 'vuex'
   export default {
    
@@ -41,7 +50,19 @@ import {mapState} from 'vuex'
     
     computed :{           
          
-         ...mapState(['url','AppUrl'])
+         ...mapState(['url','AppUrl']),
+
+
      },
+
+     methods : {
+
+         fecha_formateada : function(val) {
+
+         return moment(val).format('DD/MM/YYYY'); 
+
+         }
+
+     }
   }
 </script>

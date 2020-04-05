@@ -34,7 +34,8 @@ class DocumentosEscaneadosController extends Controller
 
         $filtro  = $this->getFiltro($tipo_documento);
         return DocumentosEscaneados::where('ot_id',$ot_id)   
-                                     ->where($filtro,$id)                                        
+                                     ->where($filtro,$id)    
+                                     ->with('Usuario')                                    
                                       ->get();
 
     }

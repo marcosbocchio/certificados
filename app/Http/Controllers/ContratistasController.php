@@ -33,7 +33,7 @@ class ContratistasController extends Controller
     public function callView()
       {   
           $user = auth()->user(); 
-          $header_titulo = "Contratistas";
+          $header_titulo = "Comitente";
           $header_descripcion ="Alta | Baja | Modificación"; 
         
           return view('contratistas',compact('user','header_titulo','header_descripcion'));
