@@ -7,7 +7,8 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title" >Editar</h4>
                 </div>
-                <div class="modal-body">              
+                <div class="modal-body">    
+                    <div class="row">          
                     <div class="col-md-12">
                         <div class="box box-custom-enod">
                             <div class="box-header with-border">
@@ -27,7 +28,7 @@
                             <div class="col-md-6">    
                                 <div class="form-group">
                                     <label for="name">Nombre (*)</label>                   
-                                    <input autocomplete="off" v-model="newRegistro.nombre" type="text" name="nombre" class="form-control" value=""> 
+                                    <input autocomplete="off" v-model="newRegistro.nombre" type="text" name="nombre" class="form-control" value="" maxlength="30"> 
                                 </div>  
                             </div>
                             <div class="col-md-12">
@@ -63,7 +64,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Teléfono (*)</label>                   
-                                    <input autocomplete="off" v-model="newRegistro.tel" type="text" name="telefono" class="form-control" value=""> 
+                                    <input autocomplete="off" v-model="newRegistro.tel" type="text" name="telefono" class="form-control" value=""  maxlength="40" placeholder="Ej: 0299-15-1234567 / 0299-4444-3333 (111)"> 
                                 </div> 
                             </div>
                             <div class="col-md-6">
@@ -108,19 +109,19 @@
                             <div class="col-md-6">    
                                 <div class="form-group">
                                     <label for="name">Nombre</label>                   
-                                    <input autocomplete="off" v-model="contacto.nombre" type="text" name="nombre" class="form-control" value=""> 
+                                    <input autocomplete="off" v-model="contacto.nombre" type="text" name="nombre" class="form-control" value="" maxlength="30"> 
                                 </div>  
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="usuario">Cargo</label>
-                                    <input autocomplete="off" type="text" name="cargo" class="form-control" v-model="contacto.cargo" value="">
+                                    <input autocomplete="off" type="text" name="cargo" class="form-control" v-model="contacto.cargo" value="" maxlength="30">
                                 </div>      
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="usuario">Teléfono</label>
-                                    <input autocomplete="off" type="text" name="telefono" class="form-control" v-model="contacto.tel" value="">
+                                    <input autocomplete="off" type="text" name="telefono" class="form-control" v-model="contacto.tel" value="" maxlength="40" placeholder="Ej: 0299-15-1234567 / 0299-4444-3333 (111)">
                                 </div>      
                             </div>
                             <div class="col-md-6">
@@ -129,12 +130,15 @@
                                     <input autocomplete="off" type="text" name="email" class="form-control" v-model="contacto.email" value="">
                                 </div>      
                             </div>
-                            <div class="col-md-1"> 
+                            <div class="col-md-1">                          
 
-                                <p>&nbsp;</p>
-                                <span>                             
-                                    <a title="Agregar Contacto" @click="AddContacto()"> <app-icon img="plus-circle" color="black"></app-icon> </a>
+                            <p>&nbsp;</p>
+
+                            <div class="form-group">                    
+                                <span>
+                                    <button title="Agregar Contacto" type="button" @click="AddContacto()"><span class="fa fa-plus-circle"></span></button> 
                                 </span>
+                            </div>
                         
                             </div>
 
@@ -164,7 +168,7 @@
                                                 </td>                                            
                                                 <td>
                                                     <div v-if="indexDetalle == k ">       
-                                                          <input type="text" v-model="TablaContactos[k].cargo" maxlength="20" size="15">        
+                                                          <input type="text" v-model="TablaContactos[k].cargo" maxlength="30" size="30">        
                                                     </div>   
                                                     <div v-else>
                                                            {{ TablaContactos[k].cargo }}
@@ -172,7 +176,7 @@
                                                  </td>
                                                 <td>
                                                     <div v-if="indexDetalle == k ">       
-                                                          <input type="text" v-model="TablaContactos[k].tel" maxlength="20" size="20">        
+                                                          <input type="text" v-model="TablaContactos[k].tel" maxlength="40" size="40">        
                                                     </div>   
                                                     <div v-else>
                                                            {{ TablaContactos[k].tel }}
@@ -199,7 +203,7 @@
                         </div>
                          
                     </div>        
-             
+                </div>
               </div>
                 <div class="modal-footer">
                     <input type="submit" class="btn btn-primary" value="Guardar">
@@ -387,7 +391,7 @@ export default {
         
             let FileSize = this.selectedFile.size / 1024 / 1024; // in MB           
             let FileType=this.selectedFile.type;         
-            console.log(FileType);
+           // console.log(FileType);
 
             if (!((FileType == 'image/jpeg') || (FileType == 'image/bmp') || (FileType == 'image/png'))) {                   
         
@@ -398,7 +402,7 @@ export default {
                     return; 
              }
             
-                console.log(this.selectedFile);
+               // console.log(this.selectedFile);
 
                 if(FileSize > (0.15) ){
                     event.preventDefault();
@@ -428,7 +432,7 @@ export default {
               
                axios.defaults.baseURL = this.url;     
                var url = 'storage/logo-cliente';
-               console.log(fd);
+            //   console.log(fd);
 
                axios.post(url,fd,settings)
                .then (response => {                                
@@ -502,7 +506,8 @@ export default {
                   
                   
                 }).then(response => {
-                  console.log(response.data);   
+                  console.log(response.data);  
+                  console.log('ya mostre el respose'); 
                   this.$emit('update');
                   this.errors=[];
                   $('#editar').modal('hide');

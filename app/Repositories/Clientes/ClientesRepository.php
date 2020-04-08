@@ -18,7 +18,7 @@ class ClientesRepository extends BaseRepository
 
 
     $cliente = $this->getModel();  
-   
+    
     DB::beginTransaction();
     try { 
 
@@ -40,7 +40,8 @@ class ClientesRepository extends BaseRepository
   public function updateCliente($request,$id){
 
     $cliente = Clientes::find($id);     
-    
+   // $X = 1 / 0;
+  
     DB::beginTransaction();
     try {
         $this->saveCliente($request,$cliente);       
@@ -52,6 +53,15 @@ class ClientesRepository extends BaseRepository
         DB::rollback();
         throw $e;      
         
+      }
+
+      // test //
+      $contactos = Contactos::where('cliente_id',$cliente->id)->get();
+      return $contactos;
+      foreach ($contactos as $contacto) {
+
+        return $contacto;
+      break;
       }
 
   }
@@ -74,7 +84,7 @@ public function saveCliente($request,$cliente){
 
   public function updateContacto($request,$cliente){ 
          
-    $contactos = Contactos::where('cliente_id',$cliente['id'])->get();
+    $contactos = Contactos::where('cliente_id',$cliente->id)->get();
 
       DB::beginTransaction();
       try
@@ -82,23 +92,25 @@ public function saveCliente($request,$cliente){
         
           foreach ($contactos as $contacto) {
             $existe = false;
-            foreach ($request['contactos'] as $contacto_request) {
+            foreach ($request->contactos as $contacto_request) {
 
-                if(isset($contacto_request['id'])){
+               if(isset($contacto_request['id'])){
 
                     if( ($contacto['id'] == $contacto_request['id'])){
+
                       $existe = true;
+                      
                     }
                 }
               }
 
-            if (!$existe){
+           // if (!$existe){
               Contactos::where('id',$contacto['id'])                     
                         ->delete();
-              }
+           //   }
           }
 
-          foreach ($request['contactos'] as $contacto_request) {
+          foreach ($request->contactos as $contacto_request) {
 
               $contacto_request_new = Contactos::firstOrCreate(
                   

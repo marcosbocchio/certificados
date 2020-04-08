@@ -28,18 +28,18 @@ class ClienteRequest extends FormRequest
         return [
           
                 'codigo'        => 'required|Max:13',
-                'nombre'        => 'required|Max:20',
+                'nombre'        => 'required|Max:30',
                 'razon_social'  => 'required|Max:100',
                 'provincia'     =>'required',
                 'localidad'     =>'required',
                 'cp'            =>'required|min:4|max:8|regex:/[A-Z0-9]/',
                 'direccion'     =>'required|Max:50',
-                'tel'           =>'required|regex:/^([0-9-]{6,15})?$/',
+                'tel'           =>'required|regex:/^([0-9-()\/ ]{6,40})?$/',
                 'email'         =>'required|unique:users|email',
 
-                'contactos.*.nombre' =>'required|Max:20',
-                'contactos.*.cargo'  =>'required|Max:45',
-                'contactos.*.tel'  =>'required|regex:/^([0-9-]{6,15})?$/',
+                'contactos.*.nombre' =>'required|Max:30',
+                'contactos.*.cargo'  =>'required|Max:30',
+                'contactos.*.tel'    =>'required|regex:/^([0-9-()\/ ]{6,40})?$/',
                 'contactos.*.email'   =>'nullable|email',
             ];
      
