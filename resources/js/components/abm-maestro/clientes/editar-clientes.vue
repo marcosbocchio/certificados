@@ -158,7 +158,7 @@
                                              <tr v-for="(FilaTabla,k) in (TablaContactos)"  @click="selectPosContacto(k)" :key="k" >                                        
                                                 <td>
                                                     <div v-if="indexDetalle == k ">       
-                                                          <input type="text" v-model="TablaContactos[k].nombre" maxlength="20" size="25">        
+                                                          <input type="text" v-model="TablaContactos[k].nombre" maxlength="30" size="25">        
                                                     </div>   
                                                     <div v-else>
                                                            {{ TablaContactos[k].nombre }}

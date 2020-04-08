@@ -6,12 +6,12 @@
 
  <style>
 
-@page { margin: 397px 30px 200px 60px !important;
+@page { margin: 430px 30px 200px 60px !important;
         padding: 0px 0px 0px 0px !important; }
 
 header {
     position:fixed;
-    top: -357px;    
+    top: -388px;    
     }
 
 main{
@@ -74,14 +74,14 @@ td b,td span {
                                 <td rowspan="4" style="text-align: right;width: 240px;">
                                     <img src="{{ public_path('img/logo-enod-web.jpg')}}" alt="" style="height: 60px; margin-right: 25px;">
                                 </td>   
-                                <td style="font-size: 19px; height: 30px;width: 200px; text-align: center;margin-left: 0px" rowspan="3"><b>ORDEN DE TRABAJO</b></td>
+                                <td style="font-size: 19px; height: 30px;width: 250px; text-align: center;margin-left: 0px" rowspan="3"><b>ORDEN DE TRABAJO</b></td>
                                 <td style="font-size: 11px;"><b ></b></td>                         
                             </tr>
                             <tr>
-                                <td style="font-size: 11px;" ><b style="margin-left: 131px;">OT N°: </b>{{$ot->numero}}</td>                      
+                                <td style="font-size: 11px;" ><b style="margin-left: 80px;">OT N°: </b>{{$ot->numero}}</td>                      
                             </tr>
                             <tr>
-                                <td style="font-size: 11px;"><b style="margin-left: 131px;">FECHA: </b>{{ date('d-m-Y', strtotime($ot->fecha)) }}</td>
+                                <td style="font-size: 11px;"><b style="margin-left: 80px;">FECHA: </b>{{ date('d-m-Y', strtotime($ot->fecha)) }}</td>
                             </tr>
                             <tr>
                                 <td style="font-size: 11px;"><b></b></td>                     
@@ -140,12 +140,14 @@ td b,td span {
             <table>
                 <tbody>
                   <tr>
-                    <td style="font-size: 12px; width:270px" ><b>Lugar de ensayo: </b>{{$ot->lugar}}</td>
-                    <td style="text-align: left; width:160px">
-                      <a href="{{ $geo }}" target="_blank" >
-                        <img src="{{ public_path('img/mark-google-maps.jpg')}}" alt="" style="height: 20px;">
-                      </a>  
+                    <td style="font-size: 12px; width:270px;" ><b>Lugar de ensayo: </b>{{$ot->lugar}}
+
+                     <a href="{{ $geo }}" target="_blank" >
+                        <img src="{{ public_path('img/mark-google-maps.jpg')}}" alt="" style="height: 18px;">
+                     </a>  
+                    
                     </td>
+                    <td style="text-align: left; width:105px">&nbsp;</td>
                     <td style="font-size: 12px;  width:240px" ><b>Horario: </b>{{ date('H:i', strtotime($ot->fecha_hora_estimada_ensayo)) }}</td>    
                   </tr>
                   <tr>
@@ -153,21 +155,29 @@ td b,td span {
                     <td> &nbsp;</td>
                     <td style="font-size: 12px;" ><b>Provincia: </b>{{$provincia->provincia}}</td>
                   </tr>
-                  <tr>                
-                     
-                      <td style="font-size: 12px;" ><b>Contacto 1: </b>{{$contacto1->nombre}} - {{$contacto1->cargo}}</td>
-                      <td style="font-size: 12px;" ><b>Tel: </b>{{$contacto1->tel}}</td>
-                      <td style="font-size: 12px;" ><b>Email: </b>{{$contacto1->email}} </td>
+                  <tr>                          
+                      <td style="font-size: 12px;" colspan="2"><b>Contacto 1: </b>{{$contacto1->nombre}}</td>
+                      <td style="font-size: 12px;" ><b>Cargo: </b>{{$contacto1->cargo}}</td>
                   </tr>
                   <tr>
-                      <td style="font-size: 12px;" ><b>Contacto 2: </b>{{$contacto2->nombre ?? ''}} - {{$contacto2->cargo ?? ''}}</td>
-                      <td style="font-size: 12px;" ><b>Tel: </b>{{$contacto2->tel ?? ''}}</td>
-                      <td style="font-size: 12px;" ><b>Email: </b>{{$contacto2->email ?? ''}} </td>
+                      <td style="font-size: 12px;padding-top:-5px" colspan="2" ><b>Tel: </b>{{$contacto1->tel}}</td>
+                      <td style="font-size: 12px;padding-top:-5px"><b>Email: </b>{{$contacto1->email}} </td>
                   </tr>
                   <tr>
-                      <td style="font-size: 12px;" ><b>Contacto 3: </b> {{ $contacto3->nombre ?? ''}} - {{$contacto3->cargo ?? ''}}</td>                      
-                      <td style="font-size: 12px;" ><b>Tel: </b>{{$contacto3->tel ?? ''}}</td>
-                      <td style="font-size: 12px;" ><b>Email: </b>{{$contacto3->email ?? ''}} </td>
+                      <td style="font-size: 12px;" colspan="2" ><b>Contacto 2: </b>{{$contacto2->nombre ?? ''}}</td>
+                      <td style="font-size: 12px;"><b>Cargo: </b>{{$contacto2->cargo ?? ''}}</td>
+                  </tr>
+                  <tr>
+                      <td style="font-size: 12px;padding-top:-5px" colspan="2" ><b>Tel: </b>{{$contacto2->tel ?? ''}}</td>
+                      <td style="font-size: 12px;padding-top:-5px"><b>Email: </b>{{$contacto2->email ?? ''}} </td>
+                  </tr>
+                  <tr>
+                      <td style="font-size: 12px;" colspan="2" ><b>Contacto 3: </b> {{ $contacto3->nombre ?? ''}}</td>        
+                      <td style="font-size: 12px;"><b>Cargo: </b>{{$contacto3->cargo ?? ''}}</td>              
+                  </tr>
+                  <tr>
+                      <td style="font-size: 12px;padding-top:-5px" colspan="2" ><b>Tel: </b>{{$contacto3->tel ?? ''}}</td>
+                      <td style="font-size: 12px;padding-top:-5px"><b>Email: </b>{{$contacto3->email ?? ''}} </td>
                   </tr>
                 </tbody>
               </table>   
@@ -351,7 +361,7 @@ td b,td span {
     if ( isset($pdf) ) {      
 
         $x = 488;
-        $y = 83;
+        $y = 85;
         $text = "PÁGINA : {PAGE_NUM} de {PAGE_COUNT}";
         $font = $fontMetrics->get_font("serif", "bold");
         $size = 9;
