@@ -189,7 +189,7 @@ b {
                             
                             </td>
                             <td style="font-size: 11px;border-right: 1px solid #000;" colspan="4"  ><b>Agente Acoplamiento : </b>{{$informe_us->agente_acoplamiento}}</td>
-                            <td style="font-size: 11px;  " colspan="2" ><b>Ejecutor Ensayo : </b>{{$ejecutor_ensayo->name}}</td>  
+                            <td style="font-size: 11px;  " colspan="2" ><b>Ejec. Ensayo: : </b>{{$ejecutor_ensayo->name}}</td>  
 
                         </tr>
                         <tr>

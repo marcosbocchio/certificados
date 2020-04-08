@@ -188,7 +188,7 @@ b {
                             <td style="font-size: 11px;border-right: 1px solid #000;" colspan="3" ><b>EPS: </b>{{$informe->eps}}</td>                    
                         </tr>
                         <tr>
-                            <td style="font-size: 11px; border-right: 1px solid #000; " colspan="2" ><b>Ejec. Ensayo : </b>{{$ejecutor_ensayo->name}}</td>           
+                            <td style="font-size: 11px; border-right: 1px solid #000; " colspan="2" ><b>Ejec. Ensayo: </b>{{$ejecutor_ensayo->name}}</td>           
                             <td style="font-size: 11px; border-right: 1px solid #000;"  colspan="2"><b>Dis.Fuente/pelicula: </b>{{$informe_ri->distancia_fuente_pelicula}}</td>
                             <td style="font-size: 11px; border-right: 1px solid #000;" colspan="3"><b>PQR: </b>{{$informe->pqr}}</td>                    
                         </tr>                                   

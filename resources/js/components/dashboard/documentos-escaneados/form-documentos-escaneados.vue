@@ -76,8 +76,8 @@ export default {
     data() { return {
     
         ruta: 'documentos_escaneados',    
-        max_size : 1000, //KB
-        tipos_archivo_soportados:['jpg','jpeg'],
+        max_size : 20000, //KB
+        tipos_archivo_soportados:['jpg','jpeg','pdf'],
         temp_registro : {},
         newRegistro : {
             'path': '',

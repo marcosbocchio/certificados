@@ -12,8 +12,6 @@
 @section('contenido') 
  <div id="app">
 
-   
-
   <remitos    
   
      :otdata  ="{{$ot}}"    

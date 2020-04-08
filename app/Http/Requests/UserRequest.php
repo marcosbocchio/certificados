@@ -29,10 +29,10 @@ class UserRequest extends FormRequest
         }
 
         return [
-            'name' => 'required',
+            'name' => 'required | max:30',
             'dni'  =>'nullable|numeric|digits_between:7,8|unique:users,dni,'. $this->id,
             'film' => 'nullable|numeric|digits_between:1,3|unique:users,film,'. $this->id,
-             'email'  =>'required|email|unique:users,email,'. $this->id,
+            'email'  =>'required|email|unique:users,email,'. $this->id,
             'password' =>'required|Min:8',
             'cliente'  =>$condicion_cliente
         ];

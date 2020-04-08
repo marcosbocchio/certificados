@@ -210,7 +210,7 @@ b {
                         <tr>                           
                             <td style="font-size: 11px;border-right: 1px solid #000;" ><b>PQR: </b>{{$informe->pqr}}</td>
                             <td style="font-size: 11px; border-right: 1px solid #000; " colspan="4" ><b>Aplic. Rev.: </b>{{$revelador_aplicacion->codigo}}</td>
-                            <td style="font-size: 11px; " colspan="2" ><b>Ejecutor Ensayo : </b>{{$ejecutor_ensayo->name}}</td>
+                            <td style="font-size: 11px; " colspan="2" ><b>Ejec. Ensayo: </b>{{$ejecutor_ensayo->name}}</td>
                         </tr>                
                         </tbody>
                     </table>   
