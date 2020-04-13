@@ -89,7 +89,7 @@
         <div class="col-md-6">
           <div class="form-group">
               <label>Contacto 1 *</label>
-              <v-select v-model="contacto1" name="contacto_1" label="nombre" :options="contactos"></v-select>   
+              <v-select v-model="contacto1" name="contacto_1" label="nombre" id='contacto1' :options="contactos"></v-select>   
             </div>
         </div>
         <div class="col-md-6">
@@ -407,13 +407,11 @@
             <v-select v-model="riesgo" label="descripcion" :options="riesgos" id="riesgos"></v-select>
           </div> 
 
-      
-              <div class="form-group">                    
-                <span>
-                    <button type="button" @click="addRiesgo()"><span class="fa fa-plus-circle"></span></button> 
-                </span>
-              </div>
-       
+            <div class="form-group">                    
+              <span>
+                  <button type="button" @click="addRiesgo()"><span class="fa fa-plus-circle"></span></button> 
+              </span>
+            </div>       
           
           <div class="form-group">
             &nbsp;
@@ -1024,6 +1022,13 @@ export default {
            $('#nuevo').modal('hide');     
       },
 
+      marcarCamposNoValidados: function(errores){
+
+         $.each( errores, function( key, value ) {
+            $(`#${key}`).addClass("markError");
+            console.log(key);
+          });
+      },
 
       submit()
        {        
@@ -1089,7 +1094,9 @@ export default {
                   
                 }
 
+     //  this.marcarCamposNoValidados(this.errors); 
            });  
+    
       }
       else if (this.accion =='edit')
       { 
@@ -1198,6 +1205,11 @@ export default {
 .upSelect {
   font-weight: bold;
   font-size: 14;
+}
+.markError{
+
+  border-color: red;
+
 }
 
 </style>

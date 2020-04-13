@@ -46,7 +46,7 @@
 
                     <div class="box box-custom-enod">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Partes sin Certificados</h3>
+                            <h3 class="box-title">PARTES SIN CERTIFICADOS</h3>
 
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -84,7 +84,7 @@
                     <div v-show="TablaPartesServicios.length">
                         <div class="box box-custom-enod">
                             <div class="box-header with-border">
-                                <h3 class="box-title">Servicios</h3>
+                                <h3 class="box-title">SERVICIOS</h3>
 
                                 <div class="box-tools pull-right">
                                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -162,7 +162,7 @@
                     <div v-show="TablaPartesProductosPorCosturas.length && modo_cobro=='COSTURAS'">
                         <div class="box box-custom-enod">
                             <div class="box-header with-border">
-                                <h3 class="box-title">Productos</h3>
+                                <h3 class="box-title">PRODUCTOS</h3>
 
                                 <div class="box-tools pull-right">
                                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -205,7 +205,7 @@
                     <div v-show="TablaPartesProductosPorPlacas.length && modo_cobro=='PLACAS'">
                         <div class="box box-custom-enod">
                             <div class="box-header with-border">
-                                <h3 class="box-title">Productos</h3>
+                                <h3 class="box-title">PRODUCTOS</h3>
 
                                 <div class="box-tools pull-right">
                                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>

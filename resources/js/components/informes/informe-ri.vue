@@ -391,7 +391,7 @@
                     <div class="box box-custom-enod">
                         
                         <div class="box-header with-border">
-                            <h5 class="box-title">INDICACIONES</h5>
+                            <h3 class="box-title">INDICACIONES</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                                 </button>                       
@@ -464,7 +464,7 @@
                 <!-- PASADAS RI -->
                <div class="box box-custom-enod">
                    <div class="box-header with-border">
-                        <h5 class="box-title">PASADAS</h5>
+                        <h3 class="box-title">PASADAS</h3>
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                             </button>                       

@@ -188,7 +188,7 @@
                    <div class="box box-custom-enod">
                        <div class="box-body">
                             <div class="box-header with-border">
-                                <h5 class="box-title">Calibraciones</h5>
+                                <h3 class="box-title">CALIBRACIONES</h3>
                                 <div class="box-tools pull-right">
                                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                                     </button>                       
@@ -385,7 +385,7 @@
                <div class="box box-custom-enod">
                    <div class="box-body">
                         <div class="box-header with-border">
-                            <h5 class="box-title">Imagenes Calibraciones</h5>
+                            <h3 class="box-title">IMAGENES CALIBRACIONES</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                                 </button>                       
@@ -447,7 +447,7 @@
                     <div class="box box-custom-enod">                
 
                         <div class="box-header with-border">
-                            <h5 class="box-title">Registro de Mediciones </h5>
+                            <h3 class="box-title">REGISTRO DE MEDICIONES </h3>
                         </div>
                         <div class="box-body">   
                             <div>&nbsp;</div>
@@ -604,7 +604,7 @@
                    <div class="box box-custom-enod">
                         <div class="box-body">   
                             <div class="box-header with-border">
-                                <h5 class="box-title">Registro de Mediciones </h5>                               
+                                <h3 class="box-title">REGISTRO DE MEDICIONES</h3>                               
                             </div>
                             <div>&nbsp;</div>
 
@@ -743,7 +743,7 @@
                <div class="box box-custom-enod">
                    <div class="box-body">
                         <div class="box-header with-border">
-                            <h5 class="box-title">Imagenes Indicaciones</h5>
+                            <h3 class="box-title">IMAGENES INDICACIONES</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                                 </button>                       

@@ -287,7 +287,12 @@ b {
             @if ($ExisteRI)       
                 <tr>                         
                     <td style="font-size: 13px;height: 30px;border-top: 1px dashed black;" colspan="5"><b style="margin-left: 6px;">METODO ENSAYO: RI </b></td>                                         
-                </tr>  
+                </tr> 
+                @if ($estado == 'original')
+                    <tr>                         
+                        <td style="font-size: 13px;height: 30px" colspan="5"><b style="margin-left: 6px;">Placas Repetidas Total: </b>{{ $parte->placas_repetidas }}</td>                                         
+                    </tr>                       
+                @endif
                 @foreach ($parte_detalle as $item)
                     @if ($item->metodo == 'RI')                               
                          <tr>                         

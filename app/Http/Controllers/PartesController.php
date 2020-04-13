@@ -175,7 +175,8 @@ class PartesController extends Controller
         $parte->movilidad_propia_sn = $request->movilidad_propia_sn;
         $parte->patente = $request->patente;
         $parte->km_inicial = $request->km_inicial;
-        $parte->km_final = $request->km_final;
+        $parte->km_final = $request->km_final;     
+        $parte->placas_repetidas = $request->informes_ri ? $request->placas_repetidas : null;
         $parte->user_id = $user_id;
         $parte->observaciones = $request->observaciones;
         $parte->save();

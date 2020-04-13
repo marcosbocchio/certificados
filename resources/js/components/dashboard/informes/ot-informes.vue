@@ -18,7 +18,7 @@
            <div v-show="$can('T_informes_edita')">
                 <div class="box box-custom-enod top-buffer">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Agregar Informe</h3>
+                        <h3 class="box-title">AGREGAR INFORME</h3>
                 
                         <div class="box-body">  
                             <div class="form-group">
@@ -41,7 +41,7 @@
 
             <div class="box box-custom-enod top-buffer">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Informes Orden de Trabajo</h3>
+                    <h3 class="box-title">INFORMES ORDEN DE TRABAJO</h3>
 
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>

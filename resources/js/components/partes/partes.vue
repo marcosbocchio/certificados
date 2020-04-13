@@ -62,7 +62,7 @@
                 </div>   
                 <div class="box box-custom-enod">
                     <div class="box-header with-border">
-                    <h3 class="box-title">Responsabilidades</h3>
+                    <h3 class="box-title">RESPONSABILIDADES</h3>
 
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -116,7 +116,7 @@
                 </div>  
                 <div class="box box-custom-enod">
                     <div class="box-header with-border">
-                    <h3 class="box-title">Informes sin Parte Diario</h3>
+                    <h3 class="box-title">INFORMES SIN PARTE DIARIO</h3>
 
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -157,7 +157,7 @@
                 <div v-show="TablaServicios.length">
                     <div class="box box-custom-enod" >
                         <div class="box-header with-border">
-                        <h3 class="box-title">Servicios</h3>
+                            <h3 class="box-title">SERVICIOS</h3>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                                 </button>                       
@@ -206,7 +206,7 @@
                 <div v-show="TablaInformesRi.length">
                     <div class="box box-custom-enod" >
                         <div class="box-header with-border">
-                        <h3 class="box-title">Informes RI</h3>
+                        <h3 class="box-title">INFORMES RI</h3>
 
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -214,6 +214,12 @@
                             </div>
                         </div>
                         <div class="box-body"> 
+                            <div class="col-md-3">
+                                    <div class="form-group" >
+                                        <label for="placas_repetidas">Placas Repetidas Total*</label>
+                                        <input type="number" v-model="placas_repetidas" class="form-control" id="placas_repetidas">
+                                    </div>                            
+                                </div>
                             
                                 <div class="col-md-12">
                                     <div class="table-responsive">
@@ -272,7 +278,7 @@
                 <div v-show="TablaInformesPm.length">
                     <div class="box box-custom-enod" >
                         <div class="box-header with-border">
-                        <h3 class="box-title">Informes PM</h3>
+                        <h3 class="box-title">INFORMES PM</h3>
 
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -330,7 +336,7 @@
                 <div v-show="TablaInformesLp.length">
                     <div class="box box-custom-enod" >
                         <div class="box-header with-border">
-                        <h3 class="box-title">Informes LP</h3>
+                        <h3 class="box-title">INFORMES LP</h3>
 
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -389,7 +395,7 @@
                 <div v-show="TablaInformesUs.length">
                     <div class="box box-custom-enod" >
                         <div class="box-header with-border">
-                        <h3 class="box-title">Informes US</h3>
+                        <h3 class="box-title">INFORMES US</h3>
 
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -461,7 +467,7 @@
                        <!--Informes IMPORTADOS -->
                         <div class="box box-custom-enod" >
                             <div class="box-header with-border">
-                            <h3 class="box-title">Informes {{itemMetodo}}</h3>
+                            <h3 class="box-title">INFORMES {{itemMetodo}}</h3>
 
                                 <div class="box-tools pull-right">
                                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -609,6 +615,7 @@ export default {
         km_final:'',
         observaciones:'',
         loading: false,
+        placas_repetidas : '',
 
         operador:'',
         operadores:[],
@@ -730,6 +737,7 @@ export default {
                this.patente = this.parte_data.patente;
                this.km_final = this.parte_data.km_final;
                this.km_inicial = this.parte_data.km_inicial;
+               this.placas_repetidas = this.parte_data.placas_repetidas;
                this.observaciones = this.parte_data.observaciones;  
                this.$nextTick(function(){
 
@@ -1800,6 +1808,12 @@ export default {
                 return;
                 }
 
+            if(this.TablaInformesRi.length && !this.placas_repetidas){
+
+                toastr.error('El campo placas repetidas es obligatorio');
+                return;
+            }
+
             this.errors =[];
 
           
@@ -1819,6 +1833,7 @@ export default {
                 'observaciones'        : this.observaciones, 
                 'responsables'         :this.TablaResponsables, 
                 'informes_ri'          :this.TablaInformesRi,
+                'placas_repetidas'     :this.placas_repetidas,
                 'informes_pm'          :this.TablaInformesPm,
                 'informes_lp'          :this.TablaInformesLp,     
                 'informes_us'          :this.TablaInformesUs,
@@ -1868,6 +1883,12 @@ export default {
                 return;
                 }
 
+            if(this.TablaInformesRi.length && !this.placas_repetidas){
+
+                toastr.error('El campo placas repetidas es obligatorio');
+                return;
+            }
+
             console.log('entro para actualizar' );
             this.errors =[];        
             var urlRegistros = 'partes/' + this.parte_data.id  ;      
@@ -1885,6 +1906,7 @@ export default {
                 'km_final'             : this.km_final,
                 'observaciones'        : this.observaciones, 
                 'responsables'         :this.TablaResponsables,
+                'placas_repetidas'     :this.placas_repetidas,
                 'informes_ri'          :this.TablaInformesRi,
                 'informes_pm'          :this.TablaInformesPm,        
                 'informes_lp'          :this.TablaInformesLp,

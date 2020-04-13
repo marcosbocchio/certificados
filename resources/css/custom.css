@@ -16,10 +16,9 @@ font-size: 14px;
 font-weight: 400;
 }
 
-.box-header h5 {
+.box-header h3 {
 
   font-family: 'Montserrat',sans-serif;
-  font-weight: bold;
   font-style: italic;
 }
 .noresize {

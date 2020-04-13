@@ -34,7 +34,7 @@
 
         <div class="box box-custom-enod top-buffer">
             <div class="box-header with-border">
-            <h3 class="box-title">Operarios Asignados Orden de Trabajo</h3>
+            <h3 class="box-title">OPERARIOS ASIGNADOS A LA ORDEN DE TRABAJO</h3>
 
             <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -71,7 +71,7 @@
             <div class="top-buffer" >
                 <div class="box box-custom-enod">
                     <div class="box-header with-border">
-                    <h3 class="box-title">Documentación</h3>
+                    <h3 class="box-title">DOCUMENTACIÓN</h3>
 
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
