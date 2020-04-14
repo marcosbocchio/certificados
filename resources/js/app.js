@@ -210,6 +210,9 @@ Vue.component('abm-documentos-escaneados', require('./components/dashboard/docum
 Vue.component('table-documentos-escaneados', require('./components/dashboard/documentos-escaneados/table-documentos-escaneados.vue').default);
 Vue.component('form-documentos-escaneados', require('./components/dashboard/documentos-escaneados/form-documentos-escaneados.vue').default);
 
+/* Soldadores */
+Vue.component('estadisticas-soldaduras', require('./components/soldadores/estadisticas-soldaduras.vue').default);
+
 Vue.prototype.Laravel = window.Laravel;
 
 /**loadOperadoresDisometria

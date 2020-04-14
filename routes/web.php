@@ -77,10 +77,13 @@ Route::group(['middleware' => ['auth']], function () {
   Route::get('/area/enod/dosimetria/estados','DosimetriaEstadosController@callView')->name('dosimetria-estados');  
   Route::get('/area/enod/dosimetria/operador_periodo_rx','OperadorPeriodoRxController@callView')->name('operador-periodo-rx');  
   Route::get('/area/enod/dosimetria/resumen','DosimetriaResumenController@callView')->name('dosimetria-resumen');  
+  Route::get('/area/enod/soldadores/estadisticas-soldaduras','EstadisticasSoldadurasController@callView')->name('estadisticas-soldaduras');  
 
-   // reportes
 
- Route::get('/pdf/dosimetria/periodos','PdfDosimetriaPeriodosController@imprimir')->name('pdfDosimetriaPeriodos');
+  // reportes
+
+
+  Route::get('/pdf/dosimetria/periodos','PdfDosimetriaPeriodosController@imprimir')->name('pdfDosimetriaPeriodos');
 
 });
 
