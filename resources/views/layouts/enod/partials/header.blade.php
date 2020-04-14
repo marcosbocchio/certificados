@@ -2,7 +2,9 @@
 
     <!-- Main Header -->
     <header class="main-header">
-
+    @if (env('APP_ENV')=='local')
+         <p style="color: white; position: absolute;;z-index: 9999;width: 100%;height: 35px;text-align: center;font-size: 26px;margin: 7px;font-weight: bold;" >Entorno de testing</p> 
+    @endif
         <!-- Logo -->
         <a href="{{ route('dashboard') }}" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->

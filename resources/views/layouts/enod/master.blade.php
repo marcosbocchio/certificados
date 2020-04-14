@@ -73,6 +73,8 @@ desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
+
+
 <body class="hold-transition skin-yellow fixed sidebar-mini">
 
 @include('layouts.enod.partials.header')
