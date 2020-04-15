@@ -125,7 +125,7 @@
           </div>
           <div class="form-group">
             <label>Localidad *</label>
-            <v-select v-model="localidad" label="localidad" :options="localidades" @input="sync()"></v-select>   
+            <v-select v-model="localidad" label="localidad" :options="localidades" @input="sync()" ></v-select>   
           </div>
           <div class="form-group">
             <label for="search">Buscar Ubicación</label>
@@ -688,10 +688,8 @@ export default {
          
          handler : function(servicios,oldservicios) {
         
-          console.log('-----');
           let existeRi = false;
           servicios.forEach(function(servicio) {
-              console.log(servicio.metodo);         
               
               if(servicio.metodo == 'RI'){                 
                   existeRi = true; 
@@ -747,7 +745,6 @@ export default {
                 this.inputsEpps      = this.ot_eppsdata;                
           
                }
-              console.log(this.ot_productosdata);
 
               },      
 
@@ -775,7 +772,6 @@ export default {
               
                 axios.defaults.baseURL = this.url ;                
                 var urlRegistros = 'users/empresa' + '?api_token=' + Laravel.user.api_token;  
-                console.log(axios.defaults.baseURL + '/' + urlRegistros);           
                 axios.get(urlRegistros).then(response =>{
                 this.users_empresa = response.data             
                 });
@@ -830,8 +826,6 @@ export default {
                 });               
               },
         cargarEppDefaults :  function(){
-
-               console.log('cargarEppDefaults'); 
               
                if (this.acciondata == 'create'){
                  
@@ -890,11 +884,22 @@ export default {
               },
       sync () {            
               
-                this.mapCenter.lat = parseFloat(this.localidad.lat);
-                this.mapCenter.lng = parseFloat(this.localidad.lon);
-                this.markers[0].position.lat =parseFloat(this.localidad.lat);
-                this.markers[0].position.lng = parseFloat(this.localidad.lon);              
-            
+              if(this.localidad){
+
+                  this.mapCenter.lat = parseFloat(this.localidad.lat);
+                  this.mapCenter.lng = parseFloat(this.localidad.lon);
+                  this.markers[0].position.lat =parseFloat(this.localidad.lat);
+                  this.markers[0].position.lng = parseFloat(this.localidad.lon);          
+
+                }else{
+
+                this.localidad= {
+                
+                    lat : 0,
+                    lon : 0
+          }
+                }
+                this.getLocalidades()
               },
               
       setPlace(place) {
@@ -997,7 +1002,6 @@ export default {
           this.index_referencias = index ;
           this.tabla = tabla;
           this.inputs = inputsReferencia ;
-          console.log(inputsReferencia);
           eventSetReferencia.$emit('open');
       },
 
@@ -1026,7 +1030,6 @@ export default {
 
          $.each( errores, function( key, value ) {
             $(`#${key}`).addClass("markError");
-            console.log(key);
           });
       },
 

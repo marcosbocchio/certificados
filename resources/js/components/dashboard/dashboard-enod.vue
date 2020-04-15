@@ -176,14 +176,14 @@
                                 <td> {{ot.estado}}</td>   
 
                                 <td width="10px">                                   
-                                  <button class="btn btn-warning btn-sm" title="Editar" @click="openEditarOt" :disabled="!$can('T_edita')">
+                                  <button class="btn btn-warning btn-sm" title="Editar" @click="openEditarOt(ot.id)" :disabled="!$can('T_edita')">
                                     <span class="fa fa-edit">
                                     </span>
                                   </button>                              
                                 </td>
 
                                 <td width="10px">                                  
-                                  <button class="btn btn-default btn-sm" title="Soldadores/Usuarios Cliente" @click="openUsuariosOt" :disabled="!$can('T_usuarios')">
+                                  <button class="btn btn-default btn-sm" title="Soldadores/Usuarios Cliente" @click="openUsuariosOt(ot.id)" :disabled="!$can('T_usuarios')">
                                     <span class="fa fa-user">
                                     </span>
                                   </button>                                 
@@ -343,15 +343,15 @@ export default {
 
         },
       
-      openEditarOt: function(){
+      openEditarOt: function(id){
 
-        window.location.href = this.AppUrl + '/area/enod/ots/' + this.ot_id_selected + '/edit';
+        window.location.href = this.AppUrl + '/area/enod/ots/' + id + '/edit';
 
       },
 
-      openUsuariosOt: function(){
+      openUsuariosOt: function(id){
 
-        window.location.href = this.AppUrl + '/soldadores/ot/' + this.ot_id_selected;
+        window.location.href = this.AppUrl + '/soldadores/ot/' + id;
 
       }
 
