@@ -8,7 +8,10 @@
 
 @page { margin: 430px 30px 200px 60px !important;
         padding: 0px 0px 0px 0px !important; }
-
+        
+.EspecialCaracter {
+    font-family: DejaVu Sans;
+}
 header {
     position:fixed;
     top: -388px;    
@@ -334,9 +337,9 @@ td b,td span {
                   <tr> 
                     <td style="font-size: 12px; width:470px;" >
                         @if ($ot_producto->ot_referencia_id)
-                        <li style="margin-left: 20px;"><a href="{{ route('ProductosReferencias',$ot_producto->ot_referencia_id)}}">{{ $ot_producto->producto }} {{ $ot_producto->medida }} {{ $ot_producto->unidad_medida_codigo }}</a></li> <br>
+                        <li style="margin-left: 20px;font-size: 11px;" class="EspecialCaracter"><a href="{{ route('ProductosReferencias',$ot_producto->ot_referencia_id)}}">{{ $ot_producto->producto }} {{ $ot_producto->medida }} {{ $ot_producto->unidad_medida_codigo }}</a></li> <br>
                         @else
-                        <li style="margin-left: 20px;">  {{ $ot_producto->producto }} {{ $ot_producto->medida }} {{ $ot_producto->unidad_medida_codigo }} </li> </span>  
+                        <li style="margin-left: 20px;font-size: 11px;" class="EspecialCaracter">  {{ $ot_producto->producto }} {{ $ot_producto->medida }} {{ $ot_producto->unidad_medida_codigo }} </li> </span>  
                         @endif 
                       </td>
                       <td style="font-size: 12px; width:80px;text-align: center;" >{{$ot_producto->cantidad_productos}}</td>
