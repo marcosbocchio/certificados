@@ -119,10 +119,8 @@ export default {
             this.indexPosTablaDosimetria = this.dia_actual-1;
             this.setYears();
             this.year = new Date(this.fecha).getFullYear();
-            this.month = new Date(this.fecha).getMonth() + 1;
+            this.month = new Date(this.fecha).getMonth() + 1;            
             this.day = new Date(this.fecha).getDate();
-            console.log('el dia de hoy es:');
-            console.log(this.day);
             this.setMonths();
             
        })
@@ -152,12 +150,11 @@ export default {
 
                 }
                 
-                this.$store.dispatch('loadDiasDelMes',{year : this.year , month : this.month}).then(response =>{
+               this.$store.dispatch('loadDiasDelMes',{year : this.year , month : this.month}).then(response =>{
 
-                    this.$store.dispatch('loadDosimetriaOperador',{operador_id : this.operador.id, year : this.year , month : this.month}).then(
-                        response => {
+                    this.$store.dispatch('loadDosimetriaOperador',{operador_id : this.operador.id, year : this.year , month : this.month}).then(response => {
                             
-                            this.ResetTabla();
+                          this.ResetTabla();
     
                         }
                     );  
@@ -240,11 +237,12 @@ export default {
 
     deshabilitarInput(val){
 
+  
         
     let deshabilitar = false;
     let esMismoDia = this.ComprobarMismoDia(val);
 
-    if((this.operador_data.can.D_operador_Admin) || (val=='')){
+    if((this.$can('D_operador_Admin')) || (val=='')){
 
         console.log('el val es vacio');
 
@@ -260,8 +258,6 @@ export default {
 
             deshabilitar = true;
         }
-
-
     } 
 
     return deshabilitar;
@@ -286,11 +282,12 @@ export default {
 
      },
 
-     ResetTabla : function() {
+    ResetTabla : function() {
 
         this.TablaDosimetria = [];
      
         for (let index = 0; index < this.DiasDelMes; index++) {
+
             this.TablaDosimetria.push({
 
                 day : index + 1,
@@ -311,61 +308,64 @@ export default {
 
         }.bind(this));
 
-            setTimeout(x => {
+        setTimeout(x => {
 
-            this.$nextTick(() => {                
+        this.$nextTick(() => {   
+            if(this.$refs['refInputMediciones']){
+
                 this.$refs['refInputMediciones'][0].focus();
-                });  
-            },250);
+            }             
+            });  
+        },250);
 
      },
 
     selectPosTablaDosimetria :function(index){
         
-            this.indexPosTablaDosimetria = index ;
+        this.indexPosTablaDosimetria = index ;
            
-        },
+    },
 
-     submit :function () {
+    submit :function () {
        
-            axios.defaults.baseURL = this.url ;
-            var urlRegistros = 'dosimetria_operador';  
+        axios.defaults.baseURL = this.url ;
+        var urlRegistros = 'dosimetria_operador';  
+                    
+        axios.post(urlRegistros, {   
+        
+        operador : this.operador,  
+        year : this.year,
+        month : this.month, 
+        dosimetria_operadores : this.TablaDosimetria,              
+
+        }).then(response => {            
+            this.errors=[];     
+            console.log(response);         
+            this.$store.dispatch('loadDosimetriaOperador',{operador_id : this.operador.id, year : this.year , month : this.month}).then(
+                    response => {
                         
-            axios.post(urlRegistros, {   
+                        this.ResetTabla();
+
+                    }
+                );           
+            toastr.success('dosimetrīa actualizado con éxito');                
             
-            operador : this.operador,  
-            year : this.year,
-            month : this.month, 
-            dosimetria_operadores : this.TablaDosimetria,              
-
-            }).then(response => {            
-                this.errors=[];     
-                console.log(response);         
-                this.$store.dispatch('loadDosimetriaOperador',{operador_id : this.operador.id, year : this.year , month : this.month}).then(
-                        response => {
-                            
-                            this.ResetTabla();
-    
-                        }
-                    );           
-                toastr.success('dosimetrīa actualizado con éxito');                
-                
-            }).catch(error => {
-               
-                this.errors = error.response.data.errors;                 
-                $.each( this.errors, function( key, value ) {
-                    toastr.error(value,key);
-                    console.log( key + ": " + value );
-                });
-                
-                if(this.errors = [] && error){
-
-                     toastr.error("Ocurrio un error al procesar la solicitud");                     
-                     this.users_ot_operarios = this.ot_operarios_data;   
-                }
-  
+        }).catch(error => {
+            
+            this.errors = error.response.data.errors;                 
+            $.each( this.errors, function( key, value ) {
+                toastr.error(value,key);
+                console.log( key + ": " + value );
             });
-        }
+            
+            if(this.errors = [] && error){
+
+                    toastr.error("Ocurrio un error al procesar la solicitud");                     
+                    this.users_ot_operarios = this.ot_operarios_data;   
+            }
+
+        });
+    }
 
  },
   

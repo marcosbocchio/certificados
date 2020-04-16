@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\ClienteRequest;
+use Illuminate\Support\Collection as Collection;
 use App\Clientes;
 use Illuminate\Support\Facades\DB;
 use App\Contactos;
@@ -239,5 +240,22 @@ class ClientesController extends Controller
               throw $e;      
               
             }
+    }
+
+    /* Esta funcion devuelve el cliente de un usuario, si es usuario Enod devuelve todos los clientes */
+    public function getClientesOperador($user_id){
+
+      $user = User::findOrfail($user_id);
+
+      if ($user->cliente_id){
+
+        return Clientes::where('id',$user->cliente_id)->get();      
+       
+      }else{
+
+        return Clientes::all();
+        
+      }
+
     }
 }

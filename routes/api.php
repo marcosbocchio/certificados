@@ -21,6 +21,7 @@ Route::group(['middleware' => 'auth:api'], function()
 {   
     Route::resource('parametros_generales', 'ParametrosGeneralesController');
     Route::get('clientes/paginate', 'ClientesController@paginate'); 
+    Route::get('clientes/operador/{user_id}', 'ClientesController@getClientesOperador');
     Route::resource('clientes', 'ClientesController'); 
     Route::get('contratistas/paginate', 'ContratistasController@paginate'); 
     Route::resource('contratistas', 'ContratistasController'); 
@@ -259,6 +260,9 @@ Route::get('/pdf/productos/referencias/informe/pm/{id}','PdfInformesPmReferencia
 Route::get('/pdf/productos/referencias/informe/lp/{id}','PdfInformesLpReferenciasController@imprimir')->name('InformeLpReferencias');    
 
 Route::get('/pdf/dosimetria/year/{year}/operadores/{str_list_of_ids?}/rs/{cliente_sn}/months/{str_list_of_months}','PdfDosimetriaController@imprimir')->name('pdfDosimetriaAnual');
+
+
+Route::get('/pdf/soldadores/estadisticas-soldaduras/cliente/{cliente_id}/obra/{obra}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}','PdfEstadisticasSoldadurasController@imprimir')->name('pdfEstadisticasSoldaduras');
 
 Route::get('/pdf/informe/{id}','PdfInformesController@index')->name('pdfInformes');
 Route::get('/pdf/informe/lp/{informe}','PdfInformesLpController@imprimir')->name('pdfInformeLp');
