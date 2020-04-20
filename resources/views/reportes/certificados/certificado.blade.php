@@ -95,7 +95,7 @@ b {
                         <tbody>                        
                                 <tr>                                                
                                     
-                                    <td style="font-size: 11px;height: 45px;width: 260px"><span style="margin-top: -20px;"><b>CLIENTE: </b>{{$cliente->nombre_fantasia}}</span></td> 
+                                    <td style="font-size: 11px;height: 45px;width: 235px"><span style="margin-top: -20px;"><b>CLIENTE: </b>{{$cliente->nombre_fantasia}}</span></td> 
                                     <td  style="width: 140px">
                                         <span>
                                             @if($ot->logo_cliente_sn && $cliente->path)
@@ -106,7 +106,7 @@ b {
                                         </span>
                                     </td>                                     
                                 
-                                    <td style="font-size: 11px;width: 260px">
+                                    <td style="font-size: 11px;width: 235px">
                                         @if($contratista)
                                             <b>COMITENTE: </b>{{$contratista->nombre}}
                                         @endif                         

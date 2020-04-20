@@ -7,7 +7,7 @@
 
 <style>
 
-@page { margin:191px 30px 140px 60px !important;
+@page { margin:210px 30px 140px 60px !important;
         padding: 0px 0px 0px 0px !important; }
 
 body {
@@ -17,7 +17,7 @@ body {
 
 header {
     position:fixed;
-    top: -163px; 
+    top: -182px; 
    
     }
 
@@ -94,12 +94,13 @@ b {
                     <table width="100%" >
                         <tbody>
                             <tr>                         
-                                <td style="font-size: 12px;height: 20px; width: 233px;"><b>CLIENTE: </b>{{$cliente->nombre_fantasia}}</td>                        
-                                <td style="font-size: 12px; width: 253px;"><b>PROYECTO: </b>{{$ot->proyecto}}</td>               
-                                
+                                <td style="font-size: 12px;height: 20px; width: 233px;"><b>CLIENTE: </b>{{$cliente->nombre_fantasia}}</td>                         
                                 <td style="font-size: 12px;"><b>OBRA: </b>{{$ot->obra}}</td>     
                                 <td style="font-size: 12px;"><b>OT N°: </b>{{$ot->numero}}</td>     
-                            </tr>               
+                            </tr>    
+                            <tr>
+                                <td style="font-size: 12px; width: 500px;"><b>PROYECTO: </b>{{$ot->proyecto}}</td>
+                            </tr>           
                         </tbody>
                     </table>          
                 </td>
