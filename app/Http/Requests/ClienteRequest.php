@@ -28,7 +28,7 @@ class ClienteRequest extends FormRequest
         return [
           
                 'codigo'        => 'required|Max:13',
-                'nombre'        => 'required|Max:30',
+                'nombre'        => 'required|Max:15',
                 'razon_social'  => 'required|Max:100',
                 'provincia'     =>'required',
                 'localidad'     =>'required',

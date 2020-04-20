@@ -8,13 +8,13 @@
 <style>  
 
 @page {    
-        margin: 335px 15px 204px 15px !important;
+        margin: 352px 15px 204px 15px !important;
         padding: 0px 0px 0px 0px !important;
        }
 
 header {
     position:fixed;
-    top: -296px;    
+    top: -313px;    
 }
 
 footer {
@@ -94,11 +94,9 @@ b {
                     <table width="100%" >
                         <tbody>                        
                                 <tr>                                                
-                                    <td style="font-size: 11px;width: 220px"><b>PROYECTO: </b>{{$ot->proyecto}}</td>
-                                    <td style="font-size: 11px;height: 45px;width: 220px"><span style="margin-top: -20px;"><b>CLIENTE: </b>{{$cliente->nombre_fantasia}}</span>
                                     
-                                    </td> 
-                                    <td>
+                                    <td style="font-size: 11px;height: 45px;width: 260px"><span style="margin-top: -20px;"><b>CLIENTE: </b>{{$cliente->nombre_fantasia}}</span></td> 
+                                    <td  style="width: 140px">
                                         <span>
                                             @if($ot->logo_cliente_sn && $cliente->path)
                                                 <img  src="{{ public_path($cliente->path)}}" alt=""  style="height: 40px;margin-top: 5px;">
@@ -108,23 +106,31 @@ b {
                                         </span>
                                     </td>                                     
                                 
-                                    <td style="font-size: 11px;width: 220px">
+                                    <td style="font-size: 11px;width: 260px">
                                         @if($contratista)
                                             <b>COMITENTE: </b>{{$contratista->nombre}}
                                         @endif                         
                                         
                                     </td>  
-                                    <td>
+                                    <td style="width: 210px">
                                         @if($ot->logo_contratista_sn && $contratista->path_logo)
                                             <img  src="{{ public_path($contratista->path_logo)}}" alt="" style="height: 40px;margin-top: 5px;">
                                         @else
                                             <img  src="{{ public_path('img/blank.png')}}" alt=""  style="height: 40px;margin-top: 5px;">
                                         @endif
                                     </td>              
-                                    
-                                    <td style="font-size: 11px;width: 100px;"><b>OBRA: </b>{{$informe->obra}}</td>
-                                    <td style="font-size: 11px;"><b>OT N°: </b>{{$ot->numero}}</td>     
-                                </tr>               
+
+                                    @if($ot->obra)
+
+                                         <td style="font-size: 11px;"><b>OBRA: </b>{{$ot->obra}}</td>
+
+                                    @endif
+                                    <td style="font-size: 11px;"><b>OT N°: </b>{{$ot->numero}}</td>  
+                                    <td style="font-size: 11px;"><b>FTS N°: </b>{{$ot->presupuesto}}</td>   
+                                </tr>  
+                                <tr>
+                                   <td style="font-size: 11px;" colspan="6"><b>PROYECTO: </b>{{$ot->proyecto}}</td>
+                                </tr>
                            </tbody>
                     </table>          
                 </td>
@@ -552,7 +558,7 @@ b {
 
                     </td>
 
-                    <td style="font-size: 11px;width:95px; text-align: center" class="bordered-td">hhh
+                    <td style="font-size: 11px;width:95px; text-align: center" class="bordered-td">
 
                         @foreach ( $defectos_posiciones as  $defectos_posicion)
                             @if ($defectos_posicion->posicion_id == $junta_posiciones->posicion_id)
@@ -581,7 +587,7 @@ b {
             @endforeach    
 
             {{ $cantFilasTotal = count($juntas_posiciones) }}
-            {{ $filasPage = 15 }}
+            {{ $filasPage = 14 }}
             {{ $filasACompletar = pdfCantFilasACompletar($filasPage,$cantFilasTotal) }}  
 
              @for ( $x=0 ;  $x < $filasACompletar ; $x++)

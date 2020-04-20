@@ -25,7 +25,7 @@ class ContratistaRequest extends FormRequest
     {
         return [
 
-            'nombre'            => 'required|Max:20'      
+            'nombre'            => 'required|Max:15'      
         ];
     }
 }

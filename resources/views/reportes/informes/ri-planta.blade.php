@@ -7,12 +7,12 @@
 
 <style>
 
-@page { margin: 365px 30px 192px 60px !important;
+@page { margin: 367px 30px 190px 60px !important;
         padding: 0px 0px 0px 0px !important; }
 
 header {
     position:fixed;
-    top: -326px;    
+    top: -328px;    
     }
 
 main{
@@ -92,7 +92,7 @@ b {
                 </td>
             </tr>
             <tr>
-                <td class="bordered">
+                <td class="bordered" style="border-bottom: none;">
                     <table width="100%" >
                         <tbody>
                             <tr>                         
@@ -123,18 +123,25 @@ b {
                                        <img  src="{{ public_path('img/blank.png')}}" alt=""  style="height: 35px;margin-top: 5px;">
                                     @endif
 
-                                </td>
-                                                    
-                            </tr>            
+                                </td>                                                    
+                            </tr>  
+                       </tbody>
+                    </table>          
+                </td>
+            </tr> 
+            <tr>
+                <td>
+                    <table width="100%" >
+                        <tbody>             
                             <tr>                                                  
-                                <td style="font-size: 11px; width: 253px;" colspan="2"><b>PROYECTO: </b>{{$ot->proyecto}}</td>                            
+                                <td style="font-size: 11px; width: 382px;"><b>PROYECTO: </b>{{$ot->proyecto}}</td>                            
                                 <td style="font-size: 11px;"><b>OBRA: </b>{{$ot->obra}}</td>     
                                 <td style="font-size: 11px;"><b>OT N°: </b>{{$ot->numero}}</td>     
                             </tr>   
                         </tbody>
                     </table>          
                 </td>
-            </tr>
+            </tr> 
             <tr>
                 <td class="bordered">
                     <table width="100%" style="border-collapse: collapse;" >

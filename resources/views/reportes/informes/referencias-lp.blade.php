@@ -71,7 +71,7 @@ b {
                 </td>
             </tr>
             <tr>
-                <td class="bordered">
+                <td class="bordered" style="border-bottom: none;">
                     <table width="100%" >
                         <tbody>
                             <tr>                         
@@ -89,9 +89,9 @@ b {
                             
                                 <td style="font-size: 11px; width: 190px;">
                                   
-                                        @if($contratista)
-                                            <b>COMITENTE: </b>{{$contratista->nombre}}
-                                        @endif                                               
+                                    @if($contratista)
+                                        <b>COMITENTE: </b>{{$contratista->nombre}}
+                                    @endif                                               
                                  
                                 </td> 
                                 <td>
@@ -102,11 +102,18 @@ b {
                                        <img  src="{{ public_path('img/blank.png')}}" alt=""  style="height: 35px;margin-top: 5px;">
                                     @endif
 
-                                </td>
-                                                    
-                            </tr>            
+                                </td>                                                    
+                            </tr>  
+                       </tbody>
+                    </table>          
+                </td>
+            </tr> 
+            <tr>
+                <td>
+                    <table width="100%" >
+                        <tbody>             
                             <tr>                                                  
-                                <td style="font-size: 11px; width: 253px;" colspan="2"><b>PROYECTO: </b>{{$ot->proyecto}}</td>                            
+                                <td style="font-size: 11px; width: 382px;"><b>PROYECTO: </b>{{$ot->proyecto}}</td>                            
                                 <td style="font-size: 11px;"><b>OBRA: </b>{{$ot->obra}}</td>     
                                 <td style="font-size: 11px;"><b>OT N°: </b>{{$ot->numero}}</td>     
                             </tr>   

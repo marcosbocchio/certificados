@@ -8,7 +8,7 @@
 <style>  
 
 @page {    
-        margin: 198px 15px 150px 15px !important;
+        margin: 217px 15px 150px 15px !important;
         padding: 0px 0px 0px 0px !important;
        }
 
@@ -19,7 +19,7 @@ body {
 
 header {
     position:fixed;
-    top: -159px;    
+    top: -178px;    
 }
 
 footer {
@@ -94,11 +94,9 @@ b {
                     <table width="100%" >
                         <tbody>                        
                                 <tr>                                                
-                                    <td style="font-size: 11px;width: 220px"><b>PROYECTO: </b>{{$ot->proyecto}}</td>
-                                    <td style="font-size: 11px;height: 45px;width: 220px"><span style="margin-top: -20px;"><b>CLIENTE: </b>{{$cliente->nombre_fantasia}}</span>
                                     
-                                    </td> 
-                                    <td>
+                                    <td style="font-size: 11px;height: 45px;width: 260px"><span style="margin-top: -20px;"><b>CLIENTE: </b>{{$cliente->nombre_fantasia}}</span></td> 
+                                    <td  style="width: 140px">
                                         <span>
                                             @if($ot->logo_cliente_sn && $cliente->path)
                                                 <img  src="{{ public_path($cliente->path)}}" alt=""  style="height: 40px;margin-top: 5px;">
@@ -108,13 +106,13 @@ b {
                                         </span>
                                     </td>                                     
                                 
-                                    <td style="font-size: 11px;width: 200px">
+                                    <td style="font-size: 11px;width: 260px">
                                         @if($contratista)
                                             <b>COMITENTE: </b>{{$contratista->nombre}}
                                         @endif                         
                                         
                                     </td>  
-                                    <td>
+                                    <td style="width: 210px">
                                         @if($ot->logo_contratista_sn && $contratista->path_logo)
                                             <img  src="{{ public_path($contratista->path_logo)}}" alt="" style="height: 40px;margin-top: 5px;">
                                         @else
@@ -130,6 +128,9 @@ b {
                                     <td style="font-size: 11px;"><b>OT N°: </b>{{$ot->numero}}</td>  
                                     <td style="font-size: 11px;"><b>FTS N°: </b>{{$ot->presupuesto}}</td>   
                                 </tr>  
+                                <tr>
+                                   <td style="font-size: 11px;" colspan="6"><b>PROYECTO: </b>{{$ot->proyecto}}</td>
+                                </tr>
                            </tbody>
                     </table>          
                 </td>

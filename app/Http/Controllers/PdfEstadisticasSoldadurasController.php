@@ -15,19 +15,19 @@ class PdfEstadisticasSoldadurasController extends Controller
         $fd = date('Y-m-d',strtotime($fecha_desde));
         $fh = date('Y-m-d',strtotime($fecha_hasta));
         $estadisticasGenerales = DB::select('CALL getEstadisticasGeneralesSoldaduras(?,?,?,?)',array($cliente_id,$obra,$fd,$fh));  
-        $this->completarTitulosQuicenas($estadisticasGenerales);
-      //  dd($estadisticasGenerales);  
+        $this->completarTitulosQuicenas($estadisticasGenerales);     
         $total_costuras_radiografiadas = 0;
         $total_costuras_aprobadas = 0;
         $total_costuras_rechazadas = 0;
         $total_posiciones_radiografiadas = 0;
         $total_posiciones_aprobadas = 0;
         $total_posiciones_rechazadas = 0;
+        $total_cantidad_soldaduras_soldador = 0;
         $this->CalcularTotalesEstadisticasGenerales($estadisticasGenerales,$total_costuras_radiografiadas,$total_costuras_aprobadas,$total_costuras_rechazadas,$total_posiciones_radiografiadas,$total_posiciones_aprobadas,$total_posiciones_rechazadas);
-       // dd($estadisticasGenerales,$total_costuras_radiografiadas,$total_costuras_aprobadas,$total_costuras_rechazadas,$total_posiciones_radiografiadas,$total_posiciones_aprobadas,$total_posiciones_rechazadas);
+        // dd($estadisticasGenerales,$total_costuras_radiografiadas,$total_costuras_aprobadas,$total_costuras_rechazadas,$total_posiciones_radiografiadas,$total_posiciones_aprobadas,$total_posiciones_rechazadas);
         $cantidadSoldadurasSoldador = DB::select('CALL CantidadSoldadurasSoldador(?,?,?,?)',array($cliente_id,$obra,$fd,$fh));    
-
-      //  dd($estadisticasGenerales,$estadisticasGenerales);
+        $this->CalcularTotalCantidadSoldadurasSoldador($cantidadSoldadurasSoldador,$total_cantidad_soldaduras_soldador);
+       // dd($estadisticasGenerales,$cantidadSoldadurasSoldador);
         $pdf = \PDF::loadView('reportes.soldadores.estadisticas-soldaduras',compact(
 
                                                                 'cliente',
@@ -41,14 +41,14 @@ class PdfEstadisticasSoldadurasController extends Controller
                                                                 'total_costuras_rechazadas',
                                                                 'total_posiciones_radiografiadas',
                                                                 'total_posiciones_aprobadas',
-                                                                'total_posiciones_rechazadas'                                                             
+                                                                'total_posiciones_rechazadas','total_cantidad_soldaduras_soldador'                                                             
                                                                
                                                                ));
         return $pdf->stream();
         
     }
 
-   public function CalcularTotalesEstadisticasGenerales($estadisticasGenerales,&$total_costuras_radiografiadas,&$total_costuras_aprobadas,&$total_costuras_rechazadas,&$total_posiciones_radiografiadas,&$total_posiciones_aprobadas,&$total_posiciones_rechazadas){
+    function CalcularTotalesEstadisticasGenerales($estadisticasGenerales,&$total_costuras_radiografiadas,&$total_costuras_aprobadas,&$total_costuras_rechazadas,&$total_posiciones_radiografiadas,&$total_posiciones_aprobadas,&$total_posiciones_rechazadas){
 
         foreach ($estadisticasGenerales as $item) {
 
@@ -60,6 +60,14 @@ class PdfEstadisticasSoldadurasController extends Controller
             $total_posiciones_rechazadas+= $item->posiciones_rechazadas;
         }
    }
+
+   function CalcularTotalCantidadSoldadurasSoldador($cantidadSoldadurasSoldador,&$total_cantidad_soldaduras_soldador){
+
+     foreach ($cantidadSoldadurasSoldador as $item) {
+    
+        $total_cantidad_soldaduras_soldador+= $item->posiciones_radiografiadas;
+     }
+   }
    
 public function completarTitulosQuicenas($estadisticasGenerales){
 
@@ -70,7 +78,7 @@ public function completarTitulosQuicenas($estadisticasGenerales){
         $dia = date("d",strtotime($item->fecha_inicial));
         $mes = getNombreMes(date("m",strtotime($item->fecha_inicial)));
         $anio = date("Y",strtotime($item->fecha_inicial));
-        $quincena = intval($dia) <= 15 ? '1ER' : '2DA';
+        $quincena = intval($dia) < 15 ? '1ER' : '2DA';
         $item->titulo = $quincena . ' ' .'QUINCENA'. ' ' . strtoupper($mes) . ' ' . 'DE' . ' ' . $anio;
     }
 

@@ -11,7 +11,7 @@
     font-family: DejaVu Sans;
 }
 
-@page { margin: 287px 30px 144px 60px !important;
+@page { margin: 287px 30px 140px 60px !important;
         padding: 0px 0px 0px 0px !important; }
 
 header {
@@ -108,7 +108,7 @@ b {
                 </td>
             </tr>
             <tr>
-                <td class="bordered">
+                <td class="bordered" style="border-bottom: none;">
                     <table width="100%" >
                         <tbody>
                             <tr>                         
@@ -139,11 +139,18 @@ b {
                                        <img  src="{{ public_path('img/blank.png')}}" alt=""  style="height: 35px;margin-top: 5px;">
                                     @endif
 
-                                </td>
-                                                    
-                            </tr>            
+                                </td>                                                    
+                            </tr>  
+                       </tbody>
+                    </table>          
+                </td>
+            </tr> 
+            <tr>
+                <td>
+                    <table width="100%" >
+                        <tbody>             
                             <tr>                                                  
-                                <td style="font-size: 11px; width: 253px;" colspan="2"><b>PROYECTO: </b>{{$ot->proyecto}}</td>                            
+                                <td style="font-size: 11px; width: 382px;"><b>PROYECTO: </b>{{$ot->proyecto}}</td>                            
                                 <td style="font-size: 11px;"><b>OBRA: </b>{{$ot->obra}}</td>     
                                 <td style="font-size: 11px;"><b>OT N°: </b>{{$ot->numero}}</td>     
                             </tr>   
@@ -267,7 +274,7 @@ b {
     <table style="text-align: center;border-collapse: collapse;">
         <tbody>
         <tr>
-            <td style="border-bottom: 2px solid #000;background:#D8D8D8" colspan="16">DATOS DE CALIBRACIÓN</td>
+            <td style="border-bottom: 2px solid #000;background:#D8D8D8;padding-top:5px;" colspan="16">DATOS DE CALIBRACIÓN</td>
         </tr>
             <tr>
                 

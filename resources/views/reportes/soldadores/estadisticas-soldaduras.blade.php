@@ -42,6 +42,11 @@ b {
     margin-left: 2px;
 }
 
+table thead th {
+
+    font-size: 12px;
+}
+
 </style>
 
  <body class="bordered" style="border-top: none;">
@@ -135,15 +140,15 @@ b {
 
     @foreach ($estadisticasGenerales as $item)
 
-    @php 
-         $costuras_aprobadas_porcentaje = number_format(($item->costuras_aprobadas * 100) / $item->costuras_radiografiadas,1);
-         $costuras_rechazadas_porcentaje = number_format(100 - $costuras_aprobadas_porcentaje,1) ;
-         $posiciones_aprobadas_porcentaje = number_format(($item->posiciones_aprobadas * 100) / $item->posiciones_radiografiadas,1);
-         $posiciones_rechazadas_porcentaje = number_format(100 - $posiciones_aprobadas_porcentaje,1);
-    @endphp
-   
-    <h6 style="margin-left: 5px;">{{ $item->titulo}}</h6>
-    <table style="text-align: center;margin-top: 20px;border-collapse: collapse;" width="100%" >
+        @php 
+            $costuras_aprobadas_porcentaje = number_format(($item->costuras_aprobadas * 100) / $item->costuras_radiografiadas,1);
+            $costuras_rechazadas_porcentaje = number_format(100 - $costuras_aprobadas_porcentaje,1) ;
+            $posiciones_aprobadas_porcentaje = number_format(($item->posiciones_aprobadas * 100) / $item->posiciones_radiografiadas,1);
+            $posiciones_rechazadas_porcentaje = number_format(100 - $posiciones_aprobadas_porcentaje,1);
+        @endphp
+    
+        <h6 style="margin-left: 5px;">{{ $item->titulo}}</h6>
+        <table style="text-align: center;margin-top: 20px;border-collapse: collapse;" width="100%" >
             <tbody >
                 <tr> 
                     <td style="width: 50px;">&nbsp;</td>
@@ -182,14 +187,43 @@ b {
         </table>
         
     @endforeach
-    <table>
+
+    <h5 style="margin-left: 5px;">Cantidad de Soldaduras por Soldador</h5>
+
+    <table style="text-align: center;margin-top: 20px;border-collapse: collapse;" width="60%" class="bordered" >
+        <thead>
+            <tr>
+                <th style="font-size: 11px;text-align: center;" class="bordered-td">Soldador</th>
+                <th style="font-size: 11px;text-align: center;" class="bordered-td">Total Ensayado</th>
+                <th style="font-size: 11px;text-align: center;" class="bordered-td">Fallas Totales</th>
+                <th style="font-size: 11px;text-align: center;" class="bordered-td">% Fallas / Rx propias</th>
+                <th style="font-size: 11px;text-align: center;" class="bordered-td">% Fallas Total</th>
+            </tr>
+        </thead>
+        <tbody>
+        
+            @foreach ($cantidadSoldadurasSoldador as $item)                
+                @php 
+                    $fallas_propias_porcentaje = number_format(($item->posiciones_rechazadas * 100) / $item->posiciones_radiografiadas,1);
+                    $fallas_total_porcentaje = number_format(($item->posiciones_rechazadas * 100) / $total_cantidad_soldaduras_soldador,1);
+                @endphp            
+                <tr>
+                    <td style="font-size: 11px;text-align: center;" class="bordered-td">{{ $item->codigo }}</td>
+                    <td style="font-size: 11px;text-align: center;" class="bordered-td">{{ $item->posiciones_radiografiadas}}</td>
+                    <td style="font-size: 11px;text-align: center;" class="bordered-td">{{ $item->posiciones_rechazadas}}</td>
+                    <td style="font-size: 11px;text-align: center;" class="bordered-td">{{ $fallas_propias_porcentaje }} %</td>
+                    <td style="font-size: 11px;text-align: center;" class="bordered-td">{{ $fallas_total_porcentaje }}</td>
+                </tr>
+            @endforeach            
+        </tbody>
     </table>
+
 </main>
 <script type="text/php">
 
     if ( isset($pdf) ) {
         $x = 490;
-        $y = 97;
+        $y = 110;
         $text_pagina = "PÁGINA : {PAGE_NUM} de {PAGE_COUNT}";
         $text_titulo = "INFORME FINAL";
         $font = $fontMetrics->get_font("serif", "bold");

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Proyecto : {{$ot->proyecto }} - OT N° : {{$ot->numero}}</title>
+    <title>PROYECTO : {{$ot->proyecto }} - OT N° : {{$ot->numero}}</title>
 
  <style>
 
@@ -95,7 +95,7 @@ td b,td span {
                 </td>
             </tr>
             <tr>
-                <td class="bordered">
+                <td class="bordered" style="border-bottom: none;">
                     <table width="100%" >
                         <tbody>
                             <tr>                         
@@ -126,11 +126,18 @@ td b,td span {
                                        <img  src="{{ public_path('img/blank.png')}}" alt=""  style="height: 35px;margin-top: 5px;">
                                     @endif
 
-                                </td>
-                                                    
-                            </tr>            
+                                </td>                                                    
+                            </tr>  
+                       </tbody>
+                    </table>          
+                </td>
+            </tr> 
+            <tr>
+                <td>
+                    <table width="100%" >
+                        <tbody>             
                             <tr>                                                  
-                                <td style="font-size: 11px; width: 253px;" colspan="2"><b>PROYECTO: </b>{{$ot->proyecto}}</td>                            
+                                <td style="font-size: 11px; width: 382px;"><b>PROYECTO: </b>{{$ot->proyecto}}</td>                            
                                 <td style="font-size: 11px;"><b>OBRA: </b>{{$ot->obra}}</td>     
                                 <td style="font-size: 11px;"><b>OT N°: </b>{{$ot->numero}}</td>     
                             </tr>   
@@ -138,7 +145,7 @@ td b,td span {
                     </table>          
                 </td>
             </tr> 
-            <tr>
+          <tr>
           <td class="bordered">
             <table>
                 <tbody>
@@ -329,9 +336,7 @@ td b,td span {
                       
                   </tr>
                       
-                  @endforeach
-                      
-                      
+                  @endforeach                       
                       
                   @foreach ( $ot_productos as $ot_producto )
                   <tr> 
@@ -346,9 +351,7 @@ td b,td span {
                       <td style="font-size: 12px; width:80px;text-align: center;" >{{$ot_producto->unidad_medida_codigo}}</td>
                   </tr>               
 
-                  @endforeach  
-                  
-               
+                  @endforeach                  
 
                   @for ( $x=0 ;  $x < 2 ; $x++)
                       <tr>
