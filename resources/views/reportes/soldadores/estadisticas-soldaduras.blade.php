@@ -141,7 +141,8 @@ b {
          $posiciones_aprobadas_porcentaje = number_format(($item->posiciones_aprobadas * 100) / $item->posiciones_radiografiadas,1);
          $posiciones_rechazadas_porcentaje = number_format(100 - $posiciones_aprobadas_porcentaje,1);
     @endphp
-    <h5 style="margin-left: 5px;">Período {{ $loop->index + 1}} </h5>
+   
+    <h6 style="margin-left: 5px;">{{ $item->titulo}}</h6>
     <table style="text-align: center;margin-top: 20px;border-collapse: collapse;" width="100%" >
             <tbody >
                 <tr> 
