@@ -552,7 +552,7 @@ b {
 
                     </td>
 
-                    <td style="font-size: 11px;width:95px; text-align: center" class="bordered-td">
+                    <td style="font-size: 11px;width:95px; text-align: center" class="bordered-td">hhh
 
                         @foreach ( $defectos_posiciones as  $defectos_posicion)
                             @if ($defectos_posicion->posicion_id == $junta_posiciones->posicion_id)
