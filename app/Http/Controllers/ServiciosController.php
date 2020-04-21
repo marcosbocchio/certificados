@@ -30,7 +30,7 @@ class ServiciosController extends Controller
 
     public function paginate(Request $request){
 
-        return  Servicios::with('metodoEnsayos')->with('unidadMedidas')->orderBy('id','DESC')->paginate(10);
+        return  Servicios::with('metodoEnsayos')->with('unidadMedidas')->orderBy('codigo','ASC')->paginate(10);
     }
 
     public function callView()
