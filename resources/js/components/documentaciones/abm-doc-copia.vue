@@ -18,9 +18,15 @@
 
         <div class="clearfix"></div>    
        
-            <component :is= setTablaComponente :registros="registros"  @confirmarDelete="confirmDeleteRegistro" @editRegistroEvent="editRegistro" :loading="isLoading"/>    
+            <component :is= setTablaComponente :registros="registros.data"  @confirmarDelete="confirmDeleteRegistro" @editRegistroEvent="editRegistro" :loading="isLoading"/>    
             <delete-registro :datoDelete="datoDelete" :fillRegistro="fillRegistro" @close-modal="getRegistros" :modelo="modelo"></delete-registro>  
-     
+
+             <pagination 
+                  :data="registros" @pagination-change-page="getResults" :limit="3" >
+                  <span slot="prev-nav">&lt; Previous</span>
+                  <span slot="next-nav">Next &gt;</span> 
+             </pagination>   
+
         <div class="clearfix"></div>    
 
         <!--  Modal -->
@@ -285,9 +291,13 @@ export default {
             this.newRegistro.tipo='PROCEDIMIENTO';
         }
         if(this.newRegistro.tipo == 'PROCEDIMIENTO'){
-            var urlRegistros = this.modelo + '/ot/' + this.ot_id_data;      
+
+            var urlRegistros = this.modelo + '/ot/' + this.ot_id_data; 
+
         }else{
+
            var urlRegistros = this.modelo;      
+
         }
         axios.get(urlRegistros).then(response =>{
             this.registros = response.data;
@@ -340,8 +350,6 @@ export default {
                     return;     
              }
           
-            console.log(this.selectedFile);
-
             if(FileSize > 20 ){
                  event.preventDefault();
                  toastr.error('Archivo demasiado grande. (Max 20 MB)');
@@ -355,8 +363,8 @@ export default {
                 this.onUpload();   
 
             } 
-         
         },
+
         onUpload() {
 
               this.HabilitarGuardar = false          
@@ -477,9 +485,6 @@ export default {
                 }
 
            });  
-
-
-
     },
 
     confirmDeleteRegistro: function(registro,dato){            

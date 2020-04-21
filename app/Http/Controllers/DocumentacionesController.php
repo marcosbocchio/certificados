@@ -22,8 +22,8 @@ class DocumentacionesController extends Controller
     public function __construct(DocumentacionesRepository $documentacionesRepository)
     {
 
-     $this->middleware(['role_or_permission:Super Admin|M_documentaciones'],['only' => ['callView']]);   
-     $this->documentaciones = $documentacionesRepository;
+        $this->middleware(['role_or_permission:Super Admin|M_documentaciones'],['only' => ['callView']]);   
+        $this->documentaciones = $documentacionesRepository;
      
     }
 
@@ -43,7 +43,7 @@ class DocumentacionesController extends Controller
                                 ->orWhere('documentaciones.tipo','PROCEDIMIENTO GENERAL')
                                 ->selectRaw('documentaciones.*,usuario_documentaciones.fecha_caducidad')
                                 ->orderBy('id','DESC')
-                                ->paginate(5); 
+                                ->get(); 
         
         foreach ($documentaciones as $documentacion) {
 

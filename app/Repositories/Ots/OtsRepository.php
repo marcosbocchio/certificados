@@ -160,10 +160,10 @@ class OtsRepository extends BaseRepository
     if($request->isMethod('post')){
       
        $ot->user_id = $user_id;
+       $ot->estado  = 'EDITANDO';
 
     }
     
-    $ot->estado             = 'EDITANDO';
     $ot->save();     
   }
 
