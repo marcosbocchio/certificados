@@ -24,7 +24,7 @@ class UserController extends Controller
     public function index(Request $request)
     {   
 
-      return User::with('cliente')->get();
+      return User::with('cliente')->orderBy('name','ASC')->get();
   
     }
 
@@ -63,7 +63,7 @@ class UserController extends Controller
 
     public function getUsersEmpresa(){
 
-      return User::where('cliente_id',null)->get();
+      return User::where('cliente_id',null)->orderBy('name','ASC')->get();
 
     }
 
@@ -75,7 +75,7 @@ class UserController extends Controller
 
     public function UserCliente($id){
 
-      return User::where('cliente_id',$id)->get();
+      return User::where('cliente_id',$id)->orderBy('name','ASC')->get();
     }
     
 }

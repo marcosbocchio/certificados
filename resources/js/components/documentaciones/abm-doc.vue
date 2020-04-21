@@ -4,7 +4,7 @@
         <div class="small-box bg-custom-3">
             <div class="inner">
                 <h3>{{ registros.length }}</h3>
-                <p>Procedimientos </p>
+                <p>Documentaciones </p>
             </div>
             <div class="icon">
                 <i class="fas fa-radiation-alt"></i>
