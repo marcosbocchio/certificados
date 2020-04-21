@@ -137,7 +137,7 @@ td b,td span {
                     <table width="100%" >
                         <tbody>             
                             <tr>                                                  
-                                <td style="font-size: 11px; width: 382px;"><b>PROYECTO: </b>{{$ot->proyecto}}</td>                            
+                                <td style="font-size: 11px; width: 480px;"><b>PROYECTO: </b>{{$ot->proyecto}}</td>                            
                                 <td style="font-size: 11px;"><b>OBRA: </b>{{$ot->obra}}</td>     
                                 <td style="font-size: 11px;"><b>OT N°: </b>{{$ot->numero}}</td>     
                             </tr>   

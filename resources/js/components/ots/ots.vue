@@ -7,7 +7,7 @@
         <div class="col-md-6">
           <div class="form-group">
             <label for="proyecto">Proyecto *</label>
-            <input type="text" v-model="proyecto" class="form-control" id="proyecto" placeholder="">
+            <input type="text" v-model="proyecto" class="form-control" id="proyecto" placeholder="" maxlength="50">
           </div>
         </div>
       </div>
@@ -17,13 +17,13 @@
       <div class="col-md-2">
         <div class="form-group">
           <label for="fst">FST Nº *</label>
-          <input v-model="fst" type="number" class="form-control" id="fst" placeholder="">
+          <input v-model="fst" type="number" class="form-control" id="fst" placeholder="" min="1" maxlength = "8" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
         </div>
       </div>
         <div class="col-md-2">
           <div class="form-group">
             <label for="ot">OT Nº *</label>
-            <input v-model="ot" type="number" class="form-control" id="ot" placeholder="">
+            <input v-model="ot" type="number" class="form-control" id="ot" placeholder="" min="1" maxlength = "8" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
           </div>
         </div>
       <div class="col-md-2">
@@ -40,7 +40,7 @@
         <div class="col-md-2">
           <div class="form-group">
             <label for="fst">Obra Nº</label>
-            <input v-model="obra" type="number" class="form-control" id="obra" placeholder="" min="0">
+            <input v-model="obra" type="number" class="form-control" id="obra" placeholder="" min="1" maxlength = "8" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
           </div>
         </div>        
         <div class="col-md-2">
@@ -117,7 +117,7 @@
         <div class="col-md-6">
           <div class="form-group">
             <label for="lugar_ensayo">Lugar de ensayo *</label>
-            <input v-model="lugar_ensayo" type="text" class="form-control" id="lugar_ensayo" placeholder="">
+            <input v-model="lugar_ensayo" type="text" class="form-control" id="lugar_ensayo" placeholder="" maxlength="35">
           </div>        
           <div class="form-group">
             <label>Provincia *</label>
@@ -746,7 +746,22 @@ export default {
           
                }
 
-              },      
+              },    
+      
+      MaxLengthCamposNumber : function($event,obj){
+
+        console.log($event);
+        console.log(obj);
+        console.log($event.target.value.length);
+        console.log($event.target.maxLength);
+        if($event.target.value.length > $event.target.maxLength){
+        
+          console.log('elvalor es mayot');
+      //  $event.target.value = $event.target.value.slice(0, $event.target.maxLength);
+          obj = 1;
+
+        }
+      },
 
       getClientes : function(){
 

@@ -25,8 +25,8 @@ class OtsRequest extends FormRequest
     {       
              
          return [
-            'ot'                       => 'required|digits_between:1,11|integer|unique:ots,numero,'. $this->id,
-            'fst'                      => 'required|digits_between:1,11|integer|unique:ots,presupuesto,'. $this->id,
+            'ot'                       => 'required|digits_between:1,8|integer|unique:ots,numero,'. $this->id,
+            'fst'                      => 'required|digits_between:1,8|integer|unique:ots,presupuesto,'. $this->id,
             'cliente'                  => 'required',
             'proyecto'                 => 'required|Max:50',
             'fecha'                    => 'required',
