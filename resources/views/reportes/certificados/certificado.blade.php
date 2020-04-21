@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>certificado {{FormatearNumeroConCeros($certificado->numero,8)}}</title>
+    <title>CERTIFICADO N°: {{FormatearNumeroConCeros($certificado->numero,8)}}</title>
 </head>
 
 <style>  
@@ -112,7 +112,7 @@ b {
                                         @endif                         
                                         
                                     </td>  
-                                    <td style="width: 210px">
+                                    <td style="width: 180px">
                                         @if($ot->logo_contratista_sn && $contratista->path_logo)
                                             <img  src="{{ public_path($contratista->path_logo)}}" alt="" style="height: 40px;margin-top: 5px;">
                                         @else

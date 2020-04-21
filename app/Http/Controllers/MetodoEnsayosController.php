@@ -25,7 +25,7 @@ class MetodoEnsayosController extends Controller
      */
     public function index()
     {
-        return  $this->metodoEnsayo->getAll();
+        return MetodoEnsayos::orderBy('metodo','ASC')->get();
     }
     /**
      * Show the form for creating a new resource.

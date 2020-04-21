@@ -19,8 +19,6 @@ use App\Localidades;
 use Illuminate\Support\Facades\Auth;
 use \stdClass;
 
-
-
 class OtsController extends Controller
 {
     Protected $ot;

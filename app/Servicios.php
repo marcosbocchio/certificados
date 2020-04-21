@@ -19,4 +19,5 @@ class Servicios extends Model
    return $this->belongsTo('App\MetodoEnsayos','metodo_ensayo_id','id');
    
    }
+   
 }

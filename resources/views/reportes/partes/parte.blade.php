@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Parte</title>
+    <title>PARTE DIARIO N°: {{$parte->id}} </title>
 </head>
 
 <style>
@@ -94,12 +94,12 @@ b {
                     <table width="100%" >
                         <tbody>
                             <tr>                         
-                                <td style="font-size: 12px;height: 20px; width: 233px;"><b>CLIENTE: </b>{{$cliente->nombre_fantasia}}</td>                         
+                                <td style="font-size: 12px;height: 20px;width: 350;"><b>CLIENTE: </b>{{$cliente->nombre_fantasia}}</td>                         
                                 <td style="font-size: 12px;"><b>OBRA: </b>{{$ot->obra}}</td>     
                                 <td style="font-size: 12px;"><b>OT N°: </b>{{$ot->numero}}</td>     
                             </tr>    
                             <tr>
-                                <td style="font-size: 12px; width: 500px;"><b>PROYECTO: </b>{{$ot->proyecto}}</td>
+                                <td style="font-size: 12px;"" colspan="3"><b>PROYECTO: </b>{{$ot->proyecto}}</td>
                             </tr>           
                         </tbody>
                     </table>          

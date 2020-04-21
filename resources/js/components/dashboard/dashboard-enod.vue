@@ -152,10 +152,10 @@
                         <thead>
                             <tr>
                                 <th class="col-lg-1">OT N°</th>
-                                <th class="col-lg-3" >CLIENTE</th>    
-                                <th class="col-lg-3">PROYECTO</th>  
+                                <th class="col-lg-2" >CLIENTE</th>    
+                                <th class="col-lg-5">PROYECTO</th>  
                                 <th class="col-lg-1">OBRA N°</th>     
-                                <th class="col-lg-2">FECHA</th>     
+                                <th class="col-lg-1">FECHA</th>     
                                 <th class="col-lg-1">ESTADO</th>                        
                                 <th class="col-lg-1" colspan="4">
                                  <small style="margin-left: 2px;">Editar</small>

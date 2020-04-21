@@ -8,18 +8,30 @@
                     <h4 class="modal-title">Editar</h4>
                 </div>
                 <div class="modal-body">                       
-                                              
-                    <label for="codigo">Código (*)</label>                   
-                    <input autocomplete="off" v-model="editRegistro.codigo" type="text" name="codigo" class="form-control" value="">
+                    <div class="form-group">                          
+                          <label for="codigo">Código (*)</label>   
+                          <input autocomplete="off" v-model="editRegistro.codigo" type="text" name="codigo" class="form-control" value="">
+                    </div>      
+
+                    <div class="form-group">
+                            <label for="name">Descripción</label>                   
+                         <input autocomplete="off" type="text" name="descripcion" class="form-control" v-model="editRegistro.descripcion" value="">
+                    </div>
                     
-                    <label for="name">Descripción</label>                   
-                    <input autocomplete="off" type="text" name="descripcion" class="form-control" v-model="editRegistro.descripcion" value="">
+                    <div class="form-group">
+                        <label for="name">Unidad Medida (*)</label>      
+                        <v-select v-model="unidad_medida" label="codigo" :options="unidades_medidas"></v-select>
+                    </div>
 
-                     <label for="name">Unidad Medida (*)</label>      
-                    <v-select v-model="unidad_medida" label="codigo" :options="unidades_medidas"></v-select>
-
-                    <label for="name">Método Ensayo (*)</label>      
-                    <v-select v-model="metodo_ensayo" label="metodo" :options="metodos_ensayos"></v-select>                   
+                    <div class="form-group">
+                        <label for="name">Método Ensayo (*)</label>      
+                        <v-select v-model="metodo_ensayo" label="metodo" :options="metodos_ensayos">
+                            <template slot="option" slot-scope="option">
+                                <span class="upSelect">{{ option.metodo }}</span> <br> 
+                                <span class="downSelect"> {{ option.descripcion }} </span>
+                            </template>  
+                         </v-select>
+                    </div>                
                   
                 </div>
             

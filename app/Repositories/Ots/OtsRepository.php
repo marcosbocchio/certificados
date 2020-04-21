@@ -34,7 +34,7 @@ class OtsRepository extends BaseRepository
   }
 
   public function store( $request)
-  {  
+  {      
 
     $ot = $this->getModel();
     $servicios = $request->servicios;
@@ -77,8 +77,6 @@ class OtsRepository extends BaseRepository
         $productos = $request->productos;
         $epps      = $request->epps;
         $riesgos   = $request->riesgos;       
-
-
 
         DB::beginTransaction();
           try {  
@@ -158,7 +156,13 @@ class OtsRepository extends BaseRepository
     $ot->responsable_ot_id = $request->user_empresa;
     $ot->observaciones     = $request->observaciones;
     $ot->fecha_hora_estimada_ensayo = $fecha_hora_estimada_ensayo;
-    $ot->user_id            = $user_id;
+
+    if($request->isMethod('post')){
+      
+       $ot->user_id = $user_id;
+
+    }
+    
     $ot->estado             = 'EDITANDO';
     $ot->save();     
   }
