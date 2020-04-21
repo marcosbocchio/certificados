@@ -141,7 +141,7 @@ class OtOperariosController extends Controller
 
     public function users(){
   
-        return User::whereNull('cliente_id')->get();
+        return User::whereNull('cliente_id')->orderBy('name','ASC')->get();
 
     }
 
