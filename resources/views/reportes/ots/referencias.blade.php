@@ -103,12 +103,23 @@ td {
 
                                 </td>
                                                     
-                            </tr>            
-                            <tr>                                                  
-                                <td style="font-size: 11px; width: 253px;" colspan="2"><b>PROYECTO: </b>{{$ot->proyecto}}</td>                            
+                            </tr>    
+ 
+                        </tbody>
+                    </table>          
+                </td>
+            </tr>
+             <tr>
+                <td class="bordered">
+                    <table width="100%" >
+                        <tbody>   
+                            <tr>                                                                                            
+                                <td style="font-size: 11px; width: 490px;" colspan="2"><b>PROYECTO: </b>{{$ot->proyecto}}</td>                            
                                 <td style="font-size: 11px;"><b>OBRA: </b>{{$ot->obra}}</td>     
                                 <td style="font-size: 11px;"><b>OT N°: </b>{{$ot->numero}}</td>     
-                            </tr>   
+                           
+                            </tr>      
+ 
                         </tbody>
                     </table>          
                 </td>

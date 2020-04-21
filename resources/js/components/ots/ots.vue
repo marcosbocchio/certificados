@@ -7,7 +7,7 @@
         <div class="col-md-6">
           <div class="form-group">
             <label for="proyecto">Proyecto *</label>
-            <input type="text" v-model="proyecto" class="form-control" id="proyecto" placeholder="" maxlength="50">
+            <input type="text" v-model="proyecto" class="form-control" id="proyecto" placeholder="" maxlength="60">
           </div>
         </div>
       </div>
