@@ -21,7 +21,7 @@ class ContratistasController extends Controller
      */
     public function index()
     {
-        return Contratistas::all();
+        return Contratistas::orderBy('nombre','ASC')->get();
     }
 
     public function paginate(Request $request){
