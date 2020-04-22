@@ -22,7 +22,7 @@ class EppsController extends Controller
      */
     public function index()
     {
-        return  $this->epps->getAll();
+        return Epps::orderBy('descripcion','ASC')->get();
     }
 
     /**

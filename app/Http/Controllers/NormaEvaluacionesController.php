@@ -26,7 +26,7 @@ class NormaEvaluacionesController extends Controller
      */
     public function index()
     {
-        return  $this->normaEvaluacion->getAll();
+        return  NormaEvaluaciones::orderBy('codigo','ASC')->get();
     }
 
     public function paginate(Request $request){

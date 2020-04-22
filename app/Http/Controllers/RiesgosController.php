@@ -23,7 +23,7 @@ class RiesgosController extends Controller
      */
     public function index()
     {
-        return  $this->riesgos->getAll();
+        return  Riesgos::orderBy('descripcion','ASC')->get();
 
     }
 

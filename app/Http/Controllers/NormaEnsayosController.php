@@ -27,7 +27,7 @@ class NormaEnsayosController extends Controller
      */
     public function index()
     {
-        return  $this->normaEnsayo->getAll();
+        return  NormaEnsayos::orderBy('codigo','ASC')->get();
     }
 
     public function paginate(Request $request){

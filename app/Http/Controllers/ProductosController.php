@@ -24,7 +24,7 @@ class ProductosController extends Controller
      */
     public function index()
     {
-        return  Productos::with('unidadMedidas')->orderBy('codigo','ASC')->get();
+        return  Productos::with('unidadMedidas')->orderBy('descripcion','ASC')->get();
     }
 
     public function paginate(Request $request){
@@ -35,7 +35,7 @@ class ProductosController extends Controller
 
     public function ProductosOts(){
 
-        return  Productos::where('visible_ot',1)->orderBy('codigo','ASC')->get();
+        return  Productos::where('visible_ot',1)->orderBy('descripcion','ASC')->get();
     }
 
     public function callView()
