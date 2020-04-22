@@ -29,13 +29,13 @@ class MedidasController extends Controller
      */
     public function index()
     {
-        return Medidas::all();
+        return Medidas::orderBy('codigo','ASC')->get();
     
     }
 
     public function paginate(Request $request){
 
-        return Medidas::with('unidadMedidas')->orderBy('id','DESC')->paginate(10);
+        return Medidas::with('unidadMedidas')->orderBy('codigo','ASC')->paginate(10);
 
     }
 

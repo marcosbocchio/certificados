@@ -32,7 +32,7 @@ class NormaEnsayosController extends Controller
 
     public function paginate(Request $request){
 
-        return NormaEnsayos::orderBy('id','DESC')->paginate(10);
+        return NormaEnsayos::orderBy('codigo','ASC')->paginate(10);
   
      }
 

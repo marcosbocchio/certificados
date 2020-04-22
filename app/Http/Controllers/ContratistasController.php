@@ -26,7 +26,7 @@ class ContratistasController extends Controller
 
     public function paginate(Request $request){
 
-      return Contratistas::orderBy('id','DESC')->paginate(10);
+      return Contratistas::orderBy('nombre','ASC')->paginate(10);
   
       }
 

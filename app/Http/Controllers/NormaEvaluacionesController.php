@@ -31,7 +31,7 @@ class NormaEvaluacionesController extends Controller
 
     public function paginate(Request $request){
 
-        return NormaEvaluaciones::orderBy('id','DESC')->paginate(10);
+        return NormaEvaluaciones::orderBy('codigo','ASC')->paginate(10);
   
      }
 

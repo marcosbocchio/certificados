@@ -28,7 +28,7 @@ class FuentesController extends Controller
 
     public function paginate(Request $request){
       
-        return Fuentes::orderBy('id','DESC')->paginate(10);
+        return Fuentes::orderBy('codigo','ASC')->paginate(10);
   
       }
 

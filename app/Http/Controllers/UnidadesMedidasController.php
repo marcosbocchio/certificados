@@ -27,7 +27,7 @@ class UnidadesMedidasController extends Controller
 
     public function paginate(Request $request){
 
-        return UnidadesMedidas::orderBy('id','DESC')->paginate(10);
+        return UnidadesMedidas::orderBy('codigo','ASC')->paginate(10);
 
     }
 

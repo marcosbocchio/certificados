@@ -17,7 +17,7 @@ class ContactosRepository extends BaseRepository
 
     $Contactos = $this->getModel();
 
-    return $Contactos->where('cliente_id',$id)->get();
+    return $Contactos->where('cliente_id',$id)->orderBy('nombre','ASC')->get();
 
   }
 

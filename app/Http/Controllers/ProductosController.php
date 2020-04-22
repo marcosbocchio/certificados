@@ -24,18 +24,18 @@ class ProductosController extends Controller
      */
     public function index()
     {
-        return  Productos::with('unidadMedidas')->get();
+        return  Productos::with('unidadMedidas')->orderBy('codigo','ASC')->get();
     }
 
     public function paginate(Request $request){
 
-        return  Productos::with('unidadMedidas')->orderBy('id','DESC')->paginate(10);
+        return  Productos::with('unidadMedidas')->orderBy('codigo','ASC')->paginate(10);
 
     }
 
     public function ProductosOts(){
 
-        return  Productos::where('visible_ot',1)->get();
+        return  Productos::where('visible_ot',1)->orderBy('codigo','ASC')->get();
     }
 
     public function callView()

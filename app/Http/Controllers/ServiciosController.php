@@ -25,7 +25,7 @@ class ServiciosController extends Controller
      */
     public function index()
     {
-        return  Servicios::with('metodoEnsayos')->with('unidadMedidas')->get();
+        return  Servicios::with('metodoEnsayos')->with('unidadMedidas')->orderBy('codigo','ASC')->get();
     }
 
     public function paginate(Request $request){

@@ -28,7 +28,7 @@ class ClientesController extends Controller
      */
     public function index()
     {
-        $clientes =  Clientes::with('contactos')->with('localidad')->get();
+        $clientes =  Clientes::with('contactos')->with('localidad')->orderBy('nombre_fantasia','ASC')->get();
         foreach ($clientes as $cliente) {
 
             $provincia = Provincias::find($cliente->localidad['provincia_id']);
