@@ -2,12 +2,12 @@
 <div> 
     <div class="form-group"> 
 
-      <div class="col-lg-1 col-xs-3">
+      <div class="col-md-1 col-xs-2">
         <button class="btn btn-primary" v-on:click.prevent="openNuevoRegistro()" :disabled="!$can(permiso_create)">Nuevo</button>
       </div>
 
       <div v-show="modelo == 'users' || modelo == 'interno_equipos' || modelo == 'clientes'" >
-        <div class="col-lg-4 col-lg-offset-7 col-xs-9">       
+        <div class="col-md-3 col-md-offset-8 col-xs-10">
           <div class="input-group">
               <input type="text" v-model="search" class="form-control" placeholder="Buscar...">
               <span class="input-group-addon btn" @click="aplicarFiltro()" style="background-color: #F9CA33;"><i class="fa fa-search"></i></span>
