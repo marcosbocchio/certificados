@@ -22,12 +22,12 @@
         <div class="form-group"> 
 
                 <div v-show="$can('M_documentaciones_edita')">
-                    <div class="col-md-1 col-xs-3">
+                    <div class="col-lg-1 col-xs-3">
                          <button class="btn btn-primary pull-left" v-on:click.prevent="openNuevoRegistro()">Nuevo</button>      
                     </div>
                 </div>            
                 
-                <div class="col-md-3 col-md-offset-6 col-xs-9">       
+               <div class="col-lg-4 col-lg-offset-7 col-xs-9">       
                     <div class="input-group">
                         <input type="text" v-model="search" class="form-control" placeholder="Buscar...">
                         <span class="input-group-addon btn" @click="aplicarFiltro()" style="background-color: #F9CA33;"><i class="fa fa-search"></i></span>
@@ -38,7 +38,7 @@
 
        <div class="clearfix"></div>    
 
-        <div class="col-md-10">
+        <div class="col-md-12">
 
             <component :is= setTablaComponente :registros="registros.data"  @confirmarDelete="confirmDeleteRegistro" @editRegistroEvent="editRegistro" :loading="isLoading"/>    
             <delete-registro :datoDelete="datoDelete" :fillRegistro="fillRegistro" @close-modal="getResults" :modelo="modelo"></delete-registro>  
