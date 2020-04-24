@@ -159,9 +159,9 @@
                                 <th class="col-lg-1">ESTADO</th>                        
                                 <th class="col-lg-1" colspan="4">
                                  <small style="margin-left: 2px;">Editar</small>
-                                 <small style="margin-left: 13px;">Usuarios</small>
-                                 <small style="margin-left: 16px;">Informe</small>
-                                 <small style="margin-left: 13px;">Acción</small>
+                                 <small style="margin-left: 10px;">Usuarios</small>
+                                 <small style="margin-left: 15px;">Informe</small>
+                                 <small style="margin-left: 12px;">Acción</small>
 
                                 </th>
                             </tr>
