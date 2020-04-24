@@ -337,11 +337,13 @@ export default {
         }
         if(this.newRegistro.tipo == 'PROCEDIMIENTO'){
 
-            var urlRegistros = this.modelo + '/ot/' + this.ot_id_data + '?page='+ page + '&search=' + this.search;  ; 
+            var urlRegistros = this.modelo + '/ot/' + this.ot_id_data + '?page='+ page + '&search=' + this.search;  
+            this.$store.dispatch('loadContarProcedimientos',this.ot_id_data);
 
         }else{
 
            var urlRegistros = this.modelo +   '?page='+ page + '&search=' + this.search; 
+            this.$store.dispatch('loadContarDocumentacionesTotal');
 
         }
         axios.get(urlRegistros).then(response =>{

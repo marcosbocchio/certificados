@@ -285,7 +285,10 @@ class DocumentacionesController extends Controller
 
     public function DocumentacionesTotal(){
 
-        return Documentaciones::count(); 
+        return Documentaciones::orWhere('documentaciones.tipo','USUARIO')
+                                ->orWhere('documentaciones.tipo','OT')
+                                ->orWhere('documentaciones.tipo','INSTITUCIONAL')
+                                ->orWhere('documentaciones.tipo','PROCEDIMIENTO GENERAL')->count(); 
 
     }
 }
