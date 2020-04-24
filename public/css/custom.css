@@ -28,9 +28,9 @@ font-weight: 400;
 .top-buffer { margin-top:20px; }
 
 
-table th {
+table thead th {
 
-  font-size: 12px;;
+  font-size: 13px;;
 } 
 
 table thead tr th small {
@@ -46,7 +46,9 @@ table thead tr th small {
 
 table tbody td {
 
-  font-size: 12px;
+   font-size: 13px;
+  font-weight: 500;
+
 }
 
 label {
