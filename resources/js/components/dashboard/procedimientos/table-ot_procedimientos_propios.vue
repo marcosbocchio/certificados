@@ -5,10 +5,10 @@
           <table class="table table-hover table-striped">
             <thead>
               <tr>
-                <th>Tipo</th>
-                <th>Título</th>
-                <th>Descripción</th>
-                <th>Metodo</th>  
+                <th>TIPO</th>
+                <th>TÍTULO</th>
+                <th>DESCRIPCIÓN</th>
+                <th>MÉTODO</th>  
                 <th colspan="3">&nbsp;</th>
               </tr>
             </thead>
@@ -40,8 +40,9 @@
     props : {
       registros : {
         type : Array,
-        required : true
-      }         
+        required : true,
+       default:function () { return [] }    
+      },           
     },
 
      computed :{

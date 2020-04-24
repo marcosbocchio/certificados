@@ -46,13 +46,7 @@ class ClientesController extends Controller
                                 ->Filtro($filtro)
                                 ->orderBy('id','DESC')
                                 ->paginate(10);        
-    /*
-        foreach ($clientes as $cliente) {
 
-            $provincia = Provincias::find($cliente->localidad['provincia_id']);
-            $cliente->provincia = $provincia;
-        }
-*/
       return $clientes;
 
     }

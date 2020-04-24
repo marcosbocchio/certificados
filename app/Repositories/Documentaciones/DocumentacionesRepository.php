@@ -90,7 +90,7 @@ class DocumentacionesRepository extends BaseRepository
     $documento->tipo = $request->tipo;
     $documento->titulo = $request->titulo;
     $documento->descripcion = $request->descripcion;
-    $documento->metodo_ensayo_id = $request->metodo_ensayo['id'];
+    $documento->metodo_ensayo_id = $request->metodo_ensayo['id'] !=0 ? $request->metodo_ensayo['id'] : null;
     $documento->path = $request->path;
     $documento->save();
 

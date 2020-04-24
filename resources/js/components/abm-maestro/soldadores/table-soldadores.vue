@@ -5,8 +5,8 @@
       <table class="table table-hover table-striped">
         <thead>
           <tr>
-            <th>Código</th>
-            <th>Nonbre</th>          
+            <th>CÓDIGO</th>
+            <th>NOMBRE</th>          
             <th colspan="2">&nbsp;</th>
           </tr>
         </thead>

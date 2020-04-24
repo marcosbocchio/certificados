@@ -5,14 +5,14 @@
       <table class="table table-hover table-striped">
         <thead>
           <tr>
-            <th>N° Int.</th>
-            <th>Equipo</th>
-            <th>Método</th>
-            <th>Fuente</th>
-            <th>Actividad</th>
+            <th>N° INT.</th>
+            <th>EQUIPO</th>
+            <th>MÉTODO</th>
+            <th>FUENTE</th>
+            <th>ACTIVIDAD</th>
             <th>N° OT</th>
-            <th>Cliente</th>
-            <th>Ubicación</th>
+            <th>CLIENTE</th>
+            <th>UBICACIÓN</th>
             <th colspan="2">&nbsp;</th>
           </tr>
         </thead>

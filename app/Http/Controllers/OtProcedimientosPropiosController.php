@@ -51,7 +51,8 @@ class OtProcedimientosPropiosController extends Controller
                     ->join('ot_procedimientos_propios','ot_procedimientos_propios.documentacion_id','=','documentaciones.id')
                     ->where('ot_procedimientos_propios.ot_id',$ot_id)
                     ->select('documentaciones.*')
-                    ->get();
+                    ->orderBy('tipo','ASC')
+                    ->paginate(10);
 
         foreach ($documentaciones as $documentacion) {
 
@@ -113,17 +114,7 @@ class OtProcedimientosPropiosController extends Controller
         $ot_procedimieto_propio->save();
     
       }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+ 
 
     /**
      * Show the form for editing the specified resource.

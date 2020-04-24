@@ -55,8 +55,7 @@
 
       created : function(){
 
-        this.getResults();
-  
+        this.getResults();  
 
       }, 
 

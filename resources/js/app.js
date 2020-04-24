@@ -303,6 +303,7 @@ state: {
         CantPartes:'0',
         CantCertificados:'0',
         CantSoldadores:'0',
+        CantDocumentacionesTotal:'0',
         CantDocumentaciones:'0',
         CantProcedimientos:'0',
         CantUsuariosCliente:'0',
@@ -718,6 +719,15 @@ actions : {
           })
         },
 
+        loadContarDocumentacionesTotal({
+          commit}) {
+           axios.defaults.baseURL = store.state.url ;
+           var urlRegistros = 'documentaciones/total' + '?api_token=' + Laravel.user.api_token;             
+           axios.get(urlRegistros).then((response) => {
+           commit('ContarDocumentacionesTotal', response.data)           
+          })
+        },
+
         loadContarDocumentaciones({
           commit},ot_id) {
            axios.defaults.baseURL = store.state.url ;
@@ -962,6 +972,10 @@ actions : {
 
       ContarProcedimientos(state, CantProcedimientos) {
         state.CantProcedimientos = CantProcedimientos
+      },
+
+      ContarDocumentacionesTotal(state, CantDocumentacionesTotal) {
+        state.CantDocumentacionesTotal = CantDocumentacionesTotal
       },
 
       ContarDocumentaciones(state, CantDocumentaciones) {

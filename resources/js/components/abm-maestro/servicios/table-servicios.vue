@@ -5,10 +5,10 @@
       <table class="table table-hover table-striped">
         <thead>
           <tr>
-            <th>codigo</th>
-            <th>descripción</th>
-            <th style="text-align: center" >Unidad Medida</th>
-            <th style="text-align: center">Método Ensayo</th>
+            <th>CÓDIDO</th>
+            <th>DESCRIPCIÓN</th>
+            <th style="text-align: center" >UNIDAD MEDIDA</th>
+            <th style="text-align: center">MÉTODO ENSAYO</th>
             <th colspan="2">&nbsp;</th>
           </tr>
         </thead>

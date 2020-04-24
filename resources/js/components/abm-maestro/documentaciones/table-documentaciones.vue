@@ -5,11 +5,11 @@
       <table class="table table-hover table-striped">
         <thead>
           <tr>
-            <th>Tipo</th>
-            <th>Título</th>
-            <th>Descripción</th>
-            <th>Metodo</th>
-            <th>Usuario</th>
+            <th>TIPO</th>
+            <th>TÍTULO</th>
+            <th>DESCRIPCIÓN</th>
+            <th>MÉTODO</th>
+            <th>USUARIO</th>
             <th colspan="2">&nbsp;</th>
           </tr>
         </thead>
@@ -23,7 +23,7 @@
             <td>{{ registro.titulo}}</td>
             <td>{{ registro.descripcion }}</td>
             <td>{{ registro.metodo_ensayo['metodo']}}</td>
-            <td>{{ registro.usuario['name']}}</td>
+            <td>{{ registro.usuario[0]['name']}}</td>
             <td width="10px">
               <button class="btn btn-warning btn-sm" title="Editar" v-on:click.prevent="$emit('editRegistroEvent',registro)" :disabled="!$can('M_documentaciones_edita')"><span class="fa fa-edit"></span></button>
             </td>
@@ -48,8 +48,9 @@
       registros : {
         type : Array,
         required : true,
-        default:function () { return [] } 
+       default:function () { return [] }    
       },    
+  
 
       loading : {
         type : Boolean,

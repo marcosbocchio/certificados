@@ -52,7 +52,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(users_ot_operario,k) in users_ot_operarios" :key="k" @click="selectDoc(users_ot_operario.id)">                                 
+                            <tr v-for="(users_ot_operario,k) in users_ot_operarios" :key="k" @click="selectDoc(users_ot_operario.id)" :class="{selected: user_ot_operario_id === users_ot_operario.id}">                                 
                                 <td> {{users_ot_operario.name}}</td>     
                                 <td> {{users_ot_operario.email}}</td>         
                                 <td> <i class="fa fa-minus-circle" @click="removeOperarios(k)" ></i></td>
@@ -119,7 +119,7 @@ export default {
      },
      
      ot_id_data : '',
-    
+     user_ot_operario_id :'-1'
   },
 
   data () { return {
@@ -131,6 +131,7 @@ export default {
     
     }    
   },
+
   created : function() {
       
       this.$store.dispatch('loadOperadores'); 
@@ -180,6 +181,7 @@ export default {
 
     selectDoc : function(id){
 
+            this.user_ot_operario_id = id;    
             axios.defaults.baseURL = this.url ;
             var urlRegistros = 'documentaciones/ot_operarios/' + this.ot_id_data + '/' + id + '?api_token=' + Laravel.user.api_token;      
             console.log(urlRegistros);

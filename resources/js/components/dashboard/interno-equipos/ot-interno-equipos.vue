@@ -29,9 +29,9 @@
                             <table class="table table-hover table-striped">
                                 <thead>
                                     <tr>                                     
-                                        <th>N° Serie</th>     
-                                        <th>N° Int.</th> 
-                                        <th>Equipo</th>                                                      
+                                        <th>N° SERIE</th>     
+                                        <th>N° INT.</th> 
+                                        <th>EQUIPO</th>                                                      
                                         <th colspan="1">&nbsp;</th>
                                     </tr>
                                 </thead>

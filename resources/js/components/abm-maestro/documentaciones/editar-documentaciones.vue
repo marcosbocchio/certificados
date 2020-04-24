@@ -129,9 +129,8 @@ import { eventEditRegistro } from '../../event-bus';
                     
                  this.$nextTick(function () {
                    
-                    this.tipo_documentos.forEach(function(tipo_doc) {
-        
-                            console.log(tipo_doc.tipo);
+                    this.tipo_documentos.forEach(function(tipo_doc) {        
+                    
                             if (tipo_doc.tipo == this.documentacion.tipo){
                                 this.tipo_documento.tipo = tipo_doc.tipo;
                                 this.tipo_documento.descripcion = tipo_doc.descripcion;

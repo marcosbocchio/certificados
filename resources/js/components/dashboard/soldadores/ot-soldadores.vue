@@ -28,7 +28,7 @@
                     </div> 
                     <div class="form-group">                    
                         <span>
-                            <i class="fa fa-plus-circle" @click="addSoldador(soldador.id)"></i>
+                            <button type="button" @click="addSoldador(soldador.id)"><span class="fa fa-plus-circle"></span></button>                            
                         </span>
                     </div>
                  </div>                
@@ -73,7 +73,7 @@
                     </div> 
                     <div class="form-group">                    
                         <span>
-                            <i class="fa fa-plus-circle" @click="addUsuarioCliente(usuario_cliente.id)"></i>
+                            <button type="button" @click="addUsuarioCliente(usuario_cliente.id)"><span class="fa fa-plus-circle"></span></button>                            
                         </span>
                     </div>
                  </div>                

@@ -36,7 +36,6 @@ class InternoEquipos extends Model
                  ->orWhereHas('equipo', function ($q) use($filtro) {
                       $q->WhereRaw("equipos.codigo LIKE '%" . $filtro . "%'");
                   })   
-
                   
                   ->orWhereHas('ot.cliente', function ($q) use($filtro) {
                     $q->WhereRaw("clientes.nombre_fantasia LIKE '%" . $filtro . "%'");
@@ -47,7 +46,7 @@ class InternoEquipos extends Model
                   }) 
 
                   ->orWhereHas('equipo.metodoEnsayos', function ($q) use($filtro) {
-                    $q->WhereRaw("metodo_ensayos.metodo LIKE BINARY '%" . $filtro . "%'");
+                    $q->WhereRaw("metodo_ensayos.metodo = '" .  $filtro ."'" );
                   }) 
 
                   ->orWhereHas('ot', function ($q) use($filtro) {

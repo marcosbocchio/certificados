@@ -144,8 +144,9 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::post('storage/firma-digital', 'StorageController@saveFirmaDigital');
 
     Route::get('documentaciones/ot','DocumentacionesController@DocumentacionesDeOt'); 
+    Route::get('documentaciones/total', 'DocumentacionesController@DocumentacionesTotal'); 
     Route::resource('documentaciones', 'DocumentacionesController'); 
-    Route::get('documentaciones/paginate', 'DocumentacionesController@paginate'); 
+    Route::get('documentaciones/ot/paginate', 'DocumentacionesController@paginate'); 
   
     Route::get('documentaciones/ot_operarios/{ot_id}/{user_id}', 'DocumentacionesController@getDocOtOperarios');
     

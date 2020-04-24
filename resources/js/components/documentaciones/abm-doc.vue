@@ -1,26 +1,56 @@
 <template>
     <div>
         <!-- small box -->
-        <div class="small-box bg-custom-3">
-            <div class="inner">
-                <h3>{{ registros.length }}</h3>
-                <p>Documentaciones </p>
+        <div class="col-lg-12">
+            <div class="small-box bg-custom-3">
+                <div class="inner">
+                    <h3  v-if="modelo == 'ot_procedimientos_propios'">{{ CantProcedimientos }}</h3>
+                    <h3  v-if="modelo == 'documentaciones'">{{ CantDocumentacionesTotal }}</h3>
+                    <div v-if="modelo == 'ot_procedimientos_propios'">
+                        <p>Procedimientos </p>
+                    </div>
+                    <div v-else>
+                        <p>Documentaciones </p>
+                    </div>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-radiation-alt"></i>
+                </div>
+                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
             </div>
-            <div class="icon">
-                <i class="fas fa-radiation-alt"></i>
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
         </div>
+        <div class="form-group"> 
 
-         <div v-show="$can('M_documentaciones_edita')">
-              <button class="btn btn-primary pull-left" v-on:click.prevent="openNuevoRegistro()">Nuevo</button>      
-         </div>
+                <div v-show="$can('M_documentaciones_edita')">
+                    <div class="col-md-1 col-xs-3">
+                         <button class="btn btn-primary pull-left" v-on:click.prevent="openNuevoRegistro()">Nuevo</button>      
+                    </div>
+                </div>            
+                
+                <div class="col-md-3 col-md-offset-6 col-xs-9">       
+                    <div class="input-group">
+                        <input type="text" v-model="search" class="form-control" placeholder="Buscar...">
+                        <span class="input-group-addon btn" @click="aplicarFiltro()" style="background-color: #F9CA33;"><i class="fa fa-search"></i></span>
+                    </div>  
+                </div>
+        </div> 
 
-        <div class="clearfix"></div>    
+
+       <div class="clearfix"></div>    
+
+        <div class="col-md-10">
+
+            <component :is= setTablaComponente :registros="registros.data"  @confirmarDelete="confirmDeleteRegistro" @editRegistroEvent="editRegistro" :loading="isLoading"/>    
+            <delete-registro :datoDelete="datoDelete" :fillRegistro="fillRegistro" @close-modal="getResults" :modelo="modelo"></delete-registro>  
+
+             <pagination 
+                  :data="registros" @pagination-change-page="getResults" :limit="3" >
+                  <span slot="prev-nav">&lt; Previous</span>
+                  <span slot="next-nav">Next &gt;</span> 
+             </pagination>   
+       </div>
        
-            <component :is= setTablaComponente :registros="registros"  @confirmarDelete="confirmDeleteRegistro" @editRegistroEvent="editRegistro" :loading="isLoading"/>    
-            <delete-registro :datoDelete="datoDelete" :fillRegistro="fillRegistro" @close-modal="getRegistros" :modelo="modelo"></delete-registro>  
-     
+
         <div class="clearfix"></div>    
 
         <!--  Modal -->
@@ -160,7 +190,7 @@ export default {
         editmode: false,
         fillRegistro: {},
         datoDelete: '',
-        registros: [],     
+        registros: {},     
         newRegistro : {  
             tipo :'',          
             titulo: '',
@@ -174,7 +204,7 @@ export default {
          isLoading_file: false,     
          uploadPercentage: 0,
          isPdf: false,
-
+         search:'',
          tipo_documentos :[
                           
             'INSTITUCIONAL',
@@ -211,12 +241,27 @@ export default {
 
       created : function(){
 
-            this.getRegistros();
-            this.getUsuarios();
-            this.getMetodosEnsayos();       
-      },  
-     
+        this.getResults();
+        this.getUsuarios();
+        this.getMetodosEnsayos();  
 
+      },  
+
+     mounted :function(){
+
+         if(this.modelo == 'documentaciones') {
+
+            this.$store.dispatch('loadContarDocumentacionesTotal');
+
+         }else {
+
+            this.$store.dispatch('loadContarProcedimientos',this.ot_id_data);
+
+         }
+
+
+
+     },
       watch : {
           
           newRegistro : function(val) {
@@ -235,15 +280,21 @@ export default {
              return 'table-' + this.modelo ;
          },       
          
-         ...mapState(['url','AppUrl'])
+         ...mapState(['url','AppUrl','CantProcedimientos','CantDocumentacionesTotal'])
      },
      
     methods :{
 
     openGallery(index) {
       this.$refs.lightbox.showImage(0)
-    }   , 
-        
+    }, 
+
+    aplicarFiltro : function(){
+
+        this.getResults(1,this.search);
+
+    },
+
     openNuevoRegistro : function(){      
             
            this.editmode = false; 
@@ -276,7 +327,7 @@ export default {
            $('#nuevo').modal('show');    
            }, 
 
-    getRegistros : function(){
+    getResults : function(page = 1){
 
         this.isLoading = true;
         axios.defaults.baseURL = this.url ;
@@ -285,9 +336,13 @@ export default {
             this.newRegistro.tipo='PROCEDIMIENTO';
         }
         if(this.newRegistro.tipo == 'PROCEDIMIENTO'){
-            var urlRegistros = this.modelo + '/ot/' + this.ot_id_data;      
+
+            var urlRegistros = this.modelo + '/ot/' + this.ot_id_data + '?page='+ page + '&search=' + this.search;  ; 
+
         }else{
-           var urlRegistros = this.modelo;      
+
+           var urlRegistros = this.modelo +   '?page='+ page + '&search=' + this.search; 
+
         }
         axios.get(urlRegistros).then(response =>{
             this.registros = response.data;
@@ -297,11 +352,11 @@ export default {
 
     getMetodosEnsayos: function(){
              
-        axios.defaults.baseURL = this.url ;
-        var urlRegistros = 'metodo_ensayos' + '?api_token=' + Laravel.user.api_token;        
-        axios.get(urlRegistros).then(response =>{
-        this.metodo_ensayos = response.data
-        });
+            axios.defaults.baseURL = this.url ;
+            var urlRegistros = 'metodo_ensayos' + '?api_token=' + Laravel.user.api_token;        
+            axios.get(urlRegistros).then(response =>{
+            this.metodo_ensayos = response.data
+            });
         },
 
     onFileSelected(event) {         
@@ -312,18 +367,17 @@ export default {
             this.selectedFile = event.target.files[0];
          
             let FileSize = this.selectedFile.size / 1024 / 1024; // in MB           
-            let FileType=this.selectedFile.type;         
-            console.log(FileType);
+            let FileType=this.selectedFile.type;              
 
             if(this.newRegistro.tipo == 'PROCEDIMIENTO') {
 
                 if (FileType != 'application/pdf') {
                
-                        toastr.error('El tipo de archivo no es aceptado ');
-                        this.$refs.inputFile1.type = 'text';
-                        this.$refs.inputFile1.type = 'file';  
-                        this.selectedFile = null;
-                        return;     
+                    toastr.error('El tipo de archivo no es aceptado ');
+                    this.$refs.inputFile1.type = 'text';
+                    this.$refs.inputFile1.type = 'file';  
+                    this.selectedFile = null;
+                    return;     
                 }
 
             }
@@ -340,8 +394,6 @@ export default {
                     return;     
              }
           
-            console.log(this.selectedFile);
-
             if(FileSize > 20 ){
                  event.preventDefault();
                  toastr.error('Archivo demasiado grande. (Max 20 MB)');
@@ -355,8 +407,8 @@ export default {
                 this.onUpload();   
 
             } 
-         
         },
+
         onUpload() {
 
               this.HabilitarGuardar = false          
@@ -417,7 +469,7 @@ export default {
                 $('#nuevo').modal('hide');
                 this.newRegistro = {},               
                 toastr.success('Nuevo registro creado con éxito');  
-                this.getRegistros();              
+                this.getResults();              
                 
              }).catch(error => {
                
@@ -458,7 +510,7 @@ export default {
                 $('#nuevo').modal('hide');
                 this.newRegistro = {},               
                 toastr.success('Nuevo registro creado con éxito');  
-                this.getRegistros();              
+                this.getResults();              
                  console.log(response);
                 
              }).catch(error => {
@@ -477,9 +529,6 @@ export default {
                 }
 
            });  
-
-
-
     },
 
     confirmDeleteRegistro: function(registro,dato){            
@@ -497,8 +546,8 @@ export default {
                 this.usuario ={};
                 this.selectedFile =  null,      
                 $('#nuevo').modal('show');  
-                this.metodo_ensayo = registro.metodo_ensayo;
-                this.usuario = registro.usuario;                
+                this.metodo_ensayo =  registro.metodo_ensayo ? registro.metodo_ensayo : {id :''};
+                this.usuario = registro.usuario[0];                
                 this.newRegistro = registro;  
                 let fileName = this.newRegistro.path ; 
                 let FileExt = fileName.substring(fileName.length-3,fileName.length);

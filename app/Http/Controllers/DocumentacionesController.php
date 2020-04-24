@@ -33,26 +33,33 @@ class DocumentacionesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {   
-        $documentaciones = DB::table('documentaciones')
-                                ->leftJoin('usuario_documentaciones','usuario_documentaciones.documentacion_id','=','documentaciones.id')
-                                ->orWhere('documentaciones.tipo','USUARIO')
-                                ->orWhere('documentaciones.tipo','OT')
-                                ->orWhere('documentaciones.tipo','INSTITUCIONAL')
-                                ->orWhere('documentaciones.tipo','PROCEDIMIENTO GENERAL')
-                                ->selectRaw('documentaciones.*,usuario_documentaciones.fecha_caducidad')
-                                ->orderBy('id','DESC')
-                                ->get(); 
+        $filtro = $request->search;
+        $documentaciones = Documentaciones::leftJoin('usuario_documentaciones','usuario_documentaciones.documentacion_id','=','documentaciones.id')
+                                            ->orWhere('documentaciones.tipo','USUARIO')
+                                            ->orWhere('documentaciones.tipo','OT')
+                                            ->orWhere('documentaciones.tipo','INSTITUCIONAL')
+                                            ->orWhere('documentaciones.tipo','PROCEDIMIENTO GENERAL') 
+                                            ->with('metodoEnsayo')   
+                                            ->with('usuario')      
+                                            ->Filtro($filtro)                      
+                                            ->selectRaw('documentaciones.*,usuario_documentaciones.fecha_caducidad')                               
+                                            ->orderBy('documentaciones.tipo','ASC')    
+                                            ->orderBy('documentaciones.id','DESC')                         
+                                            ->paginate(10); 
         
         foreach ($documentaciones as $documentacion) {
 
-            $metodo_ensayo = DB::table('documentaciones')
+         /*   $metodo_ensayo = DB::table('documentaciones')
                              ->leftJoin('metodo_ensayos','documentaciones.metodo_ensayo_id','=','metodo_ensayos.id')
                              ->where('documentaciones.id',$documentacion->id)   
                              ->select('metodo_ensayos.*')
                              ->first();
+        */
 
+        /*
+       
             $usuario = DB::table('documentaciones')
                              ->leftJoin('usuario_documentaciones','usuario_documentaciones.documentacion_id','=','documentaciones.id')
                              ->leftJoin('users','usuario_documentaciones.user_id','=','users.id')
@@ -60,48 +67,13 @@ class DocumentacionesController extends Controller
                              ->select('users.*')
                              ->first();  
 
-            $metodo_ensayo = $metodo_ensayo ? $metodo_ensayo : "";       
+        //    $metodo_ensayo = $metodo_ensayo ? $metodo_ensayo : "";       
+        //    $documentacion->metodo_ensayo = $metodo_ensayo ;
             $usuario = $usuario ? $usuario : "";        
-            $documentacion->metodo_ensayo = $metodo_ensayo ;
             $documentacion->usuario = $usuario ;
+         */   
         }               
-   
-        return $documentaciones;
-    }
-
-    public function paginate(Request $request){
-
-        $documentaciones = DB::table('documentaciones')
-                                ->leftJoin('usuario_documentaciones','usuario_documentaciones.documentacion_id','=','documentaciones.id')
-                                ->orWhere('documentaciones.tipo','USUARIO')
-                                ->orWhere('documentaciones.tipo','OT')
-                                ->orWhere('documentaciones.tipo','INSTITUCIONAL')
-                                ->orWhere('documentaciones.tipo','PROCEDIMIENTO GENERAL')
-                                ->selectRaw('documentaciones.*,usuario_documentaciones.fecha_caducidad')
-                                ->orderBy('id','DESC')
-                                ->paginate(5); 
         
-        foreach ($documentaciones as $documentacion) {
-
-            $metodo_ensayo = DB::table('documentaciones')
-                             ->leftJoin('metodo_ensayos','documentaciones.metodo_ensayo_id','=','metodo_ensayos.id')
-                             ->where('documentaciones.id',$documentacion->id)   
-                             ->select('metodo_ensayos.*')
-                             ->first();
-
-            $usuario = DB::table('documentaciones')
-                             ->leftJoin('usuario_documentaciones','usuario_documentaciones.documentacion_id','=','documentaciones.id')
-                             ->leftJoin('users','usuario_documentaciones.user_id','=','users.id')
-                             ->where('documentaciones.id',$documentacion->id)   
-                             ->select('users.*')
-                             ->first();  
-
-            $metodo_ensayo = $metodo_ensayo ? $metodo_ensayo : "";       
-            $usuario = $usuario ? $usuario : "";        
-            $documentacion->metodo_ensayo = $metodo_ensayo ;
-            $documentacion->usuario = $usuario ;
-        }               
-   
         return $documentaciones;
     }
 
@@ -308,6 +280,12 @@ class DocumentacionesController extends Controller
   
       
         $documento->delete();
+
+    }
+
+    public function DocumentacionesTotal(){
+
+        return Documentaciones::count(); 
 
     }
 }

@@ -28,7 +28,7 @@ class PdfEstadisticasSoldadurasController extends Controller
         $cantidadSoldadurasSoldador = DB::select('CALL CantidadSoldadurasSoldador(?,?,?,?)',array($cliente_id,$obra,$fd,$fh));    
         $this->CalcularTotalCantidadSoldadurasSoldador($cantidadSoldadurasSoldador,$total_cantidad_soldaduras_soldador);
        // dd($estadisticasGenerales,$cantidadSoldadurasSoldador);
-        $pdf = \PDF::loadView('reportes.soldadores.estadisticas-soldaduras',compact(
+        $pdf = \PDF::loadView('reportes.soldadores.estadisticas-soldaduras2',compact(
 
                                                                 'cliente',
                                                                 'obra',

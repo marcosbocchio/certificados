@@ -27,7 +27,7 @@
                             <thead>
                                 <tr>                                     
                                     <th>N°</th>
-                                    <th>Tipo Servicio</th> 
+                                    <th>TIPO SERVICIO</th> 
                                     <th>FECHA</th>                                                
                                     <th colspan="4">&nbsp;</th>
                                 </tr>
