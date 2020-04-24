@@ -44,6 +44,11 @@ table thead tr th small {
   vertical-align: middle;
 }
 
+table tbody td {
+
+  font-size: 12px;
+}
+
 label {
 
   font-family: 'Open Sans',sans-serif;
@@ -97,3 +102,4 @@ table .selected{
 
   background-color: #54A75C;
 }
+
