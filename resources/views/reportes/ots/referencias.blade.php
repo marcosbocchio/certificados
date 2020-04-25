@@ -199,8 +199,8 @@ td {
                     <table>
                         <tbody>
                             <tr>
-                                <td style="font-size: 15px;">
-                                    <p><strong>Observaciones: </strong>{{$ot_referencia->descripcion}}</p> 
+                                <td>
+                                    <p style="margin: 25 5 5 10;" ><strong>Observaciones: </strong>{{$ot_referencia->descripcion}}</p> 
                                 </td>
                             </tr>
                         </tbody>

@@ -358,7 +358,7 @@
                                         </tr>
                                     </thead>                         
                                     <tbody>
-                                        <tr v-for="(FIlaTabla,k) in (TablaDetalle)" :key="k" @click="selectPosDetalle(k)" :class="{selected: indexDetalle === k}">
+                                        <tr v-for="(FIlaTabla,k) in (TablaDetalle)" :key="k" @click="selectPosDetalle(k)" :class="{selected: indexDetalle === k}" class="pointer">
                                             <td>{{ FIlaTabla.pk }}</td>
                                             <td>{{ FIlaTabla.tipo_soldadura.codigo }}</td>                                 
                                             <td>{{ FIlaTabla.junta }}</td>                                      
@@ -1393,7 +1393,7 @@ export default {
 
                     let informe = response.data;
                     toastr.success('informe N°' + this.numero_inf + ' fue creado con éxito ');
-                    window.open( this.AppUrl + '/api/pdf/informe/ri/' + informe.id,'_blank');
+                    window.open( this.AppUrl + '/pdf/informe/ri/' + informe.id,'_blank');
                     window.location.href = this.AppUrl + '/informes/ot/' + this.otdata.id;
 
                 }).catch(error => {
@@ -1482,7 +1482,7 @@ export default {
                 ).then( () => {
 
                     toastr.success('informe N°' + this.numero_inf + ' fue actualizado con éxito ');               
-                    window.open( this.AppUrl + '/api/pdf/informe/ri/' + this.informedata.id,'_blank');
+                    window.open( this.AppUrl + '/pdf/informe/ri/' + this.informedata.id,'_blank');
                     window.location.href = this.AppUrl + '/informes/ot/' + this.otdata.id;
 
                 }).catch(error => {

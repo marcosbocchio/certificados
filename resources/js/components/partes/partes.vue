@@ -1846,7 +1846,7 @@ export default {
 
           let parte = response.data;
           toastr.success('Parte diario con fecha' +  this.fecha + ' fue creado con éxito ');        
-          window.open( this.AppUrl + '/api/pdf/parte/' + parte.id + '/final','_blank');
+          window.open( this.AppUrl + '/pdf/parte/' + parte.id + '/final','_blank');
           window.location.href = this.AppUrl + '/partes/ot/' + this.otdata.id;
 
         }).catch(error => {
@@ -1918,7 +1918,7 @@ export default {
         ).then( () => {
 
           toastr.success('Parte diario con fecha' +  this.fecha + ' fue actualizado con éxito ');
-          window.open( this.AppUrl + '/api/pdf/parte/' + this.parte_data.id + '/final','_blank');
+          window.open( this.AppUrl + '/pdf/parte/' + this.parte_data.id + '/final','_blank');
           window.location.href = this.AppUrl + '/partes/ot/' + this.otdata.id;
 
         }).catch(error => {

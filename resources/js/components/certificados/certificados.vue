@@ -329,12 +329,9 @@ export default {
       mounted : function() {    
 
         this.getModalidadCobro();
+        this.getNumeroCertificado();       
 
-        this.getNumeroCertificado();
-       
-
-      },       
-      
+      },         
 
     computed :{
 
@@ -539,11 +536,9 @@ export default {
                     }
                 }
 
-
             }
 
             this.CompletarNoCombinados();
-
 
         },
 
@@ -788,7 +783,7 @@ export default {
 
           let certificado = response.data;
           toastr.success('Certificado N°' +  this.numero_code + ' fue creado con éxito ');
-          window.open( this.AppUrl + '/api/pdf/certificado/' + certificado.id + '/final','_blank');
+          window.open( this.AppUrl + '/pdf/certificado/' + certificado.id + '/final','_blank');
           window.location.href = this.AppUrl + '/certificados/ot/' + this.otdata.id;
          
         }).catch(error => {
@@ -831,7 +826,7 @@ export default {
         ).then( () => {
 
           toastr.success('Certificado N°' +  this.numero_code + ' fue actualizado con éxito ');
-          window.open( this.AppUrl + '/api/pdf/certificado/' + this.certificado_data.id + '/final','_blank');
+          window.open( this.AppUrl + '/pdf/certificado/' + this.certificado_data.id + '/final','_blank');
           window.location.href = this.AppUrl + '/certificados/ot/' + this.otdata.id;
 
         }).catch(error => {

@@ -15,7 +15,7 @@
         </div>
 
         <div v-show="$can('T_certif_edita')">        
-            <a :href="AppUrl + '/area/enod/ot/' + ot_id_data + '/certificado' " class="btn btn-primary pull-left">Nuevo</a>     
+            <a :href="AppUrl + '/area/enod/ot/' + ot_id_data + '/certificado' " class="btn btn-primary pull-left"> <span class="fa fa-plus-circle"></span> Nuevo</a>     
         </div> 
 
         <div class="clearfix"></div>
@@ -40,11 +40,11 @@
                                     </td>
 
                                     <td width="10px" v-show="$can('T_certif_edita')"> 
-                                        <a :href="AppUrl + '/api/pdf/certificado/' + ot_certificado.id + '/original' " target="_blank"  class="btn btn-default btn-sm" title="Informe original"><span class="fa fa-file-pdf-o"></span></a>
+                                        <a :href="AppUrl + '/pdf/certificado/' + ot_certificado.id + '/original' " target="_blank"  class="btn btn-default btn-sm" title="Informe original"><span class="fa fa-file-pdf-o"></span></a>
                                     </td>    
 
                                     <td width="10px"> 
-                                        <a :href="AppUrl + '/api/pdf/certificado/' + ot_certificado.id + '/final' " target="_blank"  class="btn btn-default btn-sm" title="Informe"><span class="fa fa-file-pdf-o"></span></a>
+                                        <a :href="AppUrl + '/pdf/certificado/' + ot_certificado.id + '/final' " target="_blank"  class="btn btn-default btn-sm" title="Informe"><span class="fa fa-file-pdf-o"></span></a>
                                     </td> 
                                     <td width="10px"> 
                                         <button @click="informesEscaneados(ot_certificado.id)" :disabled="!$can('T_certif_edita')" class="btn btn-default btn-sm" title="Informes escaneados"><span class="fa fa-cloud-upload"></span></button>

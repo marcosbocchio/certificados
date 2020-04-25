@@ -18,23 +18,31 @@
                 </div>
                 <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
             </div>
-        </div>
-        <div class="form-group"> 
+        </div>          
+       
 
-                <div v-show="$can('M_documentaciones_edita')">
-                  <div class="col-md-1 col-xs-2">
-                         <button class="btn btn-primary pull-left" v-on:click.prevent="openNuevoRegistro()">Nuevo</button>      
+
+            <div v-show="$can('M_documentaciones_edita')">
+                <div class="col-md-1 col-xs-2">
+                    <button class="btn btn-primary pull-left" v-on:click.prevent="openNuevoRegistro()"><span class="fa fa-plus-circle"></span> Nuevo</button>      
+                </div>
+            </div>   
+            <div v-show="modelo=='documentaciones'">
+
+                <div class="form-group">           
+                    <div class="col-md-3 col-md-offset-4 col-sm-3 col-sm-offset-5 col-xs-5">
+                        <v-select class="style-chooser" v-model="tipo" :options="['INSTITUCIONAL','OT','PROCEDIMIENTO GENERAL','USUARIO']" id="tipo" placeholder="TODOS" @input="getResults()"></v-select>   
                     </div>
-                </div>            
-                
-               <div class="col-md-3 col-md-offset-8 col-xs-10"> 
+                </div>                       
+               
+                <div class="col-md-4 col-xs-5 pull-right"> 
                     <div class="input-group">
                         <input type="text" v-model="search" class="form-control" placeholder="Buscar...">
                         <span class="input-group-addon btn" @click="aplicarFiltro()" style="background-color: #F9CA33;"><i class="fa fa-search"></i></span>
                     </div>  
-                </div>
-        </div> 
+                </div>  
 
+            </div>         
 
        <div class="clearfix"></div>    
 
@@ -81,7 +89,7 @@
                                 </div>                             
                             </div>      
                             <div class="form-group">
-                                <label for="name">Título (*)</label>
+                                <label for="titulo">Título (*)</label>
                                 <input type="text" name="titulo" class="form-control" v-model="newRegistro.titulo" value="">               
                             </div>  
                             <div class="form-group">
@@ -204,6 +212,7 @@ export default {
          isLoading_file: false,     
          uploadPercentage: 0,
          isPdf: false,
+         tipo:'',
          search:'',
          tipo_documentos :[
                           
@@ -258,9 +267,6 @@ export default {
             this.$store.dispatch('loadContarProcedimientos',this.ot_id_data);
 
          }
-
-
-
      },
       watch : {
           
@@ -338,15 +344,18 @@ export default {
         if(this.newRegistro.tipo == 'PROCEDIMIENTO'){
 
             var urlRegistros = this.modelo + '/ot/' + this.ot_id_data + '?page='+ page + '&search=' + this.search;  
+           
             this.$store.dispatch('loadContarProcedimientos',this.ot_id_data);
 
         }else{
 
-           var urlRegistros = this.modelo +   '?page='+ page + '&search=' + this.search; 
+           var urlRegistros = this.modelo +'?page='+ page + '&search=' + this.search  + '&tipo=' + this.tipo; 
+           console.log(urlRegistros);
             this.$store.dispatch('loadContarDocumentacionesTotal');
 
         }
         axios.get(urlRegistros).then(response =>{
+            console.log(response.data);
             this.registros = response.data;
             this.isLoading = false;
         });
@@ -564,9 +573,27 @@ export default {
 
 <style scoped>
 
+
 .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
      background-color: #eee;
 }
+
+
+  .style-chooser .vs__search::placeholder,
+  .style-chooser .vs__dropdown-toggle,
+  .style-chooser .vs__dropdown-menu {
+    background: #dfe5fb;
+    border: none;
+    color: #394066;
+    text-transform: lowercase;
+    font-variant: small-caps;
+  }
+
+  .style-chooser .vs__clear,
+  .style-chooser .vs__open-indicator {
+    fill: #394066;
+  }
+
 
 
 </style>

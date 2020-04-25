@@ -51,8 +51,6 @@ import {mapState} from 'vuex'
     computed :{           
          
          ...mapState(['url','AppUrl']),
-
-
      },
 
      methods : {

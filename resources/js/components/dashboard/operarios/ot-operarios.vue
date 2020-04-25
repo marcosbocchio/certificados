@@ -52,7 +52,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(users_ot_operario,k) in users_ot_operarios" :key="k" @click="selectDoc(users_ot_operario.id)" :class="{selected: user_ot_operario_id === users_ot_operario.id}">                                 
+                            <tr v-for="(users_ot_operario,k) in users_ot_operarios" :key="k" @click="selectDoc(users_ot_operario.id)" :class="{selected: user_ot_operario_id === users_ot_operario.id}" class="pointer">                                 
                                 <td> {{users_ot_operario.name}}</td>     
                                 <td> {{users_ot_operario.email}}</td>         
                                 <td> <i class="fa fa-minus-circle" @click="removeOperarios(k)" ></i></td>

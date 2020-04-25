@@ -23,19 +23,36 @@ class Documentaciones extends Model
  
    }
 
-   public function scopeFiltro($query, $filtro='') {
+   public function scopeFiltro($query, $filtro='',$tipo='') { 
 
-    if (trim($filtro) != '') {
-       
-          $query->WhereRaw("documentaciones.tipo LIKE '%" . $filtro . "%'")
+        if (trim($filtro) != '' && trim($tipo) == '') {
+        
+            $query->WhereRaw("documentaciones.tipo LIKE '%" . $filtro . "%'")
                 ->orWhereRaw("documentaciones.titulo LIKE '%" . $filtro . "%'")    
                 ->orWhereRaw("documentaciones.descripcion LIKE '%" . $filtro . "%'") 
                 ->orWhereHas('metodoEnsayo', function ($q) use($filtro) {
                     $q->WhereRaw("metodo_ensayos.metodo LIKE '%" . $filtro . "%'");
                 });  
-   
-    }
- 
+    
+        }elseif(trim($filtro) != '' && trim($tipo) !=''){           
+            
+            $query ->where("documentaciones.tipo",$tipo)
+                   ->where(function($q) use($filtro) {
+                    $q->WhereRaw("documentaciones.tipo LIKE '%" . $filtro . "%'")
+                     ->orWhereRaw("documentaciones.titulo LIKE '%" . $filtro . "%'")    
+                     ->orWhereRaw("documentaciones.descripcion LIKE '%" . $filtro . "%'") 
+                     ->orWhereHas('metodoEnsayo', function ($q) use($filtro) {
+                         $q->WhereRaw("metodo_ensayos.metodo LIKE '%" . $filtro . "%'");
+                      });  
+                    });
+                   
+
+        }
+        elseif (trim($tipo) !='') {
+        
+             $query->WhereRaw("documentaciones.tipo = '" .  $tipo ."'" ); 
+
+        }
 }
 
    

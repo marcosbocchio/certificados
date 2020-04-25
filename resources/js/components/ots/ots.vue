@@ -1094,7 +1094,7 @@ export default {
 
           let ot = response.data;
           toastr.success('OT N° ' + this.ot + ' fue creada con éxito ');
-          window.open( this.AppUrl + '/api/pdf/ot/' + ot.id,'_blank');
+          window.open( this.AppUrl + '/pdf/ot/' + ot.id,'_blank');
           window.location.href = this.AppUrl;
           console.log(response.data);
         }).catch(error => {
@@ -1159,7 +1159,7 @@ export default {
           ).then( () => {
        
             toastr.success('OT N° ' + this.ot + ' fue editada con éxito ');
-            window.open( this.AppUrl + '/api/pdf/ot/' + this.otdata.id,'_blank');
+            window.open( this.AppUrl + '/pdf/ot/' + this.otdata.id,'_blank');
             window.location.href = this.AppUrl;
 
         }).catch(error => {
@@ -1177,9 +1177,7 @@ export default {
                   
                 }
 
-           }); 
-
-          
+           });           
       }
       
     },

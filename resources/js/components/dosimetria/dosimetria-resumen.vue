@@ -584,8 +584,8 @@ export default {
              }
          })
          this.str_list_of_months = array_list_of_months.toString();
-         console.log(this.str_list_of_months);
-         window.open(this.url + '/pdf/dosimetria/year/' + this.year + '/operadores/' + this.str_list_of_ids + '/rs/' + this.rs + '/months/' + this.str_list_of_months,'_blank');
+       
+         window.open(this.AppUrl + '/pdf/dosimetria/year/' + this.year + '/operadores/' + this.str_list_of_ids + '/rs/' + this.rs + '/months/' + this.str_list_of_months,'_blank');
 
 
      },

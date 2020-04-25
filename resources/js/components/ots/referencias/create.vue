@@ -8,8 +8,9 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h3 class="modal-title"> Referencias <small>{{tabla}}</small></h3>
                 </div>
-              
                 <div class="modal-body">
+               <div class="row"> 
+                    <div class="col-md-12">
                     <div class="form-group">
                         <label>Observaciones</label>
                         <textarea v-model="referencia.observaciones" class="form-control noresize" rows="3" placeholder="" maxlength="500"></textarea>
@@ -72,13 +73,15 @@
                     </div>   
                  
                </div>
+            </div>
+            </div>
                 <div class="modal-footer">
                     <a href="#" class="btn btn-primary" v-on:click.prevent="storeRegistro()" >Guardar</a>
                     <button type="button" class="btn btn-default" name="button" data-dismiss="modal" >Cancelar</button>
                 </div>
                               
         
-            </div>
+        </div>
         </div>         
     </div>
 </div>       

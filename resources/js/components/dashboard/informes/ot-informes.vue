@@ -28,7 +28,7 @@
                             <div class="form-group">                    
                                 <span>
                                     <a  @click="NuevoInforme(ot_data.id)">
-                                        <button class="btn btn-primary" :disabled="!metodo_selected">
+                                        <button class="btn btn-primary" :disabled="!metodo_selected"><span class="fa fa-plus-circle"></span> 
                                             Nuevo
                                     </button>
                                     </a>                              
@@ -99,7 +99,7 @@
                                     <td v-if="ot_informe.metodo == 'US'"> 
                                         <a :href="AppUrl + '/placas/informe/' + ot_informe.id" class="btn btn-default btn-sm" title="Digitalización"><img width="16px" :src="AppUrl + '/img/IconoUS.ico'"></a>
                                     </td> 
-                                    <td v-if="!ot_informe.importable_sn" width="10px"> <a :href="AppUrl + '/api/pdf/informe/' + ot_informe.id " target="_blank"  class="btn btn-default btn-sm" title="Informe"><span class="fa fa-file-pdf-o"></span></a></td> 
+                                    <td v-if="!ot_informe.importable_sn" width="10px"> <a :href="AppUrl + '/pdf/informe/' + ot_informe.id " target="_blank"  class="btn btn-default btn-sm" title="Informe"><span class="fa fa-file-pdf-o"></span></a></td> 
                                     <td v-else><a :href="AppUrl + '/' + ot_informe.path " target="_blank" title="Informe" class="btn btn-default btn-sm"><span class="fa fa-file-pdf-o"></span></a></td> 
                                     <td v-if="!ot_informe.importable_sn" width="10px"> 
                                         <button @click="informesEscaneados(ot_informe.id)" :disabled="!$can('T_informes_edita')" class="btn btn-default btn-sm" title="Informes escaneados"><span class="fa fa-cloud-upload"></span></button>

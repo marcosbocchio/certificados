@@ -133,7 +133,12 @@
   </div> 
 
   <div class="row"> 
-    <div class="col-md-3 col-md-offset-9">
+    <div class="col-md-2">
+        <div v-show="$can('O_alta')">        
+            <button @click="NuevaOt()" class="btn btn-primary pull-left"> <span class="fa fa-plus-circle"></span> NUEVA OT</button>     
+        </div> 
+    </div>
+    <div class="col-md-3 col-md-offset-7">
       <div class="form-group"> 
           <div class="input-group">
               <input type="text" v-model="search" class="form-control" placeholder="Buscar...">
@@ -167,7 +172,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(ot,k) in ots.data" :key="k" @click="selectOt(k)" :class="{selected: ot_id_selected === ots.data[k].id}" >
+                            <tr v-for="(ot,k) in ots.data" :key="k" @click="selectOt(k)" :class="{selected: ot_id_selected === ots.data[k].id}"  class="pointer" >
                                 <td> {{ot.numero}}</td>     
                                 <td> {{ot.cliente.nombre_fantasia}}</td>         
                                 <td> {{ot.proyecto}}</td>         
@@ -189,7 +194,7 @@
                                   </button>                                 
                                 </td>
 
-                                <td width="10px"> <a :href="AppUrl + '/api/pdf/ot/' + ot.id " target="_blank"  class="btn btn-default btn-sm" title="Informe"><span class="fa fa-file-pdf-o"></span></a></td>
+                                <td width="10px"> <a :href="AppUrl + '/pdf/ot/' + ot.id " target="_blank"  class="btn btn-default btn-sm" title="Informe"><span class="fa fa-file-pdf-o"></span></a></td>
 
                                 <td v-if="!ot.firma" width="10px"> 
                                   <button class="btn btn-default btn-sm" title="Firmar" @click="firmar(k)" :disabled="!$can('T_accion')">
@@ -353,6 +358,12 @@ export default {
 
         window.location.href = this.AppUrl + '/soldadores/ot/' + id;
 
+      },
+
+      NuevaOt : function(){
+
+        window.location.href = this.AppUrl + '/area/enod/ots';
+     
       }
 
 

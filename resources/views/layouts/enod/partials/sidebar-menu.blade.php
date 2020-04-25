@@ -15,6 +15,7 @@
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>       
         <li><a href="{{ route('dashboard')}}" ><i class="fa fa-dashboard"></i> <span>TABLERO PRINCIPAL</span></a></li>   
+        <!--
         @can('OT')  
           <li class="treeview">
             <a href="#">
@@ -33,6 +34,7 @@
             </ul>
           </li>
         @endcan
+        -->
         @can('MAESTROS')
           <li class="treeview">
             <a href="#">

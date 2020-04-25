@@ -14,7 +14,7 @@
           </div>
 
         <div v-show="$can('T_remitos_edita')">
-            <a :href="AppUrl + '/area/enod/ot/' + ot_id_data + '/remito' " class="btn btn-primary pull-left">Nuevo</a>
+            <a :href="AppUrl + '/area/enod/ot/' + ot_id_data + '/remito' " class="btn btn-primary pull-left"><span class="fa fa-plus-circle"></span> Nuevo</a>
         </div>
        
         <div class="clearfix"></div>
@@ -43,8 +43,8 @@
                                     <td width="10px"> 
                                         <button @click.prevent="editRemito(k)" class="btn btn-warning btn-sm" title="Editar" :disabled="!$can('T_remitos_edita')"><span class="fa fa-edit"></span></button>
                                     </td>
-                                    <td v-if="ot_remito.interno_sn" width="10px"> <a :href="AppUrl + '/api/pdf/remito/' + ot_remito.id " target="_blank"  class="btn btn-default btn-sm" title="Informe"><span class="fa fa-file-pdf-o"></span></a></td>
-                                    <td v-else width="10px"> <a :href="AppUrl + '/api/pdf/remito/' + ot_remito.id " target="_blank"  class="btn btn-default btn-sm" title="Imprimir"><span class="fa fa-print"></span></a></td>                                  
+                                    <td v-if="ot_remito.interno_sn" width="10px"> <a :href="AppUrl + '/pdf/remito/' + ot_remito.id " target="_blank"  class="btn btn-default btn-sm" title="Informe"><span class="fa fa-file-pdf-o"></span></a></td>
+                                    <td v-else width="10px"> <a :href="AppUrl + '/pdf/remito/' + ot_remito.id " target="_blank"  class="btn btn-default btn-sm" title="Imprimir"><span class="fa fa-print"></span></a></td>                                  
                                     
                                 </tr>                       
                                 

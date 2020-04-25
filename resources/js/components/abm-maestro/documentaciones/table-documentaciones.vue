@@ -23,7 +23,8 @@
             <td>{{ registro.titulo}}</td>
             <td>{{ registro.descripcion }}</td>
             <td>{{ registro.metodo_ensayo['metodo']}}</td>
-            <td>{{ registro.usuario[0]['name']}}</td>
+            <td v-if="registro.usuario[0]">{{ registro.usuario[0]['name']}}</td>
+            <td  v-else></td>
             <td width="10px">
               <button class="btn btn-warning btn-sm" title="Editar" v-on:click.prevent="$emit('editRegistroEvent',registro)" :disabled="!$can('M_documentaciones_edita')"><span class="fa fa-edit"></span></button>
             </td>
