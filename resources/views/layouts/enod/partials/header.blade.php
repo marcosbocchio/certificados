@@ -2,9 +2,7 @@
 
     <!-- Main Header -->
     <header class="main-header">
-    @if (env('APP_ENV')=='local')
-         <p style="color: white; position: absolute;;z-index: 9999;width: 100%;height: 35px;text-align: center;font-size: 26px;margin: 7px;font-weight: bold;" >ENTORNO DE TESTING</p> 
-    @endif
+
         <!-- Logo -->
         <a href="{{ route('dashboard') }}" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
@@ -21,6 +19,15 @@
             <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
                 <span class="sr-only">Toggle navigation</span>
             </a>
+            @if (env('APP_ENV')=='local')            
+                <div  style="display: inline-block;" class="hidden-xs">             
+                    <span style="color: white; z-index: 9999;width: 100%;height: 35px;text-align: center;font-size: 26px;font-weight: bold;margin-left: 300px;" >ENTORNO DE TESTING</span> 
+                </div>
+                <div style="display: inline-block;" class="visible-xs">             
+                    <span style="color: white; z-index: 9999;width: 100%;height: 25px;text-align: center;font-size: 20px;font-weight: bold;margin-left: 100px;" >ENTORNO DE TESTING</span> 
+                </div>
+              
+            @endif
             <!-- Navbar Right Menu -->
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">

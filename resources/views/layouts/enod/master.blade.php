@@ -131,6 +131,13 @@ desired effect
   });
 });
 
+jQuery(document).ready(function() {
+    function moverDiv() {
+        document.getElementById("divmov").classList.toggle("moveDI");
+        }
+    setInterval(moverDiv, 3000);
+});
+
 var url = window.location;
 // for sidebar menu but not for treeview submenu
 $('ul.sidebar-menu a').filter(function() {
@@ -141,5 +148,8 @@ $('ul.treeview-menu a').filter(function() {
     return this.href == url;
 }).parentsUntil(".sidebar-menu > .treeview-menu").siblings().removeClass('active menu-open').end().addClass('active menu-open');
 </script>
+
+
+
 </body>
 </html>

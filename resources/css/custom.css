@@ -107,3 +107,13 @@ table .selected{
   background-color: #54A75C;
 }
 
+.moveDI{
+  position: relative;
+  animation-name: movDereIzq;
+  animation-duration: 1s;
+  animation-iteration-count: 2;
+  animation-play-state : running;
+}
+.moveDI:hover{
+  animation-play-state: paused;
+}
