@@ -799,7 +799,7 @@ export default {
         { 'ot_id' : this.otdata.id, 'metodo' : this.metodo }).then(response =>{ 
                 if(this.procedimientos.length == 0  ){
                     toastr.options = toastrInfo;
-                    toastr.info('No existe ningún procedimiento para lael método de ensayo seleccionado'); 
+                    toastr.info('No existe ningún procedimiento para el método de ensayo seleccionado'); 
                     toastr.options = toastrDefault;
                 }
         });
