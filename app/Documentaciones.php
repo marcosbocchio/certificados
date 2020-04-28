@@ -27,23 +27,28 @@ class Documentaciones extends Model
 
         if (trim($filtro) != '' && trim($tipo) == '') {
         
-            $query->WhereRaw("documentaciones.tipo LIKE '%" . $filtro . "%'")
-                ->orWhereRaw("documentaciones.titulo LIKE '%" . $filtro . "%'")    
+            $query->WhereRaw("documentaciones.titulo LIKE '%" . $filtro . "%'")    
                 ->orWhereRaw("documentaciones.descripcion LIKE '%" . $filtro . "%'") 
                 ->orWhereHas('metodoEnsayo', function ($q) use($filtro) {
                     $q->WhereRaw("metodo_ensayos.metodo LIKE '%" . $filtro . "%'");
-                });  
+                })
+                ->orWhereHas('usuario', function ($q) use($filtro) {
+                    $q->WhereRaw("users.name LIKE '%" . $filtro . "%'");
+                }); 
     
         }elseif(trim($filtro) != '' && trim($tipo) !=''){           
             
             $query ->where("documentaciones.tipo",$tipo)
                    ->where(function($q) use($filtro) {
-                    $q->WhereRaw("documentaciones.tipo LIKE '%" . $filtro . "%'")
-                     ->orWhereRaw("documentaciones.titulo LIKE '%" . $filtro . "%'")    
-                     ->orWhereRaw("documentaciones.descripcion LIKE '%" . $filtro . "%'") 
-                     ->orWhereHas('metodoEnsayo', function ($q) use($filtro) {
-                         $q->WhereRaw("metodo_ensayos.metodo LIKE '%" . $filtro . "%'");
-                      });  
+                        $q->WhereRaw("documentaciones.titulo LIKE '%" . $filtro . "%'")    
+                        ->orWhereRaw("documentaciones.descripcion LIKE '%" . $filtro . "%'") 
+                        
+                        ->orWhereHas('metodoEnsayo', function ($q) use($filtro) {
+                            $q->WhereRaw("metodo_ensayos.metodo LIKE '%" . $filtro . "%'");
+                        })
+                        ->orWhereHas('usuario', function ($q) use($filtro) {
+                            $q->WhereRaw("users.name LIKE '%" . $filtro . "%'");
+                        }); 
                     });
                    
 

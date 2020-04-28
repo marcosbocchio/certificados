@@ -72,7 +72,7 @@ class PdfInformesRiController extends Controller
           $defectos_posiciones = DB::select('CALL InformeRiGasoductoDefectosPasadasPosicion(?)',array($informe_ri->id));   
 
        
-
+         // dd($juntas_posiciones,$pasadas_posiciones,$defectos_posiciones);
      
       
 

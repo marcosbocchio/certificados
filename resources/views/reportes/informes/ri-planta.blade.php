@@ -342,14 +342,18 @@ b {
                     <td style="font-size: 11px;  width:65px;text-align: center" class="bordered-td">{{$junta_posicion->soldadorz}} / {{$junta_posicion->soldadorp}} </td>
                     <td style="font-size: 11px;  width:64.5px;text-align: center" class="bordered-td">{{$junta_posicion->posicion}}</td>
                     <td style="font-size: 11px;  width:201.5px; " class="bordered-td">&nbsp;
+                    @php $primero = true; @endphp
                         @foreach ($defectos_posiciones as $key => $defecto_posicion)                                
 
                             
                             @if ($defecto_posicion->posicion_id == $junta_posicion->posicion_id)
 
+                                @if (!$primero)
+                                    /
+                                @endif
 
-                                {{$defecto_posicion->codigo}} /&nbsp;
-
+                                {{$defecto_posicion->codigo}} 
+                                {{ $primero = false}}      
 
                             @endif
                             

@@ -27,7 +27,7 @@
                         <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="horario">Horario *</label>
-                                <input type="text" v-model="horario" class="form-control" maxlength="5" id="horario" v-on:keyup="FormatearHorario">
+                                <input type="text" v-model="horario" class="form-control" maxlength="5" id="horario" v-on:keyup="FormatearHorario" placeholder="HH-HH">
                             </div>                            
                         </div>
                         <div class="clearfix"></div>

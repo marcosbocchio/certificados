@@ -413,8 +413,8 @@
                         </div> 
                         <div class="col-md-2">                       
                             <div class="form-group" >                            
-                                <label for="posicionPlaca">Posición Indicación</label>
-                                <input type="text" v-model="posicionPlacaGosaducto" class="form-control" id="posicionPlacaGosaducto" :disabled="(!TablaDetalle.length)" maxlength="10">                           
+                                <label for="posicionPlacaGosaducto">Posición Indicación</label>
+                                <input type="text" v-model="posicionPlacaGosaducto" class="form-control" id="posicionPlacaGosaducto" placeholder="XXX-XXX" :disabled="(!TablaDetalle.length)" maxlength="7">                           
                             </div>     
                         </div>    
                           
@@ -1183,9 +1183,7 @@ export default {
                 observacion : '',
                 pasadas : [],
                 defectos : []  
-            });   
-
-           
+            });            
         },
 
         AddPasadas () {   
@@ -1196,8 +1194,6 @@ export default {
                     toastr.error('Error : Formato PLANTA  acepta 1 pasada');       
                     return;
                 }
-
-
             }
 
             if(this.formato == 'DUCTO'){
@@ -1206,32 +1202,28 @@ export default {
                     toastr.error('Error : Formato DUCTO acepta 6 pasadas');       
                      return;
                 }
-
-
             }
             
             if(this.soldador1) {
 
-                    this.TablaDetalle[this.indexDetalle].pasadas.push({ 
-                        pasada : this.pasada,
-                        soldador1: this.soldador1,
-                        soldador2: this.soldador2,     
-                        soldador3: this.soldador3,                
+                this.TablaDetalle[this.indexDetalle].pasadas.push({ 
+                    pasada : this.pasada,
+                    soldador1: this.soldador1,
+                    soldador2: this.soldador2,     
+                    soldador3: this.soldador3,                
 
-                    });  
-                    
-                    if (this.isGasoducto){
-                        if (this.pasada < 6)
-                            this.pasada++;
-                        else if(this.pasada == 6)
-                        this.pasada = 1;
-                    }
-
+                });  
+                
+                if (this.isGasoducto){
+                    if (this.pasada < 6)
+                        this.pasada++;
+                    else if(this.pasada == 6)
+                    this.pasada = 1;
+                }
             }
             else{
 
                 toastr.error('Campo Cunio Z es obligatorio'); 
-
             } 
         },
 
@@ -1241,6 +1233,19 @@ export default {
 
                  toastr.error('Campo defecto es obligatorio'); 
                  return;
+            }
+
+            if(this.posicionPlacaGosaducto !=''){
+
+                let exp_posicion = /^[0-9]{1,3}-[0-9]{1,3}$/ ;
+
+                if(!exp_posicion.test(this.posicionPlacaGosaducto)){
+
+                 toastr.error('El formato ingresado no es válido'); 
+                 return;
+
+                }
+
             }
     
             this.TablaDetalle[this.indexDetalle].defectos.push({ 
@@ -1258,15 +1263,15 @@ export default {
             
             },
         RemoveDetalle(index) {
+
            this.indexDetalle = 0;   
-           this.TablaDetalle.splice(index, 1);               
-            
+           this.TablaDetalle.splice(index, 1);                  
         },
 
         RemovePasada(index) {
+
             this.indexPasada = 0;   
-            this.TablaDetalle[this.indexDetalle].pasadas.splice(index, 1);     
-            
+            this.TablaDetalle[this.indexDetalle].pasadas.splice(index, 1);                 
         },
 
         RemoveDefectos(index) {            
@@ -1279,15 +1284,13 @@ export default {
             this.TablaDetalle[this.indexDetalle].defectos.forEach(function(defecto){
 
                 if(defecto.posicion !=''){
-                    console.log('defecto:' + defecto.descripcion + '  posicion:' + defecto.posicion );
-                    aceptable = false;
-                   
-                }
 
+                    console.log('defecto:' + defecto.descripcion + '  posicion:' + defecto.posicion );
+                    aceptable = false;                   
+                }
             })
 
-            this.TablaDetalle[this.indexDetalle].aceptable_sn = aceptable;
-                
+            this.TablaDetalle[this.indexDetalle].aceptable_sn = aceptable;                
         },
 
         insertarClonacion : function (posicion){

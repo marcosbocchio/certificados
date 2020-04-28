@@ -89,7 +89,7 @@ b {
                     </table>          
                 </td>
             </tr>
-            <tr >
+            <tr>
                 <td class="bordered">
                     <table width="100%" >
                         <tbody>                        
@@ -184,7 +184,7 @@ b {
                     <table width="100%" style="border-collapse: collapse;" >
                         <tbody>
                             <tr>                               
-                               <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>EVALUADOR </b></td>   
+                               <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>CERTIFICADOR </b></td>   
                                <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>CLIENTE </b></td> 
                             </tr>
                             <tr>                               

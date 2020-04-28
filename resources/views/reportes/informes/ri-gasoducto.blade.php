@@ -89,13 +89,13 @@ b {
                     </table>          
                 </td>
             </tr>
-            <tr >
+        <tr>
                 <td class="bordered">
                     <table width="100%" >
                         <tbody>                        
                                 <tr>                                                
                                     
-                                    <td style="font-size: 11px;height: 45px;width: 260px"><span style="margin-top: -20px;"><b>CLIENTE: </b>{{$cliente->nombre_fantasia}}</span></td> 
+                                    <td style="font-size: 11px;height: 45px;width: 235px"><span style="margin-top: -20px;"><b>CLIENTE: </b>{{$cliente->nombre_fantasia}}</span></td> 
                                     <td  style="width: 140px">
                                         <span>
                                             @if($ot->logo_cliente_sn && $cliente->path)
@@ -106,13 +106,13 @@ b {
                                         </span>
                                     </td>                                     
                                 
-                                    <td style="font-size: 11px;width: 260px">
+                                    <td style="font-size: 11px;width: 235px">
                                         @if($contratista)
                                             <b>COMITENTE: </b>{{$contratista->nombre}}
                                         @endif                         
                                         
                                     </td>  
-                                    <td style="width: 210px">
+                                    <td style="width: 180px">
                                         @if($ot->logo_contratista_sn && $contratista->path_logo)
                                             <img  src="{{ public_path($contratista->path_logo)}}" alt="" style="height: 40px;margin-top: 5px;">
                                         @else
@@ -134,7 +134,8 @@ b {
                            </tbody>
                     </table>          
                 </td>
-            </tr>
+            </tr>    
+
             <tr>
                 <td class="bordered">
                     <table width="100%" style="border-collapse: collapse;" >
@@ -239,9 +240,9 @@ b {
                                 <td style="font-size: 11px; width:28px;  text-align: center;" class="bordered-td">P</td>  
                                 <td style="font-size: 11px; width:28px;  text-align: center;" class="bordered-td">Z</td>  
                                 <td style="font-size: 11px; width:28px;  text-align: center;" class="bordered-td">P</td>    
-                                <td style="font-size: 11px; width:75px; text-align: center;" class="bordered-td">Tipo</td>  
-                                <td style="font-size: 11px; width:75px; text-align: center"  class="bordered-td">Posición</td>                     
-                                <td style="font-size: 11px; width:75px; text-align: center;" class="bordered-td">Pasadas</td>
+                                <td style="font-size: 11px; width:60px; text-align: center;" class="bordered-td">Tipo</td>  
+                                <td style="font-size: 11px; width:105px; text-align: center"  class="bordered-td">Posición</td>                     
+                                <td style="font-size: 11px; width:60px; text-align: center;" class="bordered-td">Pasadas</td>
                                 <td style="font-size: 11px; width:25px; text-align: center;" class="bordered-td">AP</td>
                                 <td style="font-size: 11px; width:25px; text-align: center;" class="bordered-td">RZ</td>                            
                             </tr>                         
@@ -548,27 +549,41 @@ b {
 
                     <!-- Defectos Posición -->
 
-                    <td style="font-size: 11px;width:95px;  text-align: center" class="bordered-td">
-
+                    <td style="font-size: 10px;width:76.2px;  text-align: center" class="bordered-td">
+                      @php $primero = true; @endphp
                         @foreach ( $defectos_posiciones as  $defectos_posicion)
                             @if ($defectos_posicion->posicion_id == $junta_posiciones->posicion_id)
-                                {{ $defectos_posicion->codigo }} /
+
+                                @if (!$primero)
+                                    /
+                                @endif
+
+                                {{ $defectos_posicion->codigo }}   
+                                {{ $primero = false}}                  
+
+                            @endif
+
+                        @endforeach
+
+                    </td>
+
+                    <td style="font-size: 10px;width:133.5px; text-align: center" class="bordered-td">
+                        @php $primero = true; @endphp
+                        @foreach ( $defectos_posiciones as  $defectos_posicion)
+                            @if ($defectos_posicion->posicion_id == $junta_posiciones->posicion_id)
+
+                                @if (!$primero)
+                                    /
+                                @endif
+
+                                {{ $defectos_posicion->posicion }}
+                                {{ $primero = false}}     
                             @endif
                         @endforeach
 
                     </td>
 
-                    <td style="font-size: 11px;width:95px; text-align: center" class="bordered-td">
-
-                        @foreach ( $defectos_posiciones as  $defectos_posicion)
-                            @if ($defectos_posicion->posicion_id == $junta_posiciones->posicion_id)
-                                {{ $defectos_posicion->posicion }} /
-                            @endif
-                        @endforeach
-
-                    </td>
-
-                    <td style="font-size: 11px;width:95.5px; text-align: center" class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 11px;width:75px; text-align: center" class="bordered-td">&nbsp;</td>
 
                      <!-- Resultado-->   
                     <td style="font-size: 11px;width:32.2px; text-align: center; " class="bordered-td">
@@ -609,15 +624,15 @@ b {
                 <td style="font-size: 11px;  width:36.5px; text-align:center;" class="bordered-td">&nbsp;</td>
                 <td style="font-size: 11px;  width:36.5px; text-align:center;" class="bordered-td">&nbsp;</td>
                 <td style="font-size: 11px;  width:64px;text-align: center" class="bordered-td">&nbsp;</td>
-                <td style="font-size: 11px;width:95px;  text-align: center" class="bordered-td">&nbsp;</td>
-                <td style="font-size: 11px;width:95px; text-align: center" class="bordered-td">&nbsp;</td>
-                <td style="font-size: 11px;width:95.5px; text-align: center" class="bordered-td">        
+                <td style="font-size: 11px;width:75px;  text-align: center" class="bordered-td">&nbsp;</td>
+                <td style="font-size: 11px;width:93.5px; text-align: center" class="bordered-td">&nbsp;</td>
+                <td style="font-size: 11px;width:76px; text-align: center" class="bordered-td">        
                 <td style="font-size: 11px;width:32.2px; text-align: center; " class="bordered-td">&nbsp;</td>
                 <td style="font-size: 11px; text-align: center;" class="bordered-td">&nbsp;</td>
                
             </tr>
             @endfor
-                                        
+                                       
         </tbody>
     </table> 
 </main>  

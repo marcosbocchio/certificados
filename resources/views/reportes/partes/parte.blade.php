@@ -250,19 +250,19 @@ b {
         <tbody>        
 
             <tr> 
-                <td style="font-size: 13px;height: 30px;" colspan="5"><b style="margin-left: 6px;">SERVICIOS: </b></td>                                             
+                <td style="font-size: 13px;height: 30px;" colspan="5"><b style="margin-left: 4px;">SERVICIOS: </b></td>                                             
             </tr>  
             <tr>
-                <td style="font-size: 12px;width: 100px; "><&nbsp;></b></td>  
+                 
                 <td style="font-size: 12px;width: 100px; "><b>Metodo Ensayo: </b></td>                        
-                <td style="font-size: 12px;width: 350px; " colspan="2"><b>Descripción </b></td>                         
+                <td style="font-size: 12px;width: 350px; " colspan="3"><b>Descripción </b></td>                         
                 <td style="font-size: 12px;text-align: center;"><b>Cantidad </b></td>        
             </tr>    
             @foreach($servicios as $servicio)
                 <tr>
-                    <td style="font-size: 12px;width: 100px; ">&nbsp;</td>  
-                    <td style="font-size: 12px;width: 100px;">{{$servicio->metodo}}</td>                        
-                    <td style="font-size: 12px;width: 350px; " colspan="2">{{$servicio->servicio_descripcion}}</td>                         
+                    
+                    <td style="font-size: 12px;width: 100px;"><span style="margin-left:10px;">{{$servicio->metodo}}</span></td>                        
+                    <td style="font-size: 12px;width: 350px; " colspan="3"><span style="margin-left:10px;">{{$servicio->servicio_descripcion}}</span> </td>                         
                     <td style="font-size: 12px;text-align: center;text-align: center;">
 
                         @if($estado == 'original')
