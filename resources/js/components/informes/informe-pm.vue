@@ -360,6 +360,7 @@ import Datepicker from 'vuejs-datepicker';
 import {mapState} from 'vuex';
 import {en, es} from 'vuejs-datepicker/dist/locale'
 import { eventSetReferencia } from '../event-bus';
+import { toastrInfo,toastrDefault } from '../toastrConfig';
 
 export default {
     components: {

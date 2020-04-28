@@ -590,6 +590,7 @@ import {en, es} from 'vuejs-datepicker/dist/locale'
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 import moment from 'moment';
+import { toastrInfo,toastrDefault } from '../toastrConfig';
 
 export default {
 
