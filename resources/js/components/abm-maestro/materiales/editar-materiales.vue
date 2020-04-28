@@ -74,7 +74,8 @@ export default {
                console.log('entro en open modal');            
             this.$nextTick(function () { 
                 this.editRegistro.codigo = this.selectRegistro.codigo;
-                this.editRegistro.descripcion = this.selectRegistro.descripcion;               
+                this.editRegistro.descripcion = this.selectRegistro.descripcion;      
+                this.editRegistro.updated_at = this.selectRegistro.updated_at;         
 
                 console.log(this.selectRegistro.cliente_id);
               
@@ -99,7 +100,8 @@ export default {
                   toastr.success('Material editado con éxito');         
                   this.editRegistro={}
                   
-                }).catch(error => {                   
+                }).catch(error => {     
+                    console.log(error);              
                     this.errors = error.response.data.errors;
                     $.each( this.errors, function( key, value ) {
                         toastr.error(value);

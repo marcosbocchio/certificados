@@ -26,6 +26,7 @@ toastr.options = {
   "hideMethod": "fadeOut"
 }
 
+/*
 const toastrWarning = {
   "closeButton": true,
   "debug": false,
@@ -43,6 +44,26 @@ const toastrWarning = {
   "showMethod": "fadeIn",
   "hideMethod": "fadeOut"
 }
+
+const toastrInfo = {
+  "closeButton": true,
+  "debug": false,
+  "newestOnTop": false,
+  "progressBar": false,
+  "positionClass": "toast-bottom-right",
+  "preventDuplicates": false,
+  "onclick": null,
+  "showDuration": "300",
+  "hideDuration": "1000",
+  "timeOut": "5000",
+  "extendedTimeOut": "1000",
+  "showEasing": "swing",
+  "hideEasing": "linear",
+  "showMethod": "fadeIn",
+  "hideMethod": "fadeOut"
+}
+
+*/
 
 window.Vue = require('vue');
 
@@ -442,11 +463,13 @@ actions : {
           commit},payload) {
           axios.defaults.baseURL = store.state.url 
           console.log(payload);
-          var urlRegistros = 'procedimientos_informes/ot/' + payload.ot_id + '/metodo/' + payload.metodo + '?api_token=' + Laravel.user.api_token;         
-          console.log(urlRegistros);
-          axios.get(urlRegistros).then((response) => {     
-            console.log(response.data);   
-            commit('getProcedimientosOtMetodo', response.data)           
+          var urlRegistros = 'procedimientos_informes/ot/' + payload.ot_id + '/metodo/' + payload.metodo + '?api_token=' + Laravel.user.api_token;        
+          return new Promise((resolve, reject) => { 
+            axios.get(urlRegistros).then((response) => {     
+              console.log(response.data);   
+              commit('getProcedimientosOtMetodo', response.data);         
+              resolve();       
+            })
           })
         },
 

@@ -822,6 +822,8 @@ import Datepicker from 'vuejs-datepicker';
 import {mapState} from 'vuex';
 import {en, es} from 'vuejs-datepicker/dist/locale'
 import { eventSetReferencia } from '../event-bus';
+import { toastrInfo,toastrDefault } from '../toastrConfig';
+
 export default {
     
     components: {
@@ -1042,7 +1044,14 @@ export default {
       this.$store.dispatch('loadDiametros');
       this.getTecnicas();
       this.$store.dispatch('loadInternoEquiposActivos',this.metodo);       
-      this.$store.dispatch('loadProcedimietosOtMetodo',  { 'ot_id' : this.otdata.id, 'metodo' : this.metodo });
+      this.$store.dispatch('loadProcedimietosOtMetodo',  
+        { 'ot_id' : this.otdata.id, 'metodo' : this.metodo }).then(response =>{ 
+                if(this.procedimientos.length == 0  ){
+                    toastr.options = toastrInfo;
+                    toastr.info('No existen ningun procedimiento para la OT/método seleccionado'); 
+                    toastr.options = toastrDefault;
+                }
+        });
       this.$store.dispatch('loadNormaEvaluaciones');        
       this.$store.dispatch('loadNormaEnsayos');  
       this.getEstadosSuperficies();

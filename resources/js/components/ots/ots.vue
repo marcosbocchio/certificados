@@ -39,13 +39,13 @@
       </div>
         <div class="col-md-2">
           <div class="form-group">
-            <label for="fst">Obra Nº</label>
-            <input v-model="obra" type="number" class="form-control" id="obra" placeholder="" min="1" maxlength = "8" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+            <label for="obra">Obra Nº</label>
+            <input v-model="obra" type="text" class="form-control" id="obra" placeholder="" maxlength = "8">
           </div>
         </div>        
         <div class="col-md-2">
           <div class="form-group">
-            <label for="fecha">Fecha estimada*</label>
+            <label for="fecha_ensayo">Fecha estimada*</label>
               <div class="input-group date">
                 <div class="input-group-addon">
                   <i class="fa fa-calendar"></i>

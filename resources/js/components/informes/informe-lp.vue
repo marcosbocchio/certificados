@@ -558,7 +558,14 @@ data() {return {
         this.$store.dispatch('loadMateriales');
         this.$store.dispatch('loadDiametros');
         this.$store.dispatch('loadInternoEquiposActivos',this.metodo);       
-        this.$store.dispatch('loadProcedimietosOtMetodo',  { 'ot_id' : this.otdata.id, 'metodo' : this.metodo });  
+      this.$store.dispatch('loadProcedimietosOtMetodo',  
+        { 'ot_id' : this.otdata.id, 'metodo' : this.metodo }).then(response =>{ 
+                if(this.procedimientos.length == 0  ){
+                    toastr.options = toastrInfo;
+                    toastr.info('No existen ningun procedimiento para la OT/método seleccionado'); 
+                    toastr.options = toastrDefault;
+                }
+        });
         this.$store.dispatch('loadNormaEvaluaciones');        
         this.$store.dispatch('loadNormaEnsayos'); 
         this.$store.dispatch('loadTipoLiquidos','penetrante_tipo_liquido');      

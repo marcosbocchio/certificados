@@ -794,8 +794,15 @@ export default {
 
     created : function(){       
         
-        this.isLoading =  true;
-        this.$store.dispatch('loadProcedimietosOtMetodo',  { 'ot_id' : this.otdata.id, 'metodo' : this.metodo });
+      this.isLoading =  true;
+      this.$store.dispatch('loadProcedimietosOtMetodo',  
+        { 'ot_id' : this.otdata.id, 'metodo' : this.metodo }).then(response =>{ 
+                if(this.procedimientos.length == 0  ){
+                    toastr.options = toastrInfo;
+                    toastr.info('No existen ningun procedimiento para la OT/método seleccionado'); 
+                    toastr.options = toastrDefault;
+                }
+        });
         this.$store.dispatch('loadMateriales');
         this.$store.dispatch('loadDiametros');
         this.$store.dispatch('loadInternoEquiposActivos',this.metodo);      

@@ -7,7 +7,7 @@ use App\Http\Requests\MaterialRequest;
 use Illuminate\Support\Facades\DB;
 use App\Materiales;
 use App\User;
-
+use Exception as Exception;
 
 class MaterialesController extends Controller
 {
@@ -15,7 +15,7 @@ class MaterialesController extends Controller
     public function __construct()
     {
 
-    $this->middleware(['role_or_permission:Super Admin|M_materiales'],['only' => ['callView']]);  
+       $this->middleware(['role_or_permission:Super Admin|M_materiales'],['only' => ['callView']]);  
     
     }
 
@@ -60,26 +60,43 @@ class MaterialesController extends Controller
     }
 
     public function update(MaterialRequest $request, $id){
+      
+      $material = Materiales::where('id',$id)
+                              ->where('updated_at',$request['updated_at'])                              
+                              ->first();
+                              
+      if(is_null($material)){
 
-      $material = Materiales::find($id);     
-    
+
+           return response()->json(['errors' => ['error' => ['Otro usuario modificó el registro que intenta actualizar, recargue la página y vuelva a intentarlo']]], 404);
+
+      }else{
+
         DB::beginTransaction();
         try {
+  
+         //   $material = Materiales::find($id);
+       
+      
             $this->saveMaterial($request,$material);
             DB::commit(); 
-    
-          } catch (Exception $e) {
       
-            DB::rollback();
-            throw $e;      
-            
-          }
+            } catch (Exception $e) {
+              
+              DB::rollback();
+              throw $e;
+              
+            }
+
+      }
+
     }
     public function saveMaterial($request,$material){
 
       $material->codigo = $request['codigo'];
       $material->descripcion = $request['descripcion'];
       $material->save();
+  
 
     }
 

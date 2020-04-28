@@ -91,10 +91,7 @@ class InformesRiRepository extends BaseRepository
     $informeRi->distancia_fuente_pelicula = $request->distancia_fuente_pelicula;
     $informeRi->tecnicas_grafico_id = $request->tecnica['grafico_id'];
     $informeRi->exposicion = $request->exposicion;
-    $informeRi->save();   
-
-
-   
+    $informeRi->save();      
 
   }
 
@@ -148,11 +145,9 @@ class InformesRiRepository extends BaseRepository
  
            }
        
-         }       
-       
+         }          
       
       }
- 
     
   }
 
@@ -168,7 +163,6 @@ class InformesRiRepository extends BaseRepository
     return $junta;
   }
 
-
   public function savePosicion($detalle,$junta){
 
     $posicion = new Posicion;  
@@ -180,7 +174,6 @@ class InformesRiRepository extends BaseRepository
 
     return $posicion;
   }
-
 
   public function savePasadasPosicion($pasadas,$posicion){   
      

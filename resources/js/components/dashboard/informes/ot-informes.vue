@@ -20,11 +20,16 @@
                     <div class="box-header with-border">
                         <h3 class="box-title">AGREGAR INFORME</h3>
                 
-                        <div class="box-body">  
+                        <div class="box-body">           
                             <div class="form-group">
-                                <label>Tipo</label>
-                            <v-select v-model="metodo_ensayo" label="metodo" :options="ot_metodos_ensayos_data" ></v-select> 
-                            </div> 
+                                <label for="name">Tipo</label>      
+                                <v-select v-model="metodo_ensayo" label="metodo" :options="ot_metodos_ensayos_data">
+                                    <template slot="option" slot-scope="option">
+                                        <span class="upSelect">{{ option.metodo }}</span> <br> 
+                                        <span class="downSelect"> {{ option.descripcion }} </span>
+                                    </template>  
+                                </v-select>
+                            </div>                            
                             <div class="form-group">                    
                                 <span>
                                     <a  @click="NuevoInforme(ot_data.id)">

@@ -106,8 +106,13 @@
                             <div v-if="newRegistro.tipo == 'USUARIO' |newRegistro.tipo == 'PROCEDIMIENTO' |newRegistro.tipo == 'PROCEDIMIENTO GENERAL' ">
                                 <div class="form-group">
                                     <label for="name">Método de Ensayo</label>
-                                    <v-select v-model="metodo_ensayo" label="metodo" :options="metodo_ensayos"></v-select>
-                                </div>
+                                    <v-select v-model="metodo_ensayo" label="metodo" :options="metodo_ensayos">
+                                        <template slot="option" slot-scope="option">
+                                            <span class="upSelect">{{ option.metodo }}</span> <br> 
+                                            <span class="downSelect"> {{ option.descripcion }} </span>
+                                        </template>  
+                                    </v-select>
+                                </div>  
                             </div>    
                             <div v-if="newRegistro.tipo == 'USUARIO'">
                                 <div class="form-group">
