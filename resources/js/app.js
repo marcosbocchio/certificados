@@ -26,7 +26,7 @@ toastr.options = {
   "hideMethod": "fadeOut"
 }
 
-/*
+
 const toastrWarning = {
   "closeButton": true,
   "debug": false,
@@ -63,7 +63,7 @@ const toastrInfo = {
   "hideMethod": "fadeOut"
 }
 
-*/
+
 
 window.Vue = require('vue');
 
