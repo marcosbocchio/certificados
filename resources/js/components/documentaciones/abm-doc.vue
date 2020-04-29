@@ -121,7 +121,7 @@
                                         <div class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                         </div>
-                                            <Datepicker v-model="newRegistro.fecha_caducidad" :input-class="'form-control pull-right'" :language="es"></Datepicker>   
+                                            <Datepicker v-model="newRegistro.fecha_caducidad" :input-class="'form-control pull-right'"  :language="es"></Datepicker>   
                                     </div>
                                 </div>                               
                             </div>

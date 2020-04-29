@@ -549,7 +549,7 @@ b {
 
                     <!-- Defectos Posición -->
 
-                    <td style="font-size: 10px;width:76.2px;  text-align: center" class="bordered-td">
+                    <td style="font-size: 9px;width:76.2px;  text-align: center" class="bordered-td">
                       @php $primero = true; @endphp
                         @foreach ( $defectos_posiciones as  $defectos_posicion)
                             @if ($defectos_posicion->posicion_id == $junta_posiciones->posicion_id)
@@ -567,7 +567,7 @@ b {
 
                     </td>
 
-                    <td style="font-size: 10px;width:133.5px; text-align: center" class="bordered-td">
+                    <td style="font-size: 9px;width:133.5px; text-align: center" class="bordered-td">
                         @php $primero = true; @endphp
                         @foreach ( $defectos_posiciones as  $defectos_posicion)
                             @if ($defectos_posicion->posicion_id == $junta_posiciones->posicion_id)
