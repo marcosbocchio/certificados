@@ -10,6 +10,8 @@
 @page { margin: 367px 30px 190px 60px !important;
         padding: 0px 0px 0px 0px !important; }
 
+
+
 header {
     position:fixed;
     top: -328px;    
@@ -377,7 +379,7 @@ b {
                 </tr>
    
             @endforeach
-
+<!--
             {{ $cantFilasTotal = count($juntas_posiciones) }}
             {{ $filasPage = 35}}
             {{ $filasACompletar = pdfCantFilasACompletar($filasPage,$cantFilasTotal) }}
@@ -393,7 +395,7 @@ b {
                     <td style="font-size: 11px;" class="bordered-td">&nbsp;</td>
                 </tr>
             @endfor
-                                            
+-->                                        
         </tbody>
     </table>
 </main>   

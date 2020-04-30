@@ -79,18 +79,18 @@
                         <div class="modal-body">
                             <div v-if="modelo == 'ot_procedimientos_propios'"> 
                                 <div class="form-group">
-                                    <label  for="tipo">Tipo Documento (*)</label>
+                                    <label  for="tipo">Tipo Documento *</label>
                                     <input type="text" id="tipo" class="form-control" v-model="newRegistro.tipo" disabled>    
                                 </div>                             
                             </div>
                             <div v-else>
                                  <div class="form-group">
-                                   <label  for="tipo">Tipo Documento (*)</label>
+                                   <label  for="tipo">Tipo Documento *</label>
                                    <v-select v-model="newRegistro.tipo" label="tipo" :options="tipo_documentos"></v-select>
                                 </div>                             
                             </div>      
                             <div class="form-group">
-                                <label for="titulo">Título (*)</label>
+                                <label for="titulo">Título *</label>
                                 <input type="text" name="titulo" class="form-control" v-model="newRegistro.titulo" value="">               
                             </div>  
                             <div class="form-group">
@@ -99,7 +99,7 @@
                             </div>
                             <div v-if="newRegistro.tipo == 'USUARIO'">
                                 <div class="form-group">
-                                    <label for="name">Usuario (*)</label>
+                                    <label for="name">Usuario *</label>
                                     <v-select v-model="usuario" label="name" :options="usuarios"></v-select>
                                 </div>
                             </div>
@@ -116,12 +116,10 @@
                             </div>    
                             <div v-if="newRegistro.tipo == 'USUARIO'">
                                 <div class="form-group">
-                                    <label for="fecha">Fecha (*)</label>
+                                    <label for="fecha">Fecha vencimiento *</label>
                                     <div class="input-group date">
-                                        <div class="input-group-addon">
-                                        <i class="fa fa-calendar"></i>
-                                        </div>
-                                            <Datepicker v-model="newRegistro.fecha_caducidad" :input-class="'form-control pull-right'"  :language="es"></Datepicker>   
+                              
+                                            <date-picker v-model="newRegistro.fecha_caducidad" value-type="YYYY-MM-DD" format="DD-MM-YYYY" placeholder="DD-MM-YYYY" />
                                     </div>
                                 </div>                               
                             </div>
@@ -167,9 +165,11 @@
 <script>
 require('vue-image-lightbox/dist/vue-image-lightbox.min.css')
 import {mapState} from 'vuex'
-import Datepicker from 'vuejs-datepicker';
-import {en, es} from 'vuejs-datepicker/dist/locale'
+//import Datepicker from 'vuejs-datepicker';
+//import {en, es} from 'vuejs-datepicker/dist/locale'
 import LightBox from 'vue-image-lightbox'
+import DatePicker from 'vue2-datepicker';
+import 'vue2-datepicker/index.css';
 
 export default {
     name: 'abm-doc',
@@ -186,7 +186,7 @@ export default {
       },
 
       components: {
-            Datepicker,       
+         
             LightBox,
         },
 
@@ -226,10 +226,7 @@ export default {
             'OT',    
             'PROCEDIMIENTO GENERAL',          
             'USUARIO'           
-         ], 
-         en: en,
-         es: es,    
-      
+         ],       
          errors:[],
          metodo_ensayos:[],
          metodo_ensayo :{

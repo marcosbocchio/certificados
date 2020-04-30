@@ -51,8 +51,17 @@ class InformesRiRepository extends BaseRepository
 
   public function updateInforme($request, $id){
 
-    $informe  = Informe::find($id);
-    $informeRi =InformesRi::where('informe_id',$informe->id)->first();
+    $informe = Informe::where('id',$id)
+                        ->where('updated_at',$request['updated_at'])                              
+                        ->first();
+                        
+    if(is_null($informe)){
+
+        return response()->json(['errors' => ['error' => ['Otro usuario modificó el registro que intenta actualizar, recargue la página y vuelva a intentarlo']]], 404);
+
+    }else{
+   
+     $informeRi =InformesRi::where('informe_id',$informe->id)->first();
    
     DB::beginTransaction();
     try {
@@ -70,7 +79,7 @@ class InformesRiRepository extends BaseRepository
         throw $e;      
         
       }
-
+    }
   }
   
   public function saveInformeRi($request,$informe,$informeRi){      

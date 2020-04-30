@@ -36,6 +36,7 @@
         "vue-popperjs": "^2.3.0",
         "vue-select": "^3.1.0",
         "vue-timeselector": "^0.1.7",
+        "vue2-datepicker": "^3.5.0",
         "vue2-google-maps": "^0.10.6",
         "vuejs-datepicker": "^1.5.4",
         "vuejs-progress-bar": "^1.1.1",

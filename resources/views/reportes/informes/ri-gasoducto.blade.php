@@ -12,6 +12,7 @@
         padding: 0px 0px 0px 0px !important;
        }
 
+
 header {
     position:fixed;
     top: -313px;    
@@ -600,7 +601,7 @@ b {
                 </tr>
                 
             @endforeach    
-
+  <!--
             {{ $cantFilasTotal = count($juntas_posiciones) }}
             {{ $filasPage = 14 }}
             {{ $filasACompletar = pdfCantFilasACompletar($filasPage,$cantFilasTotal) }}  
@@ -632,7 +633,7 @@ b {
                
             </tr>
             @endfor
-                                       
+    -->                                
         </tbody>
     </table> 
 </main>  

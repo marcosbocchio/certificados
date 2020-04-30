@@ -1128,6 +1128,7 @@ export default {
               data : {
 
               'id'                  : this.otdata.id,
+              'updated_at'          : this.otdata.updated_at,
               'cliente'             : this.cliente.id,
               'logo_cliente_sn'     : this.logo_cliente_sn,
               'contratista'         : this.contratista,

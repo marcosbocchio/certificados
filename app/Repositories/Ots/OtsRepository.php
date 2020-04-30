@@ -71,7 +71,17 @@ class OtsRepository extends BaseRepository
   public function updateOt( $request, $id)
   {
 
-        $ot = $this->getModel()->find($id);
+     $ot = OTS::where('id',$id)
+          ->where('updated_at',$request['updated_at'])                              
+          ->first();
+    
+      if(is_null($ot)){
+
+
+            return response()->json(['errors' => ['error' => ['Otro usuario modificó el registro que intenta actualizar, recargue la página y vuelva a intentarlo']]], 404);
+
+      }else{
+             
         $servicios = $request->servicios;
         $tipo_peliculas = $request->tipo_peliculas;
         $productos = $request->productos;
@@ -115,7 +125,7 @@ class OtsRepository extends BaseRepository
         throw $e;      
         
       }
-
+    }
   }
 
 

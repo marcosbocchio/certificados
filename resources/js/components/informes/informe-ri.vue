@@ -1451,6 +1451,7 @@ export default {
                     data : {
                         
                         'ot'              : this.otdata,
+                        'updated_at'      : this.informedata.updated_at,
                         'obra'            : this.obra,
                         'ejecutor_ensayo' : this.ejecutor_ensayo,  
                         'metodo_ensayo'   : this.metodo,  
