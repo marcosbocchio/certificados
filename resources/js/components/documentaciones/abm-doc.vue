@@ -118,7 +118,7 @@
                             <div v-if="newRegistro.tipo == 'USUARIO'">
                               
                                 <div class="form-group">
-                                    <label for="fecha">Fecha vencimiento *</label>
+                                    <label for="fecha">Fecha caducidad *</label>
                                     <div>                                                                      
                                         <date-picker v-model="newRegistro.fecha_caducidad" value-type="YYYY-MM-DD" format="DD-MM-YYYY" placeholder="DD-MM-YYYY" ></date-picker>
                                     </div>
