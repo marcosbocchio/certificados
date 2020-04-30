@@ -114,14 +114,16 @@
                                     </v-select>
                                 </div>  
                             </div>    
+                            
                             <div v-if="newRegistro.tipo == 'USUARIO'">
+                              
                                 <div class="form-group">
                                     <label for="fecha">Fecha vencimiento *</label>
-                                    <div class="input-group date">
-                              
-                                            <date-picker v-model="newRegistro.fecha_caducidad" value-type="YYYY-MM-DD" format="DD-MM-YYYY" placeholder="DD-MM-YYYY" />
+                                    <div>                                                                      
+                                        <date-picker v-model="newRegistro.fecha_caducidad" value-type="YYYY-MM-DD" format="DD-MM-YYYY" placeholder="DD-MM-YYYY" ></date-picker>
                                     </div>
-                                </div>                               
+                                </div>                 
+                                  
                             </div>
                             <div class="form-group">                           
                                <input type="file" class="form-control" id="inputFile" ref="inputFile1" name="file" @change="onFileSelected($event)">
@@ -601,6 +603,13 @@ export default {
     .col-xs-12, .col-sm-12 {
         margin-top:10px;
     }
+}
+
+.mx-datepicker {
+  position: relative;
+  display: block;
+  width: 100%;
+
 }
 
 </style>
