@@ -167,11 +167,10 @@
 <script>
 require('vue-image-lightbox/dist/vue-image-lightbox.min.css')
 import {mapState} from 'vuex'
-//import Datepicker from 'vuejs-datepicker';
-//import {en, es} from 'vuejs-datepicker/dist/locale'
 import LightBox from 'vue-image-lightbox'
 import DatePicker from 'vue2-datepicker';
 import 'vue2-datepicker/index.css';
+import 'vue2-datepicker/locale/es';
 
 export default {
     name: 'abm-doc',
@@ -605,11 +604,6 @@ export default {
     }
 }
 
-.mx-datepicker {
-  position: relative;
-  display: block;
-  width: 100%;
 
-}
 
 </style>

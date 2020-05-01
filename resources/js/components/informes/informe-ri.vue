@@ -14,12 +14,9 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                  <label for="fecha">Fecha *</label>
-                                <div class="input-group date">
-                                    <div class="input-group-addon">
-                                    <i class="fa fa-calendar"></i>
-                                    </div>
-                                        <Datepicker v-model="fecha" :input-class="'form-control pull-right'" :language="es"></Datepicker>   
-                                </div>
+                                <div>                                                                      
+                                    <date-picker v-model="fecha" value-type="YYYY-MM-DD" format="DD-MM-YYYY" placeholder="DD-MM-YYYY" ></date-picker>
+                                </div>   
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -584,9 +581,9 @@
 <script>
 
 import uniq from 'lodash/uniq';
-import Datepicker from 'vuejs-datepicker';
-import {mapState} from 'vuex';
-import {en, es} from 'vuejs-datepicker/dist/locale'
+import DatePicker from 'vue2-datepicker';
+import 'vue2-datepicker/index.css';
+import 'vue2-datepicker/locale/es';import {mapState} from 'vuex';
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 import moment from 'moment';
@@ -596,7 +593,6 @@ export default {
 
     components: {
 
-      Datepicker,
       Loading
       
     },
@@ -699,9 +695,7 @@ export default {
 
     data() {return {
 
-        errors:[],
-            en: en,
-            es: es, 
+        errors:[], 
             isLoading: false,
             fullPage: false,         
 
@@ -893,7 +887,7 @@ export default {
 
                if(this.numero_inf)
 
-                      return this.metodo + (this.numero_inf <10? '00' : this.numero_inf<100? '0' : '') + this.numero_inf ;
+                return this.metodo + (this.numero_inf <10? '00' : this.numero_inf<100? '0' : '') + this.numero_inf ;
         }
        
      },

@@ -9,12 +9,9 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="fecha">Fecha *</label>
-                                <div class="input-group date">
-                                    <div class="input-group-addon">
-                                    <i class="fa fa-calendar"></i>
-                                    </div>
-                                        <Datepicker v-model="fecha" :input-class="'form-control pull-right'" :language="es"></Datepicker>   
-                                </div>
+                                <div>                                                                      
+                                    <date-picker v-model="fecha" value-type="YYYY-MM-DD" format="DD-MM-YYYY" placeholder="DD-MM-YYYY" autocomplete="off" ></date-picker>
+                                </div> 
                             </div>
                         </div>  
                         <div class="col-md-3">
@@ -179,13 +176,12 @@
 
 import { toastrWarning,toastrDefault } from '../toastrConfig';
 
-import Datepicker from 'vuejs-datepicker';
 import {mapState} from 'vuex';
-import {en, es} from 'vuejs-datepicker/dist/locale'
+import DatePicker from 'vue2-datepicker';
+import 'vue2-datepicker/index.css';
+import 'vue2-datepicker/locale/es';
 export default {
-    components: {
-
-      Datepicker
+    components: {      
       
     },
 
@@ -221,8 +217,7 @@ export default {
     data (){return{  
 
         errors:[],
-         en: en,
-         es: es, 
+
         interno_sn :true, 
         fecha:new Date(), 
         numero:'',

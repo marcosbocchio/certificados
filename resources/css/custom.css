@@ -107,4 +107,10 @@ table .selected{
   background-color: #54A75C;
 }
 
+.mx-datepicker {
+  
+  position: relative !important;
+  display: block !important;
+  width: 100% !important;
 
+}

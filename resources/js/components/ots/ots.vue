@@ -29,12 +29,9 @@
       <div class="col-md-2">
         <div class="form-group">
           <label for="fecha">Fecha *</label>
-            <div class="input-group date">
-                <div class="input-group-addon">
-                  <i class="fa fa-calendar"></i>
-                </div>
-                    <Datepicker v-model="fecha" :input-class="'form-control pull-right'" :language="es"></Datepicker>   
-            </div>
+              <div>                                                                      
+                  <date-picker v-model="fecha" value-type="YYYY-MM-DD" format="DD-MM-YYYY" placeholder="DD-MM-YYYY" ></date-picker>
+              </div>   
         </div>
       </div>
         <div class="col-md-2">
@@ -45,13 +42,10 @@
         </div>        
         <div class="col-md-2">
           <div class="form-group">
-            <label for="fecha_ensayo">Fecha estimada*</label>
-              <div class="input-group date">
-                <div class="input-group-addon">
-                  <i class="fa fa-calendar"></i>
-                </div>
-                <Datepicker v-model="fecha_ensayo" :input-class="'form-control pull-right'" :language="es"></Datepicker>   
-              </div>
+            <label for="fecha_ensayo">Fecha estimada *</label>  
+              <div>                                                                      
+                  <date-picker v-model="fecha_ensayo" value-type="YYYY-MM-DD" format="DD-MM-YYYY" placeholder="DD-MM-YYYY" ></date-picker>
+              </div>              
           </div>
         </div>
        <div class="col-md-2">
@@ -458,8 +452,9 @@
 <script>
 
 import {mapState} from 'vuex'
-import Datepicker from 'vuejs-datepicker';
-import {en, es} from 'vuejs-datepicker/dist/locale'
+import DatePicker from 'vue2-datepicker';
+import 'vue2-datepicker/index.css';
+import 'vue2-datepicker/locale/es';
 import Timeselector from 'vue-timeselector';
 import { eventSetReferencia } from '../event-bus';
 
@@ -467,7 +462,6 @@ import { eventSetReferencia } from '../event-bus';
 export default {
 
   components: {
-      Datepicker,
       Timeselector
   },
    props: {
@@ -545,8 +539,6 @@ export default {
     data() { return {
          
         errors:[],
-         en: en,
-         es: es,
          markers: [{
             position: {
               lat: '',
