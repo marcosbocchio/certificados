@@ -457,6 +457,7 @@ import 'vue2-datepicker/index.css';
 import 'vue2-datepicker/locale/es';
 import Timeselector from 'vue-timeselector';
 import { eventSetReferencia } from '../event-bus';
+import moment from 'moment';
 
 
 export default {
@@ -555,7 +556,7 @@ export default {
             heading: 0,
           },        
           proyecto:'',
-          fecha:new Date(),     
+          fecha: moment(new Date()).format('YYYY-MM-DD'),
           fecha_ensayo:'',
           hora: '',
           clientes:[],

@@ -1,7 +1,7 @@
 <template>
  <div class="row">
        <div class="col-md-12">
-            <form @submit.prevent="editmode ?  Update() : Store()"  method="post">
+            <form @submit.prevent="editmode ?  Update() : Store()"  method="post" autocomplete="off">
                 <informe-header :otdata="otdata"></informe-header>
                  <div class="box box-custom-enod">
                     <div class="box-body"> 
@@ -10,10 +10,11 @@
                             <div class="form-group">
                                 <label for="fecha">Fecha *</label>
                                 <div>                                                                      
-                                    <date-picker v-model="fecha" value-type="YYYY-MM-DD" format="DD-MM-YYYY" placeholder="DD-MM-YYYY" autocomplete="off" ></date-picker>
+                                    <date-picker v-model="fecha" value-type="YYYY-MM-DD" format="DD-MM-YYYY" placeholder="DD-MM-YYYY"></date-picker>
                                 </div> 
                             </div>
                         </div>  
+b 
                         <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="prefijo">Prefijo N° *</label>
@@ -180,6 +181,8 @@ import {mapState} from 'vuex';
 import DatePicker from 'vue2-datepicker';
 import 'vue2-datepicker/index.css';
 import 'vue2-datepicker/locale/es';
+import moment from 'moment';
+
 export default {
     components: {      
       
@@ -219,7 +222,7 @@ export default {
         errors:[],
 
         interno_sn :true, 
-        fecha:new Date(), 
+        fecha: moment(new Date()).format('YYYY-MM-DD'),
         numero:'',
         prefijo:'1',
         receptor:'',

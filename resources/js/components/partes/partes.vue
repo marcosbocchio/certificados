@@ -10,12 +10,9 @@
                                 <label for="fecha">Fecha *</label>
                                 <input type="checkbox" id="checkbox_f" v-model="permitir_anteriores_sn" style="float:right"> 
                                 <label for="tipo" style="float:right;margin-right: 5px;">Permitir Anteriores</label>    
-                                <div class="input-group date">
-                                    <div class="input-group-addon">
-                                    <i class="fa fa-calendar"></i>
-                                    </div>
-                                        <Datepicker v-model="fecha" :input-class="'form-control pull-right'" :language="es"></Datepicker>   
-                                   </div>
+                                <div>                                                                      
+                                    <date-picker v-model="fecha" value-type="YYYY-MM-DD" format="DD-MM-YYYY" placeholder="DD-MM-YYYY" ></date-picker>
+                                </div> 
                             </div>
                         </div>  
                         <div class="col-md-3">
@@ -528,16 +525,16 @@
 
 <script>
 import {eventHeaderParte} from '../event-bus';
-import Datepicker from 'vuejs-datepicker';
 import {mapState} from 'vuex';
-import {en, es} from 'vuejs-datepicker/dist/locale';
+import DatePicker from 'vue2-datepicker';
+import 'vue2-datepicker/index.css';
+import 'vue2-datepicker/locale/es';
 import moment from 'moment';
 
 export default {
     components: {
 
-      Datepicker
-      
+            
     },
 
     props :{
@@ -602,8 +599,7 @@ export default {
     data (){return{  
 
         errors:[],
-        en: en,
-        es: es,
+
         obra:'',      
         fecha:'',   
         permitir_anteriores_sn: false,

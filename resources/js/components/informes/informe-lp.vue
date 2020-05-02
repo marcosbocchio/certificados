@@ -374,6 +374,7 @@ import 'vue2-datepicker/index.css';
 import 'vue2-datepicker/locale/es';
 import { eventSetReferencia } from '../event-bus';
 import { toastrInfo,toastrDefault } from '../toastrConfig';
+import moment from 'moment';
 
 export default {
 
@@ -501,7 +502,7 @@ data() {return {
         
         errors:[],
         obra:'',
-        fecha: new Date(),
+        fecha: moment(new Date()).format('YYYY-MM-DD'),
         numero_inf:'',
         numero_inf_generado:'',
         componente:'',

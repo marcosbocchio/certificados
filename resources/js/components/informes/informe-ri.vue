@@ -15,7 +15,7 @@
                             <div class="form-group">
                                  <label for="fecha">Fecha *</label>
                                 <div>                                                                      
-                                    <date-picker v-model="fecha" value-type="YYYY-MM-DD" format="DD-MM-YYYY" placeholder="DD-MM-YYYY" ></date-picker>
+                                    <date-picker v-model="fecha" value-type="YYYY-MM-DD" format="DD-MM-YYYY" placeholder="DD-MM-YYYY" autocomplete="new-password" ></date-picker>
                                 </div>   
                             </div>
                         </div>
@@ -592,7 +592,7 @@ import { toastrInfo,toastrDefault } from '../toastrConfig';
 export default {
 
     components: {
-
+        
       Loading
       
     },
@@ -701,7 +701,7 @@ export default {
 
            // Formulario encabezado
             obra:'',
-            fecha: new Date(),
+            fecha: moment(new Date()).format('YYYY-MM-DD'),
             numero_inf:'',
             numero_inf_generado:'',
             prefijo:'',
