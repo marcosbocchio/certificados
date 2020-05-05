@@ -145,6 +145,7 @@ Route::group(['middleware' => 'auth:api'], function()
 
     Route::get('documentaciones/ot','DocumentacionesController@DocumentacionesDeOt'); 
     Route::get('documentaciones/total', 'DocumentacionesController@DocumentacionesTotal'); 
+    Route::get('documentaciones/verificar_duplicados/tipo/{tipo?}/titulo/{titulo?}/usuario/{user_id?}', 'DocumentacionesController@verificarDuplicados'); 
     Route::resource('documentaciones', 'DocumentacionesController'); 
     Route::get('documentaciones/ot/paginate', 'DocumentacionesController@paginate'); 
   

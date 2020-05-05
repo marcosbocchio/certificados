@@ -93,14 +93,23 @@ class DocumentacionesController extends Controller
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    public function verificarDuplicados($tipo = null,$titulo= null,$user_id = null){
+
+        if($tipo ==  'USUARIO'){
+
+            return documentaciones::join('usuario_documentaciones','usuario_documentaciones.documentacion_id','=','documentaciones.id')
+                                    ->where('documentaciones.tipo',$tipo)
+                                    ->where('documentaciones.titulo',$titulo)
+                                    ->where('usuario_documentaciones.user_id',$user_id) 
+                                    ->get();
+
+        }else{
+            
+            return documentaciones::where('documentaciones.tipo',$tipo)
+                                    ->where('documentaciones.titulo',$titulo)
+                                    ->get();
+        }
+
     }
 
     /**

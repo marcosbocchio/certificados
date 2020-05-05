@@ -91,7 +91,7 @@
                             </div>      
                             <div class="form-group">
                                 <label for="titulo">Título *</label>
-                                <input type="text" name="titulo" class="form-control" v-model="newRegistro.titulo" value="">               
+                                <input type="text" name="titulo" class="form-control" v-model="newRegistro.titulo" value="" @change="VerificarDuplicado()">               
                             </div>  
                             <div class="form-group">
                                 <label for="name">Descripción </label>
@@ -100,7 +100,7 @@
                             <div v-if="newRegistro.tipo == 'USUARIO'">
                                 <div class="form-group">
                                     <label for="name">Usuario *</label>
-                                    <v-select v-model="usuario" label="name" :options="usuarios"></v-select>
+                                    <v-select v-model="usuario" label="name" :options="usuarios" @input="VerificarDuplicado()"></v-select>
                                 </div>
                             </div>
                             <div v-if="newRegistro.tipo == 'USUARIO' |newRegistro.tipo == 'PROCEDIMIENTO' |newRegistro.tipo == 'PROCEDIMIENTO GENERAL' ">
@@ -161,10 +161,29 @@
                 </div>
             </div>
         </form>
+
+        <div class="modal fade" tabindex="-1" role="dialog" id="modal-cancelar-continuar" data-keyboard="false" data-backdrop="static">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h4><span class="fa fa-warning" style="color:#FBCA19;">&nbsp;&nbsp;</span>Alerta</h4>
+                    </div>
+                <div class="modal-body">
+                    <p style="text-align: center;">El registro ingresado ya existe.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" @click="cancelarModal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Ignorar</button>
+                </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        
     </div>    
 </template>
 
 <script>
+import { toastrWarning,toastrDefault } from '../toastrConfig';
 require('vue-image-lightbox/dist/vue-image-lightbox.min.css')
 import {mapState} from 'vuex'
 import LightBox from 'vue-image-lightbox'
@@ -374,6 +393,34 @@ export default {
             });
         },
 
+    VerificarDuplicado:  function(){
+
+            axios.defaults.baseURL = this.url ;
+            var urlRegistros = 'documentaciones/verificar_duplicados/tipo/'+ this.newRegistro.tipo + '/titulo/'+ this.newRegistro.titulo + '/usuario/' + this.usuario.id + '?api_token=' + Laravel.user.api_token;        
+            axios.get(urlRegistros).then(response =>{
+            
+                let res =  response.data;
+                if(res.length){                    
+
+                    $('#modal-cancelar-continuar').modal('show');
+
+                }
+
+            });
+
+    },
+
+    cancelarModal : function(){
+
+        this.newRegistro.titulo = '';
+        this.newRegistro.descripcion = '';
+        this.usuario.descripcion = '';
+        this.usuario = {
+              id:'',
+         },
+         $('#modal-cancelar-continuar').modal('hide');
+    },
+
     onFileSelected(event) {         
           
             this.isLoading_file = true;  
@@ -558,16 +605,17 @@ export default {
                 this.HabilitarGuardar = true;
                 this.newRegistro = {};    
                 this.metodo_ensayo={};   
-                this.usuario ={};
-                this.selectedFile =  null,      
-                $('#nuevo').modal('show');  
+                this.usuario ={};               
                 this.metodo_ensayo =  registro.metodo_ensayo ? registro.metodo_ensayo : {id :''};
                 this.usuario = registro.usuario[0];                
                 this.newRegistro = registro;  
                 let fileName = this.newRegistro.path ; 
                 let FileExt = fileName.substring(fileName.length-3,fileName.length);
-                this.isPdf = (FileExt == 'pdf') ? true : false ;      
-                    
+                this.isPdf = (FileExt == 'pdf') ? true : false ;  
+                this.$refs.inputFile1.type = 'text';
+                this.$refs.inputFile1.type = 'file';  
+                this.selectedFile =  null        
+                $('#nuevo').modal('show');  
             },
 }
 }
