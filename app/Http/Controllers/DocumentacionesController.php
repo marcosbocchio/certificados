@@ -35,7 +35,7 @@ class DocumentacionesController extends Controller
      */
     public function index(Request $request)
     {   
-        $filtro = $request->search;
+        $filtro = $request->search == 'null' ? '' : $request->search;;
         $tipo = $request->tipo == 'null' ? '' : $request->tipo;
         $documentaciones = Documentaciones::leftJoin('usuario_documentaciones','usuario_documentaciones.documentacion_id','=','documentaciones.id')
                                             ->orWhere('documentaciones.tipo','USUARIO')

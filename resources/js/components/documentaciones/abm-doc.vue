@@ -301,7 +301,7 @@ export default {
 
     aplicarFiltro : function(){
 
-        this.getResults(1,this.search);
+        this.getResults(1);
 
     },
 
