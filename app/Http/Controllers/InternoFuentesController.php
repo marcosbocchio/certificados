@@ -102,6 +102,7 @@ class InternoFuentesController extends Controller
         $interno_fuente->activo_sn = $request['activo_sn'];
         $interno_fuente->fecha_evaluacion = date('Y-m-d',strtotime($request['fecha_evaluacion'])) ;
         $interno_fuente->curie = $request['curie'];
+        $interno_fuente->foco = $request['foco'];
         $interno_fuente->fuente_id = $request['fuente']['id'];
         $interno_fuente->save();
     

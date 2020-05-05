@@ -95,8 +95,7 @@ class MaterialesController extends Controller
 
       $material->codigo = $request['codigo'];
       $material->descripcion = $request['descripcion'];
-      $material->save();
-  
+      $material->save();  
 
     }
 

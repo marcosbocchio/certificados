@@ -8,10 +8,14 @@
 <style>  
 
 @page {    
-        margin: 352px 15px 204px 15px !important;
+        margin: 352px 15px 195px 15px !important;
         padding: 0px 0px 0px 0px !important;
        }
 
+body {
+    margin: 0px 1px 0px 1px;
+    padding: 0 0 0 0;
+}
 
 header {
     position:fixed;
@@ -19,7 +23,7 @@ header {
 }
 
 footer {
-    position: fixed; bottom:15.5px; 
+    position: fixed; bottom:7px; 
     padding-top: 0px;
 
 }
@@ -60,7 +64,7 @@ b {
 
 </style>
 
-<body>   
+ <body class="bordered" style="border-top: none;border-bottom: none;">  
 
 <header>
     <table style="text-align: center" width="100%" class="bordered">
@@ -121,13 +125,13 @@ b {
                                         @endif
                                     </td>              
 
-                                    @if($ot->obra)
+                                    <td style="font-size: 11px;">&nbsp;</td>   
+                                    @if($informe->obra)
 
-                                         <td style="font-size: 11px;"><b>OBRA: </b>{{$ot->obra}}</td>
+                                         <td style="font-size: 11px;"><b>OBRA: </b>{{$informe->obra}}</td>
 
                                     @endif
                                     <td style="font-size: 11px;"><b>OT N°: </b>{{$ot->numero}}</td>  
-                                    <td style="font-size: 11px;"><b>FTS N°: </b>{{$ot->presupuesto}}</td>   
                                 </tr>  
                                 <tr>
                                    <td style="font-size: 11px;" colspan="6"><b>PROYECTO: </b>{{$ot->proyecto}}</td>
@@ -181,24 +185,25 @@ b {
                             
                             </td>
                             <td style="font-size: 11px;width: 100px;border-right: 1px solid #000;" ><b>Act: </b>{{$actividad}}</td>
-                            <td style="font-size: 11px;width: 280px; border-right: 1px solid #000;"  colspan="3" ><b>Proc. Sold. : </b>{{$informe->procedimiento_soldadura}}</td>                        
+                            <td style="font-size: 11px; border-right: 1px solid #000;"  colspan="3"><b>Proc. RI: </b>{{$procedimiento_inf->titulo}} </td>       
                         </tr>
                         <tr>
                             <td style="font-size: 11px;width: 280px; border-right: 1px solid #000;" colspan="2"><b style="font-size: 11px;">Norma Evaluación: </b>{{$norma_evaluacion->codigo}}</td>  
-                            <td style="font-size: 11px;"><b>Foco: </b>{{$informe_ri->foco}}</td>
+                            <td style="font-size: 11px;"><b>Foco: </b>{{$interno_fuente->foco}}</td>
                             <td style="font-size: 11px; border-right: 1px solid #000;"><b>N° Exp. : </b>{{$informe_ri->exposicion}}</td>
-                            <td style="font-size: 11px; border-right: 1px solid #000;"  colspan="3"><b>Proc. RI: </b>{{$procedimiento_inf->titulo}} </td>                      
+                            <td style="font-size: 11px;width: 280px; border-right: 1px solid #000;"  colspan="3" ><b>EPS: </b>{{$informe->procedimiento_soldadura}}</td>                        
+               
                         </tr>
                         <tr>
                             <td style="font-size: 11px;border-right: 1px solid #000; " colspan="2"><b>Norma Ensayo: </b>{{$norma_ensayo->codigo}}</td>
                             <td style="font-size: 11px;"><b>Pelicula : </b>{{$tipo_pelicula->fabricante}}</td>   
                             <td style="font-size: 11px;border-right: 1px solid #000;"><b>Tipo: </b>{{$tipo_pelicula->codigo}}</td>    
-                            <td style="font-size: 11px;border-right: 1px solid #000;" colspan="3" ><b>EPS: </b>{{$informe->eps}}</td>                    
+                            <td style="font-size: 11px; border-right: 1px solid #000;" colspan="3"><b>PQR: </b>{{$informe->pqr}}</td>                    
                         </tr>
                         <tr>
                             <td style="font-size: 11px; border-right: 1px solid #000; " colspan="2" ><b>Ejec. Ensayo: </b>{{$ejecutor_ensayo->name}}</td>           
                             <td style="font-size: 11px; border-right: 1px solid #000;"  colspan="2"><b>Dis.Fuente/pelicula: </b>{{$informe_ri->distancia_fuente_pelicula}}</td>
-                            <td style="font-size: 11px; border-right: 1px solid #000;" colspan="3"><b>PQR: </b>{{$informe->pqr}}</td>                    
+                            <td style="font-size: 11px; border-right: 1px solid #000;" colspan="3"></td>                    
                         </tr>                                   
                         </tbody>
                     </table>   
@@ -343,7 +348,7 @@ b {
 
 <main>
     
-    <table width="100%" class="bordered"  >
+    <table width="100%" class="bordered" style="padding: 0 -3px 0 -3px;" >
         <tbody>
             @foreach ($juntas_posiciones as $junta_posiciones)
                 <tr>
@@ -358,7 +363,6 @@ b {
 
                             
                             @if (($pasadas_posicion->posicion_id == $junta_posiciones->posicion_id) && ($pasadas_posicion->numero == 1 ))
-
 
                                  <td style="font-size: 11px;  width:36px; text-align:center;" class="bordered-td">{{$pasadas_posicion->soldadorz}} </td>                           
                                   {{  $x = 1 }}

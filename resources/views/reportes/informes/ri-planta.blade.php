@@ -7,10 +7,13 @@
 
 <style>
 
-@page { margin: 367px 30px 190px 60px !important;
+@page { margin: 367px 30px 187px 60px !important;
         padding: 0px 0px 0px 0px !important; }
 
-
+body {
+    margin: 0px 1px 0px 1px;
+    padding: 0 0 0 0;
+}
 
 header {
     position:fixed;
@@ -24,7 +27,7 @@ main{
 
 
 footer {
-    position: fixed; bottom:6px; 
+    position: fixed; bottom:7px; 
     padding-top: 0px;
 }
 
@@ -58,12 +61,11 @@ footer {
 }
 
 b {
-
     margin-left: 2px;
 }
 </style>
 
-<body>   
+<body class="bordered" style="border-top: none;border-bottom: none;">  
 
 <header>
     <table style="text-align: center" width="100%" class="bordered">
@@ -137,7 +139,7 @@ b {
                         <tbody>             
                             <tr>                                                  
                                 <td style="font-size: 11px; width: 480px;"><b>PROYECTO: </b>{{$ot->proyecto}}</td>                            
-                                <td style="font-size: 11px;"><b>OBRA: </b>{{$ot->obra}}</td>     
+                                <td style="font-size: 11px;"><b>OBRA: </b>{{$informe->obra}}</td>     
                                 <td style="font-size: 11px;"><b>OT N°: </b>{{$ot->numero}}</td>     
                             </tr>   
                         </tbody>
@@ -172,12 +174,18 @@ b {
                         </tr>
                         <tr>
                             <td style="font-size: 11px;border-right: 1px solid #000;" colspan="2" ><b>Plano / Isom :</b>{{$informe->plano_isom}}</td>
-                            <td style="font-size: 11px; border-right: 1px solid #000;" colspan="4"  ><b>Foco: </b>{{$informe_ri->foco}}</td>                            
+                            <td style="font-size: 11px; border-right: 1px solid #000;" colspan="4"  ><b>Foco: </b>{{$interno_fuente->foco}}</td>                            
                             <td style="font-size: 11px;  " colspan="2" ><b>Ejec. Ensayo: </b>{{$ejecutor_ensayo->name}}</td>                          
                         </tr>
                         <tr>
-                            <td style="font-size: 11px;" colspan="1"  ><b>Diametro: </b>{{$diametro_espesor->diametro}}</td>    
-                            <td style="font-size: 11px;border-right: 1px solid #000; " colspan="1" ><b>Espesor: </b>
+                            <td style="font-size: 11px;border-right:1px solid #000;" colspan="2"  ><b>Diametro: </b>{{$diametro_espesor->diametro}}</td>    
+                            <td style="font-size: 11px;" colspan="2"  ><b>Pelicula : </b>{{$tipo_pelicula->fabricante}}</td>    
+                            <td style="font-size: 11px; border-right: 1px solid #000;" colspan="2"  ><b>Tipo: </b>{{$tipo_pelicula->codigo}}</td> 
+                            <td style="font-size: 11px; " colspan="2" ><b>Tecnica: </b>{{$tecnica->codigo}}</td>
+
+                        </tr>
+                        <tr>
+                            <td style="font-size: 11px;border-right: 1px solid #000; " colspan="2" ><b>Espesor: </b>
 
                                 @if ($informe->espesor_chapa)
                                 {{ $informe->espesor_chapa }}
@@ -185,15 +193,7 @@ b {
                                 {{  $diametro_espesor->espesor }}
                                 @endif                       
                             
-                            </td>
-                            <td style="font-size: 11px;" colspan="2"  ><b>Pelicula : </b>{{$tipo_pelicula->fabricante}}</td>    
-                            <td style="font-size: 11px; border-right: 1px solid #000;" colspan="2"  ><b>Tipo: </b>{{$tipo_pelicula->codigo}}</td> 
-                            <td style="font-size: 11px; " colspan="2" ><b>Tecnica: </b>{{$tecnica->codigo}}</td>
-
-                        </tr>
-                        <tr>
-                            <td style="font-size: 11px;border-right: 1px solid #000;" colspan="2"><b>Proc. Sold. : </b>{{$informe->procedimiento_soldadura}}</td>                            
-                            <td style="font-size: 11px; width: 75px"   ><b>Pantalla: </b>Pb</td>
+                            </td>                            <td style="font-size: 11px; width: 75px"   ><b>Pantalla: </b>Pb</td>
                             <td style="font-size: 11px; width: 15px"  ><b>Ant: </b>{{$informe_ri->pos_ant}}</td>
                             <td style="font-size: 11px; width: 15px"  ><b>Pos: </b>{{$informe_ri->pos_pos}}</td>
                             <td style="font-size: 11px; width: 1px; border-right: 1px solid #000;"  ><b>Lado: </b>{{$informe_ri->lado}}</td>      
@@ -202,7 +202,7 @@ b {
                             </td>                  
                         </tr>
                         <tr>                           
-                            <td style="font-size: 11px;border-right: 1px solid #000;" colspan="2" ><b>EPS: </b>{{$informe->eps}}</td>
+                            <td style="font-size: 11px;border-right: 1px solid #000;" colspan="2"><b>EPS: </b>{{$informe->procedimiento_soldadura}}</td>                            
                             <td style="font-size: 11px; border-right: 1px solid #000;" colspan="4" ><b>Ici : </b>{{$ici->codigo}}</td>                            
                         </tr>
                         <tr>
@@ -336,14 +336,14 @@ b {
 
 <main>
     
-    <table width="100%" class="bordered">
+    <table width="100%" class="bordered" style="padding: 0 -3px 0 -3px;" >
         <tbody>
             @foreach ($juntas_posiciones as $junta_posicion)
                 <tr>
                     <td style="font-size: 11px;  width:66px;text-align: center" class="bordered-td">{{ $junta_posicion->junta }}</td>
                     <td style="font-size: 11px;  width:65px;text-align: center" class="bordered-td">{{$junta_posicion->soldadorz}} / {{$junta_posicion->soldadorp}} </td>
                     <td style="font-size: 11px;  width:64.5px;text-align: center" class="bordered-td">{{$junta_posicion->posicion}}</td>
-                    <td style="font-size: 11px;  width:201.5px; " class="bordered-td">&nbsp;
+                    <td style="font-size: 9px;  width:201.5px; " class="bordered-td">&nbsp;
                     @php $primero = true; @endphp
                         @foreach ($defectos_posiciones as $key => $defecto_posicion)                                
 
@@ -354,7 +354,7 @@ b {
                                     /
                                 @endif
 
-                                {{$defecto_posicion->codigo}} 
+                                {{$defecto_posicion->codigo}} : {{$defecto_posicion->posicion}}
                                 {{ $primero = false}}      
 
                             @endif
@@ -414,9 +414,6 @@ b {
         $angle = 0.0;   //  default
         $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
     }
-
-    $pdf->line(46.5,130,46.5,800,array(0,0,0),1.5);
-    $pdf->line(571.3,130,571.3,800,array(0,0,0),1.5);
 
 </script>
 

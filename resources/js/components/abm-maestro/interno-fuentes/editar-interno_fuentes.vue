@@ -11,38 +11,49 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="numero_serie">N° Serie (*)</label>   
+                                <label for="numero_serie">N° Serie *</label>   
                                 <input type="checkbox" id="checkbox" v-model="editRegistro.activo_sn" style="float:right"> 
                                 <label for="tipo" style="float:right;margin-right: 5px;">ACTIVO</label>     
                                 <input autocomplete="off" v-model="editRegistro.nro_serie" type="text" name="numero_serie" class="form-control" value="">         
                             </div>
                         </div>   
 
+                        <div class="col-md-6">   
+                            <div class="form-group">
+                                <label for="fecha">Fecha Evaluación *</label>
+                                <div>                                                                      
+                                    <date-picker v-model="editRegistro.fecha_evaluacion" value-type="YYYY-MM-DD" format="DD-MM-YYYY" placeholder="DD-MM-YYYY" disabled ></date-picker>
+                                </div> 
+                            </div>
+                        </div>     
+
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="fecha">Fecha Evaluación(*)</label>
-                                <div class="input-group date">
-                                    <div class="input-group-addon">
-                                    <i class="fa fa-calendar"></i>
-                                    </div>
-                                        <Datepicker v-model="editRegistro.fecha_evaluacion" :input-class="'form-control pull-right'" :language="es" disabled ></Datepicker>   
-                                </div>
-                            </div>
-                        </div>       
-                        
-                    <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="curie">Actividad</label>
+                                <label for="curie">Act. inicial</label>
                                 <input v-model="editRegistro.curie" type="number" name="curie" class="form-control" value="" step="0.01" disabled> 
                             </div>
-                    </div>
-
-                    <div class="col-md-12">
+                        </div>   
+                        
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <label for="name">Fuente (*)</label>      
+                                <label for="curie">Act. Actual</label>
+                                <input v-model="editRegistro.curie_actual" type="number" name="curie" class="form-control" value="" step="0.01" disabled> 
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="foco">Foco</label>
+                                    <input v-model="editRegistro.foco" type="text" name="foco" class="form-control" maxlength="10"> 
+                                </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="name">Fuente *</label>      
                                 <v-select v-model="fuente" label="codigo" :options="fuentes" disabled></v-select>
                             </div>
-                    </div>
+                        </div>
                     </div>
                 </div>
             
@@ -58,12 +69,13 @@
 
 <script>
 import {mapState} from 'vuex'
-import Datepicker from 'vuejs-datepicker';
-import {en, es} from 'vuejs-datepicker/dist/locale'
+import DatePicker from 'vue2-datepicker';
+import 'vue2-datepicker/index.css';
+import 'vue2-datepicker/locale/es';
 import { eventEditRegistro } from '../../event-bus';
 export default {
     components: {
-      Datepicker,
+      
       
   },
 
@@ -75,15 +87,14 @@ export default {
           }
 
     },
-    data() { return {
-        
-        en: en,
-        es: es,
+    data() { return {        
 
         editRegistro : {           
             'nro_serie'  : '',
             'fecha_evaluacion':'',
             'curie' : '', 
+            'foco'  :'',
+            'curie_actual' :'',
             'activo_sn' : true,      
          },
          fuente :'',       
@@ -119,8 +130,10 @@ export default {
                 this.editRegistro.nro_serie = this.selectRegistro.nro_serie;
                 this.editRegistro.activo_sn = this.selectRegistro.activo_sn;  
                 this.editRegistro.fecha_evaluacion = this.selectRegistro.fecha_evaluacion;
-                this.editRegistro.curie = this.selectRegistro.curie_actual; 
-                this.fuente = this.selectRegistro.fuente;               
+                this.editRegistro.curie = this.selectRegistro.curie; 
+                this.editRegistro.curie_actual = this.selectRegistro.curie_actual; 
+                this.fuente = this.selectRegistro.fuente;    
+                this.editRegistro.foco = this.selectRegistro.foco;           
                // this.$store.dispatch('loadCurie',this.selectRegistro.id);
 
                 this.$forceUpdate();

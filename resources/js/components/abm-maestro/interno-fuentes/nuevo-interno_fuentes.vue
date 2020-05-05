@@ -11,22 +11,19 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="numero_serie">N° Serie (*)</label>   
+                                <label for="numero_serie">N° Serie *</label>   
                                 <input type="checkbox" id="checkbox" v-model="newRegistro.activo_sn" style="float:right"> 
                                 <label for="tipo" style="float:right;margin-right: 5px;">ACTIVO</label>     
                                 <input autocomplete="off" v-model="newRegistro.nro_serie" type="text" name="numero_serie" class="form-control" value="">         
                             </div>
                         </div>   
 
-                        <div class="col-md-6">
+                        <div class="col-md-6">   
                             <div class="form-group">
-                                <label for="fecha">Fecha Evaluación(*)</label>
-                                <div class="input-group date">
-                                    <div class="input-group-addon">
-                                    <i class="fa fa-calendar"></i>
-                                    </div>
-                                        <Datepicker v-model="newRegistro.fecha_evaluacion" :input-class="'form-control pull-right'" :language="es"></Datepicker>   
-                                </div>
+                                <label for="fecha">Fecha Evaluación *</label>
+                                <div>                                                                      
+                                    <date-picker v-model="newRegistro.fecha_evaluacion" value-type="YYYY-MM-DD" format="DD-MM-YYYY" placeholder="DD-MM-YYYY" ></date-picker>
+                                </div> 
                             </div>
                         </div>       
                         
@@ -37,9 +34,16 @@
                             </div>
                     </div>
 
+                    <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="foco">Foco</label>
+                                <input v-model="newRegistro.foco" type="text" name="foco" class="form-control" maxlength="10"> 
+                            </div>
+                    </div>
+
                     <div class="col-md-12">
                             <div class="form-group">
-                                <label for="name">Fuente (*)</label>      
+                                <label for="name">Fuente *</label>      
                                 <v-select v-model="fuente" label="codigo" :options="fuentes" ></v-select>
                             </div>
                     </div>
@@ -57,24 +61,23 @@
 </template>
 
 <script>
- import {mapState} from 'vuex'
- import Datepicker from 'vuejs-datepicker';
- import {en, es} from 'vuejs-datepicker/dist/locale'
- import { eventNewRegistro } from '../../event-bus';
+import {mapState} from 'vuex'
+import DatePicker from 'vue2-datepicker';
+import 'vue2-datepicker/index.css';
+import 'vue2-datepicker/locale/es';
+import { eventNewRegistro } from '../../event-bus';
 export default {
     components: {
-      Datepicker,
+      
       
   },
     data() { return {
-
-         en: en,
-         es: es,
     
         newRegistro : {           
             'nro_serie'  : '',
             'fecha_evaluacion' :'',
             'curie' : '', 
+            'foco' :'',
             'activo_sn' : true,      
          },
         fuente :'',      

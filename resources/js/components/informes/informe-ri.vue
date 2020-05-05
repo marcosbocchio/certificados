@@ -100,21 +100,14 @@
 
                         <div class="col-md-3">
                             <div class="form-group" >
-                                <label for="procedimientos_soldadura">Procedimiento Soldadura *</label>
+                                <label for="procedimientos_soldadura">Procedimiento Soldadura (EPS)*</label>
                                 <input type="text" v-model="procedimiento_soldadura" class="form-control" id="procedimientos_soldadura">
                             </div>                            
                         </div>  
 
-                        <div class="col-md-3">                       
-                            <div class="form-group" >
-                                <label for="eps">EPS</label>
-                                <input type="text" v-model="eps" class="form-control" id="eps">
-                            </div>         
-                        </div>
-
                          <div class="col-md-3">                       
                             <div class="form-group" >
-                                <label for="eps">PQR</label>
+                                <label for="pqr">PQR</label>
                                 <input type="text" v-model="pqr" class="form-control" id="pqr">
                             </div>         
                         </div>  
@@ -145,19 +138,6 @@
                         </div>
                        
                         <div class="col-md-3">
-                            <div class="form-group" >                   
-                                <label for="kv">Kv</label>
-                                <input  type="text" class="form-control" v-model="kv" id="kv">     
-                            </div>                         
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group" >                        
-                                <label for="ma">mA</label>
-                                <input  type="text" class="form-control" v-model="ma" id="ma"> 
-                            </div>                             
-                        </div>                       
-                      
-                        <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="fuente">Fuente</label>
                                  <input type="text" v-model="fuente.codigo" class="form-control" id="fuente" disabled>
@@ -167,9 +147,31 @@
                         <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="foco">Foco *</label>
-                                <input type="text" v-model="foco" class="form-control" id="foco">
+                                <input type="text" v-model="interno_fuente.foco" class="form-control" id="foco" disabled>
                             </div>                            
                         </div>
+                        
+                        <div class="col-md-3">                       
+                            <div class="form-group" >
+                                <label for="actividad">Actividad</label>
+                                <input type="text" v-model="actividad" class="form-control" id="actividad" disabled>
+                            </div>         
+                        </div>   
+
+                        <div class="col-md-3">
+                            <div class="form-group" >                   
+                                <label for="kv">Kv</label>
+                                <input  type="text" class="form-control" v-model="kv" id="kv" :disabled="interno_equipo.interno_fuente">     
+                            </div>                         
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group" >                        
+                                <label for="ma">mA</label>
+                                <input  type="text" class="form-control" v-model="ma" id="ma" :disabled="interno_equipo.interno_fuente"> 
+                            </div>                             
+                        </div>                       
+                      
+
 
                         <div class="col-md-3">
                             <div class="form-group">
@@ -256,12 +258,7 @@
                         <div class="clearfix"></div>
 
                         
-                        <div class="col-md-3">                       
-                            <div class="form-group" >
-                                <label for="actividad">Actividad</label>
-                                <input type="text" v-model="actividad" class="form-control" id="actividad" disabled>
-                            </div>         
-                        </div>       
+
                         <div class="col-md-3">                       
                             <div class="form-group" >
                                 <label for="exposicion">N° Exposiciones *</label>
@@ -411,7 +408,7 @@
                         <div class="col-md-2">                       
                             <div class="form-group" >                            
                                 <label for="posicionPlacaGosaducto">Posición Indicación</label>
-                                <input type="text" v-model="posicionPlacaGosaducto" class="form-control" id="posicionPlacaGosaducto" placeholder="XXX-XXX" :disabled="(!TablaDetalle.length)" maxlength="7">                           
+                                <input type="text" v-model="posicionPlacaGosaducto" class="form-control" id="posicionPlacaGosaducto" placeholder="XXX / XXX-XXX" :disabled="(!TablaDetalle.length)" maxlength="7">                           
                             </div>     
                         </div>    
                           
@@ -731,7 +728,6 @@ export default {
             ici:'',
             norma_ensayo:'',
             tecnica:'',
-            eps:'',
             pqr:'',
             exposicion:'',      
             actividad:'',          
@@ -920,7 +916,6 @@ export default {
                this.tipo_pelicula = this.tipo_peliculadata;
                this.espesor_chapa = this.informedata.espesor_chapa;
                this.procedimiento_soldadura = this.informedata.procedimiento_soldadura;
-               this.eps = this.informedata.eps;
                this.pqr = this.informedata.pqr;        
                this.foco = this.informe_ridata.foco;
                this.pos_ant = this.informe_ridata.pos_ant;
@@ -1231,9 +1226,10 @@ export default {
 
             if(this.posicionPlacaGosaducto !=''){
 
-                let exp_posicion = /^[0-9]{1,3}-[0-9]{1,3}$/ ;
+                let exp_posicion_1 = /^[0-9]{1,3}$/ ;
+                let exp_posicion_2 = /^[0-9]{1,3}-[0-9]{1,3}$/ ;
 
-                if(!exp_posicion.test(this.posicionPlacaGosaducto)){
+                if(!exp_posicion_1.test(this.posicionPlacaGosaducto) && !exp_posicion_2.test(this.posicionPlacaGosaducto)){
 
                  toastr.error('El formato ingresado no es válido'); 
                  return;
@@ -1387,7 +1383,6 @@ export default {
                         'norma_ensayo': this.norma_ensayo,
                         'tecnica':this.tecnica,
                         'tecnicas_grafico' : this.tecnica_grafico,
-                        'eps':this.eps,
                         'pqr':this.pqr,                      
                         'exposicion': this.exposicion,   
                         'detalles'  : this.TablaDetalle,           
@@ -1478,7 +1473,6 @@ export default {
                         'norma_ensayo': this.norma_ensayo,
                         'tecnica':this.tecnica,
                         'tecnicas_grafico' : this.tecnica_grafico,
-                        'eps':this.eps,
                         'pqr':this.pqr,                       
                         'exposicion': this.exposicion,   
                         'detalles'  : this.TablaDetalle,           

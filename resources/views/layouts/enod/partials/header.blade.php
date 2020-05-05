@@ -6,7 +6,7 @@
         <!-- Logo -->
         <a href="{{ route('dashboard') }}" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
-            <span class="logo-mini"><b>A</b>LT</span>
+            <span class="logo-mini"><b>E</b>nod</span>
             <!-- logo for regular state and mobile devices -->
             <span class="logo-lg">
                  <img src="{{asset('img/logo-enod.png')}}" style="margin-top: -10px;" height="70px" alt="Logo Enod"> 

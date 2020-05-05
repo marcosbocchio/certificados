@@ -63,16 +63,13 @@ class PdfInformesRiController extends Controller
         $contratista = Contratistas::find($ot->contratista_id);
         
       
-       
-
         if ($informe_ri->gasoducto_sn){
 
           $juntas_posiciones = DB::select('CALL InformeRiGasoductoJuntaPosicion(?)',array($informe_ri->id));        
           $pasadas_posiciones = DB::select('CALL InformeRiGasoductoPasadasPosicion(?)',array($informe_ri->id));
           $defectos_posiciones = DB::select('CALL InformeRiGasoductoDefectosPasadasPosicion(?)',array($informe_ri->id));   
 
-       
-         // dd($juntas_posiciones,$pasadas_posiciones,$defectos_posiciones);
+          
      
       
 
@@ -105,12 +102,13 @@ class PdfInformesRiController extends Controller
         }else
 
         {
-      
-      /* Detalle */
-      
-      $juntas_posiciones = DB::select('CALL InformeRiPlantaJuntaPosicion(?)',array($informe_ri->id));
-      $defectos_posiciones = DB::select('CALL InformeRiPlantaDefectosPasadaPosicion(?)',array($informe_ri->id));                                          
-      
+          
+          /* Detalle */
+          
+          $juntas_posiciones = DB::select('CALL InformeRiPlantaJuntaPosicion(?)',array($informe_ri->id));
+          $defectos_posiciones = DB::select('CALL InformeRiPlantaDefectosPasadaPosicion(?)',array($informe_ri->id));                                          
+          
+        //  dd($juntas_posiciones,$defectos_posiciones);
 
           $pdf = PDF::loadView('reportes.informes.ri-planta',compact('ot',
                                                               'norma_ensayo',
