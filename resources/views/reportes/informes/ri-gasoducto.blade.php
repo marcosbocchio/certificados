@@ -423,8 +423,8 @@ b {
                         @endforeach
 
                            @if ($x == 0)
-                             <td style="font-size: 11px;  width:36px; text-align:center;" class="bordered-td"> </td>
-                             <td style="font-size: 11px;  width:36px; text-align:center;" class="bordered-td"></td>                            
+                             <td style="font-size: 11px;  width:36px; text-align:center;" class="bordered-td">&nbsp;</td>
+                             <td style="font-size: 11px;  width:36px; text-align:center;" class="bordered-td">&nbsp;</td>                            
                           @endif   
 
                         <!--   Pasada 3 -->
