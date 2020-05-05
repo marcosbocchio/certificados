@@ -27,6 +27,7 @@ class InternoFuenteRequest extends FormRequest
             'nro_serie'  => 'required|Max:45',    
             'curie'      => 'nullable | numeric |between:0,200',   
             'fuente'     => 'required',
+            'foco'       => 'required',
         ];
     }
 
