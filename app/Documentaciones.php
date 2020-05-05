@@ -25,7 +25,7 @@ class Documentaciones extends Model
 
    public function scopeFiltro($query, $filtro='',$tipo='') { 
 
-        if (trim($filtro) != '' && trim($tipo) == '') {
+        if (trim($filtro)  && !trim($tipo)) {
         
             $query->WhereRaw("documentaciones.titulo LIKE '%" . $filtro . "%'")    
                 ->orWhereRaw("documentaciones.descripcion LIKE '%" . $filtro . "%'") 
@@ -36,7 +36,7 @@ class Documentaciones extends Model
                     $q->WhereRaw("users.name LIKE '%" . $filtro . "%'");
                 }); 
     
-        }elseif(trim($filtro) != '' && trim($tipo) !=''){           
+        }elseif(trim($filtro) && trim($tipo)){           
             
             $query ->where("documentaciones.tipo",$tipo)
                    ->where(function($q) use($filtro) {
@@ -53,7 +53,7 @@ class Documentaciones extends Model
                    
 
         }
-        elseif (trim($tipo) !='') {
+        elseif (trim($tipo)) {
         
              $query->WhereRaw("documentaciones.tipo = '" .  $tipo ."'" ); 
 
