@@ -115,8 +115,13 @@ table .selected{
 
 }
 
-.modal {
+
+
+
+.modal{
+  overflow-y:auto;
   text-align: center;
+
 }
 
 @media screen and (min-width: 768px) { 
@@ -128,7 +133,7 @@ table .selected{
   }
 }
 
-.modal-dialog {
+.modal .modal-dialog {
   display: inline-block;
   text-align: left;
   vertical-align: middle;

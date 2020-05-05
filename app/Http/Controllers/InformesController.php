@@ -250,6 +250,12 @@ class InformesController extends Controller
             $informe->parte_id = null;
             $informe->save();
         }
+
+        $informes_importados  = InformesImportados::where('parte_id',$parte_id)->get();
+        foreach ($informes_importados as $informe) {
+            $informe->parte_id = null;
+            $informe->save();
+        }
        
      }
 

@@ -64,7 +64,7 @@
 
         <!--  Modal -->
         <form v-on:submit.prevent="editmode ? updateRegistro() : storeRegistro()">
-            <div class="modal fade" id="nuevo">
+            <div class="modal fade" id="nuevo" data-backdrop="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -162,7 +162,7 @@
             </div>
         </form>
 
-        <div class="modal fade" tabindex="-1" role="dialog" id="modal-cancelar-continuar" data-keyboard="false" data-backdrop="static">
+        <div class="modal fade " tabindex="-1" role="dialog" id="modal-cancelar-continuar" data-keyboard="false" data-backdrop="static" >
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
