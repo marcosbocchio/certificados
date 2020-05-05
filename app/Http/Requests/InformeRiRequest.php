@@ -68,7 +68,6 @@ class InformeRiRequest extends FormRequest
                 'tecnica'                   => 'required',
                 'eps'                       => 'Max:30',
                 'pqr'                       => 'Max:30',
-                'foco'                      => 'required',
                 'interno_equipo'            => 'required',
                 'tipo_pelicula'             => 'required',
                 'procedimiento'             => 'required',

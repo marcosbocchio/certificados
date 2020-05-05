@@ -146,7 +146,7 @@
 
                         <div class="col-md-3">
                             <div class="form-group" >
-                                <label for="foco">Foco *</label>
+                                <label for="foco">Foco </label>
                                 <input type="text" v-model="interno_fuente.foco" class="form-control" id="foco" disabled>
                             </div>                            
                         </div>
@@ -716,7 +716,6 @@ export default {
             kv:'',
             ma:'',
             fuente:'',       
-            foco:'',
             tipo_pelicula:'',
             pantalla:'Pb',
             pos_ant: 0.10,
@@ -917,7 +916,6 @@ export default {
                this.espesor_chapa = this.informedata.espesor_chapa;
                this.procedimiento_soldadura = this.informedata.procedimiento_soldadura;
                this.pqr = this.informedata.pqr;        
-               this.foco = this.informe_ridata.foco;
                this.pos_ant = this.informe_ridata.pos_ant;
                this.pos_pos = this.informe_ridata.pos_pos;
                this.lado = this.informe_ridata.lado;            
@@ -1370,7 +1368,6 @@ export default {
                         'kv'               :this.kv,
                         'ma'               :this.ma,   
                         'interno_fuente' :this.interno_fuente,                           
-                        'foco':           this.foco,
                         'tipo_pelicula' : this.tipo_pelicula,
                         'pantalla':       this.pantalla,
                         'pos_ant':        this.pos_ant,
@@ -1460,7 +1457,6 @@ export default {
                         'kv'               :this.kv,
                         'ma'               :this.ma,   
                         'interno_fuente' :this.interno_fuente,            
-                        'foco'              :this.foco,
                         'tipo_pelicula' : this.tipo_pelicula,
                         'pantalla':       this.pantalla,
                         'pos_ant':        this.pos_ant,

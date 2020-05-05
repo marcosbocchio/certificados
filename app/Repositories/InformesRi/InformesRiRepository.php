@@ -92,7 +92,6 @@ class InformesRiRepository extends BaseRepository
     $informeRi->tipo_pelicula_id = $request->tipo_pelicula['id'];
     $informeRi->ici_id  = $request->ici['id'];
     $informeRi->gasoducto_sn = $request->gasoducto_sn;
-    $informeRi->foco = $request->foco;
     $informeRi->pantalla = $request->pantalla;
     $informeRi->pos_ant = $request->pos_ant;
     $informeRi->pos_pos = $request->pos_pos;

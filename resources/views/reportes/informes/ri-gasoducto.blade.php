@@ -591,7 +591,7 @@ b {
                     <td style="font-size: 11px;width:75px; text-align: center" class="bordered-td">&nbsp;</td>
 
                      <!-- Resultado-->   
-                    <td style="font-size: 11px;width:32.2px; text-align: center; " class="bordered-td">
+                    <td style="font-size: 11px;width:33px; text-align: center; " class="bordered-td">
                         @if ($junta_posiciones->aceptable_sn == 1)
                             X
                         @endif
