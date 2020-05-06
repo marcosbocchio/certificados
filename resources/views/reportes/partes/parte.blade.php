@@ -162,7 +162,7 @@ b {
 
                                 <td style="text-align:left ;font-size: 11px; border-right: 1px solid #000;width: 150px;margin-left: 15px;" rowspan="2">
                                     @if($evaluador && $evaluador->path)
-                                        <img src="{{ public_path($evaluador->path)}}" alt="" style="width: 100px;">
+                                        <img src="{{ public_path($evaluador->path)}}" alt="" style="width: 100px;height: 50px;">
                                     @endif
                                 </td> 
 
@@ -292,7 +292,10 @@ b {
                 @if ($estado == 'original')
                     <tr>                         
                         <td style="font-size: 13px;height: 30px" colspan="5"><b style="margin-left: 6px;">Placas Repetidas Total: </b>{{ $parte->placas_repetidas }}</td>                                         
-                    </tr>                       
+                    </tr>       
+                    <tr>                         
+                        <td style="font-size: 13px;height: 30px" colspan="5"><b style="margin-left: 6px;">Placas Testigos Total: </b>{{ $parte->placas_testigos }}</td>                                         
+                    </tr>                  
                 @endif
                 @foreach ($parte_detalle as $item)
                     @if ($item->metodo == 'RI')                               

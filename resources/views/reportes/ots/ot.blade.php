@@ -296,7 +296,7 @@ td b,td span {
                         <td style="font-size: 12px; width: 40px; padding: 20px 0px 10px 0px"><b>Firma: </b></td>        
                         <td style="font-size: 11px;" rowspan="2">
                           @if($evaluador && $evaluador->path)
-                                <img src="{{ public_path($evaluador->path)}}" alt="" style="height: 70px;margin-left:40px ">
+                                <img src="{{ public_path($evaluador->path)}}" alt="" style="height: 70px;width: 140px; margin-left:40px ">
                           @endif
                         </td> 
                     </tr>

@@ -273,7 +273,7 @@ b {
 
                                 <td style="text-align:left ;font-size: 11px; border-right: 1px solid #000;width: 150px;margin-left: 15px;" rowspan="2">
                                     @if($evaluador && $evaluador->path)
-                                        <img src="{{ public_path($evaluador->path)}}" alt="" style="width: 100px;">
+                                        <img src="{{ public_path($evaluador->path)}}" alt="" style="width: 100px;height: 50px;">
                                     @endif
                                 </td> 
 

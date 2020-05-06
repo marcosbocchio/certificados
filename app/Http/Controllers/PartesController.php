@@ -177,6 +177,7 @@ class PartesController extends Controller
         $parte->km_inicial = $request->km_inicial;
         $parte->km_final = $request->km_final;     
         $parte->placas_repetidas = $request->informes_ri ? $request->placas_repetidas : null;
+        $parte->placas_testigos = $request->informes_ri ? $request->placas_testigos : null;
         $parte->user_id = $user_id;
         $parte->observaciones = $request->observaciones;
         $parte->save();

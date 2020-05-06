@@ -5,7 +5,7 @@
                 <parte-header :otdata="otdata" @set-obra="setObra($event)" ></parte-header>
                  <div class="box box-custom-enod">
                     <div class="box-body">                               
-                        <div class="col-md-3">
+                        <div class="col-md-4s col-lg-3">
                             <div class="form-group">
                                 <label for="fecha">Fecha *</label>
                                 <input type="checkbox" id="checkbox_f" v-model="permitir_anteriores_sn" style="float:right"> 
@@ -211,13 +211,21 @@
                             </div>
                         </div>
                         <div class="box-body"> 
-                            <div class="col-md-3">
+                                <div class="col-sm-6 col-md-3">
                                     <div class="form-group" >
-                                        <label for="placas_repetidas">Placas Repetidas Total*</label>
+                                        <label for="placas_repetidas">Placas Repetidas Total *</label>
                                         <input type="number" v-model="placas_repetidas" class="form-control" id="placas_repetidas">
                                     </div>                            
                                 </div>
-                            
+                                <div class="col-sm-6 col-md-3">
+                                    <div class="form-group" >
+                                        <label for="placas_testigos">Placas Testigos Total *</label>
+                                        <input type="number" v-model="placas_testigos" class="form-control" id="placas_testigos">
+                                    </div>                            
+                                </div>
+
+                            <div class="clearfix"></div>
+
                                 <div class="col-md-12">
                                     <div class="table-responsive">
                                         <table class="table table-hover table-striped table-bordered">
@@ -612,6 +620,7 @@ export default {
         observaciones:'',
         loading: false,
         placas_repetidas : '',
+        placas_testigos : '',
 
         operador:'',
         operadores:[],
@@ -734,6 +743,7 @@ export default {
                this.km_final = this.parte_data.km_final;
                this.km_inicial = this.parte_data.km_inicial;
                this.placas_repetidas = this.parte_data.placas_repetidas;
+               this.placas_testigos = this.parte_data.placas_testigos;
                this.observaciones = this.parte_data.observaciones;  
                this.$nextTick(function(){
 
@@ -1830,6 +1840,7 @@ export default {
                 'responsables'         :this.TablaResponsables, 
                 'informes_ri'          :this.TablaInformesRi,
                 'placas_repetidas'     :this.placas_repetidas,
+                'placas_testigos'      :this.placas_testigos,
                 'informes_pm'          :this.TablaInformesPm,
                 'informes_lp'          :this.TablaInformesLp,     
                 'informes_us'          :this.TablaInformesUs,
@@ -1885,6 +1896,12 @@ export default {
                 return;
             }
 
+            if(this.TablaInformesRi.length && !this.placas_testigos){
+
+                toastr.error('El campo placas testigos es obligatorio');
+                return;
+            }
+
             console.log('entro para actualizar' );
             this.errors =[];        
             var urlRegistros = 'partes/' + this.parte_data.id  ;      
@@ -1903,6 +1920,7 @@ export default {
                 'observaciones'        : this.observaciones, 
                 'responsables'         :this.TablaResponsables,
                 'placas_repetidas'     :this.placas_repetidas,
+                'placas_testigos'      :this.placas_testigos,
                 'informes_ri'          :this.TablaInformesRi,
                 'informes_pm'          :this.TablaInformesPm,        
                 'informes_lp'          :this.TablaInformesLp,
