@@ -45,35 +45,10 @@ class DocumentacionesController extends Controller
                                             ->with('metodoEnsayo')   
                                             ->with('usuario')      
                                             ->Filtro($filtro,$tipo)                      
-                                            ->selectRaw('documentaciones.*,usuario_documentaciones.fecha_caducidad')                               
+                                            ->selectRaw('documentaciones.*')                               
                                             ->orderBy('documentaciones.tipo','ASC')    
                                             ->orderBy('documentaciones.id','DESC')                         
-                                            ->paginate(10); 
-        
-        foreach ($documentaciones as $documentacion) {
-
-         /*   $metodo_ensayo = DB::table('documentaciones')
-                             ->leftJoin('metodo_ensayos','documentaciones.metodo_ensayo_id','=','metodo_ensayos.id')
-                             ->where('documentaciones.id',$documentacion->id)   
-                             ->select('metodo_ensayos.*')
-                             ->first();
-        */
-
-        /*
-       
-            $usuario = DB::table('documentaciones')
-                             ->leftJoin('usuario_documentaciones','usuario_documentaciones.documentacion_id','=','documentaciones.id')
-                             ->leftJoin('users','usuario_documentaciones.user_id','=','users.id')
-                             ->where('documentaciones.id',$documentacion->id)   
-                             ->select('users.*')
-                             ->first();  
-
-        //    $metodo_ensayo = $metodo_ensayo ? $metodo_ensayo : "";       
-        //    $documentacion->metodo_ensayo = $metodo_ensayo ;
-            $usuario = $usuario ? $usuario : "";        
-            $documentacion->usuario = $usuario ;
-         */   
-        }               
+                                            ->paginate(10);             
         
         return $documentaciones;
     }
@@ -141,7 +116,7 @@ class DocumentacionesController extends Controller
                                     documentaciones.path as path,
                                     usuario_documentaciones.user_id as user_id,
                                     documentaciones.metodo_ensayo_id as metodo_ensayo_id,
-                                    usuario_documentaciones.fecha_caducidad as fecha_caducidad
+                                    documentaciones.fecha_caducidad as fecha_caducidad
                                     
                                     from
                                     documentaciones left join usuario_documentaciones on
@@ -186,7 +161,7 @@ class DocumentacionesController extends Controller
                         documentaciones.path,
                         usuario_documentaciones.user_id,
                         documentaciones.metodo_ensayo_id,
-                        usuario_documentaciones.fecha_caducidad,
+                        documentaciones.fecha_caducidad,
                         users.name 
                         
                         from usuario_documentaciones

@@ -24,24 +24,38 @@ class DocumentacionesRequest extends FormRequest
     {   
       
        if ( $this->tipo == 'USUARIO'){ 
+
         return [
+
             'tipo' =>'required',
             'titulo' =>'required | max:45',
             'descripcion' => 'max:50',
             'usuario.name' => 'required',
-            'path' =>'required',
             'fecha_caducidad' =>'required',
-           
+            'path' =>'required',          
         ];
         }
-        else{
+        elseif($this->tipo == 'PROCEDIMIENTO'){
             return [
                'tipo' =>'required',
                'descripcion' => 'max:50',
                'titulo' =>'required | max:45',
-               'path' =>'required'
+               'path' =>'required',
+            ];
+        }else{
+
+            return [
+               'tipo' =>'required',
+               'descripcion' => 'max:50',
+               'titulo' =>'required | max:45',
+               'fecha_caducidad' =>'required',
+               'path' =>'required',
             ];
         }
+        
+
+
+
     }
 
     public function attributes()

@@ -97,7 +97,7 @@
                             <div class="col-md-12">   
                                 <div class="form-group">       
                                     <p>Formatos soportados : png, bmp, jpg.</p>                  
-                                    <P><strong>Relacion 2:1 Ej: 600x300 Pixeles</strong></P>        
+                                    <P><strong>Relación 2:1 Ej: 400x200 Pixeles</strong></P>                           
                                     <div v-if="editRegistro.path">                            
                                         <img :src="'/' + editRegistro.path" class="margin zoom-in"  @click="openGallery()" alt="..." width="120" >
                                         <LightBox :images="images"  ref="lightbox"  :show-light-box="false" ></LightBox>

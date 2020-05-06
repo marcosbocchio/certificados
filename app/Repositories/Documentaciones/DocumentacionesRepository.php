@@ -86,12 +86,14 @@ class DocumentacionesRepository extends BaseRepository
   public function saveDocumento($documento,$request){
 
     
-    $fecha_caducidad =  date('Y-m-d',strtotime($request->fecha_caducidad));            
+    $fecha_caducidad = $request->fecha_caducidad ? date('Y-m-d',strtotime($request->fecha_caducidad)) : null;
     $documento->tipo = $request->tipo;
     $documento->titulo = $request->titulo;
     $documento->descripcion = $request->descripcion;
     $documento->metodo_ensayo_id = $request->metodo_ensayo['id'] !=0 ? $request->metodo_ensayo['id'] : null;
     $documento->path = $request->path;
+    $documento->fecha_caducidad = $fecha_caducidad;
+
     $documento->save();
 
     return $documento ;
@@ -99,11 +101,8 @@ class DocumentacionesRepository extends BaseRepository
 
   public function saveUsuarioDocumento($documento,$usuarioDocumento,$request){
 
-    $fecha_caducidad = $request->fecha_caducidad ? date('Y-m-d',strtotime($request->fecha_caducidad)) : null;
-
     $usuarioDocumento->documentacion_id = $documento->id;
     $usuarioDocumento->user_id = $request->usuario['id'];      
-    $usuarioDocumento->fecha_caducidad = $fecha_caducidad;
     $usuarioDocumento->save();
 
   }

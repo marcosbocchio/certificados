@@ -115,7 +115,7 @@
                                 </div>  
                             </div>    
                             
-                            <div v-if="newRegistro.tipo == 'USUARIO'">
+                            <div v-if="newRegistro.tipo == 'USUARIO' |newRegistro.tipo == 'OT' |newRegistro.tipo == 'PROCEDIMIENTO GENERAL' |newRegistro.tipo == 'INSTITUCIONAL' ">
                               
                                 <div class="form-group">
                                     <label for="fecha">Fecha caducidad *</label>
@@ -407,8 +407,7 @@ export default {
                 }
 
             });
-
-    },
+      },
 
     cancelarModal : function(){
 
