@@ -96,7 +96,8 @@
                             
                             <div class="col-md-12">   
                                 <div class="form-group">       
-                                    <p>Formatos soportados : png, bmp, jpg</p>                          
+                                    <p>Formatos soportados : png, bmp, jpg.</p>                  
+                                    <P><strong>Relacion 2:1 Ej: 600x300 Pixeles</strong></P>        
                                     <div v-if="editRegistro.path">                            
                                         <img :src="'/' + editRegistro.path" class="margin zoom-in"  @click="openGallery()" alt="..." width="120" >
                                         <LightBox :images="images"  ref="lightbox"  :show-light-box="false" ></LightBox>
@@ -274,6 +275,8 @@ export default {
                 this.images[0].src ='/' + this.selectRegistro.path;
                 this.images[0].thumb  ='/' + this.selectRegistro.path;  
                 this.TablaContactos = this.selectRegistro.contactos;
+                this.$refs.inputFile1.type = 'text';
+                this.$refs.inputFile1.type = 'file';  
                 this.selectedFile =  null;
                 this.setRoles(); 
                 $('#editar').modal('show');    
@@ -305,10 +308,8 @@ export default {
             this.HabilitarGuardar = false;          
 
             this.selectedFile = event.target.files[0];
-        
             let FileSize = this.selectedFile.size / 1024 / 1024; // in MB           
-            let FileType=this.selectedFile.type;         
-            console.log(FileType);
+            let FileType=this.selectedFile.type;       
 
             if (!((FileType == 'image/jpeg') || (FileType == 'image/bmp') || (FileType == 'image/png'))) {                   
         
