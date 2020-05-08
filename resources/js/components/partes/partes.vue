@@ -151,7 +151,6 @@
                     </div>
                 </div>
                  <!-- Servicios  -->
-                <div v-show="TablaServicios.length">
                     <div class="box box-custom-enod" >
                         <div class="box-header with-border">
                             <div class="col-md-3">
@@ -213,7 +212,7 @@
                         
                         </div>
                     </div>
-                </div>
+                
                   <!--Informe RI -->
                 <div v-show="TablaInformesRi.length">
                     <div class="box box-custom-enod" >
