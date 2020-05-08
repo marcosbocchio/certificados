@@ -1596,7 +1596,7 @@ export default {
         
         RecalcularViaticos()  {
 
-            let index = this.TablaServicios.findIndex(elemento => (elemento.unidad_medida == 'Dia' && elemento.servicio_descripcion.includes('VIATICOS')))      
+            let index = this.TablaServicios.findIndex(elemento => (elemento.unidad_medida == 'Dia' && elemento.servicio_descripcion.includes('Viáticos')))      
             if(index > -1){
                
                 this.TablaServicios[index].cant_final = this.TablaResponsables.length;
