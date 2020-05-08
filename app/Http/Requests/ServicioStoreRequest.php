@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class NormaEnsayosRequest extends FormRequest
+class ServicioStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,12 @@ class NormaEnsayosRequest extends FormRequest
     public function rules()
     {
         return [
-            'codigo' => 'required|Max:15',
-            'descripcion'  =>'nullable|Max:100',
+
+            'codigo'        => 'required|Max:20',
+            'descripcion'   => 'nullable|Max:100',
+            'abreviatura'   => 'required|Max:4|unique:servicios,abreviatura,',
+            'unidad_medida' => 'required',
+            'metodo_ensayo' => 'required',
         ];
     }
 
@@ -33,7 +37,7 @@ class NormaEnsayosRequest extends FormRequest
     {
             return [
                 'codigo'                   => 'código',
-                'descripcion'              => 'descripción',
+                'prefijo'                  => 'descripción',
             ];
      
     }

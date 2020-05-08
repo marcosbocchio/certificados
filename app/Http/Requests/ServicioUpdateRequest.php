@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ServicioRequest extends FormRequest
+class ServicioUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,10 @@ class ServicioRequest extends FormRequest
     public function rules()
     {
         return [
-            'codigo' => 'required|Max:20',
-            'descripcion'  =>'nullable|Max:100',
+
+            'codigo'        => 'required|Max:20',
+            'descripcion'   => 'nullable|Max:100',
+            'abreviatura'   => 'required|Max:4|unique:servicios,abreviatura,' . $this->servicio,
             'unidad_medida' => 'required',
             'metodo_ensayo' => 'required',
         ];

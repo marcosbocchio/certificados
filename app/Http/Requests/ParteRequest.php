@@ -44,7 +44,20 @@ class ParteRequest extends FormRequest
             'horario' =>'required|Max:5', 
             'patente' => $condicion_patente,
             'km_inicial' => $condicion_km_inicial,
-            'km_final'  =>  $condicion_km_final,             
+            'km_final'  =>  $condicion_km_final,   
+            'servicios.*.cant_final' => 'nullable|integer|Min:1',               
         ];
     }
+
+
+
+    public function attributes()
+    {
+            return [
+               
+                'servicios.*.cant_final' =>'cant de la tabla servicios'
+            ];
+     
+    }
+
 }

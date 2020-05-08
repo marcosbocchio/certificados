@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\ServicioRequest;
+use App\Http\Requests\ServicioStoreRequest;
+use App\Http\Requests\ServicioUpdateRequest;
 use Illuminate\Support\Facades\DB;
 use App\Servicios;
 use App\User;
@@ -58,7 +59,7 @@ class ServiciosController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ServicioRequest $request)
+    public function store(ServicioStoreRequest $request)
     {
         $servicio = new Servicios;   
 
@@ -105,7 +106,7 @@ class ServiciosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ServicioRequest $request, $id)
+    public function update(ServicioUpdateRequest $request, $id)
     {
        
         $servicio = Servicios::find($id);     
@@ -129,6 +130,7 @@ class ServiciosController extends Controller
         $servicio->descripcion = $request['descripcion'];
         $servicio->unidades_medida_id = $request['unidad_medida']['id'];
         $servicio->metodo_ensayo_id = $request['metodo_ensayo']['id'];
+        $servicio->abreviatura = strtoupper($request['abreviatura']);
         $servicio->save();
         
     }

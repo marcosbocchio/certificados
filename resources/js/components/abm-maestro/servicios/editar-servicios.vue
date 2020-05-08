@@ -7,38 +7,54 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Editar</h4>
                 </div>
-                <div class="modal-body">                       
-                    <div class="form-group">                          
-                          <label for="codigo">Código (*)</label>   
-                          <input autocomplete="off" v-model="editRegistro.codigo" type="text" name="codigo" class="form-control" value="">
-                    </div>      
+                <div class="modal-body">    
+                    <div class="row">          
+                        <div class="col-md-6">    
+                            <div class="form-group">                          
+                                <label for="codigo">Código *</label>   
+                                <input autocomplete="off" v-model="editRegistro.codigo" type="text" name="codigo" class="form-control" value="">
+                            </div>      
+                        </div>
+                        <div class="col-md-6">    
+                            <div class="form-group">                          
+                                <label for="abreviatura">Abreviatura *</label>   
+                                <input autocomplete="off" v-model="editRegistro.abreviatura" type="text" name="abreviatura" class="form-control" maxlength="4">
+                            </div>      
+                        </div>
+                        
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                    <label for="name">Descripción</label>                   
+                                <input autocomplete="off" type="text" name="descripcion" class="form-control" v-model="editRegistro.descripcion" value="">
+                            </div>
+                        </div>
 
-                    <div class="form-group">
-                            <label for="name">Descripción</label>                   
-                         <input autocomplete="off" type="text" name="descripcion" class="form-control" v-model="editRegistro.descripcion" value="">
-                    </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="name">Unidad Medida *</label>      
+                                <v-select v-model="unidad_medida" label="codigo" :options="unidades_medidas"></v-select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="name">Método Ensayo *</label>      
+                                <v-select v-model="metodo_ensayo" label="metodo" :options="metodos_ensayos">
+                                    <template slot="option" slot-scope="option">
+                                        <span class="upSelect">{{ option.metodo }}</span> <br> 
+                                        <span class="downSelect"> {{ option.descripcion }} </span>
+                                    </template>  
+                                </v-select>
+                            </div>   
+                        </div>             
                     
-                    <div class="form-group">
-                        <label for="name">Unidad Medida (*)</label>      
-                        <v-select v-model="unidad_medida" label="codigo" :options="unidades_medidas"></v-select>
                     </div>
-
-                    <div class="form-group">
-                        <label for="name">Método Ensayo (*)</label>      
-                        <v-select v-model="metodo_ensayo" label="metodo" :options="metodos_ensayos">
-                            <template slot="option" slot-scope="option">
-                                <span class="upSelect">{{ option.metodo }}</span> <br> 
-                                <span class="downSelect"> {{ option.descripcion }} </span>
-                            </template>  
-                         </v-select>
-                    </div>                
-                  
+                
                 </div>
-            
-                <div class="modal-footer">
-                    <input type="submit" class="btn btn-primary" value="Guardar">
-                    <button type="button" class="btn btn-default" name="button" data-dismiss="modal" >Cancelar</button>
-                </div>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-primary" value="Guardar">
+                        <button type="button" class="btn btn-default" name="button" data-dismiss="modal" >Cancelar</button>
+                    </div>
             </div>
         </div>
     </div>
@@ -62,7 +78,8 @@ export default {
     
         editRegistro : {           
             'codigo'  : '',
-            'descripcion' : '',                            
+            'descripcion' : '',          
+            'abreviatura' : '',                  
          },
 
         unidad_medida :{}, 
@@ -92,6 +109,7 @@ export default {
             this.$nextTick(function () { 
                 this.editRegistro.codigo = this.selectRegistro.codigo;
                 this.editRegistro.descripcion = this.selectRegistro.descripcion;             
+                this.editRegistro.abreviatura = this.selectRegistro.abreviatura;
                 this.unidad_medida = this.selectRegistro.unidad_medidas;
                 this.metodo_ensayo = this.selectRegistro.metodo_ensayos;            
 

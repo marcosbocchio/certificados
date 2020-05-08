@@ -337,6 +337,7 @@ state: {
         dosimetria_rx:[],
         dosimetria_estados:[],
         dosimetria_resumen:[],
+        serviciosOt  : [],
 
     },
 
@@ -804,6 +805,16 @@ actions : {
           })
         },
 
+        loadServiciosOt({
+          commit},ot_id) {
+           axios.defaults.baseURL = store.state.url ;
+           var urlRegistros = 'ot_servicios/ot/' + ot_id + '?api_token=' + Laravel.user.api_token;             
+           axios.get(urlRegistros).then((response) => {
+           commit('getServiciosOt', response.data)           
+          })
+        },
+
+
         loadCurie({
           commit},payload ) {
            axios.defaults.baseURL = store.state.url ;
@@ -1011,6 +1022,10 @@ actions : {
 
       ContarCertificados(state, CantCertificados) {
         state.CantCertificados = CantCertificados
+      },
+
+      getServiciosOt(state, serviciosOt) {
+        state.serviciosOt = serviciosOt
       },
 
       ContarRemitos(state, CantRemitos) {

@@ -154,47 +154,62 @@
                 <div v-show="TablaServicios.length">
                     <div class="box box-custom-enod" >
                         <div class="box-header with-border">
-                            <h3 class="box-title">SERVICIOS</h3>
+                            <div class="col-md-3">
+                                <h3 class="box-title">SERVICIOS </h3>
+                            </div>
+
+                            <div class="form-group">
+                                <label style="color:gray;display: inline-block;font-weight: lighter;font-style: oblique;text-align:right" class="col-md-3 control-label"><span> Agregar Servicios Manualmente</span></label>
+                                <div class="col-md-5">
+                                      <v-select v-model="servicio_manual" label="servicio_descripcion" :options="serviciosOt" id="serviciosOt"></v-select>
+                                 </div>
+                                 <div class="col-md-1"> 
+                                     <button type="button" @click="AddServicioManual()"><span class="fa fa-plus-circle"></span></button> 
+                                </div>
+                              </div>
+  
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                                 </button>                       
                             </div>
                         </div>
-                        <div class="box-body"> 
-                            
-                                <div class="col-md-12">
-                                    <div class="table-responsive">
-                                        <table class="table table-hover table-striped table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th class="col-md-1">METODO</th>
-                                                    <th class="col-md-9">DESCRIPCIÓN</th>       
-                                                    <th class="col-md-1">CANT</th>                                                                                                                                       
-                                                    <th class="col-md-1">&nbsp;</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr v-for="(item,k) in TablaServicios" :key="k"  @click="selectPosTablaServicios(k)">     
-                                                    <td v-if="item.visible"> {{ item.metodo}}</td>  
-                                                    <td v-if="item.visible"> {{ item.servicio_descripcion}}</td>   
-                                                    <td v-if="item.visible">
-                                                        <div v-if="indexTablaServicios == k ">       
-                                                          <input type="number" v-model="TablaServicios[k].cant_final" maxlength="3">        
-                                                        </div>   
-                                                        <div v-else>
-                                                           {{ item.cant_final }}
-                                                        </div>                                   
-                                                    </td>                                                                                                                    
-                                                    <td style="text-align:center" v-if="item.visible"> <a  @click="RemoveTablaServicio(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a></td>
-                                                    
-                                                </tr>   
-                                                <tr v-for="fila in 4" >
-                                                    <td colspan="5" style="background: #FFFFFF"> &nbsp;</td>                                                  
-                                                </tr>                                             
-                                            </tbody>
-                                        </table>
-                                    </div>
+
+                        <div class="box-body">                             
+
+
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th class="col-md-1">METODO</th>
+                                                <th class="col-md-9">DESCRIPCIÓN</th>       
+                                                <th class="col-md-1">CANT</th>                                                                                                                                       
+                                                <th class="col-md-1">&nbsp;</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="(item,k) in TablaServicios" :key="k"  @click="selectPosTablaServicios(k)">     
+                                                <td v-if="item.visible"> {{ item.metodo}}</td>  
+                                                <td v-if="item.visible"> {{ item.servicio_descripcion}}</td>   
+                                                <td v-if="item.visible">
+                                                    <div v-if="indexTablaServicios == k ">       
+                                                        <input type="number" v-model.number="TablaServicios[k].cant_final" maxlength="3" min="0" @change="validarCantidad(TablaServicios,k,'cant_final')">        
+                                                    </div>   
+                                                    <div v-else>
+                                                        {{ item.cant_final }}
+                                                    </div>                                   
+                                                </td>                                                                                                                    
+                                                <td style="text-align:center" v-if="item.visible"> <a  @click="RemoveTablaServicio(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a></td>
+                                                
+                                            </tr>   
+                                            <tr v-for="fila in 4" >
+                                                <td colspan="5" style="background: #FFFFFF"> &nbsp;</td>                                                  
+                                            </tr>                                             
+                                        </tbody>
+                                    </table>
                                 </div>
+                            </div>
                         
                         </div>
                     </div>
@@ -214,13 +229,13 @@
                                 <div class="col-sm-6 col-md-3">
                                     <div class="form-group" >
                                         <label for="placas_repetidas">Placas Repetidas Total *</label>
-                                        <input type="number" v-model="placas_repetidas" class="form-control" id="placas_repetidas">
+                                        <input type="number" v-model.number="placas_repetidas" class="form-control" id="placas_repetidas" min="0">
                                     </div>                            
                                 </div>
                                 <div class="col-sm-6 col-md-3">
                                     <div class="form-group" >
                                         <label for="placas_testigos">Placas Testigos Total *</label>
-                                        <input type="number" v-model="placas_testigos" class="form-control" id="placas_testigos">
+                                        <input type="number" v-model.number="placas_testigos" class="form-control" id="placas_testigos"  min="0">
                                     </div>                            
                                 </div>
 
@@ -246,7 +261,7 @@
                                                     <td v-if="item.visible">    
                                                                                                             
                                                         <div v-if="indexTablaInformesRi == k ">       
-                                                          <input type="number" v-model="TablaInformesRi[k].costura_final" maxlength="4">        
+                                                          <input type="number" v-model.number="TablaInformesRi[k].costura_final" maxlength="4"  @change="validarCantidad(TablaInformesRi,k,'costura_final')">        
                                                         </div>   
                                                         <div v-else>
                                                            {{ item.costura_final }}
@@ -256,7 +271,7 @@
                                                     <td v-if="item.visible"> {{ item.pulgadas_final}}</td> 
                                                     <td v-if="item.visible">
                                                         <div v-if="indexTablaInformesRi == k ">       
-                                                          <input type="number" v-model="TablaInformesRi[k].placas_final" maxlength="4" step="0.1" @input="RecalcularMetros('RI')">        
+                                                          <input type="number" v-model.number="TablaInformesRi[k].placas_final" maxlength="4" step="0.1" @input="RecalcularMetros('RI')"  @change="validarCantidad(TablaInformesRi,k,'placas_final')">        
                                                         </div>   
                                                         <div v-else>
                                                            {{ item.placas_final }}
@@ -645,6 +660,7 @@ export default {
         indexTablaInformesImportados:'-1',
         indexTablaServicios:'-1',
         cms:[],
+        servicio_manual : {},
 
     }},
 
@@ -653,6 +669,7 @@ export default {
         this.getOperadoresOt();
         this.getCms();
         this.CargaDeDatos();  
+        this.$store.dispatch('loadServiciosOt',this.otdata.id);        
 
     },
 
@@ -697,7 +714,7 @@ export default {
 
     computed :{
 
-        ...mapState(['url','AppUrl']),     
+        ...mapState(['url','AppUrl','serviciosOt']),     
         
         fecha_mysql : function(){
 
@@ -1389,6 +1406,39 @@ export default {
             });
         },
 
+        AddServicioManual : function(){    
+
+            if(this.TablaServicios.findIndex(elemento => elemento.servicio_descripcion == this.servicio_manual.servicio_descripcion) != -1){
+                
+                if(this.TablaServicios[this.TablaServicios.findIndex(elemento => elemento.servicio_descripcion ==this.servicio_manual.servicio_descripcion)].visible == true){
+
+                    this.TablaServicios[this.TablaServicios.findIndex(elemento => elemento.servicio_descripcion ==this.servicio_manual.servicio_descripcion)].cant_final +=1;                 
+                }else{
+
+                     this.TablaServicios[this.TablaServicios.findIndex(elemento => elemento.servicio_descripcion ==this.servicio_manual.servicio_descripcion)].cant_final = 1; 
+                     this.TablaServicios[this.TablaServicios.findIndex(elemento => elemento.servicio_descripcion ==this.servicio_manual.servicio_descripcion)].visible +=true; 
+                }
+            }
+            else{
+
+                this.TablaServicios.push({
+                        
+                    metodo_ensayo_id : this.servicio_manual.metodo_ensayo_id,
+                    servicio_id : this.servicio_manual.servicio_id,
+                    metodo: this.servicio_manual.metodo,
+                    servicio_descripcion:this.servicio_manual.servicio_descripcion,
+                    cant_original : 0,
+                    cant_final: 1,
+                    unidad_medida : this.servicio_manual.unidad_medida,
+                    visible : true,
+        
+                    })
+            }
+
+         this.$forceUpdate();      
+
+        },
+
         async getServiciosInformes(informe_id,importado_sn){
 
             axios.defaults.baseURL = this.url ;
@@ -1667,8 +1717,7 @@ export default {
                 cm_final:'',
                 metodo : informe_ri_parte[0].metodo,
             
-            });  
-                
+            });                 
            
            
         },
@@ -1797,6 +1846,14 @@ export default {
 
             return valido;
         },
+        
+        validarCantidad : function (tabla,index,campo){
+
+            if(tabla[index][`${campo}`] ==='' ||  tabla[index][`${campo}`] < 0){
+                tabla[index][`${campo}`] = 0;
+            }
+
+        },
 
         Store : function(){
          
@@ -1814,10 +1871,17 @@ export default {
                 return;
                 }
 
-            if(this.TablaInformesRi.length && !this.placas_repetidas){
+            if(this.TablaInformesRi.length && this.placas_repetidas===''){
 
                 toastr.error('El campo placas repetidas es obligatorio');
                 return;
+            }
+
+            if(this.TablaInformesRi.length && !this.placas_testigos===''){
+
+                toastr.error('El campo placas testigos es obligatorio');
+                return;
+
             }
 
             this.errors =[];
@@ -1890,17 +1954,18 @@ export default {
                 return;
                 }
 
-            if(this.TablaInformesRi.length && !this.placas_repetidas){
+                if(this.TablaInformesRi.length && this.placas_repetidas===''){
 
-                toastr.error('El campo placas repetidas es obligatorio');
-                return;
-            }
+                    toastr.error('El campo placas repetidas es obligatorio');
+                    return;
+                    }
 
-            if(this.TablaInformesRi.length && !this.placas_testigos){
+                    if(this.TablaInformesRi.length && !this.placas_testigos===''){
 
-                toastr.error('El campo placas testigos es obligatorio');
-                return;
-            }
+                    toastr.error('El campo placas testigos es obligatorio');
+                    return;
+
+                    }
 
             console.log('entro para actualizar' );
             this.errors =[];        
