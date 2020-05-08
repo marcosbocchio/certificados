@@ -1426,7 +1426,7 @@ export default {
                     servicio_id : this.servicio_manual.servicio_id,
                     metodo: this.servicio_manual.metodo,
                     servicio_descripcion:this.servicio_manual.servicio_descripcion,
-                    cant_original : 0,
+                    cant_original : '',
                     cant_final: 1,
                     unidad_medida : this.servicio_manual.unidad_medida,
                     visible : true,
@@ -1605,10 +1605,13 @@ export default {
 
       RecalcularHospedaje()  {
 
-            let index = this.TablaServicios.findIndex(elemento => (elemento.unidad_medida == 'Dia' && elemento.servicio_descripcion.includes('HOSPEDAJE')))      
+          console.log('entro ee recalcular hospedaje');
+            let index = this.TablaServicios.findIndex(elemento => (elemento.unidad_medida == 'Dia' && elemento.servicio_descripcion.includes('Hospedaje')))      
+
             if(index > -1){
                
                 this.TablaServicios[index].cant_final = this.TablaResponsables.length;
+                this.TablaServicios[index].cant_original = this.TablaResponsables.length;
             }
         },
 

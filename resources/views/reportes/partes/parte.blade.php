@@ -259,20 +259,25 @@ b {
                 <td style="font-size: 12px;text-align: center;"><b>Cantidad </b></td>        
             </tr>    
             @foreach($servicios as $servicio)
-                <tr>
-                    
-                    <td style="font-size: 12px;width: 100px;"><span style="margin-left:10px;">{{$servicio->metodo}}</span></td>                        
-                    <td style="font-size: 12px;width: 350px; " colspan="3"><span style="margin-left:10px;">{{$servicio->servicio_descripcion}}</span> </td>                         
-                    <td style="font-size: 12px;text-align: center;text-align: center;">
 
-                        @if($estado == 'original')
-                            {{$servicio->cant_original}}
-                        @else
-                            {{$servicio->cant_final}}
-                        @endif
+                @if (($estado == 'original' && $servicio->cant_original !='')||($estado == 'final' && $servicio->cant_final !=''))
                     
-                    </td>        
-                </tr>                 
+                    <tr>
+                        
+                        <td style="font-size: 12px;width: 100px;"><span style="margin-left:10px;">{{$servicio->metodo}}</span></td>                        
+                        <td style="font-size: 12px;width: 350px; " colspan="3"><span style="margin-left:10px;">{{$servicio->servicio_descripcion}}</span> </td>                         
+                        <td style="font-size: 12px;text-align: center;text-align: center;">
+
+                            @if($estado == 'original')
+                                {{$servicio->cant_original}}
+                            @else
+                                {{$servicio->cant_final}}
+                            @endif
+                        
+                        </td>        
+                    </tr>   
+
+                @endif
             @endforeach
 
 

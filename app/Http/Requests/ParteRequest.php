@@ -45,7 +45,7 @@ class ParteRequest extends FormRequest
             'patente' => $condicion_patente,
             'km_inicial' => $condicion_km_inicial,
             'km_final'  =>  $condicion_km_final,   
-            'servicios.*.cant_final' => 'nullable|integer|Min:1',               
+            'servicios.*.cant_final' => 'nullable|integer|Min:0',               
         ];
     }
 
