@@ -99,7 +99,7 @@ td b,td span {
                     <table width="100%" >
                         <tbody>
                             <tr>                         
-                                <td style="font-size: 11px;width: 190px;height: 45px;"><b>CLIENTE: </b>{{$cliente->nombre_fantasia}}                            
+                                <td style="font-size: 10px;width: 190px;height: 45px;"><b>CLIENTE: </b>{{$cliente->nombre_fantasia}}                            
                                     
                                 </td>  
 
@@ -111,7 +111,7 @@ td b,td span {
                                    @endif    
                                 </td>                                    
                             
-                                <td style="font-size: 11px; width: 195px;">
+                                <td style="font-size: 10px; width: 195px;">
                                   
                                         @if($contratista)
                                             <b>COMITENTE: </b>{{$contratista->nombre}}
