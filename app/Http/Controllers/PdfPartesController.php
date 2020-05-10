@@ -8,6 +8,7 @@ use App\Partes;
 use App\Ots;
 use App\Clientes;
 use App\User;
+use App\Contratistas;
 
 class PdfPartesController extends Controller
 {
@@ -39,7 +40,8 @@ class PdfPartesController extends Controller
                           ->select('users.name as nombre','parte_operadores.responsabilidad')
                           ->get();     
         
-        
+        $contratista = Contratistas::find($ot->contratista_id);
+
         $parte_detalle = DB::select('CALL ParteDetalle(?,?)',array($id,$estado));
 
         $servicios = DB::table('parte_servicios')
@@ -75,6 +77,7 @@ class PdfPartesController extends Controller
 
         $pdf = \PDF::loadView('reportes.partes.parte',compact('ot',
                                                             'cliente', 
+                                                            'contratista',
                                                             'parte',
                                                             'metodos_informe',
                                                             'informes_detalle',

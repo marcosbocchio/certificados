@@ -103,15 +103,15 @@ td b,td span {
                                     
                                 </td>  
 
-                                <td style="width: 140px;">
+                                <td style="width: 130px;">
                                     @if($ot->logo_cliente_sn && $cliente->path)
-                                    <img  src="{{ public_path($cliente->path)}}" alt=""  style="height: 35px;margin-top: 5px;">
+                                    <img  src="{{ public_path($cliente->path)}}" alt=""  style="height: 43px;max-width: 120px;margin-top: 5px;">
                                    @else
-                                     <img  src="{{ public_path('img/blank.png')}}" alt=""  style="height: 35px;margin-top: 5px;">
+                                     <img  src="{{ public_path('img/blank.png')}}" alt=""  style="height: 43px;margin-top: 5px;">
                                    @endif    
                                 </td>                                    
                             
-                                <td style="font-size: 11px; width: 190px;">
+                                <td style="font-size: 11px; width: 195px;">
                                   
                                         @if($contratista)
                                             <b>COMITENTE: </b>{{$contratista->nombre}}
@@ -121,9 +121,9 @@ td b,td span {
                                 <td>
                                     
                                     @if($contratista && $ot->logo_contratista_sn && $contratista->path_logo)
-                                       <img  src="{{ public_path($contratista->path_logo)}}" alt="" style="height:35px;margin-top: 5px;">
+                                       <img  src="{{ public_path($contratista->path_logo)}}" alt="" style="height:43px;max-width: 120px;margin-top: 5px;">
                                     @else
-                                       <img  src="{{ public_path('img/blank.png')}}" alt=""  style="height: 35px;margin-top: 5px;">
+                                       <img  src="{{ public_path('img/blank.png')}}" alt=""  style="height: 43px;margin-top: 5px;">
                                     @endif
 
                                 </td>                                                    

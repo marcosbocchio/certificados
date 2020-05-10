@@ -40,7 +40,7 @@ if($remito->interno_sn){
         $cliente = Clientes::find($ot->cliente_id);
         $user = User::find($remito->user_id);
 
-        $pdf = \PDF::loadView('reportes.remitos.remito-interno2',compact('remito','ot','cliente','detalle','remito_interno_equipos','user','contratista'))->setPaper('a4','portrait')->setWarnings(false);  
+        $pdf = \PDF::loadView('reportes.remitos.remito-interno',compact('remito','ot','cliente','detalle','remito_interno_equipos','user','contratista'))->setPaper('a4','portrait')->setWarnings(false);  
 
         return $pdf->stream();
 

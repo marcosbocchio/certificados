@@ -8,7 +8,7 @@
 <style>  
 
 @page {    
-        margin: 352px 15px 195px 15px !important;
+        margin: 354px 15px 195px 15px !important;
         padding: 0px 0px 0px 0px !important;
        }
 
@@ -19,7 +19,7 @@ body {
 
 header {
     position:fixed;
-    top: -313px;    
+    top: -315px;    
 }
 
 footer {
@@ -100,18 +100,18 @@ b {
                         <tbody>                        
                                 <tr>                                                
                                     
-                                    <td style="font-size: 11px;height: 45px;width: 235px"><span style="margin-top: -20px;"><b>CLIENTE: </b>{{$cliente->nombre_fantasia}}</span></td> 
+                                    <td style="font-size: 10px;height: 45px;width: 235px"><span style="margin-top: -20px;"><b>CLIENTE: </b>{{$cliente->nombre_fantasia}}</span></td> 
                                     <td  style="width: 140px">
                                         <span>
                                             @if($ot->logo_cliente_sn && $cliente->path)
-                                                <img  src="{{ public_path($cliente->path)}}" alt=""  style="height: 40px;margin-top: 5px;">
+                                                <img  src="{{ public_path($cliente->path)}}" alt=""  style="height: 43px;max-width: 130px;margin-top: 5px;">
                                             @else
-                                                <img  src="{{ public_path('img/blank.png')}}" alt=""  style="height: 40px;margin-top: 5px;">
+                                                <img  src="{{ public_path('img/blank.png')}}" alt=""  style="height: 43px;margin-top: 5px;">
                                             @endif
                                         </span>
                                     </td>                                     
                                 
-                                    <td style="font-size: 11px;width: 235px">
+                                    <td style="font-size: 10px;width: 235px">
                                         @if($contratista)
                                             <b>COMITENTE: </b>{{$contratista->nombre}}
                                         @endif                         
@@ -119,22 +119,22 @@ b {
                                     </td>  
                                     <td style="width: 180px">
                                         @if($ot->logo_contratista_sn && $contratista->path_logo)
-                                            <img  src="{{ public_path($contratista->path_logo)}}" alt="" style="height: 40px;margin-top: 5px;">
+                                            <img  src="{{ public_path($contratista->path_logo)}}" alt="" style="height: 43px;max-width: 130px;margin-top: 5px;">
                                         @else
-                                            <img  src="{{ public_path('img/blank.png')}}" alt=""  style="height: 40px;margin-top: 5px;">
+                                            <img  src="{{ public_path('img/blank.png')}}" alt=""  style="height: 43px;margin-top: 5px;">
                                         @endif
                                     </td>              
 
-                                    <td style="font-size: 11px;">&nbsp;</td>   
+                                    <td style="font-size: 10px;">&nbsp;</td>   
                                     @if($informe->obra)
 
-                                         <td style="font-size: 11px;"><b>OBRA: </b>{{$informe->obra}}</td>
+                                         <td style="font-size: 10px;"><b>OBRA: </b>{{$informe->obra}}</td>
 
                                     @endif
-                                    <td style="font-size: 11px;"><b>OT N°: </b>{{$ot->numero}}</td>  
+                                    <td style="font-size: 10px;"><b>OT N°: </b>{{$ot->numero}}</td>  
                                 </tr>  
                                 <tr>
-                                   <td style="font-size: 11px;" colspan="6"><b>PROYECTO: </b>{{$ot->proyecto}}</td>
+                                   <td style="font-size: 10px;" colspan="6"><b>PROYECTO: </b>{{$ot->proyecto}}</td>
                                 </tr>
                            </tbody>
                     </table>          

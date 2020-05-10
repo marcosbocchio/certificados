@@ -69,68 +69,18 @@ b {
                         </table>          
                     </td>
                </tr>
-            <tr>
-                <td class="bordered" style="border-bottom: none;">
-                    <table width="100%" >
-                        <tbody>
-                            <tr>                         
-                                <td style="font-size: 11px;width: 190px;height: 45px;"><b>CLIENTE: </b>{{$cliente->nombre_fantasia}}                            
-                                    
-                                </td>  
-
-                                <td style="width: 140px;">
-                                    @if($ot->logo_cliente_sn && $cliente->path)
-                                    <img  src="{{ public_path($cliente->path)}}" alt=""  style="height: 35px;margin-top: 5px;">
-                                   @else
-                                     <img  src="{{ public_path('img/blank.png')}}" alt=""  style="height: 35px;margin-top: 5px;">
-                                   @endif    
-                                </td>                                    
-                            
-                                <td style="font-size: 11px; width: 190px;">
-                                  
-                                    @if($contratista)
-                                        <b>COMITENTE: </b>{{$contratista->nombre}}
-                                    @endif                                               
-                                 
-                                </td> 
-                                <td>
-                                    
-                                    @if($contratista && $ot->logo_contratista_sn && $contratista->path_logo)
-                                       <img  src="{{ public_path($contratista->path_logo)}}" alt="" style="height:35px;margin-top: 5px;">
-                                    @else
-                                       <img  src="{{ public_path('img/blank.png')}}" alt=""  style="height: 35px;margin-top: 5px;">
-                                    @endif
-
-                                </td>                                                    
-                            </tr>  
-                       </tbody>
-                    </table>          
-                </td>
-            </tr> 
-            <tr>
-                <td>
-                    <table width="100%" >
-                        <tbody>             
-                            <tr>                                                  
-                                <td style="font-size: 11px; width: 480px;"><b>PROYECTO: </b>{{$ot->proyecto}}</td>                            
-                                <td style="font-size: 11px;"><b>OBRA: </b>{{$ot->obra}}</td>     
-                                <td style="font-size: 11px;"><b>OT N°: </b>{{$ot->numero}}</td>     
-                            </tr>   
-                        </tbody>
-                    </table>          
-                </td>
-            </tr>
-            <tr>
-                <td class="bordered">
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td style="font-size: 13px;" > <b>PIEZA: </b>  {{$detalle_pm->pieza}} &nbsp;&nbsp; <b>N°: </b>{{$detalle_pm->numero}}</td>  
-                            </tr>
-                        </tbody>
-                    </table>
-                </td>
-            </tr>                 
+               @include('reportes.informes.partial.header-portrait')
+                <tr>
+                    <td class="bordered">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td style="font-size: 13px;" > <b>PIEZA: </b>  {{$detalle_pm->pieza}} &nbsp;&nbsp; <b>N°: </b>{{$detalle_pm->numero}}</td>  
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>                 
             </tbody>
         </table>
     </header>

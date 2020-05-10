@@ -91,11 +91,11 @@
                             </div>      
                             <div class="form-group">
                                 <label for="titulo">Título *</label>
-                                <input type="text" name="titulo" class="form-control" v-model="newRegistro.titulo" value="" @change="VerificarDuplicado()">               
+                                <input type="text" name="titulo" class="form-control" v-model="newRegistro.titulo" value="" @change="VerificarDuplicado()" maxlength="25">               
                             </div>  
                             <div class="form-group">
                                 <label for="name">Descripción </label>
-                                <input type="text" name="descripcion" class="form-control" v-model="newRegistro.descripcion" value="">  
+                                <input type="text" name="descripcion" class="form-control" v-model="newRegistro.descripcion" value="" maxlength="50">  
                             </div>
                             <div v-if="newRegistro.tipo == 'USUARIO'">
                                 <div class="form-group">

@@ -7,7 +7,7 @@
 
 <style>
 
-@page { margin:210px 30px 140px 60px !important;
+@page { margin:235px 30px 140px 60px !important;
         padding: 0px 0px 0px 0px !important; }
 
 body {
@@ -17,7 +17,7 @@ body {
 
 header {
     position:fixed;
-    top: -182px; 
+    top: -207px; 
    
     }
 
@@ -89,22 +89,8 @@ b {
                     </table>          
                 </td>
             </tr>
-            <tr >
-                <td class="bordered">
-                    <table width="100%" >
-                        <tbody>
-                            <tr>                         
-                                <td style="font-size: 12px;height: 20px;width: 350;"><b>CLIENTE: </b>{{$cliente->nombre_fantasia}}</td>                         
-                                <td style="font-size: 12px;"><b>OBRA: </b>{{$ot->obra}}</td>     
-                                <td style="font-size: 12px;"><b>OT N°: </b>{{$ot->numero}}</td>     
-                            </tr>    
-                            <tr>
-                                <td style="font-size: 12px;"" colspan="3"><b>PROYECTO: </b>{{$ot->proyecto}}</td>
-                            </tr>           
-                        </tbody>
-                    </table>          
-                </td>
-            </tr>   
+             @include('reportes.informes.partial.header-portrait')
+
             <tr > 
                 <td class="bordered">
                     <table width="100%" >

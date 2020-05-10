@@ -46,8 +46,8 @@ class DocumentacionesRequest extends FormRequest
 
             return [
                'tipo' =>'required',
-               'descripcion' => 'max:50',
-               'titulo' =>'required | max:45',
+               'descripcion' => 'max:100',
+               'titulo' =>'required | max:25',
                'fecha_caducidad' =>'required',
                'path' =>'required',
             ];
