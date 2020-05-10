@@ -29,7 +29,7 @@
                         <div class="modal-body">
                             
                             <div class="form-group">
-                                <label  for="tipo">Descripción (*)</label>
+                                <label  for="tipo">Descripción *</label>
                                 <input type="text" id="descripcion" class="form-control" v-model="newRegistro.descripcion">    
                             </div>   
 

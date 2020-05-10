@@ -11,7 +11,7 @@
                      <div class="row">
                     <div class="col-md-12">   
                         <div class="form-group"> 
-                            <label for="codigo">Nombre (*)</label>                   
+                            <label for="codigo">Nombre *</label>                   
                             <input autocomplete="off" v-model="newRegistro.nombre" type="text" name="codigo" class="form-control" value="">            
                         </div>
                     </div> 

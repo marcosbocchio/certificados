@@ -10,13 +10,13 @@
                 <div class="modal-body">    
                 
                    
-                    <label for="codigo">Código (*)</label>                   
+                    <label for="codigo">Código *</label>                   
                     <input autocomplete="off" v-model="newRegistro.codigo" type="text" name="codigo" class="form-control" value="">
                     
                     <label for="name">Descripción</label>                   
                     <input autocomplete="off" type="text" name="descripcion" class="form-control" v-model="newRegistro.descripcion" value="">
                    
-                    <label for="name">Unidad Medida (*)</label>      
+                    <label for="name">Unidad Medida *</label>      
                     <v-select v-model="unidad_medida" label="codigo" :options="unidades_medidas"></v-select>
                 </div>
             

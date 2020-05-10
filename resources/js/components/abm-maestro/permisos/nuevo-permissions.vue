@@ -9,10 +9,10 @@
                     </div>
                     <div class="modal-body">
 
-                    <label for="codigo">Nombre (*)</label>                   
+                    <label for="codigo">Nombre *</label>                   
                     <input autocomplete="off" v-model="newRegistro.name" type="text" name="codigo" class="form-control" value="">
                     
-                    <label for="name">Guard (*)</label>                   
+                    <label for="name">Guard *</label>                   
                     <v-select v-model="newRegistro.guard_name" :options="guards"></v-select>
 
                     </div>

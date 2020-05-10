@@ -10,17 +10,17 @@
                 <div class="modal-body">    
                 
                    
-                    <label for="numero_serie">N° Serie (*)</label>   
+                    <label for="numero_serie">N° Serie *</label>   
 
                     <input type="checkbox" id="checkbox" v-model="editRegistro.activo_sn" style="float:right"> 
                     <label for="tipo" style="float:right;margin-right: 5px;">ACTIVO</label>     
 
                     <input autocomplete="off" v-model="editRegistro.nro_serie" type="text" name="numero_serie" class="form-control" value="">
 
-                    <label for="numero_interno">N° Interno (*)</label> 
+                    <label for="numero_interno">N° Interno *</label> 
                     <input autocomplete="off" v-model="editRegistro.nro_interno" type="text" name="numero_interno" class="form-control" value="">                  
 
-                    <label for="equipos">Equipo (*)</label>      
+                    <label for="equipos">Equipo *</label>      
                     <v-select v-model="equipo" label="codigo" :options="equipos"></v-select>              
 
                     <label>Fuente </label>

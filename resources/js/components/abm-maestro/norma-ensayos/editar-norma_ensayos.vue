@@ -10,7 +10,7 @@
                 <div class="modal-body">    
                 
                    
-                    <label for="codigo">Código (*)</label>                   
+                    <label for="codigo">Código *</label>                   
                     <input autocomplete="off" v-model="editRegistro.codigo" type="text" name="codigo" class="form-control" value="">
                     
                     <label for="name">Descripción</label>                   

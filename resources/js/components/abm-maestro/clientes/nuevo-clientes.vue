@@ -21,55 +21,55 @@
                             <div class="box-body">  
                                 <div class="col-md-6">    
                                     <div class="form-group">
-                                        <label for="name">Código (*)</label>                   
+                                        <label for="name">Código *</label>                   
                                         <input autocomplete="off" v-model="newRegistro.codigo" type="text" name="codigo" class="form-control" value=""> 
                                     </div>  
                                 </div>            
                                 <div class="col-md-6">    
                                     <div class="form-group">
-                                        <label for="name">Nombre (*)</label>                   
+                                        <label for="name">Nombre *</label>                   
                                         <input autocomplete="off" v-model="newRegistro.nombre" type="text" name="nombre" class="form-control" value="" maxlength="30" > 
                                     </div>  
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="name">Razon Social(*)</label>                   
+                                        <label for="name">Razon Social*</label>                   
                                         <input autocomplete="off" v-model="newRegistro.razon_social" type="text" name="razon_social" class="form-control" value=""> 
                                     </div> 
                                 </div> 
                             <div class="col-md-6">                 
                                     <div class="form-group">
-                                        <label>Provincia (*)</label>
+                                        <label>Provincia *</label>
                                         <v-select v-model="provincia" label="provincia" :options="provincias" @input="getLocalidades()"></v-select>   
                                     </div>
                             </div>
                                 <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Localidad (*)</label>
+                                    <label>Localidad *</label>
                                     <v-select v-model="localidad" label="localidad" :options="localidades"></v-select>   
                                 </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="name">Código Postal (*)</label>                   
+                                        <label for="name">Código Postal *</label>                   
                                         <input autocomplete="off" v-model="newRegistro.cp" type="text" name="cp" class="form-control" value=""> 
                                     </div> 
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="name">Dirección (*)</label>                   
+                                        <label for="name">Dirección *</label>                   
                                         <input autocomplete="off" v-model="newRegistro.direccion" type="text" name="direccion" class="form-control" value=""> 
                                     </div>  
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="name">Teléfono (*)</label>                   
+                                        <label for="name">Teléfono *</label>                   
                                         <input autocomplete="off" v-model="newRegistro.tel" type="text" name="telefono" class="form-control" value="" maxlength="40" placeholder="Ej: 0299-15-1234567 / 0299-4444-3333 (111)"> 
                                     </div> 
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="usuario">email (*)</label>
+                                        <label for="usuario">email *</label>
                                         <input autocomplete="off" type="text" name="email" class="form-control" v-model="newRegistro.email" value="">
                                     </div>      
                                 </div>
