@@ -292,7 +292,8 @@ class CertificadosController extends Controller
                                           ->where('certificados.id',$id)
                                           ->whereRaw('ot_servicios.ot_id = ots.id')
                                           ->selectRaw('certificado_servicios.*,LPAD(partes.id, 8, "0") as numero_formateado,DATE_FORMAT(partes.fecha,"%d/%m/%Y")as fecha_formateada,ot_servicios.combinado_sn,
-                                          servicios.abreviatura,servicios.descripcion as servicio_descripcion,(SELECT DISTINCT(informes.obra) from informes WHERE informes.parte_id =partes.id ) as obra')                                       
+                                          servicios.abreviatura,servicios.descripcion as servicio_descripcion,(SELECT informes.obra from informes WHERE informes.parte_id = partes.id UNION SELECT informes_importados.obra from informes_importados WHERE informes_importados.parte_id = partes.id  limit 1) as obra
+                                          ')                                       
                                           ->orderBy('certificado_servicios.id','ASC')
                                           ->get();
 

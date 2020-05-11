@@ -6,7 +6,7 @@
 
  <style>
 
-@page { margin: 430px 30px 200px 60px !important;
+@page { margin: 452px 30px 200px 60px !important;
         padding: 0px 0px 0px 0px !important; }
         
 .EspecialCaracter {
@@ -14,7 +14,7 @@
 }
 header {
     position:fixed;
-    top: -388px;    
+    top: -410px;    
     }
 
 main{
@@ -198,7 +198,7 @@ td b,td span {
             <table>
                 <tbody>
                     <tr>
-                        <td style="font-size: 12px; width:220px" ><b>Métodos de ensayos: </b>
+                        <td style="font-size: 11px;" colspan="2" ><b>Métodos de Ensayos: </b>
                           @foreach ( $metodos_ensayos as $metodo )
 
                               @if (!$loop->first)
@@ -210,20 +210,21 @@ td b,td span {
                            @endforeach
                         
                         </td>
-                        <td style="font-size: 12px; width:210px" ><b>Calidad de Placa: </b>
-                            @foreach ($ot_calidad_placas as $ot_calidad_placa)
-                              
-                                @if (!$loop->first)
-                                  ,
-                                @endif 
-
-                                {{ $ot_calidad_placa->codigo  }}
-
-                            @endforeach
-                        
+                      </tr>  
+                      <tr>
+                        <td style="font-size: 11px; width:380px" ><b>Calidad de Placa: </b>
+                          @foreach ($ot_calidad_placas as $ot_calidad_placa)
+                          
+                          @if (!$loop->first)
+                          ,
+                          @endif 
+                          
+                          {{ $ot_calidad_placa->codigo  }}
+                          
+                          @endforeach                    
                         </td>
-                        <td style="font-size: 12px; width:240px" ><b>Fecha Estimada ensayo: </b>{{ date('d-m-Y', strtotime($ot->fecha_hora_estimada_ensayo)) }} </td>
-                    </tr>                    
+                        <td style="font-size: 11px;" ><b>Fecha Estimada Ensayo: </b>{{ date('d-m-Y', strtotime($ot->fecha_hora_estimada_ensayo)) }} </td>
+                    </tr>                  
                 </tbody>
               </table>   
             </td>
