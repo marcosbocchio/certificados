@@ -83,14 +83,14 @@ class DocumentacionesController extends Controller
                                     ->where('usuario_documentaciones.user_id',$user_id) 
                                     ->get();
 
-        }else if ('EQUIPO'){
+        }else if ($tipo == 'EQUIPO'){
 
             return documentaciones::join('interno_equipo_documentaciones','interno_equipo_documentaciones.documentacion_id','=','documentaciones.id')
                                     ->where('documentaciones.tipo',$tipo)
                                     ->where('documentaciones.titulo',$titulo)
                                     ->where('interno_equipo_documentaciones.interno_equipo_id',$interno_equipo_id) 
                                     ->get();
-        }else if('FUENTE'){
+        }else if($tipo == 'FUENTE'){
 
             return documentaciones::join('interno_fuente_documentaciones','interno_fuente_documentaciones.documentacion_id','=','documentaciones.id')
                                     ->where('documentaciones.tipo',$tipo)

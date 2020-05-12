@@ -274,15 +274,11 @@ export default {
             'VEHICULO'           
          ],       
          errors:[],
-         interno_equipo: {id:null,},
-         interno_fuente:{id:null,}, 
+         interno_equipo: {id:null},
+         interno_fuente:{id:null}, 
+         usuario :{id:null},
          metodo_ensayos:[],
-         metodo_ensayo :{
-             id:'',
-         },
-         usuario :{
-              id:null,
-         },
+         metodo_ensayo :{id:'',},
          usuarios:[],
          selectedFile : null,     
          HabilitarGuardar : true, 
@@ -362,6 +358,9 @@ export default {
            this.metodo_ensayo ={
                 id:'',
             };
+         this.interno_equipo = {'id' : null};
+         this.interno_fuente = {'id':null};
+         this.usuario = {'id':null};
             
            if(this.newRegistro.tipo == 'PROCEDIMIENTO'){
 
@@ -428,6 +427,7 @@ export default {
 
             axios.defaults.baseURL = this.url ;
             var urlRegistros = 'documentaciones/verificar_duplicados/tipo/'+ this.newRegistro.tipo + '/titulo/'+ this.newRegistro.titulo + '/usuario/' + this.usuario.id + '/equipo/' + this.interno_equipo.id + '/fuente/' + this.interno_fuente.id +'?api_token=' + Laravel.user.api_token;        
+            console.log(urlRegistros);
             axios.get(urlRegistros).then(response =>{
             
                 let res =  response.data;
@@ -445,9 +445,11 @@ export default {
         this.newRegistro.titulo = '';
         this.newRegistro.descripcion = '';
         this.usuario.descripcion = '';
-        this.usuario = {
-              id:'',
-         },
+        this.fecha_caducidad ='';
+        this.interno_equipo = {id:null};
+        this.interno_fuente = {id:null};
+        this.usuario = {id:null};
+        this.metodo_ensayo ={id:''};
          $('#modal-cancelar-continuar').modal('hide');
     },
 
@@ -637,15 +639,11 @@ export default {
 
                 this.editmode = true;
                 this.HabilitarGuardar = true;
-                this.newRegistro = {};    
-                this.metodo_ensayo={};   
-                this.usuario ={};   
-                this.interno_equipo ={}; 
-                this.interno_fuente ={};             
+                this.newRegistro = {};     
                 this.metodo_ensayo =  registro.metodo_ensayo ? registro.metodo_ensayo : {id :''};
-                this.usuario = registro.usuario[0];    
-                this.interno_equipo = registro.interno_equipo[0];
-                this.interno_fuente = registro.interno_fuente[0];            
+                this.usuario = registro.usuario[0] ? registro.usuario[0] : {'id' : null};
+                this.interno_equipo = registro.interno_equipo[0] ? registro.interno_equipo[0] : {'id' : null};
+                this.interno_fuente = registro.interno_fuente[0] ? registro.interno_fuente[0] : {'id' : null};            
                 this.newRegistro = registro;  
                 let fileName = this.newRegistro.path ; 
                 let FileExt = fileName.substring(fileName.length-3,fileName.length);
