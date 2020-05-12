@@ -24,7 +24,7 @@
                     <v-select v-model="equipo" label="codigo" :options="equipos"></v-select>              
 
                     <label>Fuente </label>
-                    <v-select  v-model="interno_fuente" :options="interno_fuentes_activos" label="nro_serie">
+                    <v-select  v-model="interno_fuente" :options="interno_fuentes" label="nro_serie">
                         <template slot="option" slot-scope="option">
                             <span class="upSelect">{{ option.nro_serie }}</span> <br> 
                             <span class="downSelect"> {{ option.fuente.codigo }} </span>
@@ -86,13 +86,13 @@ export default {
              
     }.bind(this)); 
    this.$store.dispatch('loadEquipos');
-   this.$store.dispatch('loadInternoFuentesActivos');
+   this.$store.dispatch('loadInternoFuentes',1);
 
     },
   
     computed :{
     
-         ...mapState(['url','equipos','interno_fuentes_activos'])
+         ...mapState(['url','equipos','interno_fuentes'])
     }, 
    
     methods: {

@@ -110,7 +110,7 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label>Equipo *</label>
-                            <v-select  v-model="interno_equipo" :options="interno_equipos_activos" label="nro_interno">
+                            <v-select  v-model="interno_equipo" :options="interno_equipos" label="nro_interno">
                                 <template slot="option" slot-scope="option">
                                     <span class="upSelect">{{ option.nro_interno }}</span> <br> 
                                     <span class="downSelect"> {{ option.equipo.codigo }} </span>
@@ -451,7 +451,7 @@
                             <div class="col-md-3">                       
                                 <div class="form-group" >
                                     <label for="elemento_us_pa" title="Elemento">Elemento *</label>
-                                    <input type="text" v-model="elemento_us_pa" class="form-control" id="elemento_us_pa">
+                                    <input type="text" v-model="elemento_us_pa" class="form-control" id="elemento_us_pa" maxlength="15">
                                 </div>         
                             </div>
 
@@ -610,7 +610,7 @@
                                 <div class="col-md-12">                       
                                     <div class="form-group" >
                                         <label for="elemento_me" title="Elemento">Elemento *</label>
-                                        <input type="text" v-model="elemento_me" class="form-control" id="elemento_me">
+                                        <input type="text" v-model="elemento_me" class="form-control" id="elemento_me" maxlength="15">
                                     </div>         
                                 </div>
 
@@ -651,10 +651,12 @@
 
                                 <div class="clearfix"></div>  
 
-                                <div class="col-md-1">                                                       
-                                    <span>
-                                      <button type="button"  @click="addTabla_me()"><span class="fa fa-plus-circle"></span></button>  
-                                    </span>                            
+                                <div class="col-md-1">        
+                                    <div class="form-group" >                                               
+                                        <span>
+                                        <button type="button"  @click="addTabla_me()"><span class="fa fa-plus-circle"></span></button>  
+                                        </span>       
+                                    </div>                     
                                </div>
 
                                <div class="clearfix"></div>  
@@ -1038,7 +1040,7 @@ export default {
       this.$store.dispatch('loadMateriales');
       this.$store.dispatch('loadDiametros');
       this.getTecnicas();
-      this.$store.dispatch('loadInternoEquiposActivos',this.metodo);       
+      this.$store.dispatch('loadInternoEquipos',{ 'metodo' : this.metodo, 'activo_sn' : 1 });       
       this.$store.dispatch('loadProcedimietosOtMetodo',  
         { 'ot_id' : this.otdata.id, 'metodo' : this.metodo }).then(response =>{ 
                 if(this.procedimientos.length == 0  ){
@@ -1063,7 +1065,7 @@ export default {
 
     computed :{
 
-        ...mapState(['url','AppUrl','materiales','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','ejecutor_ensayos','interno_equipos_activos']),     
+        ...mapState(['url','AppUrl','materiales','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','ejecutor_ensayos','interno_equipos']),     
 
         numero_inf_code : function()  {
 
@@ -1443,9 +1445,9 @@ export default {
                  return ;            
             }
 
-            if(this.elemento_us_pa.length  > 10){
+            if(this.elemento_us_pa.length  > 15){
 
-                toastr.error('El campo elemento no debe contener más de 10 caracteres'); 
+                toastr.error('El campo elemento no debe contener más de 15 caracteres'); 
                 return ;
              }       
 
@@ -1595,9 +1597,9 @@ export default {
                  return ;            
             }
 
-            if(this.elemento_me.length  > 10){
+            if(this.elemento_me.length  > 15){
 
-                toastr.error('El campo elemento no debe contener más de 10 caracteres'); 
+                toastr.error('El campo elemento no debe contener más de 15 caracteres'); 
                 return ;
              }   
 

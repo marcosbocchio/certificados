@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title>Informe {{FormatearNumeroInforme($informe->numero,'US')}}</title>
+    <title>INFORME {{FormatearNumeroInforme($informe->numero,'US')}}</title>
 </head>
 
 <style  type='text/css'>
@@ -15,12 +15,16 @@
     page-break-after: always;
 }
 
-@page { margin: 308px 30px 125px 60px !important;
+@page { margin: 290px 30px 103px 60px !important;
         padding: 0px 0px 0px 0px !important; }
-
+        
+body {
+    margin: 0px 1px 0px 1px;
+    padding: 0 0 0 0;
+}
 header {
     position:fixed;
-    top: -271px;    
+    top: -253px;    
     }
 
 main{
@@ -80,7 +84,7 @@ b {
 }
 </style>
 
-<body>   
+<body class="bordered" style="border-top: none;border-bottom: none;">  
 
 <header>
     <table style="text-align: center" width="100%" class="bordered">
@@ -165,9 +169,6 @@ b {
                     </table>   
                 </td>
             </tr>
-            <tr>
-                <td style="border-bottom: 2px solid #000;background:#D8D8D8" >REGISTRO DE MEDICIONES</td>
-            </tr>
         </tbody>
     </table>
 </header>
@@ -213,10 +214,13 @@ b {
         </table>
     </footer>
 
-<main>
+<main style="padding: 0 -3px 0 -3px;" >
 
     <table style="text-align: center;border-collapse: collapse;" class="bordered" >
         <thead>
+            <tr>
+                <td style="border-bottom: 2px solid #000;background:#D8D8D8" colspan="13" >REGISTRO DE MEDICIONES</td>
+            </tr>
             <tr>
                 <th id="rotate" style="border-right: 1px solid #000;font-size: 13px;font-weight: normal;"><div id="vertical" style="margin-left: 17px;margin-right: 17px;">ELEMENTO</div></th>
                 <th id="rotate" style="border-right: 1px solid #000;font-size: 13px;font-weight: normal;"><div id="vertical" style="margin-left: 6px;margin-right: 6px;">DIAMETRO</div></th>
@@ -230,7 +234,7 @@ b {
                 <th id="rotate" style="border-right: 1px solid #000;font-size: 13px;font-weight: normal;"><div id="vertical" style="margin-left: -34px;margin-right: -34px;">LONGITUD (mm)</div></th>
                 <th id="rotate" style="border-right: 1px solid #000;font-size: 13px;font-weight: normal;"><div id="vertical" style="margin-left: -37.8px;margin-right: -37.8px;">NIVEL REGISTRO</div></th>
                 <th id="rotate" style="border-right: 1px solid #000;font-size: 13px;font-weight: normal;" ><div id="vertical" style="margin-left: -4px;margin-right: -4px;">RESULTADO</div></th>
-                <th id="rotate" style="font-size: 13px;font-weight: normal;" ><div id="vertical" style="margin-left: -30px;margin-right: -30px;">REFERENCIA</div></th>
+                <th id="rotate" style="font-size: 13px;font-weight: normal;" ><div id="vertical" style="margin-left: -29.6px;margin-right: -29.6px;">REFERENCIA</div></th>
             </tr>
         </thead>
         <tbody>
@@ -265,7 +269,7 @@ b {
         
             </tr>        
             @endforeach   
-
+<!--
             {{ $cantFilasTotal = count($indicaciones_us_pa) }}
             {{ $filasPage = 27}}
             {{ $filasACompletar = pdfCantFilasACompletar($filasPage,$cantFilasTotal) }}
@@ -287,60 +291,62 @@ b {
                     <td style="font-size: 10px; text-align: center;" class="bordered-td">&nbsp;</td>
                </tr>
             @endfor
+-->
         </tbody>
     </table>
 
    
-    @if($informe_us->path1_indicacion || $informe_us->path2_indicacion || $informe_us->path2_indicacion || $informe_us->path2_indicacion)
+    @if($informe_us->path1_indicacion || $informe_us->path2_indicacion || $informe_us->path3_indicacion || $informe_us->path3_indicacion)
+
         <div class="page-break"></div>
+        <table style="text-align: center;" width="100%">
+                <tbody>
+                    <tr>
+                        <td>
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align: center; width: 340px;height: 190px;">
+                                                
+                                            @if ($informe_us->path1_indicacion)
+                                                <img src="{{ public_path($informe_us->path1_indicacion) }}" alt="" style="height: 180px; width: 263px;">
+                                            @endif  
+                            
+                                        </td>
+
+                                        <td style="text-align: center; width: 340px;height: 190px;">
+                                                
+                                            @if ($informe_us->path2_indicacion)
+                                                <img src="{{ public_path($informe_us->path2_indicacion) }}" alt="" style="height: 180px; width: 263px;">
+                                            @endif  
+                            
+                                        </td>  
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: center; width: 340px;height: 190px;">
+                                            
+                                            @if ($informe_us->path3_indicacion)
+                                                <img src="{{ public_path($informe_us->path3_indicacion) }}" alt="" style="height: 180px; width: 263px;">
+                                            @endif  
+                                
+                                        </td>
+
+                                        <td style="text-align: center; width: 340px;height: 190px;">
+
+                                            @if ($informe_us->path4_indicacion)
+                                                <img src="{{ public_path($informe_us->path4_indicacion) }}" alt="" style="height: 180px; width: 263px;">
+                                            @endif  
+                                
+                                        </td>
+                                    </tr>                        
+                                </tbody>
+                            </table>             
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
     @endif
 
-   <table style="text-align: center;" width="100%">
-        <tbody>
-            <tr>
-                <td>
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td style="text-align: center; width: 340px;height: 190px;">
-                                        
-                                    @if ($informe_us->path1_indicacion)
-                                        <img src="{{ public_path($informe_us->path1_indicacion) }}" alt="" style="height: 180px; width: 263px;">
-                                    @endif  
-                    
-                                </td>
-
-                                <td style="text-align: center; width: 340px;height: 190px;">
-                                        
-                                    @if ($informe_us->path2_indicacion)
-                                        <img src="{{ public_path($informe_us->path2_indicacion) }}" alt="" style="height: 180px; width: 263px;">
-                                    @endif  
-                    
-                                </td>  
-                            </tr>
-                            <tr>
-                                <td style="text-align: center; width: 340px;height: 190px;">
-                                    
-                                    @if ($informe_us->path3_indicacion)
-                                        <img src="{{ public_path($informe_us->path3_indicacion) }}" alt="" style="height: 180px; width: 263px;">
-                                    @endif  
-                        
-                                </td>
-
-                                <td style="text-align: center; width: 340px;height: 190px;">
-
-                                    @if ($informe_us->path4_indicacion)
-                                        <img src="{{ public_path($informe_us->path4_indicacion) }}" alt="" style="height: 180px; width: 263px;">
-                                    @endif  
-                        
-                                </td>
-                            </tr>                        
-                        </tbody>
-                    </table>             
-                </td>
-            </tr>
-        </tbody>
-    </table>
 
 </main>
      
@@ -359,9 +365,6 @@ b {
         $angle = 0.0;   //  default
         $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
     }
-
-    $pdf->line(46.5,130,46.5,780,array(0,0,0),1.5);
-    $pdf->line(571.3,130,571.3,780,array(0,0,0),1.5);
  
 </script>
 

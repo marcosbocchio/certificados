@@ -17,7 +17,7 @@ class InternoEquiposController extends Controller
   {
 
         $this->middleware(['role_or_permission:Super Admin|M_interno_equipos'],['only' => ['callView']]);  
-        $this->middleware(['role_or_permission:Super Admin|T_equipos'],['only' => ['OtInternoEquipos']]);   
+        $this->middleware(['role_or_permission:Super Admin|T_equipos_acceder'],['only' => ['OtInternoEquipos']]);   
         $this->middleware(['role_or_permission:Super Admin|T_equipos_actualiza'],['only' => ['store','destroy']]);
 
   
@@ -80,7 +80,8 @@ class InternoEquiposController extends Controller
         //
     }
 
-    public function getEquiposMetodoActivos($metodo){
+    public function getInternoEquipos($metodo,$activo_sn = ''){
+
       
         if($metodo != 'null'){
 
@@ -93,7 +94,7 @@ class InternoEquiposController extends Controller
                                     ->with('internoFuente')
                                     ->get();
 
-        }else{
+        }else if($activo_sn){
 
           return InternoEquipos::where('interno_equipos.activo_sn',1)
                                   ->with('equipo')
@@ -101,7 +102,15 @@ class InternoEquiposController extends Controller
                                   ->Select('interno_equipos.*')
                                   ->get();
 
-        }
+        }else{
+
+          return InternoEquipos::  with('equipo')
+                                  ->with('internoFuente')
+                                  ->Select('interno_equipos.*')
+                                  ->get();
+
+
+          }
                   
 
 

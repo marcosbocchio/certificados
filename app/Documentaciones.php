@@ -19,9 +19,21 @@ class Documentaciones extends Model
 
     public function usuario(){
 
-    return $this->belongsToMany('App\User','App\UsuarioDocumentaciones','documentacion_id');
+         return $this->belongsToMany('App\User','App\UsuarioDocumentaciones','documentacion_id');
  
    }
+
+   public function internoEquipo(){
+
+    return $this->belongsToMany('App\InternoEquipos','App\InternoEquipoDocumentaciones','documentacion_id','interno_equipo_id');
+
+  }
+
+public function InternoFuente(){
+
+    return $this->belongsToMany('App\InternoFuentes','App\InternoFuenteDocumentaciones','documentacion_id','interno_fuente_id');
+
+}
 
    public function scopeFiltro($query, $filtro='',$tipo='') { 
 

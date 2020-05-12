@@ -91,10 +91,10 @@
                                     <label for="espesor_chapa">Espesor Chapa *</label> 
                                 </div>
                                 <div v-else>
-                                     <label for="espesor_chapa">Espesor Chapa *</label> 
+                                     <label for="espesor_chapa">Espesor Chapa </label> 
                                 </div>                        
                             
-                                <input  type="text" class="form-control" v-model="espesor_chapa"  id="espesor_chapa" :disabled="!isChapa" > 
+                                <input  type="number" class="form-control" v-model.number="espesor_chapa"  id="espesor_chapa" :disabled="!isChapa" step="0.1"> 
                              </div>                                      
                         </div>
 
@@ -128,7 +128,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Equipo *</label>
-                                    <v-select  v-model="interno_equipo" :options="interno_equipos_activos" label="nro_interno" @input="getFuente()">
+                                    <v-select  v-model="interno_equipo" :options="interno_equipos" label="nro_interno" @input="getFuente()">
                                         <template slot="option" slot-scope="option">
                                             <span class="upSelect">{{ option.nro_interno }}</span> <br> 
                                             <span class="downSelect"> {{ option.equipo.codigo }} </span>
@@ -795,7 +795,7 @@ export default {
         });
         this.$store.dispatch('loadMateriales');
         this.$store.dispatch('loadDiametros');
-        this.$store.dispatch('loadInternoEquiposActivos',this.metodo);      
+        this.$store.dispatch('loadInternoEquipos',{ 'metodo' : this.metodo, 'activo_sn' : 1 });       
         this.getTipoPeliculas();
         this.$store.dispatch('loadNormaEvaluaciones');        
         this.$store.dispatch('loadNormaEnsayos');       
@@ -829,7 +829,8 @@ export default {
             if(val){
 
                   this.isChapa = (val.diametro =='CHAPA') ? true : false;
-
+                  this.espesor_chapa = '';
+                  this.espesor='';
             }   
         },
         formato : function (val){
@@ -867,7 +868,7 @@ export default {
 
     computed :{
 
-        ...mapState(['url','AppUrl','materiales','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','ejecutor_ensayos','interno_equipos_activos','fuentePorInterno','curie']),
+        ...mapState(['url','AppUrl','materiales','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','ejecutor_ensayos','interno_equipos','fuentePorInterno','curie']),
 
            HabilitarClonarPasadas(){
                 this.EnableClonarPasadas = (this.isGasoducto && this.pasada=='1' && this.TablaDetalle.length);

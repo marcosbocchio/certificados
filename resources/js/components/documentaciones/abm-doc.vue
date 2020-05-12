@@ -32,7 +32,7 @@
 
                 <div class="form-group">           
                     <div class="col-md-3 col-md-offset-4 col-sm-12 col-xs-12">
-                        <v-select class="style-chooser" v-model="tipo" :options="['INSTITUCIONAL','OT','PROCEDIMIENTO GENERAL','USUARIO']" id="tipo" placeholder="TODOS" @input="getResults()"></v-select>   
+                        <v-select class="style-chooser" v-model="tipo" :options="['INSTITUCIONAL','OT','PROCEDIMIENTO GENERAL','USUARIO','EQUIPO','FUENTE']" id="tipo" placeholder="TODOS" @input="getResults()"></v-select>   
                     </div>
                 </div>                       
                
@@ -88,7 +88,7 @@
                                    <label  for="tipo">Tipo Documento *</label>
                                    <v-select v-model="newRegistro.tipo" label="tipo" :options="tipo_documentos"></v-select>
                                 </div>                             
-                            </div>      
+                            </div> 
                             <div class="form-group">
                                 <label for="titulo">Título *</label>
                                 <input type="text" name="titulo" class="form-control" v-model="newRegistro.titulo" value="" @change="VerificarDuplicado()" maxlength="25">               
@@ -96,6 +96,29 @@
                             <div class="form-group">
                                 <label for="name">Descripción </label>
                                 <input type="text" name="descripcion" class="form-control" v-model="newRegistro.descripcion" value="" maxlength="50">  
+                            </div>
+                            <div v-if="newRegistro.tipo == 'EQUIPO'">
+                                <div class="form-group">
+                                    <label for="equipo">Equipo *</label>
+                                    <v-select  v-model="interno_equipo" :options="interno_equipos" label="nro_interno" @input="VerificarDuplicado()">
+                                        <template slot="option" slot-scope="option">
+                                            <span class="upSelect">{{ option.nro_interno }}</span> <br> 
+                                            <span class="downSelect"> {{ option.equipo.codigo }} </span>
+                                        </template>
+                                    </v-select>
+                                </div>
+                            </div>
+
+                            <div v-if="newRegistro.tipo == 'FUENTE'">
+                                <div class="form-group">                        
+                                   <label>Fuente </label>
+                                    <v-select  v-model="interno_fuente" :options="interno_fuentes" label="nro_serie" @input="VerificarDuplicado()">
+                                        <template slot="option" slot-scope="option">
+                                            <span class="upSelect">{{ option.nro_serie }}</span> <br> 
+                                            <span class="downSelect"> {{ option.fuente.codigo }} </span>
+                                        </template>
+                                    </v-select>    
+                                </div>
                             </div>
                             <div v-if="newRegistro.tipo == 'USUARIO'">
                                 <div class="form-group">
@@ -115,14 +138,14 @@
                                 </div>  
                             </div>    
                             
-                            <div v-if="newRegistro.tipo == 'USUARIO' |newRegistro.tipo == 'OT' |newRegistro.tipo == 'PROCEDIMIENTO GENERAL' |newRegistro.tipo == 'INSTITUCIONAL' ">
                               
+                            <div v-if="newRegistro.tipo == 'USUARIO' |newRegistro.tipo == 'OT' |newRegistro.tipo == 'PROCEDIMIENTO GENERAL' |newRegistro.tipo == 'INSTITUCIONAL' |newRegistro.tipo == 'EQUIPO' |newRegistro.tipo == 'FUENTE'" >
                                 <div class="form-group">
                                     <label for="fecha">Fecha caducidad *</label>
                                     <div>                                                                      
                                         <date-picker v-model="newRegistro.fecha_caducidad" value-type="YYYY-MM-DD" format="DD-MM-YYYY" placeholder="DD-MM-YYYY" ></date-picker>
                                     </div>
-                                </div>                 
+                                </div>            
                                   
                             </div>
                             <div class="form-group">                           
@@ -136,7 +159,7 @@
                                 <p>Formatos soportados : jpg, bmp, pdf.</p>
                             </div>
                              <div class="form-group">  
-                                 <div v-if="isPdf">
+                                 <div v-if="isPdf && newRegistro.path != ''">
                                     <a :href="AppUrl + '/' + newRegistro.path" target="_blank" class="btn btn-default btn-sm" title="pdf"><span class="fa fa-file-pdf-o"></span></a>
                                  </div> 
                                  <div v-else-if="newRegistro.path != ''">                            
@@ -214,9 +237,9 @@ export default {
 
        images:[
                 {              
-                    src: '',
-                    thumb: '',
-                    caption: 'caption to display. receive <html> <b>tag</b>', // Optional
+                src: '',
+                thumb: '',
+                caption: 'caption to display. receive <html> <b>tag</b>', // Optional
                 
                 }
             ]   ,
@@ -245,15 +268,20 @@ export default {
             'INSTITUCIONAL',
             'OT',    
             'PROCEDIMIENTO GENERAL',          
-            'USUARIO'           
+            'USUARIO',
+            'EQUIPO',
+            'FUENTE',
+            'VEHICULO'           
          ],       
          errors:[],
+         interno_equipo: {id:null,},
+         interno_fuente:{id:null,}, 
          metodo_ensayos:[],
          metodo_ensayo :{
              id:'',
          },
          usuario :{
-              id:'',
+              id:null,
          },
          usuarios:[],
          selectedFile : null,     
@@ -281,6 +309,9 @@ export default {
 
      mounted :function(){
 
+        this.$store.dispatch('loadInternoEquipos',{ 'metodo' : null, 'activo_sn' : '' });     
+        this.$store.dispatch('loadInternoFuentes','');       
+  
          if(this.modelo == 'documentaciones') {
 
             this.$store.dispatch('loadContarDocumentacionesTotal');
@@ -309,7 +340,7 @@ export default {
              return 'table-' + this.modelo ;
          },       
          
-         ...mapState(['url','AppUrl','CantProcedimientos','CantDocumentacionesTotal'])
+         ...mapState(['url','AppUrl','CantProcedimientos','CantDocumentacionesTotal','interno_equipos','interno_fuentes'])
      },
      
     methods :{
@@ -396,7 +427,7 @@ export default {
     VerificarDuplicado:  function(){
 
             axios.defaults.baseURL = this.url ;
-            var urlRegistros = 'documentaciones/verificar_duplicados/tipo/'+ this.newRegistro.tipo + '/titulo/'+ this.newRegistro.titulo + '/usuario/' + this.usuario.id + '?api_token=' + Laravel.user.api_token;        
+            var urlRegistros = 'documentaciones/verificar_duplicados/tipo/'+ this.newRegistro.tipo + '/titulo/'+ this.newRegistro.titulo + '/usuario/' + this.usuario.id + '/equipo/' + this.interno_equipo.id + '/fuente/' + this.interno_fuente.id +'?api_token=' + Laravel.user.api_token;        
             axios.get(urlRegistros).then(response =>{
             
                 let res =  response.data;
@@ -518,7 +549,9 @@ export default {
             'tipo'               : this.newRegistro.tipo,
             'titulo'             : this.newRegistro.titulo,
             'descripcion'        : this.newRegistro.descripcion,
-            'usuario'            : this.usuario,         
+            'usuario'            : this.usuario,      
+            'interno_equipo'     : this.interno_equipo,   
+            'interno_fuente'     : this.interno_fuente,     
             'metodo_ensayo'      : this.metodo_ensayo,   
             'fecha_caducidad'    : this.newRegistro.fecha_caducidad,
             'path'               : this.newRegistro.path,
@@ -560,6 +593,8 @@ export default {
             'titulo'             : this.newRegistro.titulo,
             'descripcion'        : this.newRegistro.descripcion,
             'usuario'            : this.usuario,         
+            'interno_equipo'     : this.interno_equipo,   
+            'interno_fuente'     : this.interno_fuente,   
             'metodo_ensayo'      : this.metodo_ensayo,   
             'fecha_caducidad'    : this.newRegistro.fecha_caducidad,
             'path'               : this.newRegistro.path,
@@ -604,9 +639,13 @@ export default {
                 this.HabilitarGuardar = true;
                 this.newRegistro = {};    
                 this.metodo_ensayo={};   
-                this.usuario ={};               
+                this.usuario ={};   
+                this.interno_equipo ={}; 
+                this.interno_fuente ={};             
                 this.metodo_ensayo =  registro.metodo_ensayo ? registro.metodo_ensayo : {id :''};
-                this.usuario = registro.usuario[0];                
+                this.usuario = registro.usuario[0];    
+                this.interno_equipo = registro.interno_equipo[0];
+                this.interno_fuente = registro.interno_fuente[0];            
                 this.newRegistro = registro;  
                 let fileName = this.newRegistro.path ; 
                 let FileExt = fileName.substring(fileName.length-3,fileName.length);

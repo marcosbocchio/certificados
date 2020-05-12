@@ -305,8 +305,8 @@ state: {
         norma_evaluaciones:[],
         norma_ensayos:[],
         interno_equipo_show:{},
-        interno_equipos_activos:[],
-        interno_fuentes_activos:[],
+        interno_equipos:[], 
+        interno_fuentes:[],
         fuentes:[],
         equipos:[],
         fuentePorInterno:{},
@@ -516,14 +516,14 @@ actions : {
           })
         },
 
-        loadInternoEquiposActivos({
-          commit},metodo = null) {
+        loadInternoEquipos({
+          commit},payload) {
           axios.defaults.baseURL = store.state.url ;
-          var urlRegistros = 'interno_equipos/metodo/' + metodo + '/activos' + '?api_token=' + Laravel.user.api_token;         
+          var urlRegistros = 'interno_equipos/metodo/' + payload.metodo + '/activo_sn/' + payload.activo_sn + '?api_token=' + Laravel.user.api_token;         
           console.log(urlRegistros);
           axios.get(urlRegistros).then((response) => {
             console.log(response.data);
-            commit('getInternoEquiposActivos', response.data)           
+            commit('getInternoEquipos', response.data)           
           })
         }, 
 
@@ -541,14 +541,14 @@ actions : {
             })
         }, 
         
-        loadInternoFuentesActivos({
-          commit}) {
+        loadInternoFuentes({
+          commit},activo_sn) {
           axios.defaults.baseURL = store.state.url ;
-          var urlRegistros = 'interno_fuentes/' + 'activos' + '?api_token=' + Laravel.user.api_token;         
+          var urlRegistros = 'interno_fuentes/activo_sn/' + activo_sn + '?api_token=' + Laravel.user.api_token;         
           console.log(urlRegistros);
           axios.get(urlRegistros).then((response) => {
             console.log(response.data);
-            commit('getInternoFuentesActivos', response.data)           
+            commit('getInternoFuentes', response.data)           
           })
         },
 
@@ -913,17 +913,17 @@ actions : {
         state.metodos_ensayos = metodoEnsayos
       },
 
-      getInternoEquiposActivos(state, interno_equipos_activos) {
-        state.interno_equipos_activos = interno_equipos_activos
+      getInternoEquipos(state, interno_equipos) {
+        state.interno_equipos = interno_equipos
       },
 
       getUbicacionInternoEquipo(state, interno_equipo_show) {
         state.interno_equipo_show = interno_equipo_show
-      },      
-
-      getInternoFuentesActivos(state, interno_fuentes_activos) {
-        state.interno_fuentes_activos = interno_fuentes_activos
-      },
+      },    
+      
+      getInternoFuentes(state, interno_fuentes) {
+        state.interno_fuentes = interno_fuentes
+      }, 
 
       getFuentes(state, fuentes) {
         state.fuentes = fuentes

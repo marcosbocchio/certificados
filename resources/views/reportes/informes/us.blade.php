@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title>Informe {{FormatearNumeroInforme($informe->numero,'US')}}</title>
+    <title>INFORME {{FormatearNumeroInforme($informe->numero,'US')}}</title>
 </head>
 
 <style  type='text/css'>
@@ -11,13 +11,18 @@
     font-family: DejaVu Sans;
 }
 
-@page { margin: 287px 30px 140px 60px !important;
+@page { margin: 293px 30px 140px 60px !important;
         padding: 0px 0px 0px 0px !important; }
 
 header {
     position:fixed;
-    top: -250px;    
+    top: -253px;    
     }
+
+body {
+    margin: 0px 1px 0px 1px;
+    padding: 0 0 0 0;
+}
 
 main{
    
@@ -77,7 +82,7 @@ b {
 }
 </style>
 
-<body>   
+<body class="bordered" style="border-top: none;border-bottom: none;">  
 
 <header>
     <table style="text-align: center" width="100%" class="bordered">
@@ -223,32 +228,36 @@ b {
 <main>
     <table style="text-align: center;border-collapse: collapse;">
         <tbody>
-        <tr>
-            <td style="border-bottom: 2px solid #000;background:#D8D8D8;padding-top:5px;" colspan="16">DATOS DE CALIBRACIÓN</td>
-        </tr>
-            <tr>
-                
-                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: 15.7px;margin-right: 15.7px;">ZAPATA</div></td>
-                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: 6px;margin-right: 6px;">PALPADOR</div></td>
-                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: 13px;margin-right: 13px;">N° SERIE</div></td>
-                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -48px;margin-right: -48px;">FRECUENCIA (Mhz)</div></td>
-                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -30px;margin-right: -30px;">ANG. APERTURA</div></td>
-                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -3px;margin-right:  -3px;">RANGO</div></td>
-                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -12px;margin-right: -12px;">POSICIÓN</div></td>
-                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -45px;margin-right: -45px;">CURVA ELEVACION</div></td>
-                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -55px;margin-right: -55px;">BLOCK CALIBRACIÓN</div></td>
-                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -50px;margin-right: -50px;">BLOCK SENSIBILIDAD</div></td>
-                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -49.5px;margin-right: -49.5px;">REFLECTOR REF. (mm)</div></td>
-                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -50px;margin-right: -50px;">GANANCIA REF. (dB)</div></td>
-                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -38px;margin-right: -38px;">NIVEL REGISTRO</div></td>
-                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -54.5px;margin-right: -54.5px;">CORREC. TRANSF (dB)</div></td>
-                <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -67.5px;margin-right: -67.5px;">ADICIONAL BARRIDO (dB)</div></td>
-                <td id="rotate" style="font-size: 13px;"><div id="vertical" style="margin-left: -45px;margin-right: -45px;">AMPLIF. TOTAL (dB)</div></td>
-
+                <tr>           
+                <td>
+                    <tr>
+                        <td style="border-bottom: 2px solid #000;background:#D8D8D8;padding-top:5px;" colspan="16">DATOS DE CALIBRACIÓN</td>
+                    </tr>
+                    <tr>
+                        
+                        <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: 14px;margin-right: 14px;">ZAPATA</div></td>
+                        <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: 6px;margin-right: 6px;">PALPADOR</div></td>
+                        <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: 13px;margin-right: 13px;">N° SERIE</div></td>
+                        <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -48px;margin-right: -48px;">FRECUENCIA (Mhz)</div></td>
+                        <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -30px;margin-right: -30px;">ANG. APERTURA</div></td>
+                        <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -3px;margin-right:  -3px;">RANGO</div></td>
+                        <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -12px;margin-right: -12px;">POSICIÓN</div></td>
+                        <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -45px;margin-right: -45px;">CURVA ELEVACION</div></td>
+                        <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -55px;margin-right: -55px;">BLOCK CALIBRACIÓN</div></td>
+                        <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -50px;margin-right: -50px;">BLOCK SENSIBILIDAD</div></td>
+                        <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -49.5px;margin-right: -49.5px;">REFLECTOR REF. (mm)</div></td>
+                        <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -50px;margin-right: -50px;">GANANCIA REF. (dB)</div></td>
+                        <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -38px;margin-right: -38px;">NIVEL REGISTRO</div></td>
+                        <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -54.5px;margin-right: -54.5px;">CORREC. TRANSF (dB)</div></td>
+                        <td id="rotate" style="border-right: 1px solid #000;font-size: 13px;"><div id="vertical" style="margin-left: -67.5px;margin-right: -67.5px;">ADICIONAL BARRIDO (dB)</div></td>
+                        <td id="rotate" style="font-size: 13px;"><div id="vertical" style="margin-left: -45px;margin-right: -45px;">AMPLIF. TOTAL (dB)</div></td>
+        
+                    </tr>
+                </td>
             </tr>
         </tbody>
     </table> 
-    <table width="100%" class="bordered">
+    <table width="100%" class="bordered" style="padding: 0 -3px 0 -3px;" >
         <tbody>
             @foreach ($calibraciones_us as $calibracion)
                 <tr>
@@ -291,7 +300,7 @@ b {
             {{ $filasACompletar = 4 - count($calibraciones_us) }}  
             @for ( $x=0 ;  $x < $filasACompletar ; $x++)
                 <tr>
-                    <td style="font-size: 10px; width:80px;height: 15.2px; text-align: center;"class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 10px; width:80px;text-align: center;"class="bordered-td">&nbsp;</td>
                     <td style="font-size: 10px; width:80px;text-align: center;" class="bordered-td">&nbsp;</td>
                     <td style="font-size: 10px; width:79.7px;text-align: center;" class="bordered-td">&nbsp;</td>
                     <td style="font-size: 10px; width:20.9px;  text-align: center;" class="bordered-td">&nbsp;</td> 
@@ -313,7 +322,7 @@ b {
         </tbody>
     </table>
     
-    <table style="text-align: center;" width="100%">
+    <table style="text-align: center;margin-top: 5px;" width="100%" >
         <tbody>
             <tr>
                 <td>
@@ -357,20 +366,16 @@ b {
                     </table>             
                 </td>
             </tr>
-        </tbody>
-    </table>
-    <table style="margin-top: 0px; border-collapse: collapse;" class="bordered"  width="100%">
-        <tbody>
-             <tr>
-                 <td style="border-bottom: 2px solid #000;background:#D8D8D8;text-align: center;" >
-                    REGISTRO DE MEDICIONES
-                    @if($tecnica->codigo == 'US' || $tecnica->codigo=='PA')
-                    <a href="{{ route('InformeUsIndicacionesUsPa',$informe->id)}}"><img src="{{ public_path('img/fa-file-pdf.jpg')}}" style="height: 15px;margin-left:3px;;margin-top:2px;text-align: center;"></a>
-                    @elseif($tecnica->codigo ='ME')
-                    <a href="{{ route('InformeUsIndicacionesMe',$informe->id)}}"><img src="{{ public_path('img/fa-file-pdf.jpg')}}" style="height: 15px;margin-left:3px;;margin-top:2px;text-align: center;"></a>
-                    @endif
-                </td>
-             </tr>
+            <tr>
+                <td style="border-top: 2px solid #000;background:#D8D8D8;text-align: center;" >
+                   REGISTRO DE MEDICIONES
+                   @if($tecnica->codigo == 'US' || $tecnica->codigo=='PA')
+                   <a href="{{ route('InformeUsIndicacionesUsPa',$informe->id)}}"><img src="{{ public_path('img/fa-file-pdf.jpg')}}" style="height: 15px;margin-left:3px;;margin-top:2px;text-align: center;"></a>
+                   @elseif($tecnica->codigo ='ME')
+                   <a href="{{ route('InformeUsIndicacionesMe',$informe->id)}}"><img src="{{ public_path('img/fa-file-pdf.jpg')}}" style="height: 15px;margin-left:3px;;margin-top:2px;text-align: center;"></a>
+                   @endif
+               </td>
+            </tr>
         </tbody>
     </table>
 </main>
@@ -389,10 +394,7 @@ b {
         $char_space = 0.0;  //  default
         $angle = 0.0;   //  default
         $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
-    }
-
-    $pdf->line(46.5,130,46.5,800,array(0,0,0),1.5);
-    $pdf->line(571.3,130,571.3,800,array(0,0,0),1.5);
+    }  
  
 </script>
 

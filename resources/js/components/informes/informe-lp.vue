@@ -91,7 +91,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Equipo *</label>
-                                    <v-select  v-model="interno_equipo" :options="interno_equipos_activos" label="nro_interno" @input="getFuente()">
+                                    <v-select  v-model="interno_equipo" :options="interno_equipos" label="nro_interno" @input="getFuente()">
                                         <template slot="option" slot-scope="option">
                                             <span class="upSelect">{{ option.nro_interno }}</span> <br> 
                                             <span class="downSelect"> {{ option.equipo.codigo }} </span>
@@ -555,7 +555,7 @@ data() {return {
 
         this.$store.dispatch('loadMateriales');
         this.$store.dispatch('loadDiametros');
-        this.$store.dispatch('loadInternoEquiposActivos',this.metodo);       
+        this.$store.dispatch('loadInternoEquipos',{ 'metodo' : this.metodo, 'activo_sn' : 1 });       
       this.$store.dispatch('loadProcedimietosOtMetodo',  
         { 'ot_id' : this.otdata.id, 'metodo' : this.metodo }).then(response =>{ 
                 if(this.procedimientos.length == 0  ){
@@ -595,7 +595,7 @@ data() {return {
 
     computed :{
 
-        ...mapState(['url','AppUrl','materiales','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','interno_equipos_activos','iluminaciones','penetrantes_tipo_liquido','reveladores_tipo_liquido','removedores_tipo_liquido','ejecutor_ensayos','fuentePorInterno']),     
+        ...mapState(['url','AppUrl','materiales','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','interno_equipos','iluminaciones','penetrantes_tipo_liquido','reveladores_tipo_liquido','removedores_tipo_liquido','ejecutor_ensayos','fuentePorInterno']),     
 
         numero_inf_code : function()  {
 

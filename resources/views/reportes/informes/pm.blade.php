@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Informe {{FormatearNumeroInforme($informe->numero,'PM')}}</title>
+    <title>INFORME {{FormatearNumeroInforme($informe->numero,'PM')}}</title>
 </head>
 
 <style>

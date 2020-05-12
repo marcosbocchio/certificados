@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Referencia OT N°: {{$ot->numero}} - {{ $tabla }}: {{$modelo->descripcion}}</title></head>
+    <title>REFERENCIA OT N°: {{$ot->numero}} - {{ $tabla }}: {{$modelo->descripcion}}</title></head>
 
  <style>
 

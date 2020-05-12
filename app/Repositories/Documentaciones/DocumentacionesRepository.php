@@ -6,6 +6,10 @@ use App\Documentaciones;
 use App\UsuarioDocumentaciones;
 use App\OtProcedimientosPropios;
 use Illuminate\Support\Facades\DB;
+use App\InternoEquipoDocumentaciones;
+use App\InternoFuenteDocumentaciones;
+use App\InternoVehiculoDocumentaciones;
+
 
 
 class DocumentacionesRepository extends BaseRepository
@@ -29,14 +33,32 @@ class DocumentacionesRepository extends BaseRepository
         
           if ($request->tipo == 'USUARIO'){
 
-            $usuarioDocumento = new UsuarioDocumentaciones;
-            $this->saveUsuarioDocumento($documento,$usuarioDocumento,$request);    
+            $usuario_documento = new UsuarioDocumentaciones;
+            $this->saveUsuarioDocumento($documento,$usuario_documento,$request);    
           }
 
           if ($request->tipo == 'PROCEDIMIENTO'){
 
             $ot_procedimieto_propio = new OtProcedimientosPropios;
             (new \App\Http\Controllers\OtProcedimientosPropiosController)->store($documento->id,$ot_procedimieto_propio,$request->ot_id);
+          }
+
+          if ($request->tipo == 'EQUIPO'){
+
+            $equipo_documento = new InternoEquipoDocumentaciones;
+            $this->saveEquipoDocumento($documento,$equipo_documento,$request);        
+          }
+
+          if ($request->tipo == 'FUENTE'){
+
+            $fuente_documento = new InternoFuenteDocumentaciones;
+            $this->saveFuenteDocumento($documento,$fuente_documento,$request);        
+          }
+
+          if ($request->tipo == 'VEHICULO'){
+
+            $vehiculo_documento = new InternoVehiculoDocumentaciones;
+            $this->saveVehiculoDocumento($documento,$vehiculo_documento,$request);        
           }
 
     DB::commit();
@@ -58,20 +80,40 @@ class DocumentacionesRepository extends BaseRepository
 
     try {
      
-     $documento = $this->saveDocumento($documento,$request);
+          $documento = $this->saveDocumento($documento,$request);
 
-     if ($request->tipo == 'USUARIO'){
+          if ($request->tipo == 'USUARIO'){
 
-       $usuarioDocumento = UsuarioDocumentaciones::where('documentacion_id',$documento->id)->first();
-       $this->saveUsuarioDocumento($documento,$usuarioDocumento,$request);
+            $usuario_documento = UsuarioDocumentaciones::where('documentacion_id',$documento->id)->first();
+            $this->saveUsuarioDocumento($documento,$usuario_documento,$request);
 
-    }
+          }
 
-    if ($request->tipo == 'PROCEDIMIENTO'){
+          if ($request->tipo == 'PROCEDIMIENTO'){
 
-      $ot_procedimieto_propio = OtProcedimientosPropios::where('documentacion_id',$documento->id)->first();
-      (new \App\Http\Controllers\OtProcedimientosPropiosController)->store($documento->id,$ot_procedimieto_propio,$request->ot_id); 
-    }
+            $ot_procedimieto_propio = OtProcedimientosPropios::where('documentacion_id',$documento->id)->first();
+            (new \App\Http\Controllers\OtProcedimientosPropiosController)->store($documento->id,$ot_procedimieto_propio,$request->ot_id); 
+          }
+
+          if ($request->tipo == 'EQUIPO'){
+
+            $equipo_documento = InternoEquipoDocumentaciones::where('documentacion_id',$documento->id)->first();
+            $this->saveEquipoDocumento($documento,$equipo_documento,$request);
+          }
+
+          if ($request->tipo == 'FUENTE'){
+
+            $fuente_documento = InternoFuenteDocumentaciones::where('documentacion_id',$documento->id)->first();
+            $this->saveFuenteDocumento($documento,$fuente_documento,$request);        
+          }
+
+          if ($request->tipo == 'VEHICULO'){
+
+            $vehiculo_documento = InternoVehiculoDocumentaciones::where('documentacion_id',$documento->id)->first();
+            $this->saveVehiculoDocumento($documento,$vehiculo_documento,$request);        
+          }
+
+
     DB::commit(); 
       } catch (Exception $e) {
 
@@ -84,7 +126,6 @@ class DocumentacionesRepository extends BaseRepository
   }
 
   public function saveDocumento($documento,$request){
-
     
     $fecha_caducidad = $request->fecha_caducidad ? date('Y-m-d',strtotime($request->fecha_caducidad)) : null;
     $documento->tipo = $request->tipo;
@@ -99,11 +140,35 @@ class DocumentacionesRepository extends BaseRepository
     return $documento ;
   }
 
-  public function saveUsuarioDocumento($documento,$usuarioDocumento,$request){
+  public function saveUsuarioDocumento($documento,$usuario_documento,$request){
 
-    $usuarioDocumento->documentacion_id = $documento->id;
-    $usuarioDocumento->user_id = $request->usuario['id'];      
-    $usuarioDocumento->save();
+    $usuario_documento->documentacion_id = $documento->id;
+    $usuario_documento->user_id = $request->usuario['id'];      
+    $usuario_documento->save();
+
+  }
+
+  public function saveEquipoDocumento($documento,$equipo_documento,$request){
+
+    $equipo_documento->documentacion_id = $documento->id;
+    $equipo_documento->interno_equipo_id = $request->interno_equipo['id'];      
+    $equipo_documento->save();
+
+  }
+
+  public function saveFuenteDocumento($documento,$fuente_documento,$request){
+
+    $fuente_documento->documentacion_id = $documento->id;
+    $fuente_documento->interno_fuente_id = $request->interno_fuente['id'];      
+    $fuente_documento->save();
+
+  }
+
+  public function saveVehiculoDocumento($documento,$vehiculo_documento,$request){
+
+    $vehiculo_documento->documentacion_id = $documento->id;
+    $vehiculo_documento->interno_vehiculo_id = $request->interno_vehiculo['id'];      
+    $vehiculo_documento->save();
 
   }
 

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Referencia Informe N°: {{FormatearNumeroInforme($informe->numero,'LP')}} - Pieza N°: {{$detalle_lp->numero}}</title>
+    <title>REFERENCIA INFORME N°: {{FormatearNumeroInforme($informe->numero,'LP')}}</title>
 </head>
 <style>
  
@@ -76,7 +76,7 @@ b {
                     <table>
                         <tbody>
                             <tr>
-                                <td style="font-size: 13px;" > <b>PIEZA: </b>  {{$detalle_lp->pieza}} &nbsp;&nbsp; <b>N°: </b>{{$detalle_lp->numero}}</td>  
+                                <td style="font-size: 12px;" > <b>ELEMENTO: </b>  {{$detalle_lp->pieza}}</td>  
                             </tr>
                         </tbody>
                     </table>

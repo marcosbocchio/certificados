@@ -2,16 +2,17 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Referencia Informe N°: {{FormatearNumeroInforme($informe->numero,'PM')}} - Pieza N°: {{$detalle_pm->numero}}</title></head>
+    <title>REFERENCIA INFORME N°: {{FormatearNumeroInforme($informe->numero,'PM')}}</title>
+</head>
 <style>
  
- @page { margin: 193px 30px 194px 60px !important;
+ @page { margin: 195px 30px 194px 60px !important;
         padding: 0px 0px 0px 0px !important; }
 
 
 header {
     position:fixed;
-    top: -153px;  
+    top: -155px;  
     }
 
 footer {
@@ -75,7 +76,7 @@ b {
                         <table>
                             <tbody>
                                 <tr>
-                                    <td style="font-size: 13px;" > <b>PIEZA: </b>  {{$detalle_pm->pieza}} &nbsp;&nbsp; <b>N°: </b>{{$detalle_pm->numero}}</td>  
+                                    <td style="font-size: 12px;" > <b>ELEMENTO: </b>  {{$detalle_pm->pieza}} </td>  
                                 </tr>
                             </tbody>
                         </table>

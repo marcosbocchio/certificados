@@ -117,7 +117,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Equipo *</label>
-                                    <v-select  v-model="interno_equipo" :options="interno_equipos_activos" label="nro_interno">
+                                    <v-select  v-model="interno_equipo" :options="interno_equipos" label="nro_interno">
                                         <template slot="option" slot-scope="option">
                                             <span class="upSelect">{{ option.nro_interno }}</span> <br> 
                                             <span class="downSelect"> {{ option.equipo.codigo }} </span>
@@ -244,7 +244,7 @@ export default {
     created : function() {
 
         this.getProductos();  
-        this.$store.dispatch('loadInternoEquiposActivos');       
+        this.$store.dispatch('loadInternoEquipos',{ 'metodo' : null, 'activo_sn' : 1 });       
         this.setEdit();   
 
     },
@@ -268,7 +268,7 @@ export default {
 
     computed :{
 
-        ...mapState(['url','AppUrl','interno_equipos_activos','interno_equipo_show']),
+        ...mapState(['url','AppUrl','interno_equipos','interno_equipo_show']),
        
      },
 

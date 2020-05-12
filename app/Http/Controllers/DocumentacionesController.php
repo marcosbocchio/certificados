@@ -42,8 +42,13 @@ class DocumentacionesController extends Controller
                                             ->orWhere('documentaciones.tipo','OT')
                                             ->orWhere('documentaciones.tipo','INSTITUCIONAL')
                                             ->orWhere('documentaciones.tipo','PROCEDIMIENTO GENERAL') 
+                                            ->orWhere('documentaciones.tipo','EQUIPO')
+                                            ->orWhere('documentaciones.tipo','FUENTE')
+                                            ->orWhere('documentaciones.tipo','VEHICULO')
                                             ->with('metodoEnsayo')   
-                                            ->with('usuario')      
+                                            ->with('usuario')
+                                            ->with('internoEquipo')
+                                            ->with('InternoFuente')      
                                             ->Filtro($filtro,$tipo)                      
                                             ->selectRaw('documentaciones.*')                               
                                             ->orderBy('documentaciones.tipo','ASC')    
@@ -68,7 +73,7 @@ class DocumentacionesController extends Controller
 
     }
 
-    public function verificarDuplicados($tipo = null,$titulo= null,$user_id = null){
+    public function verificarDuplicados($tipo = null,$titulo= null,$user_id = null,$interno_equipo_id= null,$interno_fuente_id = null){
 
         if($tipo ==  'USUARIO'){
 
@@ -78,7 +83,23 @@ class DocumentacionesController extends Controller
                                     ->where('usuario_documentaciones.user_id',$user_id) 
                                     ->get();
 
-        }else{
+        }else if ('EQUIPO'){
+
+            return documentaciones::join('interno_equipo_documentaciones','interno_equipo_documentaciones.documentacion_id','=','documentaciones.id')
+                                    ->where('documentaciones.tipo',$tipo)
+                                    ->where('documentaciones.titulo',$titulo)
+                                    ->where('interno_equipo_documentaciones.interno_equipo_id',$interno_equipo_id) 
+                                    ->get();
+        }else if('FUENTE'){
+
+            return documentaciones::join('interno_fuente_documentaciones','interno_fuente_documentaciones.documentacion_id','=','documentaciones.id')
+                                    ->where('documentaciones.tipo',$tipo)
+                                    ->where('documentaciones.titulo',$titulo)
+                                    ->where('interno_fuente_documentaciones.interno_fuente_id',$interno_fuente_id) 
+                                    ->get();
+
+        }
+        else{
             
             return documentaciones::where('documentaciones.tipo',$tipo)
                                     ->where('documentaciones.titulo',$titulo)

@@ -58,13 +58,21 @@ class InternoFuentesController extends Controller
         //
     }
 
-    public function getFuentesActivos(){
+    public function getInternoFuentes($activo_sn =''){
       
+        if($activo_sn==''){
+          
+          return InternoFuentes::Select('interno_fuentes.*')
+                                  ->with('fuente')                            
+                                  ->get();
 
-        return  InternoFuentes::where('activo_sn',1)
-                                ->Select('interno_fuentes.*')
-                                ->with('fuente')                            
-                                ->get();
+        }else{
+          
+          return  InternoFuentes::where('activo_sn',$activo_sn)
+                                  ->Select('interno_fuentes.*')
+                                  ->with('fuente')                            
+                                  ->get();
+        }
 
 
     }

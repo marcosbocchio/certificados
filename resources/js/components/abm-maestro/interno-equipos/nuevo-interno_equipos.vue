@@ -24,7 +24,7 @@
                     <v-select v-model="equipo" label="codigo" :options="equipos"></v-select>              
 
                     <label>Fuente </label>
-                    <v-select  v-model="interno_fuente" :options="interno_fuentes_activos" label="nro_serie">
+                    <v-select  v-model="interno_fuente" :options="interno_fuentes" label="nro_serie">
                         <template slot="option" slot-scope="option">
                             <span class="upSelect">{{ option.nro_serie }}</span> <br> 
                             <span class="downSelect"> {{ option.fuente.codigo }} </span>
@@ -75,7 +75,7 @@ export default {
     },
     computed :{
     
-         ...mapState(['url','equipos','interno_fuentes_activos'])
+         ...mapState(['url','equipos','interno_fuentes'])
     },
  
    

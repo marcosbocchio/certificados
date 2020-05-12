@@ -5,12 +5,13 @@
       <table class="table table-hover table-striped">
         <thead>
           <tr>
-            <th>TIPO</th>
-            <th>TÍTULO</th>
-            <th>DESCRIPCIÓN</th>
-            <th>MÉTODO</th>
-            <th>USUARIO</th>
-            <th colspan="2">&nbsp;</th>
+            <th class="col-md-1">TIPO</th>
+            <th class="col-md-2">TÍTULO</th>
+            <th class="col-md-4">DESCRIPCIÓN</th>
+            <th class="col-md-1">MÉTODO</th>
+            <th class="col-md-2">USUARIO</th>
+            <th class="col-md-1">INT. Nº</th>
+            <th >&nbsp;</th>
           </tr>
         </thead>
         <tbody>
@@ -19,12 +20,18 @@
             <td v-if="registro.tipo == 'USUARIO'">USUARIOS</td>          
             <td v-if="registro.tipo == 'OT'" >OT</td>          
             <td v-if="registro.tipo == 'INSTITUCIONAL'">INSTITUCIONAL</td>    
-            <td v-if="registro.tipo == 'PROCEDIMIENTO GENERAL'">PROCEDIMIENTO GENERAL</td>       
+            <td v-if="registro.tipo == 'PROCEDIMIENTO GENERAL'">PROCEDIMIENTO GENERAL</td>    
+            <td v-if="registro.tipo == 'EQUIPO'">EQUIPO</td>
+            <td v-if="registro.tipo == 'FUENTE'">FUENTE</td>
+            <td v-if="registro.tipo == 'VEHICULO'">VEHICULO</td>   
             <td>{{ registro.titulo}}</td>
             <td>{{ registro.descripcion }}</td>
             <td>{{ registro.metodo_ensayo['metodo']}}</td>
             <td v-if="registro.usuario[0]">{{ registro.usuario[0]['name']}}</td>
-            <td  v-else></td>
+            <td  v-else>&nbsp;</td>
+            <td v-if="registro.tipo == 'EQUIPO' && registro.interno_equipo[0]">{{ registro.interno_equipo[0]['nro_interno']}}</td>
+            <td v-else-if="registro.tipo == 'FUENTE' && registro.interno_fuente[0]">{{ registro.interno_fuente[0]['nro_serie']}}</td>
+            <td  v-else>&nbsp;</td>
             <td width="10px">
               <button class="btn btn-warning btn-sm" title="Editar" v-on:click.prevent="$emit('editRegistroEvent',registro)" :disabled="!$can('M_documentaciones_edita')"><span class="fa fa-edit"></span></button>
             </td>
