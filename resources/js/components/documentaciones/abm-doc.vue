@@ -270,8 +270,7 @@ export default {
             'PROCEDIMIENTO GENERAL',          
             'USUARIO',
             'EQUIPO',
-            'FUENTE',
-            'VEHICULO'           
+            'FUENTE',                     
          ],       
          errors:[],
          interno_equipo: {id:null},
