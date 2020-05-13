@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection as Collection;
 use App\MetodoEnsayos;
 use App\Users;
+use App\InternoEquipoDocumentaciones;
+use App\InternoFuenteDocumentaciones;
+use Illuminate\Support\Facades\Log;
 
 
 class DocumentacionesController extends Controller
@@ -35,6 +38,9 @@ class DocumentacionesController extends Controller
      */
     public function index(Request $request)
     {   
+
+        DB::enableQueryLog();
+
         $filtro = $request->search == 'null' ? '' : $request->search;;
         $tipo = $request->tipo == 'null' ? '' : $request->tipo;
         $documentaciones = Documentaciones::leftJoin('usuario_documentaciones','usuario_documentaciones.documentacion_id','=','documentaciones.id')
@@ -48,13 +54,18 @@ class DocumentacionesController extends Controller
                                             ->with('metodoEnsayo')   
                                             ->with('usuario')
                                             ->with('internoEquipo')
-                                            ->with('InternoFuente')      
+                                            ->with('internoFuente')      
                                             ->Filtro($filtro,$tipo)                      
                                             ->selectRaw('documentaciones.*')                               
                                             ->orderBy('documentaciones.tipo','ASC')    
                                             ->orderBy('documentaciones.id','DESC')                         
                                             ->paginate(10);             
         
+    $queries = DB::getQueryLog();
+    foreach($queries as $i=>$query)
+    {
+        Log::debug("Query $i: " . json_encode($query));
+    }
         return $documentaciones;
     }
 
@@ -83,14 +94,14 @@ class DocumentacionesController extends Controller
                                     ->where('usuario_documentaciones.user_id',$user_id) 
                                     ->get();
 
-        }else if ($tipo == 'EQUIPO'){
+        }elseif ($tipo == 'EQUIPO'){
 
             return documentaciones::join('interno_equipo_documentaciones','interno_equipo_documentaciones.documentacion_id','=','documentaciones.id')
                                     ->where('documentaciones.tipo',$tipo)
                                     ->where('documentaciones.titulo',$titulo)
                                     ->where('interno_equipo_documentaciones.interno_equipo_id',$interno_equipo_id) 
                                     ->get();
-        }else if($tipo == 'FUENTE'){
+        }elseif($tipo == 'FUENTE'){
 
             return documentaciones::join('interno_fuente_documentaciones','interno_fuente_documentaciones.documentacion_id','=','documentaciones.id')
                                     ->where('documentaciones.tipo',$tipo)
@@ -280,10 +291,17 @@ class DocumentacionesController extends Controller
     {   
         $documento = $this->documentaciones->find($id);    
         
-        $usuarioDocumento = new UsuarioDocumentaciones;
+        $usuario_documento = new UsuarioDocumentaciones;
     
-        $usuarioDocumento->where('documentacion_id',$id)->delete();
-  
+        $usuario_documento->where('documentacion_id',$id)->delete();
+
+        $equipo_documento = new InternoEquipoDocumentaciones;
+    
+        $equipo_documento->where('documentacion_id',$id)->delete();
+
+        $fuente_documento = new InternoFuenteDocumentaciones;
+    
+        $fuente_documento->where('documentacion_id',$id)->delete();         
       
         $documento->delete();
 

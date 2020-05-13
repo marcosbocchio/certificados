@@ -29,7 +29,7 @@ class Documentaciones extends Model
 
   }
 
-public function InternoFuente(){
+public function internoFuente(){
 
     return $this->belongsToMany('App\InternoFuentes','App\InternoFuenteDocumentaciones','documentacion_id','interno_fuente_id');
 
@@ -46,12 +46,19 @@ public function InternoFuente(){
                 })
                 ->orWhereHas('usuario', function ($q) use($filtro) {
                     $q->WhereRaw("users.name LIKE '%" . $filtro . "%'");
-                }); 
+                })
+                ->orWhereHas('internoEquipo', function ($q) use($filtro) {
+                    $q->WhereRaw("interno_equipos.nro_interno LIKE '%" . $filtro . "%'");
+                })
+                ->orWhereHas('internoFuente', function ($q) use($filtro) {
+                    $q->WhereRaw("interno_fuentes.nro_serie LIKE '%" . $filtro . "%'");
+                });
     
         }elseif(trim($filtro) && trim($tipo)){           
             
             $query ->where("documentaciones.tipo",$tipo)
                    ->where(function($q) use($filtro) {
+                       
                         $q->WhereRaw("documentaciones.titulo LIKE '%" . $filtro . "%'")    
                         ->orWhereRaw("documentaciones.descripcion LIKE '%" . $filtro . "%'") 
                         
@@ -60,6 +67,12 @@ public function InternoFuente(){
                         })
                         ->orWhereHas('usuario', function ($q) use($filtro) {
                             $q->WhereRaw("users.name LIKE '%" . $filtro . "%'");
+                        })
+                        ->orWhereHas('internoEquipo', function ($q) use($filtro) {
+                            $q->WhereRaw("interno_equipos.nro_interno LIKE '%" . $filtro . "%'");
+                        })
+                        ->orWhereHas('internoFuente', function ($q) use($filtro) {
+                            $q->WhereRaw("interno_fuentes.nro_serie LIKE '%" . $filtro . "%'");
                         }); 
                     });
                    

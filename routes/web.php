@@ -112,7 +112,9 @@ Route::group(['middleware' => ['auth']], function () {
 
 });
 
-
+/*
  Route::get('php', function () {
    phpinfo();
 }); 
+
+*/
