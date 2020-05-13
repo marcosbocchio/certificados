@@ -312,6 +312,9 @@ class DocumentacionesController extends Controller
         return Documentaciones::orWhere('documentaciones.tipo','USUARIO')
                                 ->orWhere('documentaciones.tipo','OT')
                                 ->orWhere('documentaciones.tipo','INSTITUCIONAL')
+                                ->orWhere('documentaciones.tipo','EQUIPO')
+                                ->orWhere('documentaciones.tipo','FUENTE')
+                                ->orWhere('documentaciones.tipo','VEHICULO')
                                 ->orWhere('documentaciones.tipo','PROCEDIMIENTO GENERAL')->count(); 
 
     }
