@@ -40,6 +40,7 @@ class PdfInformesPmController extends Controller
          $ot = Ots::findOrFail($informe->ot_id);
          $cliente = Clientes::findOrFail($ot->cliente_id);           
          $material = Materiales::findOrFail($informe->material_id);   
+         $material_accesorio = Materiales::find($informe->material_accesorio_id);
          $norma_ensayo = NormaEnsayos::findOrFail($informe->norma_ensayo_id);   
          $norma_evaluacion = NormaEvaluaciones::findOrFail($informe->norma_evaluacion_id); 
          $ot_procedimiento_propio = OtProcedimientosPropios::findOrFail($informe->procedimiento_informe_id);
@@ -87,6 +88,7 @@ class PdfInformesPmController extends Controller
                                                                 'informe',
                                                                 'informe_pm',
                                                                 'material',
+                                                                'material_accesorio',
                                                                 'tipo_magnetizacion',
                                                                 'magnetizacion',
                                                                 'desmagnetizacion_sn',

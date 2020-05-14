@@ -12,8 +12,6 @@
 @section('contenido') 
  <div id="app">
 
-   
-
   <informe-ri      
    
       metodo ="{{$metodo}}"
@@ -21,6 +19,7 @@
      :informedata ="{{$informe}}"
      :informe_ridata ="{{$informe_ri}}"
      :materialdata="{{$informe_material}}"
+     :material2data ="{{$informe_material_accesorio}}"
      :diametrodata="{{$informe_diametro}}"
      :diametro_espesordata="{{$informe_diametroEspesor}}"
      :interno_fuentedata="{{$informe_interno_fuente}}"

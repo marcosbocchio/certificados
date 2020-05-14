@@ -259,6 +259,7 @@ class InternoEquiposController extends Controller
 
     return InternoEquipos::where('ot_id',$ot_id)
                            ->with('equipo')
+                           ->with('internoFuente.fuente')
                            ->select('interno_equipos.*')
                            ->get();
       }

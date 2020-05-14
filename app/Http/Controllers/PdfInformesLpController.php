@@ -37,6 +37,7 @@ class PdfInformesLpController extends Controller
          $ot = Ots::findOrFail($informe->ot_id);
          $cliente = Clientes::findOrFail($ot->cliente_id);           
          $material = Materiales::findOrFail($informe->material_id);   
+         $material_accesorio = Materiales::find($informe->material_accesorio_id);
          $norma_ensayo = NormaEnsayos::findOrFail($informe->norma_ensayo_id);   
          $norma_evaluacion = NormaEvaluaciones::findOrFail($informe->norma_evaluacion_id); 
          $diametro_espesor = DiametrosEspesor::findOrFail($informe->diametro_espesor_id);       
@@ -55,7 +56,9 @@ class PdfInformesLpController extends Controller
          $iluminacion = Iluminaciones::findOrFail($informe_lp->iluminacion_id);        
          $evaluador = User::find($informe->firma);
          $contratista = Contratistas::find($ot->contratista_id);
+
        // dd($evaluador);
+
          $detalles =  DB::select('SELECT 
                                 detalles_lp.pieza as pieza,
                                 detalles_lp.cm as cm,
@@ -70,7 +73,6 @@ class PdfInformesLpController extends Controller
                                 informes_lp.id =:id',['id' => $informe_lp->id ]);
         
         
- 
            $pdf = PDF::loadView('reportes.informes.lp',compact('ot',
                                                                 'norma_ensayo',
                                                                 'norma_evaluacion',
@@ -85,7 +87,8 @@ class PdfInformesLpController extends Controller
                                                                 'contratista',
                                                                 'informe',
                                                                 'informe_lp',
-                                                                'material',                                                            
+                                                                'material',   
+                                                                'material_accesorio',                                                         
                                                                 'metodo',   
                                                                 'penetrante',   
                                                                 'penetrante_aplicacion',

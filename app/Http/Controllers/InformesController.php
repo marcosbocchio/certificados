@@ -206,13 +206,13 @@ class InformesController extends Controller
         $informe->user_id = $user_id;
         $informe->ejecutor_ensayo_id = $request->ejecutor_ensayo['ot_operario_id'];
         $informe->material_id = $request->material['id'];
+        $informe->material_accesorio_id = $request->material2 ? $request->material2['id'] : null;
         $informe->fecha = date('Y-m-d',strtotime($request->fecha));
         $informe->numero = $request->numero_inf;
         $informe->prefijo = $request->prefijo;  
         $informe->componente = $request->componente;
         $informe->procedimiento_soldadura = $request->procedimiento_soldadura;
         $informe->plano_isom = $request->plano_isom;
-        $informe->eps = $request->eps;
         $informe->pqr = $request->pqr;
         $informe->observaciones = $request->observaciones;
         $informe->save();   

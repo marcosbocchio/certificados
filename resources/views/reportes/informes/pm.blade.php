@@ -108,7 +108,13 @@ b {
                             <td style="font-size: 11px; " colspan="2"  ><b>Norma Ensayo: </b>{{$norma_ensayo->codigo}}</td>                
                         </tr>
                         <tr>
-                            <td style="font-size: 11px;border-right: 1px solid #000;"  ><b>Plano / Isom :</b>{{$informe->plano_isom}}</td>
+                            <td style="font-size: 11px;border-right: 1px solid #000;"  ><b>Material A. :</b>
+
+                                @if ($material_accesorio)
+                                    {{$material_accesorio->codigo}}                                
+                                @endif
+                            
+                            </td>
                             <td style="font-size: 11px;border-right: 1px solid #000; " colspan="4"  ><b>Vehículo: </b>{{$informe_pm->vehiculo}}</td>
                             
                             
@@ -125,11 +131,17 @@ b {
                             
                         </tr>
                         <tr>
-                            <td style="font-size: 11px; border-right: 1px solid #000;"  ><b>Diametro: </b>{{$diametro_espesor->diametro}}</td>    
+                            <td style="font-size: 11px;border-right: 1px solid #000;"  ><b>Plano / Isom :</b>{{$informe->plano_isom}}</td>
                             <td style="font-size: 11px;border-right: 1px solid #000; " colspan="4"  ><b>Aditivo: </b>{{$informe_pm->aditivo}}</td>    
-                            <td style="font-size: 11px;  " colspan="2" ><b>Dis.Fuente/pelicula: </b>{{$informe_pm->distancia_fuente_pelicula}}</td>
+                           <td style="font-size: 11px; " colspan="2" ><b>Tecnica: </b>{{$tecnica->descripcion}}</td>
                         </tr>
                         <tr>
+                            <td style="font-size: 11px; border-right: 1px solid #000;"  ><b>Diametro: </b>{{$diametro_espesor->diametro}}</td>    
+                            <td style="font-size: 11px; border-right: 1px solid #000;" colspan="4"  ><b>Tipo Magnetización: </b>{{$tipo_magnetizacion->codigo}}</td>  
+                            <td style="font-size: 11px;" colspan="2"  ><b>Color Partículas: </b>{{$color_particula->codigo}} </td>    
+                        
+                        </tr>
+                        <tr>                           
                             <td style="font-size: 11px;border-right: 1px solid #000; "  ><b>Espesor: </b>
 
                                 @if ($informe->espesor_chapa)
@@ -138,29 +150,22 @@ b {
                                 {{  $diametro_espesor->espesor }}
                                 @endif                       
                             
-                            </td>
-                            <td style="font-size: 11px; border-right: 1px solid #000;" colspan="4"  ><b>Tipo Magnetización: </b>{{$tipo_magnetizacion->codigo}}</td>    
-                            <td style="font-size: 11px;  " colspan="2" ><b>Ejec. Ensayo: </b>{{$ejecutor_ensayo->name}}</td>                
-                        
-                        </tr>
-                        <tr>                           
-                            <td style="font-size: 11px;border-right: 1px solid #000;" ><b>Proc. Sold. : </b>{{$informe->procedimiento_soldadura}}</td>
-                            
+                            </td>                            
                            <td style="font-size: 11px;  " colspan="2"  ><b>Magnetización : </b>{{$magnetizacion->codigo}}</td>  
                            <td style="font-size: 11px;border-right: 1px solid #000;" colspan="2"  ><b>Fueza Portante: </b>{{$magnetizacion->fuerza_portante}}</td>                            
-                           <td style="font-size: 11px; " colspan="2" ><b>Tecnica: </b>{{$tecnica->descripcion}}</td>
+                             <td style="font-size: 11px;" colspan="2"  ><b>Iluminación: </b>{{$iluminacion->codigo}} </td>  
                         </tr>
                         <tr>
-                            <td style="font-size: 11px;border-right: 1px solid #000;" ><b>EPS: </b>{{$informe->eps}}</td>
+                            <td style="font-size: 11px;border-right: 1px solid #000;" ><b>EPS: </b>{{$informe->procedimiento_soldadura}}</td>
                             <td style="font-size: 11px;" colspan="2"  ><b>Concentración: </b>{{$informe_pm->concentracion}}</td>
                             <td style="font-size: 11px;" colspan="1"  ><b>V: </b>{{$informe_pm->voltaje}}</td>  
                             <td style="font-size: 11px; border-right: 1px solid #000;" colspan="1"  ><b>Am: </b>{{$informe_pm->amperaje}}</td>                          
-                            <td style="font-size: 11px;" colspan="2"  ><b>Color Partículas: </b>{{$color_particula->codigo}} </td>  
+                            <td style="font-size: 11px;  " colspan="2" ><b>Ejec. Ensayo: </b>{{$ejecutor_ensayo->name}}</td>                
                         </tr>
                         <tr>                           
                             <td style="font-size: 11px;border-right: 1px solid #000;" ><b>PQR: </b>{{$informe->pqr}}</td>
                             <td style="font-size: 11px; border-right: 1px solid #000; " colspan="4" ><b>Proc. PM: </b>{{$procedimiento_inf->titulo}} </td>
-                             <td style="font-size: 11px;" colspan="2"  ><b>Iluminación: </b>{{$iluminacion->codigo}} </td>  
+                             <td style="font-size: 11px;" colspan="2"  ><b>&nbsp; </td>  
 
                         </tr>                
                         </tbody>

@@ -162,6 +162,7 @@ export default {
 
          this.users_ot_operarios.splice(index, 1);
          this.documentaciones = [];
+         this.user_ot_operario_id = '-1'
 
     },
     

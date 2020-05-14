@@ -185,6 +185,7 @@ class InformesLpController extends Controller
         $informe = Informe::findOrFail($id);
         $informe_lp =InformesLp::where('informe_id',$informe->id)->first();     
         $informe_material = Materiales::find($informe->material_id);
+        $informe_material_accesorio = Materiales::find($informe->material_accesorio_id);
         $informe_diametroEspesor = DiametrosEspesor::find($informe->diametro_espesor_id);
         $informe_diametro = DiametroView::where('diametro',$informe_diametroEspesor->diametro)->first();       
         $informe_interno_equipo = internoEquipos::where('id',$informe->interno_equipo_id)->with('equipo')->first();
@@ -202,6 +203,8 @@ class InformesLpController extends Controller
         $removedor_aplicacion  = AplicacionesLp::findOrFail($informe_lp->removedor_aplicacion_lp_id);   
         $informe_lp_iluminacion = Iluminaciones::find($informe_lp->iluminacion_id);
         
+        if ($informe_material_accesorio == null)
+             $informe_material_accesorio = new Materiales();  
 
         $informe_detalle = $this->getDetalle($informe_lp->id);
 
@@ -212,6 +215,7 @@ class InformesLpController extends Controller
                                                  'informe',
                                                  'informe_lp',  
                                                  'informe_material',  
+                                                 'informe_material_accesorio',
                                                  'informe_diametro',
                                                  'informe_diametroEspesor',                                                                            
                                                  'informe_tecnica_grafico',

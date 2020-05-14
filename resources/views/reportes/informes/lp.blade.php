@@ -113,25 +113,23 @@ b {
                             <td style="font-size: 11px; " colspan="2"  ><b>Limpieza Previa: </b>descripcion limpieza</td>                
                         </tr>
                         <tr>
-                            <td style="font-size: 11px;border-right: 1px solid #000;"  ><b>Plano / Isom :</b>{{$informe->plano_isom}}</td>
-                            <td style="font-size: 11px;border-right: 1px solid #000; " colspan="4"  ><b>Método: </b>{{$metodo->tipo}}-{{$metodo->metodo}}</td>                         
+                            <td style="font-size: 11px;border-right: 1px solid #000;"  ><b>Material A. :</b>
+                            
+                                @if ($material_accesorio)
+                                    {{$material_accesorio->codigo}}                                
+                                @endif
+                            
+                            </td>                            <td style="font-size: 11px;border-right: 1px solid #000; " colspan="4"  ><b>Método: </b>{{$metodo->tipo}}-{{$metodo->metodo}}</td>                         
                             <td style="font-size: 11px; " colspan="2"  ><b>Limpieza Intermedia: </b>descripcion limpieza</td>                      
                         </tr>
                         <tr>
-                            <td style="font-size: 11px; border-right: 1px solid #000;"  ><b>Diametro: </b>{{$diametro_espesor->diametro}}</td>    
+                            <td style="font-size: 11px;border-right: 1px solid #000;"  ><b>Plano / Isom :</b>{{$informe->plano_isom}}</td>
                             <td style="font-size: 11px; border-right: 1px solid #000;" colspan="4"  ><b>Penetrante: </b>{{$informe_lp->tipo_penetrante}}</td>    
                             <td style="font-size: 11px; " colspan="2"  ><b>Limpieza Final: </b>descripcion limpieza</td>                
                         </tr>
                         <tr>
-                            <td style="font-size: 11px;border-right: 1px solid #000; "  ><b>Espesor: </b>
+                            <td style="font-size: 11px; border-right: 1px solid #000;"  ><b>Diametro: </b>{{$diametro_espesor->diametro}}</td>    
 
-                                @if ($informe->espesor_chapa)
-                                {{ $informe->espesor_chapa }}
-                                @else
-                                {{  $diametro_espesor->espesor }}
-                                @endif                       
-                            
-                            </td>
                             <td style="font-size: 11px;border-right: 1px solid #000; " colspan="4"  ><b>Tipo/Marca Pen.: </b>
                               {{$penetrante->tipo}}
                              @if ($penetrante->marca)
@@ -145,13 +143,20 @@ b {
                         
                         </tr>
                         <tr>                           
-                           <td style="font-size: 11px;border-right: 1px solid #000;" ><b>Proc. Sold. : </b>{{$informe->procedimiento_soldadura}}</td>
-                           <td style="font-size: 11px;width: 150px" colspan="2" ><b>Aplic Pen.: </b>{{$penetrante_aplicacion->codigo}}</td>  
+                            <td style="font-size: 11px;border-right: 1px solid #000; "  ><b>Espesor: </b>
+
+                                @if ($informe->espesor_chapa)
+                                {{ $informe->espesor_chapa }}
+                                @else
+                                {{  $diametro_espesor->espesor }}
+                                @endif                       
+                            
+                            </td>                           <td style="font-size: 11px;width: 150px" colspan="2" ><b>Aplic Pen.: </b>{{$penetrante_aplicacion->codigo}}</td>  
                            <td style="font-size: 11px;border-right: 1px solid #000;" colspan="2"  ><b>Tiempo Pen.: </b> {{$informe_lp->tiempo_penetracion}} Min.</td>
                            <td style="font-size: 11px; " colspan="2" ><b>Norma Ensayo: </b>{{$norma_ensayo->codigo}}</td>                
                         </tr>
                         <tr>
-                            <td style="font-size: 11px;border-right: 1px solid #000;" ><b>EPS: </b>{{$informe->eps}}</td>
+                            <td style="font-size: 11px;border-right: 1px solid #000;" ><b>EPS: </b>{{$informe->procedimiento_soldadura}}</td>
                             <td style="font-size: 11px;border-right: 1px solid #000;" colspan="4"  ><b>Revelador: </b>
 
                             {{$revelador->tipo}}

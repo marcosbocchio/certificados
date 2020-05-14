@@ -28,12 +28,19 @@
 
                     <div class="col-md-3" >                       
                         <div class="form-group">
-                            <label for="materiales">Material *</label>
-                            <v-select v-model="material" label="codigo" :options="materiales" id="materiales"></v-select>   
+                            <label for="material">Material *</label>
+                            <v-select v-model="material" label="codigo" :options="materiales" id="material"></v-select>   
                         </div>      
-                    </div>      
+                    </div>   
 
                     <div class="clearfix"></div>    
+
+                    <div class="col-md-3" >                       
+                        <div class="form-group">
+                                <label for="material2">Material accesorio</label>
+                            <v-select v-model="material2" label="codigo" :options="materiales" id="material2"></v-select>   
+                        </div>      
+                    </div>   
 
                     <div class="col-md-3">
                         <div class="form-group" >
@@ -60,32 +67,32 @@
                                </v-select>   
                             </div>                            
                         </div>
-                      
+
+                        <div class="clearfix"></div>    
+
                         <div class="col-md-3">    
                              <div class="form-group" >                         
-                                <label for="espesor_chapa">Espesor Chapa</label>
-                                <input  type="text" class="form-control" v-model="espesor_chapa"  id="espesor_chapa" :disabled="!isChapa" > 
+                                <div v-if="isChapa">
+                                    <label for="espesor_chapa">Espesor Chapa *</label> 
+                                </div>
+                                <div v-else>
+                                     <label for="espesor_chapa">Espesor Chapa </label> 
+                                </div>   
+                                <input  type="number" class="form-control" v-model="espesor_chapa"  id="espesor_chapa" :disabled="!isChapa" step="0.1" > 
                              </div>                                      
                         </div>
 
                         <div class="col-md-3">
                             <div class="form-group" >
-                                <label for="procedimientos_soldadura">Procedimiento Soldadura *</label>
-                                <input type="text" v-model="procedimiento_soldadura" class="form-control" id="procedimientos_soldadura">
+                                <label for="procedimientos_soldadura">Proc. Soldadura (EPS) *</label>
+                                <input type="text" v-model="procedimiento_soldadura" class="form-control" id="procedimientos_soldadura" maxlength="20">
                             </div>                            
-                        </div>  
-
-                        <div class="col-md-3">                       
-                            <div class="form-group" >
-                                <label for="eps">EPS</label>
-                                <input type="text" v-model="eps" class="form-control" id="eps">
-                            </div>         
-                        </div>
+                        </div> 
 
                          <div class="col-md-3">                       
                             <div class="form-group" >
-                                <label for="eps">PQR</label>
-                                <input type="text" v-model="pqr" class="form-control" id="pqr">
+                                <label for="pqr">PQR</label>
+                                <input type="text" v-model="pqr" class="form-control" id="pqr" maxlength="20">
                             </div>         
                         </div> 
 
@@ -403,6 +410,12 @@ export default {
       required : false
       },
 
+      material2data : {
+       type : [ Object, Array ],
+       required : false,
+
+      },
+
       diametrodata : {
       type : Object,
       required : false
@@ -490,12 +503,12 @@ export default {
         numero_inf_generado:'',
         componente:'',
         material:'',
+        material2:'',
         plano_isom:'',
         diametro:'',
         espesor:'',
         espesor_chapa:'', 
         procedimiento_soldadura:'',
-        eps:'',
         pqr:'',
         tecnica:'',
         interno_equipo:'',       
@@ -614,6 +627,7 @@ export default {
                this.numero_inf = this.informedata.numero;
                this.componente = this.informedata.componente;
                this.material = this.materialdata;
+               this.material2 = this.material2data;
                this.plano_isom = this.informedata.plano_isom;
                this.diametro = this.diametrodata;
                this.espesor = this.diametro_espesordata;
@@ -624,7 +638,6 @@ export default {
                this.norma_ensayo = this.norma_ensayodata;            
                this.espesor_chapa = this.informedata.espesor_chapa;
                this.procedimiento_soldadura = this.informedata.procedimiento_soldadura;
-               this.eps = this.informedata.eps;
                this.pqr = this.informedata.pqr;           
                this.metodo_trabajo_pm = this.metodo_trabajo_pmdata;               
 
@@ -694,6 +707,10 @@ export default {
         getEspesores : function(){
             this.espesor='';          
             this.tecnica ='';      
+            if(this.diametro != 'CHAPA')   {
+
+                this.espesor_chapa = '';                
+            }            
             if(this.diametro){    
                  this.$store.dispatch('loadEspesores',this.diametro.diametro_code);
              }
@@ -855,6 +872,7 @@ export default {
                 'procedimiento' : this.procedimiento,           
                 'observaciones':  this.observaciones,
                 'material':       this.material,
+                'material2':      this.material2,
                 'diametro':       this.diametro,
                 'espesor':        this.espesor,
                 'espesor_chapa' :  this.espesor_chapa, 
@@ -863,7 +881,6 @@ export default {
                 'norma_evaluacion': this.norma_evaluacion,           
                 'norma_ensayo'      : this.norma_ensayo,
                 'tecnica'           :this.tecnica,              
-                'eps'               :this.eps,
                 'pqr'               :this.pqr,  
                 'metodo_trabajo_pm' : this.metodo_trabajo_pm,
                 'voltaje'           :this.voltaje,
@@ -934,6 +951,7 @@ export default {
                 'procedimiento' : this.procedimiento,           
                 'observaciones':  this.observaciones,
                 'material':       this.material,
+                'material2':      this.material2,
                 'diametro':       this.diametro,
                 'espesor':        this.espesor,
                 'espesor_chapa' :  this.espesor_chapa, 
@@ -942,7 +960,6 @@ export default {
                 'norma_evaluacion': this.norma_evaluacion,           
                 'norma_ensayo'      : this.norma_ensayo,
                 'tecnica'           :this.tecnica,              
-                'eps'               :this.eps,
                 'pqr'               :this.pqr,  
                 'metodo_trabajo_pm' : this.metodo_trabajo_pm,
                 'voltaje'           :this.voltaje,

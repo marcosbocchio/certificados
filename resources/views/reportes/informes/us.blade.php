@@ -131,10 +131,22 @@ b {
            
                         </tr>
                         <tr>
-                            <td style="font-size: 11px;border-right: 1px solid #000;" colspan="2" ><b>Plano / Isom :</b>{{$informe->plano_isom}}</td>
+                            <td style="font-size: 11px;border-right: 1px solid #000;" colspan="2" ><b>Material A.: </b>
+
+                                @if ($material_accesorio)
+                                    {{$material_accesorio->codigo}}                                
+                                @endif
+                                
+                            </td>
                             <td style="font-size: 11px; border-right: 1px solid #000;" colspan="4"  ><b>Estado Superficie: </b>{{$estado_superficie->codigo}}</td>                            
                             <td style="font-size: 11px; " colspan="2" ><b>Tecnica: </b>{{$tecnica->descripcion}}</td>
                         
+                        </tr>
+                        <tr>
+                            <td style="font-size: 11px;border-right: 1px solid #000;" colspan="2" ><b>Plano / Isom :</b>{{$informe->plano_isom}}</td>
+                            <td style="font-size: 11px;border-right: 1px solid #000;" colspan="4"  ><b>Agente Acoplamiento : </b>{{$informe_us->agente_acoplamiento}}</td>
+                            <td style="font-size: 11px;  " colspan="2" ><b>Ejec. Ensayo: </b>{{$ejecutor_ensayo->name}}</td>  
+
                         </tr>
                         <tr>
                             <td style="font-size: 11px;" colspan="1"  ><b>Diametro: </b>{{$diametro_espesor->diametro}}</td>    
@@ -148,14 +160,7 @@ b {
                                     {{  $diametro_espesor->espesor }}
                                 @endif                       
                             
-                            </td>
-                            <td style="font-size: 11px;border-right: 1px solid #000;" colspan="4"  ><b>Agente Acoplamiento : </b>{{$informe_us->agente_acoplamiento}}</td>
-                            <td style="font-size: 11px;  " colspan="2" ><b>Ejec. Ensayo: </b>{{$ejecutor_ensayo->name}}</td>  
-
-                        </tr>
-                        <tr>
-                            <td style="font-size: 11px;border-right: 1px solid #000;" colspan="2"><b>Proc. Sold. : </b>{{$informe->procedimiento_soldadura}}</td>                            
-                            <td style="font-size: 11px;border-right: 1px solid #000;" colspan="4" ><b>EPS: </b>{{$informe->eps}}</td>
+                            </td>                            <td style="font-size: 11px;border-right: 1px solid #000;" colspan="4" ><b>EPS: </b>{{$informe->procedimiento_soldadura}}</td>
                             <td style="font-size: 11px;" colspan="2" >&nbsp;</td>
                         </tr>  
                         <tr>

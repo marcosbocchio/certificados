@@ -29,18 +29,21 @@
                             <table class="table table-hover table-striped">
                                 <thead>
                                     <tr>                                     
-                                        <th>N° SERIE</th>     
-                                        <th>N° INT.</th> 
-                                        <th>EQUIPO</th>                                                      
-                                        <th colspan="1">&nbsp;</th>
+                                        <th class="col-md-2">N° SERIE</th>     
+                                        <th class="col-md-2">N° INT.</th> 
+                                        <th class="col-md-3">EQUIPO</th>    
+                                        <th class="col-md-4">FUENTE</th>                                                  
+                                        <th class="col-md-1">&nbsp;</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="(interno_equipo,k) in interno_equipos" :key="k"> 
+                                    <tr v-for="(interno_equipo,k) in interno_equipos" :key="k" class="pointer"> 
                                                     
                                         <td> {{interno_equipo.nro_serie}}</td>    
                                         <td> {{interno_equipo.nro_interno}}</td> 
                                         <td> {{interno_equipo.equipo.codigo}}</td>
+                                        <td v-if="interno_equipo.interno_fuente"> {{interno_equipo.interno_fuente.nro_serie}} / {{interno_equipo.interno_fuente.fuente.codigo}}</td>
+                                        <td v-else>&nbsp;</td>
                                         <td> <i class="fa fa-minus-circle" @click="removeInternoEquipos(k)" ></i></td>                                                 
                                     </tr>                       
                                     
@@ -77,7 +80,7 @@ export default {
 data () { return { 
 
     interno_equipos:[],
-
+    documentaciones_equipos : [],
 
 }},
 
@@ -134,7 +137,8 @@ data () { return {
   
             });
         }
-
  }
+
 }
+
 </script>

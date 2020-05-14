@@ -21,6 +21,7 @@
      :informedata ="{{$informe}}"
      :informe_pmdata ="{{$informe_pm}}"
      :materialdata="{{$informe_material}}"
+     :material2data ="{{$informe_material_accesorio}}"
      :diametrodata="{{$informe_diametro}}"
      :diametro_espesordata="{{$informe_diametroEspesor}}"  
      :tecnicadata="{{$informe_tecnica}}"     

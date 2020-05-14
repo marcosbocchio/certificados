@@ -19,6 +19,7 @@
      :informedata ="{{$informe}}"    
      :informe_usdata ="{{$informe_us}}"
      :materialdata="{{$informe_material}}"
+     :material2data ="{{$informe_material_accesorio}}"
      :diametrodata="{{$informe_diametro}}"
      :diametro_espesordata="{{$informe_diametroEspesor}}"
      :interno_equipodata="{{$informe_interno_equipo}}"

@@ -109,12 +109,16 @@ class InformesRiController extends Controller
         $informe = Informe::findOrFail($id);
         $informe_ri =InformesRi::where('informe_id',$informe->id)->first();
         $informe_material = Materiales::find($informe->material_id);
+        $informe_material_accesorio = Materiales::find($informe->material_accesorio_id);
         $informe_diametroEspesor = DiametrosEspesor::find($informe->diametro_espesor_id);
         $informe_diametro = DiametroView::where('diametro',$informe_diametroEspesor->diametro)->first();
         $informe_interno_fuente = InternoFuentes::where('id',$informe_ri->interno_fuente_id)->with('fuente')->first();
         
         if ($informe_interno_fuente == null)
            $informe_interno_fuente = new InternoFuentes();
+
+       if ($informe_material_accesorio == null)
+           $informe_material_accesorio = new Materiales();
        
         $informe_tecnica_grafico = (new TecnicasGraficosController)->show($informe_ri->tecnicas_grafico_id);
         $informe_interno_equipo = internoEquipos::where('id',$informe->interno_equipo_id)->with('equipo')->first();
@@ -135,6 +139,7 @@ class InformesRiController extends Controller
                                                  'informe',
                                                  'informe_ri',  
                                                  'informe_material',  
+                                                 'informe_material_accesorio',
                                                  'informe_diametro',
                                                  'informe_diametroEspesor',  
                                                  'informe_interno_fuente',                                                

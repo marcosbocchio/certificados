@@ -341,6 +341,7 @@ class InformesUsController extends Controller
         $informe = Informe::findOrFail($id);
         $informe_us =InformesUs::where('informe_id',$informe->id)->first();    
         $informe_material = Materiales::find($informe->material_id);
+        $informe_material_accesorio = Materiales::find($informe->material_accesorio_id);
         $informe_tecnica = Tecnicas::find($informe->tecnica_id);
         $informe_diametroEspesor = DiametrosEspesor::find($informe->diametro_espesor_id);
         $informe_diametro = DiametroView::where('diametro',$informe_diametroEspesor->diametro)->first();
@@ -356,7 +357,8 @@ class InformesUsController extends Controller
         $tabla_us_pa    = $this->getTabla_us_pa($informe_us->id);
         $tabla_me       = $this->getTabla_me($informe_us->id);
 
-
+        if ($informe_material_accesorio == null)
+               $informe_material_accesorio = new Materiales();
     
 
         return view('informes.us.edit', compact('ot',
@@ -368,6 +370,7 @@ class InformesUsController extends Controller
                                                  'informe_diametroEspesor',  
                                                  'informe_tecnica', 
                                                  'informe_material',
+                                                 'informe_material_accesorio',
                                                  'informe_interno_equipo',
                                                  'informe_procedimiento',
                                                  'informe_norma_evaluacion',
