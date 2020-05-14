@@ -1055,7 +1055,7 @@ export default {
       this.$store.dispatch('loadMateriales');
       this.$store.dispatch('loadDiametros');
       this.getTecnicas();
-      this.$store.dispatch('loadInternoEquipos',{ 'metodo' : this.metodo, 'activo_sn' : 1 });       
+       this.$store.dispatch('loadInternoEquipos',{ 'metodo' : this.metodo, 'activo_sn' : 1, 'instrumento_medicion' : 'null' });       
       this.$store.dispatch('loadProcedimietosOtMetodo',  
         { 'ot_id' : this.otdata.id, 'metodo' : this.metodo }).then(response =>{ 
                 if(this.procedimientos.length == 0  ){

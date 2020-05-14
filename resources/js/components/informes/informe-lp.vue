@@ -94,29 +94,7 @@
                                 <label for="pqr">PQR</label>
                                 <input type="text" v-model="pqr" class="form-control" id="pqr" maxlength="20">
                             </div>         
-                        </div>
-                       
-
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Equipo *</label>
-                                    <v-select  v-model="interno_equipo" :options="interno_equipos" label="nro_interno" @input="getFuente()">
-                                        <template slot="option" slot-scope="option">
-                                            <span class="upSelect">{{ option.nro_interno }}</span> <br> 
-                                            <span class="downSelect"> {{ option.equipo.codigo }} </span>
-                                        </template>
-                                    </v-select>
-                            </div>
-                        </div>                       
-
-                       <div class="clearfix"></div>    
-
-                        <div class="col-md-3">
-                            <div class="form-group" >
-                                <label for="voltaje">Tipo</label>
-                                <input type="text" v-model="interno_equipo.equipo.tipo_lp" class="form-control" id="Tipo" disabled>
-                            </div>                            
-                        </div>                     
+                        </div>                         
                         
                         <div class="col-md-3">                       
                             <div class="form-group">
@@ -124,7 +102,8 @@
                                 <v-select v-model="procedimiento" label="titulo" :options="procedimientos" id="procRadio"></v-select>   
                             </div>      
                         </div>
-                       
+
+                        <div class="clearfix"></div>    
 
                         <div class="col-md-3">                       
                             <div class="form-group">
@@ -151,12 +130,10 @@
                             </div>      
                         </div>
 
-                       <div class="clearfix"></div>    
-
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Metodo Trabajo *</label>
-                                    <v-select  v-model="metodo_trabajo_lp" :options="metodos_trabajo_lp" label="tipo_metodo">
+                                    <v-select  v-model="metodo_trabajo_lp" :options="metodos_trabajo_lp" label="tipo_metodo"  @input="getInstrumentoMediciones()">
                                         <template slot="option" slot-scope="option">
                                             <span class="upSelect">{{ option.tipo }}</span> <br> 
                                             <span class="downSelect"> {{ option.metodo }} </span>
@@ -168,9 +145,36 @@
                         <div class="col-md-3">                       
                             <div class="form-group">
                                 <label> Tipo Penetrante *</label>
-                                <v-select v-model="tipo_penetrante" label="codigo" :options="['VISIBLE','FLUORESCENTE']"></v-select>   
+                                <input type="text" v-model="tipo_penetrante" class="form-control" id="tipo_penetrante" disabled>                          
                             </div>      
                         </div> 
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Inst. Medición *</label>
+                                
+                                    <v-select  v-model="interno_equipo" :options="interno_equipos" label="nro_interno" @input="getFuente()">
+                                        <template slot="option" slot-scope="option">
+                                            <span class="upSelect">{{ option.nro_interno }}</span> <br> 
+                                            <span class="downSelect"> {{ option.equipo.codigo }} </span>
+                                        </template>
+                                    </v-select>
+
+                            </div>
+                        </div>  
+
+                        <div class="col-md-3">
+                            <div class="form-group" >
+                                <label for="instrumento_medicion">Tipo</label>
+                                <div v-if="interno_equipo">
+                                    <input type="text" v-model="interno_equipo.equipo.instrumento_medicion" class="form-control" id="instrumento_medicion" disabled>
+                                </div>
+                                 <div v-else="">
+                                    <input type="text" class="form-control" id="instrumento_medicion" disabled>
+                                </div>
+
+                            </div>                            
+                        </div>  
 
                         <div class="col-md-3">
                             <div class="form-group">
@@ -184,7 +188,6 @@
                             </div>
                         </div>
 
-
                         <div class="col-md-3">                       
                             <div class="form-group">
                                 <label>Aplicación  Penetrante</label>
@@ -192,12 +195,15 @@
                             </div>      
                         </div> 
 
+                        <div class="clearfix"></div>    
+
                         <div class="col-md-3">                       
                             <div class="form-group" >
                                 <label for="tiempo_penetracion">Tiempo Penetración</label>
                                 <input type="number" v-model="tiempo_penetracion" class="form-control" id="tiempo_penetracion">
                             </div>         
                         </div>
+
 
                         <div class="col-md-3">
                             <div class="form-group">
@@ -562,6 +568,7 @@ data() {return {
         index_referencias:'',
         tabla:'',
         inputsData:{},
+        loading : false,
        
       }
     },
@@ -570,7 +577,6 @@ data() {return {
 
         this.$store.dispatch('loadMateriales');
         this.$store.dispatch('loadDiametros');
-        this.$store.dispatch('loadInternoEquipos',{ 'metodo' : this.metodo, 'activo_sn' : 1 });       
       this.$store.dispatch('loadProcedimietosOtMetodo',  
         { 'ot_id' : this.otdata.id, 'metodo' : this.metodo }).then(response =>{ 
                 if(this.procedimientos.length == 0  ){
@@ -604,7 +610,7 @@ data() {return {
            if(val){
                  this.isChapa = (val.diametro =='CHAPA') ? true : false;
             }   
-        },     
+        },        
 
     },
 
@@ -646,9 +652,9 @@ data() {return {
                this.procedimiento_soldadura = this.informedata.procedimiento_soldadura;
                this.pqr = this.informedata.pqr;           
                this.metodo_trabajo_lp = this.metodo_trabajo_lpdata;            
+               this.tipo_penetrante = (this.metodo_trabajo_lp.tipo == 'TIPO I') ? 'Fluorescente' : 'Visible';  
                this.ejecutor_ensayo = this.ejecutor_ensayodata;          
                this.observaciones = this.informedata.observaciones;
-               this.tipo_penetrante = this.informe_lpdata.tipo_penetrante;
                this.penetrante_tipo_liquido = this.penetrante_tipo_liquido_data;
                this.revelador_tipo_liquido  = this.revelador_tipo_liquido_data;
                this.removedor_tipo_liquido  = this.removedor_tipo_liquido_data;
@@ -710,10 +716,24 @@ data() {return {
 
     getFuente : function(){
 
-        this.$store.dispatch('loadFuentePorInterno',this.interno_equipo.interno_fuente_id);
-       
+        this.$store.dispatch('loadFuentePorInterno',this.interno_equipo.interno_fuente_id);      
 
       },
+
+
+     getInstrumentoMediciones(){
+
+        this.tipo_penetrante = (this.metodo_trabajo_lp.tipo == 'TIPO I') ? 'Fluorescente' : 'Visible';  
+        console.log(this.tipo_penetrante);
+
+        let instrumento_medicion = (this.tipo_penetrante =='Fluorescente')  ? 'Lampara UV' : 'Luxómetro';
+        this.$store.dispatch('loadInternoEquipos',{ 'metodo' : this.metodo, 'activo_sn' : 1, 'instrumento_medicion' : instrumento_medicion }).then(response =>{
+            
+            this.interno_equipo = '';
+
+        });       
+
+    },
 
     selectPosDetalle :function(index){
         
@@ -768,9 +788,9 @@ data() {return {
         },
 
     removeDetalle(index) {
+
         this.indexPosDetalle = 0;   
-        this.TablaLp.splice(index, 1);
-    
+        this.TablaLp.splice(index, 1);    
     },
 
     OpenReferencias(event,index,tabla,inputsReferencia){
@@ -781,15 +801,13 @@ data() {return {
         eventSetReferencia.$emit('open');
     },
 
-    AddReferencia(Ref){      
-
+    AddReferencia(Ref){    
     
         this.TablaLp[this.index_referencias].observaciones = Ref.observaciones;
         this.TablaLp[this.index_referencias].path1 = Ref.path1;
         this.TablaLp[this.index_referencias].path2 = Ref.path2;
         this.TablaLp[this.index_referencias].path3 = Ref.path3;
-        this.TablaLp[this.index_referencias].path4 = Ref.path4;
-    
+        this.TablaLp[this.index_referencias].path4 = Ref.path4;    
     
         $('#nuevo').modal('hide');     
     },
@@ -825,7 +843,6 @@ data() {return {
                 'tecnica'           :this.tecnica,              
                 'pqr'               :this.pqr,  
                 'metodo_trabajo_lp'             : this.metodo_trabajo_lp,
-                'tipo_penetrante'               : this.tipo_penetrante,
                 'penetrante_tipo_liquido'       :this.penetrante_tipo_liquido,
                 'penetrante_aplicacion'         :this.penetrante_aplicacion,
                 'tiempo_penetracion'            :this.tiempo_penetracion,
@@ -898,7 +915,6 @@ data() {return {
                 'tecnica'           :this.tecnica,              
                 'pqr'               :this.pqr,  
                 'metodo_trabajo_lp'             : this.metodo_trabajo_lp,
-                'tipo_penetrante'               : this.tipo_penetrante,
                 'penetrante_tipo_liquido'       :this.penetrante_tipo_liquido,
                 'penetrante_aplicacion'         :this.penetrante_aplicacion,
                 'tiempo_penetracion'            :this.tiempo_penetracion,

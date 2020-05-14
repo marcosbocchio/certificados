@@ -19,8 +19,8 @@
                     <label for="metodo_ensayo">Método de Ensayo *</label>      
                     <v-select v-model="metodo_ensayos" label="metodo" :options="metodos_ensayos" :input="setTipoLp()"></v-select> 
                     
-                    <label for="tipo_lp">Tipo Lp</label>
-                    <input v-model="newRegistro.tipo_lp" type="text" name="tipo_lp" class="form-control" :disabled="metodo_ensayos.metodo != 'LP'">               
+                    <label for="instrumento_medicion">Instrumento Medición *</label>
+                    <v-select v-model="newRegistro.instrumento_medicion" :options="['Luxómetro','Lampara UV']" :disabled="metodo_ensayos.metodo != 'LP'"></v-select>
               
                 </div>
             
@@ -43,7 +43,7 @@ export default {
         newRegistro : {           
             'codigo'  : '',
             'descripcion'  : '',
-            'tipo_lp' : '',             
+            'instrumento_medicion' : '',             
          },
          metodo_ensayos :'',          
         
@@ -68,7 +68,7 @@ export default {
                 this.newRegistro = {           
                     'codigo'  : '',
                     'descripcion'  : '',
-                    'tipo_lp' : '',    
+                    'instrumento_medicion' : '',    
                 };
 
                 this.metodo_ensayos = '';  
@@ -81,7 +81,7 @@ export default {
             setTipoLp : function () {
                
                if(this.metodo_ensayos.metodo != 'LP')
-                    this.newRegistro.tipo_lp = '';
+                    this.newRegistro.instrumento_medicion = '';
                
             },    
 

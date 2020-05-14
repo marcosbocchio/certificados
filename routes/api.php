@@ -152,7 +152,7 @@ Route::group(['middleware' => 'auth:api'], function()
   
     Route::get('documentaciones/ot_operarios/{ot_id}/{user_id}', 'DocumentacionesController@getDocOtOperarios');
     
-    Route::get('interno_equipos/metodo/{metodo}/activo_sn/{activo_sn?}', 'InternoEquiposController@getInternoEquipos');   
+    Route::get('interno_equipos/metodo/{metodo}/activo_sn/{activo_sn?}/instrumento_medicion/{instrumento_medicion?}', 'InternoEquiposController@getInternoEquipos');   
     Route::get('interno_equipos/paginate', 'InternoEquiposController@paginate');
     Route::resource('interno_equipos', 'InternoEquiposController');
       

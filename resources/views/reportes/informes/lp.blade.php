@@ -95,7 +95,7 @@ b {
                         <tbody>                 
                         <tr>
                             <td style="font-size: 11px; width: 190px;border-right: 1px solid #000;"><b>Componente: </b>{{$informe->componente}}</td>
-                            <td style="font-size: 11px;  width: 230px; border-right: 1px solid #000;" colspan="4"  ><b>Inst. Medición: </b>{{$equipo->equipo->tipo_lp}} / {{$equipo->equipo->codigo}}</td>                            
+                            <td style="font-size: 11px;  width: 230px; border-right: 1px solid #000;" colspan="4"  ><b>Inst. Medición: </b>{{$equipo->nro_interno}} / {{$equipo->equipo->instrumento_medicion}}</td>                            
                             <td style="font-size: 11px;width: 120px;  " colspan="1"  ><b style="font-size: 11px;">Rem: </b>
                              {{$removedor->tipo}}
                              @if ($removedor->marca)
@@ -124,7 +124,16 @@ b {
                         </tr>
                         <tr>
                             <td style="font-size: 11px;border-right: 1px solid #000;"  ><b>Plano / Isom :</b>{{$informe->plano_isom}}</td>
-                            <td style="font-size: 11px; border-right: 1px solid #000;" colspan="4"  ><b>Penetrante: </b>{{$informe_lp->tipo_penetrante}}</td>    
+                            <td style="font-size: 11px; border-right: 1px solid #000;" colspan="4"  ><b>Penetrante: </b>
+
+                            @if($metodo->tipo =='TIPO I')
+
+                                  Fluorescente
+                            @else
+                                  Visible
+                            @endif
+                            
+                            </td>    
                             <td style="font-size: 11px; " colspan="2"  ><b>Limpieza Final: </b>descripcion limpieza</td>                
                         </tr>
                         <tr>

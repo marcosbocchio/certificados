@@ -519,11 +519,14 @@ actions : {
         loadInternoEquipos({
           commit},payload) {
           axios.defaults.baseURL = store.state.url ;
-          var urlRegistros = 'interno_equipos/metodo/' + payload.metodo + '/activo_sn/' + payload.activo_sn + '?api_token=' + Laravel.user.api_token;         
+          var urlRegistros = 'interno_equipos/metodo/' + payload.metodo + '/activo_sn/' + payload.activo_sn + '/instrumento_medicion/' + payload.instrumento_medicion + '?api_token=' + Laravel.user.api_token;         
           console.log(urlRegistros);
+          return new Promise((resolve, reject) => {
           axios.get(urlRegistros).then((response) => {
             console.log(response.data);
-            commit('getInternoEquipos', response.data)           
+            commit('getInternoEquipos', response.data)   
+            resolve()       
+          })        
           })
         }, 
 

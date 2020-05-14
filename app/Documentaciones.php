@@ -60,7 +60,7 @@ public function internoFuente(){
                    ->where(function($q) use($filtro) {
                        
                         $q->WhereRaw("documentaciones.titulo LIKE '%" . $filtro . "%'")    
-                        ->orWhereRaw("documentaciones.descripcion LIKE '%" . $filtro . "%'") 
+                            ->orWhereRaw("documentaciones.descripcion LIKE '%" . $filtro . "%'") 
                         
                         ->orWhereHas('metodoEnsayo', function ($q) use($filtro) {
                             $q->WhereRaw("metodo_ensayos.metodo LIKE '%" . $filtro . "%'");

@@ -9,6 +9,7 @@ use App\Http\Requests\InternoEquipoRequest;
 use Illuminate\Support\Facades\DB;
 use App\Fuentes;
 use \stdClass;
+use Illuminate\Support\Facades\Log;
 
 class InternoEquiposController extends Controller
 {
@@ -80,23 +81,32 @@ class InternoEquiposController extends Controller
         //
     }
 
-    public function getInternoEquipos($metodo,$activo_sn = ''){
+    public function getInternoEquipos($metodo, $activo_sn = '', $instrumento_medicion = 'null'){
+      DB::enableQueryLog();
 
-      
         if($metodo != 'null'){
 
-            return  InternoEquipos::join('equipos','equipos.id','=','interno_equipos.equipo_id') 
+            $interno_equipos =   InternoEquipos::join('equipos','equipos.id','=','interno_equipos.equipo_id') 
                                     ->join('metodo_ensayos','equipos.metodo_ensayo_id','=','metodo_ensayos.id')
                                     ->where('metodo_ensayos.metodo',$metodo)
                                     ->where('interno_equipos.activo_sn',1)
+                                    ->where(function($q) use($instrumento_medicion) {
+
+                                      $q->orWhereRaw("? = 'null'",$instrumento_medicion)
+                                         ->orWhere("equipos.instrumento_medicion",[$instrumento_medicion]);
+
+                                            })
                                     ->Select('interno_equipos.*')
                                     ->with('equipo')
                                     ->with('internoFuente')
                                     ->get();
+          
+                            
+
 
         }else if($activo_sn){
 
-          return InternoEquipos::where('interno_equipos.activo_sn',1)
+          $interno_equipos =  InternoEquipos::where('interno_equipos.activo_sn',1)
                                   ->with('equipo')
                                   ->with('internoFuente')
                                   ->Select('interno_equipos.*')
@@ -104,16 +114,21 @@ class InternoEquiposController extends Controller
 
         }else{
 
-          return InternoEquipos::  with('equipo')
+          $interno_equipos = InternoEquipos::  with('equipo')
                                   ->with('internoFuente')
                                   ->Select('interno_equipos.*')
                                   ->get();
 
 
           }
-                  
 
+          $queries = DB::getQueryLog();
+          foreach($queries as $i=>$query)
+          {
+              Log::debug("Query $i: " . json_encode($query));
+          }
 
+        return $interno_equipos;
     }
 
     /**

@@ -801,7 +801,7 @@ export default {
         });
         this.$store.dispatch('loadMateriales');
         this.$store.dispatch('loadDiametros');
-        this.$store.dispatch('loadInternoEquipos',{ 'metodo' : this.metodo, 'activo_sn' : 1 });       
+        this.$store.dispatch('loadInternoEquipos',{ 'metodo' : this.metodo, 'activo_sn' : 1, 'instrumento_medicion' : 'null' });       
         this.getTipoPeliculas();
         this.$store.dispatch('loadNormaEvaluaciones');        
         this.$store.dispatch('loadNormaEnsayos');       

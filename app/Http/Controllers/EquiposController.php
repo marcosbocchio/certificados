@@ -99,7 +99,7 @@ class EquiposController extends Controller
         $equipo->codigo = $request['codigo'];
         $equipo->descripcion = $request['descripcion'];
         $equipo->metodo_ensayo_id = $request['metodo_ensayos']['id'];
-        $equipo->tipo_lp = $request['tipo_lp'];
+        $equipo->instrumento_medicion = $request['instrumento_medicion'];
         $equipo->save();
   
       }

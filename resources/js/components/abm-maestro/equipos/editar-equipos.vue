@@ -19,8 +19,8 @@
                     <label for="metodo_ensayo">Método de Ensayo *</label>      
                     <v-select v-model="metodo_ensayos" label="metodo" :options="metodos_ensayos" :input="setTipoLp()"></v-select> 
                     
-                    <label for="tipo_lp">Tipo Lp</label>
-                    <input v-model="editRegistro.tipo_lp" type="text" name="tipo_lp" class="form-control" :disabled="metodo_ensayos.metodo != 'LP'">             
+                    <label for="instrumento_medicion">Instrumento Medición *</label>
+                    <v-select v-model="editRegistro.instrumento_medicion" :options="['Luxómetro','Lampara UV']" :disabled="metodo_ensayos.metodo != 'LP'"></v-select>
               
                 </div>
             
@@ -52,7 +52,7 @@ export default {
         editRegistro : {           
             'codigo'  : '',
             'descripcion'  : '',
-            'tipo_lp' : '',             
+            'instrumento_medicion' : '',             
          },
          metodo_ensayos :'',          
         
@@ -84,7 +84,7 @@ export default {
 
                     this.editRegistro.codigo = this.selectRegistro.codigo;
                     this.editRegistro.descripcion = this.selectRegistro.descripcion;
-                    this.editRegistro.tipo_lp = this.selectRegistro.tipo_lp;         
+                    this.editRegistro.instrumento_medicion = this.selectRegistro.instrumento_medicion;         
                     this.metodo_ensayos = this.selectRegistro.metodo_ensayos;   
                 
                     $('#editar').modal('show');               
@@ -96,7 +96,7 @@ export default {
             setTipoLp : function () {
                
                if(this.metodo_ensayos.metodo != 'LP')
-                    this.editRegistro.tipo_lp = '';
+                    this.editRegistro.instrumento_medicion = '';
                
             },  
 

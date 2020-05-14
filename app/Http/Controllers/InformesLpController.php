@@ -95,7 +95,6 @@ class InformesLpController extends Controller
    
         $informeLp->informe_id = $informe->id;
         $informeLp->metodo_trabajo_lp_id = $request->metodo_trabajo_lp['id'];
-        $informeLp->tipo_penetrante = $request->tipo_penetrante;
         $informeLp->penetrante_tipo_liquido_id = $request->penetrante_tipo_liquido['id'];
         $informeLp->penetrante_aplicacion_lp_id = $request->penetrante_aplicacion['id'];
         $informeLp->tiempo_penetracion = $request->tiempo_penetracion;

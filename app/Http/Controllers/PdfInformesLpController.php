@@ -44,7 +44,7 @@ class PdfInformesLpController extends Controller
          $ot_procedimiento_propio = OtProcedimientosPropios::findOrFail($informe->procedimiento_informe_id);
          $procedimiento_inf = Documentaciones::findOrFail($ot_procedimiento_propio->documentacion_id); 
          $metodo = MetodosTrabajoLp::findOrFail($informe_lp->metodo_trabajo_lp_id);        
-         $equipo = InternoEquipos::findOrFail($informe->interno_equipo_id)->with('equipo')->first(); 
+         $equipo = InternoEquipos::where('id',$informe->interno_equipo_id)->with('equipo')->first(); 
          $ot_operador = OtOperarios::findOrFail($informe->ejecutor_ensayo_id);         
          $penetrante = TipoLiquidos::findOrFail($informe_lp->penetrante_tipo_liquido_id);
          $penetrante_aplicacion = AplicacionesLp::findOrFail($informe_lp->penetrante_aplicacion_lp_id);         
@@ -58,7 +58,7 @@ class PdfInformesLpController extends Controller
          $contratista = Contratistas::find($ot->contratista_id);
 
        // dd($evaluador);
-
+      //  dd($equipo);
          $detalles =  DB::select('SELECT 
                                 detalles_lp.pieza as pieza,
                                 detalles_lp.cm as cm,

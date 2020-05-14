@@ -8,7 +8,7 @@
             <th>CÓDIDO</th>
             <th>DESCRIPCIÓN</th>
             <th>MÉTODO</th>
-            <th>TIPO LP</th>      
+            <th>INST. MEDICIÓN</th>      
             <th colspan="2">&nbsp;</th>
           </tr>
         </thead>
@@ -17,7 +17,7 @@
             <td>{{ registro.codigo }}</td>
             <td>{{ registro.descripcion }}</td>
             <td>{{ registro.metodo_ensayos.metodo }}</td>  
-            <td>{{ registro.tipo_lp }}</td>   
+            <td>{{ registro.instrumento_medicion }}</td>   
             
             <td width="10px">
               <button class="btn btn-warning btn-sm" title="Editar" v-on:click.prevent="updateValue(registro)" :disabled="!$can('M_equipos_edita')"><span class="fa fa-edit"></span></button>
