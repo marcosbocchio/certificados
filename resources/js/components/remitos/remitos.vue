@@ -244,7 +244,7 @@ export default {
     created : function() {
 
         this.getProductos();  
-        this.$store.dispatch('loadInternoEquipos',{ 'metodo' : null, 'activo_sn' : 1 });       
+        this.$store.dispatch('loadInternoEquipos',{ 'metodo' : null, 'activo_sn' : 1,'instrumento_medicion' : 'null' });       
         this.setEdit();   
 
     },

@@ -304,7 +304,7 @@ export default {
 
      mounted :function(){
 
-        this.$store.dispatch('loadInternoEquipos',{ 'metodo' : null, 'activo_sn' : '' });     
+        this.$store.dispatch('loadInternoEquipos',{ 'metodo' : null, 'activo_sn' : 'null','instrumento_medicion' : 'null' });     
         this.$store.dispatch('loadInternoFuentes','');       
   
          if(this.modelo == 'documentaciones') {

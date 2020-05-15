@@ -726,7 +726,7 @@ data() {return {
         this.tipo_penetrante = (this.metodo_trabajo_lp.tipo == 'TIPO I') ? 'Fluorescente' : 'Visible';  
         console.log(this.tipo_penetrante);
 
-        let instrumento_medicion = (this.tipo_penetrante =='Fluorescente')  ? 'Lampara UV' : 'Luxómetro';
+        let instrumento_medicion = (this.tipo_penetrante =='Fluorescente')  ? 'Luxometro luz UV' : 'Luxometro luz blanca';
         this.$store.dispatch('loadInternoEquipos',{ 'metodo' : this.metodo, 'activo_sn' : 1, 'instrumento_medicion' : instrumento_medicion }).then(response =>{
             
             this.interno_equipo = '';
