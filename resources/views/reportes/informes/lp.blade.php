@@ -95,7 +95,7 @@ b {
                         <tbody>                 
                         <tr>
                             <td style="font-size: 11px; width: 190px;border-right: 1px solid #000;"><b>Componente: </b>{{$informe->componente}}</td>
-                            <td style="font-size: 11px;  width: 230px; border-right: 1px solid #000;" colspan="4"  ><b>Inst. Medición: </b>{{$equipo->nro_interno}} / {{$equipo->equipo->instrumento_medicion}}</td>                            
+                            <td style="font-size: 11px;  width: 230px; border-right: 1px solid #000;" colspan="4"  ><b>Inst. Medición: </b>{{$equipo->equipo->instrumento_medicion}} / {{$equipo->equipo->codigo}} </td>                            
                             <td style="font-size: 11px;width: 120px;  " colspan="1"  ><b style="font-size: 11px;">Rem: </b>
                              {{$removedor->tipo}}
                              @if ($removedor->marca)
@@ -110,7 +110,7 @@ b {
                         <tr>                       
                             <td style="font-size: 11px;border-right: 1px solid #000;"  ><b>Material: </b>{{$material->codigo}}</td>
                             <td style="font-size: 11px; border-right: 1px solid #000; " colspan="4" ><b>Proc. LP: </b>{{$procedimiento_inf->titulo}} </td>
-                            <td style="font-size: 11px; " colspan="2"  ><b>Limpieza Previa: </b>descripcion limpieza</td>                
+                            <td style="font-size: 11px; " colspan="2"  ><b>Limpieza Previa: </b>{{$informe_lp->limpieza_previa}}</td>                
                         </tr>
                         <tr>
                             <td style="font-size: 11px;border-right: 1px solid #000;"  ><b>Material A. :</b>
@@ -120,7 +120,7 @@ b {
                                 @endif
                             
                             </td>                            <td style="font-size: 11px;border-right: 1px solid #000; " colspan="4"  ><b>Método: </b>{{$metodo->tipo}}-{{$metodo->metodo}}</td>                         
-                            <td style="font-size: 11px; " colspan="2"  ><b>Limpieza Intermedia: </b>descripcion limpieza</td>                      
+                            <td style="font-size: 11px; " colspan="2"  ><b>Limpieza Intermedia: </b>{{$informe_lp->limpieza_intermedia}}</td>                      
                         </tr>
                         <tr>
                             <td style="font-size: 11px;border-right: 1px solid #000;"  ><b>Plano / Isom :</b>{{$informe->plano_isom}}</td>
@@ -134,7 +134,7 @@ b {
                             @endif
                             
                             </td>    
-                            <td style="font-size: 11px; " colspan="2"  ><b>Limpieza Final: </b>descripcion limpieza</td>                
+                            <td style="font-size: 11px; " colspan="2"  ><b>Limpieza Final: </b>{{$informe_lp->limpieza_final}}</td>                
                         </tr>
                         <tr>
                             <td style="font-size: 11px; border-right: 1px solid #000;"  ><b>Diametro: </b>{{$diametro_espesor->diametro}}</td>    
