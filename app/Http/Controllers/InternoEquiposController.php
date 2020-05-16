@@ -83,7 +83,7 @@ class InternoEquiposController extends Controller
 
     public function getInternoEquipos($metodo, $activo_sn = '', $instrumento_medicion = 'null'){          
 
-      DB::enableQueryLog();
+        DB::enableQueryLog();
 
         if($metodo != 'null'){
 

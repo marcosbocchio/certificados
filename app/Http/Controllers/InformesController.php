@@ -185,7 +185,6 @@ class InformesController extends Controller
                                               ->first(); 
     
           $informe->diametro_espesor_id = $diametro_espesor['id'];
-
           
     
         }else{
@@ -203,7 +202,6 @@ class InformesController extends Controller
         $informe->norma_evaluacion_id = $request->norma_evaluacion['id'];
         $informe->norma_ensayo_id = $request->norma_ensayo['id'];
         $informe->tecnica_id = $request->tecnica['id'];
-        $informe->user_id = $user_id;
         $informe->ejecutor_ensayo_id = $request->ejecutor_ensayo['ot_operario_id'];
         $informe->material_id = $request->material['id'];
         $informe->material_accesorio_id = $request->material2 ? $request->material2['id'] : null;
@@ -215,6 +213,13 @@ class InformesController extends Controller
         $informe->plano_isom = $request->plano_isom;
         $informe->pqr = $request->pqr;
         $informe->observaciones = $request->observaciones;
+
+        if($request->isMethod('post')){
+      
+            $informe->user_id = $user_id;
+     
+         }
+
         $informe->save();   
         
         return $informe;

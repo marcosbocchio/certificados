@@ -14,7 +14,7 @@
             </thead>
             <tbody>
               <tr v-for="registro in registros" :key="registro.id">           
-                <td>PROCEDIMIENTOS</td>     
+                <td>PROCEDIMIENTO</td>     
                 <td>{{ registro.titulo}}</td>
                 <td>{{ registro.descripcion }}</td>
                 <td>{{ registro.metodo_ensayo['metodo']}}</td>    

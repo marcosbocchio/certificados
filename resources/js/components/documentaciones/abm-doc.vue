@@ -341,7 +341,9 @@ export default {
     methods :{
 
     openGallery(index) {
+
       this.$refs.lightbox.showImage(0)
+
     }, 
 
     aplicarFiltro : function(){
@@ -361,7 +363,7 @@ export default {
          this.interno_fuente = {'id':null};
          this.usuario = {'id':null};
             
-           if(this.newRegistro.tipo == 'PROCEDIMIENTO'){
+           if(this.modelo == 'ot_procedimientos_propios'){
 
                this.newRegistro = {  
                     tipo :'PROCEDIMIENTO',          
@@ -640,9 +642,9 @@ export default {
                 this.HabilitarGuardar = true;
                 this.newRegistro = {};     
                 this.metodo_ensayo =  registro.metodo_ensayo ? registro.metodo_ensayo : {id :''};
-                this.usuario = registro.usuario[0] ? registro.usuario[0] : {'id' : null};
-                this.interno_equipo = registro.interno_equipo[0] ? registro.interno_equipo[0] : {'id' : null};
-                this.interno_fuente = registro.interno_fuente[0] ? registro.interno_fuente[0] : {'id' : null};            
+                this.usuario = registro.usuario ? registro.usuario[0] : {'id' : null};
+                this.interno_equipo = registro.interno_equipo ? registro.interno_equipo[0] : {'id' : null};
+                this.interno_fuente = registro.interno_fuente ? registro.interno_fuente[0] : {'id' : null};            
                 this.newRegistro = registro;  
                 let fileName = this.newRegistro.path ; 
                 let FileExt = fileName.substring(fileName.length-3,fileName.length);
