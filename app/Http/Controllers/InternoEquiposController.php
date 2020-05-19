@@ -83,37 +83,40 @@ class InternoEquiposController extends Controller
 
     public function getInternoEquipos($metodo, $activo_sn = '', $tipo_penetrante = 'null'){          
 
-       $instrumento_medicion = '';
-
-       if($tipo_penetrante != 'null'){
-
-         $instrumento_medicion = ($tipo_penetrante ==  'Fluorescente') ? 'Luxometro luz UV' : 'Luxometro luz blanca';
+      
+      if($tipo_penetrante != 'null'){
+        
+        $instrumento_medicion = ($tipo_penetrante ==  'Fluorescente') ? 'Luxometro luz UV' : 'Luxometro luz blanca';
+        
+      }else{
+        
+        $instrumento_medicion = 'null';
 
        }
 
         DB::enableQueryLog();
 
-        if($metodo != 'null'){
+        if(($metodo != 'null')&&($activo_sn)){
 
             $interno_equipos =   InternoEquipos::join('equipos','equipos.id','=','interno_equipos.equipo_id') 
-                                    ->join('metodo_ensayos','equipos.metodo_ensayo_id','=','metodo_ensayos.id')
-                                    ->where('metodo_ensayos.metodo',$metodo)
-                                    ->where('interno_equipos.activo_sn',1)
-                                    ->where(function($q) use($instrumento_medicion) {
+                                                ->join('metodo_ensayos','equipos.metodo_ensayo_id','=','metodo_ensayos.id')
+                                                ->where('metodo_ensayos.metodo',$metodo)
+                                                ->where('interno_equipos.activo_sn',1)
+                                                ->where(function($q) use($instrumento_medicion) {
 
-                                      $q->orWhereRaw("? = 'null'",$instrumento_medicion)
-                                         ->orWhere("equipos.instrumento_medicion",[$instrumento_medicion]);
+                                                  $q->orWhereRaw("? = 'null'",$instrumento_medicion)
+                                                    ->orWhere("equipos.instrumento_medicion",[$instrumento_medicion]);
 
-                                            })
-                                    ->Select('interno_equipos.*')
-                                    ->with('equipo')
-                                    ->with('internoFuente')
-                                    ->get();
+                                                        })
+                                                ->Select('interno_equipos.*')
+                                                ->with('equipo')
+                                                ->with('internoFuente')
+                                                ->get();
           
                             
 
 
-        }else if($activo_sn){
+        }elseif($activo_sn){
 
           $interno_equipos =  InternoEquipos::where('interno_equipos.activo_sn',1)
                                   ->with('equipo')
