@@ -110,7 +110,7 @@ b {
                              @endif
                             
                             </td>  
-                            <td style="font-size: 10px;  " colspan="1"  ><b style="font-size: 11px;">Aplic.: </b>{{$removedor_aplicacion->codigo}}</td>                          
+                            <td style="font-size: 9px;  " colspan="1"  ><b style="font-size: 11px;">Aplic.: </b>{{$removedor_aplicacion->codigo}}</td>                          
                         </tr>
                         <tr>                       
                             <td style="font-size: 11px;border-right: 1px solid #000;"  ><b>Material: </b>{{$material->codigo}}</td>
