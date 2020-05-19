@@ -101,7 +101,7 @@ b {
                         <tr>
                             <td style="font-size: 11px; width: 192px;border-right: 1px solid #000;"><b>Componente: </b>{{$informe->componente}}</td>
                             <td style="font-size: 11px;  width: 228px; border-right: 1px solid #000;" colspan="4"  ><b>Inst. Medición: </b>{{$equipo->equipo->instrumento_medicion}} / {{$equipo->equipo->codigo}} </td>                            
-                            <td style="font-size: 11px;width: 120px;  " colspan="1"  ><b style="font-size: 11px;">Rem: </b>
+                            <td style="font-size: 10px;width: 120px;  " colspan="1"  ><b style="font-size: 10px;">Rem: </b>
                              {{$removedor->tipo}}
                              @if ($removedor->marca)
 
@@ -172,7 +172,7 @@ b {
                         </tr>
                         <tr>
                             <td style="font-size: 10px;border-right: 1px solid #000;" ><b>EPS:</b>{{$informe->procedimiento_soldadura}}</td>
-                            <td style="font-size: 11px;border-right: 1px solid #000;" colspan="4"  ><b>Revelador: </b>
+                            <td style="font-size: 10px;border-right: 1px solid #000;" colspan="4"  ><b>Revelador: </b>
 
                             {{$revelador->tipo}}
                              @if ($revelador->marca)
