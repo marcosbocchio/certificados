@@ -74,7 +74,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('metodos_trabajo_pm', 'MetodosTrabajoPmController');
     Route::resource('metodos_trabajo_lp', 'MetodosTrabajoLpController');
     Route::resource('aplicaciones_lp', 'AplicacionesLpController');
-    Route::get('tipo_liquidos/{tipo}', 'TipoLiquidosController@getTipoLiquidos');
+    Route::get('tipo_liquidos/penetrante_sn/{penetrante_sn}/revelador_sn/{revelador_sn}/removedor_sn/{removedor_sn}/metodo_trabajo_lp_id/{metodo_trabajo_lp_id}', 'TipoLiquidosController@getTipoLiquidos');
     Route::resource('corrientes', 'CorrientesController');
     Route::resource('color_particulas', 'ColorParticulasController');
     Route::resource('iluminaciones', 'IluminacionesController');
@@ -152,7 +152,7 @@ Route::group(['middleware' => 'auth:api'], function()
   
     Route::get('documentaciones/ot_operarios/{ot_id}/{user_id}', 'DocumentacionesController@getDocOtOperarios');
     
-    Route::get('interno_equipos/metodo/{metodo}/activo_sn/{activo_sn?}/instrumento_medicion/{instrumento_medicion?}', 'InternoEquiposController@getInternoEquipos');   
+    Route::get('interno_equipos/metodo/{metodo}/activo_sn/{activo_sn?}/tipo_penetrante/{tipo_penetrante?}', 'InternoEquiposController@getInternoEquipos');   
     Route::get('interno_equipos/paginate', 'InternoEquiposController@paginate');
     Route::resource('interno_equipos', 'InternoEquiposController');
       
@@ -257,6 +257,10 @@ Route::get('/fecha_actual',function(){
     return date("Y/m/d H:i:s");
 });
 
+/*
+api/tipo_liquidos/penetrante_sn/{penetrante_sn}/revelador_sn{revelador_sn}/removedor_sn/{removedor_sn}/metodo_trabajo_lp_id/{metodo_trabajo_lp_id}
+http://certificados.test/api/tipo_liquidos/penetrante_sn/0/revelador_sn/1/removedor_sn/0/metodo_trabajo_lp_id/1?api_token=XOttyjkkDp1MsUzKGAZiP3y6uTLTieB2qAc4YT22I9ApoBia77V7arjioMSG
 
 
 
+*/

@@ -7,8 +7,13 @@
 
 <style>
 
-@page { margin: 355px 30px 126px 60px !important;
+@page { margin: 355px 30px 124px 60px !important;
         padding: 0px 0px 0px 0px !important; }
+
+body {
+    margin: 0px 1px 0px 1px;
+    padding: 0 0 0 0;
+}
 
 header {
     position:fixed;
@@ -59,7 +64,7 @@ b {
 }
 </style>
 
-<body>   
+<body class="bordered" style="border-top: none;border-bottom: none;">  
 
 <header>
     <table style="text-align: center" width="100%" class="bordered">
@@ -156,15 +161,15 @@ b {
                              <td style="font-size: 11px;" colspan="2"  ><b>Iluminación: </b>{{$iluminacion->codigo}} </td>  
                         </tr>
                         <tr>
-                            <td style="font-size: 11px;border-right: 1px solid #000;" ><b>EPS: </b>{{$informe->procedimiento_soldadura}}</td>
+                            <td style="font-size: 10px;border-right: 1px solid #000;" ><b>EPS:</b>{{$informe->procedimiento_soldadura}}</td>
                             <td style="font-size: 11px;" colspan="2"  ><b>Concentración: </b>{{$informe_pm->concentracion}}</td>
                             <td style="font-size: 11px;" colspan="1"  ><b>V: </b>{{$informe_pm->voltaje}}</td>  
                             <td style="font-size: 11px; border-right: 1px solid #000;" colspan="1"  ><b>Am: </b>{{$informe_pm->amperaje}}</td>                          
                             <td style="font-size: 11px;  " colspan="2" ><b>Ejec. Ensayo: </b>{{$ejecutor_ensayo->name}}</td>                
                         </tr>
                         <tr>                           
-                            <td style="font-size: 11px;border-right: 1px solid #000;" ><b>PQR: </b>{{$informe->pqr}}</td>
-                            <td style="font-size: 11px; border-right: 1px solid #000; " colspan="4" ><b>Proc. PM: </b>{{$procedimiento_inf->titulo}} </td>
+                            <td style="font-size: 10px;border-right: 1px solid #000;" ><b>PQR:</b>{{$informe->pqr}}</td>
+                            <td style="font-size: 11px; border-right: 1px solid #000; " colspan="4" ><b>Proc. : </b>{{$procedimiento_inf->titulo}} </td>
                              <td style="font-size: 11px;" colspan="2"  ><b>&nbsp; </td>  
 
                         </tr>                
@@ -251,7 +256,7 @@ b {
 </footer>
 
 <main>    
-    <table width="100%" class="bordered">
+    <table width="100%" class="bordered" style="padding: 0 -3px 0 -3px;" >
         <tbody>
             @foreach ($detalles as $detalle)
                 <tr>
@@ -286,6 +291,7 @@ b {
                 </tr>                
             @endforeach    
 
+        <!--
             {{ $cantFilasTotal = count($detalles) }}
             {{ $filasPage = 29 }}
             {{ $filasACompletar = pdfCantFilasACompletar($filasPage,$cantFilasTotal) }}  
@@ -299,7 +305,10 @@ b {
                     <td style="font-size: 11px; text-align: center;width:38px;" class="bordered-td">&nbsp;</td>
                     <td class="bordered-td">&nbsp;</td>
                 </tr>
-            @endfor                                  
+            @endfor  
+
+        -->
+                                
         </tbody>
     </table>
 </main>
@@ -318,10 +327,6 @@ b {
         $angle = 0.0;   //  default
         $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
     }
-
-    $pdf->line(46.5,130,46.5,800,array(0,0,0),1.5);
-    $pdf->line(571.3,130,571.3,800,array(0,0,0),1.5);
-
 
 </script>
 

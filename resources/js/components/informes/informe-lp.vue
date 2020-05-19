@@ -85,14 +85,14 @@
                         <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="procedimientos_soldadura">Proc. Soldadura (EPS) *</label>
-                                <input type="text" v-model="procedimiento_soldadura" class="form-control" id="procedimientos_soldadura" maxlength="20">
+                                <input type="text" v-model="procedimiento_soldadura" class="form-control" id="procedimientos_soldadura" maxlength="30">
                             </div>                            
                         </div>  
 
                         <div class="col-md-3">                       
                             <div class="form-group" >
                                 <label for="pqr">PQR</label>
-                                <input type="text" v-model="pqr" class="form-control" id="pqr" maxlength="20">
+                                <input type="text" v-model="pqr" class="form-control" id="pqr" maxlength="30">
                             </div>         
                         </div>                         
                         
@@ -270,7 +270,7 @@
                         <div class="col-md-3">                       
                             <div class="form-group" >
                                 <label for="iluminaciones">Iluminaciones *</label>
-                                <v-select v-model="iluminacion" label="codigo" :options="iluminaciones"></v-select>   
+                                <v-select v-model="iluminacion" label="codigo" :options="iluminaciones" disabled ></v-select>   
                             </div>         
                         </div>
 
@@ -586,10 +586,7 @@ data() {return {
                 }
         });
         this.$store.dispatch('loadNormaEvaluaciones');        
-        this.$store.dispatch('loadNormaEnsayos'); 
-        this.$store.dispatch('loadTipoLiquidos','penetrante_tipo_liquido');      
-        this.$store.dispatch('loadTipoLiquidos','revelador_tipo_liquido');      
-        this.$store.dispatch('loadTipoLiquidos','removedor_tipo_liquido');     
+        this.$store.dispatch('loadNormaEnsayos');     
         this.$store.dispatch('loadIluminaciones'); 
         this.$store.dispatch('loadEjecutorEnsayo', this.otdata.id); 
         this.getMetodosTrabajoLp();  
@@ -667,7 +664,7 @@ data() {return {
                this.limpieza_final          = this.informe_lpdata.limpieza_final;
                this.iluminacion = this.iluminacion_data;
                this.TablaLp = this.detalledata;
- 
+               this.getTipoLiquidos();
  
             }         
 
@@ -724,14 +721,63 @@ data() {return {
      getInstrumentoMediciones(){
 
         this.tipo_penetrante = (this.metodo_trabajo_lp.tipo == 'TIPO I') ? 'Fluorescente' : 'Visible';  
-        console.log(this.tipo_penetrante);
 
-        let instrumento_medicion = (this.tipo_penetrante =='Fluorescente')  ? 'Luxometro luz UV' : 'Luxometro luz blanca';
-        this.$store.dispatch('loadInternoEquipos',{ 'metodo' : this.metodo, 'activo_sn' : 1, 'instrumento_medicion' : instrumento_medicion }).then(response =>{
+        switch (this.metodo_trabajo_lp.metodo) {
+
+            case 'METODO A':
+
+                this.tipo_penetrante +=' - Lavable con agua';
+
+                break;
+
+            case 'METODO B':
+                this.tipo_penetrante +=' - Emusificante Lipofilico';
+                break;
+
+            case 'METODO C':
+                this.tipo_penetrante +=' - Lavable con Solvente';
+                break;
+
+            case 'METODO D':
+                this.tipo_penetrante +=' - Emusificante hidrofilico';
+
+            break;
+        
+         
+        }
+
+        if(this.metodo_trabajo_lp.tipo == 'TIPO I'){
+
+            this.iluminacion = this.iluminaciones[this.iluminaciones.findIndex(elemento => elemento.codigo == '1076 Lux')];
+
+        }else if(this.metodo_trabajo_lp.tipo == 'TIPO II'){
+
+            this.iluminacion = this.iluminaciones[this.iluminaciones.findIndex(elemento => elemento.codigo == '1000 µv/cm2')];
+
+        }
+
+
+    
+
+        this.$store.dispatch('loadInternoEquipos',{ 'metodo' : this.metodo, 'activo_sn' : 1, 'tipo_penetrante' : this.tipo_penetrante }).then(response =>{
             
             this.interno_equipo = '';
 
-        });       
+        });     
+
+
+        this.penetrante_tipo_liquido = '';
+        this.removedor_tipo_liquido = '';
+        this.removedor_tipo_liquido = '';
+
+        this.getTipoLiquidos();       
+    },
+
+    getTipoLiquidos : function(){
+
+            this.$store.dispatch('loadTipoLiquidos', { 'penetrante_sn' : 1,'revelador_sn' : 0,'removedor_sn' : 0, 'metodo_trabajo_lp_id' : this.metodo_trabajo_lp.id });      
+            this.$store.dispatch('loadTipoLiquidos', { 'penetrante_sn' : 0,'revelador_sn' : 1,'removedor_sn' : 0, 'metodo_trabajo_lp_id' : this.metodo_trabajo_lp.id });      
+            this.$store.dispatch('loadTipoLiquidos', { 'penetrante_sn' : 0,'revelador_sn' : 0,'removedor_sn' : 1, 'metodo_trabajo_lp_id' : this.metodo_trabajo_lp.id });  
 
     },
 

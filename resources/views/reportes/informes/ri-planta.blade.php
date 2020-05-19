@@ -152,17 +152,17 @@ b {
                             </td>                  
                         </tr>
                         <tr>                           
-                            <td style="font-size: 11px;border-right: 1px solid #000;" colspan="2"><b>EPS: </b>{{$informe->procedimiento_soldadura}}</td>                            
+                            <td style="font-size: 10px;border-right: 1px solid #000;" colspan="2"><b>EPS:</b>{{$informe->procedimiento_soldadura}}</td>                            
                             <td style="font-size: 11px; border-right: 1px solid #000;" colspan="4" ><b>Ici : </b>{{$ici->codigo}}</td>                            
                         </tr>
                         <tr>
-                            <td style="font-size: 11px;border-right: 1px solid #000;" colspan="2"><b>PQR: </b>{{$informe->pqr}}</td>
+                            <td style="font-size: 10px;border-right: 1px solid #000;" colspan="2"><b>PQR:</b>{{$informe->pqr}}</td>
                             <td style="font-size: 11px;" colspan="2" ><b>Actividad: </b>{{$actividad}}</td>
                             <td style="font-size: 11px;border-right: 1px solid #000;" colspan="2" ><b>N° Exp. : </b>{{$informe_ri->exposicion}}</td>  
                            
                         </tr>
                         <tr>                           
-                            <td style="font-size: 11px; border-right: 1px solid #000;" colspan="2" ><b>Proc. RI: </b>{{$procedimiento_inf->titulo}} </td>
+                            <td style="font-size: 11px; border-right: 1px solid #000;" colspan="2" ><b>Proc. : </b>{{$procedimiento_inf->titulo}} </td>
                              <td style="font-size: 11px;border-right: 1px solid #000;" colspan="4" ><b>Dis.Fuente/pelicula: </b>{{$informe_ri->distancia_fuente_pelicula}}</td>
                         </tr>                
                         </tbody>
@@ -289,7 +289,15 @@ b {
             @foreach ($juntas_posiciones as $junta_posicion)
                 <tr>
                     <td style="font-size: 11px;  width:66px;text-align: center" class="bordered-td">{{ $junta_posicion->junta }}</td>
-                    <td style="font-size: 11px;  width:65px;text-align: center" class="bordered-td">{{$junta_posicion->soldadorz}} / {{$junta_posicion->soldadorp}} </td>
+                    <td style="font-size: 11px;  width:65px;text-align: center" class="bordered-td">
+                    {{$junta_posicion->soldadorz}} 
+
+                    @if ($junta_posicion->soldadorp)
+                    
+                          / {{$junta_posicion->soldadorp}} 
+                        
+                    @endif
+                    </td>
                     <td style="font-size: 11px;  width:64.5px;text-align: center" class="bordered-td">{{$junta_posicion->posicion}}</td>
                     <td style="font-size: 9px;  width:201.5px; " class="bordered-td">&nbsp;
                     @php $primero = true; @endphp

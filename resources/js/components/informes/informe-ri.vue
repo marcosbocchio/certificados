@@ -69,7 +69,7 @@
 
                         <div class="col-md-3">
                             <div class="form-group" >
-                                <label for="Diametro">Diametro *</label>
+                                <label for="Diametro">Ø *</label>
                                 <v-select v-model="diametro" label="diametro" :options="diametros" @input="getEspesores()"></v-select>   
                             </div>                            
                         </div>    
@@ -106,14 +106,14 @@
                         <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="procedimientos_soldadura">Proc. Soldadura (EPS)*</label>
-                                <input type="text" v-model="procedimiento_soldadura" class="form-control" id="procedimientos_soldadura" maxlength="20">
+                                <input type="text" v-model="procedimiento_soldadura" class="form-control" id="procedimientos_soldadura" maxlength="30">
                             </div>                            
                         </div>  
 
                          <div class="col-md-3">                       
                             <div class="form-group" >
                                 <label for="pqr">PQR</label>
-                                <input type="text" v-model="pqr" class="form-control" id="pqr" maxlength="20">
+                                <input type="text" v-model="pqr" class="form-control" id="pqr" maxlength="30">
                             </div>         
                         </div>  
 
@@ -193,7 +193,7 @@
                         <div class="col-md-3">                       
                             <div class="form-group">
                                 <label for="procRadio">Procedimiento RI *</label>
-                                <v-select v-model="procedimiento" label="titulo" :options="procedimientos" id="procRadio"></v-select>   
+                                <v-select v-model="procedimiento" label="titulo" :options="procedimientos" id="procRadio" :appendToBody="'false'" :autoscroll="true"></v-select>   
                             </div>      
                         </div>
 
@@ -396,7 +396,7 @@
                         <div class="col-md-3">                          
                            <div class="form-group" >
                                 <label>Indicación</label>           
-                                <v-select v-model="defectoRiPlanta" :options="defectosRiPlanta" label="descripcion" :disabled="(!TablaDetalle.length)">
+                                <v-select v-model="defectoRiPlanta" :options="defectosRiPlanta" label="codigo" :disabled="(!TablaDetalle.length)">
                                     <template slot="option" slot-scope="option">
                                         <span class="upSelect">{{ option.descripcion }} </span> <br> 
                                         <span class="downSelect">{{ option.codigo }} </span>
@@ -471,12 +471,8 @@
                         </div>     
                     </div>
                     <div class="col-md-2">    
-                        <div v-if="!isGasoducto">   
-                            <label>Cuño 1</label>  
-                        </div>  
-                        <div v-else>                   
-                             <label>Cuño Z</label> 
-                        </div>          
+                               
+                        <label>Cuño Z</label>                                
                         <v-select v-model="soldador1" :options="soldadores" label="codigo" :disabled="(!TablaDetalle.length)">
                             <template slot="option" slot-scope="option">
                                 <span class="upSelect">{{ option.nombre }} </span> <br> 
@@ -485,8 +481,10 @@
                         </v-select>                  
                     </div> 
                     <div v-if="isGasoducto">   
-                        <div class="col-md-2">                         
-                            <label>Cuño L</label>           
+                        <div class="col-md-2">     
+
+                            <label>Cuño L</label>    
+                                   
                             <v-select v-model="soldador2" :options="soldadores" label="codigo" :disabled="(!isGasoducto || pasada!='1' || !TablaDetalle.length)">
                                 <template slot="option" slot-scope="option">
                                     <span class="upSelect">{{ option.nombre }} </span> <br> 
@@ -497,12 +495,8 @@
                     </div>
 
                     <div class="col-md-2">  
-                        <div v-if="!isGasoducto">   
-                            <label>Cuño 2</label>  
-                        </div>  
-                        <div v-else>                   
-                             <label>Cuño P</label> 
-                        </div>                         
+               
+                        <label>Cuño P</label>              
                                
                         <v-select v-model="soldador3" :options="soldadores" label="codigo" :disabled="(!TablaDetalle.length)">
                             <template slot="option" slot-scope="option">
@@ -784,7 +778,6 @@ export default {
              
              junta_posicion_selected : '',
              clonando : false,
-             validoPasadas : true,  
              
              }},
 
@@ -801,7 +794,7 @@ export default {
         });
         this.$store.dispatch('loadMateriales');
         this.$store.dispatch('loadDiametros');
-        this.$store.dispatch('loadInternoEquipos',{ 'metodo' : this.metodo, 'activo_sn' : 1, 'instrumento_medicion' : 'null' });       
+        this.$store.dispatch('loadInternoEquipos',{ 'metodo' : this.metodo, 'activo_sn' : 1, 'tipo_penetrante' : 'null' });       
         this.getTipoPeliculas();
         this.$store.dispatch('loadNormaEvaluaciones');        
         this.$store.dispatch('loadNormaEnsayos');       
@@ -1326,24 +1319,7 @@ export default {
             this.clonando = false;
         },
 
-        validarPasadas : function() {
-
-            this.TablaDetalle.forEach(function(item){
-
-                if(item['pasadas'].length == 0){
-
-                    this.validoPasadas = false;
-                    return;
-                }
-
-            }.bind(this))
-        },
-
-        Store : function(){
-            
-          
-            this.validarPasadas();         
-            if (this.validoPasadas){
+        Store : function(){          
 
                     this.errors =[];
                     let gasoducto_sn ;
@@ -1424,16 +1400,9 @@ export default {
                         }
 
                 });    
-           }else {
-
-                toastr.error("Error: Pasadas sin completar");    
-                this.validoPasadas = true;
-           }
+  
         },
         Update : function() {    
-
-            this.validarPasadas();
-            if (this.validoPasadas){
 
                     console.log('entro para actualizar' );
                     this.errors =[];
@@ -1513,14 +1482,7 @@ export default {
                         }
 
                 }); 
-        } else {
-
-                toastr.error("Error: Pasadas sin completar");    
-                this.validoPasadas = true;
-
-           }
         }
-
     }
     
 }
@@ -1534,5 +1496,7 @@ export default {
 .checkbox-inline {
     margin-left: 0px;
 }
+
+
 
 </style>

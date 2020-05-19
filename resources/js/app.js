@@ -519,7 +519,7 @@ actions : {
         loadInternoEquipos({
           commit},payload) {
           axios.defaults.baseURL = store.state.url ;
-          var urlRegistros = 'interno_equipos/metodo/' + payload.metodo + '/activo_sn/' + payload.activo_sn + '/instrumento_medicion/' + payload.instrumento_medicion + '?api_token=' + Laravel.user.api_token;         
+          var urlRegistros = 'interno_equipos/metodo/' + payload.metodo + '/activo_sn/' + payload.activo_sn + '/tipo_penetrante/' + payload.tipo_penetrante + '?api_token=' + Laravel.user.api_token;         
           console.log(urlRegistros);
           return new Promise((resolve, reject) => {
           axios.get(urlRegistros).then((response) => {
@@ -592,13 +592,13 @@ actions : {
         },  
         
         loadTipoLiquidos({
-          commit},tipo) {
+          commit},payload) {
           axios.defaults.baseURL = store.state.url ;
-          var urlRegistros = 'tipo_liquidos/' + tipo +  '?api_token=' + Laravel.user.api_token;         
+          var urlRegistros = 'tipo_liquidos/penetrante_sn/' + payload.penetrante_sn + '/revelador_sn/'+ payload.revelador_sn + '/removedor_sn/' + payload.removedor_sn + '/metodo_trabajo_lp_id/' +  payload.metodo_trabajo_lp_id + '?api_token=' + Laravel.user.api_token;         
           console.log(urlRegistros);
           axios.get(urlRegistros).then((response) => {
             console.log(response.data);
-            commit('getTipoLiquidos',{ 'liquidos' :response.data,'tipo' : tipo })           
+           commit('getTipoLiquidos',{ 'liquidos' :response.data,'payload' : payload })           
           })
         }, 
 
@@ -940,27 +940,24 @@ actions : {
         state.fuentePorInterno = fuentePorInterno
       },
 
-      getTipoLiquidos(state, tipo_liquidos) {       
+      getTipoLiquidos(state, tipo_liquidos) {  
+        
+        console.log('el tipo liquido es:');
+        console.log(tipo_liquidos);
 
-        switch (tipo_liquidos.tipo) {
+        if(tipo_liquidos.payload.penetrante_sn){
 
-          case 'penetrante_tipo_liquido':
+          state.penetrantes_tipo_liquido = tipo_liquidos.liquidos;
 
-            state.penetrantes_tipo_liquido = tipo_liquidos.liquidos;
-            break;
+        }else if(tipo_liquidos.payload.revelador_sn){
 
-          case 'revelador_tipo_liquido':
+          state.reveladores_tipo_liquido = tipo_liquidos.liquidos;
 
-            state.reveladores_tipo_liquido = tipo_liquidos.liquidos;
-            break;
-          
-          case 'removedor_tipo_liquido':
-            
-            state.removedores_tipo_liquido = tipo_liquidos.liquidos;
-            break;        
-         
+        }else if(tipo_liquidos.payload.removedor_sn){
+
+          state.removedores_tipo_liquido = tipo_liquidos.liquidos;
+
         }
-
        
       },
 

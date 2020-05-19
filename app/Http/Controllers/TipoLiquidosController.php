@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 use App\TipoLiquidos;
 use Illuminate\Http\Request;
+use App\MetodosTrabajoLp;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
+
 
 class TipoLiquidosController extends Controller
 {
@@ -16,29 +20,84 @@ class TipoLiquidosController extends Controller
         //
     }
 
-    public function getTipoLiquidos($tipo){
+    public function getTipoLiquidos($penetrante_sn,$revelador_sn,$removedor_sn,$metodo_trabajo_lp_id){
 
+        $metodo_trabajo = MetodosTrabajoLp::find($metodo_trabajo_lp_id);
+        $fluorescente_sn = 0;
+        $visible_sn = 0;
+        $lavable_agua_sn = 0;
+        $emusificante_lipofilico_sn = 0;
+        $lavable_solvente_sn = 0;
+        $emusificante_hidrofilico_sn = 0;
+        $q = '';
 
-        switch ($tipo) {
-            case 'penetrante_tipo_liquido':
-               
-              return TipoLiquidos::where('penetrante_sn',1)->get();
+        if($penetrante_sn){
 
-            break;
+            $q = $q . 'penetrante_sn = 1';
 
-            case 'revelador_tipo_liquido':
-               
-              return TipoLiquidos::where('revelador_sn',1)->get();
+        }else if($revelador_sn){
 
-            break;
+            $q = $q . 'revelador_sn = 1';
 
-            case 'removedor_tipo_liquido':
-               
-              return TipoLiquidos::where('removedor_sn',1)->get();
+        }else if($removedor_sn){
 
-            break;            
-          
+            $q = $q . 'removedor_sn = 1';
         }
+
+        $q = $q ? ($q . ' and ') : '';
+
+        switch ($metodo_trabajo->tipo) {
+
+            case 'TIPO I':
+
+                $q = $q . 'fluorescente_sn = 1';
+
+                break;
+            
+            case 'TIPO II':
+
+                $q = $q . 'visible_sn = 1';
+                break;
+        }
+
+        $q = $q . ' and ';
+
+        switch ($metodo_trabajo->metodo) {
+
+            case 'METODO A':
+
+                $q = $q . 'lavable_agua_sn = 1';         
+                break;
+
+            case 'METODO B':
+
+                $q = $q . 'emusificante_lipofilico_sn = 1';            
+                break;
+
+            case 'METODO C':
+
+                $q = $q . 'lavable_solvente_sn = 1'; 
+                break;   
+
+            case 'METODO D':
+
+                $q = $q . 'emusificante_hidrofilico_sn = 1';       
+                break;  
+    
+        }
+
+    DB::enableQueryLog();      
+
+    $tipo_liquidos = TipoLiquidos::whereRaw($q)
+                                    ->get();    
+    
+    $queries = DB::getQueryLog();
+    foreach($queries as $i=>$query)
+    {
+        Log::debug("Query $i: " . json_encode($query));
+    }   
+
+    return $tipo_liquidos;
     }
 
     /**

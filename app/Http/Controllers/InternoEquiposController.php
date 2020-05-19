@@ -81,7 +81,13 @@ class InternoEquiposController extends Controller
         //
     }
 
-    public function getInternoEquipos($metodo, $activo_sn = '', $instrumento_medicion = 'null'){          
+    public function getInternoEquipos($metodo, $activo_sn = '', $tipo_penetrante = 'null'){          
+
+       if($tipo_penetrante != 'null'){
+
+         $instrumento_medicion = ($tipo_penetrante ==  'Fluorescente') ? 'Luxometro luz UV' : 'Luxometro luz blanca';
+
+       }
 
         DB::enableQueryLog();
 
