@@ -663,10 +663,9 @@ data() {return {
                this.limpieza_intermedia     = this.informe_lpdata.limpieza_intermedia; 
                this.limpieza_final          = this.informe_lpdata.limpieza_final;
                this.iluminacion = this.iluminacion_data;
-               this.TablaLp = this.detalledata;
-               
+               this.TablaLp = this.detalledata;               
                this.getTipoLiquidos();
-               this.getInternoEquipos(); 
+               this.$store.dispatch('loadInternoEquipos',{ 'metodo' : this.metodo, 'activo_sn' : 1, 'tipo_penetrante' : this.tipo_penetrante });
             }         
 
         },      
@@ -722,8 +721,6 @@ data() {return {
      getInstrumentoMediciones(){
 
         this.tipo_penetrante = (this.metodo_trabajo_lp.tipo == 'TIPO I') ? 'Fluorescente' : 'Visible';  
-
-
 
         if(this.metodo_trabajo_lp.tipo == 'TIPO I'){
 
