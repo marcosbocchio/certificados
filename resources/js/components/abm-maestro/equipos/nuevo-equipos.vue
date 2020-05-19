@@ -20,7 +20,7 @@
                     <v-select v-model="metodo_ensayos" label="metodo" :options="metodos_ensayos" :input="setTipoLp()"></v-select> 
                     
                     <label for="instrumento_medicion">Instrumento Medición *</label>
-                    <v-select v-model="newRegistro.instrumento_medicion" :options="['Luxometro luz blanca','Luxo metro luz UV']" :disabled="metodo_ensayos.metodo != 'LP'"></v-select>
+                    <v-select v-model="newRegistro.instrumento_medicion" :options="['Luxómetro luz blanca','Luxómetro luz UV']" :disabled="metodo_ensayos.metodo != 'LP'"></v-select>
               
                 </div>
             
