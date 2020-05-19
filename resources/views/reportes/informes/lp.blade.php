@@ -99,8 +99,8 @@ b {
                     <table width="100%" style="border-collapse: collapse;" >
                         <tbody>                 
                         <tr>
-                            <td style="font-size: 11px; width: 190px;border-right: 1px solid #000;"><b>Componente: </b>{{$informe->componente}}</td>
-                            <td style="font-size: 11px;  width: 230px; border-right: 1px solid #000;" colspan="4"  ><b>Inst. Medición: </b>{{$equipo->equipo->instrumento_medicion}} / {{$equipo->equipo->codigo}} </td>                            
+                            <td style="font-size: 11px; width: 192px;border-right: 1px solid #000;"><b>Componente: </b>{{$informe->componente}}</td>
+                            <td style="font-size: 11px;  width: 228px; border-right: 1px solid #000;" colspan="4"  ><b>Inst. Medición: </b>{{$equipo->equipo->instrumento_medicion}} / {{$equipo->equipo->codigo}} </td>                            
                             <td style="font-size: 11px;width: 120px;  " colspan="1"  ><b style="font-size: 11px;">Rem: </b>
                              {{$removedor->tipo}}
                              @if ($removedor->marca)
