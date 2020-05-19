@@ -722,6 +722,24 @@ data() {return {
 
         this.tipo_penetrante = (this.metodo_trabajo_lp.tipo == 'TIPO I') ? 'Fluorescente' : 'Visible';  
 
+
+
+        if(this.metodo_trabajo_lp.tipo == 'TIPO I'){
+
+            this.iluminacion = this.iluminaciones[this.iluminaciones.findIndex(elemento => elemento.codigo == '1076 Lux')];
+
+        }else if(this.metodo_trabajo_lp.tipo == 'TIPO II'){
+
+            this.iluminacion = this.iluminaciones[this.iluminaciones.findIndex(elemento => elemento.codigo == '1000 µv/cm2')];
+
+        }
+
+        this.$store.dispatch('loadInternoEquipos',{ 'metodo' : this.metodo, 'activo_sn' : 1, 'tipo_penetrante' : this.tipo_penetrante }).then(response =>{
+            
+            this.interno_equipo = '';
+
+        });     
+
         switch (this.metodo_trabajo_lp.metodo) {
 
             case 'METODO A':
@@ -742,28 +760,8 @@ data() {return {
                 this.tipo_penetrante +=' - Emusificante hidrofilico';
 
             break;
-        
          
         }
-
-        if(this.metodo_trabajo_lp.tipo == 'TIPO I'){
-
-            this.iluminacion = this.iluminaciones[this.iluminaciones.findIndex(elemento => elemento.codigo == '1076 Lux')];
-
-        }else if(this.metodo_trabajo_lp.tipo == 'TIPO II'){
-
-            this.iluminacion = this.iluminaciones[this.iluminaciones.findIndex(elemento => elemento.codigo == '1000 µv/cm2')];
-
-        }
-
-
-    
-
-        this.$store.dispatch('loadInternoEquipos',{ 'metodo' : this.metodo, 'activo_sn' : 1, 'tipo_penetrante' : this.tipo_penetrante }).then(response =>{
-            
-            this.interno_equipo = '';
-
-        });     
 
 
         this.penetrante_tipo_liquido = '';
