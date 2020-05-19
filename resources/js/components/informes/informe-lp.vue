@@ -664,8 +664,9 @@ data() {return {
                this.limpieza_final          = this.informe_lpdata.limpieza_final;
                this.iluminacion = this.iluminacion_data;
                this.TablaLp = this.detalledata;
+               
                this.getTipoLiquidos();
- 
+               this.getInternoEquipos(); 
             }         
 
         },      
@@ -734,11 +735,7 @@ data() {return {
 
         }
 
-        this.$store.dispatch('loadInternoEquipos',{ 'metodo' : this.metodo, 'activo_sn' : 1, 'tipo_penetrante' : this.tipo_penetrante }).then(response =>{
-            
-            this.interno_equipo = '';
-
-        });     
+        this.getInternoEquipos();    
 
         switch (this.metodo_trabajo_lp.metodo) {
 
@@ -776,6 +773,16 @@ data() {return {
             this.$store.dispatch('loadTipoLiquidos', { 'penetrante_sn' : 1,'revelador_sn' : 0,'removedor_sn' : 0, 'metodo_trabajo_lp_id' : this.metodo_trabajo_lp.id });      
             this.$store.dispatch('loadTipoLiquidos', { 'penetrante_sn' : 0,'revelador_sn' : 1,'removedor_sn' : 0, 'metodo_trabajo_lp_id' : this.metodo_trabajo_lp.id });      
             this.$store.dispatch('loadTipoLiquidos', { 'penetrante_sn' : 0,'revelador_sn' : 0,'removedor_sn' : 1, 'metodo_trabajo_lp_id' : this.metodo_trabajo_lp.id });  
+
+    },
+
+    getInternoEquipos : function(){
+
+        this.$store.dispatch('loadInternoEquipos',{ 'metodo' : this.metodo, 'activo_sn' : 1, 'tipo_penetrante' : this.tipo_penetrante }).then(response =>{
+            
+            this.interno_equipo = '';
+
+        });   
 
     },
 
