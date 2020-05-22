@@ -166,7 +166,14 @@ b {
                             <td style="font-size: 11px;" colspan="2"  ><b>Concentración: </b>{{$informe_pm->concentracion}}</td>
                             <td style="font-size: 11px;" colspan="1"  ><b>V: </b>{{$informe_pm->voltaje}}</td>  
                             <td style="font-size: 11px; border-right: 1px solid #000;" colspan="1"  ><b>Am: </b>{{$informe_pm->amperaje}}</td>                          
-                            <td style="font-size: 11px;  " colspan="2" ><b>Contraste</b>{{$contraste->tipo}} / {{$contraste->marca}}</td>                
+                            <td style="font-size: 11px;  " colspan="2" ><b>Contraste :</b>
+                            @if ($contraste)
+                                
+                                {{$contraste->tipo}} / {{$contraste->marca}}
+
+                            @endif
+                            
+                            </td>                
                         </tr>
                         <tr>                           
                             <td style="font-size: 10px;border-right: 1px solid #000;" ><b>PQR:</b>{{$ot_tipo_soldadura->pqr}}</td>

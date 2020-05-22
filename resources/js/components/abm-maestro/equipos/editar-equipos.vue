@@ -20,7 +20,7 @@
                     <v-select v-model="metodo_ensayos" label="metodo" :options="metodos_ensayos" @input="resetInstrumentoMedicion" ></v-select> 
                     
                     <label for="instrumento_medicion">Instrumento Medición </label>
-                    <v-select v-model="editRegistro.instrumento_medicion" :options="['Luxómetro luz blanca','Lampara luz UV']" :disabled="((metodo_ensayos.metodo != 'LP') && (metodo_ensayos.metodo != 'PM'))"></v-select>
+                    <v-select v-model="editRegistro.instrumento_medicion" :options="instrumentos_mediciones" :disabled="((metodo_ensayos.metodo != 'LP') && (metodo_ensayos.metodo != 'PM'))"></v-select>
               
                 </div>
             
@@ -54,7 +54,8 @@ export default {
             'descripcion'  : '',
             'instrumento_medicion' : '',             
          },
-         metodo_ensayos :'',          
+         instrumentos_mediciones :  ['Luxómetro luz blanca','Lampara luz UV'] ,
+         metodo_ensayos :'',    
         
         errors:{},        
          }
