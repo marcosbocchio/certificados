@@ -28,6 +28,7 @@ use App\OtOperarios;
 use App\Soldadores;
 use App\TipoSoldaduras;
 use \stdClass;
+use App\OtTipoSoldaduras;
 
 class InformesRiController extends Controller
 {
@@ -119,7 +120,13 @@ class InformesRiController extends Controller
 
        if ($informe_material_accesorio == null)
            $informe_material_accesorio = new Materiales();
-       
+
+        $informe_ot_tipo_soldadura = OtTipoSoldaduras::join('tipo_soldaduras','tipo_soldaduras.id','=','ot_tipo_soldaduras.tipo_soldadura_id')
+        ->where('ot_tipo_soldaduras.id',$informe->ot_tipo_soldadura_id)->with('tipoSoldadura')->select('ot_tipo_soldaduras.*','tipo_soldaduras.codigo')->first();
+
+        if ($informe_ot_tipo_soldadura == null)
+              $informe_ot_tipo_soldadura = new OtTipoSoldaduras();
+
         $informe_tecnica_grafico = (new TecnicasGraficosController)->show($informe_ri->tecnicas_grafico_id);
         $informe_interno_equipo = internoEquipos::where('id',$informe->interno_equipo_id)->with('equipo')->first();
         $documetacionesRepository = new DocumentacionesRepository;
@@ -138,6 +145,7 @@ class InformesRiController extends Controller
                                                  'user',
                                                  'informe',
                                                  'informe_ri',  
+                                                 'informe_ot_tipo_soldadura',
                                                  'informe_material',  
                                                  'informe_material_accesorio',
                                                  'informe_diametro',

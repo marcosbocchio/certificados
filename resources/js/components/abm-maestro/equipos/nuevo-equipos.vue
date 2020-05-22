@@ -17,10 +17,10 @@
                     <input autocomplete="off" type="text" name="descripcion" class="form-control" v-model="newRegistro.descripcion" value="">              
 
                     <label for="metodo_ensayo">Método de Ensayo *</label>      
-                    <v-select v-model="metodo_ensayos" label="metodo" :options="metodos_ensayos" :input="setTipoLp()"></v-select> 
+                    <v-select v-model="metodo_ensayos" label="metodo" :options="metodos_ensayos" @input="resetInstrumentoMedicion" ></v-select> 
                     
-                    <label for="instrumento_medicion">Instrumento Medición *</label>
-                    <v-select v-model="newRegistro.instrumento_medicion" :options="['Luxómetro luz blanca','Luxómetro luz UV']" :disabled="metodo_ensayos.metodo != 'LP'"></v-select>
+                    <label for="instrumento_medicion">Instrumento Medición </label>
+                    <v-select v-model="newRegistro.instrumento_medicion" :options="['Luxómetro luz blanca','Lampara luz UV']" :disabled="((metodo_ensayos.metodo != 'LP') && (metodo_ensayos.metodo != 'PM'))"></v-select>
               
                 </div>
             
@@ -78,10 +78,9 @@ export default {
                       
             },   
 
-            setTipoLp : function () {
-               
-               if(this.metodo_ensayos.metodo != 'LP')
-                    this.newRegistro.instrumento_medicion = '';
+            resetInstrumentoMedicion : function () {               
+             
+                this.newRegistro.instrumento_medicion = '';
                
             },    
 

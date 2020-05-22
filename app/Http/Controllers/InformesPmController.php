@@ -24,6 +24,9 @@ use App\ColorParticulas;
 use App\Iluminaciones;
 use App\DetallesPm;
 use App\DetallesPmReferencias;
+use App\OtTipoSoldaduras;
+use App\Particulas;
+use App\Contrastes;
 
 class InformesPmController extends Controller
 {
@@ -102,6 +105,7 @@ class InformesPmController extends Controller
    
       $informePm->informe_id = $informe->id;
       $informePm->metodo_trabajo_pm_id = $request->metodo_trabajo_pm['id'];
+      $informePm->instrumento_medicion_id = $request->instrumento_medicion['id'];
       $informePm->voltaje = $request->voltaje;
       $informePm->amperaje  = $request->am;
       $informePm->vehiculo = $request->vehiculo;
@@ -110,8 +114,9 @@ class InformesPmController extends Controller
       $informePm->tipo_magnetizacion_id = $request->tipo_magnetizacion['id'];
       $informePm->corriente_magnetizacion_id = $request->magnetizacion['id'];
       $informePm->desmagnetizacion_sn    = $request->desmagnetizacion_sn;
-      $informePm->color_particula_id = $request->color_particula['id'];
       $informePm->iluminacion_id = $request->iluminacion['id'];
+      $informePm->particula_id = $request->particula['id'];
+      $informePm->tinta_contraste_id = $request->contraste['id'];
   
       $informePm->save();     
       
@@ -179,6 +184,7 @@ class InformesPmController extends Controller
         $informe_diametroEspesor = DiametrosEspesor::find($informe->diametro_espesor_id);
         $informe_diametro = DiametroView::where('diametro',$informe_diametroEspesor->diametro)->first();       
         $informe_interno_equipo = internoEquipos::where('id',$informe->interno_equipo_id)->with('equipo')->first();
+        $informe_instrumento_medicion = internoEquipos::where('id',$informe_pm->instrumento_medicion_id)->with('equipo')->first();
         $informe_tecnica = Tecnicas::find($informe->tecnica_id);
         $documetacionesRepository = new DocumentacionesRepository;
         $informe_procedimiento = (new DocumentacionesController($documetacionesRepository))->ProcedimientoInformeId($informe->procedimiento_informe_id);    
@@ -189,11 +195,21 @@ class InformesPmController extends Controller
         $informe_pm_tipo_magnetizacion = TiposMagnetizacion::find($informe_pm->tipo_magnetizacion_id);
         $informe_pm_magnetizacion = Corrientes::find($informe_pm->corriente_magnetizacion_id);
         $informe_pm_desmagnetizacion_sn = $informe_pm->desmagnetizacion_sn;
-        $infome_pm_color_particula = ColorParticulas::find($informe_pm->color_particula_id);
         $informe_pm_iluminacion = Iluminaciones::find($informe_pm->iluminacion_id);
+        $informe_pm_particula = Particulas::where('id',$informe_pm->particula_id)->with('color')->first();
+        $informe_pm_contraste = Contrastes::find($informe_pm->tinta_contraste_id);
+
+        if ($informe_pm_contraste == null)
+            $informe_pm_contraste = new Contrastes();
 
         if ($informe_material_accesorio == null)
             $informe_material_accesorio = new Materiales();
+
+        $informe_ot_tipo_soldadura = OtTipoSoldaduras::join('tipo_soldaduras','tipo_soldaduras.id','=','ot_tipo_soldaduras.tipo_soldadura_id')
+        ->where('ot_tipo_soldaduras.id',$informe->ot_tipo_soldadura_id)->with('tipoSoldadura')->select('ot_tipo_soldaduras.*','tipo_soldaduras.codigo')->first();
+
+        if ($informe_ot_tipo_soldadura == null)
+              $informe_ot_tipo_soldadura = new OtTipoSoldaduras();
 
         $informe_detalle = $this->getDetalle($informe_pm->id);
 
@@ -203,11 +219,13 @@ class InformesPmController extends Controller
                                                  'informe',
                                                  'informe_pm',  
                                                  'informe_material',  
+                                                 'informe_ot_tipo_soldadura',
                                                  'informe_material_accesorio',
                                                  'informe_diametro',
                                                  'informe_diametroEspesor',                                                                            
                                                  'informe_tecnica_grafico',
                                                  'informe_interno_equipo',   
+                                                 'informe_instrumento_medicion',
                                                  'informe_tecnica', 
                                                  'informe_procedimiento',                                              
                                                  'informe_norma_evaluacion',
@@ -217,8 +235,9 @@ class InformesPmController extends Controller
                                                  'informe_pm_tipo_magnetizacion',
                                                  'informe_pm_magnetizacion',
                                                  'informe_pm_desmagnetizacion_sn',
-                                                 'infome_pm_color_particula',
                                                  'informe_pm_iluminacion',
+                                                 'informe_pm_particula',
+                                                 'informe_pm_contraste',
                                                  'informe_detalle',
                                                  'header_titulo',
                                                  'header_descripcion'));

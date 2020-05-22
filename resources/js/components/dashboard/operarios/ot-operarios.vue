@@ -1,6 +1,5 @@
 <template>
-    <div>
-       
+    <div>       
           <!-- small box -->
           <div class="small-box bg-custom-1">
             <div class="inner">
@@ -182,16 +181,15 @@ export default {
 
     selectDoc : function(id){
 
-            this.user_ot_operario_id = id;    
-            axios.defaults.baseURL = this.url ;
-            var urlRegistros = 'documentaciones/ot_operarios/' + this.ot_id_data + '/' + id + '?api_token=' + Laravel.user.api_token;      
-            console.log(urlRegistros);
-            axios.get(urlRegistros).then(response =>{
-                
-                    this.documentaciones = response.data              
+        this.user_ot_operario_id = id;    
+        axios.defaults.baseURL = this.url ;
+        var urlRegistros = 'documentaciones/ot_operarios/' + this.ot_id_data + '/' + id + '?api_token=' + Laravel.user.api_token;      
+        console.log(urlRegistros);
+        axios.get(urlRegistros).then(response =>{
+            
+                this.documentaciones = response.data              
 
-                });     
-
+            });     
     },
 
     submit :function () {

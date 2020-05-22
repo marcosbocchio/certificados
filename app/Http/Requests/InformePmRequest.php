@@ -40,8 +40,7 @@ class InformePmRequest extends FormRequest
             'material'                  => 'required',
             'plano_isom'                => 'required|Max:10',
             'diametro'                  => 'required',
-            'procedimiento_soldadura'   => 'required|Max:30', 
-            'pqr'                       => 'Max:30',             
+            'ot_tipo_soldadura'         => 'required',
             'tecnica'                   => 'required',  
             'vehiculo'                  => 'Max:20',
             'aditivo'                   => 'Max:20',          
@@ -50,7 +49,6 @@ class InformePmRequest extends FormRequest
             'norma_ensayo'              => 'required',  
             'tipo_magnetizacion'        => 'required',  
             'magnetizacion'             => 'required', 
-            'color_particula'           => 'required', 
             'iluminacion'               => 'required', 
             'desmagnetizacion_sn'       => 'required', 
             'voltaje'                   => 'required', 
@@ -82,6 +80,8 @@ class InformePmRequest extends FormRequest
             'detalles.*.pieza'            => 'pieza',
             'detalles.*.cm'               => 'cm', 
             'desmagnetizacion_sn'         => 'desmagnetización',    
+            'ot_tipo_soldadura'           => 'Eps',  
+
             ];
     }
 }

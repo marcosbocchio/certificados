@@ -81,7 +81,7 @@ b {
                                 <td style="font-size: 11px;"><b style="margin-left: 40px"></b></td>                         
                             </tr>
                             <tr>
-                                <td style="font-size: 11px;" ><b style="margin-left: 120px" >INFORME N°: </b>{{$informe->prefijo}}-{{FormatearNumeroInforme($informe->numero,'RI')}}</td>                      
+                                <td style="font-size: 11px;" ><b style="margin-left: 120px" >INFORME N°: </b>{{$informe->km}}-{{$ot_tipo_soldadura->TipoSoldadura->codigo}}-{{FormatearNumeroInforme($informe->numero,'RI')}}</td>                      
                             </tr>
                             <tr>
                                 <td style="font-size: 11px;"><b style="margin-left: 120px">FECHA: </b>{{ date('d-m-Y', strtotime($informe->fecha)) }}</td>
@@ -191,14 +191,14 @@ b {
                             <td style="font-size: 11px;width: 280px; border-right: 1px solid #000;" colspan="2"><b style="font-size: 11px;">Norma Evaluación: </b>{{$norma_evaluacion->codigo}}</td>  
                             <td style="font-size: 11px;"><b>Foco: </b>{{$interno_fuente->foco}}</td>
                             <td style="font-size: 11px; border-right: 1px solid #000;"><b>N° Exp. : </b>{{$informe_ri->exposicion}}</td>
-                            <td style="font-size: 11px;width: 280px; border-right: 1px solid #000;"  colspan="3" ><b>EPS: </b>{{$informe->procedimiento_soldadura}}</td>                        
+                            <td style="font-size: 11px;width: 280px; border-right: 1px solid #000;"  colspan="3" ><b>EPS: </b>{{$ot_tipo_soldadura->eps}}</td>                        
                
                         </tr>
                         <tr>
                             <td style="font-size: 11px;border-right: 1px solid #000; " colspan="2"><b>Norma Ensayo: </b>{{$norma_ensayo->codigo}}</td>
                             <td style="font-size: 11px;"><b>Pelicula : </b>{{$tipo_pelicula->fabricante}}</td>   
                             <td style="font-size: 11px;border-right: 1px solid #000;"><b>Tipo: </b>{{$tipo_pelicula->codigo}}</td>    
-                            <td style="font-size: 11px; border-right: 1px solid #000;" colspan="3"><b>PQR: </b>{{$informe->pqr}}</td>                    
+                            <td style="font-size: 11px; border-right: 1px solid #000;" colspan="3"><b>PQR: </b>{{$ot_tipo_soldadura->pqr}}</td>                    
                         </tr>
                         <tr>
                             <td style="font-size: 11px; border-right: 1px solid #000; " colspan="2" ><b>Ejec. Ensayo: </b>{{$ejecutor_ensayo->name}}</td>           
@@ -352,9 +352,9 @@ b {
         <tbody>
             @foreach ($juntas_posiciones as $junta_posiciones)
                 <tr>
-                    <td style="font-size: 11px;  width:38px;text-align: center" class="bordered-td">{{ $junta_posiciones->km}}</td>
+                    <td style="font-size: 11px;  width:38px;text-align: center" class="bordered-td">{{ $informe->km}}</td>
                     <td style="font-size: 11px;  width:50px;text-align: center" class="bordered-td">{{$junta_posiciones->junta}} </td>
-                    <td style="font-size: 11px;  width:50px;text-align: center" class="bordered-td">{{$junta_posiciones->tipo_soldadura}}</td>
+                    <td style="font-size: 11px;  width:50px;text-align: center" class="bordered-td">{{$ot_tipo_soldadura->TipoSoldadura->codigo}}</td>
                  
                         {{ $x =0  }}
 

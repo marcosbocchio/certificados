@@ -20,6 +20,7 @@
      :otdata  ="{{$ot}}"
      :informedata ="{{$informe}}"
      :informe_pmdata ="{{$informe_pm}}"
+     :ot_tipo_soldaduradata = "{{$informe_ot_tipo_soldadura}}"
      :materialdata="{{$informe_material}}"
      :material2data ="{{$informe_material_accesorio}}"
      :diametrodata="{{$informe_diametro}}"
@@ -34,9 +35,11 @@
      :tipo_magnetizacion_data = "{{$informe_pm_tipo_magnetizacion}}"  
      :magnetizacion_data = "{{$informe_pm_magnetizacion}}"   
      :desmagnetizacion_sn_data = "{{$informe_pm_desmagnetizacion_sn}}"   
-     :color_particula_data = "{{$infome_pm_color_particula}}"      
      :iluminacion_data = "{{$informe_pm_iluminacion}}"   
-     :detalledata="{{$informe_detalle}}"     
+     :contraste_data = "{{$informe_pm_contraste}}"
+     :particula_data ="{{$informe_pm_particula}}"
+     :detalledata="{{$informe_detalle}}"   
+     :instrumento_medicion_data = "{{$informe_instrumento_medicion}}"  
      
      editmode  
     

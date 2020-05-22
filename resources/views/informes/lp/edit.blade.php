@@ -19,6 +19,7 @@
      metodo ="{{$metodo}}"
      :otdata  ="{{$ot}}"
      :informedata ="{{$informe}}"
+     :ot_tipo_soldaduradata = "{{$informe_ot_tipo_soldadura}}"
      :informe_lpdata ="{{$informe_lp}}"
      :materialdata="{{$informe_material}}"
      :material2data ="{{$informe_material_accesorio}}"

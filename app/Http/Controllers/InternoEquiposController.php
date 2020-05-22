@@ -81,56 +81,55 @@ class InternoEquiposController extends Controller
         //
     }
 
-    public function getInternoEquipos($metodo, $activo_sn = '', $tipo_penetrante = 'null'){          
 
+
+
+    public function getInternoEquipos($metodo, $activo_sn, $tipo_penetrante){            
       
+      DB::enableQueryLog();
+
+      $interno_equipos='';
+      $instrumento_medicion='';
+
       if($tipo_penetrante != 'null'){
         
-        $instrumento_medicion = ($tipo_penetrante ==  'Fluorescente') ? 'Luxometro luz UV' : 'Luxometro luz blanca';
+            $instrumento_medicion = ($tipo_penetrante == 'Fluorescente') ? 'Lampara luz UV' : 'Luxometro luz blanca';
         
-      }else{
-        
-        $instrumento_medicion = 'null';
+            $interno_equipos =  InternoEquipos::join('equipos','equipos.id','=','interno_equipos.equipo_id') 
+                                              ->where('interno_equipos.activo_sn',1)
+                                              ->where('equipos.instrumento_medicion',$instrumento_medicion) 
+                                              ->Select('interno_equipos.*')
+                                              ->with('equipo')
+                                              ->with('internoFuente')
+                                              ->get();    
 
-       }
+      }elseif(($metodo != 'null')&&($activo_sn)){
 
-        DB::enableQueryLog();
-
-        if(($metodo != 'null')&&($activo_sn)){
-
-            $interno_equipos =   InternoEquipos::join('equipos','equipos.id','=','interno_equipos.equipo_id') 
+            $interno_equipos = InternoEquipos::join('equipos','equipos.id','=','interno_equipos.equipo_id') 
                                                 ->join('metodo_ensayos','equipos.metodo_ensayo_id','=','metodo_ensayos.id')
                                                 ->where('metodo_ensayos.metodo',$metodo)
                                                 ->where('interno_equipos.activo_sn',1)
-                                                ->where(function($q) use($instrumento_medicion) {
-
-                                                  $q->orWhereRaw("? = 'null'",$instrumento_medicion)
-                                                    ->orWhere("equipos.instrumento_medicion",[$instrumento_medicion]);
-
-                                                        })
+                                                ->whereNull('equipos.instrumento_medicion')
                                                 ->Select('interno_equipos.*')
                                                 ->with('equipo')
                                                 ->with('internoFuente')
-                                                ->get();
-          
-                            
+                                                ->get();                                
 
 
-        }elseif($activo_sn){
+      }elseif($activo_sn !='null'){
 
-          $interno_equipos =  InternoEquipos::where('interno_equipos.activo_sn',1)
-                                  ->with('equipo')
-                                  ->with('internoFuente')
-                                  ->Select('interno_equipos.*')
-                                  ->get();
+          $interno_equipos = InternoEquipos::where('interno_equipos.activo_sn',1)
+                                            ->with('equipo')
+                                            ->with('internoFuente')
+                                            ->Select('interno_equipos.*')
+                                            ->get();
 
-        }else{
+      }else{
 
-          $interno_equipos = InternoEquipos::  with('equipo')
-                                  ->with('internoFuente')
-                                  ->Select('interno_equipos.*')
-                                  ->get();
-
+          $interno_equipos = InternoEquipos::with('equipo')
+                                            ->with('internoFuente')
+                                            ->Select('interno_equipos.*')
+                                            ->get();
 
           }
 

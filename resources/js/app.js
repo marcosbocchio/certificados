@@ -195,6 +195,8 @@ Vue.component('ot-certificados', require('./components/dashboard/certificados/ot
 Vue.component('ot-soldadores', require('./components/dashboard/soldadores/ot-soldadores').default);
 Vue.component('ot-documentaciones', require('./components/dashboard/documentaciones/ot-documentaciones').default);
 Vue.component('table-ot_procedimientos_propios', require('./components/dashboard/procedimientos/table-ot_procedimientos_propios').default);
+Vue.component('ot-tipoSoldaduras', require('./components/dashboard/procedimientos/ot-tipoSoldaduras').default);
+
 /*
 Vue.component('table-placas_ri', require('./components/dashboard/placas/table-placas_ri').default);
 Vue.component('table-placas_us', require('./components/dashboard/placas/table-placas_us').default);
@@ -296,6 +298,7 @@ state: {
         contratistas:[],
         provincias:[],
         localidades:[],
+        ot_tipo_soldaduras:[],
         materiales:[],
         diametros:[],
         espesores:[],
@@ -306,6 +309,7 @@ state: {
         norma_ensayos:[],
         interno_equipo_show:{},
         interno_equipos:[], 
+        instrumentos_mediciones:[],
         interno_fuentes:[],
         fuentes:[],
         equipos:[],
@@ -313,6 +317,7 @@ state: {
         penetrantes_tipo_liquido:[],
         reveladores_tipo_liquido:[],
         removedores_tipo_liquido:[],
+        particulas:[],
         roles:[],
         permisos:[],
         iluminaciones:[],
@@ -338,6 +343,8 @@ state: {
         dosimetria_estados:[],
         dosimetria_resumen:[],
         serviciosOt  : [],
+        epss:[],
+        pqrs:[],
 
     },
 
@@ -425,6 +432,45 @@ actions : {
           axios.get(urlRegistros).then((response) => {
             console.log(response.data);
             commit('getLocalidades', response.data)           
+          })
+        },
+
+        loadOtTipoSoldaduras({
+          commit},ot_id) {
+          axios.defaults.baseURL = store.state.url ;
+          var urlRegistros = 'ot_tipo_soldaduras/ot/' + ot_id + '?api_token=' + Laravel.user.api_token;        
+          return new Promise((resolve, reject) => { 
+          axios.get(urlRegistros).then((response) => {
+            console.log(response.data);
+            commit('getOtTipoSoldaduras', response.data) 
+            resolve();       
+          })          
+          })
+        },
+
+        loadOtEpss({
+          commit},ot_id) {
+          axios.defaults.baseURL = store.state.url ;
+          var urlRegistros = 'ot_tipo_soldaduras/ot/' + ot_id + '/epss/' +'?api_token=' + Laravel.user.api_token;        
+          return new Promise((resolve, reject) => { 
+          axios.get(urlRegistros).then((response) => {
+            console.log(response.data);
+            commit('getOtEpss', response.data) 
+            resolve();       
+          })          
+          })
+        },
+
+        loadOtPqrs({
+          commit},ot_id) {
+          axios.defaults.baseURL = store.state.url ;
+          var urlRegistros = 'ot_tipo_soldaduras/ot/' + ot_id + /pqrs/ +'?api_token=' + Laravel.user.api_token;        
+          return new Promise((resolve, reject) => { 
+          axios.get(urlRegistros).then((response) => {
+            console.log(response.data);
+            commit('getOtPqrs', response.data) 
+            resolve();       
+          })          
           })
         },
 
@@ -525,6 +571,34 @@ actions : {
           axios.get(urlRegistros).then((response) => {
             console.log(response.data);
             commit('getInternoEquipos', response.data)   
+            resolve()       
+          })        
+          })
+        }, 
+
+        loadInstrumentosMediciones({
+          commit},payload) {
+          axios.defaults.baseURL = store.state.url ;
+          var urlRegistros = 'interno_equipos/metodo/' + payload.metodo + '/activo_sn/' + payload.activo_sn + '/tipo_penetrante/' + payload.tipo_penetrante + '?api_token=' + Laravel.user.api_token;         
+          console.log(urlRegistros);
+          return new Promise((resolve, reject) => {
+          axios.get(urlRegistros).then((response) => {
+            console.log(response.data);
+            commit('getInstrumentosMediciones', response.data)   
+            resolve()       
+          })        
+          })
+        }, 
+
+        loadParticulas({
+          commit},metodo_trabajo_pm_id) {
+          axios.defaults.baseURL = store.state.url ;
+          var urlRegistros = 'particulas/metodo_trabajo_pm/' + metodo_trabajo_pm_id + '?api_token=' + Laravel.user.api_token;         
+          console.log(urlRegistros);
+          return new Promise((resolve, reject) => {
+          axios.get(urlRegistros).then((response) => {
+            console.log(response.data);
+            commit('getParticulas', response.data)   
             resolve()       
           })        
           })
@@ -888,6 +962,18 @@ actions : {
         state.materiales = materiales
       },
 
+      getOtTipoSoldaduras(state, ot_tipo_soldaduras) {
+        state.ot_tipo_soldaduras = ot_tipo_soldaduras
+      },
+
+      getOtEpss(state, epss) {
+        state.epss = epss
+      },
+
+      getOtPqrs(state, pqrs) {
+        state.pqrs = pqrs
+      },
+
       getDiametros(state, diametros) {
         state.diametros = diametros
       },
@@ -919,6 +1005,15 @@ actions : {
       getInternoEquipos(state, interno_equipos) {
         state.interno_equipos = interno_equipos
       },
+
+      getInstrumentosMediciones(state, instrumentos_mediciones) {
+        state.instrumentos_mediciones = instrumentos_mediciones
+      },
+
+      getParticulas(state, particulas) {
+        state.particulas = particulas
+      },
+
 
       getUbicacionInternoEquipo(state, interno_equipo_show) {
         state.interno_equipo_show = interno_equipo_show

@@ -8,7 +8,7 @@
                         <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="formato">Tipo informe RI *</label>
-                                <v-select v-model="formato" :options="['PLANTA', 'DUCTO']"></v-select>
+                                <v-select v-model="formato" :options="['PLANTA', 'DUCTO']" @input="cambiopTipoInforme"></v-select>
                             </div>                            
                         </div>
                         <div class="col-md-3">
@@ -19,18 +19,34 @@
                                 </div>   
                             </div>
                         </div>
-                        <div class="col-md-3">
+
+                        <div class="col-md-2">
                             <div class="form-group" >
                                 <div v-if="isGasoducto">
-                                    <label for="prefijo">Prefijo *</label> 
+                                    <label for="pk">PK *</label> 
                                 </div>
                                 <div v-else>
-                                     <label for="prefijo">Prefijo</label> 
+                                     <label for="pk">PK</label> 
                                 </div>
-                                <input type="text" v-model="prefijo" class="form-control" id="prefijo" :disabled="!isGasoducto">
+                               <input type="number" v-model="pk" class="form-control" id="pk" :disabled="(!isGasoducto)">                           
                             </div>                            
                         </div>
-                         <div class="col-md-3">
+
+                        <div class="col-md-2">
+                            <div class="form-group" >
+                                <div v-if="isGasoducto">
+                                    <label for="ot_tipo_soldadura">Tipo Sol *</label> 
+                                    <v-select v-model="ot_tipo_soldadura" label="codigo" :options="ot_tipo_soldaduras" id="ot_tipo_soldadura" @input="cambioOtTipoSoldadura" :disabled="(!isGasoducto)"></v-select>   
+
+                                </div>
+                                <div v-else>
+                                     <label >Tipo Sol</label> 
+                                    <v-select  :options="[]":disabled="(!isGasoducto)"></v-select>   
+                                </div>
+                            </div>                            
+                        </div>
+
+                         <div class="col-md-2">
                             <div class="form-group" >
                                 <label for="numero_inf">Informe N°</label>
                                 <input type="text" v-model="numero_inf_code" class="form-control" id="numero_inf" disabled>
@@ -106,14 +122,17 @@
                         <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="procedimientos_soldadura">Proc. Soldadura (EPS)*</label>
-                                <input type="text" v-model="procedimiento_soldadura" class="form-control" id="procedimientos_soldadura" maxlength="30">
+                                <v-select v-model="ot_tipo_soldadura" label="eps" :options="ot_tipo_soldaduras" id="procedimientos_soldadura"  :disabled="(isGasoducto)"></v-select>  
                             </div>                            
                         </div>  
+
+                        <div class="clearfix"></div>
 
                          <div class="col-md-3">                       
                             <div class="form-group" >
                                 <label for="pqr">PQR</label>
-                                <input type="text" v-model="pqr" class="form-control" id="pqr" maxlength="30">
+                                <v-select v-model="ot_tipo_soldadura" label="pqr" :options="ot_tipo_soldaduras" id="pqr"  :disabled="(isGasoducto)"></v-select>  
+                           
                             </div>         
                         </div>  
 
@@ -133,12 +152,12 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Equipo *</label>
-                                    <v-select  v-model="interno_equipo" :options="interno_equipos" label="nro_interno" @input="getFuente()">
-                                        <template slot="option" slot-scope="option">
-                                            <span class="upSelect">{{ option.nro_interno }}</span> <br> 
-                                            <span class="downSelect"> {{ option.equipo.codigo }} </span>
-                                        </template>
-                                    </v-select>
+                                <v-select  v-model="interno_equipo" :options="interno_equipos" label="nro_interno" @input="getFuente()">
+                                    <template slot="option" slot-scope="option">
+                                        <span class="upSelect">{{ option.nro_interno }}</span> <br> 
+                                        <span class="downSelect"> {{ option.equipo.codigo }} </span>
+                                    </template>
+                                </v-select>
                             </div>
                         </div>
                        
@@ -297,14 +316,14 @@
                     <div class="col-md-2">                       
                         <div class="form-group" >                            
                             <label for="pk">Pk</label>
-                            <input type="number" v-model="pk" class="form-control" id="pk" :disabled="(!isGasoducto)">                           
+                            <input type="number" v-model="pk" class="form-control" id="pk" disabled>                           
                         </div>     
                     </div>   
 
                     <div class="col-md-2">                      
                         <div class="form-group" >
                            <label>Tipo Sol.</label>
-                           <v-select v-model="tipo_soldadura" label="codigo" :options="tipo_soldaduras" :disabled="(!isGasoducto)"></v-select>
+                            <input type="text" :value="tipo_soldadura" class="form-control" disabled>
                         </div>
                     </div>                   
                   
@@ -353,7 +372,7 @@
                                     <tbody>
                                         <tr v-for="(FIlaTabla,k) in (TablaDetalle)" :key="k" @click="selectPosDetalle(k)" :class="{selected: indexDetalle === k}" class="pointer">
                                             <td>{{ FIlaTabla.pk }}</td>
-                                            <td>{{ FIlaTabla.tipo_soldadura.codigo }}</td>                                 
+                                            <td>{{ FIlaTabla.tipo_soldadura }}</td>                                 
                                             <td>{{ FIlaTabla.junta }}</td>                                      
                                             <td>{{ FIlaTabla.posicion }} </td>   
                                             <td> <input type="checkbox" id="checkbox" v-model="TablaDetalle[k].aceptable_sn">  </td>                                 
@@ -620,6 +639,12 @@ export default {
       required : false
       },
 
+      ot_tipo_soldaduradata : {
+       type : [ Object, Array ],
+       required : false,
+
+      },
+
       material2data : {
        type : [ Object, Array ],
        required : false,
@@ -691,7 +716,7 @@ export default {
 
     data() {return {
 
-        errors:[], 
+            errors:[], 
             isLoading: false,
             fullPage: false,         
 
@@ -706,6 +731,8 @@ export default {
             plano_isom:'',
             procedimiento:{},           
             observaciones:'',
+            ot_tipo_soldadura:'',
+            tipo_soldadura:'',
             material:'',
             material2:'',
             diametro:'',
@@ -722,12 +749,10 @@ export default {
             pos_pos:0.10,
             lado:'',
             distancia_fuente_pelicula:'',
-            procedimiento_soldadura:'',
             norma_evaluacion:'',
             ici:'',
             norma_ensayo:'',
             tecnica:'',
-            pqr:'',
             exposicion:'',      
             actividad:'',          
             ejecutor_ensayo:'',
@@ -738,7 +763,6 @@ export default {
 
            // Formulario detalle
             pk:'',
-            tipo_soldadura:'',
             pasada:'',
             junta:'',
             soldador1:'',
@@ -765,20 +789,16 @@ export default {
              
              icis:[],
              tecnicas:[],            
-             tecnicas_graficos :[],             
+             tecnicas_graficos :[], 
 
-             
-             tipo_soldaduras:[],
              soldadores:[],
              posiciones:[],
              defectosRiPlanta:[],
              defectosRiGasoducto:[],
              TablaDetalle:[],   
-             TablaPasadas:[],        
-             
+             TablaPasadas:[],                     
              junta_posicion_selected : '',
-             clonando : false,
-             
+             clonando : false,             
              }},
 
     created : function(){       
@@ -792,6 +812,7 @@ export default {
                     toastr.options = toastrDefault;
                 }
         });
+        this.$store.dispatch('loadOtTipoSoldaduras', this.otdata.id);
         this.$store.dispatch('loadMateriales');
         this.$store.dispatch('loadDiametros');
         this.$store.dispatch('loadInternoEquipos',{ 'metodo' : this.metodo, 'activo_sn' : 1, 'tipo_penetrante' : 'null' });       
@@ -803,8 +824,6 @@ export default {
         this.$store.dispatch('loadEjecutorEnsayo', this.otdata.id); 
         this.getSoldadores();
         this.getDefectosRiPlanta();
-        this.getDefectosRiGasoducto();
-        this.getTipoSoldaduras();     
         this.pasada = 1;  
         this.formato = 'PLANTA'
         this.setEdit();        
@@ -828,8 +847,6 @@ export default {
             if(val){
 
                   this.isChapa = (val.diametro =='CHAPA') ? true : false;
-              //    this.espesor_chapa = '';
-              //    this.espesor='';
             }   
         },
         formato : function (val){
@@ -867,10 +884,11 @@ export default {
 
     computed :{
 
-        ...mapState(['url','AppUrl','materiales','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','ejecutor_ensayos','interno_equipos','fuentePorInterno','curie']),
+        ...mapState(['url','AppUrl','ot_tipo_soldaduras','materiales','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','ejecutor_ensayos','interno_equipos','fuentePorInterno','curie']),
 
            HabilitarClonarPasadas(){
-                this.EnableClonarPasadas = (this.isGasoducto && this.pasada=='1' && this.TablaDetalle.length);
+
+               this.EnableClonarPasadas = (this.isGasoducto && this.pasada=='1' && this.TablaDetalle.length);
            },  
            
            fecha_mysql : function(){
@@ -895,7 +913,8 @@ export default {
                
                this.formato = this.informe_ridata.gasoducto_sn ? 'DUCTO' : 'PLANTA';
                this.fecha   = this.informedata.fecha;
-               this.prefijo = this.informedata.prefijo;
+               this.pk = this.informedata.km;
+               this.ot_tipo_soldadura = this.ot_tipo_soldaduradata;
                this.numero_inf = this.informedata.numero;
                this.componente = this.informedata.componente;
                this.material = this.materialdata;
@@ -915,8 +934,6 @@ export default {
                this.norma_ensayo = this.norma_ensayodata;
                this.tipo_pelicula = this.tipo_peliculadata;
                this.espesor_chapa = this.informedata.espesor_chapa;
-               this.procedimiento_soldadura = this.informedata.procedimiento_soldadura;
-               this.pqr = this.informedata.pqr;        
                this.pos_ant = this.informe_ridata.pos_ant;
                this.pos_pos = this.informe_ridata.pos_pos;
                this.lado = this.informe_ridata.lado;            
@@ -925,24 +942,31 @@ export default {
                this.ejecutor_ensayo = this.ejecutor_ensayodata;          
                this.TablaDetalle = this.detalledata,  
                this.observaciones = this.informedata.observaciones 
-
-               console.log('este es el interno fuente:' + this.interno_fuentedata + 'este es el final');
+               this.tipo_soldadura = this.ot_tipo_soldadura ? (this.ot_tipo_soldadura.tipo_soldadura.codigo) : '';               
                if (this.interno_fuentedata.id != undefined){
 
                    this.$store.dispatch('loadCurie', { 'interno_fuente_id' : this.interno_fuentedata.id, 'fecha_final': this.informedata.fecha }).then(response => {
     
                          this.actividad = this.curie;
-    
                    }); 
                }        
 
             }
+
+            this.isLoading =  false;
 
         },       
 
         setObra : function(value){
 
             this.obra = value;
+        },
+
+        cambiopTipoInforme : function(){
+
+            this.pk ='' ;
+            this.ot_tipo_soldadura='';
+            this.cambioOtTipoSoldadura();
         },
 
         getNumeroInforme:function(){            
@@ -955,7 +979,6 @@ export default {
                         axios.get(urlRegistros).then(response =>{
                         this.numero_inf_generado = response.data 
                         
-                        console.log(this.numero_inf_generado.length);
                         if(this.numero_inf_generado.length){
 
                             this.numero_inf =  this.numero_inf_generado[0].numero_informe
@@ -984,6 +1007,10 @@ export default {
              }
         },
         
+        cambioOtTipoSoldadura(){
+
+            this.tipo_soldadura = this.ot_tipo_soldadura ? (this.ot_tipo_soldadura.tipo_soldadura.codigo) : '';
+        },          
 
         getFuente : function(){
             
@@ -1102,17 +1129,6 @@ export default {
         },
 
         //detalle
-        getTipoSoldaduras : function(){
-
-                axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'tipo_soldaduras' + '?api_token=' + Laravel.user.api_token;        
-                axios.get(urlRegistros).then(response =>{
-                this.tipo_soldaduras = response.data
-                this.isLoading =  false;
-
-                });           
-             
-        },
 
         getSoldadores : function(){
 
@@ -1344,6 +1360,8 @@ export default {
                         'metodo_ensayo'   : this.metodo,  
                         'fecha':          this.fecha,
                         'numero_inf':     this.numero_inf,
+                        'pk':             this.pk,                
+                        'ot_tipo_soldadura' : this.ot_tipo_soldadura,
                         'prefijo'        :this.prefijo,
                         'gasoducto_sn' :  gasoducto_sn,               
                         'componente' :    this.componente,
@@ -1365,13 +1383,11 @@ export default {
                         'pos_pos':       this.pos_pos,
                         'lado':          this.lado,
                         'distancia_fuente_pelicula': this.distancia_fuente_pelicula,
-                        'procedimiento_soldadura': this.procedimiento_soldadura,
                         'norma_evaluacion': this.norma_evaluacion,
                         'ici': this.ici,
                         'norma_ensayo': this.norma_ensayo,
                         'tecnica':this.tecnica,
                         'tecnicas_grafico' : this.tecnica_grafico,
-                        'pqr':this.pqr,                      
                         'exposicion': this.exposicion,   
                         'detalles'  : this.TablaDetalle,           
                 }}
@@ -1427,6 +1443,8 @@ export default {
                         'metodo_ensayo'   : this.metodo,  
                         'fecha':          this.fecha,
                         'numero_inf':     this.numero_inf,
+                        'pk':             this.pk,                
+                        'ot_tipo_soldadura' : this.ot_tipo_soldadura,
                         'prefijo'        :this.prefijo,
                         'gasoducto_sn' :  gasoducto_sn,               
                         'componente' :    this.componente,
@@ -1448,13 +1466,11 @@ export default {
                         'pos_pos':       this.pos_pos,
                         'lado':          this.lado,
                         'distancia_fuente_pelicula': this.distancia_fuente_pelicula,
-                        'procedimiento_soldadura': this.procedimiento_soldadura,
                         'norma_evaluacion': this.norma_evaluacion,
                         'ici': this.ici,
                         'norma_ensayo': this.norma_ensayo,
                         'tecnica':this.tecnica,
                         'tecnicas_grafico' : this.tecnica_grafico,
-                        'pqr':this.pqr,                       
                         'exposicion': this.exposicion,   
                         'detalles'  : this.TablaDetalle,           
                 }}

@@ -172,7 +172,7 @@ b {
                            <td style="font-size: 11px; " colspan="2" ><b>Norma Ensayo: </b>{{$norma_ensayo->codigo}}</td>                
                         </tr>
                         <tr>
-                            <td style="font-size: 10px;border-right: 1px solid #000;" ><b>EPS:</b>{{$informe->procedimiento_soldadura}}</td>
+                            <td style="font-size: 10px;border-right: 1px solid #000;" ><b>EPS:</b>{{$ot_tipo_soldadura->eps}}</td>
                             <td style="font-size: 10px;border-right: 1px solid #000;" colspan="4"  ><b>Revelador: </b>
 
                             {{$revelador->tipo}}
@@ -186,7 +186,7 @@ b {
                             <td style="font-size: 11px;" colspan="2"  ><b>Iluminación: </b>{{$iluminacion->codigo}} </td>  
                         </tr>
                         <tr>                           
-                            <td style="font-size: 10px;border-right: 1px solid #000;" ><b>PQR:</b>{{$informe->pqr}}</td>
+                            <td style="font-size: 10px;border-right: 1px solid #000;" ><b>PQR:</b>{{$ot_tipo_soldadura->pqr}}</td>
                             <td style="font-size: 11px; border-right: 1px solid #000; " colspan="4" ><b>Aplic. Rev.: </b>{{$revelador_aplicacion->codigo}}</td>
                             <td style="font-size: 11px; " colspan="2" ><b>Ejec. Ensayo: </b>{{$ejecutor_ensayo->name}}</td>
                         </tr>                

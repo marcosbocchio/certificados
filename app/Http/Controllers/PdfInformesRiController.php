@@ -32,6 +32,7 @@ use App\DefectosPasadasPosicion;
 use App\OtOperarios;
 use App\OtProcedimientosPropios;
 use App\Contratistas;
+use App\OtTipoSoldaduras;
 
 class PdfInformesRiController extends Controller
 {
@@ -44,6 +45,7 @@ class PdfInformesRiController extends Controller
         $informe_ri = InformesRi::where('informe_id',$informe->id)->firstOrFail();
         $ot = Ots::findOrFail($informe->ot_id);
         $cliente = Clientes::findOrFail($ot->cliente_id);
+        $ot_tipo_soldadura = OtTipoSoldaduras::where('id',$informe->ot_tipo_soldadura_id)->with('Tiposoldadura')->first();
         $material = Materiales::findOrFail($informe->material_id);   
         $material_accesorio = Materiales::find($informe->material_accesorio_id);
         $norma_ensayo = NormaEnsayos::findOrFail($informe->norma_ensayo_id);   
@@ -61,24 +63,22 @@ class PdfInformesRiController extends Controller
         $ejecutor_ensayo = User::findOrFail($ot_operador->user_id);
         $tecnicas_grafico = TecnicasGraficos::findOrFail($informe_ri->tecnicas_grafico_id);
         $evaluador = User::find($informe->firma);
-        $contratista = Contratistas::find($ot->contratista_id);
-        
+        $contratista = Contratistas::find($ot->contratista_id);        
       
         if ($informe_ri->gasoducto_sn){
-
+          
           $juntas_posiciones = DB::select('CALL InformeRiGasoductoJuntaPosicion(?)',array($informe_ri->id));        
           $pasadas_posiciones = DB::select('CALL InformeRiGasoductoPasadasPosicion(?)',array($informe_ri->id));
-          $defectos_posiciones = DB::select('CALL InformeRiGasoductoDefectosPasadasPosicion(?)',array($informe_ri->id));   
-
+          $defectos_posiciones = DB::select('CALL InformeRiGasoductoDefectosPasadasPosicion(?)',array($informe_ri->id));        
           
-     
-      
+       //   dd($juntas_posiciones,$pasadas_posiciones,$defectos_posiciones,$ot_tipo_soldadura);
 
           $pdf = PDF::loadView('reportes.informes.ri-gasoducto',compact('ot',
                                                                         'norma_ensayo',
                                                                         'norma_evaluacion',
                                                                         'procedimiento_inf',
                                                                         'interno_equipo',
+                                                                        'ot_tipo_soldadura',
                                                                         'actividad',
                                                                         'interno_fuente',
                                                                         'tipo_pelicula',
@@ -110,12 +110,13 @@ class PdfInformesRiController extends Controller
           $juntas_posiciones = DB::select('CALL InformeRiPlantaJuntaPosicion(?)',array($informe_ri->id));
           $defectos_posiciones = DB::select('CALL InformeRiPlantaDefectosPasadaPosicion(?)',array($informe_ri->id));                                          
           
-        //  dd($juntas_posiciones,$defectos_posiciones);
+         // dd($juntas_posiciones,$defectos_posiciones,$ot_tipo_soldadura);
 
           $pdf = PDF::loadView('reportes.informes.ri-planta',compact('ot',
                                                               'norma_ensayo',
                                                               'norma_evaluacion',
                                                               'procedimiento_inf',
+                                                              'ot_tipo_soldadura',
                                                               'interno_equipo',
                                                               'actividad',
                                                               'interno_fuente',

@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Ots;
+use Illuminate\Support\Facades\DB;
 use App\Informe;
 use App\MetodoEnsayos;
 use App\DiametrosEspesor;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use App\OtProcedimientosPropios;
 use App\InformesView;
 use App\InformesImportados;
@@ -50,11 +50,10 @@ class InformesController extends Controller
 
     public function paginate(Request $request,$id){
 
-          return DB::table('informes_view')
-                     ->where('ot_id',$id) 
-                     ->orderBy('fecha','DESC')
-                     ->orderBy('id','DESC')                   
-                     ->paginate(10);
+          return InformesView::where('ot_id',$id) 
+                                ->orderBy('fecha','DESC')
+                                ->orderBy('id','DESC')                   
+                                ->paginate(10);
       
     }
 
@@ -176,8 +175,8 @@ class InformesController extends Controller
 
         }else{
 
-                 $informe->procedimiento_informe_id = $request->procedimiento['ot_procedimientos_propios_id'];
-          }
+            $informe->procedimiento_informe_id = $request->procedimiento['ot_procedimientos_propios_id'];
+        }
 
         if (($request->diametro['diametro'] =='CHAPA') || ($request->diametro['diametro'] =='VARIOS')){
     
@@ -196,7 +195,8 @@ class InformesController extends Controller
           $informe->diametro_espesor_id = $diametro_espesor['id'];
     
         } 
-        $informe->espesor_chapa       = $request->espesor_chapa;
+
+        $informe->espesor_chapa = $request->espesor_chapa;
         $informe->interno_equipo_id = $request->interno_equipo['id'];
         $informe->metodo_ensayo_id  = $metodo_ensayo['id'];
         $informe->norma_evaluacion_id = $request->norma_evaluacion['id'];
@@ -207,11 +207,10 @@ class InformesController extends Controller
         $informe->material_accesorio_id = $request->material2 ? $request->material2['id'] : null;
         $informe->fecha = date('Y-m-d',strtotime($request->fecha));
         $informe->numero = $request->numero_inf;
-        $informe->prefijo = $request->prefijo;  
+        $informe->km = $request->pk;  
+        $informe->ot_tipo_soldadura_id = $request->ot_tipo_soldadura ? $request->ot_tipo_soldadura['id'] : null;
         $informe->componente = $request->componente;
-        $informe->procedimiento_soldadura = $request->procedimiento_soldadura;
         $informe->plano_isom = $request->plano_isom;
-        $informe->pqr = $request->pqr;
         $informe->observaciones = $request->observaciones;
 
         if($request->isMethod('post')){

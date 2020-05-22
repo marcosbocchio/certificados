@@ -56,8 +56,7 @@ class InformeUsRequest extends FormRequest
             'material'                  => 'required',
             'plano_isom'                => 'required|Max:10',
             'diametro'                  => 'required',
-            'procedimiento_soldadura'   => 'required|Max:30', 
-            'pqr'                       => 'Max:30',
+            'ot_tipo_soldadura'         => 'required',
             'interno_equipo'            => 'required',      
             'procedimiento'             => 'required',         
             'norma_evaluacion'          => 'required',
@@ -72,5 +71,15 @@ class InformeUsRequest extends FormRequest
 
         return $validacion_completa;
 
+    }
+
+    public function attributes()
+
+    {
+        return [
+            
+            'ot_tipo_soldadura'           => 'Eps',  
+
+            ];
     }
 }

@@ -19,5 +19,6 @@ class Informe extends Model
         return $this->belongsTo('App\Tecnicas','tecnica_id','id');
         
      }
+
   
 }

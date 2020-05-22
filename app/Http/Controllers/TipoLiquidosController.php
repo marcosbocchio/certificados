@@ -44,47 +44,53 @@ class TipoLiquidosController extends Controller
             $q = $q . 'removedor_sn = 1';
         }
 
-        $q = $q ? ($q . ' and ') : '';
-
-        switch ($metodo_trabajo->tipo) {
-
-            case 'TIPO I':
-
-                $q = $q . 'fluorescente_sn = 1';
-
-                break;
+        
+        if($penetrante_sn){
             
-            case 'TIPO II':
+            $q = $q ? ($q . ' and ') : '';
 
-                $q = $q . 'visible_sn = 1';
-                break;
-        }
-
-        $q = $q . ' and ';
-
-        switch ($metodo_trabajo->metodo) {
-
-            case 'METODO A':
-
-                $q = $q . 'lavable_agua_sn = 1';         
-                break;
-
-            case 'METODO B':
-
-                $q = $q . 'emusificante_lipofilico_sn = 1';            
-                break;
-
-            case 'METODO C':
-
-                $q = $q . 'lavable_solvente_sn = 1'; 
-                break;   
-
-            case 'METODO D':
-
-                $q = $q . 'emusificante_hidrofilico_sn = 1';       
-                break;  
+            switch ($metodo_trabajo->tipo) {
     
+                case 'TIPO I':
+    
+                    $q = $q . 'fluorescente_sn = 1';
+    
+                    break;
+                
+                case 'TIPO II':
+    
+                    $q = $q . 'visible_sn = 1';
+                    break;
+            }
+    
+            $q = $q . ' and ';
+    
+            switch ($metodo_trabajo->metodo) {
+    
+                case 'METODO A':
+    
+                    $q = $q . 'lavable_agua_sn = 1';         
+                    break;
+    
+                case 'METODO B':
+    
+                    $q = $q . 'emusificante_lipofilico_sn = 1';            
+                    break;
+    
+                case 'METODO C':
+    
+                    $q = $q . 'lavable_solvente_sn = 1'; 
+                    break;   
+    
+                case 'METODO D':
+    
+                    $q = $q . 'emusificante_hidrofilico_sn = 1';       
+                    break;  
+        
+            }
+
         }
+
 
     DB::enableQueryLog();      
 

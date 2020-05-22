@@ -7,7 +7,7 @@
 
 <style>
 
-@page { margin: 355px 30px 124px 60px !important;
+@page { margin: 357px 30px 124px 60px !important;
         padding: 0px 0px 0px 0px !important; }
 
 body {
@@ -17,7 +17,7 @@ body {
 
 header {
     position:fixed;
-    top: -315px;    
+    top: -317px;    
     }
 
 main{
@@ -120,8 +120,9 @@ b {
                                 @endif
                             
                             </td>
-                            <td style="font-size: 11px;border-right: 1px solid #000; " colspan="4"  ><b>Vehículo: </b>{{$informe_pm->vehiculo}}</td>
-                            
+                            <td style="font-size: 11px;" colspan="2"  ><b>Vehículo: </b>{{$informe_pm->vehiculo}}</td>
+                             <td style="font-size: 11px;border-right: 1px solid #000; " colspan="2"  ><b>Aditivo: </b>{{$informe_pm->aditivo}}</td>    
+
                             
                             <td style="font-size: 11px;" colspan="2"  ><b>Desmaganetización: </b>
 
@@ -137,13 +138,13 @@ b {
                         </tr>
                         <tr>
                             <td style="font-size: 11px;border-right: 1px solid #000;"  ><b>Plano / Isom :</b>{{$informe->plano_isom}}</td>
-                            <td style="font-size: 11px;border-right: 1px solid #000; " colspan="4"  ><b>Aditivo: </b>{{$informe_pm->aditivo}}</td>    
+                            <td style="font-size: 11px;border-right: 1px solid #000; " colspan="4"  ><b>Particula: </b>{{$particula->tipo}} / {{$particula->marca}}</td>    
                            <td style="font-size: 11px; " colspan="2" ><b>Tecnica: </b>{{$tecnica->descripcion}}</td>
                         </tr>
                         <tr>
                             <td style="font-size: 11px; border-right: 1px solid #000;"  ><b>Diametro: </b>{{$diametro_espesor->diametro}}</td>    
                             <td style="font-size: 11px; border-right: 1px solid #000;" colspan="4"  ><b>Tipo Magnetización: </b>{{$tipo_magnetizacion->codigo}}</td>  
-                            <td style="font-size: 11px;" colspan="2"  ><b>Color Partículas: </b>{{$color_particula->codigo}} </td>    
+                            <td style="font-size: 11px;" colspan="2"  ><b>Color Partículas: </b>{{$particula->color->codigo}} </td>    
                         
                         </tr>
                         <tr>                           
@@ -161,16 +162,16 @@ b {
                              <td style="font-size: 11px;" colspan="2"  ><b>Iluminación: </b>{{$iluminacion->codigo}} </td>  
                         </tr>
                         <tr>
-                            <td style="font-size: 10px;border-right: 1px solid #000;" ><b>EPS:</b>{{$informe->procedimiento_soldadura}}</td>
+                            <td style="font-size: 10px;border-right: 1px solid #000;" ><b>EPS:</b>{{$ot_tipo_soldadura->eps}}</td>
                             <td style="font-size: 11px;" colspan="2"  ><b>Concentración: </b>{{$informe_pm->concentracion}}</td>
                             <td style="font-size: 11px;" colspan="1"  ><b>V: </b>{{$informe_pm->voltaje}}</td>  
                             <td style="font-size: 11px; border-right: 1px solid #000;" colspan="1"  ><b>Am: </b>{{$informe_pm->amperaje}}</td>                          
-                            <td style="font-size: 11px;  " colspan="2" ><b>Ejec. Ensayo: </b>{{$ejecutor_ensayo->name}}</td>                
+                            <td style="font-size: 11px;  " colspan="2" ><b>Contraste</b>{{$contraste->tipo}} / {{$contraste->marca}}</td>                
                         </tr>
                         <tr>                           
-                            <td style="font-size: 10px;border-right: 1px solid #000;" ><b>PQR:</b>{{$informe->pqr}}</td>
+                            <td style="font-size: 10px;border-right: 1px solid #000;" ><b>PQR:</b>{{$ot_tipo_soldadura->pqr}}</td>
                             <td style="font-size: 11px; border-right: 1px solid #000; " colspan="4" ><b>Proc. : </b>{{$procedimiento_inf->titulo}} </td>
-                             <td style="font-size: 11px;" colspan="2"  ><b>&nbsp; </td>  
+                            <td style="font-size: 11px;  " colspan="2" ><b>Ejec. Ensayo: </b>{{$ejecutor_ensayo->name}}</td>                
 
                         </tr>                
                         </tbody>

@@ -95,14 +95,14 @@
                     <div class="col-md-3">
                         <div class="form-group" >
                             <label for="procedimientos_soldadura">Proc. Soldadura (EPS)</label>
-                            <input type="text" v-model="procedimiento_soldadura" class="form-control" id="procedimientos_soldadura" maxlength="30">
+                            <v-select v-model="ot_tipo_soldadura" label="eps" :options="ot_tipo_soldaduras" id="procedimientos_soldadura"></v-select>  
                         </div>                            
                     </div>
 
                     <div class="col-md-3">                       
                         <div class="form-group" >
                             <label for="pqr">PQR</label>
-                            <input type="text" v-model="pqr" class="form-control" id="pqr" maxlength="30">
+                            <v-select v-model="ot_tipo_soldadura" label="pqr" :options="ot_tipo_soldaduras" id="pqr"></v-select>  
                         </div>         
                     </div>
 
@@ -883,6 +883,13 @@ export default {
             required : false
             },    
 
+        ot_tipo_soldaduradata : {
+
+            type : [ Object, Array ],
+            required : false,
+
+        },
+
         material2data : {
         type : [ Object, Array ],
         required : false,
@@ -957,6 +964,7 @@ export default {
         observaciones:'',
         numero_inf:'',
         numero_inf_generado:'',
+        ot_tipo_soldadura:'',
         componente:'',
         material:'',
         material2:'', 
@@ -964,10 +972,8 @@ export default {
         diametro:'',
         espesor:'',
         espesor_chapa:'', 
-        procedimiento_soldadura:'',
         isVarios:false,
         isChapa:false,
-        pqr:'',
         tecnica:'',
         interno_equipo:'',       
         procedimiento:'',
@@ -1052,6 +1058,7 @@ export default {
     created : function() {
         
       this.getCliente();  
+      this.$store.dispatch('loadOtTipoSoldaduras', this.otdata.id);
       this.$store.dispatch('loadMateriales');
       this.$store.dispatch('loadDiametros');
       this.getTecnicas();
@@ -1080,7 +1087,7 @@ export default {
 
     computed :{
 
-        ...mapState(['url','AppUrl','materiales','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','ejecutor_ensayos','interno_equipos']),     
+        ...mapState(['url','AppUrl','ot_tipo_soldaduras','materiales','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','ejecutor_ensayos','interno_equipos']),     
 
         numero_inf_code : function()  {
 
@@ -1131,6 +1138,7 @@ export default {
                this.fecha   = this.informedata.fecha;
                this.numero_inf = this.informedata.numero;
                this.componente = this.informedata.componente;
+               this.ot_tipo_soldadura = this.ot_tipo_soldaduradata;
                this.plano_isom = this.informedata.plano_isom;
                this.procedimiento_soldadura = this.informedata.procedimiento_soldadura;
                this.path1_calibracion = this.informe_usdata.path1_calibracion;
@@ -1820,6 +1828,7 @@ export default {
                 'ot'              : this.otdata,
                 'obra'            : this.obra,
                 'fecha':          this.fecha,
+                'ot_tipo_soldadura' : this.ot_tipo_soldadura,
                 'observaciones':  this.observaciones,
                 'numero_inf':     this.numero_inf,
                 'componente' :    this.componente,
@@ -1896,6 +1905,7 @@ export default {
                 'fecha':          this.fecha,
                 'observaciones':  this.observaciones,
                 'numero_inf':     this.numero_inf,
+                'ot_tipo_soldadura' : this.ot_tipo_soldadura,
                 'componente' :    this.componente,
                 'material':       this.material,
                 'material2':      this.material2,

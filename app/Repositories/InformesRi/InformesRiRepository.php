@@ -110,7 +110,7 @@ class InformesRiRepository extends BaseRepository
 
         try {
 
-         $junta = $this->saveJunta($detalle,$informeRi);            
+         $junta = $this->saveJunta($detalle,$informeRi,$request);            
           
         } 
         catch(Exception $e){          
@@ -162,10 +162,8 @@ class InformesRiRepository extends BaseRepository
   public function saveJunta($detalle ,$informeRi){
 
     $junta =  new Juntas;
-    $junta->tipo_soldadura_id = $detalle['tipo_soldadura']['id'];
     $junta->codigo = $detalle['junta'];
     $junta->informe_ri_id = $informeRi->id;          
-    $junta->km = $detalle['pk']; 
     $junta->save();
     
     return $junta;

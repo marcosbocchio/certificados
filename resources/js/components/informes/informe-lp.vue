@@ -85,14 +85,14 @@
                         <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="procedimientos_soldadura">Proc. Soldadura (EPS) *</label>
-                                <input type="text" v-model="procedimiento_soldadura" class="form-control" id="procedimientos_soldadura" maxlength="30">
+                                <v-select v-model="ot_tipo_soldadura" label="eps" :options="ot_tipo_soldaduras" id="procedimientos_soldadura"></v-select>  
                             </div>                            
                         </div>  
 
                         <div class="col-md-3">                       
                             <div class="form-group" >
                                 <label for="pqr">PQR</label>
-                                <input type="text" v-model="pqr" class="form-control" id="pqr" maxlength="30">
+                                <v-select v-model="ot_tipo_soldadura" label="pqr" :options="ot_tipo_soldaduras" id="pqr"></v-select>  
                             </div>         
                         </div>                         
                         
@@ -433,6 +433,12 @@ props :{
             required : false
             },
 
+        ot_tipo_soldaduradata : {
+            type : [ Object, Array ],
+            required : false,
+
+            },
+
         material2data : {
         type : [ Object, Array ],
         required : false,
@@ -527,14 +533,13 @@ data() {return {
         numero_inf:'',
         numero_inf_generado:'',
         componente:'',
+        ot_tipo_soldadura:'',
         material:'',
         material2:'',
         plano_isom:'',
         diametro:'',
         espesor:'',
         espesor_chapa:'', 
-        procedimiento_soldadura:'',
-        pqr:'',
         tecnica:'',
         interno_equipo:{ equipo:'' },     
         procedimiento:'',
@@ -576,8 +581,9 @@ data() {return {
     created :  function() {
 
         this.$store.dispatch('loadMateriales');
+        this.$store.dispatch('loadOtTipoSoldaduras', this.otdata.id);
         this.$store.dispatch('loadDiametros');
-      this.$store.dispatch('loadProcedimietosOtMetodo',  
+        this.$store.dispatch('loadProcedimietosOtMetodo',  
         { 'ot_id' : this.otdata.id, 'metodo' : this.metodo }).then(response =>{ 
                 if(this.procedimientos.length == 0  ){
                     toastr.options = toastrInfo;
@@ -613,7 +619,7 @@ data() {return {
 
     computed :{
 
-        ...mapState(['url','AppUrl','materiales','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','interno_equipos','iluminaciones','penetrantes_tipo_liquido','reveladores_tipo_liquido','removedores_tipo_liquido','ejecutor_ensayos','fuentePorInterno']),     
+        ...mapState(['url','AppUrl','materiales','ot_tipo_soldaduras','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','interno_equipos','iluminaciones','penetrantes_tipo_liquido','reveladores_tipo_liquido','removedores_tipo_liquido','ejecutor_ensayos','fuentePorInterno']),     
 
         numero_inf_code : function()  {
 
@@ -621,7 +627,6 @@ data() {return {
 
                       return this.metodo + (this.numero_inf <10? '00' : this.numero_inf<100? '0' : '') + this.numero_inf ;
         },
-
        
      },
 
@@ -635,6 +640,7 @@ data() {return {
                this.fecha   = this.informedata.fecha;            
                this.numero_inf = this.informedata.numero;
                this.componente = this.informedata.componente;
+               this.ot_tipo_soldadura = this.ot_tipo_soldaduradata;
                this.material = this.materialdata;
                this.material2 = this.material2data;
                this.plano_isom = this.informedata.plano_isom;
@@ -646,8 +652,6 @@ data() {return {
                this.norma_evaluacion = this.norma_evaluaciondata;
                this.norma_ensayo = this.norma_ensayodata;            
                this.espesor_chapa = this.informedata.espesor_chapa;
-               this.procedimiento_soldadura = this.informedata.procedimiento_soldadura;
-               this.pqr = this.informedata.pqr;           
                this.metodo_trabajo_lp = this.metodo_trabajo_lpdata;            
                this.tipo_penetrante = (this.metodo_trabajo_lp.tipo == 'TIPO I') ? 'Fluorescente' : 'Visible';  
                this.ejecutor_ensayo = this.ejecutor_ensayodata;          
@@ -663,9 +667,10 @@ data() {return {
                this.limpieza_intermedia     = this.informe_lpdata.limpieza_intermedia; 
                this.limpieza_final          = this.informe_lpdata.limpieza_final;
                this.iluminacion = this.iluminacion_data;
-               this.TablaLp = this.detalledata;               
+               this.TablaLp = this.detalledata;       
                this.getTipoLiquidos();
                this.$store.dispatch('loadInternoEquipos',{ 'metodo' : this.metodo, 'activo_sn' : 1, 'tipo_penetrante' : this.tipo_penetrante });
+               this.setearTipoPenetrante();
             }         
 
         },      
@@ -692,10 +697,9 @@ data() {return {
                     }else{
 
                         this.numero_inf = 1;
-                    }
+                    }          
                     
-                    
-                    });   
+                });   
              }
         },
 
@@ -717,7 +721,6 @@ data() {return {
 
       },
 
-
      getInstrumentoMediciones(){
 
         this.tipo_penetrante = (this.metodo_trabajo_lp.tipo == 'TIPO I') ? 'Fluorescente' : 'Visible';  
@@ -734,30 +737,7 @@ data() {return {
 
         this.getInternoEquipos();    
 
-        switch (this.metodo_trabajo_lp.metodo) {
-
-            case 'METODO A':
-
-                this.tipo_penetrante +=' - Lavable con agua';
-
-                break;
-
-            case 'METODO B':
-                this.tipo_penetrante +=' - Emusificante Lipofilico';
-                break;
-
-            case 'METODO C':
-                this.tipo_penetrante +=' - Lavable con Solvente';
-                break;
-
-            case 'METODO D':
-                this.tipo_penetrante +=' - Emusificante hidrofilico';
-
-            break;
-         
-        }
-
-
+        this.setearTipoPenetrante();
         this.penetrante_tipo_liquido = '';
         this.removedor_tipo_liquido = '';
         this.removedor_tipo_liquido = '';
@@ -767,9 +747,9 @@ data() {return {
 
     getTipoLiquidos : function(){
 
-            this.$store.dispatch('loadTipoLiquidos', { 'penetrante_sn' : 1,'revelador_sn' : 0,'removedor_sn' : 0, 'metodo_trabajo_lp_id' : this.metodo_trabajo_lp.id });      
-            this.$store.dispatch('loadTipoLiquidos', { 'penetrante_sn' : 0,'revelador_sn' : 1,'removedor_sn' : 0, 'metodo_trabajo_lp_id' : this.metodo_trabajo_lp.id });      
-            this.$store.dispatch('loadTipoLiquidos', { 'penetrante_sn' : 0,'revelador_sn' : 0,'removedor_sn' : 1, 'metodo_trabajo_lp_id' : this.metodo_trabajo_lp.id });  
+        this.$store.dispatch('loadTipoLiquidos', { 'penetrante_sn' : 1,'revelador_sn' : 0,'removedor_sn' : 0, 'metodo_trabajo_lp_id' : this.metodo_trabajo_lp.id });      
+        this.$store.dispatch('loadTipoLiquidos', { 'penetrante_sn' : 0,'revelador_sn' : 1,'removedor_sn' : 0, 'metodo_trabajo_lp_id' : this.metodo_trabajo_lp.id });      
+        this.$store.dispatch('loadTipoLiquidos', { 'penetrante_sn' : 0,'revelador_sn' : 0,'removedor_sn' : 1, 'metodo_trabajo_lp_id' : this.metodo_trabajo_lp.id });  
 
     },
 
@@ -781,6 +761,33 @@ data() {return {
 
         });   
 
+    },
+
+    setearTipoPenetrante : function(){
+
+        switch (this.metodo_trabajo_lp.metodo) {
+
+            case 'METODO A':
+
+                this.tipo_penetrante +=' - Lavable con agua';
+                break;
+
+            case 'METODO B':
+
+                this.tipo_penetrante +=' - Emusificante Lipofilico';
+                break;
+
+            case 'METODO C':
+
+                this.tipo_penetrante +=' - Lavable con Solvente';
+                break;
+
+            case 'METODO D':
+
+                this.tipo_penetrante +=' - Emusificante hidrofilico';
+                break;
+         
+        }
     },
 
     selectPosDetalle :function(index){
@@ -879,17 +886,16 @@ data() {return {
                 'plano_isom' :    this.plano_isom,
                 'procedimiento' : this.procedimiento,           
                 'observaciones':  this.observaciones,
+                'ot_tipo_soldadura' : this.ot_tipo_soldadura,
                 'material':       this.material,
                 'material2':      this.material2,
                 'diametro':       this.diametro,
                 'espesor':        this.espesor,
                 'espesor_chapa'  :  this.espesor_chapa, 
                 'interno_equipo'        :  this.interno_equipo,               
-                'procedimiento_soldadura': this.procedimiento_soldadura,
                 'norma_evaluacion': this.norma_evaluacion,           
                 'norma_ensayo'      : this.norma_ensayo,
                 'tecnica'           :this.tecnica,              
-                'pqr'               :this.pqr,  
                 'metodo_trabajo_lp'             : this.metodo_trabajo_lp,
                 'penetrante_tipo_liquido'       :this.penetrante_tipo_liquido,
                 'penetrante_aplicacion'         :this.penetrante_aplicacion,
@@ -951,17 +957,16 @@ data() {return {
                 'plano_isom' :    this.plano_isom,
                 'procedimiento' : this.procedimiento,           
                 'observaciones':  this.observaciones,
+                'ot_tipo_soldadura' : this.ot_tipo_soldadura,
                 'material':       this.material,
                 'material2':      this.material2,
                 'diametro':       this.diametro,
                 'espesor':        this.espesor,
                 'espesor_chapa'  :  this.espesor_chapa, 
                 'interno_equipo'     :  this.interno_equipo,               
-                'procedimiento_soldadura': this.procedimiento_soldadura,
                 'norma_evaluacion'  : this.norma_evaluacion,           
                 'norma_ensayo'      : this.norma_ensayo,
                 'tecnica'           :this.tecnica,              
-                'pqr'               :this.pqr,  
                 'metodo_trabajo_lp'             : this.metodo_trabajo_lp,
                 'penetrante_tipo_liquido'       :this.penetrante_tipo_liquido,
                 'penetrante_aplicacion'         :this.penetrante_aplicacion,

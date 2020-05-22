@@ -1,5 +1,13 @@
 <template>    
     <div class="box box-custom-enod top-buffer">
+        <div class="box-header with-border">
+        <h3 class="box-title">PROCEDIMIENTOS ENOD</h3>
+
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>                       
+            </div>
+        </div>
       <div class="box-body">
         <div class="table-responsive">
           <table class="table table-hover table-striped">
@@ -14,7 +22,7 @@
             </thead>
             <tbody>
               <tr v-for="registro in registros" :key="registro.id">           
-                <td>PROCEDIMIENTO</td>     
+                <td>{{ registro.tipo}}</td>     
                 <td>{{ registro.titulo}}</td>
                 <td>{{ registro.descripcion }}</td>
                 <td>{{ registro.metodo_ensayo['metodo']}}</td>    

@@ -17,10 +17,10 @@
                     <input autocomplete="off" type="text" name="descripcion" class="form-control" v-model="editRegistro.descripcion" value="">              
 
                     <label for="metodo_ensayo">Método de Ensayo *</label>      
-                    <v-select v-model="metodo_ensayos" label="metodo" :options="metodos_ensayos" :input="setTipoLp()"></v-select> 
+                    <v-select v-model="metodo_ensayos" label="metodo" :options="metodos_ensayos" @input="resetInstrumentoMedicion" ></v-select> 
                     
-                    <label for="instrumento_medicion">Instrumento Medición *</label>
-                    <v-select v-model="editRegistro.instrumento_medicion" :options="['Luxómetro luz blanca','Luxómetro luz UV']" :disabled="metodo_ensayos.metodo != 'LP'"></v-select>
+                    <label for="instrumento_medicion">Instrumento Medición </label>
+                    <v-select v-model="editRegistro.instrumento_medicion" :options="['Luxómetro luz blanca','Lampara luz UV']" :disabled="((metodo_ensayos.metodo != 'LP') && (metodo_ensayos.metodo != 'PM'))"></v-select>
               
                 </div>
             
@@ -79,7 +79,7 @@ export default {
    
     methods: {
            openModal : function(){
-           console.log('entro en open modal');            
+               
                 this.$nextTick(function () { 
 
                     this.editRegistro.codigo = this.selectRegistro.codigo;
@@ -93,12 +93,11 @@ export default {
                 })
             },
 
-            setTipoLp : function () {
+            resetInstrumentoMedicion : function () {               
+             
+                this.newRegistro.instrumento_medicion = '';
                
-               if(this.metodo_ensayos.metodo != 'LP')
-                    this.editRegistro.instrumento_medicion = '';
-               
-            },  
+            },   
 
             storeRegistro: function(){           
 

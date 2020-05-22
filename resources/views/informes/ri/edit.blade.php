@@ -18,6 +18,7 @@
      :otdata  ="{{$ot}}"
      :informedata ="{{$informe}}"
      :informe_ridata ="{{$informe_ri}}"
+     :ot_tipo_soldaduradata = "{{$informe_ot_tipo_soldadura}}"
      :materialdata="{{$informe_material}}"
      :material2data ="{{$informe_material_accesorio}}"
      :diametrodata="{{$informe_diametro}}"

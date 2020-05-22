@@ -31,12 +31,11 @@ class InformeLpRequest extends FormRequest
             'material'                  => 'required',
             'plano_isom'                => 'required|Max:10',
             'diametro'                  => 'required',
-            'procedimiento_soldadura'   => 'required|Max:30', 
-            'pqr'                       => 'Max:30',
             'interno_equipo'            => 'required',      
             'procedimiento'             => 'required',         
             'norma_evaluacion'          => 'required',
-            'norma_ensayo'              => 'required',  
+            'norma_ensayo'              => 'required',
+            'ot_tipo_soldadura'         => 'required',
             'metodo_trabajo_lp'         => 'required',
             'penetrante_tipo_liquido'   => 'required',
             'tiempo_penetracion'        => 'required|integer| digits_between:1,3',
@@ -70,6 +69,7 @@ class InformeLpRequest extends FormRequest
             'detalles.*.detalle'          => 'detalle',
             'detalles.*.pieza'            => 'pieza',
             'detalles.*.cm'               => 'cm', 
+            'ot_tipo_soldadura'           => 'Eps',  
            
             ];
     }

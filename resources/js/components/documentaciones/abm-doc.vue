@@ -58,6 +58,12 @@
                   <span slot="next-nav">Next &gt;</span> 
              </pagination>   
        </div>
+
+        <div class="clearfix"></div>    
+
+       <div v-if="modelo=='ot_procedimientos_propios'">
+             <ot-tipoSoldaduras :ot_id_data="ot_id_data" ></ot-tipoSoldaduras> 
+       </div> 
        
 
         <div class="clearfix"></div>    
@@ -300,11 +306,12 @@ export default {
         this.getUsuarios();
         this.getMetodosEnsayos();  
 
+
       },  
 
      mounted :function(){
 
-        this.$store.dispatch('loadInternoEquipos',{ 'metodo' : null, 'activo_sn' : 'null','instrumento_medicion' : 'null' });     
+        this.$store.dispatch('loadInternoEquipos',{ 'metodo' : 'null', 'activo_sn' : 'null','tipo_penetrante' : 'null' });     
         this.$store.dispatch('loadInternoFuentes','');       
   
          if(this.modelo == 'documentaciones') {

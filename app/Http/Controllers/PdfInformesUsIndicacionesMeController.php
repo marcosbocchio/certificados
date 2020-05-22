@@ -25,6 +25,7 @@ use App\InformesUsMe;
 use App\DetalleUsMe;
 use App\Generatrices;
 use App\User;
+use App\OtTipoSoldaduras;
 
 class PdfInformesUsIndicacionesMeController extends Controller
 {
@@ -35,7 +36,8 @@ class PdfInformesUsIndicacionesMeController extends Controller
          $informe = Informe::findOrFail($id);       
          $informe_us = InformesUs::where('informe_id',$informe->id)->firstOrFail();
          $ot = Ots::findOrFail($informe->ot_id);
-         $cliente = Clientes::findOrFail($ot->cliente_id);           
+         $cliente = Clientes::findOrFail($ot->cliente_id);    
+         $ot_tipo_soldadura = OtTipoSoldaduras::where('id',$informe->ot_tipo_soldadura_id)->with('Tiposoldadura')->first();
          $material = Materiales::findOrFail($informe->material_id);   
          $norma_ensayo = NormaEnsayos::findOrFail($informe->norma_ensayo_id);   
          $norma_evaluacion = NormaEvaluaciones::findOrFail($informe->norma_evaluacion_id); 
@@ -59,6 +61,7 @@ class PdfInformesUsIndicacionesMeController extends Controller
                                                                 'procedimiento_inf',                                                               
                                                                 'fuente',
                                                                 'diametro_espesor',
+                                                                'ot_tipo_soldadura',
                                                                 'tecnica',
                                                                 'interno_equipo',
                                                                 'ejecutor_ensayo',

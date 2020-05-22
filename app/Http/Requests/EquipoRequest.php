@@ -24,7 +24,6 @@ class EquipoRequest extends FormRequest
             'codigo'            => 'required|Max:20',
             'descripcion'       =>'nullable|Max:100',
             'metodo_ensayos'     => 'required',
-            'tipo_lp'           => 'nullable| Max:15',       
           
         ];
     }

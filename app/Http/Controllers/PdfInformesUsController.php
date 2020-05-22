@@ -23,6 +23,7 @@ use App\Tecnicas;
 use App\EstadosSuperficies;
 use App\CalibracionesUs;
 use App\User;
+use App\OtTipoSoldaduras;
 
 class PdfInformesUsController extends Controller
 {
@@ -34,7 +35,8 @@ class PdfInformesUsController extends Controller
          $informe = Informe::findOrFail($id);       
          $informe_us = InformesUs::where('informe_id',$informe->id)->firstOrFail();
          $ot = Ots::findOrFail($informe->ot_id);
-         $cliente = Clientes::findOrFail($ot->cliente_id);           
+         $cliente = Clientes::findOrFail($ot->cliente_id);        
+         $ot_tipo_soldadura = OtTipoSoldaduras::where('id',$informe->ot_tipo_soldadura_id)->with('Tiposoldadura')->first();
          $material = Materiales::findOrFail($informe->material_id);   
          $material_accesorio = Materiales::find($informe->material_accesorio_id);
          $norma_ensayo = NormaEnsayos::findOrFail($informe->norma_ensayo_id);   
@@ -54,7 +56,8 @@ class PdfInformesUsController extends Controller
         $pdf = PDF::loadView('reportes.informes.us',compact('ot',
                                                                 'norma_ensayo',
                                                                 'norma_evaluacion',
-                                                                'procedimiento_inf',                                                               
+                                                                'procedimiento_inf',
+                                                                'ot_tipo_soldadura',                                                               
                                                                 'fuente',
                                                                 'diametro_espesor',
                                                                 'tecnica',

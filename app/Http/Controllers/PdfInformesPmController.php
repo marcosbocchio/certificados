@@ -27,7 +27,9 @@ use App\MetodosTrabajoPm;
 use App\ColorParticulas;
 use App\Iluminaciones;
 use App\Contratistas;
-
+use App\OtTipoSoldaduras;
+use App\Particulas;
+use App\Contrastes;
 
 class PdfInformesPmController extends Controller
 {
@@ -39,6 +41,7 @@ class PdfInformesPmController extends Controller
          $informe_pm = InformesPm::where('informe_id',$informe->id)->firstOrFail();
          $ot = Ots::findOrFail($informe->ot_id);
          $cliente = Clientes::findOrFail($ot->cliente_id);           
+         $ot_tipo_soldadura = OtTipoSoldaduras::where('id',$informe->ot_tipo_soldadura_id)->with('Tiposoldadura')->first();
          $material = Materiales::findOrFail($informe->material_id);   
          $material_accesorio = Materiales::find($informe->material_accesorio_id);
          $norma_ensayo = NormaEnsayos::findOrFail($informe->norma_ensayo_id);   
@@ -47,6 +50,8 @@ class PdfInformesPmController extends Controller
          $procedimiento_inf = Documentaciones::findOrFail($ot_procedimiento_propio->documentacion_id);       
          $fuente = Fuentes::find($informe_pm->fuente_id);
          $diametro_espesor = DiametrosEspesor::findOrFail($informe->diametro_espesor_id);
+         $particula = Particulas::where('id',$informe_pm->particula_id)->with('color')->first();
+         $contraste = Contrastes::where('id',$informe_pm->tinta_contraste_id)->first();
          $tecnica = Tecnicas::findOrFail($informe->tecnica_id);
          $interno_equipo = InternoEquipos::where('id',$informe->interno_equipo_id)->with('equipo')->first();
          $tipo_magnetizacion = TiposMagnetizacion::findOrFail($informe_pm->tipo_magnetizacion_id);
@@ -55,7 +60,6 @@ class PdfInformesPmController extends Controller
          $ot_operador = OtOperarios::findOrFail($informe->ejecutor_ensayo_id);
          $metodo = MetodosTrabajoPm::findOrFail($informe_pm->metodo_trabajo_pm_id);
          $ejecutor_ensayo = User::findOrFail($ot_operador->user_id);
-         $color_particula = ColorParticulas::findOrFail($informe_pm->color_particula_id);
          $iluminacion = Iluminaciones::findOrFail($informe_pm->iluminacion_id);
          $evaluador = User::find($informe->firma);
          $contratista = Contratistas::find($ot->contratista_id);
@@ -87,13 +91,15 @@ class PdfInformesPmController extends Controller
                                                                 'contratista',
                                                                 'informe',
                                                                 'informe_pm',
+                                                                'ot_tipo_soldadura',
                                                                 'material',
                                                                 'material_accesorio',
                                                                 'tipo_magnetizacion',
                                                                 'magnetizacion',
+                                                                'particula',
+                                                                'contraste',
                                                                 'desmagnetizacion_sn',
                                                                 'metodo',
-                                                                'color_particula',
                                                                 'iluminacion',
                                                                 'evaluador',
                                                                 'detalles'

@@ -24,7 +24,7 @@ use App\MetodosTrabajoLp;
 use App\TipoLiquidos;
 use App\AplicacionesLp;
 use App\User;
-
+use App\OtTipoSoldaduras;
 
 class PdfInformesLpController extends Controller
 {
@@ -35,7 +35,8 @@ class PdfInformesLpController extends Controller
          $informe = Informe::findOrFail($id);       
          $informe_lp= InformesLp::where('informe_id',$informe->id)->firstOrFail();        
          $ot = Ots::findOrFail($informe->ot_id);
-         $cliente = Clientes::findOrFail($ot->cliente_id);           
+         $cliente = Clientes::findOrFail($ot->cliente_id);      
+         $ot_tipo_soldadura = OtTipoSoldaduras::where('id',$informe->ot_tipo_soldadura_id)->with('Tiposoldadura')->first();
          $material = Materiales::findOrFail($informe->material_id);   
          $material_accesorio = Materiales::find($informe->material_accesorio_id);
          $norma_ensayo = NormaEnsayos::findOrFail($informe->norma_ensayo_id);   
@@ -87,6 +88,7 @@ class PdfInformesLpController extends Controller
                                                                 'contratista',
                                                                 'informe',
                                                                 'informe_lp',
+                                                                'ot_tipo_soldadura',
                                                                 'material',   
                                                                 'material_accesorio',                                                         
                                                                 'metodo',   

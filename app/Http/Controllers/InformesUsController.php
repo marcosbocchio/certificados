@@ -24,6 +24,7 @@ use App\DetalleUsMe;
 use App\Generatrices;
 use App\Ots;
 use \stdClass;
+use App\OtTipoSoldaduras;
 
 
 class InformesUsController extends Controller
@@ -360,6 +361,11 @@ class InformesUsController extends Controller
         if ($informe_material_accesorio == null)
                $informe_material_accesorio = new Materiales();
     
+        $informe_ot_tipo_soldadura = OtTipoSoldaduras::join('tipo_soldaduras','tipo_soldaduras.id','=','ot_tipo_soldaduras.tipo_soldadura_id')
+        ->where('ot_tipo_soldaduras.id',$informe->ot_tipo_soldadura_id)->with('tipoSoldadura')->select('ot_tipo_soldaduras.*','tipo_soldaduras.codigo')->first();
+
+        if ($informe_ot_tipo_soldadura == null)
+                $informe_ot_tipo_soldadura = new OtTipoSoldaduras();
 
         return view('informes.us.edit', compact('ot',
                                                  'metodo',
@@ -370,6 +376,7 @@ class InformesUsController extends Controller
                                                  'informe_diametroEspesor',  
                                                  'informe_tecnica', 
                                                  'informe_material',
+                                                 'informe_ot_tipo_soldadura',
                                                  'informe_material_accesorio',
                                                  'informe_interno_equipo',
                                                  'informe_procedimiento',

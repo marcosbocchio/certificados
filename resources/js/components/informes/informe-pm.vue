@@ -85,14 +85,14 @@
                         <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="procedimientos_soldadura">Proc. Soldadura (EPS) *</label>
-                                <input type="text" v-model="procedimiento_soldadura" class="form-control" id="procedimientos_soldadura" maxlength="30">
+                                <v-select v-model="ot_tipo_soldadura" label="eps" :options="ot_tipo_soldaduras" id="procedimientos_soldadura"></v-select>  
                             </div>                            
                         </div> 
 
                          <div class="col-md-3">                       
                             <div class="form-group" >
                                 <label for="pqr">PQR</label>
-                                <input type="text" v-model="pqr" class="form-control" id="pqr" maxlength="30">
+                                <v-select v-model="ot_tipo_soldadura" label="pqr" :options="ot_tipo_soldaduras" id="pqr"></v-select>  
                             </div>         
                         </div> 
 
@@ -150,8 +150,58 @@
 
                         <div class="col-md-3">                       
                             <div class="form-group">
-                                <label>Método *</label>
-                                <v-select v-model="metodo_trabajo_pm" label="codigo" :options="metodos_trabajo_pm"></v-select>   
+                                <label>Método trabajo *</label>
+                                <v-select v-model="metodo_trabajo_pm" label="codigo" :options="metodos_trabajo_pm" @input="getInstrumentoMediciones()" ></v-select>   
+                            </div>      
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Inst. Medición *</label>
+                                
+                                    <v-select  v-model="instrumento_medicion" :options="instrumentos_mediciones" label="nro_interno">
+                                        <template slot="option" slot-scope="option">
+                                            <span class="upSelect">{{ option.nro_interno }}</span> <br> 
+                                            <span class="downSelect"> {{ option.equipo.codigo }} </span>
+                                        </template>
+                                    </v-select>
+
+                            </div>
+                        </div>  
+
+                        <div class="col-md-3">                       
+                            <div class="form-group">
+                                <label>Particulas *</label>
+                                <v-select v-model="particula" label="tipo" :options="particulas" >
+                                     <template slot="option" slot-scope="option">
+                                            <span class="upSelect">{{ option.tipo }}</span> <br> 
+                                            <span class="downSelect"> {{ option.marca }} </span>
+                                        </template>
+                                    </v-select>
+                            </div>      
+                        </div>
+
+                        <div class="col-md-3">                       
+                            <div class="form-group" >
+                                <label for="color_particulas">Color Particulas *</label>
+                                <div v-if="particula">
+                                    <input class="form-control" v-model="particula.color.codigo" disabled> 
+                                </div>
+                                <div v-else>
+                                     <input class="form-control" value="" disabled> 
+                                </div>
+                            </div>         
+                        </div> 
+
+                        <div class="col-md-3">                       
+                            <div class="form-group">
+                                <label for="contraste">Contraste</label>
+                                <v-select v-model="contraste" label="tipo" :options="contrastes" id="contraste">
+                                     <template slot="option" slot-scope="option">
+                                        <span class="upSelect">{{ option.tipo }}</span> <br> 
+                                        <span class="downSelect"> {{ option.marca }} </span>
+                                    </template>     
+                                </v-select>   
                             </div>      
                         </div>
 
@@ -184,7 +234,8 @@
                                 <label for="concentracion">Concentración *</label>
                                 <input  type="number" class="form-control" v-model="concentracion" id="concentracion" step=".01"> 
                             </div>                             
-                        </div>                        
+                        </div>  
+
 
                         <div class="col-md-3">                       
                             <div class="form-group">
@@ -193,7 +244,7 @@
                             </div>      
                         </div>
 
-                         
+             
                         <div class="col-md-3">
                             <div class="form-group" >                        
                                 <label for="v">Voltaje *</label>
@@ -215,20 +266,13 @@
                             </div>      
                         </div>
 
-                       <div class="clearfix"></div>    
+                        <div class="clearfix"></div>    
 
                         <div class="col-md-3">
                             <div class="form-group" >                        
                                 <label for="fuerza_portante">Fuerza Portante</label>
                                 <input  type="number" class="form-control" v-model="magnetizacion.fuerza_portante" disabled id="fuerza_portante"> 
                             </div>                             
-                        </div> 
-
-                        <div class="col-md-3">                       
-                            <div class="form-group" >
-                                <label for="color_particulas">Color Particulas *</label>
-                                <v-select v-model="color_partula" label="codigo" :options="color_particulas"></v-select>   
-                            </div>         
                         </div>  
 
                         <div class="col-md-3">                       
@@ -244,8 +288,6 @@
                                 <v-select v-model="desmagnetizacion" :options="['SI','NO']"></v-select>   
                             </div>      
                         </div>
-
-                        <div class="clearfix"></div>    
 
                         <div class="col-md-3">                       
                             <div class="form-group" >
@@ -405,6 +447,12 @@ export default {
       required : false
       },
 
+      ot_tipo_soldaduradata : {
+       type : [ Object, Array ],
+       required : false,
+
+      },
+
       materialdata : {
       type : Object,
       required : false
@@ -432,6 +480,11 @@ export default {
       },
 
       interno_equipodata : {
+      type : [ Object ],  
+      required : false
+      },
+
+      instrumento_medicion_data : {
       type : [ Object ],  
       required : false
       },
@@ -471,13 +524,18 @@ export default {
       required : false
       },
 
-      desmagnetizacion_sn_data : {
-      type : [ Number ],  
+      particula_data : {
+      type : [ Object ],  
       required : false
       },
 
-     color_particula_data : {
-      type : [ Object ],  
+      contraste_data : {
+      type : [ Object,Array ],  
+      required : false
+      },
+
+      desmagnetizacion_sn_data : {
+      type : [ Number ],  
       required : false
       },
 
@@ -502,16 +560,16 @@ export default {
         numero_inf:'',
         numero_inf_generado:'',
         componente:'',
+        ot_tipo_soldadura:'',
         material:'',
         material2:'',
         plano_isom:'',
         diametro:'',
         espesor:'',
         espesor_chapa:'', 
-        procedimiento_soldadura:'',
-        pqr:'',
         tecnica:'',
-        interno_equipo:'',       
+        interno_equipo:'',      
+        instrumento_medicion:'',
         procedimiento:'',
         norma_ensayo:'',
         norma_evaluacion:'',
@@ -526,16 +584,16 @@ export default {
         fuerza_portante:'',
         voltaje:'',
         am:'',
-        color_partula:'',
+        contraste:'',
         iluminacion:'',       
-      
+        particula:'',
         tecnicas:[],
-        equipos:[],
+        contrastes:[],
+        equipos:[],       
 
         metodos_trabajo_pm:[],
         tipos_magnetizacion:[],
         corrientes:[],      
-        color_particulas:[],     
         isChapa:false,
         requiereVehiculoAditivo:false,
 
@@ -555,6 +613,7 @@ export default {
     created : function() {
 
       this.getCliente();  
+      this.$store.dispatch('loadOtTipoSoldaduras', this.otdata.id);
       this.$store.dispatch('loadMateriales');
       this.$store.dispatch('loadDiametros');
       this.getTecnicas();
@@ -573,7 +632,7 @@ export default {
       this.$store.dispatch('loadEjecutorEnsayo', this.otdata.id); 
       this.getTiposMagnetizacon();
       this.getCorrientes();
-      this.getColorParticulas();
+      this.getConstrastes();
       this.$store.dispatch('loadIluminaciones');
       this.setEdit();      
     },
@@ -585,7 +644,7 @@ export default {
 
     computed :{
 
-        ...mapState(['url','AppUrl','materiales','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','iluminaciones','ejecutor_ensayos','interno_equipos']),     
+        ...mapState(['url','AppUrl','materiales','ot_tipo_soldaduras','diametros','espesores','procedimientos','norma_evaluaciones','particulas','norma_ensayos','iluminaciones','ejecutor_ensayos','interno_equipos','instrumentos_mediciones']),     
 
         numero_inf_code : function()  {
 
@@ -626,10 +685,14 @@ export default {
                this.fecha   = this.informedata.fecha;            
                this.numero_inf = this.informedata.numero;
                this.componente = this.informedata.componente;
+               this.ot_tipo_soldadura = this.ot_tipo_soldaduradata;
                this.material = this.materialdata;
                this.material2 = this.material2data;
                this.plano_isom = this.informedata.plano_isom;
+               this.instrumento_medicion = this.instrumento_medicion_data;
                this.diametro = this.diametrodata;
+               this.particula = this.particula_data;
+               this.contraste = this.contraste_data;
                this.espesor = this.diametro_espesordata;
                this.tecnica = this.tecnicadata;
                this.interno_equipo = this.interno_equipodata;           
@@ -639,7 +702,8 @@ export default {
                this.espesor_chapa = this.informedata.espesor_chapa;
                this.procedimiento_soldadura = this.informedata.procedimiento_soldadura;
                this.pqr = this.informedata.pqr;           
-               this.metodo_trabajo_pm = this.metodo_trabajo_pmdata;               
+               this.metodo_trabajo_pm = this.metodo_trabajo_pmdata;    
+
 
                 this.$nextTick(function(){
                     
@@ -654,13 +718,14 @@ export default {
                this.magnetizacion = this.magnetizacion_data;
                this.desmagnetizacion = this.desmagnetizacion_sn_data ? 'SI' : 'NO';
                this.voltaje = this.informe_pmdata.voltaje;
-               this.color_partula = this.color_particula_data;
                this.iluminacion = this.iluminacion_data;
                this.am = this.informe_pmdata.amperaje;              
                this.ejecutor_ensayo = this.ejecutor_ensayodata;          
                this.TablaLp = this.detalledata,  
                this.observaciones = this.informedata.observaciones 
-
+               this.setearTipoPenetrante();
+               this.$store.dispatch('loadInstrumentosMediciones',{ 'metodo' : this.metodo, 'activo_sn' : 1, 'tipo_penetrante' : this.tipo_penetrante });
+               this.getParticulas();
             }         
 
         },   
@@ -697,8 +762,7 @@ export default {
                     }else{
 
                         this.numero_inf = 1;
-                    }
-                    
+                    }                    
                     
                     });   
              }
@@ -714,6 +778,38 @@ export default {
             if(this.diametro){    
                  this.$store.dispatch('loadEspesores',this.diametro.diametro_code);
              }
+        },
+
+        getInstrumentoMediciones : function(){
+
+             this.setearTipoPenetrante();
+
+             this.$store.dispatch('loadInstrumentosMediciones',{ 'metodo' : this.metodo, 'activo_sn' : 1, 'tipo_penetrante' : this.tipo_penetrante }).then(response =>{
+            
+                this.instrumento_medicion ='';
+
+            });   
+
+            this.particula='';
+            this.getParticulas();
+
+        },
+
+    setearTipoPenetrante : function(){
+
+        if(this.metodo_trabajo_pm.codigo =='Húmedo-Visible' || this.metodo_trabajo_pm.codigo == 'Seco-Visible'){
+
+            this.tipo_penetrante = 'Visible';
+
+        }else if(this.metodo_trabajo_pm.codigo == 'Húmedo-Fluorescente' || this.metodo_trabajo_pm.codigo == 'Seco-Fluorescente'){
+
+            this.tipo_penetrante ='Fluorescente';
+        }
+    },
+
+        getParticulas : function(){
+
+            this.$store.dispatch('loadParticulas',this.metodo_trabajo_pm.id );   
         },
 
         getTecnicas: function(){
@@ -734,7 +830,18 @@ export default {
             
                 });
 
-        },         
+        },        
+        
+        getConstrastes: function(){
+           
+            axios.defaults.baseURL = this.url ;
+                var urlRegistros = 'contrastes/getTodos' + '?api_token=' + Laravel.user.api_token;         
+                axios.get(urlRegistros).then(response =>{
+                this.contrastes = response.data   
+            
+                });
+
+        },   
 
          getEjecutorEnsayo: function(){
              
@@ -769,15 +876,6 @@ export default {
             var urlRegistros = 'corrientes' + '?api_token=' + Laravel.user.api_token;        
             axios.get(urlRegistros).then(response =>{
             this.corrientes = response.data
-            });
-         },
-
-         getColorParticulas: function(){
-             
-            axios.defaults.baseURL = this.url ;
-            var urlRegistros = 'color_particulas' + '?api_token=' + Laravel.user.api_token;        
-            axios.get(urlRegistros).then(response =>{
-            this.color_particulas = response.data
             });
          },
 
@@ -868,6 +966,7 @@ export default {
                 'fecha':          this.fecha,
                 'numero_inf':     this.numero_inf,                            
                 'componente' :    this.componente,
+                'ot_tipo_soldadura' : this.ot_tipo_soldadura,
                 'plano_isom' :    this.plano_isom,
                 'procedimiento' : this.procedimiento,           
                 'observaciones':  this.observaciones,
@@ -877,11 +976,9 @@ export default {
                 'espesor':        this.espesor,
                 'espesor_chapa' :  this.espesor_chapa, 
                 'interno_equipo'        :  this.interno_equipo,               
-                'procedimiento_soldadura': this.procedimiento_soldadura,
                 'norma_evaluacion': this.norma_evaluacion,           
                 'norma_ensayo'      : this.norma_ensayo,
                 'tecnica'           :this.tecnica,              
-                'pqr'               :this.pqr,  
                 'metodo_trabajo_pm' : this.metodo_trabajo_pm,
                 'voltaje'           :this.voltaje,
                 'am'                :this.am,
@@ -892,8 +989,9 @@ export default {
                 'magnetizacion'     :this.magnetizacion,
                 'desmagnetizacion_sn'  :desmagnetizacion_sn,
                 'fuerza_portante'   :this.fuerza_portante,
-                'color_particula'   :this.color_partula,
                 'iluminacion'       :this.iluminacion,
+                'particula'         :this.particula,
+                'contraste'         :this.contraste,
                 'detalles'  :      this.TablaLp,        
           }
           
@@ -947,6 +1045,7 @@ export default {
                 'fecha':          this.fecha,
                 'numero_inf':     this.numero_inf,                            
                 'componente' :    this.componente,
+                'ot_tipo_soldadura' : this.ot_tipo_soldadura,
                 'plano_isom' :    this.plano_isom,
                 'procedimiento' : this.procedimiento,           
                 'observaciones':  this.observaciones,
@@ -955,12 +1054,11 @@ export default {
                 'diametro':       this.diametro,
                 'espesor':        this.espesor,
                 'espesor_chapa' :  this.espesor_chapa, 
-                'interno_equipo'        :  this.interno_equipo,          
-                'procedimiento_soldadura': this.procedimiento_soldadura,
+                'interno_equipo'        :  this.interno_equipo,        
+                'instrumento_medicion'  :this.instrumento_medicion,  
                 'norma_evaluacion': this.norma_evaluacion,           
                 'norma_ensayo'      : this.norma_ensayo,
                 'tecnica'           :this.tecnica,              
-                'pqr'               :this.pqr,  
                 'metodo_trabajo_pm' : this.metodo_trabajo_pm,
                 'voltaje'           :this.voltaje,
                 'am'                :this.am,
@@ -971,9 +1069,10 @@ export default {
                 'magnetizacion'     :this.magnetizacion,
                 'desmagnetizacion_sn'  :desmagnetizacion_sn,
                 'fuerza_portante'   :this.fuerza_portante,
-                'color_particula'   :this.color_partula,
                 'iluminacion'       :this.iluminacion,
-                 'detalles'  :      this.TablaLp,                      
+                'particula'         :this.particula,
+                'contraste'         :this.contraste,
+                'detalles'  :      this.TablaLp,                      
           }}
           
       

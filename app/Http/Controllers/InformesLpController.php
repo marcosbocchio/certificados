@@ -21,6 +21,7 @@ use App\DetallesLp;
 use App\MetodosTrabajoLp;
 use App\Iluminaciones;
 use App\DetallesLpReferencias;
+use App\OtTipoSoldaduras;
 
 class InformesLpController extends Controller
 {
@@ -205,6 +206,12 @@ class InformesLpController extends Controller
         if ($informe_material_accesorio == null)
              $informe_material_accesorio = new Materiales();  
 
+        $informe_ot_tipo_soldadura = OtTipoSoldaduras::join('tipo_soldaduras','tipo_soldaduras.id','=','ot_tipo_soldaduras.tipo_soldadura_id')
+        ->where('ot_tipo_soldaduras.id',$informe->ot_tipo_soldadura_id)->with('tipoSoldadura')->select('ot_tipo_soldaduras.*','tipo_soldaduras.codigo')->first();
+
+        if ($informe_ot_tipo_soldadura == null)
+              $informe_ot_tipo_soldadura = new OtTipoSoldaduras();
+
         $informe_detalle = $this->getDetalle($informe_lp->id);
 
      //   dd($informe_detalle);
@@ -216,6 +223,7 @@ class InformesLpController extends Controller
                                                  'informe_material',  
                                                  'informe_material_accesorio',
                                                  'informe_diametro',
+                                                 'informe_ot_tipo_soldadura',
                                                  'informe_diametroEspesor',                                                                            
                                                  'informe_tecnica_grafico',
                                                  'informe_interno_equipo',                                                   

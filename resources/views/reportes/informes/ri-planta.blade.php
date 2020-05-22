@@ -143,7 +143,8 @@ b {
                                 {{  $diametro_espesor->espesor }}
                                 @endif                       
                             
-                            </td>                            <td style="font-size: 11px; width: 75px"   ><b>Pantalla: </b>Pb</td>
+                            </td>                            
+                            <td style="font-size: 11px; width: 75px"   ><b>Pantalla: </b>Pb</td>
                             <td style="font-size: 11px; width: 15px"  ><b>Ant: </b>{{$informe_ri->pos_ant}}</td>
                             <td style="font-size: 11px; width: 15px"  ><b>Pos: </b>{{$informe_ri->pos_pos}}</td>
                             <td style="font-size: 11px; width: 1px; border-right: 1px solid #000;"  ><b>Lado: </b>{{$informe_ri->lado}}</td>      
@@ -152,11 +153,11 @@ b {
                             </td>                  
                         </tr>
                         <tr>                           
-                            <td style="font-size: 10px;border-right: 1px solid #000;" colspan="2"><b>EPS:</b>{{$informe->procedimiento_soldadura}}</td>                            
+                            <td style="font-size: 10px;border-right: 1px solid #000;" colspan="2"><b>EPS:</b>{{$ot_tipo_soldadura->eps}}</td>                            
                             <td style="font-size: 11px; border-right: 1px solid #000;" colspan="4" ><b>Ici : </b>{{$ici->codigo}}</td>                            
                         </tr>
                         <tr>
-                            <td style="font-size: 10px;border-right: 1px solid #000;" colspan="2"><b>PQR:</b>{{$informe->pqr}}</td>
+                            <td style="font-size: 10px;border-right: 1px solid #000;" colspan="2"><b>PQR:</b>{{$ot_tipo_soldadura->pqr}}</td>
                             <td style="font-size: 11px;" colspan="2" ><b>Actividad: </b>{{$actividad}}</td>
                             <td style="font-size: 11px;border-right: 1px solid #000;" colspan="2" ><b>N° Exp. : </b>{{$informe_ri->exposicion}}</td>  
                            

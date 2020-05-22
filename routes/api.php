@@ -76,6 +76,9 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('aplicaciones_lp', 'AplicacionesLpController');
     Route::get('tipo_liquidos/penetrante_sn/{penetrante_sn}/revelador_sn/{revelador_sn}/removedor_sn/{removedor_sn}/metodo_trabajo_lp_id/{metodo_trabajo_lp_id}', 'TipoLiquidosController@getTipoLiquidos');
     Route::resource('corrientes', 'CorrientesController');
+    Route::get('contrastes/getTodos', 'ContrastesController@getTodos');
+    Route::resource('particulas', 'ParticulasController');
+    Route::get('particulas/metodo_trabajo_pm/{metodo_trabajo_pm_id}', 'ParticulasController@getParticulasMetodoTrabajoPm');
     Route::resource('color_particulas', 'ColorParticulasController');
     Route::resource('iluminaciones', 'IluminacionesController');
     Route::get('tecnicas/metodo/{metodo}', 'TecnicasController@tecnicasMetodo');
@@ -198,6 +201,12 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('ot_procedimientos_propios','OtProcedimientosPropiosController');
     Route::get('ot_procedimientos_propios/ot/{id}','OtProcedimientosPropiosController@ProcedimientosPropiosOt');
     Route::get('ot_procedimientos_propios/ot/{id}/total','OtProcedimientosPropiosController@OtProcedimientosTotal');   
+
+    Route::resource('ot_tipo_soldaduras','OtTipoSoldadurasController');
+    Route::get('ot_tipo_soldaduras/ot/{id}','OtTipoSoldadurasController@TipoSoldadurasOt');
+    Route::get('ot_tipo_soldaduras/ot/{id}/epss','OtTipoSoldadurasController@EpssOt');
+    Route::get('ot_tipo_soldaduras/ot/{id}/pqrs','OtTipoSoldadurasController@PqrsOt');
+
     
     //placas
 

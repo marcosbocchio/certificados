@@ -63,10 +63,9 @@ class InformeRiRequest extends FormRequest
                 'componente'                => $condicion_componente . 'Max:20',
                 'material'                  => 'required',
                 'plano_isom'                => 'required|Max:10',
+                'ot_tipo_soldadura'         => 'required',
                 'diametro'                  => 'required',
-                'procedimiento_soldadura'   => 'required|Max:30', 
                 'tecnica'                   => 'required',
-                'pqr'                       => 'Max:30',
                 'interno_equipo'            => 'required',
                 'tipo_pelicula'             => 'required',
                 'procedimiento'             => 'required',
@@ -101,7 +100,8 @@ class InformeRiRequest extends FormRequest
             'norma_ensayo'         => 'norma Ensayo',
             'ejecutor_ensayo'      => 'ejecutor ensayo',
             'procedimiento_soldadura' =>'procedimiento soldadura',  
-            'gasoducto_sn'          =>'formato'  
+            'gasoducto_sn'          =>'formato',
+            'ot_tipo_soldadura'     =>'Eps'  
             ];
         }
 }

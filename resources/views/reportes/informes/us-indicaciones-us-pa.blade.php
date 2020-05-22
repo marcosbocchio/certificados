@@ -157,12 +157,12 @@ b {
                         </tr>
                         <tr>
                             <td style="font-size: 11px;border-right: 1px solid #000;" colspan="2"><b>Proc. Sold. : </b>{{$informe->procedimiento_soldadura}}</td>                            
-                            <td style="font-size: 11px;border-right: 1px solid #000;" colspan="4" ><b>EPS: </b>{{$informe->eps}}</td>
+                            <td style="font-size: 11px;border-right: 1px solid #000;" colspan="4" ><b>EPS: </b>{{$ot_tipo_soldadura->eps}}</td>
                             <td style="font-size: 11px;" colspan="2" >&nbsp;</td>
                         </tr>  
                         <tr>
                             <td style="font-size: 11px; border-right: 1px solid #000;" colspan="2" ><b>Proc. US: </b>{{$procedimiento_inf->titulo}} </td>
-                            <td style="font-size: 11px;border-right: 1px solid #000;" colspan="4"><b>PQR: </b>{{$informe->pqr}}</td>
+                            <td style="font-size: 11px;border-right: 1px solid #000;" colspan="4"><b>PQR: </b>{{$ot_tipo_soldadura->pqr}}</td>
                             <td style="font-size: 11px;" colspan="2" >&nbsp;</td>
                         </tr>          
                         </tbody>

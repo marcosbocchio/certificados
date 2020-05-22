@@ -11,17 +11,17 @@ use App\User;
 use App\Contratistas;
 use App\DetalleUsPaUs;
 use App\DetallesUsPaUsReferencias;
+use App\OtTipoSoldaduras;
 
 class PdfInformesUsReferenciaController extends Controller
 {
-    public function imprimir($id){ 
-
-      
+    public function imprimir($id){       
               
         $detalle_us_pa_us_referencia = DetallesUsPaUsReferencias::find($id);
         $detalle_us_pa_us = DetalleUsPaUs::where('detalle_us_pa_us_referencia_id',$id)->first();
         $informe_us = InformesUs::find($detalle_us_pa_us->informe_us_id);
         $informe = Informe::find($informe_us->informe_id);      
+        $ot_tipo_soldadura = OtTipoSoldaduras::where('id',$informe->ot_tipo_soldadura_id)->with('Tiposoldadura')->first();
         $ot = Ots:: find($informe->ot_id);
         $cliente = Clientes::find($ot->cliente_id);       
         $evaluador = User::find($informe->firma);       
@@ -30,6 +30,7 @@ class PdfInformesUsReferenciaController extends Controller
         $pdf = \PDF::loadView('reportes.informes.referencias-us-pa-us',compact('ot',
                                                                 'informe_us',                                                              
                                                                 'informe',
+                                                                'ot_tipo_soldadura',
                                                                 'detalle_us_pa_us',
                                                                 'detalle_us_pa_us_referencia',
                                                                 'cliente',
