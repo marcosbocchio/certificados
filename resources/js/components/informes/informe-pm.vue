@@ -169,6 +169,19 @@
                             </div>
                         </div>  
 
+                        <div class="col-md-3">
+                            <div class="form-group" >
+                                <label for="instrumento_medicion">Tipo</label>
+                                <div v-if="instrumento_medicion">
+                                    <input type="text" v-model="instrumento_medicion.equipo.instrumento_medicion" class="form-control" id="instrumento_medicion" disabled>
+                                </div>
+                                 <div v-else="">
+                                    <input type="text" class="form-control" id="instrumento_medicion" disabled>
+                                </div>
+
+                            </div>                            
+                        </div>  
+
                         <div class="col-md-3">                       
                             <div class="form-group">
                                 <label>Particulas *</label>
@@ -180,6 +193,8 @@
                                     </v-select>
                             </div>      
                         </div>
+
+                        <div class="clearfix"></div>    
 
                         <div class="col-md-3">                       
                             <div class="form-group" >
@@ -266,8 +281,6 @@
                             </div>      
                         </div>
 
-                        <div class="clearfix"></div>    
-
                         <div class="col-md-3">
                             <div class="form-group" >                        
                                 <label for="fuerza_portante">Fuerza Portante</label>
@@ -278,7 +291,7 @@
                         <div class="col-md-3">                       
                             <div class="form-group" >
                                 <label for="iluminaciones">Iluminaciones *</label>
-                                <v-select v-model="iluminacion" label="codigo" :options="iluminaciones"></v-select>   
+                                <v-select v-model="iluminacion" label="codigo" :options="iluminaciones" disabled></v-select>   
                             </div>         
                         </div>  
 
@@ -288,6 +301,8 @@
                                 <v-select v-model="desmagnetizacion" :options="['SI','NO']"></v-select>   
                             </div>      
                         </div>
+
+                        <div class="clearfix"></div>    
 
                         <div class="col-md-3">                       
                             <div class="form-group" >
@@ -617,7 +632,7 @@ export default {
       this.$store.dispatch('loadMateriales');
       this.$store.dispatch('loadDiametros');
       this.getTecnicas();
-        this.$store.dispatch('loadInternoEquipos',{ 'metodo' : this.metodo, 'activo_sn' : 1, 'tipo_penetrante' : 'null' });       
+      this.$store.dispatch('loadInternoEquipos',{ 'metodo' : this.metodo, 'activo_sn' : 1, 'tipo_penetrante' : 'null' });       
       this.$store.dispatch('loadProcedimietosOtMetodo',  
         { 'ot_id' : this.otdata.id, 'metodo' : this.metodo }).then(response =>{ 
                 if(this.procedimientos.length == 0  ){
@@ -718,7 +733,6 @@ export default {
                this.magnetizacion = this.magnetizacion_data;
                this.desmagnetizacion = this.desmagnetizacion_sn_data ? 'SI' : 'NO';
                this.voltaje = this.informe_pmdata.voltaje;
-               this.iluminacion = this.iluminacion_data;
                this.am = this.informe_pmdata.amperaje;              
                this.ejecutor_ensayo = this.ejecutor_ensayodata;          
                this.TablaLp = this.detalledata,  
@@ -726,6 +740,7 @@ export default {
                this.setearTipoPenetrante();
                this.$store.dispatch('loadInstrumentosMediciones',{ 'metodo' : this.metodo, 'activo_sn' : 1, 'tipo_penetrante' : this.tipo_penetrante });
                this.getParticulas();
+               this.iluminacion = this.iluminacion_data;
             }         
 
         },   
@@ -783,7 +798,7 @@ export default {
         getInstrumentoMediciones : function(){
 
              this.setearTipoPenetrante();
-
+          
              this.$store.dispatch('loadInstrumentosMediciones',{ 'metodo' : this.metodo, 'activo_sn' : 1, 'tipo_penetrante' : this.tipo_penetrante }).then(response =>{
             
                 this.instrumento_medicion ='';
@@ -795,16 +810,20 @@ export default {
 
         },
 
-    setearTipoPenetrante : function(){
+    setearTipoPenetrante : function(){     
 
-        if(this.metodo_trabajo_pm.codigo =='Húmedo-Visible' || this.metodo_trabajo_pm.codigo == 'Seco-Visible'){
+        if(this.metodo_trabajo_pm.codigo ==='Húmedo-Visible' || this.metodo_trabajo_pm.codigo === 'Seco-Visible'){
 
             this.tipo_penetrante = 'Visible';
+            this.iluminacion = this.iluminaciones[this.iluminaciones.findIndex(elemento => elemento.codigo == '1076 Lux')];
 
-        }else if(this.metodo_trabajo_pm.codigo == 'Húmedo-Fluorescente' || this.metodo_trabajo_pm.codigo == 'Seco-Fluorescente'){
+        }else if(this.metodo_trabajo_pm.codigo === 'Húmedo-Fluorescente' || this.metodo_trabajo_pm.codigo === 'Seco-Fluorescente'){
 
-            this.tipo_penetrante ='Fluorescente';
+            this.tipo_penetrante = 'Fluorescente';
+            this.iluminacion = this.iluminaciones[this.iluminaciones.findIndex(elemento => elemento.codigo == '1000 µv/cm2')];
+
         }
+
     },
 
         getParticulas : function(){
@@ -978,7 +997,8 @@ export default {
                 'interno_equipo'        :  this.interno_equipo,               
                 'norma_evaluacion': this.norma_evaluacion,           
                 'norma_ensayo'      : this.norma_ensayo,
-                'tecnica'           :this.tecnica,              
+                'tecnica'           :this.tecnica,          
+                'instrumento_medicion'  :this.instrumento_medicion,  
                 'metodo_trabajo_pm' : this.metodo_trabajo_pm,
                 'voltaje'           :this.voltaje,
                 'am'                :this.am,

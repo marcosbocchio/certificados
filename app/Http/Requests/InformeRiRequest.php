@@ -78,7 +78,8 @@ class InformeRiRequest extends FormRequest
                 'actividad'                 => 'Max:10',
                 'exposicion'                => 'required|integer|digits_between:1,6',
                 'ejecutor_ensayo'           => 'required',
-                'observaciones'             => 'max:250',           
+                'observaciones'             => 'max:250',     
+                'pk'                        => 'required |numeric|min:0'
             
         ];
 
