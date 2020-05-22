@@ -311,21 +311,7 @@
                             </button>                       
                         </div>
                     </div>
-                <div class="box-body">
-
-                    <div class="col-md-2">                       
-                        <div class="form-group" >                            
-                            <label for="pk">Pk</label>
-                            <input type="number" v-model="pk" class="form-control" id="pk" disabled>                           
-                        </div>     
-                    </div>   
-
-                    <div class="col-md-2">                      
-                        <div class="form-group" >
-                           <label>Tipo Sol.</label>
-                            <input type="text" :value="tipo_soldadura" class="form-control" disabled>
-                        </div>
-                    </div>                   
+                <div class="box-body">           
                   
                     <div class="col-md-2">                      
                         <div class="form-group" >
@@ -358,9 +344,7 @@
                             <div class="table-responsive">
                                 <table class="table table-hover table-striped table-bordered">
                                     <thead>
-                                        <tr>
-                                            <th class="col-md-1">Pk</th>
-                                            <th class="col-md-1">TIPO SOL.</th>                                     
+                                        <tr>                                  
                                             <th class="col-md-1">ELEMENTO</th>                                       
                                             <th class="col-md-1">POS</th>  
                                             <th class="col-md-1">ACEPTABLE</th>    
@@ -370,9 +354,7 @@
                                         </tr>
                                     </thead>                         
                                     <tbody>
-                                        <tr v-for="(FIlaTabla,k) in (TablaDetalle)" :key="k" @click="selectPosDetalle(k)" :class="{selected: indexDetalle === k}" class="pointer">
-                                            <td>{{ FIlaTabla.pk }}</td>
-                                            <td>{{ FIlaTabla.tipo_soldadura }}</td>                                 
+                                        <tr v-for="(FIlaTabla,k) in (TablaDetalle)" :key="k" @click="selectPosDetalle(k)" :class="{selected: indexDetalle === k}" class="pointer">                         
                                             <td>{{ FIlaTabla.junta }}</td>                                      
                                             <td>{{ FIlaTabla.posicion }} </td>   
                                             <td> <input type="checkbox" id="checkbox" v-model="TablaDetalle[k].aceptable_sn">  </td>                                 
@@ -1184,9 +1166,7 @@ export default {
                   return;
             }          
 
-            this.TablaDetalle.push({ 
-                pk : this.pk,
-                tipo_soldadura:this.tipo_soldadura,             
+            this.TablaDetalle.push({        
                 junta: this.junta,           
                 posicion : (typeof(posicion) !== 'undefined') ? posicion : this.posicion, 
                 aceptable_sn : 1 ,
