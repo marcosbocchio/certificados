@@ -71,7 +71,7 @@ class PdfInformesRiController extends Controller
           $pasadas_posiciones = DB::select('CALL InformeRiGasoductoPasadasPosicion(?)',array($informe_ri->id));
           $defectos_posiciones = DB::select('CALL InformeRiGasoductoDefectosPasadasPosicion(?)',array($informe_ri->id));        
           
-       //   dd($juntas_posiciones,$pasadas_posiciones,$defectos_posiciones,$ot_tipo_soldadura);
+        //  dd($juntas_posiciones,$pasadas_posiciones,$defectos_posiciones,$ot_tipo_soldadura,$informe);
 
           $pdf = PDF::loadView('reportes.informes.ri-gasoducto',compact('ot',
                                                                         'norma_ensayo',

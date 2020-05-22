@@ -173,11 +173,9 @@ class InformesRiController extends Controller
                                ->where('informes_ri.id',$id)
                                ->select('juntas.codigo as junta',
                                       'posicion.descripcion as observacion',                                   
-                                      'posicion.aceptable_sn as aceptable_sn',                                     
-                                      'juntas.km as pk',
+                                      'posicion.aceptable_sn as aceptable_sn',                            
                                       'posicion.codigo as posicion',
-                                      'posicion.id as posicion_id',
-                                      'juntas.tipo_soldadura_id')
+                                      'posicion.id as posicion_id')
                                 ->orderBy('posicion.id','asc')
                                 ->get();
 
@@ -200,7 +198,7 @@ class InformesRiController extends Controller
                                             ->where('informes_ri.id',$id)
                                             ->where('juntas.codigo',$detalle_posicion->junta)
                                             ->where('posicion.codigo',$detalle_posicion->posicion)
-                                            ->selectRaw('pasadas_posicion.*,IFNULL(juntas.tipo_soldadura_id,"") as tipo_soldadura_id')
+                                            ->selectRaw('pasadas_posicion.*')
                                             ->get();
 
             $pasadas = array();
@@ -232,15 +230,12 @@ class InformesRiController extends Controller
                 $obj->soldador3 = $obj->soldador3 ? $obj->soldador3 : "";    
 
                 array_push($pasadas,$obj);
-             }
-
-             
-            $tipo_soldadura = TipoSoldaduras::find($detalle_posicion->tipo_soldadura_id) ? TipoSoldaduras::find($detalle_posicion->tipo_soldadura_id) : "";           
+             }        
          
 
             $detalle_posicion->defectos = $defecto_posicion;
             $detalle_posicion->pasadas = $pasadas;       
-            $detalle_posicion->tipo_soldadura = $tipo_soldadura;
+           
           
         }
 

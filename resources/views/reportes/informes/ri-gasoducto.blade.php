@@ -352,7 +352,18 @@ b {
         <tbody>
             @foreach ($juntas_posiciones as $junta_posiciones)
                 <tr>
-                    <td style="font-size: 11px;  width:38px;text-align: center" class="bordered-td">{{ $informe->km}}</td>
+                    <td style="font-size: 11px;  width:38px;text-align: center" class="bordered-td">
+                    @if ($informe->km)
+
+                       {{ $informe->km}}
+                       
+                    @else
+
+                        &nbsp;   
+                        
+                    @endif
+                    
+                    </td>
                     <td style="font-size: 11px;  width:50px;text-align: center" class="bordered-td">{{$junta_posiciones->junta}} </td>
                     <td style="font-size: 11px;  width:50px;text-align: center" class="bordered-td">{{$ot_tipo_soldadura->TipoSoldadura->codigo}}</td>
                  
