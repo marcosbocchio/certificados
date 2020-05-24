@@ -6,7 +6,7 @@
         <button class="btn btn-primary" v-on:click.prevent="openNuevoRegistro()" :disabled="!$can(permiso_create)"><span class="fa fa-plus-circle"></span> Nuevo</button>
       </div>
 
-      <div v-show="modelo == 'users' || modelo == 'interno_equipos' || modelo == 'clientes'" >
+      <div v-show="modelo == 'users' || modelo == 'interno_equipos' || modelo == 'clientes' || modelo == 'equipos'" >
         <div class="col-md-3 col-md-offset-8 col-xs-10">
           <div class="input-group">
               <input type="text" v-model="search" class="form-control" placeholder="Buscar...">

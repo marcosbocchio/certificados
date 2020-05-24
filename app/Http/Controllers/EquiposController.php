@@ -28,8 +28,10 @@ class EquiposController extends Controller
     }
 
     public function paginate(Request $request){
-      
-        return Equipos::orderBy('id','DESC')->with('metodoEnsayos')->paginate(10);
+
+        $filtro = $request->search;
+        
+        return Equipos::orderBy('id','DESC')->with('metodoEnsayos')->Filtro($filtro)->paginate(10);
   
       }
 
@@ -62,6 +64,17 @@ class EquiposController extends Controller
     public function store(EquipoRequest $request){
 
         $equipo = new Equipos;   
+
+      
+        $equipo_aux = Equipos::where('codigo',$request['codigo'])
+        ->where('descripcion',$request['descripcion']) 
+        ->first();
+
+        if(!is_null($equipo_aux)){
+          
+             return response()->json(['errors' => ['error' => ['Existe un Equipo con ese código y descripción']]], 422);
+
+        }
   
           DB::beginTransaction();
           try { 
@@ -81,7 +94,14 @@ class EquiposController extends Controller
       public function update(EquipoRequest $request, $id){
   
         $equipo = Equipos::find($id);     
-      
+
+        $equipo_aux = Equipos::where('codigo',$request['codigo'])
+        ->where('descripcion',$request['descripcion']) 
+        ->first();
+
+        if(!is_null($equipo_aux) && ($equipo_aux->id != $id)){
+           return response()->json(['errors' => ['error' => ['Existe un Equipo con ese código y descripción']]], 422);    
+        }
           DB::beginTransaction();
           try {
               $this->saveMaterial($request,$equipo);
@@ -94,6 +114,7 @@ class EquiposController extends Controller
               
             }
       }
+
       public function saveMaterial($request,$equipo){
   
         $equipo->codigo = $request['codigo'];

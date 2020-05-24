@@ -277,7 +277,17 @@
                         <div class="col-md-3">                       
                             <div class="form-group">
                                 <label>Magnetización *</label>
-                                <v-select v-model="magnetizacion" label="codigo" :options="corrientes"></v-select>   
+                                <v-select v-model="magnetizacion" label="id" :options="corrientes">
+                                    <template #selected-option="{ codigo }">
+                                        <div style="display: flex; align-items: baseline;">
+                                        <span>{{ codigo }}</span>
+                                        </div>
+                                    </template>    
+                                     <template slot="option" slot-scope="option">
+                                        <span class="upSelect">{{ option.codigo }}</span> <br> 
+                                        <span class="downSelect">FP {{ option.fuerza_portante }} </span>
+                                    </template>                                 
+                                </v-select>   
                             </div>      
                         </div>
 

@@ -26,7 +26,7 @@ class InternoEquipoRequest extends FormRequest
         return [
 
             'nro_serie'      => 'nullable| Max:45',  
-            'nro_interno'    => 'required| Max:5', 
+            'nro_interno'    => 'required|numeric |digits_between:1,5', 
             'voltaje'        => 'nullable| digits_between:1,11',
             'amperaje'       => 'nullable| digits_between:1,11',       
             'equipo'         => 'required',

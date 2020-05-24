@@ -21,7 +21,12 @@
                     <input autocomplete="off" v-model="editRegistro.nro_interno" type="text" name="numero_interno" class="form-control" value="">                  
 
                     <label for="equipos">Equipo *</label>      
-                    <v-select v-model="equipo" label="codigo" :options="equipos"></v-select>              
+                    <v-select v-model="equipo" label="codigo" :options="equipos">
+                        <template slot="option" slot-scope="option">
+                            <span class="upSelect">{{ option.nro_serie }}</span> <br> 
+                            <span class="downSelect"> {{ option.fuente.codigo }} </span>
+                        </template>
+                    </v-select>              
 
                     <label>Fuente </label>
                     <v-select  v-model="interno_fuente" :options="interno_fuentes" label="nro_serie">

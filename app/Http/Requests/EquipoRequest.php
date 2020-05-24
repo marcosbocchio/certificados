@@ -23,7 +23,7 @@ class EquipoRequest extends FormRequest
 
             'codigo'            => 'required|Max:20',
             'descripcion'       =>'nullable|Max:100',
-            'metodo_ensayos'     => 'required',
+            'metodo_ensayos'    => 'required',
           
         ];
     }

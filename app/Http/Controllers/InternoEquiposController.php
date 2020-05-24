@@ -35,14 +35,21 @@ class InternoEquiposController extends Controller
 
     public function paginate(Request $request){
 
+       DB::enableQueryLog();
+
         $filtro = $request->search;
-      //  return $filtro;
-        $interno_equipos = InternoEquipos::orderBy('id','DESC')
-                                          ->with('ot.localidad.provincia','ot.cliente')
+        $interno_equipos = InternoEquipos::with('ot.localidad.provincia','ot.cliente')
                                           ->with('equipo.metodoEnsayos')
                                           ->with('internoFuente.fuente')
+                                          ->selectRaw('interno_equipos.*,CONVERT(nro_interno,UNSIGNED) as nro_interno_numeric' )
+                                          ->orderby('nro_interno_numeric','DESC')
                                           ->Filtro($filtro)
                                           ->paginate(10);
+        $queries = DB::getQueryLog();
+        foreach($queries as $i=>$query)
+        {
+            Log::debug("Query $i: " . json_encode($query));
+        }
 
         foreach ( $interno_equipos as $interno_equipo) {
           
@@ -56,7 +63,7 @@ class InternoEquiposController extends Controller
           }      
      
         }
-
+        
         return $interno_equipos;
   
       }
