@@ -894,6 +894,7 @@ export default {
             if(this.editmode) {
                
                this.formato = this.informe_ridata.gasoducto_sn ? 'DUCTO' : 'PLANTA';
+               this.obra = this.informedata.obra;
                this.fecha   = this.informedata.fecha;
                this.pk = this.informedata.km;
                this.ot_tipo_soldadura = this.ot_tipo_soldaduradata;

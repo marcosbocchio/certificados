@@ -27,7 +27,8 @@ class InformeRiRequest extends FormRequest
     $condicion_espesor_no_chapa = '' ;      
     $condicion_espesor_chapa = '' ;
     $condicion_dist_fuente_pelicula ='';
-    $condicion_componente='';   
+    $condicion_componente=''; 
+    $condicion_pk='';  
 
     if($this->diametro['diametro'] == 'CHAPA'){
 
@@ -41,8 +42,15 @@ class InformeRiRequest extends FormRequest
     }    
 
     if($this->gasoducto_sn == false){
+        
         $condicion_componente = 'required |';
+
+    }else{
+        
+        $condicion_pk = 'required |numeric|min:0';
     }
+
+
 
 
         $condicional = [      
@@ -79,7 +87,7 @@ class InformeRiRequest extends FormRequest
                 'exposicion'                => 'required|integer|digits_between:1,6',
                 'ejecutor_ensayo'           => 'required',
                 'observaciones'             => 'max:250',     
-                'pk'                        => 'required |numeric|min:0'
+                'pk'                        =>  $condicion_pk,
             
         ];
 

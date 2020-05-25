@@ -104,13 +104,13 @@ export default {
                 this.$store.dispatch('loadObraInformes',{ informe_id: this.informe_id , importado_sn: this.importado_sn}).then(response => {
 
                     this.obra = this.obra_informe
-                    this.inputObra();
+                  
                 })
 
             }else{
 
                 this.obra =  this.otdata.obra
-
+             
             }
              
         },
