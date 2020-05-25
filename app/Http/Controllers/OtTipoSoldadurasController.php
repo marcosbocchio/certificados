@@ -45,7 +45,7 @@ class OtTipoSoldadurasController extends Controller
           $existe = false;
             foreach ($request->tipo_soldaduras as $tipo_soldadura) {
 
-                if( ($ot_tipo_soldadura['tipo_soldadura_id'] == $tipo_soldadura['tipo_soldadura']['id']) &&(($ot_tipo_soldadura['obra'] == $tipo_soldadura['tipo_soldadura']['obra']))){
+                if( ($ot_tipo_soldadura['tipo_soldadura_id'] == $tipo_soldadura['tipo_soldadura']['id']) &&(($ot_tipo_soldadura['obra'] == $tipo_soldadura['obra']))){
                   $existe = true;
                 }
           
