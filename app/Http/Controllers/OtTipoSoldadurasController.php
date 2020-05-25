@@ -37,7 +37,7 @@ class OtTipoSoldadurasController extends Controller
      */
     public function store(Request $request)
     {
-        $ot_id = $request->ot_id;
+        $ot_id = $request->ot['id'];
 
         $ot_tipo_soldaduras = OtTipoSoldaduras::where('ot_id',$ot_id)->get();
 
@@ -63,8 +63,8 @@ class OtTipoSoldadurasController extends Controller
       
             $tipo_soldadura = OtTipoSoldaduras::updateOrCreate(
                 
-                ['ot_id' => $ot_id,'tipo_soldadura_id' => $item['tipo_soldadura']['id']],
-                ['ot_id' => $ot_id,'tipo_soldadura_id' => $item['tipo_soldadura']['id'],'eps'=>$item['eps'],'pqr'=>$item['pqr']]
+                ['ot_id' => $ot_id,'obra'=>$item['obra'],'tipo_soldadura_id' => $item['tipo_soldadura']['id']],
+                ['ot_id' => $ot_id,'obra'=>$item['obra'],'tipo_soldadura_id' => $item['tipo_soldadura']['id'],'eps'=>$item['eps'],'pqr'=>$item['pqr']]
 
             );
 
@@ -84,19 +84,14 @@ class OtTipoSoldadurasController extends Controller
 
 
     }
-    public function EpssOt($ot_id){
+
+    public function TipoSoldadurasOtObra($ot_id,$obra = null){
 
         return OtTipoSoldaduras::where('ot_id',$ot_id)
-                                ->select('ot_tipo_soldaduras.eps')
-                                 ->get();
-
-
-    }
-
-    public function PqrsOt($ot_id){
-
-        return OtTipoSoldaduras::where('ot_id',$ot_id)
-                                ->select('ot_tipo_soldaduras.pqr')
+                                ->where('obra',$obra)    
+                                ->join('tipo_soldaduras','tipo_soldaduras.id','=','ot_tipo_soldaduras.tipo_soldadura_id')
+                                ->with('tipoSoldadura')
+                                ->select('ot_tipo_soldaduras.*','tipo_soldaduras.codigo')
                                  ->get();
 
 

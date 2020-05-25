@@ -8,7 +8,7 @@
 <div id="app">
 
    <abm-doc  modelo= "ot_procedimientos_propios"
-             :ot_id_data = "{{$ot_id}}"
+             :otdata = "{{$ot}}"
 
     ></abm-doc>
 

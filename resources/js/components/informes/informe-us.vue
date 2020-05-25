@@ -95,14 +95,14 @@
                     <div class="col-md-3">
                         <div class="form-group" >
                             <label for="procedimientos_soldadura">Proc. Soldadura (EPS)</label>
-                            <v-select v-model="ot_tipo_soldadura" label="eps" :options="ot_tipo_soldaduras" id="procedimientos_soldadura"></v-select>  
+                            <v-select v-model="ot_tipo_soldadura" label="eps" :options="ot_obra_tipo_soldaduras" id="procedimientos_soldadura"></v-select>  
                         </div>                            
                     </div>
 
                     <div class="col-md-3">                       
                         <div class="form-group" >
                             <label for="pqr">PQR</label>
-                            <v-select v-model="ot_tipo_soldadura" label="pqr" :options="ot_tipo_soldaduras" id="pqr"></v-select>  
+                            <v-select v-model="ot_tipo_soldadura" label="pqr" :options="ot_obra_tipo_soldaduras" id="pqr"></v-select>  
                         </div>         
                     </div>
 
@@ -1058,7 +1058,7 @@ export default {
     created : function() {
         
       this.getCliente();  
-      this.$store.dispatch('loadOtTipoSoldaduras', this.otdata.id);
+      this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.obra });
       this.$store.dispatch('loadMateriales');
       this.$store.dispatch('loadDiametros');
       this.getTecnicas();
@@ -1087,13 +1087,13 @@ export default {
 
     computed :{
 
-        ...mapState(['url','AppUrl','ot_tipo_soldaduras','materiales','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','ejecutor_ensayos','interno_equipos']),     
+        ...mapState(['url','AppUrl','ot_obra_tipo_soldaduras','materiales','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','ejecutor_ensayos','interno_equipos']),     
 
         numero_inf_code : function()  {
 
                if(this.numero_inf)
 
-                      return this.metodo + (this.numero_inf <10? '00' : this.numero_inf<100? '0' : '') + this.numero_inf ;
+                     return this.metodo + (this.numero_inf <10? '00' : this.numero_inf<100? '0' : '') + this.numero_inf ;
         },
        
      },
@@ -1176,6 +1176,8 @@ export default {
         setObra : function(value){
 
             this.obra = value;
+            this.ot_tipo_soldadura='';
+            this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.obra });
         },
 
 

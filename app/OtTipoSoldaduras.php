@@ -9,7 +9,7 @@ class OtTipoSoldaduras extends Model
 
    protected $table='ot_tipo_soldaduras';
 
-   protected $fillable = ['ot_id','tipo_soldadura_id','eps', 'pqr'];
+   protected $fillable = ['ot_id','obra','tipo_soldadura_id','eps', 'pqr'];
 
 
    public function tipoSoldadura(){

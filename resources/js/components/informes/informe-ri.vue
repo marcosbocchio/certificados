@@ -35,13 +35,13 @@
                         <div class="col-md-2">
                             <div class="form-group" >
                                 <div v-if="isGasoducto">
-                                    <label for="ot_tipo_soldadura">Tipo Sol *</label> 
-                                    <v-select v-model="ot_tipo_soldadura" label="codigo" :options="ot_tipo_soldaduras" id="ot_tipo_soldadura" @input="cambioOtTipoSoldadura" :disabled="(!isGasoducto)"></v-select>   
+                                    <label for="ot_obra_tipo_soldaduras">Tipo Sol *</label> 
+                                    <v-select v-model="ot_tipo_soldadura" label="codigo" :options="ot_obra_tipo_soldaduras" id="ot_obra_tipo_soldaduras" @input="cambioOtTipoSoldadura" :disabled="(!isGasoducto || !obra)"></v-select>   
 
                                 </div>
                                 <div v-else>
                                      <label >Tipo Sol</label> 
-                                    <v-select  :options="[]":disabled="(!isGasoducto)"></v-select>   
+                                    <v-select  :options="[]" :disabled="(!isGasoducto)"></v-select>   
                                 </div>
                             </div>                            
                         </div>
@@ -122,7 +122,7 @@
                         <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="procedimientos_soldadura">Proc. Soldadura (EPS)*</label>
-                                <v-select v-model="ot_tipo_soldadura" label="eps" :options="ot_tipo_soldaduras" id="procedimientos_soldadura"  :disabled="(isGasoducto)"></v-select>  
+                                <v-select v-model="ot_tipo_soldadura" label="eps" :options="ot_obra_tipo_soldaduras" id="procedimientos_soldadura"  :disabled="(isGasoducto)"></v-select>  
                             </div>                            
                         </div>  
 
@@ -131,7 +131,7 @@
                          <div class="col-md-3">                       
                             <div class="form-group" >
                                 <label for="pqr">PQR</label>
-                                <v-select v-model="ot_tipo_soldadura" label="pqr" :options="ot_tipo_soldaduras" id="pqr"  :disabled="(isGasoducto)"></v-select>  
+                                <v-select v-model="ot_tipo_soldadura" label="pqr" :options="ot_obra_tipo_soldaduras" id="pqr"  :disabled="(isGasoducto)"></v-select>  
                            
                             </div>         
                         </div>  
@@ -794,7 +794,7 @@ export default {
                     toastr.options = toastrDefault;
                 }
         });
-        this.$store.dispatch('loadOtTipoSoldaduras', this.otdata.id);
+        this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.obra });
         this.$store.dispatch('loadMateriales');
         this.$store.dispatch('loadDiametros');
         this.$store.dispatch('loadInternoEquipos',{ 'metodo' : this.metodo, 'activo_sn' : 1, 'tipo_penetrante' : 'null' });       
@@ -860,13 +860,13 @@ export default {
                    });
               }
 
-        }
-       
+        },
+
     },
 
     computed :{
 
-        ...mapState(['url','AppUrl','ot_tipo_soldaduras','materiales','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','ejecutor_ensayos','interno_equipos','fuentePorInterno','curie']),
+        ...mapState(['url','AppUrl','ot_obra_tipo_soldaduras','materiales','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','ejecutor_ensayos','interno_equipos','fuentePorInterno','curie']),
 
            HabilitarClonarPasadas(){
 
@@ -942,6 +942,8 @@ export default {
         setObra : function(value){
 
             this.obra = value;
+            this.ot_tipo_soldadura='';
+            this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.obra });
         },
 
         cambiopTipoInforme : function(){

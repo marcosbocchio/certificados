@@ -85,14 +85,14 @@
                         <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="procedimientos_soldadura">Proc. Soldadura (EPS) *</label>
-                                <v-select v-model="ot_tipo_soldadura" label="eps" :options="ot_tipo_soldaduras" id="procedimientos_soldadura"></v-select>  
+                                <v-select v-model="ot_tipo_soldadura" label="eps" :options="ot_obra_tipo_soldaduras" id="procedimientos_soldadura"></v-select>  
                             </div>                            
                         </div> 
 
                          <div class="col-md-3">                       
                             <div class="form-group" >
                                 <label for="pqr">PQR</label>
-                                <v-select v-model="ot_tipo_soldadura" label="pqr" :options="ot_tipo_soldaduras" id="pqr"></v-select>  
+                                <v-select v-model="ot_tipo_soldadura" label="pqr" :options="ot_obra_tipo_soldaduras" id="pqr"></v-select>  
                             </div>         
                         </div> 
 
@@ -638,7 +638,7 @@ export default {
     created : function() {
 
       this.getCliente();  
-      this.$store.dispatch('loadOtTipoSoldaduras', this.otdata.id);
+      this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.obra });
       this.$store.dispatch('loadMateriales');
       this.$store.dispatch('loadDiametros');
       this.getTecnicas();
@@ -669,7 +669,7 @@ export default {
 
     computed :{
 
-        ...mapState(['url','AppUrl','materiales','ot_tipo_soldaduras','diametros','espesores','procedimientos','norma_evaluaciones','particulas','norma_ensayos','iluminaciones','ejecutor_ensayos','interno_equipos','instrumentos_mediciones']),     
+        ...mapState(['url','AppUrl','materiales','ot_obra_tipo_soldaduras','diametros','espesores','procedimientos','norma_evaluaciones','particulas','norma_ensayos','iluminaciones','ejecutor_ensayos','interno_equipos','instrumentos_mediciones']),     
 
         numero_inf_code : function()  {
 
@@ -758,6 +758,9 @@ export default {
         setObra : function(value){
 
             this.obra = value;
+            this.ot_tipo_soldadura='';
+            console.log(this.otdata.id,this.obra);
+            this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.obra });
         },
 
         getCliente : function(){
@@ -769,7 +772,6 @@ export default {
            
             });
         },
-
 
         getNumeroInforme:function(){            
            

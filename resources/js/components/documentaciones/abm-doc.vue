@@ -62,7 +62,7 @@
         <div class="clearfix"></div>    
 
        <div v-if="modelo=='ot_procedimientos_propios'">
-             <ot-tipoSoldaduras :ot_id_data="ot_id_data" ></ot-tipoSoldaduras> 
+             <ot-tipoSoldaduras :otdata="otdata" ></ot-tipoSoldaduras> 
        </div> 
        
 
@@ -228,9 +228,9 @@ export default {
             required : true,
             default : ''
           },
-          ot_id_data : {
-          type: Number,      
-           required: false
+          otdata : {
+            type: Object,      
+             required: false
           },
       },
 
@@ -320,7 +320,7 @@ export default {
 
          }else {
 
-            this.$store.dispatch('loadContarProcedimientos',this.ot_id_data);
+            this.$store.dispatch('loadContarProcedimientos',this.otdata.id);
 
          }
      },
@@ -404,9 +404,9 @@ export default {
         }
         if(this.newRegistro.tipo == 'PROCEDIMIENTO'){
 
-            var urlRegistros = this.modelo + '/ot/' + this.ot_id_data + '?page='+ page + '&search=' + this.search;  
+            var urlRegistros = this.modelo + '/ot/' + this.otdata.id + '?page='+ page + '&search=' + this.search;  
            
-            this.$store.dispatch('loadContarProcedimientos',this.ot_id_data);
+            this.$store.dispatch('loadContarProcedimientos',this.otdata.id);
 
         }else{
 
@@ -565,7 +565,7 @@ export default {
             'metodo_ensayo'      : this.metodo_ensayo,   
             'fecha_caducidad'    : this.newRegistro.fecha_caducidad,
             'path'               : this.newRegistro.path,
-            'ot_id'              : this.ot_id_data,   
+            'ot_id'              : this.otdata.id,   
                 
 
             }).then(response => {              
@@ -608,7 +608,7 @@ export default {
             'metodo_ensayo'      : this.metodo_ensayo,   
             'fecha_caducidad'    : this.newRegistro.fecha_caducidad,
             'path'               : this.newRegistro.path,
-            'ot_id'              : this.ot_id_data,         
+            'ot_id'              : this.otdata.id,         
                 
 
             }).then(response => {              

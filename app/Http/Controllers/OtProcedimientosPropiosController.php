@@ -37,7 +37,7 @@ class OtProcedimientosPropiosController extends Controller
         $ot_procedimientos = $this->ProcedimientosPropiosOt($ot_id);
  
 
-        return view('ot-procedimientos.index',compact('ot_id',
+        return view('ot-procedimientos.index',compact('ot',
                                         'ot_procedimientos',                                   
                                         'user',                                       
                                         'header_titulo',

@@ -17,6 +17,15 @@
                     <v-select v-model="tipo_soldadura" label="codigo" :options="tipo_soldaduras"></v-select>
                 </div>
             </div>   
+
+        <div class="col-md-2">
+          <div class="form-group">
+            <label for="obra">Obra Nº </label>
+
+            <input v-model="obra" type="text" class="form-control" id="obra" placeholder="" maxlength = "8" :disabled="otdata.obra">
+          </div>
+        </div>   
+
             <div class="col-md-3">
                 <div class="form-group" >
                     <label for="procedimientos_soldadura">Proc. Soldadura (EPS)*</label>
@@ -48,14 +57,16 @@
                     <thead>
                     <tr>
                         <th  class="col-md-2">TIPO SOL.</th>
-                        <th class="col-md-5">EPS</th>
-                        <th class="col-md-5">PQR</th>                   
+                        <th class="col-md-2">OBRA</th>
+                        <th class="col-md-4">EPS</th>
+                        <th class="col-md-4">PQR</th>                   
                         <th>&nbsp;</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr v-for="(item,k) in TablaTipoSoldaduras" :key="k">           
                         <td>{{ item.tipo_soldadura.codigo}} </td>     
+                         <td>{{ item.obra}} </td>
                         <td>{{ item.eps}} </td>
                         <td>{{ item.pqr }}</td>
                         <td style="text-align:center"> <i class="fa fa-minus-circle" @click="removeTipoSoldadura(k)" ></i></td>   
@@ -79,9 +90,9 @@
    
     props : {
 
-     ot_id_data : {
+     otdata : {
 
-        type: Number,      
+        type: Object,      
         required: true
 
        },       
@@ -92,6 +103,7 @@
       tipo_soldaduras: [],
       tipo_soldadura : {},
       TablaTipoSoldaduras : [],
+      obra:this.otdata.obra,
       eps:'',
       pqr :'',
     }
@@ -101,7 +113,7 @@
     created : function() {
 
     this.getTipoSoldaduras();
-    this.$store.dispatch('loadOtTipoSoldaduras',this.ot_id_data).then(response => {
+    this.$store.dispatch('loadOtTipoSoldaduras',this.otdata.id).then(response => {
 
         this.TablaTipoSoldaduras = this.ot_tipo_soldaduras;
 
@@ -130,21 +142,30 @@
 
     addTipoSoldaduras: function(){
 
-        if(jQuery.isEmptyObject(this.tipo_soldadura)){
+        if(jQuery.isEmptyObject(this.tipo_soldadura) || jQuery.isEmptyObject(this.obra)){
 
             return;
         }
 
-        let index = this.TablaTipoSoldaduras.findIndex(elemento => elemento.tipo_soldadura.id == this.tipo_soldadura.id);
+        let Existe = false;
+        this.TablaTipoSoldaduras.forEach(function(item){
 
-        if(index != -1){
+            if(item.tipo_soldadura.id == this.tipo_soldadura.id && item.obra == this.obra){
+                Existe = true;
+            }
+        }.bind(this))
+   
 
-            toastr.error('El tipo soldadura ya existe en la ot'); 
+        if(Existe){
+
+            toastr.error('El tipo soldadura / Obra ya existe en la ot'); 
             return;
+
          }
 
         this.TablaTipoSoldaduras.push({ 
-
+            
+            obra:this.obra,
             tipo_soldadura : this.tipo_soldadura,
             eps:this.eps,
             pqr : this.pqr,
@@ -154,6 +175,7 @@
         this.tipo_soldadura={};
         this.eps = '';
         this.pqr = '';
+        this.obra = this.otdata.obra;
 
     },
 
@@ -171,7 +193,7 @@
                         
             axios.post(urlRegistros, {   
                 
-            ot_id: this.ot_id_data,
+            ot: this.otdata,
             tipo_soldaduras : this.TablaTipoSoldaduras,
 
             }).then(response => {            

@@ -204,6 +204,7 @@ Route::group(['middleware' => 'auth:api'], function()
 
     Route::resource('ot_tipo_soldaduras','OtTipoSoldadurasController');
     Route::get('ot_tipo_soldaduras/ot/{id}','OtTipoSoldadurasController@TipoSoldadurasOt');
+    Route::get('ot_tipo_soldaduras/ot/{id}/obra/{obra?}','OtTipoSoldadurasController@TipoSoldadurasOtObra');
     Route::get('ot_tipo_soldaduras/ot/{id}/epss','OtTipoSoldadurasController@EpssOt');
     Route::get('ot_tipo_soldaduras/ot/{id}/pqrs','OtTipoSoldadurasController@PqrsOt');
 

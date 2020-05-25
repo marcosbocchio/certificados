@@ -85,14 +85,14 @@
                         <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="procedimientos_soldadura">Proc. Soldadura (EPS) *</label>
-                                <v-select v-model="ot_tipo_soldadura" label="eps" :options="ot_tipo_soldaduras" id="procedimientos_soldadura"></v-select>  
+                                <v-select v-model="ot_tipo_soldadura" label="eps" :options="ot_obra_tipo_soldaduras" id="procedimientos_soldadura"></v-select>  
                             </div>                            
                         </div>  
 
                         <div class="col-md-3">                       
                             <div class="form-group" >
                                 <label for="pqr">PQR</label>
-                                <v-select v-model="ot_tipo_soldadura" label="pqr" :options="ot_tipo_soldaduras" id="pqr"></v-select>  
+                                <v-select v-model="ot_tipo_soldadura" label="pqr" :options="ot_obra_tipo_soldaduras" id="pqr"></v-select>  
                             </div>         
                         </div>                         
                         
@@ -581,7 +581,7 @@ data() {return {
     created :  function() {
 
         this.$store.dispatch('loadMateriales');
-        this.$store.dispatch('loadOtTipoSoldaduras', this.otdata.id);
+        this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.obra });
         this.$store.dispatch('loadDiametros');
         this.$store.dispatch('loadProcedimietosOtMetodo',  
         { 'ot_id' : this.otdata.id, 'metodo' : this.metodo }).then(response =>{ 
@@ -619,7 +619,7 @@ data() {return {
 
     computed :{
 
-        ...mapState(['url','AppUrl','materiales','ot_tipo_soldaduras','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','interno_equipos','iluminaciones','penetrantes_tipo_liquido','reveladores_tipo_liquido','removedores_tipo_liquido','ejecutor_ensayos','fuentePorInterno']),     
+        ...mapState(['url','AppUrl','materiales','ot_obra_tipo_soldaduras','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','interno_equipos','iluminaciones','penetrantes_tipo_liquido','reveladores_tipo_liquido','removedores_tipo_liquido','ejecutor_ensayos','fuentePorInterno']),     
 
         numero_inf_code : function()  {
 
@@ -678,6 +678,8 @@ data() {return {
     setObra : function(value){
 
             this.obra = value;
+            this.ot_tipo_soldadura='';
+            this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.obra });
         },
 
      getNumeroInforme:function(){            

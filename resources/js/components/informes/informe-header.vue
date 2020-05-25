@@ -17,7 +17,7 @@
                 <div class="col-md-6">
                     <div class="form-group" >
                         <label for="obra">Obra N°</label>
-                        <input type="text" v-model="obra" class="form-control" id="obra" min="0" maxlength="8" :disabled="otdata.obra">
+                        <input type="text" v-model="obra" class="form-control" id="obra" min="0" maxlength="8" @change="inputObra" :disabled="otdata.obra">
                     </div>                            
                 </div>
                 <div class="col-md-6">
@@ -82,15 +82,6 @@ export default {
 
     },
 
-    watch :{
-
-      obra : function(val){
-        
-          this.$emit('set-obra',val)
-
-      }
-    },
-
     computed :{
 
         ...mapState(['url','AppUrl','obra_informe']),     
@@ -98,6 +89,11 @@ export default {
      },
 
     methods : {
+
+        inputObra :  function(){
+
+             this.$emit('set-obra',this.obra)
+        },
 
         setObra : function(){
           console.log('entro en set obra desde el refresh');      
