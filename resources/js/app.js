@@ -451,8 +451,8 @@ actions : {
 
         loadOtObraTipoSoldaduras({
           commit},payload) {
-          axios.defaults.baseURL = store.state.url ;
-          var urlRegistros = 'ot_tipo_soldaduras/ot/' + payload.ot_id +'/obra/' + payload.obra +'?api_token=' + Laravel.user.api_token;        
+          axios.defaults.baseURL = store.state.url ;  
+          var urlRegistros = 'ot_tipo_soldaduras/ot/' + payload.ot_id +'/obra/' + encodeURI(payload.obra) +'?api_token=' + Laravel.user.api_token;        
           return new Promise((resolve, reject) => { 
           axios.get(urlRegistros).then((response) => {
             console.log('estas son las ot_obras');

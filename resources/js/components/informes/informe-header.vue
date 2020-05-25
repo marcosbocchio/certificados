@@ -17,7 +17,7 @@
                 <div class="col-md-6">
                     <div class="form-group" >
                         <label for="obra">Obra N°</label>
-                        <input type="text" v-model="obra" class="form-control" id="obra" min="0" maxlength="8" @change="inputObra" :disabled="otdata.obra">
+                        <input type="text" v-model="obra" class="form-control" id="obra" min="0" maxlength="8" @input="inputObra" :disabled="otdata.obra">
                     </div>                            
                 </div>
                 <div class="col-md-6">
@@ -91,12 +91,15 @@ export default {
     methods : {
 
         inputObra :  function(){
-
+            
+            console.log('mando el inputobra',this.obra);
              this.$emit('set-obra',this.obra)
+             
         },
 
         setObra : function(){
-          console.log('entro en set obra desde el refresh');      
+
+           console.log('entro en set obra desde el refresh');      
            this.$forceUpdate();
            this.obra = ''; 
            if(this.editmode){
@@ -110,6 +113,7 @@ export default {
             }else{
 
                 this.obra =  this.otdata.obra
+                this.inputObra();
              
             }
              

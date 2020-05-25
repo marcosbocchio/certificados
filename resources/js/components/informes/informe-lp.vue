@@ -637,7 +637,8 @@ data() {return {
             if(this.editmode) {               
             
 
-               this.fecha   = this.informedata.fecha;            
+               this.fecha   = this.informedata.fecha;          
+               this.obra = this.informedata.obra;
                this.numero_inf = this.informedata.numero;
                this.componente = this.informedata.componente;
                this.ot_tipo_soldadura = this.ot_tipo_soldaduradata;
@@ -671,13 +672,18 @@ data() {return {
                this.getTipoLiquidos();
                this.$store.dispatch('loadInternoEquipos',{ 'metodo' : this.metodo, 'activo_sn' : 1, 'tipo_penetrante' : this.tipo_penetrante });
                this.setearTipoPenetrante();
+               this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.obra });
             }         
 
         },      
 
     setObra : function(value){
 
+            console.log('entro en el setobra del ri',this.obra);
+
             this.obra = value;
+
+           console.log('entro en el setobra del ri',this.obra);
             this.ot_tipo_soldadura='';
             this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.obra });
         },

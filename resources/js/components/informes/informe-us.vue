@@ -1137,6 +1137,7 @@ export default {
             
                this.fecha   = this.informedata.fecha;
                this.numero_inf = this.informedata.numero;
+               this.obra = this.informedata.obra;
                this.componente = this.informedata.componente;
                this.ot_tipo_soldadura = this.ot_tipo_soldaduradata;
                this.plano_isom = this.informedata.plano_isom;
@@ -1169,13 +1170,18 @@ export default {
                this.Tabla_us_pa = this.tabla_us_pa_data; 
                this.Tabla_me = this.tabla_me_data; 
                this.SetearBlockCalibraciones();
+               this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.obra });
             }
 
         },       
 
         setObra : function(value){
 
+            console.log('entro en el setobra del ri',this.obra);
+
             this.obra = value;
+
+           console.log('entro en el setobra del ri',this.obra);
             this.ot_tipo_soldadura='';
             this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.obra });
         },

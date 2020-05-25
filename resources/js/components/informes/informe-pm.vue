@@ -707,7 +707,8 @@ export default {
             if(this.editmode) {               
             
 
-               this.fecha   = this.informedata.fecha;            
+               this.fecha   = this.informedata.fecha;        
+               this.obra = this.informedata.obra;    
                this.numero_inf = this.informedata.numero;
                this.componente = this.informedata.componente;
                this.ot_tipo_soldadura = this.ot_tipo_soldaduradata;
@@ -728,16 +729,13 @@ export default {
                this.procedimiento_soldadura = this.informedata.procedimiento_soldadura;
                this.pqr = this.informedata.pqr;           
                this.metodo_trabajo_pm = this.metodo_trabajo_pmdata;    
-
-
                 this.$nextTick(function(){
                     
                 this.vehiculo = this.informe_pmdata.vehiculo;    
                 this.aditivo = this.informe_pmdata.aditivo;
 
-                })           
-
-
+                })      
+                
                this.concentracion  = this.informe_pmdata.concentracion;
                this.tipo_magnetizacion = this.tipo_magnetizacion_data;
                this.magnetizacion = this.magnetizacion_data;
@@ -751,15 +749,19 @@ export default {
                this.$store.dispatch('loadInstrumentosMediciones',{ 'metodo' : this.metodo, 'activo_sn' : 1, 'tipo_penetrante' : this.tipo_penetrante });
                this.getParticulas();
                this.iluminacion = this.iluminacion_data;
+               this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.obra });
             }         
 
         },   
         
         setObra : function(value){
 
+            console.log('entro en el setobra del ri',this.obra);
+
             this.obra = value;
+
+           console.log('entro en el setobra del ri',this.obra);
             this.ot_tipo_soldadura='';
-            console.log(this.otdata.id,this.obra);
             this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.obra });
         },
 
