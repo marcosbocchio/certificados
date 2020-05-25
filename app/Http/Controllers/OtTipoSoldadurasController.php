@@ -88,6 +88,7 @@ class OtTipoSoldadurasController extends Controller
 
     public function TipoSoldadurasOtObra($ot_id,$obra = null){
 
+        $obra = urldecode($obra);
         return OtTipoSoldaduras::where('ot_id',$ot_id)
                                 ->where('obra',$obra)    
                                 ->join('tipo_soldaduras','tipo_soldaduras.id','=','ot_tipo_soldaduras.tipo_soldadura_id')
