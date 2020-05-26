@@ -877,7 +877,7 @@ export default {
                   
                   if(index == -1){
                       this.reparacion_sn = false;
-                      toastr.error('No tipo soldura para Reparación no se encuentra definido',index); 
+                      toastr.error('No tipo soldura para Reparación no se encuentra definido'); 
 
                   }else{
 
@@ -969,11 +969,7 @@ export default {
 
         setObra : function(value){
 
-            console.log('entro en el setobra del ri',this.obra);
-
             this.obra = value;
-
-           console.log('entro en el setobra del ri',this.obra);
             this.ot_tipo_soldadura='';
             this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.obra });
         },
