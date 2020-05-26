@@ -36,11 +36,16 @@
                             <div class="form-group" >
                                 <div v-if="isGasoducto">
                                     <label for="ot_obra_tipo_soldaduras">Tipo Sol *</label> 
-                                    <v-select v-model="ot_tipo_soldadura" label="codigo" :options="ot_obra_tipo_soldaduras" id="ot_obra_tipo_soldaduras" @input="cambioOtTipoSoldadura" :disabled="(!isGasoducto || !obra)"></v-select>   
+
+                                 <input type="checkbox" id="reparacion" v-model="reparacion_sn" style="float:right"> 
+                                 <label for="tipo" style="float:right;margin-right: 5px;">Reparación</label>   
+
+                                    <v-select v-model="ot_tipo_soldadura" label="codigo" :options="ot_obra_tipo_soldaduras" id="ot_obra_tipo_soldaduras" @input="cambioOtTipoSoldadura" :disabled="(!isGasoducto || !obra || this.reparacion_sn)"></v-select>   
 
                                 </div>
                                 <div v-else>
-                                     <label >Tipo Sol</label> 
+                                     <label >Tipo Sol</label>  
+                                    
                                     <v-select  :options="[]" :disabled="(!isGasoducto)"></v-select>   
                                 </div>
                             </div>                            
@@ -703,6 +708,8 @@ export default {
             fullPage: false,         
 
            // Formulario encabezado
+
+            reparacion_sn:false,
             obra:'',
             fecha: moment(new Date()).format('YYYY-MM-DD'),
             numero_inf:'',
@@ -861,6 +868,26 @@ export default {
               }
 
         },
+
+        reparacion_sn : function(val){
+              
+             let index = this.ot_obra_tipo_soldaduras.findIndex(elemento => elemento.tipo_soldadura.codigo  == 'R' );
+
+              if(val){
+                  
+                  if(index == -1){
+                      this.reparacion_sn = false;
+                      toastr.error('No tipo soldura para Reparación no se encuentra definido',index); 
+
+                  }else{
+
+                      this.ot_tipo_soldadura = this.ot_obra_tipo_soldaduras[index];
+
+                  }
+
+              }
+
+        }
 
     },
 
