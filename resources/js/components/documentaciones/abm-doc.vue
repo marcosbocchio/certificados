@@ -565,7 +565,7 @@ export default {
             'metodo_ensayo'      : this.metodo_ensayo,   
             'fecha_caducidad'    : this.newRegistro.fecha_caducidad,
             'path'               : this.newRegistro.path,
-            'ot_id'              : this.otdata.id,   
+            'ot'              : this.otdata,   
                 
 
             }).then(response => {              
@@ -608,7 +608,7 @@ export default {
             'metodo_ensayo'      : this.metodo_ensayo,   
             'fecha_caducidad'    : this.newRegistro.fecha_caducidad,
             'path'               : this.newRegistro.path,
-            'ot_id'              : this.otdata.id,         
+            'ot'                 : this.otdata,         
                 
 
             }).then(response => {              

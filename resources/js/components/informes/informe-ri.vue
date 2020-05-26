@@ -38,7 +38,7 @@
                                     <label for="ot_obra_tipo_soldaduras">Tipo Sol *</label> 
 
                                  <input type="checkbox" id="reparacion" v-model="reparacion_sn" style="float:right"> 
-                                 <label for="tipo" style="float:right;margin-right: 5px;">Reparación</label>   
+                                 <label for="tipo" style="float:right;margin-right: 5px;">R</label>   
 
                                     <v-select v-model="ot_tipo_soldadura" label="codigo" :options="ot_obra_tipo_soldaduras" id="ot_obra_tipo_soldaduras" @input="cambioOtTipoSoldadura" :disabled="(!isGasoducto || !obra || this.reparacion_sn)"></v-select>   
 
@@ -327,6 +327,13 @@
                     
                    <div class="col-md-2">                       
                         <div class="form-group" >                            
+                            <label for="densidad">Densidad</label>
+                            <input type="number" v-model="densidad" class="form-control" id="densidad" step="0.1">                           
+                        </div>     
+                    </div>   
+
+                   <div class="col-md-2">                       
+                        <div class="form-group" >                            
                         <label for="posicion">Posición</label>
                         <input type="text" v-model="posicion" class="form-control" id="posicion">                           
                         </div>     
@@ -350,17 +357,18 @@
                                 <table class="table table-hover table-striped table-bordered">
                                     <thead>
                                         <tr>                                  
-                                            <th class="col-md-1">ELEMENTO</th>                                       
+                                            <th class="col-md-1">ELEMENTO</th>  
+                                            <th class="col-md-1">DENSIDAD</th>                                       
                                             <th class="col-md-1">POS</th>  
                                             <th class="col-md-1">ACEPTABLE</th>    
-                                            <th class="col-md-1">OBSERVACIÓN</th>        
-                                                                        
-                                            <th colspan="1" class="col-md-1">&nbsp;</th>
+                                            <th class="col-md-1">OBSERVACIÓN</th>                                                                            
+                                            <th class="col-md-1">&nbsp;</th>
                                         </tr>
                                     </thead>                         
                                     <tbody>
                                         <tr v-for="(FIlaTabla,k) in (TablaDetalle)" :key="k" @click="selectPosDetalle(k)" :class="{selected: indexDetalle === k}" class="pointer">                         
-                                            <td>{{ FIlaTabla.junta }}</td>                                      
+                                            <td>{{ FIlaTabla.junta }}</td>   
+                                            <td>{{ FIlaTabla.densidad }}</td>                                   
                                             <td>{{ FIlaTabla.posicion }} </td>   
                                             <td> <input type="checkbox" id="checkbox" v-model="TablaDetalle[k].aceptable_sn">  </td>                                 
                                             <td>
@@ -410,11 +418,19 @@
                                 </v-select>                
                             </div>   
                         </div> 
+
                         <div class="col-md-2">                       
                             <div class="form-group" >                            
                                 <label for="posicionPlacaGosaducto">Posición Indicación</label>
-                                <input type="text" v-model="posicionPlacaGosaducto" class="form-control" id="posicionPlacaGosaducto" placeholder="XXX / XXX-XXX" :disabled="(!TablaDetalle.length)" maxlength="7">                           
+                                <input type="text" v-model="posicionPlacaGosaducto" class="form-control" id="posicionPlacaGosaducto" placeholder="XXX-XXX" :disabled="(!TablaDetalle.length)" maxlength="7">                           
                             </div>     
+                        </div>  
+
+                        <div class="col-md-3">
+                            <div class="form-group" >
+                                <label for="defecto_sector">Sector</label>
+                                <v-select v-model="defecto_sector" label="defecto_sector" :options="['RAIZ','RELLENO','SOBREMONTA']" id="defecto_sector"  :disabled="(!posicionPlacaGosaducto)"></v-select>  
+                            </div>                            
                         </div>    
                           
                         <div class="col-md-1"> 
@@ -436,10 +452,11 @@
                                     <table class="table table-hover table-striped table-bordered">
                                         <thead>
                                             <tr>
-                                                <th style="width:90px;">CÓDIGO</th>                                                                                  
-                                                <th style="width:250px;">DESCRIPCIÓN</th>
-                                                <th style="width:90px;">POSICIÓN</th>                                                                 
-                                                <th style="width:30px;" colspan="2">&nbsp;</th>
+                                                <th class="col-md-1">CÓDIGO</th>                                                                                  
+                                                <th class="col-md-3">DESCRIPCIÓN</th>
+                                                <th class="col-md-1">POSICIÓN</th>     
+                                                <th class="col-md-1">SECTOR</th>                                                            
+                                                <th class="col-md-1">&nbsp;</th>
                                             </tr>
                                         </thead>                         
                                         <tbody>
@@ -447,20 +464,21 @@
                                                 <td>{{ defectoPasada.codigo }}</td>    
                                                 <td>{{ defectoPasada.descripcion }}</td>   
                                                 <td>{{ defectoPasada.posicion }}</td>              
-                                            
+                                                <td>{{ defectoPasada.defecto_sector }}</td>   
                                                 <td>
                                                     <a  @click="RemoveDefectos(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a> 
                                                 </td> 
                                             </tr>
                                         </tbody>
                                     </table>
-                                    </div>
+                                </div>
                             </div>                                
                          </div>
-                       </div> 
-                      </div>                     
+                    </div> 
+                  </div>       
 
-                <!-- PASADAS RI -->
+
+               <!-- PASADAS RI -->
                <div class="box box-custom-enod">
                    <div class="box-header with-border">
                         <h3 class="box-title">PASADAS</h3>
@@ -469,10 +487,19 @@
                             </button>                       
                         </div>
                     </div>
+
                 <div class="box-body">
+
+                    <div class="col-md-3">
+                        <div class="form-group" >
+                            <label for="elemento_pasadas">Elemento</label>
+                            <v-select v-model="elemento_pasada" :options="elemento_pasadas" id="defecto_sector"></v-select>  
+                        </div>                            
+                    </div>   
+
                     <div class="col-md-2">
                         <div class="form-group" >                            
-                            <label for="pasada">N° Pasada</label>
+                            <label for="Elemento">N° Pasada</label>
                             <input type="number" v-model="pasada" class="form-control" id="pasada" :disabled="(!isGasoducto || !TablaDetalle.length)">                           
                         </div>     
                     </div>
@@ -509,7 +536,8 @@
                                 <span class="upSelect">{{ option.nombre }} </span> <br> 
                                 <span class="downSelect"> {{ option.codigo }} </span>
                             </template>
-                        </v-select>                    
+                        </v-select>   
+
                     </div>  
                     
                      <div class="col-md-2"> 
@@ -519,9 +547,11 @@
                             <button type="button" @click="getSoldadores()" title="Recargar Cuños"><app-icon img="refresh" color="black"></app-icon></button>     
                           </span>
                     </div>
+
                     <div class="form-group">
                         &nbsp;
                     </div>
+
                     <div v-if="TablaDetalle.length && TablaDetalle[indexDetalle].pasadas.length">
                            <div class="col-md-12">
                                 <div class="table-responsive">
@@ -566,9 +596,9 @@
                   <button class="btn btn-primary" type="submit">Guardar</button>   
            </form>          
          
-                <loading :active.sync="isLoading"           
-                        :is-full-page="fullPage">
-                </loading>  
+            <loading :active.sync="isLoading"           
+                    :is-full-page="fullPage">
+            </loading>  
           
        </div>
    </div>
@@ -753,6 +783,7 @@ export default {
            // Formulario detalle
             pk:'',
             pasada:'',
+            densidad:'',
             junta:'',
             soldador1:'',
             soldador2:'',
@@ -762,6 +793,7 @@ export default {
             defectoRiPlanta:'',
             defectoRiGasoducto:'',
             posicionPlacaGosaducto:'',
+            defecto_sector:'',
             indexDetalle:0,
             indexPasada:0,
 
@@ -784,6 +816,8 @@ export default {
              posiciones:[],
              defectosRiPlanta:[],
              defectosRiGasoducto:[],
+             elemento_pasadas:[],
+             elemento_pasada:'',
              TablaDetalle:[],   
              TablaPasadas:[],                     
              junta_posicion_selected : '',
@@ -877,7 +911,10 @@ export default {
                   
                   if(index == -1){
                       this.reparacion_sn = false;
-                      toastr.error('No tipo soldura para Reparación no se encuentra definido'); 
+                      this.reparacion_sn = false;
+                      this.reparacion_sn = false;
+                      toastr.error('No tipo soldura para Reparación no se encuentra definido');                          
+
 
                   }else{
 
@@ -1194,16 +1231,32 @@ export default {
 
                  toastr.error('Campo posición es obligatorio'); 
                   return;
-            }          
+            }     
+            
+            let aux_junta = this.reparacion_sn ? this.junta + '-R' :  this.junta;
+            
+            this.addElementosPasadas(aux_junta);
 
             this.TablaDetalle.push({        
-                junta: this.junta,           
+                junta: aux_junta,           
+                densidad : this.densidad,
                 posicion : (typeof(posicion) !== 'undefined') ? posicion : this.posicion, 
                 aceptable_sn : 1 ,
                 observacion : '',
                 pasadas : [],
                 defectos : []  
-            });            
+            });      
+            
+        },
+
+        addElementosPasadas : function(aux_junta){
+
+            let index = this.TablaDetalle.findIndex(elemento => elemento.junta == aux_junta);            
+            
+            if(index == -1){
+
+                this.elemento_pasadas.push(aux_junta);
+            }
         },
 
         AddPasadas () {   
@@ -1257,13 +1310,12 @@ export default {
 
             if(this.posicionPlacaGosaducto !=''){
 
-                let exp_posicion_1 = /^[0-9]{1,3}$/ ;
-                let exp_posicion_2 = /^[0-9]{1,3}-[0-9]{1,3}$/ ;
+                let exp_posicion = /^[0-9]{1,3}-[0-9]{1,3}$/ ;
 
-                if(!exp_posicion_1.test(this.posicionPlacaGosaducto) && !exp_posicion_2.test(this.posicionPlacaGosaducto)){
+                if(!exp_posicion.test(this.posicionPlacaGosaducto)){
 
-                 toastr.error('El formato ingresado no es válido'); 
-                 return;
+                    toastr.error('El formato ingresado no es válido'); 
+                    return;
 
                 }
 
@@ -1271,6 +1323,7 @@ export default {
     
             this.TablaDetalle[this.indexDetalle].defectos.push({ 
                 codigo: this.defectoRiPlanta.codigo,
+                defecto_sector: this.defecto_sector,
                 descripcion: this.defectoRiPlanta.descripcion,
                 id : this.defectoRiPlanta.id,    
                 posicion : this.posicionPlacaGosaducto,                
@@ -1282,7 +1335,8 @@ export default {
                 this.TablaDetalle[this.indexDetalle].aceptable_sn = false;
             }
             
-            },
+         },
+
         RemoveDetalle(index) {
 
            this.indexDetalle = 0;   
@@ -1297,7 +1351,6 @@ export default {
 
         RemoveDefectos(index) {            
             
-            console.log('----entro en removeDefectos----');
             this.TablaDetalle[this.indexDetalle].defectos.splice(index, 1);   
 
             let aceptable = true;

@@ -40,7 +40,7 @@ class DocumentacionesRepository extends BaseRepository
           if ($request->tipo == 'PROCEDIMIENTO'){
 
             $ot_procedimieto_propio = new OtProcedimientosPropios;
-            (new \App\Http\Controllers\OtProcedimientosPropiosController)->store($documento->id,$ot_procedimieto_propio,$request->ot_id);
+            (new \App\Http\Controllers\OtProcedimientosPropiosController)->store($documento->id,$ot_procedimieto_propio,$request->ot['id']);
           }
 
           if ($request->tipo == 'EQUIPO'){
@@ -92,7 +92,7 @@ class DocumentacionesRepository extends BaseRepository
           if ($request->tipo == 'PROCEDIMIENTO'){
 
             $ot_procedimieto_propio = OtProcedimientosPropios::where('documentacion_id',$documento->id)->first();
-            (new \App\Http\Controllers\OtProcedimientosPropiosController)->store($documento->id,$ot_procedimieto_propio,$request->ot_id); 
+            (new \App\Http\Controllers\OtProcedimientosPropiosController)->store($documento->id,$ot_procedimieto_propio,$request->ot['id']); 
           }
 
           if ($request->tipo == 'EQUIPO'){
