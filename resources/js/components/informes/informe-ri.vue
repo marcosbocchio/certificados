@@ -37,7 +37,7 @@
                                 <div v-if="isGasoducto">
                                     <label for="ot_obra_tipo_soldaduras">Tipo Sol *</label> 
 
-                                 <input type="checkbox" id="reparacion_sn" v-model="reparacion_sn" :disabled="!ExisteEpsReparacion" style="float:right"> 
+                                 <input type="checkbox" id="reparacion_sn" v-model="reparacion_sn" :disabled="!ExisteEpsReparacion" @change="cambioReparacion_sn()" style="float:right"> 
                                  <label for="reparacion_sn" style="float:right;margin-right: 5px;">R</label>   
 
                                     <v-select v-model="ot_tipo_soldadura" label="codigo" :options="ot_obra_tipo_soldaduras_filter_R" id="ot_obra_tipo_soldaduras" @input="cambioOtTipoSoldadura" :disabled="(!isGasoducto || !obra )"></v-select>   
@@ -1123,30 +1123,21 @@ export default {
             this.isLoading =  false;
 
         },   
-        /*
-        cambioReparacion_sn : function(event){         
+      
+        cambioReparacion_sn : function(){      
 
-              alert(this.reparacion_sn);
-
-              if(!this.reparacion_sn){
-
-                  let index_ot_obra_tipo_soldaduras = this.ot_obra_tipo_soldaduras.findIndex(elemento => elemento.tipo_soldadura.codigo  == 'R' );
+              if(this.reparacion_sn){
                   
-                  if(index == -1){
+                  if(this.index_ot_obra_tipo_soldaduras != -1){               
 
-                      toastr.error('EPS no definido para reparación.');  
-                      this.reparacion_sn = false;
-                
-                  }else{
-
-                      this.ot_tipo_soldadura_r = this.ot_obra_tipo_soldaduras[index];
+                      this.ot_tipo_soldadura_r = this.ot_obra_tipo_soldaduras[this.index_ot_obra_tipo_soldaduras];
                       this.getElementosReparacion();
 
                   }
 
               }           
         },
-*/
+
         setObra : function(value){
 
             this.obra = value;
