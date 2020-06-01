@@ -37,10 +37,10 @@
                                 <div v-if="isGasoducto">
                                     <label for="ot_obra_tipo_soldaduras">Tipo Sol *</label> 
 
-                                 <input type="checkbox" id="reparacion" v-model="reparacion_sn" style="float:right"> 
-                                 <label for="tipo" style="float:right;margin-right: 5px;">R</label>   
+                                 <input type="checkbox" id="reparacion_sn" v-model="reparacion_sn" :disabled="!ExisteEpsReparacion" style="float:right"> 
+                                 <label for="reparacion_sn" style="float:right;margin-right: 5px;">R</label>   
 
-                                    <v-select v-model="ot_tipo_soldadura" label="codigo" :options="ot_obra_tipo_soldaduras" id="ot_obra_tipo_soldaduras" @input="cambioOtTipoSoldadura" :disabled="(!isGasoducto || !obra || this.reparacion_sn)"></v-select>   
+                                    <v-select v-model="ot_tipo_soldadura" label="codigo" :options="ot_obra_tipo_soldaduras_filter_R" id="ot_obra_tipo_soldaduras" @input="cambioOtTipoSoldadura" :disabled="(!isGasoducto || !obra )"></v-select>   
 
                                 </div>
                                 <div v-else>
@@ -123,23 +123,36 @@
                                 <input  type="number" class="form-control" v-model="espesor_chapa"  id="espesor_chapa" :disabled="!isChapa" step="0.1" > 
                              </div>                                      
                         </div>
+          
 
-                        <div class="col-md-3">
+                        <div v-if="!reparacion_sn" class="col-md-3">
                             <div class="form-group" >
                                 <label for="procedimientos_soldadura">Proc. Soldadura (EPS)*</label>
-                                <v-select v-model="ot_tipo_soldadura" label="eps" :options="ot_obra_tipo_soldaduras" id="procedimientos_soldadura"  :disabled="(isGasoducto)"></v-select>  
+                                <v-select v-model="ot_tipo_soldadura" label="eps" :options="ot_obra_tipo_soldaduras_filter_R" id="procedimientos_soldadura"  :disabled="(isGasoducto)"></v-select>  
                             </div>                            
                         </div>  
+                        <div v-else  class="col-md-3">
+                            <div class="form-group" >
+                                <label for="eps_r">Proc. Soldadura (EPS)*</label>
+                                 <input type="text" v-model="ot_tipo_soldadura_r.eps" class="form-control" id="eps_r" disabled>
+                            </div>                            
+                        </div>
 
                         <div class="clearfix"></div>
 
-                         <div class="col-md-3">                       
+                         <div v-if="!reparacion_sn" class="col-md-3">                       
                             <div class="form-group" >
                                 <label for="pqr">PQR</label>
-                                <v-select v-model="ot_tipo_soldadura" label="pqr" :options="ot_obra_tipo_soldaduras" id="pqr"  :disabled="(isGasoducto)"></v-select>  
-                           
+                                <v-select v-model="ot_tipo_soldadura" label="pqr" :options="ot_obra_tipo_soldaduras_filter_R" id="pqr"  :disabled="(isGasoducto)"></v-select>                             
                             </div>         
                         </div>  
+                        <div v-else  class="col-md-3">
+                            <div class="form-group" >
+                                <label for="pqr_r">PQR</label>
+                                 <input type="text" v-model="ot_tipo_soldadura_r.pqr" class="form-control" id="pqr_r" disabled>
+                            </div>                            
+                        </div>
+
 
                         <div class="col-md-3">                       
                             <div class="form-group">
@@ -198,8 +211,7 @@
                                 <label for="ma">mA</label>
                                 <input  type="text" class="form-control" v-model="ma" id="ma" :disabled="interno_equipo.interno_fuente"> 
                             </div>                             
-                        </div>                       
-                      
+                        </div>      
 
 
                         <div class="col-md-3">
@@ -287,8 +299,7 @@
                                 <label for="exposicion">N° Exposiciones *</label>
                                 <input type="number" v-model="exposicion" class="form-control" id="exposicion">
                             </div>         
-                        </div>                                            
-                    
+                        </div>                 
                         
                         <div class="col-md-3">
                             <div class="form-group" >
@@ -318,12 +329,21 @@
                     </div>
                 <div class="box-body">           
                   
-                    <div class="col-md-2">                      
+                <div v-if="!reparacion_sn" class="col-md-2">                      
+                    <div class="form-group" >
+                        <label for="junta">Elemento</label>
+                        <input type="text" v-model="junta" class="form-control" id="junta">
+                    </div>
+                </div>  
+                <div v-else>
+                    <div class="col-md-3">
                         <div class="form-group" >
-                            <label for="junta">Elemento</label>
-                            <input type="text" v-model="junta" class="form-control" id="junta">
-                        </div>
-                    </div>     
+                            <label for="juntas_reparacion">Elemento a Reparar</label>
+                            <v-select v-model="junta_reparacion" label="codigo" :options="juntas_reparacion" id="defecto_sector" ></v-select>  
+                        </div>                            
+                    </div>   
+                </div>
+
                     
                    <div class="col-md-2">                       
                         <div class="form-group" >                            
@@ -366,12 +386,12 @@
                                         </tr>
                                     </thead>                         
                                     <tbody>
-                                        <tr v-for="(FIlaTabla,k) in (TablaDetalle)" :key="k" @click="selectPosDetalle(k)" :class="{selected: indexDetalle === k}" class="pointer">                         
-                                            <td>{{ FIlaTabla.junta }}</td>   
-                                            <td>{{ FIlaTabla.densidad }}</td>                                   
-                                            <td>{{ FIlaTabla.posicion }} </td>   
-                                            <td> <input type="checkbox" id="checkbox" v-model="TablaDetalle[k].aceptable_sn">  </td>                                 
-                                            <td>
+                                        <tr v-for="(FIlaTabla,k) in (TablaDetalle)" :key="k" :class="{selected: indexDetalle === k}" class="pointer">                         
+                                            <td  @click="selectPosDetalle(k)">{{ FIlaTabla.junta }}</td>   
+                                            <td  @click="selectPosDetalle(k)">{{ FIlaTabla.densidad }}</td>                                   
+                                            <td  @click="selectPosDetalle(k)">{{ FIlaTabla.posicion }} </td>   
+                                            <td  @click="selectPosDetalle(k)"> <input type="checkbox" id="checkbox" v-model="TablaDetalle[k].aceptable_sn">  </td>                                 
+                                            <td  @click="selectPosDetalle(k)">
                                                 <div v-if="indexDetalle == k ">       
                                                 <input type="text" v-model="TablaDetalle[k].observacion" maxlength="50" size="60">        
                                                 </div>   
@@ -464,7 +484,7 @@
                                                 <td>{{ defectoPasada.codigo }}</td>    
                                                 <td>{{ defectoPasada.descripcion }}</td>   
                                                 <td>{{ defectoPasada.posicion }}</td>              
-                                                <td>{{ defectoPasada.defecto_sector }}</td>   
+                                                <td>{{ defectoPasada.pasada }}</td>   
                                                 <td>
                                                     <a  @click="RemoveDefectos(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a> 
                                                 </td> 
@@ -475,8 +495,7 @@
                             </div>                                
                          </div>
                     </div> 
-                  </div>       
-
+                  </div>   
 
                <!-- PASADAS RI -->
                <div class="box box-custom-enod">
@@ -490,7 +509,7 @@
 
                 <div class="box-body">
 
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <div class="form-group" >
                             <label for="elemento_pasadas">Elemento</label>
                             <v-select v-model="elemento_pasada" :options="elemento_pasadas" id="defecto_sector"></v-select>  
@@ -543,7 +562,9 @@
                      <div class="col-md-2"> 
                           <p>&nbsp;</p>
                           <span>       
-                            <button type="button" @click="AddPasadas()" title="Agregar Pasada"><app-icon img="plus-circle" color="black"></app-icon></button>        
+                            <button type="button" @click="AddPasadas()" title="Agregar Pasada"><app-icon img="plus-circle" color="black"></app-icon></button>   
+                            <button type="button"  @click="ModalClonarSoldadores()" title="Clonar Soldadores"><app-icon img="clone" color="black"></app-icon></button>
+                             <button type="button" @click="ModalImportarSoldadores()" title="Importar Soldadores"><app-icon img="file-excel-o" color="black"></app-icon></button>     
                             <button type="button" @click="getSoldadores()" title="Recargar Cuños"><app-icon img="refresh" color="black"></app-icon></button>     
                           </span>
                     </div>
@@ -552,29 +573,30 @@
                         &nbsp;
                     </div>
 
-                    <div v-if="TablaDetalle.length && TablaDetalle[indexDetalle].pasadas.length">
+                    <div v-if="TablaPasadas.length">
                            <div class="col-md-12">
                                 <div class="table-responsive">
                                     <table class="table table-hover table-striped table-bordered">
                                         <thead>
-                                            <tr>                                  
-                                                <th style="width:90px;">N° PASADA</th>                                  
-                                                <th style="width:120px;">CUÑO Z</th>
-                                                <th style="width:120px;">CUÑO L</th>
-                                                <th style="width:120px;">CUÑO P</th>                                                             
-                                                <th colspan="1" style="width:30px;">&nbsp;</th>
+                                            <tr>       
+                                                <th class="col-md-1">Elemento</th>                              
+                                                <th class="col-md-1">N° PASADA</th>                                  
+                                                <th class="col-md-2">CUÑO Z</th>
+                                                <th class="col-md-2">CUÑO L</th>
+                                                <th class="col-md-2">CUÑO P</th>                                                             
+                                                <th class="col-md-2">&nbsp;</th>
                                             </tr>
                                         </thead>                         
-                                        <tbody>
-                                            <tr v-for="(Pasada,k) in  ((TablaDetalle.length > 0) ? TablaDetalle[indexDetalle].pasadas : [])" :key="k" @click="selectPosPasada(k)" :class="{selected: indexPasada === k}">                                         
-                                                <td>{{ Pasada.pasada }}</td>                                            
-                                                <td>{{ Pasada.soldador1.codigo }} </td>
-                                                <td>{{ Pasada.soldador2.codigo }} </td>
-                                                <td>{{ Pasada.soldador3.codigo }} </td>                                          
-                                                <td> 
+                                        <tbody> 
+                                            <tr v-for="(Pasada,k) in  (TablaPasadas)" :key="k">    
+                                                <td v-if="Pasada.elemento_pasada == elemento_pasada">{{ Pasada.elemento_pasada }}</td>   
+                                                <td v-if="Pasada.elemento_pasada == elemento_pasada">{{ Pasada.pasada }}</td>                                            
+                                                <td v-if="Pasada.elemento_pasada == elemento_pasada">{{ Pasada.soldador1.codigo }} </td>
+                                                <td v-if="Pasada.elemento_pasada == elemento_pasada">{{ Pasada.soldador2.codigo }} </td>
+                                                <td v-if="Pasada.elemento_pasada == elemento_pasada">{{ Pasada.soldador3.codigo }} </td>                                          
+                                                <td v-if="Pasada.elemento_pasada == elemento_pasada"> 
                                                     <a  @click="RemovePasada(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a>
-                                                </td>          
-
+                                                </td>     
                                             </tr>
                                         </tbody>
                                     </table>
@@ -583,7 +605,7 @@
                         </div>
                   </div>  
                 </div>
-                
+
                 <div class="box box-custom-enod">
                     <div class="box-body">
                         <div class="form-group">
@@ -594,11 +616,76 @@
                 </div>                 
                
                   <button class="btn btn-primary" type="submit">Guardar</button>   
-           </form>          
+           </form>     
+
+        <div class="modal fade " tabindex="-1" role="dialog" id="modal-clonar" data-keyboard="false" data-backdrop="static" >
+            <div class="modal-dialog modal-md" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                      <h4>Clonar Soldadores</h4>
+                    </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 ">   
+                            <div class="form-group">
+                                <input type="checkbox" id="sel_todos" v-model="sel_todos_clonar" @click="SeleccionarTodosClonar" style="float:left">
+                                <label for="sel_todos" style="float:left;margin-left: 5px;">Seleccionar Todos</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 ">    
+                            <div class="form-group">
+
+                                <div v-for="(elemento,k) in elemento_pasadas" :key="k" >
+
+                                    <div v-if="elemento !=elemento_pasada" class="col-sm-4 col-xs-12">
+                                        <input type="checkbox" :id="elemento" :value="elemento"  v-model="elemento_pasadas_a_clonar" style="float:left"> 
+                                        <label :for="elemento" style="float:left;margin-left: 5px;">{{ elemento }}</label>         
+                                    </div>     
+                                </div>
+                            </div>
+                        </div>                    
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" @click="ClonarSoldadores">                     
+                        <i v-show="clonando_pasada" class="fa fa-spin fa-refresh"></i> Clonar
+                    </button>
+                </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->             
+
+
+        <div class="modal fade " tabindex="-1" role="dialog" id="modal-Importar-Soldadores" data-keyboard="false" data-backdrop="static" >
+            <div class="modal-dialog modal-md" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                      <h4>Importar Soldadores</h4>
+                    </div>
+                <div class="modal-body">
+                    <div class="row">                       
+
+                        <div class="col-md-12" style="margin-top: 15px;">    
+                            <div class="form-group">
+                                <input style="display: inline;" type="file" multiple="false" id="sheetjs-input" :accept="SheetJSFT"  @change="onchange"/>
+                                <label  v-show="importado_pasadas" class="fa fa-spin fa-refresh" for="sheetjs-input"></label>
+                            </div>
+                        </div>                    
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>                 
+                </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->  
          
-            <loading :active.sync="isLoading"           
-                    :is-full-page="fullPage">
-            </loading>  
+        <loading :active.sync="isLoading"           
+                :is-full-page="fullPage">
+        </loading>  
           
        </div>
    </div>
@@ -614,12 +701,14 @@ import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 import moment from 'moment';
 import { toastrInfo,toastrDefault } from '../toastrConfig';
+import { VueCsvImport } from 'vue-csv-import';
 
 export default {
 
     components: {
         
-      Loading
+      Loading,
+      VueCsvImport 
       
     },
 
@@ -728,6 +817,11 @@ export default {
       required : false
       }, 
 
+      pasada_juntas_data : {
+      type : [ Array ],  
+      required : false
+      }, 
+
 
     },
 
@@ -736,6 +830,10 @@ export default {
             errors:[], 
             isLoading: false,
             fullPage: false,         
+            SheetJSFT : [
+                "xlsx", "xlsb", "xlsm", "xls", "xml", "csv", "txt", "ods", "fods", "uos", "sylk", "dif", "dbf", "prn", "qpw", "123", "wb*", "wq*", "html", "htm"
+            ].map(function(x) { return "." + x; }).join(","),
+
 
            // Formulario encabezado
 
@@ -751,6 +849,7 @@ export default {
             procedimiento:{},           
             observaciones:'',
             ot_tipo_soldadura:'',
+            ot_tipo_soldadura_r:'',
             tipo_soldadura:'',
             material:'',
             material2:'',
@@ -777,7 +876,7 @@ export default {
             ejecutor_ensayo:'',
             tecnicas_grafico :'',          
             tecnica_distancia:'',
-           
+            index_ot_obra_tipo_soldaduras :-1,
            // Fin Formulario encabezado
 
            // Formulario detalle
@@ -785,6 +884,8 @@ export default {
             pasada:'',
             densidad:'',
             junta:'',
+            junta_reparacion:'',
+            juntas_reparacion:[],
             soldador1:'',
             soldador2:'',
             soldador3:'',
@@ -817,11 +918,17 @@ export default {
              defectosRiPlanta:[],
              defectosRiGasoducto:[],
              elemento_pasadas:[],
+             elemento_pasadas_a_clonar:[],
              elemento_pasada:'',
              TablaDetalle:[],   
              TablaPasadas:[],                     
              junta_posicion_selected : '',
-             clonando : false,             
+             clonando : false,     
+             clonando_pasada : false,        
+             importado_pasadas :  false,
+             parseCsv :[],
+             TablaImportada :[],
+             sel_todos_clonar: false,
              }},
 
     created : function(){       
@@ -835,7 +942,7 @@ export default {
                     toastr.options = toastrDefault;
                 }
         });
-        this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.obra });
+
         this.$store.dispatch('loadMateriales');
         this.$store.dispatch('loadDiametros');
         this.$store.dispatch('loadInternoEquipos',{ 'metodo' : this.metodo, 'activo_sn' : 1, 'tipo_penetrante' : 'null' });       
@@ -903,29 +1010,6 @@ export default {
 
         },
 
-        reparacion_sn : function(val){
-              
-             let index = this.ot_obra_tipo_soldaduras.findIndex(elemento => elemento.tipo_soldadura.codigo  == 'R' );
-
-              if(val){
-                  
-                  if(index == -1){
-                      this.reparacion_sn = false;
-                      this.reparacion_sn = false;
-                      this.reparacion_sn = false;
-                      toastr.error('No tipo soldura para Reparación no se encuentra definido');                          
-
-
-                  }else{
-
-                      this.ot_tipo_soldadura = this.ot_obra_tipo_soldaduras[index];
-
-                  }
-
-              }
-
-        }
-
     },
 
     computed :{
@@ -947,7 +1031,17 @@ export default {
                if(this.numero_inf)
 
                 return this.metodo + (this.numero_inf <10? '00' : this.numero_inf<100? '0' : '') + this.numero_inf ;
-        }
+            },
+
+            ot_obra_tipo_soldaduras_filter_R :function(){
+
+                return this.ot_obra_tipo_soldaduras.filter(item => item.codigo != 'R')
+            },
+
+            ExisteEpsReparacion : function(){
+
+                return (this.index_ot_obra_tipo_soldaduras != -1) ? true :  false;
+            }
        
      },
 
@@ -988,7 +1082,9 @@ export default {
                this.distancia_fuente_pelicula = this.informe_ridata.distancia_fuente_pelicula;
                this.ejecutor_ensayo = this.ejecutor_ensayodata;          
                this.TablaDetalle = this.detalledata,  
-               this.observaciones = this.informedata.observaciones 
+               this.TablaPasadas = this.pasada_juntas_data;
+               this.InicializarElementosPasadas();
+               this.observaciones = this.informedata.observaciones                
                this.tipo_soldadura = this.ot_tipo_soldadura ? (this.ot_tipo_soldadura.tipo_soldadura.codigo) : '';               
                if (this.interno_fuentedata.id != undefined){
 
@@ -998,17 +1094,53 @@ export default {
                    }); 
                }        
 
+                this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.informedata.obra }).then(res => {
+
+                    this.reparacion_sn = this.informe_ridata.reparacion_sn;
+                    this.index_ot_obra_tipo_soldaduras = this.ot_obra_tipo_soldaduras.findIndex(elemento => elemento.tipo_soldadura.codigo  == 'R' );
+
+                });
+
+            }else{
+
+                this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.obra }).then(res =>{
+                    this.index_ot_obra_tipo_soldaduras = this.ot_obra_tipo_soldaduras.findIndex(elemento => elemento.tipo_soldadura.codigo  == 'R' );
+                });
             }
 
             this.isLoading =  false;
 
-        },       
+        },   
+        /*
+        cambioReparacion_sn : function(event){         
 
+              alert(this.reparacion_sn);
+
+              if(!this.reparacion_sn){
+
+                  let index_ot_obra_tipo_soldaduras = this.ot_obra_tipo_soldaduras.findIndex(elemento => elemento.tipo_soldadura.codigo  == 'R' );
+                  
+                  if(index == -1){
+
+                      toastr.error('EPS no definido para reparación.');  
+                      this.reparacion_sn = false;
+                
+                  }else{
+
+                      this.ot_tipo_soldadura_r = this.ot_obra_tipo_soldaduras[index];
+                      this.getElementosReparacion();
+
+                  }
+
+              }           
+        },
+*/
         setObra : function(value){
 
             this.obra = value;
             this.ot_tipo_soldadura='';
             this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.obra });
+
         },
 
         cambiopTipoInforme : function(){
@@ -1016,32 +1148,45 @@ export default {
             this.pk ='' ;
             this.ot_tipo_soldadura='';
             this.cambioOtTipoSoldadura();
+
+        },
+
+        getElementosReparacion : function(){
+
+            axios.defaults.baseURL = this.url ;
+                var urlRegistros = 'informes_ri/elementos_reparacion/ot/' + this.otdata.id + '/km/' + this.pk + '?api_token=' + Laravel.user.api_token;         
+                axios.get(urlRegistros).then(response =>{
+                this.juntas_reparacion = response.data
+               
+                });    
+
         },
 
         getNumeroInforme:function(){            
            
-            if(!this.editmode) {
-           
+            if(!this.editmode) {           
 
-                    axios.defaults.baseURL = this.url ;
-                        var urlRegistros = 'informes/ot/' + this.otdata.id + '/metodo/' + this.metodo + '/generar-numero-informe'  + '?api_token=' + Laravel.user.api_token;         
-                        axios.get(urlRegistros).then(response =>{
-                        this.numero_inf_generado = response.data 
-                        
-                        if(this.numero_inf_generado.length){
+                axios.defaults.baseURL = this.url ;
+                var urlRegistros = 'informes/ot/' + this.otdata.id + '/metodo/' + this.metodo + '/generar-numero-informe'  + '?api_token=' + Laravel.user.api_token;         
+                axios.get(urlRegistros).then(response =>{
 
-                            this.numero_inf =  this.numero_inf_generado[0].numero_informe
-                        }else{
+                    this.numero_inf_generado = response.data 
+                    
+                    if(this.numero_inf_generado.length){
 
-                            this.numero_inf = 1;
-                        }
-                        
-                        
-                        });   
+                        this.numero_inf =  this.numero_inf_generado[0].numero_informe
+
+                    }else{
+
+                        this.numero_inf = 1;
+                    }                        
+                
+                });   
              }
         },           
 
         getEspesores : function(){
+
             this.espesor=''; 
             this.distancia_fuente_pelicula='';   
             this.tecnica ='';   
@@ -1089,15 +1234,14 @@ export default {
                 this.actividad = '';
             }
 
-
             this.resetInputsEquipos();
 
         },   
         
         resetInputsEquipos : function() {
                
-                this.kv = this.interno_equipo.voltaje;
-                this.ma = this.interno_equipo.amperaje;
+            this.kv = this.interno_equipo.voltaje;
+            this.ma = this.interno_equipo.amperaje;
 
         },
 
@@ -1150,7 +1294,6 @@ export default {
 
         },
 
-
         getEjecutorEnsayo: function(){
              
                 axios.defaults.baseURL = this.url ;
@@ -1158,9 +1301,7 @@ export default {
                 axios.get(urlRegistros).then(response =>{
                 this.ejecutor_ensayos = response.data
                 });
-              },
-
-        
+              },        
 
         resetDetalle : function(){
 
@@ -1179,11 +1320,11 @@ export default {
 
         //detalle
 
-        getSoldadores : function(){
+        async getSoldadores(){
 
                 axios.defaults.baseURL = this.url ;
                 var urlRegistros = 'ot_soldadores/ot/' + this.otdata.id + '?api_token=' + Laravel.user.api_token;        
-                axios.get(urlRegistros).then(response =>{
+                await axios.get(urlRegistros).then(response =>{
                 this.soldadores = response.data
                 });
              
@@ -1198,6 +1339,7 @@ export default {
                 });
              
         },
+
         getDefectosRiGasoducto : function(){
 
                 axios.defaults.baseURL = this.url ;
@@ -1215,26 +1357,31 @@ export default {
            
         },
 
-        selectPosPasada :function(index){
+        InicializarElementosPasadas : function(){
 
-            this.indexPasada = index ;
-           
+            this.detalledata.forEach(function(item) {
+
+                this.addElementosPasadas(item.junta);
+
+            }.bind(this));
+
         },
 
         AddDetalle (posicion) { 
             
-            if(this.junta == '' ){
+            if( (this.reparacion_sn && this.junta_reparacion == '') ||(!this.reparacion_sn && this.junta == '') ){
 
-                 toastr.error('Campo junta es obligatorio'); 
+                 toastr.error('Campo Elemento es obligatorio'); 
                  return;
+
             }else if(this.posicion == '' && this.clonando == false) {
 
                  toastr.error('Campo posición es obligatorio'); 
                   return;
             }     
             
-            let aux_junta = this.reparacion_sn ? this.junta + '-R' :  this.junta;
-            
+            let aux_junta = this.reparacion_sn ? this.junta_reparacion.codigo + 'R' :  this.junta;
+
             this.addElementosPasadas(aux_junta);
 
             this.TablaDetalle.push({        
@@ -1242,8 +1389,7 @@ export default {
                 densidad : this.densidad,
                 posicion : (typeof(posicion) !== 'undefined') ? posicion : this.posicion, 
                 aceptable_sn : 1 ,
-                observacion : '',
-                pasadas : [],
+                observacion : '',              
                 defectos : []  
             });      
             
@@ -1251,7 +1397,7 @@ export default {
 
         addElementosPasadas : function(aux_junta){
 
-            let index = this.TablaDetalle.findIndex(elemento => elemento.junta == aux_junta);            
+            let index = this.elemento_pasadas.findIndex(elemento => elemento == aux_junta);            
             
             if(index == -1){
 
@@ -1260,7 +1406,14 @@ export default {
         },
 
         AddPasadas () {   
-            
+
+            if(this.elemento_pasada == ''){
+              
+                toastr.error('Error :El elemento es obligatorio para ingresar la/s pasadas');       
+                return;
+               
+            }
+        /*
             if(this.formato == 'PLANTA'){
 
                 if(this.TablaDetalle[this.indexDetalle].pasadas.length == 1) {
@@ -1276,10 +1429,11 @@ export default {
                      return;
                 }
             }
-            
+      */     
             if(this.soldador1) {
 
-                this.TablaDetalle[this.indexDetalle].pasadas.push({ 
+                this.TablaPasadas.push({ 
+                    elemento_pasada : this.elemento_pasada,
                     pasada : this.pasada,
                     soldador1: this.soldador1,
                     soldador2: this.soldador2,     
@@ -1322,8 +1476,9 @@ export default {
             }
     
             this.TablaDetalle[this.indexDetalle].defectos.push({ 
+
                 codigo: this.defectoRiPlanta.codigo,
-                defecto_sector: this.defecto_sector,
+                pasada: this.defecto_sector,
                 descripcion: this.defectoRiPlanta.descripcion,
                 id : this.defectoRiPlanta.id,    
                 posicion : this.posicionPlacaGosaducto,                
@@ -1340,13 +1495,32 @@ export default {
         RemoveDetalle(index) {
 
            this.indexDetalle = 0;   
-           this.TablaDetalle.splice(index, 1);                  
+           let junta = this.TablaDetalle[index].junta; 
+           this.TablaDetalle.splice(index, 1);         
+
+           if(this.TablaDetalle.findIndex(elemento => elemento.junta == junta) == -1){                
+               
+               this.TablaPasadas = this.TablaPasadas.filter(function(item){
+                   
+                   return  item.elemento_pasada != junta;
+    
+                }); 
+            this.elemento_pasada = '';
+                
+            this.elemento_pasadas = this.elemento_pasadas.filter(function(item2){
+                
+                return  item2 != junta;
+
+            });
+          
+           }                 
+           
         },
 
         RemovePasada(index) {
 
             this.indexPasada = 0;   
-            this.TablaDetalle[this.indexDetalle].pasadas.splice(index, 1);                 
+            this.TablaPasadas.splice(index, 1);                 
         },
 
         RemoveDefectos(index) {            
@@ -1359,7 +1533,6 @@ export default {
 
                 if(defecto.posicion !=''){
 
-                    console.log('defecto:' + defecto.descripcion + '  posicion:' + defecto.posicion );
                     aceptable = false;                   
                 }
             })
@@ -1398,6 +1571,344 @@ export default {
             this.clonando = false;
         },
 
+        SeleccionarTodosClonar: function(){            
+
+            this.elemento_pasadas_a_clonar = [];
+
+            if(!this.sel_todos_clonar){
+
+                this.elemento_pasadas.forEach(function(item){
+    
+                    if(item != this.elemento_pasada){
+                        this.elemento_pasadas_a_clonar.push(item);
+                    }
+    
+                }.bind(this));
+
+            }
+        },
+
+        ModalClonarSoldadores: function(){
+            
+           this.elemento_pasadas_a_clonar = [];
+           this.sel_todos_clonar = false;
+
+           if(this.elemento_pasada){
+               $('#modal-clonar').modal('show');
+           }
+
+        },
+
+        ModalImportarSoldadores : function(){         
+      
+            document.getElementById("sheetjs-input").value = "";
+            $('#modal-Importar-Soldadores').modal('show');            
+
+        },
+
+        ClonarSoldadores : function(){
+
+            this.clonando_pasada = true;
+
+            /* Borro las pasadas de los elementos seleccionados que vamos a clonar*/
+
+            this.elemento_pasadas_a_clonar.forEach(function(item_a_clonar){
+
+               this.TablaPasadas = this.TablaPasadas.filter(function(item_tabla_pasada){
+
+                  return  item_tabla_pasada.elemento_pasada != item_a_clonar;
+                }) 
+
+            }.bind(this))      
+
+
+            let TablaAClonar = [];
+
+            this.TablaPasadas.forEach(function(item){
+
+                if(item.elemento_pasada == this.elemento_pasada){
+
+                    TablaAClonar.push(item);
+
+                }
+
+            }.bind(this))
+
+            console.log(TablaAClonar);
+
+            this.elemento_pasadas_a_clonar.forEach(function(item_a_clonar){
+
+                 TablaAClonar.forEach(function(item){
+                    
+                    this.TablaPasadas.push({ 
+
+                        elemento_pasada : item_a_clonar,
+                        pasada : item.pasada,
+                        soldador1 :  item.soldador1,
+                        soldador2 :  item.soldador2,
+                        soldador3 :  item.soldador3,
+            
+                    });
+
+
+                }.bind(this))
+
+            }.bind(this))
+
+           this.clonando_pasada = false;
+           $('#modal-clonar').modal('hide');
+
+        },
+
+		onchange: function(evt) {
+
+            this.importado_pasadas = true;
+			var file;
+			var files = evt.target.files;
+
+			if (!files || files.length == 0) return;
+
+			file = files[0];
+
+            var reader = new FileReader();
+
+			reader.onload = function (e) {
+				
+				var binary = "";
+				var bytes = new Uint8Array(e.target.result);
+				var length = bytes.byteLength;
+				for (var i = 0; i < length; i++) {
+					binary += String.fromCharCode(bytes[i]);
+				}
+			
+                var wb = XLSX.read(binary, {type: 'binary'});   		
+				var wsname = wb.SheetNames[0];
+				var ws = wb.Sheets[wsname];
+                var ws_f = wb.Sheets[wsname];
+
+                this.TablaImportada = XLSX.utils.sheet_to_json(ws_f,{header:["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16"],defval:''});
+                this.TablaPasadas = [];       
+                console.log(this.TablaImportada);
+                this.copiarImportacion();
+             
+            }.bind(this);
+
+            reader.readAsArrayBuffer(file);
+            
+        },       
+        
+        async  StoreSoldadores(){
+
+            let soldadores_importados = [];
+
+            this.TablaImportada.forEach(function(item,index){
+
+                if(index > 2){    
+
+                    if((item['1'] == this.pk) && (this.elemento_pasadas.findIndex(elemento => elemento == item['2'])!= -1 ) && (item['3']==this.ot_tipo_soldadura.codigo)){                
+
+                        soldadores_importados.push(item['4']);
+                        soldadores_importados.push(item['5']);
+                        soldadores_importados.push(item['6']);
+                        soldadores_importados.push(item['7']);
+                        soldadores_importados.push(item['8']);
+                        soldadores_importados.push(item['9']);
+                        soldadores_importados.push(item['10']);
+                        soldadores_importados.push(item['11']);
+                        soldadores_importados.push(item['12']);
+                        soldadores_importados.push(item['13']);
+                        soldadores_importados.push(item['14']);
+                        soldadores_importados.push(item['15']);
+                        soldadores_importados.push(item['16']);
+                        
+                    }
+                }
+
+            }.bind(this));
+
+            console.log('Soldadores Importados :' ,soldadores_importados);
+
+            axios.defaults.baseURL = this.url ;
+            var urlRegistros = 'ot_soldadores/insertar_importados/ot/' + this.otdata.id + '/cliente/' + this.otdata.cliente_id + '?api_token=' + Laravel.user.api_token;   
+            
+            try{
+
+                let res = await axios.post(urlRegistros,{
+    
+                    'soldadores_importados' : soldadores_importados,
+    
+                });                              
+
+                return true;
+              
+            } catch (error){
+
+                toastr.error('Ocurrio un error al importar los soldadores');               
+                return false;
+            }
+            
+        },
+
+        async copiarImportacion(){
+
+          let resul_store_soldadores =  await this.StoreSoldadores();
+
+          if(resul_store_soldadores) {
+       
+                await this.getSoldadores();
+
+                this.TablaImportada.forEach(function(item,index){
+                    
+                    if(index > 2){           
+
+                            if((item['1'] == this.pk) && (this.elemento_pasadas.findIndex(elemento => elemento == item['2'])!= -1 ) && (item['3']==this.ot_tipo_soldadura.codigo)){
+
+                                let index_soldador1_p1 = this.soldadores.findIndex(elemento => elemento.codigo == item['4']);
+                                let index_soldador2_p1 = this.soldadores.findIndex(elemento => elemento.codigo == item['5']);
+                                let index_soldador3_p1 = this.soldadores.findIndex(elemento => elemento.codigo == item['6']);
+
+                                let index_soldador1_p2 = this.soldadores.findIndex(elemento => elemento.codigo == item['7']);
+                                let index_soldador3_p2 = this.soldadores.findIndex(elemento => elemento.codigo == item['8']);
+
+                                let index_soldador1_p3 = this.soldadores.findIndex(elemento => elemento.codigo == item['9']);
+                                let index_soldador3_p3 = this.soldadores.findIndex(elemento => elemento.codigo == item['10']);
+
+                                let index_soldador1_p4 = this.soldadores.findIndex(elemento => elemento.codigo == item['11']);
+                                let index_soldador3_p4 = this.soldadores.findIndex(elemento => elemento.codigo == item['12']);
+
+                                let index_soldador1_p5 = this.soldadores.findIndex(elemento => elemento.codigo == item['13']);
+                                let index_soldador3_p5 = this.soldadores.findIndex(elemento => elemento.codigo == item['14']);
+
+                                let index_soldador1_p6 = this.soldadores.findIndex(elemento => elemento.codigo == item['15']);
+                                let index_soldador3_p6 = this.soldadores.findIndex(elemento => elemento.codigo == item['16']);                       
+
+                                /*Pasada 1 */
+                                if(item['4']!=''){
+
+                                    let aux_soldador1 = (index_soldador1_p1 != -1) ? this.soldadores[index_soldador1_p1] : '';
+                                    let aux_soldador2 = (index_soldador2_p1 != -1) ? this.soldadores[index_soldador2_p1] : '';
+                                    let aux_soldador3 = (index_soldador3_p1 != -1) ? this.soldadores[index_soldador3_p1] : '';
+
+                                    this.TablaPasadas.push({
+                                        
+                                        elemento_pasada :item['2'],
+                                        pasada : 1,
+                                        soldador1 :  aux_soldador1,
+                                        soldador2 :  aux_soldador2,
+                                        soldador3 :  aux_soldador3,
+                                    
+                                    });
+
+                                    /*Pasada 2 */
+                                    if(item['7']!=''){                             
+
+                                            aux_soldador1 = (index_soldador1_p2 != -1) ? this.soldadores[index_soldador1_p2] : '';
+                                            aux_soldador3 = (index_soldador3_p2 != -1) ? this.soldadores[index_soldador3_p2] : '';
+
+                                            this.TablaPasadas.push({
+                                                
+                                                elemento_pasada :item['2'],
+                                                pasada : 2,
+                                                soldador1 :  aux_soldador1,
+                                                soldador2 :  '',
+                                                soldador3 :  aux_soldador3,
+                                            
+                                            });   
+                                            
+                                            /*Pasada 3 */
+                                            if(item['9']!=''){
+
+                                                    aux_soldador1 = (index_soldador1_p3 != -1) ? this.soldadores[index_soldador1_p3] : '';
+                                                    aux_soldador3 = (index_soldador3_p3 != -1) ? this.soldadores[index_soldador3_p3] : '';
+
+                                                    this.TablaPasadas.push({
+                                                        
+                                                        elemento_pasada :item['2'],
+                                                        pasada : 3,
+                                                        soldador1 :  aux_soldador1,
+                                                        soldador2 :  '',
+                                                        soldador3 :  aux_soldador3,
+                                                    
+                                                    });                        
+
+                                                }
+
+                                                /*Pasada 4 */
+                                                if(item['11']!=''){
+
+                                                        aux_soldador1 = (index_soldador1_p4 != -1) ? this.soldadores[index_soldador1_p4] : '';
+                                                        aux_soldador3 = (index_soldador3_p4 != -1) ? this.soldadores[index_soldador3_p4] : '';
+
+                                                        this.TablaPasadas.push({
+                                                            
+                                                            elemento_pasada :item['2'],
+                                                            pasada : 4,
+                                                            soldador1 :  aux_soldador1,
+                                                            soldador2 :  '',
+                                                            soldador3 :  aux_soldador3,
+                                                        
+                                                        });                        
+
+                                                    }
+
+                                                /*Pasada 5 */
+                                                if(item['13']!=''){
+
+                                                        aux_soldador1 = (index_soldador1_p5 != -1) ? this.soldadores[index_soldador1_p5] : '';
+                                                        aux_soldador3 = (index_soldador3_p5 != -1) ? this.soldadores[index_soldador3_p5] : '';
+
+                                                        this.TablaPasadas.push({
+                                                            
+                                                            elemento_pasada :item['2'],
+                                                            pasada : 5,
+                                                            soldador1 :  aux_soldador1,
+                                                            soldador2 :  '',
+                                                            soldador3 :  aux_soldador3,
+                                                        
+                                                        });                        
+
+                                                    }
+
+                                                    /*Pasada 6 */
+                                                    if(item['15']!=''){
+
+                                                            aux_soldador1 = (index_soldador1_p6 != -1) ? this.soldadores[index_soldador1_p6] : '';
+                                                            aux_soldador3 = (index_soldador3_p6 != -1) ? this.soldadores[index_soldador3_p6] : '';
+
+                                                            this.TablaPasadas.push({
+                                                                
+                                                                elemento_pasada :item['2'],
+                                                                pasada : 6,
+                                                                soldador1 :  aux_soldador1,
+                                                                soldador2 :  '',
+                                                                soldador3 :  aux_soldador3,
+                                                            
+                                                            });                        
+
+                                                        }
+                                        }
+
+                                }
+
+                            }
+                        
+                        }       
+
+
+                }.bind(this)) 
+               
+
+                if(this.elemento_pasadas.length > 0){
+                    
+                    this.elemento_pasada = this.elemento_pasadas[0];
+                }
+                toastr.info('Los soldadores no encontrados fueron agregados al sistema automaticamente.');
+                $('#modal-Importar-Soldadores').modal('hide');         
+
+          }
+          this.importado_pasadas = false;
+        },
+
         Store : function(){          
 
                     this.errors =[];
@@ -1425,6 +1936,7 @@ export default {
                         'numero_inf':     this.numero_inf,
                         'pk':             this.pk,                
                         'ot_tipo_soldadura' : this.ot_tipo_soldadura,
+                        'reparacion_sn'     :this.reparacion_sn,
                         'prefijo'        :this.prefijo,
                         'gasoducto_sn' :  gasoducto_sn,               
                         'componente' :    this.componente,
@@ -1452,7 +1964,8 @@ export default {
                         'tecnica':this.tecnica,
                         'tecnicas_grafico' : this.tecnica_grafico,
                         'exposicion': this.exposicion,   
-                        'detalles'  : this.TablaDetalle,           
+                        'detalles'  : this.TablaDetalle,   
+                        'TablaPasadas' : this.TablaPasadas,        
                 }}
                 
             
@@ -1508,6 +2021,7 @@ export default {
                         'numero_inf':     this.numero_inf,
                         'pk':             this.pk,                
                         'ot_tipo_soldadura' : this.ot_tipo_soldadura,
+                        'reparacion_sn'     :this.reparacion_sn,
                         'prefijo'        :this.prefijo,
                         'gasoducto_sn' :  gasoducto_sn,               
                         'componente' :    this.componente,
@@ -1535,7 +2049,9 @@ export default {
                         'tecnica':this.tecnica,
                         'tecnicas_grafico' : this.tecnica_grafico,
                         'exposicion': this.exposicion,   
-                        'detalles'  : this.TablaDetalle,           
+                        'detalles'  : this.TablaDetalle,     
+                        'TablaPasadas' : this.TablaPasadas,        
+      
                 }}
                 
             

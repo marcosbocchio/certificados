@@ -7,7 +7,7 @@
 
 <div id="app">
 
-   <abm-doc  modelo= "documentaciones" permiso_create="M_documentaciones_edita" ></abm-doc>
+   <abm-doc  modelo= "documentaciones" permiso_create="M_documentaciones_edita"></abm-doc>
 
 
 </div>

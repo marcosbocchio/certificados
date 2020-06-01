@@ -25,9 +25,9 @@
             <div v-show="$can('M_documentaciones_edita')">
                 <div class="col-md-1 col-xs-12">
                     <button class="btn btn-primary pull-left" v-on:click.prevent="openNuevoRegistro()"><span class="fa fa-plus-circle"></span> Nuevo</button>      
-                </div>
-                
+                </div>                
             </div>  
+            
             <div v-show="modelo=='documentaciones'">
 
                 <div class="form-group">           
@@ -565,7 +565,7 @@ export default {
             'metodo_ensayo'      : this.metodo_ensayo,   
             'fecha_caducidad'    : this.newRegistro.fecha_caducidad,
             'path'               : this.newRegistro.path,
-            'ot'              : this.otdata,   
+            'ot'                 : this.otdata,   
                 
 
             }).then(response => {              

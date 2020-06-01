@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Ots;
 use App\OtSoldadores;
+use App\Soldadores;
 use App\OtUsuariosClientes;
+use Illuminate\Support\Facades\Log;
 
 class OtSoldadoresController extends Controller
 {
@@ -168,6 +170,50 @@ class OtSoldadoresController extends Controller
 
 
         return OtSoldadores::where('ot_id',$ot_id)->count(); 
+
+    }
+
+    public function ImportarSoldadores(Request $request,$ot_id,$cliente_id){
+
+
+        DB::beginTransaction();
+
+        try { 
+
+            $soldadores_importados = $request->input('soldadores_importados');
+
+            foreach ($soldadores_importados as $codigo_soldador) {
+
+                Log::debug("Var request ImportarSoldadores :" . $codigo_soldador);
+
+                if($codigo_soldador){
+                    
+                        $soldador = Soldadores::firstOrCreate(
+
+                            ['codigo' => $codigo_soldador,'cliente_id' => $cliente_id],['codigo' => $codigo_soldador,'cliente_id' => $cliente_id,'nombre'  =>'nn']
+                        );
+                        
+                        $soldador = Soldadores::where('cliente_id',$cliente_id)
+                                                ->where('codigo',$codigo_soldador) 
+                                                ->first();
+
+                        $soldador_id = $soldador->id; 
+
+                        $ot_soldador = OtSoldadores::firstOrCreate(
+
+                            ['ot_id' => $ot_id,'soldadores_id' => $soldador_id],['ot_id' => $ot_id,'soldadores_id' => $soldador_id]
+                        );
+                 }
+            }
+
+            DB::commit(); 
+
+       } catch (Exception $e) {
+
+            DB::rollback();
+            throw $e;      
+      
+        }
 
     }
 

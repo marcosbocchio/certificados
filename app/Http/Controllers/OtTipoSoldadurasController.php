@@ -91,6 +91,7 @@ class OtTipoSoldadurasController extends Controller
         $obra = str_replace('--','/',$obra);
         return OtTipoSoldaduras::where('ot_id',$ot_id)
                                 ->where('obra',$obra)    
+                               // ->where('tipo_soldaduras.codigo','!=','R')
                                 ->join('tipo_soldaduras','tipo_soldaduras.id','=','ot_tipo_soldaduras.tipo_soldadura_id')
                                 ->with('tipoSoldadura')
                                 ->select('ot_tipo_soldaduras.*','tipo_soldaduras.codigo')

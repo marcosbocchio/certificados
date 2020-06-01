@@ -5,6 +5,7 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
+
 require('./bootstrap');
 
 
@@ -452,12 +453,10 @@ actions : {
         loadOtObraTipoSoldaduras({
           commit},payload) {
           axios.defaults.baseURL = store.state.url ;  
-          var urlRegistros = 'ot_tipo_soldaduras/ot/' + payload.ot_id +'/obra/' + payload.obra.replace('/','--') +'?api_token=' + Laravel.user.api_token;        
+          var urlRegistros = 'ot_tipo_soldaduras/ot/' + payload.ot_id +'/obra/' + payload.obra.replace('/','--') +'?api_token=' + Laravel.user.api_token;     
+          console.log('url de loadOtObraTipoSoldaduras :',urlRegistros);  
           return new Promise((resolve, reject) => { 
           axios.get(urlRegistros).then((response) => {
-            console.log('estas son las ot_obras');
-            console.log(urlRegistros);
-            console.log(response.data);
             commit('getOtObraTipoSoldaduras', response.data) 
             resolve();       
           })          

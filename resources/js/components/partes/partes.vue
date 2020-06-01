@@ -1231,7 +1231,6 @@ export default {
             if(this.informes[index].informe_sel){
 
                 this.loading = true;
-                console.log("el valor del loading es :" , this.loading);
                 if(this.informes[index].importable_sn){
 
                   await  this.getInformesImportado(this.informes[index].id,index);

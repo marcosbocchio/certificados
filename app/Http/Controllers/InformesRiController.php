@@ -29,6 +29,7 @@ use App\Soldadores;
 use App\TipoSoldaduras;
 use \stdClass;
 use App\OtTipoSoldaduras;
+use Illuminate\Support\Facades\Log;
 
 class InformesRiController extends Controller
 {
@@ -137,9 +138,11 @@ class InformesRiController extends Controller
         $informe_norma_ensayo = NormaEnsayos::find($informe->norma_ensayo_id);
         $informe_ejecutor_ensayo =(new OtOperariosController())->getEjecutorEnsayo($informe->ejecutor_ensayo_id);
         $informe_detalle = $this->getDetalle($informe_ri->id);
-        
+        $informe_pasada_juntas = $this->getPasadasJuntas($informe_ri->id);
+
        // dd($informe_interno_equipo);
       //  dd($informe_detalle);
+      
         return view('informes.ri.edit', compact('ot',
                                                  'metodo',
                                                  'user',
@@ -160,6 +163,7 @@ class InformesRiController extends Controller
                                                  'informe_norma_ensayo',
                                                  'informe_ejecutor_ensayo',
                                                  'informe_detalle',
+                                                 'informe_pasada_juntas',
                                                  'header_titulo',
                                                  'header_descripcion'));
     }
@@ -172,76 +176,81 @@ class InformesRiController extends Controller
                                ->join('posicion','posicion.junta_id','=','juntas.id')                            
                                ->where('informes_ri.id',$id)
                                ->select('juntas.codigo as junta',
-                                      'posicion.descripcion as observacion',                                   
+                                      'posicion.descripcion as observacion',   
+                                      'posicion.densidad as densidad',                                
                                       'posicion.aceptable_sn as aceptable_sn',                            
                                       'posicion.codigo as posicion',
                                       'posicion.id as posicion_id')
                                 ->orderBy('posicion.id','asc')
                                 ->get();
 
-      
-        foreach ($informe_detalle as $detalle_posicion) {
-            
+       
+
+        foreach ($informe_detalle as $detalle_posicion) {            
             
             $defecto_posicion = DB::table('posicion')
-                                            ->join('defectos_posicion','defectos_posicion.posicion_id','=','posicion.id') 
-                                            ->join('defectos_ri','defectos_ri.id','=','defectos_posicion.defecto_ri_id')                                           
-                                            ->where('posicion.id',$detalle_posicion->posicion_id)
-                                            ->select('defectos_ri.codigo','defectos_ri.descripcion','defectos_ri.id','defectos_posicion.posicion')
-                                            ->get();
+                                    ->join('defectos_posicion','defectos_posicion.posicion_id','=','posicion.id') 
+                                    ->join('defectos_ri','defectos_ri.id','=','defectos_posicion.defecto_ri_id')                                           
+                                    ->where('posicion.id',$detalle_posicion->posicion_id)
+                                    ->select('defectos_ri.codigo','defectos_ri.descripcion','defectos_ri.id','defectos_posicion.posicion','pasada')
+                                    ->get();
 
+            $detalle_posicion->defectos = $defecto_posicion;          
 
-            $pasadas_posicion = DB::table('informes_ri')
-                                            ->join('juntas','juntas.informe_ri_id','=','informes_ri.id')
-                                            ->join('posicion','posicion.junta_id','=','juntas.id')
-                                            ->join('pasadas_posicion','pasadas_posicion.posicion_id','=','posicion.id')
-                                            ->where('informes_ri.id',$id)
-                                            ->where('juntas.codigo',$detalle_posicion->junta)
-                                            ->where('posicion.codigo',$detalle_posicion->posicion)
-                                            ->selectRaw('pasadas_posicion.*')
-                                            ->get();
-
-            $pasadas = array();
-
-             foreach ( $pasadas_posicion as $pasada_posicion) {          
-
-                $obj = new stdClass();
-                $obj->pasada = $pasada_posicion->numero ;
-
-                $obj->soldador1 = DB::table('soldadores')
-                                            ->join('ot_soldadores','ot_soldadores.soldadores_id','=','soldadores.id')  
-                                            ->where('ot_soldadores.id',$pasada_posicion->soldadorz_id)
-                                            ->select('soldadores.codigo','soldadores.nombre','ot_soldadores.*')
-                                            ->first();
-
-                $obj->soldador2 = DB::table('soldadores')
-                                            ->join('ot_soldadores','ot_soldadores.soldadores_id','=','soldadores.id')  
-                                            ->where('ot_soldadores.id',$pasada_posicion->soldadorl_id)
-                                            ->select('soldadores.codigo','soldadores.nombre','ot_soldadores.*')
-                                            ->first();
-
-                $obj->soldador2 =   $obj->soldador2 ? $obj->soldador2 : "";    
-
-                $obj->soldador3 = DB::table('soldadores')
-                                            ->join('ot_soldadores','ot_soldadores.soldadores_id','=','soldadores.id')  
-                                            ->where('ot_soldadores.id',$pasada_posicion->soldadorp_id)
-                                            ->select('soldadores.codigo','soldadores.nombre','ot_soldadores.*')
-                                            ->first();
-                $obj->soldador3 = $obj->soldador3 ? $obj->soldador3 : "";    
-
-                array_push($pasadas,$obj);
-             }        
-         
-
-            $detalle_posicion->defectos = $defecto_posicion;
-            $detalle_posicion->pasadas = $pasadas;       
-           
-          
         }
 
+      return $informe_detalle; 
 
-        return $informe_detalle; 
+    }
 
+    public function getPasadasJuntas($id){
+
+        $pasadas_juntas = DB::table('informes_ri')
+                                ->join('juntas','juntas.informe_ri_id','=','informes_ri.id')
+                                ->join('pasadas_junta','pasadas_junta.junta_id','=','juntas.id')
+                                ->where('informes_ri.id',$id)
+                                ->selectRaw('numero as pasada,soldadorl_id,soldadorp_id,soldadorz_id,juntas.codigo as elemento_pasada')
+                                ->get();
+
+        Log::debug("Var pasadas_juntas :" . $pasadas_juntas);
+
+        foreach ($pasadas_juntas as $pasadas_junta) {            
+           
+        
+            $obj = new stdClass();
+
+
+            $obj->soldador1 = DB::table('soldadores')
+                                        ->join('ot_soldadores','ot_soldadores.soldadores_id','=','soldadores.id')  
+                                        ->where('ot_soldadores.id',$pasadas_junta->soldadorz_id)
+                                        ->select('soldadores.codigo','soldadores.nombre','ot_soldadores.*')
+                                        ->first();
+        
+            $obj->soldador2 = DB::table('soldadores')
+                                        ->join('ot_soldadores','ot_soldadores.soldadores_id','=','soldadores.id')  
+                                        ->where('ot_soldadores.id',$pasadas_junta->soldadorl_id)
+                                        ->select('soldadores.codigo','soldadores.nombre','ot_soldadores.*')
+                                        ->first();
+        
+            $obj->soldador2 =   $obj->soldador2 ? $obj->soldador2 : "";    
+        
+            $obj->soldador3 = DB::table('soldadores')
+                                        ->join('ot_soldadores','ot_soldadores.soldadores_id','=','soldadores.id')  
+                                        ->where('ot_soldadores.id',$pasadas_junta->soldadorp_id)
+                                        ->select('soldadores.codigo','soldadores.nombre','ot_soldadores.*')
+                                        ->first();
+
+            $obj->soldador3 = $obj->soldador3 ? $obj->soldador3 : "";            
+
+            $pasadas_junta->soldador1 = $obj->soldador1;
+            $pasadas_junta->soldador2 = $obj->soldador2;
+            $pasadas_junta->soldador3 = $obj->soldador3;
+           
+        }   
+
+        Log::debug("Var pasadas_juntas :" . $pasadas_juntas);
+
+        return $pasadas_juntas; 
 
     }
 
@@ -256,6 +265,12 @@ class InformesRiController extends Controller
     public function update(InformeRiRequest $request, $id)
     {
         return $this->informesRi->updateInforme($request,$id);
+    }
+
+    public function getElementosReparacion($ot_id,$km){
+
+        return  DB::select('CALL InformeRiJuntasReparacion(?,?)',array($ot_id,$km));
+
     }
 
     /**

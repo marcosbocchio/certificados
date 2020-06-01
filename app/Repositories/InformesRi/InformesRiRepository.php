@@ -9,10 +9,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\DiametrosEspesor;
 use App\Juntas;
-use App\PasadasPosicion;
+use App\PasadasJunta;
 use Exception as Exception;
 use App\Posicion;
 use App\DefectosPosicion;
+use Illuminate\Support\Facades\Log;
 
 
 class InformesRiRepository extends BaseRepository
@@ -83,9 +84,9 @@ class InformesRiRepository extends BaseRepository
   }
   
   public function saveInformeRi($request,$informe,$informeRi){      
-
    
     $informeRi->informe_id = $informe->id;
+    $informeRi->reparacion_sn = $request->reparacion_sn;
     $informeRi->kv = $request->kv;
     $informeRi->ma = $request->ma;
     $informeRi->interno_fuente_id =  $request->interno_fuente ? $request->interno_fuente['id'] : null;
@@ -103,15 +104,15 @@ class InformesRiRepository extends BaseRepository
 
   }
 
-  public function saveDetalle($request,$informeRi){
-
+  public function saveDetalle($request,$informeRi){  
    
       foreach ($request->detalles as $detalle){       
 
         try {
 
-         $junta = $this->saveJunta($detalle,$informeRi,$request);            
-          
+          $junta = $this->saveJunta($detalle,$informeRi);         
+          $this->savePasadasJunta($request->TablaPasadas,$junta);     
+
         } 
         catch(Exception $e){          
 
@@ -129,11 +130,11 @@ class InformesRiRepository extends BaseRepository
   
            
          } 
-         catch(Exception $u){          
+         catch(Exception $j){          
  
-           if ($u->getCode() != '23000'){
+           if ($j->getCode() != '23000'){
            
-             throw $u;    
+             throw $j;    
  
            }
        
@@ -141,7 +142,6 @@ class InformesRiRepository extends BaseRepository
 
          try {
 
-          $this->savePasadasPosicion($detalle['pasadas'],$posicion);
           $this->saveDefectos($detalle['defectos'],$posicion);
            
          } 
@@ -159,13 +159,13 @@ class InformesRiRepository extends BaseRepository
     
   }
 
-  public function saveJunta($detalle ,$informeRi){
+  public function saveJunta($detalle,$informeRi){
 
     $junta =  new Juntas;
-    $junta->codigo = $detalle['junta'];
+    $junta->codigo = $detalle['junta'];    
     $junta->informe_ri_id = $informeRi->id;          
-    $junta->save();
-    
+    $junta->save();   
+
     return $junta;
   }
 
@@ -174,6 +174,7 @@ class InformesRiRepository extends BaseRepository
     $posicion = new Posicion;  
     $posicion->junta_id = $junta['id'];
     $posicion->codigo = $detalle['posicion'];
+    $posicion->densidad = $detalle['densidad'];
     $posicion->descripcion = $detalle['observacion'] ;
     $posicion->aceptable_sn = $detalle['aceptable_sn'];
     $posicion->save();
@@ -181,23 +182,30 @@ class InformesRiRepository extends BaseRepository
     return $posicion;
   }
 
-  public function savePasadasPosicion($pasadas,$posicion){   
-     
+  public function savePasadasJunta($pasadas,$junta){        
  
-      foreach ($pasadas as $pasada) {
-
-        $pasadasPosicion = new PasadasPosicion;   
-        $pasadasPosicion->numero = $pasada['pasada'];
-        $pasadasPosicion->posicion_id =  $posicion['id'];
-        $pasadasPosicion->soldadorz_id = $pasada['soldador1']['id'];               
-        $pasadasPosicion->soldadorl_id = $pasada['soldador2']['id'];
-        $pasadasPosicion->soldadorp_id = $pasada['soldador3']['id'];
-  
-        $pasadasPosicion->save();
-
+      foreach ($pasadas as $pasada) {        
+        
+        if(trim($pasada['elemento_pasada']) == trim($junta['codigo'])){
+          
+          /*  Log::debug("Var Pasada['elemento_pasada'] :" . $pasada['elemento_pasada']);
+            Log::debug("Var junta['codigo'] :" . $junta['codigo']);
+            Log::debug("Var junta : " . $junta);
+            Log::debug("Var junta['id'] :" . $junta['id']);
+            Log::debug("Var pasada['pasada'] :" . $pasada['pasada']); */
+      
+            $pasadasJunta = new PasadasJunta;   
+            $pasadasJunta->numero = $pasada['pasada'];
+            $pasadasJunta->junta_id = $junta['id'];
+            $pasadasJunta->soldadorz_id = $pasada['soldador1']['id'];               
+            $pasadasJunta->soldadorl_id = $pasada['soldador2']['id'];
+            $pasadasJunta->soldadorp_id = $pasada['soldador3']['id'];  
+            $pasadasJunta->save();
+     
+        }
        
       }
-    }
+  }
 
   public function saveDefectos($defectos,$posicion){
       
@@ -207,6 +215,8 @@ class InformesRiRepository extends BaseRepository
           $defectosPosicion->posicion_id = $posicion['id'];
           $defectosPosicion->defecto_ri_id = $defecto['id'];       
           $defectosPosicion->posicion = $defecto['posicion']; 
+          $defectosPosicion->pasada = $defecto['pasada']; 
+
           $defectosPosicion->save();
         }  
     
@@ -221,9 +231,8 @@ public function deleteDetalle($request,$id){
                       where
                       ir.id= ?',[$id]);
 
-      DB::delete('delete pp from pasadas_posicion as pp
-                      inner join posicion as p on pp.posicion_id = p.id 
-                      inner join juntas as j on j.id = p.junta_id
+      DB::delete('delete pj from pasadas_junta as pj                   
+                      inner join juntas as j on j.id = pj.junta_id
                       inner join informes_ri as ir on j.informe_ri_id = ir.id
                       where
                       ir.id= ?',[$id]);

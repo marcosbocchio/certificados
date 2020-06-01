@@ -68,7 +68,7 @@ class PdfInformesRiController extends Controller
         if ($informe_ri->gasoducto_sn){
           
           $juntas_posiciones = DB::select('CALL InformeRiGasoductoJuntaPosicion(?)',array($informe_ri->id));        
-          $pasadas_posiciones = DB::select('CALL InformeRiGasoductoPasadasPosicion(?)',array($informe_ri->id));
+          $pasadas_juntas = DB::select('CALL InformeRiGasoductoPasadasJuntas(?)',array($informe_ri->id));
           $defectos_posiciones = DB::select('CALL InformeRiGasoductoDefectosPasadasPosicion(?)',array($informe_ri->id));        
           
         //  dd($juntas_posiciones,$pasadas_posiciones,$defectos_posiciones,$ot_tipo_soldadura,$informe);
@@ -94,7 +94,7 @@ class PdfInformesRiController extends Controller
                                                                         'material_accesorio',
                                                                         'tecnicas_grafico',
                                                                         'juntas_posiciones',
-                                                                        'pasadas_posiciones',
+                                                                        'pasadas_juntas',
                                                                         'defectos_posiciones',
                                                                         'evaluador'))->setPaper('a4','landscape')->setWarnings(false);
 
@@ -110,7 +110,7 @@ class PdfInformesRiController extends Controller
           $juntas_posiciones = DB::select('CALL InformeRiPlantaJuntaPosicion(?)',array($informe_ri->id));
           $defectos_posiciones = DB::select('CALL InformeRiPlantaDefectosPasadaPosicion(?)',array($informe_ri->id));                                          
           
-         // dd($juntas_posiciones,$defectos_posiciones,$ot_tipo_soldadura);
+        // dd($juntas_posiciones,$defectos_posiciones);
 
           $pdf = PDF::loadView('reportes.informes.ri-planta',compact('ot',
                                                               'norma_ensayo',

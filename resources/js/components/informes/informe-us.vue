@@ -1058,7 +1058,6 @@ export default {
     created : function() {
         
       this.getCliente();  
-      this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.obra });
       this.$store.dispatch('loadMateriales');
       this.$store.dispatch('loadDiametros');
       this.getTecnicas();
@@ -1170,7 +1169,9 @@ export default {
                this.Tabla_us_pa = this.tabla_us_pa_data; 
                this.Tabla_me = this.tabla_me_data; 
                this.SetearBlockCalibraciones();
-               this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.obra });
+               this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.informedata.obra });
+            }else{
+                   this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.informedata.obra });
             }
 
         },       

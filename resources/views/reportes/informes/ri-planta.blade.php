@@ -7,8 +7,12 @@
 
 <style>
 
-@page { margin: 369px 30px 187px 60px !important;
+@page { margin: 373px 30px 187px 60px !important;
         padding: 0px 0px 0px 0px !important; }
+
+.EspecialCaracter {
+    font-family: DejaVu Sans;
+}
 
 body {
     margin: 0px 1px 0px 1px;
@@ -17,7 +21,7 @@ body {
 
 header {
     position:fixed;
-    top: -330px;    
+    top: -334px;    
     }
 
 main{
@@ -175,14 +179,15 @@ b {
                     <table  width="100%" style="text-align: center;border-collapse: collapse;">
                         <tbody>
                             <tr>
-                                <td style="font-size: 11px; width:65px;  text-align: center " rowspan="2" class="bordered-td" >ELEM.</td>
-                                <td style="font-size: 11px; width:65px;  text-align: center;" rowspan="2" class="bordered-td">CUÑO</td>
-                                <td style="font-size: 11px; width:64.5px; text-align: center;" rowspan="2" class="bordered-td">POSICIÓN</td>
-                                <td style="font-size: 11px; width:201.5px;  text-align: center;" rowspan="2" class="bordered-td">INDICACIONES</td>  
-                                <td style="font-size: 11px; width:80px; text-align: center;" colspan="2" class="bordered-td">RESULTADO</td>  
-                                <td style="font-size: 11px; text-align: center" rowspan="2" class="bordered-td">OBSERVACIÓN</td>                     
+                                <td style="font-size: 11px; width:65px;  text-align: center " rowspan="2" class="bordered-td" >Elem.</td>
+                                <td style="font-size: 11px; width:65px;  text-align: center;" rowspan="2" class="bordered-td">Cuño</td>
+                                <td style="font-size: 11px; width:50px; text-align: center;" colspan="2" class="bordered-td">Placa</td>
+                                <td style="font-size: 11px; width:385px;  text-align: center;" rowspan="2" class="bordered-td">Indicaciones</td>  
+                                <td style="font-size: 11px; text-align: center;" colspan="2" class="bordered-td">Resultado</td>  
                             </tr>
                             <tr>
+                                <td style="font-size: 11px; text-align: center;width:64.5px;" class="bordered-td">Posición</td>
+                                <td style="font-size: 11px; text-align: center;width:15px;" class="bordered-td"><span class="EspecialCaracter">ρ</span></td>  
                                 <td style="font-size: 11px; text-align: center;" class="bordered-td">AP</td>
                                 <td style="font-size: 11px; text-align: center;" class="bordered-td">RZ</td>                            
                             </tr>  
@@ -289,8 +294,8 @@ b {
         <tbody>
             @foreach ($juntas_posiciones as $junta_posicion)
                 <tr>
-                    <td style="font-size: 11px;  width:66px;text-align: center" class="bordered-td">{{ $junta_posicion->junta }}</td>
-                    <td style="font-size: 11px;  width:65px;text-align: center" class="bordered-td">
+                    <td style="font-size: 11px;  width:65.7px;text-align: center" class="bordered-td">{{ $junta_posicion->junta }}</td>
+                    <td style="font-size: 11px;  width:65.3px;text-align: center" class="bordered-td">
                     {{$junta_posicion->soldadorz}} 
 
                     @if ($junta_posicion->soldadorp)
@@ -300,7 +305,8 @@ b {
                     @endif
                     </td>
                     <td style="font-size: 11px;  width:64.5px;text-align: center" class="bordered-td">{{$junta_posicion->posicion}}</td>
-                    <td style="font-size: 9px;  width:201.5px; " class="bordered-td">&nbsp;
+                    <td style="font-size: 11px;  width:23.5px;text-align: center" class="bordered-td">{{$junta_posicion->densidad}}</td>
+                    <td style="font-size: 9px;   width:385px; " class="bordered-td">&nbsp;
                     @php $primero = true; @endphp
                         @foreach ($defectos_posiciones as $key => $defecto_posicion)                                
 
@@ -311,8 +317,22 @@ b {
                                     /
                                 @endif
 
-                                {{$defecto_posicion->codigo}} : {{$defecto_posicion->posicion}}
-                                {{ $primero = false}}      
+                                @if ($defecto_posicion->posicion)                          
+
+                                    @php
+                                        $valor_imprimir = $defecto_posicion->codigo . '(' . $defecto_posicion->posicion . ')' ;
+                                    @endphp
+                     
+                                @else 
+
+                                     @php
+                                        $valor_imprimir = $defecto_posicion->codigo ;
+                                    @endphp   
+
+                                @endif
+
+                                {{ $valor_imprimir}}
+                                {{ $primero = false}}    
 
                             @endif
                             
@@ -320,19 +340,17 @@ b {
                     
                     </td>
 
-                    <td style="font-size: 11px; text-align: center;width:39px; " class="bordered-td">
+                    <td style="font-size: 11px; text-align: center;width:37px; " class="bordered-td">
                         @if ($junta_posicion->aceptable_sn)
                             X
                         @endif
                     </td>
 
-                    <td style="font-size: 11px; text-align: center;width:38px;" class="bordered-td">
+                    <td style="font-size: 11px; text-align: center;" class="bordered-td">
                         @if (!$junta_posicion->aceptable_sn)
                             X
                         @endif
                     </td>
-
-                    <td style="font-size: 11px;" class="bordered-td">&nbsp;{{$junta_posicion->observacion}}</td>
                 </tr>
    
             @endforeach

@@ -166,6 +166,8 @@ Route::group(['middleware' => 'auth:api'], function()
 
     //Soldadores
     Route::resource('ot_soldadores', 'OtSoldadoresController');  
+    Route::post('ot_soldadores/insertar_importados/ot/{id}/cliente/{cliente_id}','OtSoldadoresController@ImportarSoldadores');
+
     Route::get('ot_soldadores/ot/{id}','OtSoldadoresController@SoldadoresOt');
     Route::get('ot_soldadores/ot/{ot_id}/total', 'OtSoldadoresController@OtSoldadoresTotal');
     Route::get('ot_usuarios_clientes/ot/{ot_id}/total', 'OtUsuariosClientesController@OtUsuariosClienteTotal');
@@ -183,6 +185,7 @@ Route::group(['middleware' => 'auth:api'], function()
     
     /*  informes */ 
     Route::resource('informes_ri','InformesRiController');    
+    Route::get('informes_ri/elementos_reparacion/ot/{ot_id}/km/{km}', 'InformesRiController@getElementosReparacion');   
     Route::resource('informes_pm','InformesPmController');
     Route::resource('informes_lp','InformesLpController');
     Route::resource('informes_us','InformesUsController');
