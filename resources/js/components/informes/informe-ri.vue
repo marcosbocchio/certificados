@@ -564,7 +564,7 @@
                           <span>       
                             <button type="button" @click="AddPasadas()" title="Agregar Pasada"><app-icon img="plus-circle" color="black"></app-icon></button>   
                             <button type="button"  @click="ModalClonarSoldadores()" title="Clonar Soldadores"><app-icon img="clone" color="black"></app-icon></button>
-                             <button type="button" @click="ModalImportarSoldadores()" title="Importar Soldadores"><app-icon img="file-excel-o" color="black"></app-icon></button>     
+                             <button type="button" @click="ModalImportarSoldadores()"  :disabled="(!isGasoducto)" title="Importar Soldadores"><app-icon img="file-excel-o" color="black"></app-icon></button>     
                             <button type="button" @click="getSoldadores()" title="Recargar Cuños"><app-icon img="refresh" color="black"></app-icon></button>     
                           </span>
                     </div>
@@ -672,6 +672,7 @@
                             <div class="form-group">
                                 <input style="display: inline;" type="file" multiple="false" id="sheetjs-input" :accept="SheetJSFT"  @change="onchange"/>
                                 <label  v-show="importado_pasadas" class="fa fa-spin fa-refresh" for="sheetjs-input"></label>
+                                <p>Formato soportado : csv</p>
                             </div>
                         </div>                    
                     </div>
@@ -979,15 +980,27 @@ export default {
         },
         formato : function (val){
 
-            this.isGasoducto =  (val == 'DUCTO') ? true : false;        
-            
+            this.isGasoducto =  (val == 'DUCTO') ? true : false;                   
 
         },
 
         pasada : function (val){
 
             this.soldador2 =  (val == '1') ? this.soldador2 : '';
-        },      
+        },
+        
+        posicionPlacaGosaducto : function(val){
+
+            if (val != '' && this.formato =='PLANTA'){
+
+                  this.defecto_sector = 'RAIZ' ;
+
+            }else if(val == '')  {
+
+                  this.defecto_sector = '' ;
+            }
+
+        },
 
         fuentePorInterno: function(val){            
       
@@ -1102,6 +1115,7 @@ export default {
             }else{
 
                 this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.obra }).then(res =>{
+
                     this.index_ot_obra_tipo_soldaduras = this.ot_obra_tipo_soldaduras.findIndex(elemento => elemento.tipo_soldadura.codigo  == 'R' );
                 });
             }
@@ -1137,8 +1151,10 @@ export default {
 
             this.obra = value;
             this.ot_tipo_soldadura='';
-            this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.obra });
-
+            this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.obra }).then(res =>{
+                    
+                    this.index_ot_obra_tipo_soldaduras = this.ot_obra_tipo_soldaduras.findIndex(elemento => elemento.tipo_soldadura.codigo  == 'R' );
+                });;
         },
 
         cambiopTipoInforme : function(){
@@ -1376,6 +1392,11 @@ export default {
 
                  toastr.error('Campo posición es obligatorio'); 
                   return;
+
+            }else if (this.densidad == ''){
+
+                    toastr.error('Campo densidad es obligatorio'); 
+                                return;
             }     
             
             let aux_junta = this.reparacion_sn ? this.junta_reparacion.codigo + 'R' :  this.junta;
