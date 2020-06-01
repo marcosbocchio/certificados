@@ -45,7 +45,20 @@ class PdfInformesRiController extends Controller
         $informe_ri = InformesRi::where('informe_id',$informe->id)->firstOrFail();
         $ot = Ots::findOrFail($informe->ot_id);
         $cliente = Clientes::findOrFail($ot->cliente_id);
-        $ot_tipo_soldadura = OtTipoSoldaduras::where('id',$informe->ot_tipo_soldadura_id)->with('Tiposoldadura')->first();
+
+        if($informe_ri->reparacion_sn){
+
+          $ot_tipo_soldadura = OtTipoSoldaduras::join('tipo_soldaduras','tipo_soldaduras.id','=','ot_tipo_soldaduras.tipo_soldadura_id')
+                                                 ->where('tipo_soldaduras.codigo','R')
+                                                 ->where('ot_tipo_soldaduras.ot_id',$ot->id)
+                                                 ->where('obra',$informe->obra)
+                                                 ->with('Tiposoldadura')->first();
+
+        }else{
+
+          $ot_tipo_soldadura = OtTipoSoldaduras::where('id',$informe->ot_tipo_soldadura_id)->with('Tiposoldadura')->first();
+
+        }
         $material = Materiales::findOrFail($informe->material_id);   
         $material_accesorio = Materiales::find($informe->material_accesorio_id);
         $norma_ensayo = NormaEnsayos::findOrFail($informe->norma_ensayo_id);   
@@ -63,7 +76,9 @@ class PdfInformesRiController extends Controller
         $ejecutor_ensayo = User::findOrFail($ot_operador->user_id);
         $tecnicas_grafico = TecnicasGraficos::findOrFail($informe_ri->tecnicas_grafico_id);
         $evaluador = User::find($informe->firma);
-        $contratista = Contratistas::find($ot->contratista_id);        
+        $contratista = Contratistas::find($ot->contratista_id);    
+        
+        
       
         if ($informe_ri->gasoducto_sn){
           

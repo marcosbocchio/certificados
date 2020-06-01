@@ -448,7 +448,7 @@
 
                         <div class="col-md-3">
                             <div class="form-group" >
-                                <label for="defecto_sector">Sector</label>
+                                <label for="defecto_sector">Pasada</label>
                                 <v-select v-model="defecto_sector" label="defecto_sector" :options="['RAIZ','RELLENO','SOBREMONTA']" id="defecto_sector"  :disabled="(!posicionPlacaGosaducto)"></v-select>  
                             </div>                            
                         </div>    
@@ -512,7 +512,7 @@
                     <div class="col-md-2">
                         <div class="form-group" >
                             <label for="elemento_pasadas">Elemento</label>
-                            <v-select v-model="elemento_pasada" :options="elemento_pasadas" id="defecto_sector"></v-select>  
+                            <v-select v-model="elemento_pasada" :options="elemento_pasadas" id="elemento_pasadas"></v-select>  
                         </div>                            
                     </div>   
 
@@ -1109,7 +1109,9 @@ export default {
 
                     this.reparacion_sn = this.informe_ridata.reparacion_sn;
                     this.index_ot_obra_tipo_soldaduras = this.ot_obra_tipo_soldaduras.findIndex(elemento => elemento.tipo_soldadura.codigo  == 'R' );
-
+                    if(this.index_ot_obra_tipo_soldaduras != -1){
+                        this.ot_tipo_soldadura_r = this.ot_obra_tipo_soldaduras[this.index_ot_obra_tipo_soldaduras];
+                    }    
                 });
 
             }else{
@@ -1470,7 +1472,7 @@ export default {
 
                  toastr.error('Campo defecto es obligatorio'); 
                  return;
-            }
+            }            
 
             if(this.posicionPlacaGosaducto !=''){
 
@@ -1482,6 +1484,13 @@ export default {
                     return;
 
                 }
+
+            }
+
+            if(this.posicionPlacaGosaducto !='' && !this.defecto_sector){
+
+                    toastr.error('El campo pasada es obligatorio si existe posicion indicación'); 
+                    return;
 
             }
     
