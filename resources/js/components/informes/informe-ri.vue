@@ -701,14 +701,12 @@ import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 import moment from 'moment';
 import { toastrInfo,toastrDefault } from '../toastrConfig';
-import { VueCsvImport } from 'vue-csv-import';
 
 export default {
 
     components: {
         
-      Loading,
-      VueCsvImport 
+      Loading
       
     },
 
