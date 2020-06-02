@@ -29,7 +29,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- message -->
     <link href="{{ asset('css/toastr.css') }}" rel="stylesheet">
 
-
     <!-- Theme style -->
     <link rel="stylesheet" href="{{mix('css/AdminLTE.min.css')}}">
 

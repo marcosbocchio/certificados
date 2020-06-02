@@ -181,8 +181,10 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ route('software_download','INDUSTREX V4.2 Lite Setup.exe') }}"><i class="fa fa-download"></i>INDUSTREX V4.2 Lite</a></li>                      
+            <li><a href="{{ route('software_download','INDUSTREX V4.2 Lite Setup.exe') }}"><i class="fa fa-download"></i>INDUSTREX V4.2 Lite</a></li>           
+            <li title="Archivo modelo de  importación para soldadores"><a href="{{ route('software_download','Importacion_soldadores.csv') }}"><i class="fa fa-download"></i>Soldadores CSV</a></li>           
           </ul>
+
         </li>
        
 

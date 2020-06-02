@@ -155,7 +155,7 @@
                                 <div class="pull-right">
                                     <a class="btn btn-default btn-flat" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
-                            document.getElementById('logout-form').submit();">
+                                         document.getElementById('logout-form').submit();">
                                         <i class="fa fa-power -off"></i>
                                         {{ __('Logout') }}
                                     </a>

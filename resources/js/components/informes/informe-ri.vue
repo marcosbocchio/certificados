@@ -8,7 +8,7 @@
                         <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="formato">Tipo informe RI *</label>
-                                <v-select v-model="formato" :options="['PLANTA', 'DUCTO']" @input="cambiopTipoInforme"></v-select>
+                                <v-select v-model="formato" :options="['PLANTA', 'DUCTO']" @input="cambiopTipoInforme" ></v-select>
                             </div>                            
                         </div>
                         <div class="col-md-3">
@@ -122,8 +122,7 @@
                                 </div>   
                                 <input  type="number" class="form-control" v-model="espesor_chapa"  id="espesor_chapa" :disabled="!isChapa" step="0.1" > 
                              </div>                                      
-                        </div>
-          
+                        </div>          
 
                         <div v-if="!reparacion_sn" class="col-md-3">
                             <div class="form-group" >
@@ -146,13 +145,13 @@
                                 <v-select v-model="ot_tipo_soldadura" label="pqr" :options="ot_obra_tipo_soldaduras_filter_R" id="pqr"  :disabled="(isGasoducto)"></v-select>                             
                             </div>         
                         </div>  
+
                         <div v-else  class="col-md-3">
                             <div class="form-group" >
                                 <label for="pqr_r">PQR</label>
                                  <input type="text" v-model="ot_tipo_soldadura_r.pqr" class="form-control" id="pqr_r" disabled>
                             </div>                            
                         </div>
-
 
                         <div class="col-md-3">                       
                             <div class="form-group">
@@ -232,7 +231,6 @@
                                 <v-select v-model="procedimiento" label="titulo" :options="procedimientos" id="procRadio" :appendToBody="'false'" :autoscroll="true"></v-select>   
                             </div>      
                         </div>
-
 
                         <div class="col-md-3">
                             <div class="form-group" >
@@ -512,14 +510,14 @@
                     <div class="col-md-2">
                         <div class="form-group" >
                             <label for="elemento_pasadas">Elemento</label>
-                            <v-select v-model="elemento_pasada" :options="elemento_pasadas" id="elemento_pasadas"></v-select>  
+                            <v-select v-model="elemento_pasada" :options="elemento_pasadas" @input="autocompletarNumeroPasada" id="elemento_pasadas"></v-select>  
                         </div>                            
                     </div>   
 
                     <div class="col-md-2">
                         <div class="form-group" >                            
                             <label for="Elemento">N° Pasada</label>
-                            <input type="number" v-model="pasada" class="form-control" id="pasada" :disabled="(!isGasoducto || !TablaDetalle.length)">                           
+                            <input type="number" v-model="pasada" class="form-control" id="pasada" disabled>                           
                         </div>     
                     </div>
                     <div class="col-md-2">    
@@ -588,12 +586,48 @@
                                             </tr>
                                         </thead>                         
                                         <tbody> 
-                                            <tr v-for="(Pasada,k) in  (TablaPasadas)" :key="k">    
+                                            <tr v-for="(Pasada,k) in  (TablaPasadas)" :key="k" @click="selectPosPasadas(k)">    
                                                 <td v-if="Pasada.elemento_pasada == elemento_pasada">{{ Pasada.elemento_pasada }}</td>   
                                                 <td v-if="Pasada.elemento_pasada == elemento_pasada">{{ Pasada.pasada }}</td>                                            
-                                                <td v-if="Pasada.elemento_pasada == elemento_pasada">{{ Pasada.soldador1.codigo }} </td>
-                                                <td v-if="Pasada.elemento_pasada == elemento_pasada">{{ Pasada.soldador2.codigo }} </td>
-                                                <td v-if="Pasada.elemento_pasada == elemento_pasada">{{ Pasada.soldador3.codigo }} </td>                                          
+                                                <td v-if="Pasada.elemento_pasada == elemento_pasada">
+                                                    <div v-if="indexPasada == k ">       
+                                                        <v-select v-model="TablaPasadas[indexPasada].soldador1" :options="soldadores" label="codigo">
+                                                            <template slot="option" slot-scope="option">
+                                                                <span class="upSelect">{{ option.nombre }} </span> <br> 
+                                                                <span class="downSelect"> {{ option.codigo }} </span>
+                                                            </template>
+                                                        </v-select>                                                    
+                                                    </div>   
+                                                    <div v-else>
+                                                        {{ Pasada.soldador1.codigo }} 
+                                                    </div>                                                  
+                                                </td>
+                                                <td v-if="Pasada.elemento_pasada == elemento_pasada">
+                                                    <div v-if="indexPasada == k ">       
+                                                        <v-select v-model="TablaPasadas[indexPasada].soldador2" :options="soldadores" label="codigo">
+                                                            <template slot="option" slot-scope="option">
+                                                                <span class="upSelect">{{ option.nombre }} </span> <br> 
+                                                                <span class="downSelect"> {{ option.codigo }} </span>
+                                                            </template>
+                                                        </v-select>                                                    
+                                                    </div>   
+                                                    <div v-else>
+                                                       {{ Pasada.soldador2.codigo }} 
+                                                    </div>                                                      
+                                                </td>
+                                                <td v-if="Pasada.elemento_pasada == elemento_pasada">
+                                                    <div v-if="indexPasada == k ">       
+                                                        <v-select v-model="TablaPasadas[indexPasada].soldador3" :options="soldadores" label="codigo">
+                                                            <template slot="option" slot-scope="option">
+                                                                <span class="upSelect">{{ option.nombre }} </span> <br> 
+                                                                <span class="downSelect"> {{ option.codigo }} </span>
+                                                            </template>
+                                                        </v-select>                                                    
+                                                    </div>   
+                                                    <div v-else>
+                                                       {{ Pasada.soldador3.codigo }} 
+                                                    </div>
+                                                </td>                                          
                                                 <td v-if="Pasada.elemento_pasada == elemento_pasada"> 
                                                     <a  @click="RemovePasada(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a>
                                                 </td>     
@@ -636,7 +670,6 @@
                     <div class="row">
                         <div class="col-md-12 ">    
                             <div class="form-group">
-
                                 <div v-for="(elemento,k) in elemento_pasadas" :key="k" >
 
                                     <div v-if="elemento !=elemento_pasada" class="col-sm-4 col-xs-12">
@@ -895,8 +928,7 @@ export default {
             posicionPlacaGosaducto:'',
             defecto_sector:'',
             indexDetalle:0,
-            indexPasada:0,
-
+            indexPasada:0,            
             //Fin Formulario detalle
            
             isRX:false,
@@ -980,7 +1012,8 @@ export default {
         },
         formato : function (val){
 
-            this.isGasoducto =  (val == 'DUCTO') ? true : false;                   
+            this.isGasoducto =  (val == 'DUCTO') ? true : false;        
+            this.reparacion_sn = (val == 'PLANTA') ? false : this.reparacion_sn;        
 
         },
 
@@ -1136,7 +1169,12 @@ export default {
                       this.getElementosReparacion();                     
                   }
 
-              }           
+              }    
+
+            this.TablaDetalle = [];
+            this.TablaPasadas = [];
+            this.TablaImportada= [];
+        
         },
 
         setObra : function(value){
@@ -1154,6 +1192,7 @@ export default {
             this.pk ='' ;
             this.ot_tipo_soldadura='';
             this.cambioOtTipoSoldadura();
+            this.resetDetalle();
 
         },
 
@@ -1210,6 +1249,7 @@ export default {
         cambioOtTipoSoldadura(){
 
             this.tipo_soldadura = this.ot_tipo_soldadura ? (this.ot_tipo_soldadura.tipo_soldadura.codigo) : '';
+
         },          
 
         getFuente : function(){
@@ -1231,7 +1271,6 @@ export default {
                     
                     });
             }
-
                
             }else{
 
@@ -1312,6 +1351,8 @@ export default {
         resetDetalle : function(){
 
             this.TablaDetalle = [];
+            this.TablaPasadas = [];
+            this.TablaImportada= [];
             this.pk = '';
             this.tipo_soldadura='';
             this.pasada='';
@@ -1416,6 +1457,29 @@ export default {
             }
         },
 
+        autocompletarNumeroPasada : function(){
+
+            let cant_pasadas =  this.contarPasadaElemento(this.elemento_pasada);   
+            this.pasada = cant_pasadas + 1 ;
+
+        },
+        
+        contarPasadaElemento: function(elemento){
+
+            let cant = 0;
+            this.TablaPasadas.forEach(function(item){
+
+                if(elemento == item.elemento_pasada){
+                    cant++;
+                }
+
+            }.bind(this)); 
+
+
+            return cant;
+
+        },
+
         AddPasadas () {   
 
             if(this.elemento_pasada == ''){
@@ -1424,10 +1488,12 @@ export default {
                 return;
                
             }
-        /*
+
+            let cant_pasadas =  this.contarPasadaElemento(this.elemento_pasada);   
+
             if(this.formato == 'PLANTA'){
 
-                if(this.TablaDetalle[this.indexDetalle].pasadas.length == 1) {
+                if(cant_pasadas >= 1) {
                     toastr.error('Error : Formato PLANTA  acepta 1 pasada');       
                     return;
                 }
@@ -1435,12 +1501,12 @@ export default {
 
             if(this.formato == 'DUCTO'){
 
-                if(this.TablaDetalle[this.indexDetalle].pasadas.length == 6) {
+                if(cant_pasadas >= 6) {
                     toastr.error('Error : Formato DUCTO acepta 6 pasadas');       
                      return;
                 }
             }
-      */     
+        
             if(this.soldador1) {
 
                 this.TablaPasadas.push({ 
@@ -1617,11 +1683,19 @@ export default {
 
         },
 
+   
+
         ModalImportarSoldadores : function(){         
       
             document.getElementById("sheetjs-input").value = "";
             $('#modal-Importar-Soldadores').modal('show');            
 
+        },
+
+        selectPosPasadas : function(index){
+
+            this.indexPasada = index ;
+         
         },
 
         ClonarSoldadores : function(){
@@ -2102,6 +2176,7 @@ export default {
 </script>
 
 <style scoped>
+
 .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
      background-color: #eee;
 }
@@ -2110,6 +2185,14 @@ export default {
     margin-left: 0px;
 }
 
-
-
+@media (max-width: 767px) {
+    .table-responsive .dropdown-menu {
+        position: static !important;
+    }
+}
+@media (min-width: 768px) {
+    .table-responsive {
+        overflow: inherit;
+    }
+}
 </style>
