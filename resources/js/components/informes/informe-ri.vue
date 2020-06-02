@@ -28,7 +28,7 @@
                                 <div v-else>
                                      <label for="pk">PK</label> 
                                 </div>
-                               <input type="number" v-model="pk" class="form-control" id="pk" :disabled="(!isGasoducto)" min="0">                           
+                               <input type="number" v-model="pk" class="form-control" id="pk" :disabled="(!isGasoducto) || reparacion_sn" min="0">                           
                             </div>                            
                         </div>
 
@@ -1133,8 +1133,7 @@ export default {
                   if(this.index_ot_obra_tipo_soldaduras != -1){               
 
                       this.ot_tipo_soldadura_r = this.ot_obra_tipo_soldaduras[this.index_ot_obra_tipo_soldaduras];
-                      this.getElementosReparacion();
-
+                      this.getElementosReparacion();                     
                   }
 
               }           
