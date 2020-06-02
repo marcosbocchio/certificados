@@ -28,7 +28,7 @@
                                 <div v-else>
                                      <label for="pk">PK</label> 
                                 </div>
-                               <input type="number" v-model="pk" class="form-control" id="pk" :disabled="(!isGasoducto) || reparacion_sn" min="0">                           
+                               <input type="number" v-model="pk" class="form-control" id="pk" :disabled="((!isGasoducto) || reparacion_sn)" min="0">                           
                             </div>                            
                         </div>
 
@@ -1107,7 +1107,7 @@ export default {
 
                 this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.informedata.obra }).then(res => {
 
-                    this.reparacion_sn = this.informe_ridata.reparacion_sn;
+                    this.reparacion_sn = this.informe_ridata.reparacion_sn == 1 ?  true : false;
                     this.index_ot_obra_tipo_soldaduras = this.ot_obra_tipo_soldaduras.findIndex(elemento => elemento.tipo_soldadura.codigo  == 'R' );
                     if(this.index_ot_obra_tipo_soldaduras != -1){
                         this.ot_tipo_soldadura_r = this.ot_obra_tipo_soldaduras[this.index_ot_obra_tipo_soldaduras];
