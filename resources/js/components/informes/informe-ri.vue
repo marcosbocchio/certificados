@@ -604,7 +604,7 @@
                                                 </td>
                                                 <td v-if="Pasada.elemento_pasada == elemento_pasada">
                                                     <div v-if="indexPasada == k ">       
-                                                        <v-select v-model="TablaPasadas[indexPasada].soldador2" :options="soldadores" label="codigo">
+                                                        <v-select v-model="TablaPasadas[indexPasada].soldador2" :options="soldadores" label="codigo" :disabled="(!isGasoducto || TablaPasadas[indexPasada].pasada!='1' || !TablaDetalle.length)">
                                                             <template slot="option" slot-scope="option">
                                                                 <span class="upSelect">{{ option.nombre }} </span> <br> 
                                                                 <span class="downSelect"> {{ option.codigo }} </span>
@@ -913,7 +913,7 @@ export default {
 
            // Formulario detalle
             pk:'',
-            pasada:'',
+            pasada:0,
             densidad:'',
             junta:'',
             junta_reparacion:'',

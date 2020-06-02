@@ -185,8 +185,7 @@
             <li title="Archivo modelo de  importación para soldadores"><a href="{{ route('software_download','Importacion_soldadores.csv') }}"><i class="fa fa-download"></i>Soldadores CSV</a></li>           
           </ul>
 
-        </li>
-       
+        </li>       
 
       </ul>
     </section>
