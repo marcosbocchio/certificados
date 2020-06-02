@@ -28,7 +28,7 @@
                                 <div v-else>
                                      <label for="pk">PK</label> 
                                 </div>
-                               <input type="number" v-model="pk" class="form-control" id="pk" :disabled="((!isGasoducto) || reparacion_sn)" min="0">                           
+                               <input type="number" v-model="pk" class="form-control" id="pk" :disabled="((!isGasoducto) || reparacion_sn== true || reparacion_sn == 1)" min="0">                           
                             </div>                            
                         </div>
 
