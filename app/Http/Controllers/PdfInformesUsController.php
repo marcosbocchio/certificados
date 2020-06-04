@@ -55,7 +55,7 @@ class PdfInformesUsController extends Controller
          $agente_acoplamiento = AgenteAcoplamientos::find($informe_us->agente_acoplamiento_id);
 
          $calibraciones_us = CalibracionesUs::where('informe_us_id',$informe_us->id)->with('Palpador')->get();
-
+       //  dd($calibraciones_us);
         $pdf = PDF::loadView('reportes.informes.us',compact('ot',
                                                                 'norma_ensayo',
                                                                 'norma_evaluacion',

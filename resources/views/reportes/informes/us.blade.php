@@ -270,7 +270,7 @@ b {
                     <td style="font-size: 10px; width:80px;text-align: center;"class="bordered-td">{{ strtoupper($calibracion->zapata) }}</td>
                     <td style="font-size: 10px; width:80px;text-align: center;" class="bordered-td">
                         @if ($calibracion->palpador)
-                          {{$calibracion->palpador->codigo}}    
+                          {{$calibracion->palpador->equipo->codigo}}    
                         @endif
                     </td>
                     <td style="font-size: 10px; width:79.7px;text-align: center;" class="bordered-td">
