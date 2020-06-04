@@ -24,6 +24,7 @@ use App\EstadosSuperficies;
 use App\CalibracionesUs;
 use App\User;
 use App\OtTipoSoldaduras;
+use App\AgenteAcoplamientos;
 
 class PdfInformesUsController extends Controller
 {
@@ -51,6 +52,8 @@ class PdfInformesUsController extends Controller
          $evaluador = User::find($informe->firma);
          $contratista = Contratistas::find($ot->contratista_id);
          $estado_superficie = EstadosSuperficies::find($informe_us->estado_superficie_id);
+         $agente_acoplamiento = AgenteAcoplamientos::find($informe_us->agente_acoplamiento_id);
+
          $calibraciones_us = CalibracionesUs::where('informe_us_id',$informe_us->id)->with('Palpador')->get();
 
         $pdf = PDF::loadView('reportes.informes.us',compact('ot',
@@ -70,6 +73,7 @@ class PdfInformesUsController extends Controller
                                                                 'material',
                                                                 'material_accesorio',
                                                                 'estado_superficie',
+                                                                'agente_acoplamiento',
                                                                 'calibraciones_us',
                                                                 'evaluador'
                                                         

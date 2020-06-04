@@ -121,6 +121,11 @@ class EquiposController extends Controller
         $equipo->descripcion = $request['descripcion'];
         $equipo->metodo_ensayo_id = $request['metodo_ensayos']['id'];
         $equipo->instrumento_medicion = $request['instrumento_medicion'];
+        if($request['metodo_ensayos']['metodo'] == 'US'){
+          $equipo->palpador_sn = $request['palpador_sn'];
+        }else{
+          $equipo->palpador_sn = 0;
+        }
         $equipo->save();
   
       }

@@ -25,6 +25,7 @@ use App\Generatrices;
 use App\Ots;
 use \stdClass;
 use App\OtTipoSoldaduras;
+use App\AgenteAcoplamientos;
 
 
 class InformesUsController extends Controller
@@ -155,7 +156,7 @@ class InformesUsController extends Controller
         $informeUs->informe_id = $informe->id;
         $informeUs->estado_superficie_id = $request->estado_superficie['id'];
         $informeUs->encoder = $request->encoder;
-        $informeUs->agente_acoplamiento  = $request->agente_acoplamiento;     
+        $informeUs->agente_acoplamiento_id  = $request->agente_acoplamiento['id'];     
         $informeUs->path1_calibracion = $request->path1_calibracion;
         $informeUs->path2_calibracion = $request->path2_calibracion;  
         $informeUs->path3_calibracion = $request->path3_calibracion;  
@@ -353,6 +354,8 @@ class InformesUsController extends Controller
         $informe_norma_ensayo = NormaEnsayos::find($informe->norma_ensayo_id);
         $informe_ejecutor_ensayo =(new OtOperariosController())->getEjecutorEnsayo($informe->ejecutor_ensayo_id);
         $informe_estado_superficie = EstadosSuperficies::find($informe_us->estado_superficie_id);
+        $informe_agente_acoplamiento = AgenteAcoplamientos::find($informe_us->agente_acoplamiento_id);
+
 
         $calibraciones  = $this->getCalibraciones($informe_us->id);
         $tabla_us_pa    = $this->getTabla_us_pa($informe_us->id);
@@ -384,6 +387,7 @@ class InformesUsController extends Controller
                                                  'informe_norma_ensayo',
                                                  'informe_ejecutor_ensayo',
                                                  'informe_estado_superficie',
+                                                 'informe_agente_acoplamiento',
                                                  'calibraciones',
                                                  'tabla_us_pa',
                                                  'tabla_me',

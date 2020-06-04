@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\MaterialRequest;
 use Illuminate\Support\Facades\DB;
+use Exception as Exception;
 use App\Materiales;
 use App\User;
-use Exception as Exception;
 
 class MaterialesController extends Controller
 {
@@ -27,7 +27,7 @@ class MaterialesController extends Controller
 
     public function paginate(Request $request){
 
-      return Materiales::orderBy('id','DESC')->paginate(10);
+      return Materiales::orderBy('codigo','DESC')->paginate(10);
 
     }
 
@@ -91,6 +91,8 @@ class MaterialesController extends Controller
       }
 
     }
+
+
     public function saveMaterial($request,$material){
 
       $material->codigo = $request['codigo'];

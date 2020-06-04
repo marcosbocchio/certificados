@@ -30,6 +30,7 @@
      :norma_ensayodata="{{$informe_norma_ensayo}}"
      :ejecutor_ensayodata="{{$informe_ejecutor_ensayo}}"
      :estado_superficiedata="{{$informe_estado_superficie}}"
+     :agente_acoplamientodata="{{$informe_agente_acoplamiento}}"
      :calibraciones_data = "{{ $calibraciones}}"
      :tabla_us_pa_data = "{{ $tabla_us_pa}}"
      :tabla_me_data = "{{ $tabla_me}}"

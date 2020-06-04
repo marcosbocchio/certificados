@@ -10,10 +10,7 @@ class CalibracionesUs extends Model
 
     public function Palpador(){
 
-        return $this->belongsTo('App\Palpadores','palpador_id','id')->withDefault([
-
-            'id' => null,              
-        ]);
-        
-        }
+        return $this->hasOne('App\InternoEquipos','id','palpador_id');
+    
+      }
 }

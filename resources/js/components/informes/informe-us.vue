@@ -175,16 +175,22 @@
                     <div class="col-md-3">                       
                         <div class="form-group" >
                             <label for="agente_acoplamiento">Agente Acoplamiento *</label>
-                            <input type="text" v-model="agente_acoplamiento" class="form-control" id="agente_acoplamiento">
+                            <v-select v-model="agente_acoplamiento" label="codigo" :options="agente_acoplamientos">
+                                <template slot="option" slot-scope="option">
+                                    <span class="upSelect">{{ option.codigo }}</span> <br> 
+                                    <span class="downSelect"> {{ option.descripcion }} </span>
+                                </template>                                
+                            </v-select>   
+
                         </div>         
                     </div>
 
                     <div class="col-md-3">                       
-                            <div class="form-group" >
-                                <label for="ejecutor_ensayo">Ejecutor Ensayo *</label>
-                                <v-select v-model="ejecutor_ensayo" label="name" :options="ejecutor_ensayos"></v-select>   
-                            </div>         
-                        </div>  
+                        <div class="form-group" >
+                            <label for="ejecutor_ensayo">Ejecutor Ensayo *</label>
+                            <v-select v-model="ejecutor_ensayo" label="name" :options="ejecutor_ensayos"></v-select>   
+                        </div>         
+                    </div>  
 
                   </div>
                </div>
@@ -207,14 +213,21 @@
                                     <input type="text" v-model="zapata" class="form-control" id="zapata">
                                 </div>         
                             </div>
-    
-                            <div class="col-md-3" >                       
+
+                            <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="palpador" title="Palpador">Palpador *</label>
-                                    <v-select v-model="palpador" label="codigo" :options="palpadores" id="palpador"></v-select>   
-                                </div>      
-                            </div>  
-    
+                                    <label>Palpador *</label>
+                                    
+                                        <v-select  v-model="palpador" :options="palpadores" label="nro_interno">
+                                            <template slot="option" slot-scope="option">
+                                                <span class="upSelect">{{ option.nro_interno }}</span> <br> 
+                                                <span class="downSelect"> {{ option.equipo.codigo }} </span>
+                                            </template>
+                                        </v-select>
+
+                                </div>
+                            </div>      
+
                             <div class="col-md-3">                       
                                 <div class="form-group" >
                                     <label for="frecuencia" title="Frecuencia (Mhz)">Frecuencia (Mhz) *</label>
@@ -359,7 +372,7 @@
                                             <tbody>
                                                 <tr v-for="(calibracion,k) in  (calibraciones)" :key="k" >                                         
                                                     <td>{{ calibracion.zapata }}</td>                                            
-                                                    <td>{{ calibracion.palpador.codigo }} </td>
+                                                    <td>{{ calibracion.palpador.nro_interno }} </td>
                                                     <td>{{ calibracion.frecuencia }} </td>
                                                     <td>{{ calibracion.angulo_apertura }} </td>    
                                                     <td>{{ calibracion.rango }}</td>
@@ -927,6 +940,11 @@ export default {
             required : false
             },
 
+        agente_acoplamientodata : {
+            type : [ Object ],  
+            required : false
+            },
+
         metodo : {
             type : String,
             required :true
@@ -1035,8 +1053,8 @@ export default {
         cantidad_generatrices_me:'',
 
         tecnicas:[],
-        palpadores:[],
         estados_superficies:[],
+        agente_acoplamientos : [],
 
         calibraciones:[],
         Tabla_us_pa:[],
@@ -1061,6 +1079,7 @@ export default {
       this.$store.dispatch('loadMateriales');
       this.$store.dispatch('loadDiametros');
       this.getTecnicas();
+      this.getAgenteAcomplamiento();
       this.$store.dispatch('loadInternoEquipos',{ 'metodo' : this.metodo, 'activo_sn' : 1, 'tipo_penetrante' : 'null' });       
       this.$store.dispatch('loadProcedimietosOtMetodo',  
         { 'ot_id' : this.otdata.id, 'metodo' : this.metodo }).then(response =>{ 
@@ -1086,7 +1105,7 @@ export default {
 
     computed :{
 
-        ...mapState(['url','AppUrl','ot_obra_tipo_soldaduras','materiales','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','ejecutor_ensayos','interno_equipos']),     
+        ...mapState(['url','AppUrl','ot_obra_tipo_soldaduras','materiales','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','ejecutor_ensayos','interno_equipos','palpadores']),     
 
         numero_inf_code : function()  {
 
@@ -1163,7 +1182,7 @@ export default {
                this.ejecutor_ensayo = this.ejecutor_ensayodata;   
                this.estado_superficie = this.estado_superficiedata;      
                this.encoder = this.informe_usdata.encoder;
-               this.agente_acoplamiento = this.informe_usdata.agente_acoplamiento;
+               this.agente_acoplamiento = this.agente_acoplamientodata;
                this.observaciones = this.informedata.observaciones            
                this.calibraciones = this.calibraciones_data;
                this.Tabla_us_pa = this.tabla_us_pa_data; 
@@ -1171,10 +1190,10 @@ export default {
                this.SetearBlockCalibraciones();
                this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.informedata.obra });
             }else{
-                   this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.informedata.obra });
-            }
+                this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.obra });
 
-        },       
+              }
+         },       
 
         setObra : function(value){
 
@@ -1237,14 +1256,24 @@ export default {
             });
          },
 
-         getPalpadores: function(){
+         getAgenteAcomplamiento: function(){
              
             axios.defaults.baseURL = this.url ;
-            var urlRegistros = 'palpadores' + '?api_token=' + Laravel.user.api_token;        
+            var urlRegistros = 'agente_acoplamientos' + '?api_token=' + Laravel.user.api_token;        
             axios.get(urlRegistros).then(response =>{
-            this.palpadores = response.data
+            this.agente_acoplamientos = response.data
             });
          },
+
+        getPalpadores : function(){
+          
+             this.$store.dispatch('loadPalpadores').then(response =>{
+            
+                this.palpador ='';
+
+            });  
+
+        },
     
         getEspesores : function(){
             this.espesor='';

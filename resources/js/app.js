@@ -167,6 +167,10 @@ Vue.component('table-materiales', require('./components/abm-maestro/materiales/t
 Vue.component('nuevo-materiales', require('./components/abm-maestro/materiales/nuevo-materiales.vue').default);
 Vue.component('editar-materiales', require('./components/abm-maestro/materiales/editar-materiales.vue').default);
 
+Vue.component('table-agente_acoplamientos', require('./components/abm-maestro/agente-acoplamientos/table-agente_acoplamientos.vue').default);
+Vue.component('nuevo-agente_acoplamientos', require('./components/abm-maestro/agente-acoplamientos/nuevo-agente_acoplamientos.vue').default);
+Vue.component('editar-agente_acoplamientos', require('./components/abm-maestro/agente-acoplamientos/editar-agente_acoplamientos.vue').default);
+
 Vue.component('table-roles', require('./components/abm-maestro/roles/table-roles.vue').default);
 Vue.component('editar-roles', require('./components/abm-maestro/roles/editar-roles.vue').default);
 Vue.component('nuevo-roles', require('./components/abm-maestro/roles/nuevo-roles.vue').default);
@@ -312,6 +316,7 @@ state: {
         interno_equipo_show:{},
         interno_equipos:[], 
         instrumentos_mediciones:[],
+        palpadores : [],
         interno_fuentes:[],
         fuentes:[],
         equipos:[],
@@ -600,6 +605,20 @@ actions : {
           axios.get(urlRegistros).then((response) => {
             console.log(response.data);
             commit('getInstrumentosMediciones', response.data)   
+            resolve()       
+          })        
+          })
+        }, 
+
+        loadPalpadores({
+          commit}) {
+          axios.defaults.baseURL = store.state.url ;
+          var urlRegistros = 'palpadores' + '?api_token=' + Laravel.user.api_token;         
+          console.log(urlRegistros);
+          return new Promise((resolve, reject) => {
+          axios.get(urlRegistros).then((response) => {
+            console.log(response.data);
+            commit('getPalpadores', response.data)   
             resolve()       
           })        
           })
@@ -1027,6 +1046,10 @@ actions : {
 
       getInstrumentosMediciones(state, instrumentos_mediciones) {
         state.instrumentos_mediciones = instrumentos_mediciones
+      },
+
+      getPalpadores(state, palpadores) {
+        state.palpadores = palpadores
       },
 
       getParticulas(state, particulas) {

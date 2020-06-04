@@ -7,21 +7,40 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Editar</h4>
                 </div>
-                <div class="modal-body">    
-                
-                   
-                    <label for="codigo">Código *</label>                   
-                    <input autocomplete="off" v-model="editRegistro.codigo" type="text" name="codigo" class="form-control" value="">
-                    
-                    <label for="name">Descripción</label>                   
-                    <input autocomplete="off" type="text" name="descripcion" class="form-control" v-model="editRegistro.descripcion" value="">              
 
-                    <label for="metodo_ensayo">Método de Ensayo *</label>      
-                    <v-select v-model="metodo_ensayos" label="metodo" :options="metodos_ensayos" @input="resetInstrumentoMedicion" ></v-select> 
+                <div class="modal-body">                    
+
+                   <div class="col-md-12">
+                     <div class="form-group">                   
+                        <label for="codigo">Código *</label>                   
+                        <input autocomplete="off" v-model="Registro.codigo" type="text" name="codigo" class="form-control" value="">
+                     </div>
+                   </div>
                     
-                    <label for="instrumento_medicion">Instrumento Medición </label>
-                    <v-select v-model="editRegistro.instrumento_medicion" :options="instrumentos_mediciones" :disabled="((metodo_ensayos.metodo != 'LP') && (metodo_ensayos.metodo != 'PM'))"></v-select>
-              
+                   <div class="col-md-12">
+                     <div class="form-group">
+                        <label for="name">Descripción</label>                   
+                        <input autocomplete="off" type="text" name="descripcion" class="form-control" v-model="Registro.descripcion" value="">  
+                     </div>
+                   </div>
+            
+
+                    <div class="col-md-12">
+                       <div class="form-group">   
+                            <label for="metodo_ensayo">Método de Ensayo *</label>      
+                                <input v-if="metodo_ensayos.metodo == 'US'" type="checkbox" id="checkbox" v-model="Registro.palpador_sn" style="float:right"> 
+                                <label v-if="metodo_ensayos.metodo == 'US'" for="tipo" style="float:right;margin-right: 5px;">PALPADOR</label>   
+                            <v-select v-model="metodo_ensayos" label="metodo" :options="metodos_ensayos" @input="resetInstrumentoMedicion" ></v-select> 
+                      </div>
+                    </div>
+
+                    <div class="col-md-12">
+                       <div class="form-group">          
+                          <label for="instrumento_medicion">Instrumento Medición </label>
+                          <v-select v-model="Registro.instrumento_medicion" :options="instrumentos_mediciones" :disabled="((metodo_ensayos.metodo != 'LP') && (metodo_ensayos.metodo != 'PM'))"></v-select>
+                       </div>
+                    </div>
+
                 </div>
             
                 <div class="modal-footer">
@@ -49,10 +68,12 @@ export default {
     },
     data() { return {
     
-        editRegistro : {           
+        Registro : {           
             'codigo'  : '',
             'descripcion'  : '',
-            'instrumento_medicion' : '',             
+            'instrumento_medicion' : '',     
+            'palpador_sn':false,        
+        
          },
          instrumentos_mediciones :  ['Luxómetro luz blanca','Lampara luz UV'] ,
          metodo_ensayos :'',    
@@ -83,10 +104,12 @@ export default {
                
                 this.$nextTick(function () { 
 
-                    this.editRegistro.codigo = this.selectRegistro.codigo;
-                    this.editRegistro.descripcion = this.selectRegistro.descripcion;
-                    this.editRegistro.instrumento_medicion = this.selectRegistro.instrumento_medicion;         
+                    this.Registro.codigo = this.selectRegistro.codigo;
+                    this.Registro.descripcion = this.selectRegistro.descripcion;
+                    this.Registro.palpador_sn = this.selectRegistro.palpador_sn;         
+                    this.Registro.instrumento_medicion = this.selectRegistro.instrumento_medicion;         
                     this.metodo_ensayos = this.selectRegistro.metodo_ensayos;   
+
                 
                     $('#editar').modal('show');               
 
@@ -96,7 +119,7 @@ export default {
 
             resetInstrumentoMedicion : function () {               
              
-                this.newRegistro.instrumento_medicion = '';
+                this.Registro.instrumento_medicion = '';
                
             },   
 
@@ -106,7 +129,7 @@ export default {
                 var urlRegistros = 'equipos/' + this.selectRegistro.id;                         
                 axios.put(urlRegistros, {   
                     
-                ...this.editRegistro,              
+                ...this.Registro,              
                 'metodo_ensayos' : this.metodo_ensayos,                    
               
                 }).then(response => {
@@ -114,7 +137,7 @@ export default {
                   this.errors=[];
                   $('#editar').modal('hide');
                   toastr.success('Equipo editado con éxito');         
-                  this.editRegistro={}
+                  this.Registro={}
                   
                 }).catch(error => {                   
                     this.errors = error.response.data.errors;

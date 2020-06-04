@@ -85,6 +85,9 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('tecnicas_graficos/{id}', 'TecnicasGraficosController@index');
     Route::get('tecnica_distancias/{id}/diametro/{diametro}', 'TecnicaDistanciasController@TecnicaDistanciasDiametro');
     Route::resource('estados_superficies', 'EstadosSuperficiesController');
+    Route::get('agente_acoplamientos/paginate', 'AgenteAcoplamientosController@paginate'); 
+    Route::resource('agente_acoplamientos', 'AgenteAcoplamientosController');
+
     Route::resource('palpadores', 'PalpadoresController');
     Route::resource('generatrices', 'GeneratricesController');
 

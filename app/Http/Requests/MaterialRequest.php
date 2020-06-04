@@ -21,6 +21,7 @@ class MaterialRequest extends FormRequest
      *
      * @return array
      */
+    
     public function rules()
     {
         return [
@@ -33,7 +34,7 @@ class MaterialRequest extends FormRequest
     {
             return [
                 'codigo'                   => 'código',
-                'descripcion'                  => 'descripción',
+                'descripcion'              => 'descripción',
             ];
      
     }

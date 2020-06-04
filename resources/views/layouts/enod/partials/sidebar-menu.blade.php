@@ -107,6 +107,10 @@
                 @can('M_interno_fuentes')
                   <li><a href="{{ route('Interno-fuentes') }}">Interno Fuentes</a></li>
                 @endcan
+
+                @can('M_agente_ac')
+                  <li><a href="{{ route('agente-acoplamiento') }}">Agente Acoplamiento</a></li>
+                @endcan
     
                 @can('M_roles')
                   <li><a href="{{ route('roles') }}">Roles</a></li>
@@ -182,7 +186,9 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="{{ route('software_download','INDUSTREX V4.2 Lite Setup.exe') }}"><i class="fa fa-download"></i>INDUSTREX V4.2 Lite</a></li>           
-            <li title="Archivo modelo de  importación para soldadores"><a href="{{ route('software_download','Importacion_soldadores.csv') }}"><i class="fa fa-download"></i>Soldadores CSV</a></li>           
+            @can('enod')
+                <li title="Formato Importación Soldadores CSV"><a href="{{ route('software_download','Importacion_soldadores.csv') }}"><i class="fa fa-download"></i>SOLDADORES CSV</a></li>           
+            @endcan
           </ul>
 
         </li>       

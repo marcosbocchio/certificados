@@ -64,7 +64,7 @@ class InformeUsRequest extends FormRequest
             'ejecutor_ensayo'           => 'required',
             'estado_superficie'         => 'required',
             'encoder'                   => 'required|max:15',
-            'agente_acoplamiento'       => 'required|max:10',
+            'agente_acoplamiento'       => 'required',
         ];
 
         $validacion_completa =array_merge($condicional_espesor,$validacion);

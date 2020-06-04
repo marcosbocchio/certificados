@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Palpadores;
+use App\InternoEquipos;
 
 class PalpadoresController extends Controller
 {
@@ -14,7 +14,14 @@ class PalpadoresController extends Controller
      */
     public function index()
     {
-        return  Palpadores::all();
+       
+        return  InternoEquipos::join('equipos','equipos.id','=','interno_equipos.equipo_id') 
+                            ->where('interno_equipos.activo_sn',1)
+                            ->where('equipos.palpador_sn',1) 
+                            ->Select('interno_equipos.*')
+                            ->with('equipo')
+                            ->with('internoFuente')
+                            ->get();    
     }
 
     /**
