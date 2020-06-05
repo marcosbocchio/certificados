@@ -1193,12 +1193,7 @@ export default {
          },       
 
         setObra : function(value){
-
-            console.log('entro en el setobra del ri',this.obra);
-
             this.obra = value;
-
-           console.log('entro en el setobra del ri',this.obra);
             this.ot_tipo_soldadura='';
             this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.obra });
         },
@@ -1293,9 +1288,7 @@ export default {
         },
 
 
-        addCalibraciones : function () {   
-            
-            console.log('entro en add calibraciones');
+        addCalibraciones : function () {               
             
             if (this.tecnica.codigo !='ME' && !this.zapata){
 
@@ -1926,7 +1919,6 @@ export default {
 
        Update : function() {
 
-            console.log('entro para actualizar' );
             this.errors =[];          
 
             var urlRegistros = 'informes_us/' + this.informedata.id  ;      

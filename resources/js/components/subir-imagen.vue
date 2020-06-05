@@ -103,8 +103,6 @@ export default {
             default:false,
 
           }
-
-
        
       },
    
@@ -152,6 +150,7 @@ export default {
        eventDeleteFile.$on('delete', this.DeleteArchivo);     
        this.images[0].src ='/' + this.path_inicial;
        this.images[0].thumb  ='/' + this.path_inicial;
+       this.getExtension(this.path_inicial);
    },
      
 
@@ -160,25 +159,13 @@ export default {
 
         path_inicial : function(val){
             
-            this.path = val;
-
-            if(val){
-
-                let extension = (val.substring(val.lastIndexOf(".") + 1)).toLowerCase();
-                if(extension == 'pdf'){
-                    this.isPdf = true;
-                    
-                }
-                this.extension = extension;
-            }
+            this.getExtension(val);
         },
         
         path : function(val) {
 
             this.images[0].src ='/' + val;
             this.images[0].thumb  ='/' + val;
-
-            console.log('entro en path iamgessss');
         },      
         
     },
@@ -187,6 +174,7 @@ export default {
          
          ...mapState(['url','AppUrl'])
      },
+     
     methods :{ 
 
     openGallery(index) {
@@ -201,6 +189,24 @@ export default {
             return false;
         }
     },
+
+    getExtension(val){
+
+        this.path = val;
+
+            if(val){
+
+                let extension = (val.substring(val.lastIndexOf(".") + 1)).toLowerCase();
+                if(extension == 'pdf'){
+                    
+                    this.isPdf = true;
+                    
+                }
+
+                this.extension = extension;
+            }
+
+    }, 
   
 
     onFileSelected(event) {          
