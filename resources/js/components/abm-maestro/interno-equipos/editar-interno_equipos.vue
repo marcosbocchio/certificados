@@ -23,10 +23,10 @@
                     <label for="equipos">Equipo *</label>      
                     <v-select v-model="equipo" label="codigo" :options="equipos">
                         <template slot="option" slot-scope="option">
-                            <span class="upSelect">{{ option.nro_serie }}</span> <br> 
-                            <span class="downSelect"> {{ option.fuente.codigo }} </span>
+                            <span class="upSelect">{{ option.codigo }}</span> <br> 
+                            <span class="downSelect"> {{ option.descripcion }} </span> 
                         </template>
-                    </v-select>              
+                    </v-select>               
 
                     <label>Fuente </label>
                     <v-select  v-model="interno_fuente" :options="interno_fuentes" label="nro_serie">
