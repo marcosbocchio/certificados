@@ -22,7 +22,7 @@
                     <div class="col-md-3">
                         <div class="form-group" >
                             <label for="componente">Componente *</label>
-                            <input type="text" v-model="componente" class="form-control" id="componente">
+                            <input type="text" v-model="componente" class="form-control" id="componente" maxlength="20">
                         </div>                            
                     </div>
 
@@ -45,7 +45,7 @@
                     <div class="col-md-3">
                         <div class="form-group" >
                             <label for="plano_isom">Plano / Isom *</label>
-                            <input type="text" v-model="plano_isom" class="form-control" id="plano_isom">
+                            <input type="text" v-model="plano_isom" class="form-control" id="plano_isom" maxlength="10">
                         </div>                            
                     </div>
 
