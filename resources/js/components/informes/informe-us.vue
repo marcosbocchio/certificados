@@ -1189,10 +1189,7 @@ export default {
                this.Tabla_me = this.tabla_me_data; 
                this.SetearBlockCalibraciones();
                this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.informedata.obra });
-            }else{
-                this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.obra });
-
-              }
+            }
          },       
 
         setObra : function(value){

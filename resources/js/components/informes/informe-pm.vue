@@ -749,11 +749,7 @@ export default {
                this.getParticulas();
                this.iluminacion = this.iluminacion_data;
                this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.informedata.obra });
-            }else{
-                
-                this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.obra });
-
-            }         
+            }       
 
         },   
         
