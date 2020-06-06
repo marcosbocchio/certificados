@@ -1,39 +1,59 @@
 <template>
     <div>       
+        <div class="col-md-12">
           <!-- small box -->
           <div class="small-box bg-custom-1">
             <div class="inner">
               <h3>{{users_ot_operarios.length}}</h3>
 
-              <p>Operadores</p>
+              <p>Operadores / Ayudantes</p>
             </div>
             <div class="icon">
                  <i class="ion ion-person-add"></i>
             </div>
             <a href="#" class="small-box-footer">Detail <i class="fa  fa-arrow-circle-down"></i></a>
           </div>
-        
-        <div class="clearfix"></div>
-      
+       </div> 
+       <div class="clearfix"></div>
+      <div class="col-md-6">
         <div v-show="$can('T_operador_actualiza')">
             <div class="box box-custom-enod">
                 <div class="box-body">  
                     <div class="form-group">
-                        <label>Operadores</label>
-                        <v-select v-model="usuario" label="name" :options="operadores" ></v-select>
+                        <label>Operador</label>
+                        <v-select v-model="operador" label="name" :options="operadores" ></v-select>
                     </div> 
                     <div class="form-group">                    
                         <span>
-                            <button type="button" @click="addOperario(usuario.id)"><span class="fa fa-plus-circle"></span></button>                            
+                            <button type="button" @click="addOperario(operador.id,'operador')"><span class="fa fa-plus-circle"></span></button>                            
                         </span>
                     </div>
                  </div>
             </div>
         </div>
+      </div>
+      <div class="col-md-6">
+        <div v-show="$can('T_operador_actualiza')">
+            <div class="box box-custom-enod">
+                <div class="box-body">  
+                    <div class="form-group">
+                        <label>Ayudante</label>
+                        <v-select v-model="ayudante" label="name" :options="operadores" ></v-select>
+                    </div> 
+                    <div class="form-group">                    
+                        <span>
+                            <button type="button" @click="addOperario(ayudante.id,'ayudante')"><span class="fa fa-plus-circle"></span></button>                            
+                        </span>
+                    </div>
+                 </div>
+            </div>
+        </div>
+      </div>
 
+    <div class="col-md-6">
         <div class="box box-custom-enod top-buffer">
             <div class="box-header with-border">
-            <h3 class="box-title">OPERARIOS ASIGNADOS A LA ORDEN DE TRABAJO</h3>
+            <h3 class="box-title">OPERADORES ASIGNADOS A LA ORDEN DE TRABAJO</h3>
 
             <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -52,9 +72,9 @@
                         </thead>
                         <tbody>
                             <tr v-for="(users_ot_operario,k) in users_ot_operarios" :key="k" @click="selectDoc(users_ot_operario.id)" :class="{selected: user_ot_operario_id === users_ot_operario.id}" class="pointer">                                 
-                                <td> {{users_ot_operario.name}}</td>     
-                                <td> {{users_ot_operario.email}}</td>         
-                                <td> <i class="fa fa-minus-circle" @click="removeOperarios(k)" ></i></td>
+                                <td v-if="users_ot_operario.ayudante_sn == 0"> {{users_ot_operario.name}}</td>     
+                                <td v-if="users_ot_operario.ayudante_sn == 0"> {{users_ot_operario.email}}</td>         
+                                <td v-if="users_ot_operario.ayudante_sn == 0"> <i class="fa fa-minus-circle" @click="removeOperarios(k)" ></i></td>
                             </tr>                       
                             
                         </tbody>
@@ -62,11 +82,48 @@
                 </div>
             </div> 
         </div> 
-        <div v-show="$can('T_operador_actualiza')">
-            <button class="btn btn-primary" v-on:click.prevent="submit()">Actualizar</button>               
-        </div>
-           
-            <div class="clearfix"></div>
+    </div>
+    <div class="col-md-6">
+        <div class="box box-custom-enod top-buffer">
+            <div class="box-header with-border">
+            <h3 class="box-title">AYUDANTES ASIGNADOS A LA ORDEN DE TRABAJO</h3>
+
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>                       
+            </div>
+            </div>
+            <div class="box-body">                        
+                <div class="table-responsive">          
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>NOMBRE</th>
+                                <th>EMAIL</th>                                                     
+                                <th colspan="2">&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(users_ot_ayudante,k) in users_ot_operarios" :key="k" @click="selectDoc(users_ot_ayudante.id)" :class="{selected: user_ot_operario_id === users_ot_ayudante.id}" class="pointer">                                 
+                                <td v-if="users_ot_ayudante.ayudante_sn == 1"> {{users_ot_ayudante.name}}</td>     
+                                <td v-if="users_ot_ayudante.ayudante_sn == 1"> {{users_ot_ayudante.email}}</td>         
+                                <td v-if="users_ot_ayudante.ayudante_sn == 1"> <i class="fa fa-minus-circle" @click="removeOperarios(k)" ></i></td>
+                            </tr>                       
+                            
+                        </tbody>
+                    </table>                     
+                </div>
+            </div> 
+        </div> 
+    </div>
+    <div class="col-md-12">
+            <div v-show="$can('T_operador_actualiza')">
+                <button class="btn btn-primary" v-on:click.prevent="submit()">Actualizar</button>               
+            </div>
+
+    </div>
+   <div class="clearfix"></div>
+     <div class="col-md-12">
             <div class="top-buffer" >
                 <div class="box box-custom-enod">
                     <div class="box-header with-border">
@@ -102,6 +159,8 @@
                     </div> 
                 </div> 
             </div>
+
+     </div>      
         <div class="clearfix"></div>
     </div>    
 </template>
@@ -125,7 +184,9 @@ export default {
 
       users_ot_operarios :[],
       usuarios:[],
-      usuario:{},   
+      operador : {},
+      ayudante : {},
+
       documentaciones : [],    
     
     }    
@@ -143,17 +204,33 @@ export default {
      },
   methods :{
  
-    addOperario : function(id){
+    addOperario : function(id,tipo){
       
 
         if (this.existeOperario(id)){
-                toastr.error('El operador ya existe en la OT');  
-        }else if(this.usuario.name){
-               console.log('agregando operario');
-            this.users_ot_operarios.push({ 
-                 ...this.usuario
-            });
-            this.usuario = "";
+                toastr.error('El operador / ayudante ya existe en la OT');  
+        }else {        
+
+            if(tipo == 'ayudante'){
+
+                this.users_ot_operarios.push({ 
+
+                    ...this.ayudante,
+                    'ayudante_sn' : 1,
+
+                });
+                this.ayudante = "";
+            }else {
+
+                this.users_ot_operarios.push({ 
+
+                    ...this.operador,
+                    'ayudante_sn' : 0,
+
+                });
+
+                this.operador = '';
+            }
         }
     },
 
@@ -168,8 +245,8 @@ export default {
     existeOperario : function(id){
 
         let existe = false;
-        this.users_ot_operarios.forEach(function (operario) {           
-            console.log(operario.id,'==',id);
+        this.users_ot_operarios.forEach(function (operario) {   
+
             if(operario.id == id){              
                 existe = true ;
             }
@@ -184,7 +261,7 @@ export default {
         this.user_ot_operario_id = id;    
         axios.defaults.baseURL = this.url ;
         var urlRegistros = 'documentaciones/ot_operarios/' + this.ot_id_data + '/' + id + '?api_token=' + Laravel.user.api_token;      
-        console.log(urlRegistros);
+
         axios.get(urlRegistros).then(response =>{
             
                 this.documentaciones = response.data              

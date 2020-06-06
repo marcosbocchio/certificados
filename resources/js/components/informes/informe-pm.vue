@@ -108,7 +108,7 @@
                          <div class="col-md-3">
                             <div class="form-group">
                                 <label>Equipo *</label>
-                                <v-select  v-model="interno_equipo" :options="interno_equipos" label="nro_interno">
+                                <v-select  v-model="interno_equipo" :options="interno_equipos" label="nro_interno" @input="setKvMa()">
                                     <template slot="option" slot-scope="option">
                                         <span class="upSelect">{{ option.nro_interno }}</span> <br> 
                                         <span class="downSelect"> {{ option.equipo.codigo }} </span>
@@ -263,14 +263,14 @@
                         <div class="col-md-3">
                             <div class="form-group" >                        
                                 <label for="v">Voltaje *</label>
-                                <input  type="number" class="form-control" v-model="voltaje" id="v" max="999"> 
+                                <input type="number" class="form-control" v-model="voltaje" id="v" max="999"> 
                             </div>                             
                         </div> 
 
                         <div class="col-md-3">
                             <div class="form-group" >                        
                                 <label for="am">Am *</label>
-                                <input  type="number" class="form-control" v-model="am" id="am" max="99"> 
+                                <input type="number" class="form-control" v-model="am" id="am" max="999"> 
                             </div>                             
                         </div> 
 
@@ -863,6 +863,15 @@ export default {
                 });
 
         },        
+        
+        setKvMa : function() {
+               
+           console.log('seteamos el kv y el ma',this.interno_equipo.voltaje) ;
+
+            this.kv = this.interno_equipo.voltaje;
+            this.ma = this.interno_equipo.amperaje;
+
+        },
         
         getConstrastes: function(){
            

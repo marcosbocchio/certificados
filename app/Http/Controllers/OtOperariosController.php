@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\User;
 use App\OtOperarios;
 use Illuminate\Support\Collection as Collection;
+use Illuminate\Support\Facades\Log;
 
 class OtOperariosController extends Controller
 {
@@ -52,7 +53,7 @@ class OtOperariosController extends Controller
                                   ->join('ot_operarios','users.id','=','ot_operarios.user_id')
                                   ->join('ots','ot_operarios.ot_id','=','ots.id')  
                                   ->where('ots.id',$ot_id)
-                                  ->select('users.*','ot_operarios.id as ot_operario_id')
+                                  ->select('users.*','ot_operarios.id as ot_operario_id','ot_operarios.ayudante_sn')
                                   ->get();
                                
         return $users_ot_operarios;
@@ -91,6 +92,7 @@ class OtOperariosController extends Controller
      */
     public function store(Request $request)
     {
+        DB::enableQueryLog();
 
         DB::beginTransaction();
         try
@@ -115,13 +117,15 @@ class OtOperariosController extends Controller
                                  ->where('user_id',$ot_operario['user_id'])
                                  ->delete();
                     }
-                }
-             
+                }             
+
                foreach ( $request->operarios as $operario) {
 
-                    $ot_operarios_update =OtOperarios::firstOrCreate(
+                  Log::debug("VAR DE operario['ayudante_sn'] :" . $operario['ayudante_sn'] );
+
+                    $ot_operarios_update =OtOperarios::updateOrCreate(
                         ['ot_id' => $request->ot_id,'user_id' => $operario['id']],
-                        ['ot_id' => $request->ot_id,'user_id' => $operario['id']]
+                        ['ot_id' => $request->ot_id,'user_id' => $operario['id'],'ayudante_sn' => $operario['ayudante_sn']]
 
                     );
        
