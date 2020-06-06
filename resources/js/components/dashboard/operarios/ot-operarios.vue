@@ -5,7 +5,6 @@
           <div class="small-box bg-custom-1">
             <div class="inner">
               <h3>{{users_ot_operarios.length}}</h3>
-
               <p>Operadores / Ayudantes</p>
             </div>
             <div class="icon">
@@ -71,9 +70,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(users_ot_operario,k) in users_ot_operarios" :key="k" @click="selectDoc(users_ot_operario.id)" :class="{selected: user_ot_operario_id === users_ot_operario.id}" class="pointer">                                 
-                                <td v-if="users_ot_operario.ayudante_sn == 0"> {{users_ot_operario.name}}</td>     
-                                <td v-if="users_ot_operario.ayudante_sn == 0"> {{users_ot_operario.email}}</td>         
+                            <tr v-for="(users_ot_operario,k) in users_ot_operarios" :key="k" :class="{selected: index == k}" class="pointer">                                 
+                                <td v-if="users_ot_operario.ayudante_sn == 0" @click="selectDoc(k)"> {{users_ot_operario.name}}</td>     
+                                <td v-if="users_ot_operario.ayudante_sn == 0" @click="selectDoc(k)"> {{users_ot_operario.email}}</td>         
                                 <td v-if="users_ot_operario.ayudante_sn == 0"> <i class="fa fa-minus-circle" @click="removeOperarios(k)" ></i></td>
                             </tr>                       
                             
@@ -104,9 +103,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(users_ot_ayudante,k) in users_ot_operarios" :key="k" @click="selectDoc(users_ot_ayudante.id)" :class="{selected: user_ot_operario_id === users_ot_ayudante.id}" class="pointer">                                 
-                                <td v-if="users_ot_ayudante.ayudante_sn == 1"> {{users_ot_ayudante.name}}</td>     
-                                <td v-if="users_ot_ayudante.ayudante_sn == 1"> {{users_ot_ayudante.email}}</td>         
+                            <tr v-for="(users_ot_ayudante,k) in users_ot_operarios" :key="k" :class="{selected: index == k}" class="pointer">                                 
+                                <td v-if="users_ot_ayudante.ayudante_sn == 1" @click="selectDoc(k)"> {{users_ot_ayudante.name}}</td>     
+                                <td v-if="users_ot_ayudante.ayudante_sn == 1" @click="selectDoc(k)"> {{users_ot_ayudante.email}}</td>         
                                 <td v-if="users_ot_ayudante.ayudante_sn == 1"> <i class="fa fa-minus-circle" @click="removeOperarios(k)" ></i></td>
                             </tr>                       
                             
@@ -157,6 +156,9 @@
                             </table>                     
                        </div>
                     </div> 
+                      <div v-if="loading" class="overlay">
+                        <loading-spin></loading-spin>
+                    </div>
                 </div> 
             </div>
 
@@ -167,6 +169,8 @@
 
 <script>
 import {mapState} from 'vuex'
+import { mapMutations } from 'vuex';
+
 export default {
 
    props :{
@@ -176,18 +180,20 @@ export default {
        required : false
      },
      
-     ot_id_data : '',
-     user_ot_operario_id :'-1'
+     ot_id_data : {
+         type : Number,
+         required:true
+     },
   },
 
   data () { return {
-
+      
       users_ot_operarios :[],
       usuarios:[],
-      operador : {},
-      ayudante : {},
-
-      documentaciones : [],    
+      operador : '',
+      ayudante : '',
+      index :'-1',
+      documentaciones : []
     
     }    
   },
@@ -200,7 +206,7 @@ export default {
   },
   computed :{
 
-       ...mapState(['url','AppUrl','operadores'])
+       ...mapState(['url','AppUrl','operadores','loading'])
      },
   methods :{
  
@@ -209,7 +215,7 @@ export default {
 
         if (this.existeOperario(id)){
                 toastr.error('El operador / ayudante ya existe en la OT');  
-        }else {        
+        }else if(this.operador || this.ayudante) {        
 
             if(tipo == 'ayudante'){
 
@@ -220,6 +226,7 @@ export default {
 
                 });
                 this.ayudante = "";
+
             }else {
 
                 this.users_ot_operarios.push({ 
@@ -238,7 +245,7 @@ export default {
 
          this.users_ot_operarios.splice(index, 1);
          this.documentaciones = [];
-         this.user_ot_operario_id = '-1'
+         this.index = -1;
 
     },
     
@@ -256,8 +263,11 @@ export default {
         return existe;
     },
 
-    selectDoc : function(id){
+    selectDoc : function(k){
 
+        this.index = k ;
+        let id = this.users_ot_operarios[k].id ;
+        this.$store.commit('loading', true);
         this.user_ot_operario_id = id;    
         axios.defaults.baseURL = this.url ;
         var urlRegistros = 'documentaciones/ot_operarios/' + this.ot_id_data + '/' + id + '?api_token=' + Laravel.user.api_token;      
@@ -265,7 +275,7 @@ export default {
         axios.get(urlRegistros).then(response =>{
             
                 this.documentaciones = response.data              
-
+                this.$store.commit('loading', false);
             });     
     },
 
@@ -282,7 +292,6 @@ export default {
 
             }).then(response => {            
                 this.errors=[];     
-                console.log(response);                  
                 toastr.success('Operarios actualizados con éxito');                
                 
             }).catch(error => {

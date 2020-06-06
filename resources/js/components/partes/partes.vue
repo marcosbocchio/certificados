@@ -70,7 +70,7 @@
                         <div class="col-md-6">
                             <div class="form-group" >
                                 <label for="km_final">Operador </label>
-                                <v-select type="text" v-model="operador" id="responsable" label="name" :options="operadores"></v-select>
+                                <v-select type="text" v-model="operador" id="responsable" label="name" :options="operadores" @input="setResponsabilidad()"></v-select>
                             </div>                            
                         </div>
                         <div class="col-md-3">
@@ -794,6 +794,15 @@ export default {
             this.TablaInformesImportados=[];
             this.TablaMetodosImportados=[];
 
+        },
+
+        setResponsabilidad : function() {
+
+            if(this.operador){
+
+                this.responsabilidad = (this.operador.ayudante_sn == 1) ? 'AYUDANTE' : 'OPERADOR' ;
+
+            }
         },
         
         getOperadoresOt: function(){

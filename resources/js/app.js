@@ -297,6 +297,7 @@ state: {
         process.env.MIX_URL_PRO :
         process.env.MIX_URL_DEV,
         
+        loading : false ,
         fecha :'',
         operadores:[],
         obra_informe:'',
@@ -967,6 +968,11 @@ actions : {
 
     },
     mutations: {
+
+ 
+      loading(state, estado) {
+          state.loading = estado
+      },
 
       getFechaActual(state, fecha) {
         state.fecha = fecha
