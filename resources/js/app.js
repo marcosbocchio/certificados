@@ -297,7 +297,7 @@ state: {
         process.env.MIX_URL_PRO :
         process.env.MIX_URL_DEV,
         
-        loading : false ,
+        isLoading : false ,
         fecha :'',
         operadores:[],
         obra_informe:'',
@@ -971,7 +971,7 @@ actions : {
 
  
       loading(state, estado) {
-          state.loading = estado
+          state.isLoading = estado
       },
 
       getFechaActual(state, fecha) {

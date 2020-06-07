@@ -717,8 +717,10 @@
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->  
          
-        <loading :active.sync="isLoading"           
-                :is-full-page="fullPage">
+        <loading :active.sync="isLoading"   
+                 :loader="'bars'"
+                 :color="'red'"
+                 :is-full-page="'false'">
         </loading>  
           
        </div>
@@ -860,7 +862,6 @@ export default {
     data() {return {
 
             errors:[], 
-            isLoading: false,
             fullPage: false,         
             SheetJSFT : [
                 "xlsx", "xlsb", "xlsm", "xls", "xml", "csv", "txt", "ods", "fods", "uos", "sylk", "dif", "dbf", "prn", "qpw", "123", "wb*", "wq*", "html", "htm"
@@ -963,8 +964,8 @@ export default {
              }},
 
     created : function(){       
-        
-      this.isLoading =  true;
+    
+      this.$store.commit('loading', true);
       this.$store.dispatch('loadProcedimietosOtMetodo',  
         { 'ot_id' : this.otdata.id, 'metodo' : this.metodo }).then(response =>{ 
                 if(this.procedimientos.length == 0  ){
@@ -1058,7 +1059,7 @@ export default {
 
     computed :{
 
-        ...mapState(['url','AppUrl','ot_obra_tipo_soldaduras','materiales','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','ejecutor_ensayos','interno_equipos','fuentePorInterno','curie']),
+        ...mapState(['isLoading','url','AppUrl','ot_obra_tipo_soldaduras','materiales','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','ejecutor_ensayos','interno_equipos','fuentePorInterno','curie']),
 
            HabilitarClonarPasadas(){
 
@@ -1154,8 +1155,6 @@ export default {
                     this.index_ot_obra_tipo_soldaduras = this.ot_obra_tipo_soldaduras.findIndex(elemento => elemento.tipo_soldadura.codigo  == 'R' );
                 });
             }
-
-            this.isLoading =  false;
 
         },   
       
@@ -1383,6 +1382,8 @@ export default {
                 var urlRegistros = 'defectos_ri/planta/' + '?api_token=' + Laravel.user.api_token;        
                 axios.get(urlRegistros).then(response =>{
                 this.defectosRiPlanta = response.data
+                 this.$store.commit('loading', false);
+    
                 });
              
         },
