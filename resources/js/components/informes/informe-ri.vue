@@ -720,7 +720,7 @@
         <loading :active.sync="isLoading"   
                  :loader="'bars'"
                  :color="'red'"
-                 :is-full-page="'false'">
+                >
         </loading>  
           
        </div>
