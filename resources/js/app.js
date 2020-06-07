@@ -736,9 +736,12 @@ actions : {
         loadOperadores({
           commit}) {
            axios.defaults.baseURL = store.state.url ;
-           var urlRegistros ='ot-operarios/users' + '?api_token=' + Laravel.user.api_token;                
+           var urlRegistros ='ot-operarios/users' + '?api_token=' + Laravel.user.api_token;        
+           return new Promise((resolve, reject) => {           
            axios.get(urlRegistros).then((response) => {
-           commit('getOperadores', response.data)           
+           commit('getOperadores', response.data)    
+           resolve()       
+          })         
           })
         },
 
@@ -747,9 +750,6 @@ actions : {
            axios.defaults.baseURL = store.state.url ;
            var urlRegistros ='dosimetria_operador/operadores' + '?api_token=' + Laravel.user.api_token;      
            axios.get(urlRegistros).then((response) => {
-            console.log(urlRegistros);
-            console.log(response.data);       
-            console.log('entro en operadores dosimetria');  
            commit('getOperadoresDosimetria', response.data)           
           })
         },
@@ -760,11 +760,11 @@ actions : {
            axios.defaults.baseURL = store.state.url ;
            var urlRegistros ='dosimetria_resumen/year/'+ payload.year + '/operadores/' + payload.operadores + '?api_token=' + Laravel.user.api_token;    
            return new Promise((resolve, reject) => {   
-           axios.get(urlRegistros).then((response) => {
-           console.log(response.data);          
-           commit('getDosimetriaResumen', response.data)  
-           resolve()       
-          })         
+            axios.get(urlRegistros).then((response) => {
+            console.log(response.data);          
+            commit('getDosimetriaResumen', response.data)  
+            resolve()       
+            })         
           })
         },
 

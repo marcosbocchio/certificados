@@ -64,15 +64,13 @@
                     <table class="table table-hover table-striped">
                         <thead>
                             <tr>
-                                <th>NOMBRE</th>
-                                <th>EMAIL</th>                                                     
-                                <th colspan="2">&nbsp;</th>
+                                <th class="col-md-12">NOMBRE</th>                                                                                
+                                <th>&nbsp;</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr v-for="(users_ot_operario,k) in users_ot_operarios" :key="k" :class="{selected: index == k}" class="pointer">                                 
                                 <td v-if="users_ot_operario.ayudante_sn == 0" @click="selectDoc(k)"> {{users_ot_operario.name}}</td>     
-                                <td v-if="users_ot_operario.ayudante_sn == 0" @click="selectDoc(k)"> {{users_ot_operario.email}}</td>         
                                 <td v-if="users_ot_operario.ayudante_sn == 0"> <i class="fa fa-minus-circle" @click="removeOperarios(k)" ></i></td>
                             </tr>                       
                             
@@ -97,15 +95,13 @@
                     <table class="table table-hover table-striped">
                         <thead>
                             <tr>
-                                <th>NOMBRE</th>
-                                <th>EMAIL</th>                                                     
-                                <th colspan="2">&nbsp;</th>
+                                <th class="col-md-12">NOMBRE</th>
+                                <th>&nbsp;</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr v-for="(users_ot_ayudante,k) in users_ot_operarios" :key="k" :class="{selected: index == k}" class="pointer">                                 
                                 <td v-if="users_ot_ayudante.ayudante_sn == 1" @click="selectDoc(k)"> {{users_ot_ayudante.name}}</td>     
-                                <td v-if="users_ot_ayudante.ayudante_sn == 1" @click="selectDoc(k)"> {{users_ot_ayudante.email}}</td>         
                                 <td v-if="users_ot_ayudante.ayudante_sn == 1"> <i class="fa fa-minus-circle" @click="removeOperarios(k)" ></i></td>
                             </tr>                       
                             
@@ -156,12 +152,16 @@
                             </table>                     
                        </div>
                     </div> 
-                      <div v-if="loading" class="overlay">
+                      <div v-if="isLoadingC" class="overlay">
                         <loading-spin></loading-spin>
                     </div>
                 </div> 
             </div>
-
+        <loading :active.sync="isLoading"   
+                 :loader="'bars'"
+                 :color="'red'"
+                 >
+        </loading>  
      </div>      
         <div class="clearfix"></div>
     </div>    
@@ -170,9 +170,14 @@
 <script>
 import {mapState} from 'vuex'
 import { mapMutations } from 'vuex';
-
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 export default {
-
+    components: {
+        
+      Loading
+      
+    },
    props :{
 
        ot_operarios_data : {
@@ -193,20 +198,22 @@ export default {
       operador : '',
       ayudante : '',
       index :'-1',
-      documentaciones : []
+      documentaciones : [],
+      isLoadingC:false
     
     }    
   },
 
   created : function() {
-      
-      this.$store.dispatch('loadOperadores'); 
+
+      this.$store.commit('loading', true);
+      this.$store.dispatch('loadOperadores').then(res => { this.$store.commit('loading', false) }); 
       this.users_ot_operarios =  JSON.parse(JSON.stringify(this.ot_operarios_data));  
      
   },
   computed :{
 
-       ...mapState(['url','AppUrl','operadores','loading'])
+       ...mapState(['url','AppUrl','operadores','isLoading'])
      },
   methods :{
  
@@ -267,7 +274,7 @@ export default {
 
         this.index = k ;
         let id = this.users_ot_operarios[k].id ;
-        this.$store.commit('loading', true);
+        this.isLoadingC  = true;
         this.user_ot_operario_id = id;    
         axios.defaults.baseURL = this.url ;
         var urlRegistros = 'documentaciones/ot_operarios/' + this.ot_id_data + '/' + id + '?api_token=' + Laravel.user.api_token;      
@@ -275,7 +282,7 @@ export default {
         axios.get(urlRegistros).then(response =>{
             
                 this.documentaciones = response.data              
-                this.$store.commit('loading', false);
+                this.isLoadingC  = false;
             });     
     },
 
