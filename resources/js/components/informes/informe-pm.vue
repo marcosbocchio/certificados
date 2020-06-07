@@ -262,14 +262,14 @@
              
                         <div class="col-md-3">
                             <div class="form-group" >                        
-                                <label for="v">Voltaje *</label>
+                                <label for="v">Kv *</label>
                                 <input type="number" class="form-control" v-model="voltaje" id="v" max="999"> 
                             </div>                             
                         </div> 
 
                         <div class="col-md-3">
                             <div class="form-group" >                        
-                                <label for="am">Am *</label>
+                                <label for="am">mA *</label>
                                 <input type="number" class="form-control" v-model="am" id="am" max="999"> 
                             </div>                             
                         </div> 
@@ -419,6 +419,10 @@
        </div>
 
        <create-referencias :index="index_referencias" :tabla="tabla" :inputsData="inputsData" @setReferencia="AddReferencia"></create-referencias>
+        <loading :active.sync="isLoading"   
+            :loader="'bars'"
+            :color="'red'">
+        </loading> 
   </div>   
   
 </template>
@@ -433,11 +437,13 @@ import 'vue2-datepicker/locale/es';import {mapState} from 'vuex';
 import { eventSetReferencia } from '../event-bus';
 import { toastrInfo,toastrDefault } from '../toastrConfig';
 import moment from 'moment';
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 
 export default {
     components: {
 
-      
+      Loading
       
     },
 
@@ -636,7 +642,7 @@ export default {
     }},
 
     created : function() {
-
+      this.$store.commit('loading', true);
       this.getCliente();  
       this.$store.dispatch('loadMateriales');
       this.$store.dispatch('loadDiametros');
@@ -657,7 +663,7 @@ export default {
       this.getTiposMagnetizacon();
       this.getCorrientes();
       this.getConstrastes();
-      this.$store.dispatch('loadIluminaciones');
+      this.$store.dispatch('loadIluminaciones').then( res=>{ this.$store.commit('loading', false)});
       this.setEdit();      
     },
 
@@ -668,7 +674,7 @@ export default {
 
     computed :{
 
-        ...mapState(['url','AppUrl','materiales','ot_obra_tipo_soldaduras','diametros','espesores','procedimientos','norma_evaluaciones','particulas','norma_ensayos','iluminaciones','ejecutor_ensayos','interno_equipos','instrumentos_mediciones']),     
+        ...mapState(['isLoading','url','AppUrl','materiales','ot_obra_tipo_soldaduras','diametros','espesores','procedimientos','norma_evaluaciones','particulas','norma_ensayos','iluminaciones','ejecutor_ensayos','interno_equipos','instrumentos_mediciones']),     
 
         numero_inf_code : function()  {
 
@@ -868,8 +874,8 @@ export default {
                
            console.log('seteamos el kv y el ma',this.interno_equipo.voltaje) ;
 
-            this.kv = this.interno_equipo.voltaje;
-            this.ma = this.interno_equipo.amperaje;
+            this.voltaje = this.interno_equipo.voltaje;
+            this.am = this.interno_equipo.amperaje;
 
         },
         

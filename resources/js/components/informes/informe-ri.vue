@@ -719,8 +719,7 @@
          
         <loading :active.sync="isLoading"   
                  :loader="'bars'"
-                 :color="'red'"
-                >
+                 :color="'red'">
         </loading>  
           
        </div>

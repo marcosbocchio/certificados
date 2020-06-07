@@ -378,6 +378,10 @@
            </form>
        </div>
        <create-referencias :index="index_referencias" :tabla="tabla" :inputsData="inputsData" @setReferencia="AddReferencia"></create-referencias>
+        <loading :active.sync="isLoading"   
+            :loader="'bars'"
+            :color="'red'">
+        </loading> 
     </div>       
 </template>
 
@@ -390,12 +394,14 @@ import 'vue2-datepicker/locale/es';
 import { eventSetReferencia } from '../event-bus';
 import { toastrInfo,toastrDefault } from '../toastrConfig';
 import moment from 'moment';
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 
 export default {
 
 components: {
 
-      
+      Loading
       
     },
 
@@ -579,7 +585,7 @@ data() {return {
     },
 
     created :  function() {
-
+        this.$store.commit('loading', true)
         this.$store.dispatch('loadMateriales');
         this.$store.dispatch('loadDiametros');
         this.$store.dispatch('loadProcedimietosOtMetodo',  
@@ -596,7 +602,7 @@ data() {return {
         this.$store.dispatch('loadEjecutorEnsayo', this.otdata.id); 
         this.getMetodosTrabajoLp();  
         this.getAplicacionesLp();  
-        this.setEdit();     
+        this.setEdit();     tata
     },
 
     mounted : function() {
@@ -618,7 +624,7 @@ data() {return {
 
     computed :{
 
-        ...mapState(['url','AppUrl','materiales','ot_obra_tipo_soldaduras','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','interno_equipos','iluminaciones','penetrantes_tipo_liquido','reveladores_tipo_liquido','removedores_tipo_liquido','ejecutor_ensayos','fuentePorInterno']),     
+        ...mapState(['isLoading','url','AppUrl','materiales','ot_obra_tipo_soldaduras','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','interno_equipos','iluminaciones','penetrantes_tipo_liquido','reveladores_tipo_liquido','removedores_tipo_liquido','ejecutor_ensayos','fuentePorInterno']),     
 
         numero_inf_code : function()  {
 
@@ -816,7 +822,8 @@ data() {return {
             axios.defaults.baseURL = this.url ;
             var urlRegistros = 'aplicaciones_lp' + '?api_token=' + Laravel.user.api_token;        
             axios.get(urlRegistros).then(response =>{
-            this.aplicaciones_lp = response.data
+                this.aplicaciones_lp = response.data;
+                this.$store.commit('loading', false);
             });
          },
 

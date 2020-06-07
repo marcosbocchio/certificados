@@ -714,11 +714,14 @@ actions : {
         loadIluminaciones({
           commit}) {
           axios.defaults.baseURL = store.state.url ;
-          var urlRegistros = 'iluminaciones' + '?api_token=' + Laravel.user.api_token;        
+          var urlRegistros = 'iluminaciones' + '?api_token=' + Laravel.user.api_token;       
+          return new Promise((resolve, reject) => {           
           console.log(urlRegistros);
           axios.get(urlRegistros).then((response) => {
             console.log(response.data);
-            commit('getIluminaciones', response.data)           
+            commit('getIluminaciones', response.data)    
+            resolve()       
+          })         
           })
         },
 

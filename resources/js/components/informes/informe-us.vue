@@ -833,6 +833,10 @@
            </form>
         </div>
         <create-referencias :index="index_referencias" :tabla="tabla" :inputsData="inputsData" @setReferencia="AddReferencia_us_pa"></create-referencias>
+        <loading :active.sync="isLoading"   
+            :loader="'bars'"
+            :color="'red'">
+        </loading> 
     </div>
 </template>
 
@@ -844,11 +848,14 @@ import 'vue2-datepicker/locale/es';import {mapState} from 'vuex';
 import { eventSetReferencia } from '../event-bus';
 import { toastrInfo,toastrDefault } from '../toastrConfig';
 import moment from 'moment';
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 
 export default {
     
     components: {
 
+        Loading
       
     },
 
@@ -1074,7 +1081,7 @@ export default {
     },
 
     created : function() {
-        
+      this.$store.commit('loading', true);
       this.getCliente();  
       this.$store.dispatch('loadMateriales');
       this.$store.dispatch('loadDiametros');
@@ -1105,7 +1112,7 @@ export default {
 
     computed :{
 
-        ...mapState(['url','AppUrl','ot_obra_tipo_soldaduras','materiales','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','ejecutor_ensayos','interno_equipos','palpadores']),     
+        ...mapState(['isLoading','url','AppUrl','ot_obra_tipo_soldaduras','materiales','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','ejecutor_ensayos','interno_equipos','palpadores']),     
 
         numero_inf_code : function()  {
 
@@ -1283,7 +1290,8 @@ export default {
             axios.defaults.baseURL = this.url ;
             var urlRegistros = 'generatrices' + '?api_token=' + Laravel.user.api_token;        
             axios.get(urlRegistros).then(response =>{
-            this.generatrices = response.data
+            this.generatrices = response.data;
+            this.$store.commit('loading', false);
             });
         },
 
