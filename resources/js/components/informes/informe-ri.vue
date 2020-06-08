@@ -996,6 +996,10 @@ export default {
 
          this.getNumeroInforme();
     }, 
+
+Update : function(){
+    
+},
     
     watch : {
 
@@ -1382,7 +1386,7 @@ export default {
                 var urlRegistros = 'defectos_ri/planta/' + '?api_token=' + Laravel.user.api_token;        
                 axios.get(urlRegistros).then(response =>{
                 this.defectosRiPlanta = response.data
-                 this.$store.commit('loading', false);
+                this.$store.commit('loading', false);
     
                 });
              
