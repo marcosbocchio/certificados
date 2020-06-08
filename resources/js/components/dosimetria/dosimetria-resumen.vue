@@ -416,6 +416,10 @@
             </div>
         </div>      
       </div>
+        <loading :active.sync="isLoading"   
+            :loader="'bars'"
+            :color="'red'">
+        </loading>  
     </div>
 </template>
 
@@ -424,11 +428,14 @@
 import {mapState} from 'vuex'
 import { eventModal } from '../event-bus';
 import Popper from 'vue-popperjs';
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 
 export default {
 
       components: {
-        	'popper': Popper
+            'popper': Popper,
+            Loading
   },
 
    props :{
@@ -474,7 +481,9 @@ export default {
   },
 
   created : function() {
- 
+
+       this.$store.commit('loading', true);
+
         this.$store.dispatch('loadFechaActual').then(response => {            
         
             this.setYears();
@@ -500,7 +509,8 @@ export default {
   watch : {
 
         year : function(val){
-
+            
+            this.$store.commit('loading', true);
             let ids ;
 
             if(this.$can('D_resumen_Admin')){
@@ -519,6 +529,7 @@ export default {
                   this.TablaResumen = [];         
                   this.TablaResumen = this.dosimetria_resumen;
                   this.CargarIds();
+                  this.$store.commit('loading', false);
 
                 }
             ); 
@@ -540,7 +551,7 @@ export default {
   
   computed :{
 
-       ...mapState(['url','AppUrl','DiasDelMes','fecha','dosimetria_resumen','ParametroGeneral']),
+       ...mapState(['isLoading','url','AppUrl','DiasDelMes','fecha','dosimetria_resumen','ParametroGeneral']),
 
        anio_actual : function(){
 

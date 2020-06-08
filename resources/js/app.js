@@ -64,8 +64,6 @@ const toastrInfo = {
   "hideMethod": "fadeOut"
 }
 
-
-
 window.Vue = require('vue');
 
 

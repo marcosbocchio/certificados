@@ -717,7 +717,8 @@
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->  
          
-        <loading :active.sync="isLoading"   
+        <loading 
+                 :active.sync="isLoading"   
                  :loader="'bars'"
                  :color="'red'">
         </loading>  
@@ -1179,7 +1180,7 @@ export default {
 
             this.obra = value;
             this.ot_tipo_soldadura='';
-            this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.obra }).then(res =>{
+            this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : (this.obra ? this.obra : 'xxxxxxxxxxx') }).then(res =>{
                     
                     this.index_ot_obra_tipo_soldaduras = this.ot_obra_tipo_soldaduras.findIndex(elemento => elemento.tipo_soldadura.codigo  == 'R' );
                 });;
