@@ -102,8 +102,8 @@ b {
                         <tr>
                             <td style="font-size: 11px; width: 200px;border-right: 1px solid #000;"><b>Componente: </b>{{$informe->componente}}</td>
                             <td style="font-size: 11px;width: 50px; " colspan="2" ><b>Equipo: </b>{{$interno_equipo->equipo->codigo}}</td>
-                            <td style="font-size: 11px;" ><b>Kv: </b>{{$informe->kv}}</td>
-                            <td style="font-size: 11px; width: 50px; border-right: 1px solid #000;" ><b>mA: </b>{{$informe->ma}}</td>
+                            <td style="font-size: 11px;" ><b>Kv: </b>{{$informe_pm->kv}}</td>
+                            <td style="font-size: 11px; width: 50px; border-right: 1px solid #000;" ><b>mA: </b>{{$informe_pm->ma}}</td>
                             <td style="font-size: 11px;  " colspan="2"  ><b style="font-size: 11px;">Norma Evaluación: </b>{{$norma_evaluacion->codigo}}</td>                            
                         </tr>
                         <tr>                
