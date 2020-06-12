@@ -5,8 +5,7 @@
       <table class="table table-hover table-striped">
         <thead>
           <tr>
-            <th class="col-md-2">CÓDIDO</th>
-            <th class="col-md-1">ABREV.</th>
+            <th class="col-md-1">CÓDIGO.</th>
             <th class="col-md-5">DESCRIPCIÓN</th>
             <th class="col-md-2" style="text-align: center" >UNIDAD MEDIDA</th>
             <th class="col-md-2" style="text-align: center">MÉTODO ENSAYO</th>
@@ -15,7 +14,6 @@
         </thead>
         <tbody>
           <tr v-for="registro in registros" :key="registro.id">
-            <td>{{ registro.codigo }}</td>
             <td>{{ registro.abreviatura }}</td>            
             <td>{{ registro.descripcion }}</td>
             <td style="text-align: center">{{ registro.unidad_medidas.codigo }}</td>     

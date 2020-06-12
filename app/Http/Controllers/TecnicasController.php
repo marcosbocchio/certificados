@@ -21,7 +21,8 @@ class TecnicasController extends Controller
     public function tecnicasMetodo($metodo)    {
      
 
-      $tecnicas = DB::select('select
+      $tecnicas = DB::select('  select
+      
                                 tecnicas.id,
                                 tecnicas.codigo,
                                 tecnicas.descripcion,
@@ -29,6 +30,7 @@ class TecnicasController extends Controller
                                 tecnicas_graficos.id as grafico_id
 
                                 from tecnicas
+
                                 left join tecnicas_graficos on tecnicas.id = tecnicas_graficos.tecnica_id
                                 inner join metodo_ensayos on metodo_ensayos.id = tecnicas.metodo_ensayo_id
                                 where 

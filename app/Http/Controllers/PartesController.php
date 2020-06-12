@@ -19,6 +19,7 @@ use \stdClass;
 use App\ParametrosGenerales;
 use App\InformesImportados;
 use App\ParteServicios;
+use Illuminate\Support\Facades\Log;
 
 class PartesController extends Controller
 {
@@ -198,7 +199,7 @@ class PartesController extends Controller
             $parteDetalle->pulgadas_final = $informe['pulgadas_final'];          
             $parteDetalle->placas_original = $informe['placas_original']; 
             $parteDetalle->placas_final = $informe['placas_final'];            
-            $parteDetalle->cm_final = $informe['cm_final']['codigo'];      
+            $parteDetalle->cm_final = $informe['cm_final'];      
      
             $parteDetalle->save();
 
@@ -229,7 +230,6 @@ class PartesController extends Controller
     }
 
     public function saveParteDetalleLp($informes_lp,$parte){
-
         
         foreach ($informes_lp as $informe) {
             
@@ -276,8 +276,7 @@ class PartesController extends Controller
             $parteDetalle->parte_id = $parte->id;            
             $parteDetalle->informe_importado_id =$informe['id'];   
             $parteDetalle->observaciones_original = $informe['observaciones_original'];      
-            $parteDetalle->observaciones_final = $informe['observaciones_final'];
-            
+            $parteDetalle->observaciones_final = $informe['observaciones_final'];            
             $parteDetalle->save();
 
             (new \App\Http\Controllers\InformesImportadosController)->setParteId($parte->id,$informe['id']);
@@ -326,6 +325,7 @@ class PartesController extends Controller
         $parte = Partes::findOrFail($id);
         $ot = Ots::findOrFail($ot_id);
 
+        DB::enableQueryLog();
         
         $responsables = ParteOperadores::where('parte_operadores.parte_id',$id)
                                         ->select('parte_operadores.*')
@@ -335,26 +335,26 @@ class PartesController extends Controller
         $informes_ri  = DB::table('parte_detalles')
                             ->join('informes','informes.id','=','parte_detalles.informe_id')
                             ->join('metodo_ensayos','metodo_ensayos.id','=','informes.metodo_ensayo_id')                            
-                             ->where('parte_detalles.parte_id',$id)
-                             ->where('metodo_ensayos.metodo','RI')
-                             ->selectRaw('parte_detalles.* , 0 as informe_sel,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada')
-                             ->get();
+                            ->where('parte_detalles.parte_id',$id)
+                            ->where('metodo_ensayos.metodo','RI')
+                            ->selectRaw('parte_detalles.* , 0 as informe_sel,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada')
+                            ->get();
     
         $informes_pm  = DB::table('parte_detalles')
                              ->join('informes','informes.id','=','parte_detalles.informe_id')          
                              ->join('metodo_ensayos','metodo_ensayos.id','=','informes.metodo_ensayo_id')    
                              ->where('metodo_ensayos.metodo','PM')                                              
-                              ->where('parte_detalles.parte_id',$id)
-                              ->selectRaw('parte_detalles.* , 0 as informe_sel,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada')
-                              ->get();
+                             ->where('parte_detalles.parte_id',$id)
+                             ->selectRaw('parte_detalles.* , 0 as informe_sel,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada')
+                             ->get();
 
         $informes_lp  = DB::table('parte_detalles')
                               ->join('informes','informes.id','=','parte_detalles.informe_id')          
                               ->join('metodo_ensayos','metodo_ensayos.id','=','informes.metodo_ensayo_id')    
                               ->where('metodo_ensayos.metodo','LP')                                              
-                               ->where('parte_detalles.parte_id',$id)
-                               ->selectRaw('parte_detalles.* , 0 as informe_sel,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada')
-                               ->get();
+                              ->where('parte_detalles.parte_id',$id)
+                              ->selectRaw('parte_detalles.* , 0 as informe_sel,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada')
+                              ->get();
 
        $informes_us  = DB::table('parte_detalles')
                                ->join('informes','informes.id','=','parte_detalles.informe_id')          
@@ -367,11 +367,11 @@ class PartesController extends Controller
                                
 
         $informes_importados = DB::table('parte_detalles')
-                                ->join('informes_importados','informes_importados.id','=','parte_detalles.informe_importado_id')          
-                                ->join('metodo_ensayos','metodo_ensayos.id','=','informes_importados.metodo_ensayo_id')                                  
-                                ->where('parte_detalles.parte_id',$id)
-                                ->selectRaw('parte_detalles.* , 0 as informe_sel,CONCAT(metodo_ensayos.metodo,LPAD(informes_importados.numero, 3, "0")) as numero_formateado,DATE_FORMAT(informes_importados.fecha,"%d/%m/%Y")as fecha_formateada,metodo_ensayos.metodo as metodo')
-                                ->get();
+                                    ->join('informes_importados','informes_importados.id','=','parte_detalles.informe_importado_id')          
+                                    ->join('metodo_ensayos','metodo_ensayos.id','=','informes_importados.metodo_ensayo_id')                                  
+                                    ->where('parte_detalles.parte_id',$id)
+                                    ->selectRaw('parte_detalles.* , 0 as informe_sel,CONCAT(metodo_ensayos.metodo,LPAD(informes_importados.numero, 3, "0")) as numero_formateado,DATE_FORMAT(informes_importados.fecha,"%d/%m/%Y")as fecha_formateada,metodo_ensayos.metodo as metodo')
+                                    ->get();
 
         $servicios = DB::table('parte_servicios')
                                 ->join('servicios','servicios.id','=','parte_servicios.servicio_id')
@@ -380,11 +380,13 @@ class PartesController extends Controller
                                 ->where('parte_servicios.parte_id',$id)
                                 ->selectRaw('metodo_ensayos.id as metodo_ensayo_id,metodo_ensayos.metodo,unidades_medidas.id as unidad_medida_id,unidades_medidas.codigo as unidad_medida,servicios.id as servicio_id,servicios.descripcion as servicio_descripcion,cant_original,cant_final')
                                 ->get();
-                             
+
+        /*
          foreach ($informes_ri as $informe_ri) {
 
             $obj = new stdClass();
             $obj = Medidas::where('codigo',$informe_ri->cm_final)->first();
+            
             if($obj){
 
                 $informe_ri->cm_final= $obj;
@@ -397,7 +399,7 @@ class PartesController extends Controller
             }
             
          }               
-        
+        */
 
         return view('partes.edit', compact('parte',
                                             'responsables',

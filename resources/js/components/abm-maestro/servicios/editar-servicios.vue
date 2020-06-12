@@ -8,16 +8,10 @@
                     <h4 class="modal-title">Editar</h4>
                 </div>
                 <div class="modal-body">    
-                    <div class="row">          
+                    <div class="row">   
                         <div class="col-md-6">    
                             <div class="form-group">                          
-                                <label for="codigo">Código *</label>   
-                                <input autocomplete="off" v-model="editRegistro.codigo" type="text" name="codigo" class="form-control" value="">
-                            </div>      
-                        </div>
-                        <div class="col-md-6">    
-                            <div class="form-group">                          
-                                <label for="abreviatura">Abreviatura *</label>   
+                                <label for="abreviatura">Código *</label>   
                                 <input autocomplete="off" v-model="editRegistro.abreviatura" type="text" name="abreviatura" class="form-control" maxlength="4">
                             </div>      
                         </div>
@@ -77,7 +71,6 @@ export default {
     data() { return {
     
         editRegistro : {           
-            'codigo'  : '',
             'descripcion' : '',          
             'abreviatura' : '',                  
          },
@@ -107,7 +100,6 @@ export default {
            openModal : function(){
                console.log('entro en open modal');            
             this.$nextTick(function () { 
-                this.editRegistro.codigo = this.selectRegistro.codigo;
                 this.editRegistro.descripcion = this.selectRegistro.descripcion;             
                 this.editRegistro.abreviatura = this.selectRegistro.abreviatura;
                 this.unidad_medida = this.selectRegistro.unidad_medidas;

@@ -26,12 +26,12 @@ class ServiciosController extends Controller
      */
     public function index()
     {
-        return  Servicios::with('metodoEnsayos')->with('unidadMedidas')->orderBy('descripcion','ASC')->get();
+        return  Servicios::with('metodoEnsayos')->with('unidadMedidas')->orderBy('abreviatura','ASC')->get();
     }
 
     public function paginate(Request $request){
 
-        return  Servicios::with('metodoEnsayos')->with('unidadMedidas')->orderBy('codigo','ASC')->paginate(10);
+        return  Servicios::with('metodoEnsayos')->with('unidadMedidas')->orderBy('abreviatura','ASC')->paginate(10);
     }
 
     public function callView()
@@ -126,7 +126,6 @@ class ServiciosController extends Controller
 
     public function saveServicio($request,$servicio){
 
-        $servicio->codigo = $request['codigo'];
         $servicio->descripcion = $request['descripcion'];
         $servicio->unidades_medida_id = $request['unidad_medida']['id'];
         $servicio->metodo_ensayo_id = $request['metodo_ensayo']['id'];

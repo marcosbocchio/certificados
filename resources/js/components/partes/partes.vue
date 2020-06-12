@@ -276,8 +276,8 @@
                                                            {{ item.placas_final }}
                                                         </div>                                   
                                                     </td>                                                  
-                                                    <td  v-if="item.visible" >                                                                                                             
-                                                        <v-select type="text" v-model="TablaInformesRi[k].cm_final" label="codigo" id="cm" :options="cms" style="display: block" taggable  @input="RecalcularMetros('RI')" disabled></v-select>                              
+                                                    <td  v-if="item.visible">      
+                                                         {{ item.cm_final }}                                                    
                                                     </td>                                                                                                                  
                                                     <td style="text-align:center" v-if="item.visible"> <a  @click="RemoveTablaInformeRi(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a></td>
                                                     
@@ -977,7 +977,7 @@ export default {
                     this.informes_ri_data.forEach(function(item){
 
                         let visible_sn = true;
-                        if( !item.costura_final  &&  !item.pulgadas_final && !item.placas_final){
+                        if( !item.costura_final && !item.pulgadas_final && !item.placas_final){
 
                             visible_sn = false
 
@@ -1727,9 +1727,7 @@ export default {
                 cm_final:informe_ri_parte[0].medida,
                 metodo : informe_ri_parte[0].metodo,
             
-            });                 
-           
-           
+            });            
         },
 
         async getInformePM(id,index){
@@ -1753,8 +1751,7 @@ export default {
                     cm_final : item.cm,
                     });                       
 
-                }.bind(this));           
-          
+                }.bind(this));               
          },
 
         async getInformeLP(id,index){

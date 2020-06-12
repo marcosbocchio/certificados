@@ -25,7 +25,6 @@ class ServicioStoreRequest extends FormRequest
     {
         return [
 
-            'codigo'        => 'required|Max:20',
             'descripcion'   => 'nullable|Max:100',
             'abreviatura'   => 'required|Max:4|unique:servicios,abreviatura,',
             'unidad_medida' => 'required',
@@ -36,8 +35,8 @@ class ServicioStoreRequest extends FormRequest
     public function attributes()
     {
             return [
-                'codigo'                   => 'código',
                 'prefijo'                  => 'descripción',
+                'abreviatura'                  => 'código',
             ];
      
     }

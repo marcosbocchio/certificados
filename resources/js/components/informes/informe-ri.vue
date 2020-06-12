@@ -126,16 +126,7 @@
                                 </div>   
                                 <input  type="number" class="form-control" v-model="espesor_chapa"  id="espesor_chapa" :disabled="!isChapa" step="0.1" > 
                              </div>                                      
-                        </div>      
-
-                        <div class="col-md-3">
-                            <div class="form-group" >
-                                <label for="cm">Medida *</label>
-                                <v-select type="text" v-model="medida" label="codigo" id="cm" :options="cms" style="display: block" taggable  @input="cambioMedida"></v-select>                              
-                            </div>                            
-                        </div>     
-
-                        <div class="clearfix"></div>
+                        </div>    
 
                         <div v-if="!reparacion_sn" class="col-md-3">
                             <div class="form-group" >
@@ -150,6 +141,8 @@
                                  <input type="text" v-model="ot_tipo_soldadura_r.eps" class="form-control" id="eps_r" disabled>
                             </div>                            
                         </div>     
+                        
+                        <div class="clearfix"></div>
 
                        <div v-if="!reparacion_sn" class="col-md-3">                       
                             <div class="form-group" >
@@ -190,7 +183,6 @@
                             </div>
                         </div>
 
-                        <div class="clearfix"></div>
 
                         <div class="col-md-3">
                             <div class="form-group" >
@@ -245,6 +237,13 @@
                                     </v-select>
                             </div>
                         </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group" >
+                                <label for="cm">Medida de Placa*</label>
+                                <v-select type="text" v-model="medida" label="codigo" id="cm" :options="cms" style="display: block" taggable  @input="cambioMedida"></v-select>                              
+                            </div>                            
+                        </div>    
 
                         <div class="col-md-3">                       
                             <div class="form-group">

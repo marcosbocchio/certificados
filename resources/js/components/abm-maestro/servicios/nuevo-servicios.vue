@@ -9,16 +9,10 @@
                 </div>
                 <div class="modal-body">           
                     
-                    <div class="row">          
+                    <div class="row">
                         <div class="col-md-6">    
                             <div class="form-group">                          
-                                <label for="codigo">Código *</label>   
-                                <input autocomplete="off" v-model="newRegistro.codigo" type="text" name="codigo" class="form-control" value="">
-                            </div>      
-                        </div>
-                        <div class="col-md-6">    
-                            <div class="form-group">                          
-                                <label for="abreviatura">Abreviatura *</label>   
+                                <label for="abreviatura">Código *</label>   
                                 <input autocomplete="off" v-model="newRegistro.abreviatura" type="text" name="abreviatura" class="form-control" maxlength="4">
                             </div>      
                         </div>
@@ -71,7 +65,6 @@ export default {
     data() { return {
     
         newRegistro : {           
-            'codigo'  : '',
             'descripcion' : '',      
             'abreviatura' : '',                     
          },
@@ -97,8 +90,7 @@ export default {
 
     methods: {
            openModal : function(){
-                this.newRegistro = {           
-                        'codigo'  : '',
+                this.newRegistro = {                      
                         'descripcion' : '',     
                         'abreviatura' : '',                           
                      },    

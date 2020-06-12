@@ -24,8 +24,6 @@ class ServicioUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-
-            'codigo'        => 'required|Max:20',
             'descripcion'   => 'nullable|Max:100',
             'abreviatura'   => 'required|Max:4|unique:servicios,abreviatura,' . $this->servicio,
             'unidad_medida' => 'required',
@@ -36,8 +34,8 @@ class ServicioUpdateRequest extends FormRequest
     public function attributes()
     {
             return [
-                'codigo'                   => 'código',
                 'prefijo'                  => 'descripción',
+                'abreviatura'              => 'código',
             ];
      
     }
