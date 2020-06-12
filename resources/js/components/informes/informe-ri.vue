@@ -131,7 +131,7 @@
                         <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="cm">Medida *</label>
-                                <v-select type="text" v-model="medida" label="codigo" id="cm" :options="cms" style="display: block" taggable  @input="ActualizarDistFuentePelicula()"></v-select>                              
+                                <v-select type="text" v-model="medida" label="codigo" id="cm" :options="cms" style="display: block" taggable  @input="cambioMedida"></v-select>                              
                             </div>                            
                         </div>     
 
@@ -964,7 +964,6 @@ export default {
 
             icis:[],
             tecnicas:[],            
-            tecnicas_graficos :[], 
 
             soldadores:[],
             posiciones:[],
@@ -1371,15 +1370,7 @@ Update : function(){
                 });
               },
 
-        getTecnicasGraficos: function(){
-                 
-                    axios.defaults.baseURL = this.url ;
-                    var urlRegistros = 'tecnicas_graficos/'+ this.tecnica.id + '?api_token=' + Laravel.user.api_token;     
-                    console.log(urlRegistros);   
-                    axios.get(urlRegistros).then(response =>{
-                    this.tecnicas_graficos = response.data
-                    });
-                  },
+
         cambioEspesor : function(){
 
             if(this.espesor.id != undefined) {
@@ -1398,17 +1389,23 @@ Update : function(){
 
         },
 
+        cambioMedida : function(){
+              
+            this.medida.codigo = this.medida.codigo.replace('X','x');
+            this.medida.codigo = this.medida.codigo.replace('-','x');
+            let existe_alto = this.medida.codigo.includes('x');
+
+            if(!existe_alto){
+                this.medida.codigo = '7x' + this.medida.codigo;
+            }  
+
+            this.ActualizarDistFuentePelicula();
+
+        },
+
         ActualizarDistFuentePelicula : function(){
 
-                console.log('entró en ActualizarDistFuentePelicula');
-              
-               this.medida.codigo = this.medida.codigo.replace('X','x');
-               this.medida.codigo = this.medida.codigo.replace('-','x');
-               let existe_alto = this.medida.codigo.includes('x');
-
-               if(!existe_alto){
-                   this.medida.codigo = '7x' + this.medida.codigo;
-               }            
+          
 
                 axios.defaults.baseURL = this.url ;
 
@@ -1423,8 +1420,8 @@ Update : function(){
                         axios.get(urlRegistros).then(response =>{
                             this.tecnica_distancia = response.data
                             this.distancia_fuente_pelicula=this.tecnica_distancia[0].valor;
-                            this.$store.commit('loading', false);
-                        });  
+                            
+                        }).finally(res => { this.$store.commit('loading', false); });  
                     }
                 }else{                                    
 
@@ -1434,8 +1431,7 @@ Update : function(){
                         axios.get(urlRegistros).then(response =>{
                             this.tecnica_distancia = response.data
                             this.distancia_fuente_pelicula=this.tecnica_distancia[0].valor;
-                            this.$store.commit('loading', false);
-                        });  
+                        }).finally(res => { this.$store.commit('loading', false); });  
                     }
                    
                 }
@@ -1487,9 +1483,7 @@ Update : function(){
                 var urlRegistros = 'defectos_ri/planta/' + '?api_token=' + Laravel.user.api_token;        
                 axios.get(urlRegistros).then(response =>{
                 this.defectosRiPlanta = response.data
-                this.$store.commit('loading', false);
-    
-                });
+            }).finally(res => { this.$store.commit('loading', false); });  
              
         },
 

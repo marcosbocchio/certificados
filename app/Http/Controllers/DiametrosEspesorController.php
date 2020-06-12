@@ -95,9 +95,6 @@ class DiametrosEspesorController extends Controller
 
     public function getEspesor($diametro){
 
-
-       
-
         $espesores =DB::select('call EspesoresDiametro(?)',array($diametro));
 
         return $espesores ;
