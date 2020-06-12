@@ -1325,7 +1325,7 @@ Update : function(){
                
             }else{
 
-                this.interno_fuente = {} ;
+                this.interno_fuente = '' ;
                 this.fuente ='';
                 this.actividad = '';
                 this.ActualizarDistFuentePelicula();
