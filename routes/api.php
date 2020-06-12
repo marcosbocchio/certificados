@@ -83,7 +83,8 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('iluminaciones', 'IluminacionesController');
     Route::get('tecnicas/metodo/{metodo}', 'TecnicasController@tecnicasMetodo');
     Route::get('tecnicas_graficos/{id}', 'TecnicasGraficosController@index');
-    Route::get('tecnica_distancias/{id}/diametro/{diametro}', 'TecnicaDistanciasController@TecnicaDistanciasDiametro');
+    Route::get('tecnica_distancias/tecnica/{tecnica_id}/diametro/{diametro}/espesor/{espesor}/foco/{foco}', 'TecnicaDistanciasController@DistanciasDiametro');
+    Route::get('tecnica_distancias/tecnica/{tecnica_id}/medida/{medida}', 'TecnicaDistanciasController@DistanciasDiametroChapa');
     Route::resource('estados_superficies', 'EstadosSuperficiesController');
     Route::get('agente_acoplamientos/paginate', 'AgenteAcoplamientosController@paginate'); 
     Route::resource('agente_acoplamientos', 'AgenteAcoplamientosController');

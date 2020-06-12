@@ -76,9 +76,7 @@ class PdfInformesRiController extends Controller
         $ejecutor_ensayo = User::findOrFail($ot_operador->user_id);
         $tecnicas_grafico = TecnicasGraficos::findOrFail($informe_ri->tecnicas_grafico_id);
         $evaluador = User::find($informe->firma);
-        $contratista = Contratistas::find($ot->contratista_id);    
-        
-        
+        $contratista = Contratistas::find($ot->contratista_id);              
       
         if ($informe_ri->gasoducto_sn){
           

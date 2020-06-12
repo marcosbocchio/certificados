@@ -276,8 +276,8 @@
                                                            {{ item.placas_final }}
                                                         </div>                                   
                                                     </td>                                                  
-                                                    <td  v-if="item.visible" >                                                                                                            
-                                                        <v-select type="text" v-model="TablaInformesRi[k].cm_final" label="codigo" id="cm" :options="cms" style="display: block" taggable  @input="RecalcularMetros('RI')"></v-select>                              
+                                                    <td  v-if="item.visible" >                                                                                                             
+                                                        <v-select type="text" v-model="TablaInformesRi[k].cm_final" label="codigo" id="cm" :options="cms" style="display: block" taggable  @input="RecalcularMetros('RI')" disabled></v-select>                              
                                                     </td>                                                                                                                  
                                                     <td style="text-align:center" v-if="item.visible"> <a  @click="RemoveTablaInformeRi(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a></td>
                                                     
@@ -882,7 +882,7 @@ export default {
             var urlRegistros = 'medidas/cm/' + '?api_token=' + Laravel.user.api_token;        
             axios.get(urlRegistros).then(response =>{
 
-            this.cms = response.data
+              this.cms = response.data
 
             });
         }, 
@@ -919,7 +919,6 @@ export default {
              var urlRegistros = 'informes/ot/' + this.otdata.id + '/parte/'+ this.parte_data.id + '/pendientes_editables_parte_diario' + '?api_token=' + Laravel.user.api_token;        
              axios.get(urlRegistros).then(response =>{
              this.informes = response.data
-             console.log(this.informes_ri_data)   
             
                 // Informes importados
                 
@@ -1724,8 +1723,8 @@ export default {
                 costura_final: informe_ri_parte[0].costuras,
                 pulgadas_final: informe_ri_parte[0].pulgadas,
                 placas_final : informe_ri_parte[0].placas, 
-                cm_original: '', 
-                cm_final:'',
+                cm_original: informe_ri_parte[0].medida, 
+                cm_final:informe_ri_parte[0].medida,
                 metodo : informe_ri_parte[0].metodo,
             
             });                 

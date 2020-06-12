@@ -111,7 +111,7 @@ desired effect
 
 <script>
   window.Laravel = {!! json_encode([
-        'permissions' => ( Auth::user()->hasRole('Super Admin') ? Permission::all() : Auth::user()->allPermissions),
+        'permissions' => ( Auth::user()->hasRole('Sistemas') ? Permission::all() : Auth::user()->allPermissions),
         'csrfToken' => csrf_token(),
         'user' => Auth::user()
     ]) !!};

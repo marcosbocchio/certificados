@@ -8,39 +8,70 @@
                     <h4 class="modal-title">Crear</h4>
                 </div>
                  <div class="modal-body">    
-                
-                   
-                    <label for="numero_serie">N° Serie *</label>   
+                    <div class="row">          
+                          <div class="col-md-12">                    
 
-                    <input type="checkbox" id="checkbox" v-model="newRegistro.activo_sn" style="float:right"> 
-                    <label for="tipo" style="float:right;margin-right: 5px;">ACTIVO</label>     
+                            <div class="col-md-12">    
+                                <div class="form-group">
+                                    <label for="numero_serie">N° Serie *</label>  
+                                    <input type="checkbox" id="checkbox" v-model="Registro.activo_sn" style="float:right"> 
+                                    <label for="tipo" style="float:right;margin-right: 5px;">ACTIVO</label>     
+                                    <input autocomplete="off" v-model="Registro.nro_serie" type="text" name="numero_serie" class="form-control" value="">
+                                </div>
+                            </div>
+                            <div class="col-md-12">    
+                                <div class="form-group">
+                                    <label for="numero_interno">N° Interno *</label> 
+                                    <input autocomplete="off" v-model="Registro.nro_interno" type="text" name="numero_interno" class="form-control" value="">                  
+                                </div>
+                            </div>
 
-                    <input autocomplete="off" v-model="newRegistro.nro_serie" type="text" name="numero_serie" class="form-control" value="">
+                             <div class="col-md-12">    
+                                <div class="form-group">
+                                    <label for="equipos">Equipo *</label>      
+                                    <v-select v-model="equipo" label="codigo" :options="equipos">
+                                        <template slot="option" slot-scope="option">
+                                            <span class="upSelect">{{ option.codigo }}</span> <br> 
+                                            <span class="downSelect"> {{ option.descripcion }} </span> 
+                                        </template>
+                                    </v-select>              
+                                </div>
+                            </div>                           
 
-                    <label for="numero_interno">N° Interno *</label> 
-                    <input autocomplete="off" v-model="newRegistro.nro_interno" type="text" name="numero_interno" class="form-control" value="">                  
+                            <div class="col-md-12">    
+                                <div class="form-group">
+                                    <label>Fuente </label>
+                                    <v-select  v-model="interno_fuente" :options="interno_fuentes" label="nro_serie">
+                                        <template slot="option" slot-scope="option">
+                                            <span class="upSelect">{{ option.nro_serie }}</span> <br> 
+                                            <span class="downSelect"> {{ option.fuente.codigo }} </span>
+                                        </template>
+                                    </v-select>                         
+                                </div>
+                            </div>
 
-                    <label for="equipos">Equipo *</label>      
-                    <v-select v-model="equipo" label="codigo" :options="equipos">
-                        <template slot="option" slot-scope="option">
-                            <span class="upSelect">{{ option.codigo }}</span> <br> 
-                            <span class="downSelect"> {{ option.descripcion }} </span> 
-                        </template>
-                    </v-select>              
+                            <div class="col-md-12">    
+                                <div class="form-group">
+                                    <label for="foco">Foco </label>
+                                    <input v-model="Registro.foco" type="number" name="foco" class="form-control" value="" :disabled="interno_fuente ||  !(equipo && equipo.metodo_ensayos.metodo == 'RI')" step="0.1">   
+                                </div>
+                            </div>
 
-                    <label>Fuente </label>
-                    <v-select  v-model="interno_fuente" :options="interno_fuentes" label="nro_serie">
-                        <template slot="option" slot-scope="option">
-                            <span class="upSelect">{{ option.nro_serie }}</span> <br> 
-                            <span class="downSelect"> {{ option.fuente.codigo }} </span>
-                        </template>
-                    </v-select>                         
+                            <div class="col-md-12">    
+                                <div class="form-group">
+                                    <label for="voltaje">Voltaje</label>
+                                    <input v-model="Registro.voltaje" type="number" name="voltaje" class="form-control" value="">   
+                                </div>
+                            </div>
 
-                    <label for="voltaje">Voltaje</label>
-                    <input v-model="newRegistro.voltaje" type="number" name="voltaje" class="form-control" value="">   
-
-                    <label for="amperaje">Amperaje</label>
-                    <input v-model="newRegistro.amperaje" type="number" name="amperaje" class="form-control" value="">             
+                            <div class="col-md-12">    
+                                <div class="form-group">
+                                    <label for="amperaje">Amperaje</label>
+                                    <input v-model="Registro.amperaje" type="number" name="amperaje" class="form-control" value="">             
+                                </div>
+                            </div>
+                          </div>
+                    </div>                
               
                 </div>
             
@@ -60,11 +91,12 @@
 export default {
     data() { return {
     
-        newRegistro : {           
+        Registro : {           
             'nro_serie'  : '',
             'nro_interno'  : '',
             'voltaje' : '', 
             'amperaje' : '', 
+            'foco' :  '',
             'activo_sn' : true,      
          },
          equipo :'',          
@@ -80,15 +112,21 @@ export default {
     },
     computed :{
     
-         ...mapState(['url','equipos','interno_fuentes'])
+         ...mapState(['url','equipos','interno_fuentes']),
+
+         interno_fuente : function(val){
+
+             foco = (val) ? foco : '';
+         }
     },
  
    
     methods: {
            openModal : function(){
-                this.newRegistro = {           
+                this.Registro = {           
                     'nro_serie'  : '',
                     'nro_interno'  : '',
+                     'foco' :  '',
                     'voltaje' : '', 
                     'amperaje' : '', 
                     'activo_sn' : true,      
@@ -106,7 +144,7 @@ export default {
                 var urlRegistros = 'interno_equipos';                         
                 axios.post(urlRegistros, {   
                     
-                ...this.newRegistro,     
+                ...this.Registro,     
                 'equipo' : this.equipo,
                 'interno_fuente' : this.interno_fuente,  
           
@@ -116,7 +154,7 @@ export default {
                   this.errors=[];
                   $('#nuevo').modal('hide');
                   toastr.success('Nuevo Interno Equipo creado con éxito');               
-                  this.newRegistro={}
+                  this.Registro={}
                   
                 }).catch(error => {                   
                     console.log(error);    
@@ -136,3 +174,11 @@ export default {
     
 }
 </script>
+
+<style scoped>
+
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+     background-color: #eee;
+}
+
+</style>

@@ -173,10 +173,12 @@ b {
                             <td style="font-size: 11px;width: 140px;border-right: 1px solid #000; "  ><b>Espesor: </b>
 
                                 @if ($informe->espesor_chapa)
-                                {{ $informe->espesor_chapa }}
+                                    {{ $informe->espesor_chapa }}
+                                @elseif($informe->espesor_especifico)
+                                    {{ $informe->espesor_especifico }}
                                 @else
-                                {{  $diametro_espesor->espesor }}
-                                @endif                       
+                                     {{ $diametro_espesor->espesor }}
+                                @endif                        
                             
                             </td>                 
                             <td style="font-size: 11px;width: 180px;"><b>Fuente: </b>     

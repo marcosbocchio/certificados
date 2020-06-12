@@ -237,6 +237,7 @@ class InternoEquiposController extends Controller
 
         $interno_equipo->nro_serie = $request['nro_serie'];
         $interno_equipo->nro_interno = $request['nro_interno'];
+        $interno_equipo->foco = $request['foco'];
         $interno_equipo->voltaje = $request['voltaje'];
         $interno_equipo->amperaje = $request['amperaje'];
         $interno_equipo->activo_sn = $request['activo_sn'];       

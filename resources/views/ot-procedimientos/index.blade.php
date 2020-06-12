@@ -9,12 +9,11 @@
 
    <abm-doc  modelo= "ot_procedimientos_propios"
              :otdata = "{{$ot}}"
-
+              permiso_create="T_proc_edita"
     ></abm-doc>
 
 </div>
 @endsection
-
 
 @section('script')
 

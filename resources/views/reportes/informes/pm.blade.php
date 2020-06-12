@@ -151,10 +151,12 @@ b {
                             <td style="font-size: 11px;border-right: 1px solid #000; "  ><b>Espesor: </b>
 
                                 @if ($informe->espesor_chapa)
-                                {{ $informe->espesor_chapa }}
+                                    {{ $informe->espesor_chapa }}
+                                @elseif($informe->espesor_especifico)
+                                    {{ $informe->espesor_especifico }}
                                 @else
-                                {{  $diametro_espesor->espesor }}
-                                @endif                       
+                                     {{ $diametro_espesor->espesor }}
+                                @endif                     
                             
                             </td>                            
                            <td style="font-size: 11px;  " colspan="2"  ><b>Magnetización : </b>{{$magnetizacion->codigo}}</td>  

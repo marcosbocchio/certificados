@@ -22,7 +22,7 @@
        
         <div class="form-group">
 
-            <div v-show="$can('M_documentaciones_edita')">
+            <div v-show="$can(permiso_create)">
                 <div class="col-md-1 col-xs-12">
                     <button class="btn btn-primary pull-left" v-on:click.prevent="openNuevoRegistro()"><span class="fa fa-plus-circle"></span> Nuevo</button>      
                 </div>                
@@ -232,6 +232,11 @@ export default {
             type: Object,      
              required: false
           },
+          permiso_create : {
+           type : String,
+           required : true
+  
+          }
       },
 
       components: {

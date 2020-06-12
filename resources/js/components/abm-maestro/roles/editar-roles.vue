@@ -8,7 +8,7 @@
                     <h4 class="modal-title">Editar</h4>
                 </div>
                 <div class="modal-body">   
-                
+                   <div class="row">     
                     <div class="modal-body">
                         <div class="col-md-6">    
                             <div class="form-group">
@@ -37,8 +37,8 @@
                         </div>
 
                     </div>
+                 </div>
                 </div>
-            
                 <div class="modal-footer">
                     <input type="submit" class="btn btn-primary" value="Guardar">
                     <button type="button" class="btn btn-default" name="button" data-dismiss="modal" >Cancelar</button>

@@ -156,9 +156,20 @@ b {
                                    {{ $informe->espesor_chapa }}
                                 @elseif ($diametro_espesor->diametro == 'VARIOS')
                                          &nbsp;
+                                @elseif($informe->espesor_especifico)
+                                    {{ $informe->espesor_especifico }}
                                 @else
                                     {{  $diametro_espesor->espesor }}
-                                @endif                       
+                                @endif    
+
+
+                                                                @if ($informe->espesor_chapa)
+                                    {{ $informe->espesor_chapa }}
+                                @elseif($informe->espesor_especifico)
+                                    {{ $informe->espesor_especifico }}
+                                @else
+                                     {{ $diametro_espesor->espesor }}
+                                @endif                      
                             
                             </td>    
                             <td style="font-size: 10px;border-right: 1px solid #000;" colspan="4" ><b>EPS: </b>{{$ot_tipo_soldadura->eps}}</td>

@@ -518,10 +518,13 @@ actions : {
         loadEspesores({
           commit},diametro_code) {
           axios.defaults.baseURL = store.state.url ;
-          var urlRegistros = 'espesor/' + diametro_code + '?api_token=' + Laravel.user.api_token;         
+          var urlRegistros = 'espesor/' + diametro_code + '?api_token=' + Laravel.user.api_token;      
+          return new Promise((resolve, reject) => {    
           console.log(urlRegistros);
           axios.get(urlRegistros).then((response) => {
             commit('getEspesores', response.data)           
+            resolve();       
+          })
           })
         },
 

@@ -18,8 +18,7 @@ class TecnicasController extends Controller
     {  
     }
 
-    public function tecnicasMetodo($metodo)
-    {
+    public function tecnicasMetodo($metodo)    {
      
 
       $tecnicas = DB::select('select
@@ -27,9 +26,8 @@ class TecnicasController extends Controller
                                 tecnicas.codigo,
                                 tecnicas.descripcion,
                                 CONCAT("/",path) as path,                                
-                                tecnicas_graficos.id as grafico_id,
-                                CONCAT(tecnicas.codigo,"-", tecnicas_graficos.id) as codigo_grafico_id
-                            
+                                tecnicas_graficos.id as grafico_id
+
                                 from tecnicas
                                 left join tecnicas_graficos on tecnicas.id = tecnicas_graficos.tecnica_id
                                 inner join metodo_ensayos on metodo_ensayos.id = tecnicas.metodo_ensayo_id

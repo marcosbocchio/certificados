@@ -20,42 +20,46 @@
                             </div>
                         </div>
 
-                        <div class="col-md-2">
-                            <div class="form-group" >
-                                <div v-if="isGasoducto">
-                                    <label for="pk">PK *</label> 
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group" >
+                                        <div v-if="isGasoducto">
+                                            <label for="pk">PK *</label> 
+                                        </div>
+                                        <div v-else>
+                                            <label for="pk">PK</label> 
+                                        </div>
+                                    <input type="number" v-model="pk" class="form-control" id="pk" :disabled="((!isGasoducto) || reparacion_sn== true || reparacion_sn == 1)" min="0">                           
+                                    </div>                            
                                 </div>
-                                <div v-else>
-                                     <label for="pk">PK</label> 
+
+                                <div class="col-md-3">
+                                    <div class="form-group" >
+                                        <div v-if="isGasoducto">
+                                            <label for="ot_obra_tipo_soldaduras">Tipo Sol *</label> 
+
+                                        <input type="checkbox" id="reparacion_sn" v-model="reparacion_sn" :disabled="!ExisteEpsReparacion" @change="cambioReparacion_sn()" style="float:right"> 
+                                        <label for="reparacion_sn" style="float:right;margin-right: 5px;">R</label>   
+
+                                            <v-select v-model="ot_tipo_soldadura" label="codigo" :options="ot_obra_tipo_soldaduras_filter_R" id="ot_obra_tipo_soldaduras" @input="cambioOtTipoSoldadura" :disabled="(!isGasoducto || !obra )"></v-select>   
+
+                                        </div>
+                                        <div v-else>
+                                            <label >Tipo Sol</label>  
+                                            
+                                            <v-select  :options="[]" :disabled="(!isGasoducto)"></v-select>   
+                                        </div>
+                                    </div>                            
                                 </div>
-                               <input type="number" v-model="pk" class="form-control" id="pk" :disabled="((!isGasoducto) || reparacion_sn== true || reparacion_sn == 1)" min="0">                           
-                            </div>                            
-                        </div>
 
-                        <div class="col-md-2">
-                            <div class="form-group" >
-                                <div v-if="isGasoducto">
-                                    <label for="ot_obra_tipo_soldaduras">Tipo Sol *</label> 
-
-                                 <input type="checkbox" id="reparacion_sn" v-model="reparacion_sn" :disabled="!ExisteEpsReparacion" @change="cambioReparacion_sn()" style="float:right"> 
-                                 <label for="reparacion_sn" style="float:right;margin-right: 5px;">R</label>   
-
-                                    <v-select v-model="ot_tipo_soldadura" label="codigo" :options="ot_obra_tipo_soldaduras_filter_R" id="ot_obra_tipo_soldaduras" @input="cambioOtTipoSoldadura" :disabled="(!isGasoducto || !obra )"></v-select>   
-
+                                <div class="col-md-6">
+                                    <div class="form-group" >
+                                        <label for="numero_inf">Informe N°</label>
+                                        <input type="text" v-model="numero_inf_code" class="form-control" id="numero_inf" disabled>
+                                    </div>                            
                                 </div>
-                                <div v-else>
-                                     <label >Tipo Sol</label>  
-                                    
-                                    <v-select  :options="[]" :disabled="(!isGasoducto)"></v-select>   
-                                </div>
-                            </div>                            
-                        </div>
-
-                         <div class="col-md-2">
-                            <div class="form-group" >
-                                <label for="numero_inf">Informe N°</label>
-                                <input type="text" v-model="numero_inf_code" class="form-control" id="numero_inf" disabled>
-                            </div>                            
+                            </div>
                         </div>
 
                         <div class="clearfix"></div>    
@@ -103,7 +107,7 @@
                                 <div v-else>
                                      <label for="espesor">Espesor *</label> 
                                 </div>                             
-                                <v-select v-model="espesor" label="espesor" :options="espesores" :disabled="isChapa">
+                                <v-select v-model="espesor" label="espesor" :options="espesores" taggable :disabled="isChapa" @input="cambioEspesor()">
                                     <template slot="option" slot-scope="option">
                                         <span class="upSelect">{{ option.espesor }} </span> <br> 
                                         <span class="downSelect"> {{ option.cuadrante }} </span>
@@ -122,7 +126,16 @@
                                 </div>   
                                 <input  type="number" class="form-control" v-model="espesor_chapa"  id="espesor_chapa" :disabled="!isChapa" step="0.1" > 
                              </div>                                      
-                        </div>          
+                        </div>      
+
+                        <div class="col-md-3">
+                            <div class="form-group" >
+                                <label for="cm">Medida *</label>
+                                <v-select type="text" v-model="medida" label="codigo" id="cm" :options="cms" style="display: block" taggable  @input="ActualizarDistFuentePelicula()"></v-select>                              
+                            </div>                            
+                        </div>     
+
+                        <div class="clearfix"></div>
 
                         <div v-if="!reparacion_sn" class="col-md-3">
                             <div class="form-group" >
@@ -130,16 +143,15 @@
                                 <v-select v-model="ot_tipo_soldadura" label="eps" :options="ot_obra_tipo_soldaduras_filter_R" id="procedimientos_soldadura"  :disabled="(isGasoducto)"></v-select>  
                             </div>                            
                         </div>  
+
                         <div v-else  class="col-md-3">
                             <div class="form-group" >
                                 <label for="eps_r">Proc. Soldadura (EPS)*</label>
                                  <input type="text" v-model="ot_tipo_soldadura_r.eps" class="form-control" id="eps_r" disabled>
                             </div>                            
-                        </div>
+                        </div>     
 
-                        <div class="clearfix"></div>
-
-                         <div v-if="!reparacion_sn" class="col-md-3">                       
+                       <div v-if="!reparacion_sn" class="col-md-3">                       
                             <div class="form-group" >
                                 <label for="pqr">PQR</label>
                                 <v-select v-model="ot_tipo_soldadura" label="pqr" :options="ot_obra_tipo_soldaduras_filter_R" id="pqr"  :disabled="(isGasoducto)"></v-select>                             
@@ -157,7 +169,7 @@
                             <div class="form-group">
                                 <label>Técnica *</label>
                                     
-                                <v-select v-model="tecnica" label="codigo_grafico_id" :options="tecnicas" @input="ActualizarDistFuentePelicula()">  
+                                <v-select v-model="tecnica" label="codigo" :options="tecnicas" @input="ActualizarDistFuentePelicula()" :disabled="isChapa">  
                                     <template slot="option" slot-scope="option">
                                         <img :src="option.path" width="80" height="73" />  
                                         <span style="margin-left: 5px"> {{option.descripcion}} </span>                                     
@@ -177,7 +189,9 @@
                                 </v-select>
                             </div>
                         </div>
-                       
+
+                        <div class="clearfix"></div>
+
                         <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="fuente">Fuente</label>
@@ -185,12 +199,19 @@
                             </div>                            
                         </div>
 
-                        <div class="col-md-3">
+                        <div v-if="(fuente)" class="col-md-3">
                             <div class="form-group" >
                                 <label for="foco">Foco </label>
                                 <input type="text" v-model="interno_fuente.foco" class="form-control" id="foco" disabled>
                             </div>                            
                         </div>
+                        <div v-else class="col-md-3">
+                          <div class="form-group" >
+                                <label for="foco">Foco </label>
+                                <input type="text" v-model="interno_equipo.foco" class="form-control" id="foco" disabled>
+                            </div>          
+                        </div>
+
                         
                         <div class="col-md-3">                       
                             <div class="form-group" >
@@ -276,9 +297,7 @@
                                     </template>    
                                 </v-select>   
                             </div>      
-                        </div>
-
-                        <div class="clearfix"></div>
+                        </div>                        
                         
                         <div class="col-md-3">                       
                             <div class="form-group">
@@ -301,8 +320,8 @@
                         
                         <div class="col-md-3">
                             <div class="form-group" >
-                                <label for="distancia_fuente_pelicula">Dist. Fuente *</label>
-                                <input type="text" v-model="distancia_fuente_pelicula" class="form-control" :disabled="!isChapa" id="distancia_fuente_pelicula">
+                                <label for="distancia_fuente_pelicula">Dist. Fuente/Film *</label>
+                                <input type="text" v-model="distancia_fuente_pelicula" class="form-control" disabled id="distancia_fuente_pelicula">
                             </div>                            
                         </div>  
 
@@ -341,33 +360,32 @@
                         </div>                            
                     </div>   
                 </div>
-
                     
-                   <div class="col-md-2">                       
-                        <div class="form-group" >                            
-                            <label for="densidad">Densidad</label>
-                            <input type="number" v-model="densidad" class="form-control" id="densidad" step="0.1">                           
-                        </div>     
-                    </div>   
+                <div class="col-md-2">                       
+                    <div class="form-group" >                            
+                        <label for="densidad">Densidad</label>
+                        <input type="number" v-model="densidad" class="form-control" id="densidad" step="0.1">                           
+                    </div>     
+                </div>   
 
-                   <div class="col-md-2">                       
-                        <div class="form-group" >                            
-                        <label for="posicion">Posición</label>
-                        <input type="text" v-model="posicion" class="form-control" id="posicion">                           
-                        </div>     
-                    </div>   
+                <div class="col-md-2">                       
+                    <div class="form-group" >                            
+                    <label for="posicion">Posición</label>
+                    <input type="text" v-model="posicion" class="form-control" id="posicion">                           
+                    </div>     
+                </div>   
 
-                    <div class="col-md-2">                       
-                             <p>&nbsp;</p>         
-                             <button type="button" @click="AddDetalle()" title="Agregar Junta/Posición"><app-icon img="plus-circle" color="black"></app-icon></button> 
-                             <button type="button" @click="ClonarPosPlanta()" title="Clonar Posición"><app-icon img="clone" color="black"></app-icon></button>                               
-                             <button type="button" @click="resetDetalle()" title="Limpiar Todo"><app-icon img="trash" color="black"></app-icon></button>                
-                   
-                    </div>      
+                <div class="col-md-2">                       
+                            <p>&nbsp;</p>         
+                            <button type="button" @click="AddDetalle()" title="Agregar Junta/Posición"><app-icon img="plus-circle" color="black"></app-icon></button> 
+                            <button type="button" @click="ClonarPosPlanta()" title="Clonar Posición"><app-icon img="clone" color="black"></app-icon></button>                               
+                            <button type="button" @click="resetDetalle()" title="Limpiar Todo"><app-icon img="trash" color="black"></app-icon></button>                
+                
+                </div>      
 
-                    <div class="form-group">
-                        &nbsp;
-                    </div>           
+                <div class="form-group">
+                    &nbsp;
+                </div>           
 
                     <div v-if="TablaDetalle.length">
                         <div class="col-md-12">
@@ -737,6 +755,9 @@ import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 import moment from 'moment';
 import { toastrInfo,toastrDefault } from '../toastrConfig';
+import {isInt} from '../../functions/isInt.js'
+import {isFloat} from '../../functions/isFloat.js'
+
 
 export default {
 
@@ -867,7 +888,6 @@ export default {
                 "xlsx", "xlsb", "xlsm", "xls", "xml", "csv", "txt", "ods", "fods", "uos", "sylk", "dif", "dbf", "prn", "qpw", "123", "wb*", "wq*", "html", "htm"
             ].map(function(x) { return "." + x; }).join(","),
 
-
            // Formulario encabezado
 
             reparacion_sn:false,
@@ -936,32 +956,34 @@ export default {
             isChapa:false,
             isGasoducto:false,
             EnableClonarPasadas:false,
-           
-             equipos:[],
-             fuentes:[],
-             tipo_peliculas:[],
-             
-             icis:[],
-             tecnicas:[],            
-             tecnicas_graficos :[], 
+            medida:'',
+            cms:[],
+            equipos:[],
+            fuentes:[],
+            tipo_peliculas:[],
 
-             soldadores:[],
-             posiciones:[],
-             defectosRiPlanta:[],
-             defectosRiGasoducto:[],
-             elemento_pasadas:[],
-             elemento_pasadas_a_clonar:[],
-             elemento_pasada:'',
-             TablaDetalle:[],   
-             TablaPasadas:[],                     
-             junta_posicion_selected : '',
-             clonando : false,     
-             clonando_pasada : false,        
-             importado_pasadas :  false,
-             parseCsv :[],
-             TablaImportada :[],
-             sel_todos_clonar: false,
-             }},
+            icis:[],
+            tecnicas:[],            
+            tecnicas_graficos :[], 
+
+            soldadores:[],
+            posiciones:[],
+            defectosRiPlanta:[],
+            defectosRiGasoducto:[],
+            elemento_pasadas:[],
+            elemento_pasadas_a_clonar:[],
+            elemento_pasada:'',
+            TablaDetalle:[],   
+            TablaPasadas:[],                     
+            junta_posicion_selected : '',
+            clonando : false,     
+            clonando_pasada : false,        
+            importado_pasadas :  false,
+            parseCsv :[],
+            TablaImportada :[],
+            sel_todos_clonar: false,
+
+        }},
 
     created : function(){       
     
@@ -982,6 +1004,7 @@ export default {
         this.$store.dispatch('loadNormaEvaluaciones');        
         this.$store.dispatch('loadNormaEnsayos');       
         this.getIcis();
+        this.getCms();
         this.getTecnicas();
         this.$store.dispatch('loadEjecutorEnsayo', this.otdata.id); 
         this.getSoldadores();
@@ -1111,7 +1134,8 @@ Update : function(){
                this.material2 = this.material2data;
                this.plano_isom = this.informedata.plano_isom;
                this.diametro = this.diametrodata;
-               this.espesor = this.diametro_espesordata;
+               this.espesor = this.informedata.espesor_especifico ? {'espesor' : this.informedata.espesor_especifico} : this.diametro_espesordata;
+               this.getEspesores();
                this.tecnica = this.tecnicadata;
                this.interno_equipo = this.interno_equipodata;
                this.interno_fuente = this.interno_fuentedata ;                 
@@ -1123,6 +1147,7 @@ Update : function(){
                this.norma_evaluacion = this.norma_evaluaciondata;
                this.norma_ensayo = this.norma_ensayodata;
                this.tipo_pelicula = this.tipo_peliculadata;
+               this.medida = { codigo : this.informe_ridata.medida };
                this.espesor_chapa = this.informedata.espesor_chapa;
                this.pos_ant = this.informe_ridata.pos_ant;
                this.pos_pos = this.informe_ridata.pos_pos;
@@ -1132,7 +1157,7 @@ Update : function(){
                this.ejecutor_ensayo = this.ejecutor_ensayodata;          
                this.TablaDetalle = this.detalledata,  
                this.TablaPasadas = this.pasada_juntas_data;
-               this.InicializarElementosPasadas();
+               this.InicializarElementosPasadas();               
                this.observaciones = this.informedata.observaciones                
                this.tipo_soldadura = this.ot_tipo_soldadura ? (this.ot_tipo_soldadura.tipo_soldadura.codigo) : '';               
                if (this.interno_fuentedata.id != undefined){
@@ -1189,6 +1214,17 @@ Update : function(){
                     this.index_ot_obra_tipo_soldaduras = this.ot_obra_tipo_soldaduras.findIndex(elemento => elemento.tipo_soldadura.codigo  == 'R' );
                 });;
         },
+        
+        getCms: function(){             
+           
+            axios.defaults.baseURL = this.url ;
+            var urlRegistros = 'medidas/cm/' + '?api_token=' + Laravel.user.api_token;        
+            axios.get(urlRegistros).then(response =>{
+
+            this.cms = response.data
+
+            });
+        }, 
 
         cambiopTipoInforme : function(){
 
@@ -1235,17 +1271,30 @@ Update : function(){
 
         getEspesores : function(){
 
-            this.espesor=''; 
-            this.distancia_fuente_pelicula='';   
-            this.tecnica ='';   
+            if(!this.isLoading){
+                this.espesor=''; 
+                this.distancia_fuente_pelicula='';   
+            
+            }
 
-            if(this.diametro != 'CHAPA')   {
+            if(this.diametro.diametro != 'CHAPA')   {
 
-                this.espesor_chapa = '';                
+                this.espesor_chapa = '';   
+
+            }else{
+
+              this.tecnica = this.tecnicas[this.tecnicas.findIndex(elemento =>elemento.codigo == 'CHAPA')];
+              if(!this.isLoading){
+                    this.ActualizarDistFuentePelicula();
+              }
             }
 
             if(this.diametro){    
-               this.$store.dispatch('loadEspesores',this.diametro.diametro_code);
+
+              this.$store.commit('loading', true);
+               this.$store.dispatch('loadEspesores',this.diametro.diametro_code).then(res =>{
+                    this.$store.commit('loading', false);
+               });
              }
         },
         
@@ -1264,7 +1313,7 @@ Update : function(){
                this.$store.dispatch('loadFuentePorInterno',this.interno_equipo.interno_fuente.id).then(response => {
 
                    this.fuente = this.fuentePorInterno;
-                
+                   this.ActualizarDistFuentePelicula();
                });      
 
                if(this.fuentePorInterno) {
@@ -1280,6 +1329,7 @@ Update : function(){
                 this.interno_fuente = {} ;
                 this.fuente ='';
                 this.actividad = '';
+                this.ActualizarDistFuentePelicula();
             }
 
             this.resetInputsEquipos();
@@ -1330,15 +1380,66 @@ Update : function(){
                     this.tecnicas_graficos = response.data
                     });
                   },
+        cambioEspesor : function(){
+
+            if(this.espesor.id != undefined) {
+
+                 this.ActualizarDistFuentePelicula();
+
+   
+            }else{
+          //   this.espesor.espesor = parseFloat(this.espesor.espesor);   
+             var match = this.espesor.espesor.match(/[+-]?([0-9]*[.])?[0-9]+?$/);
+             if(!match){
+                 this.espesor.espesor = 0;    
+             }
+                this.ActualizarDistFuentePelicula();
+            }
+
+        },
 
         ActualizarDistFuentePelicula : function(){
 
+                console.log('entró en ActualizarDistFuentePelicula');
+              
+               this.medida.codigo = this.medida.codigo.replace('X','x');
+               this.medida.codigo = this.medida.codigo.replace('-','x');
+               let existe_alto = this.medida.codigo.includes('x');
+
+               if(!existe_alto){
+                   this.medida.codigo = '7x' + this.medida.codigo;
+               }            
+
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'tecnica_distancias/'+ this.tecnica.id +'/diametro/'+ this.diametro.diametro_code + '?api_token=' + Laravel.user.api_token;        
-                axios.get(urlRegistros).then(response =>{
-                this.tecnica_distancia = response.data
-                this.distancia_fuente_pelicula=this.tecnica_distancia[0].distancia_fuente_peliculas;
-               });  
+
+                let foco = (this.interno_fuente) ? this.interno_fuente.foco : this.interno_equipo.foco ;
+                    foco = foco ? foco : 0;
+
+                if(this.tecnica.codigo == 'CHAPA'){
+
+                    if(this.tecnica &&  this.medida){
+                         this.$store.commit('loading', true);
+                        var urlRegistros = 'tecnica_distancias/tecnica/' + this.tecnica.id + '/medida/'+ this.medida.codigo + '?api_token=' + Laravel.user.api_token;
+                        axios.get(urlRegistros).then(response =>{
+                            this.tecnica_distancia = response.data
+                            this.distancia_fuente_pelicula=this.tecnica_distancia[0].valor;
+                            this.$store.commit('loading', false);
+                        });  
+                    }
+                }else{                                    
+
+                    if(this.tecnica && this.diametro && this.espesor && foco){
+                        this.$store.commit('loading', true);
+                        var urlRegistros = 'tecnica_distancias/tecnica/' + this.tecnica.id + '/diametro/'+ this.diametro.diametro_code + '/espesor/' + this.espesor.espesor + '/foco/' + foco + '?api_token=' + Laravel.user.api_token;        
+                        axios.get(urlRegistros).then(response =>{
+                            this.tecnica_distancia = response.data
+                            this.distancia_fuente_pelicula=this.tecnica_distancia[0].valor;
+                            this.$store.commit('loading', false);
+                        });  
+                    }
+                   
+                }
+
 
         },
 
@@ -2050,6 +2151,7 @@ Update : function(){
                         'ma'               :this.ma,   
                         'interno_fuente' :this.interno_fuente,                           
                         'tipo_pelicula' : this.tipo_pelicula,
+                        'medida'        : this.medida,
                         'pantalla':       this.pantalla,
                         'pos_ant':        this.pos_ant,
                         'pos_pos':       this.pos_pos,
@@ -2135,6 +2237,7 @@ Update : function(){
                         'ma'               :this.ma,   
                         'interno_fuente' :this.interno_fuente,            
                         'tipo_pelicula' : this.tipo_pelicula,
+                        'medida'        : this.medida,
                         'pantalla':       this.pantalla,
                         'pos_ant':        this.pos_ant,
                         'pos_pos':       this.pos_pos,

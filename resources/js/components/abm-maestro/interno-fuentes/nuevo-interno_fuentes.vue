@@ -37,7 +37,7 @@
                     <div class="col-md-6">
                             <div class="form-group">
                                 <label for="foco">Foco *</label>
-                                <input v-model="newRegistro.foco" type="text" name="foco" class="form-control" maxlength="10"> 
+                                <input v-model="newRegistro.foco" type="number" name="foco" class="form-control" maxlength="10" step="0.01"> 
                             </div>
                     </div>
 

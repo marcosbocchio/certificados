@@ -166,6 +166,8 @@ class InformesController extends Controller
       
         $informe->ot_id  = $request->ot['id'];
         $informe->obra = $request->obra;
+
+        $informe->espesor_especifico = null;
         
         If(!isset($request->procedimiento['ot_procedimientos_propios_id'])){
         
@@ -187,14 +189,27 @@ class InformesController extends Controller
           
     
         }else{
-    
-          $diametro_espesor = DiametrosEspesor::where('diametro',$request->diametro['diametro']) 
-                                              ->where('espesor',$request->espesor['espesor'])
-                                              ->first();
-    
-          $informe->diametro_espesor_id = $diametro_espesor['id'];
+            
+            If(!isset($request->espesor['id'])){
+
+                // Esta linea la pongo por un problema con vue que cuando edito un espesor no me lo convierte en objeto.
+                $informe->espesor_especifico = isset($request->espesor['espesor']) ? $request->espesor['espesor'] : $request->espesor ;
+
+                $diametro_espesor = DiametrosEspesor::where('diametro',$request->diametro['diametro']) 
+                                                      ->first();
+            }else {               
+                $diametro_espesor = DiametrosEspesor::where('diametro',$request->diametro['diametro']) 
+                                                    ->where('espesor',$request->espesor['espesor'])
+                                                    ->first();
+
+                                                    
+                                                }
+                                                
+            $informe->diametro_espesor_id = $diametro_espesor['id'];
+
     
         } 
+
         $informe->espesor_chapa = $request->espesor_chapa;
         $informe->interno_equipo_id = $request->interno_equipo['id'];
         $informe->metodo_ensayo_id  = $metodo_ensayo['id'];

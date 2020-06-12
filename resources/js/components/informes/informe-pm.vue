@@ -59,7 +59,7 @@
                         <div class="col-md-3">
                             <div class="form-group" >
                                 <label>Espesor</label>
-                                <v-select v-model="espesor" label="espesor" :options="espesores" :disabled="isChapa">
+                                <v-select v-model="espesor" label="espesor" :options="espesores" taggable :disabled="isChapa">
                                      <template slot="option" slot-scope="option">
                                         <span class="upSelect">{{ option.espesor }} </span> <br> 
                                         <span class="downSelect"> {{ option.cuadrante }} </span>
@@ -724,7 +724,7 @@ export default {
                this.diametro = this.diametrodata;
                this.particula = this.particula_data;
                this.contraste = this.contraste_data;
-               this.espesor = this.diametro_espesordata;
+               this.espesor = this.informedata.espesor_especifico ? {'espesor' : this.informedata.espesor_especifico} : this.diametro_espesordata;
                this.tecnica = this.tecnicadata;
                this.interno_equipo = this.interno_equipodata;           
                this.procedimiento = this.procedimientodata;            

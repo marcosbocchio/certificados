@@ -91,6 +91,7 @@ class InformesRiRepository extends BaseRepository
     $informeRi->ma = $request->ma;
     $informeRi->interno_fuente_id =  $request->interno_fuente ? $request->interno_fuente['id'] : null;
     $informeRi->tipo_pelicula_id = $request->tipo_pelicula['id'];
+    $informeRi->medida = $request->medida['codigo'];
     $informeRi->ici_id  = $request->ici['id'];
     $informeRi->gasoducto_sn = $request->gasoducto_sn;
     $informeRi->pantalla = $request->pantalla;

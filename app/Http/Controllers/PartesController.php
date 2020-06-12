@@ -474,6 +474,7 @@ class PartesController extends Controller
                                     COUNT(DISTINCT(juntas.codigo)) as costuras,
                                     diametros_espesor.diametro as pulgadas,       
                                     COUNT(posicion.id) as placas,
+                                    informes_ri.medida as medida,
                                     "RI" as metodo
                                     FROM informes 
                                     
@@ -482,7 +483,7 @@ class PartesController extends Controller
                                     left join posicion on posicion.junta_id = juntas.id
                                     inner join diametros_espesor on informes.diametro_espesor_id = diametros_espesor.id
                                     WHERE
-                                    informes.id=:id group by diametro',['id' => $id ]);
+                                    informes.id=:id group by pulgadas,medida',['id' => $id ]);
 
       $informe_ri = Collection::make($informe_ri);
 
