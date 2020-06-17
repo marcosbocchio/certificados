@@ -56,6 +56,9 @@ class Documentaciones extends Model
                 ->orWhereHas('internoEquipo', function ($q) use($filtro) {
                     $q->WhereRaw("interno_equipos.nro_interno LIKE '%" . $filtro . "%'");
                 })
+                ->orWhereHas('vehiculo', function ($q) use($filtro) {
+                    $q->WhereRaw("vehiculo.nro_interno LIKE '%" . $filtro . "%'");
+                })    
                 ->orWhereHas('internoFuente', function ($q) use($filtro) {
                     $q->WhereRaw("interno_fuentes.nro_serie LIKE '%" . $filtro . "%'");
                 });
@@ -77,6 +80,9 @@ class Documentaciones extends Model
                         ->orWhereHas('internoEquipo', function ($q) use($filtro) {
                             $q->WhereRaw("interno_equipos.nro_interno LIKE '%" . $filtro . "%'");
                         })
+                        ->orWhereHas('vehiculo', function ($q) use($filtro) {
+                            $q->WhereRaw("vehiculo.nro_interno LIKE '%" . $filtro . "%'");
+                        })   
                         ->orWhereHas('internoFuente', function ($q) use($filtro) {
                             $q->WhereRaw("interno_fuentes.nro_serie LIKE '%" . $filtro . "%'");
                         }); 

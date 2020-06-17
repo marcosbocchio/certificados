@@ -88,7 +88,8 @@ class VehiculosController extends Controller
       }
 
       public function saveVehiculos($request,$vehiculo){
-  
+        
+        $vehiculo->nro_interno = $request['nro_interno'];
         $vehiculo->marca = $request['marca'];
         $vehiculo->modelo = $request['modelo'];
         $vehiculo->patente = $request['patente'];

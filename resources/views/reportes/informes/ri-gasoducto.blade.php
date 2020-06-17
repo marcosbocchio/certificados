@@ -159,8 +159,19 @@ b {
                         <tr>                      
                             <td style="font-size: 11px; width: 140px;"><b>Material: </b>{{$material->codigo}}</td>
                             <td style="font-size: 11px; width: 140px;border-right: 1px solid #000;"  ><b>Plano / Isom :</b>{{$informe->plano_isom}}</td>
-                            <td style="font-size: 11px; width: 140px;"><b>Kv: </b>{{$interno_equipo->voltaje}}</td>
-                            <td style="font-size: 11px; width: 140px;border-right: 1px solid #000;" ><b>mA: </b>{{$interno_equipo->amperaje}}</td>
+                            <td style="font-size: 11px; width: 140px;"><b>Kv: </b>
+                                @if ($informe_ri->kv)
+                                   {{ $informe_ri->kv }}
+                                @else
+                                   {{$interno_equipo->voltaje}}
+                                @endif
+                            </td>
+                            <td style="font-size: 11px; width: 140px;border-right: 1px solid #000;" ><b>mA: </b>
+                                @if ($informe_ri->ma)
+                                   {{ $informe_ri->ma }}
+                                @else
+                                   {{$interno_equipo->amperaje}}</td>
+                                @endif
                             <td style="font-size: 11px; width: 85px"><b>Pantalla: </b>Pb</td>
                             <td style="font-size: 11px; width: 40px"><b>Ant: </b>{{$informe_ri->pos_ant}}</td>
                             <td style="font-size: 11px; width: 40px;border-right: 1px solid #000;"  ><b>Pos: </b>{{$informe_ri->pos_pos}}</td>

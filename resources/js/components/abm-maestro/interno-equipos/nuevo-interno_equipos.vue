@@ -66,14 +66,14 @@
                             <div class="col-md-12">    
                                 <div class="form-group">
                                     <label for="voltaje">Voltaje</label>
-                                    <input v-model="Registro.voltaje" type="number" name="voltaje" class="form-control" value="">   
+                                    <input v-model="Registro.voltaje" type="number" name="voltaje" class="form-control" max="9999" value="" step="0.1">   
                                 </div>
                             </div>
 
                             <div class="col-md-12">    
                                 <div class="form-group">
                                     <label for="amperaje">Amperaje</label>
-                                    <input v-model="Registro.amperaje" type="number" name="amperaje" class="form-control" value="">             
+                                    <input v-model="Registro.amperaje" type="number" name="amperaje" class="form-control" max="9999" value="" step="0.1">             
                                 </div>
                             </div>
                           </div>

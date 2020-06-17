@@ -14,24 +14,24 @@
           <div class="clearfix"></div>
 
                 <div v-show="$can('T_doc_actualiza')">
-                        <div class="box box-custom-enod">
-                            <div class="box-body">  
-                                <div class="form-group">
-                                    <label>Documentaciones</label>             
-                                    <v-select v-model="documentacion" :options="documentaciones" label="titulo">
-                                        <template slot="option" slot-scope="option">
-                                            <span class="upSelect">{{ option.titulo }} </span> <br> 
-                                            <span class="downSelect"> {{ option.descripcion }} </span>
-                                        </template>
-                                    </v-select>        
-                                </div> 
-                                <div class="form-group">                    
-                                    <span>
-                                    <button type="button" @click="addDocumentacion(documentacion.id)"><span class="fa fa-plus-circle"></span></button> 
-                                    </span>
-                                </div>
-                            </div>                
-                        </div>
+                    <div class="box box-custom-enod">
+                        <div class="box-body">  
+                            <div class="form-group">
+                                <label>Documentaciones</label>             
+                                <v-select v-model="documentacion" :options="documentaciones" label="titulo">
+                                    <template slot="option" slot-scope="option">
+                                        <span class="upSelect">{{ option.titulo }} </span> <br> 
+                                        <span class="downSelect"> {{ option.descripcion }} </span>
+                                    </template>
+                                </v-select>        
+                            </div> 
+                            <div class="form-group">                    
+                                <span>
+                                <button type="button" @click="addDocumentacion(documentacion.id)"><span class="fa fa-plus-circle"></span></button> 
+                                </span>
+                            </div>
+                        </div>                
+                    </div>
                 </div>
 
                 <div class="box box-custom-enod top-buffer">

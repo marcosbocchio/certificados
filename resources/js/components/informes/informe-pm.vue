@@ -263,14 +263,14 @@
                         <div class="col-md-3">
                             <div class="form-group" >                        
                                 <label for="v">Kv *</label>
-                                <input type="number" class="form-control" v-model="voltaje" id="v" max="999"> 
+                                <input type="number" class="form-control" v-model="voltaje" id="v" max="9999" step="0.1"> 
                             </div>                             
                         </div> 
 
                         <div class="col-md-3">
                             <div class="form-group" >                        
                                 <label for="am">mA *</label>
-                                <input type="number" class="form-control" v-model="am" id="am" max="999"> 
+                                <input type="number" class="form-control" v-model="am" id="am" max="9999" step="0.1"> 
                             </div>                             
                         </div> 
 

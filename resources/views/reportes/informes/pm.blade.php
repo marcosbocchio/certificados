@@ -102,8 +102,19 @@ b {
                         <tr>
                             <td style="font-size: 11px; width: 200px;border-right: 1px solid #000;"><b>Componente: </b>{{$informe->componente}}</td>
                             <td style="font-size: 11px;width: 50px; " colspan="2" ><b>Equipo: </b>{{$interno_equipo->equipo->codigo}}</td>
-                            <td style="font-size: 11px;" ><b>Kv: </b>{{$informe_pm->voltaje}}</td>
-                            <td style="font-size: 11px; width: 50px; border-right: 1px solid #000;" ><b>mA: </b>{{$informe_pm->amperaje}}</td>
+                            <td style="font-size: 11px;" ><b>Kv: </b>                     
+                               @if ($informe_pm->voltaje)
+                                   {{$informe_pm->voltaje }}
+                                @else
+                                   {{$interno_equipo->voltaje}}
+                                @endif
+                            </td>
+                            <td style="font-size: 11px; width: 50px; border-right: 1px solid #000;" ><b>mA: </b>
+                                @if ($informe_pm->amperaje)
+                                   {{$informe_pm->amperaje }}
+                                @else
+                                   {{$interno_equipo->amperaje}}
+                                @endif
                             <td style="font-size: 11px;  " colspan="2"  ><b style="font-size: 11px;">Norma Evaluación: </b>{{$norma_evaluacion->codigo}}</td>                            
                         </tr>
                         <tr>                

@@ -11,19 +11,18 @@
                 <div class="modal-body">   
                    <div class="row"> 
                        <div class="col-md-12">
+
+                            <div class="col-md-6">    
+                                <div class="form-group">
+                                    <label for="numero_interno">N° Interno *</label> 
+                                    <input autocomplete="off" v-model="Registro.nro_interno" type="text" name="numero_interno" class="form-control" value="" maxlength="5">                  
+                                </div>
+                            </div>
                            
                             <div class="col-md-6">    
                                 <div class="form-group">                           
                                     <label for="marca">Marca *</label>                   
                                     <input autocomplete="off" v-model="Registro.marca" type="text" name="marca" class="form-control" value="" maxlength="15" > 
-                                </div>
-                            </div>
-
-
-                            <div class="col-md-6">    
-                                <div class="form-group">    
-                                    <label for="patente">Patente *</label>      
-                                    <input autocomplete="off" v-model="Registro.patente" type="text" name="patente" class="form-control" value="" maxlength="7">         
                                 </div>
                             </div>
 
@@ -33,6 +32,14 @@
                                     <input autocomplete="off" v-model="Registro.modelo" type="text" name="modelo" class="form-control" value="" maxlength="50">
                                 </div>                            
                             </div>
+
+                            <div class="col-md-6">    
+                                <div class="form-group">    
+                                    <label for="patente">Patente *</label>      
+                                    <input autocomplete="off" v-model="Registro.patente" type="text" name="patente" class="form-control" value="" maxlength="7">         
+                                </div>
+                            </div>
+
 
                             <div class="col-md-6">    
                                 <div class="form-group">    
@@ -76,7 +83,8 @@
 export default {
     data() { return {
     
-        Registro : {           
+        Registro : {    
+            'nro_interno' :'',       
             'marca'    : '',
             'modelo'   : '',  
             'patente'  : '',
@@ -102,7 +110,8 @@ export default {
 
     methods: {
            openModal : function(){
-                    this.Registro = {           
+                    this.Registro = {  
+                         'nro_interno' :'',                
                         'marca'    : '',
                         'modelo'   : '',  
                         'patente'  : '',

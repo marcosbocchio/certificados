@@ -31,6 +31,7 @@
             <td  v-else>&nbsp;</td>
             <td v-if="registro.tipo == 'EQUIPO' && registro.interno_equipo[0]">{{ registro.interno_equipo[0]['nro_interno']}}</td>
             <td v-else-if="registro.tipo == 'FUENTE' && registro.interno_fuente[0]">{{ registro.interno_fuente[0]['nro_serie']}}</td>
+            <td  v-else-if="registro.tipo == 'VEHICULO' && registro.vehiculo[0]">{{ registro.vehiculo[0]['nro_interno']}}</td>
             <td  v-else>&nbsp;</td>
             <td width="10px">
               <button class="btn btn-warning btn-sm" title="Editar" v-on:click.prevent="$emit('editRegistroEvent',registro)" :disabled="!$can('M_documentaciones_edita')"><span class="fa fa-edit"></span></button>

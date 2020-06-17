@@ -25,12 +25,13 @@ class VehiculoRequest extends FormRequest
     {
      
         return [
-            'marca'   => 'required|Max:15',
-            'modelo'  =>'required|Max:50',
-            'patente' => 'required | Max:7',
-            'tipo'    => 'required | Max:15',
-            'chasis'  => 'required | Max:20',
-            'motor'   => 'required | Max:20',
+            'nro_interno'   => 'required',
+            'marca'         => 'required|Max:15',
+            'modelo'        =>'required|Max:50',
+            'patente'       => 'required | Max:7',
+            'tipo'          => 'required | Max:15',
+            'chasis'        => 'required | Max:20',
+            'motor'         => 'required | Max:20',
         ];
      
     }
