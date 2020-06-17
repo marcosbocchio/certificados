@@ -58,7 +58,7 @@
                             </div>
                             <div v-else class="col-md-12">
                                 <div class="form-group">
-                                    <label for="foco">Foco vv </label>
+                                    <label for="foco">Foco </label>
                                     <input v-model="interno_fuente.foco" type="number" class="form-control" disabled name="foco">  
                                 </div>
                             </div>

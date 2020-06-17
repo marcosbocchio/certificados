@@ -50,14 +50,20 @@
                                 </div>
                             </div>
                         
-                            <div class="col-md-12">    
+                            <div v-if="!(interno_fuente ||  !(equipo && equipo.metodo_ensayos.metodo == 'RI'))" class="col-md-12">    
                                 <div class="form-group">
                                     <label for="foco">Foco </label>
-                                    <input v-model="Registro.foco" type="number" name="foco" class="form-control" value="" :disabled="interno_fuente ||  !(equipo && equipo.metodo_ensayos.metodo == 'RI')" step="0.1">   
+                                    <input v-model="Registro.foco" type="number" name="foco" class="form-control" value="" step="0.1">   
                                 </div>
-                            </div>
-
-                            <div class="col-md-12">    
+                            </div>     
+                            <div v-else class="col-md-12">
+                                <div class="form-group">
+                                    <label for="foco">Foco </label>
+                                    <input v-model="interno_fuente.foco" type="number" class="form-control" disabled name="foco">  
+                                </div>
+                            </div> 
+                            
+                           <div class="col-md-12">    
                                 <div class="form-group">
                                     <label for="voltaje">Voltaje</label>
                                     <input v-model="Registro.voltaje" type="number" name="voltaje" class="form-control" value="" step="0.1">   
