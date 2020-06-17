@@ -25,12 +25,12 @@ class VehiculosController extends Controller
 
     public function index()
     {
-        return Vehiculos::orderBy('marca','ASC')->orderBy('modelo','ASC')->get();
+        return Vehiculos::orderBy('nro_interno','ASC')->get();
     }
 
     public function paginate(Request $request){
 
-        return  Vehiculos::orderBy('marca','ASC')->orderBy('modelo','ASC')->paginate(10);
+        return  Vehiculos::orderBy('nro_interno','ASC')->paginate(10);
 
     }
 

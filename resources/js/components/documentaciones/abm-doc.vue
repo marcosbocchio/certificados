@@ -131,10 +131,10 @@
                             <div v-if="newRegistro.tipo == 'VEHICULO'">
                                 <div class="form-group">                        
                                    <label>Vehículo </label>
-                                    <v-select  v-model="vehiculo" :options="vehiculos" label="marca" @input="VerificarDuplicado()">
+                                    <v-select  v-model="vehiculo" :options="vehiculos" label="nro_interno" @input="VerificarDuplicado()">
                                         <template slot="option" slot-scope="option">
-                                            <span class="upSelect">{{ option.marca }} - {{ option.modelo }}</span> <br> 
-                                            <span class="downSelect"> {{ option.patente }} </span>
+                                            <span class="upSelect">{{ option.nro_interno }} </span> <br> 
+                                            <span class="downSelect"> {{ option.marca }} - {{ option.patente }} </span>
                                         </template>
                                     </v-select>    
                                 </div>

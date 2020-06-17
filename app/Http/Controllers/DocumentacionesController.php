@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection as Collection;
 use App\MetodoEnsayos;
 use App\Users;
+use App\VehiculoDocumentaciones;
 use App\InternoEquipoDocumentaciones;
 use App\InternoFuenteDocumentaciones;
 use Illuminate\Support\Facades\Log;

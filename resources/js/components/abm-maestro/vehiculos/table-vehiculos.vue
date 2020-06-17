@@ -4,7 +4,8 @@
     <div class="table-responsive">
       <table class="table table-hover table-striped">
         <thead>
-          <tr>                     
+          <tr>      
+            <th>N° INT.</th>               
             <th>MARCA</th>
             <th>MODELO</th>
             <th>PATENTE</th>
@@ -14,6 +15,7 @@
         </thead>
         <tbody>
           <tr v-for="registro in registros" :key="registro.id">                        
+            <td>{{ registro.nro_interno }}</td> 
             <td>{{ registro.marca }}</td> 
             <td>{{ registro.modelo }}</td> 
             <td>{{ registro.patente }}</td> 

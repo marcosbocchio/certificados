@@ -15,7 +15,7 @@
                             <div class="col-md-6">    
                                 <div class="form-group">
                                     <label for="numero_interno">N° Interno *</label> 
-                                    <input autocomplete="off" v-model="Registro.nro_interno" type="text" name="numero_interno" class="form-control" value="" maxlength="5">                  
+                                    <input autocomplete="off" v-model="Registro.nro_interno" type="number" name="numero_interno" class="form-control" value="" max="99999">                  
                                 </div>
                             </div>
                            
