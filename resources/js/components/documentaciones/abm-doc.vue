@@ -678,7 +678,8 @@ export default {
                 this.metodo_ensayo =  registro.metodo_ensayo ? registro.metodo_ensayo : {id :''};
                 this.usuario = registro.usuario ? registro.usuario[0] : {'id' : null};
                 this.interno_equipo = registro.interno_equipo ? registro.interno_equipo[0] : {'id' : null};
-                this.interno_fuente = registro.interno_fuente ? registro.interno_fuente[0] : {'id' : null};            
+                this.interno_fuente = registro.interno_fuente ? registro.interno_fuente[0] : {'id' : null};     
+                this.vehiculo = registro.vehiculo ? registro.vehiculo[0] : {'id' : null};                   
                 this.newRegistro = registro;  
                 let fileName = this.newRegistro.path ; 
                 let FileExt = fileName.substring(fileName.length-3,fileName.length);
