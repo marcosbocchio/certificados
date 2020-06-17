@@ -11,8 +11,8 @@ class PermissionsController extends Controller
 {
   public function __construct()
   {
-    $this->middleware(['role_or_permission:Super Admin|M_permisos'],['only' => ['callView']]);  
-    $this->middleware(['role_or_permission:Super Admin|M_permisos_edita'],['only' => ['store','update']]);  
+    $this->middleware(['role_or_permission:Sistemas|M_permisos'],['only' => ['callView']]);  
+    $this->middleware(['role_or_permission:Sistemas|M_permisos_edita'],['only' => ['store','update']]);  
 
   }
     /**

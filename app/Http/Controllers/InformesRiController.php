@@ -39,7 +39,7 @@ class InformesRiController extends Controller
     {
 
       $this->middleware('ddppi')->only('create');  
-      $this->middleware(['role_or_permission:Super Admin|T_informes_edita'],['only' => ['create','edit']]);  
+      $this->middleware(['role_or_permission:Sistemas|T_informes_edita'],['only' => ['create','edit']]);  
 
       $this->informesRi = $informesRiRepository;
     }

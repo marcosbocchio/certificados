@@ -14,7 +14,7 @@ class OperadorPeriodoRxController extends Controller
     public function __construct()
     {
   
-          $this->middleware(['role_or_permission:Super Admin|D_activa_operador'],['only' => ['callView']]);  
+          $this->middleware(['role_or_permission:Sistemas|D_activa_operador'],['only' => ['callView']]);  
     
     }
     /**

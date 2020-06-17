@@ -26,7 +26,7 @@ class OtsController extends Controller
     public function __construct(OtsRepository $otRepository)
     {     
 
-     $this->middleware(['role_or_permission:Super Admin|O_alta'],['only' => ['create','edit']]);  
+     $this->middleware(['role_or_permission:Sistemas|O_alta'],['only' => ['create','edit']]);  
       $this->ot = $otRepository;
       
     }

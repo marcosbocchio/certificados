@@ -28,7 +28,7 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'ots.edit']);
 
         // creo roles y se los asigno a un permiso creado        
-        $role = Role::create(['name' => 'Super Admin']);
+        $role = Role::create(['name' => 'Sistemas']);
 
         $role = Role::create(['name' => 'Admin']);
         $role->givePermissionTo(Permission::all());

@@ -8,7 +8,7 @@ use App\OtProcedimientosPropios;
 use Illuminate\Support\Facades\DB;
 use App\InternoEquipoDocumentaciones;
 use App\InternoFuenteDocumentaciones;
-use App\InternoVehiculoDocumentaciones;
+use App\VehiculoDocumentaciones;
 
 
 
@@ -57,7 +57,7 @@ class DocumentacionesRepository extends BaseRepository
 
           if ($request->tipo == 'VEHICULO'){
 
-            $vehiculo_documento = new InternoVehiculoDocumentaciones;
+            $vehiculo_documento = new VehiculoDocumentaciones;
             $this->saveVehiculoDocumento($documento,$vehiculo_documento,$request);        
           }
 
@@ -109,7 +109,7 @@ class DocumentacionesRepository extends BaseRepository
 
           if ($request->tipo == 'VEHICULO'){
 
-            $vehiculo_documento = InternoVehiculoDocumentaciones::where('documentacion_id',$documento->id)->first();
+            $vehiculo_documento = new VehiculoDocumentaciones;
             $this->saveVehiculoDocumento($documento,$vehiculo_documento,$request);        
           }
 
@@ -167,7 +167,7 @@ class DocumentacionesRepository extends BaseRepository
   public function saveVehiculoDocumento($documento,$vehiculo_documento,$request){
 
     $vehiculo_documento->documentacion_id = $documento->id;
-    $vehiculo_documento->interno_vehiculo_id = $request->interno_vehiculo['id'];      
+    $vehiculo_documento->vehiculo_id = $request->vehiculo['id'];      
     $vehiculo_documento->save();
 
   }

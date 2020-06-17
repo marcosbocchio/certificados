@@ -26,7 +26,7 @@ class PdfPartesController extends Controller
 
         if($estado == 'original'){
 
-            $this->middleware(['role_or_permission:Super Admin|T_partes_edita']);  
+            $this->middleware(['role_or_permission:Sistemas|T_partes_edita']);  
 
         }
         

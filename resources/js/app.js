@@ -169,6 +169,11 @@ Vue.component('table-agente_acoplamientos', require('./components/abm-maestro/ag
 Vue.component('nuevo-agente_acoplamientos', require('./components/abm-maestro/agente-acoplamientos/nuevo-agente_acoplamientos.vue').default);
 Vue.component('editar-agente_acoplamientos', require('./components/abm-maestro/agente-acoplamientos/editar-agente_acoplamientos.vue').default);
 
+Vue.component('table-vehiculos', require('./components/abm-maestro/vehiculos/table-vehiculos.vue').default);
+Vue.component('nuevo-vehiculos', require('./components/abm-maestro/vehiculos/nuevo-vehiculos.vue').default);
+Vue.component('editar-vehiculos', require('./components/abm-maestro/vehiculos/editar-vehiculos.vue').default);
+
+
 Vue.component('table-roles', require('./components/abm-maestro/roles/table-roles.vue').default);
 Vue.component('editar-roles', require('./components/abm-maestro/roles/editar-roles.vue').default);
 Vue.component('nuevo-roles', require('./components/abm-maestro/roles/nuevo-roles.vue').default);
@@ -316,6 +321,7 @@ state: {
         interno_equipos:[], 
         instrumentos_mediciones:[],
         palpadores : [],
+        vehiculos:[],
         interno_fuentes:[],
         fuentes:[],
         equipos:[],
@@ -607,6 +613,20 @@ actions : {
           axios.get(urlRegistros).then((response) => {
             console.log(response.data);
             commit('getInstrumentosMediciones', response.data)   
+            resolve()       
+          })        
+          })
+        }, 
+
+        loadVehiculos({
+          commit}) {
+          axios.defaults.baseURL = store.state.url ;
+          var urlRegistros = 'vehiculos' + '?api_token=' + Laravel.user.api_token;         
+          console.log(urlRegistros);
+          return new Promise((resolve, reject) => {
+          axios.get(urlRegistros).then((response) => {
+            console.log(response.data);
+            commit('getVehiculos', response.data)   
             resolve()       
           })        
           })
@@ -1056,6 +1076,10 @@ actions : {
 
       getInstrumentosMediciones(state, instrumentos_mediciones) {
         state.instrumentos_mediciones = instrumentos_mediciones
+      },
+
+      getVehiculos(state, vehiculos) {
+        state.vehiculos = vehiculos
       },
 
       getPalpadores(state, palpadores) {

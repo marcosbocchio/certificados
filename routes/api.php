@@ -88,8 +88,11 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('estados_superficies', 'EstadosSuperficiesController');
     Route::get('agente_acoplamientos/paginate', 'AgenteAcoplamientosController@paginate'); 
     Route::resource('agente_acoplamientos', 'AgenteAcoplamientosController');
+    Route::get('vehiculos/paginate', 'VehiculosController@paginate'); 
+    Route::resource('vehiculos', 'VehiculosController');
 
     Route::resource('palpadores', 'PalpadoresController');
+
     Route::resource('generatrices', 'GeneratricesController');
 
     Route::get('roles/paginate', 'RolesController@paginate');      
@@ -153,7 +156,7 @@ Route::group(['middleware' => 'auth:api'], function()
 
     Route::get('documentaciones/ot','DocumentacionesController@DocumentacionesDeOt'); 
     Route::get('documentaciones/total', 'DocumentacionesController@DocumentacionesTotal'); 
-    Route::get('documentaciones/verificar_duplicados/tipo/{tipo?}/titulo/{titulo?}/usuario/{user_id?}/equipo/{interno_equipo_id?}/fuente/{interno_fuente_id?}', 'DocumentacionesController@verificarDuplicados'); 
+    Route::get('documentaciones/verificar_duplicados/tipo/{tipo?}/titulo/{titulo?}/usuario/{user_id?}/equipo/{interno_equipo_id?}/fuente/{interno_fuente_id?}/vehiculo/{vehiculo_id}', 'DocumentacionesController@verificarDuplicados'); 
     Route::resource('documentaciones', 'DocumentacionesController'); 
     Route::get('documentaciones/ot/paginate', 'DocumentacionesController@paginate'); 
   

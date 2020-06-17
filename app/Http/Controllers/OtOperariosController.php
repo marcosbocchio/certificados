@@ -15,8 +15,8 @@ class OtOperariosController extends Controller
     public function __construct()
     {
 
-        $this->middleware(['role_or_permission:Super Admin|T_operador_acceder'],['only' => ['index']]);  
-        $this->middleware(['role_or_permission:Super Admin|T_operador_actualiza'],['only' => ['store']]);
+        $this->middleware(['role_or_permission:Sistemas|T_operador_acceder'],['only' => ['index']]);  
+        $this->middleware(['role_or_permission:Sistemas|T_operador_actualiza'],['only' => ['store']]);
     
     }
     /**

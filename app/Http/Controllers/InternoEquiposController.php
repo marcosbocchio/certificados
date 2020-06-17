@@ -17,9 +17,9 @@ class InternoEquiposController extends Controller
   public function __construct()
   {
 
-        $this->middleware(['role_or_permission:Super Admin|M_interno_equipos'],['only' => ['callView']]);  
-        $this->middleware(['role_or_permission:Super Admin|T_equipos_acceder'],['only' => ['OtInternoEquipos']]);   
-        $this->middleware(['role_or_permission:Super Admin|T_equipos_actualiza'],['only' => ['store','destroy']]);
+        $this->middleware(['role_or_permission:Sistemas|M_interno_equipos'],['only' => ['callView']]);  
+        $this->middleware(['role_or_permission:Sistemas|T_equipos_acceder'],['only' => ['OtInternoEquipos']]);   
+        $this->middleware(['role_or_permission:Sistemas|T_equipos_actualiza'],['only' => ['store','destroy']]);
 
   
   }

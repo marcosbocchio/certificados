@@ -19,7 +19,7 @@ class MedidasController extends Controller
     public function __construct(MedidasRepository $medidasRepository)
     {
 
-      $this->middleware(['role_or_permission:Super Admin|M_medidas'],['only' => ['callView']]);  
+      $this->middleware(['role_or_permission:Sistemas|M_medidas'],['only' => ['callView']]);  
       $this->medidas = $medidasRepository;
     }
     /**

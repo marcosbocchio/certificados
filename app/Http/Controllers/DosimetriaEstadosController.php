@@ -18,7 +18,7 @@ class DosimetriaEstadosController extends Controller
     public function __construct()
     {
   
-          $this->middleware(['role_or_permission:Super Admin|D_estados'],['only' => ['callView']]);  
+          $this->middleware(['role_or_permission:Sistemas|D_estados'],['only' => ['callView']]);  
     
     }
     /**

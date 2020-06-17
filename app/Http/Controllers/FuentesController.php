@@ -13,7 +13,7 @@ class FuentesController extends Controller
   public function __construct()
   {
 
-        $this->middleware(['role_or_permission:Super Admin|M_fuentes'],['only' => ['callView']]);    
+        $this->middleware(['role_or_permission:Sistemas|M_fuentes'],['only' => ['callView']]);    
   
   }
     /**

@@ -111,7 +111,11 @@
                 @can('M_agente_ac')
                   <li><a href="{{ route('agente-acoplamiento') }}">Agente Acoplamiento</a></li>
                 @endcan
-    
+
+                @can('M_vehiculos')
+                  <li><a href="{{ route('vehiculos') }}">Vehiculos</a></li>
+                @endcan
+                
                 @can('M_roles')
                   <li><a href="{{ route('roles') }}">Roles</a></li>
                 @endcan

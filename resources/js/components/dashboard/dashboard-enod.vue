@@ -6,7 +6,7 @@
         <div class="small-box bg-custom-1">
           <div class="inner">
             <h3>{{ CantOperadores }}</h3>
-            <p>Operadores</p>
+            <p>Operadores / Ayudantes</p>
           </div>
           <div class="icon">
             <i class="fa ion-person-add"></i>
@@ -55,7 +55,7 @@
         <div class="small-box bg-custom-4">
           <div class="inner">
             <h3>{{ CantDocumentaciones }}</h3>
-            <p>Documentaciones</p>
+            <p>Vehículos / Documentaciones</p>
           </div>
           <div class="icon">
               <i class="fa fa-file-pdf-o"></i>

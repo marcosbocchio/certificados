@@ -32,7 +32,7 @@
 
                 <div class="form-group">           
                     <div class="col-md-3 col-md-offset-4 col-sm-12 col-xs-12">
-                        <v-select class="style-chooser" v-model="tipo" :options="['INSTITUCIONAL','OT','PROCEDIMIENTO GENERAL','USUARIO','EQUIPO','FUENTE']" id="tipo" placeholder="TODOS" @input="getResults()"></v-select>   
+                        <v-select class="style-chooser" v-model="tipo" :options="['INSTITUCIONAL','OT','PROCEDIMIENTO GENERAL','USUARIO','EQUIPO','FUENTE','VEHICULO']" id="tipo" placeholder="TODOS" @input="getResults()"></v-select>   
                     </div>
                 </div>                       
                
@@ -103,6 +103,7 @@
                                 <label for="name">Descripción </label>
                                 <input type="text" name="descripcion" class="form-control" v-model="newRegistro.descripcion" value="" maxlength="50">  
                             </div>
+
                             <div v-if="newRegistro.tipo == 'EQUIPO'">
                                 <div class="form-group">
                                     <label for="equipo">Equipo *</label>
@@ -126,12 +127,26 @@
                                     </v-select>    
                                 </div>
                             </div>
+
+                            <div v-if="newRegistro.tipo == 'VEHICULO'">
+                                <div class="form-group">                        
+                                   <label>Vehículo </label>
+                                    <v-select  v-model="vehiculo" :options="vehiculos" label="marca" @input="VerificarDuplicado()">
+                                        <template slot="option" slot-scope="option">
+                                            <span class="upSelect">{{ option.marca }} - {{ option.modelo }}</span> <br> 
+                                            <span class="downSelect"> {{ option.patente }} </span>
+                                        </template>
+                                    </v-select>    
+                                </div>
+                            </div>
+
                             <div v-if="newRegistro.tipo == 'USUARIO'">
                                 <div class="form-group">
                                     <label for="name">Usuario *</label>
                                     <v-select v-model="usuario" label="name" :options="usuarios" @input="VerificarDuplicado()"></v-select>
                                 </div>
                             </div>
+
                             <div v-if="newRegistro.tipo == 'USUARIO' |newRegistro.tipo == 'PROCEDIMIENTO' |newRegistro.tipo == 'PROCEDIMIENTO GENERAL' ">
                                 <div class="form-group">
                                     <label for="name">Método de Ensayo</label>
@@ -145,7 +160,7 @@
                             </div>    
                             
                               
-                            <div v-if="newRegistro.tipo == 'USUARIO' |newRegistro.tipo == 'OT' |newRegistro.tipo == 'PROCEDIMIENTO GENERAL' |newRegistro.tipo == 'INSTITUCIONAL' |newRegistro.tipo == 'EQUIPO' |newRegistro.tipo == 'FUENTE'" >
+                            <div v-if="newRegistro.tipo == 'USUARIO' |newRegistro.tipo == 'OT' |newRegistro.tipo == 'PROCEDIMIENTO GENERAL' |newRegistro.tipo == 'INSTITUCIONAL' |newRegistro.tipo == 'EQUIPO' |newRegistro.tipo == 'FUENTE' |newRegistro.tipo == 'VEHICULO'" >
                                 <div class="form-group">
                                     <label for="fecha">Fecha caducidad *</label>
                                     <div>                                                                      
@@ -281,11 +296,13 @@ export default {
             'PROCEDIMIENTO GENERAL',          
             'USUARIO',
             'EQUIPO',
-            'FUENTE',                     
+            'FUENTE',    
+            'VEHICULO'                 
          ],       
          errors:[],
          interno_equipo: {id:null},
          interno_fuente:{id:null}, 
+         vehiculo:{id:null}, 
          usuario :{id:null},
          metodo_ensayos:[],
          metodo_ensayo :{id:'',},
@@ -318,6 +335,7 @@ export default {
 
         this.$store.dispatch('loadInternoEquipos',{ 'metodo' : 'null', 'activo_sn' : 'null','tipo_penetrante' : 'null' });     
         this.$store.dispatch('loadInternoFuentes','');       
+        this.$store.dispatch('loadVehiculos');    
   
          if(this.modelo == 'documentaciones') {
 
@@ -333,8 +351,8 @@ export default {
           
           newRegistro : function(val) {
 
-                this.images[0].src ='/' + val.path;
-                this.images[0].thumb  ='/' + val.path;
+            this.images[0].src ='/' + val.path;
+            this.images[0].thumb  ='/' + val.path;
 
           },      
         
@@ -347,7 +365,8 @@ export default {
              return 'table-' + this.modelo ;
          },       
          
-         ...mapState(['url','AppUrl','CantProcedimientos','CantDocumentacionesTotal','interno_equipos','interno_fuentes'])
+         ...mapState(['url','AppUrl','CantProcedimientos','CantDocumentacionesTotal','interno_equipos','interno_fuentes','vehiculos'])
+
      },
      
     methods :{
@@ -373,6 +392,7 @@ export default {
             };
          this.interno_equipo = {'id' : null};
          this.interno_fuente = {'id':null};
+         this.vehiculo = {'id':null};
          this.usuario = {'id':null};
             
            if(this.modelo == 'ot_procedimientos_propios'){
@@ -439,7 +459,7 @@ export default {
     VerificarDuplicado:  function(){
 
             axios.defaults.baseURL = this.url ;
-            var urlRegistros = 'documentaciones/verificar_duplicados/tipo/'+ this.newRegistro.tipo + '/titulo/'+ this.newRegistro.titulo + '/usuario/' + this.usuario.id + '/equipo/' + this.interno_equipo.id + '/fuente/' + this.interno_fuente.id +'?api_token=' + Laravel.user.api_token;        
+            var urlRegistros = 'documentaciones/verificar_duplicados/tipo/'+ this.newRegistro.tipo + '/titulo/'+ this.newRegistro.titulo + '/usuario/' + this.usuario.id + '/equipo/' + this.interno_equipo.id + '/fuente/' + this.interno_fuente.id + '/vehiculo/'+ this.vehiculo.id  + '?api_token=' + Laravel.user.api_token;        
             console.log(urlRegistros);
             axios.get(urlRegistros).then(response =>{
             
@@ -566,7 +586,8 @@ export default {
             'descripcion'        : this.newRegistro.descripcion,
             'usuario'            : this.usuario,      
             'interno_equipo'     : this.interno_equipo,   
-            'interno_fuente'     : this.interno_fuente,     
+            'interno_fuente'     : this.interno_fuente,   
+            'vehiculo'           : this.vehiculo, 
             'metodo_ensayo'      : this.metodo_ensayo,   
             'fecha_caducidad'    : this.newRegistro.fecha_caducidad,
             'path'               : this.newRegistro.path,
@@ -610,6 +631,7 @@ export default {
             'usuario'            : this.usuario,         
             'interno_equipo'     : this.interno_equipo,   
             'interno_fuente'     : this.interno_fuente,   
+            'vehiculo'           : this.vehiculo,
             'metodo_ensayo'      : this.metodo_ensayo,   
             'fecha_caducidad'    : this.newRegistro.fecha_caducidad,
             'path'               : this.newRegistro.path,

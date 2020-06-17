@@ -34,7 +34,7 @@ class TecnicasController extends Controller
                                 left join tecnicas_graficos on tecnicas.id = tecnicas_graficos.tecnica_id
                                 inner join metodo_ensayos on metodo_ensayos.id = tecnicas.metodo_ensayo_id
                                 where 
-                                metodo_ensayos.metodo=:metodo',['metodo'=>$metodo]);
+                                metodo_ensayos.metodo=:metodo order by orden asc',['metodo'=>$metodo]);
 
      $tecnicas = Collection::make($tecnicas);                                
      return $tecnicas;

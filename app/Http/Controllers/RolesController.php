@@ -14,8 +14,8 @@ class RolesController extends Controller
 
   public function __construct()
   {
-    $this->middleware(['role_or_permission:Super Admin|M_roles'],['only' => ['callView']]);  
-    $this->middleware(['role_or_permission:Super Admin|M_roles_edita'],['only' => ['store','update']]);  
+    $this->middleware(['role_or_permission:Sistemas|M_roles'],['only' => ['callView']]);  
+    $this->middleware(['role_or_permission:Sistemas|M_roles_edita'],['only' => ['store','update']]);  
   }
     /**
      * Display a listing of the resource.

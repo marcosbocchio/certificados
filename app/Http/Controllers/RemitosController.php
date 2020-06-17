@@ -18,8 +18,8 @@ class RemitosController extends Controller
   public function __construct()
   {
 
-      $this->middleware(['role_or_permission:Super Admin|T_remitos_acceder'],['only' => ['index']]);  
-      $this->middleware(['role_or_permission:Super Admin|T_remitos_edita'],['only' => ['store','edit','update']]);  
+      $this->middleware(['role_or_permission:Sistemas|T_remitos_acceder'],['only' => ['index']]);  
+      $this->middleware(['role_or_permission:Sistemas|T_remitos_edita'],['only' => ['store','edit','update']]);  
 
   
   }

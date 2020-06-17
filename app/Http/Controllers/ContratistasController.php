@@ -5,13 +5,14 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Requests\ContratistaRequest;
 use App\Contratistas;
+
 class ContratistasController extends Controller
 {
 
     public function __construct()
     {
 
-    $this->middleware(['role_or_permission:Super Admin|M_contratistas'],['only' => ['callView']]);  
+    $this->middleware(['role_or_permission:Sistemas|M_contratistas'],['only' => ['callView']]);  
     
     }
     /**
@@ -65,9 +66,8 @@ class ContratistasController extends Controller
               DB::rollback();
               throw $e;      
               
-          }      
-  
-      }
+          }        
+    }
   
       public function update(ContratistaRequest $request, $id){
   

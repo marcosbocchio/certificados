@@ -14,7 +14,7 @@ class DosimetriaRxController extends Controller
     public function __construct()
     {
   
-          $this->middleware(['role_or_permission:Super Admin|D_rx'],['only' => ['callView']]);  
+          $this->middleware(['role_or_permission:Sistemas|D_rx'],['only' => ['callView']]);  
     
     }
     /**

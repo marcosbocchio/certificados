@@ -25,7 +25,7 @@ class DocumentacionesController extends Controller
     public function __construct(DocumentacionesRepository $documentacionesRepository)
     {
 
-        $this->middleware(['role_or_permission:Super Admin|M_documentaciones'],['only' => ['callView']]);   
+        $this->middleware(['role_or_permission:Sistemas|M_documentaciones'],['only' => ['callView']]);   
         $this->documentaciones = $documentacionesRepository;
      
     }
@@ -54,7 +54,8 @@ class DocumentacionesController extends Controller
                                             ->with('metodoEnsayo')   
                                             ->with('usuario')
                                             ->with('internoEquipo')
-                                            ->with('internoFuente')      
+                                            ->with('internoFuente')   
+                                            ->with('vehiculo')      
                                             ->Filtro($filtro,$tipo)                      
                                             ->selectRaw('documentaciones.*')                               
                                             ->orderBy('documentaciones.tipo','ASC')    
@@ -84,7 +85,7 @@ class DocumentacionesController extends Controller
 
     }
 
-    public function verificarDuplicados($tipo = null,$titulo= null,$user_id = null,$interno_equipo_id= null,$interno_fuente_id = null){
+    public function verificarDuplicados($tipo = null,$titulo= null,$user_id = null,$interno_equipo_id= null,$interno_fuente_id = null,$vehiculo_id = null){
 
         if($tipo ==  'USUARIO'){
 
@@ -101,6 +102,7 @@ class DocumentacionesController extends Controller
                                     ->where('documentaciones.titulo',$titulo)
                                     ->where('interno_equipo_documentaciones.interno_equipo_id',$interno_equipo_id) 
                                     ->get();
+
         }elseif($tipo == 'FUENTE'){
 
             return documentaciones::join('interno_fuente_documentaciones','interno_fuente_documentaciones.documentacion_id','=','documentaciones.id')
@@ -109,6 +111,13 @@ class DocumentacionesController extends Controller
                                     ->where('interno_fuente_documentaciones.interno_fuente_id',$interno_fuente_id) 
                                     ->get();
 
+        }elseif ($tipo == 'VEHICULO'){
+
+            return documentaciones::join('vehiculo_documentaciones','vehiculo_documentaciones.documentacion_id','=','documentaciones.id')
+                                    ->where('documentaciones.tipo',$tipo)
+                                    ->where('documentaciones.titulo',$titulo)
+                                    ->where('vehiculo_documentaciones.vehiculo_id',$vehiculo_id) 
+                                    ->get();
         }
         else{
             
@@ -301,7 +310,11 @@ class DocumentacionesController extends Controller
 
         $fuente_documento = new InternoFuenteDocumentaciones;
     
-        $fuente_documento->where('documentacion_id',$id)->delete();         
+        $fuente_documento->where('documentacion_id',$id)->delete();        
+        
+        $vehiculo_documento = new VehiculoDocumentaciones;
+    
+        $vehiculo_documento->where('documentacion_id',$id)->delete();
       
         $documento->delete();
 

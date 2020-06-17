@@ -68,6 +68,8 @@ Route::group(['middleware' => ['auth']], function () {
   Route::get('/area/enod/equipos', 'EquiposController@callView')->name('equipos');
   Route::get('/area/enod/interno_fuentes', 'InternoFuentesController@callView')->name('Interno-fuentes');
   Route::get('/area/enod/interno_equipos', 'InternoEquiposController@callView')->name('Interno-equipos');
+  Route::get('/area/enod/vehiculos', 'VehiculosController@callView')->name('vehiculos');
+
   Route::get('/area/enod/ots','OtsController@create')->name('ots.create')->middleware('auth');
   Route::get('/area/enod/ots/{id}/edit','OtsController@edit')->name('ots.edit');
   Route::get('/area/enod/documentaciones','DocumentacionesController@callView')->name('documentaciones');
@@ -80,9 +82,7 @@ Route::group(['middleware' => ['auth']], function () {
   Route::get('/area/enod/dosimetria/resumen','DosimetriaResumenController@callView')->name('dosimetria-resumen');  
   Route::get('/area/enod/soldadores/estadisticas-soldaduras','EstadisticasSoldadurasController@callView')->name('estadisticas-soldaduras');  
 
-
   // reportes
-
 
   Route::get('/pdf/dosimetria/periodos','PdfDosimetriaPeriodosController@imprimir')->name('pdfDosimetriaPeriodos');
 

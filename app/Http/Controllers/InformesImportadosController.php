@@ -13,7 +13,7 @@ class InformesImportadosController extends Controller
 {
     public function __construct()
     {     
-      $this->middleware(['role_or_permission:Super Admin|T_informes_edita'],['only' => ['store','edit','update']]);  
+      $this->middleware(['role_or_permission:Sistemas|T_informes_edita'],['only' => ['store','edit','update']]);  
 
     }
     /**

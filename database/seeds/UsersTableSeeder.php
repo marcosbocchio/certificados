@@ -21,7 +21,7 @@ class UsersTableSeeder extends Seeder
             'api_token' => Str::random(60),
         ]);
 
-        $administrador->assignRole('Super Admin'); 
+        $administrador->assignRole('Sistemas'); 
 
         // Usuario con el rol operador
 

@@ -13,8 +13,8 @@ class OtProcedimientosPropiosController extends Controller
     public function __construct()
     {
 
-        $this->middleware(['role_or_permission:Super Admin|T_proc_acceder'],['only' => ['index']]);  
-        $this->middleware(['role_or_permission:Super Admin|T_proc_edita'],['only' => ['store','destroy']]);  
+        $this->middleware(['role_or_permission:Sistemas|T_proc_acceder'],['only' => ['index']]);  
+        $this->middleware(['role_or_permission:Sistemas|T_proc_edita'],['only' => ['store','destroy']]);  
 
     
     }

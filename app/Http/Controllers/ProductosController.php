@@ -13,7 +13,7 @@ class ProductosController extends Controller
     public function __construct()
     {
 
-          $this->middleware(['role_or_permission:Super Admin|M_productos'],['only' => ['callView']]);  
+          $this->middleware(['role_or_permission:Sistemas|M_productos'],['only' => ['callView']]);  
     
     }
 
