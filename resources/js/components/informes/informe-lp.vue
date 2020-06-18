@@ -602,7 +602,7 @@ data() {return {
         this.$store.dispatch('loadEjecutorEnsayo', this.otdata.id); 
         this.getMetodosTrabajoLp();  
         this.getAplicacionesLp();  
-        this.setEdit();     tata
+        this.setEdit();     
     },
 
     mounted : function() {
