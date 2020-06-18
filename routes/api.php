@@ -155,12 +155,15 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::post('storage/firma-digital', 'StorageController@saveFirmaDigital');
 
     Route::get('documentaciones/ot','DocumentacionesController@DocumentacionesDeOt'); 
+    
     Route::get('documentaciones/total', 'DocumentacionesController@DocumentacionesTotal'); 
     Route::get('documentaciones/verificar_duplicados/tipo/{tipo?}/titulo/{titulo?}/usuario/{user_id?}/equipo/{interno_equipo_id?}/fuente/{interno_fuente_id?}/vehiculo/{vehiculo_id}', 'DocumentacionesController@verificarDuplicados'); 
     Route::resource('documentaciones', 'DocumentacionesController'); 
     Route::get('documentaciones/ot/paginate', 'DocumentacionesController@paginate'); 
   
     Route::get('documentaciones/ot_operarios/{ot_id}/{user_id}', 'DocumentacionesController@getDocOtOperarios');
+    Route::get('documentaciones/vehiculos/{vehiculo_id}', 'DocumentacionesController@getDocVehiculo');
+
     
     Route::get('interno_equipos/metodo/{metodo}/activo_sn/{activo_sn?}/tipo_penetrante/{tipo_penetrante?}', 'InternoEquiposController@getInternoEquipos');   
     Route::get('interno_equipos/paginate', 'InternoEquiposController@paginate');

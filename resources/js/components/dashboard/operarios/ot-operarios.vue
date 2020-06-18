@@ -157,11 +157,11 @@
                     </div>
                 </div> 
             </div>
-        <loading :active.sync="isLoading"   
-                 :loader="'bars'"
-                 :color="'red'"
-                 >
-        </loading>  
+            <loading :active.sync="isLoading"   
+                    :loader="'bars'"
+                    :color="'red'"
+                    >
+            </loading>  
      </div>      
         <div class="clearfix"></div>
     </div>    
