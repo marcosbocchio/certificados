@@ -357,7 +357,7 @@
                                         <img :src="tecnica.path" alt="..." > 
                                     </div>  
                                     <div v-else class="thumbnail" style="border:solid 1px">
-                                         <img :src="'/img/tecnicas/vacio.svg'" alt="..." >
+                                         <img :src="'/img/tecnicas/imagen_no_disponible.jpg'" alt="..." >
                                     </div>                              
                                </div>                           
                            </div> 
