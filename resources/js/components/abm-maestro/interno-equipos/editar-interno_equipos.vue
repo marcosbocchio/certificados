@@ -50,17 +50,17 @@
                                 </div>
                             </div>
                         
-                            <div v-if="!(interno_fuente ||  !(equipo && equipo.metodo_ensayos.metodo == 'RI'))" class="col-md-12">    
-                                <div class="form-group">
-                                    <label for="foco">Foco </label>
-                                    <input v-model="Registro.foco" type="number" name="foco" class="form-control" value="" step="0.1">   
-                                </div>
-                            </div>     
-                         
-                            <div v-else class="col-md-12">
+                            <div v-if="(interno_fuente || (interno_fuente && (equipo && equipo.metodo_ensayos.metodo == 'RI')))" class="col-md-12">    
                                 <div class="form-group">
                                     <label for="foco">Foco </label>
                                     <input v-model="interno_fuente.foco" type="number" class="form-control" disabled name="foco">  
+                                </div>
+                            </div>     
+                         
+                            <div v-else="" class="col-md-12">
+                                <div class="form-group">
+                                    <label for="foco">Foco </label>
+                                    <input v-model="Registro.foco" type="number" name="foco" class="form-control" value="" step="0.01">   
                                 </div>
                             </div> 
                           
