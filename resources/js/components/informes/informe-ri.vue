@@ -349,13 +349,16 @@
                                 </div>  
                             </div>
                         </div>   
-                        <div class="col-md-3">
+                        <div v-if="!isLoading" class="col-md-3">
                              <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-12" >
                                     <label>&nbsp;</label>                                   
-                                    <div v-if="tecnica.path" class="thumbnail">
+                                    <div v-if="tecnica.path" class="thumbnail" style="border:solid 1px">
                                         <img :src="tecnica.path" alt="..." > 
-                                    </div>                                
+                                    </div>  
+                                    <div v-else class="thumbnail" style="border:solid 1px">
+                                         <img :src="'/img/tecnicas/vacio.svg'" alt="..." >
+                                    </div>                              
                                </div>                           
                            </div> 
                         </div>                                                   
