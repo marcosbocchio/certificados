@@ -4,7 +4,7 @@
           <!-- small box -->
           <div class="small-box bg-custom-4">
             <div class="inner">
-              <h3>{{ ot_documentaciones.length }}</h3>
+              <h3>{{ ot_vehiculos.length}} / {{ ot_documentaciones.length }}</h3>
               <p>Vehículos / Documentaciones</p>
             </div>
             <div class="icon">

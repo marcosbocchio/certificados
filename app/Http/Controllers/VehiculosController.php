@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Vehiculos;
 use App\User;
 use Illuminate\Support\Facades\DB;
+use App\OtVehiculos;
 
 class VehiculosController extends Controller
 {
@@ -120,6 +121,12 @@ class VehiculosController extends Controller
     public function edit($id)
     {
         //
+    }
+    
+    public function OtVehiculosTotal($ot_id){
+
+        return OtVehiculos::where('ot_id',$ot_id)->count(); 
+
     }
 
 

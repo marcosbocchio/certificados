@@ -54,7 +54,7 @@
         <!-- small box -->
         <div class="small-box bg-custom-4">
           <div class="inner">
-            <h3>{{ CantDocumentaciones }}</h3>
+            <h3>{{ CantVehiculos }}  / {{ CantDocumentaciones }}</h3>
             <p>Vehículos / Documentaciones</p>
           </div>
           <div class="icon">
@@ -241,7 +241,7 @@ export default {
 
     computed :{
 
-        ...mapState(['url','AppUrl','CantInformes','CantInternoEquipos','CantOperadores','CantRemitos','CantProcedimientos','CantPartes','CantDocumentaciones','CantCertificados'])
+        ...mapState(['url','AppUrl','CantInformes','CantInternoEquipos','CantOperadores','CantRemitos','CantProcedimientos','CantPartes','CantVehiculos','CantDocumentaciones','CantCertificados'])
         
      },
     
@@ -253,6 +253,7 @@ export default {
         this.$store.dispatch('loadContarOperadores',ot_id);
         this.$store.dispatch('loadContarInternoEquipos',ot_id);
         this.$store.dispatch('loadContarProcedimientos',ot_id);
+        this.$store.dispatch('loadContarVehiculos',ot_id);
         this.$store.dispatch('loadContarDocumentaciones',ot_id);
         this.$store.dispatch('loadContarRemitos',ot_id);
         this.$store.dispatch('loadContarInformes',ot_id);

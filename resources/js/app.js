@@ -345,6 +345,7 @@ state: {
         CantDocumentaciones:'0',
         CantProcedimientos:'0',
         CantUsuariosCliente:'0',
+        CantVehiculos:'0',
         curie:'0',
         ParametroGeneral:{},
         DDPPI:false,
@@ -879,6 +880,15 @@ actions : {
           })
         },
 
+        loadContarVehiculos({
+          commit},ot_id) {
+           axios.defaults.baseURL = store.state.url ;
+           var urlRegistros = 'vehiculos/ot/' + ot_id + '/total' +'?api_token=' + Laravel.user.api_token;             
+           axios.get(urlRegistros).then((response) => {
+           commit('ContarVehiculos', response.data)           
+          })
+        },
+
         loadContarDocumentacionesTotal({
           commit}) {
            axios.defaults.baseURL = store.state.url ;
@@ -1177,6 +1187,10 @@ actions : {
 
       ContarProcedimientos(state, CantProcedimientos) {
         state.CantProcedimientos = CantProcedimientos
+      },
+
+      ContarVehiculos(state, CantVehiculos) {
+        state.CantVehiculos = CantVehiculos
       },
 
       ContarDocumentacionesTotal(state, CantDocumentacionesTotal) {

@@ -88,6 +88,8 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('estados_superficies', 'EstadosSuperficiesController');
     Route::get('agente_acoplamientos/paginate', 'AgenteAcoplamientosController@paginate'); 
     Route::resource('agente_acoplamientos', 'AgenteAcoplamientosController');
+
+    Route::get('vehiculos/ot/{ot_id}/total', 'VehiculosController@OtVehiculosTotal');   
     Route::get('vehiculos/paginate', 'VehiculosController@paginate'); 
     Route::resource('vehiculos', 'VehiculosController');
 
