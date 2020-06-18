@@ -41,7 +41,7 @@
                             <div class="col-md-12">    
                                 <div class="form-group">
                                     <label>Fuente </label>
-                                    <v-select  v-model="interno_fuente" :options="interno_fuentes" label="nro_serie">
+                                    <v-select  v-model="interno_fuente" :options="interno_fuentes" label="nro_serie" @input="Registro.foco = ''">
                                         <template slot="option" slot-scope="option">
                                             <span class="upSelect">{{ option.nro_serie }}</span> <br> 
                                             <span class="downSelect"> {{ option.fuente.codigo }} </span>
@@ -56,13 +56,14 @@
                                     <input v-model="Registro.foco" type="number" name="foco" class="form-control" value="" step="0.1">   
                                 </div>
                             </div>
+                           
                             <div v-else class="col-md-12">
                                 <div class="form-group">
                                     <label for="foco">Foco </label>
                                     <input v-model="interno_fuente.foco" type="number" class="form-control" disabled name="foco">  
                                 </div>
                             </div>
-
+                          
                             <div class="col-md-12">    
                                 <div class="form-group">
                                     <label for="voltaje">Voltaje</label>
@@ -107,23 +108,21 @@ export default {
          },
          equipo :'',          
          interno_fuente :'', 
-        errors:{},        
+         errors:{},        
          }
     
     },
- created: function () {
+
+    created: function () {
      
     eventNewRegistro.$on('open', this.openModal)   
   
     },
+
     computed :{
     
          ...mapState(['url','equipos','interno_fuentes']),
 
-         interno_fuente : function(val){
-
-             foco = (val) ? foco : '';
-         }
     },
  
    

@@ -41,7 +41,7 @@
                             <div class="col-md-12">    
                                 <div class="form-group">
                                     <label>Fuente </label>
-                                    <v-select  v-model="interno_fuente" :options="interno_fuentes" label="nro_serie">
+                                    <v-select  v-model="interno_fuente" :options="interno_fuentes" label="nro_serie" @input="Registro.foco = ''">
                                         <template slot="option" slot-scope="option">
                                             <span class="upSelect">{{ option.nro_serie }}</span> <br> 
                                             <span class="downSelect"> {{ option.fuente.codigo }} </span>
@@ -56,13 +56,14 @@
                                     <input v-model="Registro.foco" type="number" name="foco" class="form-control" value="" step="0.1">   
                                 </div>
                             </div>     
+                         
                             <div v-else class="col-md-12">
                                 <div class="form-group">
                                     <label for="foco">Foco </label>
                                     <input v-model="interno_fuente.foco" type="number" class="form-control" disabled name="foco">  
                                 </div>
                             </div> 
-                            
+                          
                            <div class="col-md-12">    
                                 <div class="form-group">
                                     <label for="voltaje">Voltaje</label>
@@ -121,26 +122,27 @@ export default {
     
     },
     
- created: function () {    
-     
-    eventEditRegistro.$on('editar',function() {
-         
-                 this.openModal();
-             
-    }.bind(this)); 
-   this.$store.dispatch('loadEquipos');
-   this.$store.dispatch('loadInternoFuentes',1);
+    created: function () {    
+        
+        eventEditRegistro.$on('editar',function() {
+            
+                    this.openModal();
+                
+        }.bind(this)); 
+    this.$store.dispatch('loadEquipos');
+    this.$store.dispatch('loadInternoFuentes',1);
 
-    },
+        },
   
     computed :{
     
-         ...mapState(['url','equipos','interno_fuentes'])
+         ...mapState(['url','equipos','interno_fuentes']),
+
     }, 
    
     methods: {
            openModal : function(){
-           console.log('entro en open modal');            
+
             this.$nextTick(function () { 
 
                 this.Registro.nro_serie = this.selectRegistro.nro_serie;
@@ -190,7 +192,7 @@ export default {
                 }
                 });
               }
-}
+    }
     
 }
 </script>
