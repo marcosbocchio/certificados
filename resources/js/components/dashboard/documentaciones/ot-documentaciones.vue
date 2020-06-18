@@ -96,7 +96,8 @@
                             <thead>
                                 <tr>
                                     <th class="col-md-2">TÍTULO</th>                                                     
-                                    <th class="col-md-8">DESCRIPCIÓN</th>
+                                    <th class="col-md-9">DESCRIPCIÓN</th>
+                                     <th class="col-md-1">&</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -155,8 +156,8 @@
                             <thead>
                                 <tr>
                                     <th class="col-md-2">TÍTULO</th>                                                     
-                                    <th class="col-md-8">DESCRIPCIÓN</th>
-                                    <th colspan="2">&nbsp;</th>
+                                    <th class="col-md-9">DESCRIPCIÓN</th>
+                                    <th colspan="1">&nbsp;</th>
                                 </tr>
                             </thead>
                             <tbody>

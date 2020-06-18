@@ -158,19 +158,6 @@
                              </div>                            
                          </div>
  
-                         <div class="col-md-3">                       
-                             <div class="form-group">
-                                 <label>Técnica *</label>
-                                     
-                                 <v-select v-model="tecnica" label="codigo" :options="tecnicas" @input="ActualizarDistFuentePelicula()" :disabled="isChapa">  
-                                     <template slot="option" slot-scope="option">
-                                         <img :src="option.path" width="80" height="73" />  
-                                         <span style="margin-left: 5px"> {{option.descripcion}} </span>                                     
-                                     </template> 
-                                 </v-select>
-                             </div>      
-                         </div>
- 
                          <div class="col-md-3">
                              <div class="form-group">
                                  <label>Equipo *</label>
@@ -182,15 +169,14 @@
                                  </v-select>
                              </div>
                          </div>
- 
- 
+
                          <div class="col-md-3">
                              <div class="form-group" >
                                  <label for="fuente">Fuente</label>
                                   <input type="text" v-model="fuente.codigo" class="form-control" id="fuente" disabled>
                              </div>                            
                          </div>
- 
+
                          <div v-if="(fuente)" class="col-md-3">
                              <div class="form-group" >
                                  <label for="foco">Foco </label>
@@ -203,8 +189,7 @@
                                  <input type="text" v-model="interno_equipo.foco" class="form-control" id="foco" disabled>
                              </div>          
                          </div>
- 
-                         
+
                          <div class="col-md-3">                       
                              <div class="form-group" >
                                  <label for="actividad">Actividad</label>
@@ -223,8 +208,7 @@
                                  <label for="ma">mA</label>
                                  <input  type="number" class="form-control" v-model="ma" id="ma" :disabled="interno_equipo.interno_fuente" max="9999" step="0.1"> 
                              </div>                             
-                         </div>      
- 
+                         </div>       
  
                          <div class="col-md-3">
                              <div class="form-group">
@@ -237,100 +221,144 @@
                                      </v-select>
                              </div>
                          </div>
- 
+
+                         <div class="clearfix"></div>
+
                          <div class="col-md-3">
                              <div class="form-group" >
                                  <label for="cm">Medida de Placa*</label>
                                  <v-select type="text" v-model="medida" label="codigo" id="cm" :options="cms" style="display: block" taggable  @input="cambioMedida"></v-select>                              
                              </div>                            
                          </div>    
- 
-                         <div class="col-md-3">                       
-                             <div class="form-group">
-                                 <label for="procRadio">Procedimiento RI *</label>
-                                 <v-select v-model="procedimiento" label="titulo" :options="procedimientos" id="procRadio" :appendToBody="'false'" :autoscroll="true"></v-select>   
-                             </div>      
-                         </div>
- 
-                         <div class="col-md-3">
-                             <div class="form-group" >
-                                 <label for="pantalla">Pantalla</label>
-                                 <input type="text" v-model="pantalla" class="form-control" id="pantalla" disabled>
-                             </div>                            
-                         </div>
-                         
-                             <div class="col-md-3">
-                             <div class="form-group" >
-                                 <label for="pos_ant">Ant *</label>
-                                 <input type="number" v-model="pos_ant" class="form-control" id="pos_ant" step=".01">
-                             </div>                            
-                         </div>
-                         <div class="col-md-3">
-                             <div class="form-group" >
-                                 <label for="pos_pos">Pos *</label>
-                                 <input type="number" v-model="pos_pos" class="form-control" id="pos_pos" step=".01">
-                             </div>                            
-                         </div>
- 
+
                          <div class="col-md-3">
                              <div class="form-group" >
                                  <label for="ici">Ici *</label>
                                  <v-select v-model="ici" label="codigo" :options="icis"></v-select>   
                              </div>                            
                          </div>    
- 
-                         <div class="col-md-3">
+
+                        <div class="col-md-3">
                              <div class="form-group" >
-                                 <label for="pos_pos">lado *</label>
-                                 <input type="text" v-model="lado" class="form-control" id="lado">
+                                 <label for="pantalla">Pantalla</label>
+                                 <input type="text" v-model="pantalla" class="form-control" id="pantalla" disabled>
                              </div>                            
                          </div>
-                             
-                         <div class="col-md-3">                       
-                             <div class="form-group">
-                                 <label>Norma Evaluación *</label>
-                                 <v-select v-model="norma_evaluacion" label="codigo" :options="norma_evaluaciones">
-                                     <template slot="option" slot-scope="option">
-                                         <span class="upSelect">{{ option.codigo }}</span> <br> 
-                                         <span class="downSelect"> {{ option.descripcion }} </span>
-                                     </template>    
-                                 </v-select>   
-                             </div>      
-                         </div>                        
-                         
-                         <div class="col-md-3">                       
-                             <div class="form-group">
-                                 <label>Norma Ensayo *</label>
-                                 <v-select v-model="norma_ensayo" label="codigo" :options="norma_ensayos">
-                                     <template slot="option" slot-scope="option">
-                                         <span class="upSelect">{{ option.codigo }}</span> <br> 
-                                         <span class="downSelect"> {{ option.descripcion }} </span>
-                                     </template>
-                                 </v-select>   
-                             </div>      
-                         </div>
- 
-                         <div class="col-md-3">                       
+
+                        <div class="col-md-3">
                              <div class="form-group" >
-                                 <label for="exposicion">N° Exposiciones *</label>
-                                 <input type="number" v-model="exposicion" class="form-control" id="exposicion">
-                             </div>         
-                         </div>                 
-                         
-                         <div class="col-md-3">
-                             <div class="form-group" >
-                                 <label for="distancia_fuente_pelicula">Dist. Fuente/Film *</label>
-                                 <input type="text" v-model="distancia_fuente_pelicula" class="form-control" disabled id="distancia_fuente_pelicula">
+                                 <label for="pos_ant">Ant *</label>
+                                 <input type="number" v-model="pos_ant" class="form-control" id="pos_ant" step=".01">
                              </div>                            
-                         </div>  
- 
-                         <div class="col-md-3">                       
-                             <div class="form-group" >
-                                 <label for="ejecutor_ensayo">Ejecutor Ensayo *</label>
-                                 <v-select v-model="ejecutor_ensayo" label="name" :options="ejecutor_ensayos"></v-select>   
-                             </div>         
-                         </div>                                                                
-                                                                
+                        </div>
+
+                        <div class="col-md-3">
+                             <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group" >
+                                        <label for="pos_pos">Pos *</label>
+                                        <input type="number" v-model="pos_pos" class="form-control" id="pos_pos" step=".01">
+                                    </div>                            
+                                </div>
+                             </div>
+                             <div class="row">
+                                <div class="col-md-12">                       
+                                    <div class="form-group">
+                                        <label for="procRadio">Procedimiento RI *</label>
+                                        <v-select v-model="procedimiento" label="titulo" :options="procedimientos" id="procRadio" :appendToBody="'false'" :autoscroll="true"></v-select>   
+                                    </div>      
+                                </div>
+                             </div>
+                             <div class="row">
+                                <div class="col-md-12">                       
+                                    <div class="form-group" >
+                                        <label for="exposicion">N° Exposiciones *</label>
+                                        <input type="number" v-model="exposicion" class="form-control" id="exposicion">
+                                    </div>         
+                                </div>                                   
+                             </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group" >
+                                        <label for="pos_pos">lado *</label>
+                                        <input type="text" v-model="lado" class="form-control" id="lado">
+                                    </div>                            
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">                       
+                                    <div class="form-group">
+                                        <label>Norma Evaluación *</label>
+                                        <v-select v-model="norma_evaluacion" label="codigo" :options="norma_evaluaciones">
+                                            <template slot="option" slot-scope="option">
+                                                <span class="upSelect">{{ option.codigo }}</span> <br> 
+                                                <span class="downSelect"> {{ option.descripcion }} </span>
+                                            </template>    
+                                        </v-select>   
+                                    </div>      
+                                </div> 
+                           </div>
+                           <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group" >
+                                        <label for="distancia_fuente_pelicula">Dist. Fuente/Film *</label>
+                                        <input type="text" v-model="distancia_fuente_pelicula" class="form-control" disabled id="distancia_fuente_pelicula">
+                                    </div>                            
+                                </div> 
+                           </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="row">
+                                <div class="col-md-12">                       
+                                    <div class="form-group">
+                                        <label>Técnica *</label>                                            
+                                        <v-select v-model="tecnica" label="codigo" :options="tecnicas" @input="ActualizarDistFuentePelicula()" :disabled="isChapa">  
+                                            <template slot="option" slot-scope="option">     
+                                                <span class="upSelect">{{ option.codigo }}</span> <br> 
+                                                <span class="downSelect"> {{ option.descripcion }} </span>                              
+                                            </template> 
+                                        </v-select>
+                                        </v-select>
+                                    </div>      
+                                </div>  
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">                       
+                                    <div class="form-group">
+                                        <label>Norma Ensayo *</label>
+                                        <v-select v-model="norma_ensayo" label="codigo" :options="norma_ensayos">
+                                            <template slot="option" slot-scope="option">
+                                                <span class="upSelect">{{ option.codigo }}</span> <br> 
+                                                <span class="downSelect"> {{ option.descripcion }} </span>
+                                            </template>
+                                        </v-select>   
+                                    </div>      
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">                       
+                                    <div class="form-group" >
+                                        <label for="ejecutor_ensayo">Ejecutor Ensayo *</label>
+                                        <v-select v-model="ejecutor_ensayo" label="name" :options="ejecutor_ensayos"></v-select>   
+                                    </div>         
+                                </div>  
+                            </div>
+                        </div>   
+                        <div class="col-md-3">
+                             <div class="row">
+                                <div class="col-md-12">
+                                    <label>&nbsp;</label>                                   
+                                    <div v-if="tecnica.path" class="thumbnail">
+                                        <img :src="tecnica.path" alt="..." > 
+                                    </div>                                
+                               </div>                           
+                           </div> 
+                        </div>                                                   
                    </div>
                 </div>
  
