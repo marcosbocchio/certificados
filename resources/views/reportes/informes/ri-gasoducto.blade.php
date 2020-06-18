@@ -206,7 +206,13 @@ b {
                         </tr>
                         <tr>
                             <td style="font-size: 11px;width: 280px; border-right: 1px solid #000;" colspan="2"><b style="font-size: 11px;">Norma Evaluación: </b>{{$norma_evaluacion->codigo}}</td>  
-                            <td style="font-size: 11px;"><b>Foco: </b>{{$interno_fuente->foco}}</td>
+                            <td style="font-size: 11px;"><b>Foco: </b>                  
+                                @if ($interno_fuente)
+                                    {{$interno_fuente->foco}}
+                                @else
+                                    {{$interno_equipo->foco}}    
+                                @endif
+                            </td>
                             <td style="font-size: 11px; border-right: 1px solid #000;"><b>N° Exp. : </b>{{$informe_ri->exposicion}}</td>
                             <td style="font-size: 11px;width: 280px; border-right: 1px solid #000;"  colspan="3" ><b>EPS: </b>{{$ot_tipo_soldadura->eps}}</td>                        
                
