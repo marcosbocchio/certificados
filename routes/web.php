@@ -113,6 +113,16 @@ Route::group(['middleware' => ['auth']], function () {
 
 });
 
+Route::get('/pdf-test',function(){
+
+  $user = auth()->user(); 
+  $header_titulo = "Pdf Test";
+  $header_descripcion =""; 
+  return view('pdf-test',compact('user','header_titulo','header_descripcion'));
+
+});  
+
+
 /*
  Route::get('php', function () {
    phpinfo();

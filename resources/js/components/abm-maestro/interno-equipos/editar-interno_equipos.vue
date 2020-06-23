@@ -129,8 +129,9 @@ export default {
                     this.openModal();
                 
         }.bind(this)); 
-    this.$store.dispatch('loadEquipos');
-    this.$store.dispatch('loadInternoFuentes',1);
+
+        this.$store.dispatch('loadEquipos');
+        this.$store.dispatch('loadInternoFuentes',1);
 
         },
   

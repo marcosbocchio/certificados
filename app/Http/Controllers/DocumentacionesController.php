@@ -248,7 +248,27 @@ class DocumentacionesController extends Controller
 
         return $documentacion;
 
-}
+    }
+
+    public function getDocInternoEquipo($interno_equipo_id){
+
+        $documentacion = Documentaciones::join('interno_equipo_documentaciones','interno_equipo_documentaciones.documentacion_id','=','documentaciones.id')
+                                          ->where('interno_equipo_documentaciones.interno_equipo_id',$interno_equipo_id)  
+                                          ->select('documentaciones.*')
+                                          ->get();
+
+    
+        return $documentacion;
+
+    }
+
+    public function getDocPorInternoOt($ot_id,$interno_equipo_id){
+
+       return DB::select('CALL getDocFuentePorInternoOt(?,?)',array($ot_id,$interno_equipo_id));        
+
+
+
+    }
 
     public function ProcedimientosMetodo($ot_id,$metodo)
     {

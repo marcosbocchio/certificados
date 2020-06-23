@@ -244,6 +244,12 @@ Vue.component('form-documentos-escaneados', require('./components/dashboard/docu
 /* Soldadores */
 Vue.component('estadisticas-soldaduras', require('./components/soldadores/estadisticas-soldaduras.vue').default);
 
+/* Trazabilidad */
+Vue.component('trazabilidad-fuente', require('./components/trazabilidad/trazabilidad-fuente.vue').default);
+
+Vue.component('pdf-test', require('./components/pdf-test').default);
+
+
 Vue.prototype.Laravel = window.Laravel;
 
 /**loadOperadoresDisometria

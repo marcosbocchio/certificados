@@ -20,7 +20,7 @@
     <div class="clearfix"></div>    
 
     <div class="col-md-12">
-        <component :is= setTablaComponente :registros="registros.data" @confirmarDelete="confirmDeleteRegistro" @editar="editRegistro" :loading="loading"/>               
+        <component :is= setTablaComponente :registros="registros.data" @confirmarDelete="confirmDeleteRegistro" @editar="editRegistro" @trazabilidad="open_trazabilidad_fuente" :loading="loading"/>               
         <delete-registro :datoDelete="datoDelete" :fillRegistro="fillRegistro" @close-modal="getResults" :modelo="modelo"></delete-registro>  
         <component :is= setNuevoComponente :modelo ="modelo" @store="getResults"/>
         <component :is= setEditarComponente :selectRegistro="selectRegistro" @update="getResults"/>  
@@ -37,7 +37,7 @@
 
 <script>
   import {mapState} from 'vuex'
-  import { eventNewRegistro, eventEditRegistro } from '../event-bus';
+  import { eventNewRegistro, eventEditRegistro, eventModal } from '../event-bus';
     export default {
       name: 'abm-maestro',
       props : {         
@@ -116,8 +116,6 @@
 
             getResults : function(page = 1){
 
-                console.log('entro en getResult');
-                console.log(this.modelo);
                 this.loading = true;
                 axios.defaults.baseURL = this.url ;
                 var urlRegistros = this.modelo + '/paginate' + '?page='+ page + '&search=' + this.search;   
@@ -129,12 +127,17 @@
               },
             
             editRegistro : function(item){
-                console.log('entro en editar principal');              
+
                 this.selectRegistro = item;    
-                console.log(item);           
                 eventEditRegistro.$emit('editar',this.selectRegistro);                  
                     
             },     
+
+            open_trazabilidad_fuente : function(registro){
+
+              eventModal.$emit('trazabilidad_fuente', registro);
+
+            },
                  
             confirmDeleteRegistro: function(registro,dato){            
               this.fillRegistro.id = registro.id;

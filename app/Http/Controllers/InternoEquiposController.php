@@ -14,20 +14,16 @@ use Illuminate\Support\Facades\Log;
 class InternoEquiposController extends Controller
 {
 
-  public function __construct()
-  {
+    public function __construct()
+    {
 
-        $this->middleware(['role_or_permission:Sistemas|M_interno_equipos'],['only' => ['callView']]);  
-        $this->middleware(['role_or_permission:Sistemas|T_equipos_acceder'],['only' => ['OtInternoEquipos']]);   
-        $this->middleware(['role_or_permission:Sistemas|T_equipos_actualiza'],['only' => ['store','destroy']]);
+          $this->middleware(['role_or_permission:Sistemas|M_interno_equipos'],['only' => ['callView']]);  
+          $this->middleware(['role_or_permission:Sistemas|T_equipos_acceder'],['only' => ['OtInternoEquipos']]);   
+          $this->middleware(['role_or_permission:Sistemas|T_equipos_actualiza'],['only' => ['store','destroy']]);
 
+    
+    }
   
-  }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         //
@@ -78,11 +74,6 @@ class InternoEquiposController extends Controller
   
       }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
@@ -153,12 +144,6 @@ class InternoEquiposController extends Controller
         return $interno_equipos;
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(InternoEquipoRequest $request){
 
 
@@ -183,12 +168,6 @@ class InternoEquiposController extends Controller
     
       }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         return InternoEquipos::where('id',$id)
@@ -197,55 +176,46 @@ class InternoEquiposController extends Controller
                                ->first(); 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(InternoEquipoRequest $request, $id){
 
         $interno_equipo = InternoEquipos::find($id);     
       
-          DB::beginTransaction();
-          try {
-              $this->saveInternoEquipo($request,$interno_equipo);
-              if($interno_equipo->interno_fuente_id){
-                (new \App\Http\Controllers\TrazabilidadFuenteController)->saveTrazabilidadfuente($interno_equipo->id,$request['interno_fuente']['id']);
-              }
-              DB::commit(); 
-      
-            } catch (Exception $e) {
+        DB::beginTransaction();
+        try {
+
+          $this->saveInternoEquipo($request,$interno_equipo);
         
-              DB::rollback();
-              throw $e;      
-              
-            }
+            (new \App\Http\Controllers\TrazabilidadFuenteController)->saveTrazabilidadfuente($interno_equipo->id,$request['interno_fuente']['id']);
+       
+
+          DB::commit(); 
+    
+          } catch (Exception $e) {
+      
+            DB::rollback();
+            throw $e;      
+            
+          }
       }
 
       public function saveInternoEquipo($request,$interno_equipo){
 
-        $interno_equipo->nro_serie = $request['nro_serie'];
-        $interno_equipo->nro_interno = $request['nro_interno'];
-        $interno_equipo->foco = $request['foco'];
-        $interno_equipo->voltaje = $request['voltaje'];
-        $interno_equipo->amperaje = $request['amperaje'];
-        $interno_equipo->activo_sn = $request['activo_sn'];       
-        $interno_equipo->equipo_id = $request['equipo']['id'];
-        $interno_equipo->interno_fuente_id = $request['interno_fuente']['id'];
-        $interno_equipo->save();
+          $interno_equipo->nro_serie = $request['nro_serie'];
+          $interno_equipo->nro_interno = $request['nro_interno'];
+          $interno_equipo->foco = $request['foco'];
+          $interno_equipo->voltaje = $request['voltaje'];
+          $interno_equipo->amperaje = $request['amperaje'];
+          $interno_equipo->activo_sn = $request['activo_sn'];       
+          $interno_equipo->equipo_id = $request['equipo']['id'];
+          $interno_equipo->interno_fuente_id = $request['interno_fuente']['id'];
+          $interno_equipo->save();
     
       }
 
@@ -271,29 +241,28 @@ class InternoEquiposController extends Controller
 
   public function OtInternoEquipos($ot_id){
 
-        $header_titulo = "Equipos OT";
-        $header_descripcion ="Baja";      
-        $accion = 'edit';      
-        $user = auth()->user();
+    $header_titulo = "Equipos OT";
+    $header_descripcion ="Baja";      
+    $accion = 'edit';      
+    $user = auth()->user();
 
-        $ot = Ots::where('id',$ot_id)->with('cliente')->first();
-        $header_sub_titulo =' / ' .$ot->cliente->nombre_fantasia . ' / OT N°: ' . $ot->numero;
+    $ot = Ots::where('id',$ot_id)->with('cliente')->first();
+    $header_sub_titulo =' / ' .$ot->cliente->nombre_fantasia . ' / OT N°: ' . $ot->numero;
 
-        $interno_equipos = $this->getInternoEquiposOt($ot_id);
- 
+    $interno_equipos = $this->getInternoEquiposOt($ot_id);
 
-        return view('ot-interno-equipos.index',compact('ot_id',
-                                        'interno_equipos',                                   
-                                        'user',                                       
-                                        'header_titulo',
-                                        'header_sub_titulo',
-                                        'header_descripcion'));
+
+    return view('ot-interno-equipos.index',compact('ot_id',
+                                    'interno_equipos',                                   
+                                    'user',                                       
+                                    'header_titulo',
+                                    'header_sub_titulo',
+                                    'header_descripcion'));
 
 
   }
 
   public function getInternoEquiposOt($ot_id){
-
 
     return InternoEquipos::where('ot_id',$ot_id)
                            ->with('equipo')
@@ -304,31 +273,31 @@ class InternoEquiposController extends Controller
   
   public function StoreOtInternoEquipos(Request $request,$ot_id){
        
-        $ot_interno_equipos = InternoEquipos::where('ot_id',$ot_id)->get();
+    $ot_interno_equipos = InternoEquipos::where('ot_id',$ot_id)->get();
 
-        foreach ($ot_interno_equipos as $ot_interno_equipo) {
+    foreach ($ot_interno_equipos as $ot_interno_equipo) {
 
-            $existe = false;
-            foreach ($request->interno_equipos as $interno_equipo) {
+        $existe = false;
+        foreach ($request->interno_equipos as $interno_equipo) {
 
-                if( ($ot_interno_equipo['id'] == $interno_equipo['id'])){
-                  $existe = true;
-                }
-          
+            if( ($ot_interno_equipo['id'] == $interno_equipo['id'])){
+              $existe = true;
             }
+      
+        }
 
-          if (!$existe){
-            
-            InternoEquipos::where('ot_id',$ot_id)
-                          ->where('id',$ot_interno_equipo['id'])
-                          ->update(['ot_id' => null]);
+      if (!$existe){
+        
+        InternoEquipos::where('ot_id',$ot_id)
+                      ->where('id',$ot_interno_equipo['id'])
+                      ->update(['ot_id' => null]);
 
-            (new \App\Http\Controllers\TrazabilidadEquipoController)->saveTrazabilidadEquipo($ot_interno_equipo['id']);
+        (new \App\Http\Controllers\TrazabilidadEquipoController)->saveTrazabilidadEquipo($ot_interno_equipo['id']);
 
-            }
-        }           
+        }
+    }           
 
-        } 
+  } 
 
  
 

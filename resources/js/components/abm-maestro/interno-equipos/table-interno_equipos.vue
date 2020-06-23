@@ -1,4 +1,5 @@
 <template>
+<div>
 <div class="box box-custom-enod top-buffer">
   <div class="box-body">
     <div class="table-responsive">
@@ -8,6 +9,7 @@
             <th>N° INT.</th>
             <th>EQUIPO</th>
             <th>MÉTODO</th>
+            <th>&nbsp;</th>
             <th>FUENTE</th>
             <th>ACTIVIDAD</th>
             <th>N° OT</th>
@@ -21,6 +23,9 @@
             <td>{{ registro.nro_interno }}</td>
             <td>{{ registro.equipo.codigo }}</td>  
             <td>{{ registro.equipo.metodo_ensayos.metodo }}</td> 
+            <th>
+                <button class="btn btn-xs" title="Historial de fuentes" v-on:click.prevent="TrazabilidadFuente(registro)"><span class="fa fa-table"></span></button>
+            </th>
             <td v-if="registro.interno_fuente" >{{ registro.interno_fuente.nro_serie }} - {{registro.interno_fuente.fuente.codigo}}</td>   
             <td v-else ></td> 
             <td v-if="registro.interno_fuente">{{ registro.interno_fuente.curie_actual }}&nbsp; Ci</td>
@@ -51,10 +56,14 @@
      <loading-spin></loading-spin>
   </div>
  </div>
+ <trazabilidad-fuente></trazabilidad-fuente>
+</div>
 </template>
 
 <script>
-import {mapState} from 'vuex'
+
+import {mapState} from 'vuex';
+
   export default {
 
     data() {return {  
@@ -81,8 +90,17 @@ import {mapState} from 'vuex'
     },
 
     methods: {
+
     updateValue: function (registro) {
+
        this.$emit('editar', registro);
+
+    },
+
+    TrazabilidadFuente : function(registro){
+
+      this.$emit('trazabilidad', registro);
+
     }
   }
   }

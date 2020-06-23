@@ -97,7 +97,7 @@
                                 <tr>
                                     <th class="col-md-2">TÍTULO</th>                                                     
                                     <th class="col-md-9">DESCRIPCIÓN</th>
-                                     <th class="col-md-1">&</th>
+                                     <th class="col-md-1">&nbsp;</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -239,10 +239,8 @@ methods : {
         this.isLoadingC  = true;
         axios.defaults.baseURL = this.url ;
         var urlRegistros = 'documentaciones/vehiculos/' + id + '?api_token=' + Laravel.user.api_token;      
-        console.log(urlRegistros);
         axios.get(urlRegistros).then(response =>{
 
-                console.log(response.data);
                 this.vehiculos_documentaciones = response.data              
                 this.isLoadingC  = false;
             });  

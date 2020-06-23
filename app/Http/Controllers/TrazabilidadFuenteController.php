@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\TrazabilidadFuente;
 use App\InternoFuentes;
+use Carbon\carbon;
+use App\InternoEquipos;
+use Illuminate\Support\Facades\Log;
 
 class TrazabilidadFuenteController extends Controller
 {
@@ -81,21 +84,49 @@ class TrazabilidadFuenteController extends Controller
         if (Auth::check())
         {
              $user_id = $userId = Auth::id();    
-         }
+        }
+     
+        $fecha_actual =  Carbon::now();
 
         $trazabilidad_fuente_actual = TrazabilidadFuente::where('interno_equipo_id',$interno_equipo_id)->latest()->first(); 
 
-        if((!$trazabilidad_fuente_actual) || ($trazabilidad_fuente_actual && $trazabilidad_fuente_actual->interno_fuente_id != $interno_fuente_id) ) {
-            
-            $interno_fuente = InternoFuentes::find($interno_fuente_id);
+        if($interno_fuente_id){
 
-            $trazabilidad_fuente = New TrazabilidadFuente;
-            $trazabilidad_fuente->interno_equipo_id = $interno_equipo_id;
-            $trazabilidad_fuente->interno_fuente_id = $interno_fuente_id;
-            $trazabilidad_fuente->user_id = $user_id;
-            $trazabilidad_fuente->curie = $interno_fuente->curie;
-            $trazabilidad_fuente->save();  
-          } 
+                if((!$trazabilidad_fuente_actual) || ($trazabilidad_fuente_actual && $trazabilidad_fuente_actual->interno_fuente_id != $interno_fuente_id) ) {
+                    
+                    /*  Agrego el nuevo registro de trazabilidad*/
+
+                    $interno_fuente = InternoFuentes::find($interno_fuente_id);
+                    $trazabilidad_fuente = New TrazabilidadFuente;
+                    $trazabilidad_fuente->interno_equipo_id = $interno_equipo_id;
+                    $trazabilidad_fuente->interno_fuente_id = $interno_fuente_id;
+                    $trazabilidad_fuente->fecha_alta =  $fecha_actual;
+                    $trazabilidad_fuente->user_id = $user_id;
+                    $trazabilidad_fuente->curie = $interno_fuente->curie;
+                    $trazabilidad_fuente->save();  
+
+                } 
+
+          }
+
+
+          if($trazabilidad_fuente_actual && !$trazabilidad_fuente_actual->fecha_baja){
+
+                $trazabilidad_fuente_actual->fecha_baja =  $fecha_actual;
+                $trazabilidad_fuente_actual->save();  
+
+          }
+        
+    }
+
+    public function getTrazabilidad(Request $request,$interno_equipo_id){
+
+        $page = $request->page;
+        Log::debug("Query page: " . $page);
+        $trazabilidad_fuente = TrazabilidadFuente::where('interno_equipo_id',$interno_equipo_id)->with('internoFuente.fuente')->orderBy('fecha_alta','desc')->paginate(10);
+
+        return $trazabilidad_fuente;
+
     }
 
     /**

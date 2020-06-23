@@ -165,7 +165,8 @@ Route::group(['middleware' => 'auth:api'], function()
   
     Route::get('documentaciones/ot_operarios/{ot_id}/{user_id}', 'DocumentacionesController@getDocOtOperarios');
     Route::get('documentaciones/vehiculos/{vehiculo_id}', 'DocumentacionesController@getDocVehiculo');
-
+    Route::get('documentaciones/interno_equipo/{interno_equipo_id}', 'DocumentacionesController@getDocInternoEquipo');
+    Route::get('documentaciones/ot/{ot_id}/interno_equipo/{interno_equipo_id}/fuentes_documentaciones', 'DocumentacionesController@getDocPorInternoOt');
     
     Route::get('interno_equipos/metodo/{metodo}/activo_sn/{activo_sn?}/tipo_penetrante/{tipo_penetrante?}', 'InternoEquiposController@getInternoEquipos');   
     Route::get('interno_equipos/paginate', 'InternoEquiposController@paginate');
@@ -274,12 +275,15 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('certificados/ot/{ot_id}/paginate', 'CertificadosController@paginate');       
     Route::resource('certificados', 'CertificadosController');
 
+    //trazabilidad
+    Route::get('trazabilidad_fuente/interno_equipo/{interno_equipo_id}','TrazabilidadFuenteController@getTrazabilidad');
 
 });
 
 Route::get('/fecha_actual',function(){
 
     return date("Y/m/d H:i:s");
+
 });
 
 /*

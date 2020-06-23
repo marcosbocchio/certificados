@@ -128,10 +128,11 @@ export default {
    
     methods: {
            openModal : function(){
+
                 this.Registro = {           
                     'nro_serie'  : '',
                     'nro_interno'  : '',
-                     'foco' :  '',
+                    'foco' :'',
                     'voltaje' : '', 
                     'amperaje' : '', 
                     'activo_sn' : true,      
@@ -151,8 +152,7 @@ export default {
                     
                 ...this.Registro,     
                 'equipo' : this.equipo,
-                'interno_fuente' : this.interno_fuente,  
-          
+                'interno_fuente' : this.interno_fuente,            
                   
                 }).then(response => {
                   this.$emit('store');
@@ -170,12 +170,11 @@ export default {
                     });
 
                      if((typeof(this.errors)=='undefined') && (error)){
-                     toastr.error("Ocurrió un error al procesar la solicitud");                     
-                  
+                     toastr.error("Ocurrió un error al procesar la solicitud");             
                 }
                 });
               }
-}
+        }
     
 }
 </script>
