@@ -72,7 +72,7 @@
  
             <div class="box box-custom-enod top-buffer">
                 <div class="box-header with-border">
-                <h3 class="box-title">DOCUMENTACIONES DEL VEHÍCULO</h3>
+                <h3 class="box-title">DOCUMENTACIONES DEL EQUIPO</h3>
 
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -109,7 +109,7 @@
  
             <div class="box box-custom-enod top-buffer">
                 <div class="box-header with-border">
-                <h3 class="box-title">FUENTES/DOCUMENTACIONES </h3>
+                <h3 class="box-title">DOCUMENTACIONES DE LA FUENTE </h3>
 
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>

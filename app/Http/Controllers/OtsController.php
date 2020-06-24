@@ -18,6 +18,8 @@ use App\Provincias;
 use App\Localidades;
 use Illuminate\Support\Facades\Auth;
 use \stdClass;
+use Carbon\carbon;
+
 
 class OtsController extends Controller
 {
@@ -182,7 +184,28 @@ class OtsController extends Controller
         //
     }
 
-    public function firmar($id){
+    public function CambiarEstado($ot_id){
+        
+        $ot = Ots::find($ot_id);
+
+        switch ($ot->estado) {
+
+            case 'EDITANDO':
+                $this->firmar($ot_id);
+                break;
+
+            case 'ACTIVA':
+                $this->cerrar($ot_id);
+                break;
+            
+            default:
+                # code...
+                break;
+        }
+
+    }
+
+    public function firmar($ot_id){
 
         $user_id = null;
         
@@ -191,9 +214,28 @@ class OtsController extends Controller
              $user_id = $userId = Auth::id();    
         }
 
-        $ot = Ots::findOrFail($id);
+        $ot = Ots::findOrFail($ot_id);
         $ot->firma =  $user_id;
         $ot->estado = 'ACTIVA';
+        $ot->fecha_firma = Carbon::now();
+        $ot->save();
+
+        return $ot;
+
+    } 
+
+    public function cerrar($ot_id){
+
+        $user_id = null;
+        
+        if (Auth::check())
+        {
+             $user_id = $userId = Auth::id();    
+        }
+
+        $ot = Ots::findOrFail($ot_id);
+        $ot->estado = 'CERRADA';
+        $ot->fecha_cierre = Carbon::now();
         $ot->save();
 
         return $ot;

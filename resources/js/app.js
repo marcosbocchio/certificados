@@ -8,6 +8,7 @@
 
 require('./bootstrap');
 
+//import "regenerator-runtime/runtime.js";
 
 toastr.options = {
   "closeButton": false,
@@ -84,6 +85,12 @@ Vue.component('v-select', vSelect);
 
 import Vue from 'vue'
 import VueLazyLoad from 'vue-lazyload'
+/*
+import VueHtml2Canvas from 'vue-html2canvas'; 
+Vue.use(VueHtml2Canvas);
+
+*/
+
 /*
 vSelect.props.components.default = () => ({
   Deselect: {

@@ -776,6 +776,7 @@
  </template>
  
  <script>
+     
  import uniq from 'lodash/uniq';
  import DatePicker from 'vue2-datepicker';
  import 'vue2-datepicker/index.css';
@@ -784,9 +785,11 @@
  import 'vue-loading-overlay/dist/vue-loading.css';
  import moment from 'moment';
  import { toastrInfo,toastrDefault } from '../toastrConfig';
- import {isInt} from '../../functions/isInt.js'
- import {isFloat} from '../../functions/isFloat.js'
+ import {isInt} from '../../functions/isInt.js';
+ import {isFloat} from '../../functions/isFloat.js';
+
  export default {
+   
      components: {
          
        Loading
@@ -1970,7 +1973,7 @@
          }
      }
      
- }
+ } 
  </script>
  
  <style scoped>

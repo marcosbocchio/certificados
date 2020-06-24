@@ -196,12 +196,23 @@
 
                                 <td width="10px"> <a :href="AppUrl + '/pdf/ot/' + ot.id " target="_blank"  class="btn btn-default btn-sm" title="Informe"><span class="fa fa-file-pdf-o"></span></a></td>
 
-                                <td v-if="!ot.firma" width="10px"> 
-                                  <button class="btn btn-default btn-sm" title="Firmar" @click="firmar(k)" :disabled="!$can('T_accion')">
-                                    <span class="glyphicon glyphicon-pencil"></span> 
-                                  </button>                                 
+                                <td width="10px"> 
+                                  <div v-if="ot.estado == 'EDITANDO'">
+                                      <button class="btn btn-default btn-sm" title="Firmar"  @click="CambiarEstado(ot.id)" :disabled="!$can('T_accion')">
+                                      <span class="glyphicon glyphicon-pencil"></span> 
+                                      </button>   
+                                  </div>
+                                  <div v-else-if="ot.estado == 'ACTIVA'">
+                                      <button class="btn btn-default btn-sm" title="Cerrar" @click="CambiarEstado(ot.id)" :disabled="!$can('T_accion')">
+                                      <span class="glyphicon glyphicon-arrow-right"></span> 
+                                      </button>   
+                                  </div>
+                                  <div v-else-if="ot.estado == 'CERRADA'"> 
+                                      <button class="btn btn-default btn-sm" title='Cerrada'  disabled>
+                                      <span class="glyphicon glyphicon-check"></span> 
+                                      </button>   
+                                  </div>
                                 </td>   
-                                <td v-else> <a class="btn btn-default btn-sm" title="Cerrar"><span class="glyphicon glyphicon-arrow-right"></span></a></td>
                               
                             </tr>
                         </tbody>
@@ -301,9 +312,7 @@ export default {
             console.log(urlRegistros);        
             axios.get(urlRegistros).then(response =>{
 
-              console.log(response.data);  
               this.ots = response.data   
-              console.log(this.ots.length);
               if(this.ots.data.length){
                 
                 this.ot_id_selected = this.ots.data[0].id; 
@@ -323,31 +332,31 @@ export default {
 
          },
 
-         firmar : function(index){
+         CambiarEstado : function(ot_id){
 
-                axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'ots/' + this.ots.data[index].id + '/firmar';                      
-                axios.put(urlRegistros).then(response => {
-                  console.log(response.data); 
-                  this.ots.data[index].firma = response.data.firma;
-                  this.getResults(this.ots.current_page);
-                  toastr.success('La OT N° '+ response.data.numero +' fue firmada con éxito');                
-                  
-                }).catch(error => {                   
-                    this.errors = error.response.data.errors;
-                    $.each( this.errors, function( key, value ) {
-                        toastr.error(value);
-                        console.log( key + ": " + value );
-                    });
-
-                     if((typeof(this.errors)=='undefined') && (error)){
-
-                     toastr.error("Ocurrió un error al procesar la solicitud");                     
-                  
-                }
+            this.loading = true;
+            axios.defaults.baseURL = this.url ;
+            var urlRegistros = 'ots/' + ot_id + '/cambiar_estado';                      
+            axios.put(urlRegistros).then(response => {
+              console.log(response.data);              
+              this.getResults(this.ots.current_page);
+              toastr.success('La OT N° '+ response.data.numero +' fue firmada con éxito');                
+              
+            }).catch(error => {                   
+                this.errors = error.response.data.errors;
+                $.each( this.errors, function( key, value ) {
+                    toastr.error(value);
+                    console.log( key + ": " + value );
                 });
 
-        },
+                  if((typeof(this.errors)=='undefined') && (error)){
+
+                  toastr.error("Ocurrió un error al procesar la solicitud");                     
+              
+            }
+            }).finally(()=> {this.loading = false;});
+
+         },
       
       openEditarOt: function(id){
 
