@@ -20,20 +20,20 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="box box-custom-enod top-buffer">
-                                    <div class="box-body">
+                                    <div class="box-body no-padding">
                                         <div class="table-responsive">
-                                            <table class="table table-hover table-striped">
+                                            <table class="table table-hover table-striped  table-condensed">
                                             <thead>
                                                 <tr>            
-                                                <th>FUENTE</th>
-                                                <th>ALTA</th>
-                                                <th>BAJA</th>             
+                                                <th>Fuente</th>
+                                                <th>Alta</th>
+                                                <th>Baja</th>             
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr v-for="(registro,k) in registros.data" :key="k">                
                                                 <td>{{ registro.interno_fuente.nro_serie }} - {{registro.interno_fuente.fuente.codigo}}</td>   
-                                                <td>{{ moment(registro.fecha_alta)}}</td>
+                                                <td>{{moment(registro.fecha_alta)}}</td>
                                                 <td>{{moment(registro.fecha_baja)}}</td>
                                                 </tr>
                                             </tbody>
@@ -50,6 +50,7 @@
                                         </pagination>   
 
                                     </div>
+     
                                 </div>
                             </div>
                         </div>
