@@ -4,7 +4,7 @@
 
 <div id="amb" class="row">
     <div class="col-sm-12">
-        <table class="table table-hover table-striped">
+        <table class="table table-hover table-striped table-condensed">
             <thead>
             <tr>
                 <th>ID</th>

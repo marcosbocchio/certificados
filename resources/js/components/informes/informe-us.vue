@@ -347,7 +347,7 @@
                             <div v-if="calibraciones.length">
                                 <div class="col-md-12">
                                     <div class="table-responsive">
-                                        <table class="table table-hover table-striped table-bordered">
+                                        <table class="table table-hover table-striped table-bordered table-condensed">
                                             <thead>
                                                 <tr>                                  
                                                     <th style="min-width:100px;">Zapata</th>                                  
@@ -561,7 +561,7 @@
                             <div v-if="Tabla_us_pa.length">
                             <div class="col-md-12">
                                 <div class="table-responsive">
-                                    <table class="table table-hover table-striped table-bordered">
+                                    <table class="table table-hover table-striped table-bordered table-condensed">
                                         <thead>
                                             <tr>
                                                 <th  class="col-lg-1">Elemento</th>
@@ -685,7 +685,7 @@
                                 <!-- tabla me -->
                                 <div class="col-md-12">
                                     <div class="table-responsive">
-                                        <table class="table table-hover table-striped table-bordered">
+                                        <table class="table table-hover table-striped table-bordered table-condensed">
                                             <thead>
                                                 <tr>
                                                     <th  class="col-lg-1">Elemento</th>

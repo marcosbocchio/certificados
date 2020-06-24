@@ -90,7 +90,7 @@
                         <div v-show="TablaResponsables.length">
                             <div class="col-md-12">
                                 <div class="table-responsive">
-                                    <table class="table table-hover table-striped">
+                                    <table class="table table-hover table-striped table-condensed table-condensed">
                                     <thead>
                                         <tr>
                                             <th class="col-md-7">Operador</th>                                         
@@ -123,7 +123,7 @@
                     <div class="box-body">                         
                         <div class="col-md-12">
                             <div class="table-responsive">
-                                <table class="table table-hover table-striped">
+                                <table class="table table-hover table-striped table-condensed table-condensed">
                                     <thead>
                                         <tr>
                                             <th>SEL.</th>
@@ -178,7 +178,7 @@
 
                             <div class="col-md-12">
                                 <div class="table-responsive">
-                                    <table class="table table-hover table-striped table-bordered">
+                                    <table class="table table-hover table-striped table-bordered table-condensed">
                                         <thead>
                                             <tr>
                                                 <th class="col-md-1">METODO</th>
@@ -242,7 +242,7 @@
 
                                 <div class="col-md-12">
                                     <div class="table-responsive">
-                                        <table class="table table-hover table-striped table-bordered">
+                                        <table class="table table-hover table-striped table-bordered table-condensed">
                                             <thead>
                                                 <tr>
                                                     <th>INFORME</th>       
@@ -308,7 +308,7 @@
                             
                                 <div class="col-md-12">
                                     <div class="table-responsive">
-                                        <table class="table table-hover table-striped table-bordered">
+                                        <table class="table table-hover table-striped table-bordered table-condensed">
                                             <thead>
                                                 <tr>
                                                     <th>INFORME</th>       
@@ -366,7 +366,7 @@
                             
                                 <div class="col-md-12">
                                     <div class="table-responsive">
-                                        <table class="table table-hover table-striped table-bordered">
+                                        <table class="table table-hover table-striped table-bordered table-condensed">
                                             <thead>
                                                 <tr>
                                                     <th>INFORME</th>       
@@ -426,7 +426,7 @@
                             
                                 <div class="col-md-12">
                                     <div class="table-responsive">
-                                        <table class="table table-hover table-striped table-bordered">
+                                        <table class="table table-hover table-striped table-bordered table-condensed">
                                             <thead>
                                                 <tr>
                                                     <th>INFORME</th>                                                                                       
@@ -496,7 +496,7 @@
                             <div class="box-body">  
                                 <div class="col-md-12">
                                     <div class="table-responsive">
-                                        <table class="table table-hover table-striped table-bordered">
+                                        <table class="table table-hover table-striped table-bordered table-condensed">
                                             <thead>
                                                 <tr>
                                                     <th class="col-md-1">INFORME</th>       

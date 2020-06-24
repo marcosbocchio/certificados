@@ -357,7 +357,7 @@
                         <div v-if="TablaLp.length">
                             <div class="col-md-12">
                                 <div class="table-responsive">
-                                    <table class="table table-hover table-striped table-bordered">
+                                    <table class="table table-hover table-striped table-bordered table-condensed">
                                         <thead>
                                             <tr>
                                                 <th class="col-md-2">ELEMENTO</th>

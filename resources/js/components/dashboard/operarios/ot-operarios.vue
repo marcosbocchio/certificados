@@ -61,7 +61,7 @@
             </div>
             <div class="box-body">                        
                 <div class="table-responsive">          
-                    <table class="table table-hover table-striped">
+                    <table class="table table-hover table-striped table-condensed">
                         <thead>
                             <tr>
                                 <th class="col-md-12">NOMBRE</th>                                                                                
@@ -92,7 +92,7 @@
             </div>
             <div class="box-body">                        
                 <div class="table-responsive">          
-                    <table class="table table-hover table-striped">
+                    <table class="table table-hover table-striped table-condensed">
                         <thead>
                             <tr>
                                 <th class="col-md-12">NOMBRE</th>
@@ -131,7 +131,7 @@
                     </div>
                     <div class="box-body">                        
                         <div class="table-responsive">          
-                            <table class="table table-hover table-striped">
+                            <table class="table table-hover table-striped table-condensed">
                                 <thead>
                                     <tr>                                     
                                         <th>TÍTULO</th>     

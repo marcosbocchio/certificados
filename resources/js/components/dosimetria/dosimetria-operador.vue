@@ -35,7 +35,7 @@
                 <div class="box-body">
                      <div class="col-md-12">
                         <div class="table-responsive">          
-                            <table class="table table-hover table-striped">
+                            <table class="table table-hover table-striped table-condensed">
                                 <thead>
                                     <tr>                                     
                                         <th style="text-align: center; min-width: 25px;" class="col-lg-1" >DÍA</th>     

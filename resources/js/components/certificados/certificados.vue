@@ -53,7 +53,7 @@
                          <div class="box-body">
                             <div class="col-md-12">
                                 <div class="table-responsive">
-                                    <table class="table table-hover table-striped">
+                                    <table class="table table-hover table-striped table-condensed">
                                     <thead>
                                         <tr>
                                             <th class="col-md-1">SEL.</th>                                                                                                  
@@ -91,7 +91,7 @@
                             <div class="box-body">
                                 <div class="col-md-12">
                                     <div class="table-responsive">
-                                        <table class="table table-hover table-striped table-bordered">
+                                        <table class="table table-hover table-striped table-bordered table-condensed">
                                         <thead>
                                             <tr>                                                                                                      
                                                 <th class="col-md-1">PARTE N°</th>  
@@ -169,7 +169,7 @@
                             <div class="box-body">
                                 <div class="col-md-12">
                                     <div class="table-responsive">
-                                        <table class="table table-hover table-striped">
+                                        <table class="table table-hover table-striped table-condensed">
                                         <thead>
                                             <tr>   
                                                 <th class="col-md-3">PARTE N°</th>                                                                                           
@@ -212,7 +212,7 @@
                             <div class="box-body">
                                 <div class="col-md-12">
                                     <div class="table-responsive">
-                                        <table class="table table-hover table-striped">
+                                        <table class="table table-hover table-striped table-condensed">
                                         <thead>
                                             <tr>       
                                                 <th class="col-md-3">PARTE N°</th>                                                                                                 

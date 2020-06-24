@@ -6,7 +6,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Trazabilidad Fuente</h4>
+                        <h4 class="modal-title">Historial de Fuentes</h4>
                     </div>
                     <div class="modal-body">
                         <div class="row">
@@ -21,8 +21,11 @@
                             <div class="col-md-12">
                                 <div class="box box-custom-enod top-buffer">
                                     <div class="box-body no-padding">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title">FUENTES ASIGNADAS AL EQUIPO</h3>
+                                    </div>
                                         <div class="table-responsive">
-                                            <table class="table table-hover table-striped  table-condensed">
+                                            <table class="table table-hover table-striped table-condensed">
                                             <thead>
                                                 <tr>            
                                                 <th>Fuente</th>

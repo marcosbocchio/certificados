@@ -153,7 +153,7 @@
         <div class="box box-custom-enod">
             <div class="box-body">
                 <div class="table-responsive">          
-                    <table class="table table-hover table-striped">
+                    <table class="table table-hover table-striped table-condensed">
                         <thead>
                             <tr>
                                 <th class="col-lg-1">OT N°</th>
@@ -163,10 +163,10 @@
                                 <th class="col-lg-1">FECHA</th>     
                                 <th class="col-lg-1">ESTADO</th>                        
                                 <th class="col-lg-1" colspan="4">
-                                 <small style="margin-left: 2px;">Editar</small>
-                                 <small style="margin-left: 10px;">Usuarios</small>
-                                 <small style="margin-left: 15px;">Informe</small>
-                                 <small style="margin-left: 12px;">Acción</small>
+                                 <small style="margin-left: 0px;">Editar</small>
+                                 <small style="margin-left: 8px;">Usuarios</small>
+                                 <small style="margin-left: 6px;">Informe</small>
+                                 <small style="margin-left: 7px;">Acción</small>
 
                                 </th>
                             </tr>

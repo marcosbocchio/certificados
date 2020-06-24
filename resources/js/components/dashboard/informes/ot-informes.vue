@@ -56,7 +56,7 @@
              
                 <div class="box-body">                        
                     <div class="table-responsive">          
-                        <table class="table table-hover table-striped table-bordered">
+                        <table class="table table-hover table-striped table-condensed">
                             <thead>
                                 <tr>
                                     <th class="col-lg-1">TIPO</th>   

@@ -23,7 +23,7 @@
             <div class="box box-custom-enod top-buffer">
                 <div class="box-header with-border">
                     <div class="table-responsive">          
-                        <table class="table table-hover table-striped">
+                        <table class="table table-hover table-striped table-condensed">
                             <thead>
                                 <tr>                                     
                                     <th class="col-lg-2">N°</th>                                    

@@ -420,7 +420,7 @@
                      <div v-if="TablaDetalle.length">
                          <div class="col-md-12">
                              <div class="table-responsive">
-                                 <table class="table table-hover table-striped table-bordered">
+                                 <table class="table table-hover table-striped table-bordered table-condensed">
                                      <thead>
                                          <tr>                                  
                                              <th class="col-md-1">ELEMENTO</th>  
@@ -515,7 +515,7 @@
                           <div v-if="TablaDetalle.length && TablaDetalle[indexDetalle].defectos.length">                 
                              <div class="col-md-12">
                                  <div class="table-responsive">
-                                     <table class="table table-hover table-striped table-bordered">
+                                     <table class="table table-hover table-striped table-bordered table-condensed">
                                          <thead>
                                              <tr>
                                                  <th class="col-md-1">CÓDIGO</th>                                                                                  
@@ -622,7 +622,7 @@
                      <div v-if="TablaPasadas.length">
                             <div class="col-md-12">
                                  <div class="table-responsive">
-                                     <table class="table table-hover table-striped table-bordered">
+                                     <table class="table table-hover table-striped table-bordered table-condensed">
                                          <thead>
                                              <tr>       
                                                  <th class="col-md-1">Elemento</th>                              

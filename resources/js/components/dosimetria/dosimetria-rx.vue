@@ -42,7 +42,7 @@
                     <div class="box-body">
                         <div class="col-md-9">
                             <div class="table-responsive">          
-                                <table class="table table-hover table-striped table-border">
+                                <table class="table table-hover table-striped table-border table-condensed">
                                     <thead>
                                         <tr>                                     
                                             <th class="col-md-5">OPERADOR</th>

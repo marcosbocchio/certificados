@@ -226,7 +226,7 @@
         <div v-show="inputsServicios.length">
           <div class="col-md-12">
             <div class="table-responsive">
-              <table class="table table-hover table-striped table-bordered">
+              <table class="table table-hover table-striped table-bordered table-condensed">
                 <thead>
                   <tr>
                     <th class="col-md-6">Servicio</th>
@@ -327,7 +327,7 @@
           <div v-show="inputsProductos.length">
             <div class="col-md-12">
               <div class="table-responsive">
-                <table class="table table-hover table-striped table-bordered">
+                <table class="table table-hover table-striped table-bordered table-condensed">
                   <thead>
                     <tr>
                       <th class="col-md-10">Productos</th>
@@ -378,7 +378,7 @@
 
           <div v-show="inputsEpps.length">           
               <div class="table-responsive">
-                <table class="table table-hover table-striped table-bordered">
+                <table class="table table-hover table-striped table-bordered table-condensed">
                   <thead>
                     <tr>
                       <th class="col-md-11">EPPS</th>                                   
@@ -413,7 +413,7 @@
 
           <div v-show="inputsRiesgos.length">           
               <div class="table-responsive">
-                <table class="table table-hover table-striped table-bordered">
+                <table class="table table-hover table-striped table-bordered table-condensed">
                   <thead>
                     <tr>
                       <th class="col-md-11">Riesgos</th>                                   

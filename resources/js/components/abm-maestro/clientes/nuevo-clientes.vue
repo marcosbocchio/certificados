@@ -144,7 +144,7 @@
 
                                 <div class="col-md-12">
                                     <div class="table-responsive">
-                                        <table class="table table-hover table-striped">
+                                        <table class="table table-hover table-striped table-condensed">
                                             <thead>
                                                 <tr>                                  
                                                     <th style="width:90px;">NOMBRE</th>                                  

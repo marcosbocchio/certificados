@@ -53,7 +53,7 @@
         <div class="box box-custom-enod">
             <div class="box-header with-border">
                 <div class="table-responsive">
-                <table class="table table-hover table-striped">
+                <table class="table table-hover table-striped table-condensed">
                     <thead>
                     <tr>
                         <th  class="col-md-2">TIPO SOL.</th>

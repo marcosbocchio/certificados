@@ -2,7 +2,7 @@
 <div class="box box-custom-enod top-buffer">
   <div class="box-body">
     <div class="table-responsive">
-      <table class="table table-hover table-striped">
+      <table class="table table-hover table-striped table-condensed">
         <thead>
           <tr>                     
             <th>N° SERIE</th>
