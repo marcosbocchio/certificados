@@ -1,18 +1,17 @@
 <template>
-    <div class="row">       
-        <div class="col-md-12">
-          <!-- small box -->
-          <div class="small-box bg-custom-1">
-            <div class="inner">
-              <h3>{{users_ot_operarios.length}}</h3>
-              <p>Operadores / Ayudantes</p>
-            </div>
-            <div class="icon">
-                 <i class="ion ion-person-add"></i>
-            </div>
-            <a href="#" class="small-box-footer">Detail <i class="fa  fa-arrow-circle-down"></i></a>
-          </div>
-       </div> 
+    <div class="row">     
+       <div class="col-lg-3 col-xs-6">      
+          <cuadro-enod
+              :titulo = "'OPERADORES'"
+              :class_color_titulo = "'color_titulo_1'"
+              :cantidad_1 ="users_ot_operarios.length"
+              :src_icono ="'/img/tablero/icono-enod-operador.svg'"
+              :class_color_cuadro = "'bg-custom-1'"   
+              :habilitado_sn ="true"                  
+          >
+          </cuadro-enod>
+       </div>
+       
        <div class="clearfix"></div>
       <div class="col-md-6">
         <div v-show="$can('T_operador_actualiza')">

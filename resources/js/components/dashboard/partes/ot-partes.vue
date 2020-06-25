@@ -1,25 +1,19 @@
 <template>
- <div>
-
-          <!-- small box -->
-          <div class="small-box bg-custom-7">
-            <div class="inner">
-              <h3>{{CantPartes}}</h3>
-
-              <p>Partes</p>
-            </div>
-            <div class="icon">
-                <i class="fa fa-calendar-o"></i>
-            </div>
-            <a href="#" class="small-box-footer">Detail <i class="fa  fa-arrow-circle-down"></i></a>
-          </div>
-                  
-           <div v-show="$can('T_partes_edita')">        
-                <a :href="AppUrl + '/area/enod/ot/' + ot_id_data + '/parte' " class="btn btn-primary pull-left"><span class="fa fa-plus-circle"></span> Nuevo</a>     
-           </div> 
+ <div class="row">
+       <div class="col-lg-3 col-xs-6">
+          <cuadro-enod
+              :titulo = "'PARTES'"
+              :class_color_titulo = "'color_titulo_1'"
+              :cantidad_1 ="CantPartes"
+              :src_icono ="'/img/tablero/icono-enod-partes.svg'"
+              :class_color_cuadro = "'bg-custom-7'"   
+              :habilitado_sn ="true"                  
+          >
+          </cuadro-enod>
+       </div>
      
         <div class="clearfix"></div>
-    
+        <div class="col-md-12">
             <div class="box box-custom-enod top-buffer">
                 <div class="box-header with-border">
                     <div class="table-responsive">          
@@ -67,7 +61,7 @@
                     </pagination>
                 </div>
             </div>
-    
+        </div>
     <div class="clearfix"></div>  
  </div>
 </template>

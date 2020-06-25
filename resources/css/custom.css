@@ -1,5 +1,5 @@
 .pointer {cursor: pointer;}
-
+.not_allowed {cursor: not-allowed;}
 .treeview-menu li a {
   margin-left: 20px;
 }
@@ -73,38 +73,38 @@ table .selected{
 
 .bg-custom-1 {
 
-  background-color: #CFCFCA;
+  background-color: #535353;
 
 }
 
 .bg-custom-2 {
 
-  background-color: #F29C33
+  background-color: #202020
 }
 .bg-custom-3 {
 
-  background-color: #F7C133;
+  background-color: #FDC937;
   ;
 }
 .bg-custom-4 {
 
-  background-color: #B7440C;
+  background-color: #BABBB5;
 }
 .bg-custom-5 {
 
-  background-color: #A8CBF2;
+  background-color: #BABBB5;
 }
 .bg-custom-6 {
 
-  background-color: #5AC7E0;
+  background-color: #535353;
 }
 .bg-custom-7 {
 
-  background-color: #3A8EB6
+  background-color: #202020
 }
 .bg-custom-8 {
 
-  background-color: #54A75C;
+  background-color: #FDC937;
 }
 
 .mx-datepicker {

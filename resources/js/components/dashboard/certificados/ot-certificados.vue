@@ -1,25 +1,27 @@
 <template>
-    <div>
-          <!-- small box -->
-        <div class="small-box bg-custom-8">
-            <div class="inner">
+    <div class="row">
 
-              <h3>{{CantCertificados}}</h3>
+       <div class="col-lg-3 col-xs-6">
+          <cuadro-enod
+              :titulo = "'CERTIFICADOS'"
+              :class_color_titulo = "'color_titulo_2'"
+              :cantidad_1 ="CantCertificados"
+              :src_icono ="'/img/tablero/icono-enod-certificados.svg'"
+              :class_color_cuadro = "'bg-custom-8'"   
+              :habilitado_sn ="true"                  
+          >
+          </cuadro-enod>
+       </div>
 
-              <p>Certificados</p>
-            </div>
-            <div class="icon">
-               <i class="fa fa-check-square-o"></i>
-            </div>
-            <a href="#" class="small-box-footer">Detail <i class="fa  fa-arrow-circle-down"></i></a>
+        <div class="col-md-12">
+            <div v-show="$can('T_certif_edita')">        
+                <a :href="AppUrl + '/area/enod/ot/' + ot_id_data + '/certificado' " class="btn btn-primary pull-left"> <span class="fa fa-plus-circle"></span> Nuevo</a>     
+            </div> 
         </div>
 
-        <div v-show="$can('T_certif_edita')">        
-            <a :href="AppUrl + '/area/enod/ot/' + ot_id_data + '/certificado' " class="btn btn-primary pull-left"> <span class="fa fa-plus-circle"></span> Nuevo</a>     
-        </div> 
-
         <div class="clearfix"></div>
-    
+
+        <div class="col-md-12">
             <div class="box box-custom-enod top-buffer">
                 <div class="box-header with-border">
                     <div class="table-responsive">          
@@ -65,6 +67,7 @@
                     </pagination>
                 </div>
             </div>
+        </div>   
     </div>
 </template>
 

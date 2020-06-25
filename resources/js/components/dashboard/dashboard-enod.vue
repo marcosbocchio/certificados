@@ -1,135 +1,119 @@
 <template>
   <div>  
     <div class="row">
-      <div class="col-lg-3 col-xs-6">
-        <!-- small box -->
-        <div class="small-box bg-custom-1">
-          <div class="inner">
-            <h3>{{ CantOperadores }}</h3>
-            <p>Operadores / Ayudantes</p>
-          </div>
-          <div class="icon">
-            <i class="fa ion-person-add"></i>
-          </div>
-            <a v-if="ot_id_selected > 0 && $can('T_operador_acceder')"  :href="AppUrl + '/operadores/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-            <a v-else href="#" class="small-box-footer" >More info <i class="fa fa-arrow-circle-right"></i></a>   
-        </div>
-      </div>
 
-        <!-- ./col -->
-      <div class="col-lg-3 col-xs-6">
-        <!-- small box -->
-        <div class="small-box bg-custom-2">
-          <div class="inner">
-            <h3>{{ CantInternoEquipos }}</h3>
-            <p>Equipos</p>
-          </div>
-          <div class="icon">
-            <i class="fa fa-wrench"></i>
-          </div>
-            <a v-if="ot_id_selected > 0 && $can('T_equipos_acceder')"  :href="AppUrl + '/interno_equipos/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-            <a v-else href="#" class="small-box-footer" >More info <i class="fa fa-arrow-circle-right"></i></a>
-        </div>
-      </div>
+       <div class="col-lg-3 col-xs-6">
+         <a @click="EntrarCuadro('operadores')">
+          <cuadro-enod
+              :titulo = "'OPERADORES'"
+              :class_color_titulo = "'color_titulo_1'"
+              :cantidad_1 ="CantOperadores"
+              :src_icono ="'/img/tablero/icono-enod-operador.svg'"
+              :class_color_cuadro = "'bg-custom-1'"   
+              :habilitado_sn =" $can('T_operador_acceder') ?  true : false"                  
+          >
+          </cuadro-enod>
+         </a>
+       </div>
 
-      <!-- ./col -->
-      <div class="col-lg-3 col-xs-6">
-        <!-- small box -->
-        <div class="small-box bg-custom-3">
-          <div class="inner">
-            <h3>{{ CantProcedimientos }}</h3>
+       <div class="col-lg-3 col-xs-6">
+         <a @click="EntrarCuadro('equipos')">
+          <cuadro-enod
+              :titulo = "'EQUIPOS'"
+              :class_color_titulo = "'color_titulo_1'"
+              :cantidad_1 ="CantInternoEquipos"
+              :src_icono ="'/img/tablero/icono-enod-equipos.svg'"
+              :class_color_cuadro = "'bg-custom-2'"   
+              :habilitado_sn =" $can('T_equipos_acceder') ?  true : false"
+          >
+          </cuadro-enod>
+          </a>
+       </div>
 
-            <p>Procedimientos</p>
-          </div>
-          <div class="icon">
-            <i class="fas fa-radiation-alt"></i>
-          </div>
-              <a v-if="ot_id_selected > 0 && $can('T_proc_acceder')"  :href="AppUrl + '/procedimientos/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-              <a v-else href="#" class="small-box-footer" >More info <i class="fa fa-arrow-circle-right"></i></a>
-        </div>
-      </div>
+       <div class="col-lg-3 col-xs-6">
+         <a @click="EntrarCuadro('procedimientos')">
+          <cuadro-enod
+              :titulo = "'PROCEDIMIENTOS'"
+              :class_color_titulo = "'color_titulo_2'"
+              :cantidad_1 ="CantProcedimientos"
+              :src_icono ="'/img/tablero/icono-enod-procedimientos.svg'"
+              :class_color_cuadro = "'bg-custom-3'"   
+              :habilitado_sn =" $can('T_proc_acceder') ?  true : false"                  
+          >
+          </cuadro-enod>
+         </a>
+       </div>
 
-      <!-- ./col -->       
-      <div class="col-lg-3 col-xs-6">
-        <!-- small box -->
-        <div class="small-box bg-custom-4">
-          <div class="inner">
-            <h3>{{ CantVehiculos }}  / {{ CantDocumentaciones }}</h3>
-            <p>Vehículos / Documentaciones</p>
-          </div>
-          <div class="icon">
-              <i class="fa fa-file-pdf-o"></i>
-          </div>
-            <a v-if="ot_id_selected > 0 && $can('T_doc_acceder')" :href="AppUrl + '/documentaciones/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-            <a v-else href="#" class="small-box-footer" >More info <i class="fa fa-arrow-circle-right"></i></a>
-        </div>
-      </div>
+       <div class="col-lg-3 col-xs-6">
+         <a @click="EntrarCuadro('documentaciones')">
+          <cuadro-enod
+              :titulo = "'VEHÍCULO / DOC.'"
+              :class_color_titulo = "'color_titulo_2'"
+              :cantidad_1 ="CantVehiculos"
+              :cantidad_2 ="CantDocumentaciones"
+              :src_icono ="'/img/tablero/icono-enod-documentacion.svg'"
+              :class_color_cuadro = "'bg-custom-4'"   
+              :habilitado_sn =" $can('T_doc_acceder') ?  true : false"
+          >
+          </cuadro-enod>
+          </a>
+       </div>
 
-      <!-- ./col -->
-      <div class="col-lg-3 col-xs-6">
-        <!-- small box -->
-        <div class="small-box bg-custom-5">
-          <div class="inner">
-            <h3>{{ CantRemitos }}</h3>
+       <div class="col-lg-3 col-xs-6">
+         <a @click="EntrarCuadro('remitos')">
+          <cuadro-enod
+              :titulo = "'REMITOS'"
+              :class_color_titulo = "'color_titulo_2'"
+              :cantidad_1 ="CantRemitos"
+              :src_icono ="'/img/tablero/icono-enod-remitos.svg'"
+              :class_color_cuadro = "'bg-custom-5'"   
+              :habilitado_sn =" $can('T_remitos_acceder') ?  true : false"                  
+          >
+          </cuadro-enod>
+         </a>
+       </div>
 
-            <p>Remitos</p>
-          </div>
-          <div class="icon">
-            <i class="fa fa-clipboard"></i>
-          </div>
-            <a v-if="ot_id_selected > 0 && $can('T_remitos_acceder')" :href="AppUrl + '/remitos/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-            <a v-else href="#" class="small-box-footer" >More info <i class="fa fa-arrow-circle-right"></i></a>
-        </div>
-      </div>
+       <div class="col-lg-3 col-xs-6">
+         <a @click="EntrarCuadro('informes')">
+          <cuadro-enod
+              :titulo = "'INFORMES'"
+              :class_color_titulo = "'color_titulo_1'"
+              :cantidad_1 ="CantInformes"
+              :src_icono ="'/img/tablero/icono-enod-informes.svg'"
+              :class_color_cuadro = "'bg-custom-6'"   
+              :habilitado_sn =" $can('T_informes_acceder') ?  true : false"                  
+          >
+          </cuadro-enod>
+         </a>
+       </div>
 
-      <!-- ./col -->
-      <div class="col-lg-3 col-xs-6">
-        <!-- small box -->
-        <div class="small-box bg-custom-6">
-          <div class="inner">
-            <h3>{{ CantInformes }} </h3>
+       <div class="col-lg-3 col-xs-6">
+         <a @click="EntrarCuadro('partes')">
+          <cuadro-enod
+              :titulo = "'PARTES'"
+              :class_color_titulo = "'color_titulo_1'"
+              :cantidad_1 ="CantPartes"
+              :src_icono ="'/img/tablero/icono-enod-partes.svg'"
+              :class_color_cuadro = "'bg-custom-7'"   
+              :habilitado_sn =" $can('T_partes_acceder') ?  true : false"                  
+          >
+          </cuadro-enod>
+         </a>
+       </div>
 
-            <p>Informes</p>
-          </div>
-          <div class="icon">
-              <i class="fa fa-list-alt"></i>
-          </div>        
-            <a v-if="ot_id_selected > 0 && $can('T_informes_acceder')"  :href="AppUrl + '/informes/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-            <a v-else href="#" class="small-box-footer" >More info <i class="fa fa-arrow-circle-right"></i></a>
-        </div>
-      </div>
-      <!-- ./col -->
-      <div class="col-lg-3 col-xs-6">
-        <!-- small box -->
-        <div class="small-box bg-custom-7">
-          <div class="inner">
-            <h3>{{CantPartes}}</h3>
-
-            <p>Partes Diarios</p>
-          </div>
-          <div class="icon">
-            <i class="fa fa-calendar-o"></i>
-          </div>
-            <a v-if="ot_id_selected > 0 && $can('T_partes_acceder')"  :href="AppUrl + '/partes/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-            <a v-else href="#" class="small-box-footer" >More info <i class="fa fa-arrow-circle-right"></i></a>          
-        </div>
-      </div>
-      <!-- ./col -->
-      <div class="col-lg-3 col-xs-6">
-        <!-- small box -->
-        <div class="small-box bg-custom-8">
-          <div class="inner">
-            <h3>{{CantCertificados}}</h3>
-
-            <p>Certificados</p>
-          </div>
-          <div class="icon">
-            <i class="fa fa-check-square-o"></i>
-          </div>
-            <a v-if="ot_id_selected > 0 && $can('T_certif_acceder')"  :href="AppUrl + '/certificados/ot/' + ot_id_selected" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-            <a v-else href="#" class="small-box-footer" >More info <i class="fa fa-arrow-circle-right"></i></a>     
-        </div>
-      </div>      
+       <div class="col-lg-3 col-xs-6">
+         <a @click="EntrarCuadro('certificados')">
+          <cuadro-enod
+              :titulo = "'CERTIFICADOS'"
+              :class_color_titulo = "'color_titulo_2'"
+              :cantidad_1 ="CantCertificados"
+              :src_icono ="'/img/tablero/icono-enod-certificados.svg'"
+              :class_color_cuadro = "'bg-custom-8'"   
+              :habilitado_sn =" $can('T_certif_acceder') ?  true : false"                  
+          >
+          </cuadro-enod>
+         </a>
+       </div>
   </div> 
 
   <div class="row"> 
@@ -243,7 +227,7 @@ export default {
     data() { return {
 
         ots :{},       
-        ot_id_selected : '',
+        ot_id_selected : '0',
         search:'',
         loading:false,
         }
@@ -374,7 +358,70 @@ export default {
 
         window.location.href = this.AppUrl + '/area/enod/ots';
      
+      } ,
+
+      EntrarCuadro : function(seccion){
+
+        console.log(seccion);
+
+        switch (seccion) {
+
+          case 'operadores':
+            if(this.$can('T_operador_acceder')){
+              window.location.href = this.AppUrl + '/operadores/ot/' + this.ot_id_selected;
+            } 
+          break;
+
+          case 'equipos':
+            if(this.$can('T_equipos_acceder')){
+              window.location.href = this.AppUrl + '/interno_equipos/ot/' + this.ot_id_selected;
+            }     
+          break;
+
+          case 'procedimientos':
+            if(this.$can('T_proc_acceder')){
+              window.location.href = this.AppUrl + '/procedimientos/ot/' + this.ot_id_selected;
+            }  
+          break;
+
+          case 'documentaciones':
+            if(this.$can('T_doc_acceder')){
+              window.location.href = this.AppUrl + '/documentaciones/ot/' + this.ot_id_selected;
+            }  
+          break;
+
+          case 'remitos':
+            if(this.$can('T_remitos_acceder')){
+              window.location.href = this.AppUrl + '/remitos/ot/' + this.ot_id_selected;
+            }  
+          break;
+  
+          case 'informes':
+            if(this.$can('T_informes_acceder')){
+              window.location.href = this.AppUrl + '/informes/ot/' + this.ot_id_selected;
+            }       
+          break;
+
+          case 'partes':
+            if(this.$can('T_partes_acceder')){
+              window.location.href = this.AppUrl + '/partes/ot/' + this.ot_id_selected;
+            }  
+          break;   
+
+          case 'certificados':
+            if(this.$can('T_certif_acceder')){
+              window.location.href = this.AppUrl + '/certificados/ot/' + this.ot_id_selected;
+            } 
+           break;  
+
+          default:
+            break;
+        }
+
+
       }
+
+
 
 
     }
@@ -390,4 +437,7 @@ export default {
         margin-top:10px;
     }
 }
+
+
+
 </style>

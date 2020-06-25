@@ -1,23 +1,28 @@
 <template>
- <div>
-          <!-- small box -->
-          <div class="small-box bg-custom-5">
-            <div class="inner">
-              <h3>{{CantRemitos}}</h3>
+ <div class="row">
 
-              <p>Remitos</p>
-            </div>
-            <div class="icon">
-            <i class="fa fa-clipboard"></i>
-            </div>
-            <a href="#" class="small-box-footer">Detail <i class="fa  fa-arrow-circle-down"></i></a>
-          </div>
+       <div class="col-lg-3 col-xs-6">
+          <cuadro-enod
+              :titulo = "'REMITOS'"
+              :class_color_titulo = "'color_titulo_2'"
+              :cantidad_1 ="CantRemitos"
+              :src_icono ="'/img/tablero/icono-enod-remitos.svg'"
+              :class_color_cuadro = "'bg-custom-5'"   
+              :habilitado_sn ="true"                  
+          >
+          </cuadro-enod>
+       </div>
 
-        <div v-show="$can('T_remitos_edita')">
-            <a :href="AppUrl + '/area/enod/ot/' + ot_id_data + '/remito' " class="btn btn-primary pull-left"><span class="fa fa-plus-circle"></span> Nuevo</a>
-        </div>
-       
         <div class="clearfix"></div>
+        
+        <div class="col-md-12">
+            <div v-show="$can('T_remitos_edita')">
+                <a :href="AppUrl + '/area/enod/ot/' + ot_id_data + '/remito' " class="btn btn-primary pull-left"><span class="fa fa-plus-circle"></span> Nuevo</a>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+         <div class="col-md-12">
             <div class="box box-custom-enod top-buffer">
                 <div class="box-header with-border">
                     <div class="table-responsive">          
@@ -58,7 +63,7 @@
                     </pagination>
                 </div>
             </div>
-      
+        </div>  
         <div class="clearfix"></div>   
  </div>
     

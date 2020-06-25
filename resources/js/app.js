@@ -199,6 +199,8 @@ Vue.component('abm-placas', require('./components/dashboard/placas/abm-placas.vu
 
 
 Vue.component('dashboard-enod', require('./components/dashboard/dashboard-enod').default);
+Vue.component('cuadro-enod', require('./components/dashboard/cuadro-enod').default);
+
 Vue.component('ot-operarios', require('./components/dashboard/operarios/ot-operarios').default);
 Vue.component('ot-interno-equipos', require('./components/dashboard/interno-equipos/ot-interno-equipos').default);
 Vue.component('ot-informes', require('./components/dashboard/informes/ot-informes').default);
@@ -347,18 +349,18 @@ state: {
         permisos:[],
         iluminaciones:[],
         ejecutor_ensayos:[],
-        CantInformes:'0',
-        CantOperadores :'0',
-        CantRemitos:'0',
-        CantInternoEquipos:'0',
-        CantPartes:'0',
-        CantCertificados:'0',
-        CantSoldadores:'0',
-        CantDocumentacionesTotal:'0',
-        CantDocumentaciones:'0',
-        CantProcedimientos:'0',
-        CantUsuariosCliente:'0',
-        CantVehiculos:'0',
+        CantInformes:0,
+        CantOperadores :0,
+        CantRemitos:0,
+        CantInternoEquipos:0,
+        CantPartes:0,
+        CantCertificados:0,
+        CantSoldadores:0,
+        CantDocumentacionesTotal:0,
+        CantDocumentaciones:0,
+        CantProcedimientos:0,
+        CantUsuariosCliente:0,
+        CantVehiculos:0,
         curie:'0',
         ParametroGeneral:{},
         DDPPI:false,

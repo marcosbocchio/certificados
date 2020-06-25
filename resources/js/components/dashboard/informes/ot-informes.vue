@@ -1,20 +1,21 @@
 <template>
-    <div>
-        <!-- small box -->
-        <div class="small-box bg-custom-6">
-            <div class="inner">
+    <div class="row">
 
-                <h3 >{{CantInformes}}</h3>
+       <div class="col-lg-3 col-xs-6">
+          <cuadro-enod
+              :titulo = "'INFORMES'"
+              :class_color_titulo = "'color_titulo_1'"
+              :cantidad_1 ="CantInformes"
+              :src_icono ="'/img/tablero/icono-enod-informes.svg'"
+              :class_color_cuadro = "'bg-custom-6'"   
+              :habilitado_sn ="true"                   
+          >
+          </cuadro-enod>
+       </div>
 
-                <p>Informes</p>
-            </div>
-            <div class="icon">
-                <i class="fa fa-list-alt"></i>
-            </div>
-            <a href="#" class="small-box-footer">Detail <i class="fa  fa-arrow-circle-down"></i></a>
-        </div>
         <div class="clearfix"></div>
 
+       <div class="col-md-12">
            <div v-show="$can('T_informes_edita')">
                 <div class="box box-custom-enod top-buffer">
                     <div class="box-header with-border">
@@ -43,7 +44,8 @@
                     </div>
                 </div>
            </div>
-
+       </div>
+       <div class="col-md-12">
             <div class="box box-custom-enod top-buffer">
                 <div class="box-header with-border">
                     <h3 class="box-title">INFORMES ORDEN DE TRABAJO</h3>
@@ -134,6 +136,7 @@
         <div class="clearfix"></div>
         <informes-importables :metodo_ensayo="metodo_ensayo" :otdata="this.ot_data" @store="getResults(ot_informes.current_page)"></informes-importables>
     </div>    
+    </div>
 </template>
 
 <script>

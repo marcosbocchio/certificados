@@ -1,24 +1,35 @@
 <template>
     <div>
-        <!-- small box -->
-        <div class="col-lg-12">
-            <div class="small-box bg-custom-3">
-                <div class="inner">
-                    <h3  v-if="modelo == 'ot_procedimientos_propios'">{{ CantProcedimientos }}</h3>
-                    <h3  v-if="modelo == 'documentaciones'">{{ CantDocumentacionesTotal }}</h3>
-                    <div v-if="modelo == 'ot_procedimientos_propios'">
-                        <p>Procedimientos </p>
-                    </div>
-                    <div v-else>
-                        <p>Documentaciones </p>
-                    </div>
-                </div>
-                <div class="icon">
-                    <i class="fas fa-radiation-alt"></i>
-                </div>
-                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+
+        <div v-if="modelo == 'ot_procedimientos_propios'">
+            <div class="col-lg-3 col-xs-6">
+                <cuadro-enod
+                    :titulo = "'PROCEDIMIENTOS'"
+                    :class_color_titulo = "'color_titulo_2'"
+                    :cantidad_1 ="CantProcedimientos"
+                    :src_icono ="'/img/tablero/icono-enod-procedimientos.svg'"
+                    :class_color_cuadro = "'bg-custom-3'"   
+                    :habilitado_sn ="true"                  
+                >
+                </cuadro-enod>
             </div>
-        </div>          
+        </div>
+
+        <div v-else-if="modelo == 'documentaciones'">
+            <div class="col-lg-3 col-xs-6">
+                <cuadro-enod
+                    :titulo = "'DOCUMENTACIONES'"
+                    :class_color_titulo = "'color_titulo_2'"
+                    :cantidad_1 ="CantDocumentacionesTotal"
+                    :src_icono ="'/img/tablero/icono-enod-documentacion.svg'"
+                    :class_color_cuadro = "'bg-custom-4'"   
+                    :habilitado_sn ="true"                  
+                >
+                </cuadro-enod>
+            </div>
+        </div>        
+
+       <div class="clearfix"></div>    
        
         <div class="form-group">
 
@@ -45,6 +56,7 @@
 
             </div>         
         </div>
+
        <div class="clearfix"></div>    
 
         <div class="col-md-12">

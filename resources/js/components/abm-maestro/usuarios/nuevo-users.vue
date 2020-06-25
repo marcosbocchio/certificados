@@ -212,11 +212,9 @@ export default {
           isEnod : function(val){
 
               if(val){
-                  this.user_rol.splice('Usuario Cliente'); 
-                  this.user_rol.push('Usuario Enod');
-              }else {
-                  this.user_rol.splice('Usuario Enod');    
-                  this.user_rol.push('Usuario Cliente')
+                  this.user_rol.splice('Cliente');                 
+              }else {                 
+                  this.user_rol.push(' Cliente')
               }
 
 
@@ -245,8 +243,7 @@ export default {
                 this.$refs.inputFile1.type = 'text';
                 this.$refs.inputFile1.type = 'file';  
                 this.selectedFile =  null;
-                this.user_rol=[],    
-                this.user_rol.push('Usuario Enod');
+                this.user_rol=[],                
                 $('#nuevo').modal('show');    
                 $( document ).ready(function() {
                     setTimeout(function(){

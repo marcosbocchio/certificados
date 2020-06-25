@@ -1,18 +1,18 @@
 <template>
-    <div class="row">     
-        <div class="col-md-12">
-          <!-- small box -->
-          <div class="small-box bg-custom-4">
-            <div class="inner">
-              <h3>{{ ot_vehiculos.length}} / {{ ot_documentaciones.length }}</h3>
-              <p>Vehículos / Documentaciones</p>
-            </div>
-            <div class="icon">
-              <i class="fa fa-file-pdf-o"></i>
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
+    <div class="row">    
+        
+       <div class="col-lg-3 col-xs-6">
+          <cuadro-enod
+              :titulo = "'VEHÍCULO / DOC.'"
+              :class_color_titulo = "'color_titulo_2'"
+              :cantidad_1 ="ot_vehiculos.length"
+              :cantidad_2 ="ot_documentaciones.length"
+              :src_icono ="'/img/tablero/icono-enod-documentacion.svg'"
+              :class_color_cuadro = "'bg-custom-4'"   
+              :habilitado_sn ="true"
+          >
+          </cuadro-enod>
+       </div>
 
         <div class="clearfix"></div>
 

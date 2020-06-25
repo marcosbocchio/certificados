@@ -236,13 +236,10 @@ export default {
           isEnod : function(val){
 
               if(val){
-                  this.user_rol.splice('Usuario Cliente'); 
-                  this.user_rol.push('Usuario Enod');
-              }else {
-                  this.user_rol.splice('Usuario Enod');    
-                  this.user_rol.push('Usuario Cliente')
+                  this.user_rol.splice('Cliente');                 
+              }else {                 
+                  this.user_rol.push(' Cliente')
               }
-
 
           },
      }, 

@@ -1,19 +1,16 @@
 <template>
     <div class="row">
-         <div class="col-md-12">
-            <!-- small box -->
-            <div class="small-box bg-custom-2">
-            <div class="inner">
-                <h3>{{ interno_equipos.length }}</h3>
-                <p>Equipos </p>
-            </div>
-            <div class="icon">
-                <i class="fa fa-wrench"></i>
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
-
+       <div class="col-lg-3 col-xs-6">
+          <cuadro-enod
+              :titulo = "'EQUIPOS'"
+              :class_color_titulo = "'color_titulo_1'"
+              :cantidad_1 ="interno_equipos.length"
+              :src_icono ="'/img/tablero/icono-enod-equipos.svg'"
+              :class_color_cuadro = "'bg-custom-2'"   
+              :habilitado_sn ="true"
+          >
+          </cuadro-enod>
+       </div>
         <div class="clearfix"></div>
 
         <div class="col-md-12">
