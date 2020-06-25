@@ -7,7 +7,7 @@
       </div>
 
       <div v-show="modelo == 'users' || modelo == 'interno_equipos' || modelo == 'clientes' || modelo == 'equipos'" >
-        <div class="col-md-3 col-md-offset-8 col-xs-10">
+        <div class="col-md-3 col-md-offset-8 col-xs-9 col-xs-offset-1">
           <div class="input-group">
               <input type="text" v-model="search" class="form-control" placeholder="Buscar...">
               <span class="input-group-addon btn" @click="aplicarFiltro()" style="background-color: #F9CA33;"><i class="fa fa-search"></i></span>

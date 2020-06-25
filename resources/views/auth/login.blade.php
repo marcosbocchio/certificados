@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-
-    <div class="grandParentContaniner">
+<div class="container"style='height:100%'>
+  <div class="grandParentContaniner">
     <div class="login-box">
       <!-- /.login-logo -->
       <div class="login-box-body">
@@ -74,6 +74,6 @@
     </div>
 
     </div>
-
+  </div>
 
 @endsection
