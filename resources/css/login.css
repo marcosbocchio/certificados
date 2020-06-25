@@ -1,3 +1,6 @@
+Html, body{
+  height:100%;
+}
 
 @media (min-width: 768px) {
 
@@ -17,6 +20,16 @@
     }
 }
 
+#app { height: 100% !important}
 .py-4 {
   padding-bottom: 5rem !important;
+  height: 100% !important;  
+}
+
+.grandParentContaniner{
+  display:table; height:100%; margin: 0 auto !important;
+}
+
+.login-box{
+  display:table-cell; vertical-align:middle !important;;
 }
