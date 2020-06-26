@@ -3,6 +3,7 @@
 
        <div class="col-lg-3 col-xs-6">
           <cuadro-enod
+              :tablero_sn ="false"
               :titulo = "'INFORMES'"
               :class_color_titulo = "'color_titulo_1'"
               :cantidad_1 ="CantInformes"

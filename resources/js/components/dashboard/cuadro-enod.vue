@@ -1,13 +1,20 @@
 <template>
     <div>
-        <div class="small-box zoom" :class="[class_color_cuadro ,{small_box_opacity : !habilitado_sn}, {pointer : habilitado_sn},{not_allowed : !habilitado_sn}  ] ">
+        <div class="small-box zoom" :class="[class_color_cuadro ,{small_box_opacity : !habilitado_sn}, {pointer : (tablero_sn && habilitado_sn)},{not_allowed : !habilitado_sn}  ] ">
           <div class="inner">
             <img :src="src_icono" width="80px" />
             <p class="cant" >{{ cantidad_1 }}</p>
             <p class="titulo" :class="class_color_titulo">{{ titulo }}</p>
           </div>
-           <div class="footer-mas-info">
-                <a href="#" class="small-box-footer" > > Más info</a>  
+           <div :class="class_footer_img">
+             <a href="#" class="small-box-footer" >
+               <div v-if="tablero_sn" :class="class_color_sub_titulo">
+                > Más info
+               </div>
+               <div v-else>
+                  &nbsp;
+               </div>
+              </a> 
            </div>           
         </div>     
     </div>
@@ -17,11 +24,22 @@ export default {
     props : {
 
         titulo : {
-            type : String,
-            required : true
+             type: String,
+             required:true,
+        },
+
+        tablero_sn : {
+            type : Boolean,
+            required : false,
+            default:true
         },
 
         class_color_titulo : {
+            type : String,
+            required : true,
+        },
+
+        class_color_sub_titulo : {
             type : String,
             required : true,
         },
@@ -32,6 +50,11 @@ export default {
         },
 
         class_color_cuadro : {
+            type : String,
+            required : true,
+        },
+
+        class_footer_img : {
             type : String,
             required : true,
         },
@@ -87,6 +110,25 @@ export default {
 
 }
 
+.color_sub_titulo_1 {
+
+ color: rgb(32, 32, 32);
+}
+
+.color_sub_titulo_2 {
+    
+  color: rgb(255, 255, 255);
+
+}
+
+.color_sub_titulo_3 {
+    
+  color: rgb(255, 203, 58);
+
+}
+
+
+
 .small-box .inner {
 
     padding-bottom: 0px;
@@ -116,14 +158,6 @@ export default {
   transition: 0.99s;
 }
 
-.footer-mas-info {
-
-background-image: url("/img/tablero/footer-operadores.png") !important;
-background-size:     cover;                   
-background-repeat:   no-repeat;
-background-position: center center;  
-
-}
 
 .small_box_opacity {  
     

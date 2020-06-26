@@ -1,5 +1,6 @@
 .pointer {cursor: pointer;}
 .not_allowed {cursor: not-allowed;}
+
 .treeview-menu li a {
   margin-left: 20px;
 }
@@ -135,3 +136,39 @@ table .selected{
   text-align: left;
   vertical-align: middle;
 }
+
+.footer-oper-inf {
+
+  background-image: url("/img/tablero/footer-oper-inf.png") !important;
+  background-size:     cover;                   
+  background-repeat:   no-repeat;
+  background-position: center center;  
+  
+  }
+
+  .footer-equipos-partes {
+
+    background-image: url("/img/tablero/footer-equipos-partes.png") !important;
+    background-size:     cover;                   
+    background-repeat:   no-repeat;
+    background-position: center center;  
+    
+  }
+
+  .footer-proc-cert {
+
+    background-image: url("/img/tablero/footer-proc-cert.png") !important;
+    background-size:     cover;                   
+    background-repeat:   no-repeat;
+    background-position: center center;  
+    
+   }
+
+   .footer-doc-remitos {
+
+    background-image: url("/img/tablero/footer-doc-remitos.png") !important;
+    background-size:     cover;                   
+    background-repeat:   no-repeat;
+    background-position: center center;  
+    
+    }

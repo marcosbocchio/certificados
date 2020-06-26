@@ -3,6 +3,7 @@
 
        <div class="col-lg-3 col-xs-6">
           <cuadro-enod
+              :tablero_sn ="false"
               :titulo = "'REMITOS'"
               :class_color_titulo = "'color_titulo_2'"
               :cantidad_1 ="CantRemitos"
@@ -14,7 +15,7 @@
        </div>
 
         <div class="clearfix"></div>
-        
+
         <div class="col-md-12">
             <div v-show="$can('T_remitos_edita')">
                 <a :href="AppUrl + '/area/enod/ot/' + ot_id_data + '/remito' " class="btn btn-primary pull-left"><span class="fa fa-plus-circle"></span> Nuevo</a>

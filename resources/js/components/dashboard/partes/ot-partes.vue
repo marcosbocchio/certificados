@@ -2,6 +2,7 @@
  <div class="row">
        <div class="col-lg-3 col-xs-6">
           <cuadro-enod
+              :tablero_sn ="false"
               :titulo = "'PARTES'"
               :class_color_titulo = "'color_titulo_1'"
               :cantidad_1 ="CantPartes"
@@ -19,7 +20,7 @@
                 <a :href="AppUrl + '/area/enod/ot/' + ot_id_data + '/parte' " class="btn btn-primary pull-left"><span class="fa fa-plus-circle"></span> Nuevo</a>     
            </div>      
         </div>  
-        
+
         <div class="clearfix"></div>
         <div class="col-md-12">
             <div class="box box-custom-enod top-buffer">

@@ -7,10 +7,12 @@
           <cuadro-enod
               :titulo = "'OPERADORES'"
               :class_color_titulo = "'color_titulo_1'"
+              :class_color_sub_titulo = "'color_sub_titulo_1'"
               :cantidad_1 ="CantOperadores"
               :src_icono ="'/img/tablero/icono-enod-operador.svg'"
               :class_color_cuadro = "'bg-custom-1'"   
-              :habilitado_sn =" $can('T_operador_acceder') ?  true : false"                  
+              :habilitado_sn =" $can('T_operador_acceder') ?  true : false"   
+              :class_footer_img ="'footer-oper-inf'"               
           >
           </cuadro-enod>
          </a>
@@ -21,10 +23,13 @@
           <cuadro-enod
               :titulo = "'EQUIPOS'"
               :class_color_titulo = "'color_titulo_1'"
+              :class_color_sub_titulo = "'color_sub_titulo_1'"
               :cantidad_1 ="CantInternoEquipos"
               :src_icono ="'/img/tablero/icono-enod-equipos.svg'"
               :class_color_cuadro = "'bg-custom-2'"   
               :habilitado_sn =" $can('T_equipos_acceder') ?  true : false"
+              :class_footer_img ="'footer-equipos-partes'"               
+
           >
           </cuadro-enod>
           </a>
@@ -35,10 +40,13 @@
           <cuadro-enod
               :titulo = "'PROCEDIMIENTOS'"
               :class_color_titulo = "'color_titulo_2'"
+              :class_color_sub_titulo = "'color_sub_titulo_2'"
               :cantidad_1 ="CantProcedimientos"
               :src_icono ="'/img/tablero/icono-enod-procedimientos.svg'"
               :class_color_cuadro = "'bg-custom-3'"   
-              :habilitado_sn =" $can('T_proc_acceder') ?  true : false"                  
+              :habilitado_sn =" $can('T_proc_acceder') ?  true : false"        
+              :class_footer_img ="'footer-proc-cert'"               
+          
           >
           </cuadro-enod>
          </a>
@@ -49,12 +57,13 @@
           <cuadro-enod
               :titulo = "'VEHÍCULO / DOC.'"
               :class_color_titulo = "'color_titulo_2'"
+              :class_color_sub_titulo = "'color_sub_titulo_3'"
               :cantidad_1 ="CantVehiculos"
               :cantidad_2 ="CantDocumentaciones"
               :src_icono ="'/img/tablero/icono-enod-documentacion.svg'"
               :class_color_cuadro = "'bg-custom-4'"   
               :habilitado_sn =" $can('T_doc_acceder') ?  true : false"
-          >
+              :class_footer_img ="'footer-doc-remitos'"                 >
           </cuadro-enod>
           </a>
        </div>
@@ -64,10 +73,13 @@
           <cuadro-enod
               :titulo = "'REMITOS'"
               :class_color_titulo = "'color_titulo_2'"
+              :class_color_sub_titulo = "'color_sub_titulo_2'"
               :cantidad_1 ="CantRemitos"
               :src_icono ="'/img/tablero/icono-enod-remitos.svg'"
               :class_color_cuadro = "'bg-custom-5'"   
-              :habilitado_sn =" $can('T_remitos_acceder') ?  true : false"                  
+              :habilitado_sn =" $can('T_remitos_acceder') ?  true : false"    
+              :class_footer_img ="'footer-doc-remitos'"               
+              
           >
           </cuadro-enod>
          </a>
@@ -78,10 +90,13 @@
           <cuadro-enod
               :titulo = "'INFORMES'"
               :class_color_titulo = "'color_titulo_1'"
+              :class_color_sub_titulo = "'color_sub_titulo_1'"
               :cantidad_1 ="CantInformes"
               :src_icono ="'/img/tablero/icono-enod-informes.svg'"
               :class_color_cuadro = "'bg-custom-6'"   
-              :habilitado_sn =" $can('T_informes_acceder') ?  true : false"                  
+              :habilitado_sn =" $can('T_informes_acceder') ?  true : false"   
+              :class_footer_img ="'footer-oper-inf'"               
+               
           >
           </cuadro-enod>
          </a>
@@ -92,10 +107,12 @@
           <cuadro-enod
               :titulo = "'PARTES'"
               :class_color_titulo = "'color_titulo_1'"
+              :class_color_sub_titulo = "'color_sub_titulo_2'"
               :cantidad_1 ="CantPartes"
               :src_icono ="'/img/tablero/icono-enod-partes.svg'"
               :class_color_cuadro = "'bg-custom-7'"   
-              :habilitado_sn =" $can('T_partes_acceder') ?  true : false"                  
+              :habilitado_sn =" $can('T_partes_acceder') ?  true : false"      
+              :class_footer_img ="'footer-equipos-partes'"               
           >
           </cuadro-enod>
          </a>
@@ -105,11 +122,14 @@
          <a @click="EntrarCuadro('certificados')">
           <cuadro-enod
               :titulo = "'CERTIFICADOS'"
-              :class_color_titulo = "'color_titulo_2'"
+              :class_color_titulo = "'color_titulo_3'"
+              :class_color_sub_titulo = "'color_sub_titulo_2'"
               :cantidad_1 ="CantCertificados"
               :src_icono ="'/img/tablero/icono-enod-certificados.svg'"
               :class_color_cuadro = "'bg-custom-8'"   
-              :habilitado_sn =" $can('T_certif_acceder') ?  true : false"                  
+              :habilitado_sn =" $can('T_certif_acceder') ?  true : false"       
+              :class_footer_img ="'footer-proc-cert'"               
+           
           >
           </cuadro-enod>
          </a>
@@ -421,9 +441,6 @@ export default {
 
       }
 
-
-
-
     }
 }
     
@@ -437,7 +454,5 @@ export default {
         margin-top:10px;
     }
 }
-
-
 
 </style>

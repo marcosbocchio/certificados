@@ -1,8 +1,9 @@
 <template>
     <div class="row">    
-        
+
        <div class="col-lg-3 col-xs-6">
           <cuadro-enod
+              :tablero_sn ="false"
               :titulo = "'VEHÍCULO / DOC.'"
               :class_color_titulo = "'color_titulo_2'"
               :cantidad_1 ="ot_vehiculos.length"

@@ -2,6 +2,7 @@
     <div class="row">
        <div class="col-lg-3 col-xs-6">
           <cuadro-enod
+              :tablero_sn ="false"
               :titulo = "'EQUIPOS'"
               :class_color_titulo = "'color_titulo_1'"
               :cantidad_1 ="interno_equipos.length"
