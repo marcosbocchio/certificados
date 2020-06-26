@@ -2,7 +2,7 @@
     <div>
         <div class="col-sm-10">
             <div v-show="$can('T_informes_edita')">
-                 <button class="btn btn-primary pull-right" v-on:click.prevent="openNuevoRegistro()">Nuevo </button>
+                 <button class="btn btn-enod pull-right" v-on:click.prevent="openNuevoRegistro()">Nuevo </button>
             </div>
         </div>
         <div class="clearfix"></div> 

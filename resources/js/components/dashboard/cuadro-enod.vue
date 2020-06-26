@@ -3,7 +3,10 @@
         <div class="small-box zoom" :class="[class_color_cuadro ,{flash : tablero_sn},{small_box_opacity : !habilitado_sn}, {pointer : (tablero_sn && habilitado_sn)},{not_allowed : !habilitado_sn}  ] ">
           <div class="inner">
             <img :src="src_icono" width="100px" />
-            <p class="cant" >{{ cantidad_1 }}</p>          
+            <p class="cant-1" >{{ cantidad_1 }}</p>          
+            <div v-if="cantidad_2 >= 0">
+              <p class="cant-2" >{{ cantidad_2 }}</p>          
+            </div>
           </div>
             <div :class="class_footer_img">
               <a href="#" class="small-box-footer" >
@@ -114,13 +117,22 @@ export default {
     padding-bottom: 0px;
 }
 
-.small-box .inner .cant {
+.small-box .inner .cant-1 {
 
   position: absolute;;
   font-size: 26px; 
   top: 0;
   right: 20px;
   color: white;
+}
+
+.small-box .inner .cant-2 {
+
+  position: absolute;;
+  font-size: 26px; 
+  bottom: 15px;
+  right: 20px;
+  color: #FFD301;
 }
 
 .small-box .small-box-footer {

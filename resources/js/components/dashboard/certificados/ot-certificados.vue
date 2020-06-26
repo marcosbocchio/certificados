@@ -17,7 +17,7 @@
 
         <div class="col-md-12">
             <div v-show="$can('T_certif_edita')">        
-                <a :href="AppUrl + '/area/enod/ot/' + ot_id_data + '/certificado' " class="btn btn-primary pull-left"> <span class="fa fa-plus-circle"></span> Nuevo</a>     
+                <a :href="AppUrl + '/area/enod/ot/' + ot_id_data + '/certificado' " class="btn btn-enod pull-left"> <span class="fa fa-plus-circle"></span> Nuevo</a>     
             </div> 
         </div>
 

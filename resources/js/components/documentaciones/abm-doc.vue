@@ -38,7 +38,7 @@
 
             <div v-show="$can(permiso_create)">
                 <div class="col-md-1 col-xs-12">
-                    <button class="btn btn-primary pull-left" v-on:click.prevent="openNuevoRegistro()"><span class="fa fa-plus-circle"></span> Nuevo</button>      
+                    <button class="btn btn-enod pull-left" v-on:click.prevent="openNuevoRegistro()"><span class="fa fa-plus-circle"></span> Nuevo</button>      
                 </div>                
             </div>  
             

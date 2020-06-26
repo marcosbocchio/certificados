@@ -140,7 +140,7 @@
   <div class="row"> 
     <div class="col-md-2 col-sm-12 col-xs-12">
         <div v-show="$can('O_alta')">        
-            <button @click="NuevaOt()" class="btn btn-primary pull-left"> <span class="fa fa-plus-circle"></span> Nueva OT</button>     
+            <button @click="NuevaOt()" class="btn pull-left btn-enod"> <span class="fa fa-plus-circle"></span> Nueva OT</button>     
         </div> 
     </div>
     <div class="col-md-2 col-md-offset-8 col-sm-12 col-xs-12">

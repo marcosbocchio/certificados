@@ -146,7 +146,6 @@ Vue.component('table-servicios', require('./components/abm-maestro/servicios/tab
 Vue.component('nuevo-servicios', require('./components/abm-maestro/servicios/nuevo-servicios.vue').default);
 Vue.component('editar-servicios', require('./components/abm-maestro/servicios/editar-servicios.vue').default);
 
-
 Vue.component('table-fuentes', require('./components/abm-maestro/fuentes/table-fuentes.vue').default);
 Vue.component('editar-fuentes', require('./components/abm-maestro/fuentes/editar-fuentes.vue').default);
 Vue.component('nuevo-fuentes', require('./components/abm-maestro/fuentes/nuevo-fuentes.vue').default);

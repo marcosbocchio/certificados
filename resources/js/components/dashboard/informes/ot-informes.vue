@@ -36,7 +36,7 @@
                             <div class="form-group">                    
                                 <span>
                                     <a  @click="NuevoInforme(ot_data.id)">
-                                        <button class="btn btn-primary" :disabled="!metodo_selected"><span class="fa fa-plus-circle"></span> 
+                                        <button class="btn btn-enod" :disabled="!metodo_selected"><span class="fa fa-plus-circle"></span> 
                                             Nuevo
                                     </button>
                                     </a>                              

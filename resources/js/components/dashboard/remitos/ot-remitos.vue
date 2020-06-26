@@ -19,7 +19,7 @@
 
         <div class="col-md-12">
             <div v-show="$can('T_remitos_edita')">
-                <a :href="AppUrl + '/area/enod/ot/' + ot_id_data + '/remito' " class="btn btn-primary pull-left"><span class="fa fa-plus-circle"></span> Nuevo</a>
+                <a :href="AppUrl + '/area/enod/ot/' + ot_id_data + '/remito' " class="btn btn-enod pull-left"><span class="fa fa-plus-circle"></span> Nuevo</a>
             </div>
         </div>
         <div class="clearfix"></div>
