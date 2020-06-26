@@ -2,6 +2,16 @@ Html, body{
   height:100%;
 }
 
+.login-box-body  , .logos-soft {
+  border: solid 1px gray !important;
+}
+
+.logos-soft {
+
+  margin-top: 8px !important;
+
+}
+
 @media (min-width: 768px) {
 
   .background-image {

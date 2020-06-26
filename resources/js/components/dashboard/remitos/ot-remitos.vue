@@ -5,7 +5,8 @@
           <cuadro-enod
               :tablero_sn ="false"
               :titulo = "'REMITOS'"
-              :class_color_titulo = "'color_titulo_2'"
+              :class_color_titulo = "'color_2'"
+              :class_color_sub_titulo = "'color_3'"
               :cantidad_1 ="CantRemitos"
               :src_icono ="'/img/tablero/icono-enod-remitos.svg'"
               :class_color_cuadro = "'bg-custom-5'"   

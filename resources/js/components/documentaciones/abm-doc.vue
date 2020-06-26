@@ -5,7 +5,8 @@
                 <cuadro-enod
                     :tablero_sn ="false"
                     :titulo = "'PROCEDIMIENTOS'"
-                    :class_color_titulo = "'color_titulo_2'"
+                    :class_color_titulo = "'color_2'"
+                    :class_color_sub_titulo = "'color_1'"          
                     :cantidad_1 ="CantProcedimientos"
                     :src_icono ="'/img/tablero/icono-enod-procedimientos.svg'"
                     :class_color_cuadro = "'bg-custom-3'"   
@@ -20,7 +21,8 @@
                 <cuadro-enod
                     :tablero_sn ="false"
                     :titulo = "'DOCUMENTACIONES'"
-                    :class_color_titulo = "'color_titulo_2'"
+                    :class_color_titulo = "'color_2'"
+                    :class_color_sub_titulo = "'color_3'"
                     :cantidad_1 ="CantDocumentacionesTotal"
                     :src_icono ="'/img/tablero/icono-enod-documentacion.svg'"
                     :class_color_cuadro = "'bg-custom-4'"   

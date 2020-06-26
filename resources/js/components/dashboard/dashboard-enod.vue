@@ -1,13 +1,15 @@
 <template>
   <div>  
+    
     <div class="row">
-
+      <div class="col-md-10 col-md-offset-1">
+      
        <div class="col-lg-3 col-xs-6">
          <a @click="EntrarCuadro('operadores')">
           <cuadro-enod
               :titulo = "'OPERADORES'"
-              :class_color_titulo = "'color_titulo_1'"
-              :class_color_sub_titulo = "'color_sub_titulo_1'"
+              :class_color_titulo = "'color_3'"
+              :class_color_sub_titulo = "'color_2'"
               :cantidad_1 ="CantOperadores"
               :src_icono ="'/img/tablero/icono-enod-operador.svg'"
               :class_color_cuadro = "'bg-custom-1'"   
@@ -22,8 +24,8 @@
          <a @click="EntrarCuadro('equipos')">
           <cuadro-enod
               :titulo = "'EQUIPOS'"
-              :class_color_titulo = "'color_titulo_1'"
-              :class_color_sub_titulo = "'color_sub_titulo_1'"
+              :class_color_titulo = "'color_3'"
+              :class_color_sub_titulo = "'color_2'"
               :cantidad_1 ="CantInternoEquipos"
               :src_icono ="'/img/tablero/icono-enod-equipos.svg'"
               :class_color_cuadro = "'bg-custom-2'"   
@@ -39,8 +41,8 @@
          <a @click="EntrarCuadro('procedimientos')">
           <cuadro-enod
               :titulo = "'PROCEDIMIENTOS'"
-              :class_color_titulo = "'color_titulo_2'"
-              :class_color_sub_titulo = "'color_sub_titulo_2'"
+              :class_color_titulo = "'color_2'"
+              :class_color_sub_titulo = "'color_1'"
               :cantidad_1 ="CantProcedimientos"
               :src_icono ="'/img/tablero/icono-enod-procedimientos.svg'"
               :class_color_cuadro = "'bg-custom-3'"   
@@ -56,8 +58,8 @@
          <a @click="EntrarCuadro('documentaciones')">
           <cuadro-enod
               :titulo = "'VEHÍCULO / DOC.'"
-              :class_color_titulo = "'color_titulo_2'"
-              :class_color_sub_titulo = "'color_sub_titulo_3'"
+              :class_color_titulo = "'color_2'"
+              :class_color_sub_titulo = "'color_3'"
               :cantidad_1 ="CantVehiculos"
               :cantidad_2 ="CantDocumentaciones"
               :src_icono ="'/img/tablero/icono-enod-documentacion.svg'"
@@ -72,8 +74,8 @@
          <a @click="EntrarCuadro('remitos')">
           <cuadro-enod
               :titulo = "'REMITOS'"
-              :class_color_titulo = "'color_titulo_2'"
-              :class_color_sub_titulo = "'color_sub_titulo_2'"
+              :class_color_titulo = "'color_2'"
+              :class_color_sub_titulo = "'color_3'"
               :cantidad_1 ="CantRemitos"
               :src_icono ="'/img/tablero/icono-enod-remitos.svg'"
               :class_color_cuadro = "'bg-custom-5'"   
@@ -89,8 +91,8 @@
          <a @click="EntrarCuadro('informes')">
           <cuadro-enod
               :titulo = "'INFORMES'"
-              :class_color_titulo = "'color_titulo_1'"
-              :class_color_sub_titulo = "'color_sub_titulo_1'"
+              :class_color_titulo = "'color_3'"
+              :class_color_sub_titulo = "'color_2'"
               :cantidad_1 ="CantInformes"
               :src_icono ="'/img/tablero/icono-enod-informes.svg'"
               :class_color_cuadro = "'bg-custom-6'"   
@@ -106,8 +108,8 @@
          <a @click="EntrarCuadro('partes')">
           <cuadro-enod
               :titulo = "'PARTES'"
-              :class_color_titulo = "'color_titulo_1'"
-              :class_color_sub_titulo = "'color_sub_titulo_2'"
+              :class_color_titulo = "'color_3'"
+              :class_color_sub_titulo = "'color_2'"
               :cantidad_1 ="CantPartes"
               :src_icono ="'/img/tablero/icono-enod-partes.svg'"
               :class_color_cuadro = "'bg-custom-7'"   
@@ -122,27 +124,26 @@
          <a @click="EntrarCuadro('certificados')">
           <cuadro-enod
               :titulo = "'CERTIFICADOS'"
-              :class_color_titulo = "'color_titulo_3'"
-              :class_color_sub_titulo = "'color_sub_titulo_2'"
+              :class_color_titulo = "'color_2'"
+              :class_color_sub_titulo = "'color_1'"
               :cantidad_1 ="CantCertificados"
               :src_icono ="'/img/tablero/icono-enod-certificados.svg'"
               :class_color_cuadro = "'bg-custom-8'"   
               :habilitado_sn =" $can('T_certif_acceder') ?  true : false"       
-              :class_footer_img ="'footer-proc-cert'"               
-           
+              :class_footer_img ="'footer-proc-cert'"     
           >
           </cuadro-enod>
          </a>
        </div>
   </div> 
-
+  </div>
   <div class="row"> 
     <div class="col-md-2 col-sm-12 col-xs-12">
         <div v-show="$can('O_alta')">        
             <button @click="NuevaOt()" class="btn btn-primary pull-left"> <span class="fa fa-plus-circle"></span> Nueva OT</button>     
         </div> 
     </div>
-    <div class="col-md-3 col-md-offset-7 col-sm-12 col-xs-12">
+    <div class="col-md-2 col-md-offset-8 col-sm-12 col-xs-12">
       <div class="form-group"> 
           <div class="input-group">
               <input type="text" v-model="search" class="form-control" placeholder="Buscar...">

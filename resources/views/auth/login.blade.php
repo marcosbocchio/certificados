@@ -64,7 +64,7 @@
           </div>
         </form>
       </div>
-      <div style="margin-top: 8px !important;">
+      <div class="logos-soft" style="margin-top: 8px !important;">
           <img src="{{asset('img/logos-soft-ram.png')}}" width="100%" alt="...">
       </div>
       <!-- /.login-box-body -->

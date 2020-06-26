@@ -5,7 +5,8 @@
           <cuadro-enod
               :tablero_sn ="false"
               :titulo = "'CERTIFICADOS'"
-              :class_color_titulo = "'color_titulo_2'"
+              :class_color_titulo = "'color_2'"
+              :class_color_sub_titulo = "'color_1'"
               :cantidad_1 ="CantCertificados"
               :src_icono ="'/img/tablero/icono-enod-certificados.svg'"
               :class_color_cuadro = "'bg-custom-8'"   

@@ -1,21 +1,20 @@
 <template>
     <div>
-        <div class="small-box zoom" :class="[class_color_cuadro ,{small_box_opacity : !habilitado_sn}, {pointer : (tablero_sn && habilitado_sn)},{not_allowed : !habilitado_sn}  ] ">
+        <div class="small-box zoom" :class="[class_color_cuadro ,{flash : tablero_sn},{small_box_opacity : !habilitado_sn}, {pointer : (tablero_sn && habilitado_sn)},{not_allowed : !habilitado_sn}  ] ">
           <div class="inner">
-            <img :src="src_icono" width="80px" />
-            <p class="cant" >{{ cantidad_1 }}</p>
-            <p class="titulo" :class="class_color_titulo">{{ titulo }}</p>
+            <img :src="src_icono" width="100px" />
+            <p class="cant" >{{ cantidad_1 }}</p>          
           </div>
-           <div :class="class_footer_img">
-             <a href="#" class="small-box-footer" >
-               <div v-if="tablero_sn" :class="class_color_sub_titulo">
-                > Más info
-               </div>
-               <div v-else>
-                  &nbsp;
-               </div>
-              </a> 
-           </div>           
+            <div :class="class_footer_img">
+              <a href="#" class="small-box-footer" >
+                <div v-if="tablero_sn"  :class="class_color_sub_titulo" style="line-height: 1.9;">                  
+                     {{ titulo }}                
+                </div>
+                <div v-else>
+                    &nbsp;
+                </div>
+                </a> 
+            </div>  
         </div>     
     </div>
 </template>
@@ -56,7 +55,7 @@ export default {
 
         class_footer_img : {
             type : String,
-            required : true,
+            required : false,
         },
 
         cantidad_1 : { 
@@ -92,42 +91,23 @@ export default {
 
 .small-box .inner .titulo {
 
-  font-size: 13px;
+  font-size: 12px;
   font-weight: bold;
   margin-top: -10px;
   
 }
 
-.color_titulo_1 {
-
-  color: rgb(255, 203, 58);
-
-}
-
-.color_titulo_2 {
-    
-  color: rgb(32, 32, 32);
-
-}
-
-.color_sub_titulo_1 {
-
- color: rgb(32, 32, 32);
-}
-
-.color_sub_titulo_2 {
-    
+.color_1{
   color: rgb(255, 255, 255);
-
+}
+  
+.color_2 {
+  color: rgb(32, 32, 32);
 }
 
-.color_sub_titulo_3 {
-    
+.color_3 {
   color: rgb(255, 203, 58);
-
 }
-
-
 
 .small-box .inner {
 
@@ -144,10 +124,10 @@ export default {
 }
 
 .small-box .small-box-footer {
-
+  font-size: 11px;
   font-weight: 600;
-  color: rgb(32,32,32);
-  background-color: rgb(255, 203, 58);
+  font-family: 'Montserrat',sans-serif;
+  padding-bottom: 0;
 }
 
 .zoom:hover  {
@@ -156,12 +136,69 @@ export default {
   -webkit-transform: scale(1.03); /* Safari 3-8 */
   transform: scale(1.03); 
   transition: 0.99s;
+
 }
 
+.flash:hover {
+
+  opacity: 1;
+	-webkit-animation: flash 1.5s;
+	animation: flash 1.5s;
+
+}
+
+@-webkit-keyframes flash {
+	0% {
+		opacity: .4;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+@keyframes flash {
+	0% {
+		opacity: .4;
+	}
+	100% {
+		opacity: 1;
+	}
+}
 
 .small_box_opacity {  
     
-    opacity: 0.7;
+    opacity: 0.5;
 }
 
+.footer-oper-inf {
+
+  background-image: url("/img/tablero/footer-oper-inf.png") !important;
+  background-size:     cover;                   
+  background-repeat:   no-repeat;
+  background-position: center center;
+  
+  }
+
+  .footer-equipos-partes {
+
+    background-image: url("/img/tablero/footer-equipos-partes.png") !important;
+    background-size:     cover;                   
+    background-repeat:   no-repeat;
+    background-position: center center;  
+  }
+
+  .footer-proc-cert {
+
+    background-image: url("/img/tablero/footer-proc-cert.png") !important;
+    background-size:     cover;                   
+    background-repeat:   no-repeat;
+    background-position: center center;  
+   }
+
+   .footer-doc-remitos {
+
+    background-image: url("/img/tablero/footer-doc-remitos.png") !important;
+    background-size:     cover;                   
+    background-repeat:   no-repeat;
+    background-position: center center;  
+    }
 </style>

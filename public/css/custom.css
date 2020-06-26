@@ -7,9 +7,11 @@
 
 .content-header h1 {
 
-font-family: 'Montserrat',sans-serif;
-font-size: 21px;
-font-weight: 500;
+  font-family: 'Montserrat',sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #6E6A6A
+
 }
 
 .sub-titulo {
@@ -17,8 +19,18 @@ font-weight: 500;
 font-family: 'Montserrat',sans-serif;
 font-size: 14px;
 font-weight: 400;
+color: #6E6A6A
+
 }
 
+.content-header .header-descripcion{
+
+  font-family: 'Montserrat',sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  color: #6E6A6A 
+
+}
 .box-header h3 {
 
   font-family: 'Montserrat',sans-serif;
@@ -137,38 +149,3 @@ table .selected{
   vertical-align: middle;
 }
 
-.footer-oper-inf {
-
-  background-image: url("/img/tablero/footer-oper-inf.png") !important;
-  background-size:     cover;                   
-  background-repeat:   no-repeat;
-  background-position: center center;  
-  
-  }
-
-  .footer-equipos-partes {
-
-    background-image: url("/img/tablero/footer-equipos-partes.png") !important;
-    background-size:     cover;                   
-    background-repeat:   no-repeat;
-    background-position: center center;  
-    
-  }
-
-  .footer-proc-cert {
-
-    background-image: url("/img/tablero/footer-proc-cert.png") !important;
-    background-size:     cover;                   
-    background-repeat:   no-repeat;
-    background-position: center center;  
-    
-   }
-
-   .footer-doc-remitos {
-
-    background-image: url("/img/tablero/footer-doc-remitos.png") !important;
-    background-size:     cover;                   
-    background-repeat:   no-repeat;
-    background-position: center center;  
-    
-    }

@@ -4,11 +4,13 @@
           <cuadro-enod
               :tablero_sn ="false"
               :titulo = "'OPERADORES'"
-              :class_color_titulo = "'color_titulo_1'"
+              :class_color_titulo = "'color_3'"
+              :class_color_sub_titulo = "'color_2'"
               :cantidad_1 ="users_ot_operarios.length"
               :src_icono ="'/img/tablero/icono-enod-operador.svg'"
               :class_color_cuadro = "'bg-custom-1'"   
-              :habilitado_sn ="true"                  
+              :habilitado_sn ="true"        
+         
           >
           </cuadro-enod>
        </div>

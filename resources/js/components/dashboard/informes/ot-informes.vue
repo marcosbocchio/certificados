@@ -5,7 +5,8 @@
           <cuadro-enod
               :tablero_sn ="false"
               :titulo = "'INFORMES'"
-              :class_color_titulo = "'color_titulo_1'"
+              :class_color_titulo = "'color_3'"
+              :class_color_sub_titulo = "'color_2'"
               :cantidad_1 ="CantInformes"
               :src_icono ="'/img/tablero/icono-enod-informes.svg'"
               :class_color_cuadro = "'bg-custom-6'"   

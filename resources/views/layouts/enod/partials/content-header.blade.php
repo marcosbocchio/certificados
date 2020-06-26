@@ -2,14 +2,14 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            {{$header_titulo}} <span class="sub-titulo" >
+            {{ strtoupper($header_titulo)}} <span class="sub-titulo" >
                 
                 @isset($header_sub_titulo)
-                        {{$header_sub_titulo}}
+                        {{strtoupper($header_sub_titulo)}}
                 @endisset
                 </span>
         
-            <small>{{ $header_descripcion }}</small>
+            <span class="header-descripcion">{{ $header_descripcion }}</span>
         </h1>
 
     </section>

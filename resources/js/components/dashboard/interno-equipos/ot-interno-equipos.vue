@@ -4,7 +4,8 @@
           <cuadro-enod
               :tablero_sn ="false"
               :titulo = "'EQUIPOS'"
-              :class_color_titulo = "'color_titulo_1'"
+              :class_color_titulo = "'color_3'"
+              :class_color_sub_titulo = "'color_2'"
               :cantidad_1 ="interno_equipos.length"
               :src_icono ="'/img/tablero/icono-enod-equipos.svg'"
               :class_color_cuadro = "'bg-custom-2'"   
