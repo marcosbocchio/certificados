@@ -12,6 +12,7 @@
               :src_icono ="'/img/tablero/icono-enod-documentacion.svg'"
               :class_color_cuadro = "'bg-custom-4'"   
               :habilitado_sn ="true"
+              :invertir_cantidad_sn ="true"
           >
           </cuadro-enod>
        </div>

@@ -3,9 +3,21 @@
         <div class="small-box zoom" :class="[class_color_cuadro ,{flash : tablero_sn},{small_box_opacity : !habilitado_sn}, {pointer : (tablero_sn && habilitado_sn)},{not_allowed : !habilitado_sn}  ] ">
           <div class="inner">
             <img :src="src_icono" width="100px" />
-            <p class="cant-1" >{{ cantidad_1 }}</p>          
+            <p class="posicion_1 color_cant_1" >
+              <div v-if="!invertir_cantidad_sn">
+                 <p class="posicion_1 color_cant_1" > {{ cantidad_1 }} </p>    
+              </div>
+              <div v-else>
+                  <p class="posicion_1 color_cant_1" > {{ cantidad_2}} </p>    
+              </div>
+                    
             <div v-if="cantidad_2 >= 0">
-              <p class="cant-2" >{{ cantidad_2 }}</p>          
+              <div v-if="!invertir_cantidad_sn">
+                 <p class="posicion_2 color_cant_2" > {{ cantidad_2 }} </p>    
+              </div>
+              <div v-else>
+                  <p class="posicion_2 color_cant_2" > {{ cantidad_1}} </p>    
+              </div>
             </div>
           </div>
             <div :class="class_footer_img">
@@ -75,7 +87,14 @@ export default {
          habilitado_sn : {
              type: Boolean,
              required:true
+         },
+
+         invertir_cantidad_sn : {
+             type: Boolean,
+             required:false,
+             default:false
          }
+
          
          }
 }
@@ -117,8 +136,10 @@ export default {
     padding-bottom: 0px;
 }
 
-.small-box .inner .cant-1 {
+.color_cant_1 { color: white;}
+.color_cant_2 { color: #FFD301;}
 
+.small-box .inner .posicion_1 {
   position: absolute;;
   font-size: 26px; 
   top: 0;
@@ -126,8 +147,8 @@ export default {
   color: white;
 }
 
-.small-box .inner .cant-2 {
 
+.small-box .inner .posicion_2 {
   position: absolute;;
   font-size: 26px; 
   bottom: 15px;
