@@ -1212,7 +1212,7 @@
  * ------------
  */
 .skin-yellow .main-header .navbar {
-  background-color: rgb(255, 204, 0);;
+  background-color: rgb(255, 204, 0);
 }
 .skin-yellow .main-header .navbar .nav > li > a {
   color: #ffffff;
@@ -1260,7 +1260,7 @@
   background-color: #db8b0b;
 }
 .skin-yellow .main-header li.user-header {
-  background-color: #F9CA33;
+  background-color: rgb(255, 204, 0);
 }
 .skin-yellow .content-header {
   background: transparent;
