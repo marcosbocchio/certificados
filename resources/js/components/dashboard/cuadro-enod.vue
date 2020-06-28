@@ -27,7 +27,6 @@
                      <div v-if="titulo_2" style="display:inline-block" class="color_cant_1">
                        <span style="color:#535353;font-weight: bold;"> | </span> {{ titulo_2 }}
                      </div> 
-
                 </div>
                 <div v-else>
                     &nbsp;
