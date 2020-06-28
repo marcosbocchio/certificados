@@ -5,8 +5,8 @@
       <table class="table table-hover table-striped table-condensed">
         <thead>
           <tr>           
-            <th>NOMBRE</th>
-            <th>GUARD</th>  
+            <th>Nombre</th>
+            <th>Guard</th>  
             <th colspan="2">&nbsp;</th>
           </tr>
         </thead>

@@ -8,8 +8,8 @@
 .content-header h1 {
 
   font-family: 'Montserrat',sans-serif;
-  font-size: 14px;
-  font-weight: 400;
+  font-size: 13px;
+  font-weight: 600;
   color: #6E6A6A
 
 }
@@ -17,8 +17,8 @@
 .sub-titulo {
 
 font-family: 'Montserrat',sans-serif;
-font-size: 14px;
-font-weight: 400;
+font-size: 13px;
+font-weight: 600;
 color: #6E6A6A
 
 }
@@ -33,9 +33,10 @@ color: #6E6A6A
 }
 .box-header h3 {
 
-  font-family: 'Montserrat',sans-serif;
-  font-style: italic;
+  font-family: 'Montserrat',sans-serif; 
+  font-weight: 400 !important;
 }
+
 .noresize {
     resize: none; 
   }
@@ -45,7 +46,7 @@ color: #6E6A6A
 
 table thead th {
 
-  font-size: 13px;
+  font-size: 14px;
 } 
 
 table thead tr th small {
@@ -82,15 +83,15 @@ table .selected{
 
 .btn-enod {
 
-  background-color: #FDC937;
-  border-color: #FDC937;
+  background-color:rgb(255, 204, 0);
+  border-color: rgb(255, 204, 0);
   color: #000000;
   font-weight: 600;
 
 }
 
 .box-custom-enod {
-  border-top-color: #F9CA33;
+  border-top-color: rgb(255, 204, 0);
 }
 
 .bg-custom-1 {
@@ -105,7 +106,7 @@ table .selected{
 }
 .bg-custom-3 {
 
-  background-color: #FDC937;
+  background-color: rgb(255, 204, 0);
   ;
 }
 .bg-custom-4 {
@@ -126,7 +127,7 @@ table .selected{
 }
 .bg-custom-8 {
 
-  background-color: #FDC937;
+  background-color: rgb(255, 204, 0);
 }
 
 .mx-datepicker {
@@ -160,6 +161,6 @@ table .selected{
 
 .pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
 
-  background-color: #FDC937;
-  border-color:#FDC937;
+  background-color: rgb(255, 204, 0);
+  border-color:rgb(255, 204, 0);
 }

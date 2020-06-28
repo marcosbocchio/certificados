@@ -5,10 +5,10 @@
       <table class="table table-hover table-striped table-condensed">
         <thead>
           <tr>                     
-            <th>N° SERIE</th>
-            <th>FUENTE</th>
-            <th>ACTIVIDAD</th> 
-            <th style="text-align: center">ACTIVO S/N</th>  
+            <th>N° Serie</th>
+            <th>Fuente</th>
+            <th>Actividad</th> 
+            <th style="text-align: center">Activo S/N</th>  
             <th colspan="2">&nbsp;</th>
           </tr>
         </thead>

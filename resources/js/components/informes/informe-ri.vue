@@ -5,6 +5,7 @@
                 <informe-header :otdata="otdata" :informe_id="informedata.id" :editmode="editmode" @set-obra="setObra($event)"></informe-header>
                 <div class="box box-custom-enod">
                    <div class="box-body">
+                      
                          <div class="col-md-3">
                              <div class="form-group" >
                                  <label for="formato">Tipo informe RI *</label>
@@ -115,7 +116,7 @@
                                  </v-select>   
                              </div>                            
                          </div>
-                       
+                      
                          <div class="col-md-3">    
                               <div class="form-group" >                         
                                  <div v-if="isChapa">
@@ -322,7 +323,6 @@
                                                 <span class="downSelect"> {{ option.descripcion }} </span>                              
                                             </template> 
                                         </v-select>
-                                        </v-select>
                                     </div>      
                                 </div>  
                             </div>
@@ -365,7 +365,7 @@
                    </div>
                 </div>
  
-                <!-- Detalle RI -->
+               
                 <div class="box box-custom-enod">
                       <div class="box-header with-border">
                          <h3 class="box-title">ELEMENTOS/POSICIONES</h3>
@@ -406,11 +406,10 @@
                  </div>   
  
                  <div class="col-md-2">                       
-                             <p>&nbsp;</p>         
-                             <button type="button" @click="AddDetalle()" title="Agregar Junta/Posición"><app-icon img="plus-circle" color="black"></app-icon></button> 
-                             <button type="button" @click="ClonarPosPlanta()" title="Clonar Posición"><app-icon img="clone" color="black"></app-icon></button>                               
-                             <button type="button" @click="resetDetalle()" title="Limpiar Todo"><app-icon img="trash" color="black"></app-icon></button>                
-                 
+                        <p>&nbsp;</p>         
+                        <button type="button" @click="AddDetalle()" title="Agregar Junta/Posición"><app-icon img="plus-circle" color="black"></app-icon></button> 
+                        <button type="button" @click="ClonarPosPlanta()" title="Clonar Posición"><app-icon img="clone" color="black"></app-icon></button>                               
+                        <button type="button" @click="resetDetalle()" title="Limpiar Todo"><app-icon img="trash" color="black"></app-icon></button>                 
                  </div>      
  
                  <div class="form-group">
@@ -423,11 +422,11 @@
                                  <table class="table table-hover table-striped table-bordered table-condensed">
                                      <thead>
                                          <tr>                                  
-                                             <th class="col-md-1">ELEMENTO</th>  
-                                             <th class="col-md-1">DENSIDAD</th>                                       
-                                             <th class="col-md-1">POS</th>  
-                                             <th class="col-md-1">ACEPTABLE</th>    
-                                             <th class="col-md-1">OBSERVACIÓN</th>                                                                            
+                                             <th class="col-md-1">Elemento</th>  
+                                             <th class="col-md-1">Densidad</th>                                       
+                                             <th class="col-md-1">Pos.</th>  
+                                             <th class="col-md-1">Aceptable</th>    
+                                             <th class="col-md-1">Observación</th>                                                                            
                                              <th class="col-md-1">&nbsp;</th>
                                          </tr>
                                      </thead>                         
@@ -459,7 +458,6 @@
                      </div>
                     </div>
  
-                    <!-- DEFECTOS RI -->
  
                      <div class="box box-custom-enod">
                          
@@ -518,10 +516,10 @@
                                      <table class="table table-hover table-striped table-bordered table-condensed">
                                          <thead>
                                              <tr>
-                                                 <th class="col-md-1">CÓDIGO</th>                                                                                  
-                                                 <th class="col-md-3">DESCRIPCIÓN</th>
-                                                 <th class="col-md-1">POSICIÓN</th>     
-                                                 <th class="col-md-1">SECTOR</th>                                                            
+                                                 <th class="col-md-1">Código</th>                                                                                  
+                                                 <th class="col-md-3">Descripción</th>
+                                                 <th class="col-md-1">Posición</th>     
+                                                 <th class="col-md-1">Sector</th>                                                            
                                                  <th class="col-md-1">&nbsp;</th>
                                              </tr>
                                          </thead>                         
@@ -543,7 +541,7 @@
                      </div> 
                    </div>   
  
-                <!-- PASADAS RI -->
+              
                 <div class="box box-custom-enod">
                     <div class="box-header with-border">
                          <h3 class="box-title">PASADAS</h3>
@@ -626,10 +624,10 @@
                                          <thead>
                                              <tr>       
                                                  <th class="col-md-1">Elemento</th>                              
-                                                 <th class="col-md-1">N° PASADA</th>                                  
-                                                 <th class="col-md-2">CUÑO Z</th>
-                                                 <th class="col-md-2">CUÑO L</th>
-                                                 <th class="col-md-2">CUÑO P</th>                                                             
+                                                 <th class="col-md-1">N° Pasada</th>                                  
+                                                 <th class="col-md-2">Cuño Z</th>
+                                                 <th class="col-md-2">Cuño L</th>
+                                                 <th class="col-md-2">Cuño P</th>                                                             
                                                  <th class="col-md-2">&nbsp;</th>
                                              </tr>
                                          </thead>                         
@@ -699,7 +697,7 @@
                 
                    <button class="btn btn-primary" type="submit">Guardar</button>   
             </form>     
- 
+
          <div class="modal fade " tabindex="-1" role="dialog" id="modal-clonar" data-keyboard="false" data-backdrop="static" >
              <div class="modal-dialog modal-md" role="document">
                  <div class="modal-content">
@@ -735,9 +733,9 @@
                          <i v-show="clonando_pasada" class="fa fa-spin fa-refresh"></i> Clonar
                      </button>
                  </div>
-                 </div><!-- /.modal-content -->
-             </div><!-- /.modal-dialog -->
-         </div><!-- /.modal -->             
+                 </div>
+             </div>
+         </div>    
  
  
          <div class="modal fade " tabindex="-1" role="dialog" id="modal-Importar-Soldadores" data-keyboard="false" data-backdrop="static" >
@@ -761,9 +759,9 @@
                  <div class="modal-footer">
                      <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>                 
                  </div>
-                 </div><!-- /.modal-content -->
-             </div><!-- /.modal-dialog -->
-         </div><!-- /.modal -->  
+                 </div>
+             </div>
+         </div>
           
          <loading 
                   :active.sync="isLoading"   
@@ -772,8 +770,8 @@
          </loading>  
            
         </div>
-    </div>
- </template>
+    </div> 
+</template>
  
  <script>
      
@@ -1352,6 +1350,7 @@
          },
          //detalle
          async getSoldadores(){
+                alert('entro en soldadores');
                  axios.defaults.baseURL = this.url ;
                  var urlRegistros = 'ot_soldadores/ot/' + this.otdata.id + '?api_token=' + Laravel.user.api_token;        
                  await axios.get(urlRegistros).then(response =>{
@@ -1975,7 +1974,7 @@
      
  } 
  </script>
- 
+
  <style scoped>
  .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
       background-color: #eee;

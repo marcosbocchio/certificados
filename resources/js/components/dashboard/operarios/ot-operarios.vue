@@ -54,7 +54,7 @@
     <div class="col-md-6">
         <div class="box box-custom-enod top-buffer">
             <div class="box-header with-border">
-            <h3 class="box-title">OPERADORES ASIGNADOS A LA ORDEN DE TRABAJO</h3>
+            <h3 class="box-title">Operadores asignados a la orden de trabajo</h3>
 
             <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -66,7 +66,7 @@
                     <table class="table table-hover table-striped table-condensed">
                         <thead>
                             <tr>
-                                <th class="col-md-12">NOMBRE</th>                                                                                
+                                <th class="col-md-12">Nombre</th>                                                                                
                                 <th>&nbsp;</th>
                             </tr>
                         </thead>
@@ -85,7 +85,7 @@
     <div class="col-md-6">
         <div class="box box-custom-enod top-buffer">
             <div class="box-header with-border">
-            <h3 class="box-title">AYUDANTES ASIGNADOS A LA ORDEN DE TRABAJO</h3>
+            <h3 class="box-title">Ayudantes asignados a la orden de trabajo</h3>
 
             <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -97,7 +97,7 @@
                     <table class="table table-hover table-striped table-condensed">
                         <thead>
                             <tr>
-                                <th class="col-md-12">NOMBRE</th>
+                                <th class="col-md-12">Nombre</th>
                                 <th>&nbsp;</th>
                             </tr>
                         </thead>
@@ -124,7 +124,7 @@
             <div class="top-buffer" >
                 <div class="box box-custom-enod">
                     <div class="box-header with-border">
-                    <h3 class="box-title">DOCUMENTACIÓN</h3>
+                    <h3 class="box-title">Documentación</h3>
 
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -136,8 +136,8 @@
                             <table class="table table-hover table-striped table-condensed">
                                 <thead>
                                     <tr>                                     
-                                        <th>TÍTULO</th>     
-                                        <th>DESCRIPCIÓN</th>                                                       
+                                        <th>Título</th>     
+                                        <th>Descripción</th>                                                       
                                         <th colspan="2">PDF</th>
                                     </tr>
                                 </thead>

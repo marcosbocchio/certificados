@@ -38,11 +38,11 @@
                                 <table class="table table-hover table-striped table-border">
                                     <thead>
                                         <tr>                                     
-                                            <th class="col-md-4">OPERADOR</th>
-                                            <th class="col-md-1">FILM</th>
-                                            <th class="col-md-2" style="text-align:center;" >FECHA ENVÍO</th>
-                                            <th class="col-md-2" style="text-align:center;" >ESTADO</th>  
-                                            <th class="col-md-2" style="text-align:center;" >FECHA DEVOLUCIÓN</th>                                                       
+                                            <th class="col-md-4">Operador</th>
+                                            <th class="col-md-1">Film</th>
+                                            <th class="col-md-2" style="text-align:center;" >Fecha envío</th>
+                                            <th class="col-md-2" style="text-align:center;" >Estado</th>  
+                                            <th class="col-md-2" style="text-align:center;" >Fecha devolución</th>                                                       
                                         </tr>
                                     </thead>
                                     <tbody>

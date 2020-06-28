@@ -22,8 +22,12 @@
           </div>
             <div :class="class_footer_img">
               <a href="#" class="small-box-footer" >
-                <div v-if="tablero_sn"  :class="class_color_sub_titulo" style="line-height: 1.9;">                  
-                     {{ titulo }}                
+                <div v-if="tablero_sn"  :class="class_color_sub_titulo" style="line-height: 1.9;">                      
+                     {{ titulo }}           
+                     <div v-if="titulo_2" style="display:inline-block" class="color_cant_1">
+                       <span style="color:#535353;font-weight: bold;"> | </span> {{ titulo_2 }}
+                     </div> 
+
                 </div>
                 <div v-else>
                     &nbsp;
@@ -40,6 +44,11 @@ export default {
         titulo : {
              type: String,
              required:true,
+        },
+
+        titulo_2 : {
+             type: String,
+             required:false,
         },
 
         tablero_sn : {
@@ -119,7 +128,7 @@ export default {
   
 }
 
-.color_1{
+.color_1, .color_cant_1  {
   color: rgb(255, 255, 255);
 }
   
@@ -127,8 +136,8 @@ export default {
   color: rgb(32, 32, 32);
 }
 
-.color_3 {
-  color: rgb(255, 203, 58);
+.color_3, .color_cant_2 {
+  color: rgb(255, 204, 0);
 }
 
 .small-box .inner {
@@ -136,8 +145,6 @@ export default {
     padding-bottom: 0px;
 }
 
-.color_cant_1 { color: white;}
-.color_cant_2 { color: #FFD301;}
 
 .small-box .inner .posicion_1 {
   position: absolute;;
@@ -153,7 +160,7 @@ export default {
   font-size: 26px; 
   bottom: 15px;
   right: 20px;
-  color: #FFD301;
+  color: rgb(255, 204, 0);
 }
 
 .small-box .small-box-footer {

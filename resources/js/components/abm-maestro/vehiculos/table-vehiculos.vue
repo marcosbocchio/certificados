@@ -6,10 +6,10 @@
         <thead>
           <tr>      
             <th>N° INT.</th>               
-            <th>MARCA</th>
-            <th>MODELO</th>
-            <th>PATENTE</th>
-            <th>TIPO</th>
+            <th>Marca</th>
+            <th>Modelo</th>
+            <th>Patente</th>
+            <th>Tipo</th>
             <th colspan="2">&nbsp;</th>
           </tr>
         </thead>

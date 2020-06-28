@@ -5,7 +5,7 @@
       <table class="table table-hover table-striped table-condensed">
         <thead>
           <tr>                     
-            <th>NOMBRE</th>
+            <th>Nombre</th>
             <th colspan="2">&nbsp;</th>
           </tr>
         </thead>

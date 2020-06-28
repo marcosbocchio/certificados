@@ -59,7 +59,7 @@
                 </div>   
                 <div class="box box-custom-enod">
                     <div class="box-header with-border">
-                    <h3 class="box-title">RESPONSABILIDADES</h3>
+                    <h3 class="box-title">Responsabilidades</h3>
 
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -113,7 +113,7 @@
                 </div>  
                 <div class="box box-custom-enod">
                     <div class="box-header with-border">
-                    <h3 class="box-title">INFORMES SIN PARTE DIARIO</h3>
+                    <h3 class="box-title">Informes sin parte diario</h3>
 
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -126,11 +126,11 @@
                                 <table class="table table-hover table-striped table-condensed table-condensed">
                                     <thead>
                                         <tr>
-                                            <th>SEL.</th>
-                                            <th>TIPO</th>                                         
-                                            <th>INFORME</th>  
-                                            <th>OBRA</th> 
-                                            <th>FECHA</th>                                                 
+                                            <th>Sel.</th>
+                                            <th>Tipo</th>                                         
+                                            <th>Informe</th>  
+                                            <th>Obra</th> 
+                                            <th>Fecha</th>                                                 
                                           
                                         </tr>
                                     </thead>
@@ -154,7 +154,7 @@
                     <div class="box box-custom-enod" >
                         <div class="box-header with-border">
                             <div class="col-md-3">
-                                <h3 class="box-title">SERVICIOS </h3>
+                                <h3 class="box-title">Servicios </h3>
                             </div>
 
                             <div class="form-group">
@@ -181,9 +181,9 @@
                                     <table class="table table-hover table-striped table-bordered table-condensed">
                                         <thead>
                                             <tr>
-                                                <th class="col-md-1">METODO</th>
-                                                <th class="col-md-9">DESCRIPCIÓN</th>       
-                                                <th class="col-md-1">CANT</th>                                                                                                                                       
+                                                <th class="col-md-1">Método</th>
+                                                <th class="col-md-9">Descripción</th>       
+                                                <th class="col-md-1">Cant.</th>                                                                                                                                       
                                                 <th class="col-md-1">&nbsp;</th>
                                             </tr>
                                         </thead>
@@ -217,7 +217,7 @@
                 <div v-show="TablaInformesRi.length">
                     <div class="box box-custom-enod" >
                         <div class="box-header with-border">
-                        <h3 class="box-title">INFORMES RI</h3>
+                        <h3 class="box-title">Informes RI</h3>
 
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -245,10 +245,10 @@
                                         <table class="table table-hover table-striped table-bordered table-condensed">
                                             <thead>
                                                 <tr>
-                                                    <th>INFORME</th>       
-                                                    <th>COSTURAS</th>                                         
-                                                    <th>PULGADAS</th>
-                                                    <th>PLACAS</th> 
+                                                    <th>Informe</th>       
+                                                    <th>Costuras</th>                                         
+                                                    <th>Pulgadas</th>
+                                                    <th>Placas</th> 
                                                     <th style="width:200px;">CM</th>                                                   
                                                     <th colspan="2">&nbsp;</th>
                                                 </tr>
@@ -297,7 +297,7 @@
                 <div v-show="TablaInformesPm.length">
                     <div class="box box-custom-enod" >
                         <div class="box-header with-border">
-                        <h3 class="box-title">INFORMES PM</h3>
+                        <h3 class="box-title">Informes PM</h3>
 
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -311,8 +311,8 @@
                                         <table class="table table-hover table-striped table-bordered table-condensed">
                                             <thead>
                                                 <tr>
-                                                    <th>INFORME</th>       
-                                                    <th>ELEMENTO</th>                                           
+                                                    <th>Informe</th>       
+                                                    <th>Elemento</th>                                           
                                                     <th>CM</th>                                                                                                
                                                     <th colspan="2">&nbsp;</th>
                                                 </tr>
@@ -355,7 +355,7 @@
                 <div v-show="TablaInformesLp.length">
                     <div class="box box-custom-enod" >
                         <div class="box-header with-border">
-                        <h3 class="box-title">INFORMES LP</h3>
+                        <h3 class="box-title">Informes LP</h3>
 
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -369,8 +369,8 @@
                                         <table class="table table-hover table-striped table-bordered table-condensed">
                                             <thead>
                                                 <tr>
-                                                    <th>INFORME</th>       
-                                                    <th>ELEMENTO</th>                                         
+                                                    <th>Informe</th>       
+                                                    <th>Elemento</th>                                         
                                                     <th>CM</th>                                                                                                
                                                     <th colspan="2">&nbsp;</th>
                                                 </tr>
@@ -414,7 +414,7 @@
                 <div v-show="TablaInformesUs.length">
                     <div class="box box-custom-enod" >
                         <div class="box-header with-border">
-                        <h3 class="box-title">INFORMES US</h3>
+                        <h3 class="box-title">Informes US</h3>
 
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -429,9 +429,9 @@
                                         <table class="table table-hover table-striped table-bordered table-condensed">
                                             <thead>
                                                 <tr>
-                                                    <th>INFORME</th>                                                                                       
-                                                    <th>ELEMENTO</th>                                                                                                
-                                                    <th>DIAMETRO</th>
+                                                    <th>Informe</th>                                                                                       
+                                                    <th>Elemento</th>                                                                                                
+                                                    <th>Diametro</th>
                                                     <th>CM</th>
                                                     <th>&nbsp;</th>
                                                 </tr>
@@ -486,7 +486,7 @@
                        <!--Informes IMPORTADOS -->
                         <div class="box box-custom-enod" >
                             <div class="box-header with-border">
-                            <h3 class="box-title">INFORMES {{itemMetodo}}</h3>
+                            <h3 class="box-title">Informes {{itemMetodo}}</h3>
 
                                 <div class="box-tools pull-right">
                                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -499,8 +499,8 @@
                                         <table class="table table-hover table-striped table-bordered table-condensed">
                                             <thead>
                                                 <tr>
-                                                    <th class="col-md-1">INFORME</th>       
-                                                    <th class="col-md-10">OBSERVACIONES</th>                                                                                                                                      
+                                                    <th class="col-md-1">Informe</th>       
+                                                    <th class="col-md-10">Observaciones</th>                                                                                                                                      
                                                     <th class="col-md-1">&nbsp;</th>
                                                 </tr>
                                             </thead>
@@ -556,7 +556,6 @@ import moment from 'moment';
 
 export default {
     components: {
-
             
     },
 

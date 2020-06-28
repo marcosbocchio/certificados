@@ -1,7 +1,7 @@
 <template>    
     <div class="box box-custom-enod top-buffer">
         <div class="box-header with-border">
-        <h3 class="box-title">PROCEDIMIENTOS ENOD</h3>
+        <h3 class="box-title">Procedimientos Enod</h3>
 
             <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -13,10 +13,10 @@
           <table class="table table-hover table-striped table-condensed">
             <thead>
               <tr>
-                <th>TIPO</th>
-                <th>TÍTULO</th>
-                <th>DESCRIPCIÓN</th>
-                <th>MÉTODO</th>  
+                <th>Tipo</th>
+                <th>Título</th>
+                <th>Descripción</th>
+                <th>Método</th>  
                 <th colspan="3">&nbsp;</th>
               </tr>
             </thead>

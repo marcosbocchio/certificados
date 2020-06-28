@@ -5,11 +5,11 @@
       <table class="table table-hover table-striped table-condensed">
         <thead>
           <tr>
-            <th class="col-md-1">TIPO</th>
-            <th class="col-md-2">TÍTULO</th>
-            <th class="col-md-4">DESCRIPCIÓN</th>
-            <th class="col-md-1">MÉTODO</th>
-            <th class="col-md-2">USUARIO</th>
+            <th class="col-md-1">Tipo</th>
+            <th class="col-md-2">Título</th>
+            <th class="col-md-4">Descripción</th>
+            <th class="col-md-1">Método</th>
+            <th class="col-md-2">Usuario</th>
             <th class="col-md-1">INT. Nº</th>
             <th >&nbsp;</th>
           </tr>

@@ -26,12 +26,20 @@
         <div class="col-md-12">
             <div class="box box-custom-enod top-buffer">
                 <div class="box-header with-border">
+                    <h3 class="box-title">Certificados asignados a la orden de trabajo</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>                       
+                    </div>
+                </div>
+                <div class="box-body">   
                     <div class="table-responsive">          
                         <table class="table table-hover table-striped table-condensed">
                             <thead>
                                 <tr>                                     
                                     <th class="col-lg-2">N°</th>                                    
-                                    <th class="col-lg-9">FECHA</th>                                                
+                                    <th class="col-lg-9">Fecha</th>                                                
                                     <th  class="col-lg-1" colspan="4">&nbsp;</th>
                                 </tr>
                             </thead>

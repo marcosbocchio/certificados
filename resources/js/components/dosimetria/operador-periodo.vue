@@ -44,8 +44,8 @@
                                 <table class="table table-hover table-striped table-border table-bordered">
                                     <thead>
                                         <tr>                                     
-                                            <th class="col-md-2">ALTA</th>
-                                            <th class="col-md-2">BAJA</th>                                    
+                                            <th class="col-md-2">Alta</th>
+                                            <th class="col-md-2">Baja</th>                                    
                                                         
                                         </tr>
                                     </thead>

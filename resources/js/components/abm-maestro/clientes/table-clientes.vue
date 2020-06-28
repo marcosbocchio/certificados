@@ -6,10 +6,10 @@
         <table class="table table-hover table-striped table-condensed">
           <thead>
             <tr>            
-              <th>NOMBRE</th>
-              <th>RAZÓN SOCIAL</th>
-              <th>EMAIL</th>
-              <th>LOCALIDAD</th>
+              <th>Nombre</th>
+              <th>Razón social</th>
+              <th>Email</th>
+              <th>Localidad</th>
               <th colspan="2">&nbsp;</th>
             </tr>
           </thead>

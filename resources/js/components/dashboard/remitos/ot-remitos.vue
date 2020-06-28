@@ -27,15 +27,23 @@
          <div class="col-md-12">
             <div class="box box-custom-enod top-buffer">
                 <div class="box-header with-border">
+                    <h3 class="box-title">Remitos asignados a la orden de trabajo</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>                       
+                    </div>
+                </div>
+                <div class="box-body">                        
                     <div class="table-responsive">          
                         <table class="table table-hover table-striped table-condensed">
                             <thead>
                                 <tr>                                     
                                     <th>N°</th>
-                                    <th>RECEPTOR</th> 
-                                    <th>DESTINO</th> 
-                                    <th style="text-align: center;">INTERNO S/N</th> 
-                                    <th>FECHA</th>                                                
+                                    <th>Receptor</th> 
+                                    <th>Destino</th> 
+                                    <th style="text-align: center;">Interno S/N</th> 
+                                    <th>Fecha</th>                                                
                                     <th colspan="2">&nbsp;</th>
                                 </tr>
                             </thead>

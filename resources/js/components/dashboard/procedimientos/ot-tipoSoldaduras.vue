@@ -2,7 +2,7 @@
   <div class="col-md-12">
     <div class="box box-custom-enod">
         <div class="box-header with-border">
-        <h3 class="box-title">PROCEDIMIENTOS CLIENTES</h3>
+        <h3 class="box-title">Procedimientos clientes</h3>
 
             <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -56,8 +56,8 @@
                 <table class="table table-hover table-striped table-condensed">
                     <thead>
                     <tr>
-                        <th  class="col-md-2">TIPO SOL.</th>
-                        <th class="col-md-2">OBRA</th>
+                        <th  class="col-md-2">Tipo Sol.</th>
+                        <th class="col-md-2">Obra</th>
                         <th class="col-md-4">EPS</th>
                         <th class="col-md-4">PQR</th>                   
                         <th>&nbsp;</th>

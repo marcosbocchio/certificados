@@ -43,7 +43,7 @@
 
                     <div class="box box-custom-enod">
                         <div class="box-header with-border">
-                            <h3 class="box-title">PARTES SIN CERTIFICADOS</h3>
+                            <h3 class="box-title">Partes sin certificados</h3>
 
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -56,10 +56,10 @@
                                     <table class="table table-hover table-striped table-condensed">
                                     <thead>
                                         <tr>
-                                            <th class="col-md-1">SEL.</th>                                                                                                  
-                                            <th class="col-md-3">PARTE N°</th>  
-                                            <th class="col-md-3">OBRA</th> 
-                                            <th class="col-md-3">FECHA</th>                                      
+                                            <th class="col-md-1">Sel.</th>                                                                                                  
+                                            <th class="col-md-3">Parte N°</th>  
+                                            <th class="col-md-3">Obra</th> 
+                                            <th class="col-md-3">Fecha</th>                                      
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -81,7 +81,7 @@
                     <div v-show="TablaPartesServicios.length">
                         <div class="box box-custom-enod">
                             <div class="box-header with-border">
-                                <h3 class="box-title">SERVICIOS</h3>
+                                <h3 class="box-title">Servicios</h3>
 
                                 <div class="box-tools pull-right">
                                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -94,14 +94,14 @@
                                         <table class="table table-hover table-striped table-bordered table-condensed">
                                         <thead>
                                             <tr>                                                                                                      
-                                                <th class="col-md-1">PARTE N°</th>  
-                                                <th class="col-md-1">OBRA</th>     
-                                                <th class="col-md-2">SERVICIO</th> 
-                                                <th class="col-md-4">DESCRIPCIÓN</th>
-                                                <th class="col-md-1">FECHA</th>     
-                                                <th class="col-md-1" >COMBINACIÓN</th>  
-                                                <th class="col-md-1" >&nbsp;</th>                                                      
-                                                <th class="col-md-1">CANTIDAD</th>     
+                                                <th class="col-md-1">Parte N°</th>  
+                                                <th class="col-md-1">Obra</th>     
+                                                <th class="col-md-2">Servicio</th> 
+                                                <th class="col-md-4">Descripción</th>
+                                                <th class="col-md-1">Fecha</th>     
+                                                <th class="col-md-1">Combinación</th>  
+                                                <th class="col-md-1">&nbsp;</th>                                                      
+                                                <th class="col-md-1">Cantidad</th>     
                                             <th class="col-md-1">&nbsp;</th>                                                                             
                                             </tr>
                                         </thead>
@@ -115,7 +115,6 @@
 
                                                 <td v-if="item.visible">{{ item.fecha_formateada}}</td>
                                                 <td  v-if="item.visible">
-
 
                                                     <div class="input-group col-xs-12">                                                      
                                                         <input type="number" id="nro_combinacion" class="form-control form-group-xs text-center"  maxlength="2" v-model="TablaPartesServicios[k].nro_combinacion" disabled >
@@ -132,7 +131,7 @@
                                                         {{ item.combinacion}}   
                                                     </span>
 
-                                                </td>                                                   
+                                                </td>                           
                                                    
                                                    
                                                 <td v-if="item.visible" style="text-align: center;">                                                                                                                                                                     
@@ -159,7 +158,7 @@
                     <div v-show="TablaPartesProductosPorCosturas.length && modo_cobro=='COSTURAS'">
                         <div class="box box-custom-enod">
                             <div class="box-header with-border">
-                                <h3 class="box-title">PRODUCTOS</h3>
+                                <h3 class="box-title">Productos</h3>
 
                                 <div class="box-tools pull-right">
                                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -172,9 +171,9 @@
                                         <table class="table table-hover table-striped table-condensed">
                                         <thead>
                                             <tr>   
-                                                <th class="col-md-3">PARTE N°</th>                                                                                           
-                                                <th class="col-md-3">COSTURAS</th>  
-                                                <th class="col-md-3">PULGADAS</th>                                                                             
+                                                <th class="col-md-3">Parte N°</th>                                                                                           
+                                                <th class="col-md-3">Costuras</th>  
+                                                <th class="col-md-3">Pulgadas</th>                                                                             
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -202,7 +201,7 @@
                     <div v-show="TablaPartesProductosPorPlacas.length && modo_cobro=='PLACAS'">
                         <div class="box box-custom-enod">
                             <div class="box-header with-border">
-                                <h3 class="box-title">PRODUCTOS</h3>
+                                <h3 class="box-title">Productos</h3>
 
                                 <div class="box-tools pull-right">
                                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -215,8 +214,8 @@
                                         <table class="table table-hover table-striped table-condensed">
                                         <thead>
                                             <tr>       
-                                                <th class="col-md-3">PARTE N°</th>                                                                                                 
-                                                <th class="col-md-3">PLACAS</th>  
+                                                <th class="col-md-3">Parte N°</th>                                                                                                 
+                                                <th class="col-md-3">Placas</th>  
                                                 <th class="col-md-3">CM</th>                                                                             
                                             </tr>
                                         </thead>

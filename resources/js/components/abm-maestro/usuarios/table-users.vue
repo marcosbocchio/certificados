@@ -6,9 +6,9 @@
         <table class="table table-hover table-striped table-condensed">
           <thead>
             <tr>
-              <th>NOMBRE</th>
-              <th>EMAIL</th>
-              <th>CLIENTE</th>
+              <th>Nombre</th>
+              <th>Email</th>
+              <th>Cliente</th>
               <th colspan="2">&nbsp;</th>
             </tr>
           </thead>

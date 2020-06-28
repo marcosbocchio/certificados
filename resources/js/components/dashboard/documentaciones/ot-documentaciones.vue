@@ -45,7 +45,7 @@
         <div class="col-md-12">
             <div class="box box-custom-enod top-buffer">
                 <div class="box-header with-border">
-                <h3 class="box-title">VEHÍCULOS ASIGNADOS A LA ORDEN DE TRABAJO</h3>
+                <h3 class="box-title">Vehículos asignados a la orden de trabajo</h3>
 
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -58,10 +58,10 @@
                             <thead>
                                 <tr>
                                     <th>N° INT.</th>                                                     
-                                    <th>MARCA</th>
-                                    <th>MODELO</th>
-                                    <th>PATENTE</th>
-                                    <th>TIPO</th>
+                                    <th>Marca</th>
+                                    <th>Modelo</th>
+                                    <th>Patente</th>
+                                    <th>Tipo</th>
                                     <th colspan="1">&nbsp;</th>
                                 </tr>
                             </thead>
@@ -86,7 +86,7 @@
  
             <div class="box box-custom-enod top-buffer">
                 <div class="box-header with-border">
-                <h3 class="box-title">DOCUMENTACIONES DEL VEHÍCULO</h3>
+                <h3 class="box-title">Documentaciones del vehículo</h3>
 
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -146,7 +146,7 @@
  
             <div class="box box-custom-enod top-buffer">
                 <div class="box-header with-border">
-                <h3 class="box-title">DOCUMENTACIONES ASIGNADAS A LA ORDEN DE TRABAJO</h3>
+                <h3 class="box-title">Documentaciones asignadas a la orden de trabajo</h3>
 
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -158,8 +158,8 @@
                         <table class="table table-hover table-striped">
                             <thead>
                                 <tr>
-                                    <th class="col-md-2">TÍTULO</th>                                                     
-                                    <th class="col-md-9">DESCRIPCIÓN</th>
+                                    <th class="col-md-2">Título</th>                                                     
+                                    <th class="col-md-9">Descripción</th>
                                     <th colspan="1">&nbsp;</th>
                                 </tr>
                             </thead>

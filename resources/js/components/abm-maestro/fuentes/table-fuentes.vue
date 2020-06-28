@@ -5,8 +5,8 @@
       <table class="table table-hover table-striped table-condensed">
         <thead>
           <tr>                     
-            <th>CÓDIDO</th>
-            <th>DESCRIPCIÓN</th>    
+            <th>código</th>
+            <th>Descripción</th>
             <th colspan="2">&nbsp;</th>
           </tr>
         </thead>

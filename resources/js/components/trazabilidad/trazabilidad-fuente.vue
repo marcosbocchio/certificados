@@ -22,7 +22,7 @@
                                 <div class="box box-custom-enod top-buffer">
                                     <div class="box-body no-padding">
                                     <div class="box-header with-border">
-                                        <h3 class="box-title">FUENTES ASIGNADAS AL EQUIPO</h3>
+                                        <h3 class="box-title">Fuentes asignadas al equipo</h3>
                                     </div>
                                         <div class="table-responsive">
                                             <table class="table table-hover table-striped table-condensed">

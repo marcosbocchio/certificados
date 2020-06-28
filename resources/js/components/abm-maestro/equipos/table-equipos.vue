@@ -5,10 +5,10 @@
       <table class="table table-hover table-striped table-condensed">
         <thead>
           <tr>                     
-            <th>CÓDIDO</th>
-            <th>DESCRIPCIÓN</th>
-            <th>MÉTODO</th>
-            <th>INST. MEDICIÓN</th>      
+            <th>código</th>
+            <th>Descripción</th>
+            <th>Método</th>
+            <th>Inst. Medición</th>      
             <th colspan="2">&nbsp;</th>
           </tr>
         </thead>

@@ -7,14 +7,14 @@
         <thead>
           <tr>
             <th>N° INT.</th>
-            <th>EQUIPO</th>
-            <th>MÉTODO</th>
+            <th>Equipo</th>
+            <th>Método</th>
             <th>&nbsp;</th>
-            <th>FUENTE</th>
-            <th>ACTIVIDAD</th>
+            <th>Fuente</th>
+            <th>Actividad</th>
             <th>N° OT</th>
-            <th>CLIENTE</th>
-            <th>UBICACIÓN</th>
+            <th>Cliente</th>
+            <th>Ubicación</th>
             <th colspan="2">&nbsp;</th>
           </tr>
         </thead>

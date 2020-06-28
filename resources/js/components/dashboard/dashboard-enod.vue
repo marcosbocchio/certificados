@@ -57,7 +57,8 @@
        <div class="col-lg-3 col-xs-6">
          <a @click="EntrarCuadro('documentaciones')">
           <cuadro-enod
-              :titulo = "'VEHÍCULO / DOC.'"
+              :titulo = "'VEHÍCULO'"
+              :titulo_2 ="'DOC.'"
               :class_color_titulo = "'color_2'"
               :class_color_sub_titulo = "'color_3'"
               :cantidad_1 ="CantVehiculos"
@@ -148,7 +149,7 @@
       <div class="form-group"> 
           <div class="input-group">
               <input type="text" v-model="search" class="form-control" placeholder="Buscar...">
-              <span class="input-group-addon btn" @click="aplicarFiltro()" style="background-color: #F9CA33;"><i class="fa fa-search"></i></span>
+              <span class="input-group-addon btn" @click="aplicarFiltro()" style="background-color: rgb(255, 204, 0);"><i class="fa fa-search"></i></span>
           </div>  
       </div>
     </div>
@@ -163,16 +164,16 @@
                         <thead>
                             <tr>
                                 <th class="col-lg-1">OT N°</th>
-                                <th class="col-lg-2" >CLIENTE</th>    
-                                <th class="col-lg-5">PROYECTO</th>  
-                                <th class="col-lg-1">OBRA N°</th>     
-                                <th class="col-lg-1">FECHA</th>     
-                                <th class="col-lg-1">ESTADO</th>                        
+                                <th class="col-lg-2" >Cliente</th>    
+                                <th class="col-lg-5">Proyecto</th>  
+                                <th class="col-lg-1">Obra N°</th>     
+                                <th class="col-lg-1">Fecha</th>     
+                                <th class="col-lg-1">Estado</th>                        
                                 <th class="col-lg-1" colspan="4">
-                                 <small style="margin-left: 0px;">Editar</small>
-                                 <small style="margin-left: 8px;">Usuarios</small>
-                                 <small style="margin-left: 6px;">Informe</small>
-                                 <small style="margin-left: 7px;">Acción</small>
+                                 <small style="margin-left: -2px;">Editar</small>
+                                 <small style="margin-left: 4px;">Usuarios</small>
+                                 <small style="margin-left: 4px;">Informe</small>
+                                 <small style="margin-left: 4px;">Acción</small>
 
                                 </th>
                             </tr>

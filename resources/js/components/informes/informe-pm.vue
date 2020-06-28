@@ -360,11 +360,11 @@
                                     <table class="table table-hover table-striped table-bordered table-condensed">
                                         <thead>
                                             <tr>
-                                                <th class="col-md-2">ELEMENTO</th>
+                                                <th class="col-md-2">Elemento</th>
                                                 <th class="col-md-1">CM</th> 
-                                                <th class="col-md-5">DETALLE</th>
-                                                <th class="col-md-1">ACEPTABLE </th>    
-                                                <th class="col-md-1">REFERENCIA </th>                                                                      
+                                                <th class="col-md-5">Detalle</th>
+                                                <th class="col-md-1">Aceptable</th>    
+                                                <th class="col-md-1">Referencia</th>                                                                      
                                                 <th class="col-md-2">&nbsp;</th>
                                             </tr>
                                         </thead>                         

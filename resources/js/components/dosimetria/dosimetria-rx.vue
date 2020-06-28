@@ -45,10 +45,10 @@
                                 <table class="table table-hover table-striped table-border table-condensed">
                                     <thead>
                                         <tr>                                     
-                                            <th class="col-md-5">OPERADOR</th>
-                                            <th class="col-md-1">FILM</th>
+                                            <th class="col-md-5">Operador</th>
+                                            <th class="col-md-1">Film</th>
                                             <th style="text-align:center;" class="col-md-1">mSv</th>  
-                                            <th style="text-align:center;" class="col-md-1"> PERIODO</th>
+                                            <th style="text-align:center;" class="col-md-1"> Período</th>
                                             <th class="col-md-2">                                          
                                                    
                                                 <input type="checkbox" id="checkbox" v-model="sel_checkbox" style="vertical-align:middle"> 

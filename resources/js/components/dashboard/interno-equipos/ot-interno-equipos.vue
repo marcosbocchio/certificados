@@ -19,7 +19,7 @@
             <div class="top-buffer" >
                 <div class="box box-custom-enod">
                     <div class="box-header with-border">
-                    <h3 class="box-title">EQUIPOS</h3>
+                    <h3 class="box-title">Equipos</h3>
 
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -31,9 +31,9 @@
                             <table class="table table-hover table-striped table-condensed">
                                 <thead>
                                     <tr>                                     
-                                        <th class="col-md-2">N° SERIE</th>     
+                                        <th class="col-md-2">N° Serie</th>     
                                         <th class="col-md-2">N° INT.</th> 
-                                        <th class="col-md-3">EQUIPO</th>    
+                                        <th class="col-md-3">Equipo</th>    
                                         <!--
                                             <th class="col-md-4">FUENTE</th>                                                  
                                         -->
@@ -71,7 +71,7 @@
  
             <div class="box box-custom-enod top-buffer">
                 <div class="box-header with-border">
-                <h3 class="box-title">DOCUMENTACIONES DEL EQUIPO</h3>
+                <h3 class="box-title">Documentaciones del equipo</h3>
 
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -83,8 +83,8 @@
                         <table class="table table-hover table-striped table-condensed">
                             <thead>
                                 <tr>
-                                    <th class="col-md-2">TÍTULO</th>                                                     
-                                    <th class="col-md-9">DESCRIPCIÓN</th>
+                                    <th class="col-md-2">Título</th>                                                     
+                                    <th class="col-md-9">Descripción</th>
                                      <th class="col-md-1">&nbsp;</th>
                                 </tr>
                             </thead>
@@ -108,7 +108,7 @@
  
             <div class="box box-custom-enod top-buffer">
                 <div class="box-header with-border">
-                <h3 class="box-title">DOCUMENTACIONES DE LA FUENTE </h3>
+                <h3 class="box-title">Documentaciones de la fuente</h3>
 
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -120,10 +120,10 @@
                         <table class="table table-hover table-striped table-condensed">
                             <thead>
                                 <tr>
-                                    <th class="col-md-1">N° SERIE</th>   
-                                    <th class="col-md-2">FUENTE</th> 
-                                    <th class="col-md-2">TÍTULO</th>                                                     
-                                    <th class="col-md-6">DESCRIPCIÓN</th>
+                                    <th class="col-md-1">N° Serie</th>   
+                                    <th class="col-md-2">Fuente</th> 
+                                    <th class="col-md-2">Título</th>                                                     
+                                    <th class="col-md-6">Descripción</th>
                                     <th class="col-md-1">&nbsp;</th>
                                 </tr>
                             </thead>

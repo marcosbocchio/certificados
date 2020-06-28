@@ -21,7 +21,7 @@
            <div v-show="$can('T_informes_edita')">
                 <div class="box box-custom-enod top-buffer">
                     <div class="box-header with-border">
-                        <h3 class="box-title">AGREGAR INFORME</h3>
+                        <h3 class="box-title">Agregar Informes</h3>
                 
                         <div class="box-body">           
                             <div class="form-group">
@@ -50,7 +50,7 @@
        <div class="col-md-12">
             <div class="box box-custom-enod top-buffer">
                 <div class="box-header with-border">
-                    <h3 class="box-title">INFORMES ORDEN DE TRABAJO</h3>
+                    <h3 class="box-title">Informes asignados a la orden de trabajo</h3>
 
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -63,11 +63,11 @@
                         <table class="table table-hover table-striped table-condensed">
                             <thead>
                                 <tr>
-                                    <th class="col-lg-1">TIPO</th>   
+                                    <th class="col-lg-1">Tipo</th>   
                                     <th class="col-lg-2">N°</th>
-                                    <th class="col-lg-1">OBRA</th>
-                                    <th class="col-lg-4">USUARIO ALTA</th> 
-                                    <th class="col-lg-2" >FECHA</th>                                                  
+                                    <th class="col-lg-1">Obra</th>
+                                    <th class="col-lg-4">Usuario alta</th> 
+                                    <th class="col-lg-2">Fecha</th>                                                  
                                     <th class="col-lg-2" colspan="5">&nbsp;</th>
                                 </tr>
                             </thead>

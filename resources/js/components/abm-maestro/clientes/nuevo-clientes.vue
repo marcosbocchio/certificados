@@ -8,8 +8,8 @@
                         <h4 class="modal-title">Crear</h4>                        
                     </div>
                     <div class="modal-body">  
-                        <div class="row"> 
                         <div class="col-md-12">
+                        <div class="row"> 
                             <div class="box box-custom-enod">
                                 <div class="box-header with-border">
                                     <h3 class="box-title">Datos Cliente</h3>

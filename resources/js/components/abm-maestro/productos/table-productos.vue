@@ -5,10 +5,10 @@
       <table class="table table-hover table-striped table-condensed">
         <thead>
           <tr>
-            <th>CÓDIDO</th>
-            <th>DESCRIPCIÓN</th>
-            <th style="text-align: center">UNIDAD MEDIDA</th>
-            <th style="text-align: center">VISIBLE OT</th>
+            <th>código</th>
+            <th>Descripción</th>
+            <th style="text-align: center">Unidad Medida</th>
+            <th style="text-align: center">Visible OT</th>
             <th colspan="2">&nbsp;</th>
           </tr>
         </thead>
