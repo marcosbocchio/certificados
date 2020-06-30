@@ -20,6 +20,7 @@ use App\ParametrosGenerales;
 use App\InformesImportados;
 use App\ParteServicios;
 use Illuminate\Support\Facades\Log;
+use App\ParteVehiculos;
 
 class PartesController extends Controller
 {
@@ -104,6 +105,7 @@ class PartesController extends Controller
         try {          
         
           $parte  = $this->saveParte($request,$parte);
+          $this->saveVehiculos($request->vehiculos,$parte);
           $this->saveResponsables($request->responsables,$parte);
           $this->saveParteDetalleRi($request->informes_ri,$parte);
           $this->saveParteDetallePm($request->informes_pm,$parte);
@@ -122,6 +124,24 @@ class PartesController extends Controller
         }
 
         return $parte;
+    }
+
+    public function saveVehiculos($vehiculos,$parte){
+    
+        if($parte->movilidad_propia_sn){
+
+            foreach ($vehiculos as $vehiculo) {
+    
+                $parte_vehiculo  = new ParteVehiculos;
+                $parte_vehiculo->parte_id = $parte->id;
+                $parte_vehiculo->vehiculo_id = $vehiculo['vehiculo']['id'];
+                $parte_vehiculo->km_inicial = $vehiculo['km_inicial'];
+                $parte_vehiculo->km_final = $vehiculo['km_final'];
+                $parte_vehiculo->save();
+    
+            }
+        }
+        
     }
 
     public function saveResponsables($responsables, $parte){
@@ -173,10 +193,7 @@ class PartesController extends Controller
         $parte->fecha = date('Y-m-d',strtotime($request->fecha));
         $parte->tipo_servicio = $request->tipo_servicio;
         $parte->horario = $request->horario;
-        $parte->movilidad_propia_sn = $request->movilidad_propia_sn;
-        $parte->patente = $request->patente;
-        $parte->km_inicial = $request->km_inicial;
-        $parte->km_final = $request->km_final;     
+        $parte->movilidad_propia_sn = $request->movilidad_propia_sn; 
         $parte->placas_repetidas = $request->informes_ri ? $request->placas_repetidas : null;
         $parte->placas_testigos = $request->informes_ri ? $request->placas_testigos : null;
         $parte->user_id = $user_id;
@@ -326,6 +343,11 @@ class PartesController extends Controller
         $ot = Ots::findOrFail($ot_id);
 
         DB::enableQueryLog();
+
+        $vehiculos = ParteVehiculos::where('parte_vehiculos.parte_id',$id)
+                                        ->select('parte_vehiculos.*')
+                                        ->with('vehiculo')
+                                        ->get();
         
         $responsables = ParteOperadores::where('parte_operadores.parte_id',$id)
                                         ->select('parte_operadores.*')
@@ -402,6 +424,7 @@ class PartesController extends Controller
         */
 
         return view('partes.edit', compact('parte',
+                                            'vehiculos',
                                             'responsables',
                                             'informes_ri',
                                             'informes_pm',
@@ -430,6 +453,8 @@ class PartesController extends Controller
         try {    
            
             $parte  = $this->saveParte($request,$parte);
+            ParteVehiculos::where('parte_id',$parte->id)->delete();
+            $this->saveVehiculos($request->vehiculos,$parte);
             $this->saveResponsables($request->responsables,$parte);
             $this->saveParteDetalleRi($request->informes_ri,$parte);
             ParteDetalles::where('parte_id',$parte->id)->delete();

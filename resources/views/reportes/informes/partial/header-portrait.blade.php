@@ -15,9 +15,9 @@
                 
                     <td style="font-size: 10px; width: 195px;">
                         
-                            @if($contratista)
-                                <b>COMITENTE: </b>{{$contratista->nombre}}
-                            @endif                                               
+                        @if($contratista)
+                            <b>COMITENTE: </b>{{$contratista->nombre}}
+                        @endif                                               
                         
                     </td> 
                     <td>

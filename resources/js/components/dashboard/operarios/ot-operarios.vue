@@ -223,7 +223,7 @@ export default {
       
 
         if (this.existeOperario(id)){
-                toastr.error('El operador / ayudante ya existe en la OT');  
+                toastr.error('El operador / ayudante existe en la OT');  
         }else if(this.operador || this.ayudante) {        
 
             if(tipo == 'ayudante'){

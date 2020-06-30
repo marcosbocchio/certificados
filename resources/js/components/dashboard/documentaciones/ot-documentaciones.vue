@@ -264,7 +264,7 @@ methods : {
 
         if (this.existeVehiculo(id)){
 
-           toastr.error('El Vehículo ya existe en la OT');  
+           toastr.error('El Vehículo existe en la OT');  
 
         }else if(this.vehiculo.id){
 
@@ -280,7 +280,7 @@ methods : {
 
         if (this.existeDocumentacion(id)){
 
-             toastr.error('El Documento ya existe en la OT');  
+             toastr.error('El Documento existe en la OT');  
 
         }else if(this.documentacion.id){
 

@@ -189,7 +189,7 @@ methods : {
 
         console.log('entro en add soldador');
             if (this.existeSoldador(id)){
-                    toastr.error('El soldador ya existe en la OT');  
+                    toastr.error('El soldador existe en la OT');  
             }else if(this.soldador.codigo){
                 console.log('agregando soldador');
                 this.ot_soldadores.push({ 
@@ -205,7 +205,7 @@ methods : {
 
      
         if (this.existeUsuarioCliente(id)){
-                toastr.error('El Usuario ya existe en la OT');  
+                toastr.error('El Usuario existe en la OT');  
         }else if(this.usuario_cliente.name){
                console.log('agregando soldador');
             this.ot_usuarios_cliente.push({ 

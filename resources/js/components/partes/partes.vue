@@ -27,7 +27,9 @@
                                 <input type="text" v-model="horario" class="form-control" maxlength="5" id="horario" v-on:keyup="FormatearHorario" placeholder="HH-HH">
                             </div>                            
                         </div>
+
                         <div class="clearfix"></div>
+
                         <div class="col-md-3">
                             <div class="form-group" >  
                                <label style="display: block;"></label>                    
@@ -35,39 +37,96 @@
                                 <label for="tipo" style="float: left;;margin-right: 5px;">Movilidad Propia</label>             
                             </div>    
                         </div>  
-                        <div class="clearfix"></div>
-
-                        <div class="col-md-3">
-                            <div class="form-group" >
-                                <label for="patente">Patente </label>
-                                <input type="text" v-model="patente" class="form-control" maxlength="10" id="patente" :disabled="!movilidad_propia_sn">
-                            </div>                            
-                        </div> 
-                        <div class="col-md-3">
-                            <div class="form-group" >
-                                <label for="km_inicial">Km Inicial </label>
-                                <input type="number" v-model="km_inicial" class="form-control" id="km_inicial" min="0" step="0.1" :disabled="!movilidad_propia_sn" @input="RecalcularKms()">
-                            </div>                            
-                        </div>  
-                        <div class="col-md-3">
-                            <div class="form-group" >
-                                <label for="km_final">Km Final </label>
-                                <input type="number" v-model="km_final" class="form-control" id="km_final" min="0" step="0.1" :disabled="!movilidad_propia_sn" @input="RecalcularKms()">
-                            </div>                            
-                        </div>  
                     </div>
                 </div>   
+
+                <div v-if="movilidad_propia_sn">
+                    <div class="box box-custom-enod">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Vehículos</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                </button>                       
+                            </div>
+                        </div>
+                        <div class="box-body"> 
+                            <div class="col-md-3">
+                                <div class="form-group" >
+                                    <label for="vehiculos">Vehículos</label>
+                                    <v-select  v-model="vehiculo" :options="vehiculos" label="nro_interno">
+                                        <template slot="option" slot-scope="option">
+                                            <span class="upSelect">{{ option.nro_interno }} </span> <br> 
+                                            <span class="downSelect"> {{ option.marca }} - {{ option.patente }} </span>
+                                        </template>
+                                    </v-select>          
+                                </div>                            
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group" >
+                                    <label for="km_inicial">Km Inicial </label>
+                                    <input type="number" v-model="km_inicial" class="form-control" id="km_inicial" min="0" step="0.1" >
+                                </div>                            
+                            </div>  
+                            <div class="col-md-3">
+                                <div class="form-group" >
+                                    <label for="km_final">Km Final </label>
+                                    <input type="number" v-model="km_final" class="form-control" id="km_final" min="0" step="0.1">
+                                </div>                            
+                            </div>  
+                            <div class="col-md-1"> 
+                                <div class="form-group">  
+                                    <p>&nbsp;</p>                  
+                                    <span>
+                                    <button type="button" @click="addVehiculo()"><span class="fa fa-plus-circle"></span></button>                        
+                                    </span>
+                                </div>
+                            </div>  
+                            <div v-show="TablaVehiculos.length">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-striped table-condensed table-condensed">
+                                        <thead>
+                                            <tr>
+                                                <th class="col-md-1">Nº Int</th>                                         
+                                                <th class="col-md-2">Marca</th>  
+                                                <th class="col-md-2">Modelo</th> 
+                                                <th class="col-md-1">Patente</th>   
+                                                <th class="col-md-1">Tipo</th>
+                                                <th class="col-md-1">Km Inicial</th>   
+                                                <th class="col-md-1">Km Final</th>                                                   
+                                                <th class="col-md-1">&nbsp;</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="(item,k) in TablaVehiculos" :key="k">
+                                                <td> {{ item.vehiculo.nro_interno}}</td>    
+                                                <td> {{ item.vehiculo.marca}}</td> 
+                                                <td> {{ item.vehiculo.modelo}}</td>    
+                                                <td> {{ item.vehiculo.patente}}</td>                                                     
+                                                <td> {{ item.vehiculo.tipo}}</td>    
+                                                <td> {{ item.km_inicial}}</td>   
+                                                <td> {{ item.km_final}}</td>                                                                                                                  
+                                                <td style="text-align:center"> <a  @click="RemoveVehiculo(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a></td>
+                                            </tr>
+                                        </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="box box-custom-enod">
                     <div class="box-header with-border">
-                    <h3 class="box-title">Responsabilidades</h3>
-
+                        <h3 class="box-title">Responsabilidades</h3>
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                             </button>                       
                         </div>
                     </div>
                     <div class="box-body"> 
-                        <div class="col-md-6">
+                        <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="km_final">Operador </label>
                                 <v-select type="text" v-model="operador" id="responsable" label="name" :options="operadores" @input="setResponsabilidad()"></v-select>
@@ -130,7 +189,7 @@
                                             <th>Tipo</th>                                         
                                             <th>Informe</th>  
                                             <th>Obra</th> 
-                                            <th>Fecha</th>                                                 
+                                            <th>Fecha</th>                                       
                                           
                                         </tr>
                                     </thead>
@@ -612,6 +671,11 @@ export default {
       required : false
       },
 
+      vehiculos_data : {
+      type : [ Array ],  
+      required : false
+      },
+
       responsables_data : {
       type : [ Array ],  
       required : false
@@ -628,7 +692,6 @@ export default {
         tipo_servicio:'',
         horario:'',
         movilidad_propia_sn:false,
-        patente:'',
         km_inicial:'',
         km_final:'',
         observaciones:'',
@@ -638,6 +701,9 @@ export default {
 
         operador:'',
         operadores:[],
+
+        vehiculo:'',
+        TablaVehiculos:[],
 
         responsabilidad:'',
         TablaResponsables:[],
@@ -664,7 +730,8 @@ export default {
     }},
 
     created : function() {
-
+        
+        this.$store.dispatch('loadVehiculos');    
         this.getOperadoresOt();
         this.getCms();
         this.CargaDeDatos();  
@@ -686,17 +753,6 @@ export default {
 
     watch :{
 
-        movilidad_propia_sn : function(val){
-
-            if(!val){
-            
-                this.patente = '';
-                this.km_inicial = '';
-                this.km_final = '';            
-            
-            }
-        },
-
         fecha : function(){
 
             this.resetInformesSelect();
@@ -713,7 +769,7 @@ export default {
 
     computed :{
 
-        ...mapState(['url','AppUrl','serviciosOt']),     
+        ...mapState(['url','AppUrl','serviciosOt','vehiculos']),     
         
         fecha_mysql : function(){
 
@@ -748,16 +804,14 @@ export default {
 
         CargaDeDatos : function(){         
 
-            if(this.editmode) {                
-            
+            if(this.editmode) {     
+
+               this.TablaVehiculos =  JSON.parse(JSON.stringify(this.vehiculos_data)); 
                this.TablaResponsables =  JSON.parse(JSON.stringify(this.responsables_data));  
                this.fecha  = this.parte_data.fecha;   
                this.tipo_servicio = this.parte_data.tipo_servicio;         
                this.horario = this.parte_data.horario;   
                this.movilidad_propia_sn = this.parte_data.movilidad_propia_sn;
-               this.patente = this.parte_data.patente;
-               this.km_final = this.parte_data.km_final;
-               this.km_inicial = this.parte_data.km_inicial;
                this.placas_repetidas = this.parte_data.placas_repetidas;
                this.placas_testigos = this.parte_data.placas_testigos;
                this.observaciones = this.parte_data.observaciones;  
@@ -1134,34 +1188,81 @@ export default {
 
         existeResponsable : function(id){
 
-            let existe = false;
-            this.TablaResponsables.forEach(function (responsable) {           
-               
-                if(responsable.user.id == id){              
-                    existe = true ;
-                }
-                
-            });
+            let index = this.TablaResponsables.findIndex(elemento => elemento.user.id == id)
+            return (index == -1 ? false : true) ;
 
-            return existe;
         },
 
+        addVehiculo(){
+            
+            if(!this.vehiculo){
+                toastr.error("El campo vehículo es obligatorio");         
+                 return;            
+            }
+
+            if(!this.km_inicial){
+                toastr.error("El campo km inical es obligatorio");         
+                 return;            
+            }
+
+            if(!this.km_final){
+                toastr.error("El campo km final es obligatorio");         
+                 return;            
+            }
+
+            if(parseFloat(this.km_final) < parseFloat(this.km_inicial)){
+                toastr.error("Km final mayor a km inical");         
+                return;      
+            }
+
+            if(this.existeVehiculo(this.vehiculo.id)){
+                toastr.error('El vehiculo existe en el parte');  
+                return;      
+            }
+
+            this.TablaVehiculos.push({ 
+
+                vehiculo :this.vehiculo,             
+                km_inicial : this.km_inicial,
+                km_final : this.km_final,          
+                    
+                });   
+            
+            this.vehiculo = '';
+            this.km_inicial='';
+            this.km_final='';
+            this.RecalcularKms();
+
+        },
+
+        existeVehiculo(id){
+            
+            let index = this.TablaVehiculos.findIndex(elemento => elemento.vehiculo.id == id)
+            return (index == -1 ? false : true) ;
+
+        },
+
+        RemoveVehiculo(index) {
+          
+           this.TablaVehiculos.splice(index, 1);               
+           this.RecalcularKms();
+        },
 
         addResponsable(id) {
 
             if(!this.operador){
-                toastr.error("El campo Operador es obligatorio");         
+                toastr.error("El campo operador es obligatorio");         
                  return;            
             }
 
             if(!this.responsabilidad){
-                toastr.error("El campo Responsabilidad es obligatorio");         
+                toastr.error("El campo responsabilidad es obligatorio");         
                 return;            
             }     
             
             if(this.existeResponsable(id)){
 
-                toastr.error('El responsable ya existe en el parte');  
+                toastr.error('El responsable existe en el parte');  
                 return;      
             }
 
@@ -1440,7 +1541,10 @@ export default {
         
                     })
             }
-
+         this.RecalcularKms();
+         this.RecalcularMetros();
+         this.RecalcularHospedaje();
+         this.RecalcularViaticos();   
          this.$forceUpdate();      
 
         },
@@ -1594,9 +1698,14 @@ export default {
         RecalcularKms()  {
 
             let index = this.TablaServicios.findIndex(elemento => (elemento.unidad_medida == 'Km' && elemento.metodo =='GRAL'))      
-            console.log(index);         
             if(index > -1){
-                let kms = parseFloat(this.km_final) - parseFloat(this.km_inicial);
+                let kms = 0;
+               
+                this.TablaVehiculos.forEach(function(item){
+
+                    kms = parseFloat(kms) +  parseFloat(item.km_final) - parseFloat(item.km_inicial);
+
+                }.bind(this));
                 this.TablaServicios[index].cant_final = parseFloat(kms);
             }
         },
@@ -1903,10 +2012,8 @@ export default {
                 'tipo_servicio'        : this.tipo_servicio,
                 'horario'              : this.horario,     
                 'movilidad_propia_sn'  : this.movilidad_propia_sn,
-                'patente'              : this.patente,          
-                'km_inicial'           : this.km_inicial,    
-                'km_final'             : this.km_final,
                 'observaciones'        : this.observaciones, 
+                'vehiculos'            : this.TablaVehiculos,    
                 'responsables'         :this.TablaResponsables, 
                 'informes_ri'          :this.TablaInformesRi,
                 'placas_repetidas'     :this.placas_repetidas,
@@ -1985,10 +2092,8 @@ export default {
                 'tipo_servicio'        : this.tipo_servicio,
                 'horario'              : this.horario,     
                 'movilidad_propia_sn'  : this.movilidad_propia_sn,
-                'patente'              : this.patente,          
-                'km_inicial'           : this.km_inicial,    
-                'km_final'             : this.km_final,
                 'observaciones'        : this.observaciones, 
+                'vehiculos'            : this.TablaVehiculos,
                 'responsables'         :this.TablaResponsables,
                 'placas_repetidas'     :this.placas_repetidas,
                 'placas_testigos'      :this.placas_testigos,

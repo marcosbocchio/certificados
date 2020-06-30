@@ -22,29 +22,13 @@ class ParteRequest extends FormRequest
      * @return array
      */
     public function rules()
-    {
-        $condicion_patente ='';
-        $condicion_km_inicial ='';
-        $condicion_km_final ='';
-        
-        if($this->movilidad_propia_sn) {
-            $condicion_patente ='required | Max:10';
-            $condicion_km_inicial ='required';
-            $condicion_km_final = 'required';
-        }else {
-            $condicion_patente ='nullable';
-            $condicion_km_inicial ='nullable';
-            $condicion_km_final ='nullable';
-        }
+    {        
 
 
         return [
             'fecha' => 'required',  
             'tipo_servicio' =>'required',
             'horario' =>'required|Max:5', 
-            'patente' => $condicion_patente,
-            'km_inicial' => $condicion_km_inicial,
-            'km_final'  =>  $condicion_km_final,   
             'servicios.*.cant_final' => 'nullable|integer|Min:0',               
         ];
     }

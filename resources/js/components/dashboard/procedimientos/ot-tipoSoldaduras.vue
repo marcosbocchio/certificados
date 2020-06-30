@@ -158,7 +158,7 @@
 
         if(Existe){
 
-            toastr.error('El tipo soldadura / Obra ya existe en la ot'); 
+            toastr.error('El tipo soldadura / Obra existe en la ot'); 
             return;
 
          }

@@ -110,10 +110,18 @@
                                    <v-select v-model="newRegistro.tipo" label="tipo" :options="tipo_documentos"></v-select>
                                 </div>                             
                             </div> 
-                            <div class="form-group">
-                                <label for="titulo">Título *</label>
-                                <input type="text" name="titulo" class="form-control" v-model="newRegistro.titulo" value="" @change="VerificarDuplicado()" maxlength="25">               
-                            </div>  
+                            <div v-if="modelo == 'ot_procedimientos_propios'">
+                                <div class="form-group">
+                                    <label for="titulo">Título *</label>
+                                    <input type="text" name="titulo" class="form-control" v-model="newRegistro.titulo" value="" maxlength="40">               
+                                </div>  
+                            </div>
+                            <div v-else>
+                                <div class="form-group">
+                                    <label for="titulo">Título *</label>
+                                    <input type="text" name="titulo" class="form-control" v-model="newRegistro.titulo" value="" @change="VerificarDuplicado()" maxlength="25">               
+                                </div>  
+                            </div>
                             <div class="form-group">
                                 <label for="name">Descripción </label>
                                 <input type="text" name="descripcion" class="form-control" v-model="newRegistro.descripcion" value="" maxlength="50">  
@@ -228,7 +236,7 @@
                     <h4><span class="fa fa-warning" style="color:#FBCA19;">&nbsp;&nbsp;</span>Alerta</h4>
                     </div>
                 <div class="modal-body">
-                    <p style="text-align: center;">El registro ingresado ya existe.</p>
+                    <p style="text-align: center;">El registro ingresado existe.</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" @click="cancelarModal">Cancelar</button>

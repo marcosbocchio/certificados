@@ -23,7 +23,7 @@
   :informes_us_data="{{$informes_us}}"
   :informes_importados_data="{{$informes_importados}}"
   :servicios_data="{{$servicios}}"
-
+  :vehiculos_data="{{$vehiculos}}"
   :responsables_data="{{$responsables}}"
   editmode  
   

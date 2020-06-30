@@ -1350,7 +1350,6 @@
          },
          //detalle
          async getSoldadores(){
-                alert('entro en soldadores');
                  axios.defaults.baseURL = this.url ;
                  var urlRegistros = 'ot_soldadores/ot/' + this.otdata.id + '?api_token=' + Laravel.user.api_token;        
                  await axios.get(urlRegistros).then(response =>{
