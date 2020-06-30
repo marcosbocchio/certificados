@@ -87,7 +87,11 @@ table .selected{
   border-color: rgb(255, 204, 0);
   color: #000000;
   font-weight: 600;
+}
 
+.btn-enod:hover {
+
+  background-color:rgb(255, 219, 74);
 }
 
 .box-custom-enod {
@@ -111,11 +115,11 @@ table .selected{
 }
 .bg-custom-4 {
 
-  background-color: #BABBB5;
+  background-color: rgb(152, 157,153);
 }
 .bg-custom-5 {
 
-  background-color: #BABBB5;
+  background-color: rgb(152, 157,153);
 }
 .bg-custom-6 {
 

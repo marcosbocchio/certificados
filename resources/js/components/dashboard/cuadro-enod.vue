@@ -208,18 +208,18 @@ export default {
     opacity: 0.5;
 }
 
-.footer-oper-inf {
+  .footer-oper-inf {
 
-  background-image: url("/img/tablero/footer-oper-inf.png") !important;
-  background-size:     cover;                   
-  background-repeat:   no-repeat;
-  background-position: center center;
-  
-  }
+    background-image: url("/img/tablero/barra-oper-inf.svg") !important;
+    background-size:     cover;                   
+    background-repeat:   no-repeat;
+    background-position: center center;
+    
+    }
 
   .footer-equipos-partes {
 
-    background-image: url("/img/tablero/footer-equipos-partes.png") !important;
+    background-image: url("/img/tablero/barra-equipos-partes.svg") !important;
     background-size:     cover;                   
     background-repeat:   no-repeat;
     background-position: center center;  
@@ -227,7 +227,7 @@ export default {
 
   .footer-proc-cert {
 
-    background-image: url("/img/tablero/footer-proc-cert.png") !important;
+    background-image: url("/img/tablero/barra-proc-cert.svg") !important;
     background-size:     cover;                   
     background-repeat:   no-repeat;
     background-position: center center;  
@@ -235,7 +235,7 @@ export default {
 
    .footer-doc-remitos {
 
-    background-image: url("/img/tablero/footer-doc-remitos.png") !important;
+    background-image: url("/img/tablero/barra-doc-remitos.svg") !important;
     background-size:     cover;                   
     background-repeat:   no-repeat;
     background-position: center center;  
