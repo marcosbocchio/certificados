@@ -9,7 +9,7 @@
 
 <style>
 
-    @page { margin: 260px 30px 310px 60px !important;
+    @page { margin: 260px 30px 280px 60px !important;
             padding: 0px 0px 0px 0px !important; }
 
 header {
@@ -41,6 +41,9 @@ footer {
                 <td>
                     <table width="100%" style="border-collapse: collapse;" >
                         <tbody>
+                            <tr>
+                                <td style="font-size: 14px;"><strong>Diccionario</strong></td>
+                            </tr>
                             <tr>
                                 <td style="font-size: 10px; " class="bordered-td"><b>F: </b>Fisura</td>
                                 <td style="font-size: 10px; " class="bordered-td"><b>FF: </b>Falta de fusion</td>

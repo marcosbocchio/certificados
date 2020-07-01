@@ -9,7 +9,7 @@
               :class_color_sub_titulo = "'color_3'"
               :cantidad_1 ="ot_vehiculos.length"
               :cantidad_2 ="ot_documentaciones.length"
-              :src_icono ="'/img/tablero/icono-enod-vehiculos-doc.svg'"
+              :src_icono ="'/img/tablero/icono-enod-documentacion.svg'"
               :class_color_cuadro = "'bg-custom-4'"   
               :habilitado_sn ="true"
               :invertir_cantidad_sn ="true"

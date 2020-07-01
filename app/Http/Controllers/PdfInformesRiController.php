@@ -88,7 +88,6 @@ class PdfInformesRiController extends Controller
 
         /* Fin encabezado */
 
-  
         if ($informe_ri->gasoducto_sn){
           
           $juntas_posiciones = DB::select('CALL InformeRiGasoductoJuntaPosicion(?)',array($informe_ri->id));        

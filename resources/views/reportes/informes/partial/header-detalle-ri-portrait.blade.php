@@ -87,7 +87,11 @@
                            </tr>
                            <tr >
                                <td colspan="2">{{$material->codigo}}</td>
-                               <td colspan="2">{{$material_accesorio->codigo}}</td>
+                               <td colspan="2">
+                                    @if($material_accesorio)
+                                         {{$material_accesorio->codigo}}
+                                    @endif
+                               </td>
                            </tr>
 
                            <tr>                          
