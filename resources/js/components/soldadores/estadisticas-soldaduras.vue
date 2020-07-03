@@ -1,14 +1,14 @@
 <template>
     <div class="row">
         <div class="col-md-3">
-            <div class="box box-primary">
+            <div class="box box-custom-enod">
                 <div class="box-body box-profile">
                     <div v-if="cliente && cliente.path" style="text-align:center">
                         <img :src="'/' + cliente.path" alt="..." width="120">    
                     </div>
-                    <h3 v-if="cliente" class="profile-username text-center">
+                    <h4 v-if="cliente" class="profile-username text-center">
                         {{cliente.nombre_fantasia}}
-                    </h3>
+                    </h4>
 
                     <p v-if="ot" class="text-muted text-center">
                         {{ot.proyecto}}
@@ -17,10 +17,10 @@
                     <ul class="list-group list-group-unbordered">
                         <li class="list-group-item pointer">
                             <div v-show="!selCliente">
-                                <b>Cliente</b> 
+                                <span class="titulo-li">Cliente</span> 
                                 <a @click="selCliente = !selCliente" class="pull-right">
                                     <div v-if="cliente">{{cliente.nombre_fantasia}}</div> 
-                                    <div v-else><span style="color:red">Seleccionar</span></div>
+                                    <div v-else><span style="color:#8e8e8e">Seleccionar</span></div>
                                 </a>
                             </div>
                             <v-select v-show="selCliente" v-model="cliente" label="nombre_fantasia" :options="clientes" @input="CambioCliente()" ></v-select>                         
@@ -28,30 +28,30 @@
                         </li>
                         <li class="list-group-item pointer">
                             <div v-show="!selOt">
-                                <b>OT</b> 
+                                <span>OT</span> 
                                 <a @click="selOt = !selOt" class="pull-right">
                                     <div v-if="ot">{{ot.numero}}</div> 
-                                    <div v-else><span style="color:red">Seleccionar</span></div>
+                                    <div v-else><span style="color:#8e8e8e">Seleccionar</span></div>
                                 </a>
                             </div>
                             <v-select v-show="selOt" v-model="ot" label="numero" :options="ots" @input="CambioOt()" ></v-select>                  
                         </li>
                         <li class="list-group-item pointer">
                             <div v-show="!selObra">
-                                <b>Obra</b> 
+                                <span>Obra</span> 
                                 <a @click="seleccionarObra()" class="pull-right">
                                     <div v-if="obra || ot.obra">{{obra.obra}}</div> 
-                                    <div v-else><span style="color:red">Seleccionar</span></div>
+                                    <div v-else><span style="color:#8e8e8e">Seleccionar</span></div>
                                 </a>
                             </div>
                             <v-select v-show="selObra" v-model="obra" label="obra" :options="obras" @input="CambioObra()"></v-select>                  
                         </li>
                         <li class="list-fecha list-group-item pointer">   
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-sm-12 col-md-12 col-lg-6">
                                     <date-picker v-model="fecha_desde" value-type="YYYY-MM-DD" format="DD-MM-YYYY" placeholder="Desde" ></date-picker>
                                 </div>                     
-                                <div class="col-md-6">
+                                <div class="col-sm-12 col-md-12 col-lg-6">
                                     <date-picker v-model="fecha_hasta" value-type="YYYY-MM-DD" format="DD-MM-YYYY" placeholder="Hasta" ></date-picker>
                                 </div>
                             </div>
@@ -115,7 +115,7 @@
                         <tab name="Defectología/Producción">
                             Defectología/Producción
                         </tab>
-                        <tab name="indicaciones">
+                        <tab name="Indicaciones">
                             Indicaciones
                         </tab>
                     </tabs>
@@ -219,7 +219,6 @@ export default {
            
         }         
         finally  {this.$store.commit('loading', false);}
-
         
     },
      
@@ -233,16 +232,18 @@ export default {
         this.fecha_desde = null;
         this.fecha_hasta = null;
         this.informes = [];
-        this.$store.commit('loading', true);
-        var urlRegistros = 'clientes/' + this.cliente.id + '/ots/' +'?api_token=' + Laravel.user.api_token;  
-        try {
-            let res = await axios.get(urlRegistros);
-            this.ots = await res.data;      
-        }catch(error){
-           
-        } 
-        
-        finally  {this.$store.commit('loading', false);}
+        if(this.cliente){
+            
+            this.$store.commit('loading', true);
+            var urlRegistros = 'clientes/' + this.cliente.id + '/ots/' +'?api_token=' + Laravel.user.api_token;  
+            try {
+                let res = await axios.get(urlRegistros);
+                this.ots = await res.data;      
+            }catch(error){
+                
+            }finally {this.$store.commit('loading', false);}
+
+        }
     },
 
     async CambioOt (){
@@ -266,13 +267,13 @@ export default {
         }        
 
     },
+
     seleccionarObra(){
 
         this.informes = [];
         if(this.ot && !this.ot.obra){
             this.selObra = !this.selObra;
         }
-
     },
 
     async CambioObra (){
@@ -467,8 +468,18 @@ body {
     border-left: none !important;
     border-right: none !important;
     border-radius: 0px !important;
+    padding-left: 0px;
 
     }
+.is-active{
+
+    border-top:3px solid chartreuse !important;
+    box-shadow: 0 -2px 0 #000;
+}
+
+ul li span {
+    font-weight: 600 !important;
+}
 
  .list-fecha { 
      border-bottom: none !important;
@@ -486,5 +497,17 @@ body {
     border: 1px solid black;
 }
 
+.box-custom-enod {
+    
+    box-shadow: 0 -2px 0 #000;
+}
 
+.profile-username {
+
+    font-size: 16px !important ;
+    font-weight: 500 !important ;
+    line-height: 1.1 !important ;
+    font-family: 'Montserrat',sans-serif;
+
+}
 </style>

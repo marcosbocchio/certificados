@@ -10,7 +10,7 @@ class ReportesController extends Controller
 
         $user = auth()->user();
         $header_titulo = "Reporte";
-        $header_descripcion ="Estadísticas Soldaduras";      
+        $header_descripcion ="Análisis de rechazo y defectología";      
         return view('soldadores.estadisticas_soldaduras',compact('user','header_titulo','header_descripcion'));        
 
     }

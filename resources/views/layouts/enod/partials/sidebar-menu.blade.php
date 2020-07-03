@@ -169,7 +169,7 @@
             </a>
             <ul class="treeview-menu">
               @can('D_soldaduras')
-                  <li><a href="{{ route('reporte-soldaduras') }}">Estadisticas Soldaduras</a></li> 
+                  <li><a href="{{ route('reporte-soldaduras') }}">Estadisticas soldaduras</a></li> 
               @endcan
             </ul>
           </li>
