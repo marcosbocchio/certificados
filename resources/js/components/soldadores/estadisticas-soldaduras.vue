@@ -473,7 +473,7 @@ body {
     }
 .is-active{
 
-    border-top:3px solid chartreuse !important;
+    border-top:3px solid rgb(255, 204, 0) !important;
     box-shadow: 0 -2px 0 #000;
 }
 
