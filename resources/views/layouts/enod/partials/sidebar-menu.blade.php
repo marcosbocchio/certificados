@@ -159,6 +159,22 @@
           </li>
         @endcan
 
+        @can('REPORTES')
+          <li class="treeview">
+            <a href="#">
+              <i class="glyphicon glyphicon-stats"></i> <span>REPORTES</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              @can('D_soldaduras')
+                  <li><a href="{{ route('reporte-soldaduras') }}">Estadisticas Soldaduras</a></li> 
+              @endcan
+            </ul>
+          </li>
+        @endcan
+
         <li class="treeview">
           <a href="#">
             <i class="fa fa-book"></i> <span>INSTITUCIONALES</span>

@@ -15,6 +15,12 @@
                             <input autocomplete="off" v-model="newRegistro.nombre" type="text" name="codigo" class="form-control" value="">            
                         </div>
                     </div> 
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="name">Razon Social*</label>                   
+                            <input autocomplete="off" v-model="newRegistro.razon_social" type="text" name="razon_social" class="form-control" value=""> 
+                        </div> 
+                    </div> 
                     <div class="col-md-12">   
                         <div class="form-group">    
                             <label>Logo</label>        
@@ -66,7 +72,8 @@ export default {
 
         error:{},    
         newRegistro : {           
-            'nombre'  : '',   
+            'nombre'  : '',               
+            'razon_social' : '',
             'logo_path':''                 
          },
 
@@ -131,7 +138,8 @@ export default {
            openModal : function(){
 
                 this.newRegistro = {           
-                    'nombre'  : '', 
+                    'nombre'  : '',             
+                    'razon_social' : '',
                     'path_logo'  : '',             
                 };           
             

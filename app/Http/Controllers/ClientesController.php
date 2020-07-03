@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use App\Contactos;
 use App\User;
 use App\Provincias;
+use App\Ots;
 
 
 class ClientesController extends Controller
@@ -250,6 +251,12 @@ class ClientesController extends Controller
         return Clientes::all();
         
       }
+
+    }
+
+    public function getOts($cliente_id){
+
+      return Ots::where('cliente_id',$cliente_id)->with('contratista')->get();
 
     }
 }

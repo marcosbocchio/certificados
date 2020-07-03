@@ -111,6 +111,11 @@ Route::group(['middleware' => ['auth']], function () {
           Route::get('/pdf/informe/us/{informe}/indicaciones_us_pa','PdfInformesUsIndicacionesUsPaController@imprimir')->name('InformeUsIndicacionesUsPa');
           Route::get('/pdf/informe/us/{informe}/indicaciones_me','PdfInformesUsIndicacionesMeController@imprimir')->name('InformeUsIndicacionesMe');
 
+
+          /* Reportes */
+          Route::get('/area/enod/reportes/estadisticas-soldaduras','ReportesController@viewSoldaduras')->name('reporte-soldaduras');
+  
+
 });
 
 Route::get('/pdf-test',function(){

@@ -15,6 +15,13 @@
                                 <input autocomplete="off" v-model="editRegistro.nombre" type="text" name="codigo" class="form-control" value="">            
                             </div>
                         </div> 
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="name">Razon Social*</label>                   
+                                <input autocomplete="off" v-model="editRegistro
+                                .razon_social" type="text" name="razon_social" class="form-control" value=""> 
+                            </div> 
+                        </div> 
                         <div class="col-md-12">   
                             <div class="form-group">    
                                 <label>Logo</label>        
@@ -74,6 +81,7 @@ export default {
         errors:{},    
         editRegistro : {           
             'nombre'  : '',   
+            'razon_social' : '',
             'logo_path':''                 
          },
 
@@ -142,6 +150,7 @@ export default {
             this.$nextTick(function () { 
 
                 this.editRegistro.nombre = this.selectRegistro.nombre;
+                this.editRegistro.razon_social = this.selectRegistro.razon_social;
                 this.editRegistro.path_logo = this.selectRegistro.path_logo;    
                 this.images[0].src ='/' + this.selectRegistro.path_logo;
                 this.images[0].thumb  ='/' + this.selectRegistro.path_logo;  

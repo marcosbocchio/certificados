@@ -88,6 +88,7 @@ class ContratistasController extends Controller
       public function saveContratista($request,$contratista){
   
         $contratista->nombre = $request['nombre'];
+        $contratista->razon_social = $request['razon_social'];
         $contratista->path_logo = $request['path_logo'];
         $contratista->save();
   

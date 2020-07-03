@@ -19,7 +19,7 @@ use App\Localidades;
 use Illuminate\Support\Facades\Auth;
 use \stdClass;
 use Carbon\carbon;
-
+use App\Informe;
 
 class OtsController extends Controller
 {
@@ -241,5 +241,11 @@ class OtsController extends Controller
         return $ot;
 
     } 
+
+    public function getObras($ot_id){
+
+        return Informe::where('ot_id',$ot_id)->select('informes.obra')->distinct()->get();
+    }
+
     
 }

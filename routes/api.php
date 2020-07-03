@@ -21,6 +21,7 @@ Route::group(['middleware' => 'auth:api'], function()
 {   
     Route::resource('parametros_generales', 'ParametrosGeneralesController');
     Route::get('clientes/paginate', 'ClientesController@paginate'); 
+    Route::get('clientes/{cliente_id}/ots', 'ClientesController@getOts'); 
     Route::get('clientes/operador/{user_id}', 'ClientesController@getClientesOperador');
     Route::resource('clientes', 'ClientesController'); 
     Route::get('contratistas/paginate', 'ContratistasController@paginate'); 
@@ -47,6 +48,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('norma_evaluaciones/paginate', 'NormaEvaluacionesController@paginate');
     Route::resource('norma_evaluaciones', 'NormaEvaluacionesController');
     Route::put('ots/{ot_id}/cambiar_estado', 'OtsController@CambiarEstado');
+    Route::get('ots/{ot_id}/obras', 'OtsController@getObras');
     Route::resource('ots', 'OtsController');
     Route::get('ot_servicios/informe/{informe_id}/importado_sn/{importado_sn}', 'OtServiciosController@getOtServiciosInforme');
     Route::get('ot_servicios/ot/{ot_id}', 'OtServiciosController@getOtServicios');
@@ -129,6 +131,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::put('informes/{id}/clonar', 'InformesController@clonar');   
     Route::get('informes/ot/{ot_id}/pendientes_parte_diario', 'InformesController@OtInformesPendienteParteDiario');
     Route::get('informes/ot/{ot_id}/parte/{parte_id}/pendientes_editables_parte_diario', 'InformesController@OtInformesPendienteEditableParteDiario');
+    Route::get('informes/ot/{ot_id}/obra/{obra}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}', 'InformesController@getInformesEstadisticasSoldaduras');
 
   
     Route::get('certificados/parte/{parte_id}/servicios', 'CertificadosController@getParteServicios');

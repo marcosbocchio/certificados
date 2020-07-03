@@ -30,7 +30,7 @@
                     <img  src="{{ public_path('img/blank.png')}}" alt=""  style="height: 42px;margin-top: 5px;">
                 @endif
 
-            </td>      
+            </td>    
 
         </tr>  
         <tr>

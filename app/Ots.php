@@ -33,5 +33,10 @@ class Ots extends Model
      
     }
 
+    public function contratista()
+    {
+        return $this->belongsTo('App\Contratistas','contratista_id','id');
+    }
+
 
 }

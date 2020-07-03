@@ -13,6 +13,7 @@ use App\OtProcedimientosPropios;
 use App\InformesView;
 use App\InformesImportados;
 use \stdClass;
+use Illuminate\Support\Facades\Log;
 
 class InformesController extends Controller
 {
@@ -311,11 +312,35 @@ class InformesController extends Controller
 
     public function getObraInforme($informe_id,$importado_sn){
        
-        
+
        $valor = DB::select('CALL getObraInforme(?,?)',array($informe_id,$importado_sn));
     
        return $valor[0]->obra;
        
     }
-   
+
+    public function getInformesEstadisticasSoldaduras($ot_id,$obra,$fecha_desde,$fecha_hasta){
+
+
+        if($fecha_desde == 'null'){
+            $fecha_desde =  date('2015-01-01');       
+         }
+
+        if($fecha_hasta == 'null'){
+            $fecha_hasta =  date('2060-01-01');    
+        }
+
+        $obra = str_replace('--','/',$obra);           
+        $informes =  InformesView:: where('metodo','RI')
+                            ->where('ot_id',$ot_id)
+                            ->where('obra',$obra)
+                            ->where('importable_sn',0)
+                            ->whereBetween('fecha',[$fecha_desde,$fecha_hasta])
+                            ->get();
+
+ 
+        return $informes;
+           
+    }
+  
 }
