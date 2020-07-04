@@ -8,7 +8,7 @@
         <tr>
             <td style="font-size: 12px;"><span class="datosHead">{{$ot->proyecto}}</span></td>
             
-            </td> 
+            
             @if(isset($informe))
                 <td style="font-size: 12px;" ><span class="datosHead">{{$informe->obra}}</span></td>     
             @else

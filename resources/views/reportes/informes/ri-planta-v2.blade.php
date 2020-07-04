@@ -189,7 +189,7 @@ footer {
     <script type="text/php">
 
         if ( isset($pdf) ) {
-            $x = 484;
+            $x = 468;
             $y = 66;
             $text = "PÁGINA : {PAGE_NUM} de {PAGE_COUNT}";
             $font = $fontMetrics->get_font("serif", "bold");
