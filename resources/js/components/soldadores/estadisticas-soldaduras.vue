@@ -20,7 +20,7 @@
                                 <span class="titulo-li">Cliente</span> 
                                 <a @click="selCliente = !selCliente" class="pull-right">
                                     <div v-if="cliente">{{cliente.nombre_fantasia}}</div> 
-                                    <div v-else><span style="color:#8e8e8e">Seleccionar</span></div>
+                                    <div v-else><span class="seleccionar">Seleccionar</span></div>
                                 </a>
                             </div>
                             <v-select v-show="selCliente" v-model="cliente" label="nombre_fantasia" :options="clientes" @input="CambioCliente()" ></v-select>                         
@@ -28,20 +28,20 @@
                         </li>
                         <li class="list-group-item pointer">
                             <div v-show="!selOt">
-                                <span>OT</span> 
+                                <span class="titulo-li">OT</span> 
                                 <a @click="selOt = !selOt" class="pull-right">
                                     <div v-if="ot">{{ot.numero}}</div> 
-                                    <div v-else><span style="color:#8e8e8e">Seleccionar</span></div>
+                                    <div v-else><span class="seleccionar">Seleccionar</span></div>
                                 </a>
                             </div>
                             <v-select v-show="selOt" v-model="ot" label="numero" :options="ots" @input="CambioOt()" ></v-select>                  
                         </li>
                         <li class="list-group-item pointer">
                             <div v-show="!selObra">
-                                <span>Obra</span> 
+                                <span class="titulo-li">Obra</span> 
                                 <a @click="seleccionarObra()" class="pull-right">
                                     <div v-if="obra || ot.obra">{{obra.obra}}</div> 
-                                    <div v-else><span style="color:#8e8e8e">Seleccionar</span></div>
+                                    <div v-else><span class="seleccionar">Seleccionar</span></div>
                                 </a>
                             </div>
                             <v-select v-show="selObra" v-model="obra" label="obra" :options="obras" @input="CambioObra()"></v-select>                  
@@ -69,7 +69,7 @@
                 <!-- /.box-body -->
             </div>
             <div v-if="ot">
-                <div class="box box-primary">
+                <div class="box box-custom-enod">
                     <div class="box-body box-profile">
                         <div v-if="ot.contratista">
                             <div v-if="ot.contratista.path_logo" style="text-align:center">
@@ -445,7 +445,7 @@ body {
     }
 }
 
-
+/*
   .style-chooser .vs__search::placeholder,
   .style-chooser .vs__dropdown-toggle,
   .style-chooser .vs__dropdown-menu {
@@ -460,6 +460,13 @@ body {
   .style-chooser .vs__open-indicator {
     fill: #394066;
   }
+*/
+.seleccionar {
+   /* font-size: 14px; */
+    font: inherit;
+    font-family: inherit;
+    color:#8e8e8e ;
+}
 
 .mx-input, .mx-datepicker,.mx-input-wrapper {
     box-shadow : none !important;
@@ -477,7 +484,7 @@ body {
     box-shadow: 0 -2px 0 #000;
 }
 
-ul li span {
+ul li .titulo-li {
     font-weight: 600 !important;
 }
 

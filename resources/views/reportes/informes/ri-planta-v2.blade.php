@@ -9,7 +9,7 @@
 
 <style>
 
-    @page { margin: 260px 30px 280px 60px !important;
+    @page { margin: 260px 40px 280px 40px !important;
             padding: 0px 0px 0px 0px !important; }
 
 header {
@@ -26,7 +26,7 @@ footer {
 
 <body>
 <header>
-    @include('reportes.informes.partial.header-principal')     
+    @include('reportes.informes.partial.header-principal-portrait')     
     @include('reportes.partial.linea-amarilla')                
     @include('reportes.informes.partial.header-cliente-comitente-portrait')    
     @include('reportes.partial.linea-gris')        

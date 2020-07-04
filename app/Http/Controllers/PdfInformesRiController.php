@@ -96,7 +96,7 @@ class PdfInformesRiController extends Controller
           
         //  dd($juntas_posiciones,$pasadas_juntas,$defectos_posiciones);
 
-          $pdf = PDF::loadView('reportes.informes.ri-gasoducto',compact('titulo','nro_informe','fecha',
+          $pdf = PDF::loadView('reportes.informes.ri-gasoducto-v2',compact('titulo','nro_informe','fecha',
                                                                         'ot',
                                                                         'norma_ensayo',
                                                                         'norma_evaluacion',
