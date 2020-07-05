@@ -94,7 +94,7 @@ b {
                     </table>          
                 </td>
             </tr>
-            @include('reportes.informes.partial.header-portrait')
+            @include('reportes.informes.partial.header-portrait-v1')
             <tr>
                 <td class="bordered">
                     <table width="100%" style="border-collapse: collapse;" >

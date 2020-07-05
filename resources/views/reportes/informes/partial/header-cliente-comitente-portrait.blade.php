@@ -35,7 +35,11 @@
         </tr>  
         <tr>
             <td style="font-size: 12px;width: 195px;" class="datosHead">{{$cliente->nombre_fantasia}}</td> 
-            <td style="font-size: 12px;width: 195px; " class="datosHead"><span style="margin-left: 12px">{{$contratista->nombre}}</span></td>  
+            <td style="font-size: 12px;width: 195px; " class="datosHead"><span style="margin-left: 12px">
+            @if($contratista)
+                {{$contratista->nombre}}
+            @endif
+            </span></td>  
         </tr>
 
     </tbody>
