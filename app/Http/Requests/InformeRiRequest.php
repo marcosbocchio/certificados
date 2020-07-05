@@ -64,14 +64,14 @@ class InformeRiRequest extends FormRequest
 
      $validacion = [
 
-                'numero_inf'                =>'required | integer| digits_between:1,3',
+                'numero_inf'                => 'required | integer| digits_between:1,3',
                 'gasoducto_sn'              => 'required',
                 'fecha'                     => 'required',
                 'obra'                      => 'required|min:1', 
                 'componente'                => $condicion_componente . 'Max:20',
                 'material'                  => 'required',
                 'plano_isom'                => 'required|Max:10',
-                'medida'                    => 'required',
+                'medida.codigo'                    => 'required',
                 'ot_tipo_soldadura'         => 'required',
                 'diametro'                  => 'required',
                 'tecnica'                   => 'required',
@@ -111,7 +111,8 @@ class InformeRiRequest extends FormRequest
             'ejecutor_ensayo'      => 'ejecutor ensayo',
             'procedimiento_soldadura' =>'procedimiento soldadura',  
             'gasoducto_sn'          =>'formato',
-            'ot_tipo_soldadura'     =>'Eps'  
+            'ot_tipo_soldadura'     =>'Eps',
+            'medida.codigo'         =>'medida'  
             ];
         }
 }

@@ -468,7 +468,7 @@ body {
     color:#8e8e8e ;
 }
 
-.mx-input, .mx-datepicker,.mx-input-wrapper {
+.list-fecha .mx-input,.list-fecha .mx-datepicker,.list-fecha .mx-input-wrapper {
     box-shadow : none !important;
    -webkit-box-shadow : none !important;  
     border-top: none !important;
