@@ -68,7 +68,7 @@
                                 <th colspan="2"> &nbsp;</th>                               
                           </tr>
                           <tr>
-                                <td colspan="2">{{$tecnica->codigo}}</td>
+                                <td class="noBorder" colspan="2">{{$tecnica->codigo}}</td>
                                 <td colspan="2" rowspan="4" style="text-align: center;"><img src="{{ public_path($tecnicas_grafico->path)}}" alt="" style="height: 100px;margin-top: -10px;"></td>
                           </tr>       
 
@@ -115,7 +115,13 @@
                                 <th colspan="4">PQR</th>
                             </tr>
                             <tr >
-                                <td colspan="4">{{$ot_tipo_soldadura->pqr}}</td>
+                                <td colspan="4">
+                                    @if($ot_tipo_soldadura->pqr)
+                                        {{$ot_tipo_soldadura->pqr}}
+                                    @else
+                                        &nbsp;
+                                    @endif
+                                </td>
                             </tr>
 
                             <tr>

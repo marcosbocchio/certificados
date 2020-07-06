@@ -33,13 +33,28 @@
 
 .header-detalle tbody tr:nth-child(4n+2 ) {
     background-color: rgb(217, 217, 217);
+    
 } 
+
 
 table .header-detalle tr th { 
 
-    border-top: 1.5px solid rgb(255,204, 0);
+    border-top: 1.5px solid rgb(255,204, 0);       
    
 }
+
+
+.borderFila { 
+
+    border-bottom: 1.5px solid rgb(255,204, 0);   
+    
+}
+
+.noBorder {
+    border: none !important;
+    border-style: none !important;
+}
+
 
 .datosHead, .header-detalle tbody tr td {
 
