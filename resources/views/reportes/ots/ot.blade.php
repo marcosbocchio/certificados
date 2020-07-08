@@ -205,9 +205,9 @@ td b,td span {
                                 ,
                               @endif 
 
-                              {{ $metodo->metodo }} 
+                                {{ $metodo->metodo }} 
 
-                           @endforeach
+                              @endforeach
                         
                         </td>
                       </tr>  

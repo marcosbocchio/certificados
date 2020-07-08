@@ -30,6 +30,7 @@ use App\Contratistas;
 use App\OtTipoSoldaduras;
 use App\Particulas;
 use App\Contrastes;
+use App\MetodoEnsayos;
 
 class PdfInformesPmController extends Controller
 {
@@ -54,6 +55,7 @@ class PdfInformesPmController extends Controller
          $contraste = Contrastes::where('id',$informe_pm->tinta_contraste_id)->first();
          $tecnica = Tecnicas::findOrFail($informe->tecnica_id);
          $interno_equipo = InternoEquipos::where('id',$informe->interno_equipo_id)->with('equipo')->first();
+         $instrumento_medicion = InternoEquipos::where('id',$informe_pm->instrumento_medicion_id)->with('equipo')->first();
          $tipo_magnetizacion = TiposMagnetizacion::findOrFail($informe_pm->tipo_magnetizacion_id);
          $magnetizacion = Corrientes::findOrFail($informe_pm->corriente_magnetizacion_id);
          $desmagnetizacion_sn = $informe_pm->desmagnetizacion_sn;
@@ -63,8 +65,18 @@ class PdfInformesPmController extends Controller
          $iluminacion = Iluminaciones::findOrFail($informe_pm->iluminacion_id);
          $evaluador = User::find($informe->firma);
          $contratista = Contratistas::find($ot->contratista_id);
-         
-         $detalles =  DB::select('SELECT 
+         $observaciones = $informe->observaciones;   
+
+        /*  Encabezado */
+
+        $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);  
+        $titulo = "PARTÍCULAS MAGNETIZABLES";
+        $nro_informe = FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo);
+        $fecha = date('d-m-Y', strtotime($informe->fecha));
+
+     //   dd($instrumento_medicion);
+
+        $detalles =  DB::select('SELECT 
                                 detalles_pm.pieza as pieza,
                                 detalles_pm.cm as cm,
                                 detalles_pm.detalle as detalle,
@@ -77,7 +89,7 @@ class PdfInformesPmController extends Controller
                                 WHERE
                                 informes_pm.id =:id',['id' => $informe_pm->id ]);       
  
-           $pdf = PDF::loadView('reportes.informes.pm',compact('ot',
+           $pdf = PDF::loadView('reportes.informes.pm-v2',compact('ot','titulo','nro_informe','fecha',
                                                                 'norma_ensayo',
                                                                 'norma_evaluacion',
                                                                 'procedimiento_inf',                                                               
@@ -86,6 +98,7 @@ class PdfInformesPmController extends Controller
                                                                 'ici',
                                                                 'tecnica',
                                                                 'interno_equipo',
+                                                                'instrumento_medicion',
                                                                 'ejecutor_ensayo',
                                                                 'cliente',
                                                                 'contratista',
@@ -102,7 +115,8 @@ class PdfInformesPmController extends Controller
                                                                 'metodo',
                                                                 'iluminacion',
                                                                 'evaluador',
-                                                                'detalles'
+                                                                'detalles',
+                                                                'observaciones'
                                                                 ))->setPaper('a4','portrait')->setWarnings(false);
                                                         
  

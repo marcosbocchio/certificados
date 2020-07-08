@@ -13,7 +13,7 @@
 
                             <tr>                          
                                 <th colspan="2">Diámetro</th>
-                                <th colspan="2">Espedor</th>
+                                <th colspan="2">Espesor</th>
                            </tr>                   
                             <tr>                           
                                 <td colspan="2">{{$diametro_espesor->diametro}}</td>
@@ -52,7 +52,7 @@
 
                             <tr>
                                 <th colspan="2">Lado</th>
-                                <th colspan="2">Dist. Fuente/F Film</th>                               
+                                <th colspan="2">Dist. Fuente / F Film</th>                               
                            </tr>
 
                            <tr>
@@ -139,7 +139,7 @@
                     <table style="font-size: 12px;float:right;" width="100%" class="header-detalle">
                         <tbody>
                             <tr>
-                                <th  width="100%" colspan="4">Plano/Isométrico</th>
+                                <th  width="100%" colspan="4">Plano / Isométrico</th>
                             </tr>                     
                             <tr>
                                  <td colspan="4">{{$informe->plano_isom}}</td>
@@ -177,7 +177,7 @@
                             </tr>
 
                             <tr>
-                                <th colspan="2">Norma ensayo</th>
+                                <th colspan="2">Norma Ensayo</th>
                                 <th colspan="2">Ejecutor Ensayo</th>
                             </tr>
                             <tr>

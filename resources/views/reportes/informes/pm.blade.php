@@ -94,7 +94,7 @@ b {
                     </table>          
                 </td>
             </tr>
-            @include('reportes.informes.partial.header-portrait-v1')
+            @include('reportes.informes.partial.header-portrait')
             <tr>
                 <td class="bordered">
                     <table width="100%" style="border-collapse: collapse;" >
@@ -115,7 +115,7 @@ b {
                                 @else
                                    {{$interno_equipo->amperaje}}
                                 @endif
-                            <td style="font-size: 11px;  " colspan="2"  ><b style="font-size: 11px;">Norma Evaluación: </b>{{$norma_evaluacion->codigo}}</td>                            
+                            <td style="font-size: 11px;" colspan="2"  ><b style="font-size: 11px;">Norma Evaluación: </b>{{$norma_evaluacion->codigo}}</td>                            
                         </tr>
                         <tr>                
                             
@@ -131,25 +131,24 @@ b {
                                 @endif
                             
                             </td>
-                            <td style="font-size: 11px;" colspan="2"  ><b>Vehículo: </b>{{$informe_pm->vehiculo}}</td>
-                             <td style="font-size: 11px;border-right: 1px solid #000; " colspan="2"  ><b>Aditivo: </b>{{$informe_pm->aditivo}}</td>    
+                            <td style="font-size: 11px;" colspan="2"><b>Vehículo: </b>{{$informe_pm->vehiculo}}</td>
+                            <td style="font-size: 11px;border-right: 1px solid #000; " colspan="2"  ><b>Aditivo: </b>{{$informe_pm->aditivo}}</td>    
 
                             
-                            <td style="font-size: 11px;" colspan="2"  ><b>Desmaganetización: </b>
+                            <td style="font-size: 11px;" colspan="2"><b>Desmaganetización: </b>
 
-                            @if ($desmagnetizacion_sn)
-                                SI
-                            @else
-                                NO 
-                            @endif                    
-                            
+                                @if ($desmagnetizacion_sn)
+                                    SI
+                                @else
+                                    NO 
+                                @endif                             
                             
                             </td>
                             
                         </tr>
                         <tr>
                             <td style="font-size: 11px;border-right: 1px solid #000;"  ><b>Plano / Isom :</b>{{$informe->plano_isom}}</td>
-                            <td style="font-size: 11px;border-right: 1px solid #000; " colspan="4"  ><b>Particula: </b>{{$particula->tipo}} / {{$particula->marca}}</td>    
+                            <td style="font-size: 11px;border-right: 1px solid #000;" colspan="4"  ><b>Particula: </b>{{$particula->tipo}} / {{$particula->marca}}</td>    
                            <td style="font-size: 11px; " colspan="2" ><b>Tecnica: </b>{{$tecnica->descripcion}}</td>
                         </tr>
                         <tr>
@@ -159,7 +158,7 @@ b {
                         
                         </tr>
                         <tr>                           
-                            <td style="font-size: 11px;border-right: 1px solid #000; "  ><b>Espesor: </b>
+                            <td style="font-size: 11px;border-right: 1px solid #000;"><b>Espesor: </b>
 
                                 @if ($informe->espesor_chapa)
                                     {{ $informe->espesor_chapa }}
@@ -172,7 +171,7 @@ b {
                             </td>                            
                            <td style="font-size: 11px;  " colspan="2"  ><b>Magnetización : </b>{{$magnetizacion->codigo}}</td>  
                            <td style="font-size: 11px;border-right: 1px solid #000;" colspan="2"  ><b>Fueza Portante: </b>{{$magnetizacion->fuerza_portante}}</td>                            
-                             <td style="font-size: 11px;" colspan="2"  ><b>Iluminación: </b>{{$iluminacion->codigo}} </td>  
+                             <td style="font-size: 11px;" colspan="2"  ><b>Iluminación: </b>{{$iluminacion->codigo}}</td>  
                         </tr>
                         <tr>
                             <td style="font-size: 10px;border-right: 1px solid #000;" ><b>EPS:</b>{{$ot_tipo_soldadura->eps}}</td>

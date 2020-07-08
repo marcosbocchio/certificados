@@ -78,6 +78,7 @@ class PdfInformesRiController extends Controller
         $tecnicas_grafico = TecnicasGraficos::findOrFail($informe_ri->tecnicas_grafico_id);
         $evaluador = User::find($informe->firma);
         $contratista = Contratistas::find($ot->contratista_id);    
+        $observaciones = $informe->observaciones;   
 
         /*  Encabezado */
 
@@ -120,7 +121,8 @@ class PdfInformesRiController extends Controller
                                                                         'juntas_posiciones',
                                                                         'pasadas_juntas',
                                                                         'defectos_posiciones',
-                                                                        'evaluador'))->setPaper('a4','landscape')->setWarnings(false);
+                                                                        'evaluador',
+                                                                        'observaciones'))->setPaper('a4','landscape')->setWarnings(false);
 
 
           return $pdf->stream();
@@ -158,7 +160,8 @@ class PdfInformesRiController extends Controller
                                                               'tecnicas_grafico',
                                                               'juntas_posiciones',
                                                               'defectos_posiciones',
-                                                              'evaluador'))->setPaper('a4','portrait')->setWarnings(false);
+                                                              'evaluador',
+                                                              'observaciones'))->setPaper('a4','portrait')->setWarnings(false);
 
                                                     
           return $pdf->stream();

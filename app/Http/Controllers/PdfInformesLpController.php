@@ -25,6 +25,7 @@ use App\TipoLiquidos;
 use App\AplicacionesLp;
 use App\User;
 use App\OtTipoSoldaduras;
+use App\MetodoEnsayos;
 
 class PdfInformesLpController extends Controller
 {
@@ -57,6 +58,13 @@ class PdfInformesLpController extends Controller
          $iluminacion = Iluminaciones::findOrFail($informe_lp->iluminacion_id);        
          $evaluador = User::find($informe->firma);
          $contratista = Contratistas::find($ot->contratista_id);
+         $observaciones = $informe->observaciones;   
+        /*  Encabezado */
+
+        $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);  
+        $titulo = "LÍQUIDOS PENETRANTES";
+        $nro_informe = FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo);
+        $fecha = date('d-m-Y', strtotime($informe->fecha));
 
        // dd($evaluador);
       //  dd($equipo);
@@ -74,7 +82,7 @@ class PdfInformesLpController extends Controller
                                 informes_lp.id =:id',['id' => $informe_lp->id ]);
         
         
-           $pdf = PDF::loadView('reportes.informes.lp',compact('ot',
+           $pdf = PDF::loadView('reportes.informes.lp-v2',compact('ot','titulo','nro_informe','fecha',
                                                                 'norma_ensayo',
                                                                 'norma_evaluacion',
                                                                 'procedimiento_inf',                                                               
@@ -100,7 +108,8 @@ class PdfInformesLpController extends Controller
                                                                 'removedor_aplicacion',                                                    
                                                                 'iluminacion',
                                                                 'evaluador',
-                                                                'detalles'
+                                                                'detalles',
+                                                                'observaciones'
                                                                 ))->setPaper('a4','portrait')->setWarnings(false);
                                                         
  

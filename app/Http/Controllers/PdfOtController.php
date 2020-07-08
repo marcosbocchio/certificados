@@ -45,8 +45,15 @@ class PdfOtController extends Controller
         $ot_calidad_placas = (new OtCalidadPlacasController)->show($ot->id);    
         $evaluador = User::find($ot->firma);  
         $contratista = Contratistas::find($ot->contratista_id);
+        $observaciones = $ot->observaciones;
 
-        $pdf = \PDF::loadView('reportes.ots.ot',compact('ot',
+        /*  Encabezado */
+      
+        $titulo = "ORDEN DE TRABAJO";
+        $nro_ot = $ot->numero;
+        $fecha = date('d-m-Y', strtotime($ot->fecha));
+
+        $pdf = \PDF::loadView('reportes.ots.ot-v2',compact('ot','titulo','nro_ot','fecha',
                                                         'cliente',
                                                         'contratista',
                                                         'ot_calidad_placas',
@@ -63,7 +70,8 @@ class PdfOtController extends Controller
                                                         'provincia',
                                                         'metodos_ensayos',
                                                         'geo',
-                                                        'evaluador'))->setPaper('a4','portrait')->setWarnings(false);
+                                                        'evaluador',
+                                                        'observaciones'))->setPaper('a4','portrait')->setWarnings(false);
 
         return $pdf->stream();
         

@@ -4,13 +4,13 @@
                 <td width="49%">
                     <table style="font-size: 12px;" width="100%" class="header-detalle">
                         <tbody>
-                      
+
                            <tr>
                                <th width="100%" colspan="4">Componente</th>
                            </tr>
                            <tr >
                                <td colspan="4">{{$informe->componente}}</td>
-                           </tr>
+                           </tr>    
 
                            <tr>
                                <th  width="100%" colspan="4">Plano / Isométrico</th>
@@ -33,44 +33,45 @@
                                 <td colspan="4">{{$procedimiento_inf->titulo}}</td>
                            </tr>
 
-                           <tr >
-                                <th colspan="2">Película</th>
-                                <th colspan="2">Tipo</th>
-                           </tr>
-                           <tr >
-                                <td colspan="2">{{$tipo_pelicula->fabricante}}</td>
-                                <td colspan="2">{{$tipo_pelicula->codigo}}</td>
-                           </tr>
-
                            <tr>
-                                <th colspan="2">Pantalla</th>
-                                <th colspan="1">Ant</th>
-                                <th colspan="1">Pos</th>
+                                <th colspan="2">Método</th>
+                                <th colspan="2">Penetrante</th>
                            </tr>
                            <tr>
-                                <td colspan="2">Pb</td>
-                                <td colspan="1">{{$informe_ri->pos_ant}}</td>
-                                <td colspan="1">{{$informe_ri->pos_pos}}</td>
-                           </tr>
+                                <td colspan="2">{{$metodo->tipo}}-{{$metodo->metodo}}</td>
+                                <td colspan="2">
+                                    @if($metodo->tipo =='TIPO I')
+                                        Fluorescente
+                                    @else
+                                        Visible
+                                    @endif
+                                </td>
+                           </tr>     
 
                            <tr>
-                                <th colspan="2">Lado</th>
-                                <th colspan="2">Dist. Fuente / F Film</th>                               
+                                <th colspan="2">Líquido Revelador</th>
+                                <th colspan="2">Aplicación Revelador</th>
                            </tr>
-
                            <tr>
-                                <td colspan="2">{{$informe_ri->lado}}</td>
-                                <td colspan="2">{{$informe_ri->distancia_fuente_pelicula}}</td>
-                           </tr>
+                                <td colspan="2">                                
+                                    {{$revelador->tipo}}
+                                    @if ($revelador->marca)
 
-                          <tr>
-                                <th colspan="2">Técnica Empleada</th>
-                                <th colspan="2"> &nbsp;</th>                               
-                          </tr>
-                          <tr>
-                                <td class="noBorder" colspan="2">{{$tecnica->codigo}}</td>
-                                <td colspan="2" rowspan="4" style="text-align: center;"><img src="{{ public_path($tecnicas_grafico->path)}}" alt="" style="height: 100px;margin-top: -10px;"></td>
-                          </tr>       
+                                        &nbsp;/&nbsp;{{$revelador->marca}}
+
+                                    @endif
+                                </td>
+                                <td colspan="2">{{$revelador_aplicacion->codigo}}</td>
+                           </tr>     
+                           
+                           <tr>
+                                <th colspan="2">Limpieza Previa</th>
+                                <th colspan="2">Limpieza Intermedia</th>
+                           </tr>
+                            <tr>
+                                <td colspan="2" class="borderFila">{{$informe_lp->limpieza_previa}}</td>
+                                <td colspan="2" class="borderFila">{{$informe_lp->limpieza_intermedia}}</td>
+                            </tr> 
 
                         </tbody>
                     </table>
@@ -81,6 +82,7 @@
                 <td width="49%">
                     <table style="font-size: 12px;float:right;" width="100%" class="header-detalle">
                         <tbody>
+
                            <tr >
                                <th width="50%" colspan="2">Material</th>
                                <th width="50%" colspan="2">Material Accesorio</th>
@@ -122,67 +124,66 @@
                                         &nbsp;
                                     @endif
                                 </td>
-                            </tr>
+                            </tr>   
 
                             <tr>
-                                <th colspan="2">Equipo</th>
-                                <th colspan="2">Fuente</th>
+                                <th colspan="3">Instrumento Medición</th>      
+                                <th colspan="1">Iluminaciones </th> 
                             </tr>
                             <tr>
-                                <td colspan="2">{{$interno_equipo->equipo->codigo}}</td>
-                                <td colspan="2">                           
-                                    @if ($interno_fuente)
-
-                                        {{$interno_fuente->fuente->codigo}} 
-                                        
-                                    @endif
-                                </td>
-                            </tr>
+                                <td colspan="3">{{$equipo->equipo->instrumento_medicion}} / {{$equipo->equipo->codigo}}</td>
+                                <td colspan="1">{{$iluminacion->codigo}}</td>
+                            </tr>  
 
                             <tr>
-                                <th colspan="2">Actividad Fuente</th>
-                                <th colspan="2">Foco</th>
-                            </tr>
-                            <tr>
-                                <td colspan="2">{{$actividad}}</td>
+                                <th colspan="2">Líquido Penetrante.</th>
+                                <th colspan="2">Aplicación Penetrante</th>                               
+                           </tr>
+                           <tr>
                                 <td colspan="2">
-                                    @if ($interno_fuente)
-                                        {{$interno_fuente->foco}}
+                                    {{$penetrante->tipo}}
+
+                                    @if ($penetrante->marca)
+                                    &nbsp;/&nbsp;{{$penetrante->marca}}
                                     @else
-                                        {{$interno_equipo->foco}}    
+                                         &nbsp;
+                                    @endif
+                                
+                                </td>
+                                <td colspan="2">
+                                    {{$penetrante_aplicacion->codigo}}
+                                </td>
+                           </tr>   
+
+
+                           <tr>
+                            <th colspan="2">Líquido Removedor </th>
+                            <th colspan="2">Aplicación Removedor </th>
+                           </tr>
+                           <tr>
+                                <td colspan="2">
+                                    {{$removedor->tipo}}
+                                    @if ($removedor->marca)
+
+                                    &nbsp;/&nbsp;{{$removedor->marca}}
+
                                     @endif
                                 </td>
-                            </tr>
+                                <td colspan="2">{{$removedor_aplicacion->codigo}}</td>
+                            </tr>  
 
-                            <tr>
-                                <th colspan="2">ICI</th>
-                                <th colspan="2">Nº de exposiciones</th>
-                            </tr>
-                            <tr>
-                                <td colspan="2">{{$ici->codigo}}</td>
-                                <td colspan="2">{{$informe_ri->exposicion}}</td>
-                            </tr>
+                           <tr>
+                                <th colspan="2">Limpieza Final</th>
+                                <th colspan="2">Ejecutor Ensayo</th>
+                           </tr>
+                           <tr>
+                                <td colspan="2" class="borderFila">{{$informe_lp->limpieza_final}}</td>
+                                <td colspan="2" class="borderFila">{{$ejecutor_ensayo->name}}</td>
+                           </tr>                    
 
-                            <tr>
-                                <th colspan="2">Norma Evaluación</th>                              
-                                <th colspan="2">Norma Ensayo</th>
-                            </tr>
-                            <tr>
-                                <td colspan="2">{{$norma_evaluacion->codigo}}</td>
-                                <td colspan="2">{{$norma_ensayo->codigo}}</td>
-                            </tr>
-
-                            <tr>
-                                <th colspan="4">Ejecutor Ensayo</th>
-                            </tr>
-                            <tr>
-                                <td colspan="4">{{$ejecutor_ensayo->name}}</td>
-                            </tr>                        
-                                                     
                         </tbody>
                     </table>
                 </td>
             </tr>
         </tbody>
     </table>
- 

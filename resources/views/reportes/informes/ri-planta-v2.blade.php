@@ -9,7 +9,7 @@
 
 <style>
 
-    @page { margin: 260px 40px 280px 40px !important;
+    @page { margin: 260px 40px 325px 40px !important;
             padding: 0px 0px 0px 0px !important; }
 
 header {
@@ -34,6 +34,10 @@ footer {
     @include('reportes.partial.linea-amarilla') 
 </header>
 <footer>
+    @include('reportes.partial.linea-amarilla') 
+
+    @include('reportes.informes.partial.observaciones') 
+
     @include('reportes.partial.linea-amarilla') 
     <table style="text-align: center;border-collapse: collapse;" width="100%" >
         <tbody>
@@ -78,10 +82,7 @@ footer {
                             <tr>
                                 <td style="font-size: 10px; " colspan="3" class="bordered-td"><b>AP: </b>Aprobado</td>                          
                                 <td style="font-size: 10px; " colspan="3" class="bordered-td"><b>RZ: </b>Rechazado</td>
-                            </tr>
-                            <tr>                                
-                                <td style="font-size: 10px;" colspan="6" class="bordered-td"><b>Observaciones: </b>{{$informe->observaciones}}</td>                                  
-                            </tr>                         
+                            </tr>                     
                         </tbody>
                     </table>
                 </td>               
