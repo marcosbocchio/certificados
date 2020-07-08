@@ -59,6 +59,7 @@ class PdfInformesLpController extends Controller
          $evaluador = User::find($informe->firma);
          $contratista = Contratistas::find($ot->contratista_id);
          $observaciones = $informe->observaciones;   
+         
         /*  Encabezado */
 
         $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);  
@@ -67,7 +68,7 @@ class PdfInformesLpController extends Controller
         $fecha = date('d-m-Y', strtotime($informe->fecha));
 
        // dd($evaluador);
-      //  dd($equipo);
+       //  dd($equipo);
          $detalles =  DB::select('SELECT 
                                 detalles_lp.pieza as pieza,
                                 detalles_lp.cm as cm,
