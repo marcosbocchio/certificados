@@ -52,7 +52,7 @@
 
                             <tr>
                                 <th colspan="2">Lado</th>
-                                <th colspan="2">Dist. Fuente / F Film</th>                               
+                                <th colspan="2">Dist. Fuente / Film</th>                               
                            </tr>
 
                            <tr>
