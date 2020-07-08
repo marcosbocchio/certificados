@@ -123,28 +123,39 @@ footer {
                             </tr>  
                             
                             <tr>
-                                <th colspan="1">Contacto 1</th>
-                                <th colspan="1">Tel</th>
+                                <th colspan="2">Contacto 1</th>
                             </tr>
                             <tr>
-                                <td colspan="1">{{$contacto1->nombre}}</td>
-                                <td colspan="1">{{$contacto1->tel}}</td>
+                                <td colspan="2">{{$contacto1->nombre}}</td>
+                            </tr>                          
+ 
+                            <tr>
+                                <th colspan="2">Email</th>    
                             </tr>
+                            <tr>
+                                 <td colspan="2">{{$contacto1->email}}</td>
+                            </tr>
+
 
                             @if($contacto2)
                                 <tr>
-                                    <th colspan="1">Contacto 2</th>
-                                    <th colspan="1">Tel</th>
+                                    <th colspan="2">Contacto 2</th>
                                 </tr>
                                 <tr>
-                                    <td colspan="1">                                  
+                                    <td colspan="2">                                  
                                         {{$contacto2->nombre}}                               
                                     </td>
-                                    <td colspan="1">
-                                        @if($contacto2->tel)
-                                        {{$contacto2->tel}}
+                                </tr>
+                                
+                                <tr>
+                                    <th colspan="2">Email</th>                                    
+                                </tr>
+                                <tr>                                    
+                                    <td colspan="2">
+                                        @if($contacto2->email)
+                                            {{$contacto2->email}}
                                         @else
-                                        &nbsp;
+                                            &nbsp;
                                         @endif
                                     </td>
                                 </tr>
@@ -152,21 +163,26 @@ footer {
                             
                             @if($contacto3)
                                 <tr>
-                                    <th colspan="1">Contacto 3</th>
-                                    <th colspan="1">Tel</th>
+                                    <th colspan="2">Contacto 3</th>
                                 </tr>
                                 <tr>
-                                    <td colspan="1">           
+                                    <td colspan="2">           
                                         {{$contacto3->nombre}}                                
                                     </td>
-                                    <td colspan="1">
-                                        @if($contacto3->tel)
-                                        {{$contacto3->tel}}
+                                </tr>    
+                                
+                                <tr>
+                                    <th colspan="2">Email</th>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        @if($contacto3->email)
+                                            {{$contacto3->email}}
                                         @else
-                                        &nbsp;
+                                            &nbsp;
                                         @endif                    
                                     </td>
-                                </tr>            
+                                </tr>
                              @endif
 
                             <tr>
@@ -191,7 +207,7 @@ footer {
                             </tr>
 
                             <tr>
-                                <td colspan="2" class="borderFila">{{ date('d-m-Y', strtotime($ot->fecha_hora_estimada_ensayo)) }}</td>
+                                <td colspan="2">{{ date('d-m-Y', strtotime($ot->fecha_hora_estimada_ensayo)) }}</td>
                             </tr>
 
                         </tbody>
@@ -219,53 +235,67 @@ footer {
                             </tr>   
 
                             <tr>
-                                <th colspan="1">Cargo</th>
-                                <th colspan="1">Email</th>
+                                <th colspan="2">Cargo</th>    
                             </tr>
                             <tr>
-                                <td colspan="1">{{$contacto1->email ?? ''}}</td>
-                                <td colspan="1">{{$contacto1->tel ?? ''}}</td>
+                                 <td colspan="2">{{$contacto1->cargo}}</td>
+                            </tr>    
+                            
+                            <tr>
+                                <th colspan="2">Tel</th>    
                             </tr>
-
+                            <tr>
+                                 <td colspan="2">{{$contacto1->tel}}</td>
+                            </tr>
+                            
                             @if($contacto2)
+                            <tr>
+                                <th colspan="2">Cargo</th>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    @if($contacto2->cargo)
+                                        {{$contacto2->cargo}}
+                                    @else
+                                        &nbsp;
+                                    @endif
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <th colspan="2">Tel</th>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    @if($contacto2->tel)
+                                       {{ $contacto2->tel }}
+                                    @else
+                                        &nbsp;
+                                    @endif                         
+                                </td>                                
+                            </tr>
+                            @endif
+
+                            @if($contacto3)
                                 <tr>
-                                    <th colspan="1">Cargo</th>
-                                    <th colspan="1">Email</th>
+                                    <th colspan="2">Cargo</th>
                                 </tr>
                                 <tr>
-                                    <td colspan="1">
-                                        @if($contacto2->email)
-                                            {{$contacto2->email}}
+                                    <td colspan="2">
+                                        @if($contacto3->cargo)
+                                            {{$contacto3->cargo}}
                                         @else
                                             &nbsp;
                                         @endif
                                         
                                     </td>
-                                    <td colspan="1">
-                                        @if($contacto2->tel)
-                                            {{$contacto2->tel}}
-                                        @else
-                                            &nbsp;
-                                        @endif
-                                    </td>
                                 </tr>
-                             @endif
-
-                             @if($contacto3)
-
+                                
                                 <tr>
-                                    <th colspan="1">Cargo</th>
-                                    <th colspan="1">Email</th>
+                                    <th colspan="2">Tel</th>
                                 </tr>
                                 <tr>
-                                    <td colspan="1">                          
-                                        @if($contacto3->email)
-                                            {{$contacto3->email}}
-                                        @else
-                                            &nbsp;
-                                        @endif
-                                    </td>
-                                    <td colspan="1">
+                                    <td colspan="2">
                                         @if($contacto3->tel)
                                             {{$contacto3->tel}}
                                         @else
@@ -273,22 +303,26 @@ footer {
                                         @endif
                                     </td>
                                 </tr>
-                             @endif   
+                             @endif
 
                             <tr>
-                                <th colspan="2">Calidad de Placa</th>
+                                <th colspan="2" >Calidad de Placa</th>
                             </tr>     
                             <tr>
-                                <td colspan="2">
-                                    @foreach ($ot_calidad_placas as $ot_calidad_placa)
-                          
-                                    @if (!$loop->first)
-                                    ,
-                                    @endif 
-                                    
-                                        {{ $ot_calidad_placa->codigo  }}
-                                    
-                                    @endforeach
+                                <td colspan="2" class="borderFila">
+                                    @if(count($ot_calidad_placas))
+                                        @foreach ($ot_calidad_placas as $ot_calidad_placa)
+                            
+                                        @if (!$loop->first)
+                                        ,
+                                        @endif 
+                                        
+                                            {{ $ot_calidad_placa->codigo  }}
+                                        
+                                        @endforeach
+                                    @else
+                                        &nbsp;
+                                    @endif
                                 </td>                                
                             </tr>  
                         </tbody>
@@ -348,7 +382,7 @@ footer {
                   @endfor
         </tbody>
     </table>    
-    
+
     <table width="100%">
         <tbody>
             <tr>
