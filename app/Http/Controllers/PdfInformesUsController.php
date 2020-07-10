@@ -25,6 +25,7 @@ use App\CalibracionesUs;
 use App\User;
 use App\OtTipoSoldaduras;
 use App\AgenteAcoplamientos;
+use App\MetodoEnsayos;
 
 class PdfInformesUsController extends Controller
 {
@@ -53,10 +54,18 @@ class PdfInformesUsController extends Controller
          $contratista = Contratistas::find($ot->contratista_id);
          $estado_superficie = EstadosSuperficies::find($informe_us->estado_superficie_id);
          $agente_acoplamiento = AgenteAcoplamientos::find($informe_us->agente_acoplamiento_id);
-
          $calibraciones_us = CalibracionesUs::where('informe_us_id',$informe_us->id)->with('Palpador')->get();
-       //  dd($calibraciones_us);
-        $pdf = PDF::loadView('reportes.informes.us',compact('ot',
+         $observaciones = $informe->observaciones;   
+
+        /*  Encabezado */
+
+        $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);  
+        $titulo = "INFORME DE ULTRASONIDO"." (" . mb_strtoupper($tecnica->descripcion,"UTF-8") . ")";        
+        $nro_informe = FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo);
+        $fecha = date('d-m-Y', strtotime($informe->fecha));
+
+        //  dd($calibraciones_us);
+        $pdf = PDF::loadView('reportes.informes.us-v2',compact('ot','titulo','metodo','nro_informe','fecha',
                                                                 'norma_ensayo',
                                                                 'norma_evaluacion',
                                                                 'procedimiento_inf',
@@ -75,7 +84,7 @@ class PdfInformesUsController extends Controller
                                                                 'estado_superficie',
                                                                 'agente_acoplamiento',
                                                                 'calibraciones_us',
-                                                                'evaluador'
+                                                                'evaluador','observaciones'
                                                         
                                                                 ))->setPaper('a4','portrait')->setWarnings(false);
 

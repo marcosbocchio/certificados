@@ -34,6 +34,7 @@ use App\OtProcedimientosPropios;
 use App\Contratistas;
 use App\OtTipoSoldaduras;
 use App\MetodoEnsayos;
+
 class PdfInformesRiController extends Controller
 {
 

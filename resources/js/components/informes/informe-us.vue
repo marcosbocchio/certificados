@@ -472,7 +472,7 @@
                             <div class="col-md-3">                       
                                 <div class="form-group" >
                                     <label for="elemento_us_pa" title="Elemento">Elemento *</label>
-                                    <input type="text" v-model="elemento_us_pa" class="form-control" id="elemento_us_pa" maxlength="15">
+                                    <input type="text" v-model="elemento_us_pa" class="form-control" id="elemento_us_pa" maxlength="10">
                                 </div>         
                             </div>
 
@@ -631,7 +631,7 @@
                                 <div class="col-md-12">                       
                                     <div class="form-group" >
                                         <label for="elemento_me" title="Elemento">Elemento *</label>
-                                        <input type="text" v-model="elemento_me" class="form-control" id="elemento_me" maxlength="15">
+                                        <input type="text" v-model="elemento_me" class="form-control" id="elemento_me" maxlength="10">
                                     </div>         
                                 </div>
 
@@ -1508,7 +1508,7 @@ export default {
                  return ;            
             }
 
-            if(this.elemento_us_pa.length  > 15){
+            if(this.elemento_us_pa.length  > 10){
 
                 toastr.error('El campo elemento no debe contener más de 15 caracteres'); 
                 return ;
@@ -1660,7 +1660,7 @@ export default {
                  return ;            
             }
 
-            if(this.elemento_me.length  > 15){
+            if(this.elemento_me.length  > 10){
 
                 toastr.error('El campo elemento no debe contener más de 15 caracteres'); 
                 return ;

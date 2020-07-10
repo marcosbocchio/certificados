@@ -25,6 +25,7 @@ use App\CalibracionesUs;
 use App\DetalleUsPaUs;
 use App\User;
 use App\OtTipoSoldaduras;
+use App\MetodoEnsayos;
 
 class PdfInformesUsIndicacionesUsPaController extends Controller
 {
@@ -52,7 +53,14 @@ class PdfInformesUsIndicacionesUsPaController extends Controller
          $estado_superficie = EstadosSuperficies::find($informe_us->estado_superficie_id);
          $indicaciones_us_pa = DetalleUsPaUs::where('informe_us_id',$informe_us->id)->get();
        
-        $pdf = PDF::loadView('reportes.informes.us-indicaciones-us-pa',compact('ot',
+         /*  Encabezado */
+
+         $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);  
+         $titulo = "INFORME DE ULTRASONIDO"." (" . mb_strtoupper($tecnica->descripcion,"UTF-8") . ")";        
+         $nro_informe = FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo);
+         $fecha = date('d-m-Y', strtotime($informe->fecha));
+
+        $pdf = PDF::loadView('reportes.informes.us-indicaciones-us-pa-v2',compact('ot','titulo','metodo','nro_informe','fecha',
                                                                 'norma_ensayo',
                                                                 'norma_evaluacion',
                                                                 'procedimiento_inf',                                                               

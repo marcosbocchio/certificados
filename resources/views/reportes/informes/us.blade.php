@@ -11,7 +11,7 @@
     font-family: DejaVu Sans;
 }
 
-@page { margin: 293px 30px 140px 60px !important;
+@page { margin: 293px 40px 140px 40px !important;
         padding: 0px 0px 0px 0px !important; }
 
 header {

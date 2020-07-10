@@ -26,6 +26,7 @@ use App\DetalleUsMe;
 use App\Generatrices;
 use App\User;
 use App\OtTipoSoldaduras;
+use App\MetodoEnsayos;
 
 class PdfInformesUsIndicacionesMeController extends Controller
 {
@@ -54,8 +55,15 @@ class PdfInformesUsIndicacionesMeController extends Controller
          $generatrices = Generatrices::all();
          $informes_us_me = InformesUsMe::where('informe_us_id',$informe_us->id)->with('detalle_us_me')->get();   
 
+         /*  Encabezado */
+
+         $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);  
+         $titulo = "INFORME DE ULTRASONIDO"." (" . mb_strtoupper($tecnica->descripcion,"UTF-8") . ")";        
+         $nro_informe = FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo);
+         $fecha = date('d-m-Y', strtotime($informe->fecha));
+
        // dd($informes_us_me);
-        $pdf = PDF::loadView('reportes.informes.us-indicaciones-me',compact('ot',
+        $pdf = PDF::loadView('reportes.informes.us-indicaciones-me-v2',compact('ot','titulo','metodo','nro_informe','fecha',
                                                                 'norma_ensayo',
                                                                 'norma_evaluacion',
                                                                 'procedimiento_inf',                                                               
