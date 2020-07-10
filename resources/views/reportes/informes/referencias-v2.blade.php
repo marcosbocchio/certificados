@@ -47,7 +47,14 @@ footer {
 
     <table width="100%">>
         <tbody>
-            <td style="font-size: 12px;" > <b>ELEMENTO: </b>  {{$detalle->pieza}}</td>  
+            <td style="font-size: 12px;" > <b>ELEMENTO: </b>  
+                @if(isset($detalle->pieza))
+                    {{$detalle->pieza}}
+                @elseif(isset($detalle->elemento))
+                    {{$detalle->elemento}}
+                @endif
+
+            </td>  
         </tbody>
     </table>
 

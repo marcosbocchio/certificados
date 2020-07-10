@@ -27,9 +27,7 @@ class PdfInformesUsReferenciaController extends Controller
         $cliente = Clientes::find($ot->cliente_id);       
         $evaluador = User::find($informe->firma);       
         $contratista = Contratistas::find($ot->contratista_id);   
-        $observaciones = $detalle_referencia->descripcion;   
-
-      //  dd($detalle_us_pa_us_referencia);
+        $observaciones = $detalle_referencia->descripcion;       
 
         /*  Encabezado */
 
