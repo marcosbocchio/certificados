@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>REFERENCIA INFORME N°: {{ $nro_informe }}</title>
     <link rel="stylesheet" href="{{ asset('/css/reportes/pdf.css') }}" media="all" />
@@ -9,22 +10,23 @@
 
 <style>
 
-    @page { margin: 260px 40px 220px 40px !important;
+    @page { margin: 260px 40px 233px 40px !important;
             padding: 0px 0px 0px 0px !important; }
 
-header {
-    position:fixed;
-    top: -237px;    
-}        
-    
-footer {
-    position: fixed; bottom:0px; 
-    padding-top: 0px;
-}
+    header {
+        position:fixed;
+        top: -237px;    
+    }        
+        
+    footer {
+        position: fixed; bottom:0px; 
+        padding-top: 0px;
+    }
 
 </style>
 
 <body>
+
 <header>
     @include('reportes.informes.partial.header-principal-portrait')     
     @include('reportes.partial.linea-amarilla')                
@@ -33,6 +35,7 @@ footer {
     @include('reportes.informes.partial.header-proyecto-portrait')    
     @include('reportes.partial.linea-amarilla') 
 </header>
+
 <footer>
     @include('reportes.partial.linea-amarilla') 
 
@@ -66,9 +69,9 @@ footer {
                             <tbody>
                                 <tr>
                                     <td style="text-align: center; width: 330px;height: 275px">
-                                            @if ($detalle_referencia->path1!='/img/imagen1.jpg')
-                                                <img src="{{ public_path($detalle_referencia->path1) }}" alt="" style="height: 160; width: 234;">
-                                            @endif  
+                                        @if ($detalle_referencia->path1!='/img/imagen1.jpg')
+                                            <img src="{{ public_path($detalle_referencia->path1) }}" alt="" style="height: 160; width: 234;">
+                                        @endif  
                                             
                                     </td>
                                     <td style="text-align: center; width: 330px;height: 275px">

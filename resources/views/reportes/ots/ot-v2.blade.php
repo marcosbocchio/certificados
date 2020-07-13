@@ -10,7 +10,7 @@
 
 <style>
 
-    @page { margin: 260px 40px 220px 40px !important;
+    @page { margin: 260px 40px 235px 40px !important;
             padding: 0px 0px 0px 0px !important; }
 
 header {
@@ -28,36 +28,7 @@ footer {
 
 <body>
 <header>
-<table style="text-align: center;" width="100%">
-    <tbody>
-        <tr>
-            <td>
-                <table width="100%">
-                    <tbody>
-                        <tr>
-                            <td rowspan="4" style="text-align: right;width: 240px;">
-                                <img src="{{ public_path('img/logo-enod-web.jpg')}}" alt="" style="height: 60px; margin-right: 25px;">
-                            </td>   
-                            <td style="font-size: 19px; height: 30px;width: 200px; text-align: center;margin-left: 0px" rowspan="3"><b>{{ $titulo }}</b></td>
-                            <td style="font-size: 11px;" ><b style="margin-left: 131px;">&nbsp;</td>          
-                        </tr>
-                        <tr>
-                            <td style="font-size: 11px;" ><b style="margin-left: 131px;">OT N°: </b>{{ $nro_ot }}</td>     
-                            
-                        </tr>
-                        <tr>
-                            <td style="font-size: 11px;"><b style="margin-left: 131px;">FECHA: </b>{{ $fecha }}</td>
-                        </tr>
-                        <tr>
-                            <td style="font-size: 11px;">&nbsp;</td>                     
-                            <td style="font-size: 11px;">&nbsp;</td>            
-                        </tr>               
-                    </tbody>
-                </table>          
-            </td>
-        </tr>
-    </tbody>
-</table>
+    @include('reportes.ots.header-principal-ot')     
     @include('reportes.partial.linea-amarilla')                
     @include('reportes.informes.partial.header-cliente-comitente-portrait')    
     @include('reportes.partial.linea-gris')        
@@ -67,32 +38,10 @@ footer {
 
 <footer>
 
-
     @include('reportes.partial.linea-amarilla') 
-
     @include('reportes.informes.partial.observaciones') 
-
     @include('reportes.partial.linea-amarilla') 
-
-    <table width="100%">
-        <tbody>
-            <tr>
-                <td style="font-size: 13px;" colspan="4"><b>Firmas </b></td> 
-            </tr>
-            <tr>
-                <td style="font-size: 13px;text-align: center;height: 50px;" colspan="2" width="50%">
-                    @if($evaluador && $evaluador->path)
-                        <img src="{{ public_path($evaluador->path)}}" alt="" style="width: 100px;height: 50px;">
-                    @endif     
-                </td>    
-                <td style="font-size: 13px;" colspan="2" width="50%">&nbsp;</td> 
-            </tr>
-            <tr>                               
-                <td style="font-size: 14px; text-align: center;"" colspan="2"><em>Responsable OT </em></td>   
-                <td style="font-size: 14px; text-align: center;" colspan="2"><em>Generador OT </em></td> 
-            </tr>
-        </tbody>
-    </table>
+    @include('reportes.ots.firmas') 
 
 </footer>
 
@@ -111,7 +60,7 @@ footer {
                             <tr>
                                 <td colspan="2">{{$ot->lugar}}
                                     <a href="{{ $geo }}" target="_blank" >
-                                        <img src="{{ public_path('img/mark-google-maps.jpg')}}" alt="" style="height: 14px;">
+                                        <img src="{{ public_path('img/mark-google-maps.png')}}" alt="" style="height: 14px;">
                                     </a>                                  
                                 </td>
                             </tr>   

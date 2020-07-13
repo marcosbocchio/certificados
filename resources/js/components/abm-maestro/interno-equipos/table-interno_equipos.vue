@@ -36,7 +36,7 @@
             <td v-else ></td> 
             <td v-if="registro.ot">
             <a :href="'https://www.google.com/maps/search/?api=1&query=' + registro.ot.lat  + ',' + registro.ot.lon " target="_blank" title="maps">  
-                   <img :src="AppUrl + '/' + 'img/mark-google-maps.jpg' " alt="maps" style="height: 20px;">  
+                   <img :src="AppUrl + '/' + 'img/mark-google-maps.png' " alt="maps" style="height: 20px;">  
             </a>
                 {{registro.ot.localidad.localidad}} / {{registro.ot.localidad.provincia.provincia}}
               </td>

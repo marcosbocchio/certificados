@@ -33,7 +33,7 @@ class PdfInformesLpReferenciasController extends Controller
         /*  Encabezado */
 
         $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);  
-        $titulo = "LÍQUIDOS PENETRANTES";
+        $titulo = "LÍQUIDOS PENETRANTES (REFERENCIA)";
         $nro_informe = FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo);
         $fecha = date('d-m-Y', strtotime($informe->fecha));
         

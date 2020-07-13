@@ -305,7 +305,7 @@ b {
                     </td>
                     <td class="bordered-td">&nbsp;
                         @if ($detalle->referencia_id)
-                            <a href="{{ route('InformePmReferencias',$detalle->referencia_id)}}"><img src="{{ public_path('img/fa-file-pdf.jpg')}}" alt="" style="height: 15px;margin-left:3px;;margin-top:2px;text-align: center;"></a>                                                       
+                            <a href="{{ route('InformePmReferencias',$detalle->referencia_id)}}"><img src="{{ public_path('img/fa-file-pdf.png')}}" alt="" style="height: 15px;margin-left:3px;;margin-top:2px;text-align: center;"></a>                                                       
                         @endif
                     </td>
                 </tr>                

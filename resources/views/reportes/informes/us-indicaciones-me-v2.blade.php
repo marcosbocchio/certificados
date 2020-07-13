@@ -9,7 +9,7 @@
 
 <style>
 
-    @page { margin: 300px 40px 160px 40px !important;
+    @page { margin: 300px 40px 151px 40px !important;
             padding: 0px 0px 0px 0px !important; }
 
     header {
@@ -35,7 +35,7 @@
     @include('reportes.informes.partial.header-proyecto-portrait')    
     @include('reportes.partial.linea-amarilla') 
     
-    <table width="100%" style="border-collapse: collapse;">
+    <table width="100%" style="border-collapse: collapse;margin-top: 10px;">
         <tbody>
             <tr>
                 <td style="border: 1px solid #000;border-collapse: collapse; background:#D8D8D8;text-align: center;">REGISTRO DE MEDICIONES</td>

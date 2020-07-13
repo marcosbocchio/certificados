@@ -14,7 +14,6 @@ use App\User;
 class PdfProductosReferenciasController extends Controller
 {
     public function imprimir($id){ 
-
       
         $ot_modelos = OtProductos::where('ot_referencia_id',$id)->first();             
         $ot = Ots::find($ot_modelos->ot_id);   
@@ -24,9 +23,16 @@ class PdfProductosReferenciasController extends Controller
         $tabla = 'Producto';    
         $evaluador = User::find($ot->firma);   
         $contratista = Contratistas::find($ot->contratista_id);
+        $observaciones = $ot_referencia->descripcion;       
 
+        
+        /*  Encabezado */
+      
+        $titulo = "REFERECIA OT";
+        $nro_ot = $ot->numero;
+        $fecha = date('d-m-Y', strtotime($ot->fecha));
 
-        $pdf = \PDF::loadView('reportes.ots.referencias',compact('ot',
+        $pdf = \PDF::loadView('reportes.ots.referencias-v2',compact('ot','titulo','nro_ot','fecha','observaciones',
                                                                 'cliente',
                                                                 'contratista',
                                                                 'modelo',

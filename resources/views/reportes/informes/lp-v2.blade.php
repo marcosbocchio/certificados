@@ -9,7 +9,7 @@
 
 <style>
 
-    @page { margin: 260px 40px 220px 40px !important;
+    @page { margin: 260px 40px 233px 40px !important;
             padding: 0px 0px 0px 0px !important; }
 
 header {
@@ -94,7 +94,7 @@ footer {
                     </td>
                     <td class="bordered-td">&nbsp;
                         @if ($detalle->referencia_id)
-                            <a href="{{ route('InformeLpReferencias',$detalle->referencia_id)}}"><img src="{{ public_path('img/fa-file-pdf.jpg')}}" alt="" style="height: 15px;margin-left:3px;;margin-top:2px;text-align: center;"></a>                                                       
+                            <a href="{{ route('InformeLpReferencias',$detalle->referencia_id)}}"><img src="{{ public_path('img/fa-file-pdf.png')}}" alt="" style="height: 15px;margin-left:3px;;margin-top:2px;text-align: center;"></a>                                                       
                         @endif
                     </td>
                 </tr>                

@@ -387,9 +387,9 @@ b {
                 <td style="border-top: 2px solid #000;background:#D8D8D8;text-align: center;" >
                    REGISTRO DE MEDICIONES
                    @if($tecnica->codigo == 'US' || $tecnica->codigo=='PA')
-                   <a href="{{ route('InformeUsIndicacionesUsPa',$informe->id)}}"><img src="{{ public_path('img/fa-file-pdf.jpg')}}" style="height: 15px;margin-left:3px;;margin-top:2px;text-align: center;"></a>
+                   <a href="{{ route('InformeUsIndicacionesUsPa',$informe->id)}}"><img src="{{ public_path('img/fa-file-pdf.png')}}" style="height: 15px;margin-left:3px;;margin-top:2px;text-align: center;"></a>
                    @elseif($tecnica->codigo ='ME')
-                   <a href="{{ route('InformeUsIndicacionesMe',$informe->id)}}"><img src="{{ public_path('img/fa-file-pdf.jpg')}}" style="height: 15px;margin-left:3px;;margin-top:2px;text-align: center;"></a>
+                   <a href="{{ route('InformeUsIndicacionesMe',$informe->id)}}"><img src="{{ public_path('img/fa-file-pdf.png')}}" style="height: 15px;margin-left:3px;;margin-top:2px;text-align: center;"></a>
                    @endif
                </td>
             </tr>

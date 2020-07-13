@@ -32,7 +32,7 @@ class PdfInformesPmReferenciasController extends Controller
         /*  Encabezado */
 
         $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);  
-        $titulo = "PARTÍCULAS MAGNETIZABLES";
+        $titulo = "PARTÍCULAS MAGNETIZABLES (REFERENCIA)";
         $nro_informe = FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo);
         $fecha = date('d-m-Y', strtotime($informe->fecha));
 
