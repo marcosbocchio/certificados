@@ -9,7 +9,7 @@
 
 <style>
 
-    @page { margin: 260px 40px 233px 40px !important;
+    @page { margin: 260px 40px 260px 40px !important;
             padding: 0px 0px 0px 0px !important; }
 
 header {
@@ -48,6 +48,21 @@ footer {
 </header>
 
 <footer>
+
+    <table width="100%">
+        <tbody>
+            <tr>
+                <td style="border: 1px solid #000;background:#D8D8D8;text-align: center;" >
+                   REGISTRO DE MEDICIONES
+                   @if($tecnica->codigo == 'US' || $tecnica->codigo=='PA')
+                   <a href="{{ route('InformeUsIndicacionesUsPa',$informe->id)}}"><img src="{{ public_path('img/fa-file-pdf.png')}}" style="height: 15px;margin-left:3px;;margin-top:2px;text-align: center;"></a>
+                   @elseif($tecnica->codigo ='ME')
+                   <a href="{{ route('InformeUsIndicacionesMe',$informe->id)}}"><img src="{{ public_path('img/fa-file-pdf.png')}}" style="height: 15px;margin-left:3px;;margin-top:2px;text-align: center;"></a>
+                   @endif
+               </td>
+            </tr>
+        </tbody>
+    </table>
 
     @include('reportes.partial.linea-amarilla') 
 
@@ -261,22 +276,9 @@ footer {
             </tbody>
         </table>
 
-        <table width="100%">
-            <tbody>
-                <tr>
-                    <td style="border: 1px solid #000;background:#D8D8D8;text-align: center;" >
-                       REGISTRO DE MEDICIONES
-                       @if($tecnica->codigo == 'US' || $tecnica->codigo=='PA')
-                       <a href="{{ route('InformeUsIndicacionesUsPa',$informe->id)}}"><img src="{{ public_path('img/fa-file-pdf.png')}}" style="height: 15px;margin-left:3px;;margin-top:2px;text-align: center;"></a>
-                       @elseif($tecnica->codigo ='ME')
-                       <a href="{{ route('InformeUsIndicacionesMe',$informe->id)}}"><img src="{{ public_path('img/fa-file-pdf.png')}}" style="height: 15px;margin-left:3px;;margin-top:2px;text-align: center;"></a>
-                       @endif
-                   </td>
-                </tr>
-            </tbody>
-        </table>
+        
+        @endif
 
-    @endif
 
 </main>   
      

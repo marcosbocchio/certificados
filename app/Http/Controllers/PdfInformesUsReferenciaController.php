@@ -32,7 +32,7 @@ class PdfInformesUsReferenciaController extends Controller
         /*  Encabezado */
 
         $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);  
-        $titulo = "INFORME DE ULTRASONIDO";
+        $titulo = "INFORME DE ULTRASONIDO (REFERENCIA)";
         $nro_informe = FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo);
         $fecha = date('d-m-Y', strtotime($informe->fecha));
 
