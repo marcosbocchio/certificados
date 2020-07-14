@@ -81,7 +81,7 @@ class PdfPartesController extends Controller
                                 })  
                                 ->where('parte_detalles.parte_id',$id)
                                 ->selectRaw('metodo_ensayos.metodo as metodo,IF(informes_importados.numero,CONCAT(metodo_ensayos.metodo,LPAD(informes_importados.numero, 3, "0")),CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0"))) as numero_formateado,IFNULL(informes.id,informes_importados.id) as informe_id,informes.id as no_importado')
-                                ->groupby('numero_formateado','metodo','informe_id','informes_importados.id')
+                                ->groupby('numero_formateado','metodo','informes.id','informes_importados.id')
                                 ->orderBy('numero_formateado','ASC')
                                 ->get();
   
