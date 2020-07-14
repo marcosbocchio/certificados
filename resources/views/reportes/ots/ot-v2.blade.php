@@ -331,32 +331,51 @@ footer {
                       </tr>
                   @endfor
         </tbody>
-    </table>    
+    </table>   
 
-    <table width="100%">
-        <tbody>
-            <tr>
-                <td  style="font-size: 13px;"><strong>Elementos de Seguridad: </strong>
-                    @foreach ( $ot_epps as $ot_epp )
-                        @if (!$loop->first)
-                        ,
-                        @endif
-                    {{$ot_epp->descripcion}}
-                    @endforeach
-                </td>           
-            </tr>
-            <tr>
-                <td  style="font-size: 13px;"><strong>Riesgos: </strong>
-                    @foreach ( $ot_riesgos as $ot_riesgo )
-                        @if (!$loop->first)
+    @if(count($ot_epps) || count($ot_riesgos))
+        @include('reportes.partial.linea-amarilla-fina') 
+    @endif
+
+    @if(count($ot_epps))
+        <table width="100%">
+            <tbody>
+                <tr>
+                    <td style="font-size: 13px;"><strong>Elementos de Seguridad: </strong> </td>
+                </tr>
+                <tr>
+                    <td style="font-size: 13px;">
+                        @foreach ( $ot_epps as $ot_epp )
+                            @if (!$loop->first)
                             ,
-                        @endif
-                    {{$ot_riesgo->descripcion}}
-                    @endforeach
-                </td>
-            </tr>
-        </tbody>
-    </table>
+                            @endif
+                        {{$ot_epp->descripcion}}
+                        @endforeach
+                    </td>           
+                </tr>
+            </tbody>
+        </table>
+    @endif
+
+    @if(count($ot_riesgos))      
+        <table width="100%">
+            <tbody>    
+                <tr>
+                    <td style="font-size: 13px;"><strong>Riesgos: </strong> </td>
+                </tr>
+                <tr>
+                    <td style="font-size: 13px;">
+                        @foreach ( $ot_riesgos as $ot_riesgo )
+                            @if (!$loop->first)
+                                ,
+                            @endif
+                        {{$ot_riesgo->descripcion}}
+                        @endforeach
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    @endif
 </main>   
      
     <script type="text/php">
