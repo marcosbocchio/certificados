@@ -569,7 +569,7 @@ class PartesController extends Controller
             $informe_us= Informe:: join('informes_us','informes.id','=','informes_us.informe_id')
                                    ->leftJoin('detalle_us_pa_us','detalle_us_pa_us.informe_us_id','=','informes_us.id')
                                    ->where('informes.id',$id)
-                                   ->selectRaw('  COUNT(detalle_us_pa_us.elemento) as costuras,
+                                   ->selectRaw('COUNT(detalle_us_pa_us.elemento) as costuras,                                   
                                                 detalle_us_pa_us.diametro as pulgadas,  
                                                 "US" as metodo')                               
                                 ->groupBy('diametro')                                                       

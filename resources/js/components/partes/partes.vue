@@ -510,7 +510,7 @@
                                                             </div>   
                                                         </div>  
                                                         <div v-else>
-                                                            <td> &nbsp;</td>
+                                                             {{ item.pieza_final }}
                                                         </div>   
                                     
                                                     </td>
@@ -945,7 +945,6 @@ export default {
             axios.defaults.baseURL = this.url ;
             var urlRegistros = 'informes/ot/' + this.otdata.id + '/pendientes_parte_diario' + '?api_token=' + Laravel.user.api_token;        
             axios.get(urlRegistros).then(response =>{
-            console.log(response.data);
             this.informes = response.data  
             });
                
@@ -1657,8 +1656,6 @@ export default {
 
         RecalcularMetros(metodo){
 
-         console.log('entro en recalcular metros :' + metodo);
-
           if(this.TablaServicios.findIndex(elemento => elemento.unidad_medida == 'Metro' && elemento.metodo == metodo) != -1){       
            
            switch (metodo) {
@@ -1721,7 +1718,6 @@ export default {
 
       RecalcularHospedaje()  {
 
-          console.log('entro ee recalcular hospedaje');
             let index = this.TablaServicios.findIndex(elemento => (elemento.unidad_medida == 'Dia' && elemento.servicio_descripcion.includes('Hospedaje')))      
 
             if(index > -1){
@@ -1895,7 +1891,7 @@ export default {
             var urlRegistros = 'partes/informe_us/' + id + '?api_token=' + Laravel.user.api_token;       
             let res = await axios.get(urlRegistros);
             let informe_us_parte = await res.data;          
-            
+            console.log(informe_us_parte);
             informe_us_parte.forEach(function(item){                    
 
                 if(item.tecnica.codigo =='US' || item.tecnica.codigo =='PA'){
@@ -1908,8 +1904,8 @@ export default {
                            tecnica : item.tecnica.codigo,
                            pulgadas_original: item.pulgadas,
                            pulgadas_final: item.pulgadas,
-                           pieza_original : '',
-                           pieza_final : '',
+                           pieza_original : item.costuras,
+                           pieza_final : item.costuras,
                            cm_original: '',
                            cm_final:'', 
                         });  
