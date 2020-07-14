@@ -46,7 +46,7 @@ footer {
 <main>   
 
     @include('reportes.partes.header-detalle-parte')         
-    @include('reportes.partial.linea-amarilla')  
+    @include('reportes.partial.linea-amarilla-fina')  
 
     @if(count($vehiculos) > 0)    
         <table width="100%" style="border-collapse: collapse;">
@@ -84,6 +84,7 @@ footer {
 
     @if(count($responsables) > 0)    
 
+    @include('reportes.partial.linea-amarilla-fina')  
 
         <table width="100%" style="border-collapse: collapse;">
             <tbody> 
@@ -114,6 +115,8 @@ footer {
     @endif
 
     @if(count($servicios) > 0)    
+
+        @include('reportes.partial.linea-amarilla-fina')  
 
         <table width="100%" style="margin-top: -5px;margin-bottom: 10px;">
             <tbody>        
@@ -166,7 +169,7 @@ footer {
 
             @if ($ExisteRI)       
                 <tr>                         
-                    <td style="font-size: 12px;height: 30px;border-top: 1px dashed black;" colspan="5"><b>METODO ENSAYO: RI </b></td>                                         
+                    <td style="font-size: 12px;height: 30px;" colspan="5"><b>METODO ENSAYO: RI </b></td>                                         
                 </tr> 
                 @if ($estado == 'original')
                     <tr>                         
@@ -199,7 +202,11 @@ footer {
                 @endforeach                     
 
             @endif
+        </tbody>                    
+    </table>
 
+    <table width="100%" style="margin-top: -5px;">
+        </tbody>
             {{$ExistePM = false}} 
             @foreach ($parte_detalle as $item)
 

@@ -47,6 +47,7 @@ class PdfPartesController extends Controller
                           ->select('vehiculos.*','parte_vehiculos.km_inicial','parte_vehiculos.km_final')
                           ->get();    
 
+
         /*  Encabezado */
 
         $titulo = "PARTE DIARIO DE TRABAJO";
@@ -77,18 +78,18 @@ class PdfPartesController extends Controller
 
                         })  
                         ->where('parte_detalles.parte_id',$id)
-                        ->selectRaw('metodo_ensayos.metodo as metodo,IF(informes_importados.numero,CONCAT(metodo_ensayos.metodo,LPAD(informes_importados.numero, 3, "0")),CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0"))) as numero_formateado,informes.id as informe_id')
-                        ->groupBy('metodo','numero_formateado','informe_id')
+                        ->selectRaw('metodo_ensayos.metodo as metodo,IF(informes_importados.numero,CONCAT(metodo_ensayos.metodo,LPAD(informes_importados.numero, 3, "0")),CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0"))) as numero_formateado,IFNULL(informes.id,informes_importados.id) as informe_id,informes.id as no_importado')
                         ->orderBy('numero_formateado','ASC')
                         ->get();
 
-         $informes_detalle = DB::table('metodo_ensayos')
+        $informes_detalle = DB::table('metodo_ensayos')
                         ->join('informes','metodo_ensayos.id','=','informes.metodo_ensayo_id')  
                         ->join('parte_detalles','parte_detalles.informe_id','=','informes.id')
                         ->where('parte_detalles.parte_id',$id)
                         ->selectRaw('metodo_ensayos.metodo as metodo,informes.id as informe_id,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado')
                         ->groupBy('informes.id','metodo','numero_formateado')                      
                         ->get();
+      //  dd($metodos_informe);
 
         $pdf = \PDF::loadView('reportes.partes.parte-v2',compact('ot','titulo','nro','fecha','observaciones','tipo_reporte',
                                                             'cliente', 

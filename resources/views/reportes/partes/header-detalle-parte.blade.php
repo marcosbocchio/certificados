@@ -36,8 +36,12 @@
                                         @if (!$loop->first)
                                         ,
                                         @endif 
-                
-                                        <a href="{{ route('pdfInformes',$item->informe_id)}}">{{$item->numero_formateado}}</a>                       
+
+                                        @if($item->no_importado !='')
+                                            <a href="{{ route('pdfInformes',$item->informe_id)}}">{{$item->numero_formateado}}</a>                       
+                                        @else
+                                            <a href="{{ route('pdfinformes_importados',$item->informe_id)}}">{{$item->numero_formateado}}</a>
+                                        @endif
                                         
                                     @endforeach
                                  

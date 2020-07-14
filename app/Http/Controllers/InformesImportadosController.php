@@ -31,9 +31,13 @@ class InformesImportadosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function open($id)
     {
-        
+      $infome_importado = InformesImportados::where('id' , $id)
+                         ->firstOrFail();
+
+      $path = public_path($infome_importado->path);
+      return response()->file($path);
     }
 
     /**

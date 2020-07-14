@@ -21,6 +21,8 @@ Route::group(['middleware' => ['auth']], function () {
   Route::get('/area/enod','DashboardController@index')->name('dashboard');
 
   Route::get('institucionales/{id}','DocumentacionesController@institucionales')->name('institucionales');
+  Route::get('informes_importados/{id}','InformesImportadosController@open')->name('pdfinformes_importados');
+
   Route::get('download/{name}','SoftwareDownloadController@software_download')->name('software_download');
   Route::get('operadores/ot/{id}','OtOperariosController@index')->name('otOperadores');
   Route::get('interno_equipos/ot/{id}','InternoEquiposController@OtInternoEquipos')->name('otInternoEquipos');
@@ -84,9 +86,9 @@ Route::group(['middleware' => ['auth']], function () {
 
   // reportes
 
-  Route::get('/pdf/dosimetria/periodos','PdfDosimetriaPeriodosController@imprimir')->name('pdfDosimetriaPeriodos');
 
-          //reportes 
+
+          Route::get('/pdf/dosimetria/periodos','PdfDosimetriaPeriodosController@imprimir')->name('pdfDosimetriaPeriodos');
 
           Route::get('/pdf/remito/{id}','PdfRemitosController@imprimir')->name('pdfRemito');
           Route::get('/pdf/parte/{id}/{estado}','PdfPartesController@imprimir');
