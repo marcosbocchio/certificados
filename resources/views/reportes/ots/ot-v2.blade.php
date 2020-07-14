@@ -28,7 +28,7 @@ footer {
 
 <body>
 <header>
-    @include('reportes.ots.header-principal-ot')     
+    @include('reportes.partial.header-principal-portrait')     
     @include('reportes.partial.linea-amarilla')                
     @include('reportes.informes.partial.header-cliente-comitente-portrait')    
     @include('reportes.partial.linea-gris')        
@@ -259,7 +259,7 @@ footer {
                                 <th colspan="2" >Calidad de Placa</th>
                             </tr>     
                             <tr>
-                                <td colspan="2" class="borderFila">
+                                <td colspan="2" class="borderFilabottom">
                                     @if(count($ot_calidad_placas))
                                         @foreach ($ot_calidad_placas as $ot_calidad_placa)
                             

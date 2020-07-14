@@ -34,12 +34,27 @@ class PdfPartesController extends Controller
         $ot = Ots::find($parte->ot_id);   
         $cliente = Clientes::find($ot->cliente_id);   
         $evaluador = User::find($parte->firma);
+
         $responsables = DB::table('parte_operadores')
                           ->join('users','users.id','=','parte_operadores.user_id')
                           ->where('parte_operadores.parte_id',$id)
                           ->select('users.name as nombre','parte_operadores.responsabilidad')
                           ->get();     
-        
+
+        $vehiculos = DB::table('parte_vehiculos')
+                          ->join('vehiculos','vehiculos.id','=','parte_vehiculos.vehiculo_id')
+                          ->where('parte_vehiculos.parte_id',$id)
+                          ->select('vehiculos.*','parte_vehiculos.km_inicial','parte_vehiculos.km_final')
+                          ->get();    
+
+        /*  Encabezado */
+
+        $titulo = "PARTE DIARIO DE TRABAJO";
+        $nro = $parte->id;
+        $fecha = date('d-m-Y', strtotime($parte->fecha));
+        $observaciones = $parte->observaciones;
+        $tipo_reporte = 'PARTE Nº:';
+
         $contratista = Contratistas::find($ot->contratista_id);
 
         $parte_detalle = DB::select('CALL ParteDetalle(?,?)',array($id,$estado));
@@ -62,8 +77,8 @@ class PdfPartesController extends Controller
 
                         })  
                         ->where('parte_detalles.parte_id',$id)
-                        ->selectRaw('metodo_ensayos.metodo as metodo,IF(informes_importados.numero,CONCAT(metodo_ensayos.metodo,LPAD(informes_importados.numero, 3, "0")),CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0"))) as numero_formateado')
-                        ->groupBy('metodo','numero_formateado')
+                        ->selectRaw('metodo_ensayos.metodo as metodo,IF(informes_importados.numero,CONCAT(metodo_ensayos.metodo,LPAD(informes_importados.numero, 3, "0")),CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0"))) as numero_formateado,informes.id as informe_id')
+                        ->groupBy('metodo','numero_formateado','informe_id')
                         ->orderBy('numero_formateado','ASC')
                         ->get();
 
@@ -75,13 +90,14 @@ class PdfPartesController extends Controller
                         ->groupBy('informes.id','metodo','numero_formateado')                      
                         ->get();
 
-        $pdf = \PDF::loadView('reportes.partes.parte',compact('ot',
+        $pdf = \PDF::loadView('reportes.partes.parte-v2',compact('ot','titulo','nro','fecha','observaciones','tipo_reporte',
                                                             'cliente', 
                                                             'contratista',
                                                             'parte',
                                                             'metodos_informe',
                                                             'informes_detalle',
                                                             'responsables',
+                                                            'vehiculos',
                                                             'servicios',
                                                             'parte_detalle',
                                                             'estado',

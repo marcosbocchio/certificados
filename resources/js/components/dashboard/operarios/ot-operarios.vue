@@ -1,6 +1,6 @@
 <template>
     <div class="row">     
-       <div class="col-lg-3 col-xs-6">      
+       <div class="col-lg-12">      
           <cuadro-enod
               :tablero_sn ="false"
               :titulo = "'OPERADORES'"
@@ -9,8 +9,7 @@
               :cantidad_1 ="users_ot_operarios.length"
               :src_icono ="'/img/tablero/icono-enod-operador.svg'"
               :class_color_cuadro = "'bg-custom-1'"   
-              :habilitado_sn ="true"        
-         
+              :habilitado_sn ="true"             
           >
           </cuadro-enod>
        </div>

@@ -127,7 +127,7 @@
                                <th colspan="4">Norma Evaluación</th>                              
                             </tr>
                             <tr>
-                                <td colspan="4" class="borderFila">{{$norma_evaluacion->codigo}}</td>
+                                <td colspan="4" class="borderFilabottom">{{$norma_evaluacion->codigo}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -181,8 +181,8 @@
                                 <th colspan="2">Ejecutor Ensayo</th>
                             </tr>
                             <tr>
-                                <td colspan="2" class="borderFila">{{$norma_ensayo->codigo}}</td>
-                                <td colspan="2" class="borderFila">{{$ejecutor_ensayo->name}}</td>
+                                <td colspan="2" class="borderFilabottom">{{$norma_ensayo->codigo}}</td>
+                                <td colspan="2" class="borderFilabottom">{{$ejecutor_ensayo->name}}</td>
                             </tr>
                         </tbody>
                     </table>

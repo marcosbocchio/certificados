@@ -44,9 +44,15 @@ table .header-detalle tr th {
 }
 
 
-.borderFila { 
+.borderFilabottom { 
 
     border-bottom: 1.5px solid rgb(255,204, 0);   
+    
+}
+
+.borderFilatop { 
+
+    border-top: 1.5px solid rgb(255,204, 0);   
     
 }
 

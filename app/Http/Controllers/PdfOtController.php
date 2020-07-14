@@ -50,10 +50,11 @@ class PdfOtController extends Controller
         /*  Encabezado */
       
         $titulo = "ORDEN DE TRABAJO";
-        $nro_ot = $ot->numero;
+        $nro = $ot->numero;
         $fecha = date('d-m-Y', strtotime($ot->fecha));
+        $tipo_reporte = 'OT Nº:';
 
-        $pdf = \PDF::loadView('reportes.ots.ot-v2',compact('ot','titulo','nro_ot','fecha',
+        $pdf = \PDF::loadView('reportes.ots.ot-v2',compact('ot','titulo','nro','fecha','tipo_reporte',
                                                         'cliente',
                                                         'contratista',
                                                         'ot_calidad_placas',

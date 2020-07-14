@@ -209,8 +209,8 @@
                                 <th colspan="2">Ejecutor Ensayo</th>
                             </tr>
                             <tr>
-                                <td colspan="2" class="borderFila">{{$tecnica->descripcion}}</td>
-                                <td colspan="2" class="borderFila">{{$ejecutor_ensayo->name}}</td>
+                                <td colspan="2" class="borderFilabottom">{{$tecnica->descripcion}}</td>
+                                <td colspan="2" class="borderFilabottom">{{$ejecutor_ensayo->name}}</td>
                             </tr>      
                        </tbody>
                     </table>
