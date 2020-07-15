@@ -85,8 +85,9 @@ class PdfInformesRiController extends Controller
 
         $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);  
         $titulo = "RADIOGRAFIA INDUSTRIAL";
-        $nro_informe = FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo);
+        $nro = FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo);
         $fecha = date('d-m-Y', strtotime($informe->fecha));
+        $tipo_reporte = "INFORME N°";
 
         /* Fin encabezado */
 
@@ -98,7 +99,7 @@ class PdfInformesRiController extends Controller
           
         //  dd($juntas_posiciones,$pasadas_juntas,$defectos_posiciones);
 
-          $pdf = PDF::loadView('reportes.informes.ri-gasoducto-v2',compact('titulo','nro_informe','fecha',
+          $pdf = PDF::loadView('reportes.informes.ri-gasoducto-v2',compact('titulo','nro','tipo_reporte','fecha',
                                                                         'ot',
                                                                         'norma_ensayo',
                                                                         'norma_evaluacion',
@@ -138,7 +139,7 @@ class PdfInformesRiController extends Controller
           
         // dd($juntas_posiciones,$defectos_posiciones);
 
-          $pdf = PDF::loadView('reportes.informes.ri-planta-v2',compact('titulo','metodo','nro_informe','fecha',
+          $pdf = PDF::loadView('reportes.informes.ri-planta-v2',compact('titulo','metodo','nro','tipo_reporte','fecha',
                                                               'ot',
                                                               'norma_ensayo',
                                                               'norma_evaluacion',

@@ -12,7 +12,7 @@
                             <td style="font-size: 11px;width: 200px" ><b style="margin-left: 110px;">&nbsp;</td>          
                         </tr>
                         <tr>
-                            <td style="font-size: 11px;" ><b style="margin-left: 110px;">INFORME N°: </b>{{$informe->km}}-{{$ot_tipo_soldadura->TipoSoldadura->codigo}}-{{ $nro_informe }}
+                            <td style="font-size: 11px;" ><b style="margin-left: 110px;">INFORME N°: </b>{{$informe->km}}-{{$ot_tipo_soldadura->TipoSoldadura->codigo}}-{{ $nro }}
                             </td>     
                             
                         </tr>

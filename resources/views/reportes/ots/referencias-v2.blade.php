@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>REFERENCIA INFORME N°: {{ $nro_ot }}</title>
+    <title>REFERENCIA INFORME N°: {{ $nro }}</title>
     <link rel="stylesheet" href="{{ asset('/css/reportes/pdf.css') }}" media="all" />
 
 </head>
@@ -25,21 +25,20 @@ footer {
 </style>
 
 <body>
+
 <header>
-    @include('reportes.ots.header-principal-ot')     
+    @include('reportes.partial.header-principal-portrait')     
     @include('reportes.partial.linea-amarilla')                
     @include('reportes.informes.partial.header-cliente-comitente-portrait')    
     @include('reportes.partial.linea-gris')        
     @include('reportes.informes.partial.header-proyecto-portrait')    
     @include('reportes.partial.linea-amarilla') 
 </header>
+
 <footer>
     @include('reportes.partial.linea-amarilla') 
-
     @include('reportes.informes.partial.observaciones')
-
     @include('reportes.partial.linea-amarilla') 
-
     @include('reportes.ots.firmas') 
 </footer>
 

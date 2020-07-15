@@ -29,10 +29,11 @@ class PdfProductosReferenciasController extends Controller
         /*  Encabezado */
       
         $titulo = "REFERECIA OT";
-        $nro_ot = $ot->numero;
+        $tipo_reporte = 'OT Nº:';
+        $nro = $ot->numero;
         $fecha = date('d-m-Y', strtotime($ot->fecha));
 
-        $pdf = \PDF::loadView('reportes.ots.referencias-v2',compact('ot','titulo','nro_ot','fecha','observaciones',
+        $pdf = \PDF::loadView('reportes.ots.referencias-v2',compact('ot','titulo','nro','tipo_reporte','fecha','observaciones',
                                                                 'cliente',
                                                                 'contratista',
                                                                 'modelo',

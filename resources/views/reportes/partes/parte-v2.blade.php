@@ -29,23 +29,23 @@ footer {
 <header>
     @include('reportes.partial.header-principal-portrait')     
     @include('reportes.partial.linea-amarilla')                
-    @include('reportes.informes.partial.header-cliente-comitente-portrait')    
+    @include('reportes.partial.header-cliente-comitente-portrait')    
     @include('reportes.partial.linea-gris')        
-    @include('reportes.informes.partial.header-proyecto-portrait')    
+    @include('reportes.partial.header-proyecto-portrait')    
     @include('reportes.partial.linea-amarilla') 
 </header>
 <footer>
 
     @include('reportes.partial.linea-amarilla') 
-    @include('reportes.informes.partial.observaciones') 
+    @include('reportes.partial.observaciones') 
     @include('reportes.partial.linea-amarilla') 
-    @include('reportes.informes.partial.firmas') 
+    @include('reportes.partes.partial.firmas') 
 </footer>
 
 
 <main>   
 
-    @include('reportes.partes.header-detalle-parte')         
+    @include('reportes.partes.partial.header-detalle-parte')         
     
     @if(count($vehiculos) > 0)    
 

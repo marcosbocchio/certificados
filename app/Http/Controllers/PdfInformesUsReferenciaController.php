@@ -33,10 +33,11 @@ class PdfInformesUsReferenciaController extends Controller
 
         $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);  
         $titulo = "INFORME DE ULTRASONIDO (REFERENCIA)";
-        $nro_informe = FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo);
+        $nro = FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo);
         $fecha = date('d-m-Y', strtotime($informe->fecha));
+        $tipo_reporte = "INFORME N°";
 
-        $pdf = \PDF::loadView('reportes.informes.referencias-v2',compact('ot','titulo','nro_informe','fecha','observaciones',
+        $pdf = \PDF::loadView('reportes.informes.referencias-v2',compact('ot','titulo','nro','tipo_reporte','fecha','observaciones',
                                                                 'informe_us',                                                              
                                                                 'informe',
                                                                 'ot_tipo_soldadura',

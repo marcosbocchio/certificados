@@ -71,8 +71,9 @@ class PdfInformesPmController extends Controller
 
         $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);  
         $titulo = "PARTÍCULAS MAGNETIZABLES";
-        $nro_informe = FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo);
+        $nro = FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo);
         $fecha = date('d-m-Y', strtotime($informe->fecha));
+        $tipo_reporte = "INFORME N°";
 
      //   dd($instrumento_medicion);
 
@@ -89,7 +90,7 @@ class PdfInformesPmController extends Controller
                                 WHERE
                                 informes_pm.id =:id',['id' => $informe_pm->id ]);       
  
-           $pdf = PDF::loadView('reportes.informes.pm-v2',compact('ot','titulo','nro_informe','fecha',
+           $pdf = PDF::loadView('reportes.informes.pm-v2',compact('ot','titulo','nro','tipo_reporte','fecha',
                                                                 'norma_ensayo',
                                                                 'norma_evaluacion',
                                                                 'procedimiento_inf',                                                               

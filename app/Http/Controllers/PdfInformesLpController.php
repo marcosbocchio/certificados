@@ -64,8 +64,9 @@ class PdfInformesLpController extends Controller
 
         $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);  
         $titulo = "LÍQUIDOS PENETRANTES";
-        $nro_informe = FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo);
+        $nro = FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo);
         $fecha = date('d-m-Y', strtotime($informe->fecha));
+        $tipo_reporte = "INFORME N°";
 
        // dd($evaluador);
        //  dd($equipo);
@@ -83,7 +84,7 @@ class PdfInformesLpController extends Controller
                                 informes_lp.id =:id',['id' => $informe_lp->id ]);
         
         
-           $pdf = PDF::loadView('reportes.informes.lp-v2',compact('ot','titulo','nro_informe','fecha',
+           $pdf = PDF::loadView('reportes.informes.lp-v2',compact('ot','titulo','nro','tipo_reporte','fecha',
                                                                 'norma_ensayo',
                                                                 'norma_evaluacion',
                                                                 'procedimiento_inf',                                                               

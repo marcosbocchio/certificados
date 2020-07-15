@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>INFORME {{ $nro_informe }}</title>
+    <title>INFORME {{ $nro }}</title>
     <link rel="stylesheet" href="{{ asset('/css/reportes/pdf.css') }}" media="all" />
 
 </head>
@@ -40,11 +40,11 @@
 
 <header>
 
-    @include('reportes.informes.partial.header-principal-portrait')     
+    @include('reportes.partial.header-principal-portrait')     
     @include('reportes.partial.linea-amarilla')                
-    @include('reportes.informes.partial.header-cliente-comitente-portrait')    
+    @include('reportes.partial.header-cliente-comitente-portrait')    
     @include('reportes.partial.linea-gris')        
-    @include('reportes.informes.partial.header-proyecto-portrait')    
+    @include('reportes.partial.header-proyecto-portrait')    
     @include('reportes.partial.linea-amarilla')    
     
 </header>
@@ -116,60 +116,6 @@
         </tbody>
     </table>
 
-
-    <!-- 
-    <table style="text-align: center;border-collapse: collapse;" width="100%">
-        <thead>
-            <tr>
-                <td id="rotate" style="font-size: 13px;" class="bordered-td"><div id="vertical" style="margin-left: 5px;margin-right: 5px;">ELEMENTO</div></td>
-                <td id="rotate" style="font-size: 13px;" class="bordered-td"><div id="vertical" style="margin-left: -6px;margin-right: -6px;">DIAMETRO</div></td>
-                <td id="rotate" style="font-size: 13px;" class="bordered-td"><div id="vertical" style="margin-left: -26px;margin-right: -26px;">N° INDICACIÓN</div></td>
-                <td id="rotate" style="font-size: 13px;" class="bordered-td"><div id="vertical" style="margin-left: -30px;margin-right: -30px;">POSICION EXAMEN</div></td>
-                <td id="rotate" style="font-size: 13px;" class="bordered-td"><div id="vertical" style="margin-left: -30px;margin-right: -30px;">ANG. INCIDENCIA</div></td>
-                <td id="rotate" style="font-size: 13px;" class="bordered-td"><div id="vertical" style="margin-left: -25px;margin-right: -25px;">CAMINO SONICO</div></td>            
-                <td id="rotate" style="font-size: 13px;" class="bordered-td"><div id="vertical" style="margin-left: 7.2px;margin-right: 7.2px;">X (cm)</div></td>
-                <td id="rotate" style="font-size: 13px;" class="bordered-td"><div id="vertical" style="margin-left: 5px;margin-right: 5px;">Y (mm)</div></td>
-                <td id="rotate" style="font-size: 13px;" class="bordered-td"><div id="vertical" style="margin-left: 5.7px;margin-right: 5.7px;">Z (mm)</div></td>
-                <td id="rotate" style="font-size: 13px;" class="bordered-td"><div id="vertical" style="margin-left: -20px;margin-right: -20px;">LONGITUD (mm)</div></td>
-                <td id="rotate" style="font-size: 13px;" class="bordered-td"><div id="vertical" style="margin-left: -25px;margin-right: -25px;">NIVEL REGISTRO</div></td>
-                <td id="rotate" style="font-size: 13px;" class="bordered-td"><div id="vertical" style="margin-left: -10px;margin-right: -10px;">RESULTADO</div></td>           
-                <td id="rotate" style="font-size: 13px;" class="bordered-td"><div id="vertical" >REFERENCIA</div></td>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($indicaciones_us_pa  as $indicacion)
-            <tr>                
-                  <td style="font-size: 10px;height: 16px;text-align: center;" class="bordered-td">{{ strtoupper($indicacion->elemento) }}</td>
-                  <td style="font-size: 10px;text-align: center;" class="bordered-td">ø {{ $indicacion->diametro }}</td>
-                  <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ $indicacion->nro_indicacion }}</td>
-                  <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ strtoupper($indicacion->posicion_examen) }}</td>
-                  <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ strtoupper($indicacion->angulo_incidencia) }}</td>
-                  <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ $indicacion->camino_sonico }}</td>
-                  <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ $indicacion->x }}</td>
-                  <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ $indicacion->y }}</td>
-                  <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ $indicacion->z }}</td>
-                  <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ $indicacion->longitud }}</td>
-                  <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ strtoupper($indicacion->nivel_registro)}}</td>
-
-                  <td style="font-size: 10px;text-align: center;" class="bordered-td">
-                  @if($indicacion->aceptable_sn)
-                      APROBADO
-                   @else
-                      RECHAZADO
-                  @endif
-                  </td>
-                  <td style="font-size: 10px;text-align: center;" class="bordered-td">
-
-                   @if ($indicacion->detalle_us_pa_us_referencia_id)
-                        <a href="{{ route('InformeUsDetalleUsPaUsReferencias',$indicacion->detalle_us_pa_us_referencia_id)}}"><img src="{{ public_path('img/fa-file-pdf.png')}}" alt="" style="height: 15px;margin-left:3px;;margin-top:2px;text-align: center;"></a>                                                       
-                    @endif
-                  
-                  </td>
-        
-            </tr>        
-            @endforeach   
-        </tbody>
-        -->
     @if($informe_us->path1_indicacion || $informe_us->path2_indicacion || $informe_us->path3_indicacion || $informe_us->path3_indicacion)
 
         <div class="page-break"></div> 
