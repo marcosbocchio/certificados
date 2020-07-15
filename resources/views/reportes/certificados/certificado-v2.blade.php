@@ -86,7 +86,7 @@ footer {
     <table width="100%" style="border-collapse: collapse;border: 1px solid black;margin-bottom: 5px;">
         <tbody>
             <tr>
-                <td style="background:#D8D8D8;text-align: left;font-size: 13px;">{{$certificado->info_pedido_cliente}} &nbsp;</td>
+                <td style="background:#D8D8D8;text-align: left;font-size: 13px;"><span style="margin-left: 2px;"> {{$certificado->info_pedido_cliente}}</span> &nbsp;</td>
             </tr>
         </tbody>
     </table>  
