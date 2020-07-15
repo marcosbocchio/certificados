@@ -15,7 +15,7 @@ use \stdClass;
 class PdfCertificadoController extends Controller
 {
     public function imprimir($id,$estado){      
-       ;
+      
         $certificado = Certificados::findOrFail($id);
         $ot = Ots::find($certificado->ot_id);
         $cliente = Clientes::find($ot->cliente_id);
@@ -34,12 +34,21 @@ class PdfCertificadoController extends Controller
         $obras = $this->obrasUnicas($partes_certificado);
         $fechas = $this->getCombinados($servicios_parte);   
         $servicios_obras =  DB::select('CALL getServiciosObrasCertificado(?,?)',array($id,$estado));
-      //  dd($tablas_por_obras);
+   
         $tablas_por_obras = $this->generarTablasPorObras($servicios_obras,$servicios_combinaciones,$productos_parte,$productos_unidades_medidas,$obras,$fechas);  
         $evaluador = User::find($certificado->firma);
-        $pdf = PDF::loadView('reportes.certificados.certificado',compact('fecha','certificado','ot','cliente','contratista','servicios_parte','productos_parte','modalidadCobro','partes_certificado','servicios_abreviaturas','productos_unidades_medidas','evaluador','obras','tablas_por_obras','servicios_footer'))->setPaper('a4','landscape')->setWarnings(false);
-      
+
+        /*  Encabezado */
+
+        $titulo1 = "CERTIFICADO" ;   
+        $titulo2 = $certificado->titulo;        
+        $nro = FormatearNumeroConCeros($certificado->numero,8);
+        $fecha = date('d-m-Y', strtotime($certificado->fecha));
+        $tipo_reporte = "CERTIFICADO N°:";
+        
+        $pdf = PDF::loadView('reportes.certificados.certificado-v2',compact('fecha','nro','titulo1','titulo2','tipo_reporte','certificado','ot','cliente','contratista','servicios_parte','productos_parte','modalidadCobro','partes_certificado','servicios_abreviaturas','productos_unidades_medidas','evaluador','obras','tablas_por_obras','servicios_footer'))->setPaper('a4','landscape')->setWarnings(false);
         return $pdf->stream();
+
 
     }
 

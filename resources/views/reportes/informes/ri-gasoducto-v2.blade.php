@@ -27,9 +27,9 @@ footer {
 <header>
     @include('reportes.partial.header-principal-landscape')     
     @include('reportes.partial.linea-amarilla')                
-    @include('reportes.partial.header-cliente-comitente-landscope')    
+    @include('reportes.partial.header-cliente-comitente-landscape')    
     @include('reportes.partial.linea-gris')        
-    @include('reportes.partial.header-proyecto-landscope')    
+    @include('reportes.partial.header-proyecto-landscape')    
     @include('reportes.partial.linea-amarilla') 
 </header>
 <footer>

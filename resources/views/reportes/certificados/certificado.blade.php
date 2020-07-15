@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>CERTIFICADO N°: {{FormatearNumeroConCeros($certificado->numero,8)}}</title>
+    <title>CERTIFICADO N°: {{ $nro }}</title>
 </head>
 
 <style>  
