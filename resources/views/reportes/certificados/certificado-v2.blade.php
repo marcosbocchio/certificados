@@ -30,7 +30,7 @@ footer {
     @include('reportes.partial.linea-amarilla')                
     @include('reportes.partial.header-cliente-comitente-landscape')    
     @include('reportes.partial.linea-gris')        
-    @include('reportes.partial.header-proyecto-landscape')    
+    @include('reportes.certificados.partial.header-proyecto-landscape')    
     @include('reportes.partial.linea-amarilla') 
 </header>
 <footer>
