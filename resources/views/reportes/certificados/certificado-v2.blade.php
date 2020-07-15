@@ -410,7 +410,7 @@ footer {
 
           if ( isset($pdf) ) {
             $x = 692;
-            $y = 60;
+            $y = 63;
             $text = "PÁGINA : {PAGE_NUM} de {PAGE_COUNT}";
             $font = $fontMetrics->get_font("serif", "bold");
             $size = 9;
