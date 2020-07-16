@@ -225,7 +225,7 @@ footer {
         <table width="100%" style="margin-top: -5px;">
             <tbody>
                 <tr>                         
-                    <td style="font-size: 12px;height: 30px;" colspan="5"><b style="margin-left: 8px;">METODO ENSAYO: PM </b></td>                                         
+                    <td style="font-size: 12px;height: 30px;" colspan="5"><b>METODO ENSAYO: PM </b></td>                                         
                 </tr>                           
                 @foreach ($informes_detalle as $item)
                     @if ($item->metodo == 'PM')      
@@ -276,7 +276,7 @@ footer {
         <table width="100%" style="margin-top: -5px;">
             <tbody>  
                 <tr>                         
-                    <td style="font-size: 12px;height: 30px;" colspan="5"><b style="margin-left: 8px;">METODO ENSAYO: LP </b></td>                                         
+                    <td style="font-size: 12px;height: 30px;" colspan="5"><b>METODO ENSAYO: LP </b></td>                                         
                 </tr>                           
                 @foreach ($informes_detalle as $item)
                     @if ($item->metodo == 'LP')      
@@ -329,7 +329,7 @@ footer {
             <tbody>  
                 @if ($ExisteUS)            
                     <tr>                         
-                        <td style="font-size: 12px;height: 30px;" colspan="5"><b style="margin-left: 8px;">METODO ENSAYO: US </b></td>                                         
+                        <td style="font-size: 12px;height: 30px;" colspan="5"><b>METODO ENSAYO: US </b></td>                                         
                     </tr>                           
                     @foreach ($informes_detalle as $item)
                         @if ($item->metodo == 'US')      
