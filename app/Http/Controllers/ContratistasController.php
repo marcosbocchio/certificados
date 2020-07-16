@@ -35,8 +35,7 @@ class ContratistasController extends Controller
       {   
           $user = auth()->user(); 
           $header_titulo = "Comitente";
-          $header_descripcion ="Alta | Baja | Modificación"; 
-        
+          $header_descripcion ="Alta | Baja | Modificación";         
           return view('contratistas',compact('user','header_titulo','header_descripcion'));
   
       }

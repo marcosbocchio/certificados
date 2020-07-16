@@ -39,8 +39,12 @@ if($remito->interno_sn){
         $contratista = Contratistas::find($ot->contratista_id);
         $cliente = Clientes::find($ot->cliente_id);
         $user = User::find($remito->user_id);
-
-        $pdf = \PDF::loadView('reportes.remitos.remito-interno',compact('remito','ot','cliente','detalle','remito_interno_equipos','user','contratista'))->setPaper('a4','portrait')->setWarnings(false);  
+        
+        $titulo = "REMITO INTERNO";
+        $nro = FormatearNumeroConCeros($remito->prefijo,'4'). '-' .FormatearNumeroConCeros($remito->numero,'8');
+        $fecha = date('d-m-Y', strtotime($remito->fecha));
+        $tipo_reporte = 'REMITO N°:';
+        $pdf = \PDF::loadView('reportes.remitos.remito-interno-v2',compact('remito','ot','titulo','nro','fecha','tipo_reporte','cliente','detalle','remito_interno_equipos','user','contratista'))->setPaper('a4','portrait')->setWarnings(false);  
 
         return $pdf->stream();
 

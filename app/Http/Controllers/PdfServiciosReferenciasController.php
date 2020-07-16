@@ -27,7 +27,7 @@ class PdfServiciosReferenciasController extends Controller
 
         /*  Encabezado */
       
-        $titulo = "REFERECIA OT";
+        $titulo = "REFERENCIA OT";
         $tipo_reporte = 'OT Nº:';
         $nro = $ot->numero;
         $fecha = date('d-m-Y', strtotime($ot->fecha));

@@ -40,16 +40,17 @@
   import { eventNewRegistro, eventEditRegistro, eventModal } from '../event-bus';
     export default {
       name: 'abm-maestro',
-      props : {         
+      props : {       
+
           modelo : {
             type : String,
             required : true,
             default : ''
           },
+
           permiso_create : {
            type : String,
-           required : true
-  
+           required : true  
           }
       },
 
@@ -60,6 +61,7 @@
       }, 
 
       data () { return {
+
         fillRegistro: {},
         errors:[],
         registros: {}, 
@@ -98,7 +100,7 @@
              return 'editar-' + this.modelo.substring(0, (this.modelo.indexOf("/") >-1) ? this.modelo.indexOf("/") : this.modelo.length) ;
          },
          
-         ...mapState(['url','permissions'])
+         ...mapState(['url'])
      },  
 
       methods: {
@@ -120,7 +122,7 @@
                 axios.defaults.baseURL = this.url ;
                 var urlRegistros = this.modelo + '/paginate' + '?page='+ page + '&search=' + this.search;   
                 axios.get(urlRegistros).then(response =>{
-                this.registros = response.data                       
+                     this.registros = response.data                       
                 }).finally(() => 
                     this.loading = false,                  
                     )
@@ -128,8 +130,8 @@
             
             editRegistro : function(item){
 
-                this.selectRegistro = item;    
-                eventEditRegistro.$emit('editar',this.selectRegistro);                  
+               this.selectRegistro = item;    
+               eventEditRegistro.$emit('editar',this.selectRegistro);                  
                     
             },     
 
@@ -139,10 +141,11 @@
 
             },
                  
-            confirmDeleteRegistro: function(registro,dato){            
+            confirmDeleteRegistro: function(registro,dato){    
+
               this.fillRegistro.id = registro.id;
               this.datoDelete = dato;             
-             $('#delete-registro').modal('show');
+              $('#delete-registro').modal('show');
           }
       }
     }

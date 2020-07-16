@@ -8,7 +8,7 @@
           <h4 class="modal-title">Advertencia</h4>
           </div>
           <div class="modal-body">
-            <p>Está seguro de eliminar el registro " {{ this.datoDelete }} " ?</p>
+            <p>Está seguro de eliminar el registro "{{ this.datoDelete }}" ?</p>
           </div>
           <div class="modal-footer">
             <input type="submit" class="btn btn-primary" value="Aceptar">
@@ -37,6 +37,7 @@ export default {
          ...mapState(['url'])
   },
   methods:{
+    
   dropRegistro :function(id){
 
       axios.defaults.baseURL = this.url;     

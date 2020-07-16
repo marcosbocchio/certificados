@@ -218,7 +218,6 @@ export default {
 
                         if(this.metodo_ensayo.importable_sn){
 
-                            console.log('el metodo es importable');
                              eventNewRegistro.$emit('open',this.modelo);
 
                         }else{

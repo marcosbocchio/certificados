@@ -1282,6 +1282,7 @@ export const eventSetReferencia = new Vue();
 export const eventEditRegistro = new Vue();
 
 import Permissions from './mixins/permissions';
+
 Vue.mixin(Permissions);
 
 const app = new Vue({
