@@ -66,7 +66,7 @@ class PdfInformesUsController extends Controller
         $tipo_reporte = "INFORME N°";
 
         //  dd($calibraciones_us);
-        $pdf = PDF::loadView('reportes.informes.us-v2',compact('ot','titulo','metodo','nro','tipo_reporte','fecha',
+        $pdf = PDF::loadView('reportes.informes.us-v2',compact('ot','titulo','nro','tipo_reporte','fecha',
                                                                 'norma_ensayo',
                                                                 'norma_evaluacion',
                                                                 'procedimiento_inf',
