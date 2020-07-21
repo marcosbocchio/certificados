@@ -44,7 +44,7 @@ class MedidasController extends Controller
         $user = auth()->user(); 
         $header_titulo = "Medidas";
         $header_descripcion ="Alta | Baja | Modificación";  
-        return view('medidas',compact('user','modelo','header_titulo','header_descripcion'));
+        return view('medidas',compact('user','header_titulo','header_descripcion'));
 
     }
 

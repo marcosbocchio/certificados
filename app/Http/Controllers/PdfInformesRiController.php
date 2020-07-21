@@ -139,7 +139,7 @@ class PdfInformesRiController extends Controller
           
         // dd($juntas_posiciones,$defectos_posiciones);
 
-          $pdf = PDF::loadView('reportes.informes.ri-planta-v2',compact('titulo','metodo','nro','tipo_reporte','fecha',
+          $pdf = PDF::loadView('reportes.informes.ri-planta-v2',compact('titulo','nro','tipo_reporte','fecha',
                                                               'ot',
                                                               'norma_ensayo',
                                                               'norma_evaluacion',

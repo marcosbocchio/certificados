@@ -40,7 +40,7 @@ class VehiculosController extends Controller
         $user = auth()->user(); 
         $header_titulo = "Vehículos";
         $header_descripcion ="Alta | Baja | Modificación";  
-        return view('vehiculos',compact('user','modelo','header_titulo','header_descripcion'));
+        return view('vehiculos',compact('user','header_titulo','header_descripcion'));
 
     }
     /**
