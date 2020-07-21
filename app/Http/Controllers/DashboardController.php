@@ -24,12 +24,12 @@ class dashboardController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
      public function index(Request $Request )
-     {        
-       
+     {                
+
          $user = $Request->user();
          $title = 'Area Enod' ;
          $header_titulo = "Tablero Principal";
          $header_descripcion ="";     
-         return view('dashboard',compact('user','title','header_titulo','header_descripcion','documentos'));
+         return view('dashboard',compact('user','title','header_titulo','header_descripcion'));
      }
 }
