@@ -130,9 +130,8 @@ Route::get('/pdf-test',function(){
 });  
 
 
-/*
+
  Route::get('php', function () {
    phpinfo();
 }); 
 
-*/
