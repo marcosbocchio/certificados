@@ -71,7 +71,6 @@ class PdfInformesUsController extends Controller
                                                                 'norma_evaluacion',
                                                                 'procedimiento_inf',
                                                                 'ot_tipo_soldadura',                                                               
-                                                                'fuente',
                                                                 'diametro_espesor',
                                                                 'tecnica',
                                                                 'interno_equipo',
