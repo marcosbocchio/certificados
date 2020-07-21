@@ -88,7 +88,6 @@ class PdfInformesLpController extends Controller
                                                                 'norma_ensayo',
                                                                 'norma_evaluacion',
                                                                 'procedimiento_inf',                                                               
-                                                                'fuente',
                                                                 'diametro_espesor',
                                                                 'ici',                                                                
                                                                 'equipo',
