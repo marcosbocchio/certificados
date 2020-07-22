@@ -3,8 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>INFORME {{ $nro }}</title>
-    <link rel="stylesheet" href="{{ asset('/css/reportes/pdf.css') }}" media="all" />
-
+    @include('reportes.css')
 </head>
 
 <style>
