@@ -8,7 +8,7 @@
                            <tr>
                                <th width="100%" colspan="4">Componente</th>
                            </tr>
-                           <tr >
+                           <tr>
                                <td colspan="4">{{$informe->componente}}</td>
                            </tr>    
 
@@ -19,10 +19,10 @@
                                 <td colspan="4">{{$informe->plano_isom}}</td>
                            </tr>
 
-                           <tr >
+                           <tr>
                                 <th colspan="4">EPS</th>
                            </tr>
-                           <tr >
+                           <tr>
                                 <td colspan="4">{{$ot_tipo_soldadura->eps}}</td>
                            </tr>
 
@@ -46,8 +46,7 @@
                                         Visible
                                     @endif
                                 </td>
-                           </tr>     
-
+                           </tr>   
                            <tr>
                                 <th colspan="2">Líquido Revelador</th>
                                 <th colspan="2">Aplicación Revelador</th>

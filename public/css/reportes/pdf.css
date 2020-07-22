@@ -30,12 +30,12 @@
 .header-detalle tbody tr:nth-child(4n+1 ) {
     background-color: rgb(217, 217, 217);
 } 
-/*
+
 .header-detalle tbody tr:nth-child(4n+2 ) {
     background-color: rgb(217, 217, 217);
     
 } 
-*/
+
 
 table .header-detalle tr th { 
 
