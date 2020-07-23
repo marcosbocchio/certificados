@@ -19,10 +19,10 @@
                                 <td colspan="4">{{$informe->plano_isom}}</td>
                            </tr>
 
-                           <tr >
+                           <tr>
                                 <th colspan="4">EPS</th>
                            </tr>
-                           <tr >
+                           <tr>
                                 <td colspan="4">{{$ot_tipo_soldadura->eps}}</td>
                            </tr>
 
@@ -33,11 +33,11 @@
                                 <td colspan="4">{{$procedimiento_inf->titulo}}</td>
                            </tr>
 
-                           <tr >
+                           <tr>
                                 <th colspan="2">Película</th>
                                 <th colspan="2">Tipo</th>
                            </tr>
-                           <tr >
+                           <tr>
                                 <td colspan="2">{{$tipo_pelicula->fabricante}}</td>
                                 <td colspan="2">{{$tipo_pelicula->codigo}}</td>
                            </tr>
@@ -81,7 +81,7 @@
                 <td width="49%">
                     <table style="font-size: 12px;float:right;" width="100%" class="header-detalle">
                         <tbody>
-                           <tr >
+                           <tr>
                                <th width="50%" colspan="2">Material</th>
                                <th width="50%" colspan="2">Material Accesorio</th>
                            </tr>
@@ -100,7 +100,7 @@
                            </tr>                   
                             <tr>                           
                                 <td colspan="2">{{$diametro_espesor->diametro}}</td>
-                                <td>              
+                                <td colspan="2">              
                                     @if ($informe->espesor_chapa)
                                         {{ $informe->espesor_chapa }}
                                     @elseif($informe->espesor_especifico)
@@ -111,7 +111,7 @@
                                 </td>
                             </tr>
 
-                            <tr >
+                            <tr>
                                 <th colspan="4">PQR</th>
                             </tr>
                             <tr >
