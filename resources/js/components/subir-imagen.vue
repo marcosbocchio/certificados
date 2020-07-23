@@ -82,13 +82,7 @@ export default {
             required : false,   
             default :'',       
           },
-/*
-          path_storage: {
-            type : String,
-            required : true,   
-            default :'',       
-          },
-*/
+          
           mostrar_formatos_soportados :{
 
              type: Boolean,
