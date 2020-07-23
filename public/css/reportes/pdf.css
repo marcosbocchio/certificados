@@ -27,11 +27,11 @@
     border-collapse: collapse;
 }
 
-.header-detalle tbody tr:nth-child(4n+1 ) {
+.header-detalle tbody tr:nth-of-type(4n+1 ) {
     background-color: rgb(217, 217, 217);
 } 
 
-.header-detalle tbody tr:nth-child(4n+2 ) {
+.header-detalle tbody tr:nth-of-type(4n+2 ) {
     background-color: rgb(217, 217, 217);
     
 } 
