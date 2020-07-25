@@ -1,48 +1,37 @@
 <template>
     <div>
-        <div class="col-sm-10 hidden-xs" >
-            <div class="small-box" style="height: 125px;">
-                <p>adfadf</p>
-            </div>
-        </div>
-        <div class="col-sm-2" >
-            <div class="small-box"  :class="[class_color_cuadro ,{flash : tablero_sn},{small_box_opacity : !habilitado_sn}, {pointer : (tablero_sn && habilitado_sn)},{not_allowed : !habilitado_sn}  ] ">
+        <div class="small-box" :class="[ class_color_cuadro_largo,{small_box_opacity : !habilitado_sn}, {pointer : (tablero_sn && habilitado_sn)},{not_allowed : !habilitado_sn}  ] ">
+
             <div class="inner">
-                <img :src="src_icono" width="100px" />
-                <p class="posicion_1 color_cant_1" >
-                <div v-if="!invertir_cantidad_sn">
-                    <p class="posicion_1 color_cant_1" > {{ cantidad_1 }} </p>    
-                </div>
-                <div v-else>
-                    <p class="posicion_1 color_cant_1" > {{ cantidad_2}} </p>    
-                </div>
-                        
-                <div v-if="cantidad_2 >= 0">
+
+              <div v-if="!invertir_cantidad_sn">
+                 <p class="posicion_1 color_cant_1" > {{ cantidad_1 }} </p>    
+              </div>
+              <div v-else>
+                  <p class="posicion_1 color_cant_1" > {{ cantidad_2}} </p>    
+              </div>
+                    
+              <div v-if="cantidad_2 >= 0">
                 <div v-if="!invertir_cantidad_sn">
                     <p class="posicion_2 color_cant_2" > {{ cantidad_2 }} </p>    
                 </div>
                 <div v-else>
                     <p class="posicion_2 color_cant_2" > {{ cantidad_1}} </p>    
                 </div>
-                </div>
+              </div>
+
             </div>
-                <div :class="class_footer_img">
-                <a href="#" class="small-box-footer" >
-                    <div v-if="tablero_sn"  :class="class_color_sub_titulo" style="line-height: 1.9;">                      
-                        {{ titulo }}           
-                        <div v-if="titulo_2" style="display:inline-block" class="color_cant_1">
-                        <span style="color:#535353;font-weight: bold;"> | </span> {{ titulo_2 }}
-                        </div> 
-                    </div>
-                    <div v-else>
-                        &nbsp;
-                    </div>
-                    </a> 
-                </div>  
-            </div>     
-        </div>
+            
+            <div class="icono_cuadro" :class="class_color_cuadro" >
+              <img :src="src_icono" width="100px" />
+            </div>
+
+
+            
+        </div>              
     </div>
 </template>
+
 <script>
 export default {
     props : {
@@ -83,6 +72,11 @@ export default {
             required : true,
         },
 
+        class_color_cuadro_largo : {
+            type : String,
+            required : true,
+        },
+
         class_footer_img : {
             type : String,
             required : false,
@@ -116,14 +110,26 @@ export default {
 </script>
 
 
-<style >
+<style scope >
 
-.small-box {
+.inner {
+
+    height:127px;
+
+}
+
+.small-box .icon {
+    top: 0;
+    right: 0;
+    padding: 0;
+}
+
+.small-box,.icono_cuadro {
+
   text-align: center !important;
   border-radius: 10px;
-  -webkit-box-shadow: 1px 1px 10px -1px rgba(0,0,0,0.75);
-  -moz-box-shadow: 1px 1px 10px -1px rgba(0,0,0,0.75);
-  box-shadow: 1px 1px 10px -1px rgba(0,0,0,0.75);
+
+
 }
 
 .small-box .inner .titulo {
@@ -169,6 +175,29 @@ export default {
   color: rgb(255, 204, 0);
 }
 
+.icon {
+
+    padding: 0;
+
+}
+
+.icono_cuadro {
+
+    position: absolute;
+    height: 127px;
+    width:200px;
+    padding: 0;
+    right:0 ; 
+    z-index: 0;
+    top: 0;
+}
+
+.icono_cuadro img {
+
+    margin-top:15px;
+
+}
+
 .small-box .small-box-footer {
   font-size: 11px;
   font-weight: 600;
@@ -176,20 +205,12 @@ export default {
   padding-bottom: 0;
 }
 
-.zoom:hover  {
-
-  -ms-transform: scale(1.03); /* IE 9 */
-  -webkit-transform: scale(1.03); /* Safari 3-8 */
-  transform: scale(1.03); 
-  transition: 0.99s;
-
-}
 
 .flash:hover {
 
   opacity: 1;
-	-webkit-animation: flash 1.5s;
-	animation: flash 1.5s;
+  -webkit-animation: flash 1.5s;
+  animation: flash 1.5s;
 
 }
 
