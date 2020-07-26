@@ -225,7 +225,6 @@ class InformesLpController extends Controller
                                                  'informe_diametro',
                                                  'informe_ot_tipo_soldadura',
                                                  'informe_diametroEspesor',                                                                            
-                                                 'informe_tecnica_grafico',
                                                  'informe_interno_equipo',                                                   
                                                  'informe_procedimiento',                                              
                                                  'informe_norma_evaluacion',
