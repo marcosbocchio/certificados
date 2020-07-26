@@ -308,7 +308,7 @@ const store = new Vuex.Store({
   
 state: {
         
-        url:window.location.protocol + '//' + window.location.hostname + '/api',
+        url:'/api/',
         AppUrl:window.location.protocol + '//' + window.location.hostname,
         
         isLoading : false ,
