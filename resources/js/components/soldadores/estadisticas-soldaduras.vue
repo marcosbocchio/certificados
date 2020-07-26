@@ -184,7 +184,7 @@ export default {
 
      computed :{
 
-        ...mapState(['isLoading','url','AppUrl']),
+        ...mapState(['isLoading','url']),
        
      },
 

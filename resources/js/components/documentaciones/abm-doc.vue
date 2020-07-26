@@ -204,7 +204,7 @@
                             </div>
                              <div class="form-group">  
                                  <div v-if="isPdf && newRegistro.path != ''">
-                                    <a :href="AppUrl + '/' + newRegistro.path" target="_blank" class="btn btn-default btn-sm" title="pdf"><span class="fa fa-file-pdf-o"></span></a>
+                                    <a :href="'/' + newRegistro.path" target="_blank" class="btn btn-default btn-sm" title="pdf"><span class="fa fa-file-pdf-o"></span></a>
                                  </div> 
                                  <div v-else-if="newRegistro.path != ''">                            
                                   <img :src="'/' + newRegistro.path" class="margin zoom-in"  @click="openGallery()" alt="..." width="120" >
@@ -388,7 +388,7 @@ export default {
              return 'table-' + this.modelo ;
          },       
          
-         ...mapState(['url','AppUrl','CantProcedimientos','CantDocumentacionesTotal','interno_equipos','interno_fuentes','vehiculos'])
+         ...mapState(['url','CantProcedimientos','CantDocumentacionesTotal','interno_equipos','interno_fuentes','vehiculos'])
 
      },
      

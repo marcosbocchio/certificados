@@ -662,7 +662,7 @@ export default {
     },
     computed :{
 
-        ...mapState(['AppUrl','url','provincias','localidades','contratistas'])
+        ...mapState(['url','provincias','localidades','contratistas'])
      },
     
 
@@ -1087,8 +1087,8 @@ export default {
 
           let ot = response.data;
           toastr.success('OT N° ' + this.ot + ' fue creada con éxito ');
-          window.open( this.AppUrl + '/pdf/ot/' + ot.id,'_blank');
-          window.location.href = this.AppUrl;
+          window.open(  '/pdf/ot/' + ot.id,'_blank');
+          window.location.href ='/';
           console.log(response.data);
         }).catch(error => {
                
@@ -1153,8 +1153,8 @@ export default {
           ).then( () => {
        
             toastr.success('OT N° ' + this.ot + ' fue editada con éxito ');
-            window.open( this.AppUrl + '/pdf/ot/' + this.otdata.id,'_blank');
-            window.location.href = this.AppUrl;
+            window.open(  '/pdf/ot/' + this.otdata.id,'_blank');
+            window.location.href ='/';
 
         }).catch(error => {
                

@@ -129,7 +129,7 @@ export default {
   
   computed :{
 
-       ...mapState(['url','AppUrl','operadores_dosimetria','fecha']),
+       ...mapState(['url','operadores_dosimetria','fecha']),
 
        permitir_alta : function() {
 

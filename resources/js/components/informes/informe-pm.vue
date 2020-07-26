@@ -674,7 +674,7 @@ export default {
 
     computed :{
 
-        ...mapState(['isLoading','url','AppUrl','materiales','ot_obra_tipo_soldaduras','diametros','espesores','procedimientos','norma_evaluaciones','particulas','norma_ensayos','iluminaciones','ejecutor_ensayos','interno_equipos','instrumentos_mediciones']),     
+        ...mapState(['isLoading','url','materiales','ot_obra_tipo_soldaduras','diametros','espesores','procedimientos','norma_evaluaciones','particulas','norma_ensayos','iluminaciones','ejecutor_ensayos','interno_equipos','instrumentos_mediciones']),     
 
         numero_inf_code : function()  {
 
@@ -1047,8 +1047,8 @@ export default {
 
           let informe = response.data;
           toastr.success('informe N°' + this.numero_inf + ' fue creado con éxito ');
-          window.open( this.AppUrl + '/pdf/informe/pm/' + informe.id,'_blank');
-          window.location.href = this.AppUrl + '/informes/ot/' + this.otdata.id;
+          window.open('/pdf/informe/pm/' + informe.id,'_blank');
+          window.location.href =  '/informes/ot/' + this.otdata.id;
 
         }).catch(error => {
                
@@ -1127,8 +1127,8 @@ export default {
         ).then( () => {
             
           toastr.success('informe N°' + this.numero_inf + ' fue actualizado con éxito ');               
-          window.open( this.AppUrl + '/pdf/informe/pm/' + this.informedata.id,'_blank');
-          window.location.href = this.AppUrl + '/informes/ot/' + this.otdata.id;
+          window.open(  '/pdf/informe/pm/' + this.informedata.id,'_blank');
+          window.location.href =  '/informes/ot/' + this.otdata.id;
 
         }).catch(error => {
                

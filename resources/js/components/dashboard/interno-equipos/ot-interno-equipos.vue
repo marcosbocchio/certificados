@@ -93,7 +93,7 @@
                                 <tr v-for="(item,k) in TablaInternoEquipoDoc" :key="k">                                 
                                     <td> {{item.titulo}}</td>     
                                     <td> {{item.descripcion}}</td>     
-                                    <td width="10px"> <a :href="AppUrl + '/' + item.path " target="_blank" title="Imagen"><span class="fa fa-file-image-o"></span></a></td>
+                                    <td width="10px"> <a :href="'/' + item.path " target="_blank" title="Imagen"><span class="fa fa-file-image-o"></span></a></td>
                                 </tr>                                     
                             </tbody>
                         </table>                     
@@ -134,7 +134,7 @@
                                     <td> {{item.codigo}} </td>                                   
                                     <td> {{item.titulo}} </td>     
                                     <td> {{item.descripcion}}  </td>     
-                                    <td width="10px"> <a :href="AppUrl + '/' + item.path " target="_blank" title="Imagen"><span class="fa fa-file-image-o"></span></a></td>
+                                    <td width="10px"> <a :href="'/' + item.path " target="_blank" title="Imagen"><span class="fa fa-file-image-o"></span></a></td>
                                 </tr>                                     
                             </tbody>
                         </table>                     
@@ -178,7 +178,7 @@ data () { return {
 
  computed :{
 
-       ...mapState(['url','AppUrl'])
+       ...mapState(['url'])
     },
 
  created : function(){

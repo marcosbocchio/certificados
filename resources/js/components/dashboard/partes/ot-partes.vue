@@ -18,7 +18,7 @@
 
        <div class="col-md-12">
            <div v-show="$can('T_partes_edita')">        
-                <a :href="AppUrl + '/area/enod/ot/' + ot_id_data + '/parte' " class="btn btn-enod pull-left"><span class="fa fa-plus-circle"></span> Nuevo</a>     
+                <a :href="'/area/enod/ot/' + ot_id_data + '/parte' " class="btn btn-enod pull-left"><span class="fa fa-plus-circle"></span> Nuevo</a>     
            </div>      
         </div>  
 
@@ -54,11 +54,11 @@
                                     </td>
                                     
                                     <td width="10px" v-show="$can('T_partes_edita')"> 
-                                        <a :href="AppUrl + '/pdf/parte/' + ot_parte.id + '/original' " target="_blank"  class="btn btn-default btn-sm" title="Informe original"><span class="fa fa-file-pdf-o"></span></a>
+                                        <a :href="'/pdf/parte/' + ot_parte.id + '/original' " target="_blank"  class="btn btn-default btn-sm" title="Informe original"><span class="fa fa-file-pdf-o"></span></a>
                                     </td>    
 
                                     <td width="10px"> 
-                                        <a :href="AppUrl + '/pdf/parte/' + ot_parte.id + '/final' " target="_blank"  class="btn btn-default btn-sm" title="Informe"><span class="fa fa-file-pdf-o"></span></a>
+                                        <a :href="'/pdf/parte/' + ot_parte.id + '/final' " target="_blank"  class="btn btn-default btn-sm" title="Informe"><span class="fa fa-file-pdf-o"></span></a>
                                     </td> 
                                     <td width="10px"> 
                                         <button @click="informesEscaneados(ot_parte.id)" :disabled="!$can('T_partes_edita')" class="btn btn-default btn-sm" title="Informes escaneados"><span class="fa fa-cloud-upload"></span></button>
@@ -66,7 +66,7 @@
                                     <td v-if="!ot_parte.firma" width="10px">
                                         <button @click="firmar(k)" class="btn btn-default btn-sm" title="Firmar" :disabled="!$can('T_partes_edita')"><span class="glyphicon glyphicon-pencil"></span></button>                                       
                                    </td>
-                                   <td v-else><a class="btn btn-default btn-sm" title="Firmado"><img width="16px" :src="AppUrl + '/img/firma.png'"></a></td>
+                                   <td v-else><a class="btn btn-default btn-sm" title="Firmado"><img width="16px" :src="'/img/firma.png'"></a></td>
 
                                </tr>                      
                             </tbody>
@@ -108,7 +108,7 @@ export default {
   
   computed :{
 
-       ...mapState(['url','AppUrl','CantPartes'])
+       ...mapState(['url','CantPartes'])
      },  
 
   methods : {
@@ -125,7 +125,7 @@ export default {
         
         editParte : function(id){
 
-            window.location.href = this.AppUrl + '/area/enod/ot/' + this.ot_id_data + '/parte/' + id +'/edit'
+            window.location.href =  '/area/enod/ot/' + this.ot_id_data + '/parte/' + id +'/edit'
         },
 
         firmar : function(index){
@@ -155,7 +155,7 @@ export default {
 
         informesEscaneados(id){
 
-            window.location.href = this.AppUrl + '/documentos-escaneados/ot/' + this.ot_id_data + '/parte/' + id ;
+            window.location.href =  '/documentos-escaneados/ot/' + this.ot_id_data + '/parte/' + id ;
 
         }
     },

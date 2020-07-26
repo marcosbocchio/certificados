@@ -624,7 +624,7 @@ data() {return {
 
     computed :{
 
-        ...mapState(['isLoading','url','AppUrl','materiales','ot_obra_tipo_soldaduras','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','interno_equipos','iluminaciones','penetrantes_tipo_liquido','reveladores_tipo_liquido','removedores_tipo_liquido','ejecutor_ensayos','fuentePorInterno']),     
+        ...mapState(['isLoading','url','materiales','ot_obra_tipo_soldaduras','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','interno_equipos','iluminaciones','penetrantes_tipo_liquido','reveladores_tipo_liquido','removedores_tipo_liquido','ejecutor_ensayos','fuentePorInterno']),     
 
         numero_inf_code : function()  {
 
@@ -928,8 +928,8 @@ data() {return {
          
           let informe = response.data;
           toastr.success('informe N°' + this.numero_inf + ' fue creado con éxito ');
-          window.open( this.AppUrl + '/pdf/informe/lp/' + informe.id,'_blank');
-          window.location.href = this.AppUrl + '/informes/ot/' + this.otdata.id;
+          window.open(  '/pdf/informe/lp/' + informe.id,'_blank');
+          window.location.href =  '/informes/ot/' + this.otdata.id;
 
         }).catch(error => {
                
@@ -999,8 +999,8 @@ data() {return {
         ).then( () => {    
 
           toastr.success('informe N°' + this.numero_inf + ' fue actualizado con éxito ');               
-          window.open( this.AppUrl + '/pdf/informe/lp/' + this.informedata.id,'_blank');
-          window.location.href = this.AppUrl + '/informes/ot/' + this.otdata.id;
+          window.open(  '/pdf/informe/lp/' + this.informedata.id,'_blank');
+          window.location.href =  '/informes/ot/' + this.otdata.id;
 
         }).catch(error => {
                

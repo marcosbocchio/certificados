@@ -107,7 +107,7 @@
                                 <tr v-for="(item,k) in vehiculos_documentaciones" :key="k">                                 
                                     <td> {{item.titulo}}</td>     
                                     <td> {{item.descripcion}}</td>     
-                                    <td width="10px"> <a :href="AppUrl + '/' + item.path " target="_blank" title="Imagen"><span class="fa fa-file-image-o"></span></a></td>
+                                    <td width="10px"> <a :href="'/' + item.path " target="_blank" title="Imagen"><span class="fa fa-file-image-o"></span></a></td>
                                 </tr>                                     
                             </tbody>
                         </table>                     
@@ -167,7 +167,7 @@
                                 <tr v-for="(ot_documentacion,k) in ot_documentaciones" :key="k">                                 
                                     <td> {{ot_documentacion.titulo}}</td>     
                                     <td> {{ot_documentacion.descripcion}}</td>     
-                                    <td width="10px"> <a :href="AppUrl + '/' + ot_documentacion.path " target="_blank" title="Imagen"><span class="fa fa-file-image-o"></span></a></td>
+                                    <td width="10px"> <a :href="'/' + ot_documentacion.path " target="_blank" title="Imagen"><span class="fa fa-file-image-o"></span></a></td>
                                     <td> <i class="fa fa-minus-circle" @click="removeDocumentacion(k)" ></i></td>
                                 </tr>                       
                                 
@@ -222,7 +222,7 @@ data () { return {
   },
   computed :{
 
-       ...mapState(['url','AppUrl','vehiculos'])
+       ...mapState(['url','vehiculos'])
     },
 
   created : function(){

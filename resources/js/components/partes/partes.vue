@@ -769,7 +769,7 @@ export default {
 
     computed :{
 
-        ...mapState(['url','AppUrl','serviciosOt','vehiculos']),     
+        ...mapState(['url','serviciosOt','vehiculos']),     
         
         fecha_mysql : function(){
 
@@ -2026,8 +2026,8 @@ export default {
 
           let parte = response.data;
           toastr.success('Parte diario con fecha' +  this.fecha + ' fue creado con éxito ');        
-          window.open( this.AppUrl + '/pdf/parte/' + parte.id + '/final','_blank');
-          window.location.href = this.AppUrl + '/partes/ot/' + this.otdata.id;
+          window.open(  '/pdf/parte/' + parte.id + '/final','_blank');
+          window.location.href =  '/partes/ot/' + this.otdata.id;
 
         }).catch(error => {
                
@@ -2104,8 +2104,8 @@ export default {
         ).then( () => {
 
           toastr.success('Parte diario con fecha' +  this.fecha + ' fue actualizado con éxito ');
-          window.open( this.AppUrl + '/pdf/parte/' + this.parte_data.id + '/final','_blank');
-          window.location.href = this.AppUrl + '/partes/ot/' + this.otdata.id;
+          window.open(  '/pdf/parte/' + this.parte_data.id + '/final','_blank');
+          window.location.href =  '/partes/ot/' + this.otdata.id;
 
         }).catch(error => {
                

@@ -19,7 +19,7 @@
 
         <div class="col-md-12">
             <div v-show="$can('T_remitos_edita')">
-                <a :href="AppUrl + '/area/enod/ot/' + ot_id_data + '/remito' " class="btn btn-enod pull-left"><span class="fa fa-plus-circle"></span> Nuevo</a>
+                <a :href="'/area/enod/ot/' + ot_id_data + '/remito' " class="btn btn-enod pull-left"><span class="fa fa-plus-circle"></span> Nuevo</a>
             </div>
         </div>
         <div class="clearfix"></div>
@@ -58,8 +58,8 @@
                                     <td width="10px"> 
                                         <button @click.prevent="editRemito(k)" class="btn btn-warning btn-sm" title="Editar" :disabled="!$can('T_remitos_edita')"><span class="fa fa-edit"></span></button>
                                     </td>
-                                    <td v-if="ot_remito.interno_sn" width="10px"> <a :href="AppUrl + '/pdf/remito/' + ot_remito.id " target="_blank"  class="btn btn-default btn-sm" title="Informe"><span class="fa fa-file-pdf-o"></span></a></td>
-                                    <td v-else width="10px"> <a :href="AppUrl + '/pdf/remito/' + ot_remito.id " target="_blank"  class="btn btn-default btn-sm" title="Imprimir"><span class="fa fa-print"></span></a></td>                                  
+                                    <td v-if="ot_remito.interno_sn" width="10px"> <a :href="'/pdf/remito/' + ot_remito.id " target="_blank"  class="btn btn-default btn-sm" title="Informe"><span class="fa fa-file-pdf-o"></span></a></td>
+                                    <td v-else width="10px"> <a :href="'/pdf/remito/' + ot_remito.id " target="_blank"  class="btn btn-default btn-sm" title="Imprimir"><span class="fa fa-print"></span></a></td>                                  
                                     
                                 </tr>                       
                                 
@@ -102,7 +102,7 @@ export default {
   
   computed :{
 
-       ...mapState(['url','AppUrl','CantRemitos'])
+       ...mapState(['url','CantRemitos'])
      },  
 
  methods : {
@@ -119,7 +119,7 @@ export default {
 
     editRemito : function(index){
 
-        window.location.href = this.AppUrl + '/area/enod/ot/' + this.ot_id_data + '/remito/' + this.ot_remitos.data[index].id +'/edit'
+        window.location.href =  '/area/enod/ot/' + this.ot_id_data + '/remito/' + this.ot_remitos.data[index].id +'/edit'
 
     }
 

@@ -140,7 +140,7 @@ export default {
      
     computed :{
     
-         ...mapState(['url','AppUrl']),       
+         ...mapState(['url']),       
 
          
     }, 

@@ -182,7 +182,7 @@ export default {
   
   computed :{
 
-       ...mapState(['url','AppUrl','dosimetria_rx','fecha']),
+       ...mapState(['url','dosimetria_rx','fecha']),
 
        dia_actual : function(){
 

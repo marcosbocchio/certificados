@@ -123,7 +123,7 @@
 
      computed :{
 
-       ...mapState(['url','AppUrl','ot_tipo_soldaduras'])
+       ...mapState(['url','ot_tipo_soldaduras'])
      },
 
      methods : {  

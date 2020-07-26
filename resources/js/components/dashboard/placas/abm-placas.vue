@@ -133,7 +133,7 @@ export default {
              return 'table-' + this.modelo ;
          },       
          
-         ...mapState(['url','AppUrl'])
+         ...mapState(['url'])
      },
      
     methods :{

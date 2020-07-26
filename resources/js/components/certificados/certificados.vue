@@ -329,7 +329,7 @@ export default {
 
     computed :{
 
-        ...mapState(['url','AppUrl']),     
+        ...mapState(['url']),     
 
         numero_code : function()  {
 
@@ -777,8 +777,8 @@ export default {
 
           let certificado = response.data;
           toastr.success('Certificado N°' +  this.numero_code + ' fue creado con éxito ');
-          window.open( this.AppUrl + '/pdf/certificado/' + certificado.id + '/final','_blank');
-          window.location.href = this.AppUrl + '/certificados/ot/' + this.otdata.id;
+          window.open('/pdf/certificado/' + certificado.id + '/final','_blank');
+          window.location.href ='/certificados/ot/' + this.otdata.id;
          
         }).catch(error => {
                
@@ -820,8 +820,8 @@ export default {
         ).then( () => {
 
           toastr.success('Certificado N°' +  this.numero_code + ' fue actualizado con éxito ');
-          window.open( this.AppUrl + '/pdf/certificado/' + this.certificado_data.id + '/final','_blank');
-          window.location.href = this.AppUrl + '/certificados/ot/' + this.otdata.id;
+          window.open('/pdf/certificado/' + this.certificado_data.id + '/final','_blank');
+          window.location.href ='/certificados/ot/' + this.otdata.id;
 
         }).catch(error => {
                

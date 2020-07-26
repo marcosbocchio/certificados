@@ -166,7 +166,7 @@ export default {
   
   computed :{
 
-       ...mapState(['url','AppUrl','operadores_dosimetria','DiasDelMes','dosimetria_operador','fecha']),
+       ...mapState(['url','operadores_dosimetria','DiasDelMes','dosimetria_operador','fecha']),
 
        dia_actual : function(){
 

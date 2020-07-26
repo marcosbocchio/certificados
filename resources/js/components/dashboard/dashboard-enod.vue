@@ -201,7 +201,7 @@
                                   </button>                                 
                                 </td>
 
-                                <td width="10px"> <a :href="AppUrl + '/pdf/ot/' + ot.id " target="_blank"  class="btn btn-default btn-sm" title="Informe"><span class="fa fa-file-pdf-o"></span></a></td>
+                                <td width="10px"> <a :href="'/pdf/ot/' + ot.id " target="_blank"  class="btn btn-default btn-sm" title="Informe"><span class="fa fa-file-pdf-o"></span></a></td>
 
                                 <td width="10px"> 
                                   <div v-if="ot.estado == 'EDITANDO'">
@@ -259,7 +259,7 @@ export default {
 
     computed :{
 
-        ...mapState(['url','AppUrl','CantInformes','CantInternoEquipos','CantOperadores','CantRemitos','CantProcedimientos','CantPartes','CantVehiculos','CantDocumentaciones','CantCertificados'])
+        ...mapState(['url','CantInformes','CantInternoEquipos','CantOperadores','CantRemitos','CantProcedimientos','CantPartes','CantVehiculos','CantDocumentaciones','CantCertificados'])
         
      },
     
@@ -367,19 +367,19 @@ export default {
       
       openEditarOt: function(id){
 
-        window.location.href = this.AppUrl + '/area/enod/ots/' + id + '/edit';
+        window.location.href =  '/area/enod/ots/' + id + '/edit';
 
       },
 
       openUsuariosOt: function(id){
 
-        window.location.href = this.AppUrl + '/soldadores/ot/' + id;
+        window.location.href =  '/soldadores/ot/' + id;
 
       },
 
       NuevaOt : function(){
 
-        window.location.href = this.AppUrl + '/area/enod/ots';
+        window.location.href =  '/area/enod/ots';
      
       } ,
 
@@ -391,49 +391,49 @@ export default {
 
           case 'operadores':
             if(this.$can('T_operador_acceder')){
-              window.location.href = this.AppUrl + '/operadores/ot/' + this.ot_id_selected;
+              window.location.href =  '/operadores/ot/' + this.ot_id_selected;
             } 
           break;
 
           case 'equipos':
             if(this.$can('T_equipos_acceder')){
-              window.location.href = this.AppUrl + '/interno_equipos/ot/' + this.ot_id_selected;
+              window.location.href =  '/interno_equipos/ot/' + this.ot_id_selected;
             }     
           break;
 
           case 'procedimientos':
             if(this.$can('T_proc_acceder')){
-              window.location.href = this.AppUrl + '/procedimientos/ot/' + this.ot_id_selected;
+              window.location.href =  '/procedimientos/ot/' + this.ot_id_selected;
             }  
           break;
 
           case 'documentaciones':
             if(this.$can('T_doc_acceder')){
-              window.location.href = this.AppUrl + '/documentaciones/ot/' + this.ot_id_selected;
+              window.location.href =  '/documentaciones/ot/' + this.ot_id_selected;
             }  
           break;
 
           case 'remitos':
             if(this.$can('T_remitos_acceder')){
-              window.location.href = this.AppUrl + '/remitos/ot/' + this.ot_id_selected;
+              window.location.href =  '/remitos/ot/' + this.ot_id_selected;
             }  
           break;
   
           case 'informes':
             if(this.$can('T_informes_acceder')){
-              window.location.href = this.AppUrl + '/informes/ot/' + this.ot_id_selected;
+              window.location.href =  '/informes/ot/' + this.ot_id_selected;
             }       
           break;
 
           case 'partes':
             if(this.$can('T_partes_acceder')){
-              window.location.href = this.AppUrl + '/partes/ot/' + this.ot_id_selected;
+              window.location.href =  '/partes/ot/' + this.ot_id_selected;
             }  
           break;   
 
           case 'certificados':
             if(this.$can('T_certif_acceder')){
-              window.location.href = this.AppUrl + '/certificados/ot/' + this.ot_id_selected;
+              window.location.href =  '/certificados/ot/' + this.ot_id_selected;
             } 
            break;  
 

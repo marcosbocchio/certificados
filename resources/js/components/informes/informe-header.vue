@@ -84,7 +84,7 @@ export default {
 
     computed :{
 
-        ...mapState(['url','AppUrl','obra_informe']),     
+        ...mapState(['url','obra_informe']),     
        
      },
 

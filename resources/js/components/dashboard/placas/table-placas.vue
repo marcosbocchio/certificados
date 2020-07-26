@@ -11,7 +11,7 @@
         </thead>
         <tbody>
           <tr v-for="registro in registros" :key="registro.id">           
-            <td> {{ registro.descripcion }} <a :href="AppUrl + '/' + registro.path" target="_blank" class="btn btn-default btn-xs" title="descargar"><span class="fa fa-download"></span></a>    
+            <td> {{ registro.descripcion }} <a :href="'/' + registro.path" target="_blank" class="btn btn-default btn-xs" title="descargar"><span class="fa fa-download"></span></a>    
            
             </td>
             <td width="10px">
@@ -41,7 +41,7 @@ import {mapState} from 'vuex'
     
     computed :{           
          
-         ...mapState(['url','AppUrl'])
+         ...mapState(['url'])
      },
   }
 </script>

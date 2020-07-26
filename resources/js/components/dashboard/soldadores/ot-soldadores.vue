@@ -152,7 +152,7 @@ data () { return {
   },
   computed :{
 
-       ...mapState(['url','AppUrl'])
+       ...mapState(['url'])
     },
 
   created : function(){

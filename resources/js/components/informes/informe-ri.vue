@@ -1054,7 +1054,7 @@
          },
      },
      computed :{
-         ...mapState(['isLoading','url','AppUrl','ot_obra_tipo_soldaduras','materiales','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','ejecutor_ensayos','interno_equipos','fuentePorInterno','curie']),
+         ...mapState(['isLoading','url','ot_obra_tipo_soldaduras','materiales','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','ejecutor_ensayos','interno_equipos','fuentePorInterno','curie']),
             HabilitarClonarPasadas(){
                 this.EnableClonarPasadas = (this.isGasoducto && this.pasada=='1' && this.TablaDetalle.length);
             },  
@@ -1873,8 +1873,8 @@
                  ).then(response => {
                      let informe = response.data;
                      toastr.success('informe N°' + this.numero_inf + ' fue creado con éxito ');
-                     window.open( this.AppUrl + '/pdf/informe/ri/' + informe.id,'_blank');
-                     window.location.href = this.AppUrl + '/informes/ot/' + this.otdata.id;
+                     window.open(  '/pdf/informe/ri/' + informe.id,'_blank');
+                     window.location.href =  '/informes/ot/' + this.otdata.id;
                  }).catch(error => {
                      
                      this.errors = error.response.data.errors;
@@ -1953,8 +1953,8 @@
              
                  ).then( () => {
                      toastr.success('informe N°' + this.numero_inf + ' fue actualizado con éxito ');               
-                     window.open( this.AppUrl + '/pdf/informe/ri/' + this.informedata.id,'_blank');
-                     window.location.href = this.AppUrl + '/informes/ot/' + this.otdata.id;
+                     window.open(  '/pdf/informe/ri/' + this.informedata.id,'_blank');
+                     window.location.href =  '/informes/ot/' + this.otdata.id;
                  }).catch(error => {
                      
                      this.errors = error.response.data.errors;

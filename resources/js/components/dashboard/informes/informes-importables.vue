@@ -143,7 +143,7 @@ components: {
 
     computed :{
     
-        ...mapState(['url','AppUrl','ejecutor_ensayos']),   
+        ...mapState(['url','ejecutor_ensayos']),   
         
     },
  

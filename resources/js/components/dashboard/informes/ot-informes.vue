@@ -108,20 +108,20 @@
                                         <button @click="ClonarInforme(k)" class="btn btn-default btn-sm" title="Clonar" :disabled="!$can('T_informes_edita')"><app-icon img="clone" color="black"></app-icon></button>
                                     </td>
                                     <td v-if="ot_informe.metodo == 'RI'"> 
-                                        <a :href="AppUrl + '/placas/informe/' + ot_informe.id" class="btn btn-default btn-sm" title="Digitalización"><img width="16px" :src="AppUrl + '/img/carestream.ico'"></a>
+                                        <a :href="'/placas/informe/' + ot_informe.id" class="btn btn-default btn-sm" title="Digitalización"><img width="16px" :src="'/img/carestream.ico'"></a>
                                     </td> 
                                     <td v-if="ot_informe.metodo == 'US'"> 
-                                        <a :href="AppUrl + '/placas/informe/' + ot_informe.id" class="btn btn-default btn-sm" title="Digitalización"><img width="16px" :src="AppUrl + '/img/IconoUS.ico'"></a>
+                                        <a :href="'/placas/informe/' + ot_informe.id" class="btn btn-default btn-sm" title="Digitalización"><img width="16px" :src="'/img/IconoUS.ico'"></a>
                                     </td> 
-                                    <td v-if="!ot_informe.importable_sn" width="10px"> <a :href="AppUrl + '/pdf/informe/' + ot_informe.id " target="_blank"  class="btn btn-default btn-sm" title="Informe"><span class="fa fa-file-pdf-o"></span></a></td> 
-                                    <td v-else><a :href="AppUrl + '/' + ot_informe.path " target="_blank" title="Informe" class="btn btn-default btn-sm"><span class="fa fa-file-pdf-o"></span></a></td> 
+                                    <td v-if="!ot_informe.importable_sn" width="10px"> <a :href="'/pdf/informe/' + ot_informe.id " target="_blank"  class="btn btn-default btn-sm" title="Informe"><span class="fa fa-file-pdf-o"></span></a></td> 
+                                    <td v-else><a :href="'/' + ot_informe.path " target="_blank" title="Informe" class="btn btn-default btn-sm"><span class="fa fa-file-pdf-o"></span></a></td> 
                                     <td v-if="!ot_informe.importable_sn" width="10px"> 
                                         <button @click="informesEscaneados(ot_informe.id)" :disabled="!$can('T_informes_edita')" class="btn btn-default btn-sm" title="Informes escaneados"><span class="fa fa-cloud-upload"></span></button>
                                     </td>  
                                     <td v-if="!ot_informe.firma && !ot_informe.importable_sn" width="10px"> 
                                         <button @click="firmar(k)" class="btn btn-default btn-sm" title="Firmar" :disabled="!$can('T_informes_edita')"><span class="glyphicon glyphicon-pencil"></span></button>                                      
                                     </td>   
-                                    <td v-else-if="!ot_informe.importable_sn"><a class="btn btn-default btn-sm" title="Firmado"><img width="16px" :src="AppUrl + '/img/firma.png'"></a></td>
+                                    <td v-else-if="!ot_informe.importable_sn"><a class="btn btn-default btn-sm" title="Firmado"><img width="16px" :src="'/img/firma.png'"></a></td>
 
                                 </tr>                       
                                  
@@ -192,7 +192,7 @@ export default {
 
   computed :{
 
-       ...mapState(['url','AppUrl','CantInformes','DDPPI','ParametroGeneral'])
+       ...mapState(['url','CantInformes','DDPPI','ParametroGeneral'])
      },  
 
     methods : {
@@ -222,7 +222,7 @@ export default {
 
                         }else{
 
-                            window.location.href= this.AppUrl + '/area/enod/ot/' + this.ot_data.id + '/informe/metodo/' + this.metodo_ensayo.metodo + '/create' ;
+                            window.location.href=  '/area/enod/ot/' + this.ot_data.id + '/informe/metodo/' + this.metodo_ensayo.metodo + '/create' ;
 
                         }     
                     }
@@ -247,7 +247,7 @@ export default {
 
         EditInforme : function(id){
 
-            window.location.href = this.AppUrl + '/area/enod/ot/' + this.ot_data.id + '/informe/' + id +'/edit'
+            window.location.href =  '/area/enod/ot/' + this.ot_data.id + '/informe/' + id +'/edit'
 
         },
 
@@ -310,7 +310,7 @@ export default {
 
         informesEscaneados(id){
 
-            window.location.href = this.AppUrl + '/documentos-escaneados/ot/' + this.ot_data.id + '/informe/' + id ;
+            window.location.href =  '/documentos-escaneados/ot/' + this.ot_data.id + '/informe/' + id ;
 
         }
     },

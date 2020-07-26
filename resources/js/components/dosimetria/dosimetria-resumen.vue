@@ -551,7 +551,7 @@ export default {
   
   computed :{
 
-       ...mapState(['isLoading','url','AppUrl','DiasDelMes','fecha','dosimetria_resumen','ParametroGeneral']),
+       ...mapState(['isLoading','url','DiasDelMes','fecha','dosimetria_resumen','ParametroGeneral']),
 
        anio_actual : function(){
 
@@ -596,7 +596,7 @@ export default {
          })
          this.str_list_of_months = array_list_of_months.toString();
        
-         window.open(this.AppUrl + '/pdf/dosimetria/year/' + this.year + '/operadores/' + this.str_list_of_ids + '/rs/' + this.rs + '/months/' + this.str_list_of_months,'_blank');
+         window.open( '/pdf/dosimetria/year/' + this.year + '/operadores/' + this.str_list_of_ids + '/rs/' + this.rs + '/months/' + this.str_list_of_months,'_blank');
 
 
      },

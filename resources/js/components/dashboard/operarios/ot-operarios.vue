@@ -146,7 +146,7 @@
                                                     
                                         <td> {{documentacion.titulo}}</td>    
                                         <td> {{documentacion.descripcion}}</td> 
-                                        <td width="10px"> <a :href="AppUrl + '/documentaciones/operador/' + documentacion.id" target="_blank" class="btn btn-default btn-sm" title="pdf"><span class="fa fa-file-pdf-o"></span></a></td>
+                                        <td width="10px"> <a :href="'/documentaciones/operador/' + documentacion.id" target="_blank" class="btn btn-default btn-sm" title="pdf"><span class="fa fa-file-pdf-o"></span></a></td>
                                                  
                                     </tr>                       
                                     
@@ -215,7 +215,7 @@ export default {
   },
   computed :{
 
-       ...mapState(['url','AppUrl','operadores','isLoading'])
+       ...mapState(['url','operadores','isLoading'])
      },
   methods :{
  

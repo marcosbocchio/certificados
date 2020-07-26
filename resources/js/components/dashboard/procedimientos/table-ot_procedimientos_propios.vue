@@ -26,7 +26,7 @@
                 <td>{{ registro.titulo}}</td>
                 <td>{{ registro.descripcion }}</td>
                 <td>{{ registro.metodo_ensayo['metodo']}}</td>    
-                <td width="10px"> <a :href="AppUrl + '/' + registro.path " target="_blank" title="Imagen" class="btn btn-default btn-sm"><span class="fa fa-file-pdf-o"></span></a></td>
+                <td width="10px"> <a :href="'/' + registro.path " target="_blank" title="Imagen" class="btn btn-default btn-sm"><span class="fa fa-file-pdf-o"></span></a></td>
                 <td width="10px">
                   <button class="btn btn-warning btn-sm" title="Editar" v-on:click.prevent="$emit('editRegistroEvent',registro)" :disabled="!$can('T_proc_edita')"><span class="fa fa-edit"></span> </button>                  
                 </td>
@@ -55,7 +55,7 @@
 
      computed :{
 
-       ...mapState(['url','AppUrl'])
+       ...mapState(['url'])
      },
 
   }
