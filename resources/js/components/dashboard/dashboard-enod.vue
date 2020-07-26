@@ -315,7 +315,7 @@ export default {
 
             this.loading = true;
             axios.defaults.baseURL = this.url ;                
-            var urlRegistros = 'ots?page='+ page + '&search=' + filtro + '&api_token=' + Laravel.user.api_token;      
+            var urlRegistros = 'ots?page='+ page + '&search=' + filtro ;      
             console.log(urlRegistros);        
             axios.get(urlRegistros).then(response =>{
 
