@@ -17,7 +17,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::group(['middleware' => ['cors']], function()
+Route::group(['middleware' => ['auth:api','cors']], function()
 {   
     Route::resource('parametros_generales', 'ParametrosGeneralesController');
     Route::get('clientes/paginate', 'ClientesController@paginate'); 
@@ -269,8 +269,7 @@ Route::group(['middleware' => ['cors']], function()
     Route::get('partes/informe_ri/{id}','PartesController@getInformeRiParte');
     Route::get('partes/informe_pm/{id}','PartesController@getInformePmParte');
     Route::get('partes/informe_lp/{id}','PartesController@getInformeLpParte');    
-    Route::get('partes/informe_us/{id}','PartesController@getInformeUsParte');
-    
+    Route::get('partes/informe_us/{id}','PartesController@getInformeUsParte');   
 
     //certificados
     Route::put('certificados/{id}/firmar', 'CertificadosController@firmar');
@@ -289,10 +288,3 @@ Route::get('/fecha_actual',function(){
 
 });
 
-/*
-api/tipo_liquidos/penetrante_sn/{penetrante_sn}/revelador_sn{revelador_sn}/removedor_sn/{removedor_sn}/metodo_trabajo_lp_id/{metodo_trabajo_lp_id}
-http://certificados.test/api/tipo_liquidos/penetrante_sn/0/revelador_sn/1/removedor_sn/0/metodo_trabajo_lp_id/1?api_token=XOttyjkkDp1MsUzKGAZiP3y6uTLTieB2qAc4YT22I9ApoBia77V7arjioMSG
-
-
-
-*/
