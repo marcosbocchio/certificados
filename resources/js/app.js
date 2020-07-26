@@ -308,12 +308,8 @@ const store = new Vuex.Store({
   
 state: {
         
-        url:process.env.NODE_ENV == 'production' ? 
-        process.env.MIX_API_URL_PRO :
-        process.env.MIX_API_URL_DEV,
-        AppUrl:process.env.NODE_ENV == 'production' ? 
-        process.env.MIX_URL_PRO :
-        process.env.MIX_URL_DEV,
+        url:window.location.protocol + '//' + window.location.hostname + '/api',
+        AppUrl:window.location.protocol + '//' + window.location.hostname,
         
         isLoading : false ,
         fecha :'',
