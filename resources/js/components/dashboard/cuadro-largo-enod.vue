@@ -206,15 +206,13 @@ export default {
     position: absolute;    
     padding: 0;    
     z-index: 0;
-    top:50px;
+    top:55px;
     right: 230px;
     font-weight: bold;
 }
 
 .icono_cuadro img {
-
     margin-top:15px;
-
 }
 
 .small-box .small-box-footer {
