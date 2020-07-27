@@ -1,34 +1,36 @@
 <template>
     <div>
         <div v-if="modelo == 'ot_procedimientos_propios'">
-            <div class="col-lg-3 col-xs-6">
-                <cuadro-enod
-                    :tablero_sn ="false"
+            <div class="col-lg-12">
+                <cuadro-largo-enod
                     :titulo = "'PROCEDIMIENTOS'"
                     :class_color_titulo = "'color_2'"
-                    :class_color_sub_titulo = "'color_1'"          
+                    :class_color_sub_titulo = "'color_1'"
                     :cantidad_1 ="CantProcedimientos"
                     :src_icono ="'/img/tablero/icono-enod-procedimientos.svg'"
                     :class_color_cuadro = "'bg-custom-3'"   
-                    :habilitado_sn ="true"                  
+                    :class_color_cuadro_largo = "'bg-custom-2'"   
+                    :habilitado_sn =" $can('T_proc_acceder') ?  true : false"        
+                    :class_footer_img ="'footer-proc-cert'"        
                 >
-                </cuadro-enod>
+                </cuadro-largo-enod>
             </div>
         </div>
 
         <div v-else-if="modelo == 'documentaciones'">
-            <div class="col-lg-3 col-xs-6">
-                <cuadro-enod
+            <div class="col-lg-12">
+                <cuadro-largo-enod
                     :tablero_sn ="false"
                     :titulo = "'DOCUMENTACIONES'"
                     :class_color_titulo = "'color_2'"
                     :class_color_sub_titulo = "'color_3'"
                     :cantidad_1 ="CantDocumentacionesTotal"
                     :src_icono ="'/img/tablero/icono-enod-documentacion.svg'"
-                    :class_color_cuadro = "'bg-custom-4'"   
+                    :class_color_cuadro = "'bg-custom-4'" 
+                    :class_color_cuadro_largo = "'bg-custom-2'"   
                     :habilitado_sn ="true"                  
                 >
-                </cuadro-enod>
+                </cuadro-largo-enod>
             </div>
         </div>        
 

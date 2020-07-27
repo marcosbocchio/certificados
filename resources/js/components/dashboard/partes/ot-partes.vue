@@ -1,17 +1,18 @@
 <template>
  <div class="row">
-       <div class="col-lg-3 col-xs-6">
-          <cuadro-enod
-              :tablero_sn ="false"
+       <div class="col-lg-12">
+          <cuadro-largo-enod
               :titulo = "'PARTES'"
               :class_color_titulo = "'color_3'"
-              :class_color_sub_titulo = "'color_2'"        
+              :class_color_sub_titulo = "'color_2'"
               :cantidad_1 ="CantPartes"
               :src_icono ="'/img/tablero/icono-enod-partes.svg'"
               :class_color_cuadro = "'bg-custom-7'"   
-              :habilitado_sn ="true"                  
+              :class_color_cuadro_largo = "'bg-custom-5'"   
+              :habilitado_sn =" $can('T_partes_acceder') ?  true : false"      
+              :class_footer_img ="'footer-equipos-partes'"               
           >
-          </cuadro-enod>
+          </cuadro-largo-enod>
        </div>
 
        <div class="clearfix"></div>

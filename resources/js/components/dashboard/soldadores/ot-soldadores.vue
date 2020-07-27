@@ -1,18 +1,21 @@
 <template>
     <div>
-       <div class="col-md-12">
-          <!-- small box -->
-          <div class="small-box bg-yellow">
-            <div class="inner">
-              <h3>{{ ot_soldadores.length }} / {{ ot_usuarios_cliente.length}}</h3>
-              <p>Soldadores / Usuarios Cliente </p>
-            </div>
-            <div class="icon">
-              <i class="fa fa-users"></i>
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
+       <div class="col-lg-12">                  
+          <cuadro-largo-enod
+              :titulo = "'SOLDADORES'"
+              :titulo_2 = "'USUARIOS CLIENTE'"
+              :class_color_titulo = "'color_2'"
+              :class_color_sub_titulo = "'color_3'"
+              :cantidad_2 ="ot_soldadores.length"
+              :cantidad_1 ="ot_usuarios_cliente.length"
+              :src_icono ="'/img/tablero/icono-enod-remitos.svg'"
+              :class_color_cuadro = "'bg-custom-1'"   
+              :class_color_cuadro_largo = "'bg-custom-4'"  
+              :habilitado_sn =" $can('T_remitos_acceder') ?  true : false"    
+              :class_footer_img ="'footer-doc-remitos'" 
+          >
+          </cuadro-largo-enod>        
+       </div>
         <div class="clearfix"></div>
         <div class="col-md-12">
             <div class="box box-custom-enod">

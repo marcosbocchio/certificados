@@ -47,8 +47,7 @@
               :src_icono ="'/img/tablero/icono-enod-procedimientos.svg'"
               :class_color_cuadro = "'bg-custom-3'"   
               :habilitado_sn =" $can('T_proc_acceder') ?  true : false"        
-              :class_footer_img ="'footer-proc-cert'"               
-          
+              :class_footer_img ="'footer-proc-cert'"        
           >
           </cuadro-enod>
          </a>

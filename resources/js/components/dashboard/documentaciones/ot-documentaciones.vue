@@ -1,20 +1,22 @@
 <template>
     <div class="row">    
 
-       <div class="col-lg-3 col-xs-6">
-          <cuadro-enod
-              :tablero_sn ="false"
-              :titulo = "'VEHÍCULO / DOC.'"
+       <div class="col-lg-12">     
+          <cuadro-largo-enod
+              :titulo = "'VEHÍCULO'"
+              :titulo_2 ="'DOC.'"
               :class_color_titulo = "'color_2'"
               :class_color_sub_titulo = "'color_3'"
               :cantidad_1 ="ot_vehiculos.length"
               :cantidad_2 ="ot_documentaciones.length"
-              :src_icono ="'/img/tablero/icono-enod-documentacion.svg'"
+              :src_icono ="'/img/tablero/icono-enod-vehiculos-doc.svg'"
               :class_color_cuadro = "'bg-custom-4'"   
-              :habilitado_sn ="true"
-              :invertir_cantidad_sn ="true"
-          >
-          </cuadro-enod>
+              :class_color_cuadro_largo = "'bg-custom-2'"  
+              :habilitado_sn =" $can('T_doc_acceder') ?  true : false"
+              :class_footer_img ="'footer-doc-remitos'"     
+              :invertir_cantidad_sn ="true"  >
+          </cuadro-largo-enod>
+        
        </div>
 
         <div class="clearfix"></div>

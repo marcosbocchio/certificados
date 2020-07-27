@@ -113,10 +113,10 @@ export default {
 
 .small-box {
   text-align: center !important;
-  border-radius: 10px;
-  -webkit-box-shadow: 1px 1px 10px -1px rgba(0,0,0,0.75);
-  -moz-box-shadow: 1px 1px 10px -1px rgba(0,0,0,0.75);
-  box-shadow: 1px 1px 10px -1px rgba(0,0,0,0.75);
+  border-radius: 5px;
+  -webkit-box-shadow: 1px 1px 5px -1px rgba(0,0,0,0.75);
+  -moz-box-shadow: 1px 1px 5px -1px rgba(0,0,0,0.75);
+   box-shadow: 1px 1px 5px -1px rgba(0,0,0,0.75);
 }
 
 .small-box .inner .titulo {

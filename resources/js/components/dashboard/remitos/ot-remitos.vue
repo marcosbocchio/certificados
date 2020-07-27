@@ -1,18 +1,19 @@
 <template>
  <div class="row">
 
-       <div class="col-lg-3 col-xs-6">
-          <cuadro-enod
-              :tablero_sn ="false"
+       <div class="col-lg-12">                  
+          <cuadro-largo-enod
               :titulo = "'REMITOS'"
               :class_color_titulo = "'color_2'"
               :class_color_sub_titulo = "'color_3'"
               :cantidad_1 ="CantRemitos"
               :src_icono ="'/img/tablero/icono-enod-remitos.svg'"
               :class_color_cuadro = "'bg-custom-5'"   
-              :habilitado_sn ="true"                  
+              :class_color_cuadro_largo = "'bg-custom-2'"  
+              :habilitado_sn =" $can('T_remitos_acceder') ?  true : false"    
+              :class_footer_img ="'footer-doc-remitos'" 
           >
-          </cuadro-enod>
+          </cuadro-largo-enod>        
        </div>
 
         <div class="clearfix"></div>

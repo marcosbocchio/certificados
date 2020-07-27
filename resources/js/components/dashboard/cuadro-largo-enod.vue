@@ -20,13 +20,22 @@
                 </div>
               </div>
 
+            </div>      
+
+            <div class="titulo_cuadro" :class="class_color_sub_titulo">                      
+              {{ titulo }} 
+              <div v-if="titulo_2" style="display:inline-block" class="color_cant_1">
+                <span style="color:#535353;font-weight: bold;"> | </span> {{ titulo_2 }}
+              </div>              
+            </div>
+
+            <div>
+
             </div>
             
             <div class="icono_cuadro" :class="class_color_cuadro" >
               <img :src="src_icono" width="100px" />
             </div>
-
-
             
         </div>              
     </div>
@@ -127,7 +136,7 @@ export default {
 .small-box,.icono_cuadro {
 
   text-align: center !important;
-  border-radius: 10px;
+  border-radius: 5px;
 
 
 }
@@ -190,6 +199,16 @@ export default {
     right:0 ; 
     z-index: 0;
     top: 0;
+}
+
+.titulo_cuadro {
+
+    position: absolute;    
+    padding: 0;    
+    z-index: 0;
+    top:50px;
+    right: 230px;
+    font-weight: bold;
 }
 
 .icono_cuadro img {

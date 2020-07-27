@@ -1,18 +1,21 @@
 <template>
     <div class="row">
 
-       <div class="col-lg-3 col-xs-6">
-          <cuadro-enod
-              :tablero_sn ="false"
+       <div class="col-lg-12">
+         <a @click="EntrarCuadro('certificados')">
+          <cuadro-largo-enod
               :titulo = "'CERTIFICADOS'"
               :class_color_titulo = "'color_2'"
               :class_color_sub_titulo = "'color_1'"
               :cantidad_1 ="CantCertificados"
               :src_icono ="'/img/tablero/icono-enod-certificados.svg'"
               :class_color_cuadro = "'bg-custom-8'"   
-              :habilitado_sn ="true"                  
+              :class_color_cuadro_largo = "'bg-custom-2'"
+              :habilitado_sn =" $can('T_certif_acceder') ?  true : false"       
+              :class_footer_img ="'footer-proc-cert'"     
           >
-          </cuadro-enod>
+          </cuadro-largo-enod>
+         </a>
        </div>
 
         <div class="col-md-12">
