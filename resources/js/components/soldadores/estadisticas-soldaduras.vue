@@ -104,10 +104,52 @@
             </div>
         </div>
         <div class="col-md-9">
-        <div class="estadisticas-soldaduras">
+           
+                  <div class="estadisticas-soldaduras">
                     <tabs :options="{ useUrlFragment: false }" @clicked="tabClicked" @changed="tabChanged">
                         <tab name="Indices de rechazos">
-                            Indices de rechazos
+                            <div v-if="TablaAnalisisRechazos.length">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="div-grafico">
+                                            <pie-chart :chart-data="data_indice_rechazos" :options="data_indice_rechazos.options" ></pie-chart>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-lg-offset-3">
+                                        <div class="col-lg-12 titulo-tabla-tabs" >
+                                            <h5>Análisis de rechazos por espesor</h5>
+                                        </div>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <th class="col-lg-2">#</th>
+                                                    <th class="col-lg-3">Aprobados</th>
+                                                    <th class="col-lg-3">Rechazados</th>
+                                                    <th class="col-lg-2">Total</th>
+                                                    <th class="col-lg-2">%</th>
+                                                </tr>    
+                                                <tr v-for="(item,k) in TablaAnalisisRechazos" :key="k">
+                                                    <td>{{ item.espesor }}</td>
+                                                    <td>{{ item.aprobados }}</td>
+                                                    <td>{{ item.rechazados }}</td>
+                                                    <td>{{ item.total }}</td>
+                                                    <td>{{ item.porcentaje_rechazados }}</td>
+                                                </tr>   
+                                                <tr>
+                                                    <th>Total</th>
+                                                    <th>{{ total_aprobados_soldaduras}}</th>
+                                                    <th>{{ total_rechazos_soldaduras}}</th>
+                                                    <th>{{ total_soldaduras_informes}}</th>
+                                                    <th>{{ total_porcentaje_rechazados}}</th>
+                                                </tr>                                     
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div v-else>
+                                <h4>No hay datos para mostrar</h4>
+                            </div>
                         </tab>
                         <tab name="Defectología">
                             Defectología
@@ -120,7 +162,7 @@
                         </tab>
                     </tabs>
                 </div>
-        </div>
+            </div>
          <loading 
                   :active.sync="isLoading"   
                   :loader="'bars'"
@@ -130,23 +172,32 @@
 </template>
 
 <script>
+Vue.use(Tabs);
 import moment from 'moment';
 import Datepicker from 'vuejs-datepicker';
 import {mapState} from 'vuex';
 import {en, es} from 'vuejs-datepicker/dist/locale'
 import Tabs from 'vue-tabs-component';
-Vue.use(Tabs);
 import 'vue-tabs-component/docs/resources/tabs-component.css';
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 import DatePicker from 'vue2-datepicker';
+
+import ChartJsPluginDataLabels from 'chartjs-plugin-datalabels';
+import DoughnutChart from '../chart.js/DoughnutChart.js'
+import BarChart from '../chart.js/BarChart.js'
+import PieChart from '../chart.js/PieChart.js'
 
 export default {
 
     components: {
 
       Datepicker,
-      Loading    
+      Loading,
+      DoughnutChart,
+      BarChart,
+      PieChart,
+      ChartJsPluginDataLabels
       
     },
     props: {
@@ -158,6 +209,7 @@ export default {
 
     },
      data() { return {    
+
         en: en,
         es: es, 
         cliente:'',
@@ -172,8 +224,17 @@ export default {
         selOt:false,
         selObra:false,
         informes : [],
-    
+
+        data_indice_rechazos : null,
+        total_soldaduras_informes : 0,
+        total_porcentaje_rechazados : 0,
+        total_rechazos_soldaduras : 0,
+        total_aprobados_soldaduras : 0,
+        TablaAnalisisRechazos:[],
+        valores_indice_rechazos : [],
+
      }
+
     },
 
  created: function () {
@@ -182,6 +243,12 @@ export default {
 
  },
 
+   mounted() {
+
+        this.generateIndicesRechazos();
+
+  },
+
      computed :{
 
         ...mapState(['isLoading','url']),
@@ -189,6 +256,41 @@ export default {
      },
 
  methods : {
+
+        generateIndicesRechazos() {              
+
+                this.data_indice_rechazos = {
+
+                    labels: ["Rechazados" ,"Aprobados"],
+                    
+                    datasets: [
+                        {
+                            backgroundColor: ['#3C8DBC' ,'#00C0EF'],
+                            data: this.valores_indice_rechazos
+                        }
+                    ],
+                    options :{         
+
+                        title : {   display : true,
+                                    text :'Indices de rechazos de soldaduras',                            
+                            },                     
+                            
+                        plugins: {
+                                    datalabels: {
+
+                                        color: '#FFFFFF',
+                                        formatter: function (value) {
+                                        return  ((Math.round(value*100/this.total_soldaduras_informes)) + '%');
+                                        }.bind(this),
+                                        font: {
+                                            weight: 'bold',
+                                            size: 14,
+                                        }
+                                    }
+                                }
+                    },              
+                }
+        },   
 
     getClienteOperador(){
 
@@ -214,7 +316,9 @@ export default {
         try {
             let res = await axios.get(urlRegistros);
             this.informes = await res.data;
-            console.log(this.informes);           
+            this.valores_indice_rechazos= [];
+            await this.getIndicesDeRechazos();
+            this.generateIndicesRechazos();
         }catch(error){
            
         }         
@@ -231,7 +335,7 @@ export default {
         this.selObra =false;
         this.fecha_desde = null;
         this.fecha_hasta = null;
-        this.informes = [];
+        this.resetVariables();
         if(this.cliente){
             
             this.$store.commit('loading', true);
@@ -251,7 +355,7 @@ export default {
         this.selOt = !this.selOt;
         this.obra = '';
         this.selObra = false;
-        this.informes = [];
+        this.resetVariables();
         this.$store.commit('loading', true);
         var urlRegistros = 'ots/' + this.ot.id + '/obras/' +'?api_token=' + Laravel.user.api_token;  
         try {
@@ -259,8 +363,7 @@ export default {
             this.obras = await res.data;           
         }catch(error){
            
-        }         
-        finally  {this.$store.commit('loading', false);}
+        }finally  {this.$store.commit('loading', false);}
 
         if(this.ot.obra){ 
             this.obra = { obra : this.ot.obra}
@@ -270,7 +373,7 @@ export default {
 
     seleccionarObra(){
 
-        this.informes = [];
+        this.resetVariables();
         if(this.ot && !this.ot.obra){
             this.selObra = !this.selObra;
         }
@@ -278,27 +381,65 @@ export default {
 
     async CambioObra (){
 
+        this.TablaAnalisisRechazos = [];
         this.selObra = !this.selObra;
+
+    },
+
+    resetVariables(){
+
+        this.informes = [];
+        this.TablaAnalisisRechazos = [];
+
+    },
+
+    async getIndicesDeRechazos(){
+
         this.$store.commit('loading', true);
-        this.$store.commit('loading', false);
-        /*
-        var urlRegistros = 'ots/' + this.ot.id + '/obras/' +'?api_token=' + Laravel.user.api_token;  
+        let informes_ids = this.informes.map(item => item.id).toString();    
+        var url = 'estadisticas-soldaduras/analisis_rechazos_espesor/' + informes_ids;
+        var urlRegistros  = 'estadisticas-soldaduras/total_soldaduras_informes/' + informes_ids;  
+        var urlRegistros2 = 'estadisticas-soldaduras/total_rechazos_soldaduras/' + informes_ids;  
+
         try {
-            let res = await axios.get(urlRegistros);
-            this.obras = await res.data;                
+
+            let res= await axios.get(url);
+            this.TablaAnalisisRechazos = await res.data;  
+            await this.calcularIndicesRechazosSoldaduras(this.TablaAnalisisRechazos);
+
         }catch(error){
            
-        } 
+        }finally  {this.$store.commit('loading', false);}
+
         
-        finally  {this.$store.commit('loading', false);} */
+    },
+
+    async calcularIndicesRechazosSoldaduras(tabla){
+        
+        this.total_soldaduras_informes = 0;
+        this.total_rechazos_soldaduras = 0;
+        this.total_aprobados_soldaduras = 0;
+        this.total_porcentaje_rechazados = 0;
+        tabla.forEach(function(item){
+            
+            this.total_rechazos_soldaduras += item.rechazados;
+            this.total_aprobados_soldaduras +=  item.aprobados; 
+            this.total_soldaduras_informes +=item.total;
+            this.total_porcentaje_rechazados += parseFloat(item.porcentaje_rechazados);
+
+        }.bind(this));
+
+        this.valores_indice_rechazos.push(this.total_rechazos_soldaduras);
+        this.valores_indice_rechazos.push(this.total_aprobados_soldaduras);
+
     },
 
     tabClicked (selectedTab) {
-    console.log('Current tab re-clicked:' + selectedTab.tab.name);
+          console.log('Current tab re-clicked:' + selectedTab.tab.name);
     },
     
     tabChanged (selectedTab) {
-        console.log('Tab changed to:' + selectedTab.tab.name);
+          console.log('Tab changed to:' + selectedTab.tab.name);
     },
  }
 }
@@ -517,4 +658,24 @@ ul li .titulo-li {
     font-family: 'Montserrat',sans-serif;
 
 }
+
+table tbody tr th,table tbody tr td {
+    text-align: center;
+}
+
+.titulo-tabla-tabs{
+    text-align: center !important;
+}
+
+.titulo-tabla-tabs h5{
+
+    font-weight: bold !important;
+    color: #6B6B6B !important;
+}
+
+  .div-grafico {
+    max-width:350px;
+    
+    margin:  0px auto 15px auto;
+  }
 </style>

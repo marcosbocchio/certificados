@@ -281,6 +281,14 @@ Route::group(['middleware' => 'auth:api'], function()
     //trazabilidad
     Route::get('trazabilidad_fuente/interno_equipo/{interno_equipo_id}','TrazabilidadFuenteController@getTrazabilidad');
 
+    /* informes clientes */
+
+    //Estadisticas soldaduras
+    Route::get('estadisticas-soldaduras/total_soldaduras_informes/{informes_ids}','EstadisticasSoldadurasController@CantSoldadurasInformes');
+    Route::get('estadisticas-soldaduras/total_rechazos_soldaduras/{informes_ids}','EstadisticasSoldadurasController@CantRechazosSoldaduras');
+    Route::get('estadisticas-soldaduras/analisis_rechazos_espesor/{informes_ids}','EstadisticasSoldadurasController@AnalisisRechazosEspesor');
+
+   
 });
 
 Route::get('/fecha_actual',function(){

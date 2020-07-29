@@ -500,17 +500,11 @@ export default {
 
                 this.TablaPartesServicios.forEach(function(item)  {
                     item.nro_combinacion = '';
-                });        
-
-                console.log('Fechas iniciales y finales');
+                });      
 
                 while ((fecha_inicial <= fecha_final)&&(index < longServicios)) {
-
-                    console.log(index);
-                    console.log(fecha_inicial);
-                    console.log(fecha_final);
+              
                     let abrev = this.getAbrevCombinadas(fecha_inicial);
-                    console.log(abrev);
                     while ((index < longServicios) && (moment(this.TablaPartesServicios[index].fecha).format('DD/MM/YYYY') == fecha_inicial)) {
                         
                         if ((abrev.findIndex(elemento => elemento == this.TablaPartesServicios[index].abreviatura) != -1)&&(abrev.length > 2)) {
