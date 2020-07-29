@@ -308,6 +308,7 @@ export default {
     async Buscar(){
 
      this.$store.commit('loading', true);
+    this.TablaAnalisisRechazos = [];
      this.selCliente = false;
      this.selOt = false;
      this.selObra = false;
