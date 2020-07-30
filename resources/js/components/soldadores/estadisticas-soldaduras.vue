@@ -421,15 +421,17 @@ export default {
         this.total_rechazos_soldaduras = 0;
         this.total_aprobados_soldaduras = 0;
         this.total_porcentaje_rechazados = 0;
+
         tabla.forEach(function(item){
             
-            this.total_rechazos_soldaduras += item.rechazados;
-            this.total_aprobados_soldaduras +=  item.aprobados; 
-            this.total_soldaduras_informes +=item.total;
-            this.total_porcentaje_rechazados += parseFloat(item.porcentaje_rechazados);
+            this.total_rechazos_soldaduras   +=  parseInt(item.rechazados);
+            this.total_aprobados_soldaduras  +=  parseInt(item.aprobados); 
+            this.total_soldaduras_informes   +=  parseInt(item.total);
+            this.total_porcentaje_rechazados +=  parseFloat(item.porcentaje_rechazados);
 
         }.bind(this));
 
+        this.total_porcentaje_rechazados = parseFloat(this.total_porcentaje_rechazados / tabla.length).toFixed(2);
         this.valores_indice_rechazos.push(this.total_rechazos_soldaduras);
         this.valores_indice_rechazos.push(this.total_aprobados_soldaduras);
 
