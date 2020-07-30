@@ -119,31 +119,33 @@
                                         <div class="col-lg-12 titulo-tabla-tabs" >
                                             <h5>Análisis de rechazos por espesor</h5>
                                         </div>
-                                        <table class="table table-striped table-condensed">
-                                            <tbody>
-                                                <tr>
-                                                    <th class="col-lg-2">#</th>
-                                                    <th class="col-lg-3">Aprobados</th>
-                                                    <th class="col-lg-3">Rechazados</th>
-                                                    <th class="col-lg-2">Total</th>
-                                                    <th class="col-lg-2">%</th>
-                                                </tr>    
-                                                <tr v-for="(item,k) in TablaAnalisisRechazos" :key="k">
-                                                    <td>{{ item.espesor }}</td>
-                                                    <td>{{ item.aprobados }}</td>
-                                                    <td>{{ item.rechazados }}</td>
-                                                    <td>{{ item.total }}</td>
-                                                    <td>{{ item.porcentaje_rechazados }}</td>
-                                                </tr>   
-                                                <tr>
-                                                    <th>Total</th>
-                                                    <th>{{ total_aprobados_soldaduras}}</th>
-                                                    <th>{{ total_rechazos_soldaduras}}</th>
-                                                    <th>{{ total_soldaduras_informes}}</th>
-                                                    <th>{{ total_porcentaje_rechazados}}</th>
-                                                </tr>                                     
-                                            </tbody>
-                                        </table>
+                                        <div class="stat-sol">
+                                            <table class="table table-striped table-condensed">
+                                                <tbody>
+                                                    <tr>
+                                                        <th class="col-lg-2">#</th>
+                                                        <th class="col-lg-3">Aprobados</th>
+                                                        <th class="col-lg-3">Rechazados</th>
+                                                        <th class="col-lg-2">Total</th>
+                                                        <th class="col-lg-2">%</th>
+                                                    </tr>    
+                                                    <tr v-for="(item,k) in TablaAnalisisRechazos" :key="k">
+                                                        <td>{{ item.espesor }}</td>
+                                                        <td>{{ item.aprobados }}</td>
+                                                        <td>{{ item.rechazados }}</td>
+                                                        <td>{{ item.total }}</td>
+                                                        <td>{{ item.porcentaje_rechazados }}</td>
+                                                    </tr>   
+                                                    <tr>
+                                                        <th>Total</th>
+                                                        <th>{{ total_aprobados_soldaduras}}</th>
+                                                        <th>{{ total_rechazos_soldaduras}}</th>
+                                                        <th>{{ total_soldaduras_informes}}</th>
+                                                        <th>{{ total_porcentaje_rechazados}}</th>
+                                                    </tr>                                     
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -662,7 +664,7 @@ ul li .titulo-li {
 
 }
 
-table tbody tr th,table tbody tr td {
+.stat-sol table tbody tr th,.stat-sol table tbody tr td {
     text-align: center;
 }
 
