@@ -1,38 +1,40 @@
 <template>
-<div> 
-    <div class="form-group"> 
+  <div class="row">
+  
+         <div class="form-group"> 
 
-      <div class="col-md-1 col-xs-2">
-        <button class="btn btn-enod" v-on:click.prevent="openNuevoRegistro()" :disabled="!$can(permiso_create)"><span class="fa fa-plus-circle"></span> Nuevo</button>
-      </div>
+            <div class="col-md-1 col-xs-2">
+              <button class="btn btn-enod" v-on:click.prevent="openNuevoRegistro()" :disabled="!$can(permiso_create)"><span class="fa fa-plus-circle"></span> Nuevo</button>
+            </div>
 
-      <div v-show="modelo == 'users' || modelo == 'interno_equipos' || modelo == 'clientes' || modelo == 'equipos'" >
-        <div class="col-md-3 col-md-offset-8 col-xs-9 col-xs-offset-1">
-          <div class="input-group">
-              <input type="text" v-model="search" class="form-control" placeholder="Buscar...">
-              <span class="input-group-addon btn" @click="aplicarFiltro()" style="background-color: #F9CA33;"><i class="fa fa-search"></i></span>
-          </div>  
-        </div>
-      </div>
+            <div v-show="modelo == 'users' || modelo == 'interno_equipos' || modelo == 'clientes' || modelo == 'equipos'" >
+              <div class="col-md-3 col-md-offset-8 col-xs-9 col-xs-offset-1">
+                <div class="input-group">
+                    <input type="text" v-model="search" class="form-control" placeholder="Buscar...">
+                    <span class="input-group-addon btn" @click="aplicarFiltro()" style="background-color: #F9CA33;"><i class="fa fa-search"></i></span>
+                </div>  
+              </div>
+            </div>
 
-    </div>     
+        </div>     
    
-    <div class="clearfix"></div>    
+      <div class="clearfix"></div>    
 
-    <div class="col-md-12">
-        <component :is= setTablaComponente :registros="registros.data" @confirmarDelete="confirmDeleteRegistro" @editar="editRegistro" @trazabilidad="open_trazabilidad_fuente" :loading="loading"/>               
-        <delete-registro :datoDelete="datoDelete" :fillRegistro="fillRegistro" @close-modal="getResults" :modelo="modelo"></delete-registro>  
-        <component :is= setNuevoComponente :modelo ="modelo" @store="getResults"/>
-        <component :is= setEditarComponente :selectRegistro="selectRegistro" @update="getResults"/>  
-        <pagination 
-                  :data="registros" @pagination-change-page="getResults" :limit="3" >
-                  <span slot="prev-nav">&lt; Previous</span>
-                  <span slot="next-nav">Next &gt;</span> 
-        </pagination>          
-             
-    </div> 
+      <div class="col-md-12">
+          <component :is= setTablaComponente :registros="registros.data" @confirmarDelete="confirmDeleteRegistro" @editar="editRegistro" @trazabilidad="open_trazabilidad_fuente" :loading="loading"/>               
+          <delete-registro :datoDelete="datoDelete" :fillRegistro="fillRegistro" @close-modal="getResults" :modelo="modelo"></delete-registro>  
+          <component :is= setNuevoComponente :modelo ="modelo" @store="getResults"/>
+          <component :is= setEditarComponente :selectRegistro="selectRegistro" @update="getResults"/>  
+          <pagination 
+                    :data="registros" @pagination-change-page="getResults" :limit="3" >
+                    <span slot="prev-nav">&lt; Previous</span>
+                    <span slot="next-nav">Next &gt;</span> 
+          </pagination>          
+              
+      </div> 
     <div class="clearfix"></div>   
-</div> 
+   
+  </div> 
 </template>
 
 <script>

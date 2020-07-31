@@ -51,10 +51,7 @@ class DocumentacionesRequest extends FormRequest
                'fecha_caducidad' =>'required',
                'path' =>'required',
             ];
-        }
-        
-
-
+        }     
 
     }
 
