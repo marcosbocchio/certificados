@@ -130,14 +130,14 @@
                          </div>    
  
                          <div v-if="!reparacion_sn" class="col-md-3">
-                             <div class="form-group" >
+                             <div class="form-group size-pqr-eps"  >
                                  <label for="procedimientos_soldadura">Proc. Soldadura (EPS)*</label>
                                  <v-select v-model="ot_tipo_soldadura" label="eps" :options="ot_obra_tipo_soldaduras_filter_R" id="procedimientos_soldadura"  :disabled="(isGasoducto)"></v-select>  
                              </div>                            
                          </div>  
  
                          <div v-else  class="col-md-3">
-                             <div class="form-group" >
+                             <div class="form-group size-pqr-eps" >
                                  <label for="eps_r">Proc. Soldadura (EPS)*</label>
                                   <input type="text" v-model="ot_tipo_soldadura_r.eps" class="form-control" id="eps_r" disabled>
                              </div>                            
@@ -146,14 +146,14 @@
                          <div class="clearfix"></div>
  
                         <div v-if="!reparacion_sn" class="col-md-3">                       
-                             <div class="form-group" >
+                             <div class="form-group size-pqr-eps" >
                                  <label for="pqr">PQR</label>
                                  <v-select v-model="ot_tipo_soldadura" label="pqr" :options="ot_obra_tipo_soldaduras_filter_R" id="pqr"  :disabled="(isGasoducto)"></v-select>                             
                              </div>         
                          </div>  
  
                          <div v-else  class="col-md-3">
-                             <div class="form-group" >
+                             <div class="form-group size-pqr-eps" >
                                  <label for="pqr_r">PQR</label>
                                   <input type="text" v-model="ot_tipo_soldadura_r.pqr" class="form-control" id="pqr_r" disabled>
                              </div>                            
@@ -1991,4 +1991,6 @@
          overflow: inherit;
      }
  }
+
+
  </style>

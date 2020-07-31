@@ -93,14 +93,14 @@
                         </div>
 
                     <div class="col-md-3">
-                        <div class="form-group" >
+                        <div class="form-group size-pqr-eps" >
                             <label for="procedimientos_soldadura">Proc. Soldadura (EPS)</label>
                             <v-select v-model="ot_tipo_soldadura" label="eps" :options="ot_obra_tipo_soldaduras" id="procedimientos_soldadura"></v-select>  
                         </div>                            
                     </div>
 
                     <div class="col-md-3">                       
-                        <div class="form-group" >
+                        <div class="form-group size-pqr-eps">
                             <label for="pqr">PQR</label>
                             <v-select v-model="ot_tipo_soldadura" label="pqr" :options="ot_obra_tipo_soldaduras" id="pqr"></v-select>  
                         </div>         

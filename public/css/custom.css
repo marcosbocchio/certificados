@@ -168,3 +168,8 @@ table .selected{
   background-color: rgb(255, 204, 0);
   border-color:rgb(255, 204, 0);
 }
+
+.size-pqr-eps{
+
+  font-size: 13px !important;
+}
