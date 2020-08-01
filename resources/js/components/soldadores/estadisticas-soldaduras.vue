@@ -154,7 +154,7 @@
                             </div>
                         </tab>
                         <tab name="Defectología">
-                            <div v-if="TablaAnalisisRechazos.length">
+                            <div v-if="TablaDetalleDefectos.length">
                                 <div class="row">
                                     <div class="col-lg-8 col-lg-offset-2">
                                         <div class="col-lg-12 titulo-tabla-tabs" >
