@@ -154,7 +154,57 @@
                             </div>
                         </tab>
                         <tab name="Defectología">
-                            Defectología
+                            <div v-if="TablaAnalisisRechazos.length">
+                                <div class="row">
+                                    <div class="col-lg-8 col-lg-offset-2">
+                                        <div class="col-lg-12 titulo-tabla-tabs" >
+                                            <h5>Defectos</h5>
+                                        </div>
+                                            <div>
+                                                <table class="table table-striped table-condensed">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th class="col-lg-2">Abrev.</th>
+                                                            <th class="col-lg-5">Descripción</th>
+                                                            <th class="col-lg-2" style="text-align: center;">Cant.</th>                                                           
+                                                            <th colspan="2" class="col-lg-3">Porcentaje</th>
+                                                        </tr>  
+                                                        <tr v-for="(item,k) in TablaDetalleDefectos" :key="k">
+                                                            <td>{{ item.abreviatura }}</td>
+                                                            <td>{{ item.descripcion }}</td>
+                                                            <td style="text-align: center;">{{ item.cantidad }}</td>
+                                                            <td class="col-lg-2">
+                                                                <div class="progress progress-xs progress-striped active">
+                                                                    <div class="progress-bar progress-bar-primary" :style="{width:item.porcentaje}"></div>
+                                                                </div>
+                                                            </td>
+                                                            <td class="col-lg-1">
+                                                                <span class="badge bg-blue">{{ item.porcentaje }}</span>
+                                                            </td>
+                                                           
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                    </div>
+
+                                   <div class="clearfix"></div>    
+                                   <div class="col-lg-3" >                       
+                                        <div class="form-group">  
+                                            <label for="diametro">Diámetro</label>                                          
+                                            <v-select v-model="DiametroDefecto"  :options="DiametrosDefectos" @input="GenerarGraficoDefectosPosicion" id="diametro"></v-select>   
+                                        </div>      
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="div-grafico">
+                                            <doughnut-chart :chart-data="data_defectologia" :options="data_defectologia.options" ></doughnut-chart>
+                                        </div>
+                                    </div>
+                                </div>     
+                            </div> 
+                             <div v-else>
+                                <h4>No hay datos para mostrar</h4>
+                            </div>
                         </tab>
                         <tab name="Defectología/Producción">
                             Defectología/Producción
@@ -226,28 +276,40 @@ export default {
         selOt:false,
         selObra:false,
         informes : [],
-
+        informes_ids :'',
+       
+        /* Indices de rechazos */
         data_indice_rechazos : null,
         total_soldaduras_informes : 0,
         total_porcentaje_rechazados : 0,
         total_rechazos_soldaduras : 0,
         total_aprobados_soldaduras : 0,
         TablaAnalisisRechazos:[],
-        valores_indice_rechazos : [],
+        valores_indice_rechazos :[],
 
+        /* Defectologia */
+        total_defectos_posicion : 0,
+        total_defectos : 0,
+        data_defectologia : null,
+        valores_defectologia : [],
+        TablaDefectosPosicion:[],
+        DiametrosDefectos:[],
+        DiametroDefecto:'',
+        TablaDetalleDefectos:[],
      }
 
     },
 
  created: function () {
 
-        this.getClienteOperador();
+    this.getClienteOperador();
 
  },
 
    mounted() {
 
         this.generateIndicesRechazos();
+        this.generateDefectologia();
 
   },
 
@@ -259,40 +321,122 @@ export default {
 
  methods : {
 
-        generateIndicesRechazos() {              
+    generateIndicesRechazos() {              
 
-                this.data_indice_rechazos = {
+            this.data_indice_rechazos = {
 
-                    labels: ["Rechazados" ,"Aprobados"],
-                    
-                    datasets: [
-                        {
-                            backgroundColor: ['#3C8DBC' ,'#00C0EF'],
-                            data: this.valores_indice_rechazos
+                labels: ["Rechazados" ,"Aprobados"],
+                
+                datasets: [
+                    {
+                        backgroundColor: ['#3C8DBC' ,'#00C0EF'],
+                        data: this.valores_indice_rechazos
+                    }
+                ],
+                options :{         
+
+                    title : {   display : true,
+                                text :'Indices de rechazos de soldaduras',                            
+                        },   
+
+                    legend: {
+                        labels: {
+                            boxWidth: 12,
+                            padding: 5
                         }
-                    ],
-                    options :{         
+                    },                    
+                        
+                    plugins: {
+                                datalabels: {
 
-                        title : {   display : true,
-                                    text :'Indices de rechazos de soldaduras',                            
-                            },                     
-                            
-                        plugins: {
-                                    datalabels: {
-
-                                        color: '#FFFFFF',
-                                        formatter: function (value) {
-                                        return  ((Math.round(value*100/this.total_soldaduras_informes)) + '%');
-                                        }.bind(this),
-                                        font: {
-                                            weight: 'bold',
-                                            size: 14,
-                                        }
+                                    color: '#FFFFFF',
+                                    formatter: function (value) {
+                                    return  ((Math.round(value*100/this.total_soldaduras_informes)) + '%');
+                                    }.bind(this),
+                                    font: {
+                                        weight: 'bold',
+                                        size: 14,
                                     }
                                 }
-                    },              
+                            }
+                },              
+            }
+    },   
+
+     generateDefectologia() {     
+
+            let labels_aux = []
+            this.TablaDefectosPosicion.forEach(function(item) {
+
+                if(item.diametro == this.DiametroDefecto){
+
+                    labels_aux.push(item.posicion_placa);
                 }
-        },   
+
+            }.bind(this))
+
+            let long_aux = this.valores_defectologia.length;
+            let data_aux = [];
+            for (let index = 0; index < long_aux; index++) {
+                data_aux.push(1);                
+            }           
+
+            this.data_defectologia = {
+
+                labels: labels_aux,
+                
+                datasets: [
+                    {
+                        backgroundColor: ['#3C8DBC' ,'#00C0EF','#0073B7','#FFCC56','#FF9F40','#FE6383','#AAEB16','#636864','#4CC0C0'],
+                        data: data_aux,
+                    }
+                ],
+                options :{         
+
+                    title : {   display : true,
+                                text :'Defectos por posición',                            
+                        },  
+                        
+                    tooltips: {
+                        callbacks: {
+                            label: function(tooltipItem,data) {
+                                var label = data.labels[tooltipItem.index] || '';
+
+                                if (label) {
+                                    label += ': ';
+                                }
+                                label += this.valores_defectologia[tooltipItem.index];
+                                return label;
+                            }.bind(this)
+                        }
+                    },                   
+             
+
+                    legend: {
+                        labels: {
+                            boxWidth: 12,
+                            padding: 5
+                        }
+                    },                    
+                        
+                    plugins: {
+                                datalabels: {                                    
+                                    
+                                    color: '#FFFFFF',
+                                    formatter: function (value,context) {
+                                    return  ((Math.round(value*this.valores_defectologia[context.dataIndex]*100/this.total_defectos_posicion)) + '%');
+                                    }.bind(this),
+                                    font: {
+                                        weight: 'bold',
+                                        size: 14,
+                                    }
+                                }
+                            }
+                },              
+            }
+    },    
+
+
 
     getClienteOperador(){
 
@@ -310,23 +454,25 @@ export default {
     async Buscar(){
 
      this.$store.commit('loading', true);
-    this.TablaAnalisisRechazos = [];
+     this.TablaAnalisisRechazos = [];
      this.selCliente = false;
      this.selOt = false;
-     this.selObra = false;
-     var urlRegistros = 'informes/ot/' + this.ot.id  + '/obra/' +  this.obra.obra.replace('/','--') + '/fecha_desde/' + this.fecha_desde + '/fecha_hasta/' + this.fecha_hasta + '?api_token=' + Laravel.user.api_token;      
-     console.log(urlRegistros);
-        try {
-            let res = await axios.get(urlRegistros);
-            this.informes = await res.data;
-            this.valores_indice_rechazos= [];
-            await this.getIndicesDeRechazos();
-            this.generateIndicesRechazos();
-        }catch(error){
-           
-        }         
-        finally  {this.$store.commit('loading', false);}
+     this.selObra = false;     
+     
+    try {
+        let url = 'informes/ot/' + this.ot.id  + '/obra/' +  this.obra.obra.replace('/','--') + '/fecha_desde/' + this.fecha_desde + '/fecha_hasta/' + this.fecha_hasta + '?api_token=' + Laravel.user.api_token;      
+        let res = await axios.get(url);
+        this.informes = await res.data;
+        this.informes_ids = this.informes.map(item => item.id).toString();    
+        this.valores_indice_rechazos= [];
+        await this.getIndicesDeRechazos();
+        await this.getDefectologia();
+        this.generateIndicesRechazos();
+    }catch(error){
         
+    }         
+    finally  {this.$store.commit('loading', false);}
+    
     },
      
     async CambioCliente (){
@@ -399,13 +545,8 @@ export default {
     async getIndicesDeRechazos(){
 
         this.$store.commit('loading', true);
-        let informes_ids = this.informes.map(item => item.id).toString();    
-        var url = 'estadisticas-soldaduras/analisis_rechazos_espesor/' + informes_ids;
-        var urlRegistros  = 'estadisticas-soldaduras/total_soldaduras_informes/' + informes_ids;  
-        var urlRegistros2 = 'estadisticas-soldaduras/total_rechazos_soldaduras/' + informes_ids;  
-
+        var url = 'estadisticas-soldaduras/analisis_rechazos_espesor/' + this.informes_ids;
         try {
-
             let res= await axios.get(url);
             this.TablaAnalisisRechazos = await res.data;  
             await this.calcularIndicesRechazosSoldaduras(this.TablaAnalisisRechazos);
@@ -415,6 +556,44 @@ export default {
         }finally  {this.$store.commit('loading', false);}
 
         
+    },
+
+    async getDefectologia(){
+
+        this.$store.commit('loading', true);
+        try {
+            
+            let url = 'estadisticas-soldaduras/analisis_defectos_posicion/' + this.informes_ids;
+            let res= await axios.get(url);
+            this.TablaDefectosPosicion = await res.data;  
+            url = 'estadisticas-soldaduras/analisis_detalle_defectos/' + this.informes_ids;
+            res= await axios.get(url);
+            this.TablaDetalleDefectos = await res.data;
+            this.total_defectos = this.TablaDetalleDefectos.map(item =>parseInt(item.cantidad)).reduce((a,b) => a + b,0);
+            this.TablaDetalleDefectos.forEach(function(item){
+                item.porcentaje =  parseFloat(item.cantidad*100/this.total_defectos).toFixed(1) + '%';
+            }.bind(this))
+            this.DiametrosDefectos =[...new Set(this.TablaDefectosPosicion.map(item=> item.diametro))];
+            this.DiametroDefecto = this.DiametrosDefectos.length ? this.DiametrosDefectos[0] : ''; 
+            await this.GenerarGraficoDefectosPosicion();
+
+        }catch(error){
+ 
+        }finally  {this.$store.commit('loading', false);}
+
+        
+    },
+
+    async GenerarGraficoDefectosPosicion(){
+
+        this.total_defectos_posicion = 0;
+        this.valores_defectologia = this.TablaDefectosPosicion.filter(item => item.diametro == this.DiametroDefecto);
+        this.valores_defectologia = this.valores_defectologia.map(item => item.cantidad);
+        this.valores_defectologia.forEach(function(item){
+            this.total_defectos_posicion += parseInt(item)
+        }.bind(this))
+
+        this.generateDefectologia();
     },
 
     async calcularIndicesRechazosSoldaduras(tabla){
@@ -673,12 +852,14 @@ ul li .titulo-li {
 
 .titulo-tabla-tabs h5{
 
-    font-weight: bold !important;
-    color: #6B6B6B !important;
+    font-weight: 700 !important;
+    color: #666 !important;
+    font-size: 12px;
+    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
 }
 
   .div-grafico {
-    max-width:350px;
+    max-width:375px;
     
     margin:  0px auto 15px auto;
   }

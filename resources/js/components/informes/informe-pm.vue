@@ -49,24 +49,24 @@
                         </div>                            
                     </div>
 
-                       <div class="col-md-3 size-1-5">
-                            <div class="form-group" >
-                                <label for="Diametro">Ø *</label>
-                                <v-select v-model="diametro" label="diametro" :options="diametros" @input="getEspesores()"></v-select>   
-                            </div>                            
-                        </div>                       
-                        
-                        <div class="col-md-3">
-                            <div class="form-group" >
-                                <label>Espesor</label>
-                                <v-select v-model="espesor" label="espesor" :options="espesores" taggable :disabled="isChapa">
-                                     <template slot="option" slot-scope="option">
-                                        <span class="upSelect">{{ option.espesor }} </span> <br> 
-                                        <span class="downSelect"> {{ option.cuadrante }} </span>
-                                     </template>     
-                               </v-select>   
-                            </div>                            
-                        </div>
+                    <div class="col-md-3 size-1-5">
+                        <div class="form-group" >
+                            <label for="Diametro">Ø *</label>
+                            <v-select v-model="diametro" label="diametro" :options="diametros" @input="getEspesores()"></v-select>   
+                        </div>                            
+                    </div>                       
+                    
+                    <div class="col-md-3">
+                        <div class="form-group" >
+                            <label>Espesor</label>
+                            <v-select v-model="espesor" label="espesor" :options="espesores" taggable :disabled="isChapa">
+                                    <template slot="option" slot-scope="option">
+                                    <span class="upSelect">{{ option.espesor }} </span> <br> 
+                                    <span class="downSelect"> {{ option.cuadrante }} </span>
+                                    </template>     
+                            </v-select>   
+                        </div>                            
+                    </div>
 
                         <div class="clearfix"></div>    
 

@@ -22,6 +22,18 @@ class EstadisticasSoldadurasController extends Controller
 
         return DB::select('CALL AnalisisSoldadurasRechazosEspesor(?)',array($informes_ids));    
 
+    }  
+
+    public function AnalisisDefectosPosicion($informes_ids){
+
+        return DB::select('CALL AnalisisSoldadurasDefectosPosicion(?)',array($informes_ids));    
+
+    }
+
+    public function AnalisisSoldadurasDetalleDefectos($informes_ids){
+
+        return DB::select('CALL AnalisisSoldadurasDetalleDefectos(?)',array($informes_ids));    
+
     }
 
     public function CantSoldadurasInformes($informes_ids){
