@@ -156,30 +156,30 @@
                         <tab name="Defectología">
                             <div v-if="TablaDetalleDefectos.length">
                                 <div class="row">
-                                    <div class="col-lg-8 col-lg-offset-2">
+                                    <div class="col-lg-10 col-lg-offset-1 col-md-12">
                                         <div class="col-lg-12 titulo-tabla-tabs" >
                                             <h5>Defectos</h5>
                                         </div>
                                             <div>
-                                                <table class="table table-striped table-condensed">
+                                                <table class="table table-striped ">
                                                     <tbody>
                                                         <tr>
-                                                            <th class="col-lg-2">Abrev.</th>
-                                                            <th class="col-lg-5">Descripción</th>
-                                                            <th class="col-lg-2" style="text-align: center;">Cant.</th>                                                           
-                                                            <th colspan="2" class="col-lg-3">Porcentaje</th>
+                                                            <th class="col-lg-2 col-md-1">Abrev.</th>
+                                                            <th class="col-lg-5 col-md-4">Descripción</th>
+                                                            <th class="col-lg-2 col-md-2" style="text-align: center;">Cant.</th>                                                           
+                                                            <th colspan="2" class="col-lg-3 col-md-5" style="text-align: center;">Porcentaje</th>
                                                         </tr>  
                                                         <tr v-for="(item,k) in TablaDetalleDefectos" :key="k">
                                                             <td>{{ item.abreviatura }}</td>
                                                             <td>{{ item.descripcion }}</td>
                                                             <td style="text-align: center;">{{ item.cantidad }}</td>
-                                                            <td class="col-lg-2">
-                                                                <div class="progress progress-xs progress-striped active">
-                                                                    <div class="progress-bar progress-bar-primary" :style="{width:item.porcentaje}"></div>
+                                                            <td class="col-lg-2 col-md-4" >
+                                                                <div class="progress progress-xs">
+                                                                    <div class="progress-bar" :style="{width:item.porcentaje,background:colores[k].color}"></div>
                                                                 </div>
                                                             </td>
-                                                            <td class="col-lg-1">
-                                                                <span class="badge bg-blue">{{ item.porcentaje }}</span>
+                                                            <td >
+                                                                <span class="badge" :style="{background:colores[k].color}">{{ item.porcentaje_formateado }}</span>
                                                             </td>
                                                            
                                                         </tr>
@@ -308,6 +308,7 @@ export default {
 
    mounted() {
 
+        this.$store.dispatch('loadColores'); 
         this.generateIndicesRechazos();
         this.generateDefectologia();
 
@@ -315,7 +316,7 @@ export default {
 
      computed :{
 
-        ...mapState(['isLoading','url']),
+        ...mapState(['isLoading','colores','url']),
        
      },
 
@@ -572,6 +573,7 @@ export default {
             this.total_defectos = this.TablaDetalleDefectos.map(item =>parseInt(item.cantidad)).reduce((a,b) => a + b,0);
             this.TablaDetalleDefectos.forEach(function(item){
                 item.porcentaje =  parseFloat(item.cantidad*100/this.total_defectos).toFixed(1) + '%';
+                item.porcentaje_formateado = item.porcentaje.length < 5 ? (String.fromCharCode(160)+ String.fromCharCode(160) + item.porcentaje)  : item.porcentaje;
             }.bind(this))
             this.DiametrosDefectos =[...new Set(this.TablaDefectosPosicion.map(item=> item.diametro))];
             this.DiametroDefecto = this.DiametrosDefectos.length ? this.DiametrosDefectos[0] : ''; 

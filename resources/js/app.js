@@ -311,6 +311,7 @@ state: {
         url:'/api/',        
         isLoading : false ,
         fecha :'',
+        colores :[],
         operadores:[],
         obra_informe:'',
         contratistas:[],
@@ -380,6 +381,20 @@ actions : {
           axios.get(urlRegistros).then((response) => {     
           console.log(response.data);
           commit('getFechaActual', response.data) 
+          resolve()       
+             })    
+
+        })
+        },
+
+        loadColores({
+          commit}) {
+          axios.defaults.baseURL = store.state.url ;
+          var urlRegistros = 'colores'  + '?api_token=' + Laravel.user.api_token;     
+          return new Promise((resolve, reject) => {          
+          axios.get(urlRegistros).then((response) => {     
+          console.log(response.data);
+          commit('getColores', response.data) 
           resolve()       
              })    
 
@@ -1019,6 +1034,10 @@ actions : {
 
       getFechaActual(state, fecha) {
         state.fecha = fecha
+      },
+
+      getColores(state, colores) {
+        state.colores = colores
       },
 
       getObraInforme(state, obra_informe) {
