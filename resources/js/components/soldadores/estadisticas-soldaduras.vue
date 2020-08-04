@@ -540,6 +540,8 @@ export default {
 
         this.informes = [];
         this.TablaAnalisisRechazos = [];
+        this.TablaDefectosPosicion= [];
+        this.TablaDetalleDefectos = [];
 
     },
 

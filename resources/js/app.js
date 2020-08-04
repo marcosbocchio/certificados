@@ -256,6 +256,14 @@ Vue.component('estadisticas-soldaduras', require('./components/soldadores/estadi
 /* Trazabilidad */
 Vue.component('trazabilidad-fuente', require('./components/trazabilidad/trazabilidad-fuente.vue').default);
 
+/*SECCION CATEGORIAS/VIDEOS  */
+Vue.component('categoria-grupos', require('./components/multimedia/categoria-grupos.vue').default);
+Vue.component('subcategoria', require('./components/multimedia/subcategoria.vue').default);
+Vue.component('categoria-edit', require('./components/multimedia/categoria-edit.vue').default);
+Vue.component('subcategoria-edit', require('./components/multimedia/subcategoria-edit.vue').default);
+Vue.component('secciones-edit', require('./components/multimedia/secciones-edit.vue').default);
+Vue.component('video-edit', require('./components/multimedia/video-edit.vue').default);
+
 Vue.component('pdf-test', require('./components/pdf-test').default);
 
 

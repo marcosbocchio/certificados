@@ -114,6 +114,23 @@ Route::group(['middleware' => ['auth']], function () {
 
       /* Reportes */
       Route::get('/area/enod/reportes/estadisticas-soldaduras','EstadisticasSoldadurasController@viewSoldaduras')->name('reporte-soldaduras');
+
+      /*SECCION CATEGORIAS/VIDEOS  */
+
+      Route::get('crear-contenido', 'GestionVideoController@callView')->name('crear-contenido');
+      Route::get('categoriasVideos', 'GestionVideoController@getCategorias')->name('getCategorias');
+      Route::get('subCategoriasVideos/{id}', 'GestionVideoController@getSubCategorias')->name('getSubCategorias');
+      Route::get('get-Videos', 'GestionVideoController@getVideos')->name('getVideos');
+      
+      Route::post('category-update', 'GestionVideoController@storeCategory');
+      Route::delete('category-delete', 'GestionVideoController@deleteCategory');
+      
+      Route::post('videos-new', 'GestionVideoController@nuevoVideo');
+      Route::delete('video-delete', 'GestionVideoController@deleteVideo');
+      
+      Route::get('multimedia', 'VideosController@multimediaHome')->name('multimedia');
+      Route::get('multimedia/{id}', 'VideosController@multimediaSubcategoria')->name('irAsubcategoria');
+      Route::get('get-Videos-categoria/{id}', 'VideosController@getVideosCategoria');
   
 
 });

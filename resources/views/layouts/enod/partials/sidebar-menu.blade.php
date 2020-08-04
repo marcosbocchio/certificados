@@ -175,6 +175,25 @@
           </li>
         @endcan
 
+        @can('CURSOS')
+          <li class="treeview">
+            <a href="#">
+              <i class="glyphicon glyphicon-film"></i> <span>MULTIMEDIA</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              @can('C_edita')
+                  <li><a href="{{ route('crear-contenido') }}">Gestionar contenido</a></li>
+              @endcan
+              @can('C_visualiza_cursos')
+                <li><a href="{{ route('multimedia') }}">Visualizar contenido</a></li>
+              @endcan
+            </ul>
+          </li>
+        @endcan
+
         <li class="treeview">
           <a href="#">
             <i class="fa fa-book"></i> <span>INSTITUCIONALES</span>
