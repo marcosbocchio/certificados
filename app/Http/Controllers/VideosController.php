@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use SebastianBergmann\Environment\Console;
 use Illuminate\Support\Facades\Auth;
-
+use Spatie\Permission\Traits\HasRoles;
 
 class VideosController extends Controller
 {
@@ -26,21 +26,17 @@ class VideosController extends Controller
         $header_descripcion ="";
         $categoriasSup = collect();
 
-        if($user->hasPermissionTo('C_visualiza_total')){
+        if($user->hasPermissionTo('C_visualiza_total') || $user->hasRole('Sistemas')){
             $categoriasSup = VideoCategory::CategoriasSuperiores()->get();
-            Log::debug("entro en C_visualiza_total ");
         }
         else if($user->hasPermissionTo('C_visualiza_acotado')){
             $categoriasSup = VideoCategory::CategoriasSuperiores()->Acotadas()->get();
         }
 
-        Log::debug("Videos: " . $categoriasSup);
-
         $resultados = collect();
         for ($i=0; $i < $categoriasSup->count(); $i++){
 
-            if($user->hasPermissionTo('C_visualiza_total')){
-               
+            if($user->hasPermissionTo('C_visualiza_total') || $user->hasRole('Sistemas')){
                 $subCategorias = $categoriasSup[$i]->videos_categories()->get();
             }
             else if($user->hasPermissionTo('C_visualiza_acotado')){
@@ -51,7 +47,6 @@ class VideosController extends Controller
                 'subcategorias' => $subCategorias
             ]);
         }
-       
         return view('videos.multimedia_home', compact('user','header_titulo','header_descripcion', 'resultados'));
     }
 
@@ -77,7 +72,7 @@ class VideosController extends Controller
             return view('videos.multimedia_subcategoria', compact('user','header_titulo','header_descripcion', 'resultados'));
         }
 
-        if($user->hasPermissionTo('C_visualiza_total')){
+        if($user->hasPermissionTo('C_visualiza_total') || $user->hasRole('Sistemas')){
             $secciones = $subcategoria->Secciones()->get();
         }
         else if($user->hasPermissionTo('C_visualiza_acotado')){

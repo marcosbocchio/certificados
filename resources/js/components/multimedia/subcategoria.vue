@@ -41,7 +41,7 @@
                     </iframe>
                 </div>
                 <div>
-                    <label style="margin-top: 15px ;">{{descripcion}}</label>
+                    <label style="margin-top: 15px ;" class="text">{{descripcion}}</label>
                 </div>
             </div>
 
@@ -74,15 +74,16 @@ export default {
 <style>
     .font{
         font-family: 'clearsans', 'montserrat';
-        font-size: 24px !important;
+        font-size: 18px !important;
         font-weight: bold;
         padding-right: 20px;
         line-height: 70px;
         text-align: end;
     }
     .text{
-        font-size: 17px;
+        font-size: 14px;
         color : black;
         font-family: 'clearsans', 'montserrat';
+        font-weight: normal;
     }
 </style>

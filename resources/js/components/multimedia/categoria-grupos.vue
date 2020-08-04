@@ -95,7 +95,7 @@ export default {
     }
     .font{
         font-family: 'clearsans', 'montserrat';
-        font-size: 26px;
+        font-size: 23px;
         font-weight: bold;
         padding-right: 20px;
         line-height: 70px;
@@ -122,14 +122,14 @@ export default {
         padding: 5px;
     }
     .curso-item{
-        font-size: 24px;
+        font-size: 18px;
         color : black;
         font-weight: bold;
     }
 
 
     .text{
-        font-size: 17px;
+        font-size: 14px;
         color : black;
         font-family: 'clearsans', 'montserrat';
     }

@@ -29,4 +29,13 @@ class VideoRequest extends FormRequest
             'videoId' => 'required'
         ];
     }
+
+    public function attributes()
+    {
+        return [
+            'title'   => 'título',
+            'videoId'   => 'link',
+
+          ];
+    }
 }
