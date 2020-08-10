@@ -4,7 +4,7 @@
             <div class="box box-custom-enod">
                 <div class="box-body box-profile">
                     <div v-if="cliente && cliente.path" style="text-align:center">
-                        <img :src="'/' + cliente.path" alt="..." width="120">    
+                        <img :src="'/' + cliente.path" alt="..." width="120">
                     </div>
                     <h4 v-if="cliente" class="profile-username text-center">
                         {{cliente.nombre_fantasia}}
@@ -17,53 +17,53 @@
                     <ul class="list-group list-group-unbordered">
                         <li class="list-group-item pointer">
                             <div v-show="!selCliente">
-                                <span class="titulo-li">Cliente</span> 
+                                <span class="titulo-li">Cliente</span>
                                 <a @click="selCliente = !selCliente" class="pull-right">
-                                    <div v-if="cliente">{{cliente.nombre_fantasia}}</div> 
+                                    <div v-if="cliente">{{cliente.nombre_fantasia}}</div>
                                     <div v-else><span class="seleccionar">Seleccionar</span></div>
                                 </a>
                             </div>
-                            <v-select v-show="selCliente" v-model="cliente" label="nombre_fantasia" :options="clientes" @input="CambioCliente()" ></v-select>                         
-                                            
+                            <v-select v-show="selCliente" v-model="cliente" label="nombre_fantasia" :options="clientes" @input="CambioCliente()" ></v-select>
+
                         </li>
                         <li class="list-group-item pointer">
                             <div v-show="!selOt">
-                                <span class="titulo-li">OT</span> 
+                                <span class="titulo-li">OT</span>
                                 <a @click="selOt = !selOt" class="pull-right">
-                                    <div v-if="ot">{{ot.numero}}</div> 
+                                    <div v-if="ot">{{ot.numero}}</div>
                                     <div v-else><span class="seleccionar">Seleccionar</span></div>
                                 </a>
                             </div>
-                            <v-select v-show="selOt" v-model="ot" label="numero" :options="ots" @input="CambioOt()" ></v-select>                  
+                            <v-select v-show="selOt" v-model="ot" label="numero" :options="ots" @input="CambioOt()" ></v-select>
                         </li>
                         <li class="list-group-item pointer">
                             <div v-show="!selObra">
-                                <span class="titulo-li">Obra</span> 
+                                <span class="titulo-li">Obra</span>
                                 <a @click="seleccionarObra()" class="pull-right">
-                                    <div v-if="obra || ot.obra">{{obra.obra}}</div> 
+                                    <div v-if="obra || ot.obra">{{obra.obra}}</div>
                                     <div v-else><span class="seleccionar">Seleccionar</span></div>
                                 </a>
                             </div>
-                            <v-select v-show="selObra" v-model="obra" label="obra" :options="obras" @input="CambioObra()"></v-select>                  
+                            <v-select v-show="selObra" v-model="obra" label="obra" :options="obras" @input="CambioObra()"></v-select>
                         </li>
-                        <li class="list-fecha list-group-item pointer">   
+                        <li class="list-fecha list-group-item pointer">
                             <div class="row">
                                 <div class="col-sm-12 col-md-12 col-lg-6">
                                     <date-picker v-model="fecha_desde" value-type="YYYY-MM-DD" format="DD-MM-YYYY" placeholder="Desde" ></date-picker>
-                                </div>                     
+                                </div>
                                 <div class="col-sm-12 col-md-12 col-lg-6">
                                     <date-picker v-model="fecha_hasta" value-type="YYYY-MM-DD" format="DD-MM-YYYY" placeholder="Hasta" ></date-picker>
                                 </div>
                             </div>
-                 
+
                         </li>
                     </ul>
 
                     <a  @click="Buscar()">
-                        <button class="btn btn-enod  btn-block" :disabled="!cliente || !ot || !obra"><span class="fa fa-plus-circle"></span> 
+                        <button class="btn btn-enod  btn-block" :disabled="!cliente || !ot || !obra"><span class="fa fa-plus-circle"></span>
                             Buscar
                         </button>
-                    </a>                       
+                    </a>
 
                 </div>
                 <!-- /.box-body -->
@@ -73,17 +73,17 @@
                     <div class="box-body box-profile">
                         <div v-if="ot.contratista">
                             <div v-if="ot.contratista.path_logo" style="text-align:center">
-                                <img :src="'/' + ot.contratista.path_logo" alt="..." width="120">    
+                                <img :src="'/' + ot.contratista.path_logo" alt="..." width="120">
                             </div>
                             <h3 class="profile-username text-center">
                                 {{ot.contratista.razon_social}}
                             </h3>
                             <ul class="list-group list-group-unbordered">
-                                <li class="list-group-item pointer">                                   
-                                    <b>Comitente</b> 
+                                <li class="list-group-item pointer">
+                                    <b>Comitente</b>
                                     <a  class="pull-right">
-                                        <div>{{ot.contratista.nombre}}</div>                                   
-                                    </a>                                                                            
+                                        <div>{{ot.contratista.nombre}}</div>
+                                    </a>
                                 </li>
                             </ul>
                         </div>
@@ -91,20 +91,20 @@
                             <span class="fa fa-book"><p style="margin-left:15px;display:inline-block;margin-bottom:20x">Informes incluidos</p></span>
                             <div v-for="(item,k) in (informes)" :key="k" class="list-informes">
                                 <div v-if="item.gasoducto_sn">
-                                   <p>Informe {{item.km}}-{{item.tipo_soldadura_codigo}}-{{item.numero_formateado}} {{ item.componente }} </p>    
+                                   <p>Informe {{item.km}}-{{item.tipo_soldadura_codigo}}-{{item.numero_formateado}} {{ item.componente }} </p>
                                 </div>
                                 <div v-else>
-                                   <p>Informe {{item.numero_formateado}} {{ item.componente }} </p>    
+                                   <p>Informe {{item.numero_formateado}} {{ item.componente }} </p>
                                 </div>
                             </div>
-                        </ul>      
+                        </ul>
                       </div>
                     <!-- /.box-body -->
                 </div>
             </div>
         </div>
         <div class="col-md-9">
-           
+
                   <div class="estadisticas-soldaduras">
                     <tabs :options="{ useUrlFragment: false }" @clicked="tabClicked" @changed="tabChanged">
                         <tab name="Indices de rechazos">
@@ -128,21 +128,21 @@
                                                         <th class="col-lg-3">Rechazados</th>
                                                         <th class="col-lg-2">Total</th>
                                                         <th class="col-lg-2">%</th>
-                                                    </tr>    
+                                                    </tr>
                                                     <tr v-for="(item,k) in TablaAnalisisRechazos" :key="k">
                                                         <td>{{ item.espesor }}</td>
                                                         <td>{{ item.aprobados }}</td>
                                                         <td>{{ item.rechazados }}</td>
                                                         <td>{{ item.total }}</td>
                                                         <td>{{ item.porcentaje_rechazados }}</td>
-                                                    </tr>   
+                                                    </tr>
                                                     <tr>
                                                         <th>Total</th>
                                                         <th>{{ total_aprobados_soldaduras}}</th>
                                                         <th>{{ total_rechazos_soldaduras}}</th>
                                                         <th>{{ total_soldaduras_informes}}</th>
                                                         <th>{{ total_porcentaje_rechazados}}</th>
-                                                    </tr>                                     
+                                                    </tr>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -161,14 +161,14 @@
                                             <h5>Defectos</h5>
                                         </div>
                                             <div>
-                                                <table class="table table-striped ">
+                                                <table class="table table-striped table-condensed">
                                                     <tbody>
                                                         <tr>
                                                             <th class="col-lg-2 col-md-1">Abrev.</th>
                                                             <th class="col-lg-5 col-md-4">Descripción</th>
-                                                            <th class="col-lg-2 col-md-2" style="text-align: center;">Cant.</th>                                                           
+                                                            <th class="col-lg-2 col-md-2" style="text-align: center;">Cant.</th>
                                                             <th colspan="2" class="col-lg-3 col-md-5" style="text-align: center;">Porcentaje</th>
-                                                        </tr>  
+                                                        </tr>
                                                         <tr v-for="(item,k) in TablaDetalleDefectos" :key="k">
                                                             <td>{{ item.abreviatura }}</td>
                                                             <td>{{ item.descripcion }}</td>
@@ -181,33 +181,80 @@
                                                             <td >
                                                                 <span class="badge" :style="{background:colores[k].color}">{{ item.porcentaje_formateado }}</span>
                                                             </td>
-                                                           
+
                                                         </tr>
                                                     </tbody>
                                                 </table>
                                             </div>
                                     </div>
 
-                                   <div class="clearfix"></div>    
-                                   <div class="col-lg-3" >                       
-                                        <div class="form-group">  
-                                            <label for="diametro">Diámetro</label>                                          
-                                            <v-select v-model="DiametroDefecto"  :options="DiametrosDefectos" @input="GenerarGraficoDefectosPosicion" id="diametro"></v-select>   
-                                        </div>      
+                                   <div class="clearfix"></div>
+                                   <div class="col-lg-3" >
+                                        <div class="form-group">
+                                            <label for="diametro">Diámetro</label>
+                                            <v-select v-model="DiametroDefecto"  :options="DiametrosDefectos" @input="GenerarGraficoDefectosPosicion" id="diametro"></v-select>
+                                        </div>
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="div-grafico">
                                             <doughnut-chart :chart-data="data_defectologia" :options="data_defectologia.options" ></doughnut-chart>
                                         </div>
                                     </div>
-                                </div>     
-                            </div> 
+                                </div>
+                            </div>
                              <div v-else>
                                 <h4>No hay datos para mostrar</h4>
                             </div>
                         </tab>
                         <tab name="Defectología/Producción">
-                            Defectología/Producción
+                            <div v-if="TablaDefectosSoldador.length">
+                                <div class="row">
+                                    <div class="col-lg-10 col-lg-offset-1 col-md-12">
+                                        <div class="col-lg-12 titulo-tabla-tabs" >
+                                            <h5>Defectos por Soldador</h5>
+                                        </div>
+                                        <div>
+                                            <table class="table table-striped table-hover">
+                                                <tbody>
+                                                    <tr>
+                                                        <th class="col-lg-3 col-md-3">Cuño</th>
+                                                        <th class="col-lg-3 col-md-2">Cord.</th>
+                                                        <th class="col-lg-3 col-md-2" style="text-align: center;">Cant.</th>
+                                                        <th colspan="2" class="col-lg-3 col-md-5" style="text-align: center;">Porcentaje</th>
+                                                    </tr>
+                                                    <tr v-for="(item,k) in TablaDefectosSoldador" :key="k" @click="getDetalleDefectosSoldador(item)" class="pointer">
+                                                        <td>{{item.codigo_soldador}} - {{item.nombre_soldador }}</td>
+                                                        <td>{{ item.cordones }}</td>
+                                                        <td style="text-align: center;">{{ item.cantidad }}</td>
+                                                        <td class="col-lg-2 col-md-4" >
+                                                            <div class="progress progress-xs">
+                                                                <div class="progress-bar" :style="{width:item.porcentaje,background:colores[k].color}"></div>
+                                                            </div>
+                                                        </td>
+                                                        <td >
+                                                            <span class="badge" :style="{background:colores[k].color}">{{ item.porcentaje_formateado }}</span>
+                                                        </td>
+
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div v-else>
+                               <h4>No hay datos para mostrar</h4>
+                            </div>
+                            <div v-if="data_detalle_defectos_soldador">
+                                 <div class="row">
+                                    <div class="col-lg-10 col-lg-offset-1">
+                                        <div style="max-height:350px;">
+                                            <bar-chart :chart-data="data_detalle_defectos_soldador" :options="data_detalle_defectos_soldador.options" ></bar-chart>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </tab>
                         <tab name="Indicaciones">
                             Indicaciones
@@ -215,11 +262,11 @@
                     </tabs>
                 </div>
             </div>
-         <loading 
-                  :active.sync="isLoading"   
+         <loading
+                  :active.sync="isLoading"
                   :loader="'bars'"
                   :color="'red'">
-         </loading>          
+         </loading>
     </div>
 </template>
 
@@ -250,20 +297,20 @@ export default {
       BarChart,
       PieChart,
       ChartJsPluginDataLabels
-      
+
     },
     props: {
 
       user : {
         type : Object,
-        required : true,       
+        required : true,
       },
 
     },
-     data() { return {    
+     data() { return {
 
         en: en,
-        es: es, 
+        es: es,
         cliente:'',
         clientes:[],
         ots:[],
@@ -277,7 +324,7 @@ export default {
         selObra:false,
         informes : [],
         informes_ids :'',
-       
+
         /* Indices de rechazos */
         data_indice_rechazos : null,
         total_soldaduras_informes : 0,
@@ -288,14 +335,24 @@ export default {
         valores_indice_rechazos :[],
 
         /* Defectologia */
+        data_defectologia : null,
         total_defectos_posicion : 0,
         total_defectos : 0,
-        data_defectologia : null,
         valores_defectologia : [],
         TablaDefectosPosicion:[],
         DiametrosDefectos:[],
         DiametroDefecto:'',
         TablaDetalleDefectos:[],
+
+        /* Defectoligía/Producción */
+        TablaDDSTemp:[],
+        data_detalle_defectos_soldador: null,
+        TablaDefectosSoldador:[],
+        TablaDetalletDefectosSoldador:[],
+        total_defectos_soldador:0,
+        cantidad_defectos_soldador : 0,
+        valores_detalle_defectos_soldador:[]
+
      }
 
     },
@@ -308,7 +365,7 @@ export default {
 
    mounted() {
 
-        this.$store.dispatch('loadColores'); 
+        this.$store.dispatch('loadColores');
         this.generateIndicesRechazos();
         this.generateDefectologia();
 
@@ -317,36 +374,36 @@ export default {
      computed :{
 
         ...mapState(['isLoading','colores','url']),
-       
+
      },
 
  methods : {
 
-    generateIndicesRechazos() {              
+    generateIndicesRechazos() {
 
             this.data_indice_rechazos = {
 
                 labels: ["Rechazados" ,"Aprobados"],
-                
+
                 datasets: [
                     {
                         backgroundColor: ['#3C8DBC' ,'#00C0EF'],
                         data: this.valores_indice_rechazos
                     }
                 ],
-                options :{         
+                options :{
 
                     title : {   display : true,
-                                text :'Indices de rechazos de soldaduras',                            
-                        },   
+                                text :'Indices de rechazos de soldaduras',
+                        },
 
                     legend: {
                         labels: {
                             boxWidth: 12,
                             padding: 5
                         }
-                    },                    
-                        
+                    },
+
                     plugins: {
                                 datalabels: {
 
@@ -360,11 +417,11 @@ export default {
                                     }
                                 }
                             }
-                },              
+                },
             }
-    },   
+    },
 
-     generateDefectologia() {     
+    generateDefectologia() {
 
             let labels_aux = []
             this.TablaDefectosPosicion.forEach(function(item) {
@@ -379,25 +436,25 @@ export default {
             let long_aux = this.valores_defectologia.length;
             let data_aux = [];
             for (let index = 0; index < long_aux; index++) {
-                data_aux.push(1);                
-            }           
+                data_aux.push(1);
+            }
 
             this.data_defectologia = {
 
                 labels: labels_aux,
-                
+
                 datasets: [
                     {
                         backgroundColor: ['#3C8DBC' ,'#00C0EF','#0073B7','#FFCC56','#FF9F40','#FE6383','#AAEB16','#636864','#4CC0C0'],
                         data: data_aux,
                     }
                 ],
-                options :{         
+                options :{
 
                     title : {   display : true,
-                                text :'Defectos por posición',                            
-                        },  
-                        
+                                text :'Defectos por posición',
+                        },
+
                     tooltips: {
                         callbacks: {
                             label: function(tooltipItem,data) {
@@ -410,19 +467,18 @@ export default {
                                 return label;
                             }.bind(this)
                         }
-                    },                   
-             
+                    },
 
                     legend: {
                         labels: {
                             boxWidth: 12,
                             padding: 5
                         }
-                    },                    
-                        
+                    },
+
                     plugins: {
-                                datalabels: {                                    
-                                    
+                                datalabels: {
+
                                     color: '#FFFFFF',
                                     formatter: function (value,context) {
                                     return  ((Math.round(value*this.valores_defectologia[context.dataIndex]*100/this.total_defectos_posicion)) + '%');
@@ -433,24 +489,76 @@ export default {
                                     }
                                 }
                             }
-                },              
+                },
             }
-    },    
+    },
 
+    GenerarGraficoDefectosSoldador(soldador){
+        this.data_detalle_defectos_soldador = {};
+        let labels_aux = this.TablaDetalletDefectosSoldador.map(item => item.defecto_codigo);
+        this.valores_detalle_defectos_soldador = this.TablaDetalletDefectosSoldador.map(item => parseFloat(item.cantidad));
+        let titulo = 'Defectos producción ' + soldador.codigo_soldador + ' - ' + soldador.nombre_soldador;
+        this.data_detalle_defectos_soldador = {
 
+                labels: labels_aux,
+
+                datasets: [
+                    {
+                        data: this.valores_detalle_defectos_soldador,
+                        backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                        borderColor : 'rgb(153, 102, 255)',
+                        borderWidth : 1
+
+                    }
+                ],
+                options :{
+
+                    title : {   display : true,
+                                text :titulo,
+                        },
+                    legend: {
+                            display: false
+                        },
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    },
+                    maintainAspectRatio: false,
+
+                    plugins: {
+                                datalabels: {
+
+                                    color: '#FFFFFF',
+                                    formatter: function (value,context) {
+                                    return  ((Math.round(value*100/this.cantidad_defectos_soldador)) + '%');
+                                    }.bind(this),
+                                    font: {
+                                        weight: 'bold',
+                                        size: 14,
+                                    }
+                                }
+                            }
+
+                },
+            }
+
+    },
 
     getClienteOperador(){
 
         this.$store.commit('loading', true);
         axios.defaults.baseURL = this.url ;
-        var urlRegistros = 'clientes/operador/' + this.user.id  +'?api_token=' + Laravel.user.api_token;         
+        var urlRegistros = 'clientes/operador/' + this.user.id  +'?api_token=' + Laravel.user.api_token;
         axios.get(urlRegistros).then(response =>{
             this.clientes = response.data
             if(this.user.cliente_id != null) {
                 this.cliente = response.data;
             }
-        }).finally(()=> {this.$store.commit('loading', false)});   
-    },  
+        }).finally(()=> {this.$store.commit('loading', false)});
+    },
 
     async Buscar(){
 
@@ -458,24 +566,26 @@ export default {
      this.TablaAnalisisRechazos = [];
      this.selCliente = false;
      this.selOt = false;
-     this.selObra = false;     
-     
+     this.selObra = false;
+
     try {
-        let url = 'informes/ot/' + this.ot.id  + '/obra/' +  this.obra.obra.replace('/','--') + '/fecha_desde/' + this.fecha_desde + '/fecha_hasta/' + this.fecha_hasta + '?api_token=' + Laravel.user.api_token;      
+        let url = 'informes/ot/' + this.ot.id  + '/obra/' +  this.obra.obra.replace('/','--') + '/fecha_desde/' + this.fecha_desde + '/fecha_hasta/' + this.fecha_hasta + '?api_token=' + Laravel.user.api_token;
         let res = await axios.get(url);
-        this.informes = await res.data;
-        this.informes_ids = this.informes.map(item => item.id).toString();    
+        this.informes = res.data;
+        this.informes_ids = this.informes.map(item => item.id).toString();
         this.valores_indice_rechazos= [];
         await this.getIndicesDeRechazos();
         await this.getDefectologia();
+        await this.getDefectologiaProduccion();
+
         this.generateIndicesRechazos();
     }catch(error){
-        
-    }         
+
+    }
     finally  {this.$store.commit('loading', false);}
-    
+
     },
-     
+
     async CambioCliente (){
 
         this.selCliente = !this.selCliente;
@@ -487,14 +597,14 @@ export default {
         this.fecha_hasta = null;
         this.resetVariables();
         if(this.cliente){
-            
+
             this.$store.commit('loading', true);
-            var urlRegistros = 'clientes/' + this.cliente.id + '/ots/' +'?api_token=' + Laravel.user.api_token;  
+            var urlRegistros = 'clientes/' + this.cliente.id + '/ots/' +'?api_token=' + Laravel.user.api_token;
             try {
                 let res = await axios.get(urlRegistros);
-                this.ots = await res.data;      
+                this.ots = res.data;
             }catch(error){
-                
+
             }finally {this.$store.commit('loading', false);}
 
         }
@@ -507,17 +617,17 @@ export default {
         this.selObra = false;
         this.resetVariables();
         this.$store.commit('loading', true);
-        var urlRegistros = 'ots/' + this.ot.id + '/obras/' +'?api_token=' + Laravel.user.api_token;  
+        var urlRegistros = 'ots/' + this.ot.id + '/obras/' +'?api_token=' + Laravel.user.api_token;
         try {
             let res = await axios.get(urlRegistros);
-            this.obras = await res.data;           
+            this.obras = res.data;
         }catch(error){
-           
+
         }finally  {this.$store.commit('loading', false);}
 
-        if(this.ot.obra){ 
+        if(this.ot.obra){
             this.obra = { obra : this.ot.obra}
-        }        
+        }
 
     },
 
@@ -538,10 +648,14 @@ export default {
 
     resetVariables(){
 
-        this.informes = [];
-        this.TablaAnalisisRechazos = [];
-        this.TablaDefectosPosicion= [];
-        this.TablaDetalleDefectos = [];
+        this.informes                      = [];
+        this.TablaAnalisisRechazos         = [];
+        this.TablaDefectosPosicion         = [];
+        this.TablaDetalleDefectos          = [];
+        this.TablaDefectosSoldador         = [];
+        this.TablaDetalletDefectosSoldador = [];
+        this.valores_detalle_defectos_soldador = null;
+        this.data_detalle_defectos_soldador = null;
 
     },
 
@@ -551,44 +665,109 @@ export default {
         var url = 'estadisticas-soldaduras/analisis_rechazos_espesor/' + this.informes_ids;
         try {
             let res= await axios.get(url);
-            this.TablaAnalisisRechazos = await res.data;  
+            this.TablaAnalisisRechazos =  res.data;
             await this.calcularIndicesRechazosSoldaduras(this.TablaAnalisisRechazos);
 
         }catch(error){
-           
+
         }finally  {this.$store.commit('loading', false);}
 
-        
+
     },
 
     async getDefectologia(){
 
         this.$store.commit('loading', true);
         try {
-            
+
             let url = 'estadisticas-soldaduras/analisis_defectos_posicion/' + this.informes_ids;
             let res= await axios.get(url);
-            this.TablaDefectosPosicion = await res.data;  
+            this.TablaDefectosPosicion = res.data;
             url = 'estadisticas-soldaduras/analisis_detalle_defectos/' + this.informes_ids;
             res= await axios.get(url);
-            this.TablaDetalleDefectos = await res.data;
+            this.TablaDetalleDefectos = res.data;
             this.total_defectos = this.TablaDetalleDefectos.map(item =>parseInt(item.cantidad)).reduce((a,b) => a + b,0);
             this.TablaDetalleDefectos.forEach(function(item){
                 item.porcentaje =  parseFloat(item.cantidad*100/this.total_defectos).toFixed(1) + '%';
                 item.porcentaje_formateado = item.porcentaje.length < 5 ? (String.fromCharCode(160)+ String.fromCharCode(160) + item.porcentaje)  : item.porcentaje;
             }.bind(this))
             this.DiametrosDefectos =[...new Set(this.TablaDefectosPosicion.map(item=> item.diametro))];
-            this.DiametroDefecto = this.DiametrosDefectos.length ? this.DiametrosDefectos[0] : ''; 
+            this.DiametroDefecto = this.DiametrosDefectos.length ? this.DiametrosDefectos[0] : '';
             await this.GenerarGraficoDefectosPosicion();
 
         }catch(error){
- 
+
         }finally  {this.$store.commit('loading', false);}
 
-        
+
+    },
+
+    async getDefectologiaProduccion(){
+
+        this.$store.commit('loading', true);
+        try {
+            let url = 'estadisticas-soldaduras/analisis_defectos_soldador/' + this.informes_ids;
+            let res = await axios.get(url);
+            this.TablaDDSTemp = res.data;
+            await this.GenerarTablaDefectosSoldador()
+            this.total_defectos_soldador = this.TablaDefectosSoldador.map(item =>parseInt(item.cantidad)).reduce((a,b) => a + b,0);
+
+            this.TablaDefectosSoldador.forEach(function(item){
+                item.porcentaje =  parseFloat(item.cantidad*100/item.cordones).toFixed(1) + '%';
+                item.porcentaje_formateado = item.porcentaje.length < 5 ? (String.fromCharCode(160)+ String.fromCharCode(160) + item.porcentaje)  : item.porcentaje;
+            }.bind(this))
+
+        }catch(error){
+
+        }finally  {this.$store.commit('loading', false);}
+
+
+    },
+
+    async GenerarTablaDefectosSoldador(){
+
+
+       let TablaDefectosSoldadorUnique = [...new Set(this.TablaDDSTemp.map(item=> item.soldador_id))];
+
+       this.TablaDefectosSoldador = [];
+
+
+       TablaDefectosSoldadorUnique.forEach(function(item_u){
+
+            this.TablaDDSTemp.forEach(function(item_t){
+
+
+                    if(parseFloat(item_t.cantidad) > 0  && item_u == item_t.soldador_id){
+
+                           if(this.TablaDefectosSoldador.findIndex(elem => elem.soldador_id == item_t.soldador_id)!= -1){
+
+                               this.TablaDefectosSoldador[this.TablaDefectosSoldador.findIndex(elem => elem.soldador_id == item_t.soldador_id)].cantidad += parseFloat(item_t.cantidad);
+
+                           }else{
+
+                               this.TablaDefectosSoldador.push({
+
+                                   'cantidad':parseFloat(item_t.cantidad),
+                                   'codigo_soldador': item_t.codigo_soldador,
+                                   'defecto_codigo': item_t.defecto_codigo,
+                                   'nombre_soldador': item_t.nombre_soldador,
+                                   'soldador_id' : item_t.soldador_id,
+                                   'cordones' : item_t.cordones,
+                               });
+
+                           }
+
+                    }
+            }.bind(this));
+
+       }.bind(this));
+
+     this.TablaDefectosSoldador.sort((a, b) => (a.cantidad < b.cantidad) ? 1 : -1)
+
     },
 
     async GenerarGraficoDefectosPosicion(){
+
 
         this.total_defectos_posicion = 0;
         this.valores_defectologia = this.TablaDefectosPosicion.filter(item => item.diametro == this.DiametroDefecto);
@@ -598,19 +777,49 @@ export default {
         }.bind(this))
 
         this.generateDefectologia();
+
+    },
+
+    async getDetalleDefectosSoldador(soldador){
+
+        this.$store.commit('loading', true);
+
+        this.TablaDetalletDefectosSoldador = [];
+        this.valores_detalle_defectos_soldador = [];
+        this.cantidad_defectos_soldador  = 0;
+
+        this.TablaDDSTemp.forEach(function(item){
+
+            if(parseFloat(item.cantidad) > 0 && parseInt(item.soldador_id) == parseInt(soldador.soldador_id)){
+
+                this.TablaDetalletDefectosSoldador.push({
+
+                    'cantidad'  : item.cantidad,
+                    'defecto_codigo' : item.defecto_codigo,
+                    'defecto_descripcion' : item.defecto_descripcion
+
+                })
+                this.cantidad_defectos_soldador += parseFloat(item.cantidad);
+            }
+
+        }.bind(this));
+
+        this.TablaDetalletDefectosSoldador.sort((a, b) => (a.cantidad < b.cantidad) ? 1 : -1)
+        this.GenerarGraficoDefectosSoldador(soldador);
+        this.$store.commit('loading', false);
     },
 
     async calcularIndicesRechazosSoldaduras(tabla){
-        
+
         this.total_soldaduras_informes = 0;
         this.total_rechazos_soldaduras = 0;
         this.total_aprobados_soldaduras = 0;
         this.total_porcentaje_rechazados = 0;
 
         tabla.forEach(function(item){
-            
+
             this.total_rechazos_soldaduras   +=  parseInt(item.rechazados);
-            this.total_aprobados_soldaduras  +=  parseInt(item.aprobados); 
+            this.total_aprobados_soldaduras  +=  parseInt(item.aprobados);
             this.total_soldaduras_informes   +=  parseInt(item.total);
 
         }.bind(this));
@@ -621,10 +830,12 @@ export default {
 
     },
 
+
+
     tabClicked (selectedTab) {
           console.log('Current tab re-clicked:' + selectedTab.tab.name);
     },
-    
+
     tabChanged (selectedTab) {
           console.log('Tab changed to:' + selectedTab.tab.name);
     },
@@ -639,7 +850,7 @@ export default {
 
 .tabs-component {
     margin: 0;
-    
+
 }
 
 .tabs-component-tabs {
@@ -798,7 +1009,7 @@ body {
 
 .list-fecha .mx-input,.list-fecha .mx-datepicker,.list-fecha .mx-input-wrapper {
     box-shadow : none !important;
-   -webkit-box-shadow : none !important;  
+   -webkit-box-shadow : none !important;
     border-top: none !important;
     border-left: none !important;
     border-right: none !important;
@@ -816,7 +1027,7 @@ ul li .titulo-li {
     font-weight: 600 !important;
 }
 
- .list-fecha { 
+ .list-fecha {
      border-bottom: none !important;
  }
 
@@ -833,7 +1044,7 @@ ul li .titulo-li {
 }
 
 .box-custom-enod {
-    
+
     box-shadow: 0 -2px 0 #000;
 }
 
@@ -864,7 +1075,7 @@ ul li .titulo-li {
 
   .div-grafico {
     max-width:375px;
-    
+
     margin:  0px auto 15px auto;
   }
 </style>

@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Str;
+use PDO;
 class EstadisticasSoldadurasController extends Controller
 {
 
@@ -13,26 +15,35 @@ class EstadisticasSoldadurasController extends Controller
 
         $user = auth()->user();
         $header_titulo = "Reporte";
-        $header_descripcion ="Análisis de rechazo y defectología";      
-        return view('soldadores.estadisticas_soldaduras',compact('user','header_titulo','header_descripcion'));        
+        $header_descripcion ="Análisis de rechazo y defectología";
+        return view('soldadores.estadisticas_soldaduras',compact('user','header_titulo','header_descripcion'));
 
     }
 
     public function AnalisisRechazosEspesor($informes_ids){
 
-        return DB::select('CALL AnalisisSoldadurasRechazosEspesor(?)',array($informes_ids));    
-
-    }  
-
-    public function AnalisisDefectosPosicion($informes_ids){
-
-        return DB::select('CALL AnalisisSoldadurasDefectosPosicion(?)',array($informes_ids));    
+        return DB::select('CALL AnalisisSoldadurasRechazosEspesor(?)',array($informes_ids));
 
     }
 
+    public function AnalisisDefectosPosicion($informes_ids){
+
+        return DB::select('CALL AnalisisSoldadurasDefectosPosicion(?)',array($informes_ids));
+
+    }
+
+    public function AnalisisSoldadurasDefectosSoldador($informes_ids){
+
+        DB::select('CALL CreateTemporaryTableDefectoPosReduce(?)',array($informes_ids));
+
+        return  DB::select('CALL AnalisisSoldadurasDefectosSoldador(?)',array($informes_ids));
+
+    }
+
+
     public function AnalisisSoldadurasDetalleDefectos($informes_ids){
 
-        return DB::select('CALL AnalisisSoldadurasDetalleDefectos(?)',array($informes_ids));    
+        return DB::select('CALL AnalisisSoldadurasDetalleDefectos(?)',array($informes_ids));
 
     }
 
@@ -40,9 +51,9 @@ class EstadisticasSoldadurasController extends Controller
 
         DB::enableQueryLog();
 
-        $total = DB::select('select CantSoldadurasInformes(?) as valor',array($informes_ids));  
+        $total = DB::select('select CantSoldadurasInformes(?) as valor',array($informes_ids));
         Log::debug("CantSoldadurasInformes " . $total[0]->valor);
-        
+
         return $total[0]->valor;
 
     }
@@ -51,7 +62,7 @@ class EstadisticasSoldadurasController extends Controller
 
         DB::enableQueryLog();
 
-        $total = DB::select('select CantRechazosSoldaduras(?) as valor',array($informes_ids));  
+        $total = DB::select('select CantRechazosSoldaduras(?) as valor',array($informes_ids));
         Log::debug("CantRechazosSoldaduras " . $total[0]->valor);
 
         return $total[0]->valor;
@@ -59,5 +70,5 @@ class EstadisticasSoldadurasController extends Controller
 
 
 
- 
+
 }

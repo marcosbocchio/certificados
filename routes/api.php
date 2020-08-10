@@ -18,20 +18,20 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::group(['middleware' => 'auth:api'], function()
-{   
+{
 
     Route::get('colores', 'ColoresController@index');
     Route::resource('parametros_generales', 'ParametrosGeneralesController');
-    Route::get('clientes/paginate', 'ClientesController@paginate'); 
-    Route::get('clientes/{cliente_id}/ots', 'ClientesController@getOts'); 
+    Route::get('clientes/paginate', 'ClientesController@paginate');
+    Route::get('clientes/{cliente_id}/ots', 'ClientesController@getOts');
     Route::get('clientes/operador/{user_id}', 'ClientesController@getClientesOperador');
-    Route::resource('clientes', 'ClientesController'); 
-    Route::get('contratistas/paginate', 'ContratistasController@paginate'); 
-    Route::resource('contratistas', 'ContratistasController'); 
-    Route::get('users/empresa', 'UserController@getUsersEmpresa');  
-    Route::get('users/paginate', 'UserController@paginate');      
-    Route::resource('users', 'UserController');  
-    Route::get('materiales/paginate', 'MaterialesController@paginate');        
+    Route::resource('clientes', 'ClientesController');
+    Route::get('contratistas/paginate', 'ContratistasController@paginate');
+    Route::resource('contratistas', 'ContratistasController');
+    Route::get('users/empresa', 'UserController@getUsersEmpresa');
+    Route::get('users/paginate', 'UserController@paginate');
+    Route::resource('users', 'UserController');
+    Route::get('materiales/paginate', 'MaterialesController@paginate');
     Route::resource('materiales', 'MaterialesController');
     Route::get('unidades_medidas/paginate', 'UnidadesMedidasController@paginate');
     Route::resource('unidades_medidas', 'UnidadesMedidasController');
@@ -65,7 +65,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('ot_riesgos', 'OtRiesgosController');
     Route::get('fuentes/interno_fuente/{interno_fuente_id}', 'FuentesController@getFuentePorInterno');
     Route::get('interno_fuentes/{interno_fuente_id}/fecha_final/{fecha_final}/curie', 'InternoFuentesController@CalcularCurie');
-    Route::get('interno_fuentes/activo_sn/{activo_sn?}', 'InternoFuentesController@getInternoFuentes');  
+    Route::get('interno_fuentes/activo_sn/{activo_sn?}', 'InternoFuentesController@getInternoFuentes');
     Route::get('interno_fuentes/paginate', 'InternoFuentesController@paginate');
     Route::resource('interno_fuentes', 'InternoFuentesController');
     Route::get('fuentes/paginate', 'FuentesController@paginate');
@@ -90,22 +90,22 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('tecnica_distancias/tecnica/{tecnica_id}/diametro/{diametro}/espesor/{espesor}/foco/{foco}', 'TecnicaDistanciasController@DistanciasDiametro');
     Route::get('tecnica_distancias/tecnica/{tecnica_id}/medida/{medida}', 'TecnicaDistanciasController@DistanciasDiametroChapa');
     Route::resource('estados_superficies', 'EstadosSuperficiesController');
-    Route::get('agente_acoplamientos/paginate', 'AgenteAcoplamientosController@paginate'); 
+    Route::get('agente_acoplamientos/paginate', 'AgenteAcoplamientosController@paginate');
     Route::resource('agente_acoplamientos', 'AgenteAcoplamientosController');
 
-    Route::get('vehiculos/ot/{ot_id}/total', 'VehiculosController@OtVehiculosTotal');   
-    Route::get('vehiculos/paginate', 'VehiculosController@paginate'); 
+    Route::get('vehiculos/ot/{ot_id}/total', 'VehiculosController@OtVehiculosTotal');
+    Route::get('vehiculos/paginate', 'VehiculosController@paginate');
     Route::resource('vehiculos', 'VehiculosController');
 
     Route::resource('palpadores', 'PalpadoresController');
 
     Route::resource('generatrices', 'GeneratricesController');
 
-    Route::get('roles/paginate', 'RolesController@paginate');      
+    Route::get('roles/paginate', 'RolesController@paginate');
     Route::resource('roles', 'RolesController');
 
-    Route::get('permissions/user', 'PermissionsController@GetPermissionsUser');  
-    Route::get('permissions/paginate', 'PermissionsController@paginate');      
+    Route::get('permissions/user', 'PermissionsController@GetPermissionsUser');
+    Route::get('permissions/paginate', 'PermissionsController@paginate');
     Route::resource('permissions', 'PermissionsController');
 
     Route::resource('tipo_soldaduras', 'TipoSoldadurasController');
@@ -114,35 +114,35 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('soldadores', 'SoldadoresController');
     Route::get('soldadores/cliente/{id}/paginate', 'SoldadoresController@paginate');
     Route::get('soldadores/cliente/{id}','SoldadoresController@SoldadoresCliente');
-    Route::post('soldadores/cliente/{id}','SoldadoresController@store');   
+    Route::post('soldadores/cliente/{id}','SoldadoresController@store');
 
     Route::get('equipos/metodo/{metodo}', 'EquiposController@EquiposMetodo');
 
     Route::get('defectos_ri/planta', 'DefectosRiController@DefectosPlanta');
     Route::get('defectos_ri/gasoducto', 'DefectosRiController@DefectosGasoducto');
 
-    
+
     Route::get('diametros', 'DiametrosEspesorController@getDiametros');
     Route::get('espesor/{id}', 'DiametrosEspesorController@getEspesor');
-    
+
     Route::get('procedimientos_informes/ot/{id_ot}/metodo/{metodo}', 'DocumentacionesController@ProcedimientosMetodo');
-    Route::get('informes/ot/{ot_id}/total', 'InformesController@OtInformesTotal');   
-    Route::get('informes/ot/{ot_id}/paginate', 'InformesController@paginate');   
-    Route::get('informes/{id}/importado_sn/{importado_sn}', 'InformesController@getObraInforme');   
-    Route::put('informes/{id}/firmar', 'InformesController@firmar');   
-    Route::put('informes/{id}/clonar', 'InformesController@clonar');   
+    Route::get('informes/ot/{ot_id}/total', 'InformesController@OtInformesTotal');
+    Route::get('informes/ot/{ot_id}/paginate', 'InformesController@paginate');
+    Route::get('informes/{id}/importado_sn/{importado_sn}', 'InformesController@getObraInforme');
+    Route::put('informes/{id}/firmar', 'InformesController@firmar');
+    Route::put('informes/{id}/clonar', 'InformesController@clonar');
     Route::get('informes/ot/{ot_id}/pendientes_parte_diario', 'InformesController@OtInformesPendienteParteDiario');
     Route::get('informes/ot/{ot_id}/parte/{parte_id}/pendientes_editables_parte_diario', 'InformesController@OtInformesPendienteEditableParteDiario');
     Route::get('informes/ot/{ot_id}/obra/{obra}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}', 'InformesController@getInformesEstadisticasSoldaduras');
 
-  
-    Route::get('certificados/parte/{parte_id}/servicios', 'CertificadosController@getParteServicios');
-    Route::get('certificados/parte/{parte_id}/modo_cobro/{modo_cobro}/productos', 'CertificadosController@getParteProductos');   
-    Route::get('certificados/ot/{ot_id}/modalidad_cobro', 'CertificadosController@getModalidadCobro');   
 
-   
-    Route::get('informes/ot/{ot_id}/metodo/{metodo}/generar-numero-informe', 'InformesController@GenerarNumeroInforme');   
-    Route::get('certificados/generar-numero-certificado', 'CertificadosController@GenerarNumeroCertificado');   
+    Route::get('certificados/parte/{parte_id}/servicios', 'CertificadosController@getParteServicios');
+    Route::get('certificados/parte/{parte_id}/modo_cobro/{modo_cobro}/productos', 'CertificadosController@getParteProductos');
+    Route::get('certificados/ot/{ot_id}/modalidad_cobro', 'CertificadosController@getModalidadCobro');
+
+
+    Route::get('informes/ot/{ot_id}/metodo/{metodo}/generar-numero-informe', 'InformesController@GenerarNumeroInforme');
+    Route::get('certificados/generar-numero-certificado', 'CertificadosController@GenerarNumeroCertificado');
 
     Route::post('storage/referencia', 'StorageController@saveReferencia');
     Route::post('storage/documento', 'StorageController@saveDocumento');
@@ -152,7 +152,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::post('storage/calibraciones_us', 'StorageController@saveCalibraciones');
     Route::post('storage/indicaciones_us', 'StorageController@saveIndicacionesUs');
     Route::post('storage/informes_importados', 'StorageController@saveInformesImportados');
-    
+
     Route::post('storage/documentos_escaneados', 'StorageController@saveDocumentosEscaneados');
     Route::post('storage/logo-cliente', 'StorageController@saveLogoCliente');
     Route::post('storage/logo-contratista', 'StorageController@saveLogoContratista');
@@ -161,67 +161,67 @@ Route::group(['middleware' => 'auth:api'], function()
 
     Route::post('storage/firma-digital', 'StorageController@saveFirmaDigital');
 
-    Route::get('documentaciones/ot','DocumentacionesController@DocumentacionesDeOt'); 
-    
-    Route::get('documentaciones/total', 'DocumentacionesController@DocumentacionesTotal'); 
-    Route::get('documentaciones/verificar_duplicados/tipo/{tipo?}/titulo/{titulo?}/usuario/{user_id?}/equipo/{interno_equipo_id?}/fuente/{interno_fuente_id?}/vehiculo/{vehiculo_id}', 'DocumentacionesController@verificarDuplicados'); 
-    Route::resource('documentaciones', 'DocumentacionesController'); 
-    Route::get('documentaciones/ot/paginate', 'DocumentacionesController@paginate'); 
-  
+    Route::get('documentaciones/ot','DocumentacionesController@DocumentacionesDeOt');
+
+    Route::get('documentaciones/total', 'DocumentacionesController@DocumentacionesTotal');
+    Route::get('documentaciones/verificar_duplicados/tipo/{tipo?}/titulo/{titulo?}/usuario/{user_id?}/equipo/{interno_equipo_id?}/fuente/{interno_fuente_id?}/vehiculo/{vehiculo_id}', 'DocumentacionesController@verificarDuplicados');
+    Route::resource('documentaciones', 'DocumentacionesController');
+    Route::get('documentaciones/ot/paginate', 'DocumentacionesController@paginate');
+
     Route::get('documentaciones/ot_operarios/{ot_id}/{user_id}', 'DocumentacionesController@getDocOtOperarios');
     Route::get('documentaciones/vehiculos/{vehiculo_id}', 'DocumentacionesController@getDocVehiculo');
     Route::get('documentaciones/interno_equipo/{interno_equipo_id}', 'DocumentacionesController@getDocInternoEquipo');
     Route::get('documentaciones/ot/{ot_id}/interno_equipo/{interno_equipo_id}/fuentes_documentaciones', 'DocumentacionesController@getDocPorInternoOt');
-    
-    Route::get('interno_equipos/metodo/{metodo}/activo_sn/{activo_sn?}/tipo_penetrante/{tipo_penetrante?}', 'InternoEquiposController@getInternoEquipos');   
+
+    Route::get('interno_equipos/metodo/{metodo}/activo_sn/{activo_sn?}/tipo_penetrante/{tipo_penetrante?}', 'InternoEquiposController@getInternoEquipos');
     Route::get('interno_equipos/paginate', 'InternoEquiposController@paginate');
     Route::resource('interno_equipos', 'InternoEquiposController');
-      
+
     //interno Equipos
 
     Route::get('interno_equipos/ot/{ot_id}/total', 'InternoEquiposController@OtInternoEquiposTotal');
     Route::post('interno_equipos/ot/{ot_id}', 'InternoEquiposController@StoreOtInternoEquipos');
 
     //Soldadores
-    Route::resource('ot_soldadores', 'OtSoldadoresController');  
+    Route::resource('ot_soldadores', 'OtSoldadoresController');
     Route::post('ot_soldadores/insertar_importados/ot/{id}/cliente/{cliente_id}','OtSoldadoresController@ImportarSoldadores');
 
     Route::get('ot_soldadores/ot/{id}','OtSoldadoresController@SoldadoresOt');
     Route::get('ot_soldadores/ot/{ot_id}/total', 'OtSoldadoresController@OtSoldadoresTotal');
     Route::get('ot_usuarios_clientes/ot/{ot_id}/total', 'OtUsuariosClientesController@OtUsuariosClienteTotal');
-    
+
     //operarios
     Route::resource('ot_operarios','OtOperariosController');
     Route::get('ot-operarios/users','OtOperariosController@users');
     Route::get('ot-operarios/ot/{ot_id}','OtOperariosController@getOperadoresOt');
     Route::get('ot_operarios/users/{ot_id}/total','OtOperariosController@OtOperadoresTotal');
-    
+
     /* Documentaciones*/
     Route::resource('ot_documentaciones','OtDocumentacionesController');
     Route::get('ot-documentaciones/ot/{id}','OtDocumentacionesController@DocumentacionesOt');
     Route::get('ot-documentaciones/ot/{ot_id}/total','OtDocumentacionesController@OtDocumentacionesTotal');
-    
-    /*  informes */ 
-    Route::resource('informes_ri','InformesRiController');    
-    Route::get('informes_ri/elementos_reparacion/ot/{ot_id}/km/{km}', 'InformesRiController@getElementosReparacion');   
+
+    /*  informes */
+    Route::resource('informes_ri','InformesRiController');
+    Route::get('informes_ri/elementos_reparacion/ot/{ot_id}/km/{km}', 'InformesRiController@getElementosReparacion');
     Route::resource('informes_pm','InformesPmController');
     Route::resource('informes_lp','InformesLpController');
     Route::resource('informes_us','InformesUsController');
 
-     /*  informes importados */ 
+     /*  informes importados */
 
     Route::resource('informes_importados','InformesImportadosController');
 
-    //Remito  
+    //Remito
     Route::get('remitos/ot/{ot_id}/total','RemitosController@RemitosTotal');
-    Route::get('remitos/ot/{ot_id}/paginate', 'RemitosController@paginate');   
+    Route::get('remitos/ot/{ot_id}/paginate', 'RemitosController@paginate');
     Route::resource('remitos','RemitosController');
-    Route::get('remitos/ot/{ot_id}/generar-numero-remito', 'RemitosController@GenerarNumeroRemito');   
+    Route::get('remitos/ot/{ot_id}/generar-numero-remito', 'RemitosController@GenerarNumeroRemito');
 
     //procedimientos
     Route::resource('ot_procedimientos_propios','OtProcedimientosPropiosController');
     Route::get('ot_procedimientos_propios/ot/{id}','OtProcedimientosPropiosController@ProcedimientosPropiosOt');
-    Route::get('ot_procedimientos_propios/ot/{id}/total','OtProcedimientosPropiosController@OtProcedimientosTotal');   
+    Route::get('ot_procedimientos_propios/ot/{id}/total','OtProcedimientosPropiosController@OtProcedimientosTotal');
 
     Route::resource('ot_tipo_soldaduras','OtTipoSoldadurasController');
     Route::get('ot_tipo_soldaduras/ot/{id}','OtTipoSoldadurasController@TipoSoldadurasOt');
@@ -229,7 +229,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('ot_tipo_soldaduras/ot/{id}/epss','OtTipoSoldadurasController@EpssOt');
     Route::get('ot_tipo_soldaduras/ot/{id}/pqrs','OtTipoSoldadurasController@PqrsOt');
 
-    
+
     //placas
 
     Route::resource('placas_ri','PlacasRiController');
@@ -262,22 +262,22 @@ Route::group(['middleware' => 'auth:api'], function()
     //parte diario
     Route::get('partes/ot/{ot_id}/certificado/{certificado_id}/pendientes_editables_certificado', 'PartesController@OtPartesPendienteEditableCertificado');
     Route::get('partes/ot/{ot_id}/pendientes_certificados', 'PartesController@OtPartesPendienteCertificado');
-    Route::get('partes/ot/{ot_id}/paginate', 'PartesController@paginate');       
-    Route::get('partes/ot/{ot_id}/ddppi', 'PartesController@ddppi');   
+    Route::get('partes/ot/{ot_id}/paginate', 'PartesController@paginate');
+    Route::get('partes/ot/{ot_id}/ddppi', 'PartesController@ddppi');
     Route::get('partes/ot/{ot_id}/total','PartesController@PartesTotal');
     Route::put('partes/{id}/firmar', 'PartesController@firmar');
     Route::resource('partes', 'PartesController');
     Route::get('partes/informe_importado/{id}','PartesController@getInformeImportado');
     Route::get('partes/informe_ri/{id}','PartesController@getInformeRiParte');
     Route::get('partes/informe_pm/{id}','PartesController@getInformePmParte');
-    Route::get('partes/informe_lp/{id}','PartesController@getInformeLpParte');    
+    Route::get('partes/informe_lp/{id}','PartesController@getInformeLpParte');
     Route::get('partes/informe_us/{id}','PartesController@getInformeUsParte');
-    
+
 
     //certificados
     Route::put('certificados/{id}/firmar', 'CertificadosController@firmar');
     Route::get('certificados/ot/{ot_id}/total','CertificadosController@CertificadosTotal');
-    Route::get('certificados/ot/{ot_id}/paginate', 'CertificadosController@paginate');       
+    Route::get('certificados/ot/{ot_id}/paginate', 'CertificadosController@paginate');
     Route::resource('certificados', 'CertificadosController');
 
     //trazabilidad
@@ -291,7 +291,9 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('estadisticas-soldaduras/analisis_rechazos_espesor/{informes_ids}','EstadisticasSoldadurasController@AnalisisRechazosEspesor');
     Route::get('estadisticas-soldaduras/analisis_defectos_posicion/{informes_ids}','EstadisticasSoldadurasController@AnalisisDefectosPosicion');
     Route::get('estadisticas-soldaduras/analisis_detalle_defectos/{informes_ids}','EstadisticasSoldadurasController@AnalisisSoldadurasDetalleDefectos');
-    
+    Route::get('estadisticas-soldaduras/analisis_defectos_soldador/{informes_ids}','EstadisticasSoldadurasController@AnalisisSoldadurasDefectosSoldador');
+
+
 });
 
 Route::get('/fecha_actual',function(){
