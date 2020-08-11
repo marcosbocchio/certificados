@@ -293,6 +293,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('estadisticas-soldaduras/analisis_detalle_defectos/{informes_ids}','EstadisticasSoldadurasController@AnalisisSoldadurasDetalleDefectos');
     Route::get('estadisticas-soldaduras/analisis_defectos_soldador/{informes_ids}','EstadisticasSoldadurasController@AnalisisSoldadurasDefectosSoldador');
 
+    Route::resource('personas_api', 'PersonasController');
 
 });
 

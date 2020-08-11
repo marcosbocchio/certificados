@@ -75,14 +75,14 @@ Route::group(['middleware' => ['auth']], function () {
   Route::get('/area/enod/ots','OtsController@create')->name('ots.create')->middleware('auth');
   Route::get('/area/enod/ots/{id}/edit','OtsController@edit')->name('ots.edit');
   Route::get('/area/enod/documentaciones','DocumentacionesController@callView')->name('documentaciones');
-  Route::get('/area/enod/roles','RolesController@callView')->name('roles');  
-  Route::get('/area/enod/permisos','PermissionsController@callView')->name('permisos');  
+  Route::get('/area/enod/roles','RolesController@callView')->name('roles');
+  Route::get('/area/enod/permisos','PermissionsController@callView')->name('permisos');
   Route::get('/area/enod/dosimetria-operador','DosimetriaOperadorController@callView')->name('dosimetria-operador');
-  Route::get('/area/enod/dosimetria-rx','DosimetriaRxController@callView')->name('dosimetria-rx');  
-  Route::get('/area/enod/dosimetria/estados','DosimetriaEstadosController@callView')->name('dosimetria-estados');  
-  Route::get('/area/enod/dosimetria/operador_periodo_rx','OperadorPeriodoRxController@callView')->name('operador-periodo-rx');  
-  Route::get('/area/enod/dosimetria/resumen','DosimetriaResumenController@callView')->name('dosimetria-resumen');  
-  Route::get('/area/enod/soldadores/estadisticas-soldaduras','EstadisticasSoldadurasController@callView')->name('estadisticas-soldaduras');  
+  Route::get('/area/enod/dosimetria-rx','DosimetriaRxController@callView')->name('dosimetria-rx');
+  Route::get('/area/enod/dosimetria/estados','DosimetriaEstadosController@callView')->name('dosimetria-estados');
+  Route::get('/area/enod/dosimetria/operador_periodo_rx','OperadorPeriodoRxController@callView')->name('operador-periodo-rx');
+  Route::get('/area/enod/dosimetria/resumen','DosimetriaResumenController@callView')->name('dosimetria-resumen');
+  Route::get('/area/enod/soldadores/estadisticas-soldaduras','EstadisticasSoldadurasController@callView')->name('estadisticas-soldaduras');
 
   // reportes
 
@@ -96,7 +96,7 @@ Route::group(['middleware' => ['auth']], function () {
       Route::get('/pdf/servicios/referencias/{id}','PdfServiciosReferenciasController@imprimir')->name('ServiciosReferencias');
       Route::get('/pdf/productos/referencias/{id}','PdfProductosReferenciasController@imprimir')->name('ProductosReferencias');
       Route::get('/pdf/productos/referencias/informe/pm/{id}','PdfInformesPmReferenciasController@imprimir')->name('InformePmReferencias');
-      Route::get('/pdf/productos/referencias/informe/lp/{id}','PdfInformesLpReferenciasController@imprimir')->name('InformeLpReferencias');    
+      Route::get('/pdf/productos/referencias/informe/lp/{id}','PdfInformesLpReferenciasController@imprimir')->name('InformeLpReferencias');
 
       Route::get('/pdf/dosimetria/year/{year}/operadores/{str_list_of_ids?}/rs/{cliente_sn}/months/{str_list_of_months}','PdfDosimetriaController@imprimir')->name('pdfDosimetriaAnual');
 
@@ -121,32 +121,32 @@ Route::group(['middleware' => ['auth']], function () {
       Route::get('categoriasVideos', 'GestionVideoController@getCategorias')->name('getCategorias');
       Route::get('subCategoriasVideos/{id}', 'GestionVideoController@getSubCategorias')->name('getSubCategorias');
       Route::get('get-Videos', 'GestionVideoController@getVideos')->name('getVideos');
-      
+
       Route::post('category-update', 'GestionVideoController@storeCategory');
       Route::delete('category-delete', 'GestionVideoController@deleteCategory');
-      
+
       Route::post('videos-new', 'GestionVideoController@nuevoVideo');
       Route::delete('video-delete', 'GestionVideoController@deleteVideo');
-      
+
       Route::get('multimedia', 'VideosController@multimediaHome')->name('multimedia');
       Route::get('multimedia/{id}', 'VideosController@multimediaSubcategoria')->name('irAsubcategoria');
       Route::get('get-Videos-categoria/{id}', 'VideosController@getVideosCategoria');
-  
+
 
 });
 
 Route::get('/pdf-test',function(){
 
-  $user = auth()->user(); 
+  $user = auth()->user();
   $header_titulo = "Pdf Test";
-  $header_descripcion =""; 
+  $header_descripcion ="";
   return view('pdf-test',compact('user','header_titulo','header_descripcion'));
 
-});  
+});
 
-
+Route::resource('personas_web', 'PersonasController');
 
  Route::get('php', function () {
    phpinfo();
-}); 
+});
 
