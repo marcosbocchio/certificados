@@ -144,7 +144,7 @@ Route::get('/pdf-test',function(){
 
 });
 
-Route::resource('personas_web', 'PersonasController');
+Route::resource('personas_web', 'PersonaController');
 
  Route::get('php', function () {
    phpinfo();
