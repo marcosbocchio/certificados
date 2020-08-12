@@ -292,6 +292,10 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('estadisticas-soldaduras/analisis_defectos_posicion/{informes_ids}','EstadisticasSoldadurasController@AnalisisDefectosPosicion');
     Route::get('estadisticas-soldaduras/analisis_detalle_defectos/{informes_ids}','EstadisticasSoldadurasController@AnalisisSoldadurasDetalleDefectos');
     Route::get('estadisticas-soldaduras/analisis_defectos_soldador/{informes_ids}','EstadisticasSoldadurasController@AnalisisSoldadurasDefectosSoldador');
+    Route::get('estadisticas-soldaduras/analisis_indicaciones/{informes_ids}','EstadisticasSoldadurasController@AnalisisSoldadurasIndicaciones');
+    Route::get('estadisticas-soldaduras/analisis_detalle_indicaciones/{informes_ids}','EstadisticasSoldadurasController@AnalisisSoldadurasDetalleIndicaciones');
+
+
 
     Route::resource('personas_api', 'PersonaController');
 

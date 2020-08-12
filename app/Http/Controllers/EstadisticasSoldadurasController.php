@@ -49,10 +49,7 @@ class EstadisticasSoldadurasController extends Controller
 
     public function CantSoldadurasInformes($informes_ids){
 
-        DB::enableQueryLog();
-
         $total = DB::select('select CantSoldadurasInformes(?) as valor',array($informes_ids));
-        Log::debug("CantSoldadurasInformes " . $total[0]->valor);
 
         return $total[0]->valor;
 
@@ -60,15 +57,34 @@ class EstadisticasSoldadurasController extends Controller
 
     public function CantRechazosSoldaduras($informes_ids){
 
-        DB::enableQueryLog();
-
         $total = DB::select('select CantRechazosSoldaduras(?) as valor',array($informes_ids));
-        Log::debug("CantRechazosSoldaduras " . $total[0]->valor);
 
         return $total[0]->valor;
     }
 
+    public function AnalisisSoldadurasIndicaciones($informes_ids){
 
+        DB::select('CALL CreateTemporaryTableDefectoPosReduce(?)',array($informes_ids));
+
+        $res =  DB::select('CALL AnalisisSoldadurasIndicaciones(?)',array($informes_ids));
+
+        DB::select('CALL DropTemporaryTableDefectoPosReduce()');
+
+        return $res;
+
+    }
+
+    public function AnalisisSoldadurasDetalleIndicaciones($informes_ids){
+
+        DB::select('CALL CreateTemporaryTableDefectoPosReduce(?)',array($informes_ids));
+
+        $res =  DB::select('CALL AnalisisSoldadurasDetalleIndicaciones(?)',array($informes_ids));
+
+        DB::select('CALL DropTemporaryTableDefectoPosReduce()');
+
+        return $res;
+
+    }
 
 
 }
