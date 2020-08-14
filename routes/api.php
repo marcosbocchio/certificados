@@ -289,6 +289,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('estadisticas-soldaduras/total_soldaduras_informes/{informes_ids}','EstadisticasSoldadurasController@CantSoldadurasInformes');
     Route::get('estadisticas-soldaduras/total_rechazos_soldaduras/{informes_ids}','EstadisticasSoldadurasController@CantRechazosSoldaduras');
     Route::get('estadisticas-soldaduras/analisis_rechazos_espesor/{informes_ids}','EstadisticasSoldadurasController@AnalisisRechazosEspesor');
+    Route::get('estadisticas-soldaduras/analisis_rechazos_diametro/{informes_ids}','EstadisticasSoldadurasController@AnalisisRechazosDiametro');
     Route::get('estadisticas-soldaduras/analisis_defectos_posicion/{informes_ids}','EstadisticasSoldadurasController@AnalisisDefectosPosicion');
     Route::get('estadisticas-soldaduras/analisis_detalle_defectos/{informes_ids}','EstadisticasSoldadurasController@AnalisisSoldadurasDetalleDefectos');
     Route::get('estadisticas-soldaduras/analisis_defectos_soldador/{informes_ids}','EstadisticasSoldadurasController@AnalisisSoldadurasDefectosSoldador');

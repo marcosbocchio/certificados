@@ -108,47 +108,90 @@
                   <div class="estadisticas-soldaduras">
                     <tabs :options="{ useUrlFragment: false }" @clicked="tabClicked" @changed="tabChanged">
                         <tab name="Indices de rechazos">
-                            <div v-if="TablaAnalisisRechazos.length">
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="div-grafico">
-                                            <pie-chart :chart-data="data_indice_rechazos" :options="data_indice_rechazos.options" ></pie-chart>
+
+                            <div v-if="data_indice_rechazos.options.length != []">
+
+                                <div class="col-lg-12">
+                                    <div class="div-grafico">
+                                        <pie-chart :chart-data="data_indice_rechazos" :options="data_indice_rechazos.options" ></pie-chart>
+                                    </div>
+                                </div>
+
+                                <div v-if="TablaAnalisisRechazosDiametro.length">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-lg-offset-3">
+                                            <div class="col-lg-12 titulo-tabla-tabs" >
+                                                <h5>Análisis de rechazos por Diametro</h5>
+                                            </div>
+                                            <div class="stat-sol">
+                                                <table class="table table-striped table-condensed">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th class="col-lg-2">Ø</th>
+                                                            <th class="col-lg-3">Aprobados</th>
+                                                            <th class="col-lg-3">Rechazados</th>
+                                                            <th class="col-lg-2">Total</th>
+                                                            <th class="col-lg-2">%</th>
+                                                        </tr>
+                                                        <tr v-for="(item,k) in TablaAnalisisRechazosDiametro" :key="k">
+                                                            <td>{{ item.diametro }}</td>
+                                                            <td>{{ item.aprobados }}</td>
+                                                            <td>{{ item.rechazados }}</td>
+                                                            <td>{{ item.total }}</td>
+                                                            <td>{{ item.porcentaje_rechazados }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Total</th>
+                                                            <th>{{ total_aprobados_soldaduras}}</th>
+                                                            <th>{{ total_rechazos_soldaduras}}</th>
+                                                            <th>{{ total_soldaduras_informes}}</th>
+                                                            <th>{{ total_porcentaje_rechazados}}</th>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 col-lg-offset-3">
-                                        <div class="col-lg-12 titulo-tabla-tabs" >
-                                            <h5>Análisis de rechazos por espesor</h5>
-                                        </div>
-                                        <div class="stat-sol">
-                                            <table class="table table-striped table-condensed">
-                                                <tbody>
-                                                    <tr>
-                                                        <th class="col-lg-2">#</th>
-                                                        <th class="col-lg-3">Aprobados</th>
-                                                        <th class="col-lg-3">Rechazados</th>
-                                                        <th class="col-lg-2">Total</th>
-                                                        <th class="col-lg-2">%</th>
-                                                    </tr>
-                                                    <tr v-for="(item,k) in TablaAnalisisRechazos" :key="k">
-                                                        <td>{{ item.espesor }}</td>
-                                                        <td>{{ item.aprobados }}</td>
-                                                        <td>{{ item.rechazados }}</td>
-                                                        <td>{{ item.total }}</td>
-                                                        <td>{{ item.porcentaje_rechazados }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Total</th>
-                                                        <th>{{ total_aprobados_soldaduras}}</th>
-                                                        <th>{{ total_rechazos_soldaduras}}</th>
-                                                        <th>{{ total_soldaduras_informes}}</th>
-                                                        <th>{{ total_porcentaje_rechazados}}</th>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                </div>
+
+                                <div v-if="TablaAnalisisRechazosEspesor.length">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-lg-offset-3">
+                                            <div class="col-lg-12 titulo-tabla-tabs" >
+                                                <h5>Análisis de rechazos por espesor</h5>
+                                            </div>
+                                            <div class="stat-sol">
+                                                <table class="table table-striped table-condensed">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th class="col-lg-2">#</th>
+                                                            <th class="col-lg-3">Aprobados</th>
+                                                            <th class="col-lg-3">Rechazados</th>
+                                                            <th class="col-lg-2">Total</th>
+                                                            <th class="col-lg-2">%</th>
+                                                        </tr>
+                                                        <tr v-for="(item,k) in TablaAnalisisRechazosEspesor" :key="k">
+                                                            <td>{{ item.espesor }}</td>
+                                                            <td>{{ item.aprobados }}</td>
+                                                            <td>{{ item.rechazados }}</td>
+                                                            <td>{{ item.total }}</td>
+                                                            <td>{{ item.porcentaje_rechazados }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Total</th>
+                                                            <th>{{ total_aprobados_soldaduras}}</th>
+                                                            <th>{{ total_rechazos_soldaduras}}</th>
+                                                            <th>{{ total_soldaduras_informes}}</th>
+                                                            <th>{{ total_porcentaje_rechazados}}</th>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
                             <div v-else>
                                 <h4>No hay datos para mostrar</h4>
                             </div>
@@ -413,7 +456,8 @@ export default {
         total_porcentaje_rechazados : 0,
         total_rechazos_soldaduras : 0,
         total_aprobados_soldaduras : 0,
-        TablaAnalisisRechazos:[],
+        TablaAnalisisRechazosEspesor:[],
+        TablaAnalisisRechazosDiametro:[],
         valores_indice_rechazos :[],
 
         /* Defectologia */
@@ -839,7 +883,7 @@ methods : {
     async Buscar(){
 
      this.$store.commit('loading', true);
-     this.TablaAnalisisRechazos = [];
+     this.TablaAnalisisRechazosEspesor = [];
      this.selCliente = false;
      this.selOt = false;
      this.selObra = false;
@@ -918,7 +962,7 @@ methods : {
 
     async CambioObra (){
 
-        this.TablaAnalisisRechazos = [];
+        this.TablaAnalisisRechazosEspesor = [];
         this.selObra = !this.selObra;
 
     },
@@ -926,13 +970,15 @@ methods : {
     resetVariables(){
 
         this.informes                      = [];
-        this.TablaAnalisisRechazos         = [];
+        this.TablaAnalisisRechazosEspesor  = [];
+        this.TablaAnalisisRechazosDiametro      = [];
         this.TablaDefectosPosicion         = [];
         this.TablaDetalleDefectos          = [];
         this.TablaDefectosSoldador         = [];
         this.TablaDetalletDefectosSoldador = [];
         this.valores_detalle_defectos_soldador = null;
         this.data_detalle_defectos_soldador = null;
+        this.data_indice_rechazos = { options : []},
         this.TablaIndicaciones = [];
         this.TablaIndicacionesPosicion = [];
         this.TablaIndicacionesPosicionDetalle = [];
@@ -943,15 +989,18 @@ methods : {
     async getIndicesDeRechazos(){
 
         this.$store.commit('loading', true);
-        var url = 'estadisticas-soldaduras/analisis_rechazos_espesor/' + this.informes_ids;
         try {
+            let url = 'estadisticas-soldaduras/analisis_rechazos_espesor/' + this.informes_ids;
             let res= await axios.get(url);
-            this.TablaAnalisisRechazos =  res.data;
-            await this.calcularIndicesRechazosSoldaduras(this.TablaAnalisisRechazos);
+            this.TablaAnalisisRechazosEspesor =  res.data;
+            url = 'estadisticas-soldaduras/analisis_rechazos_diametro/' + this.informes_ids;
+            res= await axios.get(url);
+            this.TablaAnalisisRechazosDiametro =  res.data;
+            await this.calcularIndicesRechazosSoldaduras(this.TablaAnalisisRechazosEspesor);
 
         }catch(error){
 
-        }finally  {this.$store.commit('loading', false);}
+        }finally  { this.$store.commit('loading', false); }
 
 
     },
