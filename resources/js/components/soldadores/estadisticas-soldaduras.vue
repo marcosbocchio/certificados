@@ -254,11 +254,11 @@
                             <div v-else>
                                <h4>No hay datos para mostrar</h4>
                             </div>
-                            <div v-if="data_detalle_defectos_soldador">
+                            <div v-if="TablaDetalletDefectosSoldador.length">
                                  <div class="row">
                                     <div class="col-lg-10 col-lg-offset-1">
                                         <div style="max-height:350px;">
-                                            <bar-chart :chart-data="data_detalle_defectos_soldador" :options="data_detalle_defectos_soldador.options" ></bar-chart>
+                                            <bar-chart :chart-data="data_detalle_defectos_soldador" :options="data_detalle_defectos_soldador.options" style="height: 350px;"  ></bar-chart>
                                         </div>
                                     </div>
                                 </div>
@@ -453,29 +453,25 @@ export default {
 
     },
 
- created: function () {
+    created: function () {
 
-    this.getClienteOperador();
+        this.getClienteOperador();
 
- },
+    },
 
-   mounted() {
+    mounted() {
 
-        this.$store.dispatch('loadColores');
-     //   this.generateIndicesRechazos();
-      //  this.generateDefectologia();
-  //      this.generateIndicacionesPosicion();
-   //     this.GenerarGraficoIndicacionesSoldadorDetalle();
+       this.$store.dispatch('loadColores');
+
+   },
+
+   computed :{
+
+    ...mapState(['isLoading','colores','url']),
 
   },
 
-     computed :{
-
-        ...mapState(['isLoading','colores','url']),
-
-     },
-
- methods : {
+methods : {
 
     generateIndicesRechazos() {
 
@@ -521,7 +517,7 @@ export default {
 
     generateDefectologia() {
 
-            let labels_aux = []
+            let labels_aux = [];
             this.TablaDefectosPosicion.forEach(function(item) {
 
                 if(item.diametro == this.DiametroDefecto){
@@ -859,10 +855,6 @@ export default {
         await this.getDefectologiaProduccion();
         await this.getIndicaciones();
         this.generateIndicesRechazos();
-        if(this.TablaDefectosSoldador.length > 0) {
-            await this.getDetalleDefectosSoldador(this.TablaDefectosSoldador[0]);
-            this.$forceUpdate();
-            }
 
     }catch(error){
 
@@ -1006,23 +998,52 @@ export default {
                 item.porcentaje_formateado = item.porcentaje.length < 5 ? (String.fromCharCode(160)+ String.fromCharCode(160) + item.porcentaje)  : item.porcentaje;
             }.bind(this));
 
+          if(this.TablaDefectosSoldador.length > 0) {
+                await this.getDetalleDefectosSoldador(this.TablaDefectosSoldador[0]);
+            }
+
         }catch(error){
 
         }finally  {
             this.$store.commit('loading', false);
 
             }
+    },
 
+    async getDetalleDefectosSoldador(soldador,index = 0){
 
+        this.indexDefectosSoldador = index;
+        this.$store.commit('loading', true);
+        this.TablaDetalletDefectosSoldador = [];
+        this.valores_detalle_defectos_soldador = [];
+        this.cantidad_defectos_soldador  = 0;
+
+        this.TablaDDSTemp.forEach(function(item){
+
+            if(parseFloat(item.cantidad) > 0 && parseInt(item.soldador_id) == parseInt(soldador.soldador_id)){
+
+                this.TablaDetalletDefectosSoldador.push({
+
+                    'cantidad'  : item.cantidad,
+                    'defecto_codigo' : item.defecto_codigo,
+                    'defecto_descripcion' : item.defecto_descripcion
+
+                })
+                this.cantidad_defectos_soldador += parseFloat(item.cantidad);
+            }
+
+        }.bind(this));
+
+        this.TablaDetalletDefectosSoldador.sort((a, b) => (a.cantidad < b.cantidad) ? 1 : -1)
+        this.GenerarGraficoDefectosSoldador(soldador);
+        this.$store.commit('loading', false);
     },
 
     async GenerarTablaDefectosSoldador(){
 
 
        let TablaDefectosSoldadorUnique = [...new Set(this.TablaDDSTemp.map(item=> item.soldador_id))];
-
        this.TablaDefectosSoldador = [];
-
 
        TablaDefectosSoldadorUnique.forEach(function(item_u){
 
@@ -1048,7 +1069,6 @@ export default {
                                });
 
                            }
-
                     }
             }.bind(this));
 
@@ -1068,39 +1088,9 @@ export default {
         }.bind(this))
 
         this.generateDefectologia();
-
     },
 
-    async getDetalleDefectosSoldador(soldador,index = 0){
 
-
-        this.indexDefectosSoldador = index;
-        this.$store.commit('loading', true);
-
-        this.TablaDetalletDefectosSoldador = [];
-        this.valores_detalle_defectos_soldador = [];
-        this.cantidad_defectos_soldador  = 0;
-
-        this.TablaDDSTemp.forEach(function(item){
-
-            if(parseFloat(item.cantidad) > 0 && parseInt(item.soldador_id) == parseInt(soldador.soldador_id)){
-
-                this.TablaDetalletDefectosSoldador.push({
-
-                    'cantidad'  : item.cantidad,
-                    'defecto_codigo' : item.defecto_codigo,
-                    'defecto_descripcion' : item.defecto_descripcion
-
-                })
-                this.cantidad_defectos_soldador += parseFloat(item.cantidad);
-            }
-
-        }.bind(this));
-
-        this.TablaDetalletDefectosSoldador.sort((a, b) => (a.cantidad < b.cantidad) ? 1 : -1)
-        this.GenerarGraficoDefectosSoldador(soldador);
-        this.$store.commit('loading', false);
-    },
 
     async calcularIndicesRechazosSoldaduras(tabla){
 
@@ -1192,7 +1182,7 @@ export default {
 </script>
 
 
-<style >
+<style>
 
 /* Page styles */
 
