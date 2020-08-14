@@ -257,8 +257,8 @@
                             <div v-if="TablaDetalletDefectosSoldador.length">
                                  <div class="row">
                                     <div class="col-lg-10 col-lg-offset-1">
-                                        <div style="max-height:350px;">
-                                            <bar-chart :chart-data="data_detalle_defectos_soldador" :options="data_detalle_defectos_soldador.options" style="height: 350px;"  ></bar-chart>
+                                        <div style="max-height:400px;">
+                                            <bar-chart :chart-data="data_detalle_defectos_soldador" :options="data_detalle_defectos_soldador.options" style="height: 400px;"  ></bar-chart>
                                         </div>
                                     </div>
                                 </div>
