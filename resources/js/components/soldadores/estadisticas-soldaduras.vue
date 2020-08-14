@@ -181,7 +181,13 @@
                                                             <td >
                                                                 <span class="badge" :style="{background:colores[k].color}">{{ item.porcentaje_formateado }}</span>
                                                             </td>
-
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Total</th>
+                                                            <th></th>
+                                                            <th style="text-align: center;">{{ total_defectos }}</th>
+                                                            <th></th>
+                                                            <th></th>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -199,6 +205,9 @@
                                         <div class="div-grafico">
                                             <doughnut-chart :chart-data="data_defectologia" :options="data_defectologia.options" ></doughnut-chart>
                                         </div>
+                                    </div>
+                                    <div class="col-lg-12 totales_posiciones">
+                                        <p><strong>Total defectos : </strong>{{ total_defectos_posicion}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -222,7 +231,7 @@
                                                         <th class="col-lg-3 col-md-2" style="text-align: center;">Cant.</th>
                                                         <th colspan="2" class="col-lg-3 col-md-5" style="text-align: center;">Porcentaje</th>
                                                     </tr>
-                                                    <tr v-for="(item,k) in TablaDefectosSoldador" :key="k" @click="getDetalleDefectosSoldador(item)" class="pointer">
+                                                    <tr v-for="(item,k) in TablaDefectosSoldador" :key="k" @click="getDetalleDefectosSoldador(item,k)" class="pointer"  :class="{selected: indexDefectosSoldador === k}">
                                                         <td>{{item.codigo_soldador}} - {{item.nombre_soldador }}</td>
                                                         <td>{{ item.cordones }}</td>
                                                         <td style="text-align: center;">{{ item.cantidad }}</td>
@@ -272,7 +281,7 @@
                                                         <th class="col-lg-3 col-md-2" style="text-align: center;">Cant.</th>
                                                         <th colspan="2" class="col-lg-3 col-md-5" style="text-align: center;">Porcentaje</th>
                                                     </tr>
-                                                    <tr v-for="(item,k) in TablaIndicaciones" :key="k" @click="getDetalleDefectosSoldador(item)" class="pointer">
+                                                    <tr v-for="(item,k) in TablaIndicaciones" :key="k" class="pointer">
                                                         <td>{{item.defecto_codigo}}</td>
                                                         <td>{{ item.defecto_descripcion }}</td>
                                                         <td style="text-align: center;">{{ item.cantidad }}</td>
@@ -284,7 +293,13 @@
                                                         <td >
                                                             <span class="badge" :style="{background:colores[k].color}">{{ item.porcentaje_formateado }}</span>
                                                         </td>
-
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Total</th>
+                                                        <th></th>
+                                                        <th style="text-align: center;">{{ total_indiciones }}</th>
+                                                        <th></th>
+                                                        <th></th>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -305,11 +320,26 @@
                                         <doughnut-chart :chart-data="data_indicaciones_posicion" :options="data_indicaciones_posicion.options" ></doughnut-chart>
                                     </div>
                                 </div>
+                                <div class="col-lg-12 totales_posiciones">
+                                    <div>
+                                        <p><strong>Total Indicaciones : </strong>{{ total_indicaciones_posicion}}</p>
+                                    </div>
+                                </div>
                                 </div>
                             </div>
                             <div v-else>
                                <h4>No hay datos para mostrar</h4>
                             </div>
+                            <div v-if="TablaIndicacionesPosicionDetalle.length">
+                                 <div class="row">
+                                    <div class="col-lg-10 col-lg-offset-1">
+                                        <div style="max-height:350px;">
+                                            <bar-chart :chart-data="data_indicaciones_posicion_detalle" :options="data_indicaciones_posicion_detalle.options" ></bar-chart>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </tab>
                     </tabs>
                 </div>
@@ -333,7 +363,6 @@ import 'vue-tabs-component/docs/resources/tabs-component.css';
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 import DatePicker from 'vue2-datepicker';
-
 import ChartJsPluginDataLabels from 'chartjs-plugin-datalabels';
 import DoughnutChart from '../chart.js/DoughnutChart.js'
 import BarChart from '../chart.js/BarChart.js'
@@ -359,7 +388,8 @@ export default {
       },
 
     },
-     data() { return {
+
+    data() { return {
 
         en: en,
         es: es,
@@ -378,7 +408,7 @@ export default {
         informes_ids :'',
 
         /* Indices de rechazos */
-        data_indice_rechazos : null,
+        data_indice_rechazos : { options : []},
         total_soldaduras_informes : 0,
         total_porcentaje_rechazados : 0,
         total_rechazos_soldaduras : 0,
@@ -387,7 +417,7 @@ export default {
         valores_indice_rechazos :[],
 
         /* Defectologia */
-        data_defectologia : null,
+        data_defectologia : { options : []},
         total_defectos_posicion : 0,
         total_defectos : 0,
         valores_defectologia : [],
@@ -398,12 +428,13 @@ export default {
 
         /* Defectoligía/Producción */
         TablaDDSTemp:[],
-        data_detalle_defectos_soldador: null,
+        data_detalle_defectos_soldador: { options : []},
         TablaDefectosSoldador:[],
         TablaDetalletDefectosSoldador:[],
         total_defectos_soldador:0,
         cantidad_defectos_soldador : 0,
         valores_detalle_defectos_soldador:[],
+        indexDefectosSoldador : -1,
 
         /*Indicaciones  */
         TablaIndicaciones : [] ,
@@ -412,8 +443,12 @@ export default {
         total_indicaciones_posicion:0,
         DiametrosIndicaciones :[],
         DiametroIndicaciones:'',
-        data_indicaciones_posicion : null,
+        data_indicaciones_posicion : { options : []},
+        data_indicaciones_posicion_detalle : { options : []},
         valores_indicaciones:[],
+        TablaIndicacionesPosicionDetalle : [],
+        valores_indicaciones_posicion:0,
+        valores_totales_indicaciones_posicion: [],
      }
 
     },
@@ -427,9 +462,10 @@ export default {
    mounted() {
 
         this.$store.dispatch('loadColores');
-        this.generateIndicesRechazos();
-        this.generateDefectologia();
-        this.generateIndicacionesPosicion();
+     //   this.generateIndicesRechazos();
+      //  this.generateDefectologia();
+  //      this.generateIndicacionesPosicion();
+   //     this.GenerarGraficoIndicacionesSoldadorDetalle();
 
   },
 
@@ -572,9 +608,7 @@ export default {
                         data: this.valores_detalle_defectos_soldador,
                         backgroundColor: 'rgba(153, 102, 255, 0.2)',
                         borderColor : 'rgb(153, 102, 255)',
-                        borderWidth : 1
-
-                    }
+                        borderWidth : 1,                                  }
                 ],
                 options :{
 
@@ -596,7 +630,7 @@ export default {
                     plugins: {
                                 datalabels: {
 
-                                    color: '#FFFFFF',
+                                    color: '#616161',
                                     formatter: function (value,context) {
                                     return  ((Math.round(value*100/this.cantidad_defectos_soldador)) + '%');
                                     }.bind(this),
@@ -605,7 +639,24 @@ export default {
                                         size: 14,
                                     }
                                 }
-                            }
+                            },
+
+                    tooltips: {
+                        displayColors:  false,
+                        callbacks: {
+
+                           title: function(tooltipItem,data) {
+                                var title  = this.TablaDetalleDefectos[this.TablaDetalleDefectos.findIndex(item => item.abreviatura == tooltipItem[0].label)].descripcion;
+                                title += ': ';
+                                title += tooltipItem[0].value;
+                                return title;
+
+
+                            }.bind(this),
+
+                            label : ()=> null,
+                        }
+                    },
 
                 },
             }
@@ -624,16 +675,18 @@ export default {
 
             }.bind(this))
 
+            console.log('Labels Aux : ',labels_aux);
+
             let long_aux = this.valores_indicaciones.length;
             let data_aux = [];
             for (let index = 0; index < long_aux; index++) {
                 data_aux.push(1);
             }
-
+            let labels_reverse = labels_aux.reverse();
+            let valores_indicaciones_reverse = this.valores_indicaciones.reverse();
             this.data_indicaciones_posicion = {
 
                 labels: labels_aux,
-
                 datasets: [
                     {
                         backgroundColor: ['#3C8DBC' ,'#00C0EF','#0073B7','#FFCC56','#FF9F40','#FE6383','#AAEB16','#636864','#4CC0C0'],
@@ -641,6 +694,15 @@ export default {
                     }
                 ],
                 options :{
+
+                events: ['mousemove', 'click'],
+                onHover: (event, chartElement) => {
+                          event.target.style.cursor = chartElement[0] ? 'pointer' : 'default';
+                },
+
+                onClick: function(evt,data) {
+                        this.getIndicacionesPosicion(evt,labels_aux[data[0]._index]);
+                    }.bind(this),
 
                     title : {   display : true,
                                 text :'Indicaciones por posición',
@@ -654,7 +716,7 @@ export default {
                                 if (label) {
                                     label += ': ';
                                 }
-                                label += this.valores_indicaciones[tooltipItem.index];
+                                label += valores_indicaciones_reverse[tooltipItem.index];
                                 return label;
                             }.bind(this)
                         }
@@ -685,6 +747,84 @@ export default {
                             }
                 },
             }
+    },
+
+    GenerarGraficoIndicacionesSoldadorDetalle(posicion){
+
+        this.data_indicaciones_posicion_detalle = {};
+        let labels_aux = this.TablaIndicacionesPosicionDetalle.map(item => item.defecto_codigo);
+        this.valores_indicaciones_posicion = this.TablaIndicacionesPosicionDetalle.map(item => parseFloat(item.cantidad));
+        this.valores_totales_indicaciones_posicion = this.TablaIndicacionesPosicionDetalle.map(item => item.total);
+
+        let titulo = 'Indicaciones por posición ' + posicion;
+        this.data_indicaciones_posicion_detalle = {
+
+                labels: labels_aux,
+
+                datasets: [
+                    {
+                        data: this.valores_totales_indicaciones_posicion,
+                        backgroundColor: 'rgba(210, 214, 222)',
+                        borderColor : 'rgba(210, 214, 222)',
+                        borderWidth : 1
+
+                    },
+                    {
+                        data: this.valores_indicaciones_posicion,
+                        backgroundColor: 'rgba(0, 166,90)',
+                        borderColor : 'rgba(0, 166,90)',
+                        borderWidth : 1
+
+                    }
+                ],
+                options :{
+
+                    title : {   display : true,
+                                text :titulo,
+                        },
+                    legend: {
+                            display: false
+                        },
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    },
+                    maintainAspectRatio: false,
+
+                    tooltips: {
+                        displayColors:  false,
+                        callbacks: {
+
+                           title: function(tooltipItem,data) {
+                                var title  = this.TablaIndicacionesPosicionDetalle[this.TablaIndicacionesPosicionDetalle.findIndex(item => item.defecto_codigo == tooltipItem[0].label)].defecto_descripcion;
+                                if(tooltipItem[0].datasetIndex == 0){
+                                    title+= ' total';
+                                }
+                                title += ': ';
+                                title += tooltipItem[0].value;
+                                return title;
+
+                            }.bind(this),
+
+                            label: function(tooltipItem,data) {
+                                if(tooltipItem.datasetIndex == 0) {
+                                   return ['Diametro: ' + this.DiametroIndicaciones ] ;
+                                }else {
+                                    return ['Posición: ' + posicion, 'Porcentaje: ' +(Math.round(tooltipItem.value*100/data.datasets[0].data[tooltipItem.index])) + '%']
+                                }
+
+                            }.bind(this),
+
+
+                        }
+                    },
+
+                },
+            }
+
     },
 
     getClienteOperador(){
@@ -718,8 +858,12 @@ export default {
         await this.getDefectologia();
         await this.getDefectologiaProduccion();
         await this.getIndicaciones();
-
         this.generateIndicesRechazos();
+        if(this.TablaDefectosSoldador.length > 0) {
+            await this.getDetalleDefectosSoldador(this.TablaDefectosSoldador[0]);
+            this.$forceUpdate();
+            }
+
     }catch(error){
 
     }
@@ -799,6 +943,8 @@ export default {
         this.data_detalle_defectos_soldador = null;
         this.TablaIndicaciones = [];
         this.TablaIndicacionesPosicion = [];
+        this.TablaIndicacionesPosicionDetalle = [];
+        this.indexDefectosSoldador = -1;
 
     },
 
@@ -858,11 +1004,14 @@ export default {
             this.TablaDefectosSoldador.forEach(function(item){
                 item.porcentaje =  parseFloat(item.cantidad*100/item.cordones).toFixed(1) + '%';
                 item.porcentaje_formateado = item.porcentaje.length < 5 ? (String.fromCharCode(160)+ String.fromCharCode(160) + item.porcentaje)  : item.porcentaje;
-            }.bind(this))
+            }.bind(this));
 
         }catch(error){
 
-        }finally  {this.$store.commit('loading', false);}
+        }finally  {
+            this.$store.commit('loading', false);
+
+            }
 
 
     },
@@ -911,7 +1060,6 @@ export default {
 
     async GenerarGraficoDefectosPosicion(){
 
-
         this.total_defectos_posicion = 0;
         this.valores_defectologia = this.TablaDefectosPosicion.filter(item => item.diametro == this.DiametroDefecto);
         this.valores_defectologia = this.valores_defectologia.map(item => item.cantidad);
@@ -923,8 +1071,10 @@ export default {
 
     },
 
-    async getDetalleDefectosSoldador(soldador){
+    async getDetalleDefectosSoldador(soldador,index = 0){
 
+
+        this.indexDefectosSoldador = index;
         this.$store.commit('loading', true);
 
         this.TablaDetalletDefectosSoldador = [];
@@ -1001,8 +1151,8 @@ export default {
 
     async GenerarGraficoIndicacionesPosicion(){
 
-
         this.total_indicaciones_posicion = 0;
+        this.TablaIndicacionesPosicionDetalle = [];
         this.valores_indicaciones = this.TablaIndicacionesPosicion.filter(item => item.diametro == this.DiametroIndicaciones);
         this.valores_indicaciones = this.valores_indicaciones.map(item => item.cantidad);
         this.valores_indicaciones.forEach(function(item){
@@ -1010,6 +1160,23 @@ export default {
         }.bind(this))
 
         this.generateIndicacionesPosicion();
+
+    },
+
+    async getIndicacionesPosicion(event,posicion){
+
+        this.$store.commit('loading', true);
+        try {
+
+            let url = 'estadisticas-soldaduras/analisis_indicaciones_posicion/posicion/' + posicion + '/diametro/'+ this.DiametroIndicaciones.replace('/','--') + '/' + this.informes_ids ;
+            console.log(url);
+            let res= await axios.get(url);
+            this.TablaIndicacionesPosicionDetalle = res.data;
+            await this.GenerarGraficoIndicacionesSoldadorDetalle(posicion);
+
+        }catch(error){
+
+        }finally  {this.$store.commit('loading', false);}
 
     },
 
@@ -1164,23 +1331,6 @@ body {
         top: -.725em;
     }
 }
-
-/*
-  .style-chooser .vs__search::placeholder,
-  .style-chooser .vs__dropdown-toggle,
-  .style-chooser .vs__dropdown-menu {
-    background: #dfe5fb;
-    border: none;
-    color: #394066;
-    text-transform: lowercase;
-    font-variant: small-caps;
-  }
-
-  .style-chooser .vs__clear,
-  .style-chooser .vs__open-indicator {
-    fill: #394066;
-  }
-*/
 .seleccionar {
    /* font-size: 14px; */
     font: inherit;
@@ -1258,5 +1408,11 @@ ul li .titulo-li {
     max-width:375px;
 
     margin:  0px auto 15px auto;
+  }
+
+  .totales_posiciones {
+
+      color:#666;
+      font-size: 14px;
   }
 </style>

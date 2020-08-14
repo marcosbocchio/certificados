@@ -87,4 +87,21 @@ class EstadisticasSoldadurasController extends Controller
     }
 
 
+    public function AnalisisSoldadurasIndicacionesPosicion($posicion, $diametro,$informes_ids){
+
+        $diametro_formateado = str_replace('--','/',$diametro);
+
+        DB::select('CALL CreateTemporaryTableDefectoPosReduce(?)',array($informes_ids));
+
+        $res =  DB::select('CALL AnalisisSoldadurasIndicacionesPosicion(?,?,?)',array($posicion,$diametro_formateado,$informes_ids));
+
+        DB::select('CALL DropTemporaryTableDefectoPosReduce()');
+
+        return $res;
+
+    }
+
+
+
+
 }

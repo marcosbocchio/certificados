@@ -294,8 +294,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('estadisticas-soldaduras/analisis_defectos_soldador/{informes_ids}','EstadisticasSoldadurasController@AnalisisSoldadurasDefectosSoldador');
     Route::get('estadisticas-soldaduras/analisis_indicaciones/{informes_ids}','EstadisticasSoldadurasController@AnalisisSoldadurasIndicaciones');
     Route::get('estadisticas-soldaduras/analisis_detalle_indicaciones/{informes_ids}','EstadisticasSoldadurasController@AnalisisSoldadurasDetalleIndicaciones');
-
-
+    Route::get('estadisticas-soldaduras/analisis_indicaciones_posicion/posicion/{posicion}/diametro/{diametro}/{informes_ids}','EstadisticasSoldadurasController@AnalisisSoldadurasIndicacionesPosicion');
 
     Route::resource('personas_api', 'PersonaController');
 
