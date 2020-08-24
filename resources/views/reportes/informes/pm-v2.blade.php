@@ -14,11 +14,11 @@
 
 header {
     position:fixed;
-    top: -237px;    
-}        
-    
+    top: -237px;
+}
+
 footer {
-    position: fixed; bottom:0px; 
+    position: fixed; bottom:0px;
     padding-top: 0px;
 }
 
@@ -26,60 +26,60 @@ footer {
 
 <body>
 <header>
-    @include('reportes.partial.header-principal-portrait')     
-    @include('reportes.partial.linea-amarilla')                
-    @include('reportes.partial.header-cliente-comitente-portrait')    
-    @include('reportes.partial.linea-gris')        
-    @include('reportes.partial.header-proyecto-portrait')    
-    @include('reportes.partial.linea-amarilla') 
+    @include('reportes.partial.header-principal-portrait')
+    @include('reportes.partial.linea-amarilla')
+    @include('reportes.partial.header-cliente-comitente-portrait')
+    @include('reportes.partial.linea-gris')
+    @include('reportes.partial.header-proyecto-portrait')
+    @include('reportes.partial.linea-amarilla')
 </header>
 
 <footer>
-    @include('reportes.partial.linea-amarilla') 
-    @include('reportes.partial.observaciones') 
     @include('reportes.partial.linea-amarilla')
-    @include('reportes.informes.partial.firmas') 
+    @include('reportes.partial.observaciones')
+    @include('reportes.partial.linea-amarilla')
+    @include('reportes.informes.partial.firmas')
 </footer>
 
 
-<main>   
-    
-    @include('reportes.informes.partial.header-detalle-pm-portrait')      
-    
-    @include('reportes.partial.linea-amarilla')  
+<main>
+
+    @include('reportes.informes.partial.header-detalle-pm-portrait')
+
+    @include('reportes.partial.linea-amarilla')
 
     <table width="100%" style="border-collapse: collapse;">
-        <thead>  
+        <thead>
             <tr>
                 <td colspan="6"><strong style="font-size: 14px;">Indicaciones</strong></td>
-            </tr>        
+            </tr>
             <tr>
                 <td style="font-size: 11px; width:65px;  text-align: center " rowspan="2" class="bordered-td" >ELEM.</td>
                 <td style="font-size: 11px; width:40px;  text-align: center;" rowspan="2" class="bordered-td">CM</td>
                 <td style="font-size: 11px; width:477px; text-align: center;" rowspan="2" class="bordered-td">DETALLE</td>
-                <td style="font-size: 11px; width:80px; text-align: center;" colspan="2" class="bordered-td">RESULTADO</td>  
-                <td style="font-size: 11px; text-align: center" rowspan="2" class="bordered-td">REF</td>                     
+                <td style="font-size: 11px; width:80px; text-align: center;" colspan="2" class="bordered-td">RESULTADO</td>
+                <td style="font-size: 11px; text-align: center" rowspan="2" class="bordered-td">REF</td>
             </tr>
             <tr>
                 <td style="font-size: 11px; text-align: center;" class="bordered-td">AP</td>
-                <td style="font-size: 11px; text-align: center;" class="bordered-td">RZ</td>                            
-            </tr>         
+                <td style="font-size: 11px; text-align: center;" class="bordered-td">RZ</td>
+            </tr>
         </thead>
         <tbody>
             @foreach ($detalles as $detalle)
                 <tr>
                     <td style="font-size: 11px;  width:66px;text-align: center" class="bordered-td">{{ $detalle->pieza }}</td>
-                    <td style="font-size: 11px;  width:40px;text-align: center" class="bordered-td">   
+                    <td style="font-size: 11px;  width:40px;text-align: center" class="bordered-td">
 
                         @if ($detalle->cm)
 
                             {{$detalle->cm}}
                         @else
-                            -    
+                            -
                         @endif
-                    
+
                     </td>
-                    <td style="font-size: 11px;  width:477px;" class="bordered-td">&nbsp; {{$detalle->detalle}}</td>               
+                    <td style="font-size: 11px;  width:477px;" class="bordered-td">&nbsp; {{$detalle->detalle}}</td>
                     <td style="font-size: 11px; text-align: center;width:39px; " class="bordered-td">
                         @if ($detalle->aceptable_sn)
                             X
@@ -93,17 +93,18 @@ footer {
                     </td>
                     <td class="bordered-td">&nbsp;
                         @if ($detalle->referencia_id)
-                            <a href="{{ route('InformePmReferencias',$detalle->referencia_id)}}"><img src="{{ public_path('img/fa-file-pdf.png')}}" alt="" style="height: 15px;margin-left:3px;;margin-top:2px;text-align: center;"></a>                                                       
+                            <a href="{{ route('InformePmReferencias',$detalle->referencia_id)}}"><img src="{{ public_path('img/fa-file-pdf.png')}}" alt="" style="height: 15px;margin-left:3px;;margin-top:2px;text-align: center;"></a>
                         @endif
                     </td>
-                </tr>                
-            @endforeach                                    
+                </tr>
+            @endforeach
         </tbody>
     </table>
-</main>  
-     
+    <img  src="{{ public_path('img/3d-models/cadenas.obj')}}">
+</main>
 
-@include('reportes.partial.nro_pagina') 
+
+@include('reportes.partial.nro_pagina')
 
 </body>
 

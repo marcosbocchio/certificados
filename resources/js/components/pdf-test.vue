@@ -13,7 +13,7 @@
                         </button>
                         <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
                     </div>
-                    
+
                 </div>
 
                 <div class="box-body">
@@ -25,13 +25,19 @@
                     <div class="col-md-4">
                         <div id="sector3" style="padding: 10px; ">
                             <bar-chart :chart-data="data"></bar-chart>
-                        </div>    
+                        </div>
                    </div>
                 </div>
-               
+
             </div>
 
+ <div id="sector4" style="padding: 10px; ">
+      <model-obj src="img/3d-models/cadenas.obj"></model-obj>
+ </div>
+
         <button @click="download">Download PDF </button>
+
+
     </div>
 </template>
 <script>
@@ -39,15 +45,17 @@
 import DoughnutChart from './chart.js/DoughnutChart.js'
 import BarChart from './chart.js/BarChart.js'
 import html2canvas from 'html2canvas';
+import { ModelObj } from 'vue-3d-model';
 
 export default {
 
     components: {
       DoughnutChart,
-      BarChart
+      BarChart,
+      ModelObj,
     },
-    
-    data (){return{  
+
+    data (){return{
 
             data:{
                     labels: [
@@ -72,8 +80,8 @@ export default {
         }
     },
 
-    methods :{   
-     
+    methods :{
+
 
             async download (){
 
@@ -81,7 +89,7 @@ export default {
 
                 await html2canvas(document.querySelector("#sector2")).then(canvas => {
 
-                    var imgData = canvas.toDataURL('image/png')                 
+                    var imgData = canvas.toDataURL('image/png')
                     doc.addImage(imgData,'PNG',80,30,50,50)
 
                 });
@@ -89,11 +97,13 @@ export default {
                 await html2canvas(document.querySelector("#sector3")).then(canvas => {
                     var imgData = canvas.toDataURL('image/png')
                     doc.addImage(imgData,'PNG',80,120,50,50)
-                   
+
                 });
 
+
                 const html_sector1 = document.getElementById('sector1').innerHTML;
-                 await doc.fromHTML(html_sector1,75,10); 
+                 await doc.fromHTML(html_sector1,75,10);
+
 
                 doc.save("test.pdf")
 

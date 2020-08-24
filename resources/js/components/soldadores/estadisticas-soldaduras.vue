@@ -123,32 +123,51 @@
                                             <div class="col-lg-12 titulo-tabla-tabs" >
                                                 <h5>Análisis de rechazos por Diametro</h5>
                                             </div>
-                                            <div class="stat-sol">
-                                                <table class="table table-striped table-condensed">
-                                                    <tbody>
-                                                        <tr>
-                                                            <th class="col-lg-2">Ø</th>
-                                                            <th class="col-lg-3">Aprobados</th>
-                                                            <th class="col-lg-3">Rechazados</th>
-                                                            <th class="col-lg-2">Total</th>
-                                                            <th class="col-lg-2">%</th>
-                                                        </tr>
-                                                        <tr v-for="(item,k) in TablaAnalisisRechazosDiametro" :key="k">
-                                                            <td>{{ item.diametro }}</td>
-                                                            <td>{{ item.aprobados }}</td>
-                                                            <td>{{ item.rechazados }}</td>
-                                                            <td>{{ item.total }}</td>
-                                                            <td>{{ item.porcentaje_rechazados }}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Total</th>
-                                                            <th>{{ total_aprobados_soldaduras}}</th>
-                                                            <th>{{ total_rechazos_soldaduras}}</th>
-                                                            <th>{{ total_soldaduras_informes}}</th>
-                                                            <th>{{ total_porcentaje_rechazados}}</th>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
+                                            <div class="clearfix"></div>
+                                            <div class="box box-primary">
+                                                <div class="box-header with-border">
+                                                    <i class="fas fa-bars"></i>
+
+                                                    <h3 class="box-title"><strong>DETALLE</strong></h3>
+
+                                                    <div class="box-tools pull-right">
+                                                        <download-excel
+                                                            :data   = "TablaAnalisisRechazosDiametro"
+                                                            :fields = "rechazos_diametro_json_fields"
+                                                            :meta   = "json_meta"
+                                                            name    = "filename.xls">
+                                                            <button class="btn btn-sm btn-default"><i class="fas fa-lg fa-file-excel"></i></button>
+
+                                                        </download-excel>
+                                                    </div>
+                                                </div>
+                                                <div class="stat-sol">
+                                                    <table class="table table-striped table-condensed">
+                                                        <tbody>
+                                                            <tr>
+                                                                <th class="col-lg-2">Ø</th>
+                                                                <th class="col-lg-3">Aprobados</th>
+                                                                <th class="col-lg-3">Rechazados</th>
+                                                                <th class="col-lg-2">Total</th>
+                                                                <th class="col-lg-2">%</th>
+                                                            </tr>
+                                                            <tr v-for="(item,k) in TablaAnalisisRechazosDiametro" :key="k">
+                                                                <td>{{ item.diametro }}</td>
+                                                                <td>{{ item.aprobados }}</td>
+                                                                <td>{{ item.rechazados }}</td>
+                                                                <td>{{ item.total }}</td>
+                                                                <td>{{ item.porcentaje_rechazados }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Total</th>
+                                                                <th>{{ total_aprobados_soldaduras}}</th>
+                                                                <th>{{ total_rechazos_soldaduras}}</th>
+                                                                <th>{{ total_soldaduras_informes}}</th>
+                                                                <th>{{ total_porcentaje_rechazados}}</th>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -160,32 +179,49 @@
                                             <div class="col-lg-12 titulo-tabla-tabs" >
                                                 <h5>Análisis de rechazos por espesor</h5>
                                             </div>
-                                            <div class="stat-sol">
-                                                <table class="table table-striped table-condensed">
-                                                    <tbody>
-                                                        <tr>
-                                                            <th class="col-lg-2">#</th>
-                                                            <th class="col-lg-3">Aprobados</th>
-                                                            <th class="col-lg-3">Rechazados</th>
-                                                            <th class="col-lg-2">Total</th>
-                                                            <th class="col-lg-2">%</th>
-                                                        </tr>
-                                                        <tr v-for="(item,k) in TablaAnalisisRechazosEspesor" :key="k">
-                                                            <td>{{ item.espesor }}</td>
-                                                            <td>{{ item.aprobados }}</td>
-                                                            <td>{{ item.rechazados }}</td>
-                                                            <td>{{ item.total }}</td>
-                                                            <td>{{ item.porcentaje_rechazados }}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Total</th>
-                                                            <th>{{ total_aprobados_soldaduras}}</th>
-                                                            <th>{{ total_rechazos_soldaduras}}</th>
-                                                            <th>{{ total_soldaduras_informes}}</th>
-                                                            <th>{{ total_porcentaje_rechazados}}</th>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
+                                            <div class="clearfix"></div>
+                                            <div class="box box-primary">
+                                                <div class="box-header with-border">
+                                                    <i class="fas fa-bars"></i>
+
+                                                    <h3 class="box-title"><strong>DETALLE</strong></h3>
+
+                                                    <div class="box-tools pull-right">
+                                                        <download-excel
+                                                            :data   = "TablaAnalisisRechazosEspesor"
+                                                            name    = "filename.xls">
+                                                            <button class="btn btn-sm btn-default"><i class="fas fa-lg fa-file-excel"></i></button>
+
+                                                        </download-excel>
+                                                    </div>
+                                                </div>
+                                                <div class="stat-sol">
+                                                    <table class="table table-striped table-condensed">
+                                                        <tbody>
+                                                            <tr>
+                                                                <th class="col-lg-2">#</th>
+                                                                <th class="col-lg-3">Aprobados</th>
+                                                                <th class="col-lg-3">Rechazados</th>
+                                                                <th class="col-lg-2">Total</th>
+                                                                <th class="col-lg-2">%</th>
+                                                            </tr>
+                                                            <tr v-for="(item,k) in TablaAnalisisRechazosEspesor" :key="k">
+                                                                <td>{{ item.espesor }}</td>
+                                                                <td>{{ item.aprobados }}</td>
+                                                                <td>{{ item.rechazados }}</td>
+                                                                <td>{{ item.total }}</td>
+                                                                <td>{{ item.porcentaje_rechazados }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Total</th>
+                                                                <th>{{ total_aprobados_soldaduras}}</th>
+                                                                <th>{{ total_rechazos_soldaduras}}</th>
+                                                                <th>{{ total_soldaduras_informes}}</th>
+                                                                <th>{{ total_porcentaje_rechazados}}</th>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -203,7 +239,22 @@
                                         <div class="col-lg-12 titulo-tabla-tabs" >
                                             <h5>Defectos</h5>
                                         </div>
-                                            <div>
+                                         <div class="clearfix"></div>
+                                            <div class="box box-primary">
+                                                <div class="box-header with-border">
+                                                    <i class="fas fa-bars"></i>
+
+                                                    <h3 class="box-title"><strong>DETALLE</strong></h3>
+
+                                                    <div class="box-tools pull-right">
+                                                        <download-excel
+                                                            :data   = "TablaDetalleDefectos"
+                                                            name    = "filename.xls">
+                                                            <button class="btn btn-sm btn-default"><i class="fas fa-lg fa-file-excel"></i></button>
+
+                                                        </download-excel>
+                                                    </div>
+                                                </div>
                                                 <table class="table table-striped table-condensed">
                                                     <tbody>
                                                         <tr>
@@ -265,7 +316,22 @@
                                         <div class="col-lg-12 titulo-tabla-tabs" >
                                             <h5>Defectos por Soldador</h5>
                                         </div>
-                                        <div>
+                                        <div class="clearfix"></div>
+                                        <div class="box box-primary">
+                                            <div class="box-header with-border">
+                                                <i class="fas fa-bars"></i>
+
+                                                <h3 class="box-title"><strong>DETALLE</strong></h3>
+
+                                                <div class="box-tools pull-right">
+                                                    <download-excel
+                                                        :data   = "TablaDefectosSoldador"
+                                                        name    = "filename.xls">
+                                                        <button class="btn btn-sm btn-default"><i class="fas fa-lg fa-file-excel"></i></button>
+
+                                                    </download-excel>
+                                                </div>
+                                            </div>
                                             <table class="table table-striped table-hover">
                                                 <tbody>
                                                     <tr>
@@ -315,7 +381,22 @@
                                         <div class="col-lg-12 titulo-tabla-tabs" >
                                             <h5>Indicaciones</h5>
                                         </div>
-                                        <div>
+                                        <div class="clearfix"></div>
+                                        <div class="box box-primary">
+                                            <div class="box-header with-border">
+                                                <i class="fas fa-bars"></i>
+
+                                                <h3 class="box-title"><strong>DETALLE</strong></h3>
+
+                                                <div class="box-tools pull-right">
+                                                    <download-excel
+                                                        :data   = "TablaIndicaciones"
+                                                        name    = "filename.xls">
+                                                        <button class="btn btn-sm btn-default"><i class="fas fa-lg fa-file-excel"></i></button>
+
+                                                    </download-excel>
+                                                </div>
+                                            </div>
                                             <table class="table table-striped table-hover">
                                                 <tbody>
                                                     <tr>
@@ -493,6 +574,28 @@ export default {
         TablaIndicacionesPosicionDetalle : [],
         valores_indicaciones_posicion:0,
         valores_totales_indicaciones_posicion: [],
+
+        /* Exportación excel */
+        rechazos_diametro_json_fields : {
+            'Diametro'  : 'diametro',
+            'Aprobados' : 'aprobados',
+            'Rechazados' : 'rechazados',
+            'Total'     : 'total',
+            '%':'porcentaje_rechazados'
+        },
+        rechazos_espesor_json_fields : {},
+        defectos_json_fields : {},
+        defectos_soldador_json_fields : {},
+        indicaciones_json_fields : {},
+        json_meta: [
+                    [
+                        {
+                            'key': 'charset',
+                            'value': 'utf-8'
+                        }
+                    ]
+                ],
+
      }
 
     },
@@ -993,9 +1096,11 @@ methods : {
             let url = 'estadisticas-soldaduras/analisis_rechazos_espesor/' + this.informes_ids;
             let res= await axios.get(url);
             this.TablaAnalisisRechazosEspesor =  res.data;
+            this.TablaAnalisisRechazosEspesor.forEach(function(item){item.espesor = item.espesor + ' mm'})
             url = 'estadisticas-soldaduras/analisis_rechazos_diametro/' + this.informes_ids;
             res= await axios.get(url);
             this.TablaAnalisisRechazosDiametro =  res.data;
+            this.TablaAnalisisRechazosDiametro.forEach(function(item){item.diametro = item.diametro + ' "'})
             await this.calcularIndicesRechazosSoldaduras(this.TablaAnalisisRechazosEspesor);
 
         }catch(error){

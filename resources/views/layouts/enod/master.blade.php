@@ -118,7 +118,7 @@ desired effect
 </script>
 
 <script type="text/javascript" src="{{mix('js/app.js')}}"></script>
-
+<script src="https://unpkg.com/vue-3d-model/dist/vue-3d-model.umd.js"></script>
 <script>
 
   $(document).ready(function() {
