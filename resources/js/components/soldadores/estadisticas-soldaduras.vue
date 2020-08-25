@@ -140,6 +140,7 @@
 
                                                         </download-excel>
                                                     </div>
+                                                    <download-excel :data = "dataForExcel"></download-excel>
                                                 </div>
                                                 <div class="stat-sol">
                                                     <table class="table table-striped table-condensed">
@@ -510,6 +511,7 @@ export default {
       BarChart,
       PieChart,
       ChartJsPluginDataLabels
+      
 
     },
     props: {
@@ -592,6 +594,7 @@ export default {
             'Total'       : 'total',
             '%'           :'porcentaje_rechazados'
         },
+
         rechazos_espesor_json_fields : {
             'Espesor'     : 'espesor',
             'Aprovados'   : 'aprobados',
@@ -600,12 +603,14 @@ export default {
             '%'           :'porcentaje_rechazados'
 
         },
+
         defectos_json_fields : {
             'Abrev.'      : 'abreviatura',
             'Descripción' : 'descripcion',
             'Cantidad'    : 'cantidad',
             'Porcentaje'  : 'porcentaje'
         },
+
         defectos_soldador_json_fields : {
             'Cuño'      : 'codigo_soldador',
             'Nombre'    : 'nombre_soldador',
@@ -614,20 +619,33 @@ export default {
             '%'         : 'porcentaje',
             
         },
+
         indicaciones_json_fields : {
             'Defecto':'defecto_codigo',
             'Descripción':'defecto_descripcion',
             'Cantidad':'cantidad',
             '%':'porcentaje'
         },
+
         json_meta: [
-                    [
-                        {
-                            'key': 'charset',
-                            'value': 'utf-8'
-                        }
-                    ]
-                ],
+                [
+                    {
+                        'key': 'charset',
+                        'value': 'utf-8'
+                    }
+                ]
+            ],
+
+        dataForExcel: [
+                { colA: "Hello", colB: "World" },
+                {
+                colA: "Multi-line",
+                /* Multi-line value: */
+                colB:
+                    "This is a long paragraph\nwith multiple lines\nthat should show in a single cell."
+                },
+                { colA: "Another", colB: "Regular cell" }
+            ],
 
      }
 
