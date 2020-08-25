@@ -100,7 +100,6 @@ footer {
             @endforeach
         </tbody>
     </table>
-    <img  src="{{ public_path('img/3d-models/cadenas.obj')}}">
 </main>
 
 

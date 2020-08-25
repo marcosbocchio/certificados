@@ -444,8 +444,6 @@
                                                  {{ TablaDetalle[k].observacion }}
                                                  </div>
                                              </td>
-
-
                                              <td> <a  @click="RemoveDetalle(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a>
                                              </td>
 

@@ -16,14 +16,23 @@
                                 <!-- /.box-header -->
                                 <div class="box-body" style="display: none;">
                                     <li v-for="(video, j) in seccion.videos" :key="j" style="list-style: none; margin-bottom: 3px">
-                                        <div style="vertical-align: middle; display: inline-block;">
-                                            <svg width="20" height="20">
-                                                <circle cx="10" cy="10" r="8" stroke="black" stroke-width="1" fill="yellow" />
-                                                <polygon fill="black" points="8,5 15,10 8,15" />
-                                            </svg>
+                                        <div class="row">
+                                            <div class="col-md-10 col-xs-10">
+                                                <div style="vertical-align: middle; display: inline-block;">
+                                                    <svg width="20" height="20">
+                                                        <circle cx="10" cy="10" r="8" stroke="black" stroke-width="1" fill="yellow" />
+                                                        <polygon fill="black" points="8,5 15,10 8,15" />
+                                                    </svg>
+                                                </div>
+                                                <a href="#" @click="selectVideo(video)" class="text">
+                                                    {{video.title}}</a>
+                                            </div>
+                                            <div class="col-md-2 col-xs-2 ">
+                                                <div v-if="video.path" class="pull-right">
+                                                    <a :href="'/' + video.path" target="_blank" class="btn btn-default btn-sm" title="pdf"><span class="fa fa-file-pdf-o"></span></a>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <a href="#" @click="selectVideo(video)" class="text">
-                                            {{video.title}}</a>
                                     </li>
                                 </div>
                                 <!-- /.box-body -->

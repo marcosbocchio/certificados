@@ -161,6 +161,8 @@ Route::group(['middleware' => 'auth:api'], function()
 
     Route::post('storage/firma-digital', 'StorageController@saveFirmaDigital');
 
+    Route::post('storage/documentos_videos', 'StorageController@saveDocumentosVideos');
+
     Route::get('documentaciones/ot','DocumentacionesController@DocumentacionesDeOt');
 
     Route::get('documentaciones/total', 'DocumentacionesController@DocumentacionesTotal');

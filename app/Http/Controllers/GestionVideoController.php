@@ -9,6 +9,7 @@ use App\Http\Requests\VideoRequest;
 use App\Http\Requests\CategoriaRequest;
 use Illuminate\Support\Facades\DB;
 use Exception as Exception;
+use Illuminate\Support\Facades\Log;
 
 class GestionVideoController extends Controller
 {
@@ -79,7 +80,7 @@ class GestionVideoController extends Controller
         if(!$nuevoVideo){
             $nuevoVideo = new Video;
         }
-
+        Log::debug('path del archivo: ' . $request->path);
         DB::beginTransaction();
         try {
 
@@ -92,6 +93,7 @@ class GestionVideoController extends Controller
         $nuevoVideo->title = $request->title;
         $nuevoVideo->description = $request->description;
         $nuevoVideo->video_category_id = $request->video_category_id;
+        $nuevoVideo->path = $request->path;
 
         $nuevoVideo->save();
 

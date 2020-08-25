@@ -54,20 +54,40 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <label for="descNuevoVideo" style="margin-top: 5px;">Descripción</label>
-                                    <textarea name="descNuevoVideo" rows="3" placeholder="Max 450 caracteres" maxlength="450" class="form-control noresize" v-model=videoAux.description></textarea>
+                                    <div class="form-group">
+                                        <label for="descNuevoVideo" style="margin-top: 5px;">Descripción</label>
+                                        <textarea name="descNuevoVideo" rows="3" placeholder="Max 450 caracteres" maxlength="450" class="form-control noresize" v-model=videoAux.description></textarea>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <label for="linkVideo" style="margin-top: 5px;">Link del video *</label>
-                                    <input name="linkVideo" type="text"  maxlength="350" class="form-control"  v-model="videoAux.videoId" autocomplete="off"/>
+                                    <div class="form-group">
+                                        <label for="linkVideo" style="margin-top: 5px;">Link del video *</label>
+                                        <input name="linkVideo" type="text"  maxlength="350" class="form-control"  v-model="videoAux.videoId" autocomplete="off"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label style="margin-top: 5px;">Documento: </label>
+                                        <subir-imagen
+                                            :ruta="ruta_documento_video"
+                                            :max_size="max_size"
+                                            :path_inicial="path1_documento_edit"
+                                            :tipos_archivo_soportados ="tipos_archivo_soportados"
+                                            :mostrar_formatos_soportados="true"
+                                            @path ="path1_documento_edit = $event"
+                                            @uploading ="uploading = $event"
+                                        ></subir-imagen>
+                                    </div>
                                 </div>
                             </div>
                         </form>
                     </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" form="VideoForm">Guardar</button>
+                    <button type="submit" class="btn btn-primary" form="VideoForm" :disabled="uploading">Guardar</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                 </div>
                 </div>
@@ -105,10 +125,26 @@
                                     <input  type="text" name="linkNuevoVideo" maxlength="350" class="form-control" v-model="nuevoVideo.videoId" autocomplete="off"/>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label style="margin-top: 5px;">Documento: </label>
+                                        <subir-imagen
+                                            :ruta="ruta_documento_video"
+                                            :max_size="max_size"
+                                            :path_inicial="path1_documento_add"
+                                            :tipos_archivo_soportados ="tipos_archivo_soportados"
+                                            :mostrar_formatos_soportados="true"
+                                            @path="path1_documento_add = $event"
+                                            @uploading ="uploading = $event"
+                                        ></subir-imagen>
+                                    </div>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" form="nuevoVideoForm">Guardar</button>
+                    <button type="submit" class="btn btn-primary" form="nuevoVideoForm" :disabled="uploading">Guardar</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                 </div>
                 </div>
@@ -169,18 +205,26 @@ export default {
     },
     data() {
         return {
+            uploading: false,
             videos: [],
             videoSelec: '',
             videoAux:{
                 title: '',
                 description: '',
-                videoId: ''
+                videoId: '',
+                path: ''
                 },
             nuevoVideo:{
                 title: '',
                 description: '',
-                videoId: ''
-                }
+                videoId: '',
+                path: ''
+                },
+                ruta_documento_video : 'documentos_videos',
+                max_size : 10000,
+                tipos_archivo_soportados :['pdf'],
+                path1_documento_edit : '',
+                path1_documento_add : ''
             }
         },
         created(){
@@ -195,6 +239,11 @@ export default {
                 }
             },
     methods: {
+
+        saveButtonState : function(working){
+            this.uploading =  working;
+        },
+
         isEmptyOrNull: function (item) {
               return item == null ? true : jQuery.isEmptyObject(item)
         },
@@ -202,6 +251,9 @@ export default {
                 this.$store.commit('loading', true);
                 this.videos = [];
                 this.videoSelec = '';
+                this.path1_documento_add = '';
+                this.path1_documento_edit = '';
+                axios.defaults.baseURL = '';
                 var url = "get-Videos-categoria/" + this.secionPadreSelect.id;
                 await axios.get(url).then(response =>{
                     this.videos = response.data;
@@ -213,11 +265,13 @@ export default {
                 this.videoAux.title = this.videoSelec.title;
                 this.videoAux.description = this.videoSelec.description;
                 this.videoAux.videoId = 'https://www.youtube.com/watch?v=' + this.videoSelec.videoId;
+                this.path1_documento_edit = this.videoSelec.path;
             }
             else{
                 this.videoAux.title = '';
                 this.videoAux.description = '';
                 this.videoAux.videoId = '';
+                this.path1_documento_edit = '';
             }
         },
         showVideoModal: function() {
@@ -240,6 +294,7 @@ export default {
         },
         onSubmitVideo : async function(){
             let urlA = 'videos-new';
+            axios.defaults.baseURL = '';
             await axios({
                      method: 'post',
                      url : urlA,
@@ -248,7 +303,8 @@ export default {
                         'description' : this.videoAux.description,
                         'videoId' : this.videoAux.videoId,
                         'video_category_id': this.secionPadreSelect.id,
-                        'id' : this.videoSelec.id
+                        'id' : this.videoSelec.id,
+                        'path' : this.path1_documento_edit
                      }}
                      ).then(response => {
                         toastr.success('El video se guardo con éxito');
@@ -269,6 +325,7 @@ export default {
         },
         onSubmitNuevoVideos : async function(){
             let urlA = 'videos-new';
+            axios.defaults.baseURL = '';
             await axios({
                      method: 'post',
                      url : urlA,
@@ -277,7 +334,8 @@ export default {
                         'description' : this.nuevoVideo.description,
                         'videoId' : this.nuevoVideo.videoId,
                         'video_category_id': this.secionPadreSelect.id,
-                        'id' : 0
+                        'id' : 0,
+                        'path' : this.path1_documento_add
                      }}
                      ).then(response => {
                      toastr.success('El video se guardo con éxito');
@@ -287,6 +345,7 @@ export default {
                      this.nuevoVideo.description = '';
                      this.nuevoVideo.videoId = '';
                      this.videoSelec= response.data;
+                     this.path1_documento_add = '';
                      this.setSelected();
 
                  }).catch(error => {

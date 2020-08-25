@@ -511,7 +511,7 @@ export default {
       BarChart,
       PieChart,
       ChartJsPluginDataLabels
-      
+
 
     },
     props: {
@@ -617,7 +617,7 @@ export default {
             'Cordones'  : 'cordones',
             'Cantidad'  : 'cantidad',
             '%'         : 'porcentaje',
-            
+
         },
 
         indicaciones_json_fields : {
@@ -637,14 +637,18 @@ export default {
             ],
 
         HeaderExcel: [
-                { Cliente : this.cliente ? this.cliente.nombre_fantasia : null, colB : " "},
+                { colA: "Hello", colB: "World" },
                 {
-                 Cliente : "Multi-line",
+                colA: "Multi-line",
                 /* Multi-line value: */
                 colB:
                     "This is a long paragraph\nwith multiple lines\nthat should show in a single cell."
                 },
-                { Cliente: "Another", colB: "Regular cell" }
+                { colA: "Another", colB: "Regular cell" },
+                {codigo : '1', descripcion : 'descripcion de 1', cantidad:'100' },
+                {codigo : '2', descripcion : 'descripcion de 2', cantidad:'200' },
+                {codigo : '3', descripcion : 'descripcion de 3', cantidad:'300' },
+
             ],
 
      }
