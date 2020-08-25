@@ -140,7 +140,7 @@
 
                                                         </download-excel>
                                                     </div>
-                                                    <download-excel :data = "dataForExcel"></download-excel>
+                                                    <download-excel :data = "HeaderExcel"></download-excel>
                                                 </div>
                                                 <div class="stat-sol">
                                                     <table class="table table-striped table-condensed">
@@ -398,7 +398,7 @@
                                                 <div class="box-tools pull-right">
                                                     <download-excel
                                                         :data   = "TablaIndicaciones"
-                                                        :fields = "indicaciones_soldador_json_fields"
+                                                        :fields = "indicaciones_json_fields"
                                                         :meta   = "json_meta"
                                                         name    = "filename.xls">
                                                         <button class="btn btn-sm btn-default"><i class="fas fa-lg fa-file-excel"></i></button>
@@ -636,15 +636,15 @@ export default {
                 ]
             ],
 
-        dataForExcel: [
-                { colA: "Hello", colB: "World" },
+        HeaderExcel: [
+                { Cliente : this.cliente ? this.cliente.nombre_fantasia : null, colB : " "},
                 {
-                colA: "Multi-line",
+                 Cliente : "Multi-line",
                 /* Multi-line value: */
                 colB:
                     "This is a long paragraph\nwith multiple lines\nthat should show in a single cell."
                 },
-                { colA: "Another", colB: "Regular cell" }
+                { Cliente: "Another", colB: "Regular cell" }
             ],
 
      }
