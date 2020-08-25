@@ -189,6 +189,8 @@
                                                     <div class="box-tools pull-right">
                                                         <download-excel
                                                             :data   = "TablaAnalisisRechazosEspesor"
+                                                            :fields = "rechazos_espesor_json_fields"
+                                                            :meta   = "json_meta"
                                                             name    = "filename.xls">
                                                             <button class="btn btn-sm btn-default"><i class="fas fa-lg fa-file-excel"></i></button>
 
@@ -249,6 +251,8 @@
                                                     <div class="box-tools pull-right">
                                                         <download-excel
                                                             :data   = "TablaDetalleDefectos"
+                                                            :fields = "defectos_json_fields"
+                                                            :meta   = "json_meta"
                                                             name    = "filename.xls">
                                                             <button class="btn btn-sm btn-default"><i class="fas fa-lg fa-file-excel"></i></button>
 
@@ -326,6 +330,8 @@
                                                 <div class="box-tools pull-right">
                                                     <download-excel
                                                         :data   = "TablaDefectosSoldador"
+                                                        :fields = "defectos_soldador_json_fields"
+                                                        :meta   = "json_meta"
                                                         name    = "filename.xls">
                                                         <button class="btn btn-sm btn-default"><i class="fas fa-lg fa-file-excel"></i></button>
 
@@ -391,6 +397,8 @@
                                                 <div class="box-tools pull-right">
                                                     <download-excel
                                                         :data   = "TablaIndicaciones"
+                                                        :fields = "indicaciones_soldador_json_fields"
+                                                        :meta   = "json_meta"
                                                         name    = "filename.xls">
                                                         <button class="btn btn-sm btn-default"><i class="fas fa-lg fa-file-excel"></i></button>
 
@@ -576,17 +584,42 @@ export default {
         valores_totales_indicaciones_posicion: [],
 
         /* Exportación excel */
+
         rechazos_diametro_json_fields : {
-            'Diametro'  : 'diametro',
-            'Aprobados' : 'aprobados',
-            'Rechazados' : 'rechazados',
-            'Total'     : 'total',
-            '%':'porcentaje_rechazados'
+            'Diametro'    : 'diametro',
+            'Aprobados'   : 'aprobados',
+            'Rechazados'  : 'rechazados',
+            'Total'       : 'total',
+            '%'           :'porcentaje_rechazados'
         },
-        rechazos_espesor_json_fields : {},
-        defectos_json_fields : {},
-        defectos_soldador_json_fields : {},
-        indicaciones_json_fields : {},
+        rechazos_espesor_json_fields : {
+            'Espesor'     : 'espesor',
+            'Aprovados'   : 'aprobados',
+            'Rechazados'  : 'rechazados',
+            'Total'       : 'total',
+            '%'           :'porcentaje_rechazados'
+
+        },
+        defectos_json_fields : {
+            'Abrev.'      : 'abreviatura',
+            'Descripción' : 'descripcion',
+            'Cantidad'    : 'cantidad',
+            'Porcentaje'  : 'porcentaje'
+        },
+        defectos_soldador_json_fields : {
+            'Cuño'      : 'codigo_soldador',
+            'Nombre'    : 'nombre_soldador',
+            'Cordones'  : 'cordones',
+            'Cantidad'  : 'cantidad',
+            '%'         : 'porcentaje',
+            
+        },
+        indicaciones_json_fields : {
+            'Defecto':'defecto_codigo',
+            'Descripción':'defecto_descripcion',
+            'Cantidad':'cantidad',
+            '%':'porcentaje'
+        },
         json_meta: [
                     [
                         {
