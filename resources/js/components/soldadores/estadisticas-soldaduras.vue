@@ -135,12 +135,13 @@
                                                             :data   = "TablaAnalisisRechazosDiametro"
                                                             :fields = "rechazos_diametro_json_fields"
                                                             :meta   = "json_meta"
+                                                            :title = "excel_titulo"
+                                                             worksheet = "Indices de rechazos"
                                                             name    = "filename.xls">
                                                             <button class="btn btn-sm btn-default"><i class="fas fa-lg fa-file-excel"></i></button>
 
                                                         </download-excel>
                                                     </div>
-                                                    <download-excel :data = "HeaderExcel"></download-excel>
                                                 </div>
                                                 <div class="stat-sol">
                                                     <table class="table table-striped table-condensed">
@@ -192,7 +193,9 @@
                                                             :data   = "TablaAnalisisRechazosEspesor"
                                                             :fields = "rechazos_espesor_json_fields"
                                                             :meta   = "json_meta"
-                                                            name    = "filename.xls">
+                                                            :title = "excel_titulo"
+                                                            worksheet = "Indices de rechazos"
+                                                             name    = "filename.xls">
                                                             <button class="btn btn-sm btn-default"><i class="fas fa-lg fa-file-excel"></i></button>
 
                                                         </download-excel>
@@ -254,7 +257,9 @@
                                                             :data   = "TablaDetalleDefectos"
                                                             :fields = "defectos_json_fields"
                                                             :meta   = "json_meta"
-                                                            name    = "filename.xls">
+                                                            :title = "excel_titulo"
+                                                             worksheet = "Defectología"
+                                                             name    = "filename.xls">
                                                             <button class="btn btn-sm btn-default"><i class="fas fa-lg fa-file-excel"></i></button>
 
                                                         </download-excel>
@@ -333,6 +338,8 @@
                                                         :data   = "TablaDefectosSoldador"
                                                         :fields = "defectos_soldador_json_fields"
                                                         :meta   = "json_meta"
+                                                        :title = "excel_titulo"
+                                                        worksheet = "Defectología - Producción"
                                                         name    = "filename.xls">
                                                         <button class="btn btn-sm btn-default"><i class="fas fa-lg fa-file-excel"></i></button>
 
@@ -400,6 +407,8 @@
                                                         :data   = "TablaIndicaciones"
                                                         :fields = "indicaciones_json_fields"
                                                         :meta   = "json_meta"
+                                                        :title = "excel_titulo"
+                                                        worksheet = "Indicaciones"
                                                         name    = "filename.xls">
                                                         <button class="btn btn-sm btn-default"><i class="fas fa-lg fa-file-excel"></i></button>
 
@@ -595,6 +604,8 @@ export default {
             '%'           :'porcentaje_rechazados'
         },
 
+        excel_titulo : "",
+
         rechazos_espesor_json_fields : {
             'Espesor'     : 'espesor',
             'Aprovados'   : 'aprobados',
@@ -645,6 +656,7 @@ export default {
                     "This is a long paragraph\nwith multiple lines\nthat should show in a single cell."
                 },
                 { colA: "Another", colB: "Regular cell" },
+
                 {codigo : '1', descripcion : 'descripcion de 1', cantidad:'100' },
                 {codigo : '2', descripcion : 'descripcion de 2', cantidad:'200' },
                 {codigo : '3', descripcion : 'descripcion de 3', cantidad:'300' },
@@ -1046,6 +1058,8 @@ methods : {
      this.selOt = false;
      this.selObra = false;
 
+     this.prepareTituloExcel();
+
     try {
         let url = 'informes/ot/' + this.ot.id  + '/obra/' +  this.obra.obra.replace('/','--') + '/fecha_desde/' + this.fecha_desde + '/fecha_hasta/' + this.fecha_hasta + '?api_token=' + Laravel.user.api_token;
         let res = await axios.get(url);
@@ -1063,6 +1077,16 @@ methods : {
     }
     finally  {this.$store.commit('loading', false);}
 
+    },
+
+    prepareTituloExcel : function() {
+
+    this.excel_titulo = ["Cliente: " + this.cliente.nombre_fantasia + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + "OT Nº: " + this.ot.numero + "&nbsp;&nbsp;&nbsp;&nbsp;" +  "Obra Nº: " + this.obra.obra]
+     if(this.fecha_desde)
+        this.excel_titulo.push("Desde: " + this.fecha_desde);
+     if(this.fecha_hasta)
+            this.excel_titulo.push("Hasta: " + this.fecha_hasta);
+     this.excel_titulo.push(" ");
     },
 
     async CambioCliente (){
