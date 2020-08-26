@@ -1081,7 +1081,7 @@ methods : {
 
     prepareTituloExcel : function() {
 
-    this.excel_titulo = ["Cliente: " + this.cliente.nombre_fantasia + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + "OT Nº: " + this.ot.numero + "&nbsp;&nbsp;&nbsp;&nbsp;" +  "Obra Nº: " + this.obra.obra]
+    this.excel_titulo = ["Cliente: " + this.cliente.nombre_fantasia + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + "OT Nº: " + this.ot.numero + "&nbsp;&nbsp;&nbsp;&nbsp;" +  "Obra Nº: " + this.obra.obra]
      if(this.fecha_desde)
         this.excel_titulo.push("Desde: " + this.fecha_desde);
      if(this.fecha_hasta)
