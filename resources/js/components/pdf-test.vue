@@ -104,7 +104,17 @@ export default {
                 const html_sector1 = document.getElementById('sector1').innerHTML;
                  await doc.fromHTML(html_sector1,75,10);
 
+doc.autoTable({ html: '#my-table' })
 
+// Or use javascript directly:
+doc.autoTable({
+  head: [['Name', 'Email', 'Country']],
+  body: [
+    ['David', 'david@example.com', 'Sweden'],
+    ['Castille', 'castille@example.com', 'Spain'],
+    // ...
+  ],
+})
                 doc.save("test.pdf")
 
         }
@@ -117,5 +127,6 @@ export default {
     max-width: 150px;
     margin:  100px auto;
   }
+.html2canvas-container { width: 3000px !important; height: 3000px !important; }
 
 </style>

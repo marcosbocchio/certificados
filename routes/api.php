@@ -121,7 +121,6 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('defectos_ri/planta', 'DefectosRiController@DefectosPlanta');
     Route::get('defectos_ri/gasoducto', 'DefectosRiController@DefectosGasoducto');
 
-
     Route::get('diametros', 'DiametrosEspesorController@getDiametros');
     Route::get('espesor/{id}', 'DiametrosEspesorController@getEspesor');
 
@@ -135,11 +134,9 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('informes/ot/{ot_id}/parte/{parte_id}/pendientes_editables_parte_diario', 'InformesController@OtInformesPendienteEditableParteDiario');
     Route::get('informes/ot/{ot_id}/obra/{obra}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}', 'InformesController@getInformesEstadisticasSoldaduras');
 
-
     Route::get('certificados/parte/{parte_id}/servicios', 'CertificadosController@getParteServicios');
     Route::get('certificados/parte/{parte_id}/modo_cobro/{modo_cobro}/productos', 'CertificadosController@getParteProductos');
     Route::get('certificados/ot/{ot_id}/modalidad_cobro', 'CertificadosController@getModalidadCobro');
-
 
     Route::get('informes/ot/{ot_id}/metodo/{metodo}/generar-numero-informe', 'InformesController@GenerarNumeroInforme');
     Route::get('certificados/generar-numero-certificado', 'CertificadosController@GenerarNumeroCertificado');
@@ -231,7 +228,6 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('ot_tipo_soldaduras/ot/{id}/epss','OtTipoSoldadurasController@EpssOt');
     Route::get('ot_tipo_soldaduras/ot/{id}/pqrs','OtTipoSoldadurasController@PqrsOt');
 
-
     //placas
 
     Route::resource('placas_ri','PlacasRiController');
@@ -274,7 +270,6 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('partes/informe_pm/{id}','PartesController@getInformePmParte');
     Route::get('partes/informe_lp/{id}','PartesController@getInformeLpParte');
     Route::get('partes/informe_us/{id}','PartesController@getInformeUsParte');
-
 
     //certificados
     Route::put('certificados/{id}/firmar', 'CertificadosController@firmar');

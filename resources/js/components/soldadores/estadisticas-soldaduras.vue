@@ -111,11 +111,12 @@
 
                             <div v-if="data_indice_rechazos.options.length != []">
 
-                                <div class="col-lg-12">
-                                    <div class="div-grafico">
-                                        <pie-chart :chart-data="data_indice_rechazos" :options="data_indice_rechazos.options" ></pie-chart>
+                                    <div class="col-lg-4">
+                                        <button @click="downloadPdf_tab1">Download PDF</button>
                                     </div>
-                                </div>
+                                    <div class="div-grafico">
+                                        <pie-chart :chart-id="'img_rechazos'" :chart-data="data_indice_rechazos" :options="data_indice_rechazos.options" ></pie-chart>
+                                    </div>
 
                                 <div v-if="TablaAnalisisRechazosDiametro.length">
                                     <div class="row">
@@ -136,7 +137,7 @@
                                                             :fields = "rechazos_diametro_json_fields"
                                                             :meta   = "json_meta"
                                                             :title = "excel_titulo"
-                                                             worksheet = "Indices de rechazos"
+                                                            worksheet = "Indices de rechazos"
                                                             name    = "filename.xls">
                                                             <button class="btn btn-sm btn-default"><i class="fas fa-lg fa-file-excel"></i></button>
 
@@ -194,7 +195,7 @@
                                                             :fields = "rechazos_espesor_json_fields"
                                                             :meta   = "json_meta"
                                                             :title = "excel_titulo"
-                                                            worksheet = "Indices de rechazos"
+                                                             worksheet = "Indices de rechazos"
                                                              name    = "filename.xls">
                                                             <button class="btn btn-sm btn-default"><i class="fas fa-lg fa-file-excel"></i></button>
 
@@ -233,13 +234,16 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div v-else>
                                 <h4>No hay datos para mostrar</h4>
                             </div>
                         </tab>
                         <tab name="Defectología">
                             <div v-if="TablaDetalleDefectos.length">
+                                <div class="col-lg-4">
+                                    <button @click="downloadPdf_tab2">Download PDF</button>
+                                </div>
+
                                 <div class="row">
                                     <div class="col-lg-10 col-lg-offset-1 col-md-12">
                                         <div class="col-lg-12 titulo-tabla-tabs" >
@@ -299,6 +303,7 @@
                                     </div>
 
                                    <div class="clearfix"></div>
+
                                    <div class="col-lg-3" >
                                         <div class="form-group">
                                             <label for="diametro">Diámetro</label>
@@ -307,7 +312,9 @@
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="div-grafico">
-                                            <doughnut-chart :chart-data="data_defectologia" :options="data_defectologia.options" ></doughnut-chart>
+                                            <div>
+                                                <doughnut-chart :chart-id="'img_defectologia'" :chart-data="data_defectologia" :options="data_defectologia.options" ></doughnut-chart>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-12 totales_posiciones">
@@ -321,6 +328,9 @@
                         </tab>
                         <tab name="Defectología/Producción">
                             <div v-if="TablaDefectosSoldador.length">
+                                <div class="col-lg-4">
+                                    <button @click="downloadPdf_tab3">Download PDF</button>
+                                </div>
                                 <div class="row">
                                     <div class="col-lg-10 col-lg-offset-1 col-md-12">
                                         <div class="col-lg-12 titulo-tabla-tabs" >
@@ -381,7 +391,7 @@
                                  <div class="row">
                                     <div class="col-lg-10 col-lg-offset-1">
                                         <div style="max-height:350px;">
-                                            <bar-chart :chart-data="data_detalle_defectos_soldador" :options="data_detalle_defectos_soldador.options" style="height: 400px;"  ></bar-chart>
+                                            <bar-chart :chart-id="'img_defectologia_produccion'" :chart-data="data_detalle_defectos_soldador" :options="data_detalle_defectos_soldador.options" style="height: 400px;"  ></bar-chart>
                                         </div>
                                     </div>
                                 </div>
@@ -390,6 +400,9 @@
                         </tab>
                         <tab name="Indicaciones">
                             <div v-if="TablaIndicaciones.length">
+                                <div class="col-lg-4">
+                                    <button @click="downloadPdf_tab4">Download PDF</button>
+                                </div>
                                 <div class="row">
                                     <div class="col-lg-10 col-lg-offset-1 col-md-12">
                                         <div class="col-lg-12 titulo-tabla-tabs" >
@@ -448,7 +461,6 @@
                                         </div>
                                     </div>
 
-
                                 <div class="clearfix"></div>
                                 <div class="col-lg-3" >
                                     <div class="form-group">
@@ -459,7 +471,7 @@
 
                                 <div class="col-lg-12">
                                     <div class="div-grafico">
-                                        <doughnut-chart :chart-data="data_indicaciones_posicion" :options="data_indicaciones_posicion.options" ></doughnut-chart>
+                                        <doughnut-chart :chart-id="'img_indicaciones'" :chart-data="data_indicaciones_posicion" :options="data_indicaciones_posicion.options" ></doughnut-chart>
                                     </div>
                                 </div>
                                 <div class="col-lg-12 totales_posiciones">
@@ -474,9 +486,11 @@
                             </div>
                             <div v-if="TablaIndicacionesPosicionDetalle.length">
                                  <div class="row">
-                                    <div class="col-lg-10 col-lg-offset-1">
-                                        <div style="max-height:350px;">
-                                            <bar-chart :chart-data="data_indicaciones_posicion_detalle" :options="data_indicaciones_posicion_detalle.options" ></bar-chart>
+                                    <div class="col-lg-12">
+                                        <div class="div-grafico">
+                                            <div>
+                                                <bar-chart :chart-data="data_indicaciones_posicion_detalle" :options="data_indicaciones_posicion_detalle.options" ></bar-chart>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -487,9 +501,9 @@
                 </div>
             </div>
          <loading
-                  :active.sync="isLoading"
-                  :loader="'bars'"
-                  :color="'red'">
+            :active.sync="isLoading"
+            :loader="'bars'"
+            :color="'red'">
          </loading>
     </div>
 </template>
@@ -509,6 +523,8 @@ import ChartJsPluginDataLabels from 'chartjs-plugin-datalabels';
 import DoughnutChart from '../chart.js/DoughnutChart.js'
 import BarChart from '../chart.js/BarChart.js'
 import PieChart from '../chart.js/PieChart.js'
+import html2canvas from 'html2canvas-render-offscreen';
+//import html2canvas from 'html2canvas';
 
 export default {
 
@@ -579,6 +595,7 @@ export default {
         cantidad_defectos_soldador : 0,
         valores_detalle_defectos_soldador:[],
         indexDefectosSoldador : -1,
+        soldador : {},
 
         /*Indicaciones  */
         TablaIndicaciones : [] ,
@@ -1250,7 +1267,7 @@ methods : {
         this.TablaDetalletDefectosSoldador = [];
         this.valores_detalle_defectos_soldador = [];
         this.cantidad_defectos_soldador  = 0;
-
+        this.soldador  = soldador;
         this.TablaDDSTemp.forEach(function(item){
 
             if(parseFloat(item.cantidad) > 0 && parseInt(item.soldador_id) == parseInt(soldador.soldador_id)){
@@ -1292,7 +1309,7 @@ methods : {
                            }else{
 
                                this.TablaDefectosSoldador.push({
-
+                                   'soldador_codigo_nombre' : item_t.codigo_soldador + ' - ' + item_t.nombre_soldador,
                                    'cantidad':parseFloat(item_t.cantidad),
                                    'codigo_soldador': item_t.codigo_soldador,
                                    'defecto_codigo': item_t.defecto_codigo,
@@ -1403,6 +1420,176 @@ methods : {
 
     },
 
+    async downloadPdf_tab1 (){
+
+        const doc = new jsPDF("p", "mm", "a4");
+        doc.setFont("helvetica");
+
+        doc.setFontSize(10);
+        doc.text("Cliente : " + this.cliente.nombre_fantasia, 14, 30)
+        doc.text("OT Nº: " + this.ot.numero, 14, 35 )
+        doc.text("Obra Nº : " + this.obra.obra, 50, 35)
+        doc.text("Desde : " + (this.fecha_desde ? moment( this.fecha_desde).format("DD/MM/YYYY") : '-'), 160,30)
+        doc.text("Hasta : " + (this.fecha_hasta ? moment( this.fecha_hasta).format("DD/MM/YYYY") : '-'), 160,35)
+
+        doc.setFontSize(12);
+        var newCanvas = document.getElementById('img_rechazos');
+        var imgData = newCanvas.toDataURL('image/png',1.0);
+        doc.addImage(imgData,'PNG',60,45,90,90);
+
+
+        doc.text("Análisis de rechazos por Diámetro", 14, 150)
+
+        doc.autoTable({
+            startY: 142,
+            body: this.TablaAnalisisRechazosDiametro,
+            columns: [
+                { header: 'Ø', dataKey: 'diametro' },
+                { header: 'Aprobados', dataKey: 'aprobados' },
+                { header: 'Rechazados', dataKey: 'rechazados' },
+                { header: 'Total', dataKey: 'total' },
+                { header: '%', dataKey: 'porcentaje_rechazados' },
+            ],
+            margin: { top: 30 },
+            })
+
+        doc.text("Análisis de rechazos por Espesor", 14,doc.lastAutoTable.finalY + 14)
+
+        doc.autoTable({
+            startY: doc.lastAutoTable.finalY + 16,
+            body: this.TablaAnalisisRechazosEspesor,
+            columns: [
+                { header: '#', dataKey: 'espesor' },
+                { header: 'Aprobados', dataKey: 'aprobados' },
+                { header: 'Rechazados', dataKey: 'rechazados' },
+                { header: 'Total', dataKey: 'total' },
+                { header: '%', dataKey: 'porcentaje_rechazados' },
+            ],
+            margin: { top: 30 },
+            })
+
+            var pageCount = doc.internal.getNumberOfPages();
+            for(let i = 0; i < pageCount; i++) {
+                doc.setPage(i);
+                doc.setFontSize(16);
+                doc.setFontType("bold");
+                doc.text("Indices de rechazos", 75,20)
+                doc.setFontType("normal");
+                doc.setFontSize(10);
+                doc.text(175,15,"Página: " + doc.internal.getCurrentPageInfo().pageNumber + "/" + pageCount);
+            }
+        doc.save("Indices_de_rechazos.pdf")
+
+    },
+
+     async downloadPdf_tab2 (){
+
+        const doc = new jsPDF("p", "mm", "a4");
+        doc.setFont("helvetica");
+
+        doc.setFontSize(10);
+        doc.text("Cliente : " + this.cliente.nombre_fantasia, 14, 30)
+        doc.text("OT Nº: " + this.ot.numero, 14, 35 )
+        doc.text("Obra Nº : " + this.obra.obra, 50, 35)
+        doc.text("Desde : " + (this.fecha_desde ? moment( this.fecha_desde).format("DD/MM/YYYY") : '-'), 160,30)
+        doc.text("Hasta : " + (this.fecha_hasta ? moment( this.fecha_hasta).format("DD/MM/YYYY") : '-'), 160,35)
+
+        doc.setFontSize(12);
+        doc.text("Defectos", 14, 45)
+
+        doc.autoTable({
+            startY:48,
+            body: this.TablaDetalleDefectos,
+            columns: [
+                { header: 'Abrev.', dataKey: 'abreviatura' },
+                { header: 'Descripción', dataKey: 'descripcion' },
+                { header: 'Cantidad', dataKey: 'cantidad' },
+                { header: '%', dataKey: 'porcentaje' },
+            ],
+            margin: { top: 30 },
+            })
+
+        doc.text("Diámetro: "  + this.DiametroDefecto, 14,doc.lastAutoTable.finalY + 14)
+
+        var newCanvas = document.getElementById('img_defectologia');
+        var imgData = newCanvas.toDataURL('image/png',1.0)
+        doc.addImage(imgData,'PNG',60,doc.lastAutoTable.finalY + 25,90,90)
+
+        var pageCount = doc.internal.getNumberOfPages();
+            for(let i = 0; i < pageCount; i++) {
+                doc.setPage(i);
+                doc.setFontSize(16);
+                doc.setFontType("bold");
+                doc.text("Defectología", 85,20)
+                doc.setFontType("normal");
+                doc.setFontSize(10);
+                doc.text(175,15,"Página: " + doc.internal.getCurrentPageInfo().pageNumber + "/" + pageCount);
+            }
+        doc.save("defectologia.pdf")
+
+    },
+
+    async downloadPdf_tab3(){
+
+        const doc = new jsPDF("p", "mm", "a4");
+        doc.setFont("helvetica");
+        doc.setFontSize(12);
+
+        doc.text("Defectos por soldador", 14, 20)
+
+        doc.autoTable({
+            startY:23,
+            body: this.TablaDefectosSoldador,
+            columns: [
+                { header: 'Cuño.', dataKey: 'soldador_codigo_nombre' },
+                { header: 'Cord.', dataKey: 'cordones' },
+                { header: 'Cantidad', dataKey: 'cantidad' },
+                { header: '%', dataKey: 'porcentaje' },
+            ],
+            margin: { top: 30 },
+            })
+
+       doc.text("Soldador: " + this.soldador.codigo_soldador + " - " + this.soldador.nombre_soldador  , 14,doc.lastAutoTable.finalY + 14)
+
+       var newCanvas = document.getElementById('img_defectologia_produccion');
+       var imgData = newCanvas.toDataURL('image/png',1.0)
+       doc.addImage(imgData,'PNG',60,doc.lastAutoTable.finalY + 25,90,90)
+
+        doc.save("defectologia.pdf")
+
+    },
+
+    async downloadPdf_tab4 (){
+
+        const doc = new jsPDF("p", "mm", "a4");
+        doc.setFont("helvetica");
+        doc.setFontSize(12);
+
+        doc.text("Indicaciones", 14, 20)
+
+        doc.autoTable({
+            startY:23,
+            body: this.TablaIndicaciones,
+            columns: [
+                { header: 'Abrev.', dataKey: 'defecto_codigo' },
+                { header: 'Descripción', dataKey: 'defecto_descripcion' },
+                { header: 'Cantidad', dataKey: 'cantidad' },
+                { header: '%', dataKey: 'porcentaje' },
+            ],
+            margin: { top: 30 },
+            })
+
+        doc.text("Diámetro: "  + this.DiametroIndicaciones, 14,doc.lastAutoTable.finalY + 14)
+
+        var newCanvas = document.getElementById('img_indicaciones');
+        var imgData = newCanvas.toDataURL('image/png',1.0)
+        doc.addImage(imgData,'PNG',60,doc.lastAutoTable.finalY + 25,90,90)
+
+        doc.save("indicaciones.pdf")
+
+    },
+
+
     tabClicked (selectedTab) {
           console.log('Current tab re-clicked:' + selectedTab.tab.name);
     },
@@ -1412,8 +1599,9 @@ methods : {
     },
  }
 }
-</script>
 
+
+</script>
 
 <style>
 
@@ -1629,7 +1817,6 @@ ul li .titulo-li {
 
   .div-grafico {
     max-width:375px;
-
     margin:  0px auto 15px auto;
   }
 
@@ -1638,4 +1825,7 @@ ul li .titulo-li {
       color:#666;
       font-size: 14px;
   }
+
+
+
 </style>

@@ -28,28 +28,28 @@ class DatabaseSeeder extends Seeder
         $this->call(MedidasTableSeeder::class);
         $this->call(TipoPeliculasTableSeeder::class);
         $this->call(TecnicasTable::class);
-        $this->call(FuentesTable::class);     
-        $this->call(IcisTable::class);      
-        $this->call(EquiposTableSeeder::class);     
-        $this->call(TecnicasGraficoSeeder::class);    
-        $this->call(SoldadoresSeeder::class);   
+        $this->call(FuentesTable::class);
+        $this->call(IcisTable::class);
+        $this->call(EquiposTableSeeder::class);
+        $this->call(TecnicasGraficoSeeder::class);
+        $this->call(SoldadoresSeeder::class);
         $this->call(DefectosRiSeeder::class);
-        $this->call(TecnicaDistanciasSeeder::class);   
-        $this->call(TipoSoldadurasSeeder::class);   
-        $this->call(MetodosTrabajoPmTableSeeder::class);   
-        $this->call(TiposMagnetizacionTableSeeder::class);      
-        $this->call(CorrientesTableSeeder::class);   
-        $this->call(ColorParticulasTableSeeder::class);        
+        $this->call(TecnicaDistanciasSeeder::class);
+        $this->call(TipoSoldadurasSeeder::class);
+        $this->call(MetodosTrabajoPmTableSeeder::class);
+        $this->call(TiposMagnetizacionTableSeeder::class);
+        $this->call(CorrientesTableSeeder::class);
+        $this->call(ColorParticulasTableSeeder::class);
         $this->call(IluminacionesTableSeeder::class);
-        $this->call(MetodosTrabajoLpTableSeeder::class); 
-        $this->call(AplicacionesLpTableSeeder::class); 
-        $this->call(EstadosSuperficiesSeeder::class);    
-        $this->call(GeneratricesSeeder::class);    
-        $this->call(EstadosOperadorRxSeederTable::class);            
-      
-        
+        $this->call(MetodosTrabajoLpTableSeeder::class);
+        $this->call(AplicacionesLpTableSeeder::class);
+        $this->call(EstadosSuperficiesSeeder::class);
+        $this->call(GeneratricesSeeder::class);
+        $this->call(EstadosOperadorRxSeederTable::class);
+
+
       // factory('App\Clientes', 250)->create();
-     
-      
+
+
     }
 }

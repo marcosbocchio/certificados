@@ -28,6 +28,7 @@
         "chartjs-plugin-datalabels": "^0.7.0",
         "font-awesome": "^4.7.0",
         "html2canvas": "^1.0.0-rc.5",
+        "html2canvas-render-offscreen": "0.0.3",
         "install": "^0.13.0",
         "laravel-vue-pagination": "^2.2.0",
         "magnific-popup": "^1.1.0",
