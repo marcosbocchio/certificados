@@ -663,23 +663,6 @@ export default {
                     }
                 ]
             ],
-
-        HeaderExcel: [
-                { colA: "Hello", colB: "World" },
-                {
-                colA: "Multi-line",
-                /* Multi-line value: */
-                colB:
-                    "This is a long paragraph\nwith multiple lines\nthat should show in a single cell."
-                },
-                { colA: "Another", colB: "Regular cell" },
-
-                {codigo : '1', descripcion : 'descripcion de 1', cantidad:'100' },
-                {codigo : '2', descripcion : 'descripcion de 2', cantidad:'200' },
-                {codigo : '3', descripcion : 'descripcion de 3', cantidad:'300' },
-
-            ],
-
      }
 
     },
@@ -1099,11 +1082,9 @@ methods : {
     prepareTituloExcel : function() {
 
     this.excel_titulo = ["Cliente: " + this.cliente.nombre_fantasia + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + "OT Nº: " + this.ot.numero + "&nbsp;&nbsp;&nbsp;&nbsp;" +  "Obra Nº: " + this.obra.obra]
-     if(this.fecha_desde)
-        this.excel_titulo.push("Desde: " + this.fecha_desde);
-     if(this.fecha_hasta)
-            this.excel_titulo.push("Hasta: " + this.fecha_hasta);
-     this.excel_titulo.push(" ");
+    this.excel_titulo.push("Desde: " + (this.fecha_desde ? moment( this.fecha_desde).format("DD/MM/YYYY") : '-'));
+    this.excel_titulo.push("Hasta: " + (this.fecha_hasta ? moment( this.fecha_hasta).format("DD/MM/YYYY") : '-'));
+
     },
 
     async CambioCliente (){
@@ -1170,7 +1151,7 @@ methods : {
 
         this.informes                      = [];
         this.TablaAnalisisRechazosEspesor  = [];
-        this.TablaAnalisisRechazosDiametro      = [];
+        this.TablaAnalisisRechazosDiametro = [];
         this.TablaDefectosPosicion         = [];
         this.TablaDetalleDefectos          = [];
         this.TablaDefectosSoldador         = [];
@@ -1432,13 +1413,12 @@ methods : {
         doc.text("Desde : " + (this.fecha_desde ? moment( this.fecha_desde).format("DD/MM/YYYY") : '-'), 160,30)
         doc.text("Hasta : " + (this.fecha_hasta ? moment( this.fecha_hasta).format("DD/MM/YYYY") : '-'), 160,35)
 
-        doc.setFontSize(12);
         var newCanvas = document.getElementById('img_rechazos');
         var imgData = newCanvas.toDataURL('image/png',1.0);
         doc.addImage(imgData,'PNG',60,45,90,90);
 
-
-        doc.text("Análisis de rechazos por Diámetro", 14, 150)
+        doc.setFontSize(11);
+        doc.text("Análisis de rechazos por Diámetro", 15, 140)
 
         doc.autoTable({
             startY: 142,
@@ -1453,8 +1433,7 @@ methods : {
             margin: { top: 30 },
             })
 
-        doc.text("Análisis de rechazos por Espesor", 14,doc.lastAutoTable.finalY + 14)
-
+       doc.text("Análisis de rechazos por Espesor", 15,doc.lastAutoTable.finalY + 14)
         doc.autoTable({
             startY: doc.lastAutoTable.finalY + 16,
             body: this.TablaAnalisisRechazosEspesor,
@@ -1494,8 +1473,8 @@ methods : {
         doc.text("Desde : " + (this.fecha_desde ? moment( this.fecha_desde).format("DD/MM/YYYY") : '-'), 160,30)
         doc.text("Hasta : " + (this.fecha_hasta ? moment( this.fecha_hasta).format("DD/MM/YYYY") : '-'), 160,35)
 
-        doc.setFontSize(12);
-        doc.text("Defectos", 14, 45)
+        doc.setFontSize(11);
+        doc.text("Defectos", 15, 46)
 
         doc.autoTable({
             startY:48,
@@ -1533,12 +1512,19 @@ methods : {
 
         const doc = new jsPDF("p", "mm", "a4");
         doc.setFont("helvetica");
-        doc.setFontSize(12);
 
-        doc.text("Defectos por soldador", 14, 20)
+        doc.setFontSize(10);
+        doc.text("Cliente : " + this.cliente.nombre_fantasia, 14, 30)
+        doc.text("OT Nº: " + this.ot.numero, 14, 35 )
+        doc.text("Obra Nº : " + this.obra.obra, 50, 35)
+        doc.text("Desde : " + (this.fecha_desde ? moment( this.fecha_desde).format("DD/MM/YYYY") : '-'), 160,30)
+        doc.text("Hasta : " + (this.fecha_hasta ? moment( this.fecha_hasta).format("DD/MM/YYYY") : '-'), 160,35)
+
+        doc.setFontSize(11);
+        doc.text("Defectos por soldador", 15, 46)
 
         doc.autoTable({
-            startY:23,
+            startY:48,
             body: this.TablaDefectosSoldador,
             columns: [
                 { header: 'Cuño.', dataKey: 'soldador_codigo_nombre' },
@@ -1549,12 +1535,22 @@ methods : {
             margin: { top: 30 },
             })
 
-       doc.text("Soldador: " + this.soldador.codigo_soldador + " - " + this.soldador.nombre_soldador  , 14,doc.lastAutoTable.finalY + 14)
+     //  doc.text("Soldador: " + this.soldador.codigo_soldador + " - " + this.soldador.nombre_soldador  , 15,doc.lastAutoTable.finalY + 14)
 
        var newCanvas = document.getElementById('img_defectologia_produccion');
        var imgData = newCanvas.toDataURL('image/png',1.0)
-       doc.addImage(imgData,'PNG',60,doc.lastAutoTable.finalY + 25,90,90)
+       doc.addImage(imgData,'PNG',20,doc.lastAutoTable.finalY + 15,170,80)
 
+       var pageCount = doc.internal.getNumberOfPages();
+            for(let i = 0; i < pageCount; i++) {
+                doc.setPage(i);
+                doc.setFontSize(16);
+                doc.setFontType("bold");
+                doc.text("Defectología / Producción ", 78,20)
+                doc.setFontType("normal");
+                doc.setFontSize(10);
+                doc.text(175,15,"Página: " + doc.internal.getCurrentPageInfo().pageNumber + "/" + pageCount);
+            }
         doc.save("defectologia.pdf")
 
     },
@@ -1563,12 +1559,19 @@ methods : {
 
         const doc = new jsPDF("p", "mm", "a4");
         doc.setFont("helvetica");
-        doc.setFontSize(12);
 
-        doc.text("Indicaciones", 14, 20)
+        doc.setFontSize(10);
+        doc.text("Cliente : " + this.cliente.nombre_fantasia, 14, 30)
+        doc.text("OT Nº: " + this.ot.numero, 14, 35 )
+        doc.text("Obra Nº : " + this.obra.obra, 50, 35)
+        doc.text("Desde : " + (this.fecha_desde ? moment( this.fecha_desde).format("DD/MM/YYYY") : '-'), 160,30)
+        doc.text("Hasta : " + (this.fecha_hasta ? moment( this.fecha_hasta).format("DD/MM/YYYY") : '-'), 160,35)
+
+        doc.setFontSize(11);
+        doc.text("Indicaciones", 15, 46)
 
         doc.autoTable({
-            startY:23,
+            startY:48,
             body: this.TablaIndicaciones,
             columns: [
                 { header: 'Abrev.', dataKey: 'defecto_codigo' },
@@ -1579,12 +1582,24 @@ methods : {
             margin: { top: 30 },
             })
 
-        doc.text("Diámetro: "  + this.DiametroIndicaciones, 14,doc.lastAutoTable.finalY + 14)
+        doc.text("Diámetro: "  + this.DiametroIndicaciones, 15,doc.lastAutoTable.finalY + 14)
 
         var newCanvas = document.getElementById('img_indicaciones');
         var imgData = newCanvas.toDataURL('image/png',1.0)
         doc.addImage(imgData,'PNG',60,doc.lastAutoTable.finalY + 25,90,90)
 
+        doc.text("Total Indicaciones: "  + this.total_indiciones, 15,doc.lastAutoTable.finalY + 120)
+
+        var pageCount = doc.internal.getNumberOfPages();
+            for(let i = 0; i < pageCount; i++) {
+                doc.setPage(i);
+                doc.setFontSize(16);
+                doc.setFontType("bold");
+                doc.text("Indicaciones", 85,20)
+                doc.setFontType("normal");
+                doc.setFontSize(10);
+                doc.text(175,15,"Página: " + doc.internal.getCurrentPageInfo().pageNumber + "/" + pageCount);
+            }
         doc.save("indicaciones.pdf")
 
     },
