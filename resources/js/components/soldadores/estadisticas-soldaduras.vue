@@ -1452,7 +1452,7 @@ methods : {
                 doc.setPage(i);
                 doc.setFontSize(16);
                 doc.setFontType("bold");
-                doc.text("Indices de rechazos", 75,20)
+                doc.text("Indices de rechazos", 77,20)
                 doc.setFontType("normal");
                 doc.setFontSize(10);
                 doc.text(175,15,"Página: " + doc.internal.getCurrentPageInfo().pageNumber + "/" + pageCount);
@@ -1546,7 +1546,7 @@ methods : {
                 doc.setPage(i);
                 doc.setFontSize(16);
                 doc.setFontType("bold");
-                doc.text("Defectología / Producción ", 78,20)
+                doc.text("Defectología / Producción ", 75,20)
                 doc.setFontType("normal");
                 doc.setFontSize(10);
                 doc.text(175,15,"Página: " + doc.internal.getCurrentPageInfo().pageNumber + "/" + pageCount);
