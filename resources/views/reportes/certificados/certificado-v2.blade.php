@@ -14,11 +14,11 @@
 
 header {
     position:fixed;
-    top: -235px;    
-}        
-    
+    top: -235px;
+}
+
 footer {
-    position: fixed; bottom:0px; 
+    position: fixed; bottom:0px;
     padding-top: 0px;
 }
 
@@ -26,16 +26,16 @@ footer {
 
 <body>
 <header>
-    @include('reportes.certificados.partial.header-principal-landscape')     
-    @include('reportes.partial.linea-amarilla')                
-    @include('reportes.partial.header-cliente-comitente-landscape')    
-    @include('reportes.partial.linea-gris')        
-    @include('reportes.certificados.partial.header-proyecto-landscape')    
-    @include('reportes.partial.linea-amarilla') 
+    @include('reportes.certificados.partial.header-principal-landscape')
+    @include('reportes.partial.linea-amarilla')
+    @include('reportes.partial.header-cliente-comitente-landscape')
+    @include('reportes.partial.linea-gris')
+    @include('reportes.certificados.partial.header-proyecto-landscape')
+    @include('reportes.partial.linea-amarilla')
 </header>
 <footer>
 
-    @include('reportes.partial.linea-amarilla') 
+    @include('reportes.partial.linea-amarilla')
 
     <table width="100%" class="bordered-td" style="margin-top: 8px;">
         <tbody>
@@ -44,7 +44,7 @@ footer {
                     @if(isset($servicios_footer[$x]))
                             <td style="font-size: 11px; width:33.33%px " class="bordered-td"><b>{{ $servicios_footer[$x]->abreviatura }}: </b>{{ $servicios_footer[$x]->descripcion_servicio }}</td>
                     @else
-                            <td style="font-size: 11px; " class="bordered-td">&nbsp;</td>    
+                            <td style="font-size: 11px; " class="bordered-td">&nbsp;</td>
                     @endif
                 @endfor
 
@@ -54,18 +54,18 @@ footer {
                     @if(isset($servicios_footer[$x]))
                             <td style="font-size: 11px; width:33.33%px " class="bordered-td"><b>{{ $servicios_footer[$x]->abreviatura }}: </b>{{ $servicios_footer[$x]->descripcion_servicio }}</td>
                     @else
-                            <td style="font-size: 11px; " class="bordered-td">&nbsp;</td>    
+                            <td style="font-size: 11px; " class="bordered-td">&nbsp;</td>
                     @endif
                 @endfor
 
             </tr>
-            
+
             <tr>
                 @for ( $x=6 ; $x< 9 ;$x++)
                     @if(isset($servicios_footer[$x]))
                             <td style="font-size: 11px; width:33.33%px " class="bordered-td"><b>{{ $servicios_footer[$x]->abreviatura }}: </b>{{ $servicios_footer[$x]->descripcion_servicio }}</td>
                     @else
-                            <td style="font-size: 11px; " class="bordered-td">&nbsp;</td>    
+                            <td style="font-size: 11px; " class="bordered-td">&nbsp;</td>
                     @endif
                 @endfor
 
@@ -73,13 +73,13 @@ footer {
         </tbody>
     </table>
 
-    @include('reportes.partial.linea-amarilla') 
-    @include('reportes.certificados.partial.firma')     
+    @include('reportes.partial.linea-amarilla')
+    @include('reportes.certificados.partial.firma')
 
 </footer>
 
 
-<main>   
+<main>
 
 @if($certificado->info_pedido_cliente)
 
@@ -89,7 +89,7 @@ footer {
                 <td style="background:#D8D8D8;text-align: left;font-size: 13px;"><span style="margin-left: 2px;"> {{$certificado->info_pedido_cliente}}</span> &nbsp;</td>
             </tr>
         </tbody>
-    </table>  
+    </table>
 
 @endif
 
@@ -104,12 +104,12 @@ footer {
            @endif
            <th style="font-size: 12px;" class="bordered-td" colspan="9" >SERVICIOS</th>
            <th style="font-size: 12px;" class="bordered-td" colspan="17">
-                 {{ $modalidadCobro }} EN {{ $unidad_medida}}              
+                 {{ $modalidadCobro }} EN {{ $unidad_medida}}
            </th>
         </tr>
-        <tr>    
-        {{ $cant_servicios_parte = count($servicios_abreviaturas) }}    
-        {{ $cant_productos_parte = count($productos_unidades_medidas) }} 
+        <tr>
+        {{ $cant_servicios_parte = count($servicios_abreviaturas) }}
+        {{ $cant_productos_parte = count($productos_unidades_medidas) }}
 
         @foreach ($servicios_abreviaturas as $item)
             <th style="font-size: 10px;width: 33px;" class="bordered-td">{{ $item }}</th>
@@ -118,7 +118,7 @@ footer {
         @for ($x =$cant_servicios_parte ; $x <9 ; $x++)
            <th style="font-size: 11px;" class="bordered-td">&nbsp;</th>
         @endfor
-        
+
         @foreach ($productos_unidades_medidas as $item)
             <th style="font-size: 12px;" class="bordered-td">{{ $item }}
                 @if ($modalidadCobro == 'COSTURAS')
@@ -130,50 +130,50 @@ footer {
         @for ($x =$cant_productos_parte ; $x <17 ; $x++)
            <th style="font-size: 12px;" class="bordered-td">&nbsp;</th>
         @endfor
-         
+
         </tr>
     </thead>
-    <tbody>       
+    <tbody>
         @foreach ($partes_certificado as $item_partes_certificado )
 
             <tr>
-                <td style="font-size: 12px;" class="bordered-td">{{$item_partes_certificado->fecha_formateada}}</td>                        
+                <td style="font-size: 12px;" class="bordered-td">{{$item_partes_certificado->fecha_formateada}}</td>
                 <td style="font-size: 12px;" class="bordered-td">{{$item_partes_certificado->parte_numero}}</td>
                 @if (!$ot->obra)
 
                     <td style="font-size: 12px;" class="bordered-td">{{$item_partes_certificado->obra}}</td>
-                    
+
                 @endif
 
-           <!-- INSERTO LOS SERVICIOS EN LA TABLA -->           
-          
+           <!-- INSERTO LOS SERVICIOS EN LA TABLA -->
+
             @foreach ($servicios_abreviaturas as $item_servicios_abreviaturas)
                 {{ $existeServicioEnParte = false }}
 
                 @foreach ($servicios_parte as $item_servicios_parte)
-                    
+
                     @if (($item_servicios_abreviaturas == $item_servicios_parte->abreviatura)&&($item_servicios_parte->parte_numero == $item_partes_certificado->parte_numero))
                              <td style="font-size: 12px;" class="bordered-td">{{$item_servicios_parte->cantidad}}</td>
-                           
+
                              {{ $existeServicioEnParte = true }}
                     @endif
 
                 @endforeach
 
                 @if (!$existeServicioEnParte)
-                    
+
                     <td style="font-size: 12px;" class="bordered-td">&nbsp;</td>
 
-                @endif    
+                @endif
 
 
-            @endforeach                   
+            @endforeach
 
             @for ( $x=$cant_servicios_parte  ;  $x < 9 ; $x++)
                 <td style="font-size: 12px;" class="bordered-td">&nbsp;</td>
             @endfor
-        <!-- INSERTO LOS PRODUCTOS EN LA TABLA --> 
-      
+        <!-- INSERTO LOS PRODUCTOS EN LA TABLA -->
+
             @foreach ($productos_unidades_medidas as $item_productos_unidades_medidas)
                 {{ $existeProductoEnParte = false }}
 
@@ -188,36 +188,36 @@ footer {
                 @endforeach
 
                 @if (!$existeProductoEnParte)
-                    
+
                     <td style="font-size: 12px;" class="bordered-td">&nbsp;</td>
 
-                @endif    
+                @endif
 
-            @endforeach   
+            @endforeach
 
 
             @for ( $x=$cant_productos_parte ;  $x < 17 ; $x++)
                 <td style="font-size: 12px;" class="bordered-td">&nbsp;</td>
-            @endfor     
-          </tr>     
+            @endfor
+          </tr>
 
           <!-- TERMINÓ DE PONER LOS PRODUCTOS -->
 
         @endforeach
 
           <!-- AGREGO LOS TOTALES -->
-          
+
             <tr>
                 @if (!$ot->obra)
-                    <td style="font-size: 12px;" colspan='3' class="bordered-td">Total </td>       
+                    <td style="font-size: 12px;" colspan='3' class="bordered-td">Total </td>
                 @else
-                     <td style="font-size: 12px;" colspan='2' class="bordered-td">Total </td>    
+                     <td style="font-size: 12px;" colspan='2' class="bordered-td">Total </td>
                 @endif
 
                 <!--SERVICIOS -->
-            
+
                 @foreach ($servicios_abreviaturas as $item_servicios_abreviaturas)
-                    
+
                     {{ $total_servicio = 0 }}
 
                     @foreach ($servicios_parte as $item_servicios_parte)
@@ -232,11 +232,11 @@ footer {
                     <td style="font-size: 12px;" class="bordered-td">&nbsp;</td>
                 @endfor
 
-          
+
                 <!--PRODUCTOS -->
-            
+
                 @foreach ($productos_unidades_medidas as $item_productos_unidades_medidas)
-                    
+
                     {{ $total_producto = 0 }}
 
                     @foreach ($productos_parte as $item_productos_parte)
@@ -266,26 +266,26 @@ footer {
     if($resto > 0){
         $filasObras++;
     }
-  
+
 @endphp
 <table style="padding: 0 -3px 0 -3px;">
     <tbody>
         @for ($x =0 ; $x < $filasObras ; $x++)
-            
+
             <tr>
                 <td width="400px">
 
                     @if (isset($tablas_por_obras[$x*3]))
-                        
+
                         <table class="bordered-td">
                             <thead>
-                                <tr>                                   
-                                    <th style="font-size: 12px; width:255px;text-align: center;" class="bordered-td"  colspan="2">Obra : {{ $tablas_por_obras[$x*3]->obra }}</th>                          
+                                <tr>
+                                    <th style="font-size: 12px; width:255px;text-align: center;" class="bordered-td"  colspan="2">Obra : {{ $tablas_por_obras[$x*3]->obra }}</th>
                                 </tr>
-                                <tr>                            
+                                <tr>
                                     <th style="font-size: 12px; width:125px;text-align: center;"class="bordered-td">Servicios</th>
-                                    <th style="font-size: 12px; width:125px;text-align: center;" class="bordered-td">{{ $modalidadCobro }}</th>                            
-                                </tr>                         
+                                    <th style="font-size: 12px; width:125px;text-align: center;" class="bordered-td">{{ $modalidadCobro }}</th>
+                                </tr>
                             </thead>
                             <tbody>
                                 {{ $cant_total_servicio = count($tablas_por_obras[$x*3]->servicios) }}
@@ -294,22 +294,22 @@ footer {
                                 {{ $filas_total = $cant_total_servicio > $cant_total_producto ? $cant_total_servicio : $cant_total_producto }}
 
                                 @for ( $z=0 ;  $z< $filas_total  ; $z++)
-                                    
+
                                     <tr>
                                         @if (isset($tablas_por_obras[$x*3]->servicios[$z]))
-                                            <td style="font-size: 12px;" class="bordered-td"> {{$tablas_por_obras[$x*3]->servicios[$z]->servicio }} : {{$tablas_por_obras[$x*3]->servicios[$z]->cant_total_servicio }} </td>   
-                                        @else    
+                                            <td style="font-size: 12px;" class="bordered-td"> {{$tablas_por_obras[$x*3]->servicios[$z]->servicio }} : {{$tablas_por_obras[$x*3]->servicios[$z]->cant_total_servicio }} </td>
+                                        @else
                                         <td style="font-size: 12px;" class="bordered-td">&nbsp;</td>
                                         @endif
 
                                     @if (isset($tablas_por_obras[$x*3]->productos[$z]))
-                                    <td style="font-size: 12px;" class="bordered-td">&nbsp;{{$tablas_por_obras[$x*3]->productos[$z]->producto }} {{ $unidad_medida}} : {{$tablas_por_obras[$x*3]->productos[$z]->cant_total_producto }}</td>                                  
-                                        @else    
+                                    <td style="font-size: 12px;" class="bordered-td">&nbsp;{{$tablas_por_obras[$x*3]->productos[$z]->producto }} {{ $unidad_medida}} : {{$tablas_por_obras[$x*3]->productos[$z]->cant_total_producto }}</td>
+                                        @else
                                         <td style="font-size: 12px;" class="bordered-td">&nbsp;</td>
                                         @endif
-                                
+
                                     </tr>
-                                @endfor                 
+                                @endfor
                             </tbody>
                         </table>
 
@@ -321,13 +321,13 @@ footer {
 
                         <table class="bordered-td">
                             <thead>
-                                <tr>                                   
-                                    <th style="font-size: 12px; width:255px;text-align: center;" class="bordered-td"  colspan="2">Obra : {{ $tablas_por_obras[($x*3)+1]->obra }}</th>                     
+                                <tr>
+                                    <th style="font-size: 12px; width:255px;text-align: center;" class="bordered-td"  colspan="2">Obra : {{ $tablas_por_obras[($x*3)+1]->obra }}</th>
                                 </tr>
-                                <tr>                            
+                                <tr>
                                     <th style="font-size: 12px; width:125px;text-align: center;" class="bordered-td">Servicios</th>
-                                    <th style="font-size: 12px; width:125px;text-align: center;" class="bordered-td">{{ $modalidadCobro }}</th>                           
-                                </tr>                         
+                                    <th style="font-size: 12px; width:125px;text-align: center;" class="bordered-td">{{ $modalidadCobro }}</th>
+                                </tr>
                             </thead>
                             <tbody>
                                 {{ $cant_total_servicio = count($tablas_por_obras[($x*3)+1]->servicios) }}
@@ -336,22 +336,22 @@ footer {
                                 {{ $filas_total = $cant_total_servicio > $cant_total_producto ? $cant_total_servicio : $cant_total_producto }}
 
                                 @for ( $z=0 ;  $z< $filas_total  ; $z++)
-                                    
+
                                     <tr>
                                         @if (isset($tablas_por_obras[($x*3)+1]->servicios[$z]))
-                                            <td style="font-size: 12px;" class="bordered-td"> {{$tablas_por_obras[($x*3)+1]->servicios[$z]->servicio }} : {{$tablas_por_obras[($x*3)+1]->servicios[$z]->cant_total_servicio }} </td>   
-                                        @else    
+                                            <td style="font-size: 12px;" class="bordered-td"> {{$tablas_por_obras[($x*3)+1]->servicios[$z]->servicio }} : {{$tablas_por_obras[($x*3)+1]->servicios[$z]->cant_total_servicio }} </td>
+                                        @else
                                         <td style="font-size: 12px;" class="bordered-td">&nbsp;</td>
                                         @endif
 
                                     @if (isset($tablas_por_obras[($x*3)+1]->productos[$z]))
-                                    <td style="font-size: 12px;" class="bordered-td">&nbsp;{{$tablas_por_obras[($x*3)+1]->productos[$z]->producto }} {{ $unidad_medida}} : {{$tablas_por_obras[($x*3)+1]->productos[$z]->cant_total_producto }}</td>                                  
-                                        @else    
+                                    <td style="font-size: 12px;" class="bordered-td">&nbsp;{{$tablas_por_obras[($x*3)+1]->productos[$z]->producto }} {{ $unidad_medida}} : {{$tablas_por_obras[($x*3)+1]->productos[$z]->cant_total_producto }}</td>
+                                        @else
                                         <td style="font-size: 12px;" class="bordered-td">&nbsp;</td>
                                         @endif
-                                
+
                                     </tr>
-                                @endfor      
+                                @endfor
                             </tbody>
                         </table>
 
@@ -363,13 +363,13 @@ footer {
 
                         <table class="bordered-td">
                             <thead>
-                                <tr>                                   
-                                    <th style="font-size: 12px; width:255px;text-align: center;" class="bordered-td"  colspan="2">Obra : {{ $tablas_por_obras[($x*3)+2]->obra }}</th>                     
+                                <tr>
+                                    <th style="font-size: 12px; width:255px;text-align: center;" class="bordered-td"  colspan="2">Obra : {{ $tablas_por_obras[($x*3)+2]->obra }}</th>
                                 </tr>
-                                <tr>                            
+                                <tr>
                                     <th style="font-size: 12px; width:125px;text-align: center;" class="bordered-td">Servicios</th>
-                                    <th style="font-size: 12px; width:125px;text-align: center;" class="bordered-td">{{ $modalidadCobro }}</th>                       
-                                </tr>                       
+                                    <th style="font-size: 12px; width:125px;text-align: center;" class="bordered-td">{{ $modalidadCobro }}</th>
+                                </tr>
                             </thead>
                             <tbody>
                                 {{ $cant_total_servicio = count($tablas_por_obras[($x*3)+2]->servicios) }}
@@ -378,22 +378,22 @@ footer {
                                 {{ $filas_total = $cant_total_servicio > $cant_total_producto ? $cant_total_servicio : $cant_total_producto }}
 
                                 @for ( $z=0 ;  $z< $filas_total  ; $z++)
-                                    
+
                                     <tr>
                                         @if (isset($tablas_por_obras[($x*3)+2]->servicios[$z]))
-                                            <td style="font-size: 12px;" class="bordered-td"> {{$tablas_por_obras[($x*3)+2]->servicios[$z]->servicio }} : {{$tablas_por_obras[($x*3)+2]->servicios[$z]->cant_total_servicio }} </td>   
-                                        @else    
+                                            <td style="font-size: 12px;" class="bordered-td"> {{$tablas_por_obras[($x*3)+2]->servicios[$z]->servicio }} : {{$tablas_por_obras[($x*3)+2]->servicios[$z]->cant_total_servicio }} </td>
+                                        @else
                                         <td style="font-size: 12px;" class="bordered-td">&nbsp;</td>
                                         @endif
 
                                     @if (isset($tablas_por_obras[($x*3)+2]->productos[$z]))
-                                    <td style="font-size: 12px;" class="bordered-td">&nbsp;{{$tablas_por_obras[($x*3)+2]->productos[$z]->producto }} {{ $unidad_medida}} : {{$tablas_por_obras[($x*3)+2]->productos[$z]->cant_total_producto }}</td>                                  
-                                        @else    
+                                    <td style="font-size: 12px;" class="bordered-td">&nbsp;{{$tablas_por_obras[($x*3)+2]->productos[$z]->producto }} {{ $unidad_medida}} : {{$tablas_por_obras[($x*3)+2]->productos[$z]->cant_total_producto }}</td>
+                                        @else
                                         <td style="font-size: 12px;" class="bordered-td">&nbsp;</td>
                                         @endif
-                                
+
                                     </tr>
-                                @endfor      
+                                @endfor
                             </tbody>
                         </table>
 
@@ -404,14 +404,14 @@ footer {
     </tbody>
 </table>
 
-</main>   
-     
+</main>
+
     <script type="text/php">
 
           if ( isset($pdf) ) {
             $x = 692;
             $y = 63;
-            $text = "PÁGINA : {PAGE_NUM} de {PAGE_COUNT}";
+            $text = "PAGINA : {PAGE_NUM} de {PAGE_COUNT}";
             $font = $fontMetrics->get_font("serif", "bold");
             $size = 9;
             $color = array(0,0,0);

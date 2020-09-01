@@ -14,11 +14,11 @@
 
 header {
     position:fixed;
-    top: -237px;    
-}        
-    
+    top: -237px;
+}
+
 footer {
-    position: fixed; bottom:0px; 
+    position: fixed; bottom:0px;
     padding-top: 0px;
 }
 
@@ -27,58 +27,58 @@ footer {
 <body>
 
 <header>
-    @include('reportes.partial.header-principal-portrait')     
-    @include('reportes.partial.linea-amarilla')                
-    @include('reportes.partial.header-cliente-comitente-portrait')    
-    @include('reportes.partial.linea-gris')        
-    @include('reportes.partial.header-proyecto-portrait')    
-    @include('reportes.partial.linea-amarilla') 
+    @include('reportes.partial.header-principal-portrait')
+    @include('reportes.partial.linea-amarilla')
+    @include('reportes.partial.header-cliente-comitente-portrait')
+    @include('reportes.partial.linea-gris')
+    @include('reportes.partial.header-proyecto-portrait')
+    @include('reportes.partial.linea-amarilla')
 </header>
 
 <footer>
-    @include('reportes.partial.linea-amarilla') 
+    @include('reportes.partial.linea-amarilla')
     @include('reportes.partial.observaciones')
-    @include('reportes.partial.linea-amarilla') 
-    @include('reportes.ots.firmas') 
+    @include('reportes.partial.linea-amarilla')
+    @include('reportes.ots.firmas')
 </footer>
 
-<main>   
+<main>
 
     <table width="100%">>
         <tbody>
-                <td style="font-size: 13px;" > <b>{{ $tabla }}: </b>  {{$modelo->descripcion}}</td>  
+                <td style="font-size: 13px;" > <b>{{ $tabla }}: </b>  {{$modelo->descripcion}}</td>
         </tbody>
     </table>
 
     <table style="text-align: center" class="" width="100%">
-        <tbody>            
+        <tbody>
                 <tr>
-                    <td>                     
-                        <table>    
+                    <td>
+                        <table>
                             <tbody>
                                 <tr>
                                     <td style="text-align: center; width: 330px;height: 275px">
                                             @if ($ot_referencia->path1!='/img/imagen1.jpg')
                                                 <img src="{{ public_path($ot_referencia->path1) }}" alt="" style="height: 160; width: 234;">
-                                            @endif  
-                                            
+                                            @endif
+
                                     </td>
                                     <td style="text-align: center; width: 330px;height: 275px">
                                         @if ($ot_referencia->path2!='/img/imagen2.jpg')
                                             <img src="{{  public_path($ot_referencia->path2) }}" alt="" style="height: 160; width: 234;">
-                                        @endif  
+                                        @endif
                                     </td>
                                 </tr>
                                 <tr>
                                     <td style="text-align: center; width: 330px;height: 275px">
                                         @if ($ot_referencia->path3!='/img/imagen3.jpg')
                                             <img src="{{  public_path($ot_referencia->path3) }}" alt="" style="height: 160; width: 234;">
-                                    @endif  
+                                    @endif
                                     </td>
                                     <td style="text-align: center; width: 330px;height: 275px">
                                         @if ($ot_referencia->path4!='/img/imagen4.jpg')
                                             <img src="{{  public_path($ot_referencia->path4) }}" alt="" style="height: 160; width: 234;">
-                                    @endif  
+                                    @endif
                                     </td>
                                 </tr>
                             </tbody>
@@ -86,16 +86,16 @@ footer {
                     </td>
                 </tr>
         </tbody>
-    </table>    
+    </table>
 
-</main>   
-     
+</main>
+
     <script type="text/php">
 
         if ( isset($pdf) ) {
             $x = 468;
             $y = 66;
-            $text = "PÁGINA : {PAGE_NUM} de {PAGE_COUNT}";
+            $text = "PAGINA : {PAGE_NUM} de {PAGE_COUNT}";
             $font = $fontMetrics->get_font("serif", "bold");
             $size = 9;
             $color = array(0,0,0);

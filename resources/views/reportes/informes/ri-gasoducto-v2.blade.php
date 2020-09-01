@@ -13,11 +13,11 @@
 
 header {
     position:fixed;
-    top: -230px;    
-}        
-    
+    top: -230px;
+}
+
 footer {
-    position: fixed; bottom:0px; 
+    position: fixed; bottom:0px;
     padding-top: 0px;
 }
 
@@ -25,16 +25,16 @@ footer {
 
 <body>
 <header>
-    @include('reportes.partial.header-principal-landscape')     
-    @include('reportes.partial.linea-amarilla')                
-    @include('reportes.partial.header-cliente-comitente-landscape')    
-    @include('reportes.partial.linea-gris')        
-    @include('reportes.partial.header-proyecto-landscape')    
-    @include('reportes.partial.linea-amarilla') 
+    @include('reportes.partial.header-principal-landscape')
+    @include('reportes.partial.linea-amarilla')
+    @include('reportes.partial.header-cliente-comitente-landscape')
+    @include('reportes.partial.linea-gris')
+    @include('reportes.partial.header-proyecto-landscape')
+    @include('reportes.partial.linea-amarilla')
 </header>
 <footer>
 
-    @include('reportes.partial.linea-amarilla') 
+    @include('reportes.partial.linea-amarilla')
 
     <table width="100%" style="border-collapse: collapse;" >
         <tbody>
@@ -55,7 +55,7 @@ footer {
                 <td style="font-size: 11px; " class="bordered-td"><b>CI: </b>Concavidad Interna</td>
                 <td style="font-size: 11px; " class="bordered-td"><b>CE: </b>Concavidad Externa</td>
                 <td style="font-size: 11px; " class="bordered-td"><b>SI: </b>Socavado Interior</td>
-                <td style="font-size: 11px; " class="bordered-td"><b>SE: </b>Socavado Exterior</td>                                
+                <td style="font-size: 11px; " class="bordered-td"><b>SE: </b>Socavado Exterior</td>
             </tr>
             <tr>
                 <td style="font-size: 11px; " class="bordered-td"><b>ME: </b>Escoria Aislada</td>
@@ -63,7 +63,7 @@ footer {
                 <td style="font-size: 11px; " class="bordered-td"><b>P: </b>Poros</td>
                 <td style="font-size: 11px; " class="bordered-td"><b>NP: </b>Nido de Poros</td>
                 <td style="font-size: 11px; " class="bordered-td"><b>PV: </b>Poro Vermicular</td>
-                <td style="font-size: 11px; " class="bordered-td"><b>CH: </b>Cordón Hueco</td>                                
+                <td style="font-size: 11px; " class="bordered-td"><b>CH: </b>Cordón Hueco</td>
             </tr>
             <tr>
                 <td style="font-size: 11px; " class="bordered-td"><b>IT: </b>Inclusión de Tungteno</td>
@@ -73,26 +73,26 @@ footer {
                 <td style="font-size: 11px; " class="bordered-td"><b>RP: </b>Repetir Placa</td>
             </tr>
             <tr>
-                    <td style="font-size: 11px; "  class="bordered-td"><b>R: </b>Raiz</td>                          
+                    <td style="font-size: 11px; "  class="bordered-td"><b>R: </b>Raiz</td>
                     <td style="font-size: 11px; "  class="bordered-td"><b>Y: </b>Relleno</td>
                     <td style="font-size: 11px; "  class="bordered-td"><b>S: </b>Sobremonta</td>
-                    <td style="font-size: 11px; "  class="bordered-td"><b>AP: </b>Aprobado</td>                          
+                    <td style="font-size: 11px; "  class="bordered-td"><b>AP: </b>Aprobado</td>
                     <td style="font-size: 11px; " colspan="2" class="bordered-td"><b>RZ: </b>Rechazado</td>
             </tr>
-            <tr>                                
-                <td style="font-size: 11px;" colspan="6" class="bordered-td"><b>Observaciones: </b>{{$informe->observaciones}}</td>                                  
-            </tr>                         
+            <tr>
+                <td style="font-size: 11px;" colspan="6" class="bordered-td"><b>Observaciones: </b>{{$informe->observaciones}}</td>
+            </tr>
         </tbody>
     </table>
 
-    @include('reportes.partial.linea-amarilla') 
+    @include('reportes.partial.linea-amarilla')
 
-    @include('reportes.informes.partial.firmas') 
+    @include('reportes.informes.partial.firmas')
 </footer>
 
 
 <main>
-    @include('reportes.informes.partial.header-detalle-ri-landscope')         
+    @include('reportes.informes.partial.header-detalle-ri-landscope')
 
     <table width="100%" style="border-collapse: collapse;">
         <thead>
@@ -118,27 +118,27 @@ footer {
                 <td style="font-size: 11px; width:60px;  text-align: center;" colspan="2" class="bordered-td">6° Pasada</td>
             </tr>
             <tr>
-                <td style="font-size: 11px; width:28px;  text-align: center;" class="bordered-td">Z</td>  
-                <td style="font-size: 11px; width:28px;  text-align: center;" class="bordered-td">L</td>  
+                <td style="font-size: 11px; width:28px;  text-align: center;" class="bordered-td">Z</td>
+                <td style="font-size: 11px; width:28px;  text-align: center;" class="bordered-td">L</td>
                 <td style="font-size: 11px; width:28px;  text-align: center;" class="bordered-td">P</td>
-                <td style="font-size: 11px; width:28px;  text-align: center;" class="bordered-td">Z</td>  
+                <td style="font-size: 11px; width:28px;  text-align: center;" class="bordered-td">Z</td>
                 <td style="font-size: 11px; width:28px;  text-align: center;" class="bordered-td">P</td>
-                <td style="font-size: 11px; width:28px;  text-align: center;" class="bordered-td">Z</td>  
-                <td style="font-size: 11px; width:28px;  text-align: center;" class="bordered-td">P</td>   
-                <td style="font-size: 11px; width:28px;  text-align: center;" class="bordered-td">Z</td>  
-                <td style="font-size: 11px; width:28px;  text-align: center;" class="bordered-td">P</td>  
-                <td style="font-size: 11px; width:28px;  text-align: center;" class="bordered-td">Z</td>  
-                <td style="font-size: 11px; width:28px;  text-align: center;" class="bordered-td">P</td>  
-                <td style="font-size: 11px; width:28px;  text-align: center;" class="bordered-td">Z</td>  
-                <td style="font-size: 11px; width:28px;  text-align: center;" class="bordered-td">P</td>    
-                <td style="font-size: 11px; width:49px; text-align: center;" class="bordered-td">Posición</td> 
+                <td style="font-size: 11px; width:28px;  text-align: center;" class="bordered-td">Z</td>
+                <td style="font-size: 11px; width:28px;  text-align: center;" class="bordered-td">P</td>
+                <td style="font-size: 11px; width:28px;  text-align: center;" class="bordered-td">Z</td>
+                <td style="font-size: 11px; width:28px;  text-align: center;" class="bordered-td">P</td>
+                <td style="font-size: 11px; width:28px;  text-align: center;" class="bordered-td">Z</td>
+                <td style="font-size: 11px; width:28px;  text-align: center;" class="bordered-td">P</td>
+                <td style="font-size: 11px; width:28px;  text-align: center;" class="bordered-td">Z</td>
+                <td style="font-size: 11px; width:28px;  text-align: center;" class="bordered-td">P</td>
+                <td style="font-size: 11px; width:49px; text-align: center;" class="bordered-td">Posición</td>
                 <td style="font-size: 11px; width:16px; text-align: center;" class="bordered-td"><span class="EspecialCaracter">ρ</span></td>
-                <td style="font-size: 11px; width:50px; text-align: center;" class="bordered-td">Tipo</td>  
-                <td style="font-size: 11px; width:110px; text-align: center"  class="bordered-td">Posición</td>                     
+                <td style="font-size: 11px; width:50px; text-align: center;" class="bordered-td">Tipo</td>
+                <td style="font-size: 11px; width:110px; text-align: center"  class="bordered-td">Posición</td>
                 <td style="font-size: 11px; width:25px; text-align: center;" class="bordered-td">AP</td>
                 <td style="font-size: 11px; width:25px; text-align: center;" class="bordered-td">RZ</td>
-            
-            </tr>   
+
+            </tr>
         </thead>
         <tbody>
             @foreach ($juntas_posiciones as $junta_posiciones)
@@ -147,26 +147,26 @@ footer {
                     @if ($informe->km)
 
                        {{ $informe->km}}
-                       
+
                     @else
 
-                        &nbsp;   
-                        
+                        &nbsp;
+
                     @endif
-                    
+
                     </td>
                     <td style="font-size: 11px;  width:51px;text-align: center" class="bordered-td">{{$junta_posiciones->junta}} </td>
                     <td style="font-size: 11px;  width:51px;text-align: center" class="bordered-td">{{$ot_tipo_soldadura->TipoSoldadura->codigo}}</td>
-                 
+
                         {{ $x = 0  }}
 
                         <!--   Pasada 1 -->
-                        @foreach ($pasadas_juntas as $key => $pasadas_junta)                                
+                        @foreach ($pasadas_juntas as $key => $pasadas_junta)
 
-                            
+
                             @if (($pasadas_junta->junta_id == $junta_posiciones->id) && ($pasadas_junta->numero == 1 ))
 
-                                 <td style="font-size: 11px;  width:36.5px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorz}} </td>                           
+                                 <td style="font-size: 11px;  width:36.5px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorz}} </td>
                                   {{  $x = 1 }}
 
                             @endif
@@ -174,7 +174,7 @@ footer {
                            @if (($pasadas_junta->junta_id == $junta_posiciones->id) && ($pasadas_junta->numero == 1 ))
 
 
-                                 <td style="font-size: 11px;  width:36.7px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorl}} </td>                           
+                                 <td style="font-size: 11px;  width:36.7px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorl}} </td>
 
 
                             @endif
@@ -182,94 +182,94 @@ footer {
                            @if (($pasadas_junta->junta_id == $junta_posiciones->id) && ($pasadas_junta->numero == 1 ))
 
 
-                                 <td style="font-size: 11px;  width:36.7px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorp}} </td>                           
+                                 <td style="font-size: 11px;  width:36.7px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorp}} </td>
 
 
                             @endif
-                            
-                        @endforeach  
+
+                        @endforeach
 
                         @if ($x == 0)
 
                              <td style="font-size: 11px;  width:36.5px; text-align:center;" class="bordered-td">&nbsp;</td>
                              <td style="font-size: 11px;  width:36.7px; text-align:center;" class="bordered-td">&nbsp;</td>
                              <td style="font-size: 11px;  width:36.7px; text-align:center;" class="bordered-td">&nbsp;</td>
-                            
-                        @endif   
-                    
+
+                        @endif
+
                          <!--   Pasada 2 -->
 
                          {{ $x = 0  }}
 
-                         @foreach ($pasadas_juntas as $key => $pasadas_junta)                    
+                         @foreach ($pasadas_juntas as $key => $pasadas_junta)
 
-                             
+
                             @if (($pasadas_junta->junta_id == $junta_posiciones->id) && ($pasadas_junta->numero == 2 ))
 
                                {{  $x = 1 }}
 
-                                 <td style="font-size: 11px;  width:36.8px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorz}} </td>                           
+                                 <td style="font-size: 11px;  width:36.8px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorz}} </td>
 
 
                             @endif
-                     
+
 
                             @if (($pasadas_junta->junta_id == $junta_posiciones->id) && ($pasadas_junta->numero == 2 ))
 
 
-                                 <td style="font-size: 11px;  width:36.8px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorp}} </td>                           
+                                 <td style="font-size: 11px;  width:36.8px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorp}} </td>
 
 
                             @endif
-                            
+
                         @endforeach
 
                            @if ($x == 0)
                              <td style="font-size: 11px;  width:36.8px; text-align:center;" class="bordered-td">&nbsp;</td>
-                             <td style="font-size: 11px;  width:36.8px; text-align:center;" class="bordered-td">&nbsp;</td>                            
-                          @endif   
+                             <td style="font-size: 11px;  width:36.8px; text-align:center;" class="bordered-td">&nbsp;</td>
+                          @endif
 
                         <!--   Pasada 3 -->
 
                          {{ $x =0  }}
 
-                         @foreach ($pasadas_juntas as $key => $pasadas_junta)                      
+                         @foreach ($pasadas_juntas as $key => $pasadas_junta)
 
-                            
+
                             @if (($pasadas_junta->junta_id == $junta_posiciones->id) && ($pasadas_junta->numero == 3 ))
 
                                  {{  $x = 1 }}
-                                 <td style="font-size: 11px;  width:36.7px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorz}} </td>                           
+                                 <td style="font-size: 11px;  width:36.7px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorz}} </td>
 
 
-                            @endif                       
+                            @endif
 
                             @if (($pasadas_junta->junta_id == $junta_posiciones->id) && ($pasadas_junta->numero == 3 ))
 
 
-                                 <td style="font-size: 11px;  width:36.7px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorp}} </td>                           
+                                 <td style="font-size: 11px;  width:36.7px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorp}} </td>
 
 
                             @endif
-                            
+
                         @endforeach
 
                          @if ($x == 0)
                              <td style="font-size: 11px;  width:36.7px; text-align:center;" class="bordered-td">&nbsp;</td>
-                             <td style="font-size: 11px;  width:36.7px; text-align:center;" class="bordered-td">&nbsp;</td>                            
-                          @endif 
+                             <td style="font-size: 11px;  width:36.7px; text-align:center;" class="bordered-td">&nbsp;</td>
+                          @endif
 
                         <!--   Pasada 4 -->
 
                          {{ $x =0  }}
 
-                        @foreach ($pasadas_juntas as $key => $pasadas_junta)                       
+                        @foreach ($pasadas_juntas as $key => $pasadas_junta)
 
-                            
+
                             @if (($pasadas_junta->junta_id == $junta_posiciones->id) && ($pasadas_junta->numero == 4 ))
 
                                 {{  $x = 1 }}
-                                 <td style="font-size: 11px;  width:36.7px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorz}} </td>                           
+                                 <td style="font-size: 11px;  width:36.7px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorz}} </td>
 
 
                             @endif
@@ -278,29 +278,29 @@ footer {
                             @if (($pasadas_junta->junta_id == $junta_posiciones->id) && ($pasadas_junta->numero == 4 ))
 
 
-                                 <td style="font-size: 11px;  width:36.8px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorp}} </td>                           
+                                 <td style="font-size: 11px;  width:36.8px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorp}} </td>
 
 
                             @endif
-                            
+
                         @endforeach
 
                         @if ($x == 0)
                             <td style="font-size: 11px;  width:36.7px; text-align:center;" class="bordered-td">&nbsp;</td>
-                            <td style="font-size: 11px;  width:36.8px; text-align:center;" class="bordered-td">&nbsp;</td>                            
-                        @endif 
+                            <td style="font-size: 11px;  width:36.8px; text-align:center;" class="bordered-td">&nbsp;</td>
+                        @endif
 
                         <!--   Pasada 5 -->
 
                         {{ $x =0  }}
 
-                        @foreach ($pasadas_juntas as $key => $pasadas_junta)                      
+                        @foreach ($pasadas_juntas as $key => $pasadas_junta)
 
-                            
+
                            @if (($pasadas_junta->junta_id == $junta_posiciones->id) && ($pasadas_junta->numero == 5 ))
 
                                  {{  $x = 1 }}
-                                 <td style="font-size: 11px;  width:36.7px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorz}} </td>                           
+                                 <td style="font-size: 11px;  width:36.7px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorz}} </td>
 
 
                             @endif
@@ -309,29 +309,29 @@ footer {
                             @if (($pasadas_junta->junta_id == $junta_posiciones->id) && ($pasadas_junta->numero == 5 ))
 
 
-                                 <td style="font-size: 11px;  width:36.7px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorp}} </td>                           
+                                 <td style="font-size: 11px;  width:36.7px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorp}} </td>
 
 
                             @endif
-                            
+
                         @endforeach
 
                         @if ($x == 0)
                             <td style="font-size: 11px;  width:36.7px; text-align:center;" class="bordered-td">&nbsp;</td>
-                            <td style="font-size: 11px;  width:36.7px; text-align:center;" class="bordered-td">&nbsp;</td>                            
-                        @endif 
+                            <td style="font-size: 11px;  width:36.7px; text-align:center;" class="bordered-td">&nbsp;</td>
+                        @endif
 
                         <!--   Pasada 6 -->
 
                         {{ $x =0  }}
 
-                         @foreach ($pasadas_juntas as $key => $pasadas_junta)                       
+                         @foreach ($pasadas_juntas as $key => $pasadas_junta)
 
-                            
+
                             @if (($pasadas_junta->junta_id == $junta_posiciones->id) && ($pasadas_junta->numero == 6 ))
 
                                  {{  $x = 1 }}
-                                 <td style="font-size: 11px;  width:37px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorz}} </td>                           
+                                 <td style="font-size: 11px;  width:37px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorz}} </td>
 
 
                             @endif
@@ -340,17 +340,17 @@ footer {
                             @if (($pasadas_junta->junta_id == $junta_posiciones->id) && ($pasadas_junta->numero == 6 ))
 
 
-                                 <td style="font-size: 11px;  width:37px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorp}} </td>                           
+                                 <td style="font-size: 11px;  width:37px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorp}} </td>
 
 
                             @endif
-                            
+
                         @endforeach
 
                         @if ($x == 0)
                             <td style="font-size: 11px;  width:37.5px; text-align:center;" class="bordered-td">&nbsp;</td>
-                            <td style="font-size: 11px;  width:37.5px; text-align:center;" class="bordered-td">&nbsp;</td>                            
-                        @endif 
+                            <td style="font-size: 11px;  width:37.5px; text-align:center;" class="bordered-td">&nbsp;</td>
+                        @endif
 
                     <td style="font-size: 11px;  width:63.5px;text-align: center" class="bordered-td">{{$junta_posiciones->codigo}}</td>
 
@@ -371,8 +371,8 @@ footer {
                                     /
                                 @endif
 
-                                {{ $defectos_posicion->codigo }}   
-                                {{ $primero = false}}                  
+                                {{ $defectos_posicion->codigo }}
+                                {{ $primero = false}}
 
                             @endif
 
@@ -390,36 +390,36 @@ footer {
                                 @if (!$primero)
                                     /
                                 @endif
-                                
+
                                 @if ($defectos_posicion->pasada)
                                     @if ($defectos_posicion->pasada == 'RAIZ')
                                         @php
-                                            $sector = 'R'; 
+                                            $sector = 'R';
                                         @endphp
                                     @elseif ($defectos_posicion->pasada == 'RELLENO')
                                         @php
-                                            $sector = 'Y'; 
+                                            $sector = 'Y';
                                         @endphp
                                     @elseif ($defectos_posicion->pasada == 'SOBREMONTA')
                                         @php
-                                            $sector = 'S'; 
+                                            $sector = 'S';
                                         @endphp
-                                    @endif                               
+                                    @endif
 
                                 @php
                                     $valor_imprimir = $defectos_posicion->codigo . '(' . $defectos_posicion->posicion . ')' . $sector ;
                                 @endphp
 
                                     {{ $valor_imprimir}}
-                                    {{ $primero = false}}     
-                                    
+                                    {{ $primero = false}}
+
                                 @endif
                             @endif
                         @endforeach
 
                     </td>
 
-                    <!-- Resultado-->   
+                    <!-- Resultado-->
                     <td style="font-size: 11px;width:32.7px; text-align: center; " class="bordered-td">
                         @if ($junta_posiciones->aceptable_sn == 1)
                             X
@@ -432,12 +432,12 @@ footer {
                         @endif
                     </td>
                 </tr>
-                
-            @endforeach    
+
+            @endforeach
   <!--
             {{ $cantFilasTotal = count($juntas_posiciones) }}
             {{ $filasPage = 14 }}
-            {{ $filasACompletar = pdfCantFilasACompletar($filasPage,$cantFilasTotal) }}  
+            {{ $filasACompletar = pdfCantFilasACompletar($filasPage,$cantFilasTotal) }}
 
              @for ( $x=0 ;  $x < $filasACompletar ; $x++)
             <tr>
@@ -460,24 +460,24 @@ footer {
                 <td style="font-size: 11px;  width:64px;text-align: center" class="bordered-td">&nbsp;</td>
                 <td style="font-size: 11px;width:75px;  text-align: center" class="bordered-td">&nbsp;</td>
                 <td style="font-size: 11px;width:93.5px; text-align: center" class="bordered-td">&nbsp;</td>
-                <td style="font-size: 11px;width:76px; text-align: center" class="bordered-td">        
+                <td style="font-size: 11px;width:76px; text-align: center" class="bordered-td">
                 <td style="font-size: 11px;width:32.2px; text-align: center; " class="bordered-td">&nbsp;</td>
                 <td style="font-size: 11px; text-align: center;" class="bordered-td">&nbsp;</td>
-               
+
             </tr>
             @endfor
-    -->                                
+    -->
         </tbody>
-    </table> 
+    </table>
 
-</main>   
-     
+</main>
+
     <script type="text/php">
 
         if ( isset($pdf) ) {
             $x = 692;
             $y = 60;
-            $text = "PÁGINA : {PAGE_NUM} de {PAGE_COUNT}";
+            $text = "PAGINA : {PAGE_NUM} de {PAGE_COUNT}";
             $font = $fontMetrics->get_font("serif", "bold");
             $size = 9;
             $color = array(0,0,0);
