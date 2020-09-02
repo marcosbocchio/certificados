@@ -1275,11 +1275,10 @@
                  });
                },
          cambioEspesor : function(){
+
              if(this.espesor.id != undefined) {
                   this.ActualizarDistFuentePelicula();
-
              }else{
-           //   this.espesor.espesor = parseFloat(this.espesor.espesor);
               var match = this.espesor.espesor.match(/[+-]?([0-9]*[.])?[0-9]+?$/);
               if(!match){
                   this.espesor.espesor = 0;
@@ -1287,6 +1286,7 @@
                  this.ActualizarDistFuentePelicula();
              }
          },
+
          cambioMedida : function(){
 
              this.medida.codigo = this.medida.codigo.replace('X','x');
@@ -1297,6 +1297,7 @@
              }
              this.ActualizarDistFuentePelicula();
          },
+
          ActualizarDistFuentePelicula : function(){
 
                  axios.defaults.baseURL = this.url ;
@@ -1324,6 +1325,7 @@
 
                  }
          },
+
          getEjecutorEnsayo: function(){
 
                  axios.defaults.baseURL = this.url ;
@@ -1381,6 +1383,7 @@
                  this.addElementosPasadas(item.junta);
              }.bind(this));
          },
+
          AddDetalle (posicion) {
 
              if( (this.reparacion_sn && this.junta_reparacion == '') ||(!this.reparacion_sn && this.junta == '') ){
@@ -1477,30 +1480,43 @@
 
              if(this.posicionPlacaGosaducto !=''){
 
-                let exp_posicion = /^[0-9]{1,3}-[0-9]{1,3}$/ ;
-                if(!exp_posicion.test(this.posicionPlacaGosaducto)){
-                    toastr.error('El formato ingresado no es válido');
-                    return;
-                }
+                let str_pos_placa = this.TablaDetalle[this.indexDetalle].posicion;
+                console.log(str_pos_placa);
+                if (str_pos_placa.length == 1){
 
-                let str_pos_defecto = this.posicionPlacaGosaducto.split("-");
-                let pos_inicial_defecto = parseInt(str_pos_defecto[0].trim());
-                let pos_final_defecto = parseInt(str_pos_defecto[1].trim());
+                    if (this.posicionPlacaGosaducto.length > 1 || str_pos_placa != this.posicionPlacaGosaducto){
 
-                if ((pos_final_defecto <  pos_inicial_defecto) && (pos_inicial_defecto > 0 && pos_final_defecto != 0)){
-                    toastr.error('Valores en posición indicación incorrectos');
-                    return;
-                }
+                       toastr.error('Valores en posición indicación incorrectos');
+                        return;
+                    }
 
-                let str_pos_placa = this.TablaDetalle[this.indexDetalle].posicion.split("-");
-                let pos_inicial_placa = parseInt(str_pos_placa[0].trim());
-                let pos_final_placa = parseInt(str_pos_placa[1].trim());
+                }else{
 
-                let longitud_placa = parseInt(this.TablaDetalle[0].posicion.split("-")[1].trim());
+                    let exp_posicion = /^[0-9]{1,3}-[0-9]{1,3}$/ ;
+                    if(!exp_posicion.test(this.posicionPlacaGosaducto)){
+                        toastr.error('El formato ingresado no es válido');
+                        return;
+                    }
 
-                if(! ( ((pos_inicial_defecto >= pos_inicial_placa && (pos_final_defecto <= (pos_inicial_placa + longitud_placa))) || ((pos_inicial_defecto == pos_inicial_placa) && (pos_final_defecto == pos_final_placa ))))) {
-                    toastr.error('Valores en posición indicación incorrectos');
-                    return;
+                    let str_pos_defecto = this.posicionPlacaGosaducto.split("-");
+                    let pos_inicial_defecto = parseInt(str_pos_defecto[0].trim());
+                    let pos_final_defecto = parseInt(str_pos_defecto[1].trim());
+
+                    if ((pos_final_defecto <  pos_inicial_defecto) && (pos_inicial_defecto > 0 && pos_final_defecto != 0)){
+                        toastr.error('Valores en posición indicación incorrectos');
+                        return;
+                    }
+
+                    let array_pos_placa = this.TablaDetalle[this.indexDetalle].posicion.split("-");
+                    let pos_inicial_placa = parseInt(array_pos_placa[0].trim());
+                    let pos_final_placa = parseInt(array_pos_placa[1].trim());
+
+                    let longitud_placa = parseInt(this.TablaDetalle[0].posicion.split("-")[1].trim());
+
+                    if(! ( ((pos_inicial_defecto >= pos_inicial_placa && (pos_final_defecto <= (pos_inicial_placa + longitud_placa))) || ((pos_inicial_defecto == pos_inicial_placa) && (pos_final_defecto == pos_final_placa ))))) {
+                        toastr.error('Valores en posición indicación incorrectos');
+                        return;
+                    }
                 }
              }
 
