@@ -1093,10 +1093,10 @@
                 this.componente = this.informedata.componente;
                 this.material = this.materialdata;
                 this.material2 = this.material2data;
-                if(this.informedata.material2_tipo) { material2_tipo = this.informedata.material2_tipo };
+                if(this.informedata.material2_tipo) { this.material2_tipo = this.informedata.material2_tipo };
                 this.plano_isom = this.informedata.plano_isom;
                 this.diametro = this.diametrodata;
-                this.espesor = this.informedata.espesor_especifico ? {'espesor' : this.informedata.espesor_especifico} : this.diametro_espesordata;
+                this.informedata.espesor_especifico ? {'espesor' : this.informedata.espesor_especifico} : this.diametro_espesordata;
                 this.getEspesores();
                 this.tecnica = this.tecnicadata;
                 this.interno_equipo = this.interno_equipodata;
