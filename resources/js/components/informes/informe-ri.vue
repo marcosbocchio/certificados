@@ -79,9 +79,14 @@
                              </div>
                          </div>
 
+
                          <div class="col-md-3" >
                              <div class="form-group">
-                                 <label for="material2">Material accesorio</label>
+                                <label for="material2">Material </label>
+                                <input type="radio" id="caño" value="Caño" v-model="material2_tipo" style="float:right">
+                                <label for="caño" style="float:right;margin-right: 5px;margin-left:5px" title="Caño">Caño</label>
+                                <input type="radio" id="accesorio" value="Accesorio" v-model="material2_tipo" style="float:right">
+                                <label for="accesorio" style="float:right;margin-right: 5px;margin-left:5px" title="Accesorio">Acces.</label>
                                  <v-select v-model="material2" label="codigo" :options="materiales" id="material2"></v-select>
                              </div>
                          </div>
@@ -826,6 +831,7 @@
         type : [ Object, Array ],
         required : false,
        },
+
        diametrodata : {
        type : Object,
        required : false
@@ -903,6 +909,7 @@
              tipo_soldadura:'',
              material:'',
              material2:'',
+             material2_tipo:'Accesorio',
              diametro:'',
              espesor:'',
              espesor_chapa:'',
@@ -1086,6 +1093,7 @@
                 this.componente = this.informedata.componente;
                 this.material = this.materialdata;
                 this.material2 = this.material2data;
+                if(this.informedata.material2_tipo) { material2_tipo = this.informedata.material2_tipo };
                 this.plano_isom = this.informedata.plano_isom;
                 this.diametro = this.diametrodata;
                 this.espesor = this.informedata.espesor_especifico ? {'espesor' : this.informedata.espesor_especifico} : this.diametro_espesordata;
@@ -1471,6 +1479,7 @@
                  toastr.error('Campo Cunio Z es obligatorio');
              }
          },
+
          addDefectos () {
 
              if(this.defectoRiPlanta == '' ){
@@ -1481,7 +1490,7 @@
              if(this.posicionPlacaGosaducto !=''){
 
                 let str_pos_placa = this.TablaDetalle[this.indexDetalle].posicion;
-                console.log(str_pos_placa);
+
                 if (str_pos_placa.length == 1){
 
                     if (this.posicionPlacaGosaducto.length > 1 || str_pos_placa != this.posicionPlacaGosaducto){
@@ -1550,8 +1559,8 @@
                     return  item.elemento_pasada != junta;
 
                  });
-             this.elemento_pasada = '';
 
+             this.elemento_pasada = '';
              this.elemento_pasadas = this.elemento_pasadas.filter(function(item2){
 
                  return  item2 != junta;
@@ -1561,8 +1570,10 @@
 
          },
          RemovePasada(index) {
+
              this.indexPasada = 0;
              this.TablaPasadas.splice(index, 1);
+             this.autocompletarNumeroPasada();
          },
          RemoveDefectos(index) {
 
@@ -1882,6 +1893,7 @@
                          'observaciones':  this.observaciones,
                          'material':       this.material,
                          'material2':      this.material2,
+                         'material2_tipo': this.material2_tipo,
                          'diametro':       this.diametro,
                          'espesor':        this.espesor,
                          'espesor_chapa' :  this.espesor_chapa,
@@ -1962,6 +1974,7 @@
                          'observaciones':  this.observaciones,
                          'material':       this.material,
                          'material2':      this.material2,
+                         'material2_tipo': this.material2_tipo,
                          'diametro':       this.diametro,
                          'espesor':        this.espesor,
                          'espesor_chapa'    :this.espesor_chapa,

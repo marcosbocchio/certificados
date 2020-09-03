@@ -4,7 +4,7 @@
                 <td width="49%">
                     <table style="font-size: 12px;" width="100%" class="header-detalle">
                         <tbody>
-                      
+
                            <tr>
                                <th width="100%" colspan="4">Componente</th>
                            </tr>
@@ -14,7 +14,7 @@
 
                            <tr>
                                <th  width="100%" colspan="4">Plano / Isométrico</th>
-                           </tr>                     
+                           </tr>
                            <tr>
                                 <td colspan="4">{{$informe->plano_isom}}</td>
                            </tr>
@@ -50,7 +50,7 @@
                                 <td colspan="2">{{$agente_acoplamiento->codigo}}</td>
                                 <td colspan="2">{{$tecnica->descripcion}}</td>
                            </tr>
-    
+
 
                         </tbody>
                     </table>
@@ -63,31 +63,31 @@
                         <tbody>
                            <tr >
                                <th width="50%" colspan="2">Material</th>
-                               <th width="50%" colspan="2">Material Accesorio</th>
+                               <th width="50%" colspan="2">Material ( {{ $informe->material2_tipo }})</th>
                            </tr>
                            <tr >
                                <td colspan="2">{{$material->codigo}}</td>
                                <td colspan="2">
-                                    @if($material_accesorio)
-                                         {{$material_accesorio->codigo}}
+                                    @if($material2)
+                                         {{$material2->codigo}}
                                     @endif
                                </td>
                            </tr>
 
-                           <tr>                          
+                           <tr>
                                 <th colspan="2">Diámetro</th>
                                 <th colspan="2">Espesor</th>
-                           </tr>                   
-                            <tr>                           
+                           </tr>
+                            <tr>
                                 <td colspan="2">{{$diametro_espesor->diametro}}</td>
-                                <td>              
+                                <td>
                                     @if ($informe->espesor_chapa)
                                         {{ $informe->espesor_chapa }}
                                     @elseif($informe->espesor_especifico)
                                         {{ $informe->espesor_especifico }}
                                     @else
                                         {{ $diametro_espesor->espesor }}
-                                    @endif   
+                                    @endif
                                 </td>
                             </tr>
 
@@ -106,15 +106,15 @@
 
                             <tr>
                                 <th colspan="4">Equipo</th>
-                               
+
                             </tr>
                             <tr>
                                 <td colspan="4">{{$interno_equipo->equipo->codigo}}</td>
-                        
+
                             </tr>
 
                             <tr>
-                                <th colspan="2">Norma Evaluación</th>                              
+                                <th colspan="2">Norma Evaluación</th>
                                 <th colspan="2">Norma Ensayo</th>
                             </tr>
                             <tr>
@@ -127,8 +127,8 @@
                             </tr>
                             <tr>
                                 <td colspan="4">{{$ejecutor_ensayo->name}}</td>
-                            </tr>                        
-                                                     
+                            </tr>
+
                         </tbody>
                     </table>
                 </td>

@@ -38,12 +38,12 @@ use App\MetodoEnsayos;
 class PdfInformesRiController extends Controller
 {
 
-    public function imprimir($id){      
+    public function imprimir($id){
 
        /* header */
 
-        $informe = Informe::findOrFail($id);     
-        $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);  
+        $informe = Informe::findOrFail($id);
+        $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);
         $informe_ri = InformesRi::where('informe_id',$informe->id)->firstOrFail();
         $ot = Ots::findOrFail($informe->ot_id);
         $cliente = Clientes::findOrFail($ot->cliente_id);
@@ -61,16 +61,16 @@ class PdfInformesRiController extends Controller
           $ot_tipo_soldadura = OtTipoSoldaduras::where('id',$informe->ot_tipo_soldadura_id)->with('Tiposoldadura')->first();
 
         }
-        $material = Materiales::findOrFail($informe->material_id);   
-        $material_accesorio = Materiales::find($informe->material_accesorio_id);
-        $norma_ensayo = NormaEnsayos::findOrFail($informe->norma_ensayo_id);   
-        $norma_evaluacion = NormaEvaluaciones::findOrFail($informe->norma_evaluacion_id); 
+        $material = Materiales::findOrFail($informe->material_id);
+        $material2 = Materiales::find($informe->material2_id);
+        $norma_ensayo = NormaEnsayos::findOrFail($informe->norma_ensayo_id);
+        $norma_evaluacion = NormaEvaluaciones::findOrFail($informe->norma_evaluacion_id);
         $ot_procedimiento_propio = OtProcedimientosPropios::findOrFail($informe->procedimiento_informe_id);
         $procedimiento_inf = Documentaciones::findOrFail($ot_procedimiento_propio->documentacion_id);
         $interno_equipo = InternoEquipos::where('id',$informe->interno_equipo_id)->with('equipo')->first();
-        $interno_fuente = InternoFuentes::where('id',$informe_ri->interno_fuente_id)->first();   
+        $interno_fuente = InternoFuentes::where('id',$informe_ri->interno_fuente_id)->first();
         $actividad = $interno_fuente ? curie($interno_fuente->id,$informe->fecha) : '';
-        $tipo_pelicula = TipoPeliculas::findOrFail($informe_ri->tipo_pelicula_id);     
+        $tipo_pelicula = TipoPeliculas::findOrFail($informe_ri->tipo_pelicula_id);
         $diametro_espesor = DiametrosEspesor::findOrFail($informe->diametro_espesor_id);
         $ici = Icis::findOrFail($informe_ri->ici_id);
         $tecnica = Tecnicas::findOrFail($informe->tecnica_id);
@@ -78,12 +78,12 @@ class PdfInformesRiController extends Controller
         $ejecutor_ensayo = User::findOrFail($ot_operador->user_id);
         $tecnicas_grafico = TecnicasGraficos::findOrFail($informe_ri->tecnicas_grafico_id);
         $evaluador = User::find($informe->firma);
-        $contratista = Contratistas::find($ot->contratista_id);    
-        $observaciones = $informe->observaciones;   
+        $contratista = Contratistas::find($ot->contratista_id);
+        $observaciones = $informe->observaciones;
 
         /*  Encabezado */
 
-        $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);  
+        $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);
         $titulo = "RADIOGRAFIA INDUSTRIAL";
         $nro = FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo);
         $fecha = date('d-m-Y', strtotime($informe->fecha));
@@ -92,11 +92,11 @@ class PdfInformesRiController extends Controller
         /* Fin encabezado */
 
         if ($informe_ri->gasoducto_sn){
-          
-          $juntas_posiciones = DB::select('CALL InformeRiGasoductoJuntaPosicion(?)',array($informe_ri->id));        
+
+          $juntas_posiciones = DB::select('CALL InformeRiGasoductoJuntaPosicion(?)',array($informe_ri->id));
           $pasadas_juntas = DB::select('CALL InformeRiGasoductoPasadasJuntas(?)',array($informe_ri->id));
-          $defectos_posiciones = DB::select('CALL InformeRiGasoductoDefectosPasadasPosicion(?)',array($informe_ri->id));        
-          
+          $defectos_posiciones = DB::select('CALL InformeRiGasoductoDefectosPasadasPosicion(?)',array($informe_ri->id));
+
         //  dd($juntas_posiciones,$pasadas_juntas,$defectos_posiciones);
 
           $pdf = PDF::loadView('reportes.informes.ri-gasoducto-v2',compact('titulo','nro','tipo_reporte','fecha',
@@ -118,7 +118,7 @@ class PdfInformesRiController extends Controller
                                                                         'informe',
                                                                         'informe_ri',
                                                                         'material',
-                                                                        'material_accesorio',
+                                                                        'material2',
                                                                         'tecnicas_grafico',
                                                                         'juntas_posiciones',
                                                                         'pasadas_juntas',
@@ -131,12 +131,12 @@ class PdfInformesRiController extends Controller
 
         }else
 
-        {          
+        {
           /* Detalle */
-          
+
           $juntas_posiciones = DB::select('CALL InformeRiPlantaJuntaPosicion(?)',array($informe_ri->id));
-          $defectos_posiciones = DB::select('CALL InformeRiPlantaDefectosPasadaPosicion(?)',array($informe_ri->id));                                          
-          
+          $defectos_posiciones = DB::select('CALL InformeRiPlantaDefectosPasadaPosicion(?)',array($informe_ri->id));
+
         // dd($juntas_posiciones,$defectos_posiciones);
 
           $pdf = PDF::loadView('reportes.informes.ri-planta-v2',compact('titulo','nro','tipo_reporte','fecha',
@@ -158,14 +158,14 @@ class PdfInformesRiController extends Controller
                                                               'informe',
                                                               'informe_ri',
                                                               'material',
-                                                              'material_accesorio',
+                                                              'material2',
                                                               'tecnicas_grafico',
                                                               'juntas_posiciones',
                                                               'defectos_posiciones',
                                                               'evaluador',
                                                               'observaciones'))->setPaper('a4','portrait')->setWarnings(false);
 
-                                                    
+
           return $pdf->stream();
 
       }

@@ -4,87 +4,85 @@
             <form @submit.prevent="editmode ?  Update() : Store()"  method="post" autocomplete="off">
                 <informe-header :otdata="otdata"></informe-header>
                  <div class="box box-custom-enod">
-                    <div class="box-body"> 
-                             
+                    <div class="box-body">
+
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="fecha">Fecha *</label>
-                                <div>                                                                      
+                                <div>
                                     <date-picker v-model="fecha" value-type="YYYY-MM-DD" format="DD-MM-YYYY" placeholder="DD-MM-YYYY"></date-picker>
-                                </div> 
+                                </div>
                             </div>
-                        </div>  
- 
+                        </div>
+
                         <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="prefijo">Prefijo N° *</label>
                                 <input type="number" v-model="prefijo" class="form-control" id="prefijo" @change="formatearPrefijo(prefijo,4)" min="1" max="9999" :disabled="interno_sn"/>
-                            </div>                            
-                        </div>  
+                            </div>
+                        </div>
                         <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="numero">Remito N° *</label>
-                               
-                                <input type="checkbox" id="checkbox" v-model="interno_sn" style="float:right"> 
-                                <label for="tipo" style="float:right;margin-right: 5px;">INTERNO</label>             
-                               
+                                <input type="checkbox" id="checkbox" v-model="interno_sn" style="float:right">
+                                <label for="tipo" style="float:right;margin-right: 5px;">INTERNO</label>
                                 <input type="number" v-model="numero" class="form-control" id="numero"  @change="formatearNumero(numero,8)" min="1" max="99999999" :disabled="interno_sn"/>
-                            </div>                            
-                        </div>  
-                         <div class="clearfix"></div>  
+                            </div>
+                        </div>
+                         <div class="clearfix"></div>
 
                         <div class="col-md-6">
                             <div class="form-group" >
                                 <label for="receptor">Receptor *</label>
                                 <input type="text" v-model="receptor" class="form-control" id="receptor" maxlength="45">
-                            </div>                            
+                            </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group" >
                                 <label for="destino">Lugar Destino *</label>
                                 <input type="text" v-model="destino" class="form-control" id="destino" maxlength="100">
-                            </div>                            
+                            </div>
                         </div>
                     </div>
-                 </div>   
+                 </div>
                  <div class="box box-custom-enod">
                     <div class="box-body">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Productos</label>
                                 <v-select v-model="producto" label="descripcion" :options="productos" id="productos" @input="getMedidasProducto()"></v-select>
-                            </div>  
-                        </div>  
+                            </div>
+                        </div>
                         <div class="col-md-3">
-                            <div class="form-group">  
-                            <label>Medidas</label>           
+                            <div class="form-group">
+                            <label>Medidas</label>
 
                             <v-select v-model="medida" :options="medidas" label="codigo">
                                 <template slot="option" slot-scope="option">
-                                    <span class="upSelect">{{ option.descripcion }} </span> 
+                                    <span class="upSelect">{{ option.descripcion }} </span>
                                     <span class="downSelect">   {{ option.codigo }} </span>
                                 </template>
                             </v-select>
                             </div>
-                        </div> 
+                        </div>
                         <div class="col-md-3">
-                            <div class="form-group"> 
-                                <label>Cant.</label>                 
+                            <div class="form-group">
+                                <label>Cant.</label>
                                 <input v-model="cantidad_productos" type="number" class="form-control" id="cantidad_productos" placeholder="">
                             </div>
-                        </div>      
-
-                       <div class="clearfix"></div>  
-
-                        <div class="col-md-1">                                               
-                            <span>
-                              <button type="button" @click="addProducto()"><span class="fa fa-plus-circle"></span></button> 
-                            </span>                            
                         </div>
-                        
+
+                       <div class="clearfix"></div>
+
+                        <div class="col-md-1">
+                            <span>
+                              <button type="button" @click="addProducto()"><span class="fa fa-plus-circle"></span></button>
+                            </span>
+                        </div>
+
                          <div class="form-group">
                             &nbsp;
-                        </div>        
+                        </div>
 
                             <div v-show="inputsProductos.length">
                                 <div class="col-md-12">
@@ -92,26 +90,26 @@
                                         <table class="table table-hover table-striped table-bordered table-condensed">
                                             <thead>
                                                 <tr>
-                                                    <th class="col-md-7">Productos</th>                                         
-                                                    <th class="col-md-2">Medidas</th>                     
-                                                    <th class="col-md-2">cant</th>                    
+                                                    <th class="col-md-7">Productos</th>
+                                                    <th class="col-md-2">Medidas</th>
+                                                    <th class="col-md-2">cant</th>
                                                     <th class="col-md-1">&nbsp;</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr v-for="(inputsProducto,k) in inputsProductos" :key="k">
-                                                    <td> {{ inputsProducto.producto.descripcion}}</td>                                                        
-                                                    <td> {{ inputsProducto.medida.descripcion}}&nbsp; &nbsp; {{inputsProducto.medida.codigo }}</td>  
-                                                    <td> {{ inputsProducto.cantidad_productos}}</td>                                  
+                                                    <td> {{ inputsProducto.producto.descripcion}}</td>
+                                                    <td> {{ inputsProducto.medida.descripcion}}&nbsp; &nbsp; {{inputsProducto.medida.codigo }}</td>
+                                                    <td> {{ inputsProducto.cantidad_productos}}</td>
                                                     <td style="text-align:center"> <i class="fa fa-minus-circle" @click="removeProducto(k)" ></i></td>
                                                 </tr>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
-                            </div>   
+                            </div>
                        </div>
-                    </div>    
+                    </div>
                     <div class="box box-custom-enod">
                         <div class="box-body">
                             <div class="col-md-3">
@@ -119,57 +117,57 @@
                                     <label>Equipo *</label>
                                     <v-select  v-model="interno_equipo" :options="interno_equipos" label="nro_interno">
                                         <template slot="option" slot-scope="option">
-                                            <span class="upSelect">{{ option.nro_interno }}</span> <br> 
+                                            <span class="upSelect">{{ option.nro_interno }}</span> <br>
                                             <span class="downSelect"> {{ option.equipo.codigo }} </span>
                                         </template>
                                     </v-select>
                                 </div>
                             </div>
 
-                       <div class="clearfix"></div>  
+                       <div class="clearfix"></div>
 
-                        <div class="col-md-1">                                               
+                        <div class="col-md-1">
                             <span>
-                              <button type="button" @click="addEquipo(interno_equipo.id)"><span class="fa fa-plus-circle"></span></button> 
-                            </span>                            
+                              <button type="button" @click="addEquipo(interno_equipo.id)"><span class="fa fa-plus-circle"></span></button>
+                            </span>
                         </div>
-                        
+
                          <div class="form-group">
                             &nbsp;
-                        </div>           
+                        </div>
 
-                        
-                       
+
+
                             <div v-show="inputsEquipos.length">
                                 <div class="col-md-12">
                                     <div class="table-responsive">
                                         <table class="table table-hover table-striped table-condensed">
                                         <thead>
                                             <tr>
-                                                <th class="col-md-2">N° Int.</th>                                         
-                                                <th class="col-md-9">Equipo</th>                                                             
+                                                <th class="col-md-2">N° Int.</th>
+                                                <th class="col-md-9">Equipo</th>
                                                 <th class="col-md-1">&nbsp;</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr v-for="(inputsEquipo,k) in inputsEquipos" :key="k">
-                                                <td> {{ inputsEquipo.nro_interno}}</td>                                                        
-                                                <td> {{ inputsEquipo.equipo.codigo}}</td>                                                                          
+                                                <td> {{ inputsEquipo.nro_interno}}</td>
+                                                <td> {{ inputsEquipo.equipo.codigo}}</td>
                                                 <td style="text-align:center"> <i class="fa fa-minus-circle" @click="removeEquipo(k)" ></i></td>
                                             </tr>
                                         </tbody>
                                         </table>
                                     </div>
                                 </div>
-                            </div> 
+                            </div>
 
                         </div>
-                    </div>     
-                    <button class="btn btn-primary" type="submit">Guardar</button>   
-            </form>    
+                    </div>
+                    <button class="btn btn-primary" type="submit">Guardar</button>
+            </form>
        </div>
  </div>
-            
+
 </template>
 
 <script>
@@ -184,17 +182,17 @@ import 'vue2-datepicker/locale/es';
 import moment from 'moment';
 
 export default {
-    components: {      
-      
+    components: {
+
     },
 
     props :{
 
       editmode : {
         type : Boolean,
-        required : false,    
+        required : false,
         default : false
-      },  
+      },
 
       otdata : {
         type : Object,
@@ -207,21 +205,21 @@ export default {
       },
 
        detalledata : {
-      type : [ Array ],  
+      type : [ Array ],
       required : false
       },
 
       remito_interno_equipos_data : {
-      type : [ Array ],  
+      type : [ Array ],
       required : false
       }
 
     },
-    data (){return{  
+    data (){return{
 
         errors:[],
 
-        interno_sn :true, 
+        interno_sn :true,
         fecha: moment(new Date()).format('YYYY-MM-DD'),
         numero:'',
         prefijo:'1',
@@ -230,7 +228,7 @@ export default {
         producto:'',
         medida:'',
         cantidad_productos:'',
-        interno_equipo:'',        
+        interno_equipo:'',
 
         productos:[],
         medidas:[],
@@ -243,25 +241,25 @@ export default {
 
     created : function() {
 
-        this.getProductos();  
-        this.$store.dispatch('loadInternoEquipos',{ 'metodo' : null, 'activo_sn' : 1,'tipo_penetrante' : 'null' });       
-        this.setEdit();   
+        this.getProductos();
+        this.$store.dispatch('loadInternoEquipos',{ 'metodo' : null, 'activo_sn' : 1,'tipo_penetrante' : 'null' });
+        this.setEdit();
 
     },
 
     mounted : function() {
 
          this.getNumeroRemito();
-    }, 
+    },
 
     watch :{
 
         interno_sn : function(val){
 
             if(val){
-               
-                this.getNumeroRemito();              
-              
+
+                this.getNumeroRemito();
+
             }
         }
     },
@@ -269,55 +267,55 @@ export default {
     computed :{
 
         ...mapState(['url','interno_equipos','interno_equipo_show']),
-       
+
      },
 
     methods : {
 
         setEdit : function(){
 
-            if(this.editmode) {               
-            
-               this.fecha   = this.remitodata.fecha;   
-               this.interno_sn = this.remitodata.interno_sn;         
-               this.numero = this.remitodata.numero;   
+            if(this.editmode) {
+
+               this.fecha   = this.remitodata.fecha;
+               this.interno_sn = this.remitodata.interno_sn;
+               this.numero = this.remitodata.numero;
                this.prefijo = this.remitodata.prefijo;
                this.receptor = this.remitodata.receptor;
                this.destino = this.remitodata.destino;
-               this.inputsProductos = this.detalledata;  
-               this.inputsEquipos = this.remito_interno_equipos_data;              
+               this.inputsProductos = this.detalledata;
+               this.inputsEquipos = this.remito_interno_equipos_data;
                this.formatearPrefijo(this.prefijo,4);
                this.formatearNumero(this.numero,8);
 
-            }      
+            }
 
-        },   
+        },
 
-        getNumeroRemito:function(){            
-           
-            if(!this.editmode) {           
+        getNumeroRemito:function(){
+
+            if(!this.editmode) {
 
                         axios.defaults.baseURL = this.url ;
-                        var urlRegistros = 'remitos/ot/' + this.otdata.id +'/generar-numero-remito'  + '?api_token=' + Laravel.user.api_token;         
+                        var urlRegistros = 'remitos/ot/' + this.otdata.id +'/generar-numero-remito'  + '?api_token=' + Laravel.user.api_token;
                         axios.get(urlRegistros).then(response =>{
-                        this.numero_remito_generado = response.data 
-                        
-                   
+                        this.numero_remito_generado = response.data
+
+
                             if(this.numero_remito_generado.length){
 
                                 this.numero =  this.numero_remito_generado[0].numero_remito
                             }else{
 
                                 this.numero = 1;
-                            } 
+                            }
 
                             this.prefijo = '0'
-                            this.formatearPrefijo(this.prefijo,4);        
+                            this.formatearPrefijo(this.prefijo,4);
                             this.formatearNumero(this.numero,8);
-                        
-                        });   
+
+                        });
              }
-        },  
+        },
 
         formatearPrefijo : function ( number, width )
                 {
@@ -327,7 +325,7 @@ export default {
                     {
                        this.prefijo=  new Array( width + (/\./.test( number ) ? 2 : 1) ).join( '0' ) + number;
                     }
-                  
+
 
                 },
          formatearNumero : function ( number, width )
@@ -338,23 +336,23 @@ export default {
                     {
                        this.numero=  new Array( width + (/\./.test( number ) ? 2 : 1) ).join( '0' ) + number;
                     }
-                  
+
 
                 },
 
         getProductos : function(){
-                
+
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'productos' + '?api_token=' + Laravel.user.api_token;        
+                var urlRegistros = 'productos' + '?api_token=' + Laravel.user.api_token;
                 axios.get(urlRegistros).then(response =>{
                 this.productos = response.data
-                }); 
+                });
                 },
 
         getMedidasProducto : function(){
-                    this.medida = '';               
+                    this.medida = '';
                     axios.defaults.baseURL = this.url ;
-                    var urlRegistros = 'medidas/' + this.producto.unidades_medida_id + '?api_token=' + Laravel.user.api_token;         
+                    var urlRegistros = 'medidas/' + this.producto.unidades_medida_id + '?api_token=' + Laravel.user.api_token;
                     axios.get(urlRegistros).then(response =>{
                     this.medidas = response.data
                     });
@@ -362,29 +360,29 @@ export default {
 
         addProducto(index) {
 
-            
+
             if(!this.producto){
-                toastr.error("El campo producto es obligatorio");         
-                 return;            
+                toastr.error("El campo producto es obligatorio");
+                 return;
             }
 
             if(!this.medida){
-                    toastr.error("El campo medida es obligatorio");         
-                    return;            
+                    toastr.error("El campo medida es obligatorio");
+                    return;
             }
 
             if(!this.cantidad_productos){
-                 toastr.error("El campo cantidad de producto es obligatorio");         
-                 return;            
+                 toastr.error("El campo cantidad de producto es obligatorio");
+                 return;
             }
 
-                this.inputsProductos.push({ 
-                    producto:this.producto,             
-                    medida : this.medida,              
-                    cantidad_productos:this.cantidad_productos,             
+                this.inputsProductos.push({
+                    producto:this.producto,
+                    medida : this.medida,
+                    cantidad_productos:this.cantidad_productos,
                     });
-                this.producto='',        
-                this.medida ='',       
+                this.producto='',
+                this.medida ='',
                 this.cantidad_productos='1'
 
             },
@@ -392,46 +390,46 @@ export default {
         existeEquipo : function(id){
 
             let existe = false;
-            this.inputsEquipos.forEach(function (item) {           
-               
-                if(item.id == id){              
+            this.inputsEquipos.forEach(function (item) {
+
+                if(item.id == id){
                     existe = true ;
                 }
-                
+
             });
 
             return existe;
-        },    
+        },
 
-        addEquipo(id) {        
-                
-        
+        addEquipo(id) {
+
+
             if (this.existeEquipo(id)){
-                    toastr.error('El Equipo existe en el Remito');  
+                    toastr.error('El Equipo existe en el Remito');
             }else if(this.interno_equipo){
-                
-                this.inputsEquipos.push({ 
 
-                    ... this.interno_equipo,       
-                        
+                this.inputsEquipos.push({
+
+                    ... this.interno_equipo,
+
                     });
                 this.getUbicacionEquipo()
-                this.interno_equipo=''; 
+                this.interno_equipo='';
             }
 
 
          },
 
         getUbicacionEquipo() {
-           
-         
+
+
                   this.$store.dispatch('loadUbicacionInternoEquipo',this.interno_equipo.id)
                   .then(() => {
-                    console.log('entro en get ubicacion');    
+                    console.log('entro en get ubicacion');
                     console.log(this.interno_equipo_show.ot_id + ' = ' + this.otdata.id);
                     if((this.interno_equipo_show.ot_id != null) && (this.interno_equipo_show.ot_id !=this.otdata.id)){
                         toastr.options = toastrWarning;
-                        toastr.warning('El Equipo ' + this.interno_equipo_show.nro_interno + ' se encuentra en la OT N° ' + this.interno_equipo_show.ot.numero);  
+                        toastr.warning('El Equipo ' + this.interno_equipo_show.nro_interno + ' se encuentra en la OT N° ' + this.interno_equipo_show.ot.numero);
                         toastr.options = toastrDefault;
                     }
                     });
@@ -446,34 +444,34 @@ export default {
         },
 
         Store : function(){
-         
+
           this.errors =[];
-          
-            var urlRegistros = 'remitos' ;      
+
+            var urlRegistros = 'remitos' ;
             axios({
               method: 'post',
-              url : urlRegistros,    
-              data : {             
-                'ot'              : this.otdata,      
-                'interno_sn'      :this.interno_sn,         
+              url : urlRegistros,
+              data : {
+                'ot'              : this.otdata,
+                'interno_sn'      :this.interno_sn,
                 'fecha'           : this.fecha,
                 'prefijo'         : this.prefijo,
-                'numero'          : this.numero,     
+                'numero'          : this.numero,
                 'receptor'        : this.receptor,
-                'destino'         : this.destino,          
-                'detalles'        : this.inputsProductos,  
-                'interno_equipos'         : this.inputsEquipos,  
+                'destino'         : this.destino,
+                'detalles'        : this.inputsProductos,
+                'interno_equipos'         : this.inputsEquipos,
           }
-          
+
           }).then(response => {
 
           let remito = response.data;
           toastr.success('Remito N° ' +  this.prefijo + '-' + this.numero + ' fue creado con éxito ');
           window.open(  '/pdf/remito/' + remito.id,'_blank');
           window.location.href =  '/remitos/ot/' + this.otdata.id;
-    
+
         }).catch(error => {
-               
+
                this.errors = error.response.data.errors;
                 console.log(error.response);
                $.each( this.errors, function( key, value ) {
@@ -483,36 +481,36 @@ export default {
 
                if((typeof(this.errors)=='undefined') && (error)){
 
-                     toastr.error("Ocurrió un error al procesar la solicitud");                     
-                  
+                     toastr.error("Ocurrió un error al procesar la solicitud");
+
                 }
 
-           });    
+           });
 
         },
 
         Update : function() {
 
             console.log('entro para actualizar' );
-            this.errors =[];        
-            var urlRegistros = 'remitos/' + this.remitodata.id  ;      
+            this.errors =[];
+            var urlRegistros = 'remitos/' + this.remitodata.id  ;
             axios({
               method: 'put',
-              url : urlRegistros,    
+              url : urlRegistros,
               data : {
-                'ot'              : this.otdata,    
-                'interno_sn'      :this.interno_sn,   
+                'ot'              : this.otdata,
+                'interno_sn'      :this.interno_sn,
                 'fecha'           : this.fecha,
                 'prefijo'         : this.prefijo,
-                'numero'          : this.numero,     
+                'numero'          : this.numero,
                 'receptor'        : this.receptor,
-                'destino'         : this.destino,          
+                'destino'         : this.destino,
                 'detalles'        : this.inputsProductos,
-                'interno_equipos' : this.inputsEquipos,  
-                     
+                'interno_equipos' : this.inputsEquipos,
+
           }}
-          
-      
+
+
         ).then( () => {
 
           toastr.success('Remito N° ' +  this.prefijo + '-' + this.numero + ' fue actualizado con éxito ');
@@ -520,7 +518,7 @@ export default {
           window.location.href =  '/remitos/ot/' + this.otdata.id;
 
         }).catch(error => {
-               
+
                this.errors = error.response.data.errors;
                 console.log(error.response);
                $.each( this.errors, function( key, value ) {
@@ -530,14 +528,14 @@ export default {
 
                if((typeof(this.errors)=='undefined') && (error)){
 
-                     toastr.error("Ocurrió un error al procesar la solicitud");                     
-                  
+                     toastr.error("Ocurrió un error al procesar la solicitud");
+
                 }
 
-           }); 
+           });
 
         }
-    }    
+    }
 }
 </script>
 

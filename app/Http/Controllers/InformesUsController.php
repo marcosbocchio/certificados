@@ -26,6 +26,7 @@ use App\Ots;
 use \stdClass;
 use App\OtTipoSoldaduras;
 use App\AgenteAcoplamientos;
+use Exception as Exception;
 
 
 class InformesUsController extends Controller
@@ -33,20 +34,20 @@ class InformesUsController extends Controller
     public function __construct()
     {
         $this->middleware('ddppi')->only('create');
-        $this->middleware(['role_or_permission:Sistemas|T_informes_edita'],['only' => ['create','edit']]);  
+        $this->middleware(['role_or_permission:Sistemas|T_informes_edita'],['only' => ['create','edit']]);
 
     }
 
     public function create($ot_id)
     {
-        $metodo = 'US';    
+        $metodo = 'US';
         $user = auth()->user();
         $header_titulo = "Informe";
-        $header_descripcion ="Crear";         
-        $ot = Ots::findOrFail($ot_id);      
+        $header_descripcion ="Crear";
+        $ot = Ots::findOrFail($ot_id);
         return view('informes.us.index', compact('ot',
                                                  'metodo',
-                                                 'user',                                              
+                                                 'user',
                                                  'header_titulo',
                                                  'header_descripcion'));
     }
@@ -59,7 +60,7 @@ class InformesUsController extends Controller
     {
         //
     }
- 
+
 
     /**
      * Store a newly created resource in storage.
@@ -69,12 +70,12 @@ class InformesUsController extends Controller
      */
     public function store(InformeUsRequest $request)
     {
-        $informe  = new Informe;          
-        $informeUs  = new InformesUs;  
+        $informe  = new Informe;
+        $informeUs  = new InformesUs;
 
         DB::beginTransaction();
-        try {          
-        
+        try {
+
           $informe = (new \App\Http\Controllers\InformesController)->saveInforme($request,$informe);
           $informeUs = $this->saveinformeUs($request,$informe,$informeUs);
           $tecnica = Tecnicas::find($informe->tecnica_id);
@@ -87,14 +88,14 @@ class InformesUsController extends Controller
 
               $this->saveDetalle_us_pa_us($request,$informeUs);
           }
-    
-          DB::commit(); 
-    
+
+          DB::commit();
+
         } catch (Exception $e) {
-    
+
           DB::rollback();
-          throw $e;      
-          
+          throw $e;
+
         }
 
         return $informe;
@@ -103,81 +104,81 @@ class InformesUsController extends Controller
     public function update(InformeUsRequest $request, $id){
 
         $informe  = Informe::find($id);
-        $informeUs =InformesUs::where('informe_id',$informe->id)->first();     
+        $informeUs =InformesUs::where('informe_id',$informe->id)->first();
         $tecnica = Tecnicas::find($request->tecnica['id']);
- 
+
         DB::beginTransaction();
         try {
-    
+
             $informe = (new \App\Http\Controllers\InformesController)->saveInforme($request,$informe);
-            $this->saveInformeUs($request,$informe,$informeUs);       
+            $this->saveInformeUs($request,$informe,$informeUs);
             CalibracionesUs::where('informe_us_id',$informeUs->id)->delete();
             $this->saveCalibraciones($request,$informeUs);
 
             DetalleUsPaUs::where('informe_us_id',$informeUs->id)->delete();
-            $this->deleteInforme_us_me($informeUs->id);     
-            
-           
+            $this->deleteInforme_us_me($informeUs->id);
+
+
 
             if ($tecnica->codigo == 'ME'){
 
                 $this->saveInforme_us_me($request,$informeUs);
             }else{
-  
+
                 $this->saveDetalle_us_pa_us($request,$informeUs);
             }
 
             DB::commit();
-            
+
           } catch (Exception $e) {
-    
+
             DB::rollback();
-            throw $e;      
-            
+            throw $e;
+
           }
-    
+
       }
 
       public function deleteInforme_us_me($informe_us_id){
 
-        DB::delete('delete dum from detalle_us_me as dum              
-                      inner join informes_us_me as ium on dum.informe_us_me_id = ium.id                  
+        DB::delete('delete dum from detalle_us_me as dum
+                      inner join informes_us_me as ium on dum.informe_us_me_id = ium.id
                       where
                       ium.informe_us_id= ?',[$informe_us_id]);
 
-        DB::delete('delete ium from informes_us_me as ium                        
+        DB::delete('delete ium from informes_us_me as ium
                       where
-                      ium.informe_us_id= ?',[$informe_us_id]); 
+                      ium.informe_us_id= ?',[$informe_us_id]);
       }
 
-    public function saveInformeUs($request,$informe,$informeUs){      
+    public function saveInformeUs($request,$informe,$informeUs){
 
-   
+
         $informeUs->informe_id = $informe->id;
         $informeUs->estado_superficie_id = $request->estado_superficie['id'];
         $informeUs->encoder = $request->encoder;
-        $informeUs->agente_acoplamiento_id  = $request->agente_acoplamiento['id'];     
+        $informeUs->agente_acoplamiento_id  = $request->agente_acoplamiento['id'];
         $informeUs->path1_calibracion = $request->path1_calibracion;
-        $informeUs->path2_calibracion = $request->path2_calibracion;  
-        $informeUs->path3_calibracion = $request->path3_calibracion;  
-        $informeUs->path4_calibracion = $request->path4_calibracion;    
+        $informeUs->path2_calibracion = $request->path2_calibracion;
+        $informeUs->path3_calibracion = $request->path3_calibracion;
+        $informeUs->path4_calibracion = $request->path4_calibracion;
         $informeUs->path1_indicacion = $request->path1_indicacion;
-        $informeUs->path2_indicacion = $request->path2_indicacion;  
-        $informeUs->path3_indicacion = $request->path3_indicacion;  
-        $informeUs->path4_indicacion = $request->path4_indicacion;  
-    
-        $informeUs->save();     
-        
+        $informeUs->path2_indicacion = $request->path2_indicacion;
+        $informeUs->path3_indicacion = $request->path3_indicacion;
+        $informeUs->path4_indicacion = $request->path4_indicacion;
+
+        $informeUs->save();
+
         return $informeUs;
-    
+
       }
 
     public function saveCalibraciones($request,$informeUs){
 
 
-        foreach ($request->calibraciones as $calibracion){                   
-    
-            $calibracionUs  = new CalibracionesUs; 
+        foreach ($request->calibraciones as $calibracion){
+
+            $calibracionUs  = new CalibracionesUs;
             $calibracionUs->informe_us_id = $informeUs->id;
             $calibracionUs->palpador_id = $calibracion['palpador']['id'];
             $calibracionUs->zapata = $calibracion['zapata'];
@@ -196,20 +197,20 @@ class InformesUsController extends Controller
             $calibracionUs->adicional_barrido = $calibracion['adicional_barrido'];
             $calibracionUs->amplificacion_total = $calibracion['amplificacion_total'];
 
-            $calibracionUs->save();           
-    
-          } 
+            $calibracionUs->save();
+
+          }
 
     }
 
     public function saveDetalle_us_pa_us($request,$informeUs){
 
-        foreach ($request->tabla_us_pa as $detalle_us_pa){     
-          
-            
+        foreach ($request->tabla_us_pa as $detalle_us_pa){
+
+
             $referencia_id = $this->saveReferencia($detalle_us_pa);
-    
-            $detalle_us_pa_us  = new DetalleUsPaUs; 
+
+            $detalle_us_pa_us  = new DetalleUsPaUs;
             $detalle_us_pa_us->informe_us_id = $informeUs->id;
             $detalle_us_pa_us->detalle_us_pa_us_referencia_id = $referencia_id;
             $detalle_us_pa_us->diametro = $detalle_us_pa['diametro_us_pa'];
@@ -223,22 +224,22 @@ class InformesUsController extends Controller
             $detalle_us_pa_us->z = $detalle_us_pa['z_us_pa'];
             $detalle_us_pa_us->longitud = $detalle_us_pa['longitud_us_pa'];
             $detalle_us_pa_us->nivel_registro = $detalle_us_pa['nivel_registro_us_pa'];
-            $detalle_us_pa_us->aceptable_sn = $detalle_us_pa['aceptable_sn_us_pa'];  
+            $detalle_us_pa_us->aceptable_sn = $detalle_us_pa['aceptable_sn_us_pa'];
 
-            $detalle_us_pa_us->save();           
-           
-        } 
+            $detalle_us_pa_us->save();
+
+        }
 
     }
 
     public function saveReferencia($detalle){
-   
+
         if (($detalle['observaciones'])||
             ($detalle['path1']) ||
             ($detalle['path2']) ||
             ($detalle['path3']) ||
             ($detalle['path4'])){
-    
+
               $detalle_us_pa_us_referencia                     = new DetallesUsPaUsReferencias;
               $detalle_us_pa_us_referencia->descripcion        = $detalle['observaciones'];
               $detalle_us_pa_us_referencia->path1              = $detalle['path1'];
@@ -246,21 +247,21 @@ class InformesUsController extends Controller
               $detalle_us_pa_us_referencia->path3              = $detalle['path3'];
               $detalle_us_pa_us_referencia->path4              = $detalle['path4'];
               $detalle_us_pa_us_referencia->save();
-    
+
               return $detalle_us_pa_us_referencia->id;
            }
            else{
               return null;
            }
-    
-      } 
+
+      }
 
       public function saveInforme_us_me($request,$informeUs){
 
-        $generatrices = Generatrices::all();        
-        foreach ($request->tabla_me as $detalle_informe_us_me){               
-          
-            $informe_us_me  = new InformesUsMe; 
+        $generatrices = Generatrices::all();
+        foreach ($request->tabla_me as $detalle_informe_us_me){
+
+            $informe_us_me  = new InformesUsMe;
             $informe_us_me->informe_us_id = $informeUs->id;
             $informe_us_me->diametro = $detalle_informe_us_me['diametro_me'];
             $informe_us_me->umbral = $detalle_informe_us_me['umbral_me'];
@@ -269,48 +270,48 @@ class InformesUsController extends Controller
             $informe_us_me->cantidad_posiciones = $detalle_informe_us_me['cantidad_posiciones_me'];
             $informe_us_me->cantidad_generatrices = $detalle_informe_us_me['cantidad_generatrices_me'];
 
-            $informe_us_me->save(); 
-            
+            $informe_us_me->save();
+
             $this->saveMediciones($detalle_informe_us_me['mediciones'],$informe_us_me,$generatrices);
-           
-        } 
+
+        }
 
     }
 
     public function saveMediciones($mediciones,$informe_us_me,$generatrices){
 
         $pos_gen= -1;
-        foreach ($mediciones as $medicion){    
+        foreach ($mediciones as $medicion){
 
             $pos_gen++;
             $generatriz_valor = Generatrices::where('nro',$pos_gen +1)->first()->valor;
 
-            $this->saveDetalle_us_me($medicion,$informe_us_me,$generatriz_valor);        
-           
-        } 
+            $this->saveDetalle_us_me($medicion,$informe_us_me,$generatriz_valor);
+
+        }
     }
 
     public function saveDetalle_us_me($medicion,$informe_us_me,$generatriz_valor){
 
 
         $pos_pos= -1;
-        foreach ($medicion as $item){    
+        foreach ($medicion as $item){
 
-            $pos_pos++;    
-            
+            $pos_pos++;
+
             if($item !=''){
 
-            $detalle_us_me = new DetalleUsMe;   
-           
+            $detalle_us_me = new DetalleUsMe;
+
             $detalle_us_me->informe_us_me_id = $informe_us_me->id;
             $detalle_us_me->posicion = $pos_pos + 1;
             $detalle_us_me->generatriz = $generatriz_valor;
-            $detalle_us_me->valor = $item;        
+            $detalle_us_me->valor = $item;
 
-            $detalle_us_me->save();            
+            $detalle_us_me->save();
         }
 
-        } 
+        }
     }
 
 
@@ -335,21 +336,21 @@ class InformesUsController extends Controller
     public function edit($ot_id,$id)
     {
         $header_titulo = "Informe";
-        $header_descripcion ="Editar";  
-        $metodo = 'US';    
-        $accion = 'edit';      
+        $header_descripcion ="Editar";
+        $metodo = 'US';
+        $accion = 'edit';
         $user = auth()->user();
         $ot = Ots::findOrFail($ot_id);
         $informe = Informe::findOrFail($id);
-        $informe_us =InformesUs::where('informe_id',$informe->id)->first();    
+        $informe_us =InformesUs::where('informe_id',$informe->id)->first();
         $informe_material = Materiales::find($informe->material_id);
-        $informe_material_accesorio = Materiales::find($informe->material_accesorio_id);
+        $informe_material_accesorio = Materiales::find($informe->material2_id);
         $informe_tecnica = Tecnicas::find($informe->tecnica_id);
         $informe_diametroEspesor = DiametrosEspesor::find($informe->diametro_espesor_id);
         $informe_diametro = DiametroView::where('diametro',$informe_diametroEspesor->diametro)->first();
         $informe_interno_equipo = internoEquipos::where('id',$informe->interno_equipo_id)->with('equipo')->first();
         $documetacionesRepository = new DocumentacionesRepository;
-        $informe_procedimiento = (new DocumentacionesController($documetacionesRepository))->ProcedimientoInformeId($informe->procedimiento_informe_id);    
+        $informe_procedimiento = (new DocumentacionesController($documetacionesRepository))->ProcedimientoInformeId($informe->procedimiento_informe_id);
         $informe_norma_evaluacion = NormaEvaluaciones::find($informe->norma_evaluacion_id);
         $informe_norma_ensayo = NormaEnsayos::find($informe->norma_ensayo_id);
         $informe_ejecutor_ensayo =(new OtOperariosController())->getEjecutorEnsayo($informe->ejecutor_ensayo_id);
@@ -363,7 +364,7 @@ class InformesUsController extends Controller
 
         if ($informe_material_accesorio == null)
                $informe_material_accesorio = new Materiales();
-    
+
         $informe_ot_tipo_soldadura = OtTipoSoldaduras::join('tipo_soldaduras','tipo_soldaduras.id','=','ot_tipo_soldaduras.tipo_soldadura_id')
         ->where('ot_tipo_soldaduras.id',$informe->ot_tipo_soldadura_id)->with('tipoSoldadura')->select('ot_tipo_soldaduras.*','tipo_soldaduras.codigo')->first();
 
@@ -374,10 +375,10 @@ class InformesUsController extends Controller
                                                  'metodo',
                                                  'user',
                                                  'informe',
-                                                 'informe_us',  
+                                                 'informe_us',
                                                  'informe_diametro',
-                                                 'informe_diametroEspesor',  
-                                                 'informe_tecnica', 
+                                                 'informe_diametroEspesor',
+                                                 'informe_tecnica',
                                                  'informe_material',
                                                  'informe_ot_tipo_soldadura',
                                                  'informe_material_accesorio',
@@ -402,7 +403,7 @@ class InformesUsController extends Controller
                             ->select('calibraciones_us.*')
                             ->with('palpador')
                             ->get();
-       
+
         return $calibraciones;
 
     }
@@ -410,7 +411,7 @@ class InformesUsController extends Controller
     public function getTabla_us_pa($informe_us_id){
 
         $tabla_us_pa =  DB::table('detalle_us_pa_us')
-                            ->leftjoin('detalles_us_pa_us_referencias','detalles_us_pa_us_referencias.id','=','detalle_us_pa_us.detalle_us_pa_us_referencia_id')     
+                            ->leftjoin('detalles_us_pa_us_referencias','detalles_us_pa_us_referencias.id','=','detalle_us_pa_us.detalle_us_pa_us_referencia_id')
                             ->where('informe_us_id',$informe_us_id)
                             ->selectRaw('detalle_us_pa_us.elemento as elemento_us_pa,
                                       detalle_us_pa_us.diametro as diametro_us_pa,
@@ -428,12 +429,12 @@ class InformesUsController extends Controller
                                       detalles_us_pa_us_referencias.path1 as path1,
                                       detalles_us_pa_us_referencias.path2 as path2,
                                       detalles_us_pa_us_referencias.path3 as path3,
-                                      detalles_us_pa_us_referencias.path4 as path4'                        
-                            
+                                      detalles_us_pa_us_referencias.path4 as path4'
+
                             )
-                            
+
                             ->get();
-     
+
         return $tabla_us_pa;
 
     }
@@ -447,37 +448,37 @@ class InformesUsController extends Controller
                         ->where('informe_us_id',$informe_us_id)
                         ->selectRaw('informes_us_me.id,
                                     informes_us_me.cantidad_generatrices as cantidad_generatrices_me,
-                                    informes_us_me.cantidad_posiciones as cantidad_posiciones_me,  
-                                    informes_us_me.diametro as diametro_me, 
+                                    informes_us_me.cantidad_posiciones as cantidad_posiciones_me,
+                                    informes_us_me.diametro as diametro_me,
                                     informes_us_me.elemento as elemento_me,
                                     informes_us_me.umbral as umbral_me,
                                     informes_us_me.espesor_minimo as espesor_minimo_me
                                     ')
-                        ->get();  
-     
-        foreach ( $tabla_me as $generatriz) {   
-          
-            $obj = new stdClass();      
+                        ->get();
+
+        foreach ( $tabla_me as $generatriz) {
+
+            $obj = new stdClass();
             $cant_g = (int) $generatriz->cantidad_generatrices_me;
             $cant_p = (int) $generatriz->cantidad_posiciones_me;
 
             $mediciones = array();
 
-            for ($g=0; $g < $cant_g ; $g++) { 
+            for ($g=0; $g < $cant_g ; $g++) {
 
-                 
-                $posiciones = array();  
-                for ($p=0; $p < $cant_p ; $p++){ 
-                    
-                  array_push($posiciones,'');                   
-                    
-                }      
-                array_push($mediciones,$posiciones);                          
+
+                $posiciones = array();
+                for ($p=0; $p < $cant_p ; $p++){
+
+                  array_push($posiciones,'');
+
+                }
+                array_push($mediciones,$posiciones);
 
             }
 
             $obj->mediciones = $mediciones;
-            
+
             $generatriz->mediciones = $mediciones;
 
         }
@@ -488,22 +489,22 @@ class InformesUsController extends Controller
 
             foreach ( $detalle_us_me as $item) {
 
-                $nro = 0;          
-           
+                $nro = 0;
+
                 foreach($generatrices as $item_generatriz){
-                   
+
                     if($item_generatriz['valor'] == $item['generatriz']){
-                        
+
                         $nro = $item_generatriz['nro'];
-                      
+
                     }
                 }
-              
-               
+
+
                 $generatriz->mediciones[$nro-1][$item['posicion']-1] = $item['valor'];
 
-            }        
-        }       
+            }
+        }
        return $tabla_me;
     }
 

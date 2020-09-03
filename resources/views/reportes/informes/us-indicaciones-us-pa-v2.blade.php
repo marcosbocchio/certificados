@@ -14,11 +14,11 @@
 
     header {
         position:fixed;
-        top: -237px;    
-    }        
-        
+        top: -237px;
+    }
+
     footer {
-        position: fixed; bottom:0px; 
+        position: fixed; bottom:0px;
         padding-top: 0px;
     }
 
@@ -40,25 +40,25 @@
 
 <header>
 
-    @include('reportes.partial.header-principal-portrait')     
-    @include('reportes.partial.linea-amarilla')                
-    @include('reportes.partial.header-cliente-comitente-portrait')    
-    @include('reportes.partial.linea-gris')        
-    @include('reportes.partial.header-proyecto-portrait')    
-    @include('reportes.partial.linea-amarilla')    
-    
+    @include('reportes.partial.header-principal-portrait')
+    @include('reportes.partial.linea-amarilla')
+    @include('reportes.partial.header-cliente-comitente-portrait')
+    @include('reportes.partial.linea-gris')
+    @include('reportes.partial.header-proyecto-portrait')
+    @include('reportes.partial.linea-amarilla')
+
 </header>
 
 <footer>
 
-    @include('reportes.partial.linea-amarilla') 
+    @include('reportes.partial.linea-amarilla')
 
-    @include('reportes.informes.partial.firmas') 
+    @include('reportes.informes.partial.firmas')
 
 </footer>
 
 
-<main>   
+<main>
 
     <table style="text-align: center;border-collapse: collapse;" class="bordered-td">
         <thead>
@@ -83,7 +83,7 @@
         </thead>
         <tbody>
             @foreach ($indicaciones_us_pa  as $indicacion)
-            <tr>                
+            <tr>
                   <td style="font-size: 10px;height: 16px;text-align: center;" class="bordered-td">{{ strtoupper($indicacion->elemento) }}</td>
                   <td style="font-size: 10px;text-align: center;" class="bordered-td">ø {{ $indicacion->diametro }}</td>
                   <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ $indicacion->nro_indicacion }}</td>
@@ -106,19 +106,19 @@
                   <td style="font-size: 10px;text-align: center;" class="bordered-td">
 
                    @if ($indicacion->detalle_us_pa_us_referencia_id)
-                        <a href="{{ route('InformeUsDetalleUsPaUsReferencias',$indicacion->detalle_us_pa_us_referencia_id)}}"><img src="{{ public_path('img/fa-file-pdf.png')}}" alt="" style="height: 15px;margin-left:3px;;margin-top:2px;text-align: center;"></a>                                                       
+                        <a href="{{ route('InformeUsDetalleUsPaUsReferencias',$indicacion->detalle_us_pa_us_referencia_id)}}"><img src="{{ public_path('img/fa-file-pdf.png')}}" alt="" style="height: 15px;margin-left:3px;;margin-top:2px;text-align: center;"></a>
                     @endif
-                  
+
                   </td>
-        
-            </tr>        
-            @endforeach   
+
+            </tr>
+            @endforeach
         </tbody>
     </table>
 
     @if($informe_us->path1_indicacion || $informe_us->path2_indicacion || $informe_us->path3_indicacion || $informe_us->path3_indicacion)
 
-        <div class="page-break"></div> 
+        <div class="page-break"></div>
         <table style="text-align: center;" width="100%">
                 <tbody>
                     <tr>
@@ -127,66 +127,50 @@
                                 <tbody>
                                     <tr>
                                         <td style="text-align: center; width: 340px;height: 190px;">
-                                                
+
                                             @if ($informe_us->path1_indicacion)
                                                 <img src="{{ public_path($informe_us->path1_indicacion) }}" alt="" style="height: 180px; width: 263px;">
-                                            @endif  
-                            
+                                            @endif
+
                                         </td>
 
                                         <td style="text-align: center; width: 340px;height: 190px;">
-                                                
+
                                             @if ($informe_us->path2_indicacion)
                                                 <img src="{{ public_path($informe_us->path2_indicacion) }}" alt="" style="height: 180px; width: 263px;">
-                                            @endif  
-                            
-                                        </td>  
+                                            @endif
+
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td style="text-align: center; width: 340px;height: 190px;">
-                                            
+
                                             @if ($informe_us->path3_indicacion)
                                                 <img src="{{ public_path($informe_us->path3_indicacion) }}" alt="" style="height: 180px; width: 263px;">
-                                            @endif  
-                                
+                                            @endif
+
                                         </td>
 
                                         <td style="text-align: center; width: 340px;height: 190px;">
 
                                             @if ($informe_us->path4_indicacion)
                                                 <img src="{{ public_path($informe_us->path4_indicacion) }}" alt="" style="height: 180px; width: 263px;">
-                                            @endif  
-                                
+                                            @endif
+
                                         </td>
-                                    </tr>                        
+                                    </tr>
                                 </tbody>
-                            </table>             
+                            </table>
                         </td>
                     </tr>
                 </tbody>
             </table>
     @endif
 
-</main>   
-     
-    <script type="text/php">
+</main>
 
-        if ( isset($pdf) ) {
-            $x = 468;
-            $y = 66;
-            $text = "PÁGINA : {PAGE_NUM} de {PAGE_COUNT}";
-            $font = $fontMetrics->get_font("serif", "bold");
-            $size = 9;
-            $color = array(0,0,0);
-            $word_space = 0.0;  //  default
-            $char_space = 0.0;  //  default
-            $angle = 0.0;   //  default
-            $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
+@include('reportes.partial.nro_pagina')
 
-        /* $pdf->line(34,167,561,167,array(0,0,0),1.5); */
-        }
-
-    </script>
 
 </body>
 </html>

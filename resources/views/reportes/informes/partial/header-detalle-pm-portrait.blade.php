@@ -10,11 +10,11 @@
                            </tr>
                            <tr >
                                <td colspan="4">{{$informe->componente}}</td>
-                           </tr>    
+                           </tr>
 
                            <tr>
                                <th  width="100%" colspan="4">Plano / Isométrico</th>
-                           </tr>                     
+                           </tr>
                            <tr>
                                 <td colspan="4">{{$informe->plano_isom}}</td>
                            </tr>
@@ -31,18 +31,18 @@
                            </tr>
                            <tr>
                                 <td colspan="4">{{$procedimiento_inf->titulo}}</td>
-                           </tr>    
+                           </tr>
 
                            <tr>
-                                <th colspan="4">Método</th>                               
-                           </tr> 
+                                <th colspan="4">Método</th>
+                           </tr>
                            <tr>
                                <td colspan="4">{{$metodo->codigo}}</td>
                            </tr>
 
                            <tr>
-                                <th colspan="2">Instrumento Medición</th> 
-                                <th colspan="2">Tipo</th> 
+                                <th colspan="2">Instrumento Medición</th>
+                                <th colspan="2">Tipo</th>
                            </tr>
                            <tr>
                                 <td colspan="2">{{$instrumento_medicion->equipo->codigo}}</td>
@@ -69,7 +69,7 @@
                                     @endif
                                 </td>
                            </tr>
-                            
+
                            <tr>
                                <th colspan="2">Partícula</th>
                                <th colspan="2">Color Partícula</th>
@@ -80,12 +80,12 @@
                            </tr>
 
                            <tr>
-                               <th colspan="4">Contraste</th>   
+                               <th colspan="4">Contraste</th>
                            </tr>
                            <tr>
                                <td colspan="4">
                                 @if ($contraste)
-                                
+
                                     {{$contraste->tipo}} / {{$contraste->marca}}
 
                                 @endif
@@ -104,31 +104,31 @@
 
                            <tr >
                                <th width="50%" colspan="2">Material</th>
-                               <th width="50%" colspan="2">Material Accesorio</th>
+                               <th width="50%" colspan="2">Material ( {{ $informe->material2_tipo }})</th>
                            </tr>
                            <tr >
                                <td colspan="2">{{$material->codigo}}</td>
                                <td colspan="2">
-                                    @if($material_accesorio)
-                                         {{$material_accesorio->codigo}}
+                                    @if($material2)
+                                         {{$material2->codigo}}
                                     @endif
                                </td>
                            </tr>
 
-                           <tr>                          
+                           <tr>
                                 <th colspan="2">Diámetro</th>
                                 <th colspan="2">Espesor</th>
-                           </tr>                   
-                            <tr>                           
+                           </tr>
+                            <tr>
                                 <td colspan="2">{{$diametro_espesor->diametro}}</td>
-                                <td colspan="2">              
+                                <td colspan="2">
                                     @if ($informe->espesor_chapa)
                                         {{ $informe->espesor_chapa }}
                                     @elseif($informe->espesor_especifico)
                                         {{ $informe->espesor_especifico }}
                                     @else
                                         {{ $diametro_espesor->espesor }}
-                                    @endif   
+                                    @endif
                                 </td>
                             </tr>
 
@@ -143,15 +143,15 @@
                                         &nbsp;
                                     @endif
                                 </td>
-                            </tr>   
+                            </tr>
 
                             <tr>
-                                <th colspan="2">Equipo</th>                               
+                                <th colspan="2">Equipo</th>
                                 <th colspan="1">Kv</th>
                                 <th colspan="1">mA</th>
                             </tr>
                             <tr>
-                                <td colspan="2">{{$interno_equipo->equipo->codigo}}</td>                              
+                                <td colspan="2">{{$interno_equipo->equipo->codigo}}</td>
                                 <td colspan="1">{{$informe_pm->voltaje}}</td>
                                 <td colspan="1">{{$informe_pm->amperaje}}</td>
                             </tr>
@@ -172,9 +172,9 @@
                                     @if ($desmagnetizacion_sn)
                                         SI
                                     @else
-                                        NO 
-                                    @endif  
-                                </td>       
+                                        NO
+                                    @endif
+                                </td>
                             </tr>
 
                             <tr>
@@ -184,8 +184,8 @@
                             </tr>
                             <tr>
                                 <td colspan="2">{{$magnetizacion->codigo}}</td>
-                                <td colspan="1">{{$magnetizacion->fuerza_portante}}</td>                                
-                                <td colspan="1">{{$informe_pm->concentracion}}</td>  
+                                <td colspan="1">{{$magnetizacion->fuerza_portante}}</td>
+                                <td colspan="1">{{$informe_pm->concentracion}}</td>
                             </tr>
 
                             <tr>
@@ -211,7 +211,7 @@
                             <tr>
                                 <td colspan="2" class="borderFilabottom">{{$tecnica->descripcion}}</td>
                                 <td colspan="2" class="borderFilabottom">{{$ejecutor_ensayo->name}}</td>
-                            </tr>      
+                            </tr>
                        </tbody>
                     </table>
                 </td>

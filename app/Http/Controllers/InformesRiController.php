@@ -30,6 +30,7 @@ use App\TipoSoldaduras;
 use \stdClass;
 use App\OtTipoSoldaduras;
 use Illuminate\Support\Facades\Log;
+use Exception as Exception;
 
 class InformesRiController extends Controller
 {
@@ -38,8 +39,8 @@ class InformesRiController extends Controller
     public function __construct(InformesRiRepository $informesRiRepository)
     {
 
-      $this->middleware('ddppi')->only('create');  
-      $this->middleware(['role_or_permission:Sistemas|T_informes_edita'],['only' => ['create','edit']]);  
+      $this->middleware('ddppi')->only('create');
+      $this->middleware(['role_or_permission:Sistemas|T_informes_edita'],['only' => ['create','edit']]);
 
       $this->informesRi = $informesRiRepository;
     }
@@ -50,7 +51,7 @@ class InformesRiController extends Controller
      */
     public function index()
     {
-        
+
     }
 
     /**
@@ -60,15 +61,15 @@ class InformesRiController extends Controller
      */
     public function create($ot_id)
     {
-        $metodo = 'RI';    
+        $metodo = 'RI';
         $user = auth()->user();
         $header_titulo = "Informe";
-        $header_descripcion ="Crear";         
-        $ot = Ots::findOrFail($ot_id);      
+        $header_descripcion ="Crear";
+        $ot = Ots::findOrFail($ot_id);
 
         return view('informes.ri.index', compact('ot',
                                                  'metodo',
-                                                 'user',                                              
+                                                 'user',
                                                  'header_titulo',
                                                  'header_descripcion'));
     }
@@ -93,7 +94,7 @@ class InformesRiController extends Controller
     public function show($id)
     {
     }
-    
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -103,19 +104,19 @@ class InformesRiController extends Controller
     public function edit($ot_id,$id)
     {
         $header_titulo = "Informe";
-        $header_descripcion ="Editar";  
-        $metodo = 'RI';    
-        $accion = 'edit';      
+        $header_descripcion ="Editar";
+        $metodo = 'RI';
+        $accion = 'edit';
         $user = auth()->user();
         $ot = Ots::findOrFail($ot_id);
         $informe = Informe::findOrFail($id);
         $informe_ri =InformesRi::where('informe_id',$informe->id)->first();
         $informe_material = Materiales::find($informe->material_id);
-        $informe_material_accesorio = Materiales::find($informe->material_accesorio_id);
+        $informe_material_accesorio = Materiales::find($informe->material2_id);
         $informe_diametroEspesor = DiametrosEspesor::find($informe->diametro_espesor_id);
         $informe_diametro = DiametroView::where('diametro',$informe_diametroEspesor->diametro)->first();
         $informe_interno_fuente = InternoFuentes::where('id',$informe_ri->interno_fuente_id)->with('fuente')->first();
-        
+
         if ($informe_interno_fuente == null)
            $informe_interno_fuente = new InternoFuentes();
 
@@ -142,22 +143,22 @@ class InformesRiController extends Controller
 
        // dd($informe_interno_equipo);
       //  dd($informe_detalle);
-      
+
         return view('informes.ri.edit', compact('ot',
                                                  'metodo',
                                                  'user',
                                                  'informe',
-                                                 'informe_ri',  
+                                                 'informe_ri',
                                                  'informe_ot_tipo_soldadura',
-                                                 'informe_material',  
+                                                 'informe_material',
                                                  'informe_material_accesorio',
                                                  'informe_diametro',
-                                                 'informe_diametroEspesor',  
-                                                 'informe_interno_fuente',                                                
+                                                 'informe_diametroEspesor',
+                                                 'informe_interno_fuente',
                                                  'informe_tecnica_grafico',
-                                                 'informe_interno_equipo',    
-                                                 'informe_procedimiento',    
-                                                 'infome_tipo_pelicula',                                
+                                                 'informe_interno_equipo',
+                                                 'informe_procedimiento',
+                                                 'infome_tipo_pelicula',
                                                  'informe_ici',
                                                  'informe_norma_evaluacion',
                                                  'informe_norma_ensayo',
@@ -173,33 +174,33 @@ class InformesRiController extends Controller
 
           $informe_detalle = DB::table('informes_ri')
                                ->join('juntas','juntas.informe_ri_id','=','informes_ri.id')
-                               ->join('posicion','posicion.junta_id','=','juntas.id')                            
+                               ->join('posicion','posicion.junta_id','=','juntas.id')
                                ->where('informes_ri.id',$id)
                                ->select('juntas.codigo as junta',
-                                      'posicion.descripcion as observacion',   
-                                      'posicion.densidad as densidad',                                
-                                      'posicion.aceptable_sn as aceptable_sn',                            
+                                      'posicion.descripcion as observacion',
+                                      'posicion.densidad as densidad',
+                                      'posicion.aceptable_sn as aceptable_sn',
                                       'posicion.codigo as posicion',
                                       'posicion.id as posicion_id')
                                 ->orderBy('posicion.id','asc')
                                 ->get();
 
-       
 
-        foreach ($informe_detalle as $detalle_posicion) {            
-            
+
+        foreach ($informe_detalle as $detalle_posicion) {
+
             $defecto_posicion = DB::table('posicion')
-                                    ->join('defectos_posicion','defectos_posicion.posicion_id','=','posicion.id') 
-                                    ->join('defectos_ri','defectos_ri.id','=','defectos_posicion.defecto_ri_id')                                           
+                                    ->join('defectos_posicion','defectos_posicion.posicion_id','=','posicion.id')
+                                    ->join('defectos_ri','defectos_ri.id','=','defectos_posicion.defecto_ri_id')
                                     ->where('posicion.id',$detalle_posicion->posicion_id)
                                     ->select('defectos_ri.codigo','defectos_ri.descripcion','defectos_ri.id','defectos_posicion.posicion','pasada')
                                     ->get();
 
-            $detalle_posicion->defectos = $defecto_posicion;          
+            $detalle_posicion->defectos = $defecto_posicion;
 
         }
 
-      return $informe_detalle; 
+      return $informe_detalle;
 
     }
 
@@ -214,43 +215,43 @@ class InformesRiController extends Controller
 
         Log::debug("Var pasadas_juntas :" . $pasadas_juntas);
 
-        foreach ($pasadas_juntas as $pasadas_junta) {            
-           
-        
+        foreach ($pasadas_juntas as $pasadas_junta) {
+
+
             $obj = new stdClass();
 
 
             $obj->soldador1 = DB::table('soldadores')
-                                        ->join('ot_soldadores','ot_soldadores.soldadores_id','=','soldadores.id')  
+                                        ->join('ot_soldadores','ot_soldadores.soldadores_id','=','soldadores.id')
                                         ->where('ot_soldadores.id',$pasadas_junta->soldadorz_id)
                                         ->select('soldadores.codigo','soldadores.nombre','ot_soldadores.*')
                                         ->first();
-        
+
             $obj->soldador2 = DB::table('soldadores')
-                                        ->join('ot_soldadores','ot_soldadores.soldadores_id','=','soldadores.id')  
+                                        ->join('ot_soldadores','ot_soldadores.soldadores_id','=','soldadores.id')
                                         ->where('ot_soldadores.id',$pasadas_junta->soldadorl_id)
                                         ->select('soldadores.codigo','soldadores.nombre','ot_soldadores.*')
                                         ->first();
-        
-            $obj->soldador2 =   $obj->soldador2 ? $obj->soldador2 : "";    
-        
+
+            $obj->soldador2 =   $obj->soldador2 ? $obj->soldador2 : "";
+
             $obj->soldador3 = DB::table('soldadores')
-                                        ->join('ot_soldadores','ot_soldadores.soldadores_id','=','soldadores.id')  
+                                        ->join('ot_soldadores','ot_soldadores.soldadores_id','=','soldadores.id')
                                         ->where('ot_soldadores.id',$pasadas_junta->soldadorp_id)
                                         ->select('soldadores.codigo','soldadores.nombre','ot_soldadores.*')
                                         ->first();
 
-            $obj->soldador3 = $obj->soldador3 ? $obj->soldador3 : "";            
+            $obj->soldador3 = $obj->soldador3 ? $obj->soldador3 : "";
 
             $pasadas_junta->soldador1 = $obj->soldador1;
             $pasadas_junta->soldador2 = $obj->soldador2;
             $pasadas_junta->soldador3 = $obj->soldador3;
-           
-        }   
+
+        }
 
         Log::debug("Var pasadas_juntas :" . $pasadas_juntas);
 
-        return $pasadas_juntas; 
+        return $pasadas_juntas;
 
     }
 

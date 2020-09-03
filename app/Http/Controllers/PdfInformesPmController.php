@@ -34,21 +34,21 @@ use App\MetodoEnsayos;
 
 class PdfInformesPmController extends Controller
 {
-    public function imprimir($id){      
+    public function imprimir($id){
 
         /* header */
-      
-         $informe = Informe::findOrFail($id);       
+
+         $informe = Informe::findOrFail($id);
          $informe_pm = InformesPm::where('informe_id',$informe->id)->firstOrFail();
          $ot = Ots::findOrFail($informe->ot_id);
-         $cliente = Clientes::findOrFail($ot->cliente_id);           
+         $cliente = Clientes::findOrFail($ot->cliente_id);
          $ot_tipo_soldadura = OtTipoSoldaduras::where('id',$informe->ot_tipo_soldadura_id)->with('Tiposoldadura')->first();
-         $material = Materiales::findOrFail($informe->material_id);   
-         $material_accesorio = Materiales::find($informe->material_accesorio_id);
-         $norma_ensayo = NormaEnsayos::findOrFail($informe->norma_ensayo_id);   
-         $norma_evaluacion = NormaEvaluaciones::findOrFail($informe->norma_evaluacion_id); 
+         $material = Materiales::findOrFail($informe->material_id);
+         $material2 = Materiales::find($informe->material2_id);
+         $norma_ensayo = NormaEnsayos::findOrFail($informe->norma_ensayo_id);
+         $norma_evaluacion = NormaEvaluaciones::findOrFail($informe->norma_evaluacion_id);
          $ot_procedimiento_propio = OtProcedimientosPropios::findOrFail($informe->procedimiento_informe_id);
-         $procedimiento_inf = Documentaciones::findOrFail($ot_procedimiento_propio->documentacion_id);       
+         $procedimiento_inf = Documentaciones::findOrFail($ot_procedimiento_propio->documentacion_id);
          $fuente = Fuentes::find($informe_pm->fuente_id);
          $diametro_espesor = DiametrosEspesor::findOrFail($informe->diametro_espesor_id);
          $particula = Particulas::where('id',$informe_pm->particula_id)->with('color')->first();
@@ -65,11 +65,11 @@ class PdfInformesPmController extends Controller
          $iluminacion = Iluminaciones::findOrFail($informe_pm->iluminacion_id);
          $evaluador = User::find($informe->firma);
          $contratista = Contratistas::find($ot->contratista_id);
-         $observaciones = $informe->observaciones;   
+         $observaciones = $informe->observaciones;
 
         /*  Encabezado */
 
-        $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);  
+        $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);
         $titulo = "PARTÍCULAS MAGNETIZABLES";
         $nro = FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo);
         $fecha = date('d-m-Y', strtotime($informe->fecha));
@@ -77,7 +77,7 @@ class PdfInformesPmController extends Controller
 
      //   dd($instrumento_medicion);
 
-        $detalles =  DB::select('SELECT 
+        $detalles =  DB::select('SELECT
                                 detalles_pm.pieza as pieza,
                                 detalles_pm.cm as cm,
                                 detalles_pm.detalle as detalle,
@@ -88,15 +88,14 @@ class PdfInformesPmController extends Controller
                                 INNER JOIN informes_pm ON detalles_pm.informe_pm_id = informes_pm.id
                                 LEFT JOIN detalles_pm_referencias ON detalles_pm.detalle_pm_referencia_id = detalles_pm_referencias.id
                                 WHERE
-                                informes_pm.id =:id',['id' => $informe_pm->id ]);       
- 
+                                informes_pm.id =:id',['id' => $informe_pm->id ]);
+
            $pdf = PDF::loadView('reportes.informes.pm-v2',compact('ot','titulo','nro','tipo_reporte','fecha',
                                                                 'norma_ensayo',
                                                                 'norma_evaluacion',
-                                                                'procedimiento_inf',                                                               
+                                                                'procedimiento_inf',
                                                                 'fuente',
                                                                 'diametro_espesor',
-                                                                'ici',
                                                                 'tecnica',
                                                                 'interno_equipo',
                                                                 'instrumento_medicion',
@@ -107,7 +106,7 @@ class PdfInformesPmController extends Controller
                                                                 'informe_pm',
                                                                 'ot_tipo_soldadura',
                                                                 'material',
-                                                                'material_accesorio',
+                                                                'material2',
                                                                 'tipo_magnetizacion',
                                                                 'magnetizacion',
                                                                 'particula',
@@ -119,9 +118,9 @@ class PdfInformesPmController extends Controller
                                                                 'detalles',
                                                                 'observaciones'
                                                                 ))->setPaper('a4','portrait')->setWarnings(false);
-                                                        
- 
-           return $pdf->stream(); 
-    
+
+
+           return $pdf->stream();
+
      }
 }

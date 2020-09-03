@@ -10,11 +10,11 @@
                            </tr>
                            <tr>
                                <td colspan="4">{{$informe->componente}}</td>
-                           </tr>    
+                           </tr>
 
                            <tr>
                                <th  width="100%" colspan="4">Plano / Isométrico</th>
-                           </tr>                     
+                           </tr>
                            <tr>
                                 <td colspan="4">{{$informe->plano_isom}}</td>
                            </tr>
@@ -46,13 +46,13 @@
                                         Visible
                                     @endif
                                 </td>
-                           </tr>   
+                           </tr>
                            <tr>
                                 <th colspan="2">Líquido Revelador</th>
                                 <th colspan="2">Aplicación Revelador</th>
                            </tr>
                            <tr>
-                                <td colspan="2">                                
+                                <td colspan="2">
                                     {{$revelador->tipo}}
                                     @if ($revelador->marca)
 
@@ -61,8 +61,8 @@
                                     @endif
                                 </td>
                                 <td colspan="2">{{$revelador_aplicacion->codigo}}</td>
-                           </tr>     
-                           
+                           </tr>
+
                            <tr>
                                 <th colspan="2">Limpieza Previa</th>
                                 <th colspan="2">Limpieza Intermedia</th>
@@ -70,7 +70,7 @@
                             <tr>
                                 <td colspan="2" class="borderFilabottom">{{$informe_lp->limpieza_previa}}</td>
                                 <td colspan="2" class="borderFilabottom">{{$informe_lp->limpieza_intermedia}}</td>
-                            </tr> 
+                            </tr>
 
                         </tbody>
                     </table>
@@ -84,31 +84,31 @@
 
                            <tr >
                                <th width="50%" colspan="2">Material</th>
-                               <th width="50%" colspan="2">Material Accesorio</th>
+                               <th width="50%" colspan="2">Material ( {{ $informe->material2_tipo }})</th>
                            </tr>
                            <tr >
                                <td colspan="2">{{$material->codigo}}</td>
                                <td colspan="2">
-                                    @if($material_accesorio)
-                                         {{$material_accesorio->codigo}}
+                                    @if($material2)
+                                         {{$material2->codigo}}
                                     @endif
                                </td>
                            </tr>
 
-                           <tr>                          
+                           <tr>
                                 <th colspan="2">Diámetro</th>
                                 <th colspan="2">Espesor</th>
-                           </tr>                   
-                            <tr>                           
+                           </tr>
+                            <tr>
                                 <td colspan="2">{{$diametro_espesor->diametro}}</td>
-                                <td colspan="2">              
+                                <td colspan="2">
                                     @if ($informe->espesor_chapa)
                                         {{ $informe->espesor_chapa }}
                                     @elseif($informe->espesor_especifico)
                                         {{ $informe->espesor_especifico }}
                                     @else
                                         {{ $diametro_espesor->espesor }}
-                                    @endif   
+                                    @endif
                                 </td>
                             </tr>
 
@@ -123,20 +123,20 @@
                                         &nbsp;
                                     @endif
                                 </td>
-                            </tr>   
+                            </tr>
 
                             <tr>
-                                <th colspan="3">Instrumento Medición</th>      
-                                <th colspan="1">Iluminaciones </th> 
+                                <th colspan="3">Instrumento Medición</th>
+                                <th colspan="1">Iluminaciones </th>
                             </tr>
                             <tr>
                                 <td colspan="3">{{$equipo->equipo->instrumento_medicion}} / {{$equipo->equipo->codigo}}</td>
                                 <td colspan="1">{{$iluminacion->codigo}}</td>
-                            </tr>  
+                            </tr>
 
                             <tr>
                                 <th colspan="2">Líquido Penetrante.</th>
-                                <th colspan="2">Aplicación Penetrante</th>                               
+                                <th colspan="2">Aplicación Penetrante</th>
                            </tr>
                            <tr>
                                 <td colspan="2">
@@ -147,12 +147,12 @@
                                     @else
                                          &nbsp;
                                     @endif
-                                
+
                                 </td>
                                 <td colspan="2">
                                     {{$penetrante_aplicacion->codigo}}
                                 </td>
-                           </tr>   
+                           </tr>
 
 
                            <tr>
@@ -169,7 +169,7 @@
                                     @endif
                                 </td>
                                 <td colspan="2">{{$removedor_aplicacion->codigo}}</td>
-                            </tr>  
+                            </tr>
 
                            <tr>
                                 <th colspan="2">Limpieza Final</th>
@@ -178,7 +178,7 @@
                            <tr>
                                 <td colspan="2" class="borderFilabottom">{{$informe_lp->limpieza_final}}</td>
                                 <td colspan="2" class="borderFilabottom">{{$ejecutor_ensayo->name}}</td>
-                           </tr>                    
+                           </tr>
 
                         </tbody>
                     </table>

@@ -1066,6 +1066,7 @@ methods : {
         let res = await axios.get(url);
         this.informes = res.data;
         this.informes_ids = this.informes.map(item => item.id).toString();
+        console.log(this.informes_ids);
         this.valores_indice_rechazos= [];
         await this.getIndicesDeRechazos();
         await this.getDefectologia();
@@ -1272,7 +1273,6 @@ methods : {
     },
 
     async GenerarTablaDefectosSoldador(){
-
 
        let TablaDefectosSoldadorUnique = [...new Set(this.TablaDDSTemp.map(item=> item.soldador_id))];
        this.TablaDefectosSoldador = [];

@@ -4,7 +4,7 @@
                 <td width="49%">
                     <table style="font-size: 12px;" width="100%" class="header-detalle">
                         <tbody>
-                      
+
                            <tr>
                                <th width="100%" colspan="4">Componente</th>
                            </tr>
@@ -14,7 +14,7 @@
 
                            <tr>
                                <th  width="100%" colspan="4">Plano / Isométrico</th>
-                           </tr>                     
+                           </tr>
                            <tr>
                                 <td colspan="4">{{$informe->plano_isom}}</td>
                            </tr>
@@ -55,7 +55,7 @@
 
                            <tr>
                                 <th colspan="2">Lado</th>
-                                <th colspan="2">Dist. Fuente / Film</th>                               
+                                <th colspan="2">Dist. Fuente / Film</th>
                            </tr>
 
                            <tr>
@@ -65,12 +65,12 @@
 
                           <tr>
                                 <th colspan="2">Técnica Empleada</th>
-                                <th colspan="2"> &nbsp;</th>                               
+                                <th colspan="2"> &nbsp;</th>
                           </tr>
                           <tr>
                                 <td class="noBorder" colspan="2">{{$tecnica->codigo}}</td>
                                 <td colspan="2" rowspan="4" style="text-align: center;"><img src="{{ public_path($tecnicas_grafico->path)}}" alt="" style="height: 100px;margin-top: -10px;"></td>
-                          </tr>       
+                          </tr>
 
                         </tbody>
                     </table>
@@ -83,31 +83,31 @@
                         <tbody>
                            <tr>
                                <th width="50%" colspan="2">Material</th>
-                               <th width="50%" colspan="2">Material Accesorio</th>
+                               <th width="50%" colspan="2">Material ( {{ $informe->material2_tipo }})</th>
                            </tr>
                            <tr >
                                <td colspan="2">{{$material->codigo}}</td>
                                <td colspan="2">
-                                    @if($material_accesorio)
-                                         {{$material_accesorio->codigo}}
+                                    @if($material2)
+                                         {{$material2->codigo}}
                                     @endif
                                </td>
                            </tr>
 
-                           <tr>                          
+                           <tr>
                                 <th colspan="2">Diámetro</th>
                                 <th colspan="2">Espesor</th>
-                           </tr>                   
-                            <tr>                           
+                           </tr>
+                            <tr>
                                 <td colspan="2">{{$diametro_espesor->diametro}}</td>
-                                <td colspan="2">              
+                                <td colspan="2">
                                     @if ($informe->espesor_chapa)
                                         {{ $informe->espesor_chapa }}
                                     @elseif($informe->espesor_especifico)
                                         {{ $informe->espesor_especifico }}
                                     @else
                                         {{ $diametro_espesor->espesor }}
-                                    @endif   
+                                    @endif
                                 </td>
                             </tr>
 
@@ -130,11 +130,11 @@
                             </tr>
                             <tr>
                                 <td colspan="2">{{$interno_equipo->equipo->codigo}}</td>
-                                <td colspan="2">                           
+                                <td colspan="2">
                                     @if ($interno_fuente)
 
-                                        {{$interno_fuente->fuente->codigo}} 
-                                        
+                                        {{$interno_fuente->fuente->codigo}}
+
                                     @endif
                                 </td>
                             </tr>
@@ -149,7 +149,7 @@
                                     @if ($interno_fuente)
                                         {{$interno_fuente->foco}}
                                     @else
-                                        {{$interno_equipo->foco}}    
+                                        {{$interno_equipo->foco}}
                                     @endif
                                 </td>
                             </tr>
@@ -164,7 +164,7 @@
                             </tr>
 
                             <tr>
-                                <th colspan="2">Norma Evaluación</th>                              
+                                <th colspan="2">Norma Evaluación</th>
                                 <th colspan="2">Norma Ensayo</th>
                             </tr>
                             <tr>
@@ -177,12 +177,11 @@
                             </tr>
                             <tr>
                                 <td colspan="4">{{$ejecutor_ensayo->name}}</td>
-                            </tr>                        
-                                                     
+                            </tr>
+
                         </tbody>
                     </table>
                 </td>
             </tr>
         </tbody>
     </table>
- 

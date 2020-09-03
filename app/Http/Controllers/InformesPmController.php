@@ -27,52 +27,53 @@ use App\DetallesPmReferencias;
 use App\OtTipoSoldaduras;
 use App\Particulas;
 use App\Contrastes;
+use Exception as Exception;
 
 class InformesPmController extends Controller
 {
     public function __construct()
     {
         $this->middleware('ddppi')->only('create');
-        $this->middleware(['role_or_permission:Sistemas|T_informes_edita'],['only' => ['create','edit']]);  
+        $this->middleware(['role_or_permission:Sistemas|T_informes_edita'],['only' => ['create','edit']]);
 
     }
 
 
     public function create($ot_id)
     {
-        $metodo = 'PM';    
+        $metodo = 'PM';
         $user = auth()->user();
         $header_titulo = "Informe";
-        $header_descripcion ="Crear";         
-        $ot = Ots::findOrFail($ot_id);      
+        $header_descripcion ="Crear";
+        $ot = Ots::findOrFail($ot_id);
 
         return view('informes.pm.index', compact('ot',
                                                  'metodo',
-                                                 'user',                                              
+                                                 'user',
                                                  'header_titulo',
                                                  'header_descripcion'));
     }
 
     public function store(InformePmRequest $request)
     {
-        $informe  = new Informe;          
-        $informePm  = new InformesPm;  
+        $informe  = new Informe;
+        $informePm  = new InformesPm;
 
         DB::beginTransaction();
-        try {          
-        
+        try {
+
           $informe = (new \App\Http\Controllers\InformesController)->saveInforme($request,$informe);
           $informePm = $this->saveInformePm($request,$informe,$informePm);
-       
+
           $this->saveDetalle($request,$informePm);
-    
-          DB::commit(); 
-    
+
+          DB::commit();
+
         } catch (Exception $e) {
-    
+
           DB::rollback();
-          throw $e;      
-          
+          throw $e;
+
         }
 
         return $informe;
@@ -84,25 +85,25 @@ class InformesPmController extends Controller
       $informePm =InformesPm::where('informe_id',$informe->id)->first();
       DB::beginTransaction();
       try {
-  
+
           $informe = (new \App\Http\Controllers\InformesController)->saveInforme($request,$informe);
-          $this->saveInformePm($request,$informe,$informePm);       
+          $this->saveInformePm($request,$informe,$informePm);
           DetallesPm::where('informe_pm_id',$informePm->id)->delete();
           $this->saveDetalle($request,$informePm);
           DB::commit();
-          
+
         } catch (Exception $e) {
-  
+
           DB::rollback();
-          throw $e;      
-          
+          throw $e;
+
         }
-  
+
     }
 
-    public function saveInformePm($request,$informe,$informePm){      
+    public function saveInformePm($request,$informe,$informePm){
 
-   
+
       $informePm->informe_id = $informe->id;
       $informePm->metodo_trabajo_pm_id = $request->metodo_trabajo_pm['id'];
       $informePm->instrumento_medicion_id = $request->instrumento_medicion['id'];
@@ -117,41 +118,41 @@ class InformesPmController extends Controller
       $informePm->iluminacion_id = $request->iluminacion['id'];
       $informePm->particula_id = $request->particula['id'];
       $informePm->tinta_contraste_id = $request->contraste['id'];
-  
-      $informePm->save();     
-      
+
+      $informePm->save();
+
       return $informePm;
-  
+
     }
 
     public function saveDetalle($request,$informePm){
 
 
-      foreach ($request->detalles as $detalle){    
-        
+      foreach ($request->detalles as $detalle){
+
         $referencia_id = $this->saveReferencia($detalle);
 
-        $detallePm  = new DetallesPm; 
+        $detallePm  = new DetallesPm;
         $detallePm->informe_pm_id = $informePm->id;
         $detallePm->pieza = $detalle['pieza'];
         $detallePm->cm = $detalle['cm'];
         $detallePm->detalle = $detalle['detalle'];
         $detallePm->aceptable_sn = $detalle['aceptable_sn'];
         $detallePm->detalle_pm_referencia_id = $referencia_id;
-        $detallePm->save();           
+        $detallePm->save();
 
-      } 
+      }
 
     }
 
     public function saveReferencia($detalle){
- 
+
       if (($detalle['observaciones'])||
           ($detalle['path1']) ||
           ($detalle['path2']) ||
           ($detalle['path3']) ||
           ($detalle['path4'])){
-  
+
             $detalle_pm_referencia                     = new DetallesPmReferencias;
             $detalle_pm_referencia->descripcion        = $detalle['observaciones'];
             $detalle_pm_referencia->path1              = $detalle['path1'];
@@ -159,35 +160,35 @@ class InformesPmController extends Controller
             $detalle_pm_referencia->path3              = $detalle['path3'];
             $detalle_pm_referencia->path4              = $detalle['path4'];
             $detalle_pm_referencia->save();
-  
+
             return $detalle_pm_referencia->id;
          }
          else{
             return null;
          }
-  
-    }     
-    
+
+    }
+
 
     public function edit($ot_id,$id)
     {
         $header_titulo = "Informe";
-        $header_descripcion ="Editar";  
-        $metodo = 'PM';    
-        $accion = 'edit';      
+        $header_descripcion ="Editar";
+        $metodo = 'PM';
+        $accion = 'edit';
         $user = auth()->user();
         $ot = Ots::findOrFail($ot_id);
         $informe = Informe::findOrFail($id);
-        $informe_pm =InformesPm::where('informe_id',$informe->id)->first();     
+        $informe_pm =InformesPm::where('informe_id',$informe->id)->first();
         $informe_material = Materiales::find($informe->material_id);
-        $informe_material_accesorio = Materiales::find($informe->material_accesorio_id);
+        $informe_material_accesorio = Materiales::find($informe->material2_id);
         $informe_diametroEspesor = DiametrosEspesor::find($informe->diametro_espesor_id);
-        $informe_diametro = DiametroView::where('diametro',$informe_diametroEspesor->diametro)->first();       
+        $informe_diametro = DiametroView::where('diametro',$informe_diametroEspesor->diametro)->first();
         $informe_interno_equipo = internoEquipos::where('id',$informe->interno_equipo_id)->with('equipo')->first();
         $informe_instrumento_medicion = internoEquipos::where('id',$informe_pm->instrumento_medicion_id)->with('equipo')->first();
         $informe_tecnica = Tecnicas::find($informe->tecnica_id);
         $documetacionesRepository = new DocumentacionesRepository;
-        $informe_procedimiento = (new DocumentacionesController($documetacionesRepository))->ProcedimientoInformeId($informe->procedimiento_informe_id);    
+        $informe_procedimiento = (new DocumentacionesController($documetacionesRepository))->ProcedimientoInformeId($informe->procedimiento_informe_id);
         $informe_norma_evaluacion = NormaEvaluaciones::find($informe->norma_evaluacion_id);
         $informe_norma_ensayo = NormaEnsayos::find($informe->norma_ensayo_id);
         $informe_ejecutor_ensayo =(new OtOperariosController())->getEjecutorEnsayo($informe->ejecutor_ensayo_id);
@@ -217,21 +218,20 @@ class InformesPmController extends Controller
                                                  'metodo',
                                                  'user',
                                                  'informe',
-                                                 'informe_pm',  
-                                                 'informe_material',  
+                                                 'informe_pm',
+                                                 'informe_material',
                                                  'informe_ot_tipo_soldadura',
                                                  'informe_material_accesorio',
                                                  'informe_diametro',
-                                                 'informe_diametroEspesor',                                                                            
-                                                 'informe_tecnica_grafico',
-                                                 'informe_interno_equipo',   
+                                                 'informe_diametroEspesor',
+                                                 'informe_interno_equipo',
                                                  'informe_instrumento_medicion',
-                                                 'informe_tecnica', 
-                                                 'informe_procedimiento',                                              
+                                                 'informe_tecnica',
+                                                 'informe_procedimiento',
                                                  'informe_norma_evaluacion',
                                                  'informe_norma_ensayo',
-                                                 'informe_ejecutor_ensayo',     
-                                                 'informe_pm_metodo_trabajo_pm',    
+                                                 'informe_ejecutor_ensayo',
+                                                 'informe_pm_metodo_trabajo_pm',
                                                  'informe_pm_tipo_magnetizacion',
                                                  'informe_pm_magnetizacion',
                                                  'informe_pm_desmagnetizacion_sn',
@@ -246,7 +246,7 @@ class InformesPmController extends Controller
     public function getDetalle($id){
 
       $informe_detalle = DB::table('detalles_pm')
-                             ->leftjoin('detalles_pm_referencias','detalles_pm_referencias.id','=','detalles_pm.detalle_pm_referencia_id')                      
+                             ->leftjoin('detalles_pm_referencias','detalles_pm_referencias.id','=','detalles_pm.detalle_pm_referencia_id')
                              ->where('detalles_pm.informe_pm_id',$id)
                              ->selectRaw('detalles_pm.detalle as detalle,
                                         detalles_pm.cm as cm,
@@ -258,11 +258,11 @@ class InformesPmController extends Controller
                                         detalles_pm_referencias.path3 as path3,
                                         detalles_pm_referencias.path4 as path4')
                               ->orderBy('detalles_pm.id','asc')
-                              ->get();  
-   
+                              ->get();
+
       return $informe_detalle;
 
   }
 
-    
+
 }
