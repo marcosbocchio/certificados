@@ -79,7 +79,13 @@
                         <tbody>
                             <tr>
                                 <th colspan="2">Material</th>
-                                <th colspan="2">Material ( {{ $informe->material2_tipo }})</th>
+                                <th width="50%" colspan="2">
+                                    @if($material2)
+                                        Material ( {{ $informe->material2_tipo }})
+                                     @else
+                                          &nbsp;
+                                      @endif
+                                 </th>
                             </tr>
                             <tr>
                                 <td colspan="2">{{$material->codigo}}</td>
