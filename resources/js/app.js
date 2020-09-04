@@ -256,8 +256,10 @@ Vue.component('abm-documentos-escaneados', require('./components/dashboard/docum
 Vue.component('table-documentos-escaneados', require('./components/dashboard/documentos-escaneados/table-documentos-escaneados.vue').default);
 Vue.component('form-documentos-escaneados', require('./components/dashboard/documentos-escaneados/form-documentos-escaneados.vue').default);
 
-/* Soldadores */
-Vue.component('estadisticas-soldaduras', require('./components/soldadores/estadisticas-soldaduras.vue').default);
+/* Reportes */
+Vue.component('estadisticas-soldaduras', require('./components/reportes/estadisticas-soldaduras.vue').default);
+Vue.component('costuras', require('./components/reportes/costuras.vue').default);
+Vue.component('costuras2', require('./components/reportes/costuras2.vue').default);
 
 /* Trazabilidad */
 Vue.component('trazabilidad-fuente', require('./components/trazabilidad/trazabilidad-fuente.vue').default);
@@ -328,6 +330,7 @@ state: {
         colores :[],
         operadores:[],
         obra_informe:'',
+        clientesOperador:[],
         contratistas:[],
         provincias:[],
         localidades:[],
@@ -455,6 +458,21 @@ actions : {
           })
         })
         },
+
+        /* si  el operador  no tiene cliente asignado traigo todos los clientes*/
+
+        loadClientesOperador({
+            commit},user_id) {
+            axios.defaults.baseURL = store.state.url ;
+            var urlRegistros = 'clientes/operador/' + user_id  +'?api_token=' + Laravel.user.api_token;
+            return new Promise((resolve, reject) => {
+            axios.get(urlRegistros).then((response) => {
+              console.log(response.data);
+              commit('getClientesOperador', response.data)
+              resolve();
+            })
+            })
+          },
 
         loadContratistas({
           commit
@@ -1060,6 +1078,10 @@ actions : {
 
       getParametroGeneral(state, ParametroGeneral) {
         state.ParametroGeneral = ParametroGeneral
+      },
+
+      getClientesOperador(state, clientesOperador) {
+        state.clientesOperador = clientesOperador
       },
 
       getContratistas(state, contratistas) {

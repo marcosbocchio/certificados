@@ -13,10 +13,10 @@
       </div>
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">MAIN NAVIGATION</li>       
-        <li><a href="{{ route('dashboard')}}" ><i class="fa fa-dashboard"></i> <span>TABLERO PRINCIPAL</span></a></li>   
+        <li class="header">MAIN NAVIGATION</li>
+        <li><a href="{{ route('dashboard')}}" ><i class="fa fa-dashboard"></i> <span>TABLERO PRINCIPAL</span></a></li>
         <!--
-        @can('OT')  
+        @can('OT')
           <li class="treeview">
             <a href="#">
               <i class="fa fa-laptop"></i>
@@ -28,8 +28,8 @@
             <ul class="treeview-menu">
 
              @can('O_alta')
-              <li><a href="{{ route('ots.create') }}"> Alta</a></li>  
-             @endcan                    
+              <li><a href="{{ route('ots.create') }}"> Alta</a></li>
+             @endcan
 
             </ul>
           </li>
@@ -68,11 +68,11 @@
                   <li><a href="{{ route('norma-evaluaciones') }}">Norma Evaluaciones</a></li>
                 @endcan
 
-                @can('M_documentaciones')              
+                @can('M_documentaciones')
                   <li><a href="{{ route('documentaciones')}}">Documentaciones</a></li>
                 @endcan
 
-                @can('M_unidades_medida')              
+                @can('M_unidades_medida')
                   <li><a href="{{ route('unidades-medidas') }}">Unidades de Medidas</a></li>
                 @endcan
 
@@ -115,7 +115,7 @@
                 @can('M_vehiculos')
                   <li><a href="{{ route('vehiculos') }}">Vehiculos</a></li>
                 @endcan
-                
+
                 @can('M_roles')
                   <li><a href="{{ route('roles') }}">Roles</a></li>
                 @endcan
@@ -137,7 +137,7 @@
             </a>
             <ul class="treeview-menu">
               @can('D_activa_operador')
-                  <li><a href="{{ route('operador-periodo-rx') }}">Activar Operador</a></li> 
+                  <li><a href="{{ route('operador-periodo-rx') }}">Activar Operador</a></li>
               @endcan
               @can('D_operador')
                   <li><a href="{{ route('dosimetria-operador') }}">Operador</a></li>
@@ -169,7 +169,10 @@
             </a>
             <ul class="treeview-menu">
               @can('D_soldaduras')
-                  <li><a href="{{ route('reporte-soldaduras') }}">Estadísticas soldaduras</a></li> 
+                  <li><a href="{{ route('reporte-estadisticas-soldaduras') }}">Estadísticas soldaduras</a></li>
+              @endcan
+              @can('D_soldaduras')
+                   <li><a href="{{ route('reporte-costuras') }}">Costuras</a></li>
               @endcan
             </ul>
           </li>
@@ -210,11 +213,11 @@
                 <li><a href="{{ route('institucionales',$documento->id)  }}" target='_blank' ><i class="fa fa-file-pdf-o"></i> {{ $documento->titulo }}</a></li>
 
                 @endif
-            @endforeach     
-            
+            @endforeach
+
           </ul>
-        </li>   
-       
+        </li>
+
         <li class="treeview">
           <a href="#">
             <i class="fa  fa-cloud-download"></i>
@@ -224,13 +227,13 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ route('software_download','INDUSTREX V4.2 Lite Setup.exe') }}"><i class="fa fa-download"></i>INDUSTREX V4.2 Lite</a></li>           
+            <li><a href="{{ route('software_download','INDUSTREX V4.2 Lite Setup.exe') }}"><i class="fa fa-download"></i>INDUSTREX V4.2 Lite</a></li>
             @can('enod')
-                <li title="Formato Importación Soldadores CSV"><a href="{{ route('software_download','Importacion_soldadores.csv') }}"><i class="fa fa-download"></i>SOLDADORES CSV</a></li>           
+                <li title="Formato Importación Soldadores CSV"><a href="{{ route('software_download','Importacion_soldadores.csv') }}"><i class="fa fa-download"></i>SOLDADORES CSV</a></li>
             @endcan
           </ul>
 
-        </li>       
+        </li>
 
       </ul>
     </section>

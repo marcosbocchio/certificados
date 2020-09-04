@@ -11,7 +11,7 @@ use PDO;
 class EstadisticasSoldadurasController extends Controller
 {
 
-    public function viewSoldaduras(){
+    public function callView(){
 
         $user = auth()->user();
         $header_titulo = "Reporte";
