@@ -396,7 +396,6 @@ actions : {
           var urlRegistros = 'fecha_actual'  + '?api_token=' + Laravel.user.api_token;
           return new Promise((resolve, reject) => {
           axios.get(urlRegistros).then((response) => {
-          console.log(response.data);
           commit('getFechaActual', response.data)
           resolve()
              })
@@ -410,7 +409,6 @@ actions : {
           var urlRegistros = 'colores'  + '?api_token=' + Laravel.user.api_token;
           return new Promise((resolve, reject) => {
           axios.get(urlRegistros).then((response) => {
-          console.log(response.data);
           commit('getColores', response.data)
           resolve()
              })
@@ -424,7 +422,6 @@ actions : {
           var urlRegistros = 'informes/' + payload.informe_id + '/importado_sn/' + (payload.importado_sn ? 1 : 0 )  +'?api_token=' + Laravel.user.api_token;
           return new Promise((resolve, reject) => {
           axios.get(urlRegistros).then((response) => {
-            console.log(response.data);
             commit('getObraInforme', response.data)
             resolve()
             })
@@ -467,7 +464,6 @@ actions : {
             var urlRegistros = 'clientes/operador/' + user_id  +'?api_token=' + Laravel.user.api_token;
             return new Promise((resolve, reject) => {
             axios.get(urlRegistros).then((response) => {
-              console.log(response.data);
               commit('getClientesOperador', response.data)
               resolve();
             })
@@ -499,7 +495,6 @@ actions : {
           axios.defaults.baseURL = store.state.url ;
           var urlRegistros = 'localidades/' + provincia_id + '?api_token=' + Laravel.user.api_token;
           axios.get(urlRegistros).then((response) => {
-            console.log(response.data);
             commit('getLocalidades', response.data)
           })
         },
@@ -510,7 +505,6 @@ actions : {
           var urlRegistros = 'ot_tipo_soldaduras/ot/' + ot_id + '?api_token=' + Laravel.user.api_token;
           return new Promise((resolve, reject) => {
           axios.get(urlRegistros).then((response) => {
-            console.log(response.data);
             commit('getOtTipoSoldaduras', response.data)
             resolve();
           })
@@ -524,6 +518,8 @@ actions : {
           console.log('url de loadOtObraTipoSoldaduras :',urlRegistros);
           return new Promise((resolve, reject) => {
           axios.get(urlRegistros).then((response) => {
+              console.log('entro en loadOtObraTipoSoldaduras')
+            console.log(response.data);
             commit('getOtObraTipoSoldaduras', response.data)
             resolve();
           })
@@ -536,7 +532,6 @@ actions : {
           var urlRegistros = 'ot_tipo_soldaduras/ot/' + ot_id + '/epss/' +'?api_token=' + Laravel.user.api_token;
           return new Promise((resolve, reject) => {
           axios.get(urlRegistros).then((response) => {
-            console.log(response.data);
             commit('getOtEpss', response.data)
             resolve();
           })
@@ -549,7 +544,6 @@ actions : {
           var urlRegistros = 'ot_tipo_soldaduras/ot/' + ot_id + /pqrs/ +'?api_token=' + Laravel.user.api_token;
           return new Promise((resolve, reject) => {
           axios.get(urlRegistros).then((response) => {
-            console.log(response.data);
             commit('getOtPqrs', response.data)
             resolve();
           })
@@ -561,7 +555,6 @@ actions : {
         }) {
           axios.defaults.baseURL = store.state.url ;
           var urlRegistros = 'materiales' + '?api_token=' + Laravel.user.api_token;
-          console.log(urlRegistros);
           axios.get(urlRegistros).then((response) => {
             commit('getMateriales', response.data)
           })
@@ -572,7 +565,6 @@ actions : {
         }) {
           axios.defaults.baseURL = store.state.url ;
           var urlRegistros = 'diametros' + '?api_token=' + Laravel.user.api_token;
-          console.log(urlRegistros);
           axios.get(urlRegistros).then((response) => {
             commit('getDiametros', response.data)
           })
@@ -583,7 +575,6 @@ actions : {
           axios.defaults.baseURL = store.state.url ;
           var urlRegistros = 'espesor/' + diametro_code + '?api_token=' + Laravel.user.api_token;
           return new Promise((resolve, reject) => {
-          console.log(urlRegistros);
           axios.get(urlRegistros).then((response) => {
             commit('getEspesores', response.data)
             resolve();
@@ -594,11 +585,9 @@ actions : {
         loadProcedimietosOtMetodo({
           commit},payload) {
           axios.defaults.baseURL = store.state.url
-          console.log(payload);
           var urlRegistros = 'procedimientos_informes/ot/' + payload.ot_id + '/metodo/' + payload.metodo + '?api_token=' + Laravel.user.api_token;
           return new Promise((resolve, reject) => {
             axios.get(urlRegistros).then((response) => {
-              console.log(response.data);
               commit('getProcedimientosOtMetodo', response.data);
               resolve();
             })
@@ -609,7 +598,6 @@ actions : {
           commit}) {
           axios.defaults.baseURL = store.state.url ;
           var urlRegistros = 'norma_evaluaciones' + '?api_token=' + Laravel.user.api_token;
-          console.log(urlRegistros);
           axios.get(urlRegistros).then((response) => {
             commit('getNormaEvaluaciones', response.data)
           })
@@ -619,7 +607,6 @@ actions : {
           commit}) {
           axios.defaults.baseURL = store.state.url ;
           var urlRegistros = 'norma_ensayos' + '?api_token=' + Laravel.user.api_token;
-          console.log(urlRegistros);
           axios.get(urlRegistros).then((response) => {
             commit('getNormaEnsayos', response.data)
           })
@@ -630,7 +617,6 @@ actions : {
         }) {
           axios.defaults.baseURL = store.state.url ;
           var urlRegistros = 'unidades_medidas/' + '?api_token=' + Laravel.user.api_token;
-          console.log(urlRegistros);
           axios.get(urlRegistros).then((response) => {
             commit('getUnidadesMedidas', response.data)
           })
@@ -641,7 +627,6 @@ actions : {
         }) {
           axios.defaults.baseURL = store.state.url ;
           var urlRegistros = 'metodo_ensayos' + '?api_token=' + Laravel.user.api_token;
-          console.log(urlRegistros);
           axios.get(urlRegistros).then((response) => {
             commit('getMetodosEnsayos', response.data)
           })
@@ -651,10 +636,8 @@ actions : {
           commit},payload) {
           axios.defaults.baseURL = store.state.url ;
           var urlRegistros = 'interno_equipos/metodo/' + payload.metodo + '/activo_sn/' + payload.activo_sn + '/tipo_penetrante/' + payload.tipo_penetrante + '?api_token=' + Laravel.user.api_token;
-          console.log(urlRegistros);
           return new Promise((resolve, reject) => {
           axios.get(urlRegistros).then((response) => {
-            console.log(response.data);
             commit('getInternoEquipos', response.data)
             resolve()
           })
@@ -665,10 +648,8 @@ actions : {
           commit},payload) {
           axios.defaults.baseURL = store.state.url ;
           var urlRegistros = 'interno_equipos/metodo/' + payload.metodo + '/activo_sn/' + payload.activo_sn + '/tipo_penetrante/' + payload.tipo_penetrante + '?api_token=' + Laravel.user.api_token;
-          console.log(urlRegistros);
           return new Promise((resolve, reject) => {
           axios.get(urlRegistros).then((response) => {
-            console.log(response.data);
             commit('getInstrumentosMediciones', response.data)
             resolve()
           })
@@ -679,10 +660,8 @@ actions : {
           commit}) {
           axios.defaults.baseURL = store.state.url ;
           var urlRegistros = 'vehiculos' + '?api_token=' + Laravel.user.api_token;
-          console.log(urlRegistros);
           return new Promise((resolve, reject) => {
           axios.get(urlRegistros).then((response) => {
-            console.log(response.data);
             commit('getVehiculos', response.data)
             resolve()
           })
@@ -693,10 +672,8 @@ actions : {
           commit}) {
           axios.defaults.baseURL = store.state.url ;
           var urlRegistros = 'palpadores' + '?api_token=' + Laravel.user.api_token;
-          console.log(urlRegistros);
           return new Promise((resolve, reject) => {
           axios.get(urlRegistros).then((response) => {
-            console.log(response.data);
             commit('getPalpadores', response.data)
             resolve()
           })
@@ -707,10 +684,8 @@ actions : {
           commit},metodo_trabajo_pm_id) {
           axios.defaults.baseURL = store.state.url ;
           var urlRegistros = 'particulas/metodo_trabajo_pm/' + metodo_trabajo_pm_id + '?api_token=' + Laravel.user.api_token;
-          console.log(urlRegistros);
           return new Promise((resolve, reject) => {
           axios.get(urlRegistros).then((response) => {
-            console.log(response.data);
             commit('getParticulas', response.data)
             resolve()
           })
@@ -721,10 +696,8 @@ actions : {
           commit},id) {
           axios.defaults.baseURL = store.state.url ;
           var urlRegistros = 'interno_equipos/' + id + '?api_token=' + Laravel.user.api_token;
-          console.log(urlRegistros);
           return new Promise((resolve, reject) => {
               axios.get(urlRegistros).then((response) => {
-                console.log(response.data);
                 commit('getUbicacionInternoEquipo', response.data) ;
                 resolve()
               })
@@ -735,9 +708,7 @@ actions : {
           commit},activo_sn) {
           axios.defaults.baseURL = store.state.url ;
           var urlRegistros = 'interno_fuentes/activo_sn/' + activo_sn + '?api_token=' + Laravel.user.api_token;
-          console.log(urlRegistros);
           axios.get(urlRegistros).then((response) => {
-            console.log(response.data);
             commit('getInternoFuentes', response.data)
           })
         },
@@ -747,7 +718,6 @@ actions : {
         }) {
           axios.defaults.baseURL = store.state.url ;
           var urlRegistros = 'equipos' + '?api_token=' + Laravel.user.api_token;
-          console.log(urlRegistros);
           axios.get(urlRegistros).then((response) => {
             commit('getEquipos', response.data)
           })
@@ -758,7 +728,6 @@ actions : {
         }) {
           axios.defaults.baseURL = store.state.url ;
           var urlRegistros = 'fuentes' + '?api_token=' + Laravel.user.api_token;
-          console.log(urlRegistros);
           axios.get(urlRegistros).then((response) => {
             commit('getFuentes', response.data)
           })
@@ -769,9 +738,7 @@ actions : {
           axios.defaults.baseURL = store.state.url ;
           var urlRegistros = 'fuentes/interno_fuente/' + interno_fuente_id  + '?api_token=' + Laravel.user.api_token;
           return new Promise((resolve, reject) => {
-          console.log(urlRegistros);
           axios.get(urlRegistros).then((response) => {
-            console.log(response.data);
             commit('getFuentePorInterno', response.data)
             resolve()
           })
@@ -782,9 +749,7 @@ actions : {
           commit},payload) {
           axios.defaults.baseURL = store.state.url ;
           var urlRegistros = 'tipo_liquidos/penetrante_sn/' + payload.penetrante_sn + '/revelador_sn/'+ payload.revelador_sn + '/removedor_sn/' + payload.removedor_sn + '/metodo_trabajo_lp_id/' +  payload.metodo_trabajo_lp_id + '?api_token=' + Laravel.user.api_token;
-          console.log(urlRegistros);
           axios.get(urlRegistros).then((response) => {
-            console.log(response.data);
            commit('getTipoLiquidos',{ 'liquidos' :response.data,'payload' : payload })
           })
         },
@@ -794,9 +759,7 @@ actions : {
           axios.defaults.baseURL = store.state.url ;
           var urlRegistros = 'iluminaciones' + '?api_token=' + Laravel.user.api_token;
           return new Promise((resolve, reject) => {
-          console.log(urlRegistros);
           axios.get(urlRegistros).then((response) => {
-            console.log(response.data);
             commit('getIluminaciones', response.data)
             resolve()
           })
@@ -807,9 +770,7 @@ actions : {
           commit},ot_id) {
           axios.defaults.baseURL = store.state.url ;
           var urlRegistros = 'ot-operarios/ot/' + ot_id + '?api_token=' + Laravel.user.api_token;
-          console.log(urlRegistros);
           axios.get(urlRegistros).then((response) => {
-            console.log(response.data);
             commit('getEjecutorEnsayo', response.data)
           })
         },
@@ -837,12 +798,10 @@ actions : {
 
         loadDosimetriaResumen({
           commit},payload) {
-            console.log(payload);
            axios.defaults.baseURL = store.state.url ;
            var urlRegistros ='dosimetria_resumen/year/'+ payload.year + '/operadores/' + payload.operadores + '?api_token=' + Laravel.user.api_token;
            return new Promise((resolve, reject) => {
             axios.get(urlRegistros).then((response) => {
-            console.log(response.data);
             commit('getDosimetriaResumen', response.data)
             resolve()
             })
@@ -855,7 +814,6 @@ actions : {
            var urlRegistros ='dosimetria_operador/operador/' + payload.operador_id + '/year/' + payload.year + '/month/' + payload.month + '?api_token=' + Laravel.user.api_token;
            return new Promise((resolve, reject) => {
            axios.get(urlRegistros).then((response) => {
-           console.log(response.data);
            commit('getDosimetriaOperador', response.data)
            resolve()
           })
@@ -869,7 +827,6 @@ actions : {
            var urlRegistros ='dosimetria_rx/year/' + payload.year + '/month/' + payload.month + '?api_token=' + Laravel.user.api_token;
            return new Promise((resolve, reject) => {
            axios.get(urlRegistros).then((response) => {
-           console.log(response.data);
            commit('getDosimetriaRx', response.data)
            resolve()
           })
@@ -883,7 +840,6 @@ actions : {
            var urlRegistros ='dosimetria_estados/year/' + payload.year + '/month/' + payload.month + '?api_token=' + Laravel.user.api_token;
            return new Promise((resolve, reject) => {
            axios.get(urlRegistros).then((response) => {
-           console.log(response.data);
            commit('getDosimetriaEstados', response.data)
            resolve()
           })
@@ -1001,8 +957,6 @@ actions : {
            axios.defaults.baseURL = store.state.url ;
            var urlRegistros = 'certificados/ot/' + ot_id +'/total' + '?api_token=' + Laravel.user.api_token;
            axios.get(urlRegistros).then((response) => {
-            console.log(urlRegistros);
-            console.log(response.data);
            commit('ContarCertificados', response.data)
           })
         },
@@ -1020,12 +974,9 @@ actions : {
         loadCurie({
           commit},payload ) {
            axios.defaults.baseURL = store.state.url ;
-           console.log(payload);
            var urlRegistros = 'interno_fuentes/' + payload.interno_fuente_id + '/fecha_final/' + payload.fecha_final + '/curie' + '?api_token=' + Laravel.user.api_token;
-           console.log(urlRegistros);
            return new Promise((resolve, reject) => {
            axios.get(urlRegistros).then((response) => {
-           console.log(response.data);
            commit('CalcularCurie', response.data)
            resolve()
           })
@@ -1037,7 +988,6 @@ actions : {
         }) {
           axios.defaults.baseURL = store.state.url ;
           var urlRegistros = 'roles' + '?api_token=' + Laravel.user.api_token;
-          console.log(urlRegistros);
           axios.get(urlRegistros).then((response) => {
             commit('getRoles', response.data)
           })
@@ -1048,13 +998,10 @@ actions : {
         }) {
           axios.defaults.baseURL = store.state.url ;
           var urlRegistros = 'permissions' + '?api_token=' + Laravel.user.api_token;
-          console.log(urlRegistros);
           axios.get(urlRegistros).then((response) => {
             commit('getPermisos', response.data)
           })
         },
-
-
 
     },
     mutations: {
@@ -1186,9 +1133,6 @@ actions : {
       },
 
       getTipoLiquidos(state, tipo_liquidos) {
-
-        console.log('el tipo liquido es:');
-        console.log(tipo_liquidos);
 
         if(tipo_liquidos.payload.penetrante_sn){
 

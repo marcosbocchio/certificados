@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-12">
             <form @submit.prevent="editmode ?  Update() : Store()"  method="post">
-                <informe-header :otdata="otdata" :informe_id="informedata.id" :editmode="editmode" @set-obra="setObra($event)"></informe-header>
+                <informe-header :otdata="otdata" :informe_id="informedata.id" :editmode="editmode" @set-obra="setObra"></informe-header>
                 <div class="box box-custom-enod">
                    <div class="box-body">
 
@@ -1134,11 +1134,12 @@
                          this.ot_tipo_soldadura_r = this.ot_obra_tipo_soldaduras[this.index_ot_obra_tipo_soldaduras];
                      }
                  });
-             }else{
-                 this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.obra }).then(res =>{
-                     this.index_ot_obra_tipo_soldaduras = this.ot_obra_tipo_soldaduras.findIndex(elemento => elemento.tipo_soldadura.codigo  == 'R' );
-                 });
-             }
+                }else{/*
+                    this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.obra }).then(res =>{
+                        this.index_ot_obra_tipo_soldaduras = this.ot_obra_tipo_soldaduras.findIndex(elemento => elemento.tipo_soldadura.codigo  == 'R' );
+                    });
+                    */
+                }
          },
 
          cambioReparacion_sn : function(){
@@ -1154,12 +1155,15 @@
              this.TablaImportada= [];
 
          },
+
          setObra : function(value){
              this.obra = value;
              this.ot_tipo_soldadura='';
+
              this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : (this.obra ? this.obra : 'xxxxxxxxxxx') }).then(res =>{
 
                      this.index_ot_obra_tipo_soldaduras = this.ot_obra_tipo_soldaduras.findIndex(elemento => elemento.tipo_soldadura.codigo  == 'R' );
+
                  });;
          },
 
@@ -1542,7 +1546,6 @@
                      });
 
              if(this.posicionPlacaGosaducto != ''){
-                 console.log('el defecto tiene posicion placa');
                  this.TablaDetalle[this.indexDetalle].aceptable_sn = false;
              }
 
@@ -1649,7 +1652,6 @@
                      TablaAClonar.push(item);
                  }
              }.bind(this))
-             console.log(TablaAClonar);
              this.elemento_pasadas_a_clonar.forEach(function(item_a_clonar){
                   TablaAClonar.forEach(function(item){
 
@@ -1688,7 +1690,6 @@
                  var ws_f = wb.Sheets[wsname];
                  this.TablaImportada = XLSX.utils.sheet_to_json(ws_f,{header:["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16"],defval:''});
                  this.TablaPasadas = [];
-                 console.log(this.TablaImportada);
                  this.copiarImportacion();
 
              }.bind(this);
@@ -1718,7 +1719,6 @@
                      }
                  }
              }.bind(this));
-             console.log('Soldadores Importados :' ,soldadores_importados);
              axios.defaults.baseURL = this.url ;
              var urlRegistros = 'ot_soldadores/insertar_importados/ot/' + this.otdata.id + '/cliente/' + this.otdata.cliente_id + '?api_token=' + Laravel.user.api_token;
 
@@ -1939,7 +1939,6 @@
 
          },
          Update : function() {
-                     console.log('entro para actualizar' );
                      this.errors =[];
                      let gasoducto_sn ;
                      if(this.formato =='DUCTO')

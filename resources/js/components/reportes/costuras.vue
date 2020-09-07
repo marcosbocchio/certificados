@@ -34,7 +34,7 @@
                                     <div v-else><span class="seleccionar">Seleccionar</span></div>
                                 </a>
                             </div>
-                            <v-select v-show="selOt" v-model="ot" label="numero" :options="ots" ></v-select>
+                            <v-select v-show="selOt" v-model="ot" label="numero" :options="ots" @input="CambioOt" ></v-select>
                         </li>
                         <li class="list-group-item pointer">
                              <input type="number"  v-model="pk" class="form-control" id="plano" placeholder="PK">
@@ -43,7 +43,7 @@
                              <input type="text"  v-model="plano" class="form-control" id="plano" placeholder="Plano Isométrico" maxlength="10">
                         </li>
                         <li class="list-group-item pointer">
-                             <input type="text"  v-model="plano" class="form-control" id="costura" placeholder="Costura" maxlength="10">
+                             <input type="text"  v-model="costura" class="form-control" id="costura" placeholder="Costura" maxlength="10">
                         </li>
                         <li class="list-group-item pointer">
 
@@ -71,6 +71,66 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-md-9">
+
+            <tabs :options="{ useUrlFragment: false }" @clicked="tabClicked" @changed="tabChanged">
+                <tab name="Costuras/Plano Isom">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div  v-if="(TablaCosturas.data && TablaCosturas.data.length)">
+                            <div class="box box-primary">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Detalle</h3>
+                                </div>
+
+                                <div class="box-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-condensed">
+                                        <tbody>
+                                            <tr>
+                                                <th class="">Fecha</th>
+                                                <th class="">Informe Nº	</th>
+                                                <th class="">Km</th>
+                                                <th class="">Costura</th>
+                                                <th class="">Plano Isométrico</th>
+                                                <th class="" style="text-align:center">Aprobado S/N</th>
+                                            </tr>
+                                            <tr v-for="(item,k) in TablaCosturas.data" :key="k">
+                                                <td>{{ item.fecha_formateada }}</td>
+                                                <td>
+                                                    <a :href="'/pdf/informe/' + item.informe_id " target="_blank" title="Informe"><span>{{ item.nro_informe_formateado }}</span></a>
+                                                </td>
+                                                <td>{{ item.km }}</td>
+                                                <td>{{ item.codigo_junta }}</td>
+                                                <td>{{ item.plano_isom }}</td>
+                                                <td style="text-align:center">
+                                                    <div v-if="item.aprobado_sn">
+                                                        SI
+                                                    </div>
+                                                    <div v-else>
+                                                        NO
+                                                    </div>
+
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div v-else>
+                            <h4>No hay datos para mostrar</h4>
+                        </div>
+                        </div>
+                    </div>
+                </tab>
+            </tabs>
+                <pagination :data="TablaCosturas" @pagination-change-page="Buscar" ><span slot="prev-nav">&lt; Previous</span>
+                <span slot="next-nav">Next &gt;</span> </pagination>
+        </div>
+
          <loading
             :active.sync="isLoading"
             :loader="'bars'"
@@ -82,11 +142,14 @@
 <script>
 import {mapState} from 'vuex';
 import Loading from 'vue-loading-overlay';
+import Tabs from 'vue-tabs-component';
+import Vuetable from 'vuetable-2'
 
 export default {
 
     components: {
       Loading,
+      Vuetable
     },
 
     props: {
@@ -101,13 +164,14 @@ export default {
             cliente:'',
             ots:[],
             ot:'',
-            pk : '',
-            plano:'',
+            pk : null,
+            plano:null,
+            costura:null,
             rechazados_a_la_fecha:false,
             reparaciones:false,
             selCliente:false,
             selOt:false,
-            selObra:false,
+            TablaCosturas:{},
         }
     },
 
@@ -125,6 +189,28 @@ export default {
 
 methods : {
 
+    async Buscar(page = 1) {
+
+     this.$store.commit('loading', true);
+   //  this.TablaCosturas = {};
+
+    try {
+        let url = 'costuras/ot/' + this.ot.id  + '/pk/' + (this.pk ? this.pk : 'null' ) + '/plano/' + (this.plano ? this.plano : 'null') + '/costura/' + (this.costura ? this.costura : 'null') + '/rechazado_a_la_fecha/' + this.rechazados_a_la_fecha + '/reparaciones/' + this.reparaciones + '?page='+ page + '&api_token=' + Laravel.user.api_token;
+        let res = await axios.get(url);
+        this.TablaCosturas = res.data;
+
+        console.log(page);
+        console.log(this.TablaCosturas.data);
+        console.log(this.TablaCosturas.data.length);
+
+    }catch(error){
+
+    }
+    finally  {this.$store.commit('loading', false);}
+
+
+    },
+
     async CambioCliente (){
 
         this.selCliente = !this.selCliente;
@@ -132,7 +218,8 @@ methods : {
         this.selOt =false;
         this.obra = '';
         this.selObra =false;
-      //  this.resetVariables();
+        this.TablaCosturas = {};
+
         if(this.cliente){
 
             this.$store.commit('loading', true);
@@ -146,6 +233,22 @@ methods : {
 
         }
     },
+
+    CambioOt (){
+        this.selOt = !this.selOt;
+    },
+        tabClicked (selectedTab) {
+          console.log('Current tab re-clicked:' + selectedTab.tab.name);
+    },
+
+    tabChanged (selectedTab) {
+          console.log('Tab changed to:' + selectedTab.tab.name);
+    },
 }
 }
 </script>
+
+<style>
+
+
+</style>

@@ -1051,7 +1051,7 @@ methods : {
         await this.getIndicesDeRechazos();
         await this.getDefectologia();
         await this.getDefectologiaProduccion();
-       // await this.getIndicaciones();
+        await this.getIndicaciones();
         this.generateIndicesRechazos();
 
     }catch(error){
