@@ -48,8 +48,8 @@
                         <li class="list-group-item pointer">
 
                                 <label>
-                                <input type="checkbox" v-model="rechazados_a_la_fecha">
-                                 <span style="margin-left:20px">Rechazados a la fecha</span>
+                                <input type="checkbox" v-model="rechazados">
+                                 <span style="margin-left:20px">Rechazados</span>
                                  </label>
 
                         </li>
@@ -167,7 +167,7 @@ export default {
             pk : null,
             plano:null,
             costura:null,
-            rechazados_a_la_fecha:false,
+            rechazados:false,
             reparaciones:false,
             selCliente:false,
             selOt:false,
@@ -195,7 +195,7 @@ methods : {
    //  this.TablaCosturas = {};
 
     try {
-        let url = 'costuras/ot/' + this.ot.id  + '/pk/' + (this.pk ? this.pk : 'null' ) + '/plano/' + (this.plano ? this.plano : 'null') + '/costura/' + (this.costura ? this.costura : 'null') + '/rechazado_a_la_fecha/' + this.rechazados_a_la_fecha + '/reparaciones/' + this.reparaciones + '?page='+ page + '&api_token=' + Laravel.user.api_token;
+        let url = 'costuras/ot/' + this.ot.id  + '/pk/' + (this.pk ? this.pk : 'null' ) + '/plano/' + (this.plano ? this.plano : 'null') + '/costura/' + (this.costura ? this.costura : 'null') + '/rechazados/' + this.rechazados + '/reparaciones/' + this.reparaciones + '?page='+ page + '&api_token=' + Laravel.user.api_token;
         let res = await axios.get(url);
         this.TablaCosturas = res.data;
 

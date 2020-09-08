@@ -295,7 +295,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('estadisticas-soldaduras/analisis_indicaciones_posicion/posicion/{posicion}/diametro/{diametro}/{informes_ids}','EstadisticasSoldadurasController@AnalisisSoldadurasIndicacionesPosicion');
 
     //Costuras
-    Route::get('costuras/ot/{ot_id}/pk/{pk}/plano/{plano}/costura/{costura}/rechazado_a_la_fecha/{rechazado_a_la_fecha}/reparaciones/{reparaciones}','CosturasController@getCosturas');
+    Route::get('costuras/ot/{ot_id}/pk/{pk}/plano/{plano}/costura/{costura}/rechazados/{rechazados}/reparaciones/{reparaciones}','CosturasController@getCosturas');
     // let url = 'costuras/ot/' + this.ot.id  + '/pk/' + this.pk + '/plano/' + this.plano  + '/costura/' + this.costura + '/rechazado_a_la_fecha/' + this.rechazados_a_la_fecha + '/reparaciones/' + this.reparaciones + '?api_token=' + Laravel.user.api_token;
 
     Route::resource('personas_api', 'PersonaController');

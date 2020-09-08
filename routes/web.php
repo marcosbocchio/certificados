@@ -115,6 +115,7 @@ Route::group(['middleware' => ['auth']], function () {
       /* Reportes */
       Route::get('/area/enod/reportes/estadisticas-soldaduras','EstadisticasSoldadurasController@callView')->name('reporte-estadisticas-soldaduras');
       Route::get('/area/enod/reportes/costuras','CosturasController@callView')->name('reporte-costuras');
+      Route::get('/area/enod/reportes/placas-repetidas-testigos','ReportePlacasController@callView')->name('reporte-placas-repetidas-testigos');
 
 
       /*SECCION CATEGORIAS/VIDEOS  */

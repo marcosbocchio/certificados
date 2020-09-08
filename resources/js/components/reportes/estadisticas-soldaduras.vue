@@ -518,7 +518,7 @@ import Tabs from 'vue-tabs-component';
 import 'vue-tabs-component/docs/resources/tabs-component.css';
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
-import DatePicker from 'vue2-datepicker';
+// import DatePicker from 'vue2-datepicker';
 import ChartJsPluginDataLabels from 'chartjs-plugin-datalabels';
 import DoughnutChart from '../chart.js/DoughnutChart.js'
 import BarChart from '../chart.js/BarChart.js'

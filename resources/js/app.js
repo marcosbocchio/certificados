@@ -259,7 +259,7 @@ Vue.component('form-documentos-escaneados', require('./components/dashboard/docu
 /* Reportes */
 Vue.component('estadisticas-soldaduras', require('./components/reportes/estadisticas-soldaduras.vue').default);
 Vue.component('costuras', require('./components/reportes/costuras.vue').default);
-Vue.component('costuras2', require('./components/reportes/costuras2.vue').default);
+Vue.component('placas', require('./components/reportes/placas.vue').default);
 
 /* Trazabilidad */
 Vue.component('trazabilidad-fuente', require('./components/trazabilidad/trazabilidad-fuente.vue').default);

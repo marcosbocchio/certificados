@@ -68,10 +68,10 @@ class ParticulasController extends Controller
             case 'Seco-Visible':
                 $q = $q . 'seca_visible = 1';
                 break;
-    
-            case 'Seco- Fluorescente':
+
+            case 'Seco-Fluorescente':
                 $q = $q . 'seca_fluorescente = 1';
-            break;        
+            break;
             }
 
         $particulas = Particulas::whereRaw($q)
