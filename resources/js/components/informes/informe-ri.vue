@@ -1121,19 +1121,27 @@
                 this.InicializarElementosPasadas();
                 this.observaciones = this.informedata.observaciones
                 this.tipo_soldadura = this.ot_tipo_soldadura ? (this.ot_tipo_soldadura.tipo_soldadura.codigo) : '';
+
+                if(this.informe_ridata.reparacion_sn){
+                     this.getElementosReparacion();
+                }
+
                 if (this.interno_fuentedata.id != undefined){
                     this.$store.dispatch('loadCurie', { 'interno_fuente_id' : this.interno_fuentedata.id, 'fecha_final': this.informedata.fecha }).then(response => {
 
                           this.actividad = this.curie;
                     });
                 }
-                 this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.informedata.obra }).then(res => {
-                     this.reparacion_sn = this.informe_ridata.reparacion_sn == 1 ?  true : false;
-                     this.index_ot_obra_tipo_soldaduras = this.ot_obra_tipo_soldaduras.findIndex(elemento => elemento.tipo_soldadura.codigo  == 'R' );
-                     if(this.index_ot_obra_tipo_soldaduras != -1){
-                         this.ot_tipo_soldadura_r = this.ot_obra_tipo_soldaduras[this.index_ot_obra_tipo_soldaduras];
-                     }
-                 });
+
+                this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.informedata.obra }).then(res => {
+                    this.reparacion_sn = this.informe_ridata.reparacion_sn == 1 ?  true : false;
+                    this.index_ot_obra_tipo_soldaduras = this.ot_obra_tipo_soldaduras.findIndex(elemento => elemento.tipo_soldadura.codigo  == 'R' );
+                    if(this.index_ot_obra_tipo_soldaduras != -1){
+                        this.ot_tipo_soldadura_r = this.ot_obra_tipo_soldaduras[this.index_ot_obra_tipo_soldaduras];
+                    }
+                });
+
+
                 }else{/*
                     this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.obra }).then(res =>{
                         this.index_ot_obra_tipo_soldaduras = this.ot_obra_tipo_soldaduras.findIndex(elemento => elemento.tipo_soldadura.codigo  == 'R' );
