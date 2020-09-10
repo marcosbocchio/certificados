@@ -280,7 +280,7 @@ methods :{
 
             this.data_placas_repetidas = {
 
-                labels: ["Placas total" ,"placas repetidas"],
+                labels: ["Placas informadas" ,"Placas repetidas"],
 
                 datasets: [
                     {
@@ -322,7 +322,7 @@ methods :{
 
             this.data_placas_testigos = {
 
-                labels: ["Placas total" ,"placas Testigos"],
+                labels: ["Placas informadas" ,"Placas Testigos"],
 
                 datasets: [
                     {

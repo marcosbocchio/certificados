@@ -17,13 +17,13 @@ class InternoEquiposController extends Controller
     public function __construct()
     {
 
-          $this->middleware(['role_or_permission:Sistemas|M_interno_equipos'],['only' => ['callView']]);  
-          $this->middleware(['role_or_permission:Sistemas|T_equipos_acceder'],['only' => ['OtInternoEquipos']]);   
+          $this->middleware(['role_or_permission:Sistemas|M_interno_equipos'],['only' => ['callView']]);
+          $this->middleware(['role_or_permission:Sistemas|T_equipos_acceder'],['only' => ['OtInternoEquipos']]);
           $this->middleware(['role_or_permission:Sistemas|T_equipos_actualiza'],['only' => ['store','destroy']]);
 
-    
+
     }
-  
+
     public function index()
     {
         //
@@ -48,30 +48,30 @@ class InternoEquiposController extends Controller
         }
 
         foreach ( $interno_equipos as $interno_equipo) {
-          
+
           if($interno_equipo->internoFuente){
 
             $interno_fuente = $interno_equipo->internoFuente;
-            $fuente = $interno_fuente->fuente;         
+            $fuente = $interno_fuente->fuente;
             $curie_actual = curie($interno_fuente->id);
             $interno_fuente->curie_actual = $curie_actual;
-          
-          }      
-     
+
+          }
+
         }
-        
+
         return $interno_equipos;
-  
+
       }
 
     public function callView()
-      {   
-          $user = auth()->user(); 
+      {
+          $user = auth()->user();
           $header_titulo = "Interno Equipos";
-          $header_descripcion ="Alta | Baja | Modificación"; 
-        
+          $header_descripcion ="Alta | Baja | Modificación";
+
           return view('interno_equipos',compact('user','header_titulo','header_descripcion'));
-  
+
       }
 
     public function create()
@@ -80,30 +80,30 @@ class InternoEquiposController extends Controller
     }
 
 
-    public function getInternoEquipos($metodo, $activo_sn, $tipo_penetrante){            
-      
+    public function getInternoEquipos($metodo, $activo_sn, $tipo_penetrante){
+
       DB::enableQueryLog();
 
       $interno_equipos='';
       $instrumento_medicion='';
 
       if($tipo_penetrante != 'null'){
-        
+
             $instrumento_medicion = ($tipo_penetrante == 'Fluorescente') ? 'Lampara luz UV' : 'Luxometro luz blanca';
-        
-            $interno_equipos =  InternoEquipos::join('equipos','equipos.id','=','interno_equipos.equipo_id') 
+
+            $interno_equipos =  InternoEquipos::join('equipos','equipos.id','=','interno_equipos.equipo_id')
                                               ->where('interno_equipos.activo_sn',1)
-                                              ->where('equipos.instrumento_medicion',$instrumento_medicion) 
-                                              ->where('equipos.palpador_sn',0)                                           
+                                              ->where('equipos.instrumento_medicion',$instrumento_medicion)
+                                              ->where('equipos.palpador_sn',0)
                                               ->selectRaw('interno_equipos.*,CONVERT(nro_interno,UNSIGNED) as nro_interno_numeric' )
                                               ->with('equipo')
                                               ->with('internoFuente')
                                               ->orderby('nro_interno_numeric','ASC')
-                                              ->get();    
+                                              ->get();
 
       }elseif(($metodo != 'null')&&($activo_sn)){
 
-            $interno_equipos = InternoEquipos::join('equipos','equipos.id','=','interno_equipos.equipo_id') 
+            $interno_equipos = InternoEquipos::join('equipos','equipos.id','=','interno_equipos.equipo_id')
                                                 ->join('metodo_ensayos','equipos.metodo_ensayo_id','=','metodo_ensayos.id')
                                                 ->where('metodo_ensayos.metodo',$metodo)
                                                 ->where('interno_equipos.activo_sn',1)
@@ -113,7 +113,7 @@ class InternoEquiposController extends Controller
                                                 ->with('equipo')
                                                 ->with('internoFuente')
                                                 ->orderby('nro_interno_numeric','ASC')
-                                                ->get();                                
+                                                ->get();
 
 
       }elseif($activo_sn !='null'){
@@ -147,25 +147,25 @@ class InternoEquiposController extends Controller
     public function store(InternoEquipoRequest $request){
 
 
-        $interno_equipo = new InternoEquipos;   
-    
+        $interno_equipo = new InternoEquipos;
+
         DB::beginTransaction();
-        try { 
-    
+        try {
+
             $this->saveInternoEquipo($request,$interno_equipo);
 
             if($interno_equipo->interno_fuente_id){
                  (new \App\Http\Controllers\TrazabilidadFuenteController)->saveTrazabilidadfuente($interno_equipo->id,$request['interno_fuente']['id']);
             }
-            DB::commit(); 
-    
+            DB::commit();
+
           } catch (Exception $e) {
-      
+
             DB::rollback();
-            throw $e;      
-            
-          }       
-    
+            throw $e;
+
+          }
+
       }
 
     public function show($id)
@@ -173,7 +173,7 @@ class InternoEquiposController extends Controller
         return InternoEquipos::where('id',$id)
                                ->with('ot')
                                ->select('interno_equipos.*')
-                               ->first(); 
+                               ->first();
     }
 
 
@@ -185,23 +185,23 @@ class InternoEquiposController extends Controller
 
     public function update(InternoEquipoRequest $request, $id){
 
-        $interno_equipo = InternoEquipos::find($id);     
-      
+        $interno_equipo = InternoEquipos::find($id);
+
         DB::beginTransaction();
         try {
 
           $this->saveInternoEquipo($request,$interno_equipo);
-        
-            (new \App\Http\Controllers\TrazabilidadFuenteController)->saveTrazabilidadfuente($interno_equipo->id,$request['interno_fuente']['id']);
-       
 
-          DB::commit(); 
-    
+            (new \App\Http\Controllers\TrazabilidadFuenteController)->saveTrazabilidadfuente($interno_equipo->id,$request['interno_fuente']['id']);
+
+
+          DB::commit();
+
           } catch (Exception $e) {
-      
+
             DB::rollback();
-            throw $e;      
-            
+            throw $e;
+
           }
       }
 
@@ -212,11 +212,11 @@ class InternoEquiposController extends Controller
           $interno_equipo->foco = $request['foco'];
           $interno_equipo->voltaje = $request['voltaje'];
           $interno_equipo->amperaje = $request['amperaje'];
-          $interno_equipo->activo_sn = $request['activo_sn'];       
+          $interno_equipo->activo_sn = $request['activo_sn'];
           $interno_equipo->equipo_id = $request['equipo']['id'];
           $interno_equipo->interno_fuente_id = $request['interno_fuente']['id'];
           $interno_equipo->save();
-    
+
       }
 
     /**
@@ -227,7 +227,7 @@ class InternoEquiposController extends Controller
      */
     public function destroy($id)
     {
-        $interno_equipo = InternoEquipos::find($id);    
+        $interno_equipo = InternoEquipos::find($id);
         $interno_equipo->delete();
     }
 
@@ -235,15 +235,15 @@ class InternoEquiposController extends Controller
     public function OtInternoEquiposTotal($ot_id){
 
 
-      return InternoEquipos::where('ot_id',$ot_id)->count(); 
+      return InternoEquipos::where('ot_id',$ot_id)->count();
 
   }
 
   public function OtInternoEquipos($ot_id){
 
     $header_titulo = "Equipos OT";
-    $header_descripcion ="Baja";      
-    $accion = 'edit';      
+    $header_descripcion ="Baja";
+    $accion = 'edit';
     $user = auth()->user();
 
     $ot = Ots::where('id',$ot_id)->with('cliente')->first();
@@ -253,8 +253,8 @@ class InternoEquiposController extends Controller
 
 
     return view('ot-interno-equipos.index',compact('ot_id',
-                                    'interno_equipos',                                   
-                                    'user',                                       
+                                    'interno_equipos',
+                                    'user',
                                     'header_titulo',
                                     'header_sub_titulo',
                                     'header_descripcion'));
@@ -270,36 +270,51 @@ class InternoEquiposController extends Controller
                            ->select('interno_equipos.*')
                            ->get();
       }
-  
+
   public function StoreOtInternoEquipos(Request $request,$ot_id){
-       
+
     $ot_interno_equipos = InternoEquipos::where('ot_id',$ot_id)->get();
 
-    foreach ($ot_interno_equipos as $ot_interno_equipo) {
+    DB::beginTransaction();
+    try {
 
-        $existe = false;
-        foreach ($request->interno_equipos as $interno_equipo) {
+        foreach ($ot_interno_equipos as $ot_interno_equipo) {
 
-            if( ($ot_interno_equipo['id'] == $interno_equipo['id'])){
-              $existe = true;
+            $existe = false;
+            foreach ($request->interno_equipos as $interno_equipo) {
+
+                if( ($ot_interno_equipo['id'] == $interno_equipo['id'])){
+                  $existe = true;
+                }
+
             }
-      
+
+          if (!$existe){
+
+            InternoEquipos::where('ot_id',$ot_id)
+                          ->where('id',$ot_interno_equipo['id'])
+                          ->update(['ot_id' => null]);
+
+            (new \App\Http\Controllers\TrazabilidadEquipoController)->saveTrazabilidadEquipo($ot_interno_equipo['id']);
+
+            }
         }
 
-      if (!$existe){
-        
-        InternoEquipos::where('ot_id',$ot_id)
-                      ->where('id',$ot_interno_equipo['id'])
-                      ->update(['ot_id' => null]);
+        DB::commit();
 
-        (new \App\Http\Controllers\TrazabilidadEquipoController)->saveTrazabilidadEquipo($ot_interno_equipo['id']);
+      } catch (Exception $e) {
 
-        }
-    }           
+        DB::rollback();
+        throw $e;
 
-  } 
+      }
 
- 
+
+
+
+  }
+
+
 
 
 

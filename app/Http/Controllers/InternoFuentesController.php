@@ -13,8 +13,8 @@ class InternoFuentesController extends Controller
   public function __construct()
   {
 
-        $this->middleware(['role_or_permission:Sistemas|M_interno_fuentes'],['only' => ['callView']]);  
-  
+        $this->middleware(['role_or_permission:Sistemas|M_interno_fuentes'],['only' => ['callView']]);
+
   }
     /**
      * Display a listing of the resource.
@@ -27,25 +27,25 @@ class InternoFuentesController extends Controller
     }
 
     public function paginate(Request $request){
-      
+
         $interno_fuentes =  InternoFuentes::orderBy('id','DESC')->with('fuente')->paginate(10);
 
         foreach ($interno_fuentes as $interno_fuente) {
-          
+
           $interno_fuente->curie_actual = curie($interno_fuente->id);
         }
-        
+
         return $interno_fuentes;
       }
 
       public function callView()
-      {   
-          $user = auth()->user(); 
+      {
+          $user = auth()->user();
           $header_titulo = "Interno Fuentes";
-          $header_descripcion ="Alta | Baja | Modificación"; 
-        
+          $header_descripcion ="Alta | Baja | Modificación";
+
           return view('interno_fuentes',compact('user','header_titulo','header_descripcion'));
-  
+
       }
 
     /**
@@ -59,18 +59,18 @@ class InternoFuentesController extends Controller
     }
 
     public function getInternoFuentes($activo_sn =''){
-      
+
         if($activo_sn==''){
-          
+
           return InternoFuentes::Select('interno_fuentes.*')
-                                  ->with('fuente')                            
+                                  ->with('fuente')
                                   ->get();
 
         }else{
-          
+
           return  InternoFuentes::where('activo_sn',$activo_sn)
                                   ->Select('interno_fuentes.*')
-                                  ->with('fuente')                            
+                                  ->with('fuente')
                                   ->get();
         }
 
@@ -86,24 +86,24 @@ class InternoFuentesController extends Controller
     public function store(InternoFuenteRequest $request){
 
 
-        $interno_fuente = new InternoFuentes;   
-    
+        $interno_fuente = new InternoFuentes;
+
         DB::beginTransaction();
-        try { 
-    
+        try {
+
             $this->saveInternoFuente($request,$interno_fuente);
-            DB::commit(); 
-    
+            DB::commit();
+
           } catch (Exception $e) {
-      
+
             DB::rollback();
-            throw $e;      
-            
+            throw $e;
+
           }
-       
-    
+
+
       }
-    
+
     public function saveInternoFuente($request,$interno_fuente){
 
         $interno_fuente->nro_serie = $request['nro_serie'];
@@ -113,7 +113,7 @@ class InternoFuentesController extends Controller
         $interno_fuente->foco = $request['foco'];
         $interno_fuente->fuente_id = $request['fuente']['id'];
         $interno_fuente->save();
-    
+
       }
 
     /**
@@ -147,18 +147,18 @@ class InternoFuentesController extends Controller
      */
     public function update(InternoFuenteRequest $request, $id){
 
-        $interno_fuente = InternoFuentes::find($id);     
-      
+        $interno_fuente = InternoFuentes::find($id);
+
           DB::beginTransaction();
           try {
-              $this->saveInternoFuente($request,$interno_fuente);            
-              DB::commit(); 
-      
+              $this->saveInternoFuente($request,$interno_fuente);
+              DB::commit();
+
             } catch (Exception $e) {
-        
+
               DB::rollback();
-              throw $e;      
-              
+              throw $e;
+
             }
       }
 
@@ -170,14 +170,12 @@ class InternoFuentesController extends Controller
      */
     public function destroy($id)
     {
-        $interno_fuente = InternoFuentes::find($id);    
+        $interno_fuente = InternoFuentes::find($id);
         $interno_fuente->delete();
     }
 
     public function CalcularCurie($interno_fuente_id, $fecha_final = null){
 
-     // $interno_fuente = InternoFuentes::where('id',$interno_fuente_id)->with('fuente')->first();  
-      
       $curie_actual =  curie($interno_fuente_id,$fecha_final);
 
       return  $curie_actual;
