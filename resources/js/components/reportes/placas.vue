@@ -73,17 +73,22 @@
 
             <tabs :options="{ useUrlFragment: false }">
                 <tab name="Placas Repetidas/Testigos">
-                    <div class="row">
-                        <div class="col-lg-12">
-                             <div class="div-grafico">
-                                <pie-chart  :chart-data="data_placas_repetidas" :options="data_placas_repetidas.options" ></pie-chart>
+                    <div v-if="total_placas_informes">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="div-grafico">
+                                    <pie-chart  :chart-data="data_placas_repetidas" :options="data_placas_repetidas.options" ></pie-chart>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="div-grafico">
+                                    <pie-chart  :chart-data="data_placas_testigos" :options="data_placas_testigos.options" ></pie-chart>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-lg-12">
-                             <div class="div-grafico">
-                                <pie-chart  :chart-data="data_placas_testigos" :options="data_placas_testigos.options" ></pie-chart>
-                            </div>
-                        </div>
+                    </div>
+                    <div v-else>
+                        <h4>No hay datos para mostrar</h4>
                     </div>
                 </tab>
             </tabs>
@@ -222,7 +227,9 @@ methods :{
     },
 
     async Buscar() {
-        this.$store.commit('loading', true);
+     this.$store.commit('loading', true);
+
+
      this.total_placas = 0;
 
         try {
