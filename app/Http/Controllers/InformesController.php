@@ -323,11 +323,11 @@ class InformesController extends Controller
 
 
         if($fecha_desde == 'null'){
-            $fecha_desde =  date('2015-01-01');
+            $fecha_desde =  date('2000-01-01');
          }
 
         if($fecha_hasta == 'null'){
-            $fecha_hasta =  date('2060-01-01');
+            $fecha_hasta =  date('2100-01-01');
         }
 
         $obra = str_replace('--','/',$obra);

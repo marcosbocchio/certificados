@@ -174,11 +174,11 @@
               @can('D_soldaduras')
                    <li><a href="{{ route('reporte-costuras') }}">Costuras</a></li>
               @endcan
-              <!--
+
               @can('D_soldaduras')
                    <li><a href="{{ route('reporte-placas-repetidas-testigos') }}">Placas</a></li>
               @endcan
-              -->
+
             </ul>
           </li>
         @endcan

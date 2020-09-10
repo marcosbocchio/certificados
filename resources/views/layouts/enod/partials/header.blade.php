@@ -9,7 +9,7 @@
             <span class="logo-mini"><b>E</b>nod</span>
             <!-- logo for regular state and mobile devices -->
             <span class="logo-lg">
-                 <img src="{{asset('img/logo-enod.png')}}" style="margin-top: -10px;" height="70px" alt="Logo Enod"> 
+                 <img src="{{asset('img/logo-enod.png')}}" style="margin-top: -10px;" height="70px" alt="Logo Enod">
             </span>
         </a>
 
@@ -19,14 +19,14 @@
             <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
                 <span class="sr-only">Toggle navigation</span>
             </a>
-            @if (env('APP_ENV')=='local')            
-                <div  style="display: inline-block;" class="hidden-xs">             
-                    <span style="color: white; z-index: 9999;width: 100%;height: 35px;text-align: center;font-size: 26px;font-weight: bold;margin-left: 300px;" >ENTORNO DE TESTING</span> 
+            @if (env('APP_ENV')=='local')
+                <div  style="display: inline-block;" class="hidden-xs">
+                    <span style="color: white; z-index: 9999;width: 100%;height: 35px;text-align: center;font-size: 26px;font-weight: bold;margin-left: 300px;" >ENTORNO DE TESTING</span>
                 </div>
-                <div style="display: inline-block;" class="visible-xs">             
-                    <span style="color: white; z-index: 9999;width: 100%;height: 25px;text-align: center;font-size: 20px;font-weight: bold;margin-left: 100px;" >ENTORNO DE TESTING</span> 
+                <div style="display: inline-block;" class="visible-xs">
+                    <span style="color: white; z-index: 9999;width: 100%;height: 25px;text-align: center;font-size: 20px;font-weight: bold;margin-left: 100px;" >ENTORNO DE TESTING</span>
                 </div>
-              
+
             @endif
             <!-- Navbar Right Menu -->
             <div class="navbar-custom-menu">
@@ -150,14 +150,14 @@
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                    <a href="#" class="btn btn-default btn-flat">Perfil</a>
                                 </div>
                                 <div class="pull-right">
                                     <a class="btn btn-default btn-flat" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                          document.getElementById('logout-form').submit();">
                                         <i class="fa fa-power -off"></i>
-                                        {{ __('Logout') }}
+                                        {{ __('Cerrar sesión') }}
                                     </a>
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
@@ -165,7 +165,7 @@
                                 </div>
                             </li>
                         </ul>
-                    </li>                   
+                    </li>
                 </ul>
             </div>
         </nav>

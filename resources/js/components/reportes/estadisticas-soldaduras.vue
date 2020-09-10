@@ -120,7 +120,7 @@
 
                                 <div v-if="TablaAnalisisRechazosDiametro.length">
                                     <div class="row">
-                                        <div class="col-lg-6 col-lg-offset-3">
+                                        <div class="col-lg-8 col-lg-offset-2">
                                             <div class="col-lg-12 titulo-tabla-tabs" >
                                                 <h5>Análisis de rechazos por Diametro</h5>
                                             </div>
@@ -178,7 +178,7 @@
 
                                 <div v-if="TablaAnalisisRechazosEspesor.length">
                                     <div class="row">
-                                        <div class="col-lg-6 col-lg-offset-3">
+                                        <div class="col-lg-8 col-lg-offset-2">
                                             <div class="col-lg-12 titulo-tabla-tabs" >
                                                 <h5>Análisis de rechazos por espesor</h5>
                                             </div>
@@ -518,7 +518,7 @@ import Tabs from 'vue-tabs-component';
 import 'vue-tabs-component/docs/resources/tabs-component.css';
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
-// import DatePicker from 'vue2-datepicker';
+import DatePicker from 'vue2-datepicker';
 import ChartJsPluginDataLabels from 'chartjs-plugin-datalabels';
 import DoughnutChart from '../chart.js/DoughnutChart.js'
 import BarChart from '../chart.js/BarChart.js'

@@ -296,7 +296,11 @@ Route::group(['middleware' => 'auth:api'], function()
 
     //Costuras
     Route::get('costuras/ot/{ot_id}/pk/{pk}/plano/{plano}/costura/{costura}/rechazados/{rechazados}/reparaciones/{reparaciones}','CosturasController@getCosturas');
-    // let url = 'costuras/ot/' + this.ot.id  + '/pk/' + this.pk + '/plano/' + this.plano  + '/costura/' + this.costura + '/rechazado_a_la_fecha/' + this.rechazados_a_la_fecha + '/reparaciones/' + this.reparaciones + '?api_token=' + Laravel.user.api_token;
+    Route::get('reporte-placas/cliente/{cliente_id}/ot/{ot_id}/obra/{obra}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}/total','ReportePlacasController@getPlacasTotal');
+    Route::get('reporte-placas/cliente/{cliente_id}/ot/{ot_id}/obra/{obra}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}/repetidas-testigos','ReportePlacasController@getPlacasRepetidasTestigos');
+   // Route::get('reporte-placas/cliente/{cliente_id}/ot/{ot_id}/obra/{obra}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}/testigos','ReportePlacasController@getPlacasTestigos');
+
+   // let url = 'reporte-placas' + '/cliente/' + (this.cliente ? this.cliente.id : 'null')  + '/ot/' + (this.ot ? this.ot.id : 'null' )  + '/obra/' + (this.obra ? this.obra.obra : 'null' ) + '/fecha_desde/' + this.fecha_desde + '/fecha_hasta/' + this.fecha_hasta  + '?page='+ page + '&api_token=' + Laravel.user.api_token;
 
     Route::resource('personas_api', 'PersonaController');
 

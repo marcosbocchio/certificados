@@ -192,7 +192,7 @@ methods : {
     async Buscar(page = 1) {
 
      this.$store.commit('loading', true);
-   //  this.TablaCosturas = {};
+     this.TablaCosturas = {};
 
     try {
         let url = 'costuras/ot/' + this.ot.id  + '/pk/' + (this.pk ? this.pk : 'null' ) + '/plano/' + (this.plano ? this.plano : 'null') + '/costura/' + (this.costura ? this.costura : 'null') + '/rechazados/' + this.rechazados + '/reparaciones/' + this.reparaciones + '?page='+ page + '&api_token=' + Laravel.user.api_token;
@@ -205,8 +205,7 @@ methods : {
 
     }catch(error){
 
-    }
-    finally  {this.$store.commit('loading', false);}
+    }finally  {this.$store.commit('loading', false);}
 
 
     },
