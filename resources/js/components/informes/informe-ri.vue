@@ -40,7 +40,7 @@
                                          <div v-if="isGasoducto">
                                              <label for="ot_obra_tipo_soldaduras">Tipo Sol *</label>
 
-                                         <input type="checkbox" id="reparacion_sn" v-model="reparacion_sn" :disabled="!ExisteEpsReparacion" @change="cambioReparacion_sn()" style="float:right">
+                                         <input type="checkbox" id="reparacion_sn" v-model="reparacion_sn" :disabled="!ExisteEpsReparacion || !pk" @change="cambioReparacion_sn()" style="float:right">
                                          <label for="reparacion_sn" style="float:right;margin-right: 5px;">R</label>
 
                                              <v-select v-model="ot_tipo_soldadura" label="codigo" :options="ot_obra_tipo_soldaduras_filter_R" id="ot_obra_tipo_soldaduras" @input="cambioOtTipoSoldadura" :disabled="(!isGasoducto || !obra )"></v-select>
@@ -1143,6 +1143,7 @@
          },
 
          cambioReparacion_sn : function(){
+             console.log('cambio reparacion');
                if(this.reparacion_sn){
 
                    if(this.index_ot_obra_tipo_soldaduras != -1){
