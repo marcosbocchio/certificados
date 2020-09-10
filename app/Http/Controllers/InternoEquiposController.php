@@ -309,13 +309,7 @@ class InternoEquiposController extends Controller
 
       }
 
-
-
-
   }
-
-
-
 
 
 }
