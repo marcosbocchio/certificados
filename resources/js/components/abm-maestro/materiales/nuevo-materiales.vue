@@ -9,10 +9,10 @@
                     </div>
                     <div class="modal-body">
 
-                    <label for="codigo">Código *</label>                   
+                    <label for="codigo">Código *</label>
                     <input autocomplete="off" v-model="newRegistro.codigo" type="text" name="codigo" class="form-control" value="">
-                    
-                    <label for="name">Descripción *</label>                   
+
+                    <label for="name">Descripción *</label>
                     <input autocomplete="off" type="text" name="descripcion" class="form-control" v-model="newRegistro.descripcion" value="">
 
                     </div>
@@ -27,71 +27,59 @@
 </template>
 
 <script>
-
 import {mapState} from 'vuex'
 import { eventNewRegistro } from '../../event-bus';
 export default {
-
     data() { return {
-    
+
         newRegistro : {
             'codigo': '',
             'descripcion'  : '',
          },
         errors: {}
-      
+
         }
     },
-
    created: function () {
     eventNewRegistro.$on('open', this.openModal)
-  
+
     },
     computed :{
-    
+
          ...mapState(['url'])
     },
- 
-    methods: {
 
+    methods: {
         openModal : function(){
             this.newRegistro={};
-            $('#nuevo').modal('show');    
-                
+            $('#nuevo').modal('show');
+
         },
-
         storeRegistro: function(){
-
             axios.defaults.baseURL = this.url ;
-            var urlRegistros = 'materiales';  
-                        
-            axios.post(urlRegistros, {   
-                
+            var urlRegistros = 'materiales';
+
+            axios.post(urlRegistros, {
+
             'codigo'    : this.newRegistro.codigo,
             'descripcion'  : this.newRegistro.descripcion
-                
 
             }).then(response => {
                 this.$emit('store');
                 this.errors=[];
-                $('#nuevo').modal('hide');               
+                $('#nuevo').modal('hide');
                 toastr.success('Nuevo registro creado con éxito');
-                
-                
-            }).catch(error => {
-               
-                this.errors = error.response.data.errors;
 
+
+            }).catch(error => {
+
+                this.errors = error.response.data.errors;
                 $.each( this.errors, function( key, value ) {
                     toastr.error(value,key);
                     console.log( key + ": " + value );
                 });
-
             });
-
         }
     }
 }
 </script>
-
-

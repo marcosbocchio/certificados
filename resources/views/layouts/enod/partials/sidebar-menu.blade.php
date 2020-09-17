@@ -115,7 +115,11 @@
                 @can('M_vehiculos')
                   <li><a href="{{ route('vehiculos') }}">Vehiculos</a></li>
                 @endcan
-
+                <!--
+                @can('M_modelos_3d')
+                   <li><a href="{{ route('modelos-3d') }}">Modelos 3D</a></li>
+                @endcan
+                -->
                 @can('M_roles')
                   <li><a href="{{ route('roles') }}">Roles</a></li>
                 @endcan
@@ -123,6 +127,7 @@
                 @can('M_permisos')
                   <li><a href="{{ route('permisos') }}">Permisos</a></li>
                 @endcan
+
             </ul>
           </li>
         @endcan

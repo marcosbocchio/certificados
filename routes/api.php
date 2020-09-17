@@ -92,7 +92,8 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('estados_superficies', 'EstadosSuperficiesController');
     Route::get('agente_acoplamientos/paginate', 'AgenteAcoplamientosController@paginate');
     Route::resource('agente_acoplamientos', 'AgenteAcoplamientosController');
-
+    Route::get('modelos_3d/paginate', 'Modelos3dController@paginate');
+    Route::resource('modelos_3d', 'Modelos3dController');
     Route::get('vehiculos/ot/{ot_id}/total', 'VehiculosController@OtVehiculosTotal');
     Route::get('vehiculos/paginate', 'VehiculosController@paginate');
     Route::resource('vehiculos', 'VehiculosController');
@@ -153,6 +154,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::post('storage/documentos_escaneados', 'StorageController@saveDocumentosEscaneados');
     Route::post('storage/logo-cliente', 'StorageController@saveLogoCliente');
     Route::post('storage/logo-contratista', 'StorageController@saveLogoContratista');
+    Route::post('storage/modelos_3d', 'StorageController@saveModelos3d');
 
     Route::post('storage/firma-digital', 'StorageController@saveFirmaDigital');
 

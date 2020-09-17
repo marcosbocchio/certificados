@@ -438,7 +438,14 @@
                                      <tbody>
                                          <tr v-for="(FIlaTabla,k) in (TablaDetalle)" :key="k" :class="{selected: indexDetalle === k}" class="pointer">
                                              <td  @click="selectPosDetalle(k)">{{ FIlaTabla.junta }}</td>
-                                             <td  @click="selectPosDetalle(k)">{{ FIlaTabla.densidad }}</td>
+                                             <td  @click="selectPosDetalle(k)">
+                                                 <div v-if="indexDetalle == k ">
+                                                 <input type="number" v-model="TablaDetalle[k].densidad" step="0.1">
+                                                 </div>
+                                                 <div v-else>
+                                                      {{ FIlaTabla.densidad }}
+                                                 </div>
+                                             </td>
                                              <td  @click="selectPosDetalle(k)">{{ FIlaTabla.posicion }} </td>
                                              <td  @click="selectPosDetalle(k)"> <input type="checkbox" id="checkbox" v-model="TablaDetalle[k].aceptable_sn">  </td>
                                              <td  @click="selectPosDetalle(k)">

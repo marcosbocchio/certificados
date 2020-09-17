@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class StorageController extends Controller
 {
@@ -217,6 +218,22 @@ class StorageController extends Controller
             $path = Storage::disk('public')->putFile('storage/documentos_videos',$request->file('archivo'));
 
           return $path;
+        }
+        else
+        {
+          return "Seleccione un archivo";
+        }
+    }
+
+    public function saveModelos3D(Request $request)
+    {
+        if ($request->hasFile('archivo')){
+            $file = $request->file('archivo')->getClientOriginalName();
+            $extension = $request->file('archivo')->getClientOriginalExtension();  //Get Image Extension
+            $fileName = $file.'.'.$extension;
+            $path = Storage::disk('public')->putFileAs('storage/modelos_3d',$request->file('archivo'),$file );
+
+            return $path;
         }
         else
         {

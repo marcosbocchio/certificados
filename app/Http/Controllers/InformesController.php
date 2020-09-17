@@ -70,6 +70,7 @@ class InformesController extends Controller
 
 
         switch ($metodo) {
+
             case 'RI':
                 return redirect()->route('InformeRiCreate',array('ot_id' => $ot_id));
                 break;
@@ -170,6 +171,7 @@ class InformesController extends Controller
         $informe->obra = $request->obra;
 
         $informe->espesor_especifico = null;
+
 
         If(!isset($request->procedimiento['ot_procedimientos_propios_id'])){
 

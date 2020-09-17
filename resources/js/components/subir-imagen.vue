@@ -1,10 +1,12 @@
 <template>
     <div>
         <form>
+
             <div class="form-group">
                 <input type="file" class="form-control" id="inputFile" ref="inputFile1" name="file" @change="onFileSelected($event)">
                 <button class="hide" @click.prevent="onUpload()" >upload</button>
             </div>
+
             <div  v-if="mostrar_formatos_soportados">
 
                  <p style="display:inline">Formatos: </p>
@@ -18,12 +20,15 @@
                   </div>
 
             </div>
+
             <div v-if="!isPdf && path">
 
                  <a class="btn btn-default btn-xs" @click="DeleteArchivo">x</a>
 
             </div>
+
             <div class="form-group">
+
                 <div v-if="isPdf && path">
 
                     <a v-if="!path_requerido_sn"  class="btn btn-default btn-xs" @click="DeleteArchivo"><span>x</span ></a><br>
@@ -37,12 +42,25 @@
                     <LightBox :images="images"  ref="lightbox"  :show-light-box="false" ></LightBox>
                 </div>
 
-            <progress-bar
-            :options="options"
-            :value="uploadPercentage"
-            style="margin-top:5px;"
-            /> <br/>
-            </div>
+                <progress-bar
+                :options="options"
+                :value="uploadPercentage"
+                style="margin-top:5px;"
+                /> <br/>
+
+                <div v-if="extension == 'obj'">
+                    <div class="col-md-2"  style="padding: 10px;height: 200px; ">
+                        <model-obj :src="'/' + path" @on-progress="cargando" @on-load="cargado" ></model-obj>
+                    </div>
+                </div>
+
+                <loading
+                    :active.sync="isLoading"
+                    :loader="'bars'"
+                    :color="'red'">
+                </loading>
+
+        </div>
         </form>
     </div>
 </template>
@@ -52,8 +70,17 @@ require('vue-image-lightbox/dist/vue-image-lightbox.min.css')
 import {mapState} from 'vuex';
 import LightBox from 'vue-image-lightbox';
 import {eventNewRegistro, eventDeleteFile } from '../components/event-bus';
+import { ModelObj } from 'vue-3d-model';
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 
 export default {
+
+    components: {
+      ModelObj,
+      Loading,
+      LightBox
+    },
 
     name: 'subir-imagen',
 
@@ -99,14 +126,9 @@ export default {
           },
       },
 
-    components: {
-
-        LightBox
-    },
-
       data() { return {
 
-      path : this.path_inicial,
+      path : JSON.parse(JSON.stringify(this.path_inicial)),
       uploading : false,
        images:[
                 {
@@ -125,6 +147,7 @@ export default {
         extension : '',
         errors:[],
         selectedFile : null,
+        isLoadModelo : false,
 
          options: {
 
@@ -146,8 +169,6 @@ export default {
        this.getExtension(this.path_inicial);
    },
 
-
-
     watch : {
 
         path_inicial : function(val){
@@ -165,10 +186,25 @@ export default {
 
     computed :{
 
-         ...mapState(['url'])
+      ...mapState(['url','isLoading'])
      },
 
     methods :{
+
+    cargando(){
+
+       this.$store.commit('loading', true);
+            console.log('cargando modelo');
+        this.isLoadModelo = true;
+        },
+
+    cargado(){
+
+       this.$store.commit('loading', false);
+
+            console.log('modelo cargado');
+
+        },
 
     openGallery(index) {
       this.$refs.lightbox.showImage(0)

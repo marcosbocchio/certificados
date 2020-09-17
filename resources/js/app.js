@@ -177,6 +177,12 @@ Vue.component('table-materiales', require('./components/abm-maestro/materiales/t
 Vue.component('nuevo-materiales', require('./components/abm-maestro/materiales/nuevo-materiales.vue').default);
 Vue.component('editar-materiales', require('./components/abm-maestro/materiales/editar-materiales.vue').default);
 
+Vue.component('table-modelos_3d', require('./components/abm-maestro/modelos-3d/table-modelos_3d.vue').default);
+Vue.component('nuevo-modelos_3d', require('./components/abm-maestro/modelos-3d/nuevo-modelos_3d.vue').default);
+Vue.component('editar-modelos_3d', require('./components/abm-maestro/modelos-3d/editar-modelos_3d.vue').default);
+Vue.component('modelo-3d', require('./components/abm-maestro/modelos-3d/modelo-3d').default);
+
+
 Vue.component('table-agente_acoplamientos', require('./components/abm-maestro/agente-acoplamientos/table-agente_acoplamientos.vue').default);
 Vue.component('nuevo-agente_acoplamientos', require('./components/abm-maestro/agente-acoplamientos/nuevo-agente_acoplamientos.vue').default);
 Vue.component('editar-agente_acoplamientos', require('./components/abm-maestro/agente-acoplamientos/editar-agente_acoplamientos.vue').default);
@@ -219,6 +225,7 @@ Vue.component('ot-soldadores', require('./components/dashboard/soldadores/ot-sol
 Vue.component('ot-documentaciones', require('./components/dashboard/documentaciones/ot-documentaciones').default);
 Vue.component('table-ot_procedimientos_propios', require('./components/dashboard/procedimientos/table-ot_procedimientos_propios').default);
 Vue.component('ot-tipoSoldaduras', require('./components/dashboard/procedimientos/ot-tipoSoldaduras').default);
+
 
 /*
 Vue.component('table-placas_ri', require('./components/dashboard/placas/table-placas_ri').default);

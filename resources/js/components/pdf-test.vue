@@ -31,7 +31,7 @@
 
             </div>
 
- <div id="sector4" style="padding: 10px; ">
+ <div class="col-md-4" style="padding: 10px; ">
       <model-obj src="img/3d-models/cadenas.obj"></model-obj>
  </div>
 
@@ -115,7 +115,7 @@ doc.autoTable({
     // ...
   ],
 })
-                doc.save("test.pdf")
+          doc.save("test.pdf")
 
         }
     }
