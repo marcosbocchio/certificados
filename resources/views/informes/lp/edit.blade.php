@@ -5,17 +5,17 @@
 
 <link rel="stylesheet"  href="{{asset('adminlte/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
 <link rel="stylesheet"  href="{{asset('adminlte/plugins/timepicker/bootstrap-timepicker.min.css')}}">
-   
+
 @endsection
 
 
-@section('contenido') 
+@section('contenido')
  <div id="app">
 
-   
 
-  <informe-lp 
-   
+
+  <informe-lp
+
      metodo ="{{$metodo}}"
      :otdata  ="{{$ot}}"
      :informedata ="{{$informe}}"
@@ -24,9 +24,9 @@
      :materialdata="{{$informe_material}}"
      :material2data ="{{$informe_material_accesorio}}"
      :diametrodata="{{$informe_diametro}}"
-     :diametro_espesordata="{{$informe_diametroEspesor}}"  
+     :diametro_espesordata="{{$informe_diametroEspesor}}"
      :interno_equipodata="{{$informe_interno_equipo}}"
-     :procedimientodata="{{$informe_procedimiento}}" 
+     :procedimientodata="{{$informe_procedimiento}}"
      :norma_evaluaciondata="{{$informe_norma_evaluacion}}"
      :norma_ensayodata="{{$informe_norma_ensayo}}"
      :ejecutor_ensayodata="{{$informe_ejecutor_ensayo}}"
@@ -37,12 +37,13 @@
      :penetrante_aplicacion_data="{{$penetrante_aplicacion}}"
      :revelador_aplicacion_data="{{$revelador_aplicacion}}"
      :removedor_aplicacion_data="{{$removedor_aplicacion}}"
-  
-     :iluminacion_data = "{{$informe_lp_iluminacion}}"   
-     :detalledata="{{$informe_detalle}}"     
-     
-     editmode  
-    
+
+     :iluminacion_data = "{{$informe_lp_iluminacion}}"
+     :detalledata="{{$informe_detalle}}"
+     :tablaModelos3d_data="{{$informe_modelos_3d}}"
+
+     editmode
+
   ></informe-lp>
 
  </div>

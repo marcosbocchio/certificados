@@ -66,6 +66,7 @@ class PdfInformesPmController extends Controller
          $evaluador = User::find($informe->firma);
          $contratista = Contratistas::find($ot->contratista_id);
          $observaciones = $informe->observaciones;
+         $informe_modelos_3d = (new \App\Http\Controllers\InformeModelos3dController)->getInformeModelos3d($id);
 
         /*  Encabezado */
 
@@ -116,6 +117,7 @@ class PdfInformesPmController extends Controller
                                                                 'iluminacion',
                                                                 'evaluador',
                                                                 'detalles',
+                                                                'informe_modelos_3d',
                                                                 'observaciones'
                                                                 ))->setPaper('a4','portrait')->setWarnings(false);
 

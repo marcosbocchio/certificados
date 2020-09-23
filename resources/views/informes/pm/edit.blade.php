@@ -5,17 +5,17 @@
 
 <link rel="stylesheet"  href="{{asset('adminlte/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
 <link rel="stylesheet"  href="{{asset('adminlte/plugins/timepicker/bootstrap-timepicker.min.css')}}">
-   
+
 @endsection
 
 
-@section('contenido') 
+@section('contenido')
  <div id="app">
 
-   
 
-  <informe-pm  
-   
+
+  <informe-pm
+
      metodo ="{{$metodo}}"
      :otdata  ="{{$ot}}"
      :informedata ="{{$informe}}"
@@ -24,25 +24,26 @@
      :materialdata="{{$informe_material}}"
      :material2data ="{{$informe_material_accesorio}}"
      :diametrodata="{{$informe_diametro}}"
-     :diametro_espesordata="{{$informe_diametroEspesor}}"  
-     :tecnicadata="{{$informe_tecnica}}"     
+     :diametro_espesordata="{{$informe_diametroEspesor}}"
+     :tecnicadata="{{$informe_tecnica}}"
      :interno_equipodata="{{$informe_interno_equipo}}"
-     :procedimientodata="{{$informe_procedimiento}}" 
+     :procedimientodata="{{$informe_procedimiento}}"
      :norma_evaluaciondata="{{$informe_norma_evaluacion}}"
      :norma_ensayodata="{{$informe_norma_ensayo}}"
      :ejecutor_ensayodata="{{$informe_ejecutor_ensayo}}"
      :metodo_trabajo_pmdata="{{$informe_pm_metodo_trabajo_pm}}"
-     :tipo_magnetizacion_data = "{{$informe_pm_tipo_magnetizacion}}"  
-     :magnetizacion_data = "{{$informe_pm_magnetizacion}}"   
-     :desmagnetizacion_sn_data = "{{$informe_pm_desmagnetizacion_sn}}"   
-     :iluminacion_data = "{{$informe_pm_iluminacion}}"   
+     :tipo_magnetizacion_data = "{{$informe_pm_tipo_magnetizacion}}"
+     :magnetizacion_data = "{{$informe_pm_magnetizacion}}"
+     :desmagnetizacion_sn_data = "{{$informe_pm_desmagnetizacion_sn}}"
+     :iluminacion_data = "{{$informe_pm_iluminacion}}"
      :contraste_data = "{{$informe_pm_contraste}}"
      :particula_data ="{{$informe_pm_particula}}"
-     :detalledata="{{$informe_detalle}}"   
-     :instrumento_medicion_data = "{{$informe_instrumento_medicion}}"  
-     
-     editmode  
-    
+     :detalledata="{{$informe_detalle}}"
+     :instrumento_medicion_data = "{{$informe_instrumento_medicion}}"
+     :tablaModelos3d_data="{{$informe_modelos_3d}}"
+
+     editmode
+
   ></informe-pm>
 
  </div>

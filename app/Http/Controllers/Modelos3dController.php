@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\DB;
 use Exception as Exception;
 use App\Modelos3D;
 use App\User;
+use Illuminate\Support\Str;
+use Image;
+use Illuminate\Support\Facades\Storage;
 
 class Modelos3dController extends Controller
 {
@@ -18,7 +21,7 @@ class Modelos3dController extends Controller
      */
     public function index()
     {
-        return  Modelos3D::all();
+        return  Modelos3D::orderBy('codigo','DESC')->get();
 
     }
 
@@ -73,9 +76,15 @@ class Modelos3dController extends Controller
 
      public function saveModelo3D($request,$modelo_3d){
 
+        $base64_image = $request['snapshot_base64'];
+        $png_url = "image-".time().".png";
+        $path = public_path().'/storage/modelos_3d/' . $png_url;
+        Image::make(file_get_contents($base64_image))->save($path);
+
         $modelo_3d->codigo = $request['codigo'];
         $modelo_3d->descripcion = $request['descripcion'];
         $modelo_3d->path = $request['path'];
+        $modelo_3d->path_imagen = 'storage/modelos_3d/' . $png_url ;
         $modelo_3d->save();
 
       }

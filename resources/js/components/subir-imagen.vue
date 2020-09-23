@@ -48,12 +48,6 @@
                 style="margin-top:5px;"
                 /> <br/>
 
-                <div v-if="extension == 'obj'">
-                    <div class="col-md-2"  style="padding: 10px;height: 200px; ">
-                        <model-obj :src="'/' + path" @on-progress="cargando" @on-load="cargado" ></model-obj>
-                    </div>
-                </div>
-
                 <loading
                     :active.sync="isLoading"
                     :loader="'bars'"
@@ -147,7 +141,6 @@ export default {
         extension : '',
         errors:[],
         selectedFile : null,
-        isLoadModelo : false,
 
          options: {
 
@@ -191,20 +184,6 @@ export default {
 
     methods :{
 
-    cargando(){
-
-       this.$store.commit('loading', true);
-            console.log('cargando modelo');
-        this.isLoadModelo = true;
-        },
-
-    cargado(){
-
-       this.$store.commit('loading', false);
-
-            console.log('modelo cargado');
-
-        },
 
     openGallery(index) {
       this.$refs.lightbox.showImage(0)

@@ -370,6 +370,52 @@
                    </div>
                 </div>
 
+                <div class="box box-custom-enod">
+                    <div class="box-body">
+
+                        <div class="col-md-3">
+                            <div class="form-group" >
+                                <label for="modelos_3d">Modelos 3D</label>
+                                <v-select v-model="modelo_3d" label="codigo" :options="modelos_3d" id="modelos_3d" ></v-select>
+                            </div>
+                         </div>
+
+                         <div class="clearfix"></div>
+
+                         <div class="col-md-1">
+                            <span>
+                              <button type="button" @click="addModelo()"><span class="fa fa-plus-circle"></span></button>
+                            </span>
+                         </div>
+
+                        <div v-if="TablaModelos3d.length">
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                <table class="table table-hover table-striped table-bordered table-condensed">
+                                        <thead>
+                                            <tr>
+                                                <th class="col-md-1">Modelo</th>
+                                                <th class="col-md-1">&nbsp;</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="(item,k) in (TablaModelos3d)" :key="k">
+
+                                                <td>
+                                                    {{ item.codigo }}
+                                                </td>
+                                                <td>
+                                                    <a  @click="RemoveModelo(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a>
+                                                </td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="box box-custom-enod">
                       <div class="box-header with-border">
@@ -891,6 +937,11 @@
        type : [ Array ],
        required : false
        },
+
+      tablamodelos3d_data : {
+        type : [ Array ],
+        required : false
+        }
      },
      data() {return {
              errors:[],
@@ -940,6 +991,8 @@
              tecnicas_grafico :'',
              tecnica_distancia:'',
              index_ot_obra_tipo_soldaduras :-1,
+             modelo_3d : '',
+             TablaModelos3d :[],
             // Fin Formulario encabezado
             // Formulario detalle
              pk:'',
@@ -1006,6 +1059,7 @@
          this.getTipoPeliculas();
          this.$store.dispatch('loadNormaEvaluaciones');
          this.$store.dispatch('loadNormaEnsayos');
+         this.$store.dispatch('loadModelos3d');
          this.getIcis();
          this.getCms();
          this.getTecnicas();
@@ -1065,7 +1119,7 @@
          },
      },
      computed :{
-         ...mapState(['isLoading','url','ot_obra_tipo_soldaduras','materiales','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','ejecutor_ensayos','interno_equipos','fuentePorInterno','curie']),
+         ...mapState(['isLoading','url','ot_obra_tipo_soldaduras','materiales','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','ejecutor_ensayos','interno_equipos','fuentePorInterno','curie','modelos_3d']),
             HabilitarClonarPasadas(){
                 this.EnableClonarPasadas = (this.isGasoducto && this.pasada=='1' && this.TablaDetalle.length);
             },
@@ -1128,6 +1182,7 @@
                 this.InicializarElementosPasadas();
                 this.observaciones = this.informedata.observaciones
                 this.tipo_soldadura = this.ot_tipo_soldadura ? (this.ot_tipo_soldadura.tipo_soldadura.codigo) : '';
+                this.TablaModelos3d = this.tablamodelos3d_data;
 
                 if(this.informe_ridata.reparacion_sn){
                      this.getElementosReparacion();
@@ -1874,6 +1929,24 @@
            }
            this.importado_pasadas = false;
          },
+
+         addModelo : function(){
+
+             this.TablaModelos3d.push({
+
+                ...this.modelo_3d,
+
+             });
+
+         },
+
+         RemoveModelo : function(index){
+
+              this.TablaModelos3d.splice(index, 1);
+              this.modelo_3d = '';
+
+         },
+
          Store : function(){
                      this.errors =[];
                      let gasoducto_sn ;
@@ -1931,6 +2004,7 @@
                          'exposicion': this.exposicion,
                          'detalles'  : this.TablaDetalle,
                          'TablaPasadas' : this.TablaPasadas,
+                         'TablaModelos3d' :this.TablaModelos3d,
                  }}
 
 
@@ -2011,6 +2085,7 @@
                          'exposicion': this.exposicion,
                          'detalles'  : this.TablaDetalle,
                          'TablaPasadas' : this.TablaPasadas,
+                         'TablaModelos3d' :this.TablaModelos3d,
 
                  }}
 

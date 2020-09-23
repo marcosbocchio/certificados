@@ -5,7 +5,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Crear</h4>
+                        <h4 class="modal-title">Editar</h4>
                     </div>
                     <div class="modal-body">
                         <div class="row">
@@ -35,6 +35,33 @@
                                     ></subir-imagen>
                                 </div>
                             </div>
+
+                            <div v-if="Registro.path">
+
+                                <div class="form-group" >
+
+                                    <div class="col-lg-4" style="border:2px solid;height: 200px;text-align: center;margin: 0 15px 0 15px;">
+                                        <model-obj :src="'/' + Registro.path" ref="model" :glOptions="{ preserveDrawingBuffer: true }"></model-obj>
+                                    </div>
+
+                                    <div class="col-lg-2" style="text-align:center;margin: 50px 0 50px 0;">
+                                        <button type="button" class="create" @click="snapshot">Captura </button>
+                                    </div>
+                                    <div v-if="Registro.snapshot_base64">
+                                        <div class="col-lg-4" style="border:2px solid;height: 200px;text-align: center;margin: 0 15px 0 15px;">
+                                             <img class="snapshot" v-if="Registro.snapshot_base64" :src="Registro.snapshot_base64" height="190px" style="padding: 5px;" />
+                                        </div>
+                                    </div>
+                                    <div v-else-if="Registro.path_imagen">
+                                        <div class="col-lg-4" style="border:2px solid;height: 200px;text-align: center;center;margin: 0 15px 0 15px;">
+                                           <img class="snapshot" :src="'/' + Registro.path_imagen"  />
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                           </div>
+
                         </div>
 
                     </div>
@@ -55,6 +82,7 @@ import { eventEditRegistro } from '../../event-bus';
 import { ModelObj } from 'vue-3d-model';
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
+ import {convertImgToBase64} from '../../../functions/convertImgToBase64.js';
 
 export default {
 
@@ -78,8 +106,13 @@ export default {
             'codigo': '',
             'descripcion'  : '',
             'path' : '',
+            'snapshot_base64': null,
+            'path_imagen' : '',
+            'snapshot_base64': null,
+
          },
 
+        snapshot_base64: null,
         ruta: 'modelos_3d',
         max_size :30000, //KB
         tipos_archivo_soportados:['obj'],
@@ -105,12 +138,22 @@ export default {
 
     methods: {
 
+        snapshot() {
+          this.Registro.snapshot_base64 = this.$refs.model.renderer.domElement.toDataURL('image/png', 1);
+        },
+
            openModal : function(){
 
             this.$nextTick(function () {
                 this.Registro.codigo = this.selectRegistro.codigo;
                 this.Registro.descripcion = this.selectRegistro.descripcion;
                 this.Registro.path = this.selectRegistro.path;
+                this.Registro.path_imagen = this.selectRegistro.path_imagen;
+
+                convertImgToBase64('/' + this.selectRegistro.path_imagen,function(base64Img){
+                    this.Registro.snapshot_base64 = base64Img;
+                }.bind(this),'image/png');
+
                 $('#editar').modal('show');
                 this.$forceUpdate();            })
             },
@@ -144,7 +187,8 @@ export default {
 
                 }
                 });
-              }
+              },
+
         }
 }
 </script>

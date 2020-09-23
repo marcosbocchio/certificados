@@ -14,11 +14,11 @@
 
 header {
     position:fixed;
-    top: -237px;    
-}        
-    
+    top: -237px;
+}
+
 footer {
-    position: fixed; bottom:0px; 
+    position: fixed; bottom:0px;
     padding-top: 0px;
 }
 
@@ -27,20 +27,20 @@ footer {
 <body>
 
 <header>
-    @include('reportes.partial.header-principal-portrait')     
-    @include('reportes.partial.linea-amarilla')                
-    @include('reportes.partial.header-cliente-comitente-portrait')    
-    @include('reportes.partial.linea-gris')        
-    @include('reportes.partial.header-proyecto-portrait')    
-    @include('reportes.partial.linea-amarilla') 
+    @include('reportes.partial.header-principal-portrait')
+    @include('reportes.partial.linea-amarilla')
+    @include('reportes.partial.header-cliente-comitente-portrait')
+    @include('reportes.partial.linea-gris')
+    @include('reportes.partial.header-proyecto-portrait')
+    @include('reportes.partial.linea-amarilla')
 </header>
 
 <footer>
-    @include('reportes.partial.linea-amarilla') 
+    @include('reportes.partial.linea-amarilla')
 
-    @include('reportes.partial.observaciones') 
+    @include('reportes.partial.observaciones')
 
-    @include('reportes.partial.linea-amarilla') 
+    @include('reportes.partial.linea-amarilla')
     <table style="text-align: center;border-collapse: collapse;" width="100%" >
         <tbody>
             <tr>
@@ -64,7 +64,7 @@ footer {
                                 <td style="font-size: 10px; " class="bordered-td"><b>CI: </b>Concavidad Interna</td>
                                 <td style="font-size: 10px; " class="bordered-td"><b>CE: </b>Concavidad Externa</td>
                                 <td style="font-size: 10px; " class="bordered-td"><b>SI: </b>Socavado Interior</td>
-                                <td style="font-size: 10px; " class="bordered-td"><b>SE: </b>Socavado Exterior</td>                                
+                                <td style="font-size: 10px; " class="bordered-td"><b>SE: </b>Socavado Exterior</td>
                             </tr>
                             <tr>
                                 <td style="font-size: 10px; " class="bordered-td"><b>ME: </b>Escoria Aislada</td>
@@ -72,7 +72,7 @@ footer {
                                 <td style="font-size: 10px; " class="bordered-td"><b>P: </b>Poros</td>
                                 <td style="font-size: 10px; " class="bordered-td"><b>NP: </b>Nido de Poros</td>
                                 <td style="font-size: 10px; " class="bordered-td"><b>PV: </b>Poro Vermicular</td>
-                                <td style="font-size: 10px; " class="bordered-td"><b>CH: </b>Cordón Hueco</td>                                
+                                <td style="font-size: 10px; " class="bordered-td"><b>CH: </b>Cordón Hueco</td>
                             </tr>
                             <tr>
                                 <td style="font-size: 10px; " class="bordered-td"><b>IT: </b>Inclusión de Tungteno</td>
@@ -82,115 +82,116 @@ footer {
                                 <td style="font-size: 10px; " class="bordered-td"><b>RP: </b>Repetir Placa</td>
                             </tr>
                             <tr>
-                                <td style="font-size: 10px; " colspan="3" class="bordered-td"><b>AP: </b>Aprobado</td>                          
+                                <td style="font-size: 10px; " colspan="3" class="bordered-td"><b>AP: </b>Aprobado</td>
                                 <td style="font-size: 10px; " colspan="3" class="bordered-td"><b>RZ: </b>Rechazado</td>
-                            </tr>                     
+                            </tr>
                         </tbody>
                     </table>
-                </td>               
-            </tr>     
+                </td>
+            </tr>
         </tbody>
     </table>
 
-    @include('reportes.partial.linea-amarilla') 
+    @include('reportes.partial.linea-amarilla')
 
-    @include('reportes.informes.partial.firmas') 
+    @include('reportes.informes.partial.firmas')
 
 </footer>
 
 
 <main>
-    @include('reportes.informes.partial.header-detalle-ri-portrait')      
-    
-    @include('reportes.partial.linea-amarilla')  
+    @include('reportes.informes.partial.header-detalle-ri-portrait')
+
+    @include('reportes.partial.linea-amarilla')
 
         <table width="100%" style="border-collapse: collapse;">
-            <thead>       
+            <thead>
                 <tr>
                     <td colspan="7"><strong style="font-size: 14px;">Indicaciones</strong></td>
                 </tr>
-               
+
                 <tr>
                     <td style="font-size: 11px; width:65px;  text-align: center " rowspan="2" class="bordered-td" >Elem.</td>
                     <td style="font-size: 11px; width:65px;  text-align: center;" rowspan="2" class="bordered-td">Cuño</td>
                     <td style="font-size: 11px; width:50px; text-align: center;" colspan="2" class="bordered-td">Placa</td>
-                    <td style="font-size: 11px; width:385px;  text-align: center;" rowspan="2" class="bordered-td">Indicaciones</td>  
-                    <td style="font-size: 11px; text-align: center;" colspan="2" class="bordered-td">Resultado</td>  
+                    <td style="font-size: 11px; width:385px;  text-align: center;" rowspan="2" class="bordered-td">Indicaciones</td>
+                    <td style="font-size: 11px; text-align: center;" colspan="2" class="bordered-td">Resultado</td>
                 </tr>
                 <tr>
                     <td style="font-size: 11px; text-align: center;width:64.5px;" class="bordered-td">Posición</td>
-                    <td style="font-size: 11px; text-align: center;width:15px;" class="bordered-td"><span class="EspecialCaracter">ρ</span></td>  
+                    <td style="font-size: 11px; text-align: center;width:15px;" class="bordered-td"><span class="EspecialCaracter">ρ</span></td>
                     <td style="font-size: 11px; text-align: center;" class="bordered-td">AP</td>
-                    <td style="font-size: 11px; text-align: center;" class="bordered-td">RZ</td>                            
-                </tr>  
+                    <td style="font-size: 11px; text-align: center;" class="bordered-td">RZ</td>
+                </tr>
             </thead>
             <tbody>
                 @foreach ($juntas_posiciones as $junta_posicion)
                     <tr>
                         <td style="font-size: 11px;  width:65.7px;text-align: center" class="bordered-td">{{ $junta_posicion->junta }}</td>
                         <td style="font-size: 11px;  width:65.3px;text-align: center" class="bordered-td">
-                            {{$junta_posicion->soldadorz}} 
-        
+                            {{$junta_posicion->soldadorz}}
+
                             @if ($junta_posicion->soldadorp)
-                            
-                                / {{$junta_posicion->soldadorp}} 
-                                
+
+                                / {{$junta_posicion->soldadorp}}
+
                             @endif
                         </td>
                         <td style="font-size: 11px;  width:64.5px;text-align: center" class="bordered-td">{{$junta_posicion->posicion}}</td>
                         <td style="font-size: 11px;  width:23.5px;text-align: center" class="bordered-td">{{$junta_posicion->densidad}}</td>
                         <td style="font-size: 9px;   width:385px; " class="bordered-td">&nbsp;
                         @php $primero = true; @endphp
-                            @foreach ($defectos_posiciones as $key => $defecto_posicion)                                
-    
-                                
+                            @foreach ($defectos_posiciones as $key => $defecto_posicion)
+
+
                                 @if ($defecto_posicion->posicion_id == $junta_posicion->posicion_id)
-    
+
                                     @if (!$primero)
                                         /
                                     @endif
-    
-                                    @if ($defecto_posicion->posicion)                          
-    
+
+                                    @if ($defecto_posicion->posicion)
+
                                         @php
                                             $valor_imprimir = $defecto_posicion->codigo . '(' . $defecto_posicion->posicion . ')' ;
                                         @endphp
-                         
-                                    @else 
-    
+
+                                    @else
+
                                          @php
                                             $valor_imprimir = $defecto_posicion->codigo ;
-                                        @endphp   
-    
+                                        @endphp
+
                                     @endif
-    
+
                                     {{ $valor_imprimir}}
-                                    {{ $primero = false}}    
-    
+                                    {{ $primero = false}}
+
                                 @endif
-                                
+
                             @endforeach
-                        
+
                         </td>
-    
+
                         <td style="font-size: 11px; text-align: center;width:37px; " class="bordered-td">
                             @if ($junta_posicion->aceptable_sn)
                                 X
                             @endif
                         </td>
-    
+
                         <td style="font-size: 11px; text-align: center;" class="bordered-td">
                             @if (!$junta_posicion->aceptable_sn)
                                 X
                             @endif
                         </td>
-                    </tr>       
-                @endforeach                                       
+                    </tr>
+                @endforeach
             </tbody>
         </table>
-    </main>   
-     
-    @include('reportes.partial.nro_pagina') 
+        @include('reportes.informes.partial.modelos3d-portrait')
+    </main>
+
+    @include('reportes.partial.nro_pagina')
 
 
 </body>

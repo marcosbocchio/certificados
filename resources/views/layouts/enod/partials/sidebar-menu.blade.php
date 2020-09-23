@@ -115,11 +115,11 @@
                 @can('M_vehiculos')
                   <li><a href="{{ route('vehiculos') }}">Vehiculos</a></li>
                 @endcan
-                <!--
+
                 @can('M_modelos_3d')
                    <li><a href="{{ route('modelos-3d') }}">Modelos 3D</a></li>
                 @endcan
-                -->
+
                 @can('M_roles')
                   <li><a href="{{ route('roles') }}">Roles</a></li>
                 @endcan
@@ -243,6 +243,19 @@
             @endcan
           </ul>
 
+        </li>
+
+        <li class="treeview">
+            <a href="#">
+              <i class="fa  fa-help"></i>
+              <span>AYUDA</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li><a href="{{ route('ayuda-tablero-principal') }}"><i class="fa fa-download"></i>AYUDA</a></li>
+            </ul>
         </li>
 
       </ul>

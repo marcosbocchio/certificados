@@ -5,18 +5,18 @@
 
 <link rel="stylesheet"  href="{{asset('adminlte/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
 <link rel="stylesheet"  href="{{asset('adminlte/plugins/timepicker/bootstrap-timepicker.min.css')}}">
-   
+
 @endsection
 
 
-@section('contenido') 
+@section('contenido')
  <div id="app">
- 
-  <informe-us  
-   
+
+  <informe-us
+
      metodo ="{{$metodo}}"
      :otdata  ="{{$ot}}"
-     :informedata ="{{$informe}}"    
+     :informedata ="{{$informe}}"
      :ot_tipo_soldaduradata = "{{$informe_ot_tipo_soldadura}}"
      :informe_usdata ="{{$informe_us}}"
      :materialdata="{{$informe_material}}"
@@ -24,8 +24,8 @@
      :diametrodata="{{$informe_diametro}}"
      :diametro_espesordata="{{$informe_diametroEspesor}}"
      :interno_equipodata="{{$informe_interno_equipo}}"
-     :tecnicadata="{{$informe_tecnica}}" 
-     :procedimientodata="{{$informe_procedimiento}}" 
+     :tecnicadata="{{$informe_tecnica}}"
+     :procedimientodata="{{$informe_procedimiento}}"
      :norma_evaluaciondata="{{$informe_norma_evaluacion}}"
      :norma_ensayodata="{{$informe_norma_ensayo}}"
      :ejecutor_ensayodata="{{$informe_ejecutor_ensayo}}"
@@ -34,8 +34,10 @@
      :calibraciones_data = "{{ $calibraciones}}"
      :tabla_us_pa_data = "{{ $tabla_us_pa}}"
      :tabla_me_data = "{{ $tabla_me}}"
-     editmode  
-    
+     :tablaModelos3d_data="{{$informe_modelos_3d}}"
+
+     editmode
+
   ></informe-us>
 
  </div>

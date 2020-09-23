@@ -229,7 +229,7 @@ class StorageController extends Controller
     {
         if ($request->hasFile('archivo')){
             $file = $request->file('archivo')->getClientOriginalName();
-            $extension = $request->file('archivo')->getClientOriginalExtension();  //Get Image Extension
+            $extension = $request->file('archivo')->getClientOriginalExtension();
             $fileName = $file.'.'.$extension;
             $path = Storage::disk('public')->putFileAs('storage/modelos_3d',$request->file('archivo'),$file );
 

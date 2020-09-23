@@ -6,14 +6,14 @@
 <link rel="stylesheet"  href="{{asset('adminlte/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
 <link rel="stylesheet"  href="{{asset('adminlte/plugins/timepicker/bootstrap-timepicker.min.css')}}">
 <script type="text/javascript" src="{{asset('js/sheetjs/shim.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('js/sheetjs/xlsx.full.min.js')}}"></script>  
+<script type="text/javascript" src="{{asset('js/sheetjs/xlsx.full.min.js')}}"></script>
 @endsection
 
-@section('contenido') 
+@section('contenido')
  <div id="app">
 
-  <informe-ri      
-   
+  <informe-ri
+
       metodo ="{{$metodo}}"
      :otdata  ="{{$ot}}"
      :informedata ="{{$informe}}"
@@ -32,10 +32,11 @@
      :norma_evaluaciondata="{{$informe_norma_evaluacion}}"
      :norma_ensayodata="{{$informe_norma_ensayo}}"
      :ejecutor_ensayodata="{{$informe_ejecutor_ensayo}}"
-     :detalledata="{{$informe_detalle}}"  
-     :pasada_juntas_data="{{$informe_pasada_juntas}}"   
-     editmode  
-    
+     :detalledata="{{$informe_detalle}}"
+     :pasada_juntas_data="{{$informe_pasada_juntas}}"
+     :tablaModelos3d_data="{{$informe_modelos_3d}}"
+     editmode
+
   ></informe-ri>
 
  </div>

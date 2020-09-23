@@ -136,6 +136,10 @@ Route::group(['middleware' => ['auth']], function () {
       Route::get('multimedia/{id}', 'VideosController@multimediaSubcategoria')->name('irAsubcategoria');
       Route::get('get-Videos-categoria/{id}', 'VideosController@getVideosCategoria');
 
+      /* AYUDA*/
+      Route::get('ayuda', 'AyudaController@openAyuda')->name('ayuda-tablero-principal');
+      Route::get('cambiar_clave', 'AyudaController@openCambiarClave')->name('ayuda-cambiar-clave');
+
 
 });
 

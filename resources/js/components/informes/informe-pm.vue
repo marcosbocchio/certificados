@@ -333,6 +333,53 @@
 
                         <div class="col-md-3">
                             <div class="form-group" >
+                                <label for="modelos_3d">Modelos 3D</label>
+                                <v-select v-model="modelo_3d" label="codigo" :options="modelos_3d" id="modelos_3d" ></v-select>
+                            </div>
+                         </div>
+
+                         <div class="clearfix"></div>
+
+                         <div class="col-md-1">
+                            <span>
+                              <button type="button" @click="addModelo()"><span class="fa fa-plus-circle"></span></button>
+                            </span>
+                         </div>
+
+                        <div v-if="TablaModelos3d.length">
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                <table class="table table-hover table-striped table-bordered table-condensed">
+                                        <thead>
+                                            <tr>
+                                                <th class="col-md-1">Modelo</th>
+                                                <th class="col-md-1">&nbsp;</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="(item,k) in (TablaModelos3d)" :key="k">
+
+                                                <td>
+                                                    {{ item.codigo }}
+                                                </td>
+                                                <td>
+                                                    <a  @click="RemoveModelo(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a>
+                                                </td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box box-custom-enod">
+                    <div class="box-body">
+
+                        <div class="col-md-3">
+                            <div class="form-group" >
                                 <label for="pieza">ELEMENTO</label>
                                 <input type="text" v-model="pieza" class="form-control" id="pieza">
                             </div>
@@ -582,7 +629,12 @@ export default {
       detalledata : {
       type : [ Array ],
       required : false
-      }
+      },
+
+      tablamodelos3d_data : {
+        type : [ Array ],
+        required : false
+        }
 
     },
     data() {return {
@@ -626,7 +678,8 @@ export default {
         tecnicas:[],
         contrastes:[],
         equipos:[],
-
+        modelo_3d : '',
+        TablaModelos3d :[],
         metodos_trabajo_pm:[],
         tipos_magnetizacion:[],
         corrientes:[],
@@ -670,6 +723,7 @@ export default {
       this.getConstrastes();
       this.$store.dispatch('loadIluminaciones').then( res=>{ this.$store.commit('loading', false)});
       this.setEdit();
+      this.$store.dispatch('loadModelos3d');
     },
 
     mounted : function() {
@@ -679,7 +733,7 @@ export default {
 
     computed :{
 
-        ...mapState(['isLoading','url','materiales','ot_obra_tipo_soldaduras','diametros','espesores','procedimientos','norma_evaluaciones','particulas','norma_ensayos','iluminaciones','ejecutor_ensayos','interno_equipos','instrumentos_mediciones']),
+        ...mapState(['isLoading','url','materiales','ot_obra_tipo_soldaduras','diametros','espesores','procedimientos','norma_evaluaciones','particulas','norma_ensayos','iluminaciones','ejecutor_ensayos','interno_equipos','instrumentos_mediciones','modelos_3d']),
 
         numero_inf_code : function()  {
 
@@ -755,7 +809,8 @@ export default {
                this.am = this.informe_pmdata.amperaje;
                this.ejecutor_ensayo = this.ejecutor_ensayodata;
                this.TablaLp = this.detalledata,
-               this.observaciones = this.informedata.observaciones
+               this.observaciones = this.informedata.observaciones;
+               this.TablaModelos3d = this.tablamodelos3d_data;
                this.setearTipoPenetrante();
                this.$store.dispatch('loadInstrumentosMediciones',{ 'metodo' : this.metodo, 'activo_sn' : 1, 'tipo_penetrante' : this.tipo_penetrante });
                this.getParticulas();
@@ -996,6 +1051,23 @@ export default {
             $('#nuevo').modal('hide');
         },
 
+         addModelo : function(){
+
+             this.TablaModelos3d.push({
+
+                ...this.modelo_3d,
+
+             });
+
+         },
+
+         RemoveModelo : function(index){
+
+              this.TablaModelos3d.splice(index, 1);
+              this.modelo_3d = '';
+
+         },
+
          Store : function(){
 
           this.errors =[];
@@ -1048,6 +1120,8 @@ export default {
                 'particula'         :this.particula,
                 'contraste'         :this.contraste,
                 'detalles'  :      this.TablaLp,
+                'TablaModelos3d' :this.TablaModelos3d,
+
           }
 
           }).then(response => {
@@ -1129,6 +1203,8 @@ export default {
                 'particula'         :this.particula,
                 'contraste'         :this.contraste,
                 'detalles'  :      this.TablaLp,
+                'TablaModelos3d' :this.TablaModelos3d,
+
           }}
 
 

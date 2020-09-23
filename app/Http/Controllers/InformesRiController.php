@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Clientes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection as Collection;
@@ -141,6 +142,8 @@ class InformesRiController extends Controller
         $informe_detalle = $this->getDetalle($informe_ri->id);
         $informe_pasada_juntas = $this->getPasadasJuntas($informe_ri->id);
 
+        $informe_modelos_3d = (new \App\Http\Controllers\InformeModelos3dController)->getInformeModelos3d($id);
+
        // dd($informe_interno_equipo);
       //  dd($informe_detalle);
 
@@ -165,6 +168,7 @@ class InformesRiController extends Controller
                                                  'informe_ejecutor_ensayo',
                                                  'informe_detalle',
                                                  'informe_pasada_juntas',
+                                                 'informe_modelos_3d',
                                                  'header_titulo',
                                                  'header_descripcion'));
     }

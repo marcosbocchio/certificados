@@ -198,6 +198,54 @@
 
                   </div>
                </div>
+
+                <div class="box box-custom-enod">
+                    <div class="box-body">
+
+                        <div class="col-md-3">
+                            <div class="form-group" >
+                                <label for="modelos_3d">Modelos 3D</label>
+                                <v-select v-model="modelo_3d" label="codigo" :options="modelos_3d" id="modelos_3d" ></v-select>
+                            </div>
+                         </div>
+
+                         <div class="clearfix"></div>
+
+                         <div class="col-md-1">
+                            <span>
+                              <button type="button" @click="addModelo()"><span class="fa fa-plus-circle"></span></button>
+                            </span>
+                         </div>
+
+                        <div v-if="TablaModelos3d.length">
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                <table class="table table-hover table-striped table-bordered table-condensed">
+                                        <thead>
+                                            <tr>
+                                                <th class="col-md-1">Modelo</th>
+                                                <th class="col-md-1">&nbsp;</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="(item,k) in (TablaModelos3d)" :key="k">
+
+                                                <td>
+                                                    {{ item.codigo }}
+                                                </td>
+                                                <td>
+                                                    <a  @click="RemoveModelo(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a>
+                                                </td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                <div v-show="tecnica">
 
                    <div class="box box-custom-enod">
@@ -848,7 +896,8 @@
 import uniq from 'lodash/uniq';
 import DatePicker from 'vue2-datepicker';
 import 'vue2-datepicker/index.css';
-import 'vue2-datepicker/locale/es';import {mapState} from 'vuex';
+import 'vue2-datepicker/locale/es';
+import {mapState} from 'vuex';
 import { eventSetReferencia } from '../event-bus';
 import { toastrInfo,toastrDefault } from '../toastrConfig';
 import moment from 'moment';
@@ -976,6 +1025,11 @@ export default {
             required : false
             },
 
+      tablamodelos3d_data : {
+            type : [ Array ],
+            required : false
+            }
+
     },
 
     data() {return {
@@ -1021,7 +1075,8 @@ export default {
         path2_indicacion:'',
         path3_indicacion:'',
         path4_indicacion:'',
-
+        modelo_3d : '',
+        TablaModelos3d :[],
         zapata:'',
         palpador:'',
         frecuencia:'',
@@ -1108,6 +1163,7 @@ export default {
       this.$store.dispatch('loadEjecutorEnsayo', this.otdata.id);
       this.getGeneratrices();
       this.setEdit();
+      this.$store.dispatch('loadModelos3d');
     },
 
     mounted : function() {
@@ -1117,7 +1173,7 @@ export default {
 
     computed :{
 
-        ...mapState(['isLoading','url','ot_obra_tipo_soldaduras','materiales','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','ejecutor_ensayos','interno_equipos','palpadores']),
+        ...mapState(['isLoading','url','ot_obra_tipo_soldaduras','materiales','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','ejecutor_ensayos','interno_equipos','palpadores','modelos_3d']),
 
         numero_inf_code : function()  {
 
@@ -1200,6 +1256,7 @@ export default {
                this.calibraciones = this.calibraciones_data;
                this.Tabla_us_pa = this.tabla_us_pa_data;
                this.Tabla_me = this.tabla_me_data;
+               this.TablaModelos3d = this.tablamodelos3d_data;
                this.SetearBlockCalibraciones();
                this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.informedata.obra });
             }
@@ -1855,6 +1912,23 @@ export default {
             $('#nuevo').modal('hide');
         },
 
+         addModelo : function(){
+
+             this.TablaModelos3d.push({
+
+                ...this.modelo_3d,
+
+             });
+
+         },
+
+         RemoveModelo : function(index){
+
+              this.TablaModelos3d.splice(index, 1);
+              this.modelo_3d = '';
+
+         },
+
         Store : function(){
 
 
@@ -1904,6 +1978,8 @@ export default {
                 'calibraciones'   :this.calibraciones,
                 'tabla_us_pa'     :this.Tabla_us_pa,
                 'tabla_me'        :this.Tabla_me,
+                'TablaModelos3d' :this.TablaModelos3d,
+
         }}
 
         ).then(response => {
@@ -1979,6 +2055,8 @@ export default {
                 'calibraciones'   :this.calibraciones,
                 'tabla_us_pa'     :this.Tabla_us_pa,
                 'tabla_me'        :this.Tabla_me,
+                'TablaModelos3d' :this.TablaModelos3d,
+
           }}
 
 

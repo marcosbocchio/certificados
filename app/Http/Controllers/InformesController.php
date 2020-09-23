@@ -236,7 +236,10 @@ class InformesController extends Controller
 
          }
 
-        $informe->save();
+
+         $informe->save();
+
+        (new \App\Http\Controllers\InformeModelos3dController)->store($informe->id,$request->TablaModelos3d);
 
         return $informe;
       }

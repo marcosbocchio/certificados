@@ -371,6 +371,8 @@ class InformesUsController extends Controller
         if ($informe_ot_tipo_soldadura == null)
                 $informe_ot_tipo_soldadura = new OtTipoSoldaduras();
 
+        $informe_modelos_3d = (new \App\Http\Controllers\InformeModelos3dController)->getInformeModelos3d($id);
+
         return view('informes.us.edit', compact('ot',
                                                  'metodo',
                                                  'user',
@@ -392,6 +394,7 @@ class InformesUsController extends Controller
                                                  'calibraciones',
                                                  'tabla_us_pa',
                                                  'tabla_me',
+                                                 'informe_modelos_3d',
                                                  'header_titulo',
                                                  'header_descripcion'));
     }

@@ -56,6 +56,7 @@ class PdfInformesUsController extends Controller
          $agente_acoplamiento = AgenteAcoplamientos::find($informe_us->agente_acoplamiento_id);
          $calibraciones_us = CalibracionesUs::where('informe_us_id',$informe_us->id)->with('Palpador')->get();
          $observaciones = $informe->observaciones;
+         $informe_modelos_3d = (new \App\Http\Controllers\InformeModelos3dController)->getInformeModelos3d($id);
 
         /*  Encabezado */
 
@@ -84,7 +85,8 @@ class PdfInformesUsController extends Controller
                                                                 'estado_superficie',
                                                                 'agente_acoplamiento',
                                                                 'calibraciones_us',
-                                                                'evaluador','observaciones'
+                                                                'evaluador','observaciones',
+                                                                'informe_modelos_3d'
 
                                                                 ))->setPaper('a4','portrait')->setWarnings(false);
 

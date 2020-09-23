@@ -100,6 +100,7 @@ footer {
             @endforeach
         </tbody>
     </table>
+    @include('reportes.informes.partial.modelos3d-portrait')
 </main>
 
 

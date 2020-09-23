@@ -214,6 +214,8 @@ class InformesPmController extends Controller
 
         $informe_detalle = $this->getDetalle($informe_pm->id);
 
+        $informe_modelos_3d = (new \App\Http\Controllers\InformeModelos3dController)->getInformeModelos3d($id);
+
         return view('informes.pm.edit', compact('ot',
                                                  'metodo',
                                                  'user',
@@ -239,6 +241,7 @@ class InformesPmController extends Controller
                                                  'informe_pm_particula',
                                                  'informe_pm_contraste',
                                                  'informe_detalle',
+                                                 'informe_modelos_3d',
                                                  'header_titulo',
                                                  'header_descripcion'));
     }

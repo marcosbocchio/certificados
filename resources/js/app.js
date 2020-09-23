@@ -392,6 +392,7 @@ state: {
         serviciosOt  : [],
         epss:[],
         pqrs:[],
+        modelos_3d:[],
 
     },
 
@@ -990,6 +991,18 @@ actions : {
         })
         },
 
+        loadModelos3d({
+            commit} ) {
+             axios.defaults.baseURL = store.state.url ;
+             var urlRegistros = 'modelos_3d/' + '?api_token=' + Laravel.user.api_token;
+             return new Promise((resolve, reject) => {
+             axios.get(urlRegistros).then((response) => {
+             commit('getModelos3d', response.data)
+             resolve()
+            })
+          })
+          },
+
         loadRoles({
           commit
         }) {
@@ -1269,6 +1282,12 @@ actions : {
       getDosimetriaResumen(state, dosimetria_resumen){
 
         state.dosimetria_resumen = dosimetria_resumen;
+
+      },
+
+      getModelos3d(state, modelos_3d){
+
+        state.modelos_3d = modelos_3d;
 
       },
 

@@ -215,7 +215,8 @@ class InformesLpController extends Controller
 
         $informe_detalle = $this->getDetalle($informe_lp->id);
 
-     //   dd($informe_detalle);
+        $informe_modelos_3d = (new \App\Http\Controllers\InformeModelos3dController)->getInformeModelos3d($id);
+
         return view('informes.lp.edit', compact('ot',
                                                  'metodo',
                                                  'user',
@@ -240,6 +241,7 @@ class InformesLpController extends Controller
                                                  'removedor_aplicacion',
                                                  'informe_lp_iluminacion',
                                                  'informe_detalle',
+                                                 'informe_modelos_3d',
                                                  'header_titulo',
                                                  'header_descripcion'));
     }

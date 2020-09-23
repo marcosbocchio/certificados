@@ -68,8 +68,8 @@ class PdfInformesLpController extends Controller
         $fecha = date('d-m-Y', strtotime($informe->fecha));
         $tipo_reporte = "INFORME N°";
 
-       // dd($evaluador);
-       //  dd($equipo);
+        $informe_modelos_3d = (new \App\Http\Controllers\InformeModelos3dController)->getInformeModelos3d($id);
+
          $detalles =  DB::select('SELECT
                                 detalles_lp.pieza as pieza,
                                 detalles_lp.cm as cm,
@@ -109,6 +109,7 @@ class PdfInformesLpController extends Controller
                                                                 'iluminacion',
                                                                 'evaluador',
                                                                 'detalles',
+                                                                'informe_modelos_3d',
                                                                 'observaciones'
                                                                 ))->setPaper('a4','portrait')->setWarnings(false);
 

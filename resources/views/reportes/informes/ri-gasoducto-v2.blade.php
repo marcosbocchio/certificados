@@ -470,6 +470,8 @@ footer {
         </tbody>
     </table>
 
+    @include('reportes.informes.partial.modelos3d-landscope')
+
 </main>
 
     <script type="text/php">
