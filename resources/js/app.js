@@ -180,8 +180,6 @@ Vue.component('editar-materiales', require('./components/abm-maestro/materiales/
 Vue.component('table-modelos_3d', require('./components/abm-maestro/modelos-3d/table-modelos_3d.vue').default);
 Vue.component('nuevo-modelos_3d', require('./components/abm-maestro/modelos-3d/nuevo-modelos_3d.vue').default);
 Vue.component('editar-modelos_3d', require('./components/abm-maestro/modelos-3d/editar-modelos_3d.vue').default);
-Vue.component('modelo-3d', require('./components/abm-maestro/modelos-3d/modelo-3d').default);
-
 
 Vue.component('table-agente_acoplamientos', require('./components/abm-maestro/agente-acoplamientos/table-agente_acoplamientos.vue').default);
 Vue.component('nuevo-agente_acoplamientos', require('./components/abm-maestro/agente-acoplamientos/nuevo-agente_acoplamientos.vue').default);
@@ -279,8 +277,10 @@ Vue.component('subcategoria-edit', require('./components/multimedia/subcategoria
 Vue.component('secciones-edit', require('./components/multimedia/secciones-edit.vue').default);
 Vue.component('video-edit', require('./components/multimedia/video-edit.vue').default);
 
-Vue.component('pdf-test', require('./components/pdf-test').default);
+/* Modelos 3d*/
+Vue.component('modelo3d-viewer', require('./components/modelos3d/modelo3d-viewer.vue').default);
 
+Vue.component('pdf-test', require('./components/pdf-test').default);
 
 Vue.prototype.Laravel = window.Laravel;
 

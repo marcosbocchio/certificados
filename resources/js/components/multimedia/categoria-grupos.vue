@@ -2,7 +2,7 @@
     <div v-if="tieneElementos" >
         <div  class="row">
             <div class="col-md-10 col-md-10-np">
-                <div class="titulo-categoria ">
+                <div class="titulo-categoria">
                     <h3 class="panel-title font" style="margin: 0px 0px 5px 22px;">{{title}}</h3>
                 </div>
             </div>
@@ -126,8 +126,6 @@ export default {
         color : black;
         font-weight: bold;
     }
-
-
     .text{
         font-size: 14px;
         color : black;

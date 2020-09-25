@@ -12,9 +12,9 @@ class DosimetriaOperadorController extends Controller
 {
     public function __construct()
     {
-  
-          $this->middleware(['role_or_permission:Sistemas Admin|D_operador'],['only' => ['callView']]);  
-    
+
+          $this->middleware(['role_or_permission:Sistemas Admin|D_operador'],['only' => ['callView']]);
+
     }
     /**
      * Display a listing of the resource.
@@ -27,17 +27,17 @@ class DosimetriaOperadorController extends Controller
     }
 
     public function callView()
-      {   
-          $user = auth()->user(); 
+      {
+          $user = auth()->user();
           $header_titulo = "Dosimetria Operador";
-          $header_descripcion ="Alta | Baja | Modificación";    
-        
+          $header_descripcion ="Alta | Baja | Modificación";
+
           $operador = auth()->user();
           return view('dosimetria.dosimetria_operador',compact('user','operador','header_titulo','header_descripcion'));
-  
+
       }
 
-    public function  getDosimetriaOperador($operador_id,$year,$month){        
+    public function  getDosimetriaOperador($operador_id,$year,$month){
 
         $disometrias = DosimetriaOperador::whereRaw('YEAR(fecha) = ?',[$year])
                                         ->whereRaw('MONTH(fecha) = ?',[$month])
@@ -45,9 +45,9 @@ class DosimetriaOperadorController extends Controller
                                         ->selectRaw('id,DAY(fecha) as day,microsievert, observaciones,created_at')
                                         ->orderBy('day','ASC')
                                         ->get();
-    
-         $dias = cal_days_in_month(CAL_GREGORIAN, $month, $year); 
-    
+
+         $dias = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+
          return $disometrias;
     }
     /**
@@ -72,21 +72,21 @@ class DosimetriaOperadorController extends Controller
         DB::beginTransaction();
         try
         {
-        
-          //  $this->deleteDosimetriaOperador($request);  
-            $this->saveDosimetriaOperador($request);  
+
+          //  $this->deleteDosimetriaOperador($request);
+            $this->saveDosimetriaOperador($request);
             DB::commit();
 
         }catch(\Exception $e)
         {
             DB::rollback();
             throw $e;
-        }     
+        }
 
     }
 
     public function getDosimetriaOperadores(){
-        
+
         return User::whereNull('cliente_id')
                    ->whereNotNull('film')
                    ->orderBy('film','ASC')
@@ -107,10 +107,10 @@ class DosimetriaOperadorController extends Controller
 
 
         $user_id = null;
-        
+
         if (Auth::check())
         {
-             $user_id = $userId = Auth::id();    
+             $user_id = $userId = Auth::id();
         }
 
         foreach ($request->dosimetria_operadores as $dosimetria) {
@@ -118,10 +118,10 @@ class DosimetriaOperadorController extends Controller
             $fecha = $request->year . '-' . $request->month . '-' . $dosimetria['day'];
             $item = DosimetriaOperador::where('id',$dosimetria['id'])
                                         ->first();
-            
+
             if(!$item){
-        
-                if($dosimetria['microsievert']) {
+
+                if($dosimetria['microsievert']!='') {
 
                     $dosimetria_operador = new DosimetriaOperador;
                     $dosimetria_operador->fecha = $fecha;
@@ -135,7 +135,7 @@ class DosimetriaOperadorController extends Controller
 
             }else{
 
-                if($dosimetria['microsievert']){
+                if($dosimetria['microsievert']!=''){
 
                     $item->microsievert = $dosimetria['microsievert'];
                     $item->observaciones = $dosimetria['observaciones'];
@@ -148,7 +148,7 @@ class DosimetriaOperadorController extends Controller
                 }
 
             }
-          
+
         }
 
     }

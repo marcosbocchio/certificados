@@ -136,11 +136,13 @@ Route::group(['middleware' => ['auth']], function () {
       Route::get('multimedia/{id}', 'VideosController@multimediaSubcategoria')->name('irAsubcategoria');
       Route::get('get-Videos-categoria/{id}', 'VideosController@getVideosCategoria');
 
-      /* AYUDA*/
-      Route::get('ayuda', 'AyudaController@openAyuda')->name('ayuda-tablero-principal');
-      Route::get('cambiar_clave', 'AyudaController@openCambiarClave')->name('ayuda-cambiar-clave');
+      /* AYUDA */
+      Route::get('ayuda_general', 'AyudaController@openAyuda')->name('ayuda-general');
+   //   Route::get('ayuda_general', 'AyudaController@openAyuda')->name('ayuda-general');
+   //   Route::get('ayuda_general', 'AyudaController@openAyuda')->name('ayuda-general');
 
-
+      /* MODELOS 3D */
+      Route::get('/area/enod/visualizador3d/{modelo_id}', 'Modelos3dController@Viewer')->name('viewer-3d');
 });
 
 Route::get('/pdf-test',function(){

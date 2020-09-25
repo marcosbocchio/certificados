@@ -1,7 +1,7 @@
 <template>
     <form v-on:submit.prevent="storeRegistro" method="post">
         <div class="modal fade" id="editar">
-            <div class="modal-dialog">
+           <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -11,15 +11,15 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="codigo">Código *</label>
+                                    <label for="codigo">Nombre *</label>
                                     <input autocomplete="off" v-model="Registro.codigo" type="text" name="codigo" class="form-control" value="" maxlength="20">
                                 </div>
                             </div>
 
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="name">Descripción </label>
-                                    <input autocomplete="off" type="text" name="descripcion" class="form-control" v-model="Registro.descripcion" value="" maxlength="100">
+                                    <label>Descripción</label>
+                                    <textarea v-model="Registro.descripcion" class="form-control noresize" rows="4" placeholder="" maxlength="500" value=""></textarea>
                                 </div>
                             </div>
 
@@ -37,33 +37,28 @@
                             </div>
 
                             <div v-if="Registro.path">
+                                <div class="col-sm-12 block-model">
 
-                                <div class="form-group" >
-
-                                    <div class="col-lg-4" style="border:2px solid;height: 200px;text-align: center;margin: 0 15px 0 15px;">
-                                        <model-obj :src="'/' + Registro.path" ref="model" :glOptions="{ preserveDrawingBuffer: true }"></model-obj>
-                                    </div>
-
-                                    <div class="col-lg-2" style="text-align:center;margin: 50px 0 50px 0;">
-                                        <button type="button" class="create" @click="snapshot">Captura </button>
-                                    </div>
-                                    <div v-if="Registro.snapshot_base64">
-                                        <div class="col-lg-4" style="border:2px solid;height: 200px;text-align: center;margin: 0 15px 0 15px;">
-                                             <img class="snapshot" v-if="Registro.snapshot_base64" :src="Registro.snapshot_base64" height="190px" style="padding: 5px;" />
+                                        <div style="border:0px solid;height: 500px;text-align: center;margin: 0 15px 0 15px;">
+                                            <model-obj :src="'/' + Registro.path" ref="model" :glOptions="{ preserveDrawingBuffer: true }"></model-obj>
                                         </div>
-                                    </div>
-                                    <div v-else-if="Registro.path_imagen">
-                                        <div class="col-lg-4" style="border:2px solid;height: 200px;text-align: center;center;margin: 0 15px 0 15px;">
-                                           <img class="snapshot" :src="'/' + Registro.path_imagen"  />
+
+                                        <button type="button" class="model-botton" @click="snapshot">Captura </button>
+
+                                        <div class="block-captura">
+                                            <div v-if="Registro.snapshot_base64">
+                                                <img :src="Registro.snapshot_base64" height="150" />
+                                            </div>
+
+                                            <div v-else-if="Registro.path_imagen">
+                                                <img :src="'/' + Registro.path_imagen" height="150"  />
+                                            </div>
                                         </div>
-                                    </div>
 
                                 </div>
-
-                           </div>
+                            </div>
 
                         </div>
-
                     </div>
                     <div class="modal-footer">
                         <input type="submit" class="btn btn-primary" value="Guardar">
@@ -115,7 +110,7 @@ export default {
         snapshot_base64: null,
         ruta: 'modelos_3d',
         max_size :30000, //KB
-        tipos_archivo_soportados:['obj'],
+        tipos_archivo_soportados:['obj','json','stl','dae','ply','ctm','fbx','gltf'],
         errors: {},
 
         }
@@ -156,6 +151,7 @@ export default {
 
                 $('#editar').modal('show');
                 this.$forceUpdate();            })
+                this.$forceUpdate();
             },
 
             storeRegistro: function(){
@@ -192,3 +188,28 @@ export default {
         }
 }
 </script>
+
+<style>
+
+.block-model{
+
+    position: relative;
+}
+
+.block-captura{
+
+    position: absolute;
+    right: 40px;
+    top: 20px;
+    border: 1px solid black;
+    padding: 5px;
+}
+
+.model-botton {
+
+    position: absolute;
+    left: 40px;
+    top : 20px;
+    z-index: 999;
+}
+</style>

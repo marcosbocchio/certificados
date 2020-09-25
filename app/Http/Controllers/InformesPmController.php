@@ -117,7 +117,7 @@ class InformesPmController extends Controller
       $informePm->desmagnetizacion_sn    = $request->desmagnetizacion_sn;
       $informePm->iluminacion_id = $request->iluminacion['id'];
       $informePm->particula_id = $request->particula['id'];
-      $informePm->tinta_contraste_id = $request->contraste['id'];
+      $informePm->tinta_contraste_id = isset($request->contraste['id']) ? $request->contraste['id'] : null;
 
       $informePm->save();
 

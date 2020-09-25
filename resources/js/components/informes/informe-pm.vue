@@ -612,8 +612,9 @@ export default {
       },
 
       contraste_data : {
-      type : [ Object,Array ],
-      required : false
+      type : [Object,Array] ,
+      required : false,
+      default : function () { return {}}
       },
 
       desmagnetizacion_sn_data : {

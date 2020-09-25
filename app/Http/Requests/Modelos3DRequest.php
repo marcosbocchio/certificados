@@ -26,7 +26,7 @@ class Modelos3DRequest extends FormRequest
         return [
 
             'codigo'            => 'required|Max:20',
-            'descripcion'       => 'nullable|Max:100',
+            'descripcion'       => 'nullable|Max:500',
             'path'              => 'required'
 
         ];

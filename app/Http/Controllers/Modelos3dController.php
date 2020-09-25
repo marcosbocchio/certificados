@@ -40,6 +40,19 @@ class Modelos3dController extends Controller
 
     }
 
+    public function Viewer($modelo_id)
+    {
+
+      $modelo_3d = Modelos3D::findOrFail($modelo_id);
+
+      $user = auth()->user();
+      $header_titulo = "Modelos 3D ";
+      $header_descripcion ="Visualizador";
+      return view('modelos-3d-viewer',compact('user','header_titulo','header_descripcion','modelo_3d'));
+
+    }
+
+
     /**
      * Show the form for creating a new resource.
      *

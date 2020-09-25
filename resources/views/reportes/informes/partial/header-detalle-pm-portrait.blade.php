@@ -88,7 +88,10 @@
 
                                     {{$contraste->tipo}} / {{$contraste->marca}}
 
+                                @else
+                                     &nbsp;
                                 @endif
+
                                </td>
                            </tr>
 

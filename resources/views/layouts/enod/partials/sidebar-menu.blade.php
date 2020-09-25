@@ -247,14 +247,14 @@
 
         <li class="treeview">
             <a href="#">
-              <i class="fa  fa-help"></i>
+              <i class="fa fa-question-circle"></i>
               <span>AYUDA</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
             </a>
             <ul class="treeview-menu">
-              <li><a href="{{ route('ayuda-tablero-principal') }}"><i class="fa fa-download"></i>AYUDA</a></li>
+              <li><a href="{{ route('ayuda-tablero-principal') }}"><i class="fa fa-download"></i>GENERAL</a></li>
             </ul>
         </li>
 

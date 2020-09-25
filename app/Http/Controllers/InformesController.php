@@ -209,7 +209,6 @@ class InformesController extends Controller
 
             $informe->diametro_espesor_id = $diametro_espesor['id'];
 
-
         }
 
         $informe->espesor_chapa = $request->espesor_chapa;
