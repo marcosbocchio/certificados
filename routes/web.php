@@ -138,8 +138,18 @@ Route::group(['middleware' => ['auth']], function () {
 
       /* AYUDA */
       Route::get('ayuda_general', 'AyudaController@openAyuda')->name('ayuda-general');
-   //   Route::get('ayuda_general', 'AyudaController@openAyuda')->name('ayuda-general');
-   //   Route::get('ayuda_general', 'AyudaController@openAyuda')->name('ayuda-general');
+      Route::get('ayuda_tablero_principal', 'AyudaController@openAyuda')->name('ayuda-tablero-principal');
+      Route::get('ayuda_maestros', 'AyudaController@openAyuda')->name('ayuda-maestros');
+      Route::get('ayuda_dosimetria', 'AyudaController@openAyuda')->name('ayuda-dosimetria');
+      Route::get('ayuda_multimedia', 'AyudaController@openAyuda')->name('ayuda-multimedia');
+
+      Route::get('cambiar_clave', 'AyudaController@cambiarClave')->name('ayuda-cambiar-clave');
+      Route::get('buscar_formularios', 'AyudaController@BuscarFormularios')->name('ayuda-buscar-formularios');
+      Route::get('visualizar_ot', 'AyudaController@visualizarOt')->name('ayuda-visualizar-ot');
+      Route::get('crear_ot', 'AyudaController@crearOt')->name('ayuda-crear-ot');
+      Route::get('asignar_soldadores_y_usuarios', 'AyudaController@asignarSoldadoresUsuarios')->name('ayuda-asignar-soldadores-y-usuarios');
+      Route::get('generar_informes', 'AyudaController@generarInformes')->name('ayuda-generar-informes');
+      Route::get('generar_informes_ri', 'AyudaController@generarInformesRi')->name('ayuda-generar-informes-ri');
 
       /* MODELOS 3D */
       Route::get('/area/enod/visualizador3d/{modelo_id}', 'Modelos3dController@Viewer')->name('viewer-3d');

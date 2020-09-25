@@ -6,16 +6,16 @@
        <div class="row">
         <div class="col-sm-12">
             <h1>AYUDA GENERAL</h1>
-            <p><a href="cambiar_contraseña.html">Cómo cambiar o restablecer la contraseña de tu cuenta&nbsp;</a></p>
-			<p><a href="Ayuda_buscar.html">Buscar en los formularios de la aplicación&nbsp;</a></p>
-			<p><a href="Ayuda_visualizacion_general_ot.html">Visualización general de una Orden de trabajo (OT) &nbsp;</a></p>
+            <p><a href="{{ route('ayuda-cambiar-clave') }}">Cómo cambiar o restablecer la contraseña de tu cuenta&nbsp;</a></p>
+			<p><a href="{{ route('ayuda-buscar-formularios') }}">Buscar en los formularios de la aplicación&nbsp;</a></p>
+			<p><a href="{{ route('ayuda-visualizar-ot') }}">Visualización general de una Orden de trabajo (OT) &nbsp;</a></p>
 
 		</div>
         <div class="col-sm-12">
           <h3>Tablero Principal&nbsp;</h3>
-       	  <p><a href="Ayuda_nueva_ot.html">Cómo crear una Orden de trabajo (OT)&nbsp;</a></p> <!-- CLIENTE NO VE  -->
+       	    <p><a href="{{ route('ayuda-crear-ot') }}">Cómo crear una Orden de trabajo (OT)&nbsp;</a></p> <!-- CLIENTE NO VE  -->
 
-			<p><a href="Asignar_soldador.html">Asignar soldadores y usuarios de clientes a Orden de trabajo (OT)&nbsp;</a></p> <!-- CLIENTE NO VE  -->
+			<p><a href="{{ route('ayuda-asignar-soldadores-y-usuarios') }}">Asignar soldadores y usuarios de clientes a Orden de trabajo (OT)&nbsp;</a></p> <!-- CLIENTE NO VE  -->
 
 			<p><a href="http://desarrollorusoft.com.ar" target="_blank"> Estados de una Orden de trabajo (OT)&nbsp;</a></p>
 
@@ -29,7 +29,7 @@
 
 			<p><a href="http://desarrollorusoft.com.ar" target="_blank">Creación de remitos&nbsp;</a></p> <!-- CLIENTE NO VE  -->
 
-			<p><a href="Ayuda_generar_informes.html"> Creación de informes&nbsp;</a></p>
+			<p><a href="{{ route('ayuda-generar-informes') }}"> Creación de informes&nbsp;</a></p>
 			<!-- CLIENTE NO VE  -->
 
 			<p><a href="http://desarrollorusoft.com.ar" target="_blank"> Visualización de informes&nbsp;</a></p>

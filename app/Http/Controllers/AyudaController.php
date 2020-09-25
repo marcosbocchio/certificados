@@ -15,12 +15,68 @@ class AyudaController extends Controller
 
   }
 
-  public function openCambiarClave(){
+  public function cambiarClave(){
 
     $user = auth()->user();
     $header_titulo = "Ayuda";
-    $header_descripcion = 'Cambiar Clave';
-    return view('cambiar_clave',compact('user','header_titulo','header_descripcion'));
+    $header_descripcion = '';
+    return view('ayuda.cambiar_clave',compact('user','header_titulo','header_descripcion'));
+
+  }
+
+  public function BuscarFormularios(){
+
+    $user = auth()->user();
+    $header_titulo = "Ayuda";
+    $header_descripcion = '';
+    return view('ayuda.buscar_formularios',compact('user','header_titulo','header_descripcion'));
+
+  }
+
+  public function visualizarOt(){
+
+    $user = auth()->user();
+    $header_titulo = "Ayuda";
+    $header_descripcion = '';
+    return view('ayuda.visualizar_ot',compact('user','header_titulo','header_descripcion'));
+
+  }
+
+  public function crearOt(){
+
+    $user = auth()->user();
+    $header_titulo = "Ayuda";
+    $header_descripcion = '';
+    return view('ayuda.crear_ot',compact('user','header_titulo','header_descripcion'));
+
+  }
+
+  public function asignarSoldadoresUsuarios(){
+
+    $user = auth()->user();
+    $header_titulo = "Ayuda";
+    $header_descripcion = '';
+    return view('ayuda.asigar_soldadores_usuarios',compact('user','header_titulo','header_descripcion'));
+
+  }
+
+  public function generarInformes(){
+
+    $user = auth()->user();
+    $header_titulo = "Ayuda";
+    $header_descripcion = '';
+    return view('ayuda.generar_informes',compact('user','header_titulo','header_descripcion'));
+
+  }
+
+
+
+  public function generarInformesRi(){
+
+    $user = auth()->user();
+    $header_titulo = "Ayuda";
+    $header_descripcion = '';
+    return view('ayuda.generar_informes_ri',compact('user','header_titulo','header_descripcion'));
 
   }
 

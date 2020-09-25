@@ -245,19 +245,17 @@
 
         </li>
 
-        <li class="treeview">
-            <a href="#">
-              <i class="fa fa-question-circle"></i>
-              <span>AYUDA</span>
-              <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
+        <li>
+            <a href="{{ route('ayuda-general') }}">
+              <i class="fa fa-question-circle"></i> <span>AYUDA GENERAL</span>
             </a>
             <ul class="treeview-menu">
-              <li><a href="{{ route('ayuda-general') }}"><i class="fa fa-download"></i>GENERAL</a></li>
+                <li><a href="{{ route('ayuda-general') }}"></i>Tablero principal</a></li>
+                <li><a href="{{ route('ayuda-maestros') }}"></i>Maestros</a></li>
+                <li><a href="{{ route('ayuda-dosimetria') }}"></i>Dosimetría</a></li>
+                <li><a href="{{ route('ayuda-multimedia') }}"></i>multimedia</a></li>
             </ul>
         </li>
-
       </ul>
     </section>
     <!-- /.sidebar -->
