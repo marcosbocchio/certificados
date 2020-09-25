@@ -254,7 +254,7 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li><a href="{{ route('ayuda-tablero-principal') }}"><i class="fa fa-download"></i>GENERAL</a></li>
+              <li><a href="{{ route('ayuda-general') }}"><i class="fa fa-download"></i>GENERAL</a></li>
             </ul>
         </li>
 
