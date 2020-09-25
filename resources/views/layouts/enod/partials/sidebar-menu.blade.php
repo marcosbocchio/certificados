@@ -248,6 +248,9 @@
         <li>
             <a href="{{ route('ayuda-general') }}">
               <i class="fa fa-question-circle"></i> <span>AYUDA GENERAL</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
             </a>
             <ul class="treeview-menu">
                 <li><a href="#-tablero-principal"></i>Tablero principal</a></li>
