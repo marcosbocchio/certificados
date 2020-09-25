@@ -51,8 +51,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <![endif]-->
     @yield('css')
     <!-- Google Font -->
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <link rel="stylesheet"href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
 </head>
 <!--
 BODY TAG OPTIONS:
@@ -103,6 +103,7 @@ desired effect
 
 <!-- jQuery 3 -->
 <script src="{{asset('adminlte/bower_components/jquery/dist/jquery.min.js')}}"></script>
+
 <!-- Bootstrap 3.3.7 -->
 <script src="{{asset('adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
 <!-- AdminLTE App -->
@@ -141,6 +142,25 @@ $('ul.sidebar-menu a').filter(function() {
 $('ul.treeview-menu a').filter(function() {
     return this.href == url;
 }).parentsUntil(".sidebar-menu > .treeview-menu").siblings().removeClass('active menu-open').end().addClass('active menu-open');
+
+
+$(function(){
+    $('a[href*=\\#]:not([href=\\#])').click(function() {
+    if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'')
+    && location.hostname == this.hostname) {
+    var $target = $(this.hash);
+    $target = $target.length && $target || $('[name=' + this.hash.slice(1) +']');
+    if ($target.length) {
+    var targetOffset = $target.offset().top;
+    $('html,body').animate({scrollTop: targetOffset}, 800);
+    return false;
+    }
+    }
+    });
+});
+
+
+
 </script>
 
 

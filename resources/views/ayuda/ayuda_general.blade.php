@@ -2,6 +2,8 @@
 
 @section('contenido')
 
+<a name="-tablero-principal" />
+
 <div class="ayuda_enod">
        <div class="row">
         <div class="col-sm-12">
@@ -42,12 +44,13 @@
 			<p><a href="http://desarrollorusoft.com.ar" target="_blank"> Creación de certificados&nbsp;</a></p>
 			<!-- CLIENTE NO VE  -->
 
+            <a name="-maestros" />
 			<p><a href="http://desarrollorusoft.com.ar" target="_blank"> Visualización de certificados&nbsp;</a></p>
         </div>
 
-	    <div class="col-sm-12">
-          <h3>Maestros&nbsp;</h3> <!-- CLIENTE NO VE  -->
-          	<p><a href="http://desarrollorusoft.com.ar" target="_blank">Consideraciones generales&nbsp;</a></p>
+        <div class="col-sm-12">
+            <h3>Maestros&nbsp;</h3> <!-- CLIENTE NO VE  -->
+            <p><a href="http://desarrollorusoft.com.ar" target="_blank">Consideraciones generales&nbsp;</a></p>
 
 			<p><a href="http://desarrollorusoft.com.ar" target="_blank">Gestionar usuarios&nbsp;</a></p>
 			<p><a href="http://desarrollorusoft.com.ar" target="_blank">Gestionar clientes&nbsp;</a></p>
@@ -64,7 +67,8 @@
 			<p><a href="http://desarrollorusoft.com.ar" target="_blank">Gestionar interno equipos&nbsp;</a>
 			</p>
 			<p><a href="http://desarrollorusoft.com.ar" target="_blank">Gestionar fuentes&nbsp;</a></p>
-			<p><a href="http://desarrollorusoft.com.ar" target="_blank">Gestionar interno fuente&nbsp;</a></p>
+            <p><a href="http://desarrollorusoft.com.ar" target="_blank">Gestionar interno fuente&nbsp;</a></p>
+            <a name="-dosimetria" />
 			<p><a href="http://desarrollorusoft.com.ar" target="_blank">Gestionar roles&nbsp;</a></p>
         </div>
 
@@ -75,7 +79,8 @@
 			<p><a href="http://desarrollorusoft.com.ar" target="_blank">Como registrar dosimetría operador&nbsp;</a></p><!-- CLIENTE NO VE  -->
 			<p><a href="http://desarrollorusoft.com.ar" target="_blank">Como registrar dosimetría RX&nbsp;</a></p><!-- CLIENTE NO VE  -->
 			<p><a href="http://desarrollorusoft.com.ar" target="_blank">Gestionar estados film&nbsp;</a></p><!-- CLIENTE NO VE  -->
-			<p><a href="http://desarrollorusoft.com.ar" target="_blank">Visualizar resumen dosimetría&nbsp;</a></p>
+            <p><a href="http://desarrollorusoft.com.ar" target="_blank">Visualizar resumen dosimetría&nbsp;</a></p>
+            <a name="-multimedia" />
 			<p><a href="http://desarrollorusoft.com.ar" target="_blank">Visualizar reporte de altas y baja de film&nbsp;</a></p><!-- CLIENTE NO VE  -->
         </div>
 

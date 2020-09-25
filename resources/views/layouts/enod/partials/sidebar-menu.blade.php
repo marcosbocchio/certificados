@@ -250,10 +250,10 @@
               <i class="fa fa-question-circle"></i> <span>AYUDA GENERAL</span>
             </a>
             <ul class="treeview-menu">
-                <li><a href="{{ route('ayuda-general') }}"></i>Tablero principal</a></li>
-                <li><a href="{{ route('ayuda-maestros') }}"></i>Maestros</a></li>
-                <li><a href="{{ route('ayuda-dosimetria') }}"></i>Dosimetría</a></li>
-                <li><a href="{{ route('ayuda-multimedia') }}"></i>multimedia</a></li>
+                <li><a href="#-tablero-principal"></i>Tablero principal</a></li>
+                <li><a href="#-maestros"></i>Maestros</a></li>
+                <li><a href="#-dosimetria"></i>Dosimetría</a></li>
+                <li><a href="#-multimedia"></i>multimedia</a></li>
             </ul>
         </li>
       </ul>
