@@ -6,15 +6,17 @@ use Illuminate\Http\Request;
 use App\Ots;
 use Illuminate\Support\Facades\DB;
 use App\Informe;
+use App\InformesView;
+use App\InformesRev;
 use App\MetodoEnsayos;
 use App\DiametrosEspesor;
 use Illuminate\Support\Facades\Auth;
 use App\OtProcedimientosPropios;
-use App\InformesView;
 use App\InformesImportados;
 use \stdClass;
 use Illuminate\Support\Facades\Log;
 use Exception as Exception;
+use PhpParser\Node\Stmt\Else_;
 
 class InformesController extends Controller
 {
@@ -148,21 +150,21 @@ class InformesController extends Controller
                                 ->limit(1)
                                 ->selectRaw('informes.numero + 1 as numero_informe')
                                 ->get();
-
-
         }
 
         return  $numero_informe;
 
     }
 
-    public function saveInforme($request,$informe){
+    public function saveInforme($request,$informe,$EsRevision = false){
+
+        DB::enableQueryLog();
 
         $user_id = null;
 
         if (Auth::check())
         {
-             $user_id = $userId = Auth::id();
+            $user_id = $userId = Auth::id();
         }
 
         $metodo_ensayo = MetodoEnsayos::where('metodo',$request->metodo_ensayo)->first();
@@ -171,7 +173,6 @@ class InformesController extends Controller
         $informe->obra = $request->obra;
 
         $informe->espesor_especifico = null;
-
 
         If(!isset($request->procedimiento['ot_procedimientos_propios_id'])){
 
@@ -229,18 +230,33 @@ class InformesController extends Controller
         $informe->plano_isom = $request->plano_isom;
         $informe->observaciones = $request->observaciones;
 
-        if($request->isMethod('post')){
+
+        if($request->isMethod('post') || ($EsRevision)){
 
             $informe->user_id = $user_id;
+            $res = $this->getUltimaRevision($informe->ot_id,$informe->metodo_ensayo_id,$informe->numero);
+            $revision_ant = $res[0]->valor;
+            $informe->revision = (int)$revision_ant + 1 ;
+
+         }
+
+         if( $EsRevision){
+
+              informe::where('ot_id',$informe->ot_id)
+                       ->where('metodo_ensayo_id',$informe->metodo_ensayo_id)
+                       ->where('numero',$informe->numero)
+                       ->update(['ultima_revision_sn'=>0]);
+
+              $informe->ultima_revision_sn = 1;
 
          }
 
 
-         $informe->save();
+        $informe->save();
 
         (new \App\Http\Controllers\InformeModelos3dController)->store($informe->id,$request->TablaModelos3d);
 
-        return $informe;
+         return $informe;
       }
 
      public function OtInformesPendienteParteDiario($ot_id){
@@ -344,6 +360,49 @@ class InformesController extends Controller
 
 
         return $informes;
+
+    }
+
+    public function EstaFirmada($informe_id){
+
+        $informe  = Informe::find($informe_id);
+
+        if ($informe->firma) {
+
+          return true ;
+
+        }else{
+
+           return false ;
+        }
+
+    }
+
+    public function getMetodoEnsayo($informe_id){
+
+        $informe  = Informe::find($informe_id);
+        $metodo = MetodoEnsayos::find($informe->metodo_ensayo_id);
+
+        return $metodo;
+
+    }
+
+    /*
+        Función llamada desde el update de los distintos informes, verifica si está firmado, si lo está
+        guarda la revisión del mismo.
+    */
+    public function EsRevision($informe_id){
+
+        $EsRevision = $this->EstaFirmada($informe_id);
+
+        return $EsRevision;
+
+    }
+
+
+    public function getUltimaRevision($ot_id,$metodo_ensayo_id,$numero){
+
+        return  DB::select('select getUltimaRevision(?,?,?) as valor',array($ot_id,$metodo_ensayo_id,$numero));
 
     }
 

@@ -54,7 +54,7 @@ class InformesPmController extends Controller
                                                  'header_descripcion'));
     }
 
-    public function store(InformePmRequest $request)
+    public function store(InformePmRequest $request,$EsRevision = false)
     {
         $informe  = new Informe;
         $informePm  = new InformesPm;
@@ -62,7 +62,7 @@ class InformesPmController extends Controller
         DB::beginTransaction();
         try {
 
-          $informe = (new \App\Http\Controllers\InformesController)->saveInforme($request,$informe);
+          $informe = (new \App\Http\Controllers\InformesController)->saveInforme($request,$informe,$EsRevision);
           $informePm = $this->saveInformePm($request,$informe,$informePm);
 
           $this->saveDetalle($request,$informePm);
@@ -80,6 +80,16 @@ class InformesPmController extends Controller
     }
 
     public function update(InformePmRequest $request, $id){
+
+       $EsRevision = (new \App\Http\Controllers\InformesController)->EsRevision($id);
+
+       if($EsRevision){
+
+         $this->store($request,$EsRevision);
+         return ;
+
+       }
+
 
       $informe  = Informe::find($id);
       $informePm =InformesPm::where('informe_id',$informe->id)->first();

@@ -18,7 +18,7 @@
      <div class="form-group has-feedback">
 
         <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" placeholder="Email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-                
+
         @error('email')
             <span class="invalid-feedback" role="alert" >
                 <strong style="color: red;">{{ $message }}</strong>
@@ -34,8 +34,9 @@
             <button type="submit" class="btn btn-primary">
                 {{ __('Send Password Reset Link') }}
             </button>
-        </div>    
-      </div> 
+        </div>
       </div>
-        
+      </div>
+
+     </form>
 @endsection

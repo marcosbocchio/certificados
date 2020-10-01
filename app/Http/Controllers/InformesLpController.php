@@ -68,7 +68,7 @@ class InformesLpController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(InformeLpRequest $request)
+    public function store(InformeLpRequest $request,$EsRevision = false)
     {
         $informe  = new Informe;
         $informeLp  = new InformesLp;
@@ -76,7 +76,7 @@ class InformesLpController extends Controller
         DB::beginTransaction();
         try {
 
-          $informe = (new \App\Http\Controllers\InformesController)->saveInforme($request,$informe);
+          $informe = (new \App\Http\Controllers\InformesController)->saveInforme($request,$informe,$EsRevision);
           $informeLp = $this->saveinformeLp($request,$informe,$informeLp);
 
           $this->saveDetalle($request,$informeLp);
@@ -275,6 +275,16 @@ class InformesLpController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(InformeLpRequest $request, $id){
+
+
+        $EsRevision = (new \App\Http\Controllers\InformesController)->EsRevision($id);
+
+        if($EsRevision){
+
+            $this->store($request,$EsRevision);
+            return ;
+
+        }
 
       $informe  = Informe::find($id);
       $informeLp =InformesLp::where('informe_id',$informe->id)->first();

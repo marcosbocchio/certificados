@@ -68,7 +68,7 @@ class InformesUsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(InformeUsRequest $request)
+    public function store(InformeUsRequest $request,$EsRevision = false)
     {
         $informe  = new Informe;
         $informeUs  = new InformesUs;
@@ -76,7 +76,7 @@ class InformesUsController extends Controller
         DB::beginTransaction();
         try {
 
-          $informe = (new \App\Http\Controllers\InformesController)->saveInforme($request,$informe);
+          $informe = (new \App\Http\Controllers\InformesController)->saveInforme($request,$informe,$EsRevision);
           $informeUs = $this->saveinformeUs($request,$informe,$informeUs);
           $tecnica = Tecnicas::find($informe->tecnica_id);
           $this->saveCalibraciones($request,$informeUs);
@@ -102,6 +102,16 @@ class InformesUsController extends Controller
     }
 
     public function update(InformeUsRequest $request, $id){
+
+
+        $EsRevision = (new \App\Http\Controllers\InformesController)->EsRevision($id);
+
+        if($EsRevision){
+
+          $this->store($request,$EsRevision);
+          return ;
+
+        }
 
         $informe  = Informe::find($id);
         $informeUs =InformesUs::where('informe_id',$informe->id)->first();

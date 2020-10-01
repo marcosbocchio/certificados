@@ -30,28 +30,17 @@ class PlacasUsController extends Controller
                     ->where('informes.id',$informe_id)
                     ->select('placas_us.*')
                     ->get();
-            
-        
+
         return $placas;
 
-
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     public function store(PlacaRequest $request)
 
-    { 
+    {
         DB::beginTransaction();
-        try { 
+        try {
 
             $informe_us = InformesUs::where('informe_id',$request->informe_id)->first();
             $placa = new PlacasUs();
@@ -59,12 +48,12 @@ class PlacasUsController extends Controller
             DB::commit();
 
         } catch (Exception $e) {
-        
+
             DB::rollback();
-            throw $e;      
-            
+            throw $e;
+
             }
-       
+
     }
 
     public function savePlacas($placa,$informe_us,$request){
@@ -76,51 +65,23 @@ class PlacasUsController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(PlacaRequest $request, $id)
     {
         DB::beginTransaction();
-        try { 
+        try {
 
         $informe_us = InformesUs::where('informe_id',$request->informe_id)->first();
         $placa = PlacasUs::findORfail($id);
         $this->savePlacas($placa,$informe_us,$request);
         DB::commit();
 
-        
+
     } catch (Exception $e) {
-        
+
         DB::rollback();
-        throw $e;      
-        
+        throw $e;
+
         }
     }
 
@@ -133,9 +94,9 @@ class PlacasUsController extends Controller
 
     public function destroy($id)
     {
-        
-        $placas = PlacasUs::find($id);    
-      
+
+        $placas = PlacasUs::find($id);
+
         $placas->delete();
     }
 }

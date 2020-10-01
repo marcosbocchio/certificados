@@ -158,7 +158,7 @@
     <div class="col-md-12">
         <div class="box box-custom-enod">
             <div class="box-header with-border">
-                <h3 class="box-title">Seguimiento de Costuras</h3>
+                <h3 class="box-title">Ordenes de trabajo</h3>
             </div>
             <div class="box-body">
                 <div class="table-responsive">
