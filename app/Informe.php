@@ -11,14 +11,14 @@ class Informe extends Model
     public function metodoEnsayos(){
 
         return $this->belongsTo('App\MetodoEnsayos','metodo_ensayo_id','id');
-        
+
      }
 
      public function tecnica(){
 
         return $this->belongsTo('App\Tecnicas','tecnica_id','id');
-        
+
      }
 
-  
+
 }

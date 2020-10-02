@@ -19,28 +19,28 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="registro in registros" :key="registro.id">                        
+          <tr v-for="registro in registros" :key="registro.id">
             <td>{{ registro.nro_interno }}</td>
-            <td>{{ registro.equipo.codigo }}</td>  
-            <td>{{ registro.equipo.metodo_ensayos.metodo }}</td> 
+            <td>{{ registro.equipo.codigo }}</td>
+            <td>{{ registro.equipo.metodo_ensayos.metodo }}</td>
             <th>
                 <button class="btn btn-xs" title="Historial de fuentes" v-on:click.prevent="TrazabilidadFuente(registro)"><span class="fa fa-table"></span></button>
             </th>
-            <td v-if="registro.interno_fuente" >{{ registro.interno_fuente.nro_serie }} - {{registro.interno_fuente.fuente.codigo}}</td>   
-            <td v-else ></td> 
+            <td v-if="registro.interno_fuente" >{{ registro.interno_fuente.nro_serie }} - {{registro.interno_fuente.fuente.codigo}}</td>
+            <td v-else ></td>
             <td v-if="registro.interno_fuente">{{ registro.interno_fuente.curie_actual }}&nbsp; Ci</td>
             <td v-else></td>
-            <td v-if="registro.ot" >{{ registro.ot.numero }}</td>   
-            <td v-else ></td> 
-            <td v-if="registro.ot" >{{ registro.ot.cliente.nombre_fantasia }}</td>   
-            <td v-else ></td> 
+            <td v-if="registro.ot" >{{ registro.ot.numero }}</td>
+            <td v-else ></td>
+            <td v-if="registro.ot" >{{ registro.ot.cliente.nombre_fantasia }}</td>
+            <td v-else ></td>
             <td v-if="registro.ot">
-            <a :href="'https://www.google.com/maps/search/?api=1&query=' + registro.ot.lat  + ',' + registro.ot.lon " target="_blank" title="maps">  
-                   <img :src="'/' + 'img/mark-google-maps.png' " alt="maps" style="height: 20px;">  
+            <a :href="'https://www.google.com/maps/search/?api=1&query=' + registro.ot.lat  + ',' + registro.ot.lon " target="_blank" title="maps">
+                   <img :src="'/' + 'img/mark-google-maps.png' " alt="maps" style="height: 20px;">
             </a>
                 {{registro.ot.localidad.localidad}} / {{registro.ot.localidad.provincia.provincia}}
               </td>
-            <td v-else >Enod</td>     
+            <td v-else >Enod</td>
             <td width="10px">
               <button class="btn btn-warning btn-sm" title="Editar" v-on:click.prevent="updateValue(registro)" :disabled="!$can('M_interno_equipos_edita')"><span class="fa fa-edit"></span></button>
             </td>
@@ -66,7 +66,7 @@ import {mapState} from 'vuex';
 
   export default {
 
-    data() {return {  
+    data() {return {
 
     }},
 
@@ -74,13 +74,13 @@ import {mapState} from 'vuex';
       registros : {
         type : Array,
         required : true,
-        default:function () { return [] }         
-      },    
+        default:function () { return [] }
+      },
 
       loading : {
         type : Boolean,
         required : true
-      },    
+      },
     },
 
     computed :{

@@ -406,4 +406,17 @@ class InformesController extends Controller
 
     }
 
+    public function getInformeRevisiones($ot_id,$metodo,$numero){
+
+        return informe::join('metodo_ensayos','metodo_ensayos.id','=','informes.metodo_ensayo_id')
+                        ->join('users','users.id','=','informes.user_id')
+                        ->where('informes.ot_id',$ot_id)
+                        ->where('metodo_ensayos.metodo',$metodo)
+                        ->where('informes.numero',$numero)
+                        ->where('ultima_revision_sn',0)
+                        ->selectRaw('informes.fecha,users.name,LPAD(informes.revision, 2, 0) as revision,informes.id')
+                        ->paginate(10);
+
+    }
+
 }

@@ -1,17 +1,17 @@
 <template>
     <div class="row">
 
-       <div class="col-lg-12">       
+       <div class="col-lg-12">
           <cuadro-largo-enod
               :titulo = "'INFORMES'"
               :class_color_titulo = "'color_3'"
               :class_color_sub_titulo = "'color_2'"
               :cantidad_1 ="CantInformes"
               :src_icono ="'/img/tablero/icono-enod-informes.svg'"
-              :class_color_cuadro = "'bg-custom-6'"   
-              :class_color_cuadro_largo = "'bg-custom-8'"  
-              :habilitado_sn =" $can('T_informes_acceder') ?  true : false"   
-              :class_footer_img ="'footer-oper-inf'"               
+              :class_color_cuadro = "'bg-custom-6'"
+              :class_color_cuadro_largo = "'bg-custom-8'"
+              :habilitado_sn =" $can('T_informes_acceder') ?  true : false"
+              :class_footer_img ="'footer-oper-inf'"
           >
           </cuadro-largo-enod>
        </div>
@@ -23,24 +23,24 @@
                 <div class="box box-custom-enod top-buffer">
                     <div class="box-header with-border">
                         <h3 class="box-title">Agregar Informes</h3>
-                
-                        <div class="box-body">           
+
+                        <div class="box-body">
                             <div class="form-group">
-                                <label for="name">Tipo</label>      
+                                <label for="name">Tipo</label>
                                 <v-select v-model="metodo_ensayo" label="metodo" :options="ot_metodos_ensayos_data">
                                     <template slot="option" slot-scope="option">
-                                        <span class="upSelect">{{ option.metodo }}</span> <br> 
+                                        <span class="upSelect">{{ option.metodo }}</span> <br>
                                         <span class="downSelect"> {{ option.descripcion }} </span>
-                                    </template>  
+                                    </template>
                                 </v-select>
-                            </div>                            
-                            <div class="form-group">                    
+                            </div>
+                            <div class="form-group">
                                 <span>
                                     <a  @click="NuevoInforme(ot_data.id)">
-                                        <button class="btn btn-enod" :disabled="!metodo_selected"><span class="fa fa-plus-circle"></span> 
+                                        <button class="btn btn-enod" :disabled="!metodo_selected"><span class="fa fa-plus-circle"></span>
                                             Nuevo
                                     </button>
-                                    </a>                              
+                                    </a>
                                 </span>
                             </div>
                         </div>
@@ -55,26 +55,27 @@
 
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                        </button>                       
+                        </button>
                     </div>
                 </div>
-             
-                <div class="box-body">                        
-                    <div class="table-responsive">          
+
+                <div class="box-body">
+                    <div class="table-responsive">
                         <table class="table table-hover table-striped table-condensed">
                             <thead>
                                 <tr>
-                                    <th class="col-lg-1">Tipo</th>   
-                                    <th class="col-lg-2">N°</th>
+                                    <th class="col-lg-1">Tipo</th>
+                                    <th class="col-lg-1">N°</th>
+                                    <th class="col-lg-1">Nº Rev.</th>
                                     <th class="col-lg-1">Obra</th>
-                                    <th class="col-lg-4">Usuario alta</th> 
-                                    <th class="col-lg-2">Fecha</th>                                                  
+                                    <th class="col-lg-4">Usuario alta</th>
+                                    <th class="col-lg-2">Fecha</th>
                                     <th class="col-lg-2" colspan="5">&nbsp;</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(ot_informe,k) in ot_informes.data" :key="k">                                 
-                                    <td> 
+                                <tr v-for="(ot_informe,k) in ot_informes.data" :key="k">
+                                    <td>
                                         <div v-if="ot_informe.metodo != 'US'">
                                            {{ot_informe.metodo}}
                                         </div>
@@ -92,81 +93,108 @@
                                             </div>
                                         </div>
                                         <div v-else>
-                                             {{ot_informe.numero_formateado}}       
-                                        </div>        
-                                    </td>   
-                                    <td> {{ot_informe.obra}}</td>  
-                                    <td> {{ot_informe.name}}</td>     
-                                    <td> {{ot_informe.fecha_formateada}}</td>              
-                                    <td v-if="!ot_informe.importable_sn" width="10px"> 
-                                        <button   @click.prevent="EditInforme(ot_informe.id)" class="btn btn-warning btn-sm" title="Editar" :disabled="!$can('T_informes_edita')"><span class="fa fa-edit"></span></button>
+                                             {{ot_informe.numero_formateado}}
+                                        </div>
                                     </td>
-                                    <td v-else width="10px"> 
-                                        <button @click.prevent="EditInformeImportable(ot_informe.id)" class="btn btn-warning btn-sm" title="Editar" :disabled="!$can('T_informes_edita')"><span class="fa fa-edit"></span></button>                                       
+                                    <td> {{ot_informe.revision}}</td>
+                                    <td> {{ot_informe.obra}}</td>
+                                    <td> {{ot_informe.name}}</td>
+                                    <td> {{ot_informe.fecha_formateada}}</td>
+                                    <td v-if="!ot_informe.importable_sn" width="10px">
+                                        <button  @click.prevent="VerificarRevision(ot_informe)" class="btn btn-warning btn-sm" title="Editar" :disabled="!$can('T_informes_edita')"><span class="fa fa-edit"></span></button>
+                                    </td>
+                                    <td v-else width="10px">
+                                        <button @click.prevent="EditInformeImportable(ot_informe.id)" class="btn btn-warning btn-sm" title="Editar" :disabled="!$can('T_informes_edita')"><span class="fa fa-edit"></span></button>
                                     </td>
 
-                                    <td v-if="!ot_informe.importable_sn" width="10px"> 
+                                    <td v-if="!ot_informe.importable_sn" width="10px">
                                         <button @click="ClonarInforme(k)" class="btn btn-default btn-sm" title="Clonar" :disabled="!$can('T_informes_edita')"><app-icon img="clone" color="black"></app-icon></button>
                                     </td>
-                                    <td v-if="ot_informe.metodo == 'RI'"> 
+                                    <td v-if="ot_informe.metodo == 'RI'">
                                         <a :href="'/placas/informe/' + ot_informe.id" class="btn btn-default btn-sm" title="Digitalización"><img width="16px" :src="'/img/carestream.ico'"></a>
-                                    </td> 
-                                    <td v-if="ot_informe.metodo == 'US'"> 
+                                    </td>
+                                    <td v-if="ot_informe.metodo == 'US'">
                                         <a :href="'/placas/informe/' + ot_informe.id" class="btn btn-default btn-sm" title="Digitalización"><img width="16px" :src="'/img/IconoUS.ico'"></a>
-                                    </td> 
-                                    <td v-if="!ot_informe.importable_sn" width="10px"> <a :href="'/pdf/informe/' + ot_informe.id " target="_blank"  class="btn btn-default btn-sm" title="Informe"><span class="fa fa-file-pdf-o"></span></a></td> 
-                                    <td v-else><a :href="'/' + ot_informe.path " target="_blank" title="Informe" class="btn btn-default btn-sm"><span class="fa fa-file-pdf-o"></span></a></td> 
-                                    <td v-if="!ot_informe.importable_sn" width="10px"> 
+                                    </td>
+                                    <td v-if="!ot_informe.importable_sn" width="10px"> <a :href="'/pdf/informe/' + ot_informe.id " target="_blank"  class="btn btn-default btn-sm" title="Informe"><span class="fa fa-file-pdf-o"></span></a></td>
+                                    <td v-else><a :href="'/' + ot_informe.path " target="_blank" title="Informe" class="btn btn-default btn-sm"><span class="fa fa-file-pdf-o"></span></a></td>
+                                    <td v-if="!ot_informe.importable_sn" width="10px">
                                         <button @click="informesEscaneados(ot_informe.id)" :disabled="!$can('T_informes_edita')" class="btn btn-default btn-sm" title="Informes escaneados"><span class="fa fa-cloud-upload"></span></button>
-                                    </td>  
-                                    <td v-if="!ot_informe.firma && !ot_informe.importable_sn" width="10px"> 
-                                        <button @click="firmar(k)" class="btn btn-default btn-sm" title="Firmar" :disabled="!$can('T_informes_edita')"><span class="glyphicon glyphicon-pencil"></span></button>                                      
-                                    </td>   
+                                    </td>
+                                    <td v-if="!ot_informe.firma && !ot_informe.importable_sn" width="10px">
+                                        <button @click="firmar(k)" class="btn btn-default btn-sm" title="Firmar" :disabled="!$can('T_informes_edita')"><span class="glyphicon glyphicon-pencil"></span></button>
+                                    </td>
                                     <td v-else-if="!ot_informe.importable_sn"><a class="btn btn-default btn-sm" title="Firmado"><img width="16px" :src="'/img/firma.png'"></a></td>
+                                    <td>
+                                        <button class="btn btn-default btn-sm" title="Revisiones" v-on:click.prevent="RevisionesInforme(ot_informe)"><span class="fa fa-table"></span></button>
+                                    </td>
+                                </tr>
 
-                                </tr>                       
-                                 
                             </tbody>
-                        </table>                     
+                        </table>
                     </div>
-                    <pagination 
+                    <pagination
                         :data="ot_informes" @pagination-change-page="getResults" >
                         <span slot="prev-nav">&lt; Previous</span>
-                        <span slot="next-nav">Next &gt;</span> 
+                        <span slot="next-nav">Next &gt;</span>
                     </pagination>
-                </div> 
-            </div>    
+                </div>
+            </div>
         <div class="clearfix"></div>
+
+         <div class="modal fade " tabindex="-1" role="dialog" id="modal-alerta-revision" data-keyboard="false" data-backdrop="static" >
+             <div class="modal-dialog modal-md" role="document">
+                 <div class="modal-content">
+                     <div class="modal-header">
+                       <h4>Alerta</h4>
+                     </div>
+                 <div class="modal-body">
+                   <p>El informe está firmado, la modificación generará una nueva revisión.</p>
+                 </div>
+                 <div class="modal-footer">
+                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                     <button type="button" class="btn btn-primary" @click="EditInforme">Continuar</button>
+                 </div>
+                 </div>
+             </div>
+         </div>
+
         <informes-importables :metodo_ensayo="metodo_ensayo" :otdata="this.ot_data" @store="getResults(ot_informes.current_page)"></informes-importables>
-    </div>    
+        <informes-revisiones></informes-revisiones>
+
+
+    </div>
     </div>
 </template>
 
 <script>
 import {mapState} from 'vuex'
 import { eventNewRegistro, eventEditRegistro } from '../../event-bus';
+import { eventModal } from '../../event-bus';
+
 export default {
 
     props :{
     ot_metodos_ensayos_data: {
     type : Array,
     required : false
-    },    
+    },
 
     ot_data : {
         type: Object,
         required:true,
     },
-    
+
   },
 
     data () { return {
 
       ot_informes :{},
-      metodo_ensayo:{},  
-      metodo_selected:false
-    
-    }    
+      metodo_ensayo:{},
+      metodo_selected:false,
+      informe_id_select: 0,
+
+    }
   },
 
   watch :{
@@ -175,14 +203,14 @@ export default {
 
           if (val == null)
             this.metodo_ensayo = '';
-          else  
+          else
             this.metodo_selected = val == '' ? false : true
       }
   },
 
   created : function() {
 
-     // this.ot_informes =  JSON.parse(JSON.stringify(this.ot_informes_data));       
+     // this.ot_informes =  JSON.parse(JSON.stringify(this.ot_informes_data));
   },
 
   mounted : function(){
@@ -194,14 +222,14 @@ export default {
   computed :{
 
        ...mapState(['url','CantInformes','DDPPI','ParametroGeneral'])
-     },  
+     },
 
     methods : {
 
         getResults :function(page = 1){
 
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'informes/ot/' + this.ot_data.id + '/paginate' + '?page='+ page;   
+                var urlRegistros = 'informes/ot/' + this.ot_data.id + '/paginate' + '?page='+ page;
                 axios.get(urlRegistros).then(response =>{
                 this.ot_informes = response.data
                 });
@@ -210,11 +238,11 @@ export default {
 
         NuevoInforme: function(ot_id){
 
-            
+
             this.$store.dispatch('loadParametrosGenerales','ddppi').then(response => {
 
                 this.$store.dispatch('loadDDPPI',this.ot_data.id).then(response => {
-        
+
                     if(this.DDPPI ){
 
                         if(this.metodo_ensayo.importable_sn){
@@ -225,14 +253,14 @@ export default {
 
                             window.location.href=  '/area/enod/ot/' + this.ot_data.id + '/informe/metodo/' + this.metodo_ensayo.metodo + '/create' ;
 
-                        }     
+                        }
                     }
                     else
                     {
 
                         toastr.error('No se puede crear el informe. Existen informes de hace ' + this.ParametroGeneral.valor + ' días' + ' sin parte asociado' );
-                        
-                    }                      
+
+                    }
 
                 });
 
@@ -241,14 +269,27 @@ export default {
         },
 
         ContarInformes : function(){
-                
+
                 this.$store.dispatch('loadContarInformes',this.ot_data.id);
 
             },
 
-        EditInforme : function(id){
+        VerificarRevision : function(informe){
+            this.informe_id_select = informe.id;
+            if(informe.firma){
 
-            window.location.href =  '/area/enod/ot/' + this.ot_data.id + '/informe/' + id +'/edit'
+                $('#modal-alerta-revision').modal('show');
+
+            }else{
+
+                this.EditInforme();
+            }
+
+        },
+
+        EditInforme : function(informe){
+
+            window.location.href =  '/area/enod/ot/' + this.ot_data.id + '/informe/' + this.informe_id_select + '/edit';
 
         },
 
@@ -261,39 +302,37 @@ export default {
         ClonarInforme : function (index){
 
             axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'informes/' + this.ot_informes.data[index].id + '/clonar';                      
-                axios.put(urlRegistros).then(response => {
-                  this.getResults();
-                  this.ContarInformes();
-                  toastr.success('El Informe N°' + (this.ot_informes.data[index].prefijo ? this.ot_informes.data[index].prefijo : '') +'-'+ this.ot_informes.data[index].numero_formateado + ' fue clonado con éxito');                
-                  
-                }).catch(error => {                   
-                    this.errors = error.response.data.errors;
-                    $.each( this.errors, function( key, value ) {
-                        toastr.error(value);
-                        console.log( key + ": " + value );
-                    });
+            var urlRegistros = 'informes/' + this.ot_informes.data[index].id + '/clonar';
+            axios.put(urlRegistros).then(response => {
+                this.getResults();
+                this.ContarInformes();
+                toastr.success('El Informe N°' + (this.ot_informes.data[index].prefijo ? this.ot_informes.data[index].prefijo : '') +'-'+ this.ot_informes.data[index].numero_formateado + ' fue clonado con éxito');
 
-                     if((typeof(this.errors)=='undefined') && (error)){
-
-                     toastr.error("Ocurrió un error al procesar la solicitud");                     
-                  
-                }
+            }).catch(error => {
+                this.errors = error.response.data.errors;
+                $.each( this.errors, function( key, value ) {
+                    toastr.error(value);
+                    console.log( key + ": " + value );
                 });
 
+                    if((typeof(this.errors)=='undefined') && (error)){
 
+                    toastr.error("Ocurrió un error al procesar la solicitud");
+
+            }
+            });
         },
 
         firmar : function(index){
 
             axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'informes/' + this.ot_informes.data[index].id + '/firmar';                      
+                var urlRegistros = 'informes/' + this.ot_informes.data[index].id + '/firmar';
                 axios.put(urlRegistros).then(response => {
-                  console.log(response.data); 
-                  this.ot_informes.data[index].firma = response.data.firma;    
-                  toastr.success('El Informe N° '+  (this.ot_informes.data[index].prefijo ? this.ot_informes.data[index].prefijo : '') +'-'+ this.ot_informes.data[index].numero_formateado +'  fue firmado con éxito');                
-                  
-                }).catch(error => {                   
+                  console.log(response.data);
+                  this.ot_informes.data[index].firma = response.data.firma;
+                  toastr.success('El Informe N° '+  (this.ot_informes.data[index].prefijo ? this.ot_informes.data[index].prefijo : '') +'-'+ this.ot_informes.data[index].numero_formateado +'  fue firmado con éxito');
+
+                }).catch(error => {
                     this.errors = error.response.data.errors;
                     $.each( this.errors, function( key, value ) {
                         toastr.error(value);
@@ -302,8 +341,8 @@ export default {
 
                      if((typeof(this.errors)=='undefined') && (error)){
 
-                     toastr.error("Ocurrió un error al procesar la solicitud");                     
-                  
+                     toastr.error("Ocurrió un error al procesar la solicitud");
+
                 }
                 });
 
@@ -313,8 +352,14 @@ export default {
 
             window.location.href =  '/documentos-escaneados/ot/' + this.ot_data.id + '/informe/' + id ;
 
+        },
+
+        RevisionesInforme : function(registro){
+
+        eventModal.$emit('open_revisiones', registro,this.ot_data);
+
         }
-    },
-    
+        },
+
 }
 </script>

@@ -176,7 +176,6 @@
                                  <small style="margin-left: 4px;">Usuarios</small>
                                  <small style="margin-left: 4px;">Informe</small>
                                  <small style="margin-left: 4px;">Acción</small>
-
                                 </th>
                             </tr>
                         </thead>

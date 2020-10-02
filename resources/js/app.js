@@ -225,10 +225,9 @@ Vue.component('table-ot_procedimientos_propios', require('./components/dashboard
 Vue.component('ot-tipoSoldaduras', require('./components/dashboard/procedimientos/ot-tipoSoldaduras').default);
 
 
-/*
-Vue.component('table-placas_ri', require('./components/dashboard/placas/table-placas_ri').default);
-Vue.component('table-placas_us', require('./components/dashboard/placas/table-placas_us').default);
-*/
+Vue.component('informes-revisiones', require('./components/dashboard/informes/informes-revisiones.vue').default);
+Vue.component('alerta-revision.vue', require('./components/informes/alerta-revision.vue').default);
+
 Vue.component('table-placas', require('./components/dashboard/placas/table-placas').default);
 
 

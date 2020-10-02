@@ -12,8 +12,8 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="numero_interno">Equipo</label> 
-                                    <input autocomplete="off" type="text" name="numero_interno" class="form-control" disabled :value="registro_Interno_equipo.nro_interno +  (registro_Interno_equipo ? ('-' + registro_Interno_equipo.equipo.codigo) : '')">                  
+                                    <label for="numero_interno">Equipo</label>
+                                    <input autocomplete="off" type="text" name="numero_interno" class="form-control" disabled :value="registro_Interno_equipo.nro_interno +  (registro_Interno_equipo ? ('-' + registro_Interno_equipo.equipo.codigo) : '')">
                                </div>
                             </div>
                         </div>
@@ -27,15 +27,15 @@
                                         <div class="table-responsive">
                                             <table class="table table-hover table-striped table-condensed">
                                             <thead>
-                                                <tr>            
+                                                <tr>
                                                 <th>Fuente</th>
                                                 <th>Alta</th>
-                                                <th>Baja</th>             
+                                                <th>Baja</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr v-for="(registro,k) in registros.data" :key="k">                
-                                                <td>{{ registro.interno_fuente.nro_serie }} - {{registro.interno_fuente.fuente.codigo}}</td>   
+                                                <tr v-for="(registro,k) in registros.data" :key="k">
+                                                <td>{{ registro.interno_fuente.nro_serie }} - {{registro.interno_fuente.fuente.codigo}}</td>
                                                 <td>{{moment(registro.fecha_alta)}}</td>
                                                 <td>{{moment(registro.fecha_baja)}}</td>
                                                 </tr>
@@ -46,14 +46,14 @@
                                         </div>
                                         </div>
 
-                                        <pagination 
+                                        <pagination
                                                 :data="registros" @pagination-change-page="getResults" :limit="3" >
                                                 <span slot="prev-nav">&lt; Previous</span>
-                                                <span slot="next-nav">Next &gt;</span> 
-                                        </pagination>   
+                                                <span slot="next-nav">Next &gt;</span>
+                                        </pagination>
 
                                     </div>
-     
+
                                 </div>
                             </div>
                         </div>
@@ -77,21 +77,21 @@ import moment from 'moment';
 
 export default {
 
-    data() {return {  
+    data() {return {
 
         registros :{},
         loading:false,
         registro_Interno_equipo: 0,
     }},
 
-    created: function () {    
-        
+    created: function () {
+
         eventModal.$on('trazabilidad_fuente',function(registro) {
-            
+
             this.registro_Interno_equipo = registro ;
             this.openModal();
-                
-        }.bind(this)); 
+
+        }.bind(this));
 
     },
 
@@ -104,29 +104,29 @@ export default {
     methods: {
 
         openModal : function(){
-          
-            $('#trazabilidad-fuente').modal('show');    
+
+            $('#trazabilidad-fuente').modal('show');
             this.getResults();
         },
 
         getResults : function(page = 1){
 
-            this.loading = true,     
+            this.loading = true,
             axios.defaults.baseURL = this.url ;
-            var urlRegistros = 'trazabilidad_fuente/interno_equipo/' + this.registro_Interno_equipo.id + '?page='+ page + '&api_token=' + Laravel.user.api_token;    
-            console.log(urlRegistros);    
+            var urlRegistros = 'trazabilidad_fuente/interno_equipo/' + this.registro_Interno_equipo.id + '?page='+ page + '&api_token=' + Laravel.user.api_token;
+            console.log(urlRegistros);
             axios.get(urlRegistros).then(response =>{
 
                 console.log(response.data);
-                this.registros = response.data                
+                this.registros = response.data
 
-            }).finally(() => 
-            
-                this.loading = false,                  
+            }).finally(() =>
+
+                this.loading = false,
                 )
             this.$forceUpdate();
-            
-        },     
+
+        },
 
         moment: function (date) {
 
@@ -134,7 +134,7 @@ export default {
         }
     }
 
-  }  
+  }
 </script>
 
 <style scoped>
