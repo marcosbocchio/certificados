@@ -385,7 +385,9 @@ export default {
 
         window.location.href =  '/area/enod/ots';
 
-      } ,
+      },
+
+      alerta : function(){  this.$show(['mensaje 1','mensaje 2','mensaje 3']) },
 
       EntrarCuadro : function(seccion){
 

@@ -226,7 +226,6 @@ Vue.component('ot-tipoSoldaduras', require('./components/dashboard/procedimiento
 
 
 Vue.component('informes-revisiones', require('./components/dashboard/informes/informes-revisiones.vue').default);
-Vue.component('alerta-revision.vue', require('./components/informes/alerta-revision.vue').default);
 
 Vue.component('table-placas', require('./components/dashboard/placas/table-placas').default);
 
@@ -278,6 +277,8 @@ Vue.component('video-edit', require('./components/multimedia/video-edit.vue').de
 
 /* Modelos 3d*/
 Vue.component('modelo3d-viewer', require('./components/modelos3d/modelo3d-viewer.vue').default);
+
+/* Alerta */
 
 Vue.component('pdf-test', require('./components/pdf-test').default);
 
@@ -1291,21 +1292,21 @@ actions : {
       },
 
     },
-
-
 })
+
+import Permissions from './mixins/permissions';
+Vue.mixin(Permissions);
+
+import Alertas from './mixins/alertas';
+Vue.mixin(Alertas);
 
 export const eventNewRegistro = new Vue();
 export const eventSetReferencia = new Vue();
 export const eventEditRegistro = new Vue();
 
-import Permissions from './mixins/permissions';
-
-Vue.mixin(Permissions);
 
 const app = new Vue({
     el: '#app',
     store,
-
 
 });
