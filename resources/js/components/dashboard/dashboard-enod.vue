@@ -230,7 +230,7 @@
                 <pagination :data="ots" @pagination-change-page="getResults" ><span slot="prev-nav">&lt; Previous</span>
                 <span slot="next-nav">Next &gt;</span> </pagination>
             </div>
-
+            <button @click="alerta">Alerta</button>
             <div v-if="loading" class="overlay">
                <loading-spin></loading-spin>
             </div>
@@ -387,7 +387,7 @@ export default {
 
       },
 
-      alerta : function(){  this.$show(['mensaje 1','mensaje 2','mensaje 3']) },
+      alerta : function(){  this.$showMessagePreset('success','code-200');this.$showMessagePreset('error','code-500');this.$showMessages('info',['Este mensaje de info es personalizado']) },
 
       EntrarCuadro : function(seccion){
 

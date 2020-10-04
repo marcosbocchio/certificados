@@ -61,23 +61,23 @@ export default {
 
             axios.post(urlRegistros, {
 
-            'codigo'    : this.newRegistro.codigo,
-            'descripcion'  : this.newRegistro.descripcion
+                'codigo'       : this.newRegistro.codigo,
+                'descripcion'  : this.newRegistro.descripcion
 
             }).then(response => {
+
                 this.$emit('store');
                 this.errors=[];
                 $('#nuevo').modal('hide');
-                toastr.success('Nuevo registro creado con éxito');
-
+                this.$showMessagePreset('success','code-store');
 
             }).catch(error => {
 
                 this.errors = error.response.data.errors;
                 $.each( this.errors, function( key, value ) {
-                    toastr.error(value,key);
+                    this.$showMessages('error',[value]);
                     console.log( key + ": " + value );
-                });
+                }.bind(this));
             });
         }
     }

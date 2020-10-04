@@ -44,11 +44,11 @@ export default {
       var url = this.modelo.substring(0, (this.modelo.indexOf("/") >-1) ? this.modelo.indexOf("/") : this.modelo.length) + '/' + id;
       axios.delete(url).then(response =>{       
         this.$emit('close-modal');
-        toastr.success('Eliminado correctamente');
+        this.$showMessagePreset('success','code-delete');
         console.log(response);
       }).catch(error => {
         this.errors = error.response.data
-        toastr.error("No se pudo eliminar el registro seleccionado.", "Error al eliminar :");
+        this.$showMessagePreset('error','code-no-delete');
       });
       $('#delete-registro').modal('hide');
     },

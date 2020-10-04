@@ -97,21 +97,20 @@ export default {
                   this.$emit('update');
                   this.errors=[];
                   $('#editar').modal('hide');
-                  toastr.success('Material editado con éxito');
+                  this.$showMessagePreset('success','code-edit');
                   this.editRegistro={}
 
                 }).catch(error => {
                     console.log(error);
                     this.errors = error.response.data.errors;
                     $.each( this.errors, function( key, value ) {
-                        toastr.error(value);
+                        this.$showMessages('error',[value]);
                         console.log( key + ": " + value );
-                    });
+                    }.bind(this));
 
                      if((typeof(this.errors)=='undefined') && (error)){
 
-                     toastr.error("Ocurrió un error al procesar la solicitud");
-
+                    this.$showMessagePreset('error','code-500');
                 }
                 });
               }
