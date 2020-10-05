@@ -1,8 +1,8 @@
 <script>
-import eventAlerta from '../components/event-bus.js'
 import code_messages from '../mixins/code_messages.js'
 
 /* tipo : error, success, warning , info  */
+/* title : Titulo del error  */
 /* codigo : son los predifinidos en el archivo code_messages.js */
 
 export default {
@@ -13,8 +13,8 @@ methods : {
     $showMessagePreset(tipo,codigo){
 
     let messages = [];
-    
-    if (typeof code_messages[codigo] != 'undefined'){   
+
+    if (typeof code_messages[codigo] != 'undefined'){
 
         messages.push(code_messages[codigo])
 
@@ -29,7 +29,7 @@ methods : {
     },
 
     /* Recibe un array con los mensajes a mostrar*/
-    $showMessages(tipo,messages,title){
+    $showMessages(tipo,messages,title = null){
 
        this.$show(tipo,messages,title)
 
@@ -38,7 +38,7 @@ methods : {
     $show(tipo,messages,title = null){
 
       messages.forEach(function(message) {
-        
+
         if(title){
 
              toastr[tipo](message,title);

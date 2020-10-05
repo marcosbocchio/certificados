@@ -30,7 +30,7 @@
                 <span class="invalid-feedback" role="alert">
                     <strong style="color: red;">{{ $message }}</strong>
                 </span>
-            @enderror     
+            @enderror
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
           </div>
           <div class="row">
@@ -45,11 +45,11 @@
               </div>
             </div>
           </div>
-        
+
           <div class="row" style="margin-top:10px">
               <div class="col-xs-12">
                   <button type="submit" class="btn btn-primary btn-block btn-flat">
-                    <strong> {{ __('iniciar sesión') }}</strong> 
+                    <strong> {{ __('iniciar sesión') }}</strong>
                   </button>
               </div>
             </div>
@@ -59,8 +59,8 @@
                       <a class="btn btn-link" href="{{ route('password.request') }}">
                           {{ __('Olvidó su contraseña?') }}
                       </a>
-                  @endif        
-              </div>     
+                  @endif
+              </div>
           </div>
         </form>
       </div>
