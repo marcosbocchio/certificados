@@ -470,7 +470,7 @@
                      <div v-if="TablaDetalle.length">
                          <div class="col-md-12">
                              <div class="table-responsive">
-                                 <table class="table table-hover table-striped table-bordered table-condensed">
+                                 <table class="table table-hover table-bordered table-condensed">
                                      <thead>
                                          <tr>
                                              <th class="col-md-1">Elemento</th>
@@ -482,30 +482,112 @@
                                          </tr>
                                      </thead>
                                      <tbody>
-                                         <tr v-for="(FIlaTabla,k) in (TablaDetalle)" :key="k" :class="{selected: indexDetalle === k}" class="pointer">
-                                             <td  @click="selectPosDetalle(k)">{{ FIlaTabla.junta }}</td>
-                                             <td  @click="selectPosDetalle(k)">
-                                                 <div v-if="indexDetalle == k ">
-                                                 <input type="number" v-model="TablaDetalle[k].densidad" step="0.1">
-                                                 </div>
-                                                 <div v-else>
-                                                      {{ FIlaTabla.densidad }}
-                                                 </div>
-                                             </td>
-                                             <td  @click="selectPosDetalle(k)">{{ FIlaTabla.posicion }} </td>
-                                             <td  @click="selectPosDetalle(k)"> <input type="checkbox" id="checkbox" v-model="TablaDetalle[k].aceptable_sn">  </td>
-                                             <td  @click="selectPosDetalle(k)">
-                                                 <div v-if="indexDetalle == k ">
-                                                 <input type="text" v-model="TablaDetalle[k].observacion" maxlength="50" size="60">
-                                                 </div>
-                                                 <div v-else>
-                                                 {{ TablaDetalle[k].observacion }}
-                                                 </div>
-                                             </td>
-                                             <td> <a  @click="RemoveDetalle(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a>
-                                             </td>
+                                        <template v-for="(FIlaTabla,k) in (TablaDetalle)">
+                                            <tr :key="k" :class="{selected: indexDetalle === k}" class="pointer">
+                                                <td  @click="selectPosDetalle(k)">{{ FIlaTabla.junta }}</td>
+                                                <td  @click="selectPosDetalle(k)">
+                                                    <div v-if="indexDetalle == k ">
+                                                    <input type="number" v-model="TablaDetalle[k].densidad" step="0.1">
+                                                    </div>
+                                                    <div v-else>
+                                                        {{ FIlaTabla.densidad }}
+                                                    </div>
+                                                </td>
+                                                <td  @click="selectPosDetalle(k)">{{ FIlaTabla.posicion }} </td>
+                                                <td  @click="selectPosDetalle(k)"> <input type="checkbox" id="checkbox" v-model="TablaDetalle[k].aceptable_sn">  </td>
+                                                <td  @click="selectPosDetalle(k)">
+                                                    <div v-if="indexDetalle == k ">
+                                                    <input type="text" v-model="TablaDetalle[k].observacion" maxlength="50" size="60">
+                                                    </div>
+                                                    <div v-else>
+                                                    {{ TablaDetalle[k].observacion }}
+                                                    </div>
+                                                </td>
+                                                <td> <a @click="RemoveDetalle(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                  <td v-if="k==indexDetalle" colspan="6">
 
-                                         </tr>
+                                                        <div class="box box-primary" style="margin-top: 10px;background-color:#fdfdfd;">
+                                                            <div class="box-header with-border">
+                                                                <h3 class="box-title">INDICACIONES</h3>
+                                                            </div>
+
+                                                        <div class="box-body">
+
+                                                            <div class="col-md-3">
+                                                                <div class="form-group" >
+                                                                    <label>Indicación</label>
+                                                                    <v-select v-model="defectoRiPlanta" :options="defectosRiPlanta" label="codigo" :disabled="(!TablaDetalle.length)">
+                                                                        <template slot="option" slot-scope="option">
+                                                                            <span class="upSelect">{{ option.descripcion }} </span> <br>
+                                                                            <span class="downSelect">{{ option.codigo }} </span>
+                                                                        </template>
+                                                                    </v-select>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-2">
+                                                                <div class="form-group" >
+                                                                    <label for="posicionPlacaGosaducto">Posición Indicación</label>
+                                                                    <input type="text" v-model="posicionPlacaGosaducto" class="form-control" id="posicionPlacaGosaducto" placeholder="XXX-XXX" :disabled="(!TablaDetalle.length)" maxlength="7">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-3">
+                                                                <div class="form-group" >
+                                                                    <label for="defecto_sector">Pasada</label>
+                                                                    <v-select v-model="defecto_sector" label="defecto_sector" :options="['RAIZ','RELLENO','SOBREMONTA']" id="defecto_sector"  :disabled="(!posicionPlacaGosaducto)"></v-select>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-1">
+                                                                <div class="form-group">
+                                                                    <p>&nbsp;</p>
+                                                                    <span>
+                                                                    <button type="button" @click="addDefectos()" title="Agregar Defecto"><app-icon img="plus-circle" color="black"></app-icon></button>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                &nbsp;
+                                                            </div>
+
+                                                            <div v-if="TablaDetalle.length && TablaDetalle[indexDetalle].defectos.length">
+                                                                <div class="col-md-12">
+                                                                    <div class="table-responsive">
+                                                                        <table class="table table-bordered table-condensed">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th class="col-md-1">Código</th>
+                                                                                    <th class="col-md-3">Descripción</th>
+                                                                                    <th class="col-md-1">Posición</th>
+                                                                                    <th class="col-md-1">Sector</th>
+                                                                                    <th class="col-md-1">&nbsp;</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr v-for="(defectoPasada,k) in ( (TablaDetalle.length > 0 )  ? TablaDetalle[indexDetalle].defectos : [])"  :key="k">
+                                                                                    <td>{{ defectoPasada.codigo }}</td>
+                                                                                    <td>{{ defectoPasada.descripcion }}</td>
+                                                                                    <td>{{ defectoPasada.posicion }}</td>
+                                                                                    <td>{{ defectoPasada.pasada }}</td>
+                                                                                    <td>
+                                                                                        <a  @click="RemoveDefectos(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </template>
                                      </tbody>
                                  </table>
                              </div>
@@ -513,89 +595,6 @@
                         </div>
                      </div>
                     </div>
-
-                     <div class="box box-custom-enod">
-
-                         <div class="box-header with-border">
-                             <h3 class="box-title">INDICACIONES</h3>
-                             <div class="box-tools pull-right">
-                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                                 </button>
-                             </div>
-                         </div>
-
-                       <div class="box-body">
-
-                         <div class="col-md-3">
-                            <div class="form-group" >
-                                 <label>Indicación</label>
-                                 <v-select v-model="defectoRiPlanta" :options="defectosRiPlanta" label="codigo" :disabled="(!TablaDetalle.length)">
-                                     <template slot="option" slot-scope="option">
-                                         <span class="upSelect">{{ option.descripcion }} </span> <br>
-                                         <span class="downSelect">{{ option.codigo }} </span>
-                                     </template>
-                                 </v-select>
-                             </div>
-                         </div>
-
-                         <div class="col-md-2">
-                             <div class="form-group" >
-                                 <label for="posicionPlacaGosaducto">Posición Indicación</label>
-                                 <input type="text" v-model="posicionPlacaGosaducto" class="form-control" id="posicionPlacaGosaducto" placeholder="XXX-XXX" :disabled="(!TablaDetalle.length)" maxlength="7">
-                             </div>
-                         </div>
-
-                         <div class="col-md-3">
-                             <div class="form-group" >
-                                 <label for="defecto_sector">Pasada</label>
-                                 <v-select v-model="defecto_sector" label="defecto_sector" :options="['RAIZ','RELLENO','SOBREMONTA']" id="defecto_sector"  :disabled="(!posicionPlacaGosaducto)"></v-select>
-                             </div>
-                         </div>
-
-                         <div class="col-md-1">
-                             <div class="form-group">
-                                  <p>&nbsp;</p>
-                                 <span>
-                                   <button type="button" @click="addDefectos()" title="Agregar Defecto"><app-icon img="plus-circle" color="black"></app-icon></button>
-                                 </span>
-                             </div>
-                         </div>
-
-                          <div class="form-group">
-                             &nbsp;
-                         </div>
-
-                          <div v-if="TablaDetalle.length && TablaDetalle[indexDetalle].defectos.length">
-                             <div class="col-md-12">
-                                 <div class="table-responsive">
-                                     <table class="table table-hover table-striped table-bordered table-condensed">
-                                         <thead>
-                                             <tr>
-                                                 <th class="col-md-1">Código</th>
-                                                 <th class="col-md-3">Descripción</th>
-                                                 <th class="col-md-1">Posición</th>
-                                                 <th class="col-md-1">Sector</th>
-                                                 <th class="col-md-1">&nbsp;</th>
-                                             </tr>
-                                         </thead>
-                                         <tbody>
-                                             <tr v-for="(defectoPasada,k) in ( (TablaDetalle.length > 0 )  ? TablaDetalle[indexDetalle].defectos : [])"  :key="k">
-                                                 <td>{{ defectoPasada.codigo }}</td>
-                                                 <td>{{ defectoPasada.descripcion }}</td>
-                                                 <td>{{ defectoPasada.posicion }}</td>
-                                                 <td>{{ defectoPasada.pasada }}</td>
-                                                 <td>
-                                                     <a  @click="RemoveDefectos(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a>
-                                                 </td>
-                                             </tr>
-                                         </tbody>
-                                     </table>
-                                 </div>
-                             </div>
-                          </div>
-                     </div>
-                   </div>
-
 
                 <div class="box box-custom-enod">
                     <div class="box-header with-border">
@@ -691,7 +690,7 @@
                                                  <td v-if="Pasada.elemento_pasada == elemento_pasada">{{ Pasada.elemento_pasada }}</td>
                                                  <td v-if="Pasada.elemento_pasada == elemento_pasada">{{ Pasada.pasada }}</td>
                                                  <td v-if="Pasada.elemento_pasada == elemento_pasada">
-                                                     <div v-if="indexPasada == k ">
+                                                     <div v-if="indexPasada == k">
                                                          <v-select v-model="TablaPasadas[indexPasada].soldador1" :options="soldadores" label="codigo">
                                                              <template slot="option" slot-scope="option">
                                                                  <span class="upSelect">{{ option.nombre }} </span> <br>
@@ -2131,5 +2130,7 @@
      }
  }
 
-
+ .tabla-detalle tr:nth-child(4n+1), .tabla-detalle tr:nth-child(4n+2) {
+ background: #f2f2f2;
+}
  </style>
