@@ -387,19 +387,21 @@
                               <button type="button" @click="addModelo()"><span class="fa fa-plus-circle"></span></button>
                             </span>
                          </div>
-
+                         <div class="form-group">
+                             &nbsp;
+                         </div>
                         <div v-if="TablaModelos3d.length">
-                            <div class="col-md-12">
+                            <div class="col-sm-6">
                                 <div class="table-responsive">
                                 <table class="table table-hover table-striped table-bordered table-condensed">
                                         <thead>
                                             <tr>
-                                                <th class="col-md-1">Modelo</th>
-                                                <th class="col-md-1">&nbsp;</th>
+                                                <th class="col-sm-12">Modelo</th>
+                                                <th>&nbsp;</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr v-for="(item,k) in (TablaModelos3d)" :key="k">
+                                            <tr v-for="(item,k) in (TablaModelos3d)" :key="k" class="pointer">
 
                                                 <td>
                                                     {{ item.codigo }}
@@ -473,12 +475,12 @@
                                  <table class="table table-hover table-bordered table-condensed">
                                      <thead>
                                          <tr>
-                                             <th class="col-md-1">Elemento</th>
-                                             <th class="col-md-1">Densidad</th>
-                                             <th class="col-md-1">Pos.</th>
+                                             <th class="col-md-2">Elemento</th>
+                                             <th class="col-md-2">Densidad</th>
+                                             <th class="col-md-2">Pos.</th>
                                              <th class="col-md-1">Aceptable</th>
-                                             <th class="col-md-1">Observación</th>
-                                             <th class="col-md-1">&nbsp;</th>
+                                             <th class="col-md-5">Observación</th>
+                                             <th> &nbsp;</th>
                                          </tr>
                                      </thead>
                                      <tbody>
@@ -559,16 +561,16 @@
                                                             </div>
 
                                                             <div v-if="TablaDetalle.length && TablaDetalle[indexDetalle].defectos.length">
-                                                                <div class="col-md-12">
+                                                                <div class="col-md-8">
                                                                     <div class="table-responsive">
                                                                         <table class="table table-bordered table-condensed">
                                                                             <thead>
                                                                                 <tr>
-                                                                                    <th class="col-md-1">Código</th>
-                                                                                    <th class="col-md-3">Descripción</th>
-                                                                                    <th class="col-md-1">Posición</th>
-                                                                                    <th class="col-md-1">Sector</th>
-                                                                                    <th class="col-md-1">&nbsp;</th>
+                                                                                    <th class="col-md-2">Código</th>
+                                                                                    <th class="col-md-4">Descripción</th>
+                                                                                    <th class="col-md-2">Posición</th>
+                                                                                    <th class="col-md-4">Sector</th>
+                                                                                    <th>&nbsp;</th>
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
@@ -675,21 +677,21 @@
                      </div>
 
                      <div v-if="TablaPasadas.length">
-                            <div class="col-md-12">
+                            <div class="col-md-11">
                                  <div class="table-responsive">
                                      <table class="table table-hover table-striped table-bordered table-condensed">
                                          <thead>
                                              <tr>
-                                                 <th class="col-md-1">Elemento</th>
+                                                 <th class="col-md-2">Elemento</th>
                                                  <th class="col-md-1">N° Pasada</th>
-                                                 <th class="col-md-2">Cuño Z</th>
-                                                 <th class="col-md-2">Cuño L</th>
-                                                 <th class="col-md-2">Cuño P</th>
-                                                 <th class="col-md-2">&nbsp;</th>
+                                                 <th class="col-md-3">Cuño Z</th>
+                                                 <th class="col-md-3">Cuño L</th>
+                                                 <th class="col-md-3">Cuño P</th>
+                                                 <th>&nbsp;</th>
                                              </tr>
                                          </thead>
                                          <tbody>
-                                             <tr v-for="(Pasada,k) in  (TablaPasadas)" :key="k" @click="selectPosPasadas(k)">
+                                             <tr v-for="(Pasada,k) in  (TablaPasadas)" :key="k" @click="selectPosPasadas(k)" class="pointer">
                                                  <td v-if="Pasada.elemento_pasada == elemento_pasada">{{ Pasada.elemento_pasada }}</td>
                                                  <td v-if="Pasada.elemento_pasada == elemento_pasada">{{ Pasada.pasada }}</td>
                                                  <td v-if="Pasada.elemento_pasada == elemento_pasada">
