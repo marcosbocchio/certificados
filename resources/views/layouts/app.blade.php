@@ -72,6 +72,15 @@
       increaseArea: '20%' /* optional */
     });
   });
+
 </script>
+
+<script>
+    $(document).ready(function () {
+            $("#btnsendlink").bind("click", function (evt) {
+               $( "#active" ).addClass( "fa-refresh" );
+            });
+        });
+  </script>
 </body>
 </html>

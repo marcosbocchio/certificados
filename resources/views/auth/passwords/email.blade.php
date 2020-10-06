@@ -7,9 +7,15 @@
         <div class="login-box" style="width: 400px !important">
       <!-- /.login-logo -->
       <div class="login-box-body">
-        <p class="login-box-msg" >Restablecimiento de contraseña</p>
+        @if (session('status'))
+            <div class="alert alert-success" role="alert">
+                {{ session('status') }}
+            </div>
+        @else
+            <p class="login-box-msg" >Restablecimiento de contraseña</p>
+        @endif
 
-        <form method="POST" action="{{ route('password.email') }}" autocomplete="off">
+        <form method="POST" action="{{ route('password.email') }}" autocomplete="off" id="formEmail">
             @csrf
 
             <div class="form-group has-feedback">
@@ -28,8 +34,9 @@
             <div class="row">
                 <div class="form-group">
                     <div class="col-md-4"  style="text-align: center;margin-top: 8px;" >
-                        <button type="submit" class="btn btn-primary">
-                            {{ __('Send Password Reset Link') }}
+                        <button id="btnsendlink" type="submit" class="btn btn-primary">
+                            <i id="active" class="fa fa-spin"></i>
+                            &nbsp;  {{ __('Send Password Reset Link') }}
                         </button>
                     </div>
                 </div>
@@ -44,4 +51,6 @@
 
     </div>
 </div>
+
 @endsection
+
