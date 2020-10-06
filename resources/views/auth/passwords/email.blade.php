@@ -4,7 +4,7 @@
 <div class="container" style='height:100%'>
 
     <div class="grandParentContaniner">
-        <div class="login-box">
+        <div class="login-box" style="width: 400px !important">
       <!-- /.login-logo -->
       <div class="login-box-body">
         <p class="login-box-msg" >Restablecimiento de contraseña</p>
@@ -29,7 +29,7 @@
                 <div class="form-group">
                     <div class="col-md-4"  style="text-align: center;margin-top: 8px;" >
                         <button type="submit" class="btn btn-primary">
-                            {{ __('Enviar link de restablecimiento de contraseña ') }}
+                            {{ __('Send Password Reset Link') }}
                         </button>
                     </div>
                 </div>

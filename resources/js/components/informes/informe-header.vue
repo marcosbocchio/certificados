@@ -45,7 +45,7 @@ export default {
 
       informe_id: {
           type :Number,
-          required:true,
+          required:false,
           default:0,
       },
 

@@ -1,140 +1,71 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-    <div class="login-box">
 
-   <!-- /.login-logo -->
-  <div class="login-box-body">
-    <div class="login-logo" >
-      <a href="{{ route('login') }}"><img src="{{asset('img/logo-enod-web.jpg')}}"  height="60px"  alt="Logo Enod"> </a>
-    </div>
-    <p class="login-box-msg" >Login para iniciar sesión</p>
+<div class="container" style='height:100%'>
 
-     <form method="POST" action="{{ route('login') }}">
-      @csrf
-      <div class="form-group has-feedback">
-      <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" placeholder="Email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-            @error('email')
-                <span class="invalid-feedback" role="alert" >
-                    <strong style="color: red;">{{ $message }}</strong>
-                </span>
-            @enderror
+    <div class="grandParentContaniner">
+        <div class="login-box" style="width: 500px !important">
+      <!-- /.login-logo -->
+      <div class="login-box-body">
+        <p class="login-box-msg" >Restablecer contraseña</p>
 
-        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-      </div>
-      <div class="form-group has-feedback">
-        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="contraseña" required autocomplete="current-password">
+        <form method="POST" action="{{ route('password.update') }}">
+            @csrf
 
-        @error('password')
-            <span class="invalid-feedback" role="alert">
-                <strong style="color: red;">{{ $message }}</strong>
-            </span>
-        @enderror     
-        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-      </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="checkbox icheck" >
-            <label>
-              <div class="icheckbox_square-yellow" aria-checked="false" aria-disabled="false" style="position: relative;">
-              <input name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}  type="checkbox" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">
-              <ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
-             Remember Me
-            </label>
-          </div>
-        </div>
-       </div>
-     
-       <div class="row" style="margin-top:10px">
-          <div class="col-xs-12">
-              <button type="submit" class="btn btn-primary btn-block btn-flat">
-                <strong> {{ __('iniciar sesión') }}</strong> 
-              </button>
-          </div>
-        </div>
-        <div class="row" style="padding-bottom: 0;">
-          <div class="col-xs-12"  style="text-align: center;margin-top: 11px;" >
-              @if (Route::has('password.request'))
-                  <a class="btn btn-link" href="{{ route('password.request') }}">
-                      {{ __('Olvidó su contraseña?') }}
-                  </a>
-              @endif        
-          </div>     
-      </div>
-    </form>
-  </div>
-  <!-- /.login-box-body -->
-  <div class="login-logo">
-    <a href="http://www.enodndt.com.ar/"><img src="{{asset('img/redes.png')}}"  height="90px"  alt="Redes Enod"> </a>
-  </div>
-</div>
+            <input type="hidden" name="token" value="{{ $token }}">
 
-    </div>
-</div>
+            <div class="form-group row">
+                <label for="email" class="col-md-5 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
+                <div class="col-md-6">
+                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
 
-<!--  Viejo -->
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
-
-                <div class="card-body">
-                    <form method="POST" action="{{ route('password.update') }}">
-                        @csrf
-
-                        <input type="hidden" name="token" value="{{ $token }}">
-
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Reset Password') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                    @error('email')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
             </div>
-        </div>
+
+            <div class="form-group row">
+                <label for="password" class="col-md-5 col-form-label text-md-right">{{ __('Password') }}</label>
+
+                <div class="col-md-6">
+                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+
+                    @error('password')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="password-confirm" class="col-md-5 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+
+                <div class="col-md-6">
+                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                </div>
+            </div>
+
+            <div class="form-group row mb-0">
+                <div class="col-md-6 offset-md-4">
+                    <button type="submit" class="btn btn-primary">
+                        {{ __('Reset Password') }}
+                    </button>
+                </div>
+            </div>
+        </form>
+      </div>
+      <!-- /.login-box-body -->
+      <div class="login-logo">
+        <a href="http://www.enodndt.com.ar/"><img src="{{asset('img/redes.png')}}"  height="90px"  alt="Redes Enod"> </a>
+      </div>
+    </div>
+
     </div>
 </div>
 @endsection

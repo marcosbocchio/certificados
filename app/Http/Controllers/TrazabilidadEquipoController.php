@@ -18,7 +18,7 @@ class TrazabilidadEquipoController extends Controller
              $user_id = $userId = Auth::id();
         }
 
-        $trazabilidad_equipo = new TrazabilidadEquipo;1
+        $trazabilidad_equipo = new TrazabilidadEquipo;
 
         $trazabilidad_equipo->ot_id = $ot_id;
         $trazabilidad_equipo->interno_equipo_id = $interno_equipo_id;
