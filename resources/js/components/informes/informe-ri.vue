@@ -507,13 +507,16 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                  <td v-if="k==indexDetalle" colspan="6">
+                                                  <td v-if="k==indexDetalle && indicaciones_sn" colspan="6" style="background-color: #ECF0F5;">
 
-                                                        <div class="box box-primary" style="margin-top: 10px;background-color:#fdfdfd;">
+                                                        <div class="box box-custom-enod" style="background-color:#fdfdfd;">
                                                             <div class="box-header with-border">
                                                                 <h3 class="box-title">INDICACIONES</h3>
+                                                                <div class="box-tools pull-right">
+                                                                    <button type="button" class="btn btn-box-tool" @click="indicaciones_sn=false"><i class="fa fa-times"></i>
+                                                                    </button>
+                                                                </div>
                                                             </div>
-
                                                         <div class="box-body">
 
                                                             <div class="col-md-3">
@@ -1009,7 +1012,7 @@
              defectoRiGasoducto:'',
              posicionPlacaGosaducto:'',
              defecto_sector:'',
-             indexDetalle:0,
+             indexDetalle:-1,
              indexPasada:0,
              //Fin Formulario detalle
 
@@ -1040,6 +1043,7 @@
              parseCsv :[],
              TablaImportada :[],
              sel_todos_clonar: false,
+             indicaciones_sn : false,
          }},
      created : function(){
 
@@ -1455,6 +1459,7 @@
 
          },
          selectPosDetalle :function(index){
+             this.indicaciones_sn = true;
              this.indexDetalle = index ;
              this.pasada =1 ;
 
