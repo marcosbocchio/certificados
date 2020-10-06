@@ -65,10 +65,10 @@
                             <thead>
                                 <tr>
                                     <th class="col-lg-1">Tipo</th>
-                                    <th class="col-lg-1">N°</th>
+                                    <th class="col-lg-2">N°</th>
                                     <th class="col-lg-1">Nº Rev.</th>
                                     <th class="col-lg-1">Obra</th>
-                                    <th class="col-lg-4">Usuario alta</th>
+                                    <th class="col-lg-3">Usuario alta</th>
                                     <th class="col-lg-2">Fecha</th>
                                     <th class="col-lg-2" colspan="5">&nbsp;</th>
                                 </tr>
