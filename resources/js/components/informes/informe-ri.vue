@@ -579,7 +579,7 @@
                                                                                     <td>{{ defectoPasada.descripcion }}</td>
                                                                                     <td>{{ defectoPasada.posicion }}</td>
                                                                                     <td>{{ defectoPasada.pasada }}</td>
-                                                                                    <td>
+                                                                                    <td class="pointer">
                                                                                         <a  @click="RemoveDefectos(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a>
                                                                                     </td>
                                                                                 </tr>
