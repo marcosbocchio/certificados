@@ -281,6 +281,58 @@ footer {
 
 @include('reportes.partial.nro_pagina')
 
+@if($tecnica->codigo=='US')
+
+    <script type="text/php">
+        if ( isset($pdf) ) {
+            $x = 520;
+            $y = 78;
+            $text = "RG.30 Rev.02";
+            $font = $fontMetrics->get_font("serif", "normal");
+            $size = 8;
+            $color = array(0,0,0);
+            $word_space = 0.0;  //  default
+            $char_space = 0.0;  //  default
+            $angle = 0.0;   //  default
+            $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
+        }
+    </script>
+@elseif ($tecnica->codigo=='PA')
+
+    <script type="text/php">
+        if ( isset($pdf) ) {
+            $x = 520;
+            $y = 78;
+            $text = "RG.79 Rev.01";
+            $font = $fontMetrics->get_font("serif", "normal");
+            $size = 8;
+            $color = array(0,0,0);
+            $word_space = 0.0;  //  default
+            $char_space = 0.0;  //  default
+            $angle = 0.0;   //  default
+            $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
+        }
+    </script>
+ @else
+
+ <script type="text/php">
+    if ( isset($pdf) ) {
+        $x = 518;
+        $y = 78;
+        $text = "RG.33 Rev.02";
+        $font = $fontMetrics->get_font("serif", "normal");
+        $size = 8;
+        $color = array(0,0,0);
+        $word_space = 0.0;  //  default
+        $char_space = 0.0;  //  default
+        $angle = 0.0;   //  default
+        $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
+    }
+</script>
+
+@endif
+
+
 </body>
 
 </html>

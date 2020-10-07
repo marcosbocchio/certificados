@@ -62,7 +62,7 @@ class PdfInformesUsController extends Controller
 
         $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);
         $titulo = "INFORME DE ULTRASONIDO"." (" . mb_strtoupper($tecnica->descripcion,"UTF-8") . ")";
-        $nro = FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo);
+        $nro = FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo) .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) ;
         $fecha = date('d-m-Y', strtotime($informe->fecha));
         $tipo_reporte = "INFORME N°";
 

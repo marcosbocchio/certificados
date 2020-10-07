@@ -154,5 +154,23 @@
 
 @include('reportes.partial.nro_pagina')
 
+<script type="text/php">
+
+    if ( isset($pdf) ) {
+        $x = 520;
+        $y = 78;
+        $text = "RG.33 Rev.02";
+        $font = $fontMetrics->get_font("serif", "normal");
+        $size = 8;
+        $color = array(0,0,0);
+        $word_space = 0.0;  //  default
+        $char_space = 0.0;  //  default
+        $angle = 0.0;   //  default
+        $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
+
+    }
+
+</script>
+
 </body>
 </html>
