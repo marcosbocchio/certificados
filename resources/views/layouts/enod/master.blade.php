@@ -40,7 +40,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <link rel="stylesheet" href="{{mix('css/custom.css')}}">
 
-    <link rel="stylesheet" href="{{asset('css/estilos_ayuda.css')}}">
+    <link rel="stylesheet" href="{{mix('css/estilos_ayuda.css')}}">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
