@@ -388,7 +388,7 @@ footer {
         $y = 80;
         $text = "RG.25 Rev.03";
         $font = $fontMetrics->get_font("serif", "normal");
-        $size = 7;
+        $size = 8;
         $color = array(0,0,0);
         $word_space = 0.0;  //  default
         $char_space = 0.0;  //  default
