@@ -1622,6 +1622,10 @@
                  posicion : this.posicionPlacaGosaducto,
                      });
 
+                this.defectoRiPlanta='';
+                this.posicionPlacaGosaducto='';
+                this.defecto_sector='';
+
              if(this.posicionPlacaGosaducto != ''){
                  this.TablaDetalle[this.indexDetalle].aceptable_sn = false;
              }

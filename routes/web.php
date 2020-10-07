@@ -164,6 +164,13 @@ Route::get('/pdf-test',function(){
 
 });
 
+Route::get('error_404', function(){
+
+    abort(404);
+
+})->name('error-404');
+
+
 Route::resource('personas_web', 'PersonaController');
 
  Route::get('php', function () {

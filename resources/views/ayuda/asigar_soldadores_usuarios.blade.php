@@ -18,7 +18,7 @@
 			  	<h3>Artículos relacionados&nbsp;</h3>
 			  	<p><a href="gestionar_soldadores.html"> Gestionar soldadores&nbsp;</a></p>
 			  	<p><a href="gestionar_usuarios.html"> Gestionar usuarios&nbsp;</a></p>
-			 	<p><a href="crear_informes.html"> Creación de informes&nbsp;</a></p>
+                <p><a href="{{ route('ayuda-generar-informes') }}"> Creación de informes&nbsp;</a></p>
 			</div>
         </div>
     </div>

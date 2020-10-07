@@ -112,9 +112,9 @@ footer {
 
                 <tr>
                     <td style="font-size: 11px; width:65px;  text-align: center " rowspan="2" class="bordered-td" >Elem.</td>
-                    <td style="font-size: 11px; width:65px;  text-align: center;" rowspan="2" class="bordered-td">Cuño</td>
+                    <td style="font-size: 11px; width:80px;  text-align: center;" rowspan="2" class="bordered-td">Cuño</td>
                     <td style="font-size: 11px; width:50px; text-align: center;" colspan="2" class="bordered-td">Placa</td>
-                    <td style="font-size: 11px; width:385px;  text-align: center;" rowspan="2" class="bordered-td">Indicaciones</td>
+                    <td style="font-size: 11px; width:370px;  text-align: center;" rowspan="2" class="bordered-td">Indicaciones</td>
                     <td style="font-size: 11px; text-align: center;" colspan="2" class="bordered-td">Resultado</td>
                 </tr>
                 <tr>
@@ -139,7 +139,7 @@ footer {
                         </td>
                         <td style="font-size: 11px;  width:64.5px;text-align: center" class="bordered-td">{{$junta_posicion->posicion}}</td>
                         <td style="font-size: 11px;  width:23.5px;text-align: center" class="bordered-td">{{$junta_posicion->densidad}}</td>
-                        <td style="font-size: 9px;   width:385px; " class="bordered-td">&nbsp;
+                        <td style="font-size: 9px;   width:370px; " class="bordered-td">&nbsp;
                         @php $primero = true; @endphp
                             @foreach ($defectos_posiciones as $key => $defecto_posicion)
 

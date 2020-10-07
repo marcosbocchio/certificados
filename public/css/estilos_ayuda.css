@@ -60,3 +60,6 @@
    text-align:right;
    content:counter(item) ".";
 }
+.ayuda_enod .detalle_iconos img {
+    display: inline-block
+}

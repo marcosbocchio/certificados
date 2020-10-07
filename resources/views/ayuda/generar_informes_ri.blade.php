@@ -80,7 +80,7 @@
 			<div class="col-sm-12">
 				<h3>Artículos relacionados&nbsp;</h3>
 				<p><a href="Ayuda_nueva_ot.html">Cómo crear una Orden de trabajo (OT)&nbsp;</a></p>
-				<p><a href="Asignar_soldador.html">Asignar soldadores y usuarios de clientes a Orden de trabajo (OT)&nbsp;</a></p>
+                <p><a href="{{ route('ayuda-asignar-soldadores-y-usuarios') }}">Asignar soldadores y usuarios de clientes a Orden de trabajo (OT)&nbsp;</a></p>
 				<p><a href="crear_informes.html"> Creación de informes&nbsp;</a></p>
 			</div>
 
