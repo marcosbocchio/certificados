@@ -426,7 +426,7 @@ footer {
         if ( isset($pdf) ) {
             $x = 764;
             $y = 75;
-            $text = "RG.29 Rev.01";
+            $text = "RG.93 Rev.01";
             $font = $fontMetrics->get_font("serif", "normal");
             $size = 8;
             $color = array(0,0,0);
