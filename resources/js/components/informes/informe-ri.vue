@@ -567,9 +567,9 @@
                                                                             <thead>
                                                                                 <tr>
                                                                                     <th class="col-md-2">Código</th>
-                                                                                    <th class="col-md-4">Descripción</th>
+                                                                                    <th class="col-md-6">Descripción</th>
                                                                                     <th class="col-md-2">Posición</th>
-                                                                                    <th class="col-md-4">Sector</th>
+                                                                                    <th class="col-md-2">Sector</th>
                                                                                     <th>&nbsp;</th>
                                                                                 </tr>
                                                                             </thead>
@@ -1622,14 +1622,14 @@
                  posicion : this.posicionPlacaGosaducto,
                      });
 
-                this.defectoRiPlanta='';
-                this.posicionPlacaGosaducto='';
-                this.defecto_sector='';
 
              if(this.posicionPlacaGosaducto != ''){
                  this.TablaDetalle[this.indexDetalle].aceptable_sn = false;
              }
 
+            this.defectoRiPlanta='';
+            this.posicionPlacaGosaducto='';
+            this.defecto_sector='';
           },
          RemoveDetalle(index) {
             this.indexDetalle = 0;
