@@ -297,6 +297,7 @@ footer {
             $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
         }
     </script>
+
 @elseif ($tecnica->codigo=='PA')
 
     <script type="text/php">
@@ -313,6 +314,7 @@ footer {
             $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
         }
     </script>
+
  @else
 
  <script type="text/php">

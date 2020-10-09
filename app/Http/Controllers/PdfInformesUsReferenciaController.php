@@ -13,42 +13,44 @@ use App\DetalleUsPaUs;
 use App\DetallesUsPaUsReferencias;
 use App\OtTipoSoldaduras;
 use App\MetodoEnsayos;
+use App\Tecnicas;
 
 class PdfInformesUsReferenciaController extends Controller
 {
-    public function imprimir($id){       
-              
+    public function imprimir($id){
+
         $detalle_referencia = DetallesUsPaUsReferencias::find($id);
         $detalle = DetalleUsPaUs::where('detalle_us_pa_us_referencia_id',$id)->first();
         $informe_us = InformesUs::find($detalle->informe_us_id);
-        $informe = Informe::find($informe_us->informe_id);      
+        $informe = Informe::find($informe_us->informe_id);
         $ot_tipo_soldadura = OtTipoSoldaduras::where('id',$informe->ot_tipo_soldadura_id)->with('Tiposoldadura')->first();
         $ot = Ots:: find($informe->ot_id);
-        $cliente = Clientes::find($ot->cliente_id);       
-        $evaluador = User::find($informe->firma);       
-        $contratista = Contratistas::find($ot->contratista_id);   
-        $observaciones = $detalle_referencia->descripcion;       
+        $cliente = Clientes::find($ot->cliente_id);
+        $evaluador = User::find($informe->firma);
+        $contratista = Contratistas::find($ot->contratista_id);
+        $observaciones = $detalle_referencia->descripcion;
+        $tecnica = Tecnicas::findOrFail($informe->tecnica_id);
 
         /*  Encabezado */
 
-        $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);  
+        $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);
         $titulo = "INFORME DE ULTRASONIDO (REFERENCIA)";
-        $nro = FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo);
+        $nro = FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo) .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) ;
         $fecha = date('d-m-Y', strtotime($informe->fecha));
         $tipo_reporte = "INFORME N°";
 
-        $pdf = \PDF::loadView('reportes.informes.referencias-v2',compact('ot','titulo','nro','tipo_reporte','fecha','observaciones',
-                                                                'informe_us',                                                              
+        $pdf = \PDF::loadView('reportes.informes.referencias-v2',compact('ot','titulo','nro','tipo_reporte','fecha','observaciones','metodo_ensayo','tecnica',
+                                                                'informe_us',
                                                                 'informe',
                                                                 'ot_tipo_soldadura',
                                                                 'detalle',
                                                                 'detalle_referencia',
                                                                 'cliente',
                                                                 'contratista',
-                                                                'evaluador'                                                                    
+                                                                'evaluador'
                                                                ))->setPaper('a4','portrait')->setWarnings(false);
         return $pdf->stream();
-        
+
 
 
     }

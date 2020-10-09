@@ -29,42 +29,42 @@ use App\MetodoEnsayos;
 
 class PdfInformesUsIndicacionesUsPaController extends Controller
 {
-    public function imprimir($id){      
+    public function imprimir($id){
 
         /* header */
-      
-         $informe = Informe::findOrFail($id);       
+
+         $informe = Informe::findOrFail($id);
          $informe_us = InformesUs::where('informe_id',$informe->id)->firstOrFail();
          $ot = Ots::findOrFail($informe->ot_id);
-         $cliente = Clientes::findOrFail($ot->cliente_id);           
+         $cliente = Clientes::findOrFail($ot->cliente_id);
          $ot_tipo_soldadura = OtTipoSoldaduras::where('id',$informe->ot_tipo_soldadura_id)->with('Tiposoldadura')->first();
-         $material = Materiales::findOrFail($informe->material_id);   
-         $norma_ensayo = NormaEnsayos::findOrFail($informe->norma_ensayo_id);   
-         $norma_evaluacion = NormaEvaluaciones::findOrFail($informe->norma_evaluacion_id); 
+         $material = Materiales::findOrFail($informe->material_id);
+         $norma_ensayo = NormaEnsayos::findOrFail($informe->norma_ensayo_id);
+         $norma_evaluacion = NormaEvaluaciones::findOrFail($informe->norma_evaluacion_id);
          $ot_procedimiento_propio = OtProcedimientosPropios::findOrFail($informe->procedimiento_informe_id);
-         $procedimiento_inf = Documentaciones::findOrFail($ot_procedimiento_propio->documentacion_id);       
+         $procedimiento_inf = Documentaciones::findOrFail($ot_procedimiento_propio->documentacion_id);
          $diametro_espesor = DiametrosEspesor::findOrFail($informe->diametro_espesor_id);
          $tecnica = Tecnicas::findOrFail($informe->tecnica_id);
-         $interno_equipo = InternoEquipos::findOrFail($informe->interno_equipo_id)->with('equipo')->first(); 
+         $interno_equipo = InternoEquipos::findOrFail($informe->interno_equipo_id)->with('equipo')->first();
          $ot_operador = OtOperarios::findOrFail($informe->ejecutor_ensayo_id);
          $ejecutor_ensayo = User::findOrFail($ot_operador->user_id);
          $evaluador = User::find($informe->firma);
          $contratista = Contratistas::find($ot->contratista_id);
          $estado_superficie = EstadosSuperficies::find($informe_us->estado_superficie_id);
          $indicaciones_us_pa = DetalleUsPaUs::where('informe_us_id',$informe_us->id)->get();
-       
+
          /*  Encabezado */
 
-         $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);  
-         $titulo = "INFORME DE ULTRASONIDO"." (" . mb_strtoupper($tecnica->descripcion,"UTF-8") . ")";        
-         $nro = FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo);
+         $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);
+         $titulo = "INFORME DE ULTRASONIDO"." (" . mb_strtoupper($tecnica->descripcion,"UTF-8") . ")";
+         $nro = FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo) .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) ;
          $fecha = date('d-m-Y', strtotime($informe->fecha));
          $tipo_reporte = "INFORME N°";
 
-        $pdf = PDF::loadView('reportes.informes.us-indicaciones-us-pa-v2',compact('ot','titulo','nro','tipo_reporte','fecha',
+        $pdf = PDF::loadView('reportes.informes.us-indicaciones-us-pa-v2',compact('ot','titulo','nro','tipo_reporte','fecha','metodo_ensayo',
                                                                 'norma_ensayo',
                                                                 'norma_evaluacion',
-                                                                'procedimiento_inf',                                                               
+                                                                'procedimiento_inf',
                                                                 'diametro_espesor',
                                                                 'ot_tipo_soldadura',
                                                                 'tecnica',
@@ -78,10 +78,10 @@ class PdfInformesUsIndicacionesUsPaController extends Controller
                                                                 'estado_superficie',
                                                                 'indicaciones_us_pa',
                                                                 'evaluador'
-                                                        
+
                                                                 ))->setPaper('a4','portrait')->setWarnings(false);
 
 
-           return $pdf->stream(); 
+           return $pdf->stream();
 }
 }

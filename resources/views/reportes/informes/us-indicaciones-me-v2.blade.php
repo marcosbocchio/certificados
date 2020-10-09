@@ -150,6 +150,57 @@
             @endwhile
     @endforeach
 
+    @if($informe_us->path1_indicacion || $informe_us->path2_indicacion || $informe_us->path3_indicacion || $informe_us->path3_indicacion)
+
+        <div class="page-break"></div>
+        <table style="text-align: center;" width="100%">
+                <tbody>
+                    <tr>
+                        <td>
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align: center; width: 340px;height: 190px;">
+
+                                            @if ($informe_us->path1_indicacion)
+                                                <img src="{{ public_path($informe_us->path1_indicacion) }}" alt="" style="height: 180px; width: 263px;">
+                                            @endif
+
+                                        </td>
+
+                                        <td style="text-align: center; width: 340px;height: 190px;">
+
+                                            @if ($informe_us->path2_indicacion)
+                                                <img src="{{ public_path($informe_us->path2_indicacion) }}" alt="" style="height: 180px; width: 263px;">
+                                            @endif
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: center; width: 340px;height: 190px;">
+
+                                            @if ($informe_us->path3_indicacion)
+                                                <img src="{{ public_path($informe_us->path3_indicacion) }}" alt="" style="height: 180px; width: 263px;">
+                                            @endif
+
+                                        </td>
+
+                                        <td style="text-align: center; width: 340px;height: 190px;">
+
+                                            @if ($informe_us->path4_indicacion)
+                                                <img src="{{ public_path($informe_us->path4_indicacion) }}" alt="" style="height: 180px; width: 263px;">
+                                            @endif
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+    @endif
+
 </main>
 
 @include('reportes.partial.nro_pagina')

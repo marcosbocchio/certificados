@@ -15,11 +15,11 @@
 
     header {
         position:fixed;
-        top: -237px;    
-    }        
-        
+        top: -237px;
+    }
+
     footer {
-        position: fixed; bottom:0px; 
+        position: fixed; bottom:0px;
         padding-top: 0px;
     }
 
@@ -28,65 +28,65 @@
 <body>
 
 <header>
-    @include('reportes.partial.header-principal-portrait')     
-    @include('reportes.partial.linea-amarilla')                
-    @include('reportes.partial.header-cliente-comitente-portrait')    
-    @include('reportes.partial.linea-gris')        
-    @include('reportes.partial.header-proyecto-portrait')    
-    @include('reportes.partial.linea-amarilla') 
+    @include('reportes.partial.header-principal-portrait')
+    @include('reportes.partial.linea-amarilla')
+    @include('reportes.partial.header-cliente-comitente-portrait')
+    @include('reportes.partial.linea-gris')
+    @include('reportes.partial.header-proyecto-portrait')
+    @include('reportes.partial.linea-amarilla')
 </header>
 
 <footer>
-    @include('reportes.partial.linea-amarilla') 
+    @include('reportes.partial.linea-amarilla')
     @include('reportes.partial.observaciones')
-    @include('reportes.partial.linea-amarilla') 
-    @include('reportes.informes.partial.firmas') 
+    @include('reportes.partial.linea-amarilla')
+    @include('reportes.informes.partial.firmas')
 </footer>
 
-<main>   
+<main>
 
     <table width="100%">>
         <tbody>
-            <td style="font-size: 12px;" > <b>ELEMENTO: </b>  
+            <td style="font-size: 12px;" > <b>ELEMENTO: </b>
                 @if(isset($detalle->pieza))
                     {{$detalle->pieza}}
                 @elseif(isset($detalle->elemento))
                     {{$detalle->elemento}}
                 @endif
 
-            </td>  
+            </td>
         </tbody>
     </table>
 
     <table style="text-align: center" class="" width="100%">
-        <tbody>            
+        <tbody>
                 <tr>
-                    <td>                     
-                        <table>    
+                    <td>
+                        <table>
                             <tbody>
                                 <tr>
                                     <td style="text-align: center; width: 330px;height: 275px">
                                         @if ($detalle_referencia->path1!='/img/imagen1.jpg')
                                             <img src="{{ public_path($detalle_referencia->path1) }}" alt="" style="height: 160; width: 234;">
-                                        @endif  
-                                            
+                                        @endif
+
                                     </td>
                                     <td style="text-align: center; width: 330px;height: 275px">
                                         @if ($detalle_referencia->path2!='/img/imagen2.jpg')
                                             <img src="{{  public_path($detalle_referencia->path2) }}" alt="" style="height: 160; width: 234;">
-                                        @endif  
+                                        @endif
                                     </td>
                                 </tr>
                                 <tr>
                                     <td style="text-align: center; width: 330px;height: 275px">
                                         @if ($detalle_referencia->path3!='/img/imagen3.jpg')
                                             <img src="{{  public_path($detalle_referencia->path3) }}" alt="" style="height: 160; width: 234;">
-                                    @endif  
+                                    @endif
                                     </td>
                                     <td style="text-align: center; width: 330px;height: 275px">
                                         @if ($detalle_referencia->path4!='/img/imagen4.jpg')
                                             <img src="{{  public_path($detalle_referencia->path4) }}" alt="" style="height: 160; width: 234;">
-                                    @endif  
+                                    @endif
                                     </td>
                                 </tr>
                             </tbody>
@@ -94,28 +94,98 @@
                     </td>
                 </tr>
         </tbody>
-    </table>    
+    </table>
 
-</main>   
-     
-    <script type="text/php">
+</main>
 
-        if ( isset($pdf) ) {
-            $x = 468;
-            $y = 66;
-            $text = "PÁGINA : {PAGE_NUM} de {PAGE_COUNT}";
-            $font = $fontMetrics->get_font("serif", "bold");
-            $size = 9;
-            $color = array(0,0,0);
-            $word_space = 0.0;  //  default
-            $char_space = 0.0;  //  default
-            $angle = 0.0;   //  default
-            $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
+@include('reportes.partial.nro_pagina')
 
-        /* $pdf->line(34,167,561,167,array(0,0,0),1.5); */
-        }
+    @if($metodo_ensayo->metodo=='PM')
 
-    </script>
+        <script type="text/php">
+
+            if ( isset($pdf) ) {
+                $x = 518;
+                $y = 78;
+                $text = "RG.29 Rev.02";
+                $font = $fontMetrics->get_font("serif", "normal");
+                $size = 8;
+                $color = array(0,0,0);
+                $word_space = 0.0;  //  default
+                $char_space = 0.0;  //  default
+                $angle = 0.0;   //  default
+                $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
+
+            }
+
+        </script>
+
+    @elseif($metodo_ensayo->metodo=='LP')
+
+        <script type="text/php">
+
+            if ( isset($pdf) ) {
+                $x = 518;
+                $y = 78;
+                $text = "RG.28 Rev.02";
+                $font = $fontMetrics->get_font("serif", "normal");
+                $size = 8;
+                $color = array(0,0,0);
+                $word_space = 0.0;  //  default
+                $char_space = 0.0;  //  default
+                $angle = 0.0;   //  default
+                $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
+
+            }
+
+        </script>
+
+        @elseif($metodo_ensayo->metodo=='US')
+
+            @if ($tecnica->codigo=="US")
+                <script type="text/php">
+
+                    if ( isset($pdf) ) {
+                        $x = 518;
+                        $y = 78;
+                        $text = "RG.30 Rev.02";
+                        $font = $fontMetrics->get_font("serif", "normal");
+                        $size = 8;
+                        $color = array(0,0,0);
+                        $word_space = 0.0;  //  default
+                        $char_space = 0.0;  //  default
+                        $angle = 0.0;   //  default
+                        $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
+
+                    }
+
+                </script>
+
+            @elseif($tecnica->codigo=="PA")
+
+                <script type="text/php">
+
+                    if ( isset($pdf) ) {
+                        $x = 518;
+                        $y = 78;
+                        $text = "RG.79 Rev.01";
+                        $font = $fontMetrics->get_font("serif", "normal");
+                        $size = 8;
+                        $color = array(0,0,0);
+                        $word_space = 0.0;  //  default
+                        $char_space = 0.0;  //  default
+                        $angle = 0.0;   //  default
+                        $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
+
+                    }
+
+                </script>
+
+            @endif
+
+    @endif
+
+
 
 </body>
 </html>
