@@ -281,8 +281,7 @@ class InformesLpController extends Controller
 
         if($EsRevision){
 
-            $this->store($request,$EsRevision);
-            return ;
+            return $this->store($request,$EsRevision);
 
         }
 

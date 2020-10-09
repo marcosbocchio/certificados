@@ -64,9 +64,7 @@ class InformesPmController extends Controller
 
           $informe = (new \App\Http\Controllers\InformesController)->saveInforme($request,$informe,$EsRevision);
           $informePm = $this->saveInformePm($request,$informe,$informePm);
-
           $this->saveDetalle($request,$informePm);
-
           DB::commit();
 
         } catch (Exception $e) {
@@ -85,14 +83,13 @@ class InformesPmController extends Controller
 
        if($EsRevision){
 
-         $this->store($request,$EsRevision);
-         return ;
+          return $this->store($request,$EsRevision);
 
        }
 
-
       $informe  = Informe::find($id);
       $informePm =InformesPm::where('informe_id',$informe->id)->first();
+
       DB::beginTransaction();
       try {
 

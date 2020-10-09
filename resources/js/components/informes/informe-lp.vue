@@ -1080,10 +1080,11 @@ data() {return {
           }}
 
 
-        ).then( () => {
+        ).then( response => {
 
+          let informe = response.data;
           toastr.success('informe N°' + this.numero_inf + ' fue actualizado con éxito ');
-          window.open(  '/pdf/informe/lp/' + this.informedata.id,'_blank');
+          window.open(  '/pdf/informe/lp/' + informe.id,'_blank');
           window.location.href =  '/informes/ot/' + this.otdata.id;
 
         }).catch(error => {

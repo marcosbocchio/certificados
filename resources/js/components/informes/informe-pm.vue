@@ -1209,11 +1209,12 @@ export default {
           }}
 
 
-        ).then( () => {
+        ).then(response => {
 
-          toastr.success('informe N°' + this.numero_inf + ' fue actualizado con éxito ');
-          window.open(  '/pdf/informe/pm/' + this.informedata.id,'_blank');
-          window.location.href =  '/informes/ot/' + this.otdata.id;
+        let informe = response.data;
+        toastr.success('informe N°' + this.numero_inf + ' fue actualizado con éxito ');
+        window.open('/pdf/informe/pm/' + informe.id,'_blank');
+        window.location.href =  '/informes/ot/' + this.otdata.id;
 
         }).catch(error => {
 
