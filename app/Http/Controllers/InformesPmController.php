@@ -106,6 +106,8 @@ class InformesPmController extends Controller
 
         }
 
+        return $informe;
+
     }
 
     public function saveInformePm($request,$informe,$informePm){

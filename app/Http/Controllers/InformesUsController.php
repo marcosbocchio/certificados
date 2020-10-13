@@ -145,6 +145,7 @@ class InformesUsController extends Controller
             throw $e;
 
           }
+          return $informe;
 
       }
 

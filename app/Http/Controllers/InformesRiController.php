@@ -312,24 +312,26 @@ class InformesRiController extends Controller
 
         }else{
 
-        $informeRi =InformesRi::where('informe_id',$informe->id)->first();
+            $informeRi =InformesRi::where('informe_id',$informe->id)->first();
 
-        DB::beginTransaction();
-        try {
+            DB::beginTransaction();
+            try {
 
-            $informe = (new \App\Http\Controllers\InformesController)->saveInforme($request,$informe);
-            $this->saveInformeRi($request,$informe,$informeRi);
-            $this->deleteDetalle($request,$informeRi->id);
-            $this->saveDetalle($request,$informeRi);
+                $informe = (new \App\Http\Controllers\InformesController)->saveInforme($request,$informe);
+                $this->saveInformeRi($request,$informe,$informeRi);
+                $this->deleteDetalle($request,$informeRi->id);
+                $this->saveDetalle($request,$informeRi);
 
-        DB::commit();
+            DB::commit();
 
-        } catch (Exception $e) {
+            } catch (Exception $e) {
 
-            DB::rollback();
-            throw $e;
+                DB::rollback();
+                throw $e;
 
-            }
+                }
+
+            return $informe;
         }
     }
 

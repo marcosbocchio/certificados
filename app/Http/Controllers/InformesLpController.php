@@ -302,7 +302,7 @@ class InformesLpController extends Controller
           throw $e;
 
         }
-
+        return $informe;
     }
 
     /**
