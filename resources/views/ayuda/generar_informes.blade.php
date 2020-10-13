@@ -47,8 +47,8 @@
             <p><strong>Tipos de informes </strong><br></p>
             <ul>
                 <li><a href="{{ route('ayuda-generar-informes-ri') }}">Generar informes RI</a></li>
-                <li><a href="Ayuda_generar_informesPM.html">Generar informes PM</a></li>
-                <li><a href="Ayuda_generar_informesLP.html">Generar informes LP</a></li>
+                <li><a href="{{ route('ayuda-generar-informes-pm') }}">Generar informes PM</a></li>
+                <li><a href="{{ route('ayuda-generar-informes-lp') }}">Generar informes LP</a></li>
                 <li><a href="Ayuda_generar_informesUS.html">Generar informes US</a></li>
                 <li><a href="Ayuda_generar_informesImportados.html">Importar informes externos</a></li>
             </ul>

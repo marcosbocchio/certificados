@@ -80,4 +80,22 @@ class AyudaController extends Controller
 
   }
 
+  public function generarInformesPm(){
+
+    $user = auth()->user();
+    $header_titulo = "Ayuda";
+    $header_descripcion = '';
+    return view('ayuda.generar_informes_pm',compact('user','header_titulo','header_descripcion'));
+
+  }
+
+  public function generarInformesLp(){
+
+    $user = auth()->user();
+    $header_titulo = "Ayuda";
+    $header_descripcion = '';
+    return view('ayuda.generar_informes_lp',compact('user','header_titulo','header_descripcion'));
+
+  }
+
 }

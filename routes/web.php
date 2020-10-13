@@ -19,6 +19,7 @@ Auth::routes();
 Route::group(['middleware' => ['auth']], function () {
 
   Route::get('/area/enod','DashboardController@index')->name('dashboard');
+//  Route::get('/area/enod','UserController@callviewPerfil')->name('perfil');
 
   Route::get('institucionales/{id}','DocumentacionesController@institucionales')->name('institucionales');
   Route::get('informes_importados/{id}','InformesImportadosController@open')->name('pdfinformes_importados');
@@ -150,6 +151,8 @@ Route::group(['middleware' => ['auth']], function () {
       Route::get('asignar_soldadores_y_usuarios', 'AyudaController@asignarSoldadoresUsuarios')->name('ayuda-asignar-soldadores-y-usuarios');
       Route::get('generar_informes', 'AyudaController@generarInformes')->name('ayuda-generar-informes');
       Route::get('generar_informes_ri', 'AyudaController@generarInformesRi')->name('ayuda-generar-informes-ri');
+      Route::get('generar_informes_pm', 'AyudaController@generarInformesPm')->name('ayuda-generar-informes-pm');
+      Route::get('generar_informes_lp', 'AyudaController@generarInformesLp')->name('ayuda-generar-informes-lp');
 
       /* MODELOS 3D */
       Route::get('/area/enod/visualizador3d/{modelo_id}', 'Modelos3dController@Viewer')->name('viewer-3d');

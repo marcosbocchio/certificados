@@ -15,17 +15,17 @@ class UserController extends Controller
     public function __construct(UserRepository $userRepository)
     {
 
-      $this->middleware(['role_or_permission:Sistemas|M_usuarios'], ['only' => ['callView']]);    
+      $this->middleware(['role_or_permission:Sistemas|M_usuarios'], ['only' => ['callView']]);
 
       $this->users = $userRepository;
-      
+
     }
 
     public function index(Request $request)
-    {   
+    {
 
       return User::with('cliente')->orderBy('name','ASC')->get();
-  
+
     }
 
     public function paginate(Request $request){
@@ -41,23 +41,23 @@ class UserController extends Controller
     }
 
     public function callView()
-    {   
-        $user = auth()->user(); 
+    {
+        $user = auth()->user();
         $header_titulo = "Usuarios";
-        $header_descripcion ="Alta | Baja | Modificación";  
+        $header_descripcion ="Alta | Baja | Modificación";
         return view('usuarios',compact('user','header_titulo','header_descripcion'));
 
     }
 
-    public function store(UserRequest $request){          
+    public function store(UserRequest $request){
 
-        $this->users->create($request->all()) ;      
-    
+        $this->users->create($request->all()) ;
+
     }
 
     public function destroy($id){
 
-      $user = $this->users->find($id);    
+      $user = $this->users->find($id);
       $user->delete();
     }
 
@@ -68,7 +68,7 @@ class UserController extends Controller
     }
 
     public function update(UserRequest $request,$id){
-      
+
       return $this->users->updateUser($request,$id);
 
     }
@@ -77,5 +77,14 @@ class UserController extends Controller
 
       return User::where('cliente_id',$id)->orderBy('name','ASC')->get();
     }
-    
+
+    public function callviewPerfil(){
+
+       $user = auth()->user();
+       $header_titulo = "Usuarios";
+       $header_descripcion ="";
+       return view('perfil',compact('user','header_titulo','header_descripcion'));
+
+    }
+
 }

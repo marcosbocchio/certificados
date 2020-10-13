@@ -79,9 +79,10 @@
 			</div>
 			<div class="col-sm-12">
 				<h3>Artículos relacionados&nbsp;</h3>
-				<p><a href="Ayuda_nueva_ot.html">Cómo crear una Orden de trabajo (OT)&nbsp;</a></p>
+                <p><a href="{{ route('ayuda-crear-ot') }}">Cómo crear una Orden de trabajo (OT)&nbsp;</a></p> <!-- CLIENTE NO VE  -->
                 <p><a href="{{ route('ayuda-asignar-soldadores-y-usuarios') }}">Asignar soldadores y usuarios de clientes a Orden de trabajo (OT)&nbsp;</a></p>
-				<p><a href="crear_informes.html"> Creación de informes&nbsp;</a></p>
+                <p><a href="{{ route('ayuda-generar-informes') }}"> Creación de informes&nbsp;</a></p>
+                <!-- CLIENTE NO VE  -->
 			</div>
 
         </div>
