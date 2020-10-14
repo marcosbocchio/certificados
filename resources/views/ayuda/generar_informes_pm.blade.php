@@ -39,7 +39,7 @@
         </div>
         <div class="col-sm-12">
         <h2>Elemento<br></h2>
-        <p>En esta sección es donde se cargan cada uno de los elementos/piezas ensayadas con la obligación de cargar el tamaño en cm (valor tenido en cuanta en los partes diarios). Por cada uno, es posible agregar una descripción, rechazarlo y/o asociarle un archivo de referencia para una mayor grado de detalle, como se muestra a continuación:</p>
+        <p>En esta sección es donde se cargan cada uno de los elementos/piezas ensayadas con la obligación de cargar el tamaño en cm (valor tenido en cuenta en los partes diarios). Por cada uno, es posible agregar una descripción, rechazarlo y/o asociarle un archivo de referencia para una mayor grado de detalle, como se muestra a continuación:</p>
         </div>
         <div class="col-sm-8 col-sm-offset-2">
             <img  class="img-responsive" src="{{ asset('img/ayuda/Elementos_PM.gif') }}" />

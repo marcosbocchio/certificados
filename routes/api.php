@@ -19,7 +19,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::group(['middleware' => 'auth:api'], function()
 {
-
     Route::get('colores', 'ColoresController@index');
     Route::resource('parametros_generales', 'ParametrosGeneralesController');
     Route::get('clientes/paginate', 'ClientesController@paginate');

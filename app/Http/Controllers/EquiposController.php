@@ -13,8 +13,8 @@ class EquiposController extends Controller
   public function __construct()
   {
 
-        $this->middleware(['role_or_permission:Sistemas|M_equipos'],['only' => ['callView']]);  
-  
+        $this->middleware(['role_or_permission:Sistemas|M_equipos'],['only' => ['callView']]);
+
   }
     /**
      * Display a listing of the resource.
@@ -30,19 +30,19 @@ class EquiposController extends Controller
     public function paginate(Request $request){
 
         $filtro = $request->search;
-        
+
         return Equipos::orderBy('id','DESC')->with('metodoEnsayos')->Filtro($filtro)->paginate(10);
-  
+
       }
 
     public function callView()
-      {   
-          $user = auth()->user(); 
+      {
+          $user = auth()->user();
           $header_titulo = "Equipos";
-          $header_descripcion ="Alta | Baja | Modificación"; 
-        
+          $header_descripcion ="Alta | Baja | Modificación";
+
           return view('equipos',compact('user','header_titulo','header_descripcion'));
-  
+
       }
 
     /**
@@ -63,60 +63,60 @@ class EquiposController extends Controller
      */
     public function store(EquipoRequest $request){
 
-        $equipo = new Equipos;   
+        $equipo = new Equipos;
 
-      
+
         $equipo_aux = Equipos::where('codigo',$request['codigo'])
-        ->where('descripcion',$request['descripcion']) 
-        ->first();
+                                ->where('descripcion',$request['descripcion'])
+                                ->first();
 
         if(!is_null($equipo_aux)){
-          
+
              return response()->json(['errors' => ['error' => ['Existe un Equipo con ese código y descripción']]], 422);
 
         }
-  
+
           DB::beginTransaction();
-          try { 
-  
+          try {
+
               $this->saveMaterial($request,$equipo);
-              DB::commit(); 
-  
+              DB::commit();
+
           } catch (Exception $e) {
-      
+
               DB::rollback();
-              throw $e;      
-              
-          }      
-  
+              throw $e;
+
+          }
+
       }
-  
+
       public function update(EquipoRequest $request, $id){
-  
-        $equipo = Equipos::find($id);     
+
+        $equipo = Equipos::find($id);
 
         $equipo_aux = Equipos::where('codigo',$request['codigo'])
-        ->where('descripcion',$request['descripcion']) 
+        ->where('descripcion',$request['descripcion'])
         ->first();
 
         if(!is_null($equipo_aux) && ($equipo_aux->id != $id)){
-           return response()->json(['errors' => ['error' => ['Existe un Equipo con ese código y descripción']]], 422);    
+           return response()->json(['errors' => ['error' => ['Existe un Equipo con ese código y descripción']]], 422);
         }
           DB::beginTransaction();
           try {
               $this->saveMaterial($request,$equipo);
-              DB::commit(); 
-      
+              DB::commit();
+
             } catch (Exception $e) {
-        
+
               DB::rollback();
-              throw $e;      
-              
+              throw $e;
+
             }
       }
 
       public function saveMaterial($request,$equipo){
-  
+
         $equipo->codigo = $request['codigo'];
         $equipo->descripcion = $request['descripcion'];
         $equipo->metodo_ensayo_id = $request['metodo_ensayos']['id'];
@@ -127,7 +127,7 @@ class EquiposController extends Controller
           $equipo->palpador_sn = 0;
         }
         $equipo->save();
-  
+
       }
 
     /**
@@ -160,16 +160,16 @@ class EquiposController extends Controller
      */
     public function destroy($id)
     {
-        $equipo = Equipos::find($id);    
+        $equipo = Equipos::find($id);
         $equipo->delete();
     }
 
     public function EquiposMetodo($metodo)
     {
         return DB::table('equipos')
-        ->join('metodo_ensayos','equipos.metodo_ensayo_id','=','metodo_ensayos.id')
-        ->where('metodo_ensayos.metodo','=',$metodo)
-        ->select('equipos.*')
-        ->get();
+                    ->join('metodo_ensayos','equipos.metodo_ensayo_id','=','metodo_ensayos.id')
+                    ->where('metodo_ensayos.metodo','=',$metodo)
+                    ->select('equipos.*')
+                    ->get();
     }
 }

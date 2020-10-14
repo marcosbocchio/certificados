@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Clientes;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 use App\Repositories\User\UserRepository;
 use Illuminate\Support\Facades\DB;
 use App\User;
+use Illuminate\Support\Facades\Log;
+use Session;
 
 class UserController extends Controller
 {
@@ -76,15 +79,48 @@ class UserController extends Controller
     public function UserCliente($id){
 
       return User::where('cliente_id',$id)->orderBy('name','ASC')->get();
+
     }
 
     public function callviewPerfil(){
 
        $user = auth()->user();
+       $cliente = Clientes::find($user->cliente_id);
        $header_titulo = "Usuarios";
        $header_descripcion ="";
-       return view('perfil',compact('user','header_titulo','header_descripcion'));
+       return view('perfil',compact('user','cliente','header_titulo','header_descripcion'));
 
     }
+
+    public function updatePerfil(UserRequest $request,$id){
+
+   //   dd(request()->all());
+
+        $user = User::findOrFail($id);
+
+        if( ($request->get('password')!="********"))
+        {
+            if ($request->get('password') == $request->get('password_confirmation'))
+            {
+                $user->password = bcrypt($request->get('password'));
+            }
+            else
+            {
+                return back()->with('error','Las contraseñas ingresadas no coinciden.');
+            }
+        }
+
+        $user->name= $request->get('name');
+        $user->dni = $request->get('email');
+        $user->dni = $request->get('dni');
+
+
+        $user->save();
+
+        return back()->with('success','El usuario fue actualizado.');
+
+
+
+      }
 
 }

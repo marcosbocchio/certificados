@@ -22,9 +22,9 @@ class UserRequest extends FormRequest
      * @return array
      */
     public function rules()
-    {   
+    {
         $condicion_cliente ='';
-        if(!$this->isEnod) {
+        if(isset($this->isEnod) && (!$this->isEnod)) {
             $condicion_cliente ='required';
         }
 
@@ -38,6 +38,14 @@ class UserRequest extends FormRequest
         ];
 
 
-      
+
+    }
+
+    public function attributes()
+    {
+            return [
+                'name'                   => 'nombre',
+            ];
+
     }
 }

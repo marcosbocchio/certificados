@@ -6,7 +6,7 @@ use App\Documentaciones;
 | Web Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register web routes for your application. These
+| Here is where you can register web routes for your application. Th
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
@@ -18,8 +18,10 @@ Auth::routes();
 
 Route::group(['middleware' => ['auth']], function () {
 
+  Route::get('/area/enod/perfil','UserController@callviewPerfil')->name('perfil');
   Route::get('/area/enod','DashboardController@index')->name('dashboard');
-//  Route::get('/area/enod','UserController@callviewPerfil')->name('perfil');
+
+  Route::put('users/{id}/update', 'UserController@updatePerfil')->name('users.updatePerfil');
 
   Route::get('institucionales/{id}','DocumentacionesController@institucionales')->name('institucionales');
   Route::get('informes_importados/{id}','InformesImportadosController@open')->name('pdfinformes_importados');

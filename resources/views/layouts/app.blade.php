@@ -64,6 +64,7 @@
 <script src="{{asset('adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('adminlte/plugins/iCheck/icheck.min.js')}}"></script>
+
 <script>
   $(function () {
     $('input').iCheck({
@@ -77,10 +78,10 @@
 
 <script>
     $(document).ready(function () {
-            $("#btnsendlink").bind("click", function (evt) {
-               $( "#active" ).addClass( "fa-refresh" );
-            });
+        $("#btnsendlink").bind("click", function (evt) {
+            $( "#active" ).addClass( "fa-refresh" );
         });
-  </script>
+    });
+</script>
 </body>
 </html>
