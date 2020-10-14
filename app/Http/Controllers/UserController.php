@@ -86,8 +86,8 @@ class UserController extends Controller
 
        $user = auth()->user();
        $cliente = Clientes::find($user->cliente_id);
-       $header_titulo = "Usuarios";
-       $header_descripcion ="";
+       $header_titulo = "Perfil";
+       $header_descripcion = "";
        return view('perfil',compact('user','cliente','header_titulo','header_descripcion'));
 
     }
