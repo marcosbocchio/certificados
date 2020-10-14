@@ -23,12 +23,12 @@ class InformeRiRequest extends FormRequest
      */
     public function rules()
     {
-    
-    $condicion_espesor_no_chapa = '' ;      
+
+    $condicion_espesor_no_chapa = '' ;
     $condicion_espesor_chapa = '' ;
     $condicion_dist_fuente_pelicula ='';
-    $condicion_componente=''; 
-    $condicion_pk='';  
+    $condicion_componente='';
+    $condicion_pk='';
 
     if($this->diametro['diametro'] == 'CHAPA'){
 
@@ -39,26 +39,26 @@ class InformeRiRequest extends FormRequest
 
         $condicion_espesor_no_chapa = 'required';
 
-    }    
+    }
 
     if($this->gasoducto_sn == false){
-        
+
         $condicion_componente = 'required |';
 
     }else{
-        
+
         $condicion_pk = 'required |numeric|min:0';
     }
 
 
 
 
-        $condicional = [      
-           
+        $condicional = [
+
            'espesor'                     => $condicion_espesor_no_chapa,
            'espesor_chapa'               => $condicion_espesor_chapa,
            'distancia_fuente_pelicula'   => $condicion_dist_fuente_pelicula,
-                         
+
            ];
 
 
@@ -67,11 +67,11 @@ class InformeRiRequest extends FormRequest
                 'numero_inf'                => 'required | integer| digits_between:1,3',
                 'gasoducto_sn'              => 'required',
                 'fecha'                     => 'required',
-                'obra'                      => 'required|min:1', 
+                'obra'                      => 'required|min:1',
                 'componente'                => $condicion_componente . 'Max:20',
                 'material'                  => 'required',
-                'plano_isom'                => 'required|Max:10',
-                'medida.codigo'                    => 'required',
+                'plano_isom'                => 'required|Max:20',
+                'medida.codigo'             => 'required',
                 'ot_tipo_soldadura'         => 'required',
                 'diametro'                  => 'required',
                 'tecnica'                   => 'required',
@@ -87,9 +87,9 @@ class InformeRiRequest extends FormRequest
                 'actividad'                 => 'Max:10',
                 'exposicion'                => 'required|integer|digits_between:1,6',
                 'ejecutor_ensayo'           => 'required',
-                'observaciones'             => 'max:250',     
+                'observaciones'             => 'max:250',
                 'pk'                        =>  $condicion_pk,
-            
+
         ];
 
         $validacion_completa =array_merge($condicional,$validacion);
@@ -102,17 +102,17 @@ class InformeRiRequest extends FormRequest
     public function attributes()
         {
         return [
-            'numero_inf'           => 'número de informe',  
+            'numero_inf'           => 'número de informe',
             'tipo_pelicula'        => 'tipo Pelicula',
-            'pos_ant'              => 'ant',   
-            'pos_pos'              => 'pos',   
+            'pos_ant'              => 'ant',
+            'pos_pos'              => 'pos',
             'norma_evaluacion'     => 'norma Evaluación',
             'norma_ensayo'         => 'norma Ensayo',
             'ejecutor_ensayo'      => 'ejecutor ensayo',
-            'procedimiento_soldadura' =>'procedimiento soldadura',  
+            'procedimiento_soldadura' =>'procedimiento soldadura',
             'gasoducto_sn'          =>'formato',
             'ot_tipo_soldadura'     =>'Eps',
-            'medida.codigo'         =>'medida'  
+            'medida.codigo'         =>'medida'
             ];
         }
 }

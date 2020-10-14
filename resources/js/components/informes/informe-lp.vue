@@ -50,7 +50,7 @@
                         <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="plano_isom">Plano/Isom *</label>
-                                <input type="text" v-model="plano_isom" class="form-control" id="plano_isom" maxlength="10">
+                                <input type="text" v-model="plano_isom" class="form-control" id="plano_isom" maxlength="20">
                             </div>
                         </div>
                         <div class="col-md-3">

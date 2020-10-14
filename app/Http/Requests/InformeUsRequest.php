@@ -23,44 +23,42 @@ class InformeUsRequest extends FormRequest
      */
     public function rules()
     {
-     
+
         $condicional_espesor='';
 
         if($this->diametro['diametro'] == 'CHAPA'){
 
-            $condicional_espesor = [      
-           
-                'espesor'                    => '',       
-                'espesor_chapa'              => 'required',      
-                              
-                ];           
-    
-        }else {
-    
-            $condicional_espesor = [      
-           
-                'espesor'                     => 'required',       
-                'espesor_chapa'               =>  '',
-                              
-                ];
-    
-        }   
+            $condicional_espesor = [
 
-       
+                'espesor'                    => '',
+                'espesor_chapa'              => 'required',
+
+                ];
+
+        }else {
+
+            $condicional_espesor = [
+
+                'espesor'                     => 'required',
+                'espesor_chapa'               =>  '',
+
+                ];
+
+        }
 
         $validacion = [
 
             'fecha'                     => 'required',
-            'obra'                      => 'required|min:1', 
+            'obra'                      => 'required|min:1',
             'componente'                => 'required|Max:20',
             'material'                  => 'required',
-            'plano_isom'                => 'required|Max:10',
+            'plano_isom'                => 'required|Max:20',
             'diametro'                  => 'required',
             'ot_tipo_soldadura'         => 'required',
-            'interno_equipo'            => 'required',      
-            'procedimiento'             => 'required',         
+            'interno_equipo'            => 'required',
+            'procedimiento'             => 'required',
             'norma_evaluacion'          => 'required',
-            'norma_ensayo'              => 'required',  
+            'norma_ensayo'              => 'required',
             'ejecutor_ensayo'           => 'required',
             'estado_superficie'         => 'required',
             'encoder'                   => 'required|max:15',
@@ -77,8 +75,8 @@ class InformeUsRequest extends FormRequest
 
     {
         return [
-            
-            'ot_tipo_soldadura'           => 'Eps',  
+
+            'ot_tipo_soldadura'           => 'Eps',
 
             ];
     }
