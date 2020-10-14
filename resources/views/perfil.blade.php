@@ -6,7 +6,7 @@
 
 <div class="row">
 
-    <div class="col-md-8">
+    <div class="col-md-8 col-md-offset-2">
         @include('flash-message')
         <div class="box box-custom-enod">
             <div class="box-body">
