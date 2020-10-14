@@ -40,7 +40,7 @@
                     </div>
                     </div>
 
-                    @if ($user->cliente)
+                    @if (!$user->cliente)
 
                         <div class="form-group">
                             <label for="film" class="col-sm-2 control-label">Film</label>
@@ -50,15 +50,19 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="cliente" class="col-sm-2 control-label">Cliente</label>
-
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" name="cliente" placeholder="" value="{{ $cliente->nombre_fantasia }}" disabled>
-                            </div>
-                        </div>
-
                     @endif
+
+                    @if ($user->cliente)
+
+                            <div class="form-group">
+                                <label for="cliente" class="col-sm-2 control-label">Cliente</label>
+
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="cliente" placeholder="" value="{{ $cliente->nombre_fantasia }}" disabled>
+                                </div>
+                            </div>
+
+                      @endif
 
                     <div class="form-group">
                         <label for="password" class="col-sm-2 control-label">Contraseña</label>
