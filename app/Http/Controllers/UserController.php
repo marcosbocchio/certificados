@@ -94,7 +94,7 @@ class UserController extends Controller
 
     public function updatePerfil(UserRequest $request,$id){
 
-   //   dd(request()->all());
+      // dd(request()->all());
 
         $user = User::findOrFail($id);
 

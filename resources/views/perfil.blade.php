@@ -73,10 +73,10 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="inputPasswordConfirmation" class="col-sm-2 control-label">Repetir contraseña</label>
+                        <label for="password_confirmation" class="col-sm-2 control-label">Repetir contraseña</label>
 
                         <div class="col-sm-10">
-                        <input type="password" class="form-control" name="pssword_confirmation" value="********">
+                        <input type="password" class="form-control" name="password_confirmation" value="********">
                         </div>
                     </div>
 
