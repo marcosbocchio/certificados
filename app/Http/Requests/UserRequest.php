@@ -45,6 +45,7 @@ class UserRequest extends FormRequest
     {
             return [
                 'name'                   => 'nombre',
+                'password'               => 'contraseña',
             ];
 
     }

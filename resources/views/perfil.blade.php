@@ -17,7 +17,7 @@
                     @method('PUT')
 
                     <div class="form-group">
-                        <label for="name" class="col-sm-2 control-label">Nombre</label>
+                        <label for="name" class="col-sm-2 control-label">Nombre *</label>
 
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="name" placeholder="Name" value="{{ $user->name }}" maxlength="30">
@@ -25,7 +25,7 @@
                     </div>
 
                     <div class="form-group">
-                    <label for="email" class="col-sm-2 control-label">Email</label>
+                    <label for="email" class="col-sm-2 control-label">Email *</label>
 
                     <div class="col-sm-10">
                         <input type="email" class="form-control" name="email" placeholder="Email" value="{{ $user->email }}">
@@ -33,7 +33,7 @@
                     </div>
 
                     <div class="form-group">
-                    <label for="dni" class="col-sm-2 control-label">DNI</label>
+                    <label for="dni" class="col-sm-2 control-label">DNI *</label>
 
                     <div class="col-sm-10">
                         <input type="number" class="form-control" name="dni" placeholder="Dni" value="{{ $user->dni }}">
@@ -65,10 +65,18 @@
                       @endif
 
                     <div class="form-group">
-                        <label for="password" class="col-sm-2 control-label">Contraseña</label>
+                        <label for="password" class="col-sm-2 control-label">Contraseña *</label>
 
                         <div class="col-sm-10">
-                        <input type="password" class="form-control" name="password" value="********">
+                        <input type="password" class="form-control" name="password" value="">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password_nuevo" class="col-sm-2 control-label">Nueva Contraseña</label>
+
+                        <div class="col-sm-10">
+                        <input type="password" class="form-control" name="password_nuevo" value="">
                         </div>
                     </div>
 
@@ -76,7 +84,7 @@
                         <label for="password_confirmation" class="col-sm-2 control-label">Repetir contraseña</label>
 
                         <div class="col-sm-10">
-                        <input type="password" class="form-control" name="password_confirmation" value="********">
+                        <input type="password" class="form-control" name="password_confirmation" value="">
                         </div>
                     </div>
 

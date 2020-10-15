@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use App\User;
 use Illuminate\Support\Facades\Log;
 use Session;
+use Hash;
 
 class UserController extends Controller
 {
@@ -98,26 +99,33 @@ class UserController extends Controller
 
         $user = User::findOrFail($id);
 
-        if( ($request->get('password')!="********"))
-        {
-            if ($request->get('password') == $request->get('password_confirmation'))
-            {
-                $user->password = bcrypt($request->get('password'));
+        if (Hash::check($request->get('password'), $user->password)) {
+
+            if ($request->get('password_nuevo')!='')  {
+
+                if ($request->get('password_nuevo') == $request->get('password_confirmation'))
+                {
+                    $user->password = bcrypt($request->get('password_nuevo'));
+                }
+                else
+                {
+                    return back()->with('error','Las contraseñas ingresadas no coinciden.');
+                }
+
             }
-            else
-            {
-                return back()->with('error','Las contraseñas ingresadas no coinciden.');
-            }
+
+            $user->name= $request->get('name');
+            $user->dni = $request->get('email');
+            $user->dni = $request->get('dni');
+            $user->save();
+            return back()->with('success','Perfil de usuario actualizado.');
+
+        }else{
+
+            return back()->with('error','La contraseña ingresada no es correcta.');
         }
 
-        $user->name= $request->get('name');
-        $user->dni = $request->get('email');
-        $user->dni = $request->get('dni');
 
-
-        $user->save();
-
-        return back()->with('success','El usuario fue actualizado.');
 
 
 

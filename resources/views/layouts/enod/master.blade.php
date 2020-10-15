@@ -124,13 +124,17 @@ desired effect
 <script src="https://unpkg.com/vue-3d-model/dist/vue-3d-model.umd.js"></script>
 <script>
 
-  $(document).ready(function() {
+
+
+$(document).ready(function() {
   $(window).keydown(function(event){
     if(event.keyCode == 13) {
       event.preventDefault();
       return false;
     }
   });
+
+  $(".alert").delay(4000).slideUp(500);
 });
 
 var url = window.location;

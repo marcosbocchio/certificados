@@ -40,7 +40,7 @@
                              <input type="number"  v-model="pk" class="form-control" id="plano" placeholder="PK">
                         </li>
                         <li class="list-group-item pointer">
-                             <input type="text"  v-model="plano" class="form-control" id="plano" placeholder="Plano Isométrico" maxlength="10">
+                             <input type="text"  v-model="plano" class="form-control" id="plano" placeholder="Plano Isométrico" maxlength="20">
                         </li>
                         <li class="list-group-item pointer">
                              <input type="text"  v-model="costura" class="form-control" id="costura" placeholder="Costura" maxlength="10">
