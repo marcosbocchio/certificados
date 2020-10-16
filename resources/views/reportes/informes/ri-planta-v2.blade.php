@@ -82,8 +82,9 @@ footer {
                                 <td style="font-size: 10px; " class="bordered-td"><b>RP: </b>Repetir Placa</td>
                             </tr>
                             <tr>
-                                <td style="font-size: 10px; " colspan="3" class="bordered-td"><b>AP: </b>Aprobado</td>
-                                <td style="font-size: 10px; " colspan="3" class="bordered-td"><b>RZ: </b>Rechazado</td>
+                                <td style="font-size: 10px; " colspan="2" class="bordered-td"><b>MDC: </b>Material dentro del caño</td>
+                                <td style="font-size: 10px; " colspan="2" class="bordered-td"><b>AP: </b>Aprobado</td>
+                                <td style="font-size: 10px; " colspan="2" class="bordered-td"><b>RZ: </b>Rechazado</td>
                             </tr>
                         </tbody>
                     </table>

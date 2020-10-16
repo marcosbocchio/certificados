@@ -73,11 +73,12 @@ footer {
                 <td style="font-size: 11px; " class="bordered-td"><b>RP: </b>Repetir Placa</td>
             </tr>
             <tr>
+                    <td style="font-size: 11px; "  class="bordered-td"><b>MDC: </b>Material dentro del caño</td>
                     <td style="font-size: 11px; "  class="bordered-td"><b>R: </b>Raiz</td>
                     <td style="font-size: 11px; "  class="bordered-td"><b>Y: </b>Relleno</td>
                     <td style="font-size: 11px; "  class="bordered-td"><b>S: </b>Sobremonta</td>
                     <td style="font-size: 11px; "  class="bordered-td"><b>AP: </b>Aprobado</td>
-                    <td style="font-size: 11px; " colspan="2" class="bordered-td"><b>RZ: </b>Rechazado</td>
+                    <td style="font-size: 11px; "  class="bordered-td"><b>RZ: </b>Rechazado</td>
             </tr>
             <tr>
                 <td style="font-size: 11px;" colspan="6" class="bordered-td"><b>Observaciones: </b>{{$informe->observaciones}}</td>
