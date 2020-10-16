@@ -48,8 +48,22 @@
 
                     <div class="col-md-3">
                         <div class="form-group" >
+                            <label for="linea">Linea</label>
+                            <input type="text" v-model="linea" class="form-control" id="linea" maxlength="30">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group" >
                             <label for="plano_isom">Plano / Isom *</label>
                             <input type="text" v-model="plano_isom" class="form-control" id="plano_isom" maxlength="20">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group" >
+                            <label for="hoja">hoja</label>
+                            <input type="text" v-model="hoja" class="form-control" id="hoja" maxlength="5">
                         </div>
                     </div>
 
@@ -72,7 +86,6 @@
                         </div>
                     </div>
 
-                        <div class="clearfix"></div>
 
                         <div class="col-md-3">
                              <div class="form-group" >
@@ -93,6 +106,8 @@
                             </div>
                         </div>
 
+                        <div class="clearfix"></div>
+
                          <div class="col-md-3">
                             <div class="form-group size-pqr-eps" >
                                 <label for="pqr">PQR</label>
@@ -107,7 +122,6 @@
                             </div>
                          </div>
 
-                        <div class="clearfix"></div>
 
                          <div class="col-md-3">
                             <div class="form-group">
@@ -198,8 +212,6 @@
                             </div>
                         </div>
 
-                        <div class="clearfix"></div>
-
                         <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="color_particulas">Color Particulas *</label>
@@ -223,6 +235,8 @@
                                 </v-select>
                             </div>
                         </div>
+
+                        <div class="clearfix"></div>
 
                          <div class="col-md-3">
                             <div class="form-group" >
@@ -263,6 +277,7 @@
                             </div>
                         </div>
 
+                        <div class="clearfix"></div>
 
                         <div class="col-md-3">
                             <div class="form-group" >
@@ -652,7 +667,9 @@ export default {
         material:'',
         material2:'',
         material2_tipo:'Accesorio',
+        linea:'',
         plano_isom:'',
+        hoja:'',
         diametro:'',
         espesor:'',
         espesor_chapa:'',
@@ -780,7 +797,9 @@ export default {
                this.material = this.materialdata;
                this.material2 = this.material2data;
                 if(this.informedata.material2_tipo) {this.material2_tipo = this.informedata.material2_tipo };
+               this.linea = this.informedata.linea;
                this.plano_isom = this.informedata.plano_isom;
+               this.hoja = this.informedata.hoja;
                this.instrumento_medicion = this.instrumento_medicion_data;
                this.diametro = this.diametrodata;
                this.particula = this.particula_data;
@@ -1093,7 +1112,9 @@ export default {
                 'numero_inf':     this.numero_inf,
                 'componente' :    this.componente,
                 'ot_tipo_soldadura' : this.ot_tipo_soldadura,
+                'linea'      :    this.linea,
                 'plano_isom' :    this.plano_isom,
+                'hoja'       :    this.hoja,
                 'procedimiento' : this.procedimiento,
                 'observaciones':  this.observaciones,
                 'material':       this.material,
@@ -1176,7 +1197,9 @@ export default {
                 'numero_inf':     this.numero_inf,
                 'componente' :    this.componente,
                 'ot_tipo_soldadura' : this.ot_tipo_soldadura,
+                'linea'      :    this.linea,
                 'plano_isom' :    this.plano_isom,
+                'hoja'       :    this.hoja,
                 'procedimiento' : this.procedimiento,
                 'observaciones':  this.observaciones,
                 'material':       this.material,

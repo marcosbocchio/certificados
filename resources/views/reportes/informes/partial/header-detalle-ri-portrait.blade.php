@@ -13,10 +13,16 @@
                            </tr>
 
                            <tr>
-                               <th  width="100%" colspan="4">Plano / Isométrico</th>
+                               <th colspan="2" >Linea</th>
+                               <th colspan="2" >Plano / Isométrico</th>
                            </tr>
                            <tr>
-                                <td colspan="4">{{$informe->plano_isom}}</td>
+                                <td colspan="2">{{$informe->linea}}</td>
+                                <td colspan="2">{{$informe->plano_isom}}
+                                    @if ($informe->hoja)
+                                        - H:{{ $informe->hoja}}
+                                    @endif
+                                </td>
                            </tr>
 
                            <tr>

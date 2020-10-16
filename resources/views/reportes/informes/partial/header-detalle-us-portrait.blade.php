@@ -13,16 +13,22 @@
                            </tr>
 
                            <tr>
-                               <th  width="100%" colspan="4">Plano / Isométrico</th>
+                                <th colspan="2" >Linea</th>
+                                <th colspan="2" >Plano / Isométrico</th>
                            </tr>
                            <tr>
-                                <td colspan="4">{{$informe->plano_isom}}</td>
-                           </tr>
+                                <td colspan="2">{{$informe->linea}}</td>
+                                <td colspan="2">{{$informe->plano_isom}}
+                                    @if ($informe->hoja)
+                                        - H:{{ $informe->hoja}}
+                                    @endif
+                                </td>
+                            </tr>
 
-                           <tr >
+                           <tr>
                                 <th colspan="4">EPS</th>
                            </tr>
-                           <tr >
+                           <tr>
                                 <td colspan="4">{{$ot_tipo_soldadura->eps}}</td>
                            </tr>
 

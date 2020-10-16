@@ -48,8 +48,22 @@
 
                     <div class="col-md-3">
                         <div class="form-group" >
+                            <label for="linea">Linea</label>
+                            <input type="text" v-model="linea" class="form-control" id="linea" maxlength="30">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group" >
                             <label for="plano_isom">Plano / Isom *</label>
                             <input type="text" v-model="plano_isom" class="form-control" id="plano_isom" maxlength="20">
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group" >
+                            <label for="hoja">hoja</label>
+                            <input type="text" v-model="hoja" class="form-control" id="hoja" maxlength="5">
                         </div>
                     </div>
 
@@ -82,19 +96,17 @@
                         </div>
                     </div>
 
-                    <div class="clearfix"></div>
-
-                        <div class="col-md-3">
-                             <div class="form-group" >
-                                <div v-if="isChapa">
-                                    <label for="espesor_chapa">Espesor Chapa *</label>
-                                </div>
-                                <div v-else>
-                                     <label for="espesor_chapa">Espesor Chapa </label>
-                                </div>
-                                <input  type="number" class="form-control" v-model="espesor_chapa"  id="espesor_chapa" :disabled="!isChapa" step="0.1" >
-                             </div>
-                        </div>
+                    <div class="col-md-3">
+                            <div class="form-group" >
+                            <div v-if="isChapa">
+                                <label for="espesor_chapa">Espesor Chapa *</label>
+                            </div>
+                            <div v-else>
+                                    <label for="espesor_chapa">Espesor Chapa </label>
+                            </div>
+                            <input  type="number" class="form-control" v-model="espesor_chapa"  id="espesor_chapa" :disabled="!isChapa" step="0.1" >
+                            </div>
+                    </div>
 
                     <div class="col-md-3">
                         <div class="form-group size-pqr-eps" >
@@ -102,6 +114,8 @@
                             <v-select v-model="ot_tipo_soldadura" label="eps" :options="ot_obra_tipo_soldaduras" id="procedimientos_soldadura"></v-select>
                         </div>
                     </div>
+
+                    <div class="clearfix"></div>
 
                     <div class="col-md-3">
                         <div class="form-group size-pqr-eps">
@@ -116,8 +130,6 @@
                             <v-select v-model="tecnica" label="descripcion" :options="tecnicas" id="tecnicas" @input="borrarTodasLasCalibraciones"></v-select>
                         </div>
                     </div>
-
-                    <div class="clearfix"></div>
 
                     <div class="col-md-3">
                         <div class="form-group">
@@ -1052,7 +1064,9 @@ export default {
         material:'',
         material2:'',
         material2_tipo:'Accesorio',
+        linea:'',
         plano_isom:'',
+        hoja:'',
         diametro:'',
         espesor:'',
         espesor_chapa:'',
@@ -1226,7 +1240,9 @@ export default {
                this.obra = this.informedata.obra;
                this.componente = this.informedata.componente;
                this.ot_tipo_soldadura = this.ot_tipo_soldaduradata;
+               this.linea = this.informedata.linea;
                this.plano_isom = this.informedata.plano_isom;
+               this.hoja = this.informedata.hoja;
                this.procedimiento_soldadura = this.informedata.procedimiento_soldadura;
                this.path1_calibracion = this.informe_usdata.path1_calibracion;
                this.path2_calibracion = this.informe_usdata.path2_calibracion;
@@ -1951,7 +1967,9 @@ export default {
                 'material':       this.material,
                 'material2':      this.material2,
                 'material2_tipo': this.material2_tipo,
+                'linea'      :    this.linea,
                 'plano_isom' :    this.plano_isom,
+                'hoja'       :    this.hoja,
                 'diametro':       this.diametro,
                 'espesor':        this.espesor,
                 'espesor_chapa' :  this.espesor_chapa,
@@ -2028,7 +2046,9 @@ export default {
                 'material':       this.material,
                 'material2':      this.material2,
                 'material2_tipo': this.material2_tipo,
+                'linea'      :    this.linea,
                 'plano_isom' :    this.plano_isom,
+                'hoja'       :    this.hoja,
                 'diametro':       this.diametro,
                 'espesor':        this.espesor,
                 'espesor_chapa' :  this.espesor_chapa,

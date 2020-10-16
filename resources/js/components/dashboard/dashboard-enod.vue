@@ -230,7 +230,7 @@
                 <pagination :data="ots" @pagination-change-page="getResults" ><span slot="prev-nav">&lt; Previous</span>
                 <span slot="next-nav">Next &gt;</span> </pagination>
             </div>
-            <button @click="alerta">Alerta</button>
+
             <div v-if="loading" class="overlay">
                <loading-spin></loading-spin>
             </div>

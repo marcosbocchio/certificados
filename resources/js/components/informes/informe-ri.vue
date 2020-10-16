@@ -91,6 +91,22 @@
                              </div>
                          </div>
 
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="procRadio">Procedimiento RI *</label>
+                                <v-select v-model="procedimiento" label="titulo" :options="procedimientos" id="procRadio" :appendToBody="'false'" :autoscroll="true"></v-select>
+                            </div>
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                         <div class="col-md-3">
+                             <div class="form-group" >
+                                 <label for="linea">Linea</label>
+                                 <input type="text" v-model="linea" class="form-control" id="linea" maxlength="30">
+                             </div>
+                         </div>
+
                          <div class="col-md-3">
                              <div class="form-group" >
                                  <label for="plano_isom">Plano / Isom *</label>
@@ -100,10 +116,19 @@
 
                          <div class="col-md-3">
                              <div class="form-group" >
+                                 <label for="hoja">hoja</label>
+                                 <input type="text" v-model="hoja" class="form-control" id="hoja" maxlength="5">
+                             </div>
+                         </div>
+
+                         <div class="col-md-3">
+                             <div class="form-group" >
                                  <label for="Diametro">Ø *</label>
                                  <v-select v-model="diametro" label="diametro" :options="diametros" @input="getEspesores()"></v-select>
                              </div>
                          </div>
+
+                        <div class="clearfix"></div>
 
                          <div class="col-md-3">
                              <div class="form-group" >
@@ -148,8 +173,6 @@
                              </div>
                          </div>
 
-                         <div class="clearfix"></div>
-
                         <div v-if="!reparacion_sn" class="col-md-3">
                              <div class="form-group size-pqr-eps" >
                                  <label for="pqr">PQR</label>
@@ -163,6 +186,8 @@
                                   <input type="text" v-model="ot_tipo_soldadura_r.pqr" class="form-control" id="pqr_r" disabled>
                              </div>
                          </div>
+
+                        <div class="clearfix"></div>
 
                          <div class="col-md-3">
                              <div class="form-group">
@@ -228,14 +253,14 @@
                              </div>
                          </div>
 
-                         <div class="clearfix"></div>
-
                          <div class="col-md-3">
                              <div class="form-group" >
                                  <label for="cm">Medida de Placa*</label>
                                  <v-select type="text" v-model="medida" label="codigo" id="cm" :options="cms" style="display: block" taggable  @input="cambioMedida"></v-select>
                              </div>
                          </div>
+
+                        <div class="clearfix"></div>
 
                          <div class="col-md-3">
                              <div class="form-group" >
@@ -259,42 +284,16 @@
                         </div>
 
                         <div class="col-md-3">
-                             <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group" >
-                                        <label for="pos_pos">Pos *</label>
-                                        <input type="number" v-model="pos_pos" class="form-control" id="pos_pos" step=".01">
-                                    </div>
-                                </div>
-                             </div>
-                             <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="procRadio">Procedimiento RI *</label>
-                                        <v-select v-model="procedimiento" label="titulo" :options="procedimientos" id="procRadio" :appendToBody="'false'" :autoscroll="true"></v-select>
-                                    </div>
-                                </div>
-                             </div>
-                             <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group" >
-                                        <label for="exposicion">N° Exposiciones *</label>
-                                        <input type="number" v-model="exposicion" class="form-control" id="exposicion">
-                                    </div>
-                                </div>
-                             </div>
+                            <div class="form-group" >
+                                <label for="pos_pos">Pos *</label>
+                                <input type="number" v-model="pos_pos" class="form-control" id="pos_pos" step=".01">
+                            </div>
                         </div>
 
+                        <div class="clearfix"></div>
+
                         <div class="col-md-3">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group" >
-                                        <label for="pos_pos">lado *</label>
-                                        <input type="text" v-model="lado" class="form-control" id="lado">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
+                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Norma Evaluación *</label>
@@ -306,15 +305,48 @@
                                         </v-select>
                                     </div>
                                 </div>
-                           </div>
-                           <div class="row">
+                             </div>
+                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group" >
-                                        <label for="distancia_fuente_pelicula">Dist. Fuente/Film *</label>
-                                        <input type="text" v-model="distancia_fuente_pelicula" class="form-control" disabled id="distancia_fuente_pelicula">
+                                        <label for="pos_pos">lado *</label>
+                                        <input type="text" v-model="lado" class="form-control" id="lado">
+                                    </div>
+                                </div>
+                             </div>
+                             <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group" >
+                                        <label for="ejecutor_ensayo">Ejecutor Ensayo *</label>
+                                        <v-select v-model="ejecutor_ensayo" label="name" :options="ejecutor_ensayos"></v-select>
+                                    </div>
+                                </div>
+                             </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Norma Ensayo *</label>
+                                        <v-select v-model="norma_ensayo" label="codigo" :options="norma_ensayos">
+                                            <template slot="option" slot-scope="option">
+                                                <span class="upSelect">{{ option.codigo }}</span> <br>
+                                                <span class="downSelect"> {{ option.descripcion }} </span>
+                                            </template>
+                                        </v-select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group" >
+                                        <label for="exposicion">N° Exposiciones *</label>
+                                        <input type="number" v-model="exposicion" class="form-control" id="exposicion">
                                     </div>
                                 </div>
                            </div>
+
                         </div>
 
                         <div class="col-md-3">
@@ -333,23 +365,9 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label>Norma Ensayo *</label>
-                                        <v-select v-model="norma_ensayo" label="codigo" :options="norma_ensayos">
-                                            <template slot="option" slot-scope="option">
-                                                <span class="upSelect">{{ option.codigo }}</span> <br>
-                                                <span class="downSelect"> {{ option.descripcion }} </span>
-                                            </template>
-                                        </v-select>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
                                     <div class="form-group" >
-                                        <label for="ejecutor_ensayo">Ejecutor Ensayo *</label>
-                                        <v-select v-model="ejecutor_ensayo" label="name" :options="ejecutor_ensayos"></v-select>
+                                        <label for="distancia_fuente_pelicula">Dist. Fuente/Film *</label>
+                                        <input type="text" v-model="distancia_fuente_pelicula" class="form-control" disabled id="distancia_fuente_pelicula">
                                     </div>
                                 </div>
                             </div>
@@ -962,7 +980,9 @@
              prefijo:'',
              formato :'',
              componente:'',
+             linea:'',
              plano_isom:'',
+             hoja:'',
              procedimiento:{},
              observaciones:'',
              ot_tipo_soldadura:'',
@@ -1159,7 +1179,9 @@
                 this.material = this.materialdata;
                 this.material2 = this.material2data;
                 if(this.informedata.material2_tipo) { this.material2_tipo = this.informedata.material2_tipo };
+                this.linea = this.informedata.linea;
                 this.plano_isom = this.informedata.plano_isom;
+                this.hoja = this.informedata.hoja;
                 this.diametro = this.diametrodata;
                 this.espesor = this.informedata.espesor_especifico ? {'espesor' : this.informedata.espesor_especifico} : this.diametro_espesordata;
                 this.getEspesores();
@@ -1978,15 +2000,17 @@
                          'obra'            : this.obra,
                          'ejecutor_ensayo' : this.ejecutor_ensayo,
                          'metodo_ensayo'   : this.metodo,
-                         'fecha':          this.fecha,
-                         'numero_inf':     this.numero_inf,
-                         'pk':             this.pk,
+                         'fecha'           : this.fecha,
+                         'numero_inf'      : this.numero_inf,
+                         'pk'              : this.pk,
                          'ot_tipo_soldadura' : this.ot_tipo_soldadura,
                          'reparacion_sn'     :this.reparacion_sn,
-                         'prefijo'        :this.prefijo,
-                         'gasoducto_sn' :  gasoducto_sn,
-                         'componente' :    this.componente,
+                         'prefijo'         :this.prefijo,
+                         'gasoducto_sn'    :gasoducto_sn,
+                         'componente'      :this.componente,
+                         'linea'      :    this.linea,
                          'plano_isom' :    this.plano_isom,
+                         'hoja'       :    this.hoja,
                          'procedimiento' : this.procedimiento,
                          'observaciones':  this.observaciones,
                          'material':       this.material,
@@ -2067,7 +2091,9 @@
                          'prefijo'        :this.prefijo,
                          'gasoducto_sn' :  gasoducto_sn,
                          'componente' :    this.componente,
+                         'linea'      :    this.linea,
                          'plano_isom' :    this.plano_isom,
+                         'hoja'       :    this.hoja,
                          'procedimiento' : this.procedimiento,
                          'observaciones':  this.observaciones,
                          'material':       this.material,

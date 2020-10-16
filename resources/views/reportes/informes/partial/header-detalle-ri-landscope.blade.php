@@ -1,7 +1,7 @@
     <table class="header-detalle-principal" style="border-collapse: collapse;">
         <tbody>
             <tr>
-                <td width="32%">
+                <td width="32.666%">
                     <table style="font-size: 12px;" width="100%" class="header-detalle">
                         <tbody >
                             <tr>
@@ -71,10 +71,10 @@
                         </tbody>
                     </table>
                 </td>
-                <td width="2%">
+                <td width="1%">
                     &nbsp;
                 </td>
-                <td width="32%">
+                <td width="32.666%">
                     <table style="font-size: 12px;float:right;" width="100%" class="header-detalle">
                         <tbody>
                             <tr>
@@ -138,17 +138,23 @@
                         </tbody>
                     </table>
                 </td>
-                <td width="2%">
+                <td width="1%">
                     &nbsp;
                 </td>
-                <td width="32%">
+                <td width="32.666%">
                     <table style="font-size: 12px;float:right;" width="100%" class="header-detalle">
                         <tbody>
                             <tr>
-                                <th  width="100%" colspan="4">Plano / Isométrico</th>
+                                <th colspan="2" >Linea</th>
+                                <th width="50%" colspan="2" >Plano / Isométrico</th>
                             </tr>
                             <tr>
-                                 <td colspan="4">{{$informe->plano_isom}}</td>
+                                 <td colspan="2">{{$informe->linea}}</td>
+                                 <td colspan="2">{{$informe->plano_isom}}
+                                    @if ($informe->hoja)
+                                     -H:{{ $informe->hoja}}
+                                     @endif
+                                 </td>
                             </tr>
 
                             <tr>

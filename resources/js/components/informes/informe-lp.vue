@@ -46,6 +46,12 @@
                              </div>
                          </div>
 
+                         <div class="col-md-3">
+                             <div class="form-group" >
+                                 <label for="linea">Linea</label>
+                                 <input type="text" v-model="linea" class="form-control" id="linea" maxlength="30">
+                             </div>
+                         </div>
 
                         <div class="col-md-3">
                             <div class="form-group" >
@@ -53,6 +59,14 @@
                                 <input type="text" v-model="plano_isom" class="form-control" id="plano_isom" maxlength="20">
                             </div>
                         </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group" >
+                                <label for="hoja">hoja</label>
+                                <input type="text" v-model="hoja" class="form-control" id="hoja" maxlength="5">
+                            </div>
+                        </div>
+
                         <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="Diametro">Ø *</label>
@@ -71,8 +85,6 @@
                                 </v-select>
                             </div>
                         </div>
-
-                        <div class="clearfix"></div>
 
                         <div class="col-md-3">
                              <div class="form-group" >
@@ -93,6 +105,8 @@
                             </div>
                         </div>
 
+                        <div class="clearfix"></div>
+
                         <div class="col-md-3">
                             <div class="form-group size-pqr-eps">
                                 <label for="pqr">PQR</label>
@@ -106,8 +120,6 @@
                                 <v-select v-model="procedimiento" label="titulo" :options="procedimientos" id="procRadio"></v-select>
                             </div>
                         </div>
-
-                        <div class="clearfix"></div>
 
                         <div class="col-md-3">
                             <div class="form-group">
@@ -199,8 +211,6 @@
                             </div>
                         </div>
 
-                        <div class="clearfix"></div>
-
                         <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="tiempo_penetracion">Tiempo Penetración</label>
@@ -221,6 +231,8 @@
                             </div>
                         </div>
 
+                        <div class="clearfix"></div>
+
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Aplicación  Revelador *</label>
@@ -239,8 +251,6 @@
                                     </v-select>
                             </div>
                         </div>
-
-                        <div class="clearfix"></div>
 
                         <div class="col-md-3">
                             <div class="form-group">
@@ -599,7 +609,9 @@ data() {return {
         material:'',
         material2:'',
         material2_tipo:'Accesorio',
+        linea:'',
         plano_isom:'',
+        hoja:'',
         diametro:'',
         espesor:'',
         espesor_chapa:'',
@@ -708,7 +720,9 @@ data() {return {
                this.material = this.materialdata;
                this.material2 = this.material2data;
                if(this.informedata.material2_tipo) { this.material2_tipo = this.informedata.material2_tipo };
+               this.linea = this.informedata.linea;
                this.plano_isom = this.informedata.plano_isom;
+               this.hoja = this.informedata.hoja;
                this.diametro = this.diametrodata;
                this.espesor = this.informedata.espesor_especifico ? {'espesor' : this.informedata.espesor_especifico} : this.diametro_espesordata;
                this.tecnica = this.tecnicadata;
@@ -974,7 +988,9 @@ data() {return {
                 'fecha':          this.fecha,
                 'numero_inf':     this.numero_inf,
                 'componente' :    this.componente,
+                'linea'      :    this.linea,
                 'plano_isom' :    this.plano_isom,
+                'hoja'       :    this.hoja,
                 'procedimiento' : this.procedimiento,
                 'observaciones':  this.observaciones,
                 'ot_tipo_soldadura' : this.ot_tipo_soldadura,
@@ -1048,7 +1064,9 @@ data() {return {
                 'fecha':          this.fecha,
                 'numero_inf':     this.numero_inf,
                 'componente' :    this.componente,
+                'linea'      :    this.linea,
                 'plano_isom' :    this.plano_isom,
+                'hoja'       :    this.hoja,
                 'procedimiento' : this.procedimiento,
                 'observaciones':  this.observaciones,
                 'ot_tipo_soldadura' : this.ot_tipo_soldadura,

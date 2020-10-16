@@ -227,7 +227,9 @@ class InformesController extends Controller
         $informe->km = $request->pk;
         $informe->ot_tipo_soldadura_id = $request->ot_tipo_soldadura ? $request->ot_tipo_soldadura['id'] : null;
         $informe->componente = $request->componente;
+        $informe->linea = $request->linea;
         $informe->plano_isom = $request->plano_isom;
+        $informe->hoja = $request->hoja;
         $informe->observaciones = $request->observaciones;
 
 

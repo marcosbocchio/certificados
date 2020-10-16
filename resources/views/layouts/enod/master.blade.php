@@ -78,8 +78,8 @@ desired effect
 
 <body class="hold-transition skin-yellow fixed sidebar-mini">
 
-@include('layouts.enod.partials.header')
 @include('layouts.enod.partials.sidebar-menu')
+@include('layouts.enod.partials.header')
 @include('layouts.enod.partials.content-header')
 
 
@@ -89,7 +89,7 @@ desired effect
 
 
 
-            @yield('contenido')
+                @yield('contenido')
 
 
 
