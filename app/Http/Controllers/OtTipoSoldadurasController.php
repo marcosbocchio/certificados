@@ -45,33 +45,35 @@ class OtTipoSoldadurasController extends Controller
           $existe = false;
             foreach ($request->tipo_soldaduras as $tipo_soldadura) {
 
-                if( ($ot_tipo_soldadura['tipo_soldadura_id'] == $tipo_soldadura['tipo_soldadura']['id']) &&(($ot_tipo_soldadura['obra'] == $tipo_soldadura ['obra']))){
+                if( $ot_tipo_soldadura['tipo_soldadura_id'] == $tipo_soldadura['tipo_soldadura']['id'] && $ot_tipo_soldadura['obra'] == $tipo_soldadura['obra'] && $ot_tipo_soldadura['eps'] == $tipo_soldadura['eps'] && $ot_tipo_soldadura['pqr'] == $tipo_soldadura['pqr'] ){
                   $existe = true;
                 }
-          
+
             }
 
           if (!$existe){
             OtTipoSoldaduras::where('ot_id',$ot_id)
                          ->where('tipo_soldadura_id',$ot_tipo_soldadura['tipo_soldadura_id'])
                          ->where('obra',$ot_tipo_soldadura['obra'])
+                         ->where('eps',$ot_tipo_soldadura['eps'])
+                         ->where('pqr',$ot_tipo_soldadura['pqr'])
                          ->delete();
             }
         }
 
 
         foreach ($request->tipo_soldaduras as $item) {
-      
+
             $tipo_soldadura = OtTipoSoldaduras::updateOrCreate(
-                
-                ['ot_id' => $ot_id,'obra'=>$item['obra'],'tipo_soldadura_id' => $item['tipo_soldadura']['id']],
+
+                ['ot_id' => $ot_id,'obra'=>$item['obra'],'tipo_soldadura_id' => $item['tipo_soldadura']['id'],'eps'=>$item['eps'],'pqr'=>$item['pqr']],
                 ['ot_id' => $ot_id,'obra'=>$item['obra'],'tipo_soldadura_id' => $item['tipo_soldadura']['id'],'eps'=>$item['eps'],'pqr'=>$item['pqr']]
 
             );
 
         $tipo_soldadura->save();
-  
-         } 
+
+         }
     }
 
 
@@ -90,7 +92,7 @@ class OtTipoSoldadurasController extends Controller
 
         $obra = str_replace('--','/',$obra);
         return OtTipoSoldaduras::where('ot_id',$ot_id)
-                                ->where('obra',$obra)    
+                                ->where('obra',$obra)
                                // ->where('tipo_soldaduras.codigo','!=','R')
                                 ->join('tipo_soldaduras','tipo_soldaduras.id','=','ot_tipo_soldaduras.tipo_soldadura_id')
                                 ->with('tipoSoldadura')

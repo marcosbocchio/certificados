@@ -17,7 +17,12 @@
                 <div class="col-md-6">
                     <div class="form-group" >
                         <label for="obra">Obra N°</label>
-                        <input type="text" v-model="obra" class="form-control" id="obra" min="0" maxlength="8" @input="inputObra" :disabled="otdata.obra">
+                        <div v-if="otdata.obra">
+                            <input type="text" v-model="obra" class="form-control" id="obra" min="0" maxlength="8" @input="inputObra" :disabled="otdata.obra">
+                        </div>
+                        <div v-else>
+                            <v-select v-model="obra" label="obra" :options="obras" :reduce="obras => obras.obra" @input="inputObra" id="obra"></v-select>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -66,12 +71,14 @@ export default {
 
         cliente:'',
         obra:'',
+        obras:[],
 
     }},
 
     created : function() {
 
       this.getCliente();
+      this.getObras();
       eventEditRegistro.$on('refreshObra', this.setObra);
 
     },
@@ -99,7 +106,7 @@ export default {
 
         setObra : function(){
 
-            console.log('entro en set obra');
+           console.log('entro en set obra');
            this.$forceUpdate();
            this.obra = '';
            if(this.editmode){
@@ -126,9 +133,17 @@ export default {
             axios.get(urlRegistros).then(response =>{
             this.cliente = response.data
 
-
             });
         },
+
+        getObras : function(){
+
+            axios.defaults.baseURL = this.url ;
+            var urlRegistros = 'ots/' + this.otdata.id + '/obras_por_tipo_soldaduras' + '?api_token=' + Laravel.user.api_token;
+            axios.get(urlRegistros).then(response =>{
+            this.obras = response.data
+            });
+        }
 
     }
 }

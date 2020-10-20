@@ -225,6 +225,7 @@ class InformesController extends Controller
         $informe->fecha = date('Y-m-d',strtotime($request->fecha));
         $informe->numero = $request->numero_inf;
         $informe->km = $request->pk;
+        $informe->tipo_soldadura_id = $request->tipo_soldadura['id'];
         $informe->ot_tipo_soldadura_id = $request->ot_tipo_soldadura ? $request->ot_tipo_soldadura['id'] : null;
         $informe->componente = $request->componente;
         $informe->linea = $request->linea;

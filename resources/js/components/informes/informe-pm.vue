@@ -331,8 +331,6 @@
                             </div>
                         </div>
 
-                        <div class="clearfix"></div>
-
                         <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="ejecutor_ensayo">Ejecutor Ensayo *</label>
@@ -663,6 +661,7 @@ export default {
         numero_inf:'',
         numero_inf_generado:'',
         componente:'',
+        tipo_soldadura:'',
         ot_tipo_soldadura:'',
         material:'',
         material2:'',
@@ -1111,6 +1110,7 @@ export default {
                 'fecha':          this.fecha,
                 'numero_inf':     this.numero_inf,
                 'componente' :    this.componente,
+                'tipo_soldadura' :this.ot_tipo_soldadura.tipo_soldadura,
                 'ot_tipo_soldadura' : this.ot_tipo_soldadura,
                 'linea'      :    this.linea,
                 'plano_isom' :    this.plano_isom,
@@ -1196,6 +1196,7 @@ export default {
                 'fecha':          this.fecha,
                 'numero_inf':     this.numero_inf,
                 'componente' :    this.componente,
+                'tipo_soldadura' :this.ot_tipo_soldadura.tipo_soldadura,
                 'ot_tipo_soldadura' : this.ot_tipo_soldadura,
                 'linea'      :    this.linea,
                 'plano_isom' :    this.plano_isom,
