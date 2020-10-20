@@ -2192,4 +2192,15 @@
  .tabla-detalle tr:nth-child(4n+1), .tabla-detalle tr:nth-child(4n+2) {
  background: #f2f2f2;
 }
+
+ </style>
+
+<style >
+
+    .v-select .vs__selected-options{
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    overflow: hidden;
+    }
+
  </style>

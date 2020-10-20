@@ -130,3 +130,4 @@ doc.autoTable({
 .html2canvas-container { width: 3000px !important; height: 3000px !important; }
 
 </style>
+
