@@ -40,10 +40,10 @@
                                          <div v-if="isGasoducto">
                                              <label for="ot_obra_tipo_soldaduras">Tipo Sol *</label>
 
-                                            <input type="checkbox" id="reparacion_sn" v-model="reparacion_sn" :disabled="!ExisteEpsReparacion || !pk" @change="cambioReparacion_sn()" style="float:right">
+                                            <input type="checkbox" id="reparacion_sn" v-model="reparacion_sn" :disabled="!pk || !tipo_soldadura" @change="cambioReparacion_sn()" style="float:right">
                                             <label for="reparacion_sn" style="float:right;margin-right: 5px;">R</label>
 
-                                            <v-select v-model="tipo_soldadura" label="codigo" :options="ot_tipo_soldaduras_codigo_filter_R" id="ot_obra_tipo_soldaduras" @input="cambioOtTipoSoldadura" :disabled="(!isGasoducto || !obra )"></v-select>
+                                            <v-select v-model="tipo_soldadura" label="codigo" :options="ot_tipo_soldaduras_filter_R" id="ot_obra_tipo_soldaduras" @input="cambioOtTipoSoldadura" :disabled="(!isGasoducto || !obra || !pk )"></v-select>
 
                                          </div>
                                          <div v-else>
@@ -168,8 +168,8 @@
 
                          <div v-else  class="col-md-3">
                              <div class="form-group size-pqr-eps" >
-                                 <label for="eps_r">Proc. Soldadura (EPS)*</label>
-                                  <input type="text" v-model="ot_tipo_soldadura_r.eps" class="form-control" id="eps_r" disabled>
+                                 <label for="eps_r">Proc. Soldadura (EPS) *</label>
+                                  <v-select v-model="ot_tipo_soldadura" label="proc_reparacion" :options="ot_tipo_soldaduras_filter_codigo" id="procedimientos_soldadura"></v-select>
                              </div>
                          </div>
 
@@ -183,7 +183,7 @@
                          <div v-else  class="col-md-3">
                              <div class="form-group size-pqr-eps" >
                                  <label for="pqr_r">PQR</label>
-                                  <input type="text" v-model="ot_tipo_soldadura_r.pqr" class="form-control" id="pqr_r" disabled>
+                                  <input type="text" class="form-control" id="pqr_r" disabled>
                              </div>
                          </div>
 
@@ -897,10 +897,6 @@
        type : Object,
        required : false
        },
-       tipo_soldaduradata : {
-        type : [ Object, Array ],
-        required : false,
-       },
        ot_tipo_soldaduradata : {
         type : [ Object, Array ],
         required : false,
@@ -989,12 +985,11 @@
              hoja:'',
              procedimiento:{},
              observaciones:'',
-             ot_tipo_soldadura:'',
              tipo_soldadura:'',
+             ot_tipo_soldadura:'',
              ot_tipo_soldaduras_codigo:'',
              ot_obra_tipo_soldaduras_filter:'',
              ot_tipo_soldadura_r:'',
-             tipo_soldadura:'',
              material:'',
              material2:'',
              material2_tipo:'Accesorio',
@@ -1021,7 +1016,6 @@
              ejecutor_ensayo:'',
              tecnicas_grafico :'',
              tecnica_distancia:'',
-             index_ot_obra_tipo_soldaduras :-1,
              modelo_3d : '',
              TablaModelos3d :[],
             // Fin Formulario encabezado
@@ -1172,7 +1166,7 @@
 
              },
 
-             ot_tipo_soldaduras_codigo_filter_R :function(){
+             ot_tipo_soldaduras_filter_R :function(){
 
                 let aux = [];
                 aux = this.ot_obra_tipo_soldaduras.map(item=> item.tipo_soldadura);
@@ -1201,12 +1195,6 @@
 
              },
 
-             ExisteEpsReparacion : function(){
-
-                 return (this.index_ot_obra_tipo_soldaduras != -1) ? true :  false;
-
-             }
-
       },
      methods : {
          setEdit : function(){
@@ -1217,6 +1205,7 @@
                 this.fecha   = this.informedata.fecha;
                 this.pk = this.informedata.km;
                 this.ot_tipo_soldadura = this.ot_tipo_soldaduradata;
+                this.tipo_soldadura = this.ot_tipo_soldaduradata.tipo_soldadura;
                 this.numero_inf = this.informedata.numero;
                 this.componente = this.informedata.componente;
                 this.material = this.materialdata;
@@ -1251,7 +1240,6 @@
                 this.TablaPasadas = this.pasada_juntas_data;
                 this.InicializarElementosPasadas();
                 this.observaciones = this.informedata.observaciones
-                this.tipo_soldadura = this.tipo_soldaduradata;
                 this.TablaModelos3d = this.tablamodelos3d_data;
 
                 if(this.informe_ridata.reparacion_sn){
@@ -1260,37 +1248,23 @@
 
                 if (this.interno_fuentedata.id != undefined){
                     this.$store.dispatch('loadCurie', { 'interno_fuente_id' : this.interno_fuentedata.id, 'fecha_final': this.informedata.fecha }).then(response => {
-
                           this.actividad = this.curie;
                     });
                 }
 
                 this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.informedata.obra }).then(res => {
+
                     this.reparacion_sn = this.informe_ridata.reparacion_sn == 1 ?  true : false;
-                    this.index_ot_obra_tipo_soldaduras = this.ot_obra_tipo_soldaduras.findIndex(elemento => elemento.tipo_soldadura.codigo  == 'R' );
-                    if(this.index_ot_obra_tipo_soldaduras != -1){
-                        this.ot_tipo_soldadura_r = this.ot_obra_tipo_soldaduras[this.index_ot_obra_tipo_soldaduras];
-                    }
+
                 });
 
 
-                }else{/*
-                    this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.obra }).then(res =>{
-                        this.index_ot_obra_tipo_soldaduras = this.ot_obra_tipo_soldaduras.findIndex(elemento => elemento.tipo_soldadura.codigo  == 'R' );
-                    });
-                    */
                 }
          },
 
          cambioReparacion_sn : function(){
-             console.log('cambio reparacion');
-               if(this.reparacion_sn){
 
-                   if(this.index_ot_obra_tipo_soldaduras != -1){
-                       this.ot_tipo_soldadura_r = this.ot_obra_tipo_soldaduras[this.index_ot_obra_tipo_soldaduras];
-                       this.getElementosReparacion();
-                   }
-               }
+             this.ot_tipo_soldadura='';
              this.TablaDetalle = [];
              this.TablaPasadas = [];
              this.TablaImportada= [];
@@ -1301,15 +1275,8 @@
 
              this.obra = value;
              this.ot_tipo_soldadura='';
-
-             this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : (this.obra ? this.obra : 'xxxxxxxxxxx') }).then(res =>{
-
-                     this.index_ot_obra_tipo_soldaduras = this.ot_obra_tipo_soldaduras.findIndex(elemento => elemento.tipo_soldadura.codigo  == 'R' );
-
-
-                 });;
+             this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : (this.obra ? this.obra : 'xxxxxxxxxxx') });
          },
-
 
          getCms: function(){
 
@@ -1328,7 +1295,7 @@
 
          cambioOtTipoSoldadura(){
 
-           this.ot_tipo_soldadura = '';
+            this.ot_tipo_soldadura = '';
 
          },
 
@@ -2055,7 +2022,6 @@
                          'fecha'           : this.fecha,
                          'numero_inf'      : this.numero_inf,
                          'pk'              : this.pk,
-                         'tipo_soldadura' :this.tipo_soldadura,
                          'ot_tipo_soldadura' : this.ot_tipo_soldadura,
                          'reparacion_sn'     :this.reparacion_sn,
                          'prefijo'         :this.prefijo,
@@ -2139,7 +2105,6 @@
                          'fecha':          this.fecha,
                          'numero_inf':     this.numero_inf,
                          'pk':             this.pk,
-                         'tipo_soldadura' :this.tipo_soldadura,
                          'ot_tipo_soldadura' : this.ot_tipo_soldadura,
                          'reparacion_sn'     :this.reparacion_sn,
                          'prefijo'        :this.prefijo,

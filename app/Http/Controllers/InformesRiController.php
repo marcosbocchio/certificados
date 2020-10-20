@@ -147,7 +147,6 @@ class InformesRiController extends Controller
        if ($informe_material_accesorio == null)
            $informe_material_accesorio = new Materiales();
 
-        $informe_tipo_soldadura = TipoSoldaduras::find($informe->tipo_soldadura_id);
         $informe_ot_tipo_soldadura = OtTipoSoldaduras::join('tipo_soldaduras','tipo_soldaduras.id','=','ot_tipo_soldaduras.tipo_soldadura_id')
         ->where('ot_tipo_soldaduras.id',$informe->ot_tipo_soldadura_id)->with('tipoSoldadura')->select('ot_tipo_soldaduras.*','tipo_soldaduras.codigo')->first();
 
@@ -177,7 +176,6 @@ class InformesRiController extends Controller
                                                  'user',
                                                  'informe',
                                                  'informe_ri',
-                                                 'informe_tipo_soldadura',
                                                  'informe_ot_tipo_soldadura',
                                                  'informe_material',
                                                  'informe_material_accesorio',

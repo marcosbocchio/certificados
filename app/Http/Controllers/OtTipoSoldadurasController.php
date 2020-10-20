@@ -45,7 +45,7 @@ class OtTipoSoldadurasController extends Controller
           $existe = false;
             foreach ($request->tipo_soldaduras as $tipo_soldadura) {
 
-                if( $ot_tipo_soldadura['tipo_soldadura_id'] == $tipo_soldadura['tipo_soldadura']['id'] && $ot_tipo_soldadura['obra'] == $tipo_soldadura['obra'] && $ot_tipo_soldadura['eps'] == $tipo_soldadura['eps'] && $ot_tipo_soldadura['pqr'] == $tipo_soldadura['pqr'] ){
+                if( $ot_tipo_soldadura['tipo_soldadura_id'] == $tipo_soldadura['tipo_soldadura']['id'] && $ot_tipo_soldadura['obra'] == $tipo_soldadura['obra'] && $ot_tipo_soldadura['eps'] == $tipo_soldadura['eps'] && $ot_tipo_soldadura['pqr'] == $tipo_soldadura['pqr'] && $ot_tipo_soldadura['proc_reparacion'] == $tipo_soldadura['proc_reparacion'] ){
                   $existe = true;
                 }
 
@@ -57,6 +57,7 @@ class OtTipoSoldadurasController extends Controller
                          ->where('obra',$ot_tipo_soldadura['obra'])
                          ->where('eps',$ot_tipo_soldadura['eps'])
                          ->where('pqr',$ot_tipo_soldadura['pqr'])
+                         ->where('proc_reparacion',$ot_tipo_soldadura['proc_reparacion'])
                          ->delete();
             }
         }
@@ -66,8 +67,8 @@ class OtTipoSoldadurasController extends Controller
 
             $tipo_soldadura = OtTipoSoldaduras::updateOrCreate(
 
-                ['ot_id' => $ot_id,'obra'=>$item['obra'],'tipo_soldadura_id' => $item['tipo_soldadura']['id'],'eps'=>$item['eps'],'pqr'=>$item['pqr']],
-                ['ot_id' => $ot_id,'obra'=>$item['obra'],'tipo_soldadura_id' => $item['tipo_soldadura']['id'],'eps'=>$item['eps'],'pqr'=>$item['pqr']]
+                ['ot_id' => $ot_id,'obra'=>$item['obra'],'tipo_soldadura_id' => $item['tipo_soldadura']['id'],'eps'=>$item['eps'],'pqr'=>$item['pqr'],'proc_reparacion'=>$item['proc_reparacion']],
+                ['ot_id' => $ot_id,'obra'=>$item['obra'],'tipo_soldadura_id' => $item['tipo_soldadura']['id'],'eps'=>$item['eps'],'pqr'=>$item['pqr'],'proc_reparacion'=>$item['proc_reparacion']]
 
             );
 

@@ -72,7 +72,6 @@ class InformeRiRequest extends FormRequest
                 'material'                  => 'required',
                 'plano_isom'                => 'required|Max:20',
                 'medida.codigo'             => 'required',
-                'tipo_soldadura'            => 'required',
                 'ot_tipo_soldadura'         => 'required',
                 'diametro'                  => 'required',
                 'tecnica'                   => 'required',
@@ -112,7 +111,6 @@ class InformeRiRequest extends FormRequest
             'ejecutor_ensayo'      => 'ejecutor ensayo',
             'procedimiento_soldadura' =>'procedimiento soldadura',
             'gasoducto_sn'          =>'formato',
-            'tipo_soldadura'        =>'tipo soldadura',
             'ot_tipo_soldadura'     =>'Eps',
             'medida.codigo'         =>'medida'
             ];

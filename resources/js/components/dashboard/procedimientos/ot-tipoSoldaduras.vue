@@ -11,41 +11,54 @@
         </div>
 
         <div class="box-body">
-            <div class="col-md-2">
-                <div class="form-group" >
-                    <label for="tipo_soldaduras">Tipo Sol.</label>
-                    <v-select v-model="tipo_soldadura" label="codigo" :options="tipo_soldaduras"></v-select>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group" >
+                                <label for="tipo_soldaduras">Tipo Sol.</label>
+                                <v-select v-model="tipo_soldadura" label="codigo" :options="tipo_soldaduras"></v-select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="obra">Obra Nº </label>
+                                <input v-model="obra" type="text" class="form-control" id="obra" placeholder="" maxlength = "8" :disabled="otdata.obra">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group" >
+                                <label for="procedimientos_soldadura">Proc. Soldadura (EPS) *</label>
+                                <input type="text" v-model="eps" class="form-control" id="procedimientos_soldadura" maxlength="30">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group" >
+                                <label for="pqr">PQR *</label>
+                                <input type="text" v-model="pqr" class="form-control" id="pqr" maxlength="30">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="proc_reparacion">Proc.Reparación *</label>
+                                <input type="text" v-model="proc_reparacion" class="form-control" id="proc_reparacion" maxlength="30">
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-
-        <div class="col-md-2">
-          <div class="form-group">
-            <label for="obra">Obra Nº </label>
-
-            <input v-model="obra" type="text" class="form-control" id="obra" placeholder="" maxlength = "8" :disabled="otdata.obra">
-          </div>
-        </div>
-
-            <div class="col-md-3">
-                <div class="form-group" >
-                    <label for="procedimientos_soldadura">Proc. Soldadura (EPS)*</label>
-                    <input type="text" v-model="eps" class="form-control" id="procedimientos_soldadura" maxlength="30">
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="form-group" >
-                    <label for="pqr">PQR</label>
-                    <input type="text" v-model="pqr" class="form-control" id="pqr" maxlength="30">
-                </div>
-            </div>
-            <div class="col-md-1">
-                <div class="form-group">
-                        <p>&nbsp;</p>
-                    <span>
-                        <button type="button" @click="addTipoSoldaduras()"><span class="fa fa-plus-circle"></span></button>
-                    </span>
-                </div>
+            <div class="form-group">
+                <span>
+                    <button type="button" @click="addTipoSoldaduras()"><span class="fa fa-plus-circle"></span></button>
+                </span>
             </div>
         </div>
     </div>
@@ -56,10 +69,11 @@
                 <table class="table table-hover table-striped table-condensed">
                     <thead>
                     <tr>
-                        <th  class="col-md-2">Tipo Sol.</th>
+                        <th  class="col-md-1">Tipo Sol.</th>
                         <th class="col-md-2">Obra</th>
-                        <th class="col-md-4">EPS</th>
-                        <th class="col-md-4">PQR</th>
+                        <th class="col-md-3">EPS</th>
+                        <th class="col-md-3">PQR</th>
+                        <th class="col-md-3">Proc. Reparación</th>
                         <th>&nbsp;</th>
                     </tr>
                     </thead>
@@ -69,6 +83,7 @@
                          <td>{{ item.obra}} </td>
                         <td>{{ item.eps}} </td>
                         <td>{{ item.pqr }}</td>
+                        <td>{{ item.proc_reparacion }}</td>
                         <td style="text-align:center"> <i class="fa fa-minus-circle" @click="removeTipoSoldadura(k)" ></i></td>
                     </tr>
                     </tbody>
@@ -106,6 +121,7 @@
       obra:this.otdata.obra,
       eps:'',
       pqr :'',
+      proc_reparacion:'',
     }
 
     },
@@ -142,7 +158,7 @@
 
     addTipoSoldaduras: function(){
 
-        if(jQuery.isEmptyObject(this.tipo_soldadura) || jQuery.isEmptyObject(this.obra)){
+        if(jQuery.isEmptyObject(this.tipo_soldadura) || jQuery.isEmptyObject(this.obra) || !this.eps  || !this.pqr || !this.proc_reparacion ){
 
             return;
         }
@@ -150,9 +166,10 @@
         let Existe = false;
         this.TablaTipoSoldaduras.forEach(function(item){
 
-            if(item.tipo_soldadura.id == this.tipo_soldadura.id && item.obra == this.obra && this.eps == item.eps && this.pqr == item.pqr){
+            if(item.tipo_soldadura.id == this.tipo_soldadura.id && item.obra == this.obra && this.eps == item.eps && this.pqr == item.pqr && this.proc_reparacion == item.proc_reparacion){
                 Existe = true;
             }
+
         }.bind(this))
 
 
@@ -169,12 +186,14 @@
             tipo_soldadura : this.tipo_soldadura,
             eps:this.eps,
             pqr : this.pqr,
+            proc_reparacion : this.proc_reparacion,
 
             });
 
-        this.tipo_soldadura={};
+        this.tipo_soldadura = {};
         this.eps = '';
         this.pqr = '';
+        this.proc_reparacion = '';
         this.obra = this.otdata.obra;
 
     },
