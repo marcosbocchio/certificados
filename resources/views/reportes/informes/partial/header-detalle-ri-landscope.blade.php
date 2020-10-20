@@ -99,8 +99,13 @@
                             <tr >
                                 <th colspan="4">EPS</th>
                             </tr>
-                            <tr >
-                                <td colspan="4">{{$ot_tipo_soldadura->eps}}</td>
+                            <tr>
+                                @if($informe_ri->reparacion_sn)
+                                  <td colspan="4">{{$ot_tipo_soldadura->proc_reparacion}}</td>
+                                @else
+                                    <td colspan="4">{{$ot_tipo_soldadura->eps}}</td>
+                                @endif
+
                             </tr>
 
                             <tr>
@@ -162,7 +167,7 @@
                             </tr>
                             <tr >
                                 <td colspan="4">
-                                @if($ot_tipo_soldadura->pqr)
+                                @if( !$informe_ri->reparacion_sn && $ot_tipo_soldadura->pqr)
                                       {{$ot_tipo_soldadura->pqr}}
                                 @else
                                     &nbsp;

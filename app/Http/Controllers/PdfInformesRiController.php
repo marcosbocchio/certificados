@@ -48,19 +48,8 @@ class PdfInformesRiController extends Controller
         $ot = Ots::findOrFail($informe->ot_id);
         $cliente = Clientes::findOrFail($ot->cliente_id);
 
-        if($informe_ri->reparacion_sn){
+        $ot_tipo_soldadura = OtTipoSoldaduras::where('id',$informe->ot_tipo_soldadura_id)->with('Tiposoldadura')->first();
 
-          $ot_tipo_soldadura = OtTipoSoldaduras::join('tipo_soldaduras','tipo_soldaduras.id','=','ot_tipo_soldaduras.tipo_soldadura_id')
-                                                 ->where('tipo_soldaduras.codigo','R')
-                                                 ->where('ot_tipo_soldaduras.ot_id',$ot->id)
-                                                 ->where('obra',$informe->obra)
-                                                 ->with('Tiposoldadura')->first();
-
-        }else{
-
-          $ot_tipo_soldadura = OtTipoSoldaduras::where('id',$informe->ot_tipo_soldadura_id)->with('Tiposoldadura')->first();
-
-        }
         $material = Materiales::findOrFail($informe->material_id);
         $material2 = Materiales::find($informe->material2_id);
         $norma_ensayo = NormaEnsayos::findOrFail($informe->norma_ensayo_id);
@@ -99,7 +88,7 @@ class PdfInformesRiController extends Controller
           $defectos_posiciones = DB::select('CALL InformeRiGasoductoDefectosPasadasPosicion(?)',array($informe_ri->id));
 
         //  dd($juntas_posiciones,$pasadas_juntas,$defectos_posiciones);
-
+        //    dd($ot_tipo_soldadura);
           $pdf = PDF::loadView('reportes.informes.ri-gasoducto-v2',compact('titulo','nro','tipo_reporte','fecha',
                                                                         'ot',
                                                                         'norma_ensayo',
