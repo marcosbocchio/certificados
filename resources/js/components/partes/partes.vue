@@ -741,8 +741,8 @@ export default {
         km_final:'',
         observaciones:'',
         loading: false,
-        placas_repetidas : '',
-        placas_testigos : '',
+        placas_repetidas : null,
+        placas_testigos : null,
 
         operador:'',
         operadores:[],
@@ -2091,33 +2091,50 @@ export default {
 
         },
 
-        Store : function(){
+        validar : function(){
+
+            let valido = true;
 
             if(!this.validarCmsRi()){
 
                   toastr.error('EL campo CM en los informes RI asignados al Parte son obligatorios');
-                  return;
+                  valido = false;
             }
 
-            this.errors =[];
 
             if(!this.validarResponsables()){
 
                 toastr.error('El Parte debe tener al menos 1 responsable');
-                return;
+                valido = false;
             }
 
-            if(this.TablaInformesRi.length && !this.placas_repetidas){
+            if(this.TablaInformesRi.length) {
 
-                toastr.error('El campo placas repetidas es obligatorio');
-                return;
+                if(this.placas_repetidas && this.placas_testigos)
+                    return true;
+
+                if(!this.placas_repetidas){
+
+                    toastr.error('El campo placas repetidas es obligatorio');
+                     return false;
+                }
+
+                if(!this.placas_testigos){
+
+                    toastr.error('El campo placas testigos es obligatorio');
+                     return false;
+
+                }
             }
 
-            if(this.TablaInformesRi.length && !this.placas_testigos){
+            return valido;
 
-                toastr.error('El campo placas testigos es obligatorio');
+        },
+
+        Store : function(){
+
+            if(!this.validar()){
                 return;
-
             }
 
             this.errors =[];
@@ -2175,31 +2192,9 @@ export default {
 
         Update : function() {
 
-            if(!this.validarCmsRi()){
-
-                toastr.error('EL campo CM en los informes RI asignados al Parte son obligatorios');
-                return;
-
-                }
-
-            if(!this.validarResponsables()){
-
-                toastr.error('El Parte debe tener al menos 1 responsable');
+            if(!this.validar()){
                 return;
             }
-
-                if(this.TablaInformesRi.length && !this.placas_repetidas){
-
-                    toastr.error('El campo placas repetidas es obligatorio');
-                    return;
-                    }
-
-                    if(this.TablaInformesRi.length && !this.placas_testigos){
-
-                    toastr.error('El campo placas testigos es obligatorio');
-                    return;
-
-                    }
 
             console.log('entro para actualizar' );
             this.errors =[];
