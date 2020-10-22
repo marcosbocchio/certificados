@@ -256,7 +256,7 @@
                          <div class="col-md-3">
                              <div class="form-group" >
                                  <label for="cm">Medida de Placa*</label>
-                                 <v-select type="text" v-model="medida" label="codigo" id="cm" :options="cms" style="display: block" taggable  @input="cambioMedida"></v-select>
+                                 <v-select type="text" v-model="medida" label="codigo" id="cm" :options="medidas_placa" style="display: block" taggable  @input="cambioMedida"></v-select>
                              </div>
                          </div>
 
@@ -309,7 +309,7 @@
                              <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group" >
-                                        <label for="pos_pos">lado *</label>
+                                        <label for="pos_pos">Lado *</label>
                                         <input type="text" v-model="lado" class="form-control" id="lado">
                                     </div>
                                 </div>
@@ -1044,7 +1044,6 @@
              isGasoducto:false,
              EnableClonarPasadas:false,
              medida:'',
-             cms:[],
              equipos:[],
              fuentes:[],
              tipo_peliculas:[],
@@ -1087,7 +1086,7 @@
          this.$store.dispatch('loadNormaEnsayos');
          this.$store.dispatch('loadModelos3d');
          this.getIcis();
-         this.getCms();
+         this.$store.dispatch('loadMedidasPlaca');
          this.getTecnicas();
          this.$store.dispatch('loadEjecutorEnsayo', this.otdata.id);
          this.getSoldadores();
@@ -1145,7 +1144,7 @@
      },
      computed :{
 
-         ...mapState(['isLoading','url','ot_obra_tipo_soldaduras','materiales','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','ejecutor_ensayos','interno_equipos','fuentePorInterno','curie','modelos_3d']),
+         ...mapState(['isLoading','url','ot_obra_tipo_soldaduras','materiales','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','ejecutor_ensayos','interno_equipos','fuentePorInterno','curie','modelos_3d','medidas_placa']),
 
             HabilitarClonarPasadas(){
 
@@ -1276,15 +1275,6 @@
              this.obra = value;
              this.ot_tipo_soldadura='';
              this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : (this.obra ? this.obra : 'xxxxxxxxxxx') });
-         },
-
-         getCms: function(){
-
-             axios.defaults.baseURL = this.url ;
-             var urlRegistros = 'medidas/cm/' + '?api_token=' + Laravel.user.api_token;
-             axios.get(urlRegistros).then(response =>{
-             this.cms = response.data
-             });
          },
          cambiopTipoInforme : function(){
             this.pk ='' ;
@@ -2195,12 +2185,12 @@
 
  </style>
 
-<style >
+<style>
 
     .v-select .vs__selected-options{
-    flex-wrap: nowrap;
-    white-space: nowrap;
-    overflow: hidden;
+        flex-wrap: nowrap;
+        white-space: nowrap;
+        overflow: hidden;
     }
 
  </style>

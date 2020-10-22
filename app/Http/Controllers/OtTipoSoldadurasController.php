@@ -44,30 +44,25 @@ class OtTipoSoldadurasController extends Controller
         foreach ($ot_tipo_soldaduras as $ot_tipo_soldadura) {
           $existe = false;
             foreach ($request->tipo_soldaduras as $tipo_soldadura) {
-
-                if( $ot_tipo_soldadura['tipo_soldadura_id'] == $tipo_soldadura['tipo_soldadura']['id'] && $ot_tipo_soldadura['obra'] == $tipo_soldadura['obra'] && $ot_tipo_soldadura['eps'] == $tipo_soldadura['eps'] && $ot_tipo_soldadura['pqr'] == $tipo_soldadura['pqr'] && $ot_tipo_soldadura['proc_reparacion'] == $tipo_soldadura['proc_reparacion'] ){
-                  $existe = true;
-                }
-
+                    if( $ot_tipo_soldadura['id'] == $tipo_soldadura['id']){
+                      $existe = true;
+                    }
             }
 
           if (!$existe){
             OtTipoSoldaduras::where('ot_id',$ot_id)
-                         ->where('tipo_soldadura_id',$ot_tipo_soldadura['tipo_soldadura_id'])
-                         ->where('obra',$ot_tipo_soldadura['obra'])
-                         ->where('eps',$ot_tipo_soldadura['eps'])
-                         ->where('pqr',$ot_tipo_soldadura['pqr'])
-                         ->where('proc_reparacion',$ot_tipo_soldadura['proc_reparacion'])
-                         ->delete();
+                            ->where('id',$ot_tipo_soldadura['id'])
+                            ->delete();
             }
         }
 
 
         foreach ($request->tipo_soldaduras as $item) {
 
+
             $tipo_soldadura = OtTipoSoldaduras::updateOrCreate(
 
-                ['ot_id' => $ot_id,'obra'=>$item['obra'],'tipo_soldadura_id' => $item['tipo_soldadura']['id'],'eps'=>$item['eps'],'pqr'=>$item['pqr'],'proc_reparacion'=>$item['proc_reparacion']],
+                ['id' =>$item['id']],
                 ['ot_id' => $ot_id,'obra'=>$item['obra'],'tipo_soldadura_id' => $item['tipo_soldadura']['id'],'eps'=>$item['eps'],'pqr'=>$item['pqr'],'proc_reparacion'=>$item['proc_reparacion']]
 
             );

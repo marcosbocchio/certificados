@@ -159,7 +159,12 @@ footer {
 
     <!-- DETALLE INFORME RI -->
 
-    @php $ExisteRI = false; @endphp
+    @php
+     $ExisteRI = false;
+     $ExisteRIManual = false;
+        if(count($informes_ri_adicionales) >0)
+           $ExisteRIManual = true;
+    @endphp
 
     @foreach ($parte_detalle as $item)
 
@@ -169,7 +174,7 @@ footer {
 
     @endforeach
 
-    @if ($ExisteRI)
+    @if ($ExisteRI || $ExisteRIManual)
         @include('reportes.partial.linea-amarilla-fina')
         <table width="100%" style="margin-top: -5px;">
             </tbody>
@@ -201,6 +206,17 @@ footer {
                             <td style="font-size: 12px; text-align: center;">{{$item->cm}}</td>
                         </tr>
                     @endif
+                @endforeach
+
+                @foreach ($informes_ri_adicionales as $item)
+                        <tr>
+                            <td style="font-size: 12px;height: 20px;">MANUAL</td>
+                            <td style="font-size: 12px; text-align: center;">{{$item->costura}}</td>
+                            <td style="font-size: 12px; text-align: center;">{{$item->pulgadas}}</td>
+                            <td style="font-size: 12px; text-align: center;">{{$item->placas}}</td>
+                            <td style="font-size: 12px; text-align: center;">{{$item->cm}}</td>
+                        </tr>
+
                 @endforeach
             </tbody>
         </table>

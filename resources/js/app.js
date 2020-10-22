@@ -346,6 +346,7 @@ state: {
         materiales:[],
         diametros:[],
         espesores:[],
+        medidas_placa:[],
         procedimientos:[],
         unidades_medidas:[],
         metodos_ensayos:[],
@@ -589,6 +590,16 @@ actions : {
           })
           })
         },
+
+        loadMedidasPlaca({
+            commit
+          }) {
+            axios.defaults.baseURL = store.state.url ;
+            var urlRegistros = 'medidas/cm/' + '?api_token=' + Laravel.user.api_token;
+            axios.get(urlRegistros).then((response) => {
+              commit('getMedidasPlaca', response.data)
+            })
+          },
 
         loadProcedimietosOtMetodo({
           commit},payload) {
@@ -1091,6 +1102,10 @@ actions : {
         state.espesores = espesores
       },
 
+      getMedidasPlaca(state, medidas_placa) {
+        state.medidas_placa = medidas_placa
+      },
+
       getProcedimientosOtMetodo(state, procedimientos) {
         state.procedimientos = procedimientos
       },
@@ -1130,7 +1145,6 @@ actions : {
       getParticulas(state, particulas) {
         state.particulas = particulas
       },
-
 
       getUbicacionInternoEquipo(state, interno_equipo_show) {
         state.interno_equipo_show = interno_equipo_show

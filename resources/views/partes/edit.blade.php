@@ -5,19 +5,20 @@
 
 <link rel="stylesheet"  href="{{asset('adminlte/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
 <link rel="stylesheet"  href="{{asset('adminlte/plugins/timepicker/bootstrap-timepicker.min.css')}}">
-   
+
 @endsection
 
 
 @section('contenido')
- 
+
  <div id="app">
 
-  <partes  
-  
-  :otdata="{{$ot}}" 
-  :parte_data="{{$parte}}" 
+  <partes
+
+  :otdata="{{$ot}}"
+  :parte_data="{{$parte}}"
   :informes_ri_data="{{$informes_ri}}"
+  :informes_ri_adicionales_data="{{$informes_ri_adicionales}}"
   :informes_pm_data="{{$informes_pm}}"
   :informes_lp_data="{{$informes_lp}}"
   :informes_us_data="{{$informes_us}}"
@@ -25,9 +26,9 @@
   :servicios_data="{{$servicios}}"
   :vehiculos_data="{{$vehiculos}}"
   :responsables_data="{{$responsables}}"
-  editmode  
-  
-  
+  editmode
+
+
   ></partes>
 
  </div>

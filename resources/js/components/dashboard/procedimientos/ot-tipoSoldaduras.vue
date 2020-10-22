@@ -78,12 +78,27 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="(item,k) in TablaTipoSoldaduras" :key="k">
-                        <td>{{ item.tipo_soldadura.codigo}} </td>
-                         <td>{{ item.obra}} </td>
-                        <td>{{ item.eps}} </td>
-                        <td>{{ item.pqr }}</td>
-                        <td>{{ item.proc_reparacion }}</td>
+                    <tr v-for="(item,k) in TablaTipoSoldaduras" :key="k" @click="selectPosTablaTipoSoldaduras(k)">
+
+                        <td>{{ item.tipo_soldadura.codigo}}</td>
+                        <td>{{ item.obra}} </td>
+
+
+                            <td v-if="indexTablaTipoSoldaduras ==  k">
+                                <input type="text" v-model="TablaTipoSoldaduras[k].eps" maxlength="30">
+                            </td>
+                             <td v-else>{{ item.eps}} </td>
+
+                            <td v-if="indexTablaTipoSoldaduras ==  k">
+                                <input type="text" v-model="TablaTipoSoldaduras[k].pqr" maxlength="30">
+                            </td>
+                            <td v-else>{{ item.pqr }}</td>
+
+                            <td v-if="indexTablaTipoSoldaduras ==  k">
+                                <input type="text" v-model="TablaTipoSoldaduras[k].proc_reparacion" maxlength="30">
+                            </td >
+                            <td v-else>{{ item.proc_reparacion }}</td>
+
                         <td style="text-align:center"> <i class="fa fa-minus-circle" @click="removeTipoSoldadura(k)" ></i></td>
                     </tr>
                     </tbody>
@@ -121,7 +136,9 @@
       obra:this.otdata.obra,
       eps:'',
       pqr :'',
+      id :'',
       proc_reparacion:'',
+      indexTablaTipoSoldaduras:-1,
     }
 
     },
@@ -129,11 +146,8 @@
     created : function() {
 
     this.getTipoSoldaduras();
-    this.$store.dispatch('loadOtTipoSoldaduras',this.otdata.id).then(response => {
+    this.getOtTipoSoldaduras();
 
-        this.TablaTipoSoldaduras = this.ot_tipo_soldaduras;
-
-    });
 
     },
 
@@ -143,6 +157,16 @@
      },
 
      methods : {
+
+    getOtTipoSoldaduras : function(){
+
+        this.$store.dispatch('loadOtTipoSoldaduras',this.otdata.id).then(response => {
+
+            this.TablaTipoSoldaduras = this.ot_tipo_soldaduras;
+
+        });
+
+    },
 
      getTipoSoldaduras : function(){
 
@@ -187,7 +211,7 @@
             eps:this.eps,
             pqr : this.pqr,
             proc_reparacion : this.proc_reparacion,
-
+            id : 0
             });
 
         this.tipo_soldadura = {};
@@ -196,6 +220,10 @@
         this.proc_reparacion = '';
         this.obra = this.otdata.obra;
 
+    },
+
+    selectPosTablaTipoSoldaduras : function(index){
+        this.indexTablaTipoSoldaduras = index;
     },
 
     removeTipoSoldadura : function(index){
@@ -234,7 +262,7 @@
                      this.users_ot_operarios = this.ot_operarios_data;
                 }
 
-            });
+            }).finally(() => this.getOtTipoSoldaduras() );
         }
 
     },
