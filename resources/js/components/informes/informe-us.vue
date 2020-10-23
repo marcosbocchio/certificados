@@ -1378,6 +1378,13 @@ export default {
 
         addCalibraciones : function () {
 
+            if(this.calibraciones.length == 4 ){
+
+                 toastr.error('El máximo de calibraciones a ingresar son 4');
+                 return ;
+
+            }
+
             if (this.tecnica.codigo !='ME' && !this.zapata){
 
                  toastr.error('El campo zapata es obligatorio');

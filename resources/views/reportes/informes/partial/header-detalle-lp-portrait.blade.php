@@ -78,6 +78,13 @@
                                 <td colspan="2" class="borderFilabottom">{{$informe_lp->limpieza_intermedia}}</td>
                             </tr>
 
+                            <tr>
+                                <th colspan="4">Limpieza Final</th>
+                           </tr>
+                           <tr>
+                                <td colspan="4" class="borderFilabottom">{{$informe_lp->limpieza_final}}</td>
+                           </tr>
+
                         </tbody>
                     </table>
                 </td>
@@ -183,13 +190,20 @@
                                 <td colspan="2">{{$removedor_aplicacion->codigo}}</td>
                             </tr>
 
+                            <tr>
+                                <th colspan="2">Norma Evaluación</th>
+                                <th colspan="2">Norma Ensayo</th>
+                            </tr>
+                            <tr>
+                                <td colspan="2">{{$norma_evaluacion->codigo}}</td>
+                                <td colspan="2">{{$norma_ensayo->codigo}}</td>
+                            </tr>
+
                            <tr>
-                                <th colspan="2">Limpieza Final</th>
-                                <th colspan="2">Ejecutor Ensayo</th>
+                                <th colspan="4">Ejecutor Ensayo</th>
                            </tr>
                            <tr>
-                                <td colspan="2" class="borderFilabottom">{{$informe_lp->limpieza_final}}</td>
-                                <td colspan="2" class="borderFilabottom">{{$ejecutor_ensayo->name}}</td>
+                                <td colspan="4" class="borderFilabottom">{{$ejecutor_ensayo->name}}</td>
                            </tr>
 
                         </tbody>
