@@ -109,35 +109,35 @@ footer {
         <tbody>
             @foreach ($calibraciones_us as $calibracion)
                 <tr>
-                    <td style="font-size: 10px; width:85px;text-align: center;"class="bordered-td">
+                    <td style="font-size: 9px; width:85px;text-align: center;"class="bordered-td">
                         @if($calibracion->zapata)
                            {{ strtoupper($calibracion->zapata) }}
                         @else
                             &nbsp;
                         @endif
                     </td>
-                    <td style="font-size: 10px; width:85.3px;text-align: center;" class="bordered-td">
+                    <td style="font-size: 9px; width:85.3px;text-align: center;" class="bordered-td">
                         @if ($calibracion->palpador)
                           {{$calibracion->palpador->equipo->codigo}}
                         @endif
                     </td>
-                    <td style="font-size: 10px; width:70px;text-align: center;" class="bordered-td">
+                    <td style="font-size: 9px; width:70px;text-align: center;" class="bordered-td">
                         @if ($calibracion->palpador)
                            {{$calibracion->palpador->nro_serie}}
                         @endif
                     </td>
-                    <td style="font-size: 10px; width:25px;text-align: center;" class="bordered-td">{{$calibracion->frecuencia}}</td>
-                    <td style="font-size: 10px; width:35.1px;text-align: center;" class="bordered-td">{{$calibracion->angulo_apertura}}</td>
-                    <td style="font-size: 10px; width:36.3px;text-align: center;" class="bordered-td">{{$calibracion->rango}}</td>
-                    <td style="font-size: 10px; width:32.3px;text-align: center;" class="bordered-td">{{strtoupper($calibracion->posicion)}}</td>
-                    <td style="font-size: 10px; width:35.1px;text-align: center;" class="bordered-td">
+                    <td style="font-size: 9px; width:25px;text-align: center;" class="bordered-td">{{$calibracion->frecuencia}}</td>
+                    <td style="font-size: 9px; width:35.1px;text-align: center;" class="bordered-td">{{$calibracion->angulo_apertura}}</td>
+                    <td style="font-size: 9px; width:36.3px;text-align: center;" class="bordered-td">{{$calibracion->rango}}</td>
+                    <td style="font-size: 9px; width:32.3px;text-align: center;" class="bordered-td">{{strtoupper($calibracion->posicion)}}</td>
+                    <td style="font-size: 9px; width:35.1px;text-align: center;" class="bordered-td">
                         @if($calibracion->curva_elevacion)
                             {{$calibracion->curva_elevacion}}
                         @else
                              &nbsp;
                         @endif
                     </td>
-                    <td style="font-size: 10px; width:28.8px;text-align: center;" class="bordered-td">
+                    <td style="font-size: 9px; width:28.8px;text-align: center;" class="bordered-td">
                         @if ($calibracion->block_calibracion == 'Proveta')
                             Pr
                         @elseif(($calibracion->block_calibracion == 'Escalonado'))
@@ -146,49 +146,49 @@ footer {
                               {{$calibracion->block_calibracion}}
                         @endif
                     </td>
-                    <td style="font-size: 10px; width:38.2px;text-align: center;" class="bordered-td">
+                    <td style="font-size: 9px; width:38.2px;text-align: center;" class="bordered-td">
                         @if($calibracion->block_sensibilidad)
                            {{$calibracion->block_sensibilidad}}
                         @else
                            &nbsp;
                         @endif
                     </td>
-                    <td style="font-size: 10px; width:39.1px;text-align: center;" class="bordered-td"><span class="EspecialCaracter">
+                    <td style="font-size: 9px; width:39.1px;text-align: center;" class="bordered-td"><span class="EspecialCaracter">
                         @if($calibracion->tipo_reflector)
                             {{$calibracion->tipo_reflector}}</span> &nbsp; {{$calibracion->reflector_referencia}}
                         @else
                             &nbsp;
                         @endif
                     </td>
-                    <td style="font-size: 10px; width:29.5px;text-align: center;" class="bordered-td">
+                    <td style="font-size: 9px; width:29.5px;text-align: center;" class="bordered-td">
                         @if($calibracion->ganancia_referencia)
                             {{$calibracion->ganancia_referencia}}
                         @else
                             &nbsp;
                         @endif
                     </td>
-                    <td style="font-size: 10px; width:32.2px;text-align: center;" class="bordered-td">
+                    <td style="font-size: 9px; width:32.2px;text-align: center;" class="bordered-td">
                         @if($calibracion->nivel_registro)
                             {{$calibracion->nivel_registro}}&nbsp;%
                         @else
                              &nbsp;
                         @endif
                     </td>
-                    <td style="font-size: 10px; width:29.3px;text-align: center;" class="bordered-td">
+                    <td style="font-size: 9px; width:29.3px;text-align: center;" class="bordered-td">
                         @if($calibracion->correccion_transferencia)
                             {{$calibracion->correccion_transferencia}}
                         @else
                             &nbsp;
                         @endif
                     </td>
-                    <td style="font-size: 10px; width:28.8px;text-align: center;" class="bordered-td">
+                    <td style="font-size: 9px; width:28.8px;text-align: center;" class="bordered-td">
                         @if($calibracion->adicional_barrido)
                            {{$calibracion->adicional_barrido}}
                         @else
                            &nbsp;
                         @endif
                     </td>
-                    <td style="font-size: 10px;text-align: center" class="bordered-td">
+                    <td style="font-size: 9px;text-align: center" class="bordered-td">
                         @if($calibracion->amplificacion_total)
                             {{$calibracion->amplificacion_total}}
                         @else
@@ -203,22 +203,22 @@ footer {
             {{ $filasACompletar = 4 - count($calibraciones_us) }}
             @for ( $x=0 ;  $x < $filasACompletar ; $x++)
                 <tr>
-                    <td style="font-size: 10px; width:85px;text-align: center;"class="bordered-td">&nbsp;</td>
-                    <td style="font-size: 10px; width:85.3px;text-align: center;" class="bordered-td">&nbsp;</td>
-                    <td style="font-size: 10px; width:70px;text-align: center;" class="bordered-td">&nbsp;</td>
-                    <td style="font-size: 10px; width:25px;  text-align: center;" class="bordered-td">&nbsp;</td>
-                    <td style="font-size: 10px; width:35.1px;text-align: center;" class="bordered-td">&nbsp;</td>
-                    <td style="font-size: 10px; width:36.3px;text-align: center;" class="bordered-td">&nbsp;</td>
-                    <td style="font-size: 10px; width:32.3px;text-align: center;" class="bordered-td">&nbsp;</td>
-                    <td style="font-size: 10px; width:35.1px;text-align:   center;" class="bordered-td">&nbsp;</td>
-                    <td style="font-size: 10px; width:28.8px;text-align: center;" class="bordered-td">&nbsp;</td>
-                    <td style="font-size: 10px; width:38.2px;text-align: center;" class="bordered-td">&nbsp;</td>
-                    <td style="font-size: 10px; width:39.1px;text-align: center;" class="bordered-td">&nbsp;</td>
-                    <td style="font-size: 10px; width:29.5px;text-align: center;" class="bordered-td">&nbsp;</td>
-                    <td style="font-size: 10px; width:32.2px;text-align: center;" class="bordered-td">&nbsp;</td>
-                    <td style="font-size: 10px; width:29.3px;text-align: center;" class="bordered-td">&nbsp;</td>
-                    <td style="font-size: 10px; width:28.8px;text-align: center;" class="bordered-td">&nbsp;</td>
-                    <td style="font-size: 10px;text-align: center" class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 9px; width:85px;text-align: center;"class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 9px; width:85.3px;text-align: center;" class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 9px; width:70px;text-align: center;" class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 9px; width:25px;  text-align: center;" class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 9px; width:35.1px;text-align: center;" class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 9px; width:36.3px;text-align: center;" class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 9px; width:32.3px;text-align: center;" class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 9px; width:35.1px;text-align:   center;" class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 9px; width:28.8px;text-align: center;" class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 9px; width:38.2px;text-align: center;" class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 9px; width:39.1px;text-align: center;" class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 9px; width:29.5px;text-align: center;" class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 9px; width:32.2px;text-align: center;" class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 9px; width:29.3px;text-align: center;" class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 9px; width:28.8px;text-align: center;" class="bordered-td">&nbsp;</td>
+                    <td style="font-size: 9px;text-align: center" class="bordered-td">&nbsp;</td>
                 </tr>
             @endfor
         </tbody>
