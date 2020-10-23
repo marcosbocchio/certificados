@@ -1421,9 +1421,9 @@ export default {
                  return ;
             }
 
-            if(this.angulo_apertura.length  > 10){
+            if(this.angulo_apertura.length  > 7){
 
-                toastr.error('El campo angulo apertura no debe contener más de 10 caracteres');
+                toastr.error('El campo angulo apertura no debe contener más de 7 caracteres');
                 return ;
              }
 
@@ -1433,9 +1433,9 @@ export default {
                  return ;
             }
 
-            if(this.rango.length  > 10){
+            if(this.rango.length  > 7){
 
-                toastr.error('El campo rango no debe contener más de 10 caracteres');
+                toastr.error('El campo rango no debe contener más de 7 caracteres');
                 return ;
              }
 
@@ -1445,9 +1445,9 @@ export default {
                  return ;
             }
 
-            if(this.posicion.length  > 10){
+            if(this.posicion.length  > 7){
 
-                toastr.error('El campo posicion no debe contener más de 10 caracteres');
+                toastr.error('El campo posicion no debe contener más de 7 caracteres');
                 return ;
              }
 
