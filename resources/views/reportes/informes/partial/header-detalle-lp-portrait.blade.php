@@ -82,7 +82,13 @@
                                 <th colspan="4">Limpieza Final</th>
                            </tr>
                            <tr>
-                                <td colspan="4" class="borderFilabottom">{{$informe_lp->limpieza_final}}</td>
+                                <td colspan="4" class="borderFilabottom">
+                                    @if ($informe_lp->limpieza_final)
+                                         {{$informe_lp->limpieza_final}}
+                                    @else
+                                          &nbsp;
+                                    @endif
+                                </td>
                            </tr>
 
                         </tbody>
