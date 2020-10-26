@@ -161,7 +161,7 @@
 
                          <div v-if="!reparacion_sn" class="col-md-3">
                              <div class="form-group size-pqr-eps"  >
-                                 <label for="procedimientos_soldadura">Proc. Soldadura (EPS)*</label>
+                                 <label for="procedimientos_soldadura">Proc. Soldadura (EPS) *</label>
                                  <v-select v-model="ot_tipo_soldadura" label="eps" :options="ot_tipo_soldaduras_filter_codigo" id="procedimientos_soldadura"></v-select>
                              </div>
                          </div>
@@ -1746,9 +1746,9 @@
              document.getElementById("sheetjs-input").value = "";
              $('#modal-Importar-Soldadores').modal('show');
          },
+
          selectPosPasadas : function(index){
              this.indexPasada = index ;
-
          },
          ClonarSoldadores : function(){
              this.clonando_pasada = true;

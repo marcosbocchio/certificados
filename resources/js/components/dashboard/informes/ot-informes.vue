@@ -108,7 +108,7 @@
                                     </td>
 
                                     <td v-if="!ot_informe.importable_sn" width="10px">
-                                        <button @click="ClonarInforme(k)" class="btn btn-default btn-sm" title="Clonar" :disabled="!$can('T_informes_edita')"><app-icon img="clone" color="black"></app-icon></button>
+                                        <button @click="confirmarClanacion(k)" class="btn btn-default btn-sm" title="Clonar" :disabled="!$can('T_informes_edita')"><app-icon img="clone" color="black"></app-icon></button>
                                     </td>
                                     <td v-if="ot_informe.metodo == 'RI'">
                                         <a :href="'/placas/informe/' + ot_informe.id" class="btn btn-default btn-sm" title="Digitalización"><img width="16px" :src="'/img/carestream.ico'"></a>
@@ -142,26 +142,9 @@
             </div>
         <div class="clearfix"></div>
 
-         <div class="modal fade " tabindex="-1" role="dialog" id="modal-alerta-revision" data-keyboard="false" data-backdrop="static" >
-             <div class="modal-dialog modal-md" role="document">
-                 <div class="modal-content">
-                     <div class="modal-header">
-                       <h4>Alerta</h4>
-                     </div>
-                 <div class="modal-body">
-                   <p>El informe está firmado, la modificación generará una nueva revisión.</p>
-                 </div>
-                 <div class="modal-footer">
-                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                     <button type="button" class="btn btn-primary" @click="EditInforme">Continuar</button>
-                 </div>
-                 </div>
-             </div>
-         </div>
-
         <informes-importables :metodo_ensayo="metodo_ensayo" :otdata="this.ot_data" @store="getResults(ot_informes.current_page)"></informes-importables>
         <informes-revisiones></informes-revisiones>
-
+        <confirmar-modal></confirmar-modal>
 
     </div>
     </div>
@@ -193,6 +176,7 @@ export default {
       metodo_ensayo:{},
       metodo_selected:false,
       informe_id_select: 0,
+      index_informe:0,
 
     }
   },
@@ -210,7 +194,22 @@ export default {
 
   created : function() {
 
-     // this.ot_informes =  JSON.parse(JSON.stringify(this.ot_informes_data));
+        eventModal.$on('confirmar_accion',function(accion) {
+
+       switch (accion) {
+           case 'clonar':
+               this.ClonarInforme();
+               break;
+           case 'revision':
+              this.EditInforme();
+              break;
+
+           default:
+               break;
+       }
+
+
+        }.bind(this));
   },
 
   mounted : function(){
@@ -233,7 +232,6 @@ export default {
                 axios.get(urlRegistros).then(response =>{
                 this.ot_informes = response.data
                 });
-
         },
 
         NuevoInforme: function(ot_id){
@@ -278,7 +276,7 @@ export default {
             this.informe_id_select = informe.id;
             if(informe.firma){
 
-                $('#modal-alerta-revision').modal('show');
+                eventModal.$emit('abrir_confirmar_accion','El informe ' + informe.numero_formateado  +' está firmado, la modificación generará una nueva revisión.','revision');
 
             }else{
 
@@ -299,14 +297,20 @@ export default {
 
         },
 
-        ClonarInforme : function (index){
+        confirmarClanacion : function(k){
+            this.index_informe = k;
+            eventModal.$emit('abrir_confirmar_accion','Está seguro que quiere clonar el informe N° ' + this.ot_informes.data[this.index_informe].numero_formateado + '.','clonar' );
 
-            axios.defaults.baseURL = this.url ;
-            var urlRegistros = 'informes/' + this.ot_informes.data[index].id + '/clonar';
+        },
+
+        ClonarInforme : function (){
+
+           axios.defaults.baseURL = this.url ;
+            var urlRegistros = 'informes/' + this.ot_informes.data[this.index_informe].id + '/clonar';
             axios.put(urlRegistros).then(response => {
                 this.getResults();
                 this.ContarInformes();
-                toastr.success('El Informe N°' + (this.ot_informes.data[index].prefijo ? this.ot_informes.data[index].prefijo : '') +'-'+ this.ot_informes.data[index].numero_formateado + ' fue clonado con éxito');
+                toastr.success('El Informe N° ' + this.ot_informes.data[this.index_informe].numero_formateado + ' fue clonado con éxito');
 
             }).catch(error => {
                 this.errors = error.response.data.errors;
@@ -321,6 +325,8 @@ export default {
 
             }
             });
+
+
         },
 
         firmar : function(index){
@@ -330,7 +336,7 @@ export default {
                 axios.put(urlRegistros).then(response => {
                   console.log(response.data);
                   this.ot_informes.data[index].firma = response.data.firma;
-                  toastr.success('El Informe N° '+  (this.ot_informes.data[index].prefijo ? this.ot_informes.data[index].prefijo : '') +'-'+ this.ot_informes.data[index].numero_formateado +'  fue firmado con éxito');
+                  toastr.success('El Informe N° '+ this.ot_informes.data[index].numero_formateado +'  fue firmado con éxito');
 
                 }).catch(error => {
                     this.errors = error.response.data.errors;
@@ -356,9 +362,16 @@ export default {
 
         RevisionesInforme : function(registro){
 
-        eventModal.$emit('open_revisiones', registro,this.ot_data);
+            eventModal.$emit('open_revisiones', registro,this.ot_data);
 
-        }
+        },
+
+         selectPosInforme : function(index){
+
+            this.index_informe = JSON.parse(JSON.stringify(index));
+
+         },
+
         },
 
 }

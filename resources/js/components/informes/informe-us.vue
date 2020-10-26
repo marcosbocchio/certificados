@@ -1445,9 +1445,9 @@ export default {
                  return ;
             }
 
-            if(this.posicion.length  > 7){
+            if(this.posicion.length  > 3){
 
-                toastr.error('El campo posicion no debe contener más de 7 caracteres');
+                toastr.error('El campo posicion no debe contener más de 3 caracteres');
                 return ;
              }
 

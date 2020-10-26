@@ -278,7 +278,10 @@ Vue.component('video-edit', require('./components/multimedia/video-edit.vue').de
 /* Modelos 3d*/
 Vue.component('modelo3d-viewer', require('./components/modelos3d/modelo3d-viewer.vue').default);
 
-/* Alerta */
+/* modal confirmacion */
+
+Vue.component('confirmar-modal', require('./components/confirmar-modal').default);
+
 
 Vue.component('pdf-test', require('./components/pdf-test').default);
 
@@ -1317,7 +1320,6 @@ Vue.mixin(Alertas);
 export const eventNewRegistro = new Vue();
 export const eventSetReferencia = new Vue();
 export const eventEditRegistro = new Vue();
-
 
 const app = new Vue({
     el: '#app',

@@ -234,7 +234,6 @@
 
     submit :function () {
 
-
             axios.defaults.baseURL = this.url ;
             var urlRegistros = 'ot_tipo_soldaduras';
 
