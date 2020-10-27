@@ -295,6 +295,7 @@ export default {
 
         EditInforme : function(informe){
 
+            this.$store.commit('loading', true);
             window.location.href =  '/area/enod/ot/' + this.ot_data.id + '/informe/' + this.informe_id_select + '/edit';
 
         },
