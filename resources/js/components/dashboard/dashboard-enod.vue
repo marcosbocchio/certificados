@@ -206,12 +206,12 @@
 
                                 <td width="10px">
                                   <div v-if="ot.estado == 'EDITANDO'">
-                                      <button class="btn btn-default btn-sm" title="Firmar"  @click="CambiarEstado(ot.id)" :disabled="!$can('T_accion')">
+                                      <button class="btn btn-default btn-sm" title="Firmar"  @click="CambiarEstado(k,'EDITANDO')" :disabled="!$can('T_accion')">
                                       <span class="glyphicon glyphicon-pencil"></span>
                                       </button>
                                   </div>
                                   <div v-else-if="ot.estado == 'ACTIVA'">
-                                      <button class="btn btn-default btn-sm" title="Cerrar" @click="CambiarEstado(ot.id)" :disabled="!$can('T_accion')">
+                                      <button class="btn btn-default btn-sm" title="Cerrar" @click="CambiarEstado(k,'ACTIVA')" :disabled="!$can('T_accion')">
                                       <span class="glyphicon glyphicon-arrow-right"></span>
                                       </button>
                                   </div>
@@ -240,12 +240,15 @@
     </div>
   </div>
     <div class="clearfix"></div>
+    <confirmar-modal></confirmar-modal>
+
 </div>
 
 </template>
 <script>
 
-import {mapState} from 'vuex'
+import { eventModal } from './../event-bus';
+import {mapState} from 'vuex';
 export default {
 
     data() { return {
@@ -254,6 +257,7 @@ export default {
         ot_id_selected : '0',
         search:'',
         loading:false,
+        index_ot:0,
         }
 
     },
@@ -280,6 +284,24 @@ export default {
         this.$store.dispatch('loadContarCertificados',ot_id);
 
       }
+    },
+
+    created : function() {
+
+        eventModal.$on('confirmar_accion',function(accion) {
+
+            switch (accion) {
+                case 'firmar':
+                    this.firmar();
+                    break;
+                case 'cerrar':
+                    this.cerrar();
+                    break;
+                default:
+                    break;
+            }
+
+        }.bind(this));
     },
 
     mounted : function() {
@@ -317,18 +339,16 @@ export default {
             this.loading = true;
             axios.defaults.baseURL = this.url ;
             var urlRegistros = 'ots?page='+ page + '&search=' + filtro ;
-            console.log(urlRegistros);
             axios.get(urlRegistros).then(response =>{
 
-              this.ots = response.data
-                         console.log(page);
-                        console.log(this.ots.data);
-                        console.log(this.ots.data.length);
+            this.ots = response.data
+
               if(this.ots.data.length){
 
-                this.ot_id_selected = this.ots.data[0].id;
+                 this.ot_id_selected = this.ots.data[0].id;
 
               }else{
+
                 this.ot_id_selected = -1;
 
               }
@@ -343,15 +363,43 @@ export default {
 
          },
 
-         CambiarEstado : function(ot_id){
 
+         CambiarEstado : function(k,estado){
+
+             switch (estado) {
+                 case 'EDITANDO':
+                     this.confirmarfirma(k);
+                     break;
+
+                 case 'ACTIVA':
+                     this.confirmarCierre(k);
+                     break;
+
+                 default:
+                     break;
+             }
+
+         },
+
+        confirmarfirma : function(k){
+            this.index_ot = k ;
+            eventModal.$emit('abrir_confirmar_accion','Está seguro de firmar la orden de trabajo N° ' + this.ots.data[this.index_ot].numero + ' ?','firmar' );
+
+        },
+
+        confirmarCierre : function(k){
+            this.index_ot = k ;
+            eventModal.$emit('abrir_confirmar_accion','Está seguro de cerrar la orden de trabajo N° ' + this.ots.data[this.index_ot].numero + ' ?','cerrar' );
+
+        },
+
+        firmar: function(){
             this.loading = true;
             axios.defaults.baseURL = this.url ;
-            var urlRegistros = 'ots/' + ot_id + '/cambiar_estado';
+            var urlRegistros = 'ots/' + this.ots.data[this.index_ot].id  + '/firmar';
             axios.put(urlRegistros).then(response => {
-              console.log(response.data);
-              this.getResults(this.ots.current_page);
-              toastr.success('La OT N° '+ response.data.numero +' fue firmada con éxito');
+            this.getResults(this.ots.current_page);
+            toastr.success('La OT N° '+ this.ots.data[this.index_ot].numero +' fue firmada con éxito');
 
             }).catch(error => {
                 this.errors = error.response.data.errors;
@@ -366,8 +414,31 @@ export default {
 
             }
             }).finally(()=> {this.loading = false;});
+        },
 
-         },
+        cerrar : function(){
+
+            this.loading = true;
+            axios.defaults.baseURL = this.url ;
+            var urlRegistros = 'ots/' + this.ots.data[this.index_ot].id + '/cerrar';
+            axios.put(urlRegistros).then(response => {
+            this.getResults(this.ots.current_page);
+            toastr.success('La OT N° '+ this.ots.data[this.index_ot].numero +' fue cerrada con éxito');
+
+            }).catch(error => {
+                this.errors = error.response.data.errors;
+                $.each( this.errors, function( key, value ) {
+                    toastr.error(value);
+                    console.log( key + ": " + value );
+                });
+
+                  if((typeof(this.errors)=='undefined') && (error)){
+
+                  toastr.error("Ocurrió un error al procesar la solicitud");
+
+            }
+            }).finally(()=> {this.loading = false;});
+        },
 
       openEditarOt: function(id){
 

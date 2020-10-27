@@ -48,7 +48,8 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('norma_ensayos', 'NormaEnsayosController');
     Route::get('norma_evaluaciones/paginate', 'NormaEvaluacionesController@paginate');
     Route::resource('norma_evaluaciones', 'NormaEvaluacionesController');
-    Route::put('ots/{ot_id}/cambiar_estado', 'OtsController@CambiarEstado');
+    Route::put('ots/{ot_id}/firmar', 'OtsController@firmar');
+    Route::put('ots/{ot_id}/cerrar', 'OtsController@cerrar');
     Route::get('ots/{ot_id}/obras', 'OtsController@getObras');
     Route::get('ots/{ot_id}/obras_por_tipo_soldaduras', 'OtsController@getObrasTipoSoldaduras');
     Route::resource('ots', 'OtsController');

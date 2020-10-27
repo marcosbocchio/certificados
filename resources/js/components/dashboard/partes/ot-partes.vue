@@ -65,7 +65,7 @@
                                         <button @click="informesEscaneados(ot_parte.id)" :disabled="!$can('T_partes_edita')" class="btn btn-default btn-sm" title="Informes escaneados"><span class="fa fa-cloud-upload"></span></button>
                                     </td>
                                     <td v-if="!ot_parte.firma" width="10px">
-                                        <button @click="firmar(k)" class="btn btn-default btn-sm" title="Firmar" :disabled="!$can('T_partes_edita')"><span class="glyphicon glyphicon-pencil"></span></button>
+                                        <button @click="confirmarfirma(k)" class="btn btn-default btn-sm" title="Firmar" :disabled="!$can('T_partes_edita')"><span class="glyphicon glyphicon-pencil"></span></button>
                                    </td>
                                    <td v-else><a class="btn btn-default btn-sm" title="Firmado"><img width="16px" :src="'/img/firma.png'"></a></td>
 
@@ -79,12 +79,17 @@
                         <span slot="next-nav">Next &gt;</span>
                     </pagination>
                 </div>
+                <div v-if="loading_table" class="overlay">
+                      <loading-spin></loading-spin>
+                </div>
             </div>
         </div>
     <div class="clearfix"></div>
+    <confirmar-modal></confirmar-modal>
  </div>
 </template>
 <script>
+import { eventModal } from '../../event-bus';
 import {mapState} from 'vuex'
 export default {
     props :{
@@ -96,14 +101,28 @@ export default {
   data () { return {
 
       ot_partes :{},
+      index_parte:0,
+      loading_table : false,
 
     }
   },
 
   created : function() {
 
-      this.getResults();
-      this.$store.dispatch('loadContarPartes',this.ot_id_data);
+    this.getResults();
+    this.$store.dispatch('loadContarPartes',this.ot_id_data);
+
+    eventModal.$on('confirmar_accion',function(accion) {
+
+        switch (accion) {
+            case 'firmar':
+                this.firmar();
+                break;
+            default:
+                break;
+        }
+
+    }.bind(this));
 
   },
 
@@ -129,28 +148,35 @@ export default {
             window.location.href =  '/area/enod/ot/' + this.ot_id_data + '/parte/' + id +'/edit'
         },
 
-        firmar : function(index){
+        confirmarfirma : function(k){
+            this.index_parte = k;
+            eventModal.$emit('abrir_confirmar_accion','Está seguro de firmar el parte N° ' + this.ot_partes.data[this.index_parte].numero_formateado + ' ?','firmar' );
 
+        },
+
+        firmar : function(){
+
+            this.loading_table = true;
             axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'partes/' + this.ot_partes.data[index].id + '/firmar';
-                axios.put(urlRegistros).then(response => {
-                  console.log(response.data);
-                  this.ot_partes.data[index].firma = response.data.firma;
-                  toastr.success('El Parte N° ' + response.data.id + ' fue firmado con éxito');
+            var urlRegistros = 'partes/' + this.ot_partes.data[this.index_parte].id + '/firmar';
+            axios.put(urlRegistros).then(response => {
+            console.log(response.data);
+            this.ot_partes.data[this.index_parte].firma = response.data.firma;
+            toastr.success('El Parte N° ' + this.ot_partes.data[this.index_parte].numero_formateado + ' fue firmado con éxito');
 
-                }).catch(error => {
-                    this.errors = error.response.data.errors;
-                    $.each( this.errors, function( key, value ) {
-                        toastr.error(value);
-                        console.log( key + ": " + value );
-                    });
-
-                     if((typeof(this.errors)=='undefined') && (error)){
-
-                     toastr.error("Ocurrió un error al procesar la solicitud");
-
-                }
+            }).catch(error => {
+                this.errors = error.response.data.errors;
+                $.each( this.errors, function( key, value ) {
+                    toastr.error(value);
+                    console.log( key + ": " + value );
                 });
+
+                    if((typeof(this.errors)=='undefined') && (error)){
+
+                    toastr.error("Ocurrió un error al procesar la solicitud");
+
+            }
+             }).finally(()=> { this.loading_table = false;});
 
         },
 

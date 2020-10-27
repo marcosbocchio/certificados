@@ -139,6 +139,9 @@
                         <span slot="next-nav">Next &gt;</span>
                     </pagination>
                 </div>
+                <div v-if="loading_table" class="overlay">
+                      <loading-spin></loading-spin>
+                </div>
             </div>
         <div class="clearfix"></div>
 
@@ -185,6 +188,7 @@ export default {
       metodo_selected:false,
       informe_id_select: 0,
       index_informe:0,
+      loading_table : false,
 
     }
   },
@@ -204,20 +208,19 @@ export default {
 
         eventModal.$on('confirmar_accion',function(accion) {
 
-       switch (accion) {
-           case 'clonar':
-               this.ClonarInforme();
-               break;
-           case 'revision':
-              this.EditInforme();
-              break;
-           case 'firmar':
-                this.firmar();
-                break;
-           default:
-               break;
-       }
-
+            switch (accion) {
+                case 'clonar':
+                    this.ClonarInforme();
+                    break;
+                case 'revision':
+                    this.EditInforme();
+                    break;
+                case 'firmar':
+                    this.firmar();
+                    break;
+                default:
+                    break;
+            }
 
         }.bind(this));
   },
@@ -308,19 +311,19 @@ export default {
 
         confirmarClanacion : function(k){
             this.index_informe = k;
-            eventModal.$emit('abrir_confirmar_accion','Está seguro que quiere clonar el informe N° ' + this.ot_informes.data[this.index_informe].numero_formateado + '.','clonar' );
+            eventModal.$emit('abrir_confirmar_accion','Está seguro que quiere clonar el informe N° ' + this.ot_informes.data[this.index_informe].numero_formateado + ' ?','clonar' );
 
         },
 
         confirmarfirma : function(k){
             this.index_informe = k;
-            eventModal.$emit('abrir_confirmar_accion','Está seguro de firmar el informe N° ' + this.ot_informes.data[this.index_informe].numero_formateado + '.','firmar' );
+            eventModal.$emit('abrir_confirmar_accion','Está seguro de firmar el informe N° ' + this.ot_informes.data[this.index_informe].numero_formateado + ' ?','firmar' );
 
         },
 
          async ClonarInforme (){
 
-          this.$store.commit('loading', true);
+          this.loading_table = true;
           axios.defaults.baseURL = this.url ;
           var urlRegistros = 'informes/' + this.ot_informes.data[this.index_informe].id + '/clonar';
           await axios.put(urlRegistros).then(response => {
@@ -340,33 +343,33 @@ export default {
                     toastr.error("Ocurrió un error al procesar la solicitud");
 
             }
-            }).finally(()=> { this.$store.commit('loading', false);});
+            }).finally(()=> { this.loading_table = false;});
 
 
         },
 
         async firmar (){
 
-                this.$store.commit('loading', true);
-                axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'informes/' + this.ot_informes.data[this.index_informe].id + '/firmar';
-                await axios.put(urlRegistros).then(response => {
-                this.ot_informes.data[this.index_informe].firma = response.data.firma;
-                toastr.success('El Informe N° '+ this.ot_informes.data[this.index_informe].numero_formateado +'  fue firmado con éxito');
+            this.loading_table = true;
+            axios.defaults.baseURL = this.url ;
+            var urlRegistros = 'informes/' + this.ot_informes.data[this.index_informe].id + '/firmar';
+            await axios.put(urlRegistros).then(response => {
+            this.ot_informes.data[this.index_informe].firma = response.data.firma;
+            toastr.success('El Informe N° '+ this.ot_informes.data[this.index_informe].numero_formateado +'  fue firmado con éxito');
 
-                }).catch(error => {
-                    this.errors = error.response.data.errors;
-                    $.each( this.errors, function( key, value ) {
-                        toastr.error(value);
-                        console.log( key + ": " + value );
-                    });
+            }).catch(error => {
+                this.errors = error.response.data.errors;
+                $.each( this.errors, function( key, value ) {
+                    toastr.error(value);
+                    console.log( key + ": " + value );
+                });
 
-                     if((typeof(this.errors)=='undefined') && (error)){
+                    if((typeof(this.errors)=='undefined') && (error)){
 
-                     toastr.error("Ocurrió un error al procesar la solicitud");
+                    toastr.error("Ocurrió un error al procesar la solicitud");
 
-                    }
-                }).finally(()=> { this.$store.commit('loading', false);});
+                }
+            }).finally(()=> { this.loading_table = false;});
 
         },
 

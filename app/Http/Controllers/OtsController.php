@@ -169,41 +169,7 @@ class OtsController extends Controller
      */
     public function update(OtsRequest $request, $id)
     {
-
-
         return $this->ot->updateOt($request,$id);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
-    public function CambiarEstado($ot_id){
-
-        $ot = Ots::find($ot_id);
-
-        switch ($ot->estado) {
-
-            case 'EDITANDO':
-                $this->firmar($ot_id);
-                break;
-
-            case 'ACTIVA':
-                $this->cerrar($ot_id);
-                break;
-
-            default:
-                # code...
-                break;
-        }
-
     }
 
     public function firmar($ot_id){
