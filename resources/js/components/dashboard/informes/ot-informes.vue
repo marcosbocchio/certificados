@@ -122,7 +122,7 @@
                                         <button @click="informesEscaneados(ot_informe.id)" :disabled="!$can('T_informes_edita')" class="btn btn-default btn-sm" title="Informes escaneados"><span class="fa fa-cloud-upload"></span></button>
                                     </td>
                                     <td v-if="!ot_informe.firma && !ot_informe.importable_sn" width="10px">
-                                        <button @click="firmar(k)" class="btn btn-default btn-sm" title="Firmar" :disabled="!$can('T_informes_edita')"><span class="glyphicon glyphicon-pencil"></span></button>
+                                        <button @click="confirmarfirma(k)" class="btn btn-default btn-sm" title="Firmar" :disabled="!$can('T_informes_edita')"><span class="glyphicon glyphicon-pencil"></span></button>
                                     </td>
                                     <td v-else-if="!ot_informe.importable_sn"><a class="btn btn-default btn-sm" title="Firmado"><img width="16px" :src="'/img/firma.png'"></a></td>
                                     <td>
@@ -145,7 +145,10 @@
         <informes-importables :metodo_ensayo="metodo_ensayo" :otdata="this.ot_data" @store="getResults(ot_informes.current_page)"></informes-importables>
         <informes-revisiones></informes-revisiones>
         <confirmar-modal></confirmar-modal>
-
+        <loading :active.sync="isLoading"
+            :loader="'bars'"
+            :color="'red'">
+        </loading>
     </div>
     </div>
 </template>
@@ -154,9 +157,14 @@
 import {mapState} from 'vuex'
 import { eventNewRegistro, eventEditRegistro } from '../../event-bus';
 import { eventModal } from '../../event-bus';
-
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 export default {
+    components: {
 
+      Loading
+
+    },
     props :{
     ot_metodos_ensayos_data: {
     type : Array,
@@ -203,7 +211,9 @@ export default {
            case 'revision':
               this.EditInforme();
               break;
-
+           case 'firmar':
+                this.firmar();
+                break;
            default:
                break;
        }
@@ -220,7 +230,7 @@ export default {
 
   computed :{
 
-       ...mapState(['url','CantInformes','DDPPI','ParametroGeneral'])
+       ...mapState(['url','CantInformes','DDPPI','ParametroGeneral','isLoading'])
      },
 
     methods : {
@@ -236,7 +246,7 @@ export default {
 
         NuevoInforme: function(ot_id){
 
-
+            this.$store.commit('loading', true);
             this.$store.dispatch('loadParametrosGenerales','ddppi').then(response => {
 
                 this.$store.dispatch('loadDDPPI',this.ot_data.id).then(response => {
@@ -245,25 +255,23 @@ export default {
 
                         if(this.metodo_ensayo.importable_sn){
 
+                             this.$store.commit('loading', false);
                              eventNewRegistro.$emit('open',this.modelo);
-
                         }else{
 
                             window.location.href=  '/area/enod/ot/' + this.ot_data.id + '/informe/metodo/' + this.metodo_ensayo.metodo + '/create' ;
-
                         }
                     }
                     else
                     {
 
                         toastr.error('No se puede crear el informe. Existen informes de hace ' + this.ParametroGeneral.valor + ' días' + ' sin parte asociado' );
-
+                         this.$store.commit('loading', false);
                     }
 
                 });
 
             });
-
         },
 
         ContarInformes : function(){
@@ -303,11 +311,18 @@ export default {
 
         },
 
-        ClonarInforme : function (){
+        confirmarfirma : function(k){
+            this.index_informe = k;
+            eventModal.$emit('abrir_confirmar_accion','Está seguro de firmar el informe N° ' + this.ot_informes.data[this.index_informe].numero_formateado + '.','firmar' );
 
-           axios.defaults.baseURL = this.url ;
-            var urlRegistros = 'informes/' + this.ot_informes.data[this.index_informe].id + '/clonar';
-            axios.put(urlRegistros).then(response => {
+        },
+
+         async ClonarInforme (){
+
+          this.$store.commit('loading', true);
+          axios.defaults.baseURL = this.url ;
+          var urlRegistros = 'informes/' + this.ot_informes.data[this.index_informe].id + '/clonar';
+          await axios.put(urlRegistros).then(response => {
                 this.getResults();
                 this.ContarInformes();
                 toastr.success('El Informe N° ' + this.ot_informes.data[this.index_informe].numero_formateado + ' fue clonado con éxito');
@@ -324,19 +339,19 @@ export default {
                     toastr.error("Ocurrió un error al procesar la solicitud");
 
             }
-            });
+            }).finally(()=> { this.$store.commit('loading', false);});
 
 
         },
 
-        firmar : function(index){
+        async firmar (){
 
-            axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'informes/' + this.ot_informes.data[index].id + '/firmar';
-                axios.put(urlRegistros).then(response => {
-                  console.log(response.data);
-                  this.ot_informes.data[index].firma = response.data.firma;
-                  toastr.success('El Informe N° '+ this.ot_informes.data[index].numero_formateado +'  fue firmado con éxito');
+                this.$store.commit('loading', true);
+                axios.defaults.baseURL = this.url ;
+                var urlRegistros = 'informes/' + this.ot_informes.data[this.index_informe].id + '/firmar';
+                await axios.put(urlRegistros).then(response => {
+                this.ot_informes.data[this.index_informe].firma = response.data.firma;
+                toastr.success('El Informe N° '+ this.ot_informes.data[this.index_informe].numero_formateado +'  fue firmado con éxito');
 
                 }).catch(error => {
                     this.errors = error.response.data.errors;
@@ -349,8 +364,8 @@ export default {
 
                      toastr.error("Ocurrió un error al procesar la solicitud");
 
-                }
-                });
+                    }
+                }).finally(()=> { this.$store.commit('loading', false);});
 
         },
 

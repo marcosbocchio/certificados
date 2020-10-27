@@ -1,23 +1,21 @@
 <template>
 <div>
-
-         <div class="modal fade" tabindex="-1" role="dialog" id="confirm" data-keyboard="false" data-backdrop="static" >
-             <div class="modal-dialog modal-md" role="document">
-                 <div class="modal-content">
-                     <div class="modal-header">
-                       <h4>Alerta</h4>
-                     </div>
-                 <div class="modal-body">
-                   <p> {{ mensaje }}</p>
-                 </div>
-                 <div class="modal-footer">
-                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                     <button type="button" class="btn btn-primary"  @click="aplicar(true)">Continuar</button>
-                 </div>
-                 </div>
-             </div>
-         </div>
-
+    <div class="modal fade" tabindex="-1" role="dialog" id="confirm" data-keyboard="false" data-backdrop="static" >
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h4>Alerta</h4>
+                </div>
+            <div class="modal-body">
+            <p> {{ mensaje }}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary"  @click="aplicar(true)">Continuar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            </div>
+            </div>
+        </div>
+    </div>
 </div>
 </template>
 <script>
