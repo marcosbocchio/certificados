@@ -33,6 +33,15 @@ class AyudaController extends Controller
 
   }
 
+  public function VisualizarDocOperadores(){
+
+    $user = auth()->user();
+    $header_titulo = "Ayuda";
+    $header_descripcion = '';
+    return view('ayuda.visualizar_doc_operadores',compact('user','header_titulo','header_descripcion'));
+
+  }
+
   public function visualizarOt(){
 
     $user = auth()->user();
@@ -51,12 +60,21 @@ class AyudaController extends Controller
 
   }
 
+  public function asignarOperadores(){
+
+    $user = auth()->user();
+    $header_titulo = "Ayuda";
+    $header_descripcion = '';
+    return view('ayuda.asignar_operadores',compact('user','header_titulo','header_descripcion'));
+
+  }
+
   public function asignarSoldadoresUsuarios(){
 
     $user = auth()->user();
     $header_titulo = "Ayuda";
     $header_descripcion = '';
-    return view('ayuda.asigar_soldadores_usuarios',compact('user','header_titulo','header_descripcion'));
+    return view('ayuda.asignar_soldadores_usuarios',compact('user','header_titulo','header_descripcion'));
 
   }
 
@@ -77,6 +95,15 @@ class AyudaController extends Controller
     $header_titulo = "Ayuda";
     $header_descripcion = '';
     return view('ayuda.generar_informes_ri',compact('user','header_titulo','header_descripcion'));
+
+  }
+
+  public function generarInformesUs(){
+
+    $user = auth()->user();
+    $header_titulo = "Ayuda";
+    $header_descripcion = '';
+    return view('ayuda.generar_informes_us',compact('user','header_titulo','header_descripcion'));
 
   }
 

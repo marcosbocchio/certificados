@@ -150,14 +150,21 @@ Route::group(['middleware' => ['auth']], function () {
       Route::get('buscar_formularios', 'AyudaController@BuscarFormularios')->name('ayuda-buscar-formularios');
       Route::get('visualizar_ot', 'AyudaController@visualizarOt')->name('ayuda-visualizar-ot');
       Route::get('crear_ot', 'AyudaController@crearOt')->name('ayuda-crear-ot');
+      Route::get('asignar_operadores', 'AyudaController@asignarOperadores')->name('ayuda-asignar-operadores');
+      Route::get('visualizar_documentacion_operadores', 'AyudaController@VisualizarDocOperadores')->name('ayuda-visualizar-doc-operadores');
       Route::get('asignar_soldadores_y_usuarios', 'AyudaController@asignarSoldadoresUsuarios')->name('ayuda-asignar-soldadores-y-usuarios');
       Route::get('generar_informes', 'AyudaController@generarInformes')->name('ayuda-generar-informes');
       Route::get('generar_informes_ri', 'AyudaController@generarInformesRi')->name('ayuda-generar-informes-ri');
       Route::get('generar_informes_pm', 'AyudaController@generarInformesPm')->name('ayuda-generar-informes-pm');
       Route::get('generar_informes_lp', 'AyudaController@generarInformesLp')->name('ayuda-generar-informes-lp');
+      Route::get('generar_informes_us', 'AyudaController@generarInformesUs')->name('ayuda-generar-informes-us');
 
       /* MODELOS 3D */
       Route::get('/area/enod/visualizador3d/{modelo_id}', 'Modelos3dController@Viewer')->name('viewer-3d');
+
+      /* NOTIFICACIONES */
+      Route::get('/area/enod/alarmas', 'AlarmasController@callView')->name('alarmas');
+
 });
 
 Route::get('/pdf-test',function(){

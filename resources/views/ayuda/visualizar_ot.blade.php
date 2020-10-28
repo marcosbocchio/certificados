@@ -7,13 +7,25 @@
 			<div class="col-sm-12">
 			  <h2>Visualización general de una Orden de trabajo (OT)</h2>
 			  <p>A medida que se van creando en el sistema las Ordenes de trabajo, se van listando en el Tablero principal por orden de creación en forma descendiente. Es importante aclarar, que la visualización depende del usuario conectado y nunca será posible que un cliente acceda ni visualice  una Orden de trabajo que no le corresponde.<br>
-			  Cuando seleccionamos en el listado una determinada Orden de trabajo, en los ocho íconos de la parte superior del tablero, se puede acceder y visualizar (según permisos) a la informacion específica de dicha Orden.</p>
-			  <p>Íconos de acceso a la información de la OT seleccionada:<br></p>
 			</div>
 
 			 <div class="col-sm-8 col-sm-offset-2">
-            	  <img src="{{ asset('img/ayuda/Tablero_iconos_grandes.PNG') }}"  class="img-responsive" alt="img"/><br>
-		 	 </div>
+            	  <img src="{{ asset('img/ayuda/Listado_OT.PNG') }}"  class="img-responsive" alt="img"/><br>
+             </div>
+             <div class="col-sm-12 detalle_iconos" >
+                <strong>Detalle de íconos </strong><br>
+                  <p><img  class="img-responsive" src="{{ asset('img/ayuda/Boton_editar.PNG') }}" />&nbsp;&nbsp;Permite editar una Orden de trabajo ya creada.</p>
+                  <p><img  class="img-responsive" src="{{ asset('img/ayuda/Boton_usuarios.PNG') }}" />&nbsp;&nbsp; Acceso a la asignación de usuarios de clientes y soldadores.</p>
+                  <p><img  class="img-responsive" src="{{ asset('img/ayuda/Boton_pdf.PNG') }}"/>&nbsp;&nbsp;Permite acceder al pdf de la Orden de trabajo.</p>
+                  <p><img  class="img-responsive" src="{{ asset('img/ayuda/Boton_firmar.PNG') }}" />
+                    <img  class="img-responsive"  src="{{ asset('img/ayuda/Boton_ot_activa.PNG') }}" />
+                    <img  class="img-responsive"  src="{{ asset('img/ayuda/Boton_ot_cerrada.PNG') }}" />&nbsp;&nbsp; El primero permite firmar la OT y pasarla de <strong>editando</strong> a <strong>activa</strong>.El segundo <strong>cierra</strong> la OT y se visualiza el tercer ícono. </p>
+                Cuando seleccionamos en el listado una determinada Orden de trabajo, en los ocho íconos de la parte superior del tablero, se puede acceder y visualizar (según permisos) a la informacion específica de dicha Orden.</p>
+                <p>Íconos de acceso a la información de la OT seleccionada:<br></p>
+              </div>
+              <div class="col-sm-8 col-sm-offset-2">
+                <img  class="img-responsive" src="{{ asset('img/ayuda/Tablero_iconos_grandes.PNG') }}" alt="informe.png"/><br>
+            </div>
 			<div class="col-sm-12">
 			  	<ul>
 				<li><strong>Operadores:</strong> Asignación y visualización de documentación de cada operador asignado a la OT</li>

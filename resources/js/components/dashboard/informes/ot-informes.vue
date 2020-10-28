@@ -170,8 +170,8 @@ export default {
     },
     props :{
     ot_metodos_ensayos_data: {
-    type : Array,
-    required : false
+        type : Array,
+        required : false
     },
 
     ot_data : {

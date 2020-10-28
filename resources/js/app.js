@@ -278,6 +278,9 @@ Vue.component('video-edit', require('./components/multimedia/video-edit.vue').de
 /* Modelos 3d*/
 Vue.component('modelo3d-viewer', require('./components/modelos3d/modelo3d-viewer.vue').default);
 
+/* Notificaciones  */
+Vue.component('alarmas', require('./components/notificaciones/alarmas.vue').default);
+
 /* modal confirmacion */
 
 Vue.component('confirmar-modal', require('./components/confirmar-modal').default);
