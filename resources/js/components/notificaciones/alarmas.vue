@@ -68,9 +68,7 @@
                 </div>
             </div>
             <div class="col-md-12">
-                <div v-show="$can('M_alarmas')">
-                    <button class="btn btn-primary" @click="StoreAlarmas">Actualizar</button>
-                </div>
+                <button class="btn btn-primary" @click="StoreAlarmas">Actualizar</button>
             </div>
         </div>
     </div>
