@@ -15,12 +15,12 @@ class AlarmasController extends Controller
      */
     public function index()
     {
-        return Alarmas::where('pos_vencimiento_sn',0)->get();
+        return Alarmas::where('tipo','!=','DOSIMETRIA')->get();
     }
 
     public function getAlarmaDosimetria(){
 
-        return Alarmas::where('pos_vencimiento_sn',1)->first();
+        return Alarmas::where('tipo','DOSIMETRIA')->first();
 
     }
 

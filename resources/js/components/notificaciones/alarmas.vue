@@ -1,6 +1,6 @@
 <template>
-    <div>
-       <div class="col-md-6 col-md-offset-3">
+    <div class="row">
+       <div class="col-sm-8 col-sm-offset-2">
 
             <div class="box box-custom-enod top-buffer">
                 <div class="box-header with-border">
@@ -17,7 +17,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(alarma,k) in alarmas" :key="k" @click="selectPosAlarmas(k)">
+                                <tr v-for="(alarma,k) in alarmas" :key="k" @click="selectPosAlarmas(k)" class="pointer">
                                     <td>{{ alarma.tipo }}</td>
                                     <td style="text-align: center;">
                                          <div v-if="indexPosAlarmas == k ">
@@ -90,10 +90,10 @@ export default {
      errors : [],
      semanas : [
 
-        { 'semana'  : '1 Semanas' ,  'dias': '7' },
-        { 'semana'  : '2 Semanas' ,  'dias': '14' },
-        { 'semana'  : '3 Semanas' ,  'dias': '21' },
-        { 'semana'  : '4 Semanas' ,  'dias': '28' },
+        { 'semana'  : '1 semanas' ,  'dias': '7' },
+        { 'semana'  : '2 semanas' ,  'dias': '14' },
+        { 'semana'  : '3 semanas' ,  'dias': '21' },
+        { 'semana'  : '4 semanas' ,  'dias': '28' },
 
         ]
      }
@@ -119,25 +119,29 @@ methods : {
 
     },
 
-    getAlarmas :  function(){
-        this.loading_table = true ;
-        axios.defaults.baseURL = this.url ;
-        var urlRegistros = 'alarmas' + '?api_token=' + Laravel.user.api_token;
-        axios.get(urlRegistros).then(response =>{
+    async getAlarmas(){
 
-            this.alarmas = response.data
+       this.loading_table = true ;
+       axios.defaults.baseURL = this.url ;
+       var urlRegistros = 'alarmas' + '?api_token=' + Laravel.user.api_token;
+       await axios.get(urlRegistros).then(response =>{
 
-       }).finally(()=> { this.loading_table = false;});
+            this.alarmas = response.data;
+
+       }).finally(()=> {this.indexPosAlarmas=-1; this.loading_table = false;});
+
 
     },
 
-    getAlarmaDosimetria :  function(){
+    async getAlarmaDosimetria() {
         this.loading_table = true ;
         axios.defaults.baseURL = this.url ;
         var urlRegistros = 'alarmas/dosimetria' + '?api_token=' + Laravel.user.api_token;
-        axios.get(urlRegistros).then(response =>{
+        await axios.get(urlRegistros).then(response =>{
 
-            this.aviso2_dosimetria = response.data
+            let res = response.data;
+            this.aviso1_dosimetria = this.semanas[this.semanas.findIndex(elemento => elemento.dias == res.aviso1)];
+            this.aviso2_dosimetria = res.aviso2;
 
        }).finally(()=> { this.loading_table = false;});
 
@@ -177,7 +181,7 @@ methods : {
 
             }
 
-        });
+         }).finally(()=> { this.getAlarmas()});
 
         },
 
