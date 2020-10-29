@@ -1,15 +1,16 @@
 <?php
 
 use App\ParametrosGenerales;
-use App\Partes;
 use App\InternoFuentes;
 
 /* pdfCantFilasACompletar()  : Funcion que retorna la cantidad de filas en blanco de una tabla que nos hace falta para completar un pdf.
 
-  $filasPage : cantidad de filas por pagina para el pdf 
+  $filasPage : cantidad de filas por pagina para el pdf
   $cantFilasTotal : cantidad total de registros que vamos a mostrar
 
 */
+
+
 
 function getNombreMes($nro_mes){
 
@@ -24,7 +25,7 @@ function getNombreMes($nro_mes){
       break;
     case 3:
       $mes = 'Marzo' ;
-    break; 
+    break;
     case 4:
       $mes = 'Abril' ;
     break;
@@ -33,7 +34,7 @@ function getNombreMes($nro_mes){
     break;
     case 6:
       $mes = 'Junio' ;
-    break; 
+    break;
     case 7:
       $mes = 'Julio' ;
     break;
@@ -42,7 +43,7 @@ function getNombreMes($nro_mes){
       break;
     case 9:
       $mes = 'Septiembre' ;
-    break; 
+    break;
     case 10:
       $mes = 'Octubre' ;
     break;
@@ -51,17 +52,17 @@ function getNombreMes($nro_mes){
     break;
     case 12:
       $mes = 'Diciembre' ;
-    break;  
+    break;
     default:
     $mes = 'Indifinido' ;
       break;
-  }  
+  }
 
   return $mes ;
 }
 
 function pdfCantFilasACompletar($filasPage,$cantFilasTotal){
-   
+
 
     $filas_completar = ($filasPage - ($cantFilasTotal % $filasPage)) ;
 
@@ -73,7 +74,7 @@ function pdfCantFilasACompletar($filasPage,$cantFilasTotal){
     else {
 
       return $filas_completar ;
-      
+
     }
 
 }
@@ -91,9 +92,9 @@ function FormatearNumeroConCeros(int $numero,$ceros){
 }
 
 function CalcularDiasEntreFechas($fecha_inicial, $fecha_final = null){
-  
+
   $Ti = strtotime($fecha_inicial);
-  $Tf = null; 
+  $Tf = null;
 
   if($fecha_final){
 
@@ -104,7 +105,7 @@ function CalcularDiasEntreFechas($fecha_inicial, $fecha_final = null){
     $Tf = strtotime(date('Y-m-d',strtotime('now')));
 
   }
- 
+
   $T  = intval(($Tf-$Ti)/60/60/24);
 
   return $T;
@@ -118,7 +119,7 @@ function curie($interno_fuente_id, $fecha_final = null){
   $const_t = $interno_fuente->fuente->const_t;
   $curie = $interno_fuente->curie;
   $curie_actual = round(($curie)  /(pow(2,(($T)/$const_t))),1);
-  return $curie_actual;  
+  return $curie_actual;
 
 }
 
@@ -129,8 +130,8 @@ function PuedeCrearInforme($ot_id){
 
     if($ddppi!=null){
 
-      $informes_demorados_parte = DB::select('CALL InfomesSinPartePorLimiteDias(?,?)',array($ot_id,$ddppi->valor));  
-      
+      $informes_demorados_parte = DB::select('CALL InfomesSinPartePorLimiteDias(?,?)',array($ot_id,$ddppi->valor));
+
       if(count($informes_demorados_parte) == 0){
 
         return 1;

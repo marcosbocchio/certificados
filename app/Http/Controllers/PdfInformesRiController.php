@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-use App\helpers;
+// use App\helpers;
 use App\Informe;
 use App\InformesRi;
 use App\Ots;

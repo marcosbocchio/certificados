@@ -63,6 +63,7 @@ class AlarmasController extends Controller
             $alarma = Alarmas::find($item['id']);
             $alarma->aviso1 = $item['aviso1'] ;
             $alarma->aviso2 = $item['aviso2'] ;
+            $alarma->activo_sn = $item['activo_sn'] ;
             $alarma->save();
 
             }
@@ -71,6 +72,7 @@ class AlarmasController extends Controller
 
             $alarma->aviso1 = isset($request->aviso1_dosimetria['dias']) ? $request->aviso1_dosimetria['dias'] : '' ;
             $alarma->aviso2 = $request->aviso2_dosimetria;
+            $alarma->activo_sn = $request->activo_sn_dosimetria;
             $alarma->save();
 
             DB::commit();

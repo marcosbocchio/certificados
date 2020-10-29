@@ -11,15 +11,16 @@
                         <table class="table table-hover table-striped table-condensed">
                             <thead>
                                 <tr>
-                                    <th class="col-md-6">Tipo</th>
+                                    <th class="col-md-5">Tipo</th>
                                     <th class="col-md-3" style="text-align: center;" >Días 1.º aviso </th>
                                     <th class="col-md-3" style="text-align: center;">Días 2.º aviso</th>
+                                    <th class="col-md-1" style="text-align: center;">Activo</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(alarma,k) in alarmas" :key="k" @click="selectPosAlarmas(k)" class="pointer">
+                                <tr v-for="(alarma,k) in alarmas" :key="k" class="pointer">
                                     <td>{{ alarma.tipo }}</td>
-                                    <td style="text-align: center;">
+                                    <td style="text-align: center;" @click="selectPosAlarmas(k)">
                                          <div v-if="indexPosAlarmas == k ">
                                             <input type="number" v-model="alarmas[k].aviso1" width="100%" min="0" step="1">
                                          </div>
@@ -27,7 +28,7 @@
                                             {{ alarma.aviso1 }}
                                          </div>
                                     </td>
-                                    <td style="text-align: center;">
+                                    <td style="text-align: center;" @click="selectPosAlarmas(k)">
                                          <div v-if="indexPosAlarmas == k ">
                                             <input type="number" v-model="alarmas[k].aviso2" width="100%" min="0" step="1">
                                          </div>
@@ -35,6 +36,10 @@
                                             {{ alarma.aviso2 }}
                                          </div>
                                     </td>
+                                    <td style="text-align: center;">
+                                        <input type="checkbox" id="checkbox" v-model="alarmas[k].activo_sn">
+                                    </td>
+
                                 </tr>
                             </tbody>
                         </table>
@@ -52,19 +57,25 @@
                     <h3 class="box-title">Alarmas de dosimetría</h3>
                 </div>
                 <div class="box-body">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="aviso1_dosimetria">Período notificación * </label>
-                            <v-select v-model.number="aviso1_dosimetria" label="semana"  :options="semanas" id="aviso1_dosimetria" required></v-select>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                                <input type="checkbox" id="activo_sn_dosimetria" v-model="activo_sn_dosimetria" style="float:right">
+                                <label for="activo_sn_dosimetria" style="float:right;margin-right: 5px;" class="pointer">Activo</label>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                             <label for="aviso2_dosimetria">Días para el aviso *</label>
-                             <input type="number" v-model="aviso2_dosimetria" class="form-control" min="0" step="1"  id="aviso2_dosimetria" required>
-
+                         <div class="clearfix"></div>
+                             <div class="col-md-6">
+                                <div class="form-group">
+                                     <label for="aviso1_dosimetria">Período notificación * </label>
+                                     <v-select v-model.number="aviso1_dosimetria" label="semana"  :options="semanas" id="aviso1_dosimetria" required></v-select>
+                                </div>
                         </div>
-                    </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="aviso2_dosimetria">Días para el aviso *</label>
+                                <input type="number" v-model="aviso2_dosimetria" class="form-control" min="0" step="1"  id="aviso2_dosimetria" required>
+                            </div>
+                        </div>
                 </div>
             </div>
             <div class="col-md-12">
@@ -85,6 +96,7 @@ export default {
      loading_table: false,
      aviso1_dosimetria : '',
      aviso2_dosimetria : '',
+     activo_sn_dosimetria : false,
      errors : [],
      semanas : [
 
@@ -140,6 +152,7 @@ methods : {
             let res = response.data;
             this.aviso1_dosimetria = this.semanas[this.semanas.findIndex(elemento => elemento.dias == res.aviso1)];
             this.aviso2_dosimetria = res.aviso2;
+            this.activo_sn_dosimetria = res.activo_sn;
 
        }).finally(()=> { this.loading_table = false;});
 
@@ -159,7 +172,8 @@ methods : {
             'alarmas'                 : this.alarmas,
             'aviso1_dosimetria'       : this.aviso1_dosimetria,
             'aviso2_dosimetria'       : this.aviso2_dosimetria,
-        }
+            'activo_sn_dosimetria'    : this.activo_sn_dosimetria,
+            }
 
         }).then(response => {
 
@@ -179,7 +193,7 @@ methods : {
 
             }
 
-         }).finally(()=> { this.getAlarmas()});
+         }).finally(()=> { this.getAlarmas();this.getAlarmaDosimetria()});
 
         },
 
