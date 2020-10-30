@@ -3,7 +3,8 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendVencimientosDocumentacionMailable;
 class VencimientosDocumentacion extends Command
 {
     /**
@@ -37,6 +38,6 @@ class VencimientosDocumentacion extends Command
      */
     public function handle()
     {
-        //
+        Mail::to('marcosbocchio@gmail.com')->send(new SendVencimientosDocumentacionMailable);
     }
 }
