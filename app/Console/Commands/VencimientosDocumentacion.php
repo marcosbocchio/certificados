@@ -38,6 +38,7 @@ class VencimientosDocumentacion extends Command
      */
     public function handle()
     {
-        Mail::to('marcosbocchio@gmail.com')->send(new SendVencimientosDocumentacionMailable);
+        $fecha = date("F j, Y, g:i a");
+        Mail::to('marcosbocchio@gmail.com')->send(new SendVencimientosDocumentacionMailable($fecha));
     }
 }

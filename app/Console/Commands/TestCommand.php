@@ -40,6 +40,6 @@ class TestCommand extends Command
     public function handle()
     {
         DB::enableQueryLog();
-        Log::debug("Esto se ejecuto como tarea automatica : " .date("F j, Y, g:i a"));
+        Log::debug("Esto se ejecuto como tarea automatica : " . date("F j, Y, g:i a"));
     }
 }
