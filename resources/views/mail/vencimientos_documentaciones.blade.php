@@ -7,6 +7,6 @@
 </head>
 <body>
     <h1>Correo electrónico</h1>
-    <p>contenido del mensaje de notificación</p>
+    <p>contenido del mensaje de notificación : @php .date("F j, Y, g:i a")  @endphp</p>
 </body>
 </html>
