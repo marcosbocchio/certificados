@@ -671,6 +671,8 @@ export default {
          this.$store.dispatch('loadClientesOperador',this.user.id).then(response => {
              if(this.clientesOperador.length == 1){
                  this.cliente = this.clientesOperador[0];
+                 this.CambioCliente();
+                 this.selCliente = !this.selCliente;
              }
          });
          this.$store.dispatch('loadColores');
