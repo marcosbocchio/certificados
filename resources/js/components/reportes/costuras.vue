@@ -177,7 +177,7 @@ export default {
 
    mounted() {
 
-          his.$store.dispatch('loadClientesOperador',this.user.id).then(response => {
+          this.$store.dispatch('loadClientesOperador',this.user.id).then(response => {
              if(this.clientesOperador.length == 1){
                  this.cliente = this.clientesOperador[0];
              }
