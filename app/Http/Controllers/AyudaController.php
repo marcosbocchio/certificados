@@ -6,6 +6,18 @@ use Illuminate\Http\Request;
 
 class AyudaController extends Controller
 {
+
+
+public function __construct()
+{
+
+    $this->middleware(['role_or_permission:Sistemas|enod'],['only' =>
+     ['crearOt','asignarOperadores','asignarSoldadoresUsuarios','asignarSoldadoresUsuarios',
+     'generarInformes','generarInformesRi','generarInformesLp','generarInformesPm','generarInformesUs']]);
+
+}
+
+
   public function openAyuda(){
 
     $user = auth()->user();
