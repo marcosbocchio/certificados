@@ -11,6 +11,13 @@ use PDO;
 class EstadisticasSoldadurasController extends Controller
 {
 
+    public function __construct()
+    {
+
+          $this->middleware(['role_or_permission:Sistemas|R_estadisticas_soldaduras'],['only' => ['callView']]);
+
+    }
+
     public function callView(){
 
         $user = auth()->user();
@@ -41,6 +48,9 @@ class EstadisticasSoldadurasController extends Controller
     public function AnalisisSoldadurasDefectosSoldador($informes_ids){
 
         DB::select('CALL CreateTemporaryTableDefectoPosReduce(?)',array($informes_ids));
+
+
+        Log::debug("Infomes para reporte Estadisticas soldaduras" . $informes_ids);
 
         return  DB::select('CALL AnalisisSoldadurasDefectosSoldador(?)',array($informes_ids));
 

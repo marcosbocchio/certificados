@@ -9,6 +9,15 @@ use Illuminate\Support\Facades\Log;
 
 class ReportePlacasController extends Controller
 {
+
+    public function __construct()
+    {
+
+        $this->middleware(['role_or_permission:Sistemas|R_placas'],['only' => ['callView']]);
+
+
+    }
+
     public function callView(){
 
         $user = auth()->user();

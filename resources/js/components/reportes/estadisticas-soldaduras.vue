@@ -668,7 +668,11 @@ export default {
 
     created: function () {
 
-         this.$store.dispatch('loadClientesOperador',this.user.id);
+         this.$store.dispatch('loadClientesOperador',this.user.id).then(response => {
+             if(this.clientesOperador.length == 1){
+                 this.cliente = this.clientesOperador[0];
+             }
+         });
          this.$store.dispatch('loadColores');
 
     },

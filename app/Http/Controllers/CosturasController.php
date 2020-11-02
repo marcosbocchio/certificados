@@ -9,6 +9,14 @@ use Illuminate\Support\Facades\Log;
 
 class CosturasController extends Controller
 {
+
+    public function __construct()
+    {
+
+          $this->middleware(['role_or_permission:Sistemas|R_costuras'],['only' => ['callView']]);
+
+    }
+
     public function callView(){
 
         $user = auth()->user();

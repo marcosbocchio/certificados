@@ -173,14 +173,16 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              @can('D_soldaduras')
+
+              @can('R_estadisticas_soldaduras')
                   <li><a href="{{ route('reporte-estadisticas-soldaduras') }}">Estadísticas soldaduras</a></li>
               @endcan
-              @can('D_soldaduras')
+
+              @can('R_costuras')
                    <li><a href="{{ route('reporte-costuras') }}">Costuras</a></li>
               @endcan
 
-              @can('D_soldaduras')
+              @can('R_placas')
                    <li><a href="{{ route('reporte-placas-repetidas-testigos') }}">Placas</a></li>
               @endcan
 

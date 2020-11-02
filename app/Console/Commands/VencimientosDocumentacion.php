@@ -8,6 +8,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendVencimientosDocumentacionMailable;
 use App\Documentaciones;
+use App\Alarmas;
 
 class VencimientosDocumentacion extends Command
 {
@@ -42,17 +43,17 @@ class VencimientosDocumentacion extends Command
      */
     public function handle()
     {
-        $alarmas = (new \App\Http\Controllers\AlarmasController)->index();
+        $alarmas = Alarmas::where('tipo','!=','DOSIMETRIA')
+                            ->where('activo_sn',1)
+                            ->get();
+
         foreach ($alarmas as $alarma) {
-            $resultado = [];
-            
-            if($alarma->activo_sn){
 
                switch ($alarma->tipo){
                    case 'USUARIO':
                        $resultado = $this->getVencimientosUsuarios($alarma->aviso1,$alarma->aviso2);
                        break;
-                   
+
                    default:
                        # code...
                        break;
@@ -63,8 +64,7 @@ class VencimientosDocumentacion extends Command
                 Log::debug("Usuarios con documentacion vencida: " . $item->name);
             }
 
-            }
-        }
+       }
 
 
      //   Mail::to('marcosbocchio@gmail.com')->send(new SendVencimientosDocumentacionMailable($resultado));
@@ -73,7 +73,7 @@ class VencimientosDocumentacion extends Command
     public function getVencimientosUsuarios($aviso1,$aviso2){
 
         return Documentaciones::join('usuario_documentaciones','documentaciones.id','=','usuario_documentaciones.documentacion_id')
-                                      ->join('users','users.id','=','usuario_documentaciones.user_id')  
+                                      ->join('users','users.id','=','usuario_documentaciones.user_id')
                                       ->whereRaw('DATEDIFF(now(),documentaciones.fecha_caducidad) = ? or DATEDIFF(now(),documentaciones.fecha_caducidad) = ?',[$aviso1,$aviso2])
                                       ->select('users.name')
                                       ->get();

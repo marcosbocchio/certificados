@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\DB;
 
 class PdfEstadisticasSoldadurasController extends Controller
 {
+
+
+
     public function imprimir($cliente_id,$obra,$fecha_desde,$fecha_hasta){
 
         $cliente = Clientes::find($cliente_id);
