@@ -16,7 +16,13 @@
                                 <th colspan="2" >Linea</th>
                            </tr>
                            <tr>
-                                <td colspan="4">{{$informe->linea}}</td>
+                                <td colspan="4">
+                                    @if($informe->linea)
+                                      {{$informe->linea}}
+                                    @else
+                                         &nbsp;
+                                    @endif
+                                </td>
                            </tr>
 
                             <tr>
