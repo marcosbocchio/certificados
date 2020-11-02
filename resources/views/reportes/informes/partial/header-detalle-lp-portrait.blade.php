@@ -13,7 +13,7 @@
                            </tr>
 
                            <tr>
-                                <th colspan="2" >Linea</th>
+                                <th colspan="4" >Linea</th>
                            </tr>
                            <tr>
                                 <td colspan="4">
