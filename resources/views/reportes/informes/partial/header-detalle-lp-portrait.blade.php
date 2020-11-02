@@ -14,16 +14,17 @@
 
                            <tr>
                                 <th colspan="2" >Linea</th>
-                                <th colspan="2" >Plano / Isométrico</th>
                            </tr>
                            <tr>
-                                <td colspan="2">{{$informe->linea}}</td>
-                                <td colspan="2">{{$informe->plano_isom}}
-                                    @if ($informe->hoja)
-                                        - H:{{ $informe->hoja}}
-                                    @endif
-                                </td>
-                            </tr>
+                                <td colspan="4">{{$informe->linea}}</td>
+                           </tr>
+
+                            <tr>
+                                <th colspan="4">Procedimiento</th>
+                           </tr>
+                           <tr>
+                                <td colspan="4">{{$procedimiento_inf->titulo}}</td>
+                           </tr>
 
                            <tr>
                                 <th colspan="4">EPS</th>
@@ -32,12 +33,6 @@
                                 <td colspan="4">{{$ot_tipo_soldadura->eps}}</td>
                            </tr>
 
-                           <tr>
-                                <th colspan="4">Procedimiento</th>
-                           </tr>
-                           <tr>
-                                <td colspan="4">{{$procedimiento_inf->titulo}}</td>
-                           </tr>
 
                            <tr>
                                 <th colspan="2">Método</th>
@@ -91,6 +86,13 @@
                                 </td>
                            </tr>
 
+                           <tr>
+                               <th colspan="4">Ejecutor Ensayo</th>
+                           </tr>
+                           <tr>
+                              <td colspan="4" class="borderFilabottom">{{$ejecutor_ensayo->name}}</td>
+                           </tr>
+
                         </tbody>
                     </table>
                 </td>
@@ -119,6 +121,17 @@
                                     @endif
                                </td>
                            </tr>
+
+                           <tr>
+                                <th colspan="4" >Plano / Isométrico</th>
+                            </tr>
+                            <tr>
+                                <td colspan="4">{{$informe->plano_isom}}
+                                    @if ($informe->hoja)
+                                        - H:{{ $informe->hoja}}
+                                    @endif
+                                </td>
+                            </tr>
 
                            <tr>
                                 <th colspan="2">Diámetro</th>
@@ -204,13 +217,6 @@
                                 <td colspan="2">{{$norma_evaluacion->codigo}}</td>
                                 <td colspan="2">{{$norma_ensayo->codigo}}</td>
                             </tr>
-
-                           <tr>
-                                <th colspan="4">Ejecutor Ensayo</th>
-                           </tr>
-                           <tr>
-                                <td colspan="4" class="borderFilabottom">{{$ejecutor_ensayo->name}}</td>
-                           </tr>
 
                         </tbody>
                     </table>
