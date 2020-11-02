@@ -256,7 +256,9 @@
             </a>
             <ul class="treeview-menu">
                 <li><a href="#-tablero-principal"></i>Tablero principal</a></li>
-                <li><a href="#-maestros"></i>Maestros</a></li>
+                @can('enod')
+                    <li><a href="#-maestros"></i>Maestros</a></li>
+                @endcan
                 <li><a href="#-dosimetria"></i>Dosimetría</a></li>
                 <li><a href="#-multimedia"></i>multimedia</a></li>
             </ul>
