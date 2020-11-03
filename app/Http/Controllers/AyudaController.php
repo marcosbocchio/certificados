@@ -154,4 +154,13 @@ public function __construct()
 
   }
 
+  public function AsignarProcedimientos(){
+
+    $user = auth()->user();
+    $header_titulo = "Ayuda";
+    $header_descripcion = '';
+    return view('ayuda.asignar_procedimientos',compact('user','header_titulo','header_descripcion'));
+
+  }
+
 }

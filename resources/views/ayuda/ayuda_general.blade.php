@@ -21,8 +21,12 @@
               <p><a href="{{ route('ayuda-asignar-operadores') }}" target="_blank">Asignar operadores a una Orden de trabajo (OT)&nbsp;</a></p>
           @endcan
 
+              <p><a href="{{ route('ayuda-visualizar-doc-operadores') }}" target="_blank">Visualizar documentación de operadores asignados a una Orden de trabajo (OT)&nbsp;</a></p>
 
-		      <p><a href="{{ route('ayuda-visualizar-doc-operadores') }}" target="_blank">Visualizar documentación de operadores asignados a una Orden de trabajo (OT)&nbsp;</a></p>
+          @can('enod')
+              <p><a href="{{ route('ayuda-asignar-procedimientos') }}" target="_blank">Asignar procedimientos a la Orden de trabajo (OT)&nbsp;</a></p>
+          @endcan
+
           @can('enod')
               <p><a href="{{ route('ayuda-asignar-vehiculos') }}" target="_blank">Asignar vehículos y documentación complementaria a Orden de trabajo (OT)&nbsp;</a></p>
           @endcan
