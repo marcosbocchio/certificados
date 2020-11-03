@@ -163,4 +163,13 @@ public function __construct()
 
   }
 
+  public function visualizarProcedimientos(){
+
+    $user = auth()->user();
+    $header_titulo = "Ayuda";
+    $header_descripcion = '';
+    return view('ayuda.visualizar_procedimientos',compact('user','header_titulo','header_descripcion'));
+
+  }
+
 }
