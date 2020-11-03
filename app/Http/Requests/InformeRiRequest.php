@@ -70,7 +70,7 @@ class InformeRiRequest extends FormRequest
                 'obra'                      => 'required|min:1',
                 'componente'                => $condicion_componente . 'Max:20',
                 'material'                  => 'required',
-                'plano_isom'                => 'required|Max:20',
+                'plano_isom'                => 'required|Max:30',
                 'medida.codigo'             => 'required',
                 'ot_tipo_soldadura'         => 'required',
                 'diametro'                  => 'required',

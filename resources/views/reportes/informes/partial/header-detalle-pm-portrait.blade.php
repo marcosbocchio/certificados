@@ -13,23 +13,16 @@
                            </tr>
 
                            <tr>
-                                <th colspan="2" >Linea</th>
-                                <th colspan="2" >Plano / Isométrico</th>
+                              <th colspan="4" >Linea</th>
                            </tr>
                            <tr>
-                                <td colspan="2">{{$informe->linea}}</td>
-                                <td colspan="2">{{$informe->plano_isom}}
-                                    @if ($informe->hoja)
-                                        - H:{{ $informe->hoja}}
-                                    @endif
-                                </td>
-                            </tr>
-
-                           <tr >
-                                <th colspan="4">EPS</th>
-                           </tr>
-                           <tr>
-                                <td colspan="4">{{$ot_tipo_soldadura->eps}}</td>
+                              <td colspan="4">
+                                 @if($informe->linea)
+                                    {{$informe->linea}}
+                                 @else
+                                    &nbsp;
+                                 @endif
+                              </td>
                            </tr>
 
                            <tr>
@@ -38,6 +31,14 @@
                            <tr>
                                 <td colspan="4">{{$procedimiento_inf->titulo}}</td>
                            </tr>
+
+                           <tr>
+                                <th colspan="4">EPS</th>
+                           </tr>
+                           <tr>
+                                <td colspan="4">{{$ot_tipo_soldadura->eps}}</td>
+                           </tr>
+
 
                            <tr>
                                 <th colspan="4">Método</th>
@@ -101,6 +102,15 @@
                                </td>
                            </tr>
 
+                            <tr>
+                                <th colspan="2">Técnica</th>
+                                <th colspan="2">Ejecutor Ensayo</th>
+                            </tr>
+                            <tr>
+                                <td colspan="2">{{$tecnica->descripcion}}</td>
+                                <td colspan="2">{{$ejecutor_ensayo->name}}</td>
+                            </tr>
+
                         </tbody>
                     </table>
                 </td>
@@ -128,6 +138,17 @@
                                          {{$material2->codigo}}
                                     @endif
                                </td>
+                           </tr>
+
+                           <tr>
+                                <th colspan="4" >Plano / Isométrico</th>
+                           </tr>
+                           <tr>
+                                <td colspan="4">{{$informe->plano_isom}}
+                                    @if ($informe->hoja)
+                                        - H:{{ $informe->hoja}}
+                                    @endif
+                                </td>
                            </tr>
 
                            <tr>
@@ -215,18 +236,10 @@
                                 <th colspan="2">Norma Ensayo</th>
                             </tr>
                             <tr>
-                                <td colspan="2">{{$norma_evaluacion->codigo}}</td>
-                                <td colspan="2">{{$norma_ensayo->codigo}}</td>
+                                <td colspan="2" class="borderFilabottom">{{$norma_evaluacion->codigo}}</td>
+                                <td colspan="2" class="borderFilabottom">{{$norma_ensayo->codigo}}</td>
                             </tr>
 
-                            <tr>
-                                <th colspan="2">Técnica</th>
-                                <th colspan="2">Ejecutor Ensayo</th>
-                            </tr>
-                            <tr>
-                                <td colspan="2" class="borderFilabottom">{{$tecnica->descripcion}}</td>
-                                <td colspan="2" class="borderFilabottom">{{$ejecutor_ensayo->name}}</td>
-                            </tr>
                        </tbody>
                     </table>
                 </td>

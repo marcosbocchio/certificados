@@ -56,14 +56,14 @@
                     <div class="col-md-3">
                         <div class="form-group" >
                             <label for="plano_isom">Plano / Isom *</label>
-                            <input type="text" v-model="plano_isom" class="form-control" id="plano_isom" maxlength="20">
+                            <input type="text" v-model="plano_isom" class="form-control" id="plano_isom" maxlength="30">
                         </div>
                     </div>
 
                     <div class="col-md-3">
                         <div class="form-group" >
                             <label for="hoja">hoja</label>
-                            <input type="text" v-model="hoja" class="form-control" id="hoja" maxlength="5">
+                            <input type="text" v-model="hoja" class="form-control" id="hoja" maxlength="10">
                         </div>
                     </div>
 

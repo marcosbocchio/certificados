@@ -38,7 +38,7 @@ class InformePmRequest extends FormRequest
             'obra'                      => 'required|min:1',
             'componente'                => 'required|Max:20',
             'material'                  => 'required',
-            'plano_isom'                => 'required|Max:20',
+            'plano_isom'                => 'required|Max:30',
             'diametro'                  => 'required',
             'ot_tipo_soldadura'         => 'required',
             'tecnica'                   => 'required',
