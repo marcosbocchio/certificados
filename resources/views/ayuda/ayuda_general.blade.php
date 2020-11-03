@@ -24,10 +24,10 @@
 
 		      <p><a href="{{ route('ayuda-visualizar-doc-operadores') }}" target="_blank">Visualizar documentación de operadores asignados a una Orden de trabajo (OT)&nbsp;</a></p>
           @can('enod')
-              <p><a href="{{ route('error-404') }}" target="_blank">Asignar vehículos y documentación complementaria a Orden de trabajo (OT)&nbsp;</a></p>
+              <p><a href="{{ route('ayuda-asignar-vehiculos') }}" target="_blank">Asignar vehículos y documentación complementaria a Orden de trabajo (OT)&nbsp;</a></p>
           @endcan
 
-			<p><a href="{{ route('error-404') }}" target="_blank"> Visualizar documentación de vehículos y documentación complementaria asigandos a Orden de trabajo (OT)&nbsp;</a></p>
+			<p><a href="{{ route('ayuda-visualizar-vehiculos') }}" target="_blank"> Visualizar documentación de vehículos y documentación complementaria asignados a Orden de trabajo (OT)&nbsp;</a></p>
 
           @can('enod')
                 <p><a href="{{ route('error-404') }}" target="_blank">Creación de remitos&nbsp;</a></p>

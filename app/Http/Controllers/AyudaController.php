@@ -13,7 +13,7 @@ public function __construct()
 
     $this->middleware(['role_or_permission:Sistemas|enod'],['only' =>
      ['crearOt','asignarOperadores','asignarSoldadoresUsuarios','asignarSoldadoresUsuarios',
-     'generarInformes','generarInformesRi','generarInformesLp','generarInformesPm','generarInformesUs']]);
+     'generarInformes','generarInformesRi','generarInformesLp','generarInformesPm','generarInformesUs','asignarVehiculos']]);
 
 }
 
@@ -134,6 +134,23 @@ public function __construct()
     $header_titulo = "Ayuda";
     $header_descripcion = '';
     return view('ayuda.generar_informes_lp',compact('user','header_titulo','header_descripcion'));
+
+  }
+  public function asignarVehiculos(){
+
+    $user = auth()->user();
+    $header_titulo = "Ayuda";
+    $header_descripcion = '';
+    return view('ayuda.asignar_vehiculos',compact('user','header_titulo','header_descripcion'));
+
+  }
+
+  public function visualizarVehiculos(){
+
+    $user = auth()->user();
+    $header_titulo = "Ayuda";
+    $header_descripcion = '';
+    return view('ayuda.visualizar_vehiculos',compact('user','header_titulo','header_descripcion'));
 
   }
 

@@ -153,6 +153,8 @@ Route::group(['middleware' => ['auth']], function () {
       Route::get('asignar_operadores', 'AyudaController@asignarOperadores')->name('ayuda-asignar-operadores');
       Route::get('visualizar_documentacion_operadores', 'AyudaController@VisualizarDocOperadores')->name('ayuda-visualizar-doc-operadores');
       Route::get('asignar_soldadores_y_usuarios', 'AyudaController@asignarSoldadoresUsuarios')->name('ayuda-asignar-soldadores-y-usuarios');
+      Route::get('asignar_vehiculos', 'AyudaController@asignarVehiculos')->name('ayuda-asignar-vehiculos');
+      Route::get('visualizar_vehiculos', 'AyudaController@VisualizarVehiculos')->name('ayuda-visualizar-vehiculos');
       Route::get('generar_informes', 'AyudaController@generarInformes')->name('ayuda-generar-informes');
       Route::get('generar_informes_ri', 'AyudaController@generarInformesRi')->name('ayuda-generar-informes-ri');
       Route::get('generar_informes_pm', 'AyudaController@generarInformesPm')->name('ayuda-generar-informes-pm');
