@@ -19,7 +19,7 @@
                 <p>La <strong>no</strong> asignación de procedimientos de <strong>enod</strong>, hace que en la generación de informes, sólo sea posible de seleccionar los procedimientos standard de cada método de ensayo.<br></p>
                 <p>La <strong>no</strong> asignación de al menos un procedimiento de <strong>cliente</strong>, hace que <strong>no</strong> sea posible la generación de informes<br></p>
                 <h3>Artículos relacionados&nbsp;</h3>
-                <p><a  href="{{ route('error-404') }}"> Visualizar Procedimientos de la OT &nbsp;</a></p>
+                <p><a  href="{{ route('ayuda-visualizar-procedimientos') }}"> Visualizar Procedimientos de la OT &nbsp;</a></p>
                 <p><a href="nada.html"> Gestionar Documentación&nbsp;</a></p>
             </div>
         </div>
