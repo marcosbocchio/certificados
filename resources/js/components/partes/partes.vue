@@ -379,13 +379,13 @@
                                 <div class="col-sm-6 col-md-3">
                                     <div class="form-group" >
                                         <label for="placas_repetidas">Placas Repetidas Total *</label>
-                                        <input type="number" v-model.number="placas_repetidas" class="form-control" id="placas_repetidas" min="0">
+                                        <input type="number" v-model="placas_repetidas" class="form-control" id="placas_repetidas" min="0">
                                     </div>
                                 </div>
                                 <div class="col-sm-6 col-md-3">
                                     <div class="form-group" >
                                         <label for="placas_testigos">Placas Testigos Total *</label>
-                                        <input type="number" v-model.number="placas_testigos" class="form-control" id="placas_testigos" min="0">
+                                        <input type="number" v-model="placas_testigos" class="form-control" id="placas_testigos" min="0">
                                     </div>
                                 </div>
 
@@ -868,8 +868,8 @@ export default {
                this.tipo_servicio = this.parte_data.tipo_servicio;
                this.horario = this.parte_data.horario;
                this.movilidad_propia_sn = this.parte_data.movilidad_propia_sn;
-               this.placas_repetidas = this.parte_data.placas_repetidas;
-               this.placas_testigos = this.parte_data.placas_testigos;
+               this.placas_repetidas = String(this.parte_data.placas_repetidas);
+               this.placas_testigos  = String(this.parte_data.placas_testigos);
                this.observaciones = this.parte_data.observaciones;
                this.$nextTick(function(){
 

@@ -255,7 +255,8 @@ class ClientesController extends Controller
 
     public function getOts($cliente_id){
 
-      return Ots::where('cliente_id',$cliente_id)->with('contratista')->get();
+      return Ots::where('cliente_id',$cliente_id)
+                        ->with('contratista')->get();
 
     }
 }
