@@ -164,7 +164,7 @@ class InformesController extends Controller
 
         if (Auth::check())
         {
-            $user_id = $userId = Auth::id();
+            $user_id = Auth::id();
         }
 
         $metodo_ensayo = MetodoEnsayos::where('metodo',$request->metodo_ensayo)->first();

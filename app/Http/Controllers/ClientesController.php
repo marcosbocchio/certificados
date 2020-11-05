@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\ClienteRequest;
 use Illuminate\Support\Collection as Collection;
+use Illuminate\Support\Facades\Auth;
 use App\Clientes;
 use Illuminate\Support\Facades\DB;
 use App\Contactos;
@@ -255,8 +256,30 @@ class ClientesController extends Controller
 
     public function getOts($cliente_id){
 
-      return Ots::where('cliente_id',$cliente_id)
-                        ->with('contratista')->get();
+        $user_id = null;
+
+        if (Auth::check())
+        {
+          $user_id = Auth::id();
+        }
+
+        $user = User::find($user_id);
+
+        if($user->cliente_id){
+
+            return Ots::join('ot_usuarios_clientes','ot_usuarios_clientes.ot_id','=','ots.id')
+                        ->where('ot_usuarios_clientes.user_id',$user_id)
+                        ->where('ots.cliente_id',$cliente_id)
+                        ->with('contratista')
+                        ->get();
+
+        }else {
+
+            return Ots::where('cliente_id',$cliente_id)
+                        ->with('contratista')
+                        ->get();
+        }
+
 
     }
 }

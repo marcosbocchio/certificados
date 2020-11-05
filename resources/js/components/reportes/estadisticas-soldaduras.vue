@@ -107,7 +107,7 @@
 
                   <div class="estadisticas-soldaduras">
                     <tabs :options="{ useUrlFragment: false }" @clicked="tabClicked" @changed="tabChanged">
-                        <tab name="Indices de rechazos">
+                        <tab v-if="$can('R_indices_de_rechazos')" name="Indices de rechazos">
 
                             <div v-if="data_indice_rechazos.options.length != []">
 
@@ -238,7 +238,7 @@
                                 <h4>No hay datos para mostrar</h4>
                             </div>
                         </tab>
-                        <tab name="Defectología">
+                        <tab  v-if="$can('R_defectologia')" name="Defectología">
                             <div v-if="TablaDetalleDefectos.length">
                                 <div class="col-lg-4">
                                     <button @click="downloadPdf_tab2">Exportar PDF</button>
@@ -326,7 +326,7 @@
                                 <h4>No hay datos para mostrar</h4>
                             </div>
                         </tab>
-                        <tab name="Defectología/Producción">
+                        <tab  v-if="$can('R_defectologia_produccion')" name="Defectología/Producción">
                             <div v-if="TablaDefectosSoldador.length">
                                 <div class="col-lg-4">
                                     <button @click="downloadPdf_tab3">Exportar PDF</button>
@@ -398,7 +398,7 @@
                             </div>
 
                         </tab>
-                        <tab name="Indicaciones">
+                        <tab  v-if="$can('R_indicaciones')" name="Indicaciones">
                             <div v-if="TablaIndicaciones.length">
                                 <div class="col-lg-4">
                                     <button @click="downloadPdf_tab4">Exportar PDF</button>

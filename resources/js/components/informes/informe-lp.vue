@@ -772,7 +772,6 @@ data() {return {
 
             if(!this.editmode) {
 
-                    console.log('entro en getnumeroinforme');
                     axios.defaults.baseURL = this.url ;
                     var urlRegistros = 'informes/ot/' + this.otdata.id + '/metodo/' + this.metodo + '/generar-numero-informe'  + '?api_token=' + Laravel.user.api_token;
                     axios.get(urlRegistros).then(response =>{
