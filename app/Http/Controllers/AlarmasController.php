@@ -8,11 +8,13 @@ use Illuminate\Support\Facades\DB;
 
 class AlarmasController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function getTodas()
+    {
+
+        return Alarmas::all();
+
+    }
+
     public function index()
     {
         return Alarmas::where('tipo','!=','DOSIMETRIA')->get();

@@ -306,7 +306,11 @@ Route::group(['middleware' => 'auth:api'], function()
 
     //Notificaciones
     Route::get('alarmas/dosimetria', 'AlarmasController@getAlarmaDosimetria');
+    Route::get('alarmas/todas', 'AlarmasController@getTodas');
+    Route::get('alarma-receptor/alarma/{id}', 'AlarmaReceptorController@getAlarmaReceptor');
     Route::resource('alarmas', 'AlarmasController');
+    Route::resource('alarma-receptor', 'AlarmaReceptorController');
+
 
 });
 

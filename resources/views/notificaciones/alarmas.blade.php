@@ -4,9 +4,7 @@
 
 <div id="app">
 
-   <alarmas
-
-   ></alarmas>
+   <alarmas></alarmas>
 
 </div>
 @endsection
