@@ -53,7 +53,21 @@ class AlarmaReceptorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $alarma = $request->alarma;
+      $receptores= $request->receptores;
+
+      AlarmaReceptor::where('alarma_id',$alarma['id'])
+                      ->delete();
+
+      foreach ($receptores as $receptor) {
+
+        $alarma_receptor = new AlarmaReceptor;
+        $alarma_receptor->user_id = $receptor['id'];
+        $alarma_receptor->alarma_id = $alarma['id'];
+        $alarma_receptor->save();
+
+      }
+
     }
 
     /**

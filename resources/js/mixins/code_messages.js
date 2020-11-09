@@ -7,7 +7,8 @@ const code_messages =
         'code-store'        : 'Registro guardado con éxito.',
         'code-edit'         : 'Registro editado con éxito.',
         'code-delete'       : 'Registro eliminado con éxito.',
-        'code-no-delete'    : 'Registro seleccionado no se pudo eliminar.'
+        'code-no-delete'    : 'Registro seleccionado no se pudo eliminar.',
+        'code-repeat'       : 'El registro ya exíste.'
 
     }
 

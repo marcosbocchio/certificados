@@ -344,6 +344,7 @@ state: {
         colores :[],
         operadores:[],
         obra_informe:'',
+        operadores_empresa:[],
         clientesOperador:[],
         contratistas:[],
         provincias:[],
@@ -813,6 +814,15 @@ actions : {
           })
         },
 
+        loadOperadoresEmpresa({
+            commit}) {
+             axios.defaults.baseURL = store.state.url ;
+             var urlRegistros ='users/empresa' + '?api_token=' + Laravel.user.api_token;
+             axios.get(urlRegistros).then((response) => {
+             commit('getOperadoresEmpresa', response.data)
+            })
+          },
+
         loadOperadoresDisometria({
           commit}) {
            axios.defaults.baseURL = store.state.url ;
@@ -1213,6 +1223,10 @@ actions : {
 
       getOperadores(state, operadores) {
         state.operadores = operadores
+      },
+
+      getOperadoresEmpresa(state, operadores_empresa) {
+        state.operadores_empresa = operadores_empresa
       },
 
       getOperadoresDosimetria(state, operadores_dosimetria) {
