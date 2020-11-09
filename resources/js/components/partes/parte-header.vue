@@ -66,7 +66,6 @@ export default {
       eventHeaderParte.$on('set-obra-header',function(payload){
           this.obra = payload;
           console.log(payload);
-          alert(payload);
           }.bind(this));
 
     },
