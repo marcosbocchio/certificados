@@ -48,7 +48,7 @@
                                          </div>
                                          <div v-else>
                                              <label >Tipo Sol</label>
-
+                                            <input type="checkbox" id="reparacion_sn" v-model="reparacion_sn" @change="cambioReparacion_sn()" style="float:right">
                                              <v-select  :options="[]" :disabled="(!isGasoducto)"></v-select>
                                          </div>
                                      </div>
@@ -1267,6 +1267,9 @@
              this.TablaDetalle = [];
              this.TablaPasadas = [];
              this.TablaImportada= [];
+             this.juntas_reparacion  =[];
+             this.junta_reparacion ='';
+             this.getElementosReparacion();
 
          },
 
@@ -1279,6 +1282,7 @@
          cambiopTipoInforme : function(){
             this.pk ='' ;
             this.tipo_soldadura='';
+            this.reparacion_sn= false;
             this.cambioOtTipoSoldadura();
             this.resetDetalle();
          },
@@ -1291,12 +1295,13 @@
 
          getElementosReparacion : function(){
              axios.defaults.baseURL = this.url ;
-                 var urlRegistros = 'informes_ri/elementos_reparacion/ot/' + this.otdata.id + '/km/' + this.pk + '?api_token=' + Laravel.user.api_token;
-                 axios.get(urlRegistros).then(response =>{
+             let urlRegistros = 'informes_ri/elementos_reparacion/ot/' + this.otdata.id +  '/obra/' + this.obra  + '/km/' + (this.pk ? this.pk : 'null') + '?api_token=' + Laravel.user.api_token;
+             alert(urlRegistros);
+             axios.get(urlRegistros).then(response =>{
                  this.juntas_reparacion = response.data
-
-                 });
+            });
          },
+
          getNumeroInforme:function(){
 
              if(!this.editmode) {
@@ -1513,7 +1518,7 @@
                    return;
              }else if (this.densidad == ''){
                      toastr.error('Campo densidad es obligatorio');
-                                 return;
+                     return;
              }
 
              let aux_junta = this.reparacion_sn ? this.junta_reparacion.codigo + 'R' :  this.junta;

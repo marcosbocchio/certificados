@@ -336,9 +336,9 @@ class InformesRiController extends Controller
         }
     }
 
-    public function getElementosReparacion($ot_id,$km){
-
-        return  DB::select('CALL InformeRiJuntasReparacion(?,?)',array($ot_id,$km));
+    public function getElementosReparacion($ot_id,$obra,$km){
+        $km = ($km=='null') ? '' : $km;
+        return  DB::select('CALL InformeRiJuntasReparacion(?,?,?)',array($ot_id,$obra,$km));
 
     }
 

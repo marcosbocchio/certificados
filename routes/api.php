@@ -207,7 +207,7 @@ Route::group(['middleware' => 'auth:api'], function()
 
     /*  informes */
     Route::resource('informes_ri','InformesRiController');
-    Route::get('informes_ri/elementos_reparacion/ot/{ot_id}/km/{km}', 'InformesRiController@getElementosReparacion');
+    Route::get('informes_ri/elementos_reparacion/ot/{ot_id}/obra/{obra}/km/{km}', 'InformesRiController@getElementosReparacion');
     Route::resource('informes_pm','InformesPmController');
     Route::resource('informes_lp','InformesLpController');
     Route::resource('informes_us','InformesUsController');

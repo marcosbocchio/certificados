@@ -104,7 +104,7 @@ methods  : {
     async getReceptores(){
 
        this.loading_table = true ;
-       this.operador = {};
+       this.operador ='';
        axios.defaults.baseURL = this.url ;
        var urlRegistros = 'alarma-receptor/alarma/' + (this.alarma ? this.alarma.id : 'null') + '?api_token=' + Laravel.user.api_token;
        await axios.get(urlRegistros).then(response =>{
@@ -117,6 +117,8 @@ methods  : {
     },
 
     addReceptor : function () {
+
+        if(!this.operador)  return;
 
         let index = this.receptores.findIndex(elemento => elemento.id == this.operador.id)
         if (index != -1){

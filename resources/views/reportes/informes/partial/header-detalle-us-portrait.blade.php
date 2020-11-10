@@ -62,7 +62,7 @@
                                 <th colspan="4">Ejecutor Ensayo</th>
                            </tr>
                            <tr>
-                                <td colspan="4">{{$ejecutor_ensayo->name}}</td>
+                                <td colspan="4" class="borderFilabottom">{{$ejecutor_ensayo->name}}</td>
                            </tr>
 
 
