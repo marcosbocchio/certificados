@@ -1296,7 +1296,6 @@
          getElementosReparacion : function(){
              axios.defaults.baseURL = this.url ;
              let urlRegistros = 'informes_ri/elementos_reparacion/ot/' + this.otdata.id +  '/obra/' + this.obra  + '/km/' + (this.pk ? this.pk : 'null') + '?api_token=' + Laravel.user.api_token;
-             alert(urlRegistros);
              axios.get(urlRegistros).then(response =>{
                  this.juntas_reparacion = response.data
             });
