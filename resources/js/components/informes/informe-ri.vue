@@ -46,7 +46,7 @@
                                          </div>
                                          <div v-else>
                                              <label >Tipo Sol</label>
-                                             <input type="checkbox" id="reparacion_sn" v-model="reparacion_sn" @change="cambioReparacion_sn()" style="float:right">
+                                             <input type="checkbox" id="reparacion_sn" v-model="reparacion_sn" @change="cambioReparacion_sn()" :disabled="!obra" style="float:right">
                                              <label for="reparacion_sn" style="float:right;margin-right: 5px;">R</label>
                                              <v-select  :options="[]" :disabled="(!isGasoducto)"></v-select>
                                          </div>
