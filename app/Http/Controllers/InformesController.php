@@ -152,7 +152,14 @@ class InformesController extends Controller
                                 ->get();
         }
 
-        return  $numero_informe;
+        if (count($numero_informe) > 0){
+
+            return $numero_informe[0]->numero_informe;
+
+        }else{
+
+            return 1;
+        }
 
     }
 
@@ -223,7 +230,6 @@ class InformesController extends Controller
         $informe->material2_id = $request->material2 ? $request->material2['id'] : null;
         $informe->material2_tipo = $request->material2 ? $request->material2_tipo : null;
         $informe->fecha = date('Y-m-d',strtotime($request->fecha));
-        $informe->numero = $request->numero_inf;
         $informe->km = $request->pk;
         $informe->ot_tipo_soldadura_id = $request->ot_tipo_soldadura ? $request->ot_tipo_soldadura['id'] : null;
         $informe->componente = $request->componente;
@@ -231,6 +237,16 @@ class InformesController extends Controller
         $informe->plano_isom = $request->plano_isom;
         $informe->hoja = $request->hoja;
         $informe->observaciones = $request->observaciones;
+
+        if($request->isMethod('post')){
+
+            $informe->numero = $this->GenerarNumeroInforme($request->ot['id'],$request->metodo_ensayo);
+
+        }else{
+
+            $informe->numero = $request->numero_inf;
+
+        }
 
 
         if($request->isMethod('post') || ($EsRevision)){

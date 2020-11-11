@@ -17,31 +17,31 @@
                                         <div class="input-group-addon">
                                               <i class="fa fa-calendar"></i>
                                         </div>
-                                            <Datepicker v-model="Registro.fecha" :input-class="'form-control pull-right'" :language="es" ></Datepicker>   
+                                            <Datepicker v-model="Registro.fecha" :input-class="'form-control pull-right'" :language="es" ></Datepicker>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group" >
-                                    <label for="prefijo">Prefijo</label> 
+                                    <label for="prefijo">Prefijo</label>
                                     <input type="text" v-model="Registro.prefijo" class="form-control" id="prefijo" >
-                                </div>                            
+                                </div>
                             </div>
                             <div class="col-md-6">
-                               <div class="form-group" > 
+                               <div class="form-group" >
                                     <label for="numero">Informe N° *</label>
                                     <div class="input-group">
                                         <span class="input-group-addon" style=" background-color: #eee;">{{Registro.metodo_ensayos.metodo}}</span>
                                         <input type="text" v-model="Registro.numero" class="form-control" id="numero" @change="formatearNumero(Registro.numero,3)" min="1" max="999">
                                     </div>
-                               </div>                      
+                               </div>
                             </div>
-                            <div class="col-md-12">                       
+                            <div class="col-md-12">
                                 <div class="form-group" >
                                     <label for="ejecutor_ensayo">Ejecutor Ensayo *</label>
-                                    <v-select v-model="Registro.ejecutor_ensayo" label="name" :options="ejecutor_ensayos"></v-select>   
-                                </div>         
-                            </div> 
+                                    <v-select v-model="Registro.ejecutor_ensayo" label="name" :options="ejecutor_ensayos"></v-select>
+                                </div>
+                            </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Observaciones *</label>
@@ -50,16 +50,16 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group" >
-                                    <subir-imagen                                
-                                        :ruta="ruta"                               
+                                    <subir-imagen
+                                        :ruta="ruta"
                                         :max_size="max_size"
                                         :path_inicial="Registro.path"
-                                        :tipos_archivo_soportados ="tipos_archivo_soportados"    
-                                        :mostrar_formatos_soportados="true"                          
+                                        :tipos_archivo_soportados ="tipos_archivo_soportados"
+                                        :mostrar_formatos_soportados="true"
                                         @path="Registro.path = $event"
                                         :path_requerido_sn="true"
-                                    ></subir-imagen> 
-                                </div>   
+                                    ></subir-imagen>
+                                </div>
                             </div>
 
                         </div>
@@ -86,7 +86,7 @@ export default {
 components: {
 
       Datepicker
-      
+
     },
 
     props :{
@@ -94,21 +94,21 @@ components: {
         metodo_ensayo: {
         type : Object,
         required : false
-        },   
+        },
 
         otdata : {
             type : Object,
             required : true
         },
 
-    
+
   },
 
     data() { return {
 
         en: en,
         es: es,
-        editmode : false, 
+        editmode : false,
         ruta: 'informes_importados',
         max_size :50000, //KB
         tipos_archivo_soportados:['pdf'],
@@ -122,13 +122,13 @@ components: {
             'prefijo'  : '',
             'observaciones':'',
             'path':'',
-            'metodo_ensayos' : {},     
+            'metodo_ensayos' : {},
             'ejecutor_ensayo' :{}
          },
          numero_generado:'',
 
         errors: {}
-      
+
         }
     },
 
@@ -136,23 +136,23 @@ components: {
 
     eventNewRegistro.$on('open', this.nuevoRegistro);
     eventEditRegistro.$on('edit', this.EditRegistro);
-    this.$store.dispatch('loadEjecutorEnsayo', this.otdata.id); 
+    this.$store.dispatch('loadEjecutorEnsayo', this.otdata.id);
 
     },
 
 
     computed :{
-    
-        ...mapState(['url','ejecutor_ensayos']),   
-        
+
+        ...mapState(['url','ejecutor_ensayos']),
+
     },
- 
+
     methods: {
 
-       nuevoRegistro : function(){      
-        
-           this.editmode = false; 
-           this.uploadPercentage = 0;   
+       nuevoRegistro : function(){
+
+           this.editmode = false;
+           this.uploadPercentage = 0;
            this.Registro = {
 
             'ot_id' : this.otdata.id,
@@ -174,80 +174,72 @@ components: {
 
               this.$forceUpdate();
               eventEditRegistro.$emit('refreshObra');
-              
+
            });
          $('#nuevo').modal('show');
-         
+
         },
 
         EditRegistro : function(informe_id){
             this.informe_id = informe_id;
             console.log('estoy dentro del modal edit:' + informe_id);
-            this.editmode = true; 
+            this.editmode = true;
             axios.defaults.baseURL = this.url ;
-            var urlRegistros = 'informes_importados/'+ informe_id + '/edit'  + '?api_token=' + Laravel.user.api_token;  
-            $('#nuevo').modal('show');       
+            var urlRegistros = 'informes_importados/'+ informe_id + '/edit'  + '?api_token=' + Laravel.user.api_token;
+            $('#nuevo').modal('show');
             axios.get(urlRegistros).then(response =>{
                 console.log(response.data );
                 this.Registro = response.data;
                 this.formatearNumero(this.Registro.numero,3);
                 this.$forceUpdate();
                 eventEditRegistro.$emit('refreshObra');
-            });  
+            });
         },
 
-        getNumeroInforme:function(){            
-           
+        getNumeroInforme:function(){
+
             if(!this.editmode) {
-           
-                    axios.defaults.baseURL = this.url ;
-                        var urlRegistros = 'informes/ot/' + this.otdata.id + '/metodo/' + this.metodo_ensayo.metodo + '/generar-numero-informe'  + '?api_token=' + Laravel.user.api_token;         
-                        axios.get(urlRegistros).then(response =>{
-                        this.numero_generado = response.data 
-                        console.log('el numero generado es:' + this.numero_generado);
-                        if(this.numero_generado.length){
 
-                            this.Registro.numero =  this.numero_generado[0].numero_informe
-                        }else{
+                axios.defaults.baseURL = this.url ;
+                var urlRegistros = 'informes/ot/' + this.otdata.id + '/metodo/' + this.metodo_ensayo.metodo + '/generar-numero-informe'  + '?api_token=' + Laravel.user.api_token;
+                axios.get(urlRegistros).then(response =>{
 
-                            this.Registro.numero = 1;
-                        }
-                        
-                       this.formatearNumero(this.Registro.numero,3);
-                        
-                        });   
+                    this.Registro.numero = response.data;
+                    this.formatearNumero(this.Registro.numero,3);
+
+                    });
              }
-        },   
+        },
 
         formatearNumero : function ( number, width )
             {
-                
+
                 width -= number.toString().length;
                 if ( width > 0 )
                 {
                     this.Registro.numero=  new Array( width + (/\./.test( number ) ? 2 : 1) ).join( '0' ) + number;
                 }
-                
+
             },
 
 
         storeRegistro: function(){
 
             axios.defaults.baseURL = this.url ;
-            var urlRegistros = 'informes_importados';  
-            console.log('entro en el store de informes importados');        
-            axios.post(urlRegistros, {   
-                
+            var urlRegistros = 'informes_importados';
+            console.log('entro en el store de informes importados');
+            axios.post(urlRegistros, {
+
                 ...this.Registro
-                
+
             }).then(response => {
                 this.$emit('store');
                 this.errors=[];
-                $('#nuevo').modal('hide');               
+                $('#nuevo').modal('hide');
                 toastr.success('El informe fue importado con éxito');
-                      
+
             }).catch(error => {
-               
+
                 this.errors = error.response.data.errors;
 
                 $.each( this.errors, function( key, value ) {
@@ -260,27 +252,27 @@ components: {
         },
 
         setObra : function(value){
-         
+
             this.Registro.obra = value;
         },
 
         updateRegistro: function(){
 
             axios.defaults.baseURL = this.url ;
-            var urlRegistros = 'informes_importados/' + this.Registro.id ;  
-            console.log('entro en el store de informes importados');        
-            axios.put(urlRegistros, {   
-                
+            var urlRegistros = 'informes_importados/' + this.Registro.id ;
+            console.log('entro en el store de informes importados');
+            axios.put(urlRegistros, {
+
                 ...this.Registro
-                
+
             }).then(response => {
                 this.$emit('store');
                 this.errors=[];
-                $('#nuevo').modal('hide');               
+                $('#nuevo').modal('hide');
                 toastr.success('El informe fue editado con éxito');
-                      
+
             }).catch(error => {
-               
+
                 this.errors = error.response.data.errors;
 
                 $.each( this.errors, function( key, value ) {

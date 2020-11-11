@@ -45,7 +45,7 @@ class TecnicaDistanciasController extends Controller
                 $dfp = DB::select("select DistanciaFuentePelicula_SSB(?,?) as valor", array($diametro_exterior[0]->distancia_fuente_peliculas,$espesor));
                 Log::debug("dfp " . $dfp[0]->valor);
                 break;
-            
+
             case 'DistanciaFuentePelicula_SSC':
 
                 $dfp = DB::select("select DistanciaFuentePelicula_SSC(?,?) as valor", array($foco,$espesor));
@@ -73,7 +73,7 @@ class TecnicaDistanciasController extends Controller
                 break;
         }
 
-         
+
          return $dfp;
 
     }
@@ -81,8 +81,7 @@ class TecnicaDistanciasController extends Controller
 
     public function DistanciasDiametroChapa($tecnica_id,$medida){
 
-        $tecnica = Tecnicas::find($tecnica_id);
-
+     + º
         $medidas = explode('x',$medida);
         $alto = $medidas[0];
         $ancho = $medidas[1];
