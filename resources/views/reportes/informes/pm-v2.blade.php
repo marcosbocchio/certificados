@@ -36,7 +36,7 @@ footer {
 
 <footer>
     @include('reportes.partial.linea-amarilla')
-    @include('reportes.partial.observaciones')
+    @include('reportes.informes.partial.observaciones')
     @include('reportes.partial.linea-amarilla')
     @include('reportes.informes.partial.firmas')
 </footer>

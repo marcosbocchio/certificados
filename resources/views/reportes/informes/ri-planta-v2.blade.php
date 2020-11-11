@@ -38,7 +38,7 @@ footer {
 <footer>
     @include('reportes.partial.linea-amarilla')
 
-    @include('reportes.partial.observaciones')
+    @include('reportes.informes.partial.observaciones')
 
     @include('reportes.partial.linea-amarilla')
     <table style="text-align: center;border-collapse: collapse;" width="100%" >

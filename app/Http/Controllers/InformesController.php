@@ -181,7 +181,7 @@ class InformesController extends Controller
 
         $informe->espesor_especifico = null;
 
-        If(!isset($request->procedimiento['ot_procedimientos_propios_id'])){
+        if(!isset($request->procedimiento['ot_procedimientos_propios_id'])){
 
         $ot_procedimieto_propio = new OtProcedimientosPropios;
         (new \App\Http\Controllers\OtProcedimientosPropiosController)->store($request->procedimiento['id'],$ot_procedimieto_propio,$request->ot['id']);
@@ -202,7 +202,7 @@ class InformesController extends Controller
 
         }else{
 
-            If(!isset($request->espesor['id'])){
+            if(!isset($request->espesor['id'])){
 
                 // Esta linea la pongo por un problema con vue que cuando edito un espesor no me lo convierte en objeto.
                 $informe->espesor_especifico = isset($request->espesor['espesor']) ? $request->espesor['espesor'] : $request->espesor ;
@@ -245,6 +245,12 @@ class InformesController extends Controller
         }else{
 
             $informe->numero = $request->numero_inf;
+
+        }
+
+        if(isset($request->numero_offline)){
+
+            $informe->numero_offline = $request->numero_offline;
 
         }
 
