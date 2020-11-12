@@ -1,3 +1,4 @@
+<!--Este archivo no se está usando -->
 <table width="100%" style="border-collapse: collapse;">
     <tbody>
         <tr>
