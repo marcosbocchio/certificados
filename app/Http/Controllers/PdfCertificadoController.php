@@ -14,38 +14,38 @@ use \stdClass;
 
 class PdfCertificadoController extends Controller
 {
-    public function imprimir($id,$estado){      
-      
+    public function imprimir($id,$estado){
+
         $certificado = Certificados::findOrFail($id);
         $ot = Ots::find($certificado->ot_id);
         $cliente = Clientes::find($ot->cliente_id);
         $contratista = Contratistas::find($ot->contratista_id);
-        $fecha = date("Y/m/d H:i:s");     
+        $fecha = date("Y/m/d H:i:s");
         $productoCosturaOt = (new \App\Http\Controllers\CertificadosController)->getModalidadCobro($certificado->ot_id);
-        $modalidadCobro = ( $productoCosturaOt->count() > 0 ) ? 'COSTURAS' : 'PLACAS';   
-        $partes_certificado =DB::select('CALL PartesCertificadoReporte(?)',array($id));      
+        $modalidadCobro = ( $productoCosturaOt->count() > 0 ) ? 'COSTURAS' : 'PLACAS';
+        $partes_certificado =DB::select('CALL PartesCertificadoReporte(?)',array($id));
         $servicios_parte = DB::select('CALL getServiciosCertificados(?,?)',array($id,$estado));
         $servicios_abreviaturas = $this->abreviaturasUnicas($servicios_parte);
         $servicios_combinaciones = $this->combinacionesUnicas($servicios_parte);
         $servicios_footer = $this->ServiciosParteUnicas($servicios_parte);
-        $productos_parte = DB::select('CALL getProductosCertificados(?,?,?)',array($id,$estado,$modalidadCobro));    
-        $productos_unidades_medidas = $this->productosUnicos($productos_parte);            
+        $productos_parte = DB::select('CALL getProductosCertificados(?,?,?)',array($id,$estado,$modalidadCobro));
+        $productos_unidades_medidas = $this->productosUnicos($productos_parte);
         $obras=[];
         $obras = $this->obrasUnicas($partes_certificado);
-        $fechas = $this->getCombinados($servicios_parte);   
+        $fechas = $this->getCombinados($servicios_parte);
         $servicios_obras =  DB::select('CALL getServiciosObrasCertificado(?,?)',array($id,$estado));
-   
-        $tablas_por_obras = $this->generarTablasPorObras($servicios_obras,$servicios_combinaciones,$productos_parte,$productos_unidades_medidas,$obras,$fechas);  
+
+        $tablas_por_obras = $this->generarTablasPorObras($servicios_obras,$servicios_combinaciones,$productos_parte,$productos_unidades_medidas,$obras,$fechas);
         $evaluador = User::find($certificado->firma);
 
         /*  Encabezado */
 
-        $titulo1 = "CERTIFICADO" ;   
-        $titulo2 = $certificado->titulo;        
+        $titulo1 = "CERTIFICADO" ;
+        $titulo2 = $certificado->titulo;
         $nro = FormatearNumeroConCeros($certificado->numero,8);
         $fecha = date('d-m-Y', strtotime($certificado->fecha));
         $tipo_reporte = "CERTIFICADO N°:";
-        
+
         $pdf = PDF::loadView('reportes.certificados.certificado-v2',compact('fecha','nro','titulo1','titulo2','tipo_reporte','certificado','ot','cliente','contratista','servicios_parte','productos_parte','modalidadCobro','partes_certificado','servicios_abreviaturas','productos_unidades_medidas','evaluador','obras','tablas_por_obras','servicios_footer'))->setPaper('a4','landscape')->setWarnings(false);
         return $pdf->stream();
 
@@ -67,13 +67,13 @@ class PdfCertificadoController extends Controller
         foreach ($temp_fechas as $item) {
 
            $obj = new stdClass();
-           $obras = []; 
+           $obras = [];
            foreach ($servicios_parte as $servicio) {
 
                 if($item == $servicio->fecha_formateada && $servicio->nro_combinacion)
 
                     $obras[] = $servicio->obra;
-               
+
            }
 
            $temp_obras = array_unique($obras);
@@ -90,7 +90,7 @@ class PdfCertificadoController extends Controller
     public function getCantidadCombinados($fechas,$fecha_formateada){
 
         foreach ($fechas as $item) {
-            
+
             if($item->fecha == $fecha_formateada){
 
                 return $item->cantidad_obras_combinadas ;
@@ -101,67 +101,63 @@ class PdfCertificadoController extends Controller
     }
 
     public function generarTablasPorObras($servicios_obras,$servicios_combinaciones,$productos_parte,$productos_unidades_medidas,$obras,$fechas){
-        
+
         $array_obra = [];
-        $array_temp =[];    
-     //  dd($obras,$servicios_combinaciones,$servicios_obras,$productos_parte);
-        foreach ($obras as $obra) {    
+        $array_temp =[];
+
+        foreach ($obras as $obra) {
 
             $objObra = new stdClass();
             $objObra->obra = $obra;
-            $array_temp =[];    
+            $array_temp =[];
             $array_productos = [];
 
-            foreach ($servicios_combinaciones as $combinacion) {                
+            foreach ($servicios_combinaciones as $combinacion) {
 
-                $obj = new stdClass();                
+                $obj = new stdClass();
                 $cant_total_servicio = 0;
 
-                foreach ($servicios_obras as $servicio) {                   
-                    
+                foreach ($servicios_obras as $servicio) {
 
-                    if( ($servicio->obra == $obra) && ($servicio->combinacion == $combinacion)){                        
+
+                    if( ($servicio->obra == $obra) && ($servicio->combinacion == $combinacion)){
 
                              $cant_total_servicio =  $servicio->cantidad_total_servicio;
 
-                            // dd($cant_total_servicio);
-                    }            
-                }                    
-                
+                    }
+                }
+
                 $obj->servicio = $combinacion;
-                $obj->cant_total_servicio = $cant_total_servicio;                    
+                $obj->cant_total_servicio = $cant_total_servicio;
                 $array_temp[]=$obj;
 
                 }
-                
+
                 foreach ($productos_unidades_medidas as $unidad_medida) {
 
-                    $objProducto = new stdClass();                    
-                    
+                    $objProducto = new stdClass();
+
                     $cant_total_producto = 0;
-                    foreach ($productos_parte as $producto) {                
-                        
+                    foreach ($productos_parte as $producto) {
+
                         if( ($producto->obra == $obra) && ($producto->unidad_medida_producto == $unidad_medida)){
-                            
+
                             $cant_total_producto = $cant_total_producto + $producto->cantidad;
-                            
-                        }            
-                    }                    
-                    
+
+                        }
+                    }
+
                     $objProducto->producto = $unidad_medida;
-                    $objProducto->cant_total_producto = $cant_total_producto;                    
-                    $array_productos[]=$objProducto;                  
-                }             
+                    $objProducto->cant_total_producto = $cant_total_producto;
+                    $array_productos[]=$objProducto;
+                }
 
                 $objObra->productos = $array_productos;
                 $objObra->servicios = $array_temp;
                 $array_obra[]= $objObra;
-                    
-         }
-      
-     // dd($array_obra);  
 
-     //   dd($array_obra);  
+         }
+
         return $array_obra;
 
     }
@@ -169,9 +165,9 @@ class PdfCertificadoController extends Controller
     public function generarFechaCorrelativa($partes_certificado){
 
 
-     $long_partes = count($partes_certificado);   
+     $long_partes = count($partes_certificado);
 
-     if($long_partes == 0){ 
+     if($long_partes == 0){
 
          return null ;
 
@@ -183,23 +179,23 @@ class PdfCertificadoController extends Controller
         $fecha_final = $partes_certificado[0]->fecha;
 
         foreach ($partes_certificado as $parte) {
-            
-            if( $this->EsFechaIgualoSiguiente($parte->fecha,$fecha_final) ) {             
-            
+
+            if( $this->EsFechaIgualoSiguiente($parte->fecha,$fecha_final) ) {
+
                 $fecha_final =  $parte->fecha;
                 $fecha_final_formateada =$parte->fecha_formateada;
-    
+
             }else{
-    
+
                 return null;
                 break;
             }
-    
+
         }
-    
+
         return  ($fecha_inicial_formateada . '-' . $fecha_final_formateada);
 
-    }   
+    }
 
     }
 
@@ -234,7 +230,7 @@ class PdfCertificadoController extends Controller
         $array_temp = [];
 
         foreach ($servicios_parte as $servicio) {
-            
+
             $array_temp[] = $servicio->abreviatura;
 
         }
@@ -248,7 +244,7 @@ class PdfCertificadoController extends Controller
         $array_temp = [];
 
         foreach ($servicios_parte as $servicio) {
-            
+
             $array_temp[] = $servicio->combinacion;
 
         }
@@ -256,19 +252,37 @@ class PdfCertificadoController extends Controller
         return array_unique($array_temp);
 
     }
-    
+
 
     public function productosUnicos($productos_parte){
 
         $array_temp = [];
 
         foreach ($productos_parte as $producto) {
-            
+
+            $aux = explode('/',$producto->unidad_medida_producto);
+            if(count($aux) > 1){
+                $producto->unidad_medida_producto_dec = $aux[0]/$aux[1];
+            }elseif(count($aux) == 1){
+                $producto->unidad_medida_producto_dec = $aux[0];
+            }
+
+        }
+
+        usort($productos_parte, function($a, $b)
+        {
+            return  ((float)$a->unidad_medida_producto_dec < (float)$b->unidad_medida_producto_dec) ? -1 : 1;
+
+        });
+
+        foreach ($productos_parte as $producto) {
+
             $array_temp[] = $producto->unidad_medida_producto;
 
         }
 
-        return array_unique($array_temp);
+        $array = array_unique($array_temp);
+        return $array;
 
     }
 
@@ -277,14 +291,14 @@ class PdfCertificadoController extends Controller
         $array_temp = [];
 
         foreach ($partes_certificado as $parte) {
-            
+
             $array_temp[] = $parte->obra;
 
         }
 
         $array_temp = array_unique($array_temp);
 
-        return $array_temp;        
+        return $array_temp;
 
     }
 
@@ -293,7 +307,7 @@ class PdfCertificadoController extends Controller
         $array_temp = [];
 
         foreach ($servicios_parte as $servicio) {
-            
+
             $array_temp[] = $servicio->abreviatura;
 
         }
@@ -301,9 +315,9 @@ class PdfCertificadoController extends Controller
         $array_temp = array_unique($array_temp);
         $array_temp2 = [];
         foreach ($array_temp as $item) {
-            
+
             foreach ($servicios_parte as $servicio) {
-                
+
                 if($item == $servicio->abreviatura){
 
                     $obj = new stdClass();
@@ -315,7 +329,7 @@ class PdfCertificadoController extends Controller
             }
         }
 
-        return $array_temp2;        
+        return $array_temp2;
 
     }
 

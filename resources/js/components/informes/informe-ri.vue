@@ -638,7 +638,7 @@
 
                      <div class="col-md-2">
                          <div class="form-group" >
-                             <label for="Elemento">N° Pasada</label>
+                             <label for="pasada">N° Pasada</label>
                              <input type="number" v-model="pasada" class="form-control" id="pasada" disabled>
                          </div>
                      </div>
@@ -1454,6 +1454,8 @@
              this.TablaDetalle = [];
              this.TablaPasadas = [];
              this.TablaImportada= [];
+             this.elemento_pasadas=[];
+             this.elemento_pasada='';
              this.pk = '';
              this.tipo_soldadura='';
              this.pasada='';
@@ -1629,7 +1631,7 @@
                     let pos_inicial_placa = parseInt(array_pos_placa[0].trim());
                     let pos_final_placa = parseInt(array_pos_placa[1].trim());
 
-                    let longitud_placa = parseInt(this.TablaDetalle[0].posicion.split("-")[1].trim());
+                    let longitud_placa = Math.abs(parseInt(this.TablaDetalle[0].posicion.split("-")[1].trim()) - parseInt(this.TablaDetalle[0].posicion.split("-")[0].trim()));
 
                     if(! ( ((pos_inicial_defecto >= pos_inicial_placa && (pos_final_defecto <= (pos_inicial_placa + longitud_placa))) || ((pos_inicial_defecto == pos_inicial_placa) && (pos_final_defecto == pos_final_placa ))))) {
                         toastr.error('Valores en posición indicación incorrectos');

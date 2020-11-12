@@ -81,7 +81,6 @@ class TecnicaDistanciasController extends Controller
 
     public function DistanciasDiametroChapa($tecnica_id,$medida){
 
-     + º
         $medidas = explode('x',$medida);
         $alto = $medidas[0];
         $ancho = $medidas[1];
