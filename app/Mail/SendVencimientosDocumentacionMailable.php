@@ -12,16 +12,16 @@ class SendVencimientosDocumentacionMailable extends Mailable
     use Queueable, SerializesModels;
 
     public $subject = "Notificación : vencimientos de documentaciones.";
-    public $resultado;
+    public $item;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($resultado)
+    public function __construct($item)
     {
-        $this->resultado  = $resultado;
+        $this->item  = $item;
     }
 
     /**

@@ -7,6 +7,6 @@
 </head>
 <body>
     <h1>Correo electrónico</h1>
-    <p>contenido del mensaje de notificación : {{ $resultado->name }} </p>
+    <p>contenido del mensaje de notificación : {{ $item->name }} </p>
 </body>
 </html>

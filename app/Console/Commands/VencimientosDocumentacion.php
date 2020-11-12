@@ -43,41 +43,60 @@ class VencimientosDocumentacion extends Command
      */
     public function handle()
     {
-        $alarmas = Alarmas::where('tipo','!=','DOSIMETRIA')
-                            ->where('activo_sn',1)
-                            ->get();
+        DB::enableQueryLog();
+        $alarmas = Alarmas::all();
 
-        foreach ($alarmas as $alarma) {
+        $alarma = $this->BuscarAlarma($alarmas,'USUARIO');
+        $this->EnviarMailVencimientosUsuarios($alarma);
 
-               switch ($alarma->tipo){
-                   case 'USUARIO':
-                       $resultado = $this->getVencimientosUsuarios($alarma->aviso1,$alarma->aviso2);
-                       break;
-
-                   default:
-                       # code...
-                       break;
-               }
-
-            DB::enableQueryLog();
-            foreach ($resultado as $item) {
-                Log::debug("Usuarios con documentacion vencida: " . $item->name);
-            }
-
-       }
+        //    Log::debug("Usuarios con documentacion vencida: " . $item->name . ' - DOCUMENTO:' . $item->tipo . '->' . $item->titulo);
+        //    Mail::to('marcosbocchio@gmail.com')->send(new SendVencimientosDocumentacionMailable($item));
+        //    Mail::to('bocchio_marcos@gmail.com')->send(new SendVencimientosDocumentacionMailable($item));
 
 
-     //   Mail::to('marcosbocchio@gmail.com')->send(new SendVencimientosDocumentacionMailable($resultado));
     }
 
-    public function getVencimientosUsuarios($aviso1,$aviso2){
+    public function EnviarMailVencimientosUsuarios($alarma){
+
+        $usuarios_vencidos = $this->VencimientosUsuarios($alarma->aviso1,$alarma->aviso2);
+
+        foreach ($usuarios_vencidos as $item) {
+
+            Log::debug("Usuarios con documentacion vencida: " . $item->name . ' - DOCUMENTO:' . $item->tipo . '->' . $item->titulo);
+
+        }
+
+    }
+
+
+    public function VencimientosUsuarios($aviso1,$aviso2){
 
         return Documentaciones::join('usuario_documentaciones','documentaciones.id','=','usuario_documentaciones.documentacion_id')
                                       ->join('users','users.id','=','usuario_documentaciones.user_id')
                                       ->whereRaw('DATEDIFF(now(),documentaciones.fecha_caducidad) = ? or DATEDIFF(now(),documentaciones.fecha_caducidad) = ?',[$aviso1,$aviso2])
-                                      ->select('users.name')
+                                      ->select('users.name','documentaciones.tipo','documentaciones.titulo')
                                       ->get();
 
 
     }
+
+
+
+    public function BuscarAlarma($alarmas,$tipo){
+
+        foreach ($alarmas as $alarma) {
+
+            if($alarma->tipo == $tipo){
+
+                return $alarma;
+
+            }
+
+        }
+
+        return false;
+
+     }
+
+
 }
