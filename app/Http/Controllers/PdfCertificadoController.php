@@ -276,7 +276,6 @@ class PdfCertificadoController extends Controller
                     $producto->unidad_medida_producto_dec = (float)$aux1[0] + (float)$aux2[0] ;
 
                 }
-                
 
             }elseif(count($aux1) == 1){
 
@@ -291,10 +290,8 @@ class PdfCertificadoController extends Controller
                     $producto->unidad_medida_producto_dec = (float)$aux3[0];
 
                 }
-
-
             }
-            
+
         }
 
         usort($productos_parte, function($a, $b)
