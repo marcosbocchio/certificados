@@ -260,13 +260,41 @@ class PdfCertificadoController extends Controller
 
         foreach ($productos_parte as $producto) {
 
-            $aux = explode('/',$producto->unidad_medida_producto);
-            if(count($aux) > 1){
-                $producto->unidad_medida_producto_dec = $aux[0]/$aux[1];
-            }elseif(count($aux) == 1){
-                $producto->unidad_medida_producto_dec = $aux[0];
-            }
+            $aux1 = explode(' ',$producto->unidad_medida_producto);
 
+            if(count($aux1) > 1){
+
+                $aux2 = explode('/',$aux1[1]);
+
+                if(count($aux2) > 1){
+                    $frac = (float)$aux2[0]/(float)$aux2[1];
+                  //  dd($aux1,$aux2,(float)$aux1[0] + (float)$frac);
+                    $producto->unidad_medida_producto_dec = (float)$aux1[0] + (float)$frac ;
+
+                }elseif(count($aux2) == 1) {
+
+                    $producto->unidad_medida_producto_dec = (float)$aux1[0] + (float)$aux2[0] ;
+
+                }
+                
+
+            }elseif(count($aux1) == 1){
+
+                $aux3 = explode('/',$aux1[0]);
+
+                if(count($aux3) > 1){
+
+                    $producto->unidad_medida_producto_dec = (float)$aux3[0] / (float)$aux3[1] ;
+
+                }elseif(count($aux3) == 1){
+
+                    $producto->unidad_medida_producto_dec = (float)$aux3[0];
+
+                }
+
+
+            }
+            
         }
 
         usort($productos_parte, function($a, $b)
