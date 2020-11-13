@@ -294,7 +294,6 @@ class InformesRiController extends Controller
     public function update(InformeRiRequest $request, $id)
     {
 
-
         $EsRevision = (new \App\Http\Controllers\InformesController)->EsRevision($id);
 
         if($EsRevision){
@@ -336,9 +335,13 @@ class InformesRiController extends Controller
         }
     }
 
-    public function getElementosReparacion($ot_id,$obra,$km){
-        $km = ($km=='null') ? '' : $km;
-        return  DB::select('CALL InformeRiJuntasReparacion(?,?,?)',array($ot_id,$obra,$km));
+    public function getElementosReparacion($ot_id,$obra,$km,$linea,$plano_isom,$hoja){
+
+        $km          = ($km=='null') ? '' : $km;
+        $linea       = ($linea=='null') ? '' : $linea;
+        $plano_isom  = ($plano_isom=='null') ? '' : $plano_isom;
+        $hoja        = ($hoja=='null') ? '' : $hoja;
+        return  DB::select('CALL InformeRiJuntasReparacion(?,?,?,?,?,?)',array($ot_id,$obra,$km,$linea,$plano_isom,$hoja));
 
     }
 

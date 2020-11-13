@@ -267,8 +267,8 @@ class PdfCertificadoController extends Controller
                 $aux2 = explode('/',$aux1[1]);
 
                 if(count($aux2) > 1){
+
                     $frac = (float)$aux2[0]/(float)$aux2[1];
-                  //  dd($aux1,$aux2,(float)$aux1[0] + (float)$frac);
                     $producto->unidad_medida_producto_dec = (float)$aux1[0] + (float)$frac ;
 
                 }elseif(count($aux2) == 1) {

@@ -39,14 +39,14 @@
                                      <div class="form-group" >
                                          <div v-if="isGasoducto">
                                              <label for="ot_obra_tipo_soldaduras">Tipo Sol *</label>
-                                            <input type="checkbox" id="reparacion_sn" v-model="reparacion_sn" :disabled="!pk || !tipo_soldadura" @change="cambioReparacion_sn()" style="float:right">
+                                            <input type="checkbox" id="reparacion_sn" v-model="reparacion_sn" :disabled="!pk || !tipo_soldadura || !plano_isom" @change="cambioReparacion_sn()" style="float:right">
                                             <label for="reparacion_sn" style="float:right;margin-right: 5px;">R</label>
                                             <v-select v-model="tipo_soldadura" label="codigo" :options="ot_tipo_soldaduras_filter_R" id="ot_obra_tipo_soldaduras" @input="cambioOtTipoSoldadura" :disabled="(!isGasoducto || !obra || !pk )"></v-select>
 
                                          </div>
                                          <div v-else>
                                              <label >Tipo Sol</label>
-                                             <input type="checkbox" id="reparacion_sn" v-model="reparacion_sn" @change="cambioReparacion_sn()" :disabled="!obra" style="float:right">
+                                             <input type="checkbox" id="reparacion_sn" v-model="reparacion_sn" @change="cambioReparacion_sn()" :disabled="!obra || !plano_isom" style="float:right">
                                              <label for="reparacion_sn" style="float:right;margin-right: 5px;">R</label>
                                              <v-select  :options="[]" :disabled="(!isGasoducto)"></v-select>
                                          </div>
@@ -102,21 +102,21 @@
                          <div class="col-md-3">
                              <div class="form-group" >
                                  <label for="linea">Linea</label>
-                                 <input type="text" v-model="linea" class="form-control" id="linea" maxlength="30">
+                                 <input type="text" v-model="linea" @input="reparacion_sn = false" class="form-control" id="linea" maxlength="30">
                              </div>
                          </div>
 
                          <div class="col-md-3">
                              <div class="form-group" >
                                  <label for="plano_isom">Plano / Isom *</label>
-                                 <input type="text" v-model="plano_isom" class="form-control" id="plano_isom" maxlength="30">
+                                 <input type="text" v-model="plano_isom" class="form-control" id="plano_isom" @input="reparacion_sn = false" maxlength="30">
                              </div>
                          </div>
 
                          <div class="col-md-3">
                              <div class="form-group" >
-                                 <label for="hoja">hoja</label>
-                                 <input type="text" v-model="hoja" class="form-control" id="hoja" maxlength="10">
+                                 <label for="hoja">Hoja</label>
+                                 <input type="text" v-model="hoja" class="form-control" id="hoja" @input="reparacion_sn = false" maxlength="10">
                              </div>
                          </div>
 
@@ -1294,7 +1294,7 @@
 
          getElementosReparacion : function(){
              axios.defaults.baseURL = this.url ;
-             let urlRegistros = 'informes_ri/elementos_reparacion/ot/' + this.otdata.id +  '/obra/' + this.obra  + '/km/' + (this.pk ? this.pk : 'null') + '?api_token=' + Laravel.user.api_token;
+             let urlRegistros = 'informes_ri/elementos_reparacion/ot/' + this.otdata.id +  '/obra/' + this.obra  + '/km/' + (this.pk ? this.pk : 'null') + '/linea/' + (this.linea ? this.linea :'null') + '/plano_isom/' + (this.plano_isom ? this.plano_isom : 'null') + '/hoja/' + (this.hoja ? this.hoja : 'null') + '?api_token=' + Laravel.user.api_token;
              console.log(urlRegistros);
              axios.get(urlRegistros).then(response =>{
                  this.juntas_reparacion = response.data

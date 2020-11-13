@@ -80,7 +80,6 @@ class PdfInformesRiController extends Controller
         $tipo_reporte = "INFORME N°";
 
         /* Fin encabezado */
-
         if ($informe_ri->gasoducto_sn){
 
           $juntas_posiciones = DB::select('CALL InformeRiGasoductoJuntaPosicion(?)',array($informe_ri->id));
@@ -88,7 +87,7 @@ class PdfInformesRiController extends Controller
           $defectos_posiciones = DB::select('CALL InformeRiGasoductoDefectosPasadasPosicion(?)',array($informe_ri->id));
 
         //  dd($juntas_posiciones,$pasadas_juntas,$defectos_posiciones);
-        //    dd($ot_tipo_soldadura);
+
           $pdf = PDF::loadView('reportes.informes.ri-gasoducto-v2',compact('titulo','nro','tipo_reporte','fecha',
                                                                         'ot',
                                                                         'norma_ensayo',

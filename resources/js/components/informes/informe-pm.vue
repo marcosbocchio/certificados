@@ -62,7 +62,7 @@
 
                     <div class="col-md-3">
                         <div class="form-group" >
-                            <label for="hoja">hoja</label>
+                            <label for="hoja">Hoja</label>
                             <input type="text" v-model="hoja" class="form-control" id="hoja" maxlength="10">
                         </div>
                     </div>

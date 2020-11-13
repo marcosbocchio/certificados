@@ -89,12 +89,14 @@
                                     <table class="table table-striped table-condensed">
                                         <tbody>
                                             <tr>
-                                                <th class="">Fecha</th>
-                                                <th class="">Informe Nº	</th>
-                                                <th class="">Km</th>
-                                                <th class="">Costura</th>
-                                                <th class="">Plano Isométrico</th>
-                                                <th class="" style="text-align:center">Aprobado S/N</th>
+                                                <th class="col-md-1">Fecha</th>
+                                                <th class="col-md-1">Informe Nº	</th>
+                                                <th class="col-md-1">Km</th>
+                                                <th class="col-md-1">Costura</th>
+                                                <th class="col-md-3">Línea</th>
+                                                <th class="col-md-3">Plano Isométrico</th>
+                                                <th class="col-md-1">Hoja</th>
+                                                <th class="col-md-1" style="text-align:center">Aprob. S/N</th>
                                             </tr>
                                             <tr v-for="(item,k) in TablaCosturas.data" :key="k">
                                                 <td>{{ item.fecha_formateada }}</td>
@@ -103,7 +105,9 @@
                                                 </td>
                                                 <td>{{ item.km }}</td>
                                                 <td>{{ item.codigo_junta }}</td>
+                                                <td>{{ item.linea }}</td>
                                                 <td>{{ item.plano_isom }}</td>
+                                                <td>{{ item.hoja }}</td>
                                                 <td style="text-align:center">
                                                     <div v-if="item.aprobado_sn">
                                                         SI

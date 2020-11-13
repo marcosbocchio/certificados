@@ -36,6 +36,9 @@ class CosturasController extends Controller
         $reparaciones = $reparaciones == 'true' ? 1 : 0;
 
 
+            Log::debug("plano: " . $plano);
+
+
         $page = Input::get('page', 1);
         $paginate = 10;
 
