@@ -46,7 +46,7 @@
                                          </div>
                                          <div v-else>
                                              <label >Tipo Sol</label>
-                                             <input type="checkbox" id="reparacion_sn" v-model="reparacion_sn" @change="cambioReparacion_sn()" :disabled="!obra || !plano_isom" style="float:right">
+                                             <input type="checkbox" id="reparacion_sn" v-model="reparacion_sn" @change="cambioReparacion_sn()" :disabled="!obra" style="float:right">
                                              <label for="reparacion_sn" style="float:right;margin-right: 5px;">R</label>
                                              <v-select  :options="[]" :disabled="(!isGasoducto)"></v-select>
                                          </div>
@@ -102,21 +102,21 @@
                          <div class="col-md-3">
                              <div class="form-group" >
                                  <label for="linea">Linea</label>
-                                 <input type="text" v-model="linea" @input="reparacion_sn = false" class="form-control" id="linea" maxlength="30">
+                                 <input type="text" v-model="linea" @change="getElementosReparacion" class="form-control" id="linea" maxlength="30">
                              </div>
                          </div>
 
                          <div class="col-md-3">
                              <div class="form-group" >
                                  <label for="plano_isom">Plano / Isom *</label>
-                                 <input type="text" v-model="plano_isom" class="form-control" id="plano_isom" @input="reparacion_sn = false" maxlength="30">
+                                 <input type="text" v-model="plano_isom" class="form-control" id="plano_isom" @change="getElementosReparacion" maxlength="30">
                              </div>
                          </div>
 
                          <div class="col-md-3">
                              <div class="form-group" >
                                  <label for="hoja">Hoja</label>
-                                 <input type="text" v-model="hoja" class="form-control" id="hoja" @input="reparacion_sn = false" maxlength="10">
+                                 <input type="text" v-model="hoja" class="form-control" id="hoja" @change="getElementosReparacion" maxlength="10">
                              </div>
                          </div>
 
@@ -1292,13 +1292,15 @@
 
          },
 
-         getElementosReparacion : function(){
+         async getElementosReparacion(){
+            this.$store.commit('loading', true);
              axios.defaults.baseURL = this.url ;
              let urlRegistros = 'informes_ri/elementos_reparacion/ot/' + this.otdata.id +  '/obra/' + this.obra  + '/km/' + (this.pk ? this.pk : 'null') + '/linea/' + (this.linea ? this.linea :'null') + '/plano_isom/' + (this.plano_isom ? this.plano_isom : 'null') + '/hoja/' + (this.hoja ? this.hoja : 'null') + '?api_token=' + Laravel.user.api_token;
-             console.log(urlRegistros);
-             axios.get(urlRegistros).then(response =>{
+
+             await axios.get(urlRegistros).then(response =>{
                  this.juntas_reparacion = response.data
             });
+            this.$store.commit('loading', false);
          },
 
          getNumeroInforme:function(){

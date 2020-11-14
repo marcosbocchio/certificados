@@ -89,21 +89,21 @@
                                     <table class="table table-striped table-condensed">
                                         <tbody>
                                             <tr>
-                                                <th class="col-md-2">Fecha</th>
+                                                <th class="col-md-1">Fecha</th>
                                                 <th class="col-md-2">Informe Nº	</th>
-                                                <th class="col-md-1">Km</th>
                                                 <th class="col-md-1">Costura</th>
-                                                <th class="col-md-4">Plano Isométrico</th>
-                                                <th class="col-md-2" style="text-align:center">Aprob. S/N</th>
+                                                <th class="col-md-3">Línea</th>
+                                                <th class="col-md-3">Plano Isométrico</th>
+                                                <th class="col-md-1" style="text-align:center">Aprob.</th>
                                             </tr>
                                             <tr v-for="(item,k) in TablaCosturas.data" :key="k">
                                                 <td>{{ item.fecha_formateada }}</td>
                                                 <td>
                                                     <a :href="'/pdf/informe/' + item.informe_id " target="_blank" title="Informe"><span>{{ item.nro_informe_formateado }}</span></a>
                                                 </td>
-                                                <td>{{ item.km }}</td>
                                                 <td>{{ item.codigo_junta }}</td>
-                                                <td  v-if="item.linea || item.hoja"><a href="" rel="tooltip" :title="'Linea:' + (item.linea ? item.linea : '-') + ' /' +' Hoja:'+ (item.hoja ? item.hoja :'-')">{{ item.plano_isom }}</a></td>
+                                                <td>{{ item.linea }}</td>
+                                                <td  v-if="item.hoja"><a href="" rel="tooltip" :title="' Hoja: '+ item.hoja">{{ item.plano_isom }}</a></td>
                                                 <td v-else>{{ item.plano_isom }}</td>
                                                 <td style="text-align:center">
                                                     <div v-if="item.aprobado_sn">
