@@ -29,7 +29,7 @@ class PdfCertificadoController extends Controller
         $servicios_combinaciones = $this->combinacionesUnicas($servicios_parte);
         $servicios_footer = $this->ServiciosParteUnicas($servicios_parte);
         $productos_parte = DB::select('CALL getProductosCertificados(?,?,?)',array($id,$estado,$modalidadCobro));
-        $productos_unidades_medidas = $this->productosUnicos($productos_parte);
+        $productos_unidades_medidas = $this->productosUnicos($productos_parte,$modalidadCobro);
         $obras=[];
         $obras = $this->obrasUnicas($partes_certificado);
         $fechas = $this->getCombinados($servicios_parte);
@@ -254,51 +254,54 @@ class PdfCertificadoController extends Controller
     }
 
 
-    public function productosUnicos($productos_parte){
+    public function productosUnicos($productos_parte,$modalidadCobro){
 
-        $array_temp = [];
-        dd($productos_parte);
-        foreach ($productos_parte as $producto) {
+      $array_temp = [];
 
-            $aux1 = explode(' ',$producto->unidad_medida_producto);
+      if($modalidadCobro == 'COSTURAS'){
 
-            if(count($aux1) > 1){
+          foreach ($productos_parte as $producto) {
 
-                $aux2 = explode('/',$aux1[1]);
+              $aux1 = explode(' ',$producto->unidad_medida_producto);
 
-                if(count($aux2) > 1){
+              if(count($aux1) > 1){
 
-                    $frac = (float)$aux2[0]/(float)$aux2[1];
-                    $producto->unidad_medida_producto_dec = (float)$aux1[0] + (float)$frac ;
+                  $aux2 = explode('/',$aux1[1]);
 
-                }elseif(count($aux2) == 1) {
+                  if(count($aux2) > 1){
 
-                    $producto->unidad_medida_producto_dec = (float)$aux1[0] + (float)$aux2[0] ;
+                      $frac = (float)$aux2[0]/(float)$aux2[1];
+                      $producto->unidad_medida_producto_dec = (float)$aux1[0] + (float)$frac ;
 
-                }
+                  }elseif(count($aux2) == 1) {
 
-            }elseif(count($aux1) == 1){
+                      $producto->unidad_medida_producto_dec = (float)$aux1[0] + (float)$aux2[0] ;
 
-                $aux3 = explode('/',$aux1[0]);
+                  }
 
-                if(count($aux3) > 1){
+              }elseif(count($aux1) == 1){
 
-                    $producto->unidad_medida_producto_dec = (float)$aux3[0] / (float)$aux3[1] ;
+                  $aux3 = explode('/',$aux1[0]);
 
-                }elseif(count($aux3) == 1){
+                  if(count($aux3) > 1){
 
-                    $producto->unidad_medida_producto_dec = (float)$aux3[0];
+                      $producto->unidad_medida_producto_dec = (float)$aux3[0] / (float)$aux3[1] ;
 
-                }
-            }
+                  }elseif(count($aux3) == 1){
 
-        }
+                      $producto->unidad_medida_producto_dec = (float)$aux3[0];
 
-        usort($productos_parte, function($a, $b)
-        {
-            return  ((float)$a->unidad_medida_producto_dec < (float)$b->unidad_medida_producto_dec) ? -1 : 1;
+                  }
+              }
 
-        });
+          }
+
+          usort($productos_parte, function($a, $b)
+          {
+              return  ((float)$a->unidad_medida_producto_dec < (float)$b->unidad_medida_producto_dec) ? -1 : 1;
+
+          });
+      }
 
         foreach ($productos_parte as $producto) {
 
