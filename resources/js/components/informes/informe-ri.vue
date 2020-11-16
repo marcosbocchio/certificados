@@ -1397,7 +1397,7 @@
              if(this.espesor.id != undefined) {
                   this.ActualizarDistFuentePelicula();
              }else{
-              var match = this.espesor.espesor.match(/[+-]?([0-9]*[.])?[0-9]+?$/);
+              var match = this.espesor.espesor.match(/^[+]?([0-9]+[.])?[0-9]+?$/);
               if(!match){
                   this.espesor.espesor = 0;
               }
@@ -1407,12 +1407,26 @@
 
          cambioMedida : function(){
 
+            if(this.medida.id == undefined) {
+                 this.ActualizarDistFuentePelicula();
+            }else{
+
+              var match = this.espesor.espesor.match(/[+]?([0-9]+?[xX-]{1})?[0-9]+?$/);
+              if(!match){
+                  this.espesor.espesor = 0;
+              }
+                 this.ActualizarDistFuentePelicula();
+             }
+
              this.medida.codigo = this.medida.codigo.replace('X','x');
              this.medida.codigo = this.medida.codigo.replace('-','x');
              let existe_alto = this.medida.codigo.includes('x');
              if(!existe_alto){
-                 this.medida.codigo = '7x' + this.medida.codigo;
+                 this.medida.codigo = '7 x ' + this.medida.codigo;
+             }else{
+                 this.medida.codigo = this.medida.codigo.replace('x',' x ');
              }
+
              this.ActualizarDistFuentePelicula();
          },
 
