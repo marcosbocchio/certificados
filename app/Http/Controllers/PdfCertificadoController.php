@@ -257,7 +257,7 @@ class PdfCertificadoController extends Controller
     public function productosUnicos($productos_parte){
 
         $array_temp = [];
-
+        dd($productos_parte);
         foreach ($productos_parte as $producto) {
 
             $aux1 = explode(' ',$producto->unidad_medida_producto);
