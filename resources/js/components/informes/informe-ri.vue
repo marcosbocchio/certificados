@@ -1521,6 +1521,14 @@
 
          AddDetalle (posicion) {
 
+
+             var match = this.posicion.match(/^([0-9]{1,4}[-][0-9]{1,4})$|^([a-zA-Z]{1})$/);
+              if(!match){
+                  toastr.error('Ingrese un rango separado por un guion o una letra','Formato inválido');
+                  return;
+                }
+
+
              if( (this.reparacion_sn && this.junta_reparacion == '') ||(!this.reparacion_sn && this.junta == '') ){
                   toastr.error('Campo Elemento es obligatorio');
                   return;
