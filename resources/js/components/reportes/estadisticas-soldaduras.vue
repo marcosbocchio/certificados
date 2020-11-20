@@ -892,7 +892,8 @@ methods : {
             for (let index = 0; index < long_aux; index++) {
                 data_aux.push(1);
             }
-
+         //   let labels_reverse = labels_aux.reverse();
+        //    let valores_indicaciones_reverse = this.valores_indicaciones.reverse();
             this.data_indicaciones_posicion = {
 
                 labels: labels_aux,
@@ -925,7 +926,7 @@ methods : {
                                 if (label) {
                                     label += ': ';
                                 }
-                                label += valores_indicaciones_reverse[tooltipItem.index];
+                                label += this.valores_indicaciones[tooltipItem.index];
                                 return label;
                             }.bind(this)
                         }
