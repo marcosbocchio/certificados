@@ -26,6 +26,7 @@ class EstadisticasSoldadurasController extends Controller
         return view('soldadores.estadisticas_soldaduras',compact('user','header_titulo','header_descripcion'));
 
     }
+    /* TAB  INDICES DE RECHAZOS*/
 
     public function AnalisisRechazosEspesor($informes_ids){
 
@@ -39,11 +40,22 @@ class EstadisticasSoldadurasController extends Controller
 
     }
 
+     /* TAB DEFECTOLOGIA*/
+
     public function AnalisisDefectosPosicion($informes_ids){
 
         return DB::select('CALL AnalisisSoldadurasDefectosPosicion(?)',array($informes_ids));
 
     }
+
+    public function AnalisisSoldadurasDetalleDefectos($informes_ids){
+
+        return DB::select('CALL AnalisisSoldadurasDetalleDefectos(?)',array($informes_ids));
+
+    }
+
+
+    /* TAB DEFECTOLOGIA/PRODUCCION*/
 
     public function AnalisisSoldadurasDefectosSoldador($informes_ids){
 
@@ -57,26 +69,14 @@ class EstadisticasSoldadurasController extends Controller
     }
 
 
-    public function AnalisisSoldadurasDetalleDefectos($informes_ids){
-
-        return DB::select('CALL AnalisisSoldadurasDetalleDefectos(?)',array($informes_ids));
-
-    }
-
-    public function CantSoldadurasInformes($informes_ids){
-
-        $total = DB::select('select CantSoldadurasInformes(?) as valor',array($informes_ids));
-
-        return $total[0]->valor;
-
-    }
-
     public function CantRechazosSoldaduras($informes_ids){
 
         $total = DB::select('select CantRechazosSoldaduras(?) as valor',array($informes_ids));
 
         return $total[0]->valor;
     }
+
+     /* TAB INDICACIONES */
 
     public function AnalisisSoldadurasIndicaciones($informes_ids){
 
@@ -116,6 +116,16 @@ class EstadisticasSoldadurasController extends Controller
         return $res;
 
     }
+
+    public function CantSoldadurasInformes($informes_ids){
+
+        $total = DB::select('select CantSoldadurasInformes(?) as valor',array($informes_ids));
+
+        return $total[0]->valor;
+
+    }
+
+
 
 
 

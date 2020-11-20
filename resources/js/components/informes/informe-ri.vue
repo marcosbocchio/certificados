@@ -557,7 +557,7 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div class="col-md-3">
+                                                            <div v-if="formato=='DUCTO'" class="col-md-3">
                                                                 <div class="form-group" >
                                                                     <label for="defecto_sector">Pasada</label>
                                                                     <v-select v-model="defecto_sector" label="defecto_sector" :options="['RAIZ','RELLENO','SOBREMONTA']" id="defecto_sector"  :disabled="(!posicionPlacaGosaducto)"></v-select>
@@ -586,7 +586,7 @@
                                                                                     <th class="col-md-2">Código</th>
                                                                                     <th class="col-md-6">Descripción</th>
                                                                                     <th class="col-md-2">Posición</th>
-                                                                                    <th class="col-md-2">Sector</th>
+                                                                                    <th v-if="formato=='DUCTO'" class="col-md-2">Sector</th>
                                                                                     <th>&nbsp;</th>
                                                                                 </tr>
                                                                             </thead>
@@ -595,7 +595,7 @@
                                                                                     <td>{{ defectoPasada.codigo }}</td>
                                                                                     <td>{{ defectoPasada.descripcion }}</td>
                                                                                     <td>{{ defectoPasada.posicion }}</td>
-                                                                                    <td>{{ defectoPasada.pasada }}</td>
+                                                                                    <td  v-if="formato=='DUCTO'">{{ defectoPasada.pasada }}</td>
                                                                                     <td class="pointer">
                                                                                         <a  @click="RemoveDefectos(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a>
                                                                                     </td>
@@ -1656,19 +1656,20 @@
                 }
              }
 
-             if(this.posicionPlacaGosaducto !='' && !this.defecto_sector){
+             if(this.posicionPlacaGosaducto !='' &&  this.formato=='DUCTO' && !this.defecto_sector){
                      toastr.error('El campo pasada es obligatorio si existe posicion indicación');
                      return;
              }
 
              this.TablaDetalle[this.indexDetalle].defectos.push({
+
                  codigo: this.defectoRiPlanta.codigo,
-                 pasada: this.defecto_sector,
+                 pasada: this.posicionPlacaGosaducto !='' ? this.defecto_sector : '',
                  descripcion: this.defectoRiPlanta.descripcion,
                  id : this.defectoRiPlanta.id,
                  posicion : this.posicionPlacaGosaducto,
-                     });
 
+                });
 
              if(this.posicionPlacaGosaducto != ''){
                  this.TablaDetalle[this.indexDetalle].aceptable_sn = false;

@@ -147,7 +147,7 @@ $('ul.treeview-menu a').filter(function() {
     return this.href == url;
 }).parentsUntil(".sidebar-menu > .treeview-menu").siblings().removeClass('active menu-open').end().addClass('active menu-open');
 
-
+/*
 $(function(){
     $('a[href*=\\#]:not([href=\\#])').click(function() {
     if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'')
@@ -162,8 +162,7 @@ $(function(){
     }
     });
 });
-
-
+*/
 </script>
 
 

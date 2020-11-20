@@ -487,7 +487,7 @@
                             <div v-if="TablaIndicacionesPosicionDetalle.length">
                                  <div class="row">
                                     <div class="col-lg-12">
-                                        <div class="div-grafico">
+                                        <div class="div-grafico" style="max-width:650px;">
                                             <div>
                                                 <bar-chart :chart-data="data_indicaciones_posicion_detalle" :options="data_indicaciones_posicion_detalle.options" ></bar-chart>
                                             </div>
