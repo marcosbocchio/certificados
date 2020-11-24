@@ -1021,7 +1021,7 @@ export default {
             this.TablaLp.push({
                 pieza : this.pieza,
                 cm:this.cm,
-                detalle : '',
+                detalle : 'OK',
                 aceptable_sn : 1 ,
                 observaciones : '',
                 path1:null,
