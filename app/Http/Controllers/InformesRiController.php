@@ -338,9 +338,10 @@ class InformesRiController extends Controller
     public function getElementosReparacion($ot_id,$obra,$km,$linea,$plano_isom,$hoja){
 
         $km          = ($km=='null') ? '' : $km;
-        $linea       = ($linea=='null') ? '' : $linea;
-        $plano_isom  = ($plano_isom=='null') ? '' : $plano_isom;
-        $hoja        = ($hoja=='null') ? '' : $hoja;
+        $obra        = str_replace('--','/',$obra);
+        $linea       = ($linea=='null') ? '' : str_replace('--','/',$linea);
+        $plano_isom  = ($plano_isom=='null') ? '' : str_replace('--','/',$plano_isom);
+        $hoja        = ($hoja=='null') ? '' : str_replace('--','/',$hoja);
         return  DB::select('CALL InformeRiJuntasReparacion(?,?,?,?,?,?)',array($ot_id,$obra,$km,$linea,$plano_isom,$hoja));
 
     }

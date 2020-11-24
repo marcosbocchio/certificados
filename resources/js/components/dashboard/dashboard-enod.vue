@@ -166,8 +166,8 @@
                         <thead>
                             <tr>
                                 <th class="col-lg-1">OT N°</th>
-                                <th class="col-lg-2" >Cliente</th>
-                                <th class="col-lg-5">Proyecto</th>
+                                <th class="col-lg-3" >Cliente</th>
+                                <th class="col-lg-4">Proyecto</th>
                                 <th class="col-lg-1">Obra N°</th>
                                 <th class="col-lg-1">Fecha</th>
                                 <th class="col-lg-1">Estado</th>

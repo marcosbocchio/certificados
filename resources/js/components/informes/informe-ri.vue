@@ -1295,7 +1295,7 @@
          async getElementosReparacion(){
             this.$store.commit('loading', true);
              axios.defaults.baseURL = this.url ;
-             let urlRegistros = 'informes_ri/elementos_reparacion/ot/' + this.otdata.id +  '/obra/' + this.obra  + '/km/' + (this.pk ? this.pk : 'null') + '/linea/' + (this.linea ? this.linea :'null') + '/plano_isom/' + (this.plano_isom ? this.plano_isom : 'null') + '/hoja/' + (this.hoja ? this.hoja : 'null') + '?api_token=' + Laravel.user.api_token;
+             let urlRegistros = 'informes_ri/elementos_reparacion/ot/' + this.otdata.id +  '/obra/' + this.obra.replace('/','--') + '/km/' + (this.pk ? this.pk : 'null') + '/linea/' + (this.linea ? this.linea.replace('/','--') :'null') + '/plano_isom/' + (this.plano_isom ? this.plano_isom.replace('/','--') : 'null') + '/hoja/' + (this.hoja ? this.hoja.replace('/','--') : 'null') + '?api_token=' + Laravel.user.api_token;
 
              await axios.get(urlRegistros).then(response =>{
                  this.juntas_reparacion = response.data
