@@ -26,19 +26,19 @@ class DocumentacionesController extends Controller
     public function __construct(DocumentacionesRepository $documentacionesRepository)
     {
 
-        $this->middleware(['role_or_permission:Sistemas|M_documentaciones'],['only' => ['callView']]);   
+        $this->middleware(['role_or_permission:Sistemas|M_documentaciones'],['only' => ['callView']]);
         $this->documentaciones = $documentacionesRepository;
-     
+
     }
 
-   
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {   
+    {
 
         DB::enableQueryLog();
 
@@ -48,21 +48,21 @@ class DocumentacionesController extends Controller
                                             ->orWhere('documentaciones.tipo','USUARIO')
                                             ->orWhere('documentaciones.tipo','OT')
                                             ->orWhere('documentaciones.tipo','INSTITUCIONAL')
-                                            ->orWhere('documentaciones.tipo','PROCEDIMIENTO GENERAL') 
+                                            ->orWhere('documentaciones.tipo','PROCEDIMIENTO GENERAL')
                                             ->orWhere('documentaciones.tipo','EQUIPO')
                                             ->orWhere('documentaciones.tipo','FUENTE')
                                             ->orWhere('documentaciones.tipo','VEHICULO')
-                                            ->with('metodoEnsayo')   
+                                            ->with('metodoEnsayo')
                                             ->with('usuario')
                                             ->with('internoEquipo')
-                                            ->with('internoFuente')   
-                                            ->with('vehiculo')      
-                                            ->Filtro($filtro,$tipo)                      
-                                            ->selectRaw('documentaciones.*')                               
-                                            ->orderBy('documentaciones.tipo','ASC')    
-                                            ->orderBy('documentaciones.id','DESC')                         
-                                            ->paginate(10);             
-        
+                                            ->with('internoFuente')
+                                            ->with('vehiculo')
+                                            ->Filtro($filtro,$tipo)
+                                            ->selectRaw('documentaciones.*')
+                                            ->orderBy('documentaciones.tipo','ASC')
+                                            ->orderBy('documentaciones.id','DESC')
+                                            ->paginate(10);
+
     $queries = DB::getQueryLog();
     foreach($queries as $i=>$query)
     {
@@ -75,9 +75,9 @@ class DocumentacionesController extends Controller
     {
         $user = auth()->user();
         $header_titulo = "Documentaciones";
-        $header_descripcion ="Alta | Baja | Modificación";      
+        $header_descripcion ="Alta | Baja | Modificación";
         return view('abm.documentaciones',compact('user','header_titulo','header_descripcion'));
-        
+
     }
 
     public function DocumentacionesDeOt(){
@@ -93,7 +93,7 @@ class DocumentacionesController extends Controller
             return documentaciones::join('usuario_documentaciones','usuario_documentaciones.documentacion_id','=','documentaciones.id')
                                     ->where('documentaciones.tipo',$tipo)
                                     ->where('documentaciones.titulo',$titulo)
-                                    ->where('usuario_documentaciones.user_id',$user_id) 
+                                    ->where('usuario_documentaciones.user_id',$user_id)
                                     ->get();
 
         }elseif ($tipo == 'EQUIPO'){
@@ -101,7 +101,7 @@ class DocumentacionesController extends Controller
             return documentaciones::join('interno_equipo_documentaciones','interno_equipo_documentaciones.documentacion_id','=','documentaciones.id')
                                     ->where('documentaciones.tipo',$tipo)
                                     ->where('documentaciones.titulo',$titulo)
-                                    ->where('interno_equipo_documentaciones.interno_equipo_id',$interno_equipo_id) 
+                                    ->where('interno_equipo_documentaciones.interno_equipo_id',$interno_equipo_id)
                                     ->get();
 
         }elseif($tipo == 'FUENTE'){
@@ -109,7 +109,7 @@ class DocumentacionesController extends Controller
             return documentaciones::join('interno_fuente_documentaciones','interno_fuente_documentaciones.documentacion_id','=','documentaciones.id')
                                     ->where('documentaciones.tipo',$tipo)
                                     ->where('documentaciones.titulo',$titulo)
-                                    ->where('interno_fuente_documentaciones.interno_fuente_id',$interno_fuente_id) 
+                                    ->where('interno_fuente_documentaciones.interno_fuente_id',$interno_fuente_id)
                                     ->get();
 
         }elseif ($tipo == 'VEHICULO'){
@@ -117,11 +117,11 @@ class DocumentacionesController extends Controller
             return documentaciones::join('vehiculo_documentaciones','vehiculo_documentaciones.documentacion_id','=','documentaciones.id')
                                     ->where('documentaciones.tipo',$tipo)
                                     ->where('documentaciones.titulo',$titulo)
-                                    ->where('vehiculo_documentaciones.vehiculo_id',$vehiculo_id) 
+                                    ->where('vehiculo_documentaciones.vehiculo_id',$vehiculo_id)
                                     ->get();
         }
         else{
-            
+
             return documentaciones::where('documentaciones.tipo',$tipo)
                                     ->where('documentaciones.titulo',$titulo)
                                     ->get();
@@ -137,7 +137,7 @@ class DocumentacionesController extends Controller
      */
     public function store(DocumentacionesRequest $request)
     {
-        
+
         return $this->documentaciones->store($request);
 
     }
@@ -150,7 +150,7 @@ class DocumentacionesController extends Controller
      */
     public function show($id)
     {
-        $documentacion = DB::select('select   
+        $documentacion = DB::select('select
                                     documentaciones.id as id,
                                     documentaciones.tipo as tipo,
                                     documentaciones.titulo as titulo,
@@ -159,7 +159,7 @@ class DocumentacionesController extends Controller
                                     usuario_documentaciones.user_id as user_id,
                                     documentaciones.metodo_ensayo_id as metodo_ensayo_id,
                                     documentaciones.fecha_caducidad as fecha_caducidad
-                                    
+
                                     from
                                     documentaciones left join usuario_documentaciones on
                                     usuario_documentaciones.documentacion_id = documentaciones.id
@@ -183,19 +183,19 @@ class DocumentacionesController extends Controller
 
     public function operarios($id)
     {
-       
+
         $document = Documentaciones::where('id' , $id)
                                      ->where('tipo','USUARIO')
-                                     ->firstOrFail();   
+                                     ->firstOrFail();
 
-        $path = public_path($document->path);    
+        $path = public_path($document->path);
         return response()->file($path);
-       
+
     }
 
     public function getDocOtOperarios($ot_id,$user_id){
 
-        $documentacion = DB::select('select 
+        $documentacion = DB::select('select
                                     documentaciones.id,
                                     documentaciones.tipo,
                                     documentaciones.descripcion,
@@ -204,17 +204,17 @@ class DocumentacionesController extends Controller
                                     usuario_documentaciones.user_id,
                                     documentaciones.metodo_ensayo_id,
                                     documentaciones.fecha_caducidad,
-                                    users.name 
-                                    
+                                    users.name
+
                                     from usuario_documentaciones
                                     inner join documentaciones on
                                     documentaciones.id = usuario_documentaciones.documentacion_id
                                     inner join users on users.id = usuario_documentaciones.user_id
-                                    inner join ot_operarios on ot_operarios.user_id = users.id 
-                                    where 
+                                    inner join ot_operarios on ot_operarios.user_id = users.id
+                                    where
                                     (documentaciones.metodo_ensayo_id is null or documentaciones.metodo_ensayo_id in (Select servicios.metodo_ensayo_id from servicios
-                                    inner join ot_servicios on 
-                                    ot_servicios.servicio_id = servicios.id                          
+                                    inner join ot_servicios on
+                                    ot_servicios.servicio_id = servicios.id
                                     where
                                     ot_servicios.ot_id = ot_operarios.ot_id )) and
                                     ot_operarios.ot_id =:ot_id and
@@ -228,7 +228,7 @@ class DocumentacionesController extends Controller
 
     public function getDocVehiculo($vehiculo_id){
 
-        $documentacion = DB::select('select 
+        $documentacion = DB::select('select
                                         documentaciones.id,
                                         documentaciones.tipo,
                                         documentaciones.descripcion,
@@ -237,7 +237,7 @@ class DocumentacionesController extends Controller
                                         vehiculo_documentaciones.vehiculo_id,
                                         documentaciones.metodo_ensayo_id,
                                         documentaciones.fecha_caducidad
-                                                                        
+
                                         from vehiculo_documentaciones
                                         inner join documentaciones on documentaciones.id = vehiculo_documentaciones.documentacion_id
                                         inner join vehiculos on vehiculos.id = vehiculo_documentaciones.vehiculo_id
@@ -253,20 +253,18 @@ class DocumentacionesController extends Controller
     public function getDocInternoEquipo($interno_equipo_id){
 
         $documentacion = Documentaciones::join('interno_equipo_documentaciones','interno_equipo_documentaciones.documentacion_id','=','documentaciones.id')
-                                          ->where('interno_equipo_documentaciones.interno_equipo_id',$interno_equipo_id)  
+                                          ->where('interno_equipo_documentaciones.interno_equipo_id',$interno_equipo_id)
                                           ->select('documentaciones.*')
                                           ->get();
 
-    
+
         return $documentacion;
 
     }
 
     public function getDocPorInternoOt($ot_id,$interno_equipo_id){
 
-       return DB::select('CALL getDocFuentePorInternoOt(?,?)',array($ot_id,$interno_equipo_id));        
-
-
+       return DB::select('CALL getDocFuentePorInternoOt(?,?)',array($ot_id,$interno_equipo_id));
 
     }
 
@@ -274,23 +272,23 @@ class DocumentacionesController extends Controller
     {
             $procedimientos = DB::table('ot_procedimientos_propios')
                                     ->join('ots','ots.id','=','ot_procedimientos_propios.ot_id')
-                                    ->join('documentaciones','documentaciones.id','=','ot_procedimientos_propios.documentacion_id')      
-                                    ->join('metodo_ensayos','metodo_ensayos.id','=','documentaciones.metodo_ensayo_id')   
+                                    ->join('documentaciones','documentaciones.id','=','ot_procedimientos_propios.documentacion_id')
+                                    ->join('metodo_ensayos','metodo_ensayos.id','=','documentaciones.metodo_ensayo_id')
                                     ->where('ots.id','=',$ot_id)
                                     ->where('metodo_ensayos.metodo','=',$metodo)
                                     ->select('documentaciones.*','ot_procedimientos_propios.id as ot_procedimientos_propios_id')
                                     ->get();
-                               
-            if(count($procedimientos) == 0){                
-                
-                
+
+            if(count($procedimientos) == 0){
+
+
             $procedimientos = DB::table('documentaciones')
-                                ->join('metodo_ensayos','metodo_ensayos.id','=','documentaciones.metodo_ensayo_id')                              
+                                ->join('metodo_ensayos','metodo_ensayos.id','=','documentaciones.metodo_ensayo_id')
                                 ->where('metodo_ensayos.metodo','=',$metodo)
                                 ->where('documentaciones.tipo','PROCEDIMIENTO GENERAL')
                                 ->select('documentaciones.*')
                                 ->get();
-        } 
+        }
 
         return $procedimientos;
 
@@ -300,11 +298,11 @@ class DocumentacionesController extends Controller
     {
         $procedimiento = DB::table('documentaciones')
         ->join('ot_procedimientos_propios','ot_procedimientos_propios.documentacion_id','=','documentaciones.id')
-        ->where('ot_procedimientos_propios.id','=',$id)      
+        ->where('ot_procedimientos_propios.id','=',$id)
         ->select('documentaciones.*','ot_procedimientos_propios.id as ot_procedimientos_propios_id')
         ->first();
 
-        return  $procedimiento = Collection::make($procedimiento); 
+        return  $procedimiento = Collection::make($procedimiento);
     }
 
     /**
@@ -329,7 +327,7 @@ class DocumentacionesController extends Controller
     {
 
        return $this->documentaciones->updateDocumentacion($request,$id);
-   
+
 
     }
 
@@ -340,25 +338,25 @@ class DocumentacionesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {   
-        $documento = $this->documentaciones->find($id);    
-        
+    {
+        $documento = $this->documentaciones->find($id);
+
         $usuario_documento = new UsuarioDocumentaciones;
-    
+
         $usuario_documento->where('documentacion_id',$id)->delete();
 
         $equipo_documento = new InternoEquipoDocumentaciones;
-    
+
         $equipo_documento->where('documentacion_id',$id)->delete();
 
         $fuente_documento = new InternoFuenteDocumentaciones;
-    
-        $fuente_documento->where('documentacion_id',$id)->delete();        
-        
+
+        $fuente_documento->where('documentacion_id',$id)->delete();
+
         $vehiculo_documento = new VehiculoDocumentaciones;
-    
+
         $vehiculo_documento->where('documentacion_id',$id)->delete();
-      
+
         $documento->delete();
 
     }
@@ -371,7 +369,7 @@ class DocumentacionesController extends Controller
                                 ->orWhere('documentaciones.tipo','EQUIPO')
                                 ->orWhere('documentaciones.tipo','FUENTE')
                                 ->orWhere('documentaciones.tipo','VEHICULO')
-                                ->orWhere('documentaciones.tipo','PROCEDIMIENTO GENERAL')->count(); 
+                                ->orWhere('documentaciones.tipo','PROCEDIMIENTO GENERAL')->count();
 
     }
 }

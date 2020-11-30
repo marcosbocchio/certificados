@@ -88,6 +88,21 @@ class AlarmasController extends Controller
 
     }
 
+    public function BuscarAlarma($alarmas,$tipo){
+
+        foreach ($alarmas as $alarma) {
+
+            if($alarma->tipo == $tipo){
+
+                return $alarma;
+
+            }
+        }
+
+        return false;
+
+     }
+
     /**
      * Display the specified resource.
      *

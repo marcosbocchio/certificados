@@ -23,7 +23,7 @@ class SendVencimientosDocUsuarioMailable extends Mailable
     public function __construct($item)
     {
         $this->item  = $item;
-        $this->subject = "Notificación : Vencimiento de documentación (". $item->titulo .")"  ;
+        $this->subject = "Notificación : Vencimiento de documentación de usuarios (". $item->titulo .")"  ;
 
     }
 

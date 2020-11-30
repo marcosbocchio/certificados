@@ -245,9 +245,7 @@ class InformesRiController extends Controller
 
         foreach ($pasadas_juntas as $pasadas_junta) {
 
-
             $obj = new stdClass();
-
 
             $obj->soldador1 = DB::table('soldadores')
                                         ->join('ot_soldadores','ot_soldadores.soldadores_id','=','soldadores.id')

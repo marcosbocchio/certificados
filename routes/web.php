@@ -145,6 +145,7 @@ Route::group(['middleware' => ['auth']], function () {
       /* NOTIFICACIONES */
       Route::get('/area/enod/alarmas', 'AlarmasController@callView')->name('alarmas');
       Route::get('/area/enod/alarma-receptor', 'AlarmaReceptorController@callView')->name('alarma-receptor');
+      Route::get('/area/enod/notificaciones', 'NotificacionesController@callView')->name('notificaciones');
 
 });
 

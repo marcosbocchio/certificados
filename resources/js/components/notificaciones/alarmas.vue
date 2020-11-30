@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-       <div class="col-sm-8 col-sm-offset-2">
+       <div class="col-sm-12">
 
             <div class="box box-custom-enod top-buffer">
                 <div class="box-header with-border">
@@ -11,15 +11,17 @@
                         <table class="table table-hover table-striped table-condensed">
                             <thead>
                                 <tr>
-                                    <th class="col-md-5">Tipo</th>
-                                    <th class="col-md-3" style="text-align: center;" >Días 1.º aviso </th>
-                                    <th class="col-md-3" style="text-align: center;">Días 2.º aviso</th>
+                                    <th class="col-md-2">Tipo</th>
+                                    <th class="col-md-5">Descripción</th>
+                                    <th class="col-md-2" style="text-align: center;" >Días 1.º aviso </th>
+                                    <th class="col-md-2" style="text-align: center;">Días 2.º aviso</th>
                                     <th class="col-md-1" style="text-align: center;">Activo</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr v-for="(alarma,k) in alarmas" :key="k" class="pointer">
                                     <td>{{ alarma.tipo }}</td>
+                                    <td>{{ alarma.descripcion }}</td>
                                     <td style="text-align: center;" @click="selectPosAlarmas(k)">
                                          <div v-if="indexPosAlarmas == k ">
                                             <input type="number" v-model="alarmas[k].aviso1" width="100%" min="0" step="1">

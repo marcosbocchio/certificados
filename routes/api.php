@@ -305,11 +305,14 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('reporte-placas/cliente/{cliente_id}/ot/{ot_id}/obra/{obra}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}/repetidas-testigos','ReportePlacasController@getPlacasRepetidasTestigos');
 
     //Notificaciones
-    Route::get('alarmas/dosimetria', 'AlarmasController@getAlarmaDosimetria');
-    Route::get('alarmas/todas', 'AlarmasController@getTodas');
-    Route::get('alarma-receptor/alarma/{id}', 'AlarmaReceptorController@getAlarmaReceptor');
-    Route::resource('alarmas', 'AlarmasController');
-    Route::resource('alarma-receptor', 'AlarmaReceptorController');
+    Route::get('alarmas/dosimetria','AlarmasController@getAlarmaDosimetria');
+    Route::get('alarmas/todas','AlarmasController@getTodas');
+    Route::get('alarma-receptor/alarma/{id}','AlarmaReceptorController@getAlarmaReceptor');
+    Route::get('notificaciones/user/{user_id}','NotificacionesController@getNotificaciones');
+    Route::put('notificaciones/marcar/{id}','NotificacionesController@marcarNotificaciones');
+    Route::resource('alarmas','AlarmasController');
+    Route::resource('alarma-receptor','AlarmaReceptorController');
+    Route::resource('notificaciones','NotificacionesController');
 
 
 });
