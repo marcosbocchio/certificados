@@ -25,8 +25,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
      //  $schedule->command('command:task_date')->everyMinute();
-       $schedule->command('command:VencimientosDocumentaciones')->everyMinute();
-       $schedule->command('command:DemoraCargaDosimetria')->everyMinute();
+     //  $schedule->command('command:VencimientosDocumentaciones')->everyMinute();
+     //  $schedule->command('command:DemoraCargaDosimetria')->everyMinute();
     }
 
     /**

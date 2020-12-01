@@ -120,7 +120,7 @@ class VencimientosDocumentaciones extends Command
 
         return Documentaciones::join('usuario_documentaciones','documentaciones.id','=','usuario_documentaciones.documentacion_id')
                                         ->join('users','users.id','=','usuario_documentaciones.user_id')
-                                        ->whereRaw('DATEDIFF(documentaciones.fecha_caducidad,now()) = ? or DATEDIFF(documentaciones.fecha_caducidad,now()) = ?',[$aviso1,$aviso2])
+                                        ->whereRaw('users.notificar_doc_vencida_sn = 1 and (DATEDIFF(documentaciones.fecha_caducidad,now()) = ? or DATEDIFF(documentaciones.fecha_caducidad,now()) = ?)',[$aviso1,$aviso2])
                                         ->select('users.id as user_id','users.name','documentaciones.tipo','documentaciones.titulo','users.email','documentaciones.fecha_caducidad','documentaciones.id as documentacion_id')
                                         ->get();
 

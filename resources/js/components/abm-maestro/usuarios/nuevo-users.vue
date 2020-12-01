@@ -28,7 +28,7 @@
                     <div class="col-md-12">
                             <div class="form-group">
                                 <label for="name">Nombre</label>
-                                <input autocomplete="off" v-model="newRegistro.name" type="text" name="nombre" class="form-control" value="">
+                                <input autocomplete="off" v-model="Registro.name" type="text" name="nombre" class="form-control" value="">
                             </div>
                     </div>
                         <div v-if="!isEnod">
@@ -43,39 +43,50 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="name">DNI</label>
-                                    <input autocomplete="off" v-model="newRegistro.dni" type="number" name="dni" class="form-control" value="">
+                                    <input autocomplete="off" v-model="Registro.dni" type="number" name="dni" class="form-control" value="">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="name">Film</label>
-                                    <input type="checkbox" id="checkbox" v-model="newRegistro.habilitado_arn_sn" style="float:right">
-                                    <label for="tipo" style="float:right;margin-right: 5px;">Habilitado Arn</label>
-                                    <input autocomplete="off" v-model="newRegistro.film" type="number" name="film" class="form-control" value="">
+                                    <label for="tipo" style="float:right;">Habilitado Arn</label>
+                                    <input type="checkbox" id="checkbox" v-model="Registro.habilitado_arn_sn" style="float:right;margin-right: 5px;">
+                                    <input autocomplete="off" v-model="Registro.film" type="number" name="film" class="form-control" value="">
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-12">
-                                <input type="checkbox" id="checkbox" v-model="newRegistro.notificar_doc_vencida_sn" style="float:left">
-                                <label for="tipo" style="float:left;margin-right: 5px;">Notificar Vencimientos Doc.</label>
-                        </div>
-                        <div class="col-md-12">
                             <div class="form-group">
                                 <label for="usuario">email</label>
-                                <input autocomplete="nope" type="text" name="email" class="form-control" v-model="newRegistro.email" value="">
+                                <input autocomplete="nope" type="text" name="email" class="form-control" v-model="Registro.email" value="">
                             </div>
                         </div>
 
-                        <input style="display:none" type="text" name="none-email" class="form-control" v-model="newRegistro.email" value="">
+                        <div v-if="isEnod">
+                            <div  class="col-md-12">
+                                <div>
+                                    <input type="checkbox" id="checkbox2"  v-model="Registro.exceptuar_notificar_doc_vencida_sn">
+                                    <label for="checkbox2">Exceptuar vencimiento doc.</label>
+                                </div>
+
+                                <div style="margin-left: 0px;">
+                                    <input type="checkbox" class="margin-left:20px" id="checkbox3"  v-model="Registro.exceptuar_notificar_demora_dosimetria_sn">
+                                    <label for="checkbox3">Exceptuar demora dosimetría.</label>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <input style="display:none" type="text" name="none-email" class="form-control" v-model="Registro.email" value="">
 
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="password">Contraseña</label>
-                                <input autocomplete="new-password" type="password" name="password" class="form-control" v-model="newRegistro.password">
+                                <input autocomplete="new-password" type="password" name="password" class="form-control" v-model="Registro.password">
                             </div>
                         </div>
 
-                        <input style="display:none" type="password" name="password" class="form-control" v-model="newRegistro.password">
+                        <input style="display:none" type="password" name="password" class="form-control" v-model="Registro.password">
 
                         <div class="col-md-12">
                             <div class="form-group">
@@ -97,8 +108,8 @@
                                 <div class="form-group">
                                     <p>Formatos soportados : png, bmp, jpg.</p>
                                     <P><strong>Relación 2:1 Ej: 400x200 Pixeles</strong></P>
-                                    <div v-if="newRegistro.path">
-                                        <img :src="'/' + newRegistro.path" class="margin zoom-in"  @click="openGallery()" alt="..." width="120" >
+                                    <div v-if="Registro.path">
+                                        <img :src="'/' + Registro.path" class="margin zoom-in"  @click="openGallery()" alt="..." width="120" >
                                         <LightBox :images="images"  ref="lightbox"  :show-light-box="false" ></LightBox>
                                     </div>
                                     <progress-bar
@@ -148,11 +159,13 @@ export default {
 
     data() { return {
 
-        newRegistro : {
+        Registro : {
             'name'  : '',
             'dni'   :'',
             'film'  :'',
             'habilitado_arn_sn':false,
+            'exceptuar_notificar_doc_vencida_sn':false,
+            'exceptuar_notificar_demora_dosimetria_sn':false,
             'email' : '',
             'password' : '',
             'path':''
@@ -206,7 +219,7 @@ export default {
 
     watch : {
 
-          newRegistro : function(val) {
+          Registro : function(val) {
 
                 this.images[0].src ='/' + val.path;
                 this.images[0].thumb  ='/' + val.path;
@@ -233,11 +246,13 @@ export default {
             },
 
            openModal : function(){
-                this.newRegistro = {
+                this.Registro = {
                         'name'  : '',
                         'dni'   :'',
                         'film'  :'',
                         'habilitado_arn_sn':false,
+                        'exceptuar_notificar_doc_vencida_sn':false,
+                        'exceptuar_notificar_demora_dosimetria_sn':false,
                         'email' : '',
                         'password' : '',
                         'path':''
@@ -320,7 +335,7 @@ export default {
 
                axios.post(url,fd,settings)
                .then (response => {
-                  this.newRegistro.path = response.data;
+                  this.Registro.path = response.data;
                   this.isLoading_file = false
                   this.HabilitarGuardar = true;
                   this.images[0].src ='/' + response.data;
@@ -336,7 +351,7 @@ export default {
 
             storeRegistro: function(){
 
-                if(this.newRegistro.password != this.password2){
+                if(this.Registro.password != this.password2){
                       toastr.error("Las contreseñas ingresadas no coinciden");
                       return;
                 }
@@ -345,15 +360,17 @@ export default {
                 var urlRegistros = 'users';
                 axios.post(urlRegistros, {
 
-                'name'      : this.newRegistro.name,
-                'email'     : this.newRegistro.email,
-                'dni'       : this.newRegistro.dni,
-                'film'      : this.newRegistro.film,
-                'habilitado_arn_sn': this.newRegistro.habilitado_arn_sn,
-                'password'  : this.newRegistro.password,
+                'name'      : this.Registro.name,
+                'email'     : this.Registro.email,
+                'dni'       : this.Registro.dni,
+                'film'      : this.Registro.film,
+                'habilitado_arn_sn': this.Registro.habilitado_arn_sn,
+                'exceptuar_notificar_doc_vencida_sn':this.Registro.exceptuar_notificar_doc_vencida_sn,
+                'exceptuar_notificar_demora_dosimetria_sn':this.Registro.exceptuar_notificar_demora_dosimetria_sn,
+                'password'  : this.Registro.password,
                 'cliente'   : this.cliente,
                 'isEnod'    : this.isEnod,
-                'path'      : this.newRegistro.path,
+                'path'      : this.Registro.path,
                 'roles'     :this.user_rol,
 
 
@@ -362,7 +379,7 @@ export default {
                   this.errors=[];
                   $('#nuevo').modal('hide');
                   toastr.success('Nuevo usuario creado con éxito');
-                  this.newRegistro={}
+                  this.Registro={}
 
                 }).catch(error => {
                     console.log(error);

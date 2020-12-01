@@ -48,7 +48,7 @@
                         <li class="list-group-item pointer">
 
                                 <label>
-                                <input type="checkbox" v-model="rechazados">
+                                 <input type="checkbox" v-model="rechazados">
                                  <span style="margin-left:20px">Rechazados</span>
                                  </label>
 
