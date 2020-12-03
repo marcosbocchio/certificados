@@ -121,7 +121,7 @@ class NotificacionesController extends Controller
         $str_fechas = '';
 
         foreach ($fechas_demoras as $item) {
-            $str_fechas = $str_fechas . ', ' . $item;
+            $str_fechas = $str_fechas . ' ' . $item;
         }
 
         $notificacion->descripcion = 'Le informamos que el usuario ' . $user->name . ' tiene demora en la carga de dosimetría en las siguientes fechas : ' . $str_fechas ;

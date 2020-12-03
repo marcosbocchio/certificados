@@ -63,7 +63,6 @@ class DemoraCargaDosimetria extends Command
                 }
             }
 
-        //  $this->EnviarMailVencimientosUsuarios($usuarios_vencidos);
             foreach ($usuarios_dias_demorados as $item) {
 
                Log::debug("Documentacion dosimetria: " . $item->id . ' / ' . $item->name. ' / ' . $item->Date);

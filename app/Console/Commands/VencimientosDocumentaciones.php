@@ -149,7 +149,6 @@ class VencimientosDocumentaciones extends Command
 
     }
 
-
     public function VencimientosGeneral($aviso1,$aviso2){
 
         return Documentaciones::whereRaw('tipo = "INSTITUCIONAL"   and (DATEDIFF(documentaciones.fecha_caducidad,now()) = ? or DATEDIFF(documentaciones.fecha_caducidad,now()) = ?)',[$aviso1,$aviso2])
