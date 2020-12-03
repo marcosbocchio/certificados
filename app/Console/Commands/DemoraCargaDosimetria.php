@@ -11,6 +11,7 @@ use App\User;
 use App\Documentaciones;
 use App\Alarmas;
 use App\AlarmaReceptor;
+use App\ParametrosGenerales;
 
 class DemoraCargaDosimetria extends Command
 {
@@ -37,11 +38,12 @@ class DemoraCargaDosimetria extends Command
         Log::debug("Esto se ejecuto como tarea automatica de dosimetria: " . date("F j, Y, g:i a"));
         $alarmas = Alarmas::all();
         $alarma =  (new \App\Http\Controllers\AlarmasController)->BuscarAlarma($alarmas,'DOSIMETRIA');
+        $parametro_general = ParametrosGenerales::where('codigo','DOSIMETRIA')->first();
         Log::debug("Alarna dosimetria: " . $alarma);
 
         if($alarma->activo_sn){
 
-            $usuarios_dias_demorados = $this->VencimientosDosimetria($alarma->aviso1,$alarma->aviso2);
+            $usuarios_dias_demorados = $this->VencimientosDosimetria($parametro_general->valor,$alarma->aviso2);
             $ids_usuarios_con_demora = $this->getIdsUsuarioDemoras($usuarios_dias_demorados);
             $receptores_a_avisar =  (new \App\Http\Controllers\AlarmaReceptorController)->BuscarReceptores('DOSIMETRIA');
 
@@ -51,10 +53,12 @@ class DemoraCargaDosimetria extends Command
                 $fechas_demoras = $this->getFechasDemorasUsuario($usuarios_dias_demorados,$item_id);
                 $user = User::find($item_id);
                 Mail::to($user->email)->send(new SendDemoraFechasUsuarioMailable($user,$fechas_demoras));
-                  (new \App\Http\Controllers\NotificacionesController)->storeDosimetria($user->id,$user,$fechas_demoras);
+                sleep(10);
+                (new \App\Http\Controllers\NotificacionesController)->storeDosimetria($user->id,$user,$fechas_demoras);
                 foreach ($receptores_a_avisar as $receptor) {
 
                     Mail::to($receptor->email)->send(new SendDemoraFechasUsuarioMailable($user,$fechas_demoras));
+                    sleep(10);
                     (new \App\Http\Controllers\NotificacionesController)->storeDosimetria($receptor->id,$user,$fechas_demoras);
                 }
             }
@@ -77,9 +81,9 @@ class DemoraCargaDosimetria extends Command
 
     }
 
-    public function VencimientosDosimetria($aviso1,$aviso2){
+    public function VencimientosDosimetria($fecha_inicio_control,$aviso2){
 
-         return  DB::select('CALL DosimetriaFechasDemoradasUsuarios(?)',array($aviso2));
+         return  DB::select('CALL DosimetriaFechasDemoradasUsuarios(?,?)',array($fecha_inicio_control,$aviso2));
 
     }
 

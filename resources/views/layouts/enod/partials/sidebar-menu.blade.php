@@ -15,26 +15,7 @@
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
         <li><a href="{{ route('dashboard')}}" ><i class="fa fa-dashboard"></i> <span>TABLERO PRINCIPAL</span></a></li>
-        <!--
-        @can('OT')
-          <li class="treeview">
-            <a href="#">
-              <i class="fa fa-laptop"></i>
-              <span>OT</span>
-              <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-            </a>
-            <ul class="treeview-menu">
 
-             @can('O_alta')
-              <li><a href="{{ route('ots.create') }}"> Alta</a></li>
-             @endcan
-
-            </ul>
-          </li>
-        @endcan
-        -->
         @can('MAESTROS')
           <li class="treeview">
             <a href="#">
@@ -159,6 +140,30 @@
               @can('D_reporte_alta_baja')
                   <li><a href="{{ route('pdfDosimetriaPeriodos') }}" target="_blank" >Reporte Alta/Baja</a></li>
               @endcan
+
+            </ul>
+          </li>
+        @endcan
+
+        @can('NOTIFICACIONES')
+          <li class="treeview">
+            <a href="#">
+              <i class="fa fa-bell-o"></i> <span>NOTIFICACIONES</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              @can('N_notificaciones')
+                <li><a href="{{ route('notificaciones') }}">Ver notificaciones</a></li>
+              @endcan
+              @can('N_alarmas')
+                  <li><a href="{{ route('alarmas') }}">Alarmas</a></li>
+              @endcan
+              @can('N_asignar_alarma')
+                  <li><a href="{{ route('alarma-receptor') }}">Asignar Alarmas</a></li>
+              @endcan
+
 
             </ul>
           </li>

@@ -37,22 +37,35 @@
                         <!-- Menu toggle button -->
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-bell-o"></i>
-                            <span class="label label-warning"></span>
+                            @php
+                                 $total_notificaciones =  0;
+                                 foreach ($user->notificaciones_resumen as $item){
+                                        $total_notificaciones +=$item->total;
+                                 }
+                            @endphp
+
+                            <span class="label label-warning notificacion_total" >{{ $total_notificaciones}}</span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li class="header">You have 10 notifications</li>
+                            <li class="header">Tienes <span class="notificacion_total"> {{ $total_notificaciones }} </span> notificaciones</li>
                             <li>
                                 <!-- Inner Menu: contains the notifications -->
-                                <ul class="menu">
-                                    <li><!-- start notification -->
-                                        <a href="#">
-                                            <i class="fa fa-users text-aqua"></i> 5 new members joined today
-                                        </a>
-                                    </li>
+                                <ul class="menu" id="menu-notificaciones">
+
+                                    @foreach ($user->notificaciones_resumen as $notificacion)
+
+                                        <li><!-- start notification -->
+                                            <a href="#">
+                                                <i class="fa fa-bell-o text-red"></i>
+                                               <span>{{ $notificacion->total }}</span> notificaciones de <span>{{ $notificacion->tipo }}</span>
+                                            </a>
+                                        </li>
+
+                                    @endforeach
                                     <!-- end notification -->
                                 </ul>
                             </li>
-                            <li class="footer"><a href="#">View all</a></li>
+                            <li class="footer"><a href="{{ route('notificaciones') }}">Ver detalle</a></li>
                         </ul>
                     </li>
 

@@ -78,8 +78,6 @@ export default {
 
         this.getNotificaciones();
 
-
-
     },
 
     methods : {
@@ -89,15 +87,15 @@ export default {
          return  moment(fecha).format('DD/MM/YYYY')
      },
 
-      //moment(this.fecha).format('DD/MM/YYYY')
+    async getNotificaciones(){
 
-       async getNotificaciones(){
        this.$store.commit('loading', true);
        axios.defaults.baseURL = this.url ;
        var urlRegistros = 'notificaciones/user/' + this.user_data.id + '?api_token=' + Laravel.user.api_token;
        await axios.get(urlRegistros).then(response =>{
 
             this.notificaciones = response.data;
+            this.ActualizarNotificaciones();
 
        }).finally(()=> {this.$store.commit('loading', false);});
     },
@@ -112,7 +110,8 @@ export default {
             await axios.put(urlRegistros).then(response => {
 
              this.notificaciones[index].notificado_sn = 1;
-              console.log('Entro en marcar');
+             this.ActualizarNotificaciones();
+
 
             }).finally(()=> {this.$store.commit('loading', false);});
 
@@ -130,10 +129,35 @@ export default {
 
         }).finally(()=> {this.$store.commit('loading', false);});
 
-    }
+    },
 
-    }
-}
+   async ActualizarNotificacionesResumen(){
+
+        axios.defaults.baseURL = this.url ;
+        var urlRegistros = 'notificaciones_resumen/user/' + this.user_data.id + '?api_token=' + Laravel.user.api_token;
+        await axios.get(urlRegistros).then(response =>{
+
+           let notificaciones_resumen = response.data;
+           let html_temp='';
+           notificaciones_resumen.forEach(function(item){
+               html_temp  += '<li><a href="#"><i class="fa fa-bell-o text-red"></i><span>' + item.total + '</span> notificaciones de <span>' + item.tipo + '</span></a></li>' ;
+           });
+           document.getElementById('menu-notificaciones').innerHTML=html_temp;
+        //   console.log(html_temp);
+
+        });
+    },
+
+    async ActualizarNotificaciones(){
+
+        let total_notificacion = this.notificaciones.filter(function(elem){return elem.notificado_sn == 0 }).length;
+        $(".notificacion_total").html(parseInt(total_notificacion));
+        this.ActualizarNotificacionesResumen();
+
+    },
+
+
+}}
 </script>
 
 <style scoped>

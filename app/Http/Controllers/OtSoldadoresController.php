@@ -20,8 +20,8 @@ class OtSoldadoresController extends Controller
     public function index($id)
     {
         $header_titulo = "Soldadores OT";
-        $header_descripcion ="Alta | Baja | Modificación";      
-        $accion = 'edit';      
+        $header_descripcion ="Alta | Baja | Modificación";
+        $accion = 'edit';
         $user = auth()->user();
 
         $ot_soldadores = $this->getSoldadoresOt($id);
@@ -29,9 +29,9 @@ class OtSoldadoresController extends Controller
         $ot = Ots::find($id);
 
         return view('ot-soldadores.index',compact('ot',
-                                        'ot_soldadores', 
-                                        'ot_usuarios_cliente',                                  
-                                        'user',                                       
+                                        'ot_soldadores',
+                                        'ot_usuarios_cliente',
+                                        'user',
                                         'header_titulo',
                                         'header_descripcion'));
     }
@@ -80,7 +80,7 @@ class OtSoldadoresController extends Controller
         try
         {
 
-                $ot = $request->ot;             
+                $ot = $request->ot;
                 $ot_soldadores = OtSoldadores::where('ot_id',$ot['id'])->get();
 
                 foreach ($ot_soldadores as $ot_soldador) {
@@ -90,7 +90,7 @@ class OtSoldadoresController extends Controller
                         if( ($ot_soldador['soldadores_id'] == $soldador['id'])){
                           $existe = true;
                         }
-                  
+
                     }
 
                   if (!$existe){
@@ -99,19 +99,19 @@ class OtSoldadoresController extends Controller
                                  ->delete();
                     }
                 }
-         
+
                foreach ($request->soldadores as $soldador) {
 
                     $ot_soldadores_update = OtSoldadores::firstOrCreate(
-                        
+
                        ['ot_id' => $ot['id'],'soldadores_id' => $soldador['id']],
                        ['ot_id' => $ot['id'],'soldadores_id' => $soldador['id']]
 
                     );
-       
+
                 $ot_soldadores_update->save();
 
-               } 
+               }
                // Usuarios Cliente
 
                 $ot_usuarios_cliente = OtUsuariosClientes::where('ot_id',$ot['id'])->get();
@@ -119,47 +119,47 @@ class OtSoldadoresController extends Controller
                 foreach ($ot_usuarios_cliente as $ot_usuario_cliente) {
                     $existe = false;
                       foreach ($request->usuarios_cliente as $usuario_cliente) {
-  
+
                           if( ($ot_usuario_cliente['user_id'] == $usuario_cliente['id'])){
                             $existe = true;
                           }
-                    
+
                       }
-  
+
                     if (!$existe){
                         OtUsuariosClientes::where('ot_id',$ot['id'])
                                    ->where('user_id',$ot_usuario_cliente['user_id'])
                                    ->delete();
                       }
                   }
-           
+
                   foreach ($request->usuarios_cliente as $usuario_cliente) {
-  
+
                       $ot_usuarios_cliente_update = OtUsuariosClientes::firstOrCreate(
-                          
+
                          ['ot_id' => $ot['id'],'user_id' => $usuario_cliente['id']],
                          ['ot_id' => $ot['id'],'user_id' => $usuario_cliente['id']]
-  
-                      );
-         
-                  $ot_usuarios_cliente_update->save();
-  
-                 } 
 
-              
+                      );
+
+                  $ot_usuarios_cliente_update->save();
+
+                 }
+
+
             DB::commit();
         }catch(\Exception $e)
         {
             DB::rollback();
             throw $e;
-        }     
-   
+        }
+
     }
 
     public function SoldadoresOt($ot_id){
 
         return DB::table('soldadores')
-                   ->join('ot_soldadores','ot_soldadores.soldadores_id','=','soldadores.id')  
+                   ->join('ot_soldadores','ot_soldadores.soldadores_id','=','soldadores.id')
                    ->where('ot_soldadores.ot_id',$ot_id)
                    ->select('soldadores.codigo','soldadores.nombre','ot_soldadores.*')
                    ->get();
@@ -169,7 +169,7 @@ class OtSoldadoresController extends Controller
     public function OtSoldadoresTotal($ot_id){
 
 
-        return OtSoldadores::where('ot_id',$ot_id)->count(); 
+        return OtSoldadores::where('ot_id',$ot_id)->count();
 
     }
 
@@ -178,7 +178,7 @@ class OtSoldadoresController extends Controller
 
         DB::beginTransaction();
 
-        try { 
+        try {
 
             $soldadores_importados = $request->input('soldadores_importados');
 
@@ -187,17 +187,19 @@ class OtSoldadoresController extends Controller
                 Log::debug("Var request ImportarSoldadores :" . $codigo_soldador);
 
                 if($codigo_soldador){
-                    
+
                         $soldador = Soldadores::firstOrCreate(
 
                             ['codigo' => $codigo_soldador,'cliente_id' => $cliente_id],['codigo' => $codigo_soldador,'cliente_id' => $cliente_id,'nombre'  =>'nn']
                         );
-                        
-                        $soldador = Soldadores::where('cliente_id',$cliente_id)
-                                                ->where('codigo',$codigo_soldador) 
-                                                ->first();
 
-                        $soldador_id = $soldador->id; 
+                    /*    Log::debug("Este es el soldador de la importacion :" . $soldador);
+
+                        $soldador = Soldadores::where('cliente_id',$cliente_id)
+                                                ->where('codigo',$codigo_soldador)
+                                                ->first();
+                    */
+                        $soldador_id = $soldador->id;
 
                         $ot_soldador = OtSoldadores::firstOrCreate(
 
@@ -206,13 +208,13 @@ class OtSoldadoresController extends Controller
                  }
             }
 
-            DB::commit(); 
+            DB::commit();
 
        } catch (Exception $e) {
 
             DB::rollback();
-            throw $e;      
-      
+            throw $e;
+
         }
 
     }

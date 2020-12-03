@@ -54,27 +54,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet"href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
 </head>
-<!--
-BODY TAG OPTIONS:
-=================
-Apply one or more of the following classes to get the
-desired effect
-|---------------------------------------------------------|
-| SKINS         | skin-blue                               |
-|               | skin-black                              |
-|               | skin-purple                             |
-|               | skin-yellow                             |
-|               | skin-red                                |
-|               | skin-green                              |
-|---------------------------------------------------------|
-|LAYOUT OPTIONS | fixed                                   |
-|               | layout-boxed                            |
-|               | layout-top-nav                          |
-|               | sidebar-collapse                        |
-|               | sidebar-mini                            |
-|---------------------------------------------------------|
--->
-
 
 <body class="hold-transition skin-yellow fixed sidebar-mini">
 
@@ -82,20 +61,14 @@ desired effect
 @include('layouts.enod.partials.header')
 @include('layouts.enod.partials.content-header')
 
+    <!-- Main content -->
+    <section class="content">
 
+        @yield('contenido')
 
-        <!-- Main content -->
-        <section class="content">
+    </section>
 
-
-
-                @yield('contenido')
-
-
-
-        </section>
-
-        <!-- /.content -->
+    <!-- /.content -->
 
 @include('layouts.enod.partials.footer')
 
@@ -122,47 +95,46 @@ desired effect
 
 <script type="text/javascript" src="{{mix('js/app.js')}}"></script>
 <script src="https://unpkg.com/vue-3d-model/dist/vue-3d-model.umd.js"></script>
+
 <script>
 
-
-
-$(document).ready(function() {
-  $(window).keydown(function(event){
-    if(event.keyCode == 13) {
-      event.preventDefault();
-      return false;
-    }
-  });
-
-  $(".alert").delay(4000).slideUp(500);
-});
-
-var url = window.location;
-// for sidebar menu but not for treeview submenu
-$('ul.sidebar-menu a').filter(function() {
-    return this.href == url;
-}).parent().siblings().removeClass('active').end().addClass('active');
-// for treeview which is like a submenu
-$('ul.treeview-menu a').filter(function() {
-    return this.href == url;
-}).parentsUntil(".sidebar-menu > .treeview-menu").siblings().removeClass('active menu-open').end().addClass('active menu-open');
-
-/*
-$(function(){
-    $('a[href*=\\#]:not([href=\\#])').click(function() {
-    if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'')
-    && location.hostname == this.hostname) {
-    var $target = $(this.hash);
-    $target = $target.length && $target || $('[name=' + this.hash.slice(1) +']');
-    if ($target.length) {
-    var targetOffset = $target.offset().top;
-    $('html,body').animate({scrollTop: targetOffset}, 800);
-    return false;
-    }
-    }
+    $(document).ready(function() {
+    $(window).keydown(function(event){
+        if(event.keyCode == 13) {
+        event.preventDefault();
+        return false;
+        }
     });
-});
-*/
+
+    $(".alert").delay(4000).slideUp(500);
+    });
+
+    var url = window.location;
+    // for sidebar menu but not for treeview submenu
+    $('ul.sidebar-menu a').filter(function() {
+        return this.href == url;
+    }).parent().siblings().removeClass('active').end().addClass('active');
+    // for treeview which is like a submenu
+    $('ul.treeview-menu a').filter(function() {
+        return this.href == url;
+    }).parentsUntil(".sidebar-menu > .treeview-menu").siblings().removeClass('active menu-open').end().addClass('active menu-open');
+
+
+    $(function(){
+        $('a[href*=\\#]:not([href=\\#])').click(function() {
+        if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'')
+        && location.hostname == this.hostname) {
+        var $target = $(this.hash);
+        $target = $target.length && $target || $('[name=' + this.hash.slice(1) +']');
+        if ($target.length) {
+        var targetOffset = $target.offset().top;
+        $('html,body').animate({scrollTop: targetOffset}, 800);
+        return false;
+        }
+        }
+        });
+    });
+
 </script>
 
 

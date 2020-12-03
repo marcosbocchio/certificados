@@ -7,202 +7,202 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title" >Editar</h4>
                 </div>
-                <div class="modal-body">    
-                    <div class="row">          
+                <div class="modal-body">
+                    <div class="row">
                     <div class="col-md-12">
                         <div class="box box-custom-enod">
                             <div class="box-header with-border">
                                 <h3 class="box-title">Datos Cliente</h3>
                                 <div class="box-tools pull-right">
                                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                                    </button>                       
+                                    </button>
                                 </div>
                             </div>
-                        <div class="box-body">  
-                            <div class="col-md-6">    
+                        <div class="box-body">
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Código *</label>                   
-                                    <input autocomplete="off" v-model="newRegistro.codigo" type="text" name="codigo" class="form-control" value=""> 
-                                </div>  
-                            </div>            
-                            <div class="col-md-6">    
+                                    <label for="name">Código *</label>
+                                    <input autocomplete="off" v-model="newRegistro.codigo" type="text" name="codigo" class="form-control" value="">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Nombre *</label>                   
-                                    <input autocomplete="off" v-model="newRegistro.nombre" type="text" name="nombre" class="form-control" value="" maxlength="30"> 
-                                </div>  
+                                    <label for="name">Nombre *</label>
+                                    <input autocomplete="off" v-model="newRegistro.nombre" type="text" name="nombre" class="form-control" value="" maxlength="30">
+                                </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="name">Razon Social*</label>                   
-                                    <input autocomplete="off" v-model="newRegistro.razon_social" type="text" name="razon_social" class="form-control" value=""> 
-                                </div> 
-                            </div> 
-                        <div class="col-md-6">                 
+                                    <label for="name">Razon Social*</label>
+                                    <input autocomplete="off" v-model="newRegistro.razon_social" type="text" name="razon_social" class="form-control" value="">
+                                </div>
+                            </div>
+                        <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Provincia *</label>
-                                    <v-select v-model="provincia" label="provincia" :options="provincias" @input="getLocalidades()"></v-select>   
+                                    <v-select v-model="provincia" label="provincia" :options="provincias" @input="getLocalidades()"></v-select>
                                 </div>
                         </div>
                             <div class="col-md-6">
                             <div class="form-group">
                                 <label>Localidad *</label>
-                                <v-select v-model="localidad" label="localidad" :options="localidades"></v-select>   
+                                <v-select v-model="localidad" label="localidad" :options="localidades"></v-select>
                             </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Código Postal *</label>                   
-                                    <input autocomplete="off" v-model="newRegistro.cp" type="text" name="cp" class="form-control" value=""> 
-                                </div> 
+                                    <label for="name">Código Postal *</label>
+                                    <input autocomplete="off" v-model="newRegistro.cp" type="text" name="cp" class="form-control" value="">
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Dirección *</label>                   
-                                    <input autocomplete="off" v-model="newRegistro.direccion" type="text" name="direccion" class="form-control" value=""> 
-                                </div>  
+                                    <label for="name">Dirección *</label>
+                                    <input autocomplete="off" v-model="newRegistro.direccion" type="text" name="direccion" class="form-control" value="">
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Teléfono *</label>                   
-                                    <input autocomplete="off" v-model="newRegistro.tel" type="text" name="telefono" class="form-control" value=""  maxlength="40" placeholder="Ej: 0299-15-1234567 / 0299-4444-3333 (111)"> 
-                                </div> 
+                                    <label for="name">Teléfono *</label>
+                                    <input autocomplete="off" v-model="newRegistro.tel" type="text" name="telefono" class="form-control" value=""  maxlength="40" placeholder="Ej: 0299-15-1234567 / 0299-4444-3333 (111)">
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="usuario">email *</label>
                                     <input autocomplete="off" type="text" name="email" class="form-control" v-model="newRegistro.email" value="">
-                                </div>      
+                                </div>
                             </div>
 
-                            <div class="col-md-6">   
-                                <div class="form-group">    
-                                    <label>Logo</label>        
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Logo</label>
                                     <input type="file" class="form-control" id="inputFile" ref="inputFile1" name="file" @change="onFileSelected($event)">
-                                    <button class="hide" @click.prevent="onUpload()" >upload</button> 
-                               </div>                              
-                            </div>   
+                                    <button class="hide" @click.prevent="onUpload()" >upload</button>
+                               </div>
+                            </div>
                             <div class="clearfix"></div>
-                            <div class="col-md-6">   
-                                <div class="form-group">       
-                                    <p>Formatos soportados : png, bmp, jpg</p>                          
-                                    <div v-if="newRegistro.path ">                            
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <p>Formatos soportados : png, bmp, jpg</p>
+                                    <div v-if="newRegistro.path ">
                                         <img :src="'/' + newRegistro.path" class="margin zoom-in"  @click="openGallery()" alt="..." width="120" >
                                         <LightBox :images="images"  ref="lightbox"  :show-light-box="false" ></LightBox>
-                                    </div>                              
+                                    </div>
                                     <progress-bar
                                         :options="options"
                                         :value="uploadPercentage"
                                         style="margin-top:5px;"
-                                    /> 
-                                </div>    
+                                    />
+                                </div>
                             </div>
                       </div>
                         </div>
                    </div>
-                   <!-- contacto -->  
+                   <!-- contacto -->
                     <div class="col-md-12">
                         <div class="box box-custom-enod ">
                             <div class="box-header with-border">
-                                <h3 class="box-title">Contacto</h3>                            
+                                <h3 class="box-title">Contacto</h3>
                             </div>
                         <div class="box-body">
-                            <div class="col-md-6">    
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Nombre</label>                   
-                                    <input autocomplete="off" v-model="contacto.nombre" type="text" name="nombre" class="form-control" value="" maxlength="30"> 
-                                </div>  
+                                    <label for="name">Nombre</label>
+                                    <input autocomplete="off" v-model="contacto.nombre" type="text" name="nombre" class="form-control" value="" maxlength="30">
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="usuario">Cargo</label>
                                     <input autocomplete="off" type="text" name="cargo" class="form-control" v-model="contacto.cargo" value="" maxlength="30">
-                                </div>      
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="usuario">Teléfono</label>
                                     <input autocomplete="off" type="text" name="telefono" class="form-control" v-model="contacto.tel" value="" maxlength="40" placeholder="Ej: 0299-15-1234567 / 0299-4444-3333 (111)">
-                                </div>      
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="usuario">email</label>
                                     <input autocomplete="off" type="text" name="email" class="form-control" v-model="contacto.email" value="">
-                                </div>      
+                                </div>
                             </div>
-                            <div class="col-md-1">                          
+                            <div class="col-md-1">
 
                             <p>&nbsp;</p>
 
-                            <div class="form-group">                    
+                            <div class="form-group">
                                 <span>
-                                    <button title="Agregar Contacto" type="button" @click="AddContacto()"><span class="fa fa-plus-circle"></span></button> 
+                                    <button title="Agregar Contacto" type="button" @click="AddContacto()"><span class="fa fa-plus-circle"></span></button>
                                 </span>
                             </div>
-                        
+
                             </div>
 
                             <div class="col-md-12">
                                 <div class="table-responsive">
                                     <table class="table table-hover table-striped table-condensed">
                                         <thead>
-                                            <tr>                                  
-                                                <th style="width:90px;">NOMBRE</th>                                  
+                                            <tr>
+                                                <th style="width:90px;">NOMBRE</th>
                                                 <th style="width:120px;">CARGO</th>
                                                 <th style="width:120px;">TELÉFONO</th>
-                                                <th style="width:120px;">EMAIL</th>                                                             
+                                                <th style="width:120px;">EMAIL</th>
                                                 <th colspan="1" style="width:30px;">&nbsp;</th>
                                             </tr>
-                                        </thead>                         
+                                        </thead>
                                         <tbody>
-                                             <tr v-for="(FilaTabla,k) in (TablaContactos)"  @click="selectPosContacto(k)" :key="k" >                                        
+                                             <tr v-for="(FilaTabla,k) in (TablaContactos)"  @click="selectPosContacto(k)" :key="k" >
                                                 <td>
-                                                    <div v-if="indexDetalle == k ">       
-                                                          <input type="text" v-model="TablaContactos[k].nombre" maxlength="30" size="25">        
-                                                    </div>   
+                                                    <div v-if="indexDetalle == k ">
+                                                          <input type="text" v-model="TablaContactos[k].nombre" maxlength="30" size="25">
+                                                    </div>
                                                     <div v-else>
                                                            {{ TablaContactos[k].nombre }}
-                                                    </div>      
+                                                    </div>
 
-                                                  
-                                                </td>                                            
+
+                                                </td>
                                                 <td>
-                                                    <div v-if="indexDetalle == k ">       
-                                                          <input type="text" v-model="TablaContactos[k].cargo" maxlength="30" size="30">        
-                                                    </div>   
+                                                    <div v-if="indexDetalle == k ">
+                                                          <input type="text" v-model="TablaContactos[k].cargo" maxlength="30" size="30">
+                                                    </div>
                                                     <div v-else>
                                                            {{ TablaContactos[k].cargo }}
-                                                    </div>   
+                                                    </div>
                                                  </td>
                                                 <td>
-                                                    <div v-if="indexDetalle == k ">       
-                                                          <input type="text" v-model="TablaContactos[k].tel" maxlength="40" size="40">        
-                                                    </div>   
+                                                    <div v-if="indexDetalle == k ">
+                                                          <input type="text" v-model="TablaContactos[k].tel" maxlength="40" size="40">
+                                                    </div>
                                                     <div v-else>
                                                            {{ TablaContactos[k].tel }}
-                                                    </div>   
+                                                    </div>
                                                  </td>
                                                 <td>
-                                                    <div v-if="indexDetalle == k ">       
-                                                          <input type="text" v-model="TablaContactos[k].email" maxlength="60" size="25">        
-                                                    </div>   
+                                                    <div v-if="indexDetalle == k ">
+                                                          <input type="text" v-model="TablaContactos[k].email" maxlength="60" size="25">
+                                                    </div>
                                                     <div v-else>
                                                            {{ TablaContactos[k].email }}
-                                                    </div>   
-                                                 </td>                                          
-                                                <td> 
+                                                    </div>
+                                                 </td>
+                                                <td>
                                                     <a  @click="RemoveContacto(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a>
-                                                </td>          
+                                                </td>
 
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
-                        </div> 
                         </div>
                         </div>
-                         
-                    </div>        
+                        </div>
+
+                    </div>
                 </div>
               </div>
                 <div class="modal-footer">
@@ -222,8 +222,8 @@ import {mapState} from 'vuex'
  import { eventEditRegistro } from '../../event-bus';
 export default {
 
-     components: {        
-         
+     components: {
+
             LightBox,
         },
 
@@ -231,27 +231,27 @@ export default {
 
         selectRegistro : {
             type : Object,
-            required : false,           
+            required : false,
           }
 
     },
     data() { return {
-    
-        newRegistro : {   
-            'codigo' :'',        
+
+        newRegistro : {
+            'codigo' :'',
             'nombre'  : '',
             'razon_social' : '',
             'tel' : '',
             'email' :'',
             'direccion':'',
             'cp':'',
-            'path':''              
-         },     
+            'path':''
+         },
 
-        errors:{},               
+        errors:{},
         provincia:{},
         localidad:{},
-        
+
          contacto : {
            'nombre'  : '',
            'cargo' : '',
@@ -261,68 +261,68 @@ export default {
         TablaContactos:[],
         images:[
             {
-              
+
                 src: '',
                 thumb: '',
                 caption: 'caption to display. receive <html> <b>tag</b>', // Optional
-              
+
             }
             ]   ,
-       
+
         fullPage: false,
-        isLoading_file: false,     
+        isLoading_file: false,
         uploadPercentage: 0,
-        selectedFile : null,     
-        HabilitarGuardar : true, 
-         indexDetalle:0,
+        selectedFile : null,
+        HabilitarGuardar : true,
+        indexDetalle:-1,
 
         options: {
 
            layout: {
                 height: 20,
-                width: 150,    
-                verticalTextAlign: 74,    
-                progressPadding: 0,               
-                },         
-            }         
+                width: 150,
+                verticalTextAlign: 74,
+                progressPadding: 0,
+                },
+            }
          }
-    
+
     },
  created: function () {
-     
+
     eventEditRegistro.$on('editar', this.openModal)
-    this.getProvincias();  
-   
-  
+    this.getProvincias();
+
+
     },
     computed :
-    
+
          mapState(['url','provincias','localidades'])
-       
-    ,  
+
+    ,
 
   watch : {
-          
+
           newRegistro : function(val) {
 
                 this.images[0].src ='/' + val.path;
                 this.images[0].thumb  ='/' + val.path;
 
-          },      
-        
+          },
+
     },
 
- 
+
     methods: {
 
         openGallery(index) {
                  this.$refs.lightbox.showImage(0)
-            }   ,  
+            }   ,
            openModal : function(){
 
            $('#box-widget').boxWidget('collapse')
 
-            this.$nextTick(function () { 
+            this.$nextTick(function () {
 
                 this.newRegistro.codigo = this.selectRegistro.codigo;
                 this.newRegistro.nombre = this.selectRegistro.nombre_fantasia;
@@ -353,16 +353,16 @@ export default {
                     'email' :'',
                     },
                 this.images[0].src ='/' + this.selectRegistro.path;
-                this.images[0].thumb  ='/' + this.selectRegistro.path;  
+                this.images[0].thumb  ='/' + this.selectRegistro.path;
                 this.TablaContactos = this.selectRegistro.contactos;
-                this.selectedFile =  null,      
-                $('#editar').modal('show');    
-                this.$forceUpdate();    
+                this.selectedFile =  null,
+                $('#editar').modal('show');
+                this.$forceUpdate();
             })
             },
 
             getProvincias : function(){
-                
+
                 this.$store.dispatch('loadProvincias');
 
             },
@@ -374,79 +374,79 @@ export default {
               },
 
             getClientes: function(){
-             
+
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'clientes' + '?api_token=' + Laravel.user.api_token;        
+                var urlRegistros = 'clientes' + '?api_token=' + Laravel.user.api_token;
                 axios.get(urlRegistros).then(response =>{
                 this.clientes = response.data
                 });
               },
 
-            onFileSelected(event) {         
-          
-            this.isLoading_file = true;  
-            this.HabilitarGuardar = false;          
+            onFileSelected(event) {
+
+            this.isLoading_file = true;
+            this.HabilitarGuardar = false;
 
             this.selectedFile = event.target.files[0];
-        
-            let FileSize = this.selectedFile.size / 1024 / 1024; // in MB           
-            let FileType=this.selectedFile.type;         
+
+            let FileSize = this.selectedFile.size / 1024 / 1024; // in MB
+            let FileType=this.selectedFile.type;
            // console.log(FileType);
 
-            if (!((FileType == 'image/jpeg') || (FileType == 'image/bmp') || (FileType == 'image/png'))) {                   
-        
+            if (!((FileType == 'image/jpeg') || (FileType == 'image/bmp') || (FileType == 'image/png'))) {
+
                     toastr.error('El tipo de archivo no es aceptado ');
                     this.$refs.inputFile1.type = 'text';
-                    this.$refs.inputFile1.type = 'file';  
+                    this.$refs.inputFile1.type = 'file';
                     this.selectedFile = null;
-                    return; 
+                    return;
              }
-            
+
                // console.log(this.selectedFile);
 
                 if(FileSize > (0.15) ){
                     event.preventDefault();
                     toastr.error('Archivo demasiado grande. (Max 150 KB)');
                     this.$refs.inputFile1.type = 'text';
-                    this.$refs.inputFile1.type = 'file';  
+                    this.$refs.inputFile1.type = 'file';
                     this.selectedFile = null;
                     this.uploadPercentage = 0;
-                    this.isLoading_file = false;  
+                    this.isLoading_file = false;
                 }else{
 
-                    this.onUpload();   
+                    this.onUpload();
 
-                } 
-         
+                }
+
            },
 
             onUpload() {
 
-              this.HabilitarGuardar = false          
+              this.HabilitarGuardar = false
               let settings = { headers: { 'content-type': 'multipart/form-data' }, onUploadProgress: function( progressEvent ) {
                                                                                     this.uploadPercentage = parseInt( Math.round( ( progressEvent.loaded * 100 ) / progressEvent.total ) );
                                                                                     }.bind(this) }
                const fd = new FormData();
-               
+
                fd.append('logo-cliente',this.selectedFile);
-              
-               axios.defaults.baseURL = this.url;     
+
+               axios.defaults.baseURL = this.url;
                var url = 'storage/logo-cliente';
             //   console.log(fd);
 
                axios.post(url,fd,settings)
-               .then (response => {                                
-                  this.newRegistro.path = response.data;      
-                  this.isLoading_file = false   
-                  this.HabilitarGuardar = true;   
+               .then (response => {
+                  this.newRegistro.path = response.data;
+                  this.isLoading_file = false
+                  this.HabilitarGuardar = true;
                   this.images[0].src ='/' + response.data;
-                  this.images[0].thumb  ='/' + response.data;   
-                  this.$forceUpdate();      
-                
+                  this.images[0].thumb  ='/' + response.data;
+                  this.$forceUpdate();
+
                }).catch(response => {
                    this.errors = error.response.data.errors;
-                   this.isLoading_file = false   
-                   this.HabilitarGuardar = true;            
+                   this.isLoading_file = false
+                   this.HabilitarGuardar = true;
                 })
 
             },
@@ -475,46 +475,46 @@ export default {
             },
 
             RemoveContacto : function(index){
-                 this.TablaContactos.splice(index, 1);         
+                 this.TablaContactos.splice(index, 1);
             },
 
             selectPosContacto :function(index){
 
             this.indexDetalle = index ;
-          
-           
+
+
            },
 
 
-            storeRegistro: function(){           
+            storeRegistro: function(){
 
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'clientes/' + this.selectRegistro.id;                      
-                axios.put(urlRegistros, {   
-                
-                'codigo'        :this.newRegistro.codigo, 
-                'nombre'        : this.newRegistro.nombre, 
-                'razon_social'  : this.newRegistro.razon_social, 
-                'tel'           : this.newRegistro.tel, 
-                'email'         :this.newRegistro.email, 
-                'direccion'     :this.newRegistro.direccion, 
-                'cp'            : this.newRegistro.cp,   
-                'path'          : this.newRegistro.path,   
-                'provincia'     : this.provincia,          
-                'localidad'     : this.localidad,  
+                var urlRegistros = 'clientes/' + this.selectRegistro.id;
+                axios.put(urlRegistros, {
+
+                'codigo'        :this.newRegistro.codigo,
+                'nombre'        : this.newRegistro.nombre,
+                'razon_social'  : this.newRegistro.razon_social,
+                'tel'           : this.newRegistro.tel,
+                'email'         :this.newRegistro.email,
+                'direccion'     :this.newRegistro.direccion,
+                'cp'            : this.newRegistro.cp,
+                'path'          : this.newRegistro.path,
+                'provincia'     : this.provincia,
+                'localidad'     : this.localidad,
                 'contactos'     :this.TablaContactos,
-                  
-                  
+
+
                 }).then(response => {
-                  console.log(response.data);  
-                  console.log('ya mostre el respose'); 
+                  console.log(response.data);
+                  console.log('ya mostre el respose');
                   this.$emit('update');
                   this.errors=[];
                   $('#editar').modal('hide');
-                  toastr.success('Nuevo usuario creado con éxito');               
+                  toastr.success('Nuevo usuario creado con éxito');
                   this.newRegistro={}
-                  
-                }).catch(error => {                   
+
+                }).catch(error => {
                     this.errors = error.response.data.errors;
                     $.each( this.errors, function( key, value ) {
                         toastr.error(value);
@@ -523,12 +523,12 @@ export default {
 
                      if((typeof(this.errors)=='undefined') && (error)){
 
-                     toastr.error("Ocurrió un error al procesar la solicitud");                     
-                  
+                     toastr.error("Ocurrió un error al procesar la solicitud");
+
                 }
                 });
               }
 }
-    
+
 }
 </script>

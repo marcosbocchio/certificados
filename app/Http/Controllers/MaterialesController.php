@@ -15,12 +15,12 @@ class MaterialesController extends Controller
     public function __construct()
     {
 
-       $this->middleware(['role_or_permission:Sistemas|M_materiales'],['only' => ['callView']]);  
-    
+       $this->middleware(['role_or_permission:Sistemas|M_materiales'],['only' => ['callView']]);
+
     }
 
     public function index()
-    {   
+    {
          return  Materiales::all();
 
     }
@@ -32,39 +32,40 @@ class MaterialesController extends Controller
     }
 
     public function callView()
-    {   
+    {
       $user = auth()->user();
+      dd($user);
       $header_titulo = "Materiales";
-      $header_descripcion ="Alta | Baja | Modificación";      
+      $header_descripcion ="Alta | Baja | Modificación";
       return view('materiales',compact('user','header_titulo','header_descripcion'));
 
     }
 
     public function store(MaterialRequest $request){
 
-      $material = new Materiales;   
+      $material = new Materiales;
 
         DB::beginTransaction();
-        try { 
+        try {
 
             $this->saveMaterial($request,$material);
-            DB::commit(); 
+            DB::commit();
 
         } catch (Exception $e) {
-    
+
             DB::rollback();
-            throw $e;      
-            
-        }      
+            throw $e;
+
+        }
 
     }
 
     public function update(MaterialRequest $request, $id){
-      
+
       $material = Materiales::where('id',$id)
-                              ->where('updated_at',$request['updated_at'])                              
+                              ->where('updated_at',$request['updated_at'])
                               ->first();
-                              
+
       if(is_null($material)){
 
 
@@ -74,18 +75,18 @@ class MaterialesController extends Controller
 
         DB::beginTransaction();
         try {
-  
+
          //   $material = Materiales::find($id);
-       
-      
+
+
             $this->saveMaterial($request,$material);
-            DB::commit(); 
-      
+            DB::commit();
+
             } catch (Exception $e) {
-              
+
               DB::rollback();
               throw $e;
-              
+
             }
 
       }
@@ -97,13 +98,13 @@ class MaterialesController extends Controller
 
       $material->codigo = $request['codigo'];
       $material->descripcion = $request['descripcion'];
-      $material->save();  
+      $material->save();
 
     }
 
     public function destroy($id){
 
-      $material = Materiales::find($id);    
+      $material = Materiales::find($id);
       $material->delete();
     }
 

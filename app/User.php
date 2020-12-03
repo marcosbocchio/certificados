@@ -41,10 +41,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected $with = ['notificaciones_resumen'];
+
     public function getId(){
-        
+
         return $this->id;
-    }    
+    }
 
    // protected $appends = ['all_permissions','can'];
 
@@ -52,7 +54,7 @@ class User extends Authenticatable
     {
         return $this->getAllPermissions();
     }
-    
+
      /**
      * Get all user permissions in a flat array.
      *
@@ -75,10 +77,15 @@ class User extends Authenticatable
     public function cliente(){
 
         return $this->belongsTo('App\Clientes','cliente_id','id');
-    
+
     }
 
-    
+    public function notificaciones_resumen()
+    {
+        return $this->hasMany('App\NotificacionesResumenView','user_id','id')->orderBy('tipo','asc');
+    }
+
+
     public function periodos()
     {
         return $this->hasMAny('App\OperadorPeriodoRx','operador_id','id');
@@ -87,15 +94,15 @@ class User extends Authenticatable
     public function scopeFiltro($query, $filtro='') {
 
         if (trim($filtro) != '') {
-           
+
               $query->WhereRaw("users.name LIKE '%" . $filtro . "%'")
-                    ->orWhereRaw("users.email LIKE '%" . $filtro . "%'")                 
+                    ->orWhereRaw("users.email LIKE '%" . $filtro . "%'")
                     ->orWhereHas('cliente', function ($q) use($filtro) {
                         $q->WhereRaw("clientes.nombre_fantasia LIKE '%" . $filtro . "%'");
-                    });         
-       
+                    });
+
         }
-     
+
     }
-  
+
 }
