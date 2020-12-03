@@ -174,7 +174,7 @@ class VencimientosDocumentaciones extends Command
                                 ->join('interno_equipos','interno_equipos.id','=','interno_equipo_documentaciones.interno_equipo_id')
                                 ->join('equipos','equipos.id','=','interno_equipos.equipo_id')
                                 ->whereRaw('DATEDIFF(documentaciones.fecha_caducidad,now()) = ? or DATEDIFF(documentaciones.fecha_caducidad,now()) = ?',[$aviso1,$aviso2])
-                                ->select('interno_equipos.nro_serie','equipos.codigo','documentaciones.tipo','documentaciones.titulo','documentaciones.fecha_caducidad','documentaciones.id as documentacion_id')
+                                ->select('interno_equipos.nro_serie','interno_equipos.nro_interno','equipos.codigo','documentaciones.tipo','documentaciones.titulo','documentaciones.fecha_caducidad','documentaciones.id as documentacion_id')
                                 ->get();
 
     }
