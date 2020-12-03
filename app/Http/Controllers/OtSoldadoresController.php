@@ -193,12 +193,6 @@ class OtSoldadoresController extends Controller
                             ['codigo' => $codigo_soldador,'cliente_id' => $cliente_id],['codigo' => $codigo_soldador,'cliente_id' => $cliente_id,'nombre'  =>'nn']
                         );
 
-                    /*    Log::debug("Este es el soldador de la importacion :" . $soldador);
-
-                        $soldador = Soldadores::where('cliente_id',$cliente_id)
-                                                ->where('codigo',$codigo_soldador)
-                                                ->first();
-                    */
                         $soldador_id = $soldador->id;
 
                         $ot_soldador = OtSoldadores::firstOrCreate(

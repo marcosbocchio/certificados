@@ -6,7 +6,7 @@
     <title>Notificación : Vencimientos de documentación</title>
 </head>
 <body>
-    <p>Se notifica que el siguiente documento está proxímo a vencer.</p>
+    <p>Se notifica que el siguiente documento está próximo a vencer.</p>
     <p><strong>Tipo Documento</strong> {{ $item->tipo }}</p>
     <p><strong>Documento:</strong>  {{ $item->titulo }} </p>
     <p><strong>Descripción:</strong>  {{ $item->descripcion }} </p>
