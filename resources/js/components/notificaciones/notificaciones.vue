@@ -6,20 +6,24 @@
                      <div class="box-header with-border">
 
 
-                                <h3 class="navbar-text" style="margin-left:28px;font-size:18px">Notificaciones</h3>
+                            <div class="form-gruop" style="float:left;margin-left:20px;">
+                                <div class="btn-group">
+                                    <a type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fas fa-ellipsis-v" style="color: gray;"></i>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#" @click="BorrarTodos()"><span class="fa fa-trash"></span> Borrar todos</a></li>
+                                        <li><a href="#" @click="MarcarTodos()"><span class="fas fa-check-circle"></span> Marcar todos cómo leídos</a></li>
+                                        <li><a href="#" @click="DesmarcarTodos()"><span class="far fa-check-circle"></span> Desmarcar todos cómo leídos</a></li>
+                                    </ul>
+                                </div>
+                                <div class="btn-group">
+                                      <a class="form-group"><span class="text-mensaje" style="margin-left: 12px;">Notificaciones</span> </a>
+                                </div>
+                            </div>
 
-                                    <div style="float:right;margin-right:35px;" >
-                                        <div class="btn-group">
-                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Opciones <span class="caret"></span>
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="#" @click="BorrarTodos()"><span class="fa fa-trash"></span> Borrar Todos</a></li>
-                                            <li><a href="#" @click="MarcarTodos()"><span class="fas fa-check-circle"></span> Marcar Todos</a></li>
-                                            <li><a href="#" @click="DesmarcarTodos()"><span class="far fa-check-circle" ></span> Desmarcar Todos</a></li>
-                                        </ul>
-                                        </div>
-                                    </div>
+
+
                         </div>
                     <div class="box-body">
 
@@ -145,7 +149,7 @@ export default {
 
              this.notificaciones[index].notificado_sn = !this.notificaciones[index].notificado_sn;
              this.ActualizarNotificaciones();
-            console.log("cuando marco",this.isLoading);
+              console.log("cuando marco",this.isLoading);
 
 
             });
@@ -194,11 +198,11 @@ export default {
 
      async MarcarTodos(){
 
-          await  this.notificaciones.forEach(function(item,index){
+          await this.notificaciones.forEach(function(item,index){
 
                 if (!item.notificado_sn) {
 
-                  this.MarcarDesmarcar(index);
+                    this.MarcarDesmarcar(index);
 
                 }
 
@@ -212,7 +216,7 @@ export default {
 
                 if (item.notificado_sn) {
 
-                 this.MarcarDesmarcar(index);
+                   this.MarcarDesmarcar(index);
 
                 }
 
@@ -230,8 +234,8 @@ export default {
 
     }
 
-
 }}
+
 </script>
 
 <style scoped>
@@ -247,7 +251,7 @@ export default {
             font-family: 'Montserrat',sans-serif;
             font-weight: 400 !important;
             color:#6E6A6A ;
-            font-size: 14px;
+            font-size: 18px;
             font-style: oblique;
         }
 
