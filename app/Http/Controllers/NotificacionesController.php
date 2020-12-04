@@ -11,11 +11,18 @@ use Illuminate\Support\Facades\DB;
 class NotificacionesController extends Controller
 {
 
+    public function __construct()
+    {
+
+       $this->middleware(['role_or_permission:Sistemas|N_notificaciones'],['only' => ['callView']]);
+
+    }
+
     public function callView()
     {
 
         $user = auth()->user();
-        $header_titulo = "Notificaciones";
+        $header_titulo = "";
         $header_descripcion ="";
         $operador = auth()->user();
         return view('notificaciones.notificaciones',compact('user','operador','header_titulo','header_descripcion'));
@@ -45,7 +52,7 @@ class NotificacionesController extends Controller
     public function marcarNotificaciones($id){
 
         $notificacion = Notificaciones::find($id);
-        $notificacion->notificado_sn = true;
+        $notificacion->notificado_sn = !$notificacion->notificado_sn;
         $notificacion->save();
 
 

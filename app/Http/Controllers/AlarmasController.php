@@ -8,6 +8,14 @@ use Illuminate\Support\Facades\DB;
 
 class AlarmasController extends Controller
 {
+
+    public function __construct()
+    {
+
+       $this->middleware(['role_or_permission:Sistemas|N_alarmas'],['only' => ['callView']]);
+
+    }
+
     public function getTodas()
     {
 

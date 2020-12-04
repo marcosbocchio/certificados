@@ -8,15 +8,14 @@ use App\User;
 
 class AlarmaReceptorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    public function __construct()
     {
-        //
+
+       $this->middleware(['role_or_permission:Sistemas|N_asignar_alarma'],['only' => ['callView']]);
+
     }
+
 
     public function callView()
     {
