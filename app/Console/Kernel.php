@@ -25,9 +25,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
      //  $schedule->command('command:task_date')->everyMinute();
-       $schedule->command('command:VencimientosDocumentaciones')->everyFiveMinutes();
-       $schedule->command('command:DemoraCargaDosimetria')->dailyAt('00:05');
-    }
+       $schedule->command('command:VencimientosDocumentaciones')->dailyAt('00:05');
+       $schedule->command('command:DemoraCargaDosimetria')->dailyAt('03:05');    }
 
     /**
      * Register the commands for the application.
