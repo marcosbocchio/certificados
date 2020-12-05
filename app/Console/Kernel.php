@@ -26,7 +26,7 @@ class Kernel extends ConsoleKernel
     {
      //  $schedule->command('command:task_date')->everyMinute();
        $schedule->command('command:VencimientosDocumentaciones')->everyFiveMinutes();
-       $schedule->command('command:DemoraCargaDosimetria')->hourly();
+       $schedule->command('command:DemoraCargaDosimetria')->dailyAt('00:05');
     }
 
     /**
