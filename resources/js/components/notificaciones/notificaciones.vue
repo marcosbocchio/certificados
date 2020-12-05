@@ -18,7 +18,7 @@
                                     </ul>
                                 </div>
                                 <div class="btn-group">
-                                      <a class="form-group"><span class="text-mensaje" style="margin-left: 12px;">Notificaciones</span> </a>
+                                      <a class="form-group"><span class="text-titulo" style="margin-left: 12px;">Notificaciones</span> </a>
                                 </div>
                             </div>
 
@@ -59,7 +59,7 @@
              </div>
         </div>
         <div v-else>
-            <div class="col-md-12">
+            <div class="col-md-12 abs-center">
                 <h4 class="text-center text-mensaje">No tienes notificaciones</h4>
             </div>
         </div>
@@ -246,7 +246,7 @@ export default {
 
     }
 
-    .text-mensaje {
+    .text-titulo {
 
             font-family: 'Montserrat',sans-serif;
             font-weight: 400 !important;
@@ -254,5 +254,8 @@ export default {
             font-size: 18px;
             font-style: oblique;
         }
+
+
+
 
 </style>

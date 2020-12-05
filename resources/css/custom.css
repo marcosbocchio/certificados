@@ -28,17 +28,17 @@ color: #6E6A6A
   font-family: 'Montserrat',sans-serif;
   font-weight: 400;
   font-size: 12px;
-  color: #6E6A6A 
+  color: #6E6A6A
 
 }
 .box-header h3 {
 
-  font-family: 'Montserrat',sans-serif; 
+  font-family: 'Montserrat',sans-serif;
   font-weight: 400 !important;
 }
 
 .noresize {
-    resize: none; 
+    resize: none;
   }
 
 .top-buffer { margin-top:20px; }
@@ -47,7 +47,7 @@ color: #6E6A6A
 table thead th {
 
   font-size: 14px;
-} 
+}
 
 table thead tr th small {
 
@@ -79,7 +79,7 @@ table .selected{
 
   background-color: #FDEDB6!important;
 
-} 
+}
 
 .btn-enod {
 
@@ -135,7 +135,7 @@ table .selected{
 }
 
 .mx-datepicker {
-  
+
   position: relative !important;
   display: block !important;
   width: 100% !important;
@@ -148,7 +148,7 @@ table .selected{
 
 }
 
-@media screen and (min-width: 768px) { 
+@media screen and (min-width: 768px) {
   .modal:before {
     display: inline-block;
     vertical-align: middle;
@@ -172,4 +172,11 @@ table .selected{
 .size-pqr-eps{
 
   font-size: 13px !important;
+}
+
+.abs-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 50vh;
 }
