@@ -13,8 +13,8 @@
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li><a href="#" @click="BorrarTodos()"><span class="fa fa-trash"></span> Borrar todos</a></li>
-                                        <li><a href="#" @click="MarcarTodos()"><span class="fas fa-check-circle"></span> Marcar todos cómo leídos</a></li>
-                                        <li><a href="#" @click="DesmarcarTodos()"><span class="far fa-check-circle"></span> Desmarcar todos cómo leídos</a></li>
+                                        <li><a href="#" @click="MarcarTodos()"><span class="fas fa-check-circle"></span> Marcar todos como leídos</a></li>
+                                        <li><a href="#" @click="DesmarcarTodos()"><span class="far fa-check-circle"></span> Desmarcar todos como leídos</a></li>
                                     </ul>
                                 </div>
                                 <div class="btn-group">
