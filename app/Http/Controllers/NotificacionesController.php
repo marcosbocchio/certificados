@@ -104,7 +104,7 @@ class NotificacionesController extends Controller
                 break;
 
             case 'VEHICULO':
-                $descripcion ='Le informamos el vencimiento de la siguiente documentación del vehículo: ' . $item->titulo . ' ,marca' . $item->marca . ' ,modelo ' . $item->modelo . ' ,patente ' . $item->patente . ' con fecha de vencimiento al día ' . date("d-m-Y", strtotime($item->fecha_caducidad));;
+                $descripcion ='Le informamos el vencimiento de la siguiente documentación del vehículo: ' . $item->titulo . ', marca' . $item->marca . ', modelo ' . $item->modelo . ', patente ' . $item->patente . ' con fecha de vencimiento al día ' . date("d-m-Y", strtotime($item->fecha_caducidad));;
                 break;
 
             default:
