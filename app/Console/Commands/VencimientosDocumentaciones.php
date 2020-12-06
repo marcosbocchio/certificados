@@ -120,7 +120,7 @@ class VencimientosDocumentaciones extends Command
 
         return Documentaciones::join('usuario_documentaciones','documentaciones.id','=','usuario_documentaciones.documentacion_id')
                                         ->join('users','users.id','=','usuario_documentaciones.user_id')
-                                        ->whereRaw('users.notificar_doc_vencida_sn = 1 and (DATEDIFF(documentaciones.fecha_caducidad,now()) = ? or DATEDIFF(documentaciones.fecha_caducidad,now()) = ?)',[$aviso1,$aviso2])
+                                        ->whereRaw('users.notificar_doc_vencida_sn = 1 and (DATEDIFF(documentaciones.fecha_caducidad,DATE(now())) = ? or DATEDIFF(documentaciones.fecha_caducidad,DATE(now())) = ?)',[$aviso1,$aviso2])
                                         ->select('users.id as user_id','users.name','documentaciones.tipo','documentaciones.titulo','users.email','documentaciones.fecha_caducidad','documentaciones.id as documentacion_id')
                                         ->get();
 
@@ -151,7 +151,7 @@ class VencimientosDocumentaciones extends Command
 
     public function VencimientosGeneral($aviso1,$aviso2){
 
-        return Documentaciones::whereRaw('tipo = "INSTITUCIONAL"   and (DATEDIFF(documentaciones.fecha_caducidad,now()) = ? or DATEDIFF(documentaciones.fecha_caducidad,now()) = ?)',[$aviso1,$aviso2])
+        return Documentaciones::whereRaw('tipo = "INSTITUCIONAL"   and (DATEDIFF(documentaciones.fecha_caducidad,DATE(now())) = ? or DATEDIFF(documentaciones.fecha_caducidad,DATE(now())) = ?)',[$aviso1,$aviso2])
                                 ->select('documentaciones.tipo','documentaciones.titulo','documentaciones.fecha_caducidad','documentaciones.id as documentacion_id')
                                 ->get();
 
@@ -162,7 +162,7 @@ class VencimientosDocumentaciones extends Command
         return Documentaciones::join('interno_fuente_documentaciones','documentaciones.id','=','interno_fuente_documentaciones.documentacion_id')
                                 ->join('interno_fuentes','interno_fuentes.id','=','interno_fuente_documentaciones.interno_fuente_id')
                                 ->join('fuentes','fuentes.id','=','interno_fuentes.fuente_id')
-                                ->whereRaw('DATEDIFF(documentaciones.fecha_caducidad,now()) = ? or DATEDIFF(documentaciones.fecha_caducidad,now()) = ?',[$aviso1,$aviso2])
+                                ->whereRaw('DATEDIFF(documentaciones.fecha_caducidad,DATE(now())) = ? or DATEDIFF(documentaciones.fecha_caducidad,DATE(now())) = ?',[$aviso1,$aviso2])
                                 ->select('interno_fuentes.nro_serie','fuentes.codigo','documentaciones.tipo','documentaciones.titulo','documentaciones.fecha_caducidad','documentaciones.id as documentacion_id')
                                 ->get();
 
@@ -173,7 +173,7 @@ class VencimientosDocumentaciones extends Command
         return Documentaciones::join('interno_equipo_documentaciones','documentaciones.id','=','interno_equipo_documentaciones.documentacion_id')
                                 ->join('interno_equipos','interno_equipos.id','=','interno_equipo_documentaciones.interno_equipo_id')
                                 ->join('equipos','equipos.id','=','interno_equipos.equipo_id')
-                                ->whereRaw('DATEDIFF(documentaciones.fecha_caducidad,now()) = ? or DATEDIFF(documentaciones.fecha_caducidad,now()) = ?',[$aviso1,$aviso2])
+                                ->whereRaw('DATEDIFF(documentaciones.fecha_caducidad,DATE(now())) = ? or DATEDIFF(documentaciones.fecha_caducidad,DATE(now())) = ?',[$aviso1,$aviso2])
                                 ->select('interno_equipos.nro_serie','interno_equipos.nro_interno','equipos.codigo','documentaciones.tipo','documentaciones.titulo','documentaciones.fecha_caducidad','documentaciones.id as documentacion_id')
                                 ->get();
 
@@ -181,7 +181,7 @@ class VencimientosDocumentaciones extends Command
 
     public function VencimientosProcedimientos($aviso1,$aviso2){
 
-        return Documentaciones::whereRaw('tipo = "PROCEDIMIENTO GENERAL"   and (DATEDIFF(documentaciones.fecha_caducidad,now()) = ? or DATEDIFF(documentaciones.fecha_caducidad,now()) = ?)',[$aviso1,$aviso2])
+        return Documentaciones::whereRaw('tipo = "PROCEDIMIENTO GENERAL"   and (DATEDIFF(documentaciones.fecha_caducidad,DATE(now())) = ? or DATEDIFF(documentaciones.fecha_caducidad,DATE(now())) = ?)',[$aviso1,$aviso2])
                                 ->select('documentaciones.tipo','documentaciones.titulo','documentaciones.fecha_caducidad','documentaciones.id as documentacion_id')
                                 ->get();
 
@@ -191,7 +191,7 @@ class VencimientosDocumentaciones extends Command
 
         return Documentaciones::join('vehiculo_documentaciones','documentaciones.id','=','vehiculo_documentaciones.documentacion_id')
                                 ->join('vehiculos','vehiculos.id','=','vehiculo_documentaciones.vehiculo_id')
-                                ->whereRaw('DATEDIFF(documentaciones.fecha_caducidad,now()) = ? or DATEDIFF(documentaciones.fecha_caducidad,now()) = ?',[$aviso1,$aviso2])
+                                ->whereRaw('DATEDIFF(documentaciones.fecha_caducidad,DATE(now())) = ? or DATEDIFF(documentaciones.fecha_caducidad,DATE(now())) = ?',[$aviso1,$aviso2])
                                 ->select('vehiculos.patente','vehiculos.marca','vehiculos.modelo','vehiculos.tipo as tipo_vehiculo','documentaciones.tipo','documentaciones.descripcion','documentaciones.titulo','documentaciones.fecha_caducidad','documentaciones.id as documentacion_id')
                                 ->get();
 
@@ -231,6 +231,7 @@ class VencimientosDocumentaciones extends Command
                     case 'VEHICULO':
                           Mail::to($receptor->email)->send(new SendVencimientosVehiculosMailable($item));
                            break;
+
 
                     default:
                         # code...
