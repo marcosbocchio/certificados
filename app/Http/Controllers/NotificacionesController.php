@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Notificaciones;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Log;
 
 class NotificacionesController extends Controller
 {
@@ -75,6 +75,8 @@ class NotificacionesController extends Controller
      */
     public function store($user_id,$item)
     {
+        DB::enableQueryLog();
+        Log::debug("Funcion que registra las notificaciones, user: " .$user_id . ' item;: ' .$item );
 
         $notificacion = new notificaciones;
 
