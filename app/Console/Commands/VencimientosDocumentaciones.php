@@ -232,7 +232,6 @@ class VencimientosDocumentaciones extends Command
                           Mail::to($receptor->email)->send(new SendVencimientosVehiculosMailable($item));
                            break;
 
-
                     default:
                         # code...
                         break;
