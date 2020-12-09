@@ -136,6 +136,7 @@ class VencimientosDocumentaciones extends Command
             Log::debug("Usuarios con documentacion vencida: " . $item->name . ' - DOCUMENTO:' . $item->tipo . '->' . $item->titulo);
 
             Mail::to($item->email)->send(new SendVencimientosDocUsuarioMailable($item));
+            Log::debug("mandó mail de usuario: " . $item->name);
             sleep(5);
             (new \App\Http\Controllers\NotificacionesController)->store($item->user_id,$item);
             $receptores_a_avisar =  (new \App\Http\Controllers\AlarmaReceptorController)->BuscarReceptores('USUARIO');
