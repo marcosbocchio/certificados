@@ -38,11 +38,14 @@ class DemoraCargaDosimetria extends Command
         Log::debug("Esto se ejecuto como tarea automatica de dosimetria: " . date("F j, Y, g:i a"));
         $alarmas = Alarmas::all();
         $alarma =  (new \App\Http\Controllers\AlarmasController)->BuscarAlarma($alarmas,'DOSIMETRIA');
+        $dias_ultima_notificacion = CalcularDiasEntreFechas($alarma->fecha_ejecucion);
+        Log::debug("Dias ultima notificacion dosimetria: " . $dias_ultima_notificacion . " periodo notificacion : " . $alarma->aviso1);
         $parametro_general = ParametrosGenerales::where('codigo','DOSIMETRIA')->first();
         Log::debug("Alarna dosimetria: " . $alarma);
 
-        if($alarma->activo_sn){
+        if( ($alarma->activo_sn) && ($dias_ultima_notificacion == $alarma->aviso1 || $dias_ultima_notificacion > $alarma->aviso1)){
 
+            (new \App\Http\Controllers\AlarmasController)->setFechaEjecucion($alarma);
             $usuarios_dias_demorados = $this->VencimientosDosimetria($parametro_general->valor,$alarma->aviso2);
             $ids_usuarios_con_demora = $this->getIdsUsuarioDemoras($usuarios_dias_demorados);
             $receptores_a_avisar =  (new \App\Http\Controllers\AlarmaReceptorController)->BuscarReceptores('DOSIMETRIA');
@@ -53,19 +56,19 @@ class DemoraCargaDosimetria extends Command
                 $fechas_demoras = $this->getFechasDemorasUsuario($usuarios_dias_demorados,$item_id);
                 $user = User::find($item_id);
                 Mail::to($user->email)->send(new SendDemoraFechasUsuarioMailable($user,$fechas_demoras));
-                sleep(10);
+                sleep(5);
                 (new \App\Http\Controllers\NotificacionesController)->storeDosimetria($user->id,$user,$fechas_demoras);
                 foreach ($receptores_a_avisar as $receptor) {
 
                     Mail::to($receptor->email)->send(new SendDemoraFechasUsuarioMailable($user,$fechas_demoras));
-                    sleep(10);
+                    sleep(5);
                     (new \App\Http\Controllers\NotificacionesController)->storeDosimetria($receptor->id,$user,$fechas_demoras);
                 }
             }
 
             foreach ($usuarios_dias_demorados as $item) {
 
-               Log::debug("Documentacion dosimetria: " . $item->id . ' / ' . $item->name. ' / ' . $item->Date);
+               Log::debug("Documentacion dosimetria: " . $item->id . ' / ' . $item->name. ' / ' . $item->fecha_demora);
 
             }
 
@@ -101,14 +104,14 @@ class DemoraCargaDosimetria extends Command
 
    }
 
-   public function getFechasDemorasUsuario($usuarios_dias_demorados,$user__id){
+   public function getFechasDemorasUsuario($usuarios_dias_demorados,$user_id){
 
         $array_temp = [];
 
         foreach ($usuarios_dias_demorados as $item) {
 
-            if ($item->id == $user__id)
-                $array_temp[] = $item->Date;
+            if ($item->id == $user_id)
+                $array_temp[] = $item->fecha_demora;
 
         }
 

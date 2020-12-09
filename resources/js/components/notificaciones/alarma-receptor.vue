@@ -11,7 +11,7 @@
                 </div>
                 <div class="col-sm-10">
                     <div class="form-group">
-                        <label>Operadores</label>
+                        <label>Receptor</label>
                         <v-select v-model="operador" :options="operadores_empresa" label="name" :disabled="!alarma"> </v-select>
                     </div>
                 </div>

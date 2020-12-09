@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Alarmas;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class AlarmasController extends Controller
 {
@@ -110,6 +111,13 @@ class AlarmasController extends Controller
         return false;
 
      }
+
+    public function setFechaEjecucion($alarma){
+
+        $alarma->fecha_ejecucion = DB::raw('DATE(now())');
+        $alarma->save();
+
+    }
 
     /**
      * Display the specified resource.

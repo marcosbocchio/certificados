@@ -59,6 +59,7 @@ class VencimientosDocumentaciones extends Command
         $alarma =  (new \App\Http\Controllers\AlarmasController)->BuscarAlarma($alarmas,'USUARIO');
         if($alarma->activo_sn){
 
+            (new \App\Http\Controllers\AlarmasController)->setFechaEjecucion($alarma);
             $usuarios_vencidos = $this->VencimientosUsuarios($alarma->aviso1,$alarma->aviso2);
             $this->EnviarMailVencimientosUsuarios($usuarios_vencidos);
             Log::debug("Documentacion usuario: " . $usuarios_vencidos);
@@ -69,6 +70,7 @@ class VencimientosDocumentaciones extends Command
         $alarma =  (new \App\Http\Controllers\AlarmasController)->BuscarAlarma($alarmas,'GENERAL');
         if($alarma->activo_sn){
 
+            (new \App\Http\Controllers\AlarmasController)->setFechaEjecucion($alarma);
             $general_vencidos = $this->VencimientosGeneral($alarma->aviso1,$alarma->aviso2);
             $this->EnviarMailVencimientosSoloReceptores($general_vencidos,'GENERAL');
             Log::debug("Documentacion general: " . $general_vencidos);
@@ -78,6 +80,7 @@ class VencimientosDocumentaciones extends Command
         $alarma =  (new \App\Http\Controllers\AlarmasController)->BuscarAlarma($alarmas,'FUENTES');
         if($alarma->activo_sn){
 
+            (new \App\Http\Controllers\AlarmasController)->setFechaEjecucion($alarma);
             $fuentes_vencidos = $this->VencimientosFuentes($alarma->aviso1,$alarma->aviso2);
             $this->EnviarMailVencimientosSoloReceptores($fuentes_vencidos,'FUENTES');
             Log::debug("Documentacion fuentes: " . $fuentes_vencidos);
@@ -88,6 +91,7 @@ class VencimientosDocumentaciones extends Command
         $alarma =  (new \App\Http\Controllers\AlarmasController)->BuscarAlarma($alarmas,'EQUIPOS');
         if($alarma->activo_sn){
 
+            (new \App\Http\Controllers\AlarmasController)->setFechaEjecucion($alarma);
             $equipos_vencidos = $this->VencimientosEquipos($alarma->aviso1,$alarma->aviso2);
             $this->EnviarMailVencimientosSoloReceptores($equipos_vencidos,'EQUIPOS');
             Log::debug("Documentacion equipos: " . $equipos_vencidos);
@@ -97,6 +101,7 @@ class VencimientosDocumentaciones extends Command
         $alarma =  (new \App\Http\Controllers\AlarmasController)->BuscarAlarma($alarmas,'PROCEDIMIENTOS');
         if($alarma->activo_sn){
 
+            (new \App\Http\Controllers\AlarmasController)->setFechaEjecucion($alarma);
             $procedimientos_vencidos = $this->VencimientosProcedimientos($alarma->aviso1,$alarma->aviso2);
             $this->EnviarMailVencimientosSoloReceptores($procedimientos_vencidos,'PROCEDIMIENTOS');
             Log::debug("Documentacion procedimientos: " . $procedimientos_vencidos);
@@ -104,15 +109,13 @@ class VencimientosDocumentaciones extends Command
 
        /* VEHICULOS */
        $alarma =  (new \App\Http\Controllers\AlarmasController)->BuscarAlarma($alarmas,'VEHICULOS');
-
        if($alarma->activo_sn){
 
+           (new \App\Http\Controllers\AlarmasController)->setFechaEjecucion($alarma);
            $vehiculos_vencidos = $this->VencimientosVehiculos($alarma->aviso1,$alarma->aviso2);
            $this->EnviarMailVencimientosSoloReceptores($vehiculos_vencidos,'VEHICULOS');
            Log::debug("Documentacion vehiculos: " . $vehiculos_vencidos);
         }
-
-
     }
 
 
@@ -128,13 +131,12 @@ class VencimientosDocumentaciones extends Command
 
     public function EnviarMailVencimientosUsuarios($usuarios_vencidos){
 
-
         foreach ($usuarios_vencidos as $item) {
 
             Log::debug("Usuarios con documentacion vencida: " . $item->name . ' - DOCUMENTO:' . $item->tipo . '->' . $item->titulo);
 
             Mail::to($item->email)->send(new SendVencimientosDocUsuarioMailable($item));
-            sleep(10);
+            sleep(5);
             (new \App\Http\Controllers\NotificacionesController)->store($item->user_id,$item);
             $receptores_a_avisar =  (new \App\Http\Controllers\AlarmaReceptorController)->BuscarReceptores('USUARIO');
             foreach ($receptores_a_avisar as $receptor) {
@@ -142,7 +144,7 @@ class VencimientosDocumentaciones extends Command
                 Log::debug("Usuarios receptor: " . $receptor->name . ' - DOCUMENTO:' . $item->tipo . '->' . $item->titulo);
 
                 Mail::to($receptor->email)->send(new SendVencimientosDocUsuarioMailable($item));
-                sleep(10);
+                sleep(5);
                 (new \App\Http\Controllers\NotificacionesController)->store($receptor->id,$item);
             }
         }
