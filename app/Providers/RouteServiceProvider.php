@@ -41,6 +41,8 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapAyudaRoutes();
 
+        $this->mapOfflineRoutes();
+
         //
     }
 
@@ -79,4 +81,14 @@ class RouteServiceProvider extends ServiceProvider
              ->namespace($this->namespace)
              ->group(base_path('routes/ayuda.php'));
     }
+
+
+    protected function mapOfflineRoutes()
+    {
+        Route::prefix('api')
+             ->middleware('api')
+             ->namespace($this->namespace)
+             ->group(base_path('routes/offline.php'));
+    }
+
 }

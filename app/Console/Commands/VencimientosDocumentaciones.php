@@ -137,7 +137,7 @@ class VencimientosDocumentaciones extends Command
 
             Mail::to($item->email)->send(new SendVencimientosDocUsuarioMailable($item));
             Log::debug("mandó mail de usuario: " . $item->name);
-            sleep(5);
+            sleep(10);
             (new \App\Http\Controllers\NotificacionesController)->store($item->user_id,$item);
             $receptores_a_avisar =  (new \App\Http\Controllers\AlarmaReceptorController)->BuscarReceptores('USUARIO');
             foreach ($receptores_a_avisar as $receptor) {
@@ -145,7 +145,7 @@ class VencimientosDocumentaciones extends Command
                 Log::debug("Usuarios receptor: " . $receptor->name . ' - DOCUMENTO:' . $item->tipo . '->' . $item->titulo);
 
                 Mail::to($receptor->email)->send(new SendVencimientosDocUsuarioMailable($item));
-                sleep(5);
+                sleep(10);
                 (new \App\Http\Controllers\NotificacionesController)->store($receptor->id,$item);
             }
         }

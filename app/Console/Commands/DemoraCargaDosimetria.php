@@ -56,12 +56,12 @@ class DemoraCargaDosimetria extends Command
                 $fechas_demoras = $this->getFechasDemorasUsuario($usuarios_dias_demorados,$item_id);
                 $user = User::find($item_id);
                 Mail::to($user->email)->send(new SendDemoraFechasUsuarioMailable($user,$fechas_demoras));
-                sleep(5);
+                sleep(10);
                 (new \App\Http\Controllers\NotificacionesController)->storeDosimetria($user->id,$user,$fechas_demoras);
                 foreach ($receptores_a_avisar as $receptor) {
 
                     Mail::to($receptor->email)->send(new SendDemoraFechasUsuarioMailable($user,$fechas_demoras));
-                    sleep(5);
+                    sleep(10);
                     (new \App\Http\Controllers\NotificacionesController)->storeDosimetria($receptor->id,$user,$fechas_demoras);
                 }
             }
