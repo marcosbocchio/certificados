@@ -94,7 +94,7 @@
                                    <p>Informe {{item.km}}-{{item.tipo_soldadura_codigo}}-{{item.numero_formateado}} {{ item.componente }} </p>
                                 </div>
                                 <div v-else>
-                                   <p>Informe {{item.numero_formateado}} {{ item.componente }} </p>
+                                   <p>{{item.numero_formateado}} {{ item.componente }} </p>
                                 </div>
                             </div>
                         </ul>
@@ -892,8 +892,7 @@ methods : {
             for (let index = 0; index < long_aux; index++) {
                 data_aux.push(1);
             }
-         //   let labels_reverse = labels_aux.reverse();
-        //    let valores_indicaciones_reverse = this.valores_indicaciones.reverse();
+
             this.data_indicaciones_posicion = {
 
                 labels: labels_aux,
