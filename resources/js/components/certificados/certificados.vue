@@ -505,6 +505,7 @@ export default {
                 while ((fecha_inicial <= fecha_final)&&(index < longServicios)) {
 
                     let abrev = this.getAbrevCombinadas(fecha_inicial);
+                    console.log( 'fecha inicial: ' + fecha_inicial +' abraviaturas: ' + abrev);
                     while ((index < longServicios) && (moment(this.TablaPartesServicios[index].fecha).format('DD/MM/YYYY') == fecha_inicial)) {
 
                         if ((abrev.findIndex(elemento => elemento == this.TablaPartesServicios[index].abreviatura) != -1)&&(abrev.length > 2)) {
@@ -541,11 +542,11 @@ export default {
 
             while((index < longServicios) && (moment(this.TablaPartesServicios[index].fecha).format('DD/MM/YYYY') == fecha_inicial) ){
 
-            if ((this.TablaPartesServicios[index].combinado_sn) && (abreviaturas.findIndex(elemento => elemento == this.TablaPartesServicios[index].abreviatura) == -1)){
+                if ((this.TablaPartesServicios[index].combinado_sn) && (abreviaturas.findIndex(elemento => elemento == this.TablaPartesServicios[index].abreviatura) == -1)){
 
-                    abreviaturas.push(this.TablaPartesServicios[index].abreviatura);
-                }
-             index++;
+                        abreviaturas.push(this.TablaPartesServicios[index].abreviatura);
+                    }
+                index++;
             }
 
 

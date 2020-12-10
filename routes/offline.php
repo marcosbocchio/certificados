@@ -12,6 +12,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::post('OTS_from_local', 'OfflineInformesController@storeTiposSoldaduras');
     Route::post('upload_one_img', 'OfflineInformesController@saveUsImgFiles');
     Route::post('soldadores_from_local', 'OfflineInformesController@storeSoldadores');
+    Route::get('get_Img', 'OfflineTablesController@getImg');
 
 });
 

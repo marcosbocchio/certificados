@@ -254,7 +254,7 @@ class ClientesController extends Controller
 
     }
 
-    public function getOts($cliente_id){
+   public function getOts($cliente_id){
 
         $user_id = null;
 
@@ -271,6 +271,7 @@ class ClientesController extends Controller
                         ->where('ot_usuarios_clientes.user_id',$user_id)
                         ->where('ots.cliente_id',$cliente_id)
                         ->with('contratista')
+                        ->select('ots.*')
                         ->get();
 
         }else {
@@ -278,8 +279,10 @@ class ClientesController extends Controller
             return Ots::where('cliente_id',$cliente_id)
                         ->with('contratista')
                         ->get();
+
         }
 
 
     }
+
 }
