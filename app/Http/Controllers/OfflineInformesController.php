@@ -108,10 +108,10 @@ class OfflineInformesController extends Controller
 
     public function saveReferenciaImg(Request $request)
     {
-        $path1 = 'null';
-        $path2 = 'null';
-        $path3 = 'null';
-        $path4 = 'null';
+        $path1 = '/img/imagen1.jpg';
+        $path2 = '/img/imagen2.jpg';
+        $path3 = '/img/imagen3.jpg';
+        $path4 = '/img/imagen4.jpg';
         if ($request->path1 != null){
             $path1 = $this->saveReferenciaImgFiles($request->path1);
         }
