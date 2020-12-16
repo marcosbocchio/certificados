@@ -43,9 +43,13 @@ class InformesController extends Controller
                                    ->distinct()
                                    ->get();
 
+        $usuario_metodos = (new \App\Http\Controllers\UserController)->getUsuarioMetodos($user->id);
+
+
         return view('ot-informes.index',compact('ot',
                                         'ot_metodos_ensayos',
                                         'user',
+                                        'usuario_metodos',
                                         'header_titulo',
                                         'header_sub_titulo',
                                         'header_descripcion'));

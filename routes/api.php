@@ -112,6 +112,7 @@ Route::group(['middleware' => 'auth:api'], function()
 
     Route::resource('tipo_soldaduras', 'TipoSoldadurasController');
     Route::get('users/cliente/{id}','UserController@UserCliente');
+    Route::get('users/usuario_metodos/{id}','UserController@getUsuarioMetodos');
 
     Route::resource('soldadores', 'SoldadoresController');
     Route::get('soldadores/cliente/{id}/paginate', 'SoldadoresController@paginate');

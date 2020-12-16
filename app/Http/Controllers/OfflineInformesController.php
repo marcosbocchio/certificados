@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Str;
 use Image;
-use Illuminate\Support\Facades\DB;
 use App\OtTipoSoldaduras;
 use App\OtSoldadores;
 use App\Soldadores;
@@ -155,7 +154,8 @@ class OfflineInformesController extends Controller
         $path = public_path().'/storage/calibraciones_us/' . $png_url;
 
         Image::make(file_get_contents($imagenBase64))->save($path);
-        return '/storage/calibraciones_us/' . $png_url;
+
+        return 'storage/calibraciones_us/' . $png_url;
     }
 
     public function getToday()

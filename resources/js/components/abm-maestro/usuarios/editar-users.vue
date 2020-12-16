@@ -1,7 +1,7 @@
 <template>
     <form v-on:submit.prevent="storeRegistro" method="post">
         <div class="modal fade" id="editar">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -9,45 +9,44 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <div class="radio">
-                                    <label>
-                                        <input type="radio"  name="enod" :value="true"  v-model="isEnod">
-                                            Enod
-                                        </label>
-                                </div>
-                                <div class="radio">
-                                    <label>
-                                        <input type="radio" name="cliente" :value="false" v-model="isEnod">
-                                        Cliente
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="name">Nombre</label>
-                                <input autocomplete="off" v-model="Registro.name" type="text" name="nombre" class="form-control" value="">
-                            </div>
-                        </div>
-                        <div v-if="!isEnod">
                             <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="name">Cliente</label>
-                                    <v-select v-model="cliente" label="razon_social" :options="clientes"></v-select>
-                                </div>
-                            </div>
-                        </div>
+                                <div class="btn-group">
 
-                        <div v-if="isEnod">
-                            <div class="col-md-12">
+                                        <label>
+                                            <input type="radio"  name="enod" :value="true"  v-model="isEnod">
+                                                Enod
+                                        </label>
+
+                                        <label>&nbsp;&nbsp;
+                                            <input type="radio" name="cliente" :value="false" v-model="isEnod">
+                                            Cliente
+                                        </label>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">DNI</label>
+                                    <label for="name">Nombre *</label>
+                                    <input autocomplete="off" v-model="Registro.name" type="text" name="nombre" class="form-control" value="">
+                                </div>
+                            </div>
+
+                            <div v-if="!isEnod">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="name">Cliente *</label>
+                                        <v-select v-model="cliente" label="razon_social" :options="clientes"></v-select>
+                                    </div>
+                                </div>
+                           </div>
+
+                            <div  v-if="isEnod" class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">DNI *</label>
                                     <input autocomplete="off" v-model="Registro.dni" type="number" name="dni" class="form-control" value="">
                                 </div>
                             </div>
-                            <div class="col-md-12">
+                            <div  v-if="isEnod" class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Film</label>
                                     <label for="tipo" style="float:right;">Habilitado Arn</label>
@@ -55,48 +54,63 @@
                                     <input autocomplete="off" v-model="Registro.film" type="number" name="film" class="form-control" value="">
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="col-md-12">
+                        <div v-if="!isEnod" class="clearfix"></div>
+                        <div class="col-md-6">
+
                             <div class="form-group">
-                                <label for="usuario">email</label>
+                                <label for="usuario">email *</label>
                                 <input autocomplete="nope" type="text" name="email" class="form-control" v-model="Registro.email" value="">
                             </div>
                         </div>
 
-                        <div v-if="isEnod">
-                            <div  class="col-md-12">
+                        <div class="clearfix"></div>
 
-                                <div style="margin-left: 0px;">
-                                    <input type="checkbox" class="margin-left:20px" id="checkbox5"  v-model="Registro.exceptuar_notificar_doc_vencida_sn">
-                                    <label for="checkbox5">Exceptuar vencimiento doc.</label>
+                        <div v-if="isEnod" class="col-md-6">
+                            <div class="form-group">
+                                <label>Permitir firmar</label>
+
+                                <v-select multiple v-model="metodos_firmas" :options="metodos_no_importables" label='metodo'></v-select>
+
+                            </div>
+                        </div>
+
+                        <div v-if="isEnod" class="clearfix"></div>
+
+                        <div v-if="isEnod" class="top-buffer">
+                            <div class="col-md-6">
+                                <div>
+                                    <input type="checkbox" id="checkbox2"  v-model="Registro.exceptuar_notificar_doc_vencida_sn">
+                                    <label for="checkbox2">Exceptuar vencimiento doc.</label>
                                 </div>
-
+                            </div>
+                            <div class="col-md-6">
                                 <div style="margin-left: 0px;">
-                                    <input type="checkbox" id="checkbox4" v-model="Registro.exceptuar_notificar_demora_dosimetria_sn">
-                                    <label for="checkbox4">Exceptuar demora dosimetría.</label>
+                                    <input type="checkbox" class="margin-left:20px" id="checkbox3"  v-model="Registro.exceptuar_notificar_demora_dosimetria_sn">
+                                    <label for="checkbox3">Exceptuar demora dosimetría.</label>
                                 </div>
                             </div>
                         </div>
 
                         <input style="display:none" type="text" name="none-email" class="form-control" v-model="Registro.email" value="">
 
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="password">Contraseña</label>
-                                <input autocomplete="new-password" type="password" name="password" class="form-control" v-model="Registro.password">
+                         <div v-if="!isEnod" class="clearfix"></div>
+
+                            <div class="col-md-6 top-buffer">
+                                <div class="form-group">
+                                    <label for="password">Contraseña *</label>
+                                    <input autocomplete="new-password" type="password" name="password" class="form-control" v-model="Registro.password">
+                                </div>
                             </div>
-                        </div>
 
-                        <input style="display:none" type="password" name="password" class="form-control" v-model="Registro.password">
+                            <input style="display:none" type="password" name="password" class="form-control" v-model="Registro.password">
 
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="password2">Repetir Contraseña</label>
-                                <input type="password" name="password2" class="form-control" v-model="password2">
+                            <div class="col-md-6 top-buffer">
+                                <div class="form-group">
+                                    <label for="password2">Repetir Contraseña *</label>
+                                    <input type="password" name="password2" class="form-control" v-model="password2">
+                                </div>
                             </div>
-                        </div>
-
 
                         <div v-if="isEnod">
                             <div class="col-md-12">
@@ -106,9 +120,7 @@
                                     <button class="hide" @click.prevent="onUpload()" >upload</button>
                                 </div>
                             </div>
-
                             <div class="clearfix"></div>
-
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <p>Formatos soportados : png, bmp, jpg.</p>
@@ -122,24 +134,23 @@
                                         :value="uploadPercentage"
                                         style="margin-top:5px;"
                                     />
-                                 </div>
+                            </div>
                             </div>
                         </div>
+
                         <div class="clearfix"></div>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <strong>Roles</strong>
                                 <div v-for="(rol,k) in roles" :key="k" >
-
                                     <div class="col-sm-4 col-xs-12">
-                                        <input type="checkbox" :id="rol.name " :value="rol.name" v-model="user_rol" style="float:left" :disabled="(rol.name == 'Usuario Cliente') || (rol.name == 'Usuario Enod')" >
+                                        <input type="checkbox" :id=" rol.name " :value="rol.name" v-model="user_rol" style="float:left" :disabled="(rol.name=='Usuario Cliente') || (rol.name == 'Usuario Enod')" >
                                         <label for="tipo" style="float:left;margin-left: 5px;">{{ rol.name }}</label>
-                                    </div>
+                                </div>
                                 </div>
                             </div>
                         </div>
-
-                    </div>
+                        </div>
                     </div>
 
                     <div class="modal-footer">
@@ -188,6 +199,7 @@ export default {
         cliente:{},
         clientes:[],
         user_rol:[],
+        metodos_firmas:[],
         password2:'',
         request : [],
 
@@ -230,14 +242,20 @@ export default {
 
     this.$store.dispatch('loadRoles');
     this.getClientes();
+    this.$store.dispatch('loadMetodosEnsayos');
+
 
     },
 
-    computed :
+    computed :{
 
-         mapState(['url','roles'])
+         ...mapState(['url','roles','metodos_ensayos']),
 
-    ,
+        metodos_no_importables(){
+
+             return this.metodos_ensayos.filter((metodo) => !metodo.importable_sn && metodo.metodo!='GRAL')
+         }
+    },
 
     watch : {
 
@@ -267,6 +285,7 @@ export default {
            openModal : function(){
                console.log('entro en open modal');
             this.$nextTick(function () {
+                this.metodos_firmas = [];
                 this.Registro.name = this.selectRegistro.name;
                 this.Registro.dni  = this.selectRegistro.dni,
                 this.Registro.film = this.selectRegistro.film,
@@ -292,6 +311,7 @@ export default {
                 this.$refs.inputFile1.type = 'text';
                 this.$refs.inputFile1.type = 'file';
                 this.selectedFile =  null;
+                this.getUsuariosMetodos();
                 this.setRoles();
                 $('#editar').modal('show');
                 this.$forceUpdate();
@@ -315,6 +335,17 @@ export default {
                 this.clientes = response.data
                 });
               },
+
+            getUsuariosMetodos: function(){
+
+
+                axios.defaults.baseURL = this.url ;
+                var urlRegistros = 'users/usuario_metodos/' + this.selectRegistro.id + '?api_token=' + Laravel.user.api_token;
+                axios.get(urlRegistros).then(response =>{
+                this.metodos_firmas = response.data
+                });
+
+            },
 
              onFileSelected(event) {
 
@@ -403,6 +434,7 @@ export default {
                     'cliente'   : this.cliente,
                     'isEnod'    : this.isEnod,
                     'path'      : this.Registro.path,
+                    'metodos_firmas' : this.metodos_firmas,
                     'roles'     :this.user_rol,
 
                 }).then(response => {

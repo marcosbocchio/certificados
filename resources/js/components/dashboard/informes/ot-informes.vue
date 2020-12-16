@@ -122,7 +122,7 @@
                                         <button @click="informesEscaneados(ot_informe.id)" :disabled="!$can('T_informes_edita')" class="btn btn-default btn-sm" title="Informes escaneados"><span class="fa fa-cloud-upload"></span></button>
                                     </td>
                                     <td v-if="!ot_informe.firma && !ot_informe.importable_sn" width="10px">
-                                        <button @click="confirmarfirma(k)" class="btn btn-default btn-sm" title="Firmar" :disabled="!$can('T_informes_edita')"><span class="glyphicon glyphicon-pencil"></span></button>
+                                        <button @click="confirmarfirma(k)" class="btn btn-default btn-sm" title="Firmar" :disabled="!Permitefirmar(ot_informe.metodo)"><span class="glyphicon glyphicon-pencil"></span></button>
                                     </td>
                                     <td v-else-if="!ot_informe.importable_sn"><a class="btn btn-default btn-sm" title="Firmado"><img width="16px" :src="'/img/firma.png'"></a></td>
                                     <td>
@@ -169,6 +169,12 @@ export default {
 
     },
     props :{
+
+    usuario_metodos_data : {
+        type : Array,
+        required : true,
+    },
+
     ot_metodos_ensayos_data: {
         type : Array,
         required : false
@@ -390,6 +396,12 @@ export default {
             this.index_informe = JSON.parse(JSON.stringify(index));
 
          },
+
+        Permitefirmar : function(metodo){
+
+            return (this.usuario_metodos_data.findIndex(elem => elem.metodo == metodo) == -1) ? false : true;
+
+        }
 
         },
 

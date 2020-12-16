@@ -5,23 +5,22 @@ namespace App\Http\Controllers;
 use App\Clientes;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
-use App\Repositories\User\UserRepository;
 use Illuminate\Support\Facades\DB;
 use App\User;
 use Illuminate\Support\Facades\Log;
 use Session;
 use Hash;
+use App\UsuarioMetodosEnsayos;
 
 class UserController extends Controller
 {
     Protected $users;
 
-    public function __construct(UserRepository $userRepository)
+    public function __construct()
     {
 
       $this->middleware(['role_or_permission:Sistemas|M_usuarios'], ['only' => ['callView']]);
 
-      $this->users = $userRepository;
 
     }
 
@@ -55,25 +54,93 @@ class UserController extends Controller
 
     public function store(UserRequest $request){
 
-        $this->users->create($request->all()) ;
+        $User = new User;
 
-    }
+        DB::beginTransaction();
+        try {
 
-    public function destroy($id){
+            $this->saveUser($request,$User);
+            DB::commit();
 
-      $user = $this->users->find($id);
-      $user->delete();
-    }
+        } catch (Exception $e) {
 
-    public function getUsersEmpresa(){
+            DB::rollback();
+            throw $e;
 
-      return User::where('cliente_id',null)->orderBy('name','ASC')->get();
+        }
 
     }
 
     public function update(UserRequest $request,$id){
 
-      return $this->users->updateUser($request,$id);
+        DB::beginTransaction();
+        try {
+
+            $User = User::find($id);
+            $this->saveUser($request,$User);
+            UsuarioMetodosEnsayos::where('user_id',$id)->delete();
+            $this->saveUser($request,$User);
+            DB::commit();
+
+        } catch (Exception $e) {
+
+            DB::rollback();
+            throw $e;
+
+        }
+
+    }
+
+    public function saveUser($request,$User){
+
+        if ($request['isEnod']) {
+
+          $User->cliente_id = null ;
+          $User->dni   = $request['dni'];
+          $User->film  = $request['film'];
+          $User->habilitado_arn_sn = $request['habilitado_arn_sn'];
+          $User->notificar_doc_vencida_sn = !$request['exceptuar_notificar_doc_vencida_sn'];
+          $User->notificar_demora_dosimetria_sn = !$request['exceptuar_notificar_demora_dosimetria_sn'];
+
+
+        }else {
+
+          $User->cliente_id = $request['cliente']['id'];
+
+        }
+
+        $User->name = $request['name'];
+        $User->email = $request['email'];
+
+        if($request['password'] != '********'){
+
+          $User->password = bcrypt($request['password']);
+
+        }
+
+        if(!$User->api_token){
+
+          $User->api_token = str_random(60);
+
+        }
+        $User->path = $request['path'];
+        $User->syncRoles($request['roles']);
+        $User->save();
+
+        $this->saveUsuarioMetodos($request['metodos_firmas'],$User->id);
+
+      }
+
+    public function destroy($id){
+
+      $user = User::find($id);
+      $user->delete();
+
+    }
+
+    public function getUsersEmpresa(){
+
+      return User::where('cliente_id',null)->orderBy('name','ASC')->get();
 
     }
 
@@ -125,9 +192,25 @@ class UserController extends Controller
             return back()->with('error','La contraseña ingresada no es correcta.');
         }
 
+      }
+
+    public function getUsuarioMetodos($user_id){
+
+        return UsuarioMetodosEnsayos::join('metodo_ensayos','metodo_ensayos.id','=','usuario_metodos_ensayos.metodo_ensayo_id')
+                                      ->where('user_id',$user_id)
+                                      ->select('metodo_ensayos.*')
+                                      ->get();
 
 
+    }
 
+    public function saveUsuarioMetodos($metodos_firmas,$user_id){
+
+        foreach ($metodos_firmas as $item) {
+
+            UsuarioMetodosEnsayos::create(['metodo_ensayo_id' => $item['id'],'user_id'=> $user_id]);
+
+        }
 
       }
 
