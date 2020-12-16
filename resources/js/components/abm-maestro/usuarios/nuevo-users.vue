@@ -68,7 +68,7 @@
 
                         <div v-if="isEnod" class="col-md-6">
                             <div class="form-group">
-                                <label>Permitir firmar</label>
+                                <label>Informes a firmar</label>
 
                                 <v-select multiple v-model="metodos_firmas" :options="metodos_no_importables" label='metodo'></v-select>
 
