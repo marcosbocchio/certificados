@@ -14,7 +14,7 @@ class NotificacionesController extends Controller
     public function __construct()
     {
 
-       $this->middleware(['role_or_permission:Sistemas|N_notificaciones'],['only' => ['callView']]);
+       $this->middleware(['role_or_permission:Sistemas|NOTIFICACIONES'],['only' => ['callView']]);
 
     }
 
