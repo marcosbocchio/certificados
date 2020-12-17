@@ -154,7 +154,7 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              @can('N_notificaciones')
+              @can('NOTIFICACIONES')
                 <li><a href="{{ route('notificaciones') }}">Ver notificaciones</a></li>
               @endcan
               @can('N_alarmas')
