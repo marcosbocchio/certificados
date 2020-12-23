@@ -55,7 +55,7 @@ footer {
                 <td colspan="6"><strong style="font-size: 14px;">Indicaciones</strong></td>
             </tr>
             <tr>
-                <td style="font-size: 11px; width:230px;  text-align: center " rowspan="2" class="bordered-td" >ELEM.</td>
+                <td style="font-size: 11px; width:230px;  text-align: center " rowspan="2" class="bordered-td" >ELEMENTO</td>
                 <td style="font-size: 11px; width:40px;  text-align: center;" rowspan="2" class="bordered-td">CM</td>
                 <td style="font-size: 11px; width:312px; text-align: center;" rowspan="2" class="bordered-td">DETALLE</td>
                 <td style="font-size: 11px; width:80px; text-align: center;" colspan="2" class="bordered-td">RESULTADO</td>
