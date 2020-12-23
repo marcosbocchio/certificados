@@ -45,7 +45,7 @@ class Documentaciones extends Model
 
         if($vencido_sn) {
 
-           $query->WhereRaw("date(documentaciones.fecha_caducidad) <= curdate()");
+           $query->WhereRaw("date(documentaciones.fecha_caducidad) < curdate()");
 
         }
 
