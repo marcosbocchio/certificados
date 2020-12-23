@@ -283,7 +283,6 @@ Vue.component('modelo3d-viewer', require('./components/modelos3d/modelo3d-viewer
 Vue.component('alarma-receptor', require('./components/notificaciones/alarma-receptor.vue').default);
 Vue.component('alarmas', require('./components/notificaciones/alarmas.vue').default);
 Vue.component('notificaciones', require('./components/notificaciones/notificaciones.vue').default);
-Vue.component('documentacion-vencida', require('./components/notificaciones/documentacion-vencida.vue').default);
 
 /* modal confirmacion */
 

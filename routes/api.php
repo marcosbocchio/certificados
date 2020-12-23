@@ -311,7 +311,6 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('alarma-receptor/alarma/{id}','AlarmaReceptorController@getAlarmaReceptor');
     Route::get('notificaciones/user/{user_id}','NotificacionesController@getNotificaciones');
     Route::get('notificaciones_resumen/user/{user_id}','NotificacionesResumenViewController@getResumenUsuario');
-    Route::get('documentacion/vencida','DocumentacionesController@getDocumentacionVencida');
     Route::put('notificaciones/marcar/{id}','NotificacionesController@marcarNotificaciones');
     Route::resource('alarmas','AlarmasController');
     Route::resource('alarma-receptor','AlarmaReceptorController');

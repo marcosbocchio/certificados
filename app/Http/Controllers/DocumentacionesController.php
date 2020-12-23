@@ -83,16 +83,6 @@ class DocumentacionesController extends Controller
 
     }
 
-    public function callViewDocVencida(){
-
-        $user = auth()->user();
-        $header_titulo = "";
-        $header_descripcion ="";
-        $operador = auth()->user();
-        return view('notificaciones.documentacion-vencida',compact('user','operador','header_titulo','header_descripcion'));
-
-    }
-
     public function DocumentacionesDeOt(){
 
         return Documentaciones::where('tipo','OT')->get();
@@ -386,16 +376,4 @@ class DocumentacionesController extends Controller
 
     }
 
-    public function getDocumentacionVencida($fechaHasta = null){
-        DB::enableQueryLog();
-        $page = Input::get('page', 1);
-        $paginate = 20;
-        $data = DB::select(DB::raw('CALL getDocumentacionVencida(?)'),array($fechaHasta));
-        Log::debug("Page: " . $page);
-        $offSet = ($page * $paginate) - $paginate;
-        $itemsForCurrentPage = array_slice($data, $offSet, $paginate, true);
-        $data = new \Illuminate\Pagination\LengthAwarePaginator(array_values($itemsForCurrentPage), count($data), $paginate, $page);
-        return $data;
-
-    }
 }
