@@ -5,7 +5,6 @@
                 <div class="box box-custom-enod">
                      <div class="box-header with-border">
 
-
                             <div class="form-gruop" style="float:left;margin-left:20px;">
                                 <div class="btn-group">
                                     <a type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -21,8 +20,6 @@
                                       <a class="form-group"><span class="text-titulo" style="margin-left: 12px;">Notificaciones</span> </a>
                                 </div>
                             </div>
-
-
 
                         </div>
                     <div class="box-body">

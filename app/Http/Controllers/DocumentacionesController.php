@@ -16,7 +16,7 @@ use App\VehiculoDocumentaciones;
 use App\InternoEquipoDocumentaciones;
 use App\InternoFuenteDocumentaciones;
 use Illuminate\Support\Facades\Log;
-
+use Illuminate\Support\Facades\Input;
 
 class DocumentacionesController extends Controller
 {
@@ -52,6 +52,7 @@ class DocumentacionesController extends Controller
                                             ->orWhere('documentaciones.tipo','EQUIPO')
                                             ->orWhere('documentaciones.tipo','FUENTE')
                                             ->orWhere('documentaciones.tipo','VEHICULO')
+                                            ->whereRaw('date(documentaciones.fecha_caducidad) <= curdate()')
                                             ->with('metodoEnsayo')
                                             ->with('usuario')
                                             ->with('internoEquipo')
@@ -77,6 +78,16 @@ class DocumentacionesController extends Controller
         $header_titulo = "Documentaciones";
         $header_descripcion ="Alta | Baja | Modificación";
         return view('abm.documentaciones',compact('user','header_titulo','header_descripcion'));
+
+    }
+
+    public function callViewDocVencida(){
+
+        $user = auth()->user();
+        $header_titulo = "";
+        $header_descripcion ="";
+        $operador = auth()->user();
+        return view('notificaciones.documentacion-vencida',compact('user','operador','header_titulo','header_descripcion'));
 
     }
 
@@ -370,6 +381,19 @@ class DocumentacionesController extends Controller
                                 ->orWhere('documentaciones.tipo','FUENTE')
                                 ->orWhere('documentaciones.tipo','VEHICULO')
                                 ->orWhere('documentaciones.tipo','PROCEDIMIENTO GENERAL')->count();
+
+    }
+
+    public function getDocumentacionVencida($fechaHasta = null){
+        DB::enableQueryLog();
+        $page = Input::get('page', 1);
+        $paginate = 20;
+        $data = DB::select(DB::raw('CALL getDocumentacionVencida(?)'),array($fechaHasta));
+        Log::debug("Page: " . $page);
+        $offSet = ($page * $paginate) - $paginate;
+        $itemsForCurrentPage = array_slice($data, $offSet, $paginate, true);
+        $data = new \Illuminate\Pagination\LengthAwarePaginator(array_values($itemsForCurrentPage), count($data), $paginate, $page);
+        return $data;
 
     }
 }

@@ -22,7 +22,7 @@
                     <div class="col-md-3">
                         <div class="form-group" >
                             <label for="componente">Componente *</label>
-                            <input type="text" v-model="componente" class="form-control" id="componente" maxlength="20">
+                            <input type="text" v-model="componente" class="form-control" id="componente" maxlength="30">
                         </div>
                     </div>
 
@@ -394,7 +394,7 @@
                         <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="pieza">ELEMENTO</label>
-                                <input type="text" v-model="pieza" class="form-control" id="pieza">
+                                <input type="text" v-model="pieza" class="form-control" id="pieza"  maxlength="30">
                             </div>
                         </div>
 

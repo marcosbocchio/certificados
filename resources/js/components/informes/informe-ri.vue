@@ -67,7 +67,7 @@
                          <div class="col-md-3">
                              <div class="form-group" >
                                  <label for="componente">Componente *</label>
-                                 <input type="text" v-model="componente" class="form-control" id="componente" maxlength="20">
+                                 <input type="text" v-model="componente" class="form-control" id="componente" maxlength="30">
                              </div>
                          </div>
 

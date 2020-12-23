@@ -205,10 +205,6 @@ methods : {
         let url = 'costuras/ot/' + this.ot.id  + '/pk/' + (this.pk ? this.pk : 'null' ) + '/plano/' + (this.plano ? this.plano : 'null') + '/costura/' + (this.costura ? this.costura : 'null') + '/rechazados/' + this.rechazados + '/reparaciones/' + this.reparaciones + '?page='+ page + '&api_token=' + Laravel.user.api_token;
         let res = await axios.get(url);
         this.TablaCosturas = res.data;
-        console.log(url);
-        console.log(page);
-        console.log(this.TablaCosturas.data);
-        console.log(this.TablaCosturas.data.length);
 
     }catch(error){
 

@@ -28,16 +28,11 @@ class CosturasController extends Controller
 
     public function  getCosturas($ot_id,$pk,$plano,$costura,$rechazados,$reparaciones){
 
-        DB::enableQueryLog();
         $pk = $pk == 'null' ? '' : $pk;
         $plano = $plano == 'null' ? '' : $plano;
         $costura = $costura == 'null' ? '' : $costura;
         $rechazados = $rechazados == 'true' ? 1 : 0;
         $reparaciones = $reparaciones == 'true' ? 1 : 0;
-
-
-            Log::debug("plano: " . $plano);
-
 
         $page = Input::get('page', 1);
         $paginate = 10;

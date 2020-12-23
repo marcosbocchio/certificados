@@ -124,4 +124,6 @@ class NotificacionesController extends Controller
         $material = Notificaciones::find($id);
         $material->delete();
     }
+
+
 }

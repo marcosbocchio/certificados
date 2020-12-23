@@ -22,7 +22,7 @@
                     <div class="col-md-3">
                         <div class="form-group" >
                             <label for="componente">Componente *</label>
-                            <input type="text" v-model="componente" class="form-control" id="componente" maxlength="20">
+                            <input type="text" v-model="componente" class="form-control" id="componente" maxlength="30">
                         </div>
                     </div>
 
@@ -536,7 +536,7 @@
                             <div class="col-md-3">
                                 <div class="form-group" >
                                     <label for="elemento_us_pa" title="Elemento">Elemento *</label>
-                                    <input type="text" v-model="elemento_us_pa" class="form-control" id="elemento_us_pa" maxlength="10">
+                                    <input type="text" v-model="elemento_us_pa" class="form-control" id="elemento_us_pa" maxlength="30">
                                 </div>
                             </div>
 
@@ -628,7 +628,7 @@
                                     <table class="table table-hover table-striped table-bordered table-condensed">
                                         <thead>
                                             <tr>
-                                                <th  class="col-lg-1">Elemento</th>
+                                                <th  class="col-lg-2">Elemento</th>
                                                 <th  class="col-lg-1">ø</th>
                                                 <th  class="col-lg-1">N° Ind.</th>
                                                 <th  class="col-lg-1">P.E.</th>
@@ -695,7 +695,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group" >
                                         <label for="elemento_me" title="Elemento">Elemento *</label>
-                                        <input type="text" v-model="elemento_me" class="form-control" id="elemento_me" maxlength="10">
+                                        <input type="text" v-model="elemento_me" class="form-control" id="elemento_me" maxlength="30">
                                     </div>
                                 </div>
 
@@ -723,14 +723,14 @@
                                 <div class="col-md-12">
                                     <div class="form-group" >
                                         <label for="cantidad_posiciones_me" title="Cantidad Posiciones">Posición *</label>
-                                        <input type="number" v-model="cantidad_posiciones_me" class="form-control" id="cantidad_posiciones_me">
+                                        <input type="number" v-model="cantidad_posiciones_me" class="form-control" id="cantidad_posiciones_me" min="1">
                                     </div>
                                 </div>
 
                                 <div class="col-md-12">
                                     <div class="form-group" >
                                         <label for="cantidad_generatrices_me" title="Cantidad Generatrices">Generatrices *</label>
-                                        <input type="number" v-model="cantidad_generatrices_me" class="form-control" id="cantidad_generatrices_me">
+                                        <input type="number" v-model="cantidad_generatrices_me" class="form-control" id="cantidad_generatrices_me" min="1">
                                     </div>
                                 </div>
 
@@ -752,7 +752,7 @@
                                         <table class="table table-hover table-striped table-bordered table-condensed">
                                             <thead>
                                                 <tr>
-                                                    <th  class="col-lg-1">Elemento</th>
+                                                    <th  class="col-lg-3">Elemento</th>
                                                     <th  class="col-lg-1">Nominal</th>
                                                     <th  class="col-lg-1">Mínimo</th>
                                                     <th  class="col-lg-2">ø</th>
@@ -1587,9 +1587,9 @@ export default {
                  return ;
             }
 
-            if(this.elemento_us_pa.length  > 10){
+            if(this.elemento_us_pa.length  > 30){
 
-                toastr.error('El campo elemento no debe contener más de 15 caracteres');
+                toastr.error('El campo elemento no debe contener más de 30 caracteres');
                 return ;
              }
 
@@ -1739,9 +1739,9 @@ export default {
                  return ;
             }
 
-            if(this.elemento_me.length  > 10){
+            if(this.elemento_me.length  > 30){
 
-                toastr.error('El campo elemento no debe contener más de 15 caracteres');
+                toastr.error('El campo elemento no debe contener más de 30 caracteres');
                 return ;
              }
 

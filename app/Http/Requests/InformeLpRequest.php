@@ -27,7 +27,7 @@ class InformeLpRequest extends FormRequest
 
             'fecha'                     => 'required',
             'obra'                      => 'required|min:1',
-            'componente'                => 'required|Max:20',
+            'componente'                => 'required|Max:30',
             'material'                  => 'required',
             'plano_isom'                => 'required|Max:30',
             'diametro'                  => 'required',
@@ -51,7 +51,7 @@ class InformeLpRequest extends FormRequest
             'ejecutor_ensayo'           => 'required',
             'observaciones'             => 'Max:250',
             'detalles.*.detalle'        => 'required|Max:250',
-            'detalles.*.pieza'          => 'required|Max:10',
+            'detalles.*.pieza'          => 'required|Max:30',
             'detalles.*.cm'             => 'nullable|integer',
 
         ];

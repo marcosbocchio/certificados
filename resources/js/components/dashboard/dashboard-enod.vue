@@ -227,7 +227,7 @@
                     </table>
                 </div>
 
-                <pagination :data="ots" @pagination-change-page="getResults" ><span slot="prev-nav">&lt; Previous</span>
+                <pagination :data="ots" @pagination-change-page="getResults" :limit="3" ><span slot="prev-nav">&lt; Previous</span>
                 <span slot="next-nav">Next &gt;</span> </pagination>
             </div>
 

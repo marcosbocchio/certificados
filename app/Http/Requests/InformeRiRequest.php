@@ -68,7 +68,7 @@ class InformeRiRequest extends FormRequest
                 'gasoducto_sn'              => 'required',
                 'fecha'                     => 'required',
                 'obra'                      => 'required|min:1',
-                'componente'                => $condicion_componente . 'Max:20',
+                'componente'                => $condicion_componente . 'Max:30',
                 'material'                  => 'required',
                 'plano_isom'                => 'required|Max:30',
                 'medida.codigo'             => 'required',

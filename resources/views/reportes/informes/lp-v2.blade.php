@@ -55,9 +55,9 @@ footer {
                 <td colspan="6"><strong style="font-size: 14px;">Indicaciones</strong></td>
             </tr>
             <tr>
-                <td style="font-size: 11px; width:65px;  text-align: center " rowspan="2" class="bordered-td" >ELEM.</td>
+                <td style="font-size: 11px; width:150px;  text-align: center " rowspan="2" class="bordered-td" >ELEM.</td>
                 <td style="font-size: 11px; width:40px;  text-align: center;" rowspan="2" class="bordered-td">CM</td>
-                <td style="font-size: 11px; width:477px; text-align: center;" rowspan="2" class="bordered-td">DETALLE</td>
+                <td style="font-size: 11px; width:392px; text-align: center;" rowspan="2" class="bordered-td">DETALLE</td>
                 <td style="font-size: 11px; width:80px; text-align: center;" colspan="2" class="bordered-td">RESULTADO</td>
                 <td style="font-size: 11px; text-align: center" rowspan="2" class="bordered-td">REF</td>
             </tr>
@@ -69,7 +69,7 @@ footer {
         <tbody>
             @foreach ($detalles as $detalle)
                 <tr>
-                    <td style="font-size: 11px;  width:66px;text-align: center" class="bordered-td">{{ $detalle->pieza }}</td>
+                    <td style="font-size: 11px;  width:151px;text-align: center" class="bordered-td">{{ $detalle->pieza }}</td>
                     <td style="font-size: 11px;  width:40px;text-align: center" class="bordered-td">
                     @if ($detalle->cm)
 
@@ -79,7 +79,7 @@ footer {
                     @endif
 
                     </td>
-                    <td style="font-size: 11px;  width:477px;" class="bordered-td">&nbsp; {{$detalle->detalle}}</td>
+                    <td style="font-size: 11px;  width:392px;" class="bordered-td">&nbsp; {{$detalle->detalle}}</td>
                     <td style="font-size: 11px; text-align: center;width:39px; " class="bordered-td">
                         @if ($detalle->aceptable_sn)
                             X

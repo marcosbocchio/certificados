@@ -50,7 +50,7 @@ class InformeUsRequest extends FormRequest
 
             'fecha'                     => 'required',
             'obra'                      => 'required|min:1',
-            'componente'                => 'required|Max:20',
+            'componente'                => 'required|Max:30',
             'material'                  => 'required',
             'plano_isom'                => 'required|Max:30',
             'diametro'                  => 'required',
