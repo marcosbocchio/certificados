@@ -52,7 +52,6 @@ class DocumentacionesController extends Controller
                                             ->orWhere('documentaciones.tipo','EQUIPO')
                                             ->orWhere('documentaciones.tipo','FUENTE')
                                             ->orWhere('documentaciones.tipo','VEHICULO')
-                                            ->whereRaw('date(documentaciones.fecha_caducidad) <= curdate()')
                                             ->with('metodoEnsayo')
                                             ->with('usuario')
                                             ->with('internoEquipo')
