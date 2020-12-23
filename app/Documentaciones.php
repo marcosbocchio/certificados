@@ -41,8 +41,13 @@ class Documentaciones extends Model
 
     }
 
-    public function ScopeVencido($query,$vencido_sn){
+    public function scopeVencido($query,$vencido_sn){
 
+        if($vencido_sn) {
+
+           $query->WhereRaw("date(documentaciones.fecha_caducidad) <= curdate()");
+
+        }
 
     }
 

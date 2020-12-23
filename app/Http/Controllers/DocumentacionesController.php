@@ -44,6 +44,8 @@ class DocumentacionesController extends Controller
 
         $filtro = $request->search == 'null' ? '' : $request->search;;
         $tipo = $request->tipo == 'null' ? '' : $request->tipo;
+        $vencido_sn =  $request->vencido_sn == 'true' ? true : false;
+
         $documentaciones = Documentaciones::leftJoin('usuario_documentaciones','usuario_documentaciones.documentacion_id','=','documentaciones.id')
                                             ->orWhere('documentaciones.tipo','USUARIO')
                                             ->orWhere('documentaciones.tipo','OT')
@@ -58,6 +60,7 @@ class DocumentacionesController extends Controller
                                             ->with('internoFuente')
                                             ->with('vehiculo')
                                             ->Filtro($filtro,$tipo)
+                                            ->vencido($vencido_sn)
                                             ->selectRaw('documentaciones.*')
                                             ->orderBy('documentaciones.tipo','ASC')
                                             ->orderBy('documentaciones.id','DESC')

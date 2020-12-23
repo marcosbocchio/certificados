@@ -37,32 +37,44 @@
        <div class="clearfix"></div>
 
         <div class="form-group">
-
             <div v-show="$can(permiso_create)">
                 <div class="col-md-1 col-xs-12">
+                    <div class="input-group">
+                            &nbsp;
+                    </div>
                     <button class="btn btn-enod pull-left" v-on:click.prevent="openNuevoRegistro()"><span class="fa fa-plus-circle"></span> Nuevo</button>
                 </div>
             </div>
 
+
             <div v-show="modelo=='documentaciones'">
 
-                <div class="form-group">
-                    <div class="col-md-3 col-md-offset-4 col-sm-12 col-xs-12">
+                <div class="col-md-3 col-md-offset-4  col-sm-12 col-xs-12">
+                    <div class="input-group">
+                      <label>&nbsp;</label>
+                    </div>
+                    <div class="form-group">
                         <v-select class="style-chooser" v-model="tipo" :options="['INSTITUCIONAL','OT','PROCEDIMIENTO GENERAL','USUARIO','EQUIPO','FUENTE','VEHICULO']" id="tipo" placeholder="TODOS" @input="getResults()"></v-select>
                     </div>
                 </div>
 
                 <div class="col-md-4 col-xs-12 pull-right">
                     <div class="input-group">
-                        <input type="text" v-model="search" class="form-control" placeholder="Buscar...">
-                        <span class="input-group-addon btn" @click="aplicarFiltro()" style="background-color: #F9CA33;"><i class="fa fa-search"></i></span>
+                          <input type="checkbox" id="checkbox" v-model="vencido_sn" style="float:right" @change="aplicarFiltro()">
+                          <label for="checkbox" style="float:right;margin-right: 5px;" class="pointer">Documentacíon vencida</label>
+                    </div>
+                    <div class="input-group">
+                          <input type="text" v-model="search" class="form-control" placeholder="Buscar...">
+                          <span class="input-group-addon btn" @click="aplicarFiltro()" style="background-color: #F9CA33;"><i class="fa fa-search"></i></span>
                     </div>
                 </div>
 
             </div>
+
         </div>
 
        <div class="clearfix"></div>
+
 
         <div class="col-md-12">
 
@@ -314,6 +326,7 @@ export default {
          isPdf: false,
          tipo:'',
          search:'',
+         vencido_sn: false,
          tipo_documentos :[
 
             'INSTITUCIONAL',
@@ -454,13 +467,13 @@ export default {
         }
         if(this.newRegistro.tipo == 'PROCEDIMIENTO'){
 
-            var urlRegistros = this.modelo + '/ot/' + this.otdata.id + '?page='+ page + '&search=' + this.search;
+            var urlRegistros = this.modelo + '/ot/' + this.otdata.id + '?page='+ page + '&search=' + this.search ;
 
             this.$store.dispatch('loadContarProcedimientos',this.otdata.id);
 
         }else{
 
-           var urlRegistros = this.modelo +'?page='+ page + '&search=' + this.search  + '&tipo=' + this.tipo;
+           var urlRegistros = this.modelo +'?page='+ page + '&search=' + this.search  + '&tipo=' + this.tipo + '&vencido_sn=' + this.vencido_sn;
            console.log(urlRegistros);
            this.$store.dispatch('loadContarDocumentacionesTotal');
 
