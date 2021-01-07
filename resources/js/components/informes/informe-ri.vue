@@ -1153,7 +1153,7 @@
 
             fecha_mysql : function(){
 
-                return moment(this.fecha).format('MMMM Do YYYY, h:mm:ss a');
+                return moment(this.fecha).format('MMMM Do YYYY, h:mm:ss');
 
             },
 

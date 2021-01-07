@@ -2,6 +2,7 @@
 
 use App\ParametrosGenerales;
 use App\InternoFuentes;
+use Illuminate\Support\Facades\Log;
 
 /* pdfCantFilasACompletar()  : Funcion que retorna la cantidad de filas en blanco de una tabla que nos hace falta para completar un pdf.
 
@@ -119,6 +120,7 @@ function curie($interno_fuente_id, $fecha_final = null){
   $const_t = $interno_fuente->fuente->const_t;
   $curie = $interno_fuente->curie;
   $curie_actual = round(($curie)  /(pow(2,(($T)/$const_t))),1);
+
   return $curie_actual;
 
 }
