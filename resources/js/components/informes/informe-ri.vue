@@ -1104,7 +1104,6 @@
 
          equipo : function(val){
              this.isRX = (val.codigo =='RX') ? true : false;
-
          },
 
          diametro : function(val){
