@@ -302,7 +302,7 @@ export default {
         this.dosimetria_operador.forEach(function(item) {
 
            this.TablaDosimetria[item.day-1].id = item.id;
-           this.TablaDosimetria[item.day-1].microsievert = item.microsievert;
+           this.TablaDosimetria[item.day-1].microsievert = String(item.microsievert);
            this.TablaDosimetria[item.day-1].observaciones = item.observaciones;
            this.TablaDosimetria[item.day-1].created_at = item.created_at;
 
