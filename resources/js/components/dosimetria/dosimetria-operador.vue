@@ -70,10 +70,13 @@
                             </table>
                        </div>
                 </div>
+                <div v-if="isLoading" class="overlay">
+                    <loading-spin></loading-spin>
+                </div>
              </div>
             <div class="clearfix"></div>
         </div>
-        <a class="btn btn-primary" v-on:click="submit()" >Actualizar</a>
+        <button type="button" class="btn btn-primary" v-on:click.prevent="submit()" :disabled="isLoading">Actualizar</button>
         </div>
 
       </div>
@@ -114,7 +117,6 @@ export default {
         }
 
         this.$store.dispatch('loadFechaActual').then(response => {
-
             this.$store.dispatch('loadOperadoresDisometria');
             this.indexPosTablaDosimetria = this.dia_actual-1;
             this.setYears();
@@ -151,11 +153,11 @@ export default {
                 }
 
                this.$store.dispatch('loadDiasDelMes',{year : this.year , month : this.month}).then(response =>{
-
+                   this.$store.commit('loading', true);
                     this.$store.dispatch('loadDosimetriaOperador',{operador_id : this.operador.id, year : this.year , month : this.month}).then(response => {
 
                           this.ResetTabla();
-
+                          this.$store.commit('loading', false);
                         }
                     );
 
@@ -166,7 +168,7 @@ export default {
 
   computed :{
 
-       ...mapState(['url','operadores_dosimetria','DiasDelMes','dosimetria_operador','fecha']),
+       ...mapState(['url','operadores_dosimetria','DiasDelMes','dosimetria_operador','fecha','isLoading']),
 
        dia_actual : function(){
 
@@ -236,8 +238,6 @@ export default {
 
 
     deshabilitarInput(val){
-
-
 
     let deshabilitar = false;
     let esMismoDia = this.ComprobarMismoDia(val);
@@ -327,7 +327,7 @@ export default {
     },
 
     submit :function () {
-
+        this.$store.commit('loading', true);
         axios.defaults.baseURL = this.url ;
         var urlRegistros = 'dosimetria_operador';
 
@@ -349,6 +349,7 @@ export default {
                     }
                 );
             toastr.success('dosimetrīa actualizado con éxito');
+            this.$store.commit('loading', false);
 
         }).catch(error => {
 
@@ -363,8 +364,8 @@ export default {
                     toastr.error("Ocurrio un error al procesar la solicitud");
                     this.users_ot_operarios = this.ot_operarios_data;
             }
-
-        });
+            this.$store.commit('loading', false);
+        }).finally(()=> {   });
     }
 
  },

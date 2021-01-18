@@ -123,6 +123,7 @@ class DosimetriaOperadorController extends Controller
 
                 if($dosimetria['microsievert']!='') {
 
+
                     $dosimetria_operador = new DosimetriaOperador;
                     $dosimetria_operador->fecha = $fecha;
                     $dosimetria_operador->operador_id = $request->operador['id'];
