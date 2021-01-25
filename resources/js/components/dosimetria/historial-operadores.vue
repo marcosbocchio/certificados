@@ -38,7 +38,7 @@
                          <table class="table table-hover table-striped table-condensed table-bordered">
                              <thead>
                                  <tr>
-                                    <th style="text-align:center;">OPERADOR</th>
+                                    <th style="text-align:center;min-width:200px;">OPERADOR</th>
                                     <th style="text-align:center;">DNI</th>
                                     <th style="text-align:center;">FILM</th>
                                     <th style="text-align:center;" v-for="(d) in days_in_month" :key="d" >{{d}}</th>
