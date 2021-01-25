@@ -37,18 +37,30 @@ class DosimetriaOperadorController extends Controller
 
       }
 
+      public function callViewHistorialOperadores ()
+      {
+          $user = auth()->user();
+          $header_titulo = "Historial Operadores";
+          $header_descripcion ="";
+          return view('dosimetria.historial_operadores',compact('user','header_titulo','header_descripcion'));
+
+      }
+
     public function  getDosimetriaOperador($operador_id,$year,$month){
 
         $disometrias = DosimetriaOperador::whereRaw('YEAR(fecha) = ?',[$year])
-                                        ->whereRaw('MONTH(fecha) = ?',[$month])
-                                        ->where('operador_id',$operador_id)
-                                        ->selectRaw('id,DAY(fecha) as day,microsievert, observaciones,created_at')
-                                        ->orderBy('day','ASC')
-                                        ->get();
-
-         $dias = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+                                            ->whereRaw('MONTH(fecha) = ?',[$month])
+                                            ->where('operador_id',$operador_id)
+                                            ->selectRaw('id,DAY(fecha) as day,microsievert, observaciones,created_at')
+                                            ->orderBy('day','ASC')
+                                            ->get();
 
          return $disometrias;
+    }
+
+    public function  getDosimetriaMensualOperadores($year,$month){
+
+         return  DB::select('CALL DosimetriaMensualOperadores(?,?)',array($year,$month));
     }
     /**
      * Show the form for creating a new resource.

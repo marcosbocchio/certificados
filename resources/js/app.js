@@ -254,6 +254,7 @@ Vue.component('dosimetria-rx', require('./components/dosimetria/dosimetria-rx.vu
 Vue.component('dosimetria-estados', require('./components/dosimetria/dosimetria-estados.vue').default);
 Vue.component('operador-periodo', require('./components/dosimetria/operador-periodo.vue').default);
 Vue.component('dosimetria-resumen', require('./components/dosimetria/dosimetria-resumen.vue').default);
+Vue.component('historial-operadores', require('./components/dosimetria/historial-operadores.vue').default);
 
 /* Documementos escaneados*/
 Vue.component('abm-documentos-escaneados', require('./components/dashboard/documentos-escaneados/abm-documentos-escaneados.vue').default);
@@ -397,6 +398,7 @@ state: {
         DiasDelMes:'0',
         operadores_dosimetria:[],
         dosimetria_operador:[],
+        dosimetria_operadores:[],
         dosimetria_rx:[],
         dosimetria_estados:[],
         dosimetria_resumen:[],
@@ -855,9 +857,20 @@ actions : {
            commit('getDosimetriaOperador', response.data)
            resolve()
           })
-
           })
         },
+
+        loadDosimetriaMensualOperadores({
+            commit},payload) {
+             axios.defaults.baseURL = store.state.url ;
+             var urlRegistros ='dosimetria_operador/operadores/year/' + payload.year + '/month/' + payload.month + '?api_token=' + Laravel.user.api_token;
+             return new Promise((resolve, reject) => {
+             axios.get(urlRegistros).then((response) => {
+             commit('getDosimetriaMensualOperadores', response.data)
+             resolve()
+            })
+            })
+          },
 
         loadDosimetriaRx({
           commit},payload) {
@@ -1301,6 +1314,12 @@ actions : {
       getDosimetriaOperador(state, dosimetria_operador){
 
         state.dosimetria_operador = dosimetria_operador;
+
+      },
+
+      getDosimetriaMensualOperadores(state, dosimetria_operadores){
+
+        state.dosimetria_operadores = dosimetria_operadores;
 
       },
 

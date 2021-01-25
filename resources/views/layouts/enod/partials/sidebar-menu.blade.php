@@ -135,6 +135,7 @@
                   <li><a href="{{ route('dosimetria-estados') }}">Estados</a></li>
               @endcan
               @can('D_resumen')
+                  <li><a href="{{ route('historial-operadores') }}">Historial Operadores</a></li>
                   <li><a href="{{ route('dosimetria-resumen') }}">Resumen</a></li>
               @endcan
               @can('D_reporte_alta_baja')

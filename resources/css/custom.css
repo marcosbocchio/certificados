@@ -180,3 +180,14 @@ table .selected{
     justify-content: center;
     min-height: 50vh;
 }
+
+
+.habilitadoArn {
+
+    color:rgb(255, 204, 0);
+}
+
+.deshabilitadoArn {
+
+color:rgb(255, 255, 255);
+}

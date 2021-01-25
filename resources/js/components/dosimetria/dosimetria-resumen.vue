@@ -669,15 +669,6 @@ export default {
   display: table;
 }
 
-.habilitadoArn {
-
-    color:rgb(255, 204, 0);
-}
-
-.deshabilitadoArn {
-
-color:rgb(255, 255, 255);
-}
 
 .popper  {
 
