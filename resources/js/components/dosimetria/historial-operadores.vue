@@ -6,7 +6,9 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Operador</label>
-                            <v-select multiple v-model="operadores" multiselect label="name" :options="operadores_dosimetria" ></v-select>
+                            <div class="modulo-style">
+                                <v-select multiple v-model="operadores" multiselect label="name" :options="operadores_dosimetria" ></v-select>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -239,7 +241,13 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scope>
+
+.modulo-style .v-select .vs__selected-options{
+    flex-wrap: wrap;
+    white-space: wrap;
+    overflow: wrap;
+}
 
 
 </style>
