@@ -4,8 +4,6 @@ namespace App\Http\Middleware;
 
 use Closure;
 //use App\helpers;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 class CheckDDPPI
 {
     /**
@@ -17,8 +15,6 @@ class CheckDDPPI
      */
     public function handle($request, Closure $next)
     {
-        DB::enableQueryLog();
-        Log::debug("ejecuto CheckDDPPI :" . $request->ot_id);
 
         if(!PuedeCrearInforme($request->ot_id)){
 

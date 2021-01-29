@@ -11,9 +11,9 @@
                         <table class="table table-hover table-striped table-condensed">
                             <thead>
                                 <tr>
-                                    <th class="col-md-2">Tipo</th>
-                                    <th class="col-md-5">Descripción</th>
-                                    <th class="col-md-2" style="text-align: center;" >Días 1.º aviso </th>
+                                    <th class="col-md-3">Tipo</th>
+                                    <th class="col-md-4">Descripción</th>
+                                    <th class="col-md-2" style="text-align: center;">Días 1.º aviso </th>
                                     <th class="col-md-2" style="text-align: center;">Días 2.º aviso</th>
                                     <th class="col-md-1" style="text-align: center;">Activo</th>
                                 </tr>
