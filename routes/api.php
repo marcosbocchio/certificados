@@ -182,6 +182,8 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('interno_equipos/paginate', 'InternoEquiposController@paginate');
     Route::resource('interno_equipos', 'InternoEquiposController');
 
+    Route::get('tipos_documentos_usuarios', 'TiposDocumentosUsuariosController@index');
+
     //interno Equipos
 
     Route::get('interno_equipos/ot/{ot_id}/total', 'InternoEquiposController@OtInternoEquiposTotal');

@@ -41,6 +41,12 @@ class Documentaciones extends Model
 
     }
 
+    public function TipoDocumentoUsuario()
+    {
+        return $this->belongsToMany('App\TiposDocumentosUsuarios','App\UsuarioDocumentaciones','documentacion_id','tipo_documentacion_usuario_id');
+    }
+
+
     public function scopeVencido($query,$vencido_sn){
 
         if($vencido_sn) {
@@ -50,6 +56,7 @@ class Documentaciones extends Model
         }
 
     }
+
 
    public function scopeFiltro($query, $filtro='',$tipo='') {
 

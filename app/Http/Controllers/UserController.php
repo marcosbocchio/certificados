@@ -101,6 +101,8 @@ class UserController extends Controller
           $User->habilitado_arn_sn = $request['habilitado_arn_sn'];
           $User->notificar_doc_vencida_sn = !$request['exceptuar_notificar_doc_vencida_sn'];
           $User->notificar_demora_dosimetria_sn = !$request['exceptuar_notificar_demora_dosimetria_sn'];
+          $User->notificar_por_web_sn = $request['notificar_por_web_sn'];
+          $User->notificar_por_mail_sn = $request['notificar_por_mail_sn'];
 
 
         }else {

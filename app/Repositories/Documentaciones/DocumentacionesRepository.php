@@ -145,6 +145,7 @@ class DocumentacionesRepository extends BaseRepository
 
     $usuario_documento->documentacion_id = $documento->id;
     $usuario_documento->user_id = $request->usuario['id'];
+    $usuario_documento->tipo_documentacion_usuario_id = $request->tipo_documento_usuario['id'];
     $usuario_documento->save();
 
   }

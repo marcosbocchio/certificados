@@ -124,7 +124,15 @@ class VencimientosDocumentaciones extends Command
         return Documentaciones::join('usuario_documentaciones','documentaciones.id','=','usuario_documentaciones.documentacion_id')
                                         ->join('users','users.id','=','usuario_documentaciones.user_id')
                                         ->whereRaw('users.notificar_doc_vencida_sn = 1 and (DATEDIFF(documentaciones.fecha_caducidad,DATE(now())) = ? or DATEDIFF(documentaciones.fecha_caducidad,DATE(now())) = ?)',[$aviso1,$aviso2])
-                                        ->select('users.id as user_id','users.name','documentaciones.tipo','documentaciones.titulo','users.email','documentaciones.fecha_caducidad','documentaciones.id as documentacion_id')
+                                        ->select('users.id as user_id',
+                                                 'users.name',
+                                                 'documentaciones.tipo',
+                                                 'documentaciones.titulo',
+                                                 'users.email',
+                                                 'users.notificar_por_web_sn',
+                                                 'users.notificar_por_mail_sn',
+                                                 'documentaciones.fecha_caducidad',
+                                                 'documentaciones.id as documentacion_id')
                                         ->get();
 
     }
@@ -134,19 +142,26 @@ class VencimientosDocumentaciones extends Command
         foreach ($usuarios_vencidos as $item) {
 
             Log::debug("Usuarios con documentacion vencida: " . $item->name . ' - DOCUMENTO:' . $item->tipo . '->' . $item->titulo);
-
-            Mail::to($item->email)->send(new SendVencimientosDocUsuarioMailable($item));
-            Log::debug("mandó mail de usuario: " . $item->name);
+            if($item->notificar_por_mail_sn){
+                Mail::to($item->email)->send(new SendVencimientosDocUsuarioMailable($item));
+                Log::debug("mandó mail de usuario: " . $item->name);
+            }
             sleep(10);
-            (new \App\Http\Controllers\NotificacionesController)->store($item->user_id,$item);
+
+            if($item->notificar_por_web_sn){
+                (new \App\Http\Controllers\NotificacionesController)->store($item->user_id,$item);
+            }
             $receptores_a_avisar =  (new \App\Http\Controllers\AlarmaReceptorController)->BuscarReceptores('USUARIO');
             foreach ($receptores_a_avisar as $receptor) {
 
                 Log::debug("Usuarios receptor: " . $receptor->name . ' - DOCUMENTO:' . $item->tipo . '->' . $item->titulo);
-
-                Mail::to($receptor->email)->send(new SendVencimientosDocUsuarioMailable($item));
+                if($receptor->notificar_por_mail_sn){
+                     Mail::to($receptor->email)->send(new SendVencimientosDocUsuarioMailable($item));
+                }
                 sleep(10);
-                (new \App\Http\Controllers\NotificacionesController)->store($receptor->id,$item);
+                if($receptor->notificar_por_web_sn){
+                    (new \App\Http\Controllers\NotificacionesController)->store($receptor->id,$item);
+                }
             }
         }
 

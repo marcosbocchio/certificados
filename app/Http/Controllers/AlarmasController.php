@@ -26,7 +26,7 @@ class AlarmasController extends Controller
 
     public function index()
     {
-        return Alarmas::where('tipo','!=','DOSIMETRIA')->get();
+        return Alarmas::where('tipo','!=','DOSIMETRIA')->orderby('tipo','asc')->get();
     }
 
     public function getAlarmaDosimetria(){

@@ -80,14 +80,26 @@
                         <div v-if="isEnod" class="top-buffer">
                             <div class="col-md-6">
                                 <div>
-                                    <input type="checkbox" id="checkbox2"  v-model="Registro.exceptuar_notificar_doc_vencida_sn">
+                                    <input type="checkbox" id="checkbox2" v-model="Registro.exceptuar_notificar_doc_vencida_sn">
                                     <label for="checkbox2">Exceptuar vencimiento doc.</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div style="margin-left: 0px;">
-                                    <input type="checkbox" class="margin-left:20px" id="checkbox3"  v-model="Registro.exceptuar_notificar_demora_dosimetria_sn">
+                                    <input type="checkbox" class="margin-left:20px" id="checkbox3" v-model="Registro.exceptuar_notificar_demora_dosimetria_sn">
                                     <label for="checkbox3">Exceptuar demora dosimetría.</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div>
+                                    <input type="checkbox" id="checkbox4"  v-model="Registro.notificar_por_web_sn">
+                                    <label for="checkbox4">Notificar por web.</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div style="margin-left: 0px;">
+                                    <input type="checkbox" class="margin-left:20px" id="checkbox5" v-model="Registro.notificar_por_mail_sn">
+                                    <label for="checkbox5">Notificar por mail.</label>
                                 </div>
                             </div>
                         </div>
@@ -191,9 +203,12 @@ export default {
             'habilitado_arn_sn':false,
             'exceptuar_notificar_doc_vencida_sn':false,
             'exceptuar_notificar_demora_dosimetria_sn':false,
+            'notificar_por_web_sn':false,
+            'notificar_por_mail_sn':false,
             'password' : '',
             'path':''
          },
+
         errors:{},
         isEnod:true,
         cliente:{},
@@ -292,6 +307,8 @@ export default {
                 this.Registro.habilitado_arn_sn = this.selectRegistro.habilitado_arn_sn,
                 this.Registro.exceptuar_notificar_doc_vencida_sn = !this.selectRegistro.notificar_doc_vencida_sn,
                 this.Registro.exceptuar_notificar_demora_dosimetria_sn = !this.selectRegistro.notificar_demora_dosimetria_sn,
+                this.Registro.notificar_por_web_sn = this.selectRegistro.notificar_por_web_sn,
+                this.Registro.notificar_por_mail_sn = this.selectRegistro.notificar_por_mail_sn,
                 this.Registro.email = this.selectRegistro.email;
                 this.Registro.password = '********';
                 this.password2 = '********';
@@ -430,6 +447,8 @@ export default {
                     'habilitado_arn_sn': this.Registro.habilitado_arn_sn,
                     'exceptuar_notificar_doc_vencida_sn':this.Registro.exceptuar_notificar_doc_vencida_sn,
                     'exceptuar_notificar_demora_dosimetria_sn':this.Registro.exceptuar_notificar_demora_dosimetria_sn,
+                    'notificar_por_web_sn' : this.Registro.notificar_por_web_sn,
+                    'notificar_por_mail_sn': this.Registro.notificar_por_mail_sn,
                     'password'  : this.Registro.password,
                     'cliente'   : this.cliente,
                     'isEnod'    : this.isEnod,
@@ -441,7 +460,7 @@ export default {
                   this.$emit('update');
                   this.errors=[];
                   $('#editar').modal('hide');
-                  toastr.success('Nuevo usuario creado con éxito');
+                  this.$showMessagePreset('success','code-edit');
                   this.Registro={}
 
                 }).catch(error => {
@@ -452,9 +471,7 @@ export default {
                     });
 
                      if((typeof(this.errors)=='undefined') && (error)){
-
-                     toastr.error("Ocurrió un error al procesar la solicitud");
-
+                     this.$showMessagePreset('error','code-500');
                 }
                 });
               }

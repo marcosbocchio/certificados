@@ -124,6 +124,14 @@
                                    <v-select v-model="newRegistro.tipo" label="tipo" :options="tipo_documentos"></v-select>
                                 </div>
                             </div>
+
+                            <div v-if="newRegistro.tipo == 'USUARIO'">
+                                 <div class="form-group">
+                                    <label for="tipo_doc_user">Documento *</label>
+                                    <v-select v-model="tipo_documento_usuario" label="codigo" :options="tipos_documentos_usuarios"></v-select>
+                                 </div>
+                            </div>
+
                             <div v-if="modelo == 'ot_procedimientos_propios'">
                                 <div class="form-group">
                                     <label for="titulo">Título *</label>
@@ -342,6 +350,8 @@ export default {
          interno_fuente:{id:null},
          vehiculo:{id:null},
          usuario :{id:null},
+         tipo_documento_usuario: {id:null},
+         tipos_documentos_usuarios:[],
          metodo_ensayos:[],
          metodo_ensayo :{id:'',},
          usuarios:[],
@@ -365,7 +375,7 @@ export default {
         this.getResults();
         this.getUsuarios();
         this.getMetodosEnsayos();
-
+        this.getTiposDocumentosUsuarios();
 
       },
 
@@ -432,6 +442,7 @@ export default {
          this.interno_fuente = {'id':null};
          this.vehiculo = {'id':null};
          this.usuario = {'id':null};
+         this.tipo_documento_usuario = {'id':null};
 
            if(this.modelo == 'ot_procedimientos_propios'){
 
@@ -487,6 +498,15 @@ export default {
         });
         },
 
+    getTiposDocumentosUsuarios: function(){
+
+            axios.defaults.baseURL = this.url ;
+            var urlRegistros = 'tipos_documentos_usuarios' + '?api_token=' + Laravel.user.api_token;
+            axios.get(urlRegistros).then(response =>{
+            this.tipos_documentos_usuarios = response.data
+            });
+        },
+
     getMetodosEnsayos: function(){
 
             axios.defaults.baseURL = this.url ;
@@ -522,6 +542,7 @@ export default {
         this.interno_equipo = {id:null};
         this.interno_fuente = {id:null};
         this.usuario = {id:null};
+        this.tipo_documento_usuario = {id:null};
         this.metodo_ensayo ={id:''};
          $('#modal-cancelar-continuar').modal('hide');
     },
@@ -621,17 +642,18 @@ export default {
 
             axios.post(urlRegistros, {
 
-            'tipo'               : this.newRegistro.tipo,
-            'titulo'             : this.newRegistro.titulo,
-            'descripcion'        : this.newRegistro.descripcion,
-            'usuario'            : this.usuario,
-            'interno_equipo'     : this.interno_equipo,
-            'interno_fuente'     : this.interno_fuente,
-            'vehiculo'           : this.vehiculo,
-            'metodo_ensayo'      : this.metodo_ensayo,
-            'fecha_caducidad'    : this.newRegistro.fecha_caducidad,
-            'path'               : this.newRegistro.path,
-            'ot'                 : this.otdata,
+            'tipo'                       : this.newRegistro.tipo,
+            'titulo'                     : this.newRegistro.titulo,
+            'descripcion'                : this.newRegistro.descripcion,
+            'usuario'                    : this.usuario,
+            'tipo_documento_usuario'     : this.tipo_documento_usuario,
+            'interno_equipo'             : this.interno_equipo,
+            'interno_fuente'             : this.interno_fuente,
+            'vehiculo'                   : this.vehiculo,
+            'metodo_ensayo'              : this.metodo_ensayo,
+            'fecha_caducidad'            : this.newRegistro.fecha_caducidad,
+            'path'                       : this.newRegistro.path,
+            'ot'                         : this.otdata,
 
 
             }).then(response => {
@@ -665,17 +687,18 @@ export default {
             var urlRegistros = 'documentaciones/' + this.newRegistro.id;
             axios.put(urlRegistros, {
 
-            'tipo'               : this.newRegistro.tipo,
-            'titulo'             : this.newRegistro.titulo,
-            'descripcion'        : this.newRegistro.descripcion,
-            'usuario'            : this.usuario,
-            'interno_equipo'     : this.interno_equipo,
-            'interno_fuente'     : this.interno_fuente,
-            'vehiculo'           : this.vehiculo,
-            'metodo_ensayo'      : this.metodo_ensayo,
-            'fecha_caducidad'    : this.newRegistro.fecha_caducidad,
-            'path'               : this.newRegistro.path,
-            'ot'                 : this.otdata,
+            'tipo'                    : this.newRegistro.tipo,
+            'titulo'                  : this.newRegistro.titulo,
+            'descripcion'             : this.newRegistro.descripcion,
+            'usuario'                 : this.usuario,
+            'tipo_documento_usuario'  : this.tipo_documento_usuario,
+            'interno_equipo'          : this.interno_equipo,
+            'interno_fuente'          : this.interno_fuente,
+            'vehiculo'                : this.vehiculo,
+            'metodo_ensayo'           : this.metodo_ensayo,
+            'fecha_caducidad'         : this.newRegistro.fecha_caducidad,
+            'path'                    : this.newRegistro.path,
+            'ot'                      : this.otdata,
 
 
             }).then(response => {
@@ -716,6 +739,7 @@ export default {
                 this.HabilitarGuardar = true;
                 this.newRegistro = {};
                 this.metodo_ensayo =  registro.metodo_ensayo ? registro.metodo_ensayo : {id :''};
+                this.tipo_documento_usuario =  registro.tipo_documento_usuario ? registro.tipo_documento_usuario[0] : {id :''};
                 this.usuario = registro.usuario ? registro.usuario[0] : {'id' : null};
                 this.interno_equipo = registro.interno_equipo ? registro.interno_equipo[0] : {'id' : null};
                 this.interno_fuente = registro.interno_fuente ? registro.interno_fuente[0] : {'id' : null};

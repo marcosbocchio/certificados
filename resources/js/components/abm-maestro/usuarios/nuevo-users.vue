@@ -90,6 +90,18 @@
                                     <label for="checkbox3">Exceptuar demora dosimetría.</label>
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <div>
+                                    <input type="checkbox" id="checkbox4" v-model="Registro.notificar_por_web_sn">
+                                    <label for="checkbox4">Notificar por web.</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div style="margin-left: 0px;">
+                                    <input type="checkbox" class="margin-left:20px" id="checkbox5" v-model="Registro.notificar_por_mail_sn">
+                                    <label for="checkbox5">Notificar por mail.</label>
+                                </div>
+                            </div>
                         </div>
 
                         <input style="display:none" type="text" name="none-email" class="form-control" v-model="Registro.email" value="">
@@ -184,6 +196,8 @@ export default {
             'habilitado_arn_sn':false,
             'exceptuar_notificar_doc_vencida_sn':false,
             'exceptuar_notificar_demora_dosimetria_sn':false,
+            'notificar_por_web_sn':false,
+            'notificar_por_mail_sn':false,
             'email' : '',
             'password' : '',
             'path':''
@@ -278,6 +292,8 @@ export default {
                         'habilitado_arn_sn':false,
                         'exceptuar_notificar_doc_vencida_sn':false,
                         'exceptuar_notificar_demora_dosimetria_sn':false,
+                        'notificar_por_web_sn':false,
+                        'notificar_por_mail_sn':false,
                         'email' : '',
                         'password' : '',
                         'path':''
@@ -392,6 +408,8 @@ export default {
                 'habilitado_arn_sn': this.Registro.habilitado_arn_sn,
                 'exceptuar_notificar_doc_vencida_sn':this.Registro.exceptuar_notificar_doc_vencida_sn,
                 'exceptuar_notificar_demora_dosimetria_sn':this.Registro.exceptuar_notificar_demora_dosimetria_sn,
+                'notificar_por_web_sn' : this.Registro.notificar_por_web_sn,
+                'notificar_por_mail_sn': this.Registro.notificar_por_mail_sn,
                 'password'  : this.Registro.password,
                 'cliente'   : this.cliente,
                 'isEnod'    : this.isEnod,
@@ -404,7 +422,7 @@ export default {
                   this.$emit('store');
                   this.errors=[];
                   $('#nuevo').modal('hide');
-                  toastr.success('Nuevo usuario creado con éxito');
+                  this.$showMessagePreset('success','code-store');
                   this.Registro={}
 
                 }).catch(error => {
@@ -416,7 +434,7 @@ export default {
                     });
 
                      if((typeof(this.errors)=='undefined') && (error)){
-                     toastr.error("Ocurrió un error al procesar la solicitud");
+                     this.$showMessagePreset('error','code-500');
 
                 }
                 });

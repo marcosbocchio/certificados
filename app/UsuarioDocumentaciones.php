@@ -12,4 +12,5 @@ class UsuarioDocumentaciones extends Model
 
         return $this->belongsTo('App\Documentaciones','documentacion_id');
     }
+
 }

@@ -225,11 +225,9 @@ Vue.component('ot-documentaciones', require('./components/dashboard/documentacio
 Vue.component('table-ot_procedimientos_propios', require('./components/dashboard/procedimientos/table-ot_procedimientos_propios').default);
 Vue.component('ot-tipoSoldaduras', require('./components/dashboard/procedimientos/ot-tipoSoldaduras').default);
 
-
 Vue.component('informes-revisiones', require('./components/dashboard/informes/informes-revisiones.vue').default);
 
 Vue.component('table-placas', require('./components/dashboard/placas/table-placas').default);
-
 
 Vue.component('partes', require('./components/partes/partes.vue').default);
 Vue.component('parte-header', require('./components/partes/parte-header.vue').default);

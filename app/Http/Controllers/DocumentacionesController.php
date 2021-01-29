@@ -56,6 +56,7 @@ class DocumentacionesController extends Controller
                                             ->orWhere('documentaciones.tipo','VEHICULO')
                                             ->with('metodoEnsayo')
                                             ->with('usuario')
+                                            ->with('TipoDocumentoUsuario')
                                             ->with('internoEquipo')
                                             ->with('internoFuente')
                                             ->with('vehiculo')
