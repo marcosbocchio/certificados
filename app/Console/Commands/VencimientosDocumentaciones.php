@@ -16,6 +16,7 @@ use App\Mail\SendVencimientosVehiculosMailable;
 use App\Documentaciones;
 use App\Alarmas;
 use App\AlarmaReceptor;
+use App\TiposDocumentosUsuarios;
 Use App\User;
 
 class VencimientosDocumentaciones extends Command
@@ -56,13 +57,20 @@ class VencimientosDocumentaciones extends Command
         $alarmas = Alarmas::all();
 
         /* USUARIOS */
-        $alarma =  (new \App\Http\Controllers\AlarmasController)->BuscarAlarma($alarmas,'USUARIO');
-        if($alarma->activo_sn){
+        $tipos_doc_usuarios = TiposDocumentosUsuarios::all();
 
-            (new \App\Http\Controllers\AlarmasController)->setFechaEjecucion($alarma);
-            $usuarios_vencidos = $this->VencimientosUsuarios($alarma->aviso1,$alarma->aviso2);
-            $this->EnviarMailVencimientosUsuarios($usuarios_vencidos);
-            Log::debug("Documentacion usuario: " . $usuarios_vencidos);
+        foreach ($tipos_doc_usuarios as $tipo_doc) {
+
+            $alarma =  (new \App\Http\Controllers\AlarmasController)->BuscarAlarma($alarmas,$tipo_doc->codigo_alarma);
+
+            if($alarma->activo_sn){
+
+                (new \App\Http\Controllers\AlarmasController)->setFechaEjecucion($alarma);
+                $usuarios_vencidos = $this->VencimientosUsuarios($alarma);
+                $this->EnviarMailVencimientosUsuarios($alarma,$usuarios_vencidos);
+                Log::debug("Documentacion usuario: " . $usuarios_vencidos);
+
+            }
 
         }
 
@@ -119,39 +127,42 @@ class VencimientosDocumentaciones extends Command
     }
 
 
-    public function VencimientosUsuarios($aviso1,$aviso2){
+    public function VencimientosUsuarios($alarma){
 
         return Documentaciones::join('usuario_documentaciones','documentaciones.id','=','usuario_documentaciones.documentacion_id')
-                                        ->join('users','users.id','=','usuario_documentaciones.user_id')
-                                        ->whereRaw('users.notificar_doc_vencida_sn = 1 and (DATEDIFF(documentaciones.fecha_caducidad,DATE(now())) = ? or DATEDIFF(documentaciones.fecha_caducidad,DATE(now())) = ?)',[$aviso1,$aviso2])
-                                        ->select('users.id as user_id',
-                                                 'users.name',
-                                                 'documentaciones.tipo',
-                                                 'documentaciones.titulo',
-                                                 'users.email',
-                                                 'users.notificar_por_web_sn',
-                                                 'users.notificar_por_mail_sn',
-                                                 'documentaciones.fecha_caducidad',
-                                                 'documentaciones.id as documentacion_id')
-                                        ->get();
+                                ->join('tipos_documentaciones_usuarios','tipos_documentaciones_usuarios.id','=','usuario_documentaciones.tipo_documentacion_usuario_id')
+                                ->join('users','users.id','=','usuario_documentaciones.user_id')
+                                ->whereRaw('users.notificar_doc_vencida_sn = 1 and tipos_documentaciones_usuarios.codigo_alarma = ?  and (DATEDIFF(documentaciones.fecha_caducidad,DATE(now())) = ? or DATEDIFF(documentaciones.fecha_caducidad,DATE(now())) = ?)',[$alarma->tipo,$alarma->aviso1,$alarma->aviso2])
+                                ->select('users.id as user_id',
+                                            'users.name',
+                                            'documentaciones.tipo',
+                                            'tipos_documentaciones_usuarios.codigo as tipo_doc_usuario',
+                                            'documentaciones.titulo',
+                                            'users.email',
+                                            'users.notificar_por_web_sn',
+                                            'users.notificar_por_mail_sn',
+                                            'documentaciones.fecha_caducidad',
+                                            'documentaciones.id as documentacion_id')
+                                ->get();
 
     }
 
-    public function EnviarMailVencimientosUsuarios($usuarios_vencidos){
+    public function EnviarMailVencimientosUsuarios($alarma,$usuarios_vencidos){
 
         foreach ($usuarios_vencidos as $item) {
 
-            Log::debug("Usuarios con documentacion vencida: " . $item->name . ' - DOCUMENTO:' . $item->tipo . '->' . $item->titulo);
+            Log::debug("Usuarios con documentacion vencida: " . $item->tipo_doc_usuario . ' - DOCUMENTO:' . $item->tipo . '->' . $item->titulo);
             if($item->notificar_por_mail_sn){
                 Mail::to($item->email)->send(new SendVencimientosDocUsuarioMailable($item));
                 Log::debug("mandó mail de usuario: " . $item->name);
             }
+
             sleep(10);
 
             if($item->notificar_por_web_sn){
                 (new \App\Http\Controllers\NotificacionesController)->store($item->user_id,$item);
             }
-            $receptores_a_avisar =  (new \App\Http\Controllers\AlarmaReceptorController)->BuscarReceptores('USUARIO');
+            $receptores_a_avisar =  (new \App\Http\Controllers\AlarmaReceptorController)->BuscarReceptores($alarma->tipo);
             foreach ($receptores_a_avisar as $receptor) {
 
                 Log::debug("Usuarios receptor: " . $receptor->name . ' - DOCUMENTO:' . $item->tipo . '->' . $item->titulo);
