@@ -53,16 +53,26 @@ class DemoraCargaDosimetria extends Command
 
             foreach ($ids_usuarios_con_demora as $item_id) {
 
+                Log::debug('item_id usuario con demora' . $item_id);
+
                 $fechas_demoras = $this->getFechasDemorasUsuario($usuarios_dias_demorados,$item_id);
                 $user = User::find($item_id);
-                Mail::to($user->email)->send(new SendDemoraFechasUsuarioMailable($user,$fechas_demoras));
-                sleep(10);
-                (new \App\Http\Controllers\NotificacionesController)->storeDosimetria($user->id,$user,$fechas_demoras);
+                if($user->notificar_por_mail_sn){
+                    Mail::to($user->email)->send(new SendDemoraFechasUsuarioMailable($user,$fechas_demoras));
+                    sleep(10);
+                }
+                if($user->notificar_por_web_sn){
+                    (new \App\Http\Controllers\NotificacionesController)->storeDosimetria($user->id,$user,$fechas_demoras);
+                }
                 foreach ($receptores_a_avisar as $receptor) {
 
-                    Mail::to($receptor->email)->send(new SendDemoraFechasUsuarioMailable($user,$fechas_demoras));
-                    sleep(10);
-                    (new \App\Http\Controllers\NotificacionesController)->storeDosimetria($receptor->id,$user,$fechas_demoras);
+                    if($receptor->notificar_por_mail_sn){
+                        Mail::to($receptor->email)->send(new SendDemoraFechasUsuarioMailable($user,$fechas_demoras));
+                        sleep(10);
+                    }
+                    if($receptor->notificar_por_web_sn){
+                        (new \App\Http\Controllers\NotificacionesController)->storeDosimetria($receptor->id,$user,$fechas_demoras);
+                    }
                 }
             }
 

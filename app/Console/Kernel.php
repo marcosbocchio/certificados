@@ -24,11 +24,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
       {
-        //    $schedule->command('command:task_date')->everyMinute();
+            $schedule->command('command:task_date')->everyMinute();
         //    $schedule->command('command:DemoraCargaDosimetria')->everyMinute();
         //    $schedule->command('command:VencimientosDocumentaciones')->everyMinute();
-            $schedule->command('command:VencimientosDocumentaciones')->dailyAt('02:00');
-            $schedule->command('command:DemoraCargaDosimetria')->dailyAt('04:00');
+        //    $schedule->command('command:VencimientosDocumentaciones')->dailyAt('02:00');
+        //    $schedule->command('command:DemoraCargaDosimetria')->dailyAt('04:00');
 
         }
 
