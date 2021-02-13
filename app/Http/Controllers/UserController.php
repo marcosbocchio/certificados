@@ -202,8 +202,6 @@ class UserController extends Controller
                                       ->where('user_id',$user_id)
                                       ->select('metodo_ensayos.*')
                                       ->get();
-
-
     }
 
     public function saveUsuarioMetodos($metodos_firmas,$user_id){
