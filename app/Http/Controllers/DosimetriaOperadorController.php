@@ -58,9 +58,9 @@ class DosimetriaOperadorController extends Controller
          return $disometrias;
     }
 
-    public function  getDosimetriaMensualOperadores($year,$month){
+    public function  getDosimetriaMensualOperadores($year,$month,$operador_ids = ''){
 
-         return  DB::select('CALL DosimetriaMensualOperadores(?,?)',array($year,$month));
+        return  DB::select('CALL DosimetriaMensualOperadores(?,?)',array($year,$month,$operador_ids));
     }
     /**
      * Show the form for creating a new resource.

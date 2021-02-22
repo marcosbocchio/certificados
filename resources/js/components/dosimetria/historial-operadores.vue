@@ -29,35 +29,41 @@
                     </div>
                 </div>
             </div>
-    <div v-show="TablaDosimetria.length">
-        <div class="box box-custom-enod">
-            <div class="box-body">
+            <div v-show="TablaDosimetria.length">
+                <div class="box box-custom-enod">
+                    <div class="box-body">
 
-                <div class="col-md-12">
-                     <div class="table-responsive">
-                         <table class="table table-hover table-striped table-condensed table-bordered">
-                             <thead>
-                                 <tr>
-                                    <th style="text-align:center;min-width:200px;">OPERADOR</th>
-                                    <th style="text-align:center;">DNI</th>
-                                    <th style="text-align:center;">FILM</th>
-                                    <th style="text-align:center;" v-for="(d) in days_in_month" :key="d" >{{d}}</th>
-                                  </tr>
-                             </thead>
-                             <tbody>
-                                    <tr v-for="(item,k) in TablaDosimetria" :key="k">
-                                        <td bgcolor="#000000" style="text-align:center;" :class="[{habilitadoArn : item.habilitado_arn_sn},{ deshabilitadoArn : !item.habilitado_arn_sn}]">{{item.name}}</td>
-                                        <td style="text-align:center;">{{item.dni}}</td>
-                                        <td style="text-align:center;">{{item.film}}</td>
-                                        <td style="text-align:center;" v-for="(d) in days_in_month" :key="d">{{ TablaDosimetria[k][`${d}`] }}</td>
-                                    </tr>
-                             </tbody>
-                         </table>
-                     </div>
+                        <div class="col-md-12">
+                           <div class="form-group" >
+                                <button @click="ExportarPdf">Exportar PDF</button>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-hover table-striped table-condensed table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;min-width:200px;">OPERADOR</th>
+                                            <th style="text-align:center;">DNI</th>
+                                            <th style="text-align:center;">FILM</th>
+                                            <th style="text-align:center;" v-for="(d) in days_in_month" :key="d" >{{d}}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                            <tr v-for="(item,k) in TablaDosimetria" :key="k">
+                                                <td bgcolor="#000000" style="text-align:center;" :class="[{habilitadoArn : item.habilitado_arn_sn},{ deshabilitadoArn : !item.habilitado_arn_sn}]">{{item.name}}</td>
+                                                <td style="text-align:center;">{{item.dni}}</td>
+                                                <td style="text-align:center;">{{item.film}}</td>
+                                                <td style="text-align:center;" v-for="(d) in days_in_month" :key="d">{{ TablaDosimetria[k][`${d}`] }}</td>
+                                            </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
       </div>
         <loading :active.sync="isLoading"
             :loader="'bars'"
@@ -146,6 +152,9 @@ export default {
 
        },
 
+       ids_oper_export: function () {
+           return this.operadores.length ? this.operadores.map(item=> item.id).toString() : this.operadoresIds.toString();
+       },
        TablaDosimetria : function() {
 
             if (!this.operadores.length){
@@ -207,35 +216,33 @@ export default {
         this.TablaDosimetriaTemp = [];
         this.operadoresIds =[...new Set(this.dosimetria_operadores.map(item=> item.user_id))];
 
-          for (let index = 0; index < this.operadoresIds.length; index++) {
+        for (let index = 0; index < this.operadoresIds.length; index++) {
 
-             for (let index2 = 0; index2 < this.dosimetria_operadores.length; index2++) {
-                 if(this.operadoresIds[index] == this.dosimetria_operadores[index2].user_id){
+            for (let index2 = 0; index2 < this.dosimetria_operadores.length; index2++) {
+                if(this.operadoresIds[index] == this.dosimetria_operadores[index2].user_id){
 
-                    this.TablaDosimetriaTemp.push({
+                this.TablaDosimetriaTemp.push({
 
-                        user_id : this.dosimetria_operadores[index2].user_id,
-                        name : this.dosimetria_operadores[index2].name,
-                        film : this.dosimetria_operadores[index2].film,
-                        dni : this.dosimetria_operadores[index2].dni,
-                        habilitado_arn_sn : this.dosimetria_operadores[index2].habilitado_arn_sn,
+                    user_id : this.dosimetria_operadores[index2].user_id,
+                    name : this.dosimetria_operadores[index2].name,
+                    film : this.dosimetria_operadores[index2].film,
+                    dni : this.dosimetria_operadores[index2].dni,
+                    habilitado_arn_sn : this.dosimetria_operadores[index2].habilitado_arn_sn,
+                });
+                break;
+            }
+            };
+        }
 
-
-                    });
-                    break;
-                }
-             };
-          }
-
-         for (let index = 0; index < this.dosimetria_operadores.length; index++) {
-
-             let index_do = this.TablaDosimetriaTemp.findIndex(elem => elem.user_id == this.dosimetria_operadores[index].user_id)
-             Object.defineProperty(this.TablaDosimetriaTemp[index_do],moment(this.dosimetria_operadores[index].fecha,'YYYY/MM/DD').date().toString(),{configurable: true, value:this.dosimetria_operadores[index].microsievert});
-
-         }
+        for (let index = 0; index < this.dosimetria_operadores.length; index++) {
+        let index_do = this.TablaDosimetriaTemp.findIndex(elem => elem.user_id == this.dosimetria_operadores[index].user_id)
+        Object.defineProperty(this.TablaDosimetriaTemp[index_do],moment(this.dosimetria_operadores[index].fecha,'YYYY/MM/DD').date().toString(),{configurable: true, value:this.dosimetria_operadores[index].microsievert});
+        }
      },
 
-
+     ExportarPdf: function () {
+        window.open( 'pdf/dosimetria_mensual_operadores/year/' + this.year + '/month/' + this.month + '/operadores_ids/' + this.ids_oper_export,'_blank');
+     }
  },
 
 }

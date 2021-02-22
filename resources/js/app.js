@@ -861,7 +861,7 @@ actions : {
         loadDosimetriaMensualOperadores({
             commit},payload) {
              axios.defaults.baseURL = store.state.url ;
-             var urlRegistros ='dosimetria_operador/operadores/year/' + payload.year + '/month/' + payload.month + '?api_token=' + Laravel.user.api_token;
+             var urlRegistros ='dosimetria_operador/operadores/year/' + payload.year + '/month/' + payload.month + '/operadores_ids/null' + '?api_token=' + Laravel.user.api_token;
              return new Promise((resolve, reject) => {
              axios.get(urlRegistros).then((response) => {
              commit('getDosimetriaMensualOperadores', response.data)

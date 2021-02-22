@@ -103,6 +103,7 @@ Route::group(['middleware' => ['auth']], function () {
       Route::get('/pdf/productos/referencias/informe/lp/{id}','PdfInformesLpReferenciasController@imprimir')->name('InformeLpReferencias');
 
       Route::get('/pdf/dosimetria/year/{year}/operadores/{str_list_of_ids?}/rs/{cliente_sn}/months/{str_list_of_months}','PdfDosimetriaController@imprimir')->name('pdfDosimetriaAnual');
+      Route::get('/pdf/dosimetria_mensual_operadores/year/{year}/month/{month}/operadores_ids/{operadores_ids}','PdfDosimetriaMensualOperadores@imprimir');
 
       Route::get('/pdf/soldadores/estadisticas-soldaduras/cliente/{cliente_id}/obra/{obra}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}','PdfEstadisticasSoldadurasController@imprimir')->name('pdfEstadisticasSoldaduras');
 
