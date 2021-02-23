@@ -235,13 +235,14 @@ export default {
         }
 
         for (let index = 0; index < this.dosimetria_operadores.length; index++) {
-        let index_do = this.TablaDosimetriaTemp.findIndex(elem => elem.user_id == this.dosimetria_operadores[index].user_id)
-        Object.defineProperty(this.TablaDosimetriaTemp[index_do],moment(this.dosimetria_operadores[index].fecha,'YYYY/MM/DD').date().toString(),{configurable: true, value:this.dosimetria_operadores[index].microsievert});
+            let index_do = this.TablaDosimetriaTemp.findIndex(elem => elem.user_id == this.dosimetria_operadores[index].user_id)
+            Object.defineProperty(this.TablaDosimetriaTemp[index_do],moment(this.dosimetria_operadores[index].fecha,'YYYY/MM/DD').date().toString(),{configurable: true, value:this.dosimetria_operadores[index].microsievert});
         }
+        console.log(this.TablaDosimetriaTemp);
      },
 
      ExportarPdf: function () {
-        window.open( 'pdf/dosimetria_mensual_operadores/year/' + this.year + '/month/' + this.month + '/operadores_ids/' + this.ids_oper_export,'_blank');
+        window.open( '/pdf/dosimetria_mensual_operadores/year/' + this.year + '/month/' + this.month + '/operadores_ids/' + this.ids_oper_export,'_blank');
      }
  },
 

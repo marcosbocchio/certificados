@@ -238,6 +238,8 @@ return array(
          * Use the more-than-experimental HTML5 Lib parser
          */
         "enable_html5_parser" => false,
+
+        "DOMPDF_ENABLE_CSS_FLOAT" => true,
     ),
 
 

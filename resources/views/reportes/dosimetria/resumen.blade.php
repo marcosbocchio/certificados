@@ -12,14 +12,17 @@
         padding: 0px 0px 0px 0px !important;
        }
 
+.EspecialCaracter {
+    font-family: DejaVu Sans;
+}
 
 header {
     position:fixed;
-    top: -83px;
+    top: -81px;
 }
 
 footer {
-    position: fixed; bottom:8px;
+    position: fixed; bottom:7px;
     padding-top: 0px;
 
 }
@@ -131,26 +134,24 @@ footer table tbody tr td .abreviaturas{
 </header>
 
 <footer>
-    <table style="text-align: center" width="100%" class="bordered">
+    <table width="100%" class="bordered">
         <tbody>
         {{ $cliente_sn = filter_var($resumen_cliente_sn,FILTER_VALIDATE_BOOLEAN) }}
         @if (!$cliente_sn)
 
             <tr>
-                <td style="font-size: 10px;height: 18px;width: 100px;" class="bordered-td"><strong style="margin-left: 10px;"> ESTADOS </strong></td>
-                <td style="font-size: 10px;height: 18px;" class="bordered-td">
-                    <div class="abreviaturas">
-                        <strong>O:</strong> Ok
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        <strong>B:</strong> Baja
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        <strong>N:</strong> No vinculado
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        <strong>P:</strong> Perdido
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        <strong>D:</strong> Deteriorado
-                    </div>
+                <td style="font-size: 10px;height: 18px;width: 500px;"><strong style="margin-left: 10px;"> ESTADOS : </strong>
+                    <strong>O:</strong> Ok
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <strong>B:</strong> Baja
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <strong>N:</strong> No vinculado
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <strong>P:</strong> Perdido
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <strong>D:</strong> Deteriorado
                 </td>
+                <td style="font-size: 10px;"><span class="EspecialCaracter" style="margin-left:430px">* Valores expresados en mSv </span></td>
             </tr>
 
         @endif

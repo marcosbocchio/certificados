@@ -16,15 +16,6 @@ class DosimetriaOperadorController extends Controller
           $this->middleware(['role_or_permission:Sistemas Admin|D_operador'],['only' => ['callView']]);
 
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
 
     public function callView()
       {
@@ -43,7 +34,6 @@ class DosimetriaOperadorController extends Controller
           $header_titulo = "Historial Operadores";
           $header_descripcion ="";
           return view('dosimetria.historial_operadores',compact('user','header_titulo','header_descripcion'));
-
       }
 
     public function  getDosimetriaOperador($operador_id,$year,$month){
@@ -54,30 +44,15 @@ class DosimetriaOperadorController extends Controller
                                             ->selectRaw('id,DAY(fecha) as day,microsievert, observaciones,created_at')
                                             ->orderBy('day','ASC')
                                             ->get();
-
          return $disometrias;
     }
 
-    public function  getDosimetriaMensualOperadores($year,$month,$operador_ids = ''){
+    public function  getDosimetriaMensualOperadores($year,$month){
 
-        return  DB::select('CALL DosimetriaMensualOperadores(?,?)',array($year,$month,$operador_ids));
-    }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return  DB::select('CALL DosimetriaMensualOperadores(?,?,?)',array($year,$month,''));
+
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
 
