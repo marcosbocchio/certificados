@@ -5,9 +5,9 @@
     <title>CERTIFICADO N°: {{ $nro }}</title>
 </head>
 
-<style>  
+<style>
 
-@page {    
+@page {
         margin: 217px 15px 150px 15px !important;
         padding: 0px 0px 0px 0px !important;
        }
@@ -19,11 +19,11 @@ body {
 
 header {
     position:fixed;
-    top: -178px;    
+    top: -178px;
 }
 
 footer {
-    position: fixed; bottom:5.5px; 
+    position: fixed; bottom:5.5px;
     padding-top: 0px;
 
 }
@@ -39,15 +39,15 @@ main {
 .bordered {
     border-color: #000000;
     border-style: solid;
-    border-width: 2px; 
-    border-collapse: collapse;   
+    border-width: 2px;
+    border-collapse: collapse;
 }
 
 .bordered-td {
     border-color: #000000;
     border-style: solid;
-    border-width: 1px; 
-    border-collapse: collapse; 
+    border-width: 1px;
+    border-collapse: collapse;
 }
 
 b {
@@ -57,7 +57,7 @@ b {
 
 </style>
 
- <body class="bordered" style="border-top: none;">  
+ <body class="bordered" style="border-top: none;">
 
 <header>
     <table style="text-align: center" width="100%" class="bordered">
@@ -69,33 +69,33 @@ b {
                             <tr>
                                 <td rowspan="4" style="text-align: right; width:253px">
                                     <img src="{{ public_path('img/logo-enod-web.jpg')}}" alt="" style="height: 60px; margin-right: 25px;">
-                                </td>   
-                               
+                                </td>
+
                                 <td style="font-size: 22px; height: 30px; text-align: center;width:534px;" rowspan="2"><b>CERTIFICADO</b></td>
-                                <td style="font-size: 11px;">&nbsp;</td>                         
+                                <td style="font-size: 11px;">&nbsp;</td>
                             </tr>
                             <tr>
-                                <td style="font-size: 11px;" ><b style="margin-left: 120px" >CERTIFICADO N°: </b>{{FormatearNumeroConCeros($certificado->numero,8)}}</td>                      
+                                <td style="font-size: 11px;" ><b style="margin-left: 120px" >CERTIFICADO N°: </b>{{FormatearNumeroConCeros($certificado->numero,8)}}</td>
                             </tr>
                             <tr>
                                 <td style="font-size: 15px;text-align: center;height: 20px;"><b style="margin-left: 120px"></b>{{ $certificado->titulo }}</td>
                                 <td style="font-size: 11px;height: 15px;"><b style="margin-left: 120px">FECHA: </b>{{ date('d-m-Y', strtotime($certificado->fecha)) }}</td>
                             </tr>
                             <tr>
-                                <td style="font-size: 11px;"><b style="margin-left: 120px"></b></td>                     
-                                <td style="font-size: 11px;"><b style="margin-left: 120px"></td>            
-                            </tr>               
+                                <td style="font-size: 11px;"><b style="margin-left: 120px"></b></td>
+                                <td style="font-size: 11px;"><b style="margin-left: 120px"></td>
+                            </tr>
                         </tbody>
-                    </table>          
+                    </table>
                 </td>
             </tr>
             <tr>
                 <td class="bordered">
                     <table width="100%" >
-                        <tbody>                        
-                                <tr>                                                
-                                    
-                                    <td style="font-size: 10px;height: 45px;width: 235px"><span style="margin-top: -20px;"><b>CLIENTE: </b>{{$cliente->nombre_fantasia}}</span></td> 
+                        <tbody>
+                                <tr>
+
+                                    <td style="font-size: 10px;height: 45px;width: 235px"><span style="margin-top: -20px;"><b>CLIENTE: </b>{{$cliente->nombre_fantasia}}</span></td>
                                     <td  style="width: 140px">
                                         <span>
                                             @if($ot->logo_cliente_sn && $cliente->path)
@@ -104,47 +104,47 @@ b {
                                                 <img  src="{{ public_path('img/blank.png')}}" alt=""  style="height: 43px;margin-top: 5px;">
                                             @endif
                                         </span>
-                                    </td>                                     
-                                
+                                    </td>
+
                                     <td style="font-size: 10px;width: 235px">
                                         @if($contratista)
                                             <b>COMITENTE: </b>{{$contratista->nombre}}
-                                        @endif                         
-                                        
-                                    </td>  
+                                        @endif
+
+                                    </td>
                                     <td style="width: 180px">
                                         @if($ot->logo_contratista_sn && $contratista->path_logo)
                                             <img  src="{{ public_path($contratista->path_logo)}}" alt="" style="height: 43px;max-width: 130px;margin-top: 5px;">
                                         @else
                                             <img  src="{{ public_path('img/blank.png')}}" alt=""  style="height: 43px;margin-top: 5px;">
                                         @endif
-                                    </td>              
+                                    </td>
 
                                     @if($ot->obra)
 
                                          <td style="font-size: 10px;"><b>OBRA: </b>{{$ot->obra}}</td>
 
                                     @endif
-                                    <td style="font-size: 10px;"><b>OT N°: </b>{{$ot->numero}}</td>  
-                                    <td style="font-size: 10px;"><b>FTS N°: </b>{{$ot->presupuesto}}</td>   
-                                </tr>  
+                                    <td style="font-size: 10px;"><b>OT N°: </b>{{$ot->numero}}</td>
+                                    <td style="font-size: 10px;"><b>FST N°: </b>{{$ot->presupuesto}}</td>
+                                </tr>
                                 <tr>
                                    <td style="font-size: 10px;" colspan="6"><b>PROYECTO: </b>{{$ot->proyecto}}</td>
                                 </tr>
                            </tbody>
-                    </table>          
+                    </table>
                 </td>
-            </tr>     
+            </tr>
             <tr>
 
                 <td style="background:#D8D8D8;text-align: left;font-size: 13px;" class="bordered">
                         {{$certificado->info_pedido_cliente}} &nbsp;
                 </td>
-    
-            </tr>    
+
+            </tr>
         </tbody>
     </table>
-    
+
 </header>
 
 <footer>
@@ -160,7 +160,7 @@ b {
                                     @if(isset($servicios_footer[$x]))
                                           <td style="font-size: 11px; width:213px " class="bordered-td"><b>{{ $servicios_footer[$x]->abreviatura }}: </b>{{ $servicios_footer[$x]->descripcion_servicio }}</td>
                                     @else
-                                          <td style="font-size: 11px; " class="bordered-td">&nbsp;</td>    
+                                          <td style="font-size: 11px; " class="bordered-td">&nbsp;</td>
                                     @endif
                                 @endfor
 
@@ -170,48 +170,48 @@ b {
                                     @if(isset($servicios_footer[$x]))
                                         <td style="font-size: 11px; " class="bordered-td"><b>{{ $servicios_footer[$x]->abreviatura }}: </b>{{ $servicios_footer[$x]->descripcion_servicio }}</td>
                                     @else
-                                        <td style="font-size: 11px; " class="bordered-td">&nbsp;</td>    
+                                        <td style="font-size: 11px; " class="bordered-td">&nbsp;</td>
                                     @endif
-                                @endfor   
-                                                        
-                            </tr>                 
+                                @endfor
+
+                            </tr>
                         </tbody>
                     </table>
-                </td>               
+                </td>
             </tr>
             <tr>
                 <td>
                     <table width="100%" style="border-collapse: collapse;" >
                         <tbody>
-                            <tr>                               
-                               <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>CERTIFICADOR </b></td>   
-                               <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>CLIENTE </b></td> 
+                            <tr>
+                               <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>CERTIFICADOR </b></td>
+                               <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>CLIENTE </b></td>
                             </tr>
-                            <tr>                               
-                                <td style="font-size: 11px; text-align: left; height: 25px;width:100px;"><span style="margin-left: 2px">FIRMA:</span></td>  
+                            <tr>
+                                <td style="font-size: 11px; text-align: left; height: 25px;width:100px;"><span style="margin-left: 2px">FIRMA:</span></td>
                                 <td style="font-size: 11px; border-right: 1px solid #000;" rowspan="2">
                                 @if($evaluador && $evaluador->path)
                                      <img src="{{ public_path($evaluador->path)}}" alt="" style="height: 70px;width: 140px;margin-left:40px ">
                                 @endif
-                                </td> 
-                                <td style="font-size: 11px; text-align: left; height: 25px;width:100px;"><span style="margin-left: 2px">FIRMA:</span></td> 
-                                <td style="font-size: 11px; border-right: 1px solid #000;" rowspan="2"></td>                    
+                                </td>
+                                <td style="font-size: 11px; text-align: left; height: 25px;width:100px;"><span style="margin-left: 2px">FIRMA:</span></td>
+                                <td style="font-size: 11px; border-right: 1px solid #000;" rowspan="2"></td>
                             </tr>
-                            <tr>                               
-                                <td style="font-size: 11px; text-align: left; height: 25px;"><span style="margin-left: 2px">ACLARACIÓN:</span></td>   
-                                <td style="font-size: 11px; text-align: left; height: 25px;"><span style="margin-left: 2px">ACLARACIÓN:</span></td>                                             
+                            <tr>
+                                <td style="font-size: 11px; text-align: left; height: 25px;"><span style="margin-left: 2px">ACLARACIÓN:</span></td>
+                                <td style="font-size: 11px; text-align: left; height: 25px;"><span style="margin-left: 2px">ACLARACIÓN:</span></td>
                             </tr>
                         </tbody>
-                    </table> 
+                    </table>
                 </td>
-            </tr>      
+            </tr>
         </tbody>
     </table>
 </footer>
 
 
 <main>
-    
+
     <table width="100%" class="bordered" style="text-align: center;padding: 0 -3px 0 -3px;" >
         <thead>
             <tr>
@@ -223,12 +223,12 @@ b {
                @endif
                <th style="font-size: 12px;" class="bordered" colspan="9" >SERVICIOS</th>
                <th style="font-size: 12px;" class="bordered" colspan="17">
-                     {{ $modalidadCobro }} EN {{ $unidad_medida}}              
+                     {{ $modalidadCobro }} EN {{ $unidad_medida}}
                </th>
             </tr>
-            <tr>    
-            {{ $cant_servicios_parte = count($servicios_abreviaturas) }}    
-            {{ $cant_productos_parte = count($productos_unidades_medidas) }} 
+            <tr>
+            {{ $cant_servicios_parte = count($servicios_abreviaturas) }}
+            {{ $cant_productos_parte = count($productos_unidades_medidas) }}
 
             @foreach ($servicios_abreviaturas as $item)
                 <th style="font-size: 10px;width: 33px;" class="bordered">{{ $item }}</th>
@@ -237,7 +237,7 @@ b {
             @for ($x =$cant_servicios_parte ; $x <9 ; $x++)
                <th style="font-size: 11px;" class="bordered">&nbsp;</th>
             @endfor
-            
+
             @foreach ($productos_unidades_medidas as $item)
                 <th style="font-size: 12px;" class="bordered">{{ $item }}
                     @if ($modalidadCobro == 'COSTURAS')
@@ -249,50 +249,50 @@ b {
             @for ($x =$cant_productos_parte ; $x <17 ; $x++)
                <th style="font-size: 12px;" class="bordered">&nbsp;</th>
             @endfor
-             
+
             </tr>
         </thead>
-        <tbody>       
+        <tbody>
             @foreach ($partes_certificado as $item_partes_certificado )
 
                 <tr>
-                    <td style="font-size: 12px;" class="bordered">{{$item_partes_certificado->fecha_formateada}}</td>                        
+                    <td style="font-size: 12px;" class="bordered">{{$item_partes_certificado->fecha_formateada}}</td>
                     <td style="font-size: 12px;" class="bordered">{{$item_partes_certificado->parte_numero}}</td>
                     @if (!$ot->obra)
 
                         <td style="font-size: 12px;" class="bordered">{{$item_partes_certificado->obra}}</td>
-                        
+
                     @endif
 
-               <!-- INSERTO LOS SERVICIOS EN LA TABLA -->           
-              
+               <!-- INSERTO LOS SERVICIOS EN LA TABLA -->
+
                 @foreach ($servicios_abreviaturas as $item_servicios_abreviaturas)
                     {{ $existeServicioEnParte = false }}
 
                     @foreach ($servicios_parte as $item_servicios_parte)
-                        
+
                         @if (($item_servicios_abreviaturas == $item_servicios_parte->abreviatura)&&($item_servicios_parte->parte_numero == $item_partes_certificado->parte_numero))
                                  <td style="font-size: 12px;" class="bordered">{{$item_servicios_parte->cantidad}}</td>
-                               
+
                                  {{ $existeServicioEnParte = true }}
                         @endif
 
                     @endforeach
 
                     @if (!$existeServicioEnParte)
-                        
+
                         <td style="font-size: 12px;" class="bordered">&nbsp;</td>
 
-                    @endif    
+                    @endif
 
 
-                @endforeach                   
+                @endforeach
 
                 @for ( $x=$cant_servicios_parte  ;  $x < 9 ; $x++)
                     <td style="font-size: 12px;" class="bordered">&nbsp;</td>
                 @endfor
-            <!-- INSERTO LOS PRODUCTOS EN LA TABLA --> 
-          
+            <!-- INSERTO LOS PRODUCTOS EN LA TABLA -->
+
                 @foreach ($productos_unidades_medidas as $item_productos_unidades_medidas)
                     {{ $existeProductoEnParte = false }}
 
@@ -307,36 +307,36 @@ b {
                     @endforeach
 
                     @if (!$existeProductoEnParte)
-                        
+
                         <td style="font-size: 12px;" class="bordered">&nbsp;</td>
 
-                    @endif    
+                    @endif
 
-                @endforeach   
+                @endforeach
 
 
                 @for ( $x=$cant_productos_parte ;  $x < 17 ; $x++)
                     <td style="font-size: 12px;" class="bordered">&nbsp;</td>
-                @endfor     
-              </tr>     
+                @endfor
+              </tr>
 
               <!-- TERMINÓ DE PONER LOS PRODUCTOS -->
 
             @endforeach
 
               <!-- AGREGO LOS TOTALES -->
-              
+
                 <tr>
                     @if (!$ot->obra)
-                        <td style="font-size: 12px;" colspan='3' class="bordered">Total </td>       
+                        <td style="font-size: 12px;" colspan='3' class="bordered">Total </td>
                     @else
-                         <td style="font-size: 12px;" colspan='2' class="bordered">Total </td>    
+                         <td style="font-size: 12px;" colspan='2' class="bordered">Total </td>
                     @endif
 
                     <!--SERVICIOS -->
-                
+
                     @foreach ($servicios_abreviaturas as $item_servicios_abreviaturas)
-                        
+
                         {{ $total_servicio = 0 }}
 
                         @foreach ($servicios_parte as $item_servicios_parte)
@@ -351,11 +351,11 @@ b {
                         <td style="font-size: 12px;" class="bordered">&nbsp;</td>
                     @endfor
 
-              
+
                     <!--PRODUCTOS -->
-                
+
                     @foreach ($productos_unidades_medidas as $item_productos_unidades_medidas)
-                        
+
                         {{ $total_producto = 0 }}
 
                         @foreach ($productos_parte as $item_productos_parte)
@@ -375,7 +375,7 @@ b {
 
         </tbody>
     </table>
-    
+
     <!-- AGREGO LOS CUADROS POR OBRA -->
     @php
 
@@ -385,26 +385,26 @@ b {
         if($resto > 0){
             $filasObras++;
         }
-      
+
     @endphp
     <table>
         <tbody>
             @for ($x =0 ; $x < $filasObras ; $x++)
-                
+
                 <tr>
                     <td width="400px">
 
                         @if (isset($tablas_por_obras[$x*3]))
-                            
+
                             <table class="bordered">
                                 <thead>
-                                    <tr>                                   
-                                        <th style="font-size: 12px; width:255px;text-align: center;" class="bordered"  colspan="2">Obra : {{ $tablas_por_obras[$x*3]->obra }}</th>                          
+                                    <tr>
+                                        <th style="font-size: 12px; width:255px;text-align: center;" class="bordered"  colspan="2">Obra : {{ $tablas_por_obras[$x*3]->obra }}</th>
                                     </tr>
-                                    <tr>                            
+                                    <tr>
                                         <th style="font-size: 12px; width:125px;text-align: center;"class="bordered">Servicios</th>
-                                        <th style="font-size: 12px; width:125px;text-align: center;" class="bordered">{{ $modalidadCobro }}</th>                            
-                                    </tr>                         
+                                        <th style="font-size: 12px; width:125px;text-align: center;" class="bordered">{{ $modalidadCobro }}</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
                                     {{ $cant_total_servicio = count($tablas_por_obras[$x*3]->servicios) }}
@@ -413,22 +413,22 @@ b {
                                     {{ $filas_total = $cant_total_servicio > $cant_total_producto ? $cant_total_servicio : $cant_total_producto }}
 
                                     @for ( $z=0 ;  $z< $filas_total  ; $z++)
-                                        
+
                                         <tr>
                                             @if (isset($tablas_por_obras[$x*3]->servicios[$z]))
-                                                <td style="font-size: 12px;" class="bordered"> {{$tablas_por_obras[$x*3]->servicios[$z]->servicio }} : {{$tablas_por_obras[$x*3]->servicios[$z]->cant_total_servicio }} </td>   
-                                            @else    
+                                                <td style="font-size: 12px;" class="bordered"> {{$tablas_por_obras[$x*3]->servicios[$z]->servicio }} : {{$tablas_por_obras[$x*3]->servicios[$z]->cant_total_servicio }} </td>
+                                            @else
                                             <td style="font-size: 12px;" class="bordered">&nbsp;</td>
                                             @endif
 
                                         @if (isset($tablas_por_obras[$x*3]->productos[$z]))
-                                        <td style="font-size: 12px;" class="bordered">&nbsp;{{$tablas_por_obras[$x*3]->productos[$z]->producto }} {{ $unidad_medida}} : {{$tablas_por_obras[$x*3]->productos[$z]->cant_total_producto }}</td>                                  
-                                            @else    
+                                        <td style="font-size: 12px;" class="bordered">&nbsp;{{$tablas_por_obras[$x*3]->productos[$z]->producto }} {{ $unidad_medida}} : {{$tablas_por_obras[$x*3]->productos[$z]->cant_total_producto }}</td>
+                                            @else
                                             <td style="font-size: 12px;" class="bordered">&nbsp;</td>
                                             @endif
-                                    
+
                                         </tr>
-                                    @endfor                 
+                                    @endfor
                                 </tbody>
                             </table>
 
@@ -440,13 +440,13 @@ b {
 
                             <table class="bordered">
                                 <thead>
-                                    <tr>                                   
-                                        <th style="font-size: 12px; width:255px;text-align: center;" class="bordered"  colspan="2">Obra : {{ $tablas_por_obras[($x*3)+1]->obra }}</th>                     
+                                    <tr>
+                                        <th style="font-size: 12px; width:255px;text-align: center;" class="bordered"  colspan="2">Obra : {{ $tablas_por_obras[($x*3)+1]->obra }}</th>
                                     </tr>
-                                    <tr>                            
+                                    <tr>
                                         <th style="font-size: 12px; width:125px;text-align: center;" class="bordered">Servicios</th>
-                                        <th style="font-size: 12px; width:125px;text-align: center;" class="bordered">{{ $modalidadCobro }}</th>                           
-                                    </tr>                         
+                                        <th style="font-size: 12px; width:125px;text-align: center;" class="bordered">{{ $modalidadCobro }}</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
                                     {{ $cant_total_servicio = count($tablas_por_obras[($x*3)+1]->servicios) }}
@@ -455,22 +455,22 @@ b {
                                     {{ $filas_total = $cant_total_servicio > $cant_total_producto ? $cant_total_servicio : $cant_total_producto }}
 
                                     @for ( $z=0 ;  $z< $filas_total  ; $z++)
-                                        
+
                                         <tr>
                                             @if (isset($tablas_por_obras[($x*3)+1]->servicios[$z]))
-                                                <td style="font-size: 12px;" class="bordered"> {{$tablas_por_obras[($x*3)+1]->servicios[$z]->servicio }} : {{$tablas_por_obras[($x*3)+1]->servicios[$z]->cant_total_servicio }} </td>   
-                                            @else    
+                                                <td style="font-size: 12px;" class="bordered"> {{$tablas_por_obras[($x*3)+1]->servicios[$z]->servicio }} : {{$tablas_por_obras[($x*3)+1]->servicios[$z]->cant_total_servicio }} </td>
+                                            @else
                                             <td style="font-size: 12px;" class="bordered">&nbsp;</td>
                                             @endif
 
                                         @if (isset($tablas_por_obras[($x*3)+1]->productos[$z]))
-                                        <td style="font-size: 12px;" class="bordered">&nbsp;{{$tablas_por_obras[($x*3)+1]->productos[$z]->producto }} {{ $unidad_medida}} : {{$tablas_por_obras[($x*3)+1]->productos[$z]->cant_total_producto }}</td>                                  
-                                            @else    
+                                        <td style="font-size: 12px;" class="bordered">&nbsp;{{$tablas_por_obras[($x*3)+1]->productos[$z]->producto }} {{ $unidad_medida}} : {{$tablas_por_obras[($x*3)+1]->productos[$z]->cant_total_producto }}</td>
+                                            @else
                                             <td style="font-size: 12px;" class="bordered">&nbsp;</td>
                                             @endif
-                                    
+
                                         </tr>
-                                    @endfor      
+                                    @endfor
                                 </tbody>
                             </table>
 
@@ -482,13 +482,13 @@ b {
 
                             <table class="bordered">
                                 <thead>
-                                    <tr>                                   
-                                        <th style="font-size: 12px; width:255px;text-align: center;" class="bordered"  colspan="2">Obra : {{ $tablas_por_obras[($x*3)+2]->obra }}</th>                     
+                                    <tr>
+                                        <th style="font-size: 12px; width:255px;text-align: center;" class="bordered"  colspan="2">Obra : {{ $tablas_por_obras[($x*3)+2]->obra }}</th>
                                     </tr>
-                                    <tr>                            
+                                    <tr>
                                         <th style="font-size: 12px; width:125px;text-align: center;" class="bordered">Servicios</th>
-                                        <th style="font-size: 12px; width:125px;text-align: center;" class="bordered">{{ $modalidadCobro }}</th>                       
-                                    </tr>                       
+                                        <th style="font-size: 12px; width:125px;text-align: center;" class="bordered">{{ $modalidadCobro }}</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
                                     {{ $cant_total_servicio = count($tablas_por_obras[($x*3)+2]->servicios) }}
@@ -497,22 +497,22 @@ b {
                                     {{ $filas_total = $cant_total_servicio > $cant_total_producto ? $cant_total_servicio : $cant_total_producto }}
 
                                     @for ( $z=0 ;  $z< $filas_total  ; $z++)
-                                        
+
                                         <tr>
                                             @if (isset($tablas_por_obras[($x*3)+2]->servicios[$z]))
-                                                <td style="font-size: 12px;" class="bordered"> {{$tablas_por_obras[($x*3)+2]->servicios[$z]->servicio }} : {{$tablas_por_obras[($x*3)+2]->servicios[$z]->cant_total_servicio }} </td>   
-                                            @else    
+                                                <td style="font-size: 12px;" class="bordered"> {{$tablas_por_obras[($x*3)+2]->servicios[$z]->servicio }} : {{$tablas_por_obras[($x*3)+2]->servicios[$z]->cant_total_servicio }} </td>
+                                            @else
                                             <td style="font-size: 12px;" class="bordered">&nbsp;</td>
                                             @endif
 
                                         @if (isset($tablas_por_obras[($x*3)+2]->productos[$z]))
-                                        <td style="font-size: 12px;" class="bordered">&nbsp;{{$tablas_por_obras[($x*3)+2]->productos[$z]->producto }} {{ $unidad_medida}} : {{$tablas_por_obras[($x*3)+2]->productos[$z]->cant_total_producto }}</td>                                  
-                                            @else    
+                                        <td style="font-size: 12px;" class="bordered">&nbsp;{{$tablas_por_obras[($x*3)+2]->productos[$z]->producto }} {{ $unidad_medida}} : {{$tablas_por_obras[($x*3)+2]->productos[$z]->cant_total_producto }}</td>
+                                            @else
                                             <td style="font-size: 12px;" class="bordered">&nbsp;</td>
                                             @endif
-                                    
+
                                         </tr>
-                                    @endfor      
+                                    @endfor
                                 </tbody>
                             </table>
 
@@ -522,7 +522,7 @@ b {
             @endfor
         </tbody>
     </table>
-</main>  
+</main>
 
 <script type="text/php">
 

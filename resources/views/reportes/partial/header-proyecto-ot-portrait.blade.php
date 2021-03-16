@@ -3,7 +3,7 @@
         <tr>
             <td width="50%" style="font-size: 12px;"><b>Proyecto </b></td>
             <td width="25%%" style="font-size: 12px;"><b>Obra </b></td>
-            <td width="25%%" style="font-size: 12px;"><b>FTS N° </b></td>
+            <td width="25%%" style="font-size: 12px;"><b>FST N° </b></td>
         </tr>
         <tr>
             <td style="font-size: 12px;"><span class="datosHead">{{$ot->proyecto}}</span></td>
