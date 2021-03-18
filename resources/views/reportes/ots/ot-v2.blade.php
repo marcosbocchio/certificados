@@ -378,29 +378,28 @@ footer {
         </table>
     @endif
 
-    @if($recomendar_ri)
-        <table width="100%">
-            <tbody>
+    <table width="100%">
+        <tbody>
+            <tr>
+                <td style="font-size: 13px;"><strong>Trabajo seguro: </strong> </td>
+            </tr>
+            @if($recomendar_ri)
                 <tr>
                     <td style="font-size: 13px;">
                         * Realizar los trabajos con los elementos de protección personal, tomar distancia correspondiente y vallado de zona de trabajo, calculado en el procedimiento establecido y aprobado por riesgo de irradiación.
                     </td>
                 </tr>
-            </tbody>
-        </table>
-    @endif
-
-    @if($recomendar_pm_lp_us)
-        <table width="100%">
-            <tbody>
+            @endif
+            @if($recomendar_pm_lp_us)
                 <tr>
                     <td style="font-size: 13px;">
                         * Trabajar bajo procedimiento correspondiente y normas de seguridad convencionales.
                     </td>
                 </tr>
-            </tbody>
-        </table>
-    @endif
+            @endif
+        </tbody>
+    </table>
+
 </main>
 
 @include('reportes.partial.nro_pagina')
