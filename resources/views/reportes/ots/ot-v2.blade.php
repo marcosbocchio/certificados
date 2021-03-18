@@ -386,14 +386,14 @@ footer {
             @if($recomendar_ri)
                 <tr>
                     <td style="font-size: 13px;">
-                        * Realizar los trabajos con los elementos de protección personal, tomar distancia correspondiente y vallado de zona de trabajo, calculado en el procedimiento establecido y aprobado por riesgo de irradiación.
+                      Realizar los trabajos con los elementos de protección personal, tomar distancia correspondiente y vallado de zona de trabajo, calculado en el procedimiento establecido y aprobado por riesgo de irradiación.
                     </td>
                 </tr>
             @endif
             @if($recomendar_pm_lp_us)
                 <tr>
                     <td style="font-size: 13px;">
-                        * Trabajar bajo procedimiento correspondiente y normas de seguridad convencionales.
+                     Trabajar bajo procedimiento correspondiente y normas de seguridad convencionales.
                     </td>
                 </tr>
             @endif
