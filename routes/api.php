@@ -61,6 +61,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('productos/paginate', 'ProductosController@paginate');
     Route::resource('productos', 'ProductosController');
     Route::resource('medidas', 'MedidasController');
+    Route::get('epps/servicios/{ids_servicios}', 'EppsController@eppsMetodos');
     Route::resource('epps', 'EppsController');
     Route::resource('riesgos', 'RiesgosController');
     Route::resource('ot_riesgos', 'OtRiesgosController');

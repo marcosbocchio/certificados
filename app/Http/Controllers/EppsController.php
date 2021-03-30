@@ -3,28 +3,30 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Repositories\Epps\EppsRepository;
 use App\Epps;
+use Illuminate\Support\Facades\Log;
 
+use function Psy\debug;
 
 class EppsController extends Controller
 {
-    Protected $epps;
 
-    public function __construct(EppsRepository $eppsRepository)
-    {
-      $this->epps = $eppsRepository;
-    }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        return Epps::orderBy('descripcion','ASC')->get();
+        // return Epps::orderBy('descripcion','ASC')->get();
     }
 
+    public function eppsMetodos($ids_servicios){
+
+        Log::debug("epps: " . $ids_servicios);
+        return Epps::join('epps_metodo','epps_metodo.epps_id','=','epps.id')
+                     ->join('metodo_ensayos','metodo_ensayos.id','=','epps_metodo.metodo_ensayo_id')
+                     ->join('servicios','servicios.metodo_ensayo_id','=','metodo_ensayos.id')
+                     ->whereRaw('FIND_IN_SET(servicios.id,?)',[$ids_servicios])
+                     ->selectRaw('epps.*')
+                     ->groupBy('epps.id')
+                     ->orderBy('epps.descripcion','ASC')->get();
+    }
     /**
      * Show the form for creating a new resource.
      *

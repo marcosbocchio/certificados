@@ -11,7 +11,7 @@
           </div>
         </div>
       </div>
-    </div>    
+    </div>
     <div class="box box-custom-enod">
       <div class="box-body">
       <div class="col-md-2">
@@ -29,9 +29,9 @@
       <div class="col-md-2">
         <div class="form-group">
           <label for="fecha">Fecha *</label>
-              <div>                                                                      
+              <div>
                   <date-picker v-model="fecha" value-type="YYYY-MM-DD" format="DD-MM-YYYY" placeholder="DD-MM-YYYY" ></date-picker>
-              </div>   
+              </div>
         </div>
       </div>
         <div class="col-md-2">
@@ -39,13 +39,13 @@
             <label for="obra">Obra Nº / OC</label>
             <input v-model="obra" type="text" class="form-control" id="obra" placeholder="" maxlength = "8">
           </div>
-        </div>        
+        </div>
         <div class="col-md-2">
           <div class="form-group">
-            <label for="fecha_ensayo">Fecha estimada *</label>  
-              <div>                                                                      
+            <label for="fecha_ensayo">Fecha estimada *</label>
+              <div>
                   <date-picker v-model="fecha_ensayo" value-type="YYYY-MM-DD" format="DD-MM-YYYY" placeholder="DD-MM-YYYY" ></date-picker>
-              </div>              
+              </div>
           </div>
         </div>
        <div class="col-md-2">
@@ -61,47 +61,47 @@
                 </div>
               </div>
           </div>
-        </div> 
-        <div class="col-md-6">                       
+        </div>
+        <div class="col-md-6">
           <div class="form-group">
               <label>Cliente *</label>
-               <input type="checkbox" id="checkbox" v-model="logo_cliente_sn" style="float:right"> 
-               <label for="tipo" style="float:right;margin-right: 5px;">Mostrar logo</label>    
-              <v-select v-model="cliente" label="nombre_fantasia" :options="clientes" @input="getContactos()"></v-select>   
-          </div>      
+               <input type="checkbox" id="checkbox" v-model="logo_cliente_sn" style="float:right">
+               <label for="tipo" style="float:right;margin-right: 5px;">Mostrar logo</label>
+              <v-select v-model="cliente" label="nombre_fantasia" :options="clientes" @input="getContactos()"></v-select>
+          </div>
         </div>
 
-        <div class="col-md-6">                       
+        <div class="col-md-6">
           <div class="form-group">
               <label>Comitente</label>
-               <input type="checkbox" id="checkbox" v-model="logo_contratista_sn" style="float:right"> 
-               <label for="tipo" style="float:right;margin-right: 5px;">Mostrar logo</label>    
-              <v-select v-model="contratista" label="nombre" :options="contratistas"></v-select>   
-          </div>      
+               <input type="checkbox" id="checkbox" v-model="logo_contratista_sn" style="float:right">
+               <label for="tipo" style="float:right;margin-right: 5px;">Mostrar logo</label>
+              <v-select v-model="contratista" label="nombre" :options="contratistas"></v-select>
+          </div>
         </div>
-        
+
         <div class="col-md-6">
           <div class="form-group">
               <label>Contacto 1 *</label>
-              <v-select v-model="contacto1" name="contacto_1" label="nombre" id='contacto1' :options="contactos"></v-select>   
+              <v-select v-model="contacto1" name="contacto_1" label="nombre" id='contacto1' :options="contactos"></v-select>
             </div>
         </div>
         <div class="col-md-6">
           <div class="form-group">
               <label>Contacto 2</label>
-              <v-select v-model="contacto2" name="contacto_2" label="nombre" :options="contactos"></v-select>   
+              <v-select v-model="contacto2" name="contacto_2" label="nombre" :options="contactos"></v-select>
           </div>
         </div>
         <div class="col-md-6">
           <div class="form-group">
               <label>Contacto 3</label>
-              <v-select v-model="contacto3" name="contacto_3" label="nombre" :options="contactos"></v-select>   
+              <v-select v-model="contacto3" name="contacto_3" label="nombre" :options="contactos"></v-select>
           </div>
         </div>
         <div class="col-md-6">
           <div class="form-group">
               <label>Responsable OT *</label>
-              <v-select v-model="user_empresa" name="respontable_ot" label="name" :options="users_empresa"></v-select>   
+              <v-select v-model="user_empresa" name="respontable_ot" label="name" :options="users_empresa"></v-select>
           </div>
         </div>
       </div>
@@ -112,14 +112,14 @@
           <div class="form-group">
             <label for="lugar_ensayo">Lugar de ensayo *</label>
             <input v-model="lugar_ensayo" type="text" class="form-control" id="lugar_ensayo" placeholder="" maxlength="35">
-          </div>        
+          </div>
           <div class="form-group">
             <label>Provincia *</label>
-            <v-select v-model="provincia" label="provincia" :options="provincias" @input="getLocalidades()"></v-select>   
+            <v-select v-model="provincia" label="provincia" :options="provincias" @input="getLocalidades()"></v-select>
           </div>
           <div class="form-group">
             <label>Localidad *</label>
-            <v-select v-model="localidad" label="localidad" :options="localidades" @input="sync()" ></v-select>   
+            <v-select v-model="localidad" label="localidad" :options="localidades" @input="sync()" ></v-select>
           </div>
           <div class="form-group">
             <label for="search">Buscar Ubicación</label>
@@ -136,24 +136,24 @@
           </div>
           <div class="form-group">
             <label for="latitud">Latitud</label>
-            <input type="text" 
+            <input type="text"
             class="form-control" id="latitud"
             v-model.number.lazy="localidad.lat"
             @change="sync"
             />
           </div>
-       
-        
+
+
           <div class="form-group">
             <label for="longitud">Longitud</label>
-            <input type="text" 
+            <input type="text"
             class="form-control" id="longitud"
             v-model.number.lazy="localidad.lon"
-            @change="sync"            
+            @change="sync"
             />
           </div>
-        </div>         
-       
+        </div>
+
         <div class="col-md-6">
           <gmap-map :center="mapCenter" :zoom="12"
               ref="map"
@@ -174,54 +174,54 @@
       </div>
     </div>
     <div class="box box-custom-enod">
-      <div class="box-body">       
-             
+      <div class="box-body">
+
         <div class="col-md-6">
           <div class="form-group">
               <label>Servicios</label>
               <v-select v-model="servicio" label="descripcion" :options="servicios" id="servicios"></v-select>
-          </div>  
-        </div>  
+          </div>
+        </div>
         <div class="col-md-6">
-          <div class="form-group">  
-              <label>Norma Ensayos</label>               
+          <div class="form-group">
+              <label>Norma Ensayos</label>
               <v-select v-model="norma_ensayo" label="codigo" :options="norma_ensayos">
                   <template slot="option" slot-scope="option">
-                      <span class="upSelect">{{ option.codigo }}</span> <br> 
+                      <span class="upSelect">{{ option.codigo }}</span> <br>
                       <span class="downSelect"> {{ option.descripcion }} </span>
-                  </template>              
+                  </template>
               </v-select>
           </div>
         </div>
         <div class="col-md-6">
-          <div class="form-group"> 
-             <label>Norma Evaluación</label>                   
+          <div class="form-group">
+             <label>Norma Evaluación</label>
             <v-select v-model="norma_evaluacion" label="codigo" :options="norma_evaluaciones">
                   <template slot="option" slot-scope="option">
-                      <span class="upSelect">{{ option.codigo }}</span> <br> 
+                      <span class="upSelect">{{ option.codigo }}</span> <br>
                       <span class="downSelect"> {{ option.descripcion }} </span>
-                  </template>    
+                  </template>
             </v-select>
-          </div>   
-        </div> 
+          </div>
+        </div>
         <div class="col-md-3">
-          <div class="form-group"> 
-              <label>Cant.</label>                 
+          <div class="form-group">
+              <label>Cant.</label>
               <input v-model="cantidad_servicios" type="number" class="form-control" id="cantidad_servicios" placeholder="">
           </div>
-        </div>   
+        </div>
          <div class="clearfix"></div>
-        <div class="col-md-1"> 
-            <div class="form-group">                    
+        <div class="col-md-1">
+            <div class="form-group">
               <span>
-                  <button type="button" @click="addServicio()"><span class="fa fa-plus-circle"></span></button> 
+                  <button type="button" @click="addServicio()"><span class="fa fa-plus-circle"></span></button>
               </span>
             </div>
         </div>
 
         <div class="form-group">
           &nbsp;
-        </div>       
+        </div>
 
         <div v-show="inputsServicios.length">
           <div class="col-md-12">
@@ -233,7 +233,7 @@
                     <th class="col-md-3">Norma Ensayo</th>
                     <th class="col-md-3">Norma Evaluacion</th>
                     <th class="col-md-1" style="text-align:center">Ref</th>
-                    <th class="col-md-1" style="text-align:center">Proc.</th>                   
+                    <th class="col-md-1" style="text-align:center">Proc.</th>
                     <th class="col-md-1">Cant</th>
                     <th class="col-md-1" style="text-align:center">C</th>
                     <th class="col-md-1">&nbsp;</th>
@@ -244,17 +244,17 @@
                     <td> {{ inputsServicio.servicio}}</td>
                     <td> {{ inputsServicio.norma_ensayo}}</td>
                     <td> {{ inputsServicio.norma_evaluacion}}</td>
-                    <td style="text-align:center"> <span :class="{existe : (inputsServicio.observaciones || 
-                    inputsServicio.path1 || 
-                    inputsServicio.path2 || 
-                    inputsServicio.path3 || 
-                    inputsServicio.path4)  }" class="fa fa-file-archive-o" @click="OpenReferencias($event,k,'servicios',inputsServicio)" ></span></td>      
-                    <td style="text-align:center">  
-                      <input type="checkbox" id="checkbox" v-model="inputsServicios[k].procedimiento_sn">                     
-                    </td>                   
+                    <td style="text-align:center"> <span :class="{existe : (inputsServicio.observaciones ||
+                    inputsServicio.path1 ||
+                    inputsServicio.path2 ||
+                    inputsServicio.path3 ||
+                    inputsServicio.path4)  }" class="fa fa-file-archive-o" @click="OpenReferencias($event,k,'servicios',inputsServicio)" ></span></td>
+                    <td style="text-align:center">
+                      <input type="checkbox" id="checkbox" v-model="inputsServicios[k].procedimiento_sn">
+                    </td>
                     <td> {{ inputsServicio.cantidad_servicios}}</td>
-                    <td style="text-align:center">  
-                      <input type="checkbox" id="checkbox" v-model="inputsServicios[k].combinado_sn">                     
+                    <td style="text-align:center">
+                      <input type="checkbox" id="checkbox" v-model="inputsServicios[k].combinado_sn">
                     </td>
                     <td style="text-align:center"> <i class="fa fa-minus-circle" @click="removeServicio(k)" ></i></td>
                   </tr>
@@ -262,7 +262,7 @@
               </table>
             </div>
           </div>
-        </div>   
+        </div>
       </div>
     </div>
     <div v-show ="Ri">
@@ -270,16 +270,16 @@
         <div class="box-body">
           <div class="col-md-6">
             <div class="form-group">
-              <label>Calidad de placas</label> 
+              <label>Calidad de placas</label>
 
               <v-select multiple v-model="peliculas_selected" :options="tipo_peliculas" label="codigo">
               <template slot="option" slot-scope="option">
-                 <span class="upSelect">{{ option.codigo }}</span> <br> 
+                 <span class="upSelect">{{ option.codigo }}</span> <br>
                   <span class="downSelect"> {{ option.fabricante }} </span>
               </template>
 
             </v-select>
-            </div>    
+            </div>
           </div>
         </div>
       </div>
@@ -291,35 +291,35 @@
           <div class="form-group">
               <label>Productos</label>
               <v-select v-model="producto" label="descripcion" :options="productos" id="productos" @input="getMedidasProducto()"></v-select>
-            </div>  
-          </div>  
+            </div>
+          </div>
           <div class="col-md-3">
-            <div class="form-group">  
-              <label>Medidas</label>           
+            <div class="form-group">
+              <label>Medidas</label>
 
               <v-select v-model="medida" :options="medidas" label="descripcion">
               <template slot="option" slot-scope="option">
-                 <span class="upSelect">{{ option.descripcion }} </span> 
+                 <span class="upSelect">{{ option.descripcion }} </span>
                   <span class="downSelect">   {{ option.codigo }} </span>
               </template>
               </v-select>
 
             </div>
-          </div> 
+          </div>
           <div class="col-md-3">
-            <div class="form-group"> 
-                <label>Cant.</label>                 
+            <div class="form-group">
+                <label>Cant.</label>
                 <input v-model="cantidad_productos" type="number" class="form-control" id="cantidad_productos" placeholder="">
             </div>
-          </div>  
-          <div class="col-md-1"> 
-              <div class="form-group">                    
+          </div>
+          <div class="col-md-1">
+              <div class="form-group">
                 <span>
-                    <button type="button" @click="addProducto()"><span class="fa fa-plus-circle"></span></button> 
+                    <button type="button" @click="addProducto()"><span class="fa fa-plus-circle"></span></button>
                 </span>
               </div>
           </div>
-          
+
           <div class="form-group">
             &nbsp;
           </div>
@@ -331,30 +331,30 @@
                   <thead>
                     <tr>
                       <th class="col-md-10">Productos</th>
-                      <th class="col-md-2">Medidas</th>                     
+                      <th class="col-md-2">Medidas</th>
                       <th class="col-md-1" style="text-align:center">Ref</th>
-                      <th class="col-md-1">cant</th>                    
+                      <th class="col-md-1">cant</th>
                       <th class="col-md-1">&nbsp;</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr v-for="(inputsProducto,k) in inputsProductos" :key="k">
                       <td> {{ inputsProducto.producto}}</td>
-                      <td> {{ inputsProducto.medida}}&nbsp; &nbsp; {{inputsProducto.unidad_medida_codigo }}</td>  
+                      <td> {{ inputsProducto.medida}}&nbsp; &nbsp; {{inputsProducto.unidad_medida_codigo }}</td>
                       <td style="text-align:center"> <span :class="{ existe : (inputsProducto.observaciones ||
                                           inputsProducto.path1 ||
                                           inputsProducto.path2 ||
                                           inputsProducto.path3 ||
-                                          inputsProducto.path4 )                      
-                      }" class="fa fa-file-archive-o" @click="OpenReferencias($event,k,'productos',inputsProducto)" ></span></td>                       
-                      <td> {{ inputsProducto.cantidad_productos}}</td>                                  
+                                          inputsProducto.path4 )
+                      }" class="fa fa-file-archive-o" @click="OpenReferencias($event,k,'productos',inputsProducto)" ></span></td>
+                      <td> {{ inputsProducto.cantidad_productos}}</td>
                       <td style="text-align:center"> <i class="fa fa-minus-circle" @click="removeProducto(k)" ></i></td>
                     </tr>
                   </tbody>
                 </table>
               </div>
             </div>
-          </div>            
+          </div>
       </div>
     </div>
     <div class="box box-custom-enod">
@@ -363,71 +363,71 @@
           <div class="form-group">
             <label>Elementos de seguridad</label>
             <v-select v-model="epp" label="descripcion" :options="epps" id="epps"></v-select>
-          </div> 
-          
-              <div class="form-group">                    
+          </div>
+
+              <div class="form-group">
                 <span>
-                    <button type="button" @click="addEpp()"><span class="fa fa-plus-circle"></span></button> 
+                    <button type="button" @click="addEpp()"><span class="fa fa-plus-circle"></span></button>
                 </span>
               </div>
-          
-          
+
+
           <div class="form-group">
             &nbsp;
-          </div>            
+          </div>
 
-          <div v-show="inputsEpps.length">           
+          <div v-show="inputsEpps.length">
               <div class="table-responsive">
                 <table class="table table-hover table-striped table-bordered table-condensed">
                   <thead>
                     <tr>
-                      <th class="col-md-11">EPPS</th>                                   
+                      <th class="col-md-11">EPPS</th>
                       <th class="col-md-1">&nbsp;</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr v-for="(inputsEpp,k) in inputsEpps" :key="k">
-                      <td> {{ inputsEpp.descripcion}}</td>                                  
+                      <td> {{ inputsEpp.descripcion}}</td>
                       <td style="text-align:center"> <i class="fa fa-minus-circle" @click="removeEpp(k)" ></i></td>
                     </tr>
                   </tbody>
                 </table>
-              </div>            
-          </div> 
+              </div>
+          </div>
         </div>
         <div class="col-md-6">
           <div class="form-group">
             <label>Riesgos</label>
             <v-select v-model="riesgo" label="descripcion" :options="riesgos" id="riesgos"></v-select>
-          </div> 
+          </div>
 
-            <div class="form-group">                    
+            <div class="form-group">
               <span>
-                  <button type="button" @click="addRiesgo()"><span class="fa fa-plus-circle"></span></button> 
+                  <button type="button" @click="addRiesgo()"><span class="fa fa-plus-circle"></span></button>
               </span>
-            </div>       
-          
+            </div>
+
           <div class="form-group">
             &nbsp;
-          </div>         
+          </div>
 
-          <div v-show="inputsRiesgos.length">           
+          <div v-show="inputsRiesgos.length">
               <div class="table-responsive">
                 <table class="table table-hover table-striped table-bordered table-condensed">
                   <thead>
                     <tr>
-                      <th class="col-md-11">Riesgos</th>                                   
+                      <th class="col-md-11">Riesgos</th>
                       <th class="col-md-1">&nbsp;</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr v-for="(inputsRiesgo,k) in inputsRiesgos" :key="k">
-                      <td> {{ inputsRiesgo.descripcion}}</td>                                  
+                      <td> {{ inputsRiesgo.descripcion}}</td>
                       <td style="text-align:center"> <i class="fa fa-minus-circle" @click="removeRiesgo(k)" ></i></td>
                     </tr>
                   </tbody>
                 </table>
-              </div>            
+              </div>
           </div>
         </div>
       </div>
@@ -443,9 +443,9 @@
     </div>
 
     <!--  <h1 v-if="Laravel.user.can['clientes.edit']">You have permission to manage users</h1> -->
-         <button class="btn btn-primary" type="submit" @click.prevent="submit">Guardar</button>   
+         <button class="btn btn-primary" type="submit" @click.prevent="submit">Guardar</button>
     </form>
-  </div>  
+  </div>
 </div>
 </template>
 
@@ -494,7 +494,7 @@ export default {
        type : Array,
        required : false
      },
-     
+
      ot_riesgosdata : {
        type : Array,
        required : false
@@ -511,34 +511,35 @@ export default {
      otcontacto2data : {
        type : [ Object, Array ],
        required : false,
-      
+
      },
      ot_provinciasdata : {
        type : [ Object, Array ],
        required : false,
-      
+
      },
      ot_localidaddata : {
        type : [ Object, Array ],
        required : false,
-      
+
      },
       otcontacto3data : {
        type : [ Object, Array ],
        required : false,
-      
+
      },
-    
+
      acciondata : {
        type : String,
        required :true
      }
-   
+
    },
-     
-    
+
+
     data() { return {
-         
+
+        inicializando: this.acciondata == 'create' ? false: true,
         errors:[],
          markers: [{
             position: {
@@ -554,7 +555,7 @@ export default {
           pov: {
             pitch: 0,
             heading: 0,
-          },        
+          },
           proyecto:'',
           fecha: moment(new Date()).format('YYYY-MM-DD'),
           fecha_ensayo:'',
@@ -563,7 +564,7 @@ export default {
           logo_cliente_sn:false,
           cliente: {
             id: null
-          },         
+          },
           logo_contratista_sn:false,
           contratista: {
             id: null
@@ -579,7 +580,7 @@ export default {
           users_empresa:[],
           observaciones:'',
           localidad: {
-            
+
             lat : -34.603684400000011,
             lon : -58.381559100000004
           },
@@ -588,7 +589,7 @@ export default {
           servicios:[],
           norma_ensayos :[],
           norma_evaluaciones :[],
-          servicio:'',        
+          servicio:'',
           norma_ensayo :'',
           norma_evaluacion :'',
           user_empresa:'',
@@ -596,7 +597,7 @@ export default {
 
           peliculas_selected:[],
           tipo_peliculas:[],
-          Ri : false, 
+          Ri : false,
           ri_id :'',
 
           productos :[],
@@ -616,7 +617,7 @@ export default {
           riesgos:[],
           riesgo:'',
           inputsRiesgos:[],
-         
+
           response: {},
           cantidad_placas:'',
           cantidad_servicios:'1',
@@ -626,29 +627,28 @@ export default {
           inputs:{},
 
           t:'',
-          d:'' 
+          d:''
           }
     },
     created : function(){
-        
+
         this.getClientes();
         this.$store.dispatch('loadContratistas');
-        this.getUsersEmpresa();     
+        this.getUsersEmpresa();
         this.$store.dispatch('loadProvincias');
         this.getServicios();
         this.getTipoPeliculas();
         this.getProductos();
-        this.getEpps();
         this.getRiesgos();
-        this.getMetodosEnsayos();        
+        this.getMetodosEnsayos();
         this.getNormaEnsayos();
         this.getNormaEvaluaciones();
-        this.setEdit();        
+        this.setEdit();
         this.sync();
         this.accion = this.acciondata;
       },
     mounted : function(){
-      
+
 
        $('#datepicker').datepicker({
            autoclose: true
@@ -661,48 +661,51 @@ export default {
 
     },
     computed :{
+        ...mapState(['url','provincias','localidades','contratistas']),
 
-        ...mapState(['url','provincias','localidades','contratistas'])
+        ids_servicios() {
+
+            return this.inputsServicios.map( item =>item.id ).toString();
+
+        },
      },
-    
 
      watch : {
 
        metodo_ensayos: function(metodo_ensayo) {
-        
+
          metodo_ensayo.forEach(function(metodo){
-              if(metodo.metodo == 'RI'){               
+              if(metodo.metodo == 'RI'){
                  this.ri_id = metodo.id
               }
-            }.bind(this));  
+            }.bind(this));
        },
 
        inputsServicios : {
-         
+
          handler : function(servicios,oldservicios) {
-        
+
           let existeRi = false;
           servicios.forEach(function(servicio) {
-              
-              if(servicio.metodo == 'RI'){                 
-                  existeRi = true; 
-              } 
-          }.bind(this));           
+
+              if(servicio.metodo == 'RI'){
+                  existeRi = true;
+              }
+          }.bind(this));
            this.Ri = existeRi;
            if(this.Ri == false){
               this.peliculas_selected=[]
-           }     
+           }
          },
          deep:true
        }
      },
-   
+
     methods :{
 
-      setEdit : function(){
+      setEdit : function() {
 
-
-              if(this.acciondata == "edit"){ 
+              if(this.acciondata == "edit"){
 
                 this.id              = this.otdata.id,
                 this.proyecto        = this.otdata.proyecto;
@@ -716,11 +719,11 @@ export default {
                 this.getContactos();
                 this.ot              = this.otdata.numero;
                 this.fst             = this.otdata.presupuesto;
-                this.provincia       = this.ot_provinciasdata; 
-                this.localidad       = this.ot_localidaddata; 
+                this.provincia       = this.ot_provinciasdata;
+                this.localidad       = this.ot_localidaddata;
                 this.obra            = this.otdata.obra;
                 this.observaciones   = this.otdata.observaciones;
-                this.fecha_ensayo    = this.otdata.fecha_hora_estimada_ensayo;               
+                this.fecha_ensayo    = this.otdata.fecha_hora_estimada_ensayo;
                 this.contacto1       = this.otcontacto1data;
                 this.user_empresa    = this.users_empresadata;
                 if(this.otcontacto2data != null)
@@ -735,205 +738,181 @@ export default {
                 this.peliculas_selected = this.ot_calidad_placasdata;
                 this.inputsProductos = this.ot_productosdata;
                 this.inputsRiesgos   = this.ot_riesgosdata;
-                this.inputsEpps      = this.ot_eppsdata;                
-          
+                this.inputsEpps      = this.ot_eppsdata;
                }
+               this.inicializando=false;
+              },
 
-              },    
-      
       MaxLengthCamposNumber : function($event,obj){
-
-        console.log($event);
-        console.log(obj);
-        console.log($event.target.value.length);
-        console.log($event.target.maxLength);
         if($event.target.value.length > $event.target.maxLength){
-        
-          console.log('elvalor es mayot');
-      //  $event.target.value = $event.target.value.slice(0, $event.target.maxLength);
           obj = 1;
-
         }
       },
 
       getClientes : function(){
-
-                axios.defaults.baseURL = this.url ;
-                
-                var urlRegistros = 'clientes' + '?api_token=' + Laravel.user.api_token;             
-                axios.get(urlRegistros).then(response =>{
-                this.clientes = response.data
-                });
-              },
+            axios.defaults.baseURL = this.url ;
+            var urlRegistros = 'clientes' + '?api_token=' + Laravel.user.api_token;
+            axios.get(urlRegistros).then(response =>{
+            this.clientes = response.data
+            });
+            },
       getContactos : function(){
-                this.contacto1 = '';
-                this.contacto2 = '';
-                this.contacto3 = '';
-                axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'contactos/' + this.cliente.id + '?api_token=' + Laravel.user.api_token;    
-                axios.get(urlRegistros).then(response =>{
-                this.contactos = response.data
-                });
-              },
+            this.contacto1 = '';
+            this.contacto2 = '';
+            this.contacto3 = '';
+            axios.defaults.baseURL = this.url ;
+            var urlRegistros = 'contactos/' + this.cliente.id + '?api_token=' + Laravel.user.api_token;
+            axios.get(urlRegistros).then(response =>{
+            this.contactos = response.data
+            });
+        },
 
       getUsersEmpresa : function(){
-              
-                axios.defaults.baseURL = this.url ;                
-                var urlRegistros = 'users/empresa' + '?api_token=' + Laravel.user.api_token;  
-                axios.get(urlRegistros).then(response =>{
-                this.users_empresa = response.data             
-                });
-              },
+            axios.defaults.baseURL = this.url ;
+            var urlRegistros = 'users/empresa' + '?api_token=' + Laravel.user.api_token;
+            axios.get(urlRegistros).then(response =>{
+            this.users_empresa = response.data
+            });
+        },
       getMedidasProducto : function(){
-                this.medida = '';               
-                axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'medidas/' + this.producto.unidades_medida_id + '?api_token=' + Laravel.user.api_token;         
-                axios.get(urlRegistros).then(response =>{
-                this.medidas = response.data
-                });
-              },
-    
+            this.medida = '';
+            axios.defaults.baseURL = this.url ;
+            var urlRegistros = 'medidas/' + this.producto.unidades_medida_id + '?api_token=' + Laravel.user.api_token;
+            axios.get(urlRegistros).then(response =>{
+            this.medidas = response.data
+            });
+            },
+
       getLocalidades : function(){
 
-                  this.$store.dispatch('loadLocalidades',this.provincia.id);
+             this.$store.dispatch('loadLocalidades',this.provincia.id);
 
-              },
+          },
        getServicios : function(){
-             
+
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'servicios' + '?api_token=' + Laravel.user.api_token;        
+                var urlRegistros = 'servicios' + '?api_token=' + Laravel.user.api_token;
                 axios.get(urlRegistros).then(response =>{
                 this.servicios = response.data
                 });
               },
         getTipoPeliculas : function(){
-             
+
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'tipo_peliculas' + '?api_token=' + Laravel.user.api_token;          
+                var urlRegistros = 'tipo_peliculas' + '?api_token=' + Laravel.user.api_token;
                 axios.get(urlRegistros).then(response =>{
                 this.tipo_peliculas = response.data
                 });
               },
         getProductos : function(){
-             
+
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'productos/ots' + '?api_token=' + Laravel.user.api_token;        
+                var urlRegistros = 'productos/ots' + '?api_token=' + Laravel.user.api_token;
                 axios.get(urlRegistros).then(response =>{
                 this.productos = response.data
-                }); 
+                });
               },
-        getEpps : function(){
-             
-                axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'epps' + '?api_token=' + Laravel.user.api_token;        
-                axios.get(urlRegistros).then(response =>{
-                this.epps = response.data  
-                           
+        getEppsMetodos : function(){
+
+            axios.defaults.baseURL = this.url ;
+            var urlRegistros = 'epps/servicios/'+ (this.ids_servicios ? this.ids_servicios : 'null') + '?api_token=' + Laravel.user.api_token;
+            axios.get(urlRegistros).then(response =>{
+            this.epps = response.data
+            console.log(urlRegistros)
+            console.log(response.data)
+            if(!this.inicializando){
                 this.cargarEppDefaults();
+            }
+            });
+            },
 
-                });               
-              },
         cargarEppDefaults :  function(){
-              
-               if (this.acciondata == 'create'){
-                 
-                 this.epps.forEach(function (eppDefault){
-                   
-                   if(eppDefault.default == '1'){                  
-                       this.inputsEpps.push({                         
-                         'id'           : eppDefault.id,
-                         'descripcion' : eppDefault.descripcion});                      
-                     }                 
 
-
-                   }.bind(this));
-                  }
-
+            this.epps.forEach(function (eppDefault){
+            if(eppDefault.default == '1' && this.inputsEpps.map(item =>item.id).indexOf(eppDefault.id) == '-1' ){
+                this.inputsEpps.push({
+                    'id'           : eppDefault.id,
+                    'descripcion' : eppDefault.descripcion});
+                }
+            }.bind(this));
         },
         getRiesgos : function(){
-             
+
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'riesgos' + '?api_token=' + Laravel.user.api_token;        
+                var urlRegistros = 'riesgos' + '?api_token=' + Laravel.user.api_token;
                 axios.get(urlRegistros).then(response =>{
                 this.riesgos = response.data
                 });
               },
        getMetodosEnsayos: function(){
-             
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'metodo_ensayos' + '?api_token=' + Laravel.user.api_token;        
+                var urlRegistros = 'metodo_ensayos' + '?api_token=' + Laravel.user.api_token;
                 axios.get(urlRegistros).then(response =>{
                 this.metodo_ensayos = response.data
                 });
               },
         getNormaEnsayos: function(){
-             
-                axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'norma_ensayos' + '?api_token=' + Laravel.user.api_token;        
-                axios.get(urlRegistros).then(response =>{
-                this.norma_ensayos = response.data
-                });
-              },
+            axios.defaults.baseURL = this.url ;
+            var urlRegistros = 'norma_ensayos' + '?api_token=' + Laravel.user.api_token;
+            axios.get(urlRegistros).then(response =>{
+            this.norma_ensayos = response.data
+            });
+        },
         getNormaEvaluaciones: function(){
-             
+
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'norma_evaluaciones' + '?api_token=' + Laravel.user.api_token;        
+                var urlRegistros = 'norma_evaluaciones' + '?api_token=' + Laravel.user.api_token;
                 axios.get(urlRegistros).then(response =>{
                 this.norma_evaluaciones = response.data
                 });
-              },
-              
-
+            },
       updateCenter(latLng) {
+            this.localidad.lat = latLng.lat() ;
+            this.localidad.lon = latLng.lng() ;
+        },
+      sync () {
 
-                this.localidad.lat = latLng.lat() ;
-                this.localidad.lon = latLng.lng() ;
-                
-              },
-      sync () {            
-              
-              if(this.localidad){
+            if(this.localidad){
 
-                  this.mapCenter.lat = parseFloat(this.localidad.lat);
-                  this.mapCenter.lng = parseFloat(this.localidad.lon);
-                  this.markers[0].position.lat =parseFloat(this.localidad.lat);
-                  this.markers[0].position.lng = parseFloat(this.localidad.lon);          
+                this.mapCenter.lat = parseFloat(this.localidad.lat);
+                this.mapCenter.lng = parseFloat(this.localidad.lon);
+                this.markers[0].position.lat =parseFloat(this.localidad.lat);
+                this.markers[0].position.lng = parseFloat(this.localidad.lon);
 
-                }else{
+            }else{
 
-                this.localidad= {
-                
-                    lat : 0,
-                    lon : 0
-          }
+            this.localidad= {
+
+                lat : 0,
+                lon : 0
                 }
-                this.getLocalidades()
-              },
-              
+            }
+            this.getLocalidades()
+         },
+
       setPlace(place) {
-       
-                            
-                this.localidad.lat = place.geometry.location.lat();
-                this.localidad.lon = place.geometry.location.lng();
-                this.sync();
-      
-             },
+
+        this.localidad.lat = place.geometry.location.lat();
+        this.localidad.lon = place.geometry.location.lng();
+        this.sync();
+
+        },
       getMetodo : function($id){
 
-            this.metodo_ensayos.forEach( function(metodo) {               
-                
-                 if(metodo.id == $id){
-                    this.var_metodo = metodo.metodo;
-                 }
-            }.bind(this));
-      },
-      addServicio(index) {            
+        this.metodo_ensayos.forEach( function(metodo) {
 
-            this.getMetodo(this.servicio.metodo_ensayo_id);        
-           
-            this.inputsServicios.push({ 
+                if(metodo.id == $id){
+                this.var_metodo = metodo.metodo;
+                }
+        }.bind(this));
+      },
+      addServicio(index) {
+
+            this.getMetodo(this.servicio.metodo_ensayo_id);
+
+            this.inputsServicios.push({
                 id:this.servicio.id,
-                servicio:this.servicio.descripcion,            
+                servicio:this.servicio.descripcion,
                 norma_ensayo :(this.norma_ensayo ? this.norma_ensayo.codigo : null),
                 norma_ensayo_id : (this.norma_ensayo ? this.norma_ensayo.id : null),
                 norma_evaluacion :(this.norma_evaluacion ? this.norma_evaluacion.codigo : null),
@@ -942,57 +921,58 @@ export default {
                 metodo : this.var_metodo,
                 combinado_sn : false,
                 procedimiento_sn : false ,
-                observaciones : '',                
+                observaciones : '',
                 path1:null,
                 path2:null,
                 path3:null,
                 path4:null
                  });
-            this.servicio='',        
+            this.servicio='',
             this.norma_ensayo ='',
-            this.norma_evaluacion ='',           
+            this.norma_evaluacion ='',
             this.cantidad_placas='',
             this.cantidad_servicios='1'
-
-        },     
+            this.getEppsMetodos();
+        },
 
       addProducto(index) {
-            this.inputsProductos.push({ 
+            this.inputsProductos.push({
                 id:this.producto.id,
-                producto:this.producto.descripcion,            
-                medida : this.medida.descripcion,  
+                producto:this.producto.descripcion,
+                medida : this.medida.descripcion,
                 medida_id :this.medida.id,
-                unidad_medida_id :this.producto.unidades_medida_id,            
+                unidad_medida_id :this.producto.unidades_medida_id,
                 cantidad_productos:this.cantidad_productos,
                 unidad_medida_codigo : this.medida.codigo,
-                observaciones : '',                
+                observaciones : '',
                 path1:null,
                 path2:null,
                 path3:null,
                 path4:null
                  });
-            this.producto='',        
-            this.medida ='',       
+            this.producto='',
+            this.medida ='',
             this.cantidad_productos='1'
 
         },
       addEpp(index) {
-            this.inputsEpps.push({ 
+
+            this.inputsEpps.push({
                 descripcion:this.epp.descripcion,
-                id:this.epp.id        
+                id:this.epp.id
                  });
-            this.epp=''          
+            this.epp=''
 
         },
       addRiesgo(index) {
-            this.inputsRiesgos.push({ 
+            this.inputsRiesgos.push({
                  descripcion:this.riesgo.descripcion,
-                 id:this.riesgo.id        
+                 id:this.riesgo.id
                  });
-            this.riesgo=''          
+            this.riesgo=''
 
         },
-      
+
       removeServicio(index) {
             this.inputsServicios.splice(index, 1);
         },
@@ -1013,7 +993,7 @@ export default {
           eventSetReferencia.$emit('open');
       },
 
-      AddReferencia(Ref){      
+      AddReferencia(Ref){
 
           if (Ref.tabla =='servicios'){
            this.inputsServicios[this.index_referencias].observaciones = Ref.observaciones;
@@ -1028,10 +1008,10 @@ export default {
            this.inputsProductos[this.index_referencias].path2 = Ref.path2;
            this.inputsProductos[this.index_referencias].path3 = Ref.path3;
            this.inputsProductos[this.index_referencias].path4 = Ref.path4;
-          }          
-      
-        
-           $('#nuevo').modal('hide');     
+          }
+
+
+           $('#nuevo').modal('hide');
       },
 
       marcarCamposNoValidados: function(errores){
@@ -1042,18 +1022,18 @@ export default {
       },
 
       submit()
-       {        
-         
+       {
+
 
         if(this.accion == 'create'){
             this.errors =[];
-         
-            var urlRegistros = 'ots' ;      
+
+            var urlRegistros = 'ots' ;
             axios({
               method: 'post',
-              url : urlRegistros,    
+              url : urlRegistros,
               data : {
-            
+
               'cliente'             : this.cliente.id,
               'logo_cliente_sn'     : this.logo_cliente_sn,
               'contratista'         : this.contratista,
@@ -1081,8 +1061,8 @@ export default {
               'epps'          : this.inputsEpps,
               'riesgos'       : this.inputsRiesgos
           }}
-          
-      
+
+
         ).then(response => {
 
           let ot = response.data;
@@ -1091,7 +1071,7 @@ export default {
           window.location.href ='/';
           console.log(response.data);
         }).catch(error => {
-               
+
                this.errors = error.response.data.errors;
                 console.log(error.response);
                $.each( this.errors, function( key, value ) {
@@ -1101,23 +1081,23 @@ export default {
 
                if((typeof(this.errors)=='undefined') && (error)){
 
-                     toastr.error("Ocurrió un error al procesar la solicitud");                     
-                  
+                     toastr.error("Ocurrió un error al procesar la solicitud");
+
                 }
 
-     //  this.marcarCamposNoValidados(this.errors); 
-           });  
-    
+     //  this.marcarCamposNoValidados(this.errors);
+           });
+
       }
       else if (this.accion =='edit')
-      { 
+      {
 
-        
+
         this.errors =[];
-        var urlRegistros = 'ots/' + this.otdata.id;        
+        var urlRegistros = 'ots/' + this.otdata.id;
         axios({
               method: 'put',
-              url : urlRegistros , 
+              url : urlRegistros ,
               data : {
 
               'id'                  : this.otdata.id,
@@ -1149,15 +1129,15 @@ export default {
               'epps'          : this.inputsEpps,
               'riesgos'       : this.inputsRiesgos
             }
-          }         
+          }
           ).then( () => {
-       
+
             toastr.success('OT N° ' + this.ot + ' fue editada con éxito ');
             window.open(  '/pdf/ot/' + this.otdata.id,'_blank');
             window.location.href ='/';
 
         }).catch(error => {
-               
+
                this.errors = error.response.data.errors;
                 console.log(error.response);
                $.each( this.errors, function( key, value ) {
@@ -1167,13 +1147,13 @@ export default {
 
                if((typeof(this.errors)=='undefined') && (error)){
 
-                     toastr.error("Ocurrió un error al procesar la solicitud");                     
-                  
+                     toastr.error("Ocurrió un error al procesar la solicitud");
+
                 }
 
-           });           
+           });
       }
-      
+
     },
     }
 }
@@ -1198,7 +1178,7 @@ export default {
  .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
 
     background-color: #fff;
-   
+
   }
 
   .existe {
