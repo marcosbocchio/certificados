@@ -741,6 +741,7 @@ export default {
                 this.inputsEpps      = this.ot_eppsdata;
                }
                this.inicializando=false;
+               this.getEppsMetodos();
               },
 
       MaxLengthCamposNumber : function($event,obj){
