@@ -740,7 +740,7 @@ export default {
                 this.inputsRiesgos   = this.ot_riesgosdata;
                 this.inputsEpps      = this.ot_eppsdata;
                }
-               this.inicializando=false;
+
                this.getEppsMetodos();
               },
 
@@ -813,23 +813,33 @@ export default {
                 this.productos = response.data
                 });
               },
-        getEppsMetodos : function(){
+        getEppsMetodos : function(servicio_id = null){
 
             axios.defaults.baseURL = this.url ;
-            var urlRegistros = 'epps/servicios/'+ (this.ids_servicios ? this.ids_servicios : 'null') + '?api_token=' + Laravel.user.api_token;
+            var urlRegistros = 'epps/servicios/'+ (servicio_id ? servicio_id : (this.ids_servicios ? this.ids_servicios : 'null')) + '?api_token=' + Laravel.user.api_token;
             axios.get(urlRegistros).then(response =>{
-            this.epps = response.data
-            console.log(urlRegistros)
-            console.log(response.data)
-            if(!this.inicializando){
-                this.cargarEppDefaults();
-            }
-            });
-            },
+            var epps_temp = response.data
+            //this.epps = response.data
 
-        cargarEppDefaults :  function(){
+            epps_temp.forEach(function(item){
+                if (this.epps.findIndex(elem => elem.id == item.id) == -1) {
+                    this.epps.push(item)
+                }
+                }.bind(this))
+                console.log(servicio_id)
+                console.log(urlRegistros)
+                console.log(response.data)
+                if(!this.inicializando){
+                    this.cargarEppDefaults(epps_temp);
+                }else{
+                     this.inicializando=false;
+                }
+          });
+        },
 
-            this.epps.forEach(function (eppDefault){
+        cargarEppDefaults :  function(epps_temp){
+
+            epps_temp.forEach(function (eppDefault){
             if(eppDefault.default == '1' && this.inputsEpps.map(item =>item.id).indexOf(eppDefault.id) == '-1' ){
                 this.inputsEpps.push({
                     'id'           : eppDefault.id,
@@ -928,12 +938,12 @@ export default {
                 path3:null,
                 path4:null
                  });
+            this.getEppsMetodos(this.servicio.id);
             this.servicio='',
             this.norma_ensayo ='',
             this.norma_evaluacion ='',
             this.cantidad_placas='',
             this.cantidad_servicios='1'
-            this.getEppsMetodos();
         },
 
       addProducto(index) {
