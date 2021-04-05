@@ -16,16 +16,24 @@ class EppsController extends Controller
         // return Epps::orderBy('descripcion','ASC')->get();
     }
 
-    public function eppsMetodos($ids_servicios){
+    public function eppsMetodos($servicio_id){
 
-        Log::debug("epps: " . $ids_servicios);
-        return Epps::join('epps_metodo','epps_metodo.epps_id','=','epps.id')
-                     ->join('metodo_ensayos','metodo_ensayos.id','=','epps_metodo.metodo_ensayo_id')
-                     ->join('servicios','servicios.metodo_ensayo_id','=','metodo_ensayos.id')
-                     ->whereRaw('FIND_IN_SET(servicios.id,?)',[$ids_servicios])
-                     ->selectRaw('epps.*')
-                     ->groupBy('epps.id')
-                     ->orderBy('epps.descripcion','ASC')->get();
+        Log::debug("epps: " . $servicio_id);
+
+       if($servicio_id == 'null') {
+
+           return Epps::orderBy('epps.descripcion','ASC')->get();
+
+       } else {
+           return Epps::join('epps_metodo','epps_metodo.epps_id','=','epps.id')
+                        ->join('metodo_ensayos','metodo_ensayos.id','=','epps_metodo.metodo_ensayo_id')
+                        ->join('servicios','servicios.metodo_ensayo_id','=','metodo_ensayos.id')
+                        ->whereRaw('FIND_IN_SET(servicios.id,?)',[$servicio_id])
+                        ->selectRaw('epps.*')
+                        ->groupBy('epps.id')
+                        ->orderBy('epps.descripcion','ASC')->get();
+       }
+
     }
     /**
      * Show the form for creating a new resource.

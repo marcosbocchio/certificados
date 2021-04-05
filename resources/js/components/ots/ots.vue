@@ -538,8 +538,6 @@ export default {
 
 
     data() { return {
-
-        inicializando: this.acciondata == 'create' ? false: true,
         errors:[],
          markers: [{
             position: {
@@ -639,6 +637,7 @@ export default {
         this.getServicios();
         this.getTipoPeliculas();
         this.getProductos();
+        this.getEpps();
         this.getRiesgos();
         this.getMetodosEnsayos();
         this.getNormaEnsayos();
@@ -740,8 +739,6 @@ export default {
                 this.inputsRiesgos   = this.ot_riesgosdata;
                 this.inputsEpps      = this.ot_eppsdata;
                }
-
-               this.getEppsMetodos();
               },
 
       MaxLengthCamposNumber : function($event,obj){
@@ -756,7 +753,8 @@ export default {
             axios.get(urlRegistros).then(response =>{
             this.clientes = response.data
             });
-            },
+        },
+
       getContactos : function(){
             this.contacto1 = '';
             this.contacto2 = '';
@@ -790,56 +788,63 @@ export default {
 
           },
        getServicios : function(){
+            axios.defaults.baseURL = this.url ;
+            var urlRegistros = 'servicios' + '?api_token=' + Laravel.user.api_token;
+            axios.get(urlRegistros).then(response =>{
+            this.servicios = response.data
+            });
+            },
 
-                axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'servicios' + '?api_token=' + Laravel.user.api_token;
-                axios.get(urlRegistros).then(response =>{
-                this.servicios = response.data
-                });
-              },
         getTipoPeliculas : function(){
-
                 axios.defaults.baseURL = this.url ;
                 var urlRegistros = 'tipo_peliculas' + '?api_token=' + Laravel.user.api_token;
                 axios.get(urlRegistros).then(response =>{
                 this.tipo_peliculas = response.data
                 });
               },
+
         getProductos : function(){
-
-                axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'productos/ots' + '?api_token=' + Laravel.user.api_token;
-                axios.get(urlRegistros).then(response =>{
-                this.productos = response.data
-                });
-              },
-        getEppsMetodos : function(servicio_id = null){
-
             axios.defaults.baseURL = this.url ;
-            var urlRegistros = 'epps/servicios/'+ (servicio_id ? servicio_id : (this.ids_servicios ? this.ids_servicios : 'null')) + '?api_token=' + Laravel.user.api_token;
+            var urlRegistros = 'productos/ots' + '?api_token=' + Laravel.user.api_token;
             axios.get(urlRegistros).then(response =>{
-            var epps_temp = response.data
-            //this.epps = response.data
+            this.productos = response.data
+            });
+            },
 
-            epps_temp.forEach(function(item){
-                if (this.epps.findIndex(elem => elem.id == item.id) == -1) {
-                    this.epps.push(item)
-                }
-                }.bind(this))
+        getEpps : function(servicio_id = null) {
+            axios.defaults.baseURL = this.url ;
+            var urlRegistros = 'epps/servicios/'+ servicio_id + '?api_token=' + Laravel.user.api_token;
+            axios.get(urlRegistros).then(response =>{
+                this.epps = response.data
                 console.log(servicio_id)
                 console.log(urlRegistros)
                 console.log(response.data)
-                if(!this.inicializando){
-                    this.cargarEppDefaults(epps_temp);
-                }else{
-                     this.inicializando=false;
+                if(this.acciondata == "create"){
+                    this.cargarEppDefaults(this.epps);
                 }
           });
         },
 
-        cargarEppDefaults :  function(epps_temp){
+        getEppsMetodo : function (servicio_id = null) {
+            axios.defaults.baseURL = this.url ;
+            var urlRegistros = 'epps/servicios/' + (servicio_id ? servicio_id : this.ids_servicios) + '?api_token=' + Laravel.user.api_token;
+            axios.get(urlRegistros).then(response =>{
+            var epps_temp = response.data
+            console.log(servicio_id)
+            console.log(urlRegistros)
+            console.log(response.data)
+                epps_temp.forEach(function (eppsMetodo){
+                    if(this.inputsEpps.map(item =>item.id).indexOf(eppsMetodo.id) == '-1' ){
+                            this.inputsEpps.push({
+                                'id'           : eppsMetodo.id,
+                                'descripcion' : eppsMetodo.descripcion});
+                        }
+                }.bind(this));
+            })
+        },
 
-            epps_temp.forEach(function (eppDefault){
+        cargarEppDefaults :  function() {
+            this.epps.forEach(function (eppDefault){
             if(eppDefault.default == '1' && this.inputsEpps.map(item =>item.id).indexOf(eppDefault.id) == '-1' ){
                 this.inputsEpps.push({
                     'id'           : eppDefault.id,
@@ -938,7 +943,7 @@ export default {
                 path3:null,
                 path4:null
                  });
-            this.getEppsMetodos(this.servicio.id);
+            this.getEppsMetodo(this.servicio.id);
             this.servicio='',
             this.norma_ensayo ='',
             this.norma_evaluacion ='',
