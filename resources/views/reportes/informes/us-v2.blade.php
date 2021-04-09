@@ -228,12 +228,11 @@ footer {
 
     @endif
 
-
     @if($tecnica->codigo == 'ME')
     <table style="text-align: center;border-collapse: collapse;margin-top: 10px;" width="100%">
         <thead>
                 <tr>
-                    <td style="font-size: 11px; width:120px; text-align: center " class="bordered-td" >PALPADOR</td>
+                    <td style="font-size: 11px; width:130px; text-align: center " class="bordered-td" >PALPADOR</td>
                     <td style="font-size: 11px; width:70px; text-align: center;" class="bordered-td">N° SERIE</td>
                     <td style="font-size: 11px; width:80px; text-align: center;"  class="bordered-td">FRECUENCIA (Mhz)</td>
                     <td style="font-size: 11px; width:80px;text-align: center;"  class="bordered-td">ANG. APERTURA</td>
