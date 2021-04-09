@@ -68,17 +68,17 @@
                     </div>
 
                     <div class="col-md-3">
-                            <div class="form-group" >
-                                <label for="Diametro">Ø *</label>
-                                <v-select v-model="diametro" label="diametro" :options="diametros" @input="getEspesores()"></v-select>
-                            </div>
+                        <div class="form-group" >
+                            <label for="Diametro">Ø *</label>
+                            <v-select v-model="diametro" label="diametro" :options="diametros" @input="getEspesores()"></v-select>
                         </div>
+                    </div>
 
                     <div v-if="isVarios">
                         <div class="col-md-3">
                             <div class="form-group" >
                                 <label>Espesor</label>
-                                <input  type="text" class="form-control" id="espesor_varios" value="VARIOS" >
+                                <input  type="text" class="form-control" id="espesor_varios" value="VARIOS" disabled >
                             </div>
                         </div>
                     </div>
@@ -1194,7 +1194,7 @@ export default {
 
                if(this.numero_inf)
 
-                     return this.metodo + (this.numero_inf <10? '00' : this.numero_inf<100? '0' : '') + this.numero_inf ;
+                return this.metodo + (this.numero_inf <10? '00' : this.numero_inf<100? '0' : '') + this.numero_inf ;
         },
 
      },
@@ -1366,7 +1366,6 @@ export default {
             this.$store.commit('loading', false);
             });
         },
-
 
         addCalibraciones : function () {
 
@@ -1859,18 +1858,12 @@ export default {
 
         },
 
-
         selectPosGeneratriz :function(index){
-
             this.indexPosGeneratriz = index ;
-
         },
 
         selectPosPos :function(index){
-
             this.indexPosPos = index ;
-
-
         },
 
         borrarTodasLasCalibraciones(){
@@ -1882,8 +1875,7 @@ export default {
         SetearBlockCalibraciones(){
 
             if(this.tecnica.codigo=='ME'){
-
-                this.block_calibraciones = ['Proveta', 'Escalonado'];
+                this.block_calibraciones = ['Proveta', 'Proveta escalonada'];
             }else{
 
                 this.block_calibraciones = ['V1', 'V2'];
@@ -1891,24 +1883,18 @@ export default {
         },
 
         removeCalibraciones(index) {
-
             this.calibraciones.splice(index, 1);
-
         },
 
         removeTabla_us_pa : function(index){
-
             this.Tabla_us_pa.splice(index, 1);
         },
 
         removeTabla_me : function(index){
-
             this.Tabla_me.splice(index, 1);
         },
 
-
         OpenReferencias_us_pa(event,index,tabla,inputsReferencia){
-
           this.index_referencias = index ;
           this.tabla = tabla;
           this.inputsData = inputsReferencia ;
@@ -1916,14 +1902,11 @@ export default {
       },
 
         AddReferencia_us_pa(Ref){
-
-
             this.Tabla_us_pa[this.index_referencias].observaciones = Ref.observaciones;
             this.Tabla_us_pa[this.index_referencias].path1 = Ref.path1;
             this.Tabla_us_pa[this.index_referencias].path2 = Ref.path2;
             this.Tabla_us_pa[this.index_referencias].path3 = Ref.path3;
             this.Tabla_us_pa[this.index_referencias].path4 = Ref.path4;
-
 
             $('#nuevo').modal('hide');
         },
@@ -1931,26 +1914,19 @@ export default {
          addModelo : function(){
 
              this.TablaModelos3d.push({
-
                 ...this.modelo_3d,
-
              });
-
          },
 
          RemoveModelo : function(index){
 
               this.TablaModelos3d.splice(index, 1);
               this.modelo_3d = '';
-
          },
 
         Store : function(){
 
-
             this.errors =[];
-
-
             var urlRegistros = 'informes_us' ;
             axios({
             method: 'post',
@@ -2021,7 +1997,6 @@ export default {
                     toastr.error("Ocurrió un error al procesar la solicitud");
 
                 }
-
         });
 
         },
@@ -2029,7 +2004,6 @@ export default {
        Update : function() {
 
             this.errors =[];
-
             var urlRegistros = 'informes_us/' + this.informedata.id  ;
             axios({
               method: 'put',

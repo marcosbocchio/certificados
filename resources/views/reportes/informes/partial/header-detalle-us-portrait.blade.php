@@ -116,6 +116,8 @@
                                         {{ $informe->espesor_chapa }}
                                     @elseif($informe->espesor_especifico)
                                         {{ $informe->espesor_especifico }}
+                                    @elseif($diametro_espesor->diametro == 'VARIOS')
+                                        VARIOS
                                     @else
                                         {{ $diametro_espesor->espesor }}
                                     @endif

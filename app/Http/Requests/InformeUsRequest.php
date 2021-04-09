@@ -35,7 +35,13 @@ class InformeUsRequest extends FormRequest
 
                 ];
 
-        }else {
+        } else if($this->diametro['diametro'] == 'VARIOS') {
+
+            $condicional_espesor = [
+                'espesor'                    => '',
+          ];
+
+        } else {
 
             $condicional_espesor = [
 

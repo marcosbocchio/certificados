@@ -35,7 +35,11 @@ class InformeRiRequest extends FormRequest
         $condicion_espesor_chapa = 'required';
         $condicion_dist_fuente_pelicula = 'required';
 
-    }else {
+    }else if($this->diametro['diametro'] == 'VARIOS') {
+
+        $condicion_espesor_no_chapa = '';
+
+    } else {
 
         $condicion_espesor_no_chapa = 'required';
 
