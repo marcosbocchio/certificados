@@ -240,9 +240,9 @@ footer table tbody tr td .abreviaturas{
                             <td style="font-size: 10px;" > - </td>
                         @endif
                     @else
-                        <td style="font-size: 10px;"><span style="color: {{$item->CM3}}"> {{ $item->EM3[0] }}</span></td>
-                        <td style="font-size: 10px;" class="@if($item->DOM3 > $Max_Rx_Mensual->valor) maxRxMensual @endif  @if(abs($item->DOM3 - $item->DRXM3) > $Max_dif_op_rx->valor)  maxDifOpRx @endif">{{ $item->DOM3 }}</td>
-                        <td style="font-size: 10px;" class="@if($item->DRXM3 > $Max_Rx_Mensual->valor) maxRxMensual @endif  @if(abs($item->DOM3 - $item->DRXM3) > $Max_dif_op_rx->valor)  maxDifOpRx @endif">{{ $item->DRXM3 }}</td>
+                    <td style="font-size: 10px;" class="@if($item->DOM3 > $Max_Rx_Mensual->valor) maxRxMensual @endif  @if(abs($item->DOM3 - $item->DRXM3) > $Max_dif_op_rx->valor)  maxDifOpRx @endif">{{ $item->DOM3 }}</td>
+                    <td style="font-size: 10px;" class="@if($item->DRXM3 > $Max_Rx_Mensual->valor) maxRxMensual @endif  @if(abs($item->DOM3 - $item->DRXM3) > $Max_dif_op_rx->valor)  maxDifOpRx @endif">{{ $item->DRXM3 }}</td>
+                    <td style="font-size: 10px;"><span style="color: {{$item->CM3}}"> {{ $item->EM3[0] }}</span></td>
                     @endif
 
                     @if ($cliente_sn)
