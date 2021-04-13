@@ -150,8 +150,9 @@ footer table tbody tr td .abreviaturas{
                     <strong>P:</strong> Perdido
                     &nbsp;&nbsp;&nbsp;&nbsp;
                     <strong>D:</strong> Deteriorado
+
                 </td>
-                <td style="font-size: 10px;"><span class="EspecialCaracter" style="margin-left:430px">* Valores expresados en mSv </span></td>
+                <td style="font-size: 10px;"><span class="EspecialCaracter" style="margin-left:330px">Desvío: % {{$desvio}} &nbsp;&nbsp;&nbsp;* Valores expresados en mSv </span></td>
             </tr>
 
         @endif

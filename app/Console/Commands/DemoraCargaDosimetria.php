@@ -30,8 +30,6 @@ class DemoraCargaDosimetria extends Command
         parent::__construct();
     }
 
-
-
     public function handle()
     {
         DB::enableQueryLog();
@@ -90,21 +88,17 @@ class DemoraCargaDosimetria extends Command
 
                 Log::debug("Documentacion dosimetria usuarios ids: " . $item);
 
-             }
-
+            }
        }
-
-
     }
 
     public function VencimientosDosimetria($fecha_inicio_control,$aviso2){
 
-         return  DB::select('CALL DosimetriaFechasDemoradasUsuarios(?,?)',array($fecha_inicio_control,$aviso2));
+        return  DB::select('CALL DosimetriaFechasDemoradasUsuarios(?,?)',array($fecha_inicio_control,$aviso2));
 
     }
 
     public function getIdsUsuarioDemoras($usuarios_dias_demorados){
-
 
         $array_temp = [];
 
