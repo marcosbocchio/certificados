@@ -392,21 +392,39 @@ footer table tbody tr td .abreviaturas{
 </table>
 </main>
 
-<script type="text/php">
+    <script type="text/php">
 
-    if ( isset($pdf) ) {
-        $x = 699;
-        $y = 77;
-        $text = "PÁGINA: {PAGE_NUM} de {PAGE_COUNT}";
-        $font = $fontMetrics->get_font("serif", "bold");
-        $size = 9;
-        $color = array(0,0,0);
-        $word_space = 0.0;  //  default
-        $char_space = 0.0;  //  default
-        $angle = 0.0;   //  default
-        $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
-    }
+        if ( isset($pdf) ) {
+            $x = 699;
+            $y = 77;
+            $text = "PÁGINA: {PAGE_NUM} de {PAGE_COUNT}";
+            $font = $fontMetrics->get_font("serif", "bold");
+            $size = 9;
+            $color = array(0,0,0);
+            $word_space = 0.0;  //  default
+            $char_space = 0.0;  //  default
+            $angle = 0.0;   //  default
+            $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
+        }
 
-</script>
+    </script>
+
+    <script type="text/php">
+
+        if ( isset($pdf) ) {
+            $x = 776;
+            $y = 37;
+            $text = "RG.55 Rev.01";
+            $font = $fontMetrics->get_font("serif", "normal");
+            $size = 8;
+            $color = array(0,0,0);
+            $word_space = 0.0;  //  default
+            $char_space = 0.0;  //  default
+            $angle = 0.0;   //  default
+            $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
+
+        }
+
+    </script>
 </body>
 </html>
