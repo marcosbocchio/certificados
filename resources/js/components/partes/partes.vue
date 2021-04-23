@@ -791,18 +791,6 @@ export default {
 
     },
 
-    updated : function() {
-
-        this.$nextTick(function () {
-
-            this.RecalcularMetros('LP');
-            this.RecalcularMetros('PM');
-            this.RecalcularMetros('RI');
-            this.RecalcularMetros('US');
-
-        })
-    },
-
     watch :{
 
         fecha : function(){
@@ -1615,7 +1603,7 @@ export default {
                 }else{
 
                      this.TablaServicios[this.TablaServicios.findIndex(elemento => elemento.servicio_descripcion ==this.servicio_manual.servicio_descripcion)].cant_final = 1;
-                     this.TablaServicios[this.TablaServicios.findIndex(elemento => elemento.servicio_descripcion ==this.servicio_manual.servicio_descripcion)].visible +=true;
+                     this.TablaServicios[this.TablaServicios.findIndex(elemento => elemento.servicio_descripcion ==this.servicio_manual.servicio_descripcion)].visible = true;
                 }
             }
             else{
