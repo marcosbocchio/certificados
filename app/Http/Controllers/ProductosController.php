@@ -13,8 +13,8 @@ class ProductosController extends Controller
     public function __construct()
     {
 
-          $this->middleware(['role_or_permission:Sistemas|M_productos'],['only' => ['callView']]);  
-    
+          $this->middleware(['role_or_permission:Sistemas|M_productos'],['only' => ['callView']]);
+
     }
 
     /**
@@ -33,20 +33,26 @@ class ProductosController extends Controller
 
     }
 
+    public function getProductoStockeable(){
+
+        return Productos::where('stockeable_sn',1)->get();
+
+    }
+
     public function ProductosOts(){
 
         return  Productos::where('visible_ot',1)->orderBy('descripcion','ASC')->get();
     }
 
     public function callView()
-    {   
-        $user = auth()->user(); 
+    {
+        $user = auth()->user();
         $header_titulo = "Productos";
-        $header_descripcion ="Alta | Baja | Modificación";  
+        $header_descripcion ="Alta | Baja | Modificación";
         return view('productos',compact('user','header_titulo','header_descripcion'));
 
     }
-  
+
 
     /**
      * Show the form for creating a new resource.
@@ -66,21 +72,21 @@ class ProductosController extends Controller
      */
     public function store(ProductoRequest $request)
     {
-        $producto = new Productos;   
+        $producto = new Productos;
 
         DB::beginTransaction();
-        try { 
+        try {
 
             $this->saveProducto($request,$producto);
-            DB::commit(); 
+            DB::commit();
 
         } catch (Exception $e) {
-    
+
             DB::rollback();
-            throw $e;      
-            
+            throw $e;
+
         }
-        
+
     }
 
     /**
@@ -114,18 +120,18 @@ class ProductosController extends Controller
      */
     public function update(ProductoRequest $request, $id)
     {
-        $producto = Productos::find($id);     
-    
+        $producto = Productos::find($id);
+
         DB::beginTransaction();
         try {
             $this->saveProducto($request,$producto);
-            DB::commit(); 
-    
+            DB::commit();
+
           } catch (Exception $e) {
-      
+
             DB::rollback();
-            throw $e;      
-            
+            throw $e;
+
           }
     }
 
@@ -135,6 +141,7 @@ class ProductosController extends Controller
         $producto->descripcion = $request['descripcion'];
         $producto->unidades_medida_id = $request['unidad_medida']['id'];
         $producto->visible_ot = $request->visible_ot;
+        $producto->stockeable_sn = $request->stockeable_sn;
         $producto->save();
 
     }

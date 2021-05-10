@@ -28,14 +28,15 @@ Route::group(['middleware' => ['auth']], function () {
 
   Route::get('download/{name}','SoftwareDownloadController@software_download')->name('software_download');
   Route::get('operadores/ot/{id}','OtOperariosController@index')->name('otOperadores');
-  Route::get('interno_equipos/ot/{id}','InternoEquiposController@OtInternoEquipos')->name('otInternoEquipos');
+  Route::get('interno_equipos/ot/{id}','OtInternosEquiposController@OtInternoEquipos')->name('otInternoEquipos');
   Route::get('soldadores/ot/{id}','OtSoldadoresController@index')->name('otSoldadores');
   Route::get('placas/informe/{id}','PlacasController@index')->name('placas');
   Route::get('documentos-escaneados/ot/{ot_id}/{tipo_documento}/{id}','DocumentosEscaneadosController@index')->name('ddocumentosEscaneados');
   Route::get('procedimientos/ot/{id}','OtProcedimientosPropiosController@index')->name('otProcedimientos');
   Route::get('documentaciones/ot/{id}','OtDocumentacionesController@index')->name('otDocumentaciones');
   Route::get('informes/ot/{id}','InformesController@index')->name('otInformes');
-  Route::get('remitos/ot/{id}','RemitosController@index')->name('otRemitos');
+  Route::get('/area/enod/remitos','RemitosController@callView')->name('remitos');
+  Route::get('/area/enod/remitos/listado','RemitosController@RemitosTable')->name('RemitosTable');
   Route::get('partes/ot/{id}','PartesController@index')->name('otPartes');
   Route::get('certificados/ot/{id}','CertificadosController@index')->name('otCertificados');
   Route::get('documentaciones/operador/{id}', 'DocumentacionesController@operarios');
@@ -50,7 +51,7 @@ Route::group(['middleware' => ['auth']], function () {
   Route::get('/area/enod/ot/{ot_id}/informe/{id}/edit/lp','InformesLpController@edit')->name('InformeLpEdit');
   Route::get('/area/enod/ot/{ot_id}/informe/{id}/edit/us','InformesUsController@edit')->name('InformeUsEdit');
   Route::get('/area/enod/ot/{ot_id}/remito','RemitosController@create')->name('RemitoCreate');
-  Route::get('/area/enod/ot/{ot_id}/remito/{id}/edit','RemitosController@edit')->name('RemitoEdit');
+  Route::get('/area/enod/remito/{id}/edit','RemitosController@edit')->name('RemitoEdit');
   Route::get('/area/enod/ot/{ot_id}/parte','PartesController@create')->name('ParteCreate');
   Route::get('/area/enod/ot/{ot_id}/parte/{id}/edit','PartesController@edit')->name('ParteEdit');
   Route::get('/area/enod/ot/{ot_id}/certificado','CertificadosController@create')->name('CertificadoCreate');

@@ -5,39 +5,39 @@
             <div class="inner">
 
               <div v-if="!invertir_cantidad_sn">
-                 <p class="posicion_1 color_cant_1" > {{ cantidad_1 }} </p>    
+                 <p class="posicion_1 color_cant_1" > {{ cantidad_1 }} </p>
               </div>
               <div v-else>
-                  <p class="posicion_1 color_cant_1" > {{ cantidad_2}} </p>    
+                  <p class="posicion_1 color_cant_1" > {{ cantidad_2}} </p>
               </div>
-                    
+
               <div v-if="cantidad_2 >= 0">
                 <div v-if="!invertir_cantidad_sn">
-                    <p class="posicion_2 color_cant_2" > {{ cantidad_2 }} </p>    
+                    <p class="posicion_2 color_cant_2" > {{ cantidad_2 }} </p>
                 </div>
                 <div v-else>
-                    <p class="posicion_2 color_cant_2" > {{ cantidad_1}} </p>    
+                    <p class="posicion_2 color_cant_2" > {{ cantidad_1}} </p>
                 </div>
               </div>
 
-            </div>      
+            </div>
 
-            <div class="titulo_cuadro" :class="class_color_sub_titulo">                      
-              {{ titulo }} 
+            <div class="titulo_cuadro" :class="class_color_sub_titulo">
+              {{ titulo }}
               <div v-if="titulo_2" style="display:inline-block" class="color_cant_1">
-                <span style="color:#535353;font-weight: bold;"> | </span> {{ titulo_2 }}
-              </div>              
+                <span style="color:#535353;font-weight: bold;">  </span> {{ titulo_2 }}
+              </div>
             </div>
 
             <div>
 
             </div>
-            
+
             <div class="icono_cuadro" :class="class_color_cuadro" >
               <img :src="src_icono" width="100px" />
             </div>
-            
-        </div>              
+
+        </div>
     </div>
 </template>
 
@@ -91,16 +91,16 @@ export default {
             required : false,
         },
 
-        cantidad_1 : { 
+        cantidad_1 : {
             type : Number,
-            required : true,  
+            required : true,
          },
 
-        cantidad_2 : { 
+        cantidad_2 : {
             type : Number,
             required : false,
-            default : -1  
-         },   
+            default : -1
+         },
 
          habilitado_sn : {
              type: Boolean,
@@ -113,7 +113,7 @@ export default {
              default:false
          }
 
-         
+
          }
 }
 </script>
@@ -146,13 +146,13 @@ export default {
   font-size: 12px;
   font-weight: bold;
   margin-top: -10px;
-  
+
 }
 
 .color_1, .color_cant_1  {
   color: rgb(255, 255, 255);
 }
-  
+
 .color_2 {
   color: rgb(32, 32, 32);
 }
@@ -169,7 +169,7 @@ export default {
 
 .small-box .inner .posicion_1 {
   position: absolute;;
-  font-size: 26px; 
+  font-size: 26px;
   top: 0;
   right: 20px;
   color: white;
@@ -178,7 +178,7 @@ export default {
 
 .small-box .inner .posicion_2 {
   position: absolute;;
-  font-size: 26px; 
+  font-size: 26px;
   bottom: 15px;
   right: 20px;
   color: rgb(255, 204, 0);
@@ -196,15 +196,15 @@ export default {
     height: 127px;
     width:200px;
     padding: 0;
-    right:0 ; 
+    right:0 ;
     z-index: 0;
     top: 0;
 }
 
 .titulo_cuadro {
 
-    position: absolute;    
-    padding: 0;    
+    position: absolute;
+    padding: 0;
     z-index: 0;
     top:55px;
     right: 230px;
@@ -248,41 +248,41 @@ export default {
 	}
 }
 
-.small_box_opacity {  
-    
+.small_box_opacity {
+
     opacity: 0.5;
 }
 
   .footer-oper-inf {
 
     background-image: url("/img/tablero/barra-oper-inf.svg") !important;
-    background-size:     cover;                   
+    background-size:     cover;
     background-repeat:   no-repeat;
     background-position: center center;
-    
+
     }
 
   .footer-equipos-partes {
 
     background-image: url("/img/tablero/barra-equipos-partes.svg") !important;
-    background-size:     cover;                   
+    background-size:     cover;
     background-repeat:   no-repeat;
-    background-position: center center;  
+    background-position: center center;
   }
 
   .footer-proc-cert {
 
     background-image: url("/img/tablero/barra-proc-cert.svg") !important;
-    background-size:     cover;                   
+    background-size:     cover;
     background-repeat:   no-repeat;
-    background-position: center center;  
+    background-position: center center;
    }
 
    .footer-doc-remitos {
 
     background-image: url("/img/tablero/barra-doc-remitos.svg") !important;
-    background-size:     cover;                   
+    background-size:     cover;
     background-repeat:   no-repeat;
-    background-position: center center;  
+    background-position: center center;
     }
 </style>

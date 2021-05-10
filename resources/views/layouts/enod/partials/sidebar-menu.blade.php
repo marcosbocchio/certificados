@@ -113,6 +113,22 @@
           </li>
         @endcan
 
+        @can('REMITOS')
+          <li class="treeview">
+            <a href="#">
+              <i class="fa fa-file-text-o"></i> <span>REMISIONES</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              @can('T_remitos_edita')
+                <li><a href="{{ route('RemitosTable') }}">Listado</a></li>
+              @endcan
+            </ul>
+          </li>
+        @endcan
+
         @can('DOSIMETRIA')
           <li class="treeview">
             <a href="#">
@@ -164,8 +180,6 @@
               @can('N_asignar_alarma')
                   <li><a href="{{ route('alarma-receptor') }}">Asignar Alarmas</a></li>
               @endcan
-
-
             </ul>
           </li>
         @endcan

@@ -5,21 +5,20 @@
 
 <link rel="stylesheet"  href="{{asset('adminlte/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
 <link rel="stylesheet"  href="{{asset('adminlte/plugins/timepicker/bootstrap-timepicker.min.css')}}">
-   
+
 @endsection
 
 
-@section('contenido') 
+@section('contenido')
  <div id="app">
 
-  <remitos    
-  
-     :otdata  ="{{$ot}}"    
-     :remitodata = "{{$remito}}" 
+  <remitos
+
+     :remitodata = "{{$remito}}"
      :detalledata = "{{$detalle_remito}}"
      :remito_interno_equipos_data = "{{$remito_interno_equipos}}"
-     editmode  
-    
+     editmode
+
   ></remitos>
 
  </div>

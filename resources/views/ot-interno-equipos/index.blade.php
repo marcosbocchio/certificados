@@ -6,8 +6,8 @@
 
    <ot-interno-equipos
     :ot_id_data = "{{$ot_id}}"
-    :interno_equipos_data= "{{$interno_equipos}}" 
-   
+    :ot_interno_equipos_data= "{{$ot_interno_equipos}}"
+
    ></ot-interno-equipos>
 
 </div>

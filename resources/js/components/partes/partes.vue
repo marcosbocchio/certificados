@@ -1598,7 +1598,6 @@ export default {
             if(this.TablaServicios.findIndex(elemento => elemento.servicio_descripcion == this.servicio_manual.servicio_descripcion) != -1){
 
                 if(this.TablaServicios[this.TablaServicios.findIndex(elemento => elemento.servicio_descripcion ==this.servicio_manual.servicio_descripcion)].visible == true){
-
                     this.TablaServicios[this.TablaServicios.findIndex(elemento => elemento.servicio_descripcion ==this.servicio_manual.servicio_descripcion)].cant_final +=1;
                 }else{
 

@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\DetalleRemitos;
 use App\InternoEquipos;
-use App\TrazabilidadEquipo;
 use App\RemitoInternoEquipos;
 
 class RemitosController extends Controller
@@ -18,98 +17,87 @@ class RemitosController extends Controller
   public function __construct()
   {
 
-      $this->middleware(['role_or_permission:Sistemas|T_remitos_acceder'],['only' => ['index']]);  
-      $this->middleware(['role_or_permission:Sistemas|T_remitos_edita'],['only' => ['store','edit','update']]);  
+    $this->middleware(['role_or_permission:Sistemas|T_remitos_acceder'],['only' => ['index']]);
+    $this->middleware(['role_or_permission:Sistemas|T_remitos_edita'],['only' => ['store','edit','update']]);
 
-  
   }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index($ot_id)
+    public function index()
     {
-      $header_titulo = "Remitos";
-      $header_descripcion ="Alta | Modificación";          
-      $user = auth()->user();
-
-      $ot = Ots::where('id',$ot_id)->with('cliente')->first();
-      $header_sub_titulo =' / ' .$ot->cliente->nombre_fantasia . ' / OT N°: ' . $ot->numero;
-
-      return view('ot-remitos.index',compact('ot_id',
-                                             'user',                                            
-                                             'header_titulo',
-                                             'header_sub_titulo',
-                                             'header_descripcion'));
 
     }
 
-    public function paginate(Request $request,$ot_id){
+    public function RemitosTable(){
 
-      return DB::table('remitos')
-                  ->where('ot_id','=',$ot_id)
-                  ->selectRaw('id,ot_id,LPAD(prefijo, 4, "0") as prefijo_formateado,LPAD(numero, 8, "0") as numero_formateado,DATE_FORMAT(remitos.created_at,"%d/%m/%Y")as fecha,receptor,destino,interno_sn')
-                  ->orderBy('id','DESC')           
-                  ->paginate(10);
+        $header_titulo = "Remitos";
+        $header_descripcion ="";
+        $header_sub_titulo ='';
+        $user = auth()->user();
+
+        return view('remitos.table',compact('user',
+                                            'header_titulo',
+                                            'header_sub_titulo',
+                                            'header_descripcion'));
+
     }
 
-    public function getRemitosOt($ot_id){
+    public function callView(){
 
+        $header_titulo = "Remitos";
+        $header_descripcion ="Alta | Modificación";
+        $header_sub_titulo ='';
+        $user = auth()->user();
 
-      return DB::table('remitos')
-                 ->where('ot_id','=',$ot_id)
-                 ->selectRaw('id,ot_id,LPAD(prefijo, 4, "0") as prefijo_formateado,LPAD(numero, 8, "0") as numero_formateado,DATE_FORMAT(remitos.created_at,"%d/%m/%Y")as fecha,receptor,destino,interno_sn')
-                 ->get();
+        return view('remitos.index',compact('user',
+                                            'header_titulo',
+                                            'header_sub_titulo',
+                                            'header_descripcion'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function paginate(Request $request){
+
+      return remitos::selectRaw('id,LPAD(prefijo, 4, "0") as prefijo_formateado,LPAD(numero, 8, "0") as numero_formateado,DATE_FORMAT(remitos.created_at,"%d/%m/%Y")as fecha,receptor,destino,frente_origen_id,frente_destino_id')
+                     ->with('frente_origen')
+                     ->with('frente_destino')
+                     ->orderBy('id','DESC')
+                     ->paginate(10);
+    }
+
     public function create($ot_id)
-    {      
+    {
         $user = auth()->user();
         $header_titulo = "Remito";
-        $header_descripcion ="Crear";         
-        $ot = Ots::findOrFail($ot_id);      
+        $header_descripcion ="Crear";
+        $ot = Ots::findOrFail($ot_id);
 
-        return view('remitos.index', compact('ot',                                            
-                                             'user',                                              
+        return view('remitos.index', compact('ot',
+                                             'user',
                                              'header_titulo',
                                              'header_descripcion'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(RemitoRequest $request)
-    {    
-     
+    {
+
       $detalles = $request->detalles;
       $interno_equipos = $request->interno_equipos;
-      
+
 
         $remito = new Remitos;
 
       DB::beginTransaction();
-        try {          
-        
-          $remito = $this->saveRemito($request,$remito);           
+        try {
+
+          $remito = $this->saveRemito($request,$remito);
           $this->saveDetalle($detalles,$remito);
           $this->saveInternoEquipos($interno_equipos,$remito);
           $this->updateInternoEquipos($interno_equipos,$remito);
-          DB::commit(); 
-    
+          DB::commit();
+
         } catch (Exception $e) {
-           
+
           DB::rollback();
-          throw $e;      
-          
+          throw $e;
+
         }
 
         return $remito;
@@ -118,17 +106,17 @@ class RemitosController extends Controller
     public function saveRemito($request,$remito){
 
         $user_id = null;
-        
+
         if (Auth::check())
         {
-             $user_id = $userId = Auth::id();    
+             $user_id = $userId = Auth::id();
         }
 
-        $remito->ot_id    = $request->ot['id'];
-        $remito->interno_sn = $request->interno_sn;
         $remito->prefijo  = $request->prefijo;
         $remito->numero   = $request->numero;
         $remito->fecha    = date('Y-m-d',strtotime($request->fecha));
+        $remito->frente_origen_id = $request->frente_origen['id'];
+        $remito->frente_destino_id = $request->frente_destino['id'];
         $remito->receptor = $request->receptor;
         $remito->destino  = $request->destino;
         $remito->user_id  =  $user_id;
@@ -139,17 +127,15 @@ class RemitosController extends Controller
 
      public function saveDetalle($detalles,$remito){
 
-         
          foreach ($detalles as $detalle ) {
-             
-             
+
              $detalle_remito                       = new DetalleRemitos;
              $detalle_remito->remito_id            = $remito->id;
-             $detalle_remito->producto_id          = $detalle['producto']['id'];       
+             $detalle_remito->producto_id          = $detalle['producto']['id'];
              $detalle_remito->medida_id            = $detalle['medida']['id'];
-             $detalle_remito->cantidad             = $detalle['cantidad_productos'];         
-             $detalle_remito->save();           
-      
+             $detalle_remito->cantidad             = $detalle['cantidad_productos'];
+             $detalle_remito->save();
+
            }
 
      }
@@ -157,71 +143,41 @@ class RemitosController extends Controller
      public function saveInternoEquipos($interno_equipos,$remito){
 
       foreach ($interno_equipos as $item ) {
-       
-        $remito_interno_equipo = new RemitoInternoEquipos;                
-        $remito_interno_equipo->interno_equipo_id  = $item['id'];
-        $remito_interno_equipo->remito_id  = $remito->id;    
-        $remito_interno_equipo->save();          
 
+        $remito_interno_equipo = new RemitoInternoEquipos;
+        $remito_interno_equipo->interno_equipo_id  = $item['id'];
+        $remito_interno_equipo->remito_id  = $remito->id;
+        $remito_interno_equipo->save();
       }
+
  }
 
      public function updateInternoEquipos($interno_equipos,$remito){
 
           foreach ($interno_equipos as $item ) {
-           
-            $interno_equipo = InternoEquipos::find($item['id']);                
-            $interno_equipo->ot_id  = $remito->ot_id;;     
-            $interno_equipo->save();  
-            (new \App\Http\Controllers\TrazabilidadEquipoController)->saveTrazabilidadEquipo($interno_equipo->id,$remito->ot_id);
-    
+
+            $interno_equipo = InternoEquipos::find($item['id']);
+            $interno_equipo->frente_id  = $remito->frente_destino_id;
+            $interno_equipo->save();
+            (new \App\Http\Controllers\TrazabilidadEquipoController)->saveTrazabilidadEquipo($interno_equipo->id,$remito->frente_destino_id);
+
           }
      }
 
-     public function saveTrazabilidadEquipo($interno_equipo,$remito){
-
-         $trazabilidad_equipo = new TrazabilidadEquipo;
-
-         $trazabilidad_equipo->ot_id = $remito->ot_id;
-         $trazabilidad_equipo->interno_equipo_id = $interno_equipo->id;
-         $trazabilidad_equipo->user_id = $remito->user_id;
-         $trazabilidad_equipo->save();      
-     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function edit($id)
     {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($ot_id,$id)
-    {
         $header_titulo = "Remitos";
-        $header_descripcion ="Editar";  
+        $header_descripcion ="Editar";
         $user = auth()->user();
-        $ot = Ots::findOrFail($ot_id);
-        $remito = Remitos::findOrFail($id);
-
+        $remito = Remitos::where('id',$id)->with('frente_origen')->with('frente_destino')->first();
         $detalle_remito = $this->getDetalle($remito->id);
         $remito_interno_equipos = $this->getRemitoInternoEquipos($remito->id);
-        
-     
-        return view('remitos.edit', compact('ot',                                        
-                                            'user',   
-                                            'remito', 
-                                            'detalle_remito', 
-                                            'remito_interno_equipos',                                     
+
+        return view('remitos.edit', compact('user',
+                                            'remito',
+                                            'detalle_remito',
+                                            'remito_interno_equipos',
                                             'header_titulo',
                                             'header_descripcion'));
     }
@@ -236,7 +192,7 @@ class RemitosController extends Controller
                                                 ->with('equipo')
                                                 ->get();
 
-        return $remito_interno_equipos; 
+        return $remito_interno_equipos;
 
     }
 
@@ -246,11 +202,11 @@ class RemitosController extends Controller
         $detalle_remito       = DB::table('detalle_remitos')
                                ->where('remito_id','=',$id)
                                ->select('id','cantidad')
-                               ->get();            
-  
+                               ->get();
+
 
          foreach ($detalle_remito as $item) {
-             
+
                 $producto = DB::table('productos')
                                 ->join('detalle_remitos','detalle_remitos.producto_id','=','productos.id')
                                 ->where('detalle_remitos.id','=',$item->id)
@@ -266,11 +222,11 @@ class RemitosController extends Controller
 
                 $item->cantidad_productos =(string)$item->cantidad;
                 $item->producto = $producto;
-                $item->medida = $medida;        
+                $item->medida = $medida;
 
          }
-       
-         return $detalle_remito; 
+
+         return $detalle_remito;
 
 
     }
@@ -284,59 +240,32 @@ class RemitosController extends Controller
      */
     public function update(RemitoRequest $request, $id)
     {
-
-        
         $remito = Remitos::where('id',$id)->first();
         $detalles = $request->detalles;
         $interno_equipos = $request->interno_equipos;
-        
+
         DB::beginTransaction();
-        try {     
-          
+        try {
+
             $remito = $this->saveRemito($request,$remito);
-            DetalleRemitos::where('remito_id',$id)->delete();           
+            DetalleRemitos::where('remito_id',$id)->delete();
             $this->saveDetalle($detalles,$remito);
             RemitoInternoEquipos::where('remito_id',$id)->delete();
             $this->saveInternoEquipos($interno_equipos,$remito);
             $this->updateInternoEquipos($interno_equipos,$remito);
-           
-           
+
+
           DB::commit();
-          
+
         } catch (Exception $e) {
-  
+
           DB::rollback();
-          throw $e;      
-          
+          throw $e;
+
         }
-  
-    }
-
-    public function GenerarNumeroRemito($ot_id){
-
-      return DB::table('remitos')
-                 ->where('remitos.ot_id',$ot_id)
-                 ->where('remitos.interno_sn',1)
-                 ->orderBy('remitos.numero', 'DESC')   
-                 ->limit(1) 
-                 ->selectRaw('remitos.numero + 1 as numero_remito')                    
-                 ->get();  
-
 
     }
 
-    public function RemitosTotal($ot_id){
-
-      return Remitos::where('ot_id',$ot_id)->count(); 
-
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         //

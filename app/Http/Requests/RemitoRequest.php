@@ -24,7 +24,7 @@ class RemitoRequest extends FormRequest
     public function rules()
     {
         $condicion ='';
-        
+
         if(!$this->interno_sn) {
             $condicion ='required |';
         }else {
@@ -35,8 +35,10 @@ class RemitoRequest extends FormRequest
             'fecha'                    => 'required',
             'prefijo'                  => $condicion . 'numeric',
             'numero'                   => 'required | numeric',
-            'receptor'                 => 'required | Max:45',  
-            'destino'                  => 'required | Max:100',             
+            'receptor'                 => 'required | Max:45',
+            'destino'                  => 'required | Max:100',
+            'frente_destino'           => 'required',
+            'frente_origen'            => 'required'
         ];
     }
 
@@ -45,7 +47,9 @@ class RemitoRequest extends FormRequest
             return [
                 'numero'                   => 'Remito N°',
                 'prefijo'                  => 'Prefijo N°',
+                'frente_origen'            => 'Frente origen',
+                'frente_destino'           => 'Frente destino'
             ];
-     
+
     }
 }

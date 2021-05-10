@@ -12,8 +12,6 @@
             <th>&nbsp;</th>
             <th>Fuente</th>
             <th>Actividad</th>
-            <th>N° OT</th>
-            <th>Cliente</th>
             <th>Ubicación</th>
             <th colspan="2">&nbsp;</th>
           </tr>
@@ -30,17 +28,7 @@
             <td v-else ></td>
             <td v-if="registro.interno_fuente">{{ registro.interno_fuente.curie_actual }}&nbsp; Ci</td>
             <td v-else></td>
-            <td v-if="registro.ot" >{{ registro.ot.numero }}</td>
-            <td v-else ></td>
-            <td v-if="registro.ot" >{{ registro.ot.cliente.nombre_fantasia }}</td>
-            <td v-else ></td>
-            <td v-if="registro.ot">
-            <a :href="'https://www.google.com/maps/search/?api=1&query=' + registro.ot.lat  + ',' + registro.ot.lon " target="_blank" title="maps">
-                   <img :src="'/' + 'img/mark-google-maps.png' " alt="maps" style="height: 20px;">
-            </a>
-                {{registro.ot.localidad.localidad}} / {{registro.ot.localidad.provincia.provincia}}
-              </td>
-            <td v-else >Enod</td>
+            <td>{{ registro.frente.codigo }}</td>
             <td width="10px">
               <button class="btn btn-warning btn-sm" title="Editar" v-on:click.prevent="updateValue(registro)" :disabled="!$can('M_interno_equipos_edita')"><span class="fa fa-edit"></span></button>
             </td>

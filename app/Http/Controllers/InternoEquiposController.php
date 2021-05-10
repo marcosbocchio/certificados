@@ -34,9 +34,9 @@ class InternoEquiposController extends Controller
        DB::enableQueryLog();
 
         $filtro = $request->search;
-        $interno_equipos = InternoEquipos::with('ot.localidad.provincia','ot.cliente')
-                                          ->with('equipo.metodoEnsayos')
+        $interno_equipos = InternoEquipos::with('equipo.metodoEnsayos')
                                           ->with('internoFuente.fuente')
+                                          ->with('frente')
                                           ->selectRaw('interno_equipos.*,CONVERT(nro_interno,UNSIGNED) as nro_interno_numeric' )
                                           ->orderby('nro_interno_numeric','ASC')
                                           ->Filtro($filtro)
@@ -144,6 +144,18 @@ class InternoEquiposController extends Controller
         return $interno_equipos;
     }
 
+    public function InternoEquiposFrente($frente_origen_id){
+
+        return InternoEquipos::where('interno_equipos.activo_sn',1)
+                                ->where('interno_equipos.frente_id',$frente_origen_id)
+                                ->with('equipo')
+                                ->with('internoFuente')
+                                ->selectRaw('interno_equipos.*,CONVERT(nro_interno,UNSIGNED) as nro_interno_numeric' )
+                                ->orderby('nro_interno_numeric','ASC')
+                                ->get();
+
+    }
+
     public function store(InternoEquipoRequest $request){
 
 
@@ -171,17 +183,9 @@ class InternoEquiposController extends Controller
     public function show($id)
     {
         return InternoEquipos::where('id',$id)
-                               ->with('ot')
                                ->select('interno_equipos.*')
                                ->first();
     }
-
-
-    public function edit($id)
-    {
-        //
-    }
-
 
     public function update(InternoEquipoRequest $request, $id){
 
@@ -231,46 +235,7 @@ class InternoEquiposController extends Controller
         $interno_equipo->delete();
     }
 
-
-    public function OtInternoEquiposTotal($ot_id){
-
-
-      return InternoEquipos::where('ot_id',$ot_id)->count();
-
-  }
-
-  public function OtInternoEquipos($ot_id){
-
-    $header_titulo = "Equipos OT";
-    $header_descripcion ="Baja";
-    $accion = 'edit';
-    $user = auth()->user();
-
-    $ot = Ots::where('id',$ot_id)->with('cliente')->first();
-    $header_sub_titulo =' / ' .$ot->cliente->nombre_fantasia . ' / OT N°: ' . $ot->numero;
-
-    $interno_equipos = $this->getInternoEquiposOt($ot_id);
-
-
-    return view('ot-interno-equipos.index',compact('ot_id',
-                                    'interno_equipos',
-                                    'user',
-                                    'header_titulo',
-                                    'header_sub_titulo',
-                                    'header_descripcion'));
-
-
-  }
-
-  public function getInternoEquiposOt($ot_id){
-
-    return InternoEquipos::where('ot_id',$ot_id)
-                           ->with('equipo')
-                           ->with('internoFuente.fuente')
-                           ->select('interno_equipos.*')
-                           ->get();
-      }
-
+    /*
   public function StoreOtInternoEquipos(Request $request,$ot_id){
 
     $ot_interno_equipos = InternoEquipos::where('ot_id',$ot_id)->get();
@@ -310,6 +275,6 @@ class InternoEquiposController extends Controller
       }
 
   }
-
+*/
 
 }

@@ -8,7 +8,7 @@
               :class_color_sub_titulo = "'color_3'"
               :cantidad_2 ="ot_soldadores.length"
               :cantidad_1 ="ot_usuarios_cliente.length"
-              :src_icono ="'/img/tablero/icono-enod-remitos.svg'"
+              :src_icono ="'/img/tablero/icono-enod-soldadores.svg'"
               :class_color_cuadro = "'bg-custom-1'"
               :class_color_cuadro_largo = "'bg-custom-4'"
               :habilitado_sn =" $can('T_remitos_acceder') ?  true : false"
@@ -180,11 +180,11 @@ methods : {
 
     getUsuariosCliente : function(){
 
-                axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'users/cliente/' + this.ot_data.cliente_id + '?api_token=' + Laravel.user.api_token;
-                axios.get(urlRegistros).then(response =>{
-                this.usuarios_cliente = response.data
-                });
+        axios.defaults.baseURL = this.url ;
+        var urlRegistros = 'users/cliente/' + this.ot_data.cliente_id + '?api_token=' + Laravel.user.api_token;
+        axios.get(urlRegistros).then(response =>{
+        this.usuarios_cliente = response.data
+        });
 
         },
 
@@ -200,12 +200,9 @@ methods : {
                 });
                 this.soldador = '';
             }
-
-
   },
 
   addUsuarioCliente : function(id){
-
 
         if (this.existeUsuarioCliente(id)){
                 toastr.error('El Usuario existe en la OT');
@@ -216,8 +213,6 @@ methods : {
             });
             this.usuario_cliente = '';
         }
-
-
   },
 
   removeSoldador: function(index){
@@ -262,37 +257,36 @@ methods : {
 
   submit :function () {
 
+        axios.defaults.baseURL = this.url ;
+        var urlRegistros = 'ot_soldadores';
 
-            axios.defaults.baseURL = this.url ;
-            var urlRegistros = 'ot_soldadores';
+        axios.post(urlRegistros, {
 
-            axios.post(urlRegistros, {
+        soldadores        : this.ot_soldadores,
+        usuarios_cliente  : this.ot_usuarios_cliente,
+        ot : this.ot_data
 
-            soldadores        : this.ot_soldadores,
-            usuarios_cliente  : this.ot_usuarios_cliente,
-            ot : this.ot_data
+        }).then(response => {
+            this.errors=[];
+            console.log(response);
+            toastr.success('Soldadores/Usuarios actualizados con éxito');
 
-            }).then(response => {
-                this.errors=[];
-                console.log(response);
-                toastr.success('Soldadores/Usuarios actualizados con éxito');
+        }).catch(error => {
 
-            }).catch(error => {
-
-                this.errors = error.response.data.errors;
-                $.each( this.errors, function( key, value ) {
-                    toastr.error(value,key);
-                    console.log( key + ": " + value );
-                });
-
-                if(this.errors = [] && error){
-
-                     toastr.error("Ocurrio un error al procesar la solicitud");
-                     this.ot_soldadores = this.soldadores_data;
-                }
-
+            this.errors = error.response.data.errors;
+            $.each( this.errors, function( key, value ) {
+                toastr.error(value,key);
+                console.log( key + ": " + value );
             });
-        }
+
+            if(this.errors = [] && error){
+
+                    toastr.error("Ocurrio un error al procesar la solicitud");
+                    this.ot_soldadores = this.soldadores_data;
+            }
+
+        });
+    }
 }
 }
 </script>

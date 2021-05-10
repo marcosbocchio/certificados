@@ -72,13 +72,15 @@
        </div>
 
        <div class="col-lg-3 col-xs-6">
-         <a @click="EntrarCuadro('remitos')">
+         <a @click="EntrarCuadro('soldadores')">
           <cuadro-enod
-              :titulo = "'REMITOS'"
+              :titulo = "'SOLDADORES'"
+              :titulo_2 ="'USUARIOS'"
               :class_color_titulo = "'color_2'"
               :class_color_sub_titulo = "'color_3'"
-              :cantidad_1 ="CantRemitos"
-              :src_icono ="'/img/tablero/icono-enod-remitos.svg'"
+              :cantidad_1 ="CantSoldadores"
+              :cantidad_2 ="CantUsuariosCliente"
+              :src_icono ="'/img/tablero/icono-enod-soldadores.svg'"
               :class_color_cuadro = "'bg-custom-5'"
               :habilitado_sn =" $can('T_remitos_acceder') ?  true : false"
               :class_footer_img ="'footer-doc-remitos'"
@@ -264,8 +266,17 @@ export default {
 
     computed :{
 
-        ...mapState(['url','CantInformes','CantInternoEquipos','CantOperadores','CantRemitos','CantProcedimientos','CantPartes','CantVehiculos','CantDocumentaciones','CantCertificados'])
-
+        ...mapState(['url',
+                     'CantInformes',
+                     'CantInternoEquipos',
+                     'CantOperadores',
+                     'CantSoldadores',
+                     'CantUsuariosCliente',
+                     'CantProcedimientos',
+                     'CantPartes',
+                     'CantVehiculos',
+                     'CantDocumentaciones',
+                     'CantCertificados'])
      },
 
      watch: {
@@ -278,7 +289,8 @@ export default {
         this.$store.dispatch('loadContarProcedimientos',ot_id);
         this.$store.dispatch('loadContarVehiculos',ot_id);
         this.$store.dispatch('loadContarDocumentaciones',ot_id);
-        this.$store.dispatch('loadContarRemitos',ot_id);
+        this.$store.dispatch('loadContarSoldadores',ot_id);
+        this.$store.dispatch('loadContarUsuariosCliente',ot_id);
         this.$store.dispatch('loadContarInformes',ot_id);
         this.$store.dispatch('loadContarPartes',ot_id);
         this.$store.dispatch('loadContarCertificados',ot_id);
@@ -490,9 +502,9 @@ export default {
             }
           break;
 
-          case 'remitos':
-            if(this.$can('T_remitos_acceder')){
-              window.location.href =  '/remitos/ot/' + this.ot_id_selected;
+          case 'soldadores':
+            if(this.$can('T_soldadores_acceder')){
+              window.location.href =  '/soldadores/ot/' + this.ot_id_selected;
             }
           break;
 

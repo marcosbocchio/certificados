@@ -216,7 +216,7 @@ Vue.component('ot-operarios', require('./components/dashboard/operarios/ot-opera
 Vue.component('ot-interno-equipos', require('./components/dashboard/interno-equipos/ot-interno-equipos').default);
 Vue.component('ot-informes', require('./components/dashboard/informes/ot-informes').default);
 Vue.component('informes-importables', require('./components/dashboard/informes/informes-importables').default);
-Vue.component('ot-remitos', require('./components/dashboard/remitos/ot-remitos').default);
+Vue.component('remitos-table', require('./components/remitos/remitos-table').default);
 Vue.component('ot-partes', require('./components/dashboard/partes/ot-partes').default);
 Vue.component('ot-certificados', require('./components/dashboard/certificados/ot-certificados').default);
 
@@ -381,6 +381,8 @@ state: {
         CantInformes:0,
         CantOperadores :0,
         CantRemitos:0,
+        CantSoldadores:0,
+        CantUsuarios:0,
         CantInternoEquipos:0,
         CantPartes:0,
         CantCertificados:0,
@@ -977,15 +979,6 @@ actions : {
           })
         },
 
-        loadContarRemitos({
-          commit},ot_id) {
-           axios.defaults.baseURL = store.state.url ;
-           var urlRegistros = 'remitos/ot/' + ot_id +'/total' + '?api_token=' + Laravel.user.api_token;
-           axios.get(urlRegistros).then((response) => {
-           commit('ContarRemitos', response.data)
-          })
-        },
-
         loadDiasDelMes({
           commit},payload) {
 
@@ -1287,6 +1280,14 @@ actions : {
 
       getServiciosOt(state, serviciosOt) {
         state.serviciosOt = serviciosOt
+      },
+
+      ContarSoldadoes(state, CantSoldadores) {
+        state.CantSoldadores = CantSoldadores
+      },
+
+      ContarUsuarios(state, CantUsuarios) {
+        state.CantUsuarios = CantUsuarios
       },
 
       ContarRemitos(state, CantRemitos) {

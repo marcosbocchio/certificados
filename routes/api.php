@@ -59,6 +59,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('ot_servicios', 'OtServiciosController');
     Route::get('productos/ots', 'ProductosController@ProductosOts');
     Route::get('productos/paginate', 'ProductosController@paginate');
+    Route::get('productos/stockeable', 'ProductosController@getProductoStockeable');
     Route::resource('productos', 'ProductosController');
     Route::resource('medidas', 'MedidasController');
     Route::get('epps/servicios/{ids_servicios}', 'EppsController@eppsMetodos');
@@ -185,10 +186,16 @@ Route::group(['middleware' => 'auth:api'], function()
 
     Route::get('tipos_documentos_usuarios', 'TiposDocumentosUsuariosController@index');
 
+    // Frentes
+    Route::resource('frentes', 'FrentesController');
+
     //interno Equipos
 
-    Route::get('interno_equipos/ot/{ot_id}/total', 'InternoEquiposController@OtInternoEquiposTotal');
-    Route::post('interno_equipos/ot/{ot_id}', 'InternoEquiposController@StoreOtInternoEquipos');
+    Route::get('interno_equipos/ot/{ot_id}/total', 'OtInternosEquiposController@OtInternoEquiposTotal');
+    Route::get('interno_equipos/frente/{frente_origen_id}', 'InternoEquiposController@InternoEquiposFrente');
+
+    // Ot Interno Equipos
+    Route::put('ot_interno_equipos/ot/{ot_id}', 'OtInternosEquiposController@Update');
 
     //Soldadores
     Route::resource('ot_soldadores', 'OtSoldadoresController');
@@ -217,14 +224,11 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('informes_us','InformesUsController');
 
      /*  informes importados */
-
     Route::resource('informes_importados','InformesImportadosController');
 
     //Remito
-    Route::get('remitos/ot/{ot_id}/total','RemitosController@RemitosTotal');
-    Route::get('remitos/ot/{ot_id}/paginate', 'RemitosController@paginate');
+    Route::get('remitos/paginate', 'RemitosController@paginate');
     Route::resource('remitos','RemitosController');
-    Route::get('remitos/ot/{ot_id}/generar-numero-remito', 'RemitosController@GenerarNumeroRemito');
 
     //procedimientos
     Route::resource('ot_procedimientos_propios','OtProcedimientosPropiosController');
