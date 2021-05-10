@@ -104,7 +104,6 @@ export default {
         window.location.href =  '/area/enod/remito/' + this.remitos.data[index].id +'/edit'
 
     }
-
  }
 }
 </script>
