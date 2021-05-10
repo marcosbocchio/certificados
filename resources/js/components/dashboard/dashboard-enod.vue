@@ -175,7 +175,6 @@
                                 <th class="col-lg-1">Estado</th>
                                 <th class="col-lg-1" colspan="4">
                                  <small style="margin-left: -2px;">Editar</small>
-                                 <small style="margin-left: 4px;">Usuarios</small>
                                  <small style="margin-left: 4px;">Informe</small>
                                  <small style="margin-left: 4px;">Acción</small>
                                 </th>
@@ -193,13 +192,6 @@
                                 <td width="10px">
                                   <button class="btn btn-warning btn-sm" title="Editar" @click="openEditarOt(ot.id)" :disabled="!$can('T_edita')">
                                     <span class="fa fa-edit">
-                                    </span>
-                                  </button>
-                                </td>
-
-                                <td width="10px">
-                                  <button class="btn btn-default btn-sm" title="Soldadores/Usuarios Cliente" @click="openUsuariosOt(ot.id)" :disabled="!$can('T_usuarios')">
-                                    <span class="fa fa-user">
                                     </span>
                                   </button>
                                 </td>

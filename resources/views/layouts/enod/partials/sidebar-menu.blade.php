@@ -122,7 +122,7 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              @can('T_remitos_edita')
+              @can('REMITOS')
                 <li><a href="{{ route('RemitosTable') }}">Listado</a></li>
               @endcan
             </ul>
