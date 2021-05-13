@@ -1207,6 +1207,7 @@ methods : {
         this.$store.commit('loading', true);
         try {
             let url = 'estadisticas-soldaduras/analisis_defectos_soldador/' + this.informes_ids;
+            console.log(url)
             let res = await axios.get(url);
             this.TablaDDSTemp = res.data;
             await this.GenerarTablaDefectosSoldador()
