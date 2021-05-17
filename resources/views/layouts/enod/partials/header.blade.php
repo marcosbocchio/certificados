@@ -19,20 +19,14 @@
             <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
                 <span class="sr-only">Toggle navigation</span>
             </a>
-            @if (env('APP_ENV')=='local')
-                <div  style="display: inline-block;" class="hidden-xs">
-                    <span style="color: white; z-index: 9999;width: 100%;height: 35px;text-align: center;font-size: 26px;font-weight: bold;margin-left: 300px;" >ENTORNO DE TESTING</span>
-                </div>
-                <div style="display: inline-block;" class="visible-xs">
-                    <span style="color: white; z-index: 9999;width: 100%;height: 25px;text-align: center;font-size: 20px;font-weight: bold;margin-left: 100px;" >ENTORNO DE TESTING</span>
-                </div>
-
-            @endif
             <!-- Navbar Right Menu -->
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
 
                     <!-- Notifications Menu -->
+
+
+
                     <li class="dropdown notifications-menu">
                         <!-- Menu toggle button -->
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -67,6 +61,17 @@
                             </li>
                             <li class="footer"><a href="{{ route('notificaciones') }}">Ver detalle</a></li>
                         </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        @if (config('country.app_country')=='ARGENTINA')
+                            <a href="" class="dropdown-toggle" data-toggle="dropdown"><img src="{{asset('img/flags/AR.png')}}" alt="Logo Argentina"></a>
+                        @elseif (config('country.app_country')=='BRASIL')
+                            <a href="" class="dropdown-toggle" data-toggle="dropdown"><img style="vertical-align:middle" src="{{asset('img/flags/BR.png')}}" alt="Logo Brasil"></a>
+                        @elseif (config('country.app_country')=='URUGUAY')
+                            <a href="" class="dropdown-toggle" data-toggle="dropdown"><img style="vertical-align:middle" src="{{asset('img/flags/UR.png')}}" alt="Logo Uruguay"></a>
+                        @endif
+                        </a>
                     </li>
 
                     <!-- User Account Menu -->

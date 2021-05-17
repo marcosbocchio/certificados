@@ -366,7 +366,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group" >
                                         <label for="distancia_fuente_pelicula">Dist. Fuente/Film *</label>
-                                        <input type="text" v-model="distancia_fuente_pelicula" class="form-control" disabled id="distancia_fuente_pelicula">
+                                        <input type="number" step="0.01" v-model="distancia_fuente_pelicula" class="form-control" :disabled="diametro.diametro!='VARIOS'" id="distancia_fuente_pelicula">
                                     </div>
                                 </div>
                             </div>

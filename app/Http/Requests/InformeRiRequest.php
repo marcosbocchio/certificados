@@ -91,6 +91,7 @@ class InformeRiRequest extends FormRequest
                 'actividad'                 => 'Max:10',
                 'exposicion'                => 'required|integer|digits_between:1,6',
                 'ejecutor_ensayo'           => 'required',
+                'distancia_fuente_pelicula' => 'required|numeric|between:0,99999.99',
                 'observaciones'             => 'max:250',
                 'pk'                        =>  $condicion_pk,
 

@@ -190,3 +190,8 @@ table .selected{
 
 color:rgb(255, 255, 255);
 }
+
+.well {
+    display: flex;
+    align-items: center;
+  }
