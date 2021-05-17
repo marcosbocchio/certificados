@@ -59,14 +59,14 @@
                 <!-- Notifications Menu -->
                 <li class="dropdown notifications-menu" >
                         @if (config('country.app_country')=='ARGENTINA')
-                            <img style="vertical-align:middle" src="{{asset('img/flags/AR.png')}}" alt="Logo Argentina">
-                            <span class="label" style="color:black" >Argentina</span>
+                            <img style="vertical-align:middle" src="{{asset('img/flags/AR.png')}}" alt="Logo Argentina" readonly>
+                            <span class="label" style="color:black" readonly>Argentina</span>
                         @elseif (config('country.app_country')=='BRASIL')
-                            <img style="vertical-align:middle" src="{{asset('img/flags/BR.png')}}" alt="Logo Brasil">
-                            <span class="label" style="color:black" >Brasil</span>
+                            <img style="vertical-align:middle" src="{{asset('img/flags/BR.png')}}" alt="Logo Brasil" readonly>
+                            <span class="label" style="color:black" readonly >Brasil</span>
                         @elseif (config('country.app_country')=='URUGUAY')
-                            <img style="vertical-align:middle" src="{{asset('img/flags/UR.png')}}" alt="Logo Uruguay">
-                            <span class="label" style="color:black" >Uruguay</span>
+                            <img style="vertical-align:middle" src="{{asset('img/flags/UR.png')}}" alt="Logo Uruguay" readonly>
+                            <span class="label" style="color:black" readonly>Uruguay</span>
                         @endif
                 </li>
             </ul>
