@@ -63,13 +63,19 @@
                         </ul>
                     </li>
 
-                    <li class="dropdown">
+                    <li class="dropdown user user-menu">
                         @if (config('country.app_country')=='ARGENTINA')
-                            <a href="" class="dropdown-toggle" data-toggle="dropdown"><img src="{{asset('img/flags/AR.png')}}" alt="Logo Argentina"></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" >
+                                <img src="{{asset('img/flags/argentina.png')}}" width="23" alt="Logo Argentina">
+                            </a>
                         @elseif (config('country.app_country')=='BRASIL')
-                            <a href="" class="dropdown-toggle" data-toggle="dropdown"><img style="vertical-align:middle" src="{{asset('img/flags/BR.png')}}" alt="Logo Brasil"></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <img style="vertical-align:middle" src="{{asset('img/flags/BR.png')}}" width="23" alt="Logo Brasil">
+                            </a>
                         @elseif (config('country.app_country')=='URUGUAY')
-                            <a href="" class="dropdown-toggle" data-toggle="dropdown"><img style="vertical-align:middle" src="{{asset('img/flags/UR.png')}}" alt="Logo Uruguay"></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <img style="vertical-align:middle" src="{{asset('img/flags/uruguay.png')}}" width="23"alt="Logo Uruguay">
+                            </a>
                         @endif
                         </a>
                     </li>

@@ -47,30 +47,33 @@
             padding-bottom: 0px;
             margin-bottom: 0px;
         }
+        #nav_pais {
+            position: absolute;
+            overflow: hidden;
+            right:24px;
+        }
 
     </style>
 </head>
 <body class="{{ Request::path() == 'login' || strpos(Request::path(),'password/reset') !== false  ? 'background-image hold-transition login-page' : '' }} ">
 
     <div id="app">
-
-        <div class="navbar-custom-menu" style="padding: 5px; float: right;margin-right:50px">
-            <ul class="nav navbar-nav">
-                <!-- Notifications Menu -->
-                <li class="dropdown notifications-menu" >
-                        @if (config('country.app_country')=='ARGENTINA')
-                            <img style="vertical-align:middle" src="{{asset('img/flags/AR.png')}}" alt="Logo Argentina" readonly>
-                            <span class="label" style="color:black" readonly>Argentina</span>
-                        @elseif (config('country.app_country')=='BRASIL')
-                            <img style="vertical-align:middle" src="{{asset('img/flags/BR.png')}}" alt="Logo Brasil" readonly>
-                            <span class="label" style="color:black" readonly >Brasil</span>
-                        @elseif (config('country.app_country')=='URUGUAY')
-                            <img style="vertical-align:middle" src="{{asset('img/flags/UR.png')}}" alt="Logo Uruguay" readonly>
-                            <span class="label" style="color:black" readonly>Uruguay</span>
-                        @endif
-                </li>
-            </ul>
-        </div>
+            <div id='nav_pais' class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown notifications-menu" >
+                            @if (config('country.app_country')=='ARGENTINA')
+                                <img style="vertical-align:middle" src="{{asset('img/flags/argentina.png')}}" width="23" alt="Logo Argentina" readonly>
+                                <span class="label" style="color:black" readonly>Argentina</span>
+                            @elseif (config('country.app_country')=='BRASIL')
+                                <img style="vertical-align:middle" src="{{asset('img/flags/BR.png')}}" alt="Logo Brasil" readonly>
+                                <span class="label" style="color:black" readonly >Brasil</span>
+                            @elseif (config('country.app_country')=='URUGUAY')
+                                <img style="vertical-align:middle" src="{{asset('img/flags/uruguay.png')}}" width="23" alt="Logo Uruguay" readonly>
+                                <span class="label" style="color:black" readonly>Uruguay</span>
+                            @endif
+                    </li>
+                </ul>
+            </div>
 
         @yield('content')
 

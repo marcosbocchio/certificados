@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container"style='height:100%'>
-  <div class="grandParentContaniner">
+    <div class="grandParentContaniner">
     <div class="login-box">
       <!-- /.login-logo -->
       <div class="login-box-body">

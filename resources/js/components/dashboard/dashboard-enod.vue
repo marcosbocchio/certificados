@@ -56,7 +56,7 @@
        <div class="col-lg-3 col-xs-6">
          <a @click="EntrarCuadro('documentaciones')">
           <cuadro-enod
-              :titulo = "'VEHÍCULO'"
+              :titulo = "'VEHÍCULOS'"
               :titulo_2 ="'DOC.'"
               :class_color_titulo = "'color_2'"
               :class_color_sub_titulo = "'color_3'"
@@ -74,12 +74,12 @@
        <div class="col-lg-3 col-xs-6">
          <a @click="EntrarCuadro('soldadores')">
           <cuadro-enod
-              :titulo = "'SOLDADORES'"
+              :titulo = "'CUÑOS'"
               :titulo_2 ="'USUARIOS'"
               :class_color_titulo = "'color_2'"
               :class_color_sub_titulo = "'color_3'"
-              :cantidad_1 ="CantSoldadores"
-              :cantidad_2 ="CantUsuariosCliente"
+              :cantidad_1 ="CantUsuariosCliente"
+              :cantidad_2 ="CantSoldadores"
               :src_icono ="'/img/tablero/icono-enod-soldadores.svg'"
               :class_color_cuadro = "'bg-custom-5'"
               :habilitado_sn =" $can('T_remitos_acceder') ?  true : false"
@@ -235,7 +235,6 @@
   </div>
     <div class="clearfix"></div>
     <confirmar-modal></confirmar-modal>
-
 </div>
 
 </template>

@@ -1,9 +1,9 @@
 <template>
-    <div>
+    <div  class="row">
        <div class="col-lg-12">
           <cuadro-largo-enod
-              :titulo = "'SOLDADORES'"
-              :titulo_2 = "'USUARIOS CLIENTE'"
+              :titulo = "'CUÑOS'"
+              :titulo_2 = "'USUARIOS'"
               :class_color_titulo = "'color_2'"
               :class_color_sub_titulo = "'color_3'"
               :cantidad_2 ="ot_soldadores.length"

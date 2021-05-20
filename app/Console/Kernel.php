@@ -25,8 +25,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
       {
-            Log::debug('message:'. config('cron.time_cron_documentaciones'));
-            Log::debug('message:'. config('cron.time_cron_dosimetria'));
             $schedule->command('command:task_date')->everyMinute();
             $schedule->command('command:VencimientosDocumentaciones')->dailyAt(config('cron.time_cron_documentaciones'));
             $schedule->command('command:DemoraCargaDosimetria')->dailyAt(config('cron.time_cron_dosimetria'));
