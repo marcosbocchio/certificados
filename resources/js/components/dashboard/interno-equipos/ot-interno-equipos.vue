@@ -17,22 +17,24 @@
         <div class="clearfix"></div>
 
         <div class="col-md-12">
-            <div class="top-buffer" >
-                <div class="box box-custom-enod">
-                    <div class="box-body">
-                        <div class="form-group">
-                            <label for="equipo">Equipo *</label>
-                            <v-select  v-model="interno_equipo" :options="interno_equipos" label="nro_interno">
-                                <template slot="option" slot-scope="option">
-                                    <span class="upSelect">{{ option.nro_interno }}</span> <br>
-                                    <span class="downSelect"> {{ option.equipo.codigo }} </span>
-                                </template>
-                            </v-select>
-                        </div>
-                        <div class="form-group">
-                            <span>
-                                <button type="button" @click="addEquipo(interno_equipo.id)"><span class="fa fa-plus-circle"></span></button>
-                            </span>
+            <div v-show="$can('T_equipos_actualiza')">
+                <div class="top-buffer" >
+                    <div class="box box-custom-enod">
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label for="equipo">Equipo *</label>
+                                <v-select  v-model="interno_equipo" :options="interno_equipos" label="nro_interno">
+                                    <template slot="option" slot-scope="option">
+                                        <span class="upSelect">{{ option.nro_interno }}</span> <br>
+                                        <span class="downSelect"> {{ option.equipo.codigo }} </span>
+                                    </template>
+                                </v-select>
+                            </div>
+                            <div class="form-group">
+                                <span>
+                                    <button type="button" @click="addEquipo(interno_equipo.id)"><span class="fa fa-plus-circle"></span></button>
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>

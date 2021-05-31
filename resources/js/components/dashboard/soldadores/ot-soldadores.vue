@@ -17,24 +17,27 @@
           </cuadro-largo-enod>
        </div>
         <div class="clearfix"></div>
+
         <div class="col-md-12">
-            <div class="box box-custom-enod">
-                <div class="box-body">
-                    <div class="form-group">
-                        <label>Soldadores</label>
-                        <v-select v-model="soldador" :options="soldadores" label="codigo">
-                            <template slot="option" slot-scope="option">
-                                <span class="upSelect">{{ option.nombre }} </span> <br>
-                                <span class="downSelect"> {{ option.codigo }} </span>
-                            </template>
-                        </v-select>
+            <div v-show="$can('T_soldadores_actualiza')">
+                <div class="box box-custom-enod">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label>Soldadores</label>
+                            <v-select v-model="soldador" :options="soldadores" label="codigo">
+                                <template slot="option" slot-scope="option">
+                                    <span class="upSelect">{{ option.nombre }} </span> <br>
+                                    <span class="downSelect"> {{ option.codigo }} </span>
+                                </template>
+                            </v-select>
+                        </div>
+                        <div class="form-group">
+                            <span>
+                                <button type="button" @click="addSoldador(soldador.id)"><span class="fa fa-plus-circle"></span></button>
+                            </span>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <span>
-                            <button type="button" @click="addSoldador(soldador.id)"><span class="fa fa-plus-circle"></span></button>
-                        </span>
-                    </div>
-                 </div>
+                </div>
             </div>
             <div class="box box-custom-enod top-buffer">
                 <div class="box-header with-border">
@@ -67,19 +70,20 @@
                     </div>
                 </div>
             </div>
-
-             <div class="box box-custom-enod">
-                <div class="box-body">
-                    <div class="form-group">
-                        <label>Usuarios Cliente</label>
-                        <v-select v-model="usuario_cliente" :options="usuarios_cliente" label="name"></v-select>
+            <div v-show="$can('T_soldadores_actualiza')">
+                <div class="box box-custom-enod">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label>Usuarios Cliente</label>
+                            <v-select v-model="usuario_cliente" :options="usuarios_cliente" label="name"></v-select>
+                        </div>
+                        <div class="form-group">
+                            <span>
+                                <button type="button" @click="addUsuarioCliente(usuario_cliente.id)"><span class="fa fa-plus-circle"></span></button>
+                            </span>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <span>
-                            <button type="button" @click="addUsuarioCliente(usuario_cliente.id)"><span class="fa fa-plus-circle"></span></button>
-                        </span>
-                    </div>
-                 </div>
+                </div>
             </div>
             <div class="box box-custom-enod top-buffer">
                 <div class="box-header with-border">
@@ -112,7 +116,9 @@
                     </div>
                 </div>
             </div>
-                  <a class="btn btn-primary" v-on:click.prevent="submit()" >Actualizar</a>
+                 <div v-show="$can('T_soldadores_actualiza')">
+                    <a class="btn btn-primary" v-on:click.prevent="submit()" >Actualizar</a>
+                 </div>
         </div>
         <div class="clearfix"></div>
     </div>
