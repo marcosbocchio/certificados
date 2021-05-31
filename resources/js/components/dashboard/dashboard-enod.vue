@@ -82,7 +82,7 @@
               :cantidad_2 ="CantSoldadores"
               :src_icono ="'/img/tablero/icono-enod-soldadores.svg'"
               :class_color_cuadro = "'bg-custom-5'"
-              :habilitado_sn =" $can('T_remitos_acceder') ?  true : false"
+              :habilitado_sn =" $can('T_soldadores_acceder') ?  true : false"
               :class_footer_img ="'footer-doc-remitos'"
 
           >
