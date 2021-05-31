@@ -97,7 +97,7 @@
                                 </div>
                             </div>
 
-                        <div v-if="isEnod">
+                        <div v-show="isEnod">
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Firma Digital</label>
@@ -299,15 +299,15 @@ export default {
               }
 
           },
+
      },
     methods: {
 
             openGallery(index) {
                     this.$refs.lightbox.showImage(0)
                 },
-
            openModal : function(){
-               console.log('entro en open modal');
+
             this.$nextTick(function () {
                 this.metodos_firmas = [];
                 this.Registro.name = this.selectRegistro.name;
@@ -322,11 +322,12 @@ export default {
                 this.Registro.password = '********';
                 this.password2 = '********';
                 this.Registro.path = this.selectRegistro.path;
-                console.log(this.selectRegistro.cliente_id);
-                if(this.selectRegistro.cliente_id != null){
+
+                console.log('this.isEnod: ', this.isEnod);
+                if(this.selectRegistro.cliente_id !== null) {
                     this.isEnod = false;
                     this.cliente = this.selectRegistro['cliente'];
-                }else{
+                } else {
                     this.isEnod = true;
                     this.cliente = {};
                 }
