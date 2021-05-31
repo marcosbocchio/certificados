@@ -127,31 +127,33 @@
                             <div class="col-md-12">
                                 <div class="box box-widget">
                                     <div class="box-body well" style="margin-bottom: 0 !important;">
-                                        <div class="col-md-12" style="margin-bottom: 10px;">
-                                            <strong style="font-size: 16px;font-weight: 600;">Alarmas</strong>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div>
-                                                <input type="checkbox" id="checkbox2"  v-model="Registro.exceptuar_notificar_doc_vencida_sn">
-                                                <label for="checkbox2">Exceptuar vencimiento doc.</label>
+                                        <div class="container">
+                                            <div class="col-md-12" style="margin-bottom: 10px;">
+                                                <strong style="font-size: 16px;font-weight: 600;">Alarmas</strong>
                                             </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div style="margin-left: 0px;">
-                                                <input type="checkbox" class="margin-left:20px" id="checkbox3"  v-model="Registro.exceptuar_notificar_demora_dosimetria_sn">
-                                                <label for="checkbox3">Exceptuar demora dosimetría.</label>
+                                            <div class="col-md-6">
+                                                <div>
+                                                    <input type="checkbox" id="checkbox2"  v-model="Registro.exceptuar_notificar_doc_vencida_sn">
+                                                    <label for="checkbox2">Exceptuar vencimiento doc.</label>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div>
-                                                <input type="checkbox" id="checkbox4" v-model="Registro.notificar_por_web_sn">
-                                                <label for="checkbox4">Notificar por web.</label>
+                                            <div class="col-md-6">
+                                                <div style="margin-left: 0px;">
+                                                    <input type="checkbox" class="margin-left:20px" id="checkbox3"  v-model="Registro.exceptuar_notificar_demora_dosimetria_sn">
+                                                    <label for="checkbox3">Exceptuar demora dosimetría.</label>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div style="margin-left: 0px;">
-                                                <input type="checkbox" class="margin-left:20px" id="checkbox5" v-model="Registro.notificar_por_mail_sn">
-                                                <label for="checkbox5">Notificar por mail.</label>
+                                            <div class="col-md-6">
+                                                <div>
+                                                    <input type="checkbox" id="checkbox4" v-model="Registro.notificar_por_web_sn">
+                                                    <label for="checkbox4">Notificar por web.</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div style="margin-left: 0px;">
+                                                    <input type="checkbox" class="margin-left:20px" id="checkbox5" v-model="Registro.notificar_por_mail_sn">
+                                                    <label for="checkbox5">Notificar por mail.</label>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
