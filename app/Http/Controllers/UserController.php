@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Log;
 use Session;
 use Hash;
 use App\UsuarioMetodosEnsayos;
+use App\FirmaUsuario;
 
 class UserController extends Controller
 {
@@ -27,7 +28,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
 
-      return User::with('cliente')->orderBy('name','ASC')->get();
+      return User::with('cliente')->with('firmas_usuarios')->orderBy('name','ASC')->get();
 
     }
 
@@ -60,6 +61,7 @@ class UserController extends Controller
         try {
 
             $this->saveUser($request,$User);
+            $this->createFirmas($request->firmas,$User->id);
             DB::commit();
 
         } catch (Exception $e) {
@@ -77,9 +79,10 @@ class UserController extends Controller
         try {
 
             $User = User::find($id);
-            $this->saveUser($request,$User);
+            // $this->saveUser($request,$User);
             UsuarioMetodosEnsayos::where('user_id',$id)->delete();
             $this->saveUser($request,$User);
+            $this->updateFirmas($request->firmas);
             DB::commit();
 
         } catch (Exception $e) {
@@ -88,6 +91,29 @@ class UserController extends Controller
             throw $e;
 
         }
+
+    }
+    public function updateFirmas($firmas) {
+        foreach ($firmas as $firma) {
+
+            FirmaUsuario::updateOrCreate(
+                ['metodo_ensayo_id' => $firma['metodo_ensayo_id'],'user_id' => $firma['user_id']],
+                ['metodo_ensayo_id' => $firma['metodo_ensayo_id'],'user_id' => $firma['user_id'],'path' => $firma['path']]
+            );
+        }
+
+
+    }
+
+    public function createFirmas($firmas,$user_id) {
+        foreach ($firmas as $firma) {
+
+            FirmaUsuario::firstOrCreate(
+                ['metodo_ensayo_id' => $firma['metodo_ensayo_id'],'user_id' => $user_id],
+                ['metodo_ensayo_id' => $firma['metodo_ensayo_id'],'user_id' => $user_id,'path' => $firma['path']]
+            );
+        }
+
 
     }
 

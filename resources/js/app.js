@@ -117,6 +117,9 @@ Vue.component('table-users', require('./components/abm-maestro/usuarios/table-us
 Vue.component('nuevo-users', require('./components/abm-maestro/usuarios/nuevo-users.vue').default);
 Vue.component('editar-users', require('./components/abm-maestro/usuarios/editar-users.vue').default);
 
+Vue.component('firmas-formE', require('./components/abm-maestro/usuarios/firmasFormE.vue').default);
+Vue.component('firmas-formN', require('./components/abm-maestro/usuarios/firmasFormN.vue').default);
+
 Vue.component('table-clientes', require('./components/abm-maestro/clientes/table-clientes.vue').default);
 Vue.component('nuevo-clientes', require('./components/abm-maestro/clientes/nuevo-clientes.vue').default);
 Vue.component('editar-clientes', require('./components/abm-maestro/clientes/editar-clientes.vue').default);

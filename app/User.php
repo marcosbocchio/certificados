@@ -41,7 +41,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    protected $with = ['notificaciones_resumen'];
+    protected $with = ['notificaciones_resumen','firmas_usuarios'];
 
     public function getId(){
 
@@ -83,6 +83,11 @@ class User extends Authenticatable
     public function notificaciones_resumen()
     {
         return $this->hasMany('App\NotificacionesResumenView','user_id','id')->orderBy('tipo','asc');
+    }
+
+    public function firmas_usuarios()
+    {
+        return $this->hasMany('App\FirmaUsuario','user_id','id');
     }
 
 

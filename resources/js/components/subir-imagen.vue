@@ -274,7 +274,7 @@ export default {
 
                axios.defaults.baseURL = this.url;
                var url = 'storage/' + this.ruta;
-               console.log(fd);
+               console.log(url);
 
                axios.post(url,fd,settings)
                .then (response => {

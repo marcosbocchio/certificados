@@ -1,5 +1,6 @@
 <template>
-    <form v-on:submit.prevent="storeRegistro" method="post">
+<div>
+    <form v-on:submit.prevent="storeRegistro" method="post" autocomplete="off">
         <div class="modal fade" id="editar">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -69,7 +70,7 @@
                         <div v-if="isEnod" class="col-md-6">
                             <div class="form-group">
                                 <label>Informes a firmar</label>
-
+                                <button type="button" class="btn btn-xs btn-primary" style="float:right" @click.stop="openFirmas('edit',selectRegistro)">Firmas</button>
                                 <v-select multiple v-model="metodos_firmas" :options="metodos_no_importables" label='metodo'></v-select>
 
                             </div>
@@ -184,18 +185,21 @@
             </div>
         </div>
     </form>
+<firmas-formE :metodos_ensayos='metodos_no_importables'  @close-firmas2="updatefirmas($event)"> </firmas-formE>
+</div>
 </template>
 
 <script>
 require('vue-image-lightbox/dist/vue-image-lightbox.min.css')
 import LightBox from 'vue-image-lightbox'
 import {mapState} from 'vuex'
-import { eventEditRegistro } from '../../event-bus';
+import { eventEditRegistro, eventModal} from '../../event-bus';
+
 export default {
 
     components: {
-                  LightBox,
-              },
+        LightBox,
+         },
     props : {
 
         selectRegistro : {
@@ -217,7 +221,8 @@ export default {
             'notificar_por_web_sn':false,
             'notificar_por_mail_sn':false,
             'password' : '',
-            'path':''
+            'path':'',
+            'firmas': [],
          },
 
         errors:{},
@@ -228,7 +233,6 @@ export default {
         metodos_firmas:[],
         password2:'',
         request : [],
-
         images:[
             {
 
@@ -287,8 +291,8 @@ export default {
 
           Registro : function(val) {
 
-                this.images[0].src ='/' + val.path;
-                this.images[0].thumb  ='/' + val.path;
+            this.images[0].src ='/' + val.path;
+            this.images[0].thumb  ='/' + val.path;
 
           },
 
@@ -305,13 +309,23 @@ export default {
      },
     methods: {
 
+            openFirmas (mode,item)  {
+              eventModal.$emit('open', mode,item);
+            },
+
+            updatefirmas: function (item){
+                this.Registro.firmas = item
+                console.log('edit',this.Registro)
+            },
+
             openGallery(index) {
-                    this.$refs.lightbox.showImage(0)
-                },
+                this.$refs.lightbox.showImage(0)
+            },
            openModal : function(){
 
             this.$nextTick(function () {
                 this.metodos_firmas = [];
+                this.Registro.id = this.selectRegistro.id;
                 this.Registro.name = this.selectRegistro.name;
                 this.Registro.dni  = this.selectRegistro.dni,
                 this.Registro.film = this.selectRegistro.film,
@@ -321,6 +335,7 @@ export default {
                 this.Registro.notificar_por_web_sn = this.selectRegistro.notificar_por_web_sn,
                 this.Registro.notificar_por_mail_sn = this.selectRegistro.notificar_por_mail_sn,
                 this.Registro.email = this.selectRegistro.email;
+                this.Registro.firmas = this.selectRegistro.firmas_usuarios;
                 this.Registro.password = '********';
                 this.password2 = '********';
                 this.Registro.path = this.selectRegistro.path;
@@ -419,7 +434,7 @@ export default {
                                                                                     }.bind(this) }
                const fd = new FormData();
 
-               fd.append('firma-digital',this.selectedFile);
+               fd.append('archivo',this.selectedFile);
 
                axios.defaults.baseURL = this.url;
                var url = 'storage/firma-digital';
@@ -467,6 +482,7 @@ export default {
                     'path'      : this.Registro.path,
                     'metodos_firmas' : this.metodos_firmas,
                     'roles'     :this.user_rol,
+                    'firmas'    : this.Registro.firmas,
 
                 }).then(response => {
                   this.$emit('update');

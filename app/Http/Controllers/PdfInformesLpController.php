@@ -26,6 +26,7 @@ use App\AplicacionesLp;
 use App\User;
 use App\OtTipoSoldaduras;
 use App\MetodoEnsayos;
+use App\FirmaUsuario;
 
 class PdfInformesLpController extends Controller
 {
@@ -33,7 +34,8 @@ class PdfInformesLpController extends Controller
 
         /* header */
 
-         $informe = Informe::findOrFail($id);
+        $informe = Informe::findOrFail($id);
+        $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);
          $informe_lp= InformesLp::where('informe_id',$informe->id)->firstOrFail();
          $ot = Ots::findOrFail($informe->ot_id);
          $cliente = Clientes::findOrFail($ot->cliente_id);
@@ -57,12 +59,14 @@ class PdfInformesLpController extends Controller
          $ejecutor_ensayo = User::findOrFail($ot_operador->user_id);
          $iluminacion = Iluminaciones::findOrFail($informe_lp->iluminacion_id);
          $evaluador = User::find($informe->firma);
+         $firma_metodo = FirmaUsuario::where('user_id',$informe->firma)->where('metodo_ensayo_id',$metodo_ensayo->id)->first();
+         $firma_general = $evaluador ? $evaluador->path : null;
+         $firma = $firma_metodo ? $firma_metodo->path : $firma_general;
          $contratista = Contratistas::find($ot->contratista_id);
          $observaciones = $informe->observaciones;
 
         /*  Encabezado */
 
-        $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);
         $titulo = "LÍQUIDOS PENETRANTES";
         $nro = FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo) .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) ;
         $fecha = date('d-m-Y', strtotime($informe->fecha));
@@ -110,7 +114,8 @@ class PdfInformesLpController extends Controller
                                                                 'evaluador',
                                                                 'detalles',
                                                                 'informe_modelos_3d',
-                                                                'observaciones'
+                                                                'observaciones',
+                                                                'firma',
                                                                 ))->setPaper('a4','portrait')->setWarnings(false);
 
 

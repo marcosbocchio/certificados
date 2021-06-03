@@ -31,6 +31,7 @@ use App\OtTipoSoldaduras;
 use App\Particulas;
 use App\Contrastes;
 use App\MetodoEnsayos;
+use App\FirmaUsuario;
 
 class PdfInformesPmController extends Controller
 {
@@ -39,6 +40,7 @@ class PdfInformesPmController extends Controller
         /* header */
 
          $informe = Informe::findOrFail($id);
+         $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);
          $informe_pm = InformesPm::where('informe_id',$informe->id)->firstOrFail();
          $ot = Ots::findOrFail($informe->ot_id);
          $cliente = Clientes::findOrFail($ot->cliente_id);
@@ -64,13 +66,16 @@ class PdfInformesPmController extends Controller
          $ejecutor_ensayo = User::findOrFail($ot_operador->user_id);
          $iluminacion = Iluminaciones::findOrFail($informe_pm->iluminacion_id);
          $evaluador = User::find($informe->firma);
+         $firma_general = ($evaluador) ? ($evaluador->path ? $evaluador->path : null) : null;
+         $firma_metodo = FirmaUsuario::where('user_id',$informe->firma)->where('metodo_ensayo_id',$metodo_ensayo->id)->first();
+         $firma = $firma_metodo ? ($firma_metodo->path ? $firma_metodo->path : null) : $firma_general;
+         $contratista = Contratistas::find($ot->contratista_id);
          $contratista = Contratistas::find($ot->contratista_id);
          $observaciones = $informe->observaciones;
          $informe_modelos_3d = (new \App\Http\Controllers\InformeModelos3dController)->getInformeModelos3d($id);
 
         /*  Encabezado */
 
-        $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);
         $titulo = "PARTÍCULAS MAGNETIZABLES";
         $nro = FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo) .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) ;
         $fecha = date('d-m-Y', strtotime($informe->fecha));
@@ -118,7 +123,8 @@ class PdfInformesPmController extends Controller
                                                                 'evaluador',
                                                                 'detalles',
                                                                 'informe_modelos_3d',
-                                                                'observaciones'
+                                                                'observaciones',
+                                                                'firma',
                                                                 ))->setPaper('a4','portrait')->setWarnings(false);
 
 
