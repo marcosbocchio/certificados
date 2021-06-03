@@ -449,14 +449,14 @@
                  <div v-if="!reparacion_sn" class="col-md-2">
                      <div class="form-group" >
                          <label for="junta">Elemento</label>
-                         <input type="text" v-model="junta" class="form-control" id="junta">
+                         <input type="text" v-model="junta" class="form-control" id="junta" maxlength="10">
                      </div>
                  </div>
                  <div v-else>
                      <div class="col-md-3">
                          <div class="form-group" >
                              <label for="juntas_reparacion">Elemento a Reparar</label>
-                             <v-select v-model="junta_reparacion" label="codigo" :options="juntas_reparacion" id="defecto_sector" ></v-select>
+                             <v-select v-model="junta_reparacion" label="codigo" :options="juntas_reparacion" id="defecto_sector"></v-select>
                          </div>
                      </div>
                  </div>

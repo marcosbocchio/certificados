@@ -1048,7 +1048,7 @@ export default {
 
         ruta_calibraciones_us: 'calibraciones_us',
         ruta_indicaciones_us:'indicaciones_us',
-        max_size :500, //KB
+        max_size :5000, //KB
         tipos_archivo_soportados:['jpg','bmp','jpeg','png'],
 
         errors:[],
