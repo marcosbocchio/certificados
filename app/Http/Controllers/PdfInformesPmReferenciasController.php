@@ -48,7 +48,7 @@ class PdfInformesPmReferenciasController extends Controller
                                                                 'contratista',
                                                                 'evaluador',
                                                                 'observaciones',
-                                                                'firmas',
+                                                                'firma',
                                                                ))->setPaper('a4','portrait')->setWarnings(false);
         return $pdf->stream();
 
