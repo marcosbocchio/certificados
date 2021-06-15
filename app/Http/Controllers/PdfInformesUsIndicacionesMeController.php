@@ -52,10 +52,7 @@ class PdfInformesUsIndicacionesMeController extends Controller
          $ot_operador = OtOperarios::findOrFail($informe->ejecutor_ensayo_id);
          $ejecutor_ensayo = User::findOrFail($ot_operador->user_id);
          $evaluador = User::find($informe->firma);
-         $firma_general = ($evaluador) ? ($evaluador->path ? $evaluador->path : null) : null;
-         $firma_metodo = FirmaUsuario::where('user_id',$informe->firma)->where('metodo_ensayo_id',$metodo_ensayo->id)->first();
-         $firma = $firma_metodo ? ($firma_metodo->path ? $firma_metodo->path : null) : $firma_general;
-         $contratista = Contratistas::find($ot->contratista_id);
+         $firma = (new \App\Http\Controllers\UserController)->getFirma($informe->firma,$metodo_ensayo->id);
          $contratista = Contratistas::find($ot->contratista_id);
          $estado_superficie = EstadosSuperficies::find($informe_us->estado_superficie_id);
          $generatrices = Generatrices::all();

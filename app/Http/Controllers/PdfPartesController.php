@@ -20,8 +20,6 @@ class PdfPartesController extends Controller
 
     }
 
-
-
     public function imprimir($id,$estado){
 
 

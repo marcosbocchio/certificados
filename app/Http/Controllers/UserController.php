@@ -240,4 +240,15 @@ class UserController extends Controller
 
       }
 
+    public function getFirma($user_id,$metodo_ensayo_id){
+
+        $evaluador = User::find($user_id);
+        $firma_general = ($evaluador) ? ($evaluador->path ? $evaluador->path : null) : null;
+        $firma_metodo = FirmaUsuario::where('user_id',$user_id)->where('metodo_ensayo_id',$metodo_ensayo_id)->first();
+        $firma = $firma_metodo ? ($firma_metodo->path ? $firma_metodo->path : $firma_general) : $firma_general;
+
+        return $firma;
+    }
+
+
 }

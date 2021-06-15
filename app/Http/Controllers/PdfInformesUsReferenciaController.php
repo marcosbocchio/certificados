@@ -29,10 +29,7 @@ class PdfInformesUsReferenciaController extends Controller
         $ot = Ots:: find($informe->ot_id);
         $cliente = Clientes::find($ot->cliente_id);
         $evaluador = User::find($informe->firma);
-        $firma_general = ($evaluador) ? ($evaluador->path ? $evaluador->path : null) : null;
-        $firma_metodo = FirmaUsuario::where('user_id',$informe->firma)->where('metodo_ensayo_id',$metodo_ensayo->id)->first();
-        $firma = $firma_metodo ? ($firma_metodo->path ? $firma_metodo->path : null) : $firma_general;
-        $contratista = Contratistas::find($ot->contratista_id);
+        $firma = (new \App\Http\Controllers\UserController)->getFirma($informe->firma,$metodo_ensayo->id);
         $contratista = Contratistas::find($ot->contratista_id);
         $observaciones = $detalle_referencia->descripcion;
         $tecnica = Tecnicas::findOrFail($informe->tecnica_id);
