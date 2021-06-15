@@ -96,10 +96,10 @@ class StorageController extends Controller
     public function saveFirmaDigital(Request $request){
 
 
-      if ($request->hasFile('firma-digital')){
+      if ($request->hasFile('archivo')){
 
 
-          $path = Storage::disk('public')->putFile('storage/firmas-digitales',$request->file('firma-digital'));
+          $path = Storage::disk('public')->putFile('storage/firmas-digitales',$request->file('archivo'));
 
         return $path;
       }

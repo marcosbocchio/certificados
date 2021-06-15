@@ -164,8 +164,6 @@ Route::group(['middleware' => 'auth:api'], function()
 
     Route::post('storage/firma-digital', 'StorageController@saveFirmaDigital');
 
-    Route::post('storage/firma-digital', 'StorageController@saveFirmaDigital');
-
     Route::post('storage/documentos_videos', 'StorageController@saveDocumentosVideos');
 
     Route::get('documentaciones/ot','DocumentacionesController@DocumentacionesDeOt');
@@ -323,6 +321,9 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('alarmas','AlarmasController');
     Route::resource('alarma-receptor','AlarmaReceptorController');
     Route::resource('notificaciones','NotificacionesController');
+
+    // Firmas
+    Route::get('firmas_usuarios/usuario/{id}','FirmaUsuarioController@index');
 
 
 });

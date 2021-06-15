@@ -26,6 +26,7 @@ use App\User;
 use App\OtTipoSoldaduras;
 use App\AgenteAcoplamientos;
 use App\MetodoEnsayos;
+use App\FirmaUsuario;
 
 class PdfInformesUsController extends Controller
 {
@@ -34,7 +35,8 @@ class PdfInformesUsController extends Controller
 
         /* header */
 
-         $informe = Informe::findOrFail($id);
+        $informe = Informe::findOrFail($id);
+        $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);
          $informe_us = InformesUs::where('informe_id',$informe->id)->firstOrFail();
          $ot = Ots::findOrFail($informe->ot_id);
          $cliente = Clientes::findOrFail($ot->cliente_id);
@@ -51,6 +53,10 @@ class PdfInformesUsController extends Controller
          $ot_operador = OtOperarios::findOrFail($informe->ejecutor_ensayo_id);
          $ejecutor_ensayo = User::findOrFail($ot_operador->user_id);
          $evaluador = User::find($informe->firma);
+         $firma_general = ($evaluador) ? ($evaluador->path ? $evaluador->path : null) : null;
+         $firma_metodo = FirmaUsuario::where('user_id',$informe->firma)->where('metodo_ensayo_id',$metodo_ensayo->id)->first();
+         $firma = $firma_metodo ? ($firma_metodo->path ? $firma_metodo->path : null) : $firma_general;
+         $contratista = Contratistas::find($ot->contratista_id);
          $contratista = Contratistas::find($ot->contratista_id);
          $estado_superficie = EstadosSuperficies::find($informe_us->estado_superficie_id);
          $agente_acoplamiento = AgenteAcoplamientos::find($informe_us->agente_acoplamiento_id);
@@ -60,7 +66,6 @@ class PdfInformesUsController extends Controller
 
         /*  Encabezado */
 
-        $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);
         $titulo = "INFORME DE ULTRASONIDO"."     " ." (" . mb_strtoupper($tecnica->descripcion,"UTF-8") . ")";
      //   dd($titulo);
         $nro = FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo) .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) ;
@@ -87,6 +92,7 @@ class PdfInformesUsController extends Controller
                                                                 'agente_acoplamiento',
                                                                 'calibraciones_us',
                                                                 'evaluador','observaciones',
+                                                                'firma',
                                                                 'informe_modelos_3d'
 
                                                                 ))->setPaper('a4','portrait')->setWarnings(false);

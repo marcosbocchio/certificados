@@ -12,6 +12,7 @@ use App\DetallesPm;
 use App\User;
 use App\Contratistas;
 use App\MetodoEnsayos;
+use App\FirmaUsuario;
 
 class PdfInformesPmReferenciasController extends Controller
 {
@@ -23,15 +24,19 @@ class PdfInformesPmReferenciasController extends Controller
         $detalle = DetallesPm::where('detalle_pm_referencia_id',$id)->first();
         $informe_pm = InformesPm::find($detalle->informe_pm_id);
         $informe = Informe::find($informe_pm->informe_id);
+        $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);
         $ot = Ots:: find($informe->ot_id);
         $cliente = Clientes::find($ot->cliente_id);
         $evaluador = User::find($informe->firma);
+        $firma_general = ($evaluador) ? ($evaluador->path ? $evaluador->path : null) : null;
+        $firma_metodo = FirmaUsuario::where('user_id',$informe->firma)->where('metodo_ensayo_id',$metodo_ensayo->id)->first();
+        $firma = $firma_metodo ? ($firma_metodo->path ? $firma_metodo->path : null) : $firma_general;
+        $contratista = Contratistas::find($ot->contratista_id);
         $contratista = Contratistas::find($ot->contratista_id);
         $observaciones = $detalle_referencia->descripcion;
 
         /*  Encabezado */
 
-        $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);
         $titulo = "PARTÍCULAS MAGNETIZABLES (REFERENCIA)";
         $nro = FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo) .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) ;
         $fecha = date('d-m-Y', strtotime($informe->fecha));

@@ -34,6 +34,7 @@ use App\OtProcedimientosPropios;
 use App\Contratistas;
 use App\OtTipoSoldaduras;
 use App\MetodoEnsayos;
+use App\FirmaUsuario;
 
 class PdfInformesRiController extends Controller
 {
@@ -67,6 +68,9 @@ class PdfInformesRiController extends Controller
         $ejecutor_ensayo = User::findOrFail($ot_operador->user_id);
         $tecnicas_grafico = TecnicasGraficos::findOrFail($informe_ri->tecnicas_grafico_id);
         $evaluador = User::find($informe->firma);
+        $firma_metodo = FirmaUsuario::where('user_id',$informe->firma)->where('metodo_ensayo_id',$metodo_ensayo->id)->first();
+        $firma_general = $evaluador ? $evaluador->path : null;
+        $firma = $firma_metodo ? $firma_metodo->path : $firma_general;
         $contratista = Contratistas::find($ot->contratista_id);
         $observaciones = $informe->observaciones;
         $informe_modelos_3d = (new \App\Http\Controllers\InformeModelos3dController)->getInformeModelos3d($id);
@@ -114,6 +118,7 @@ class PdfInformesRiController extends Controller
                                                                         'defectos_posiciones',
                                                                         'evaluador',
                                                                         'informe_modelos_3d',
+                                                                        'firma',
                                                                         'observaciones'))->setPaper('a4','landscape')->setWarnings(false);
 
 
@@ -154,6 +159,7 @@ class PdfInformesRiController extends Controller
                                                               'defectos_posiciones',
                                                               'evaluador',
                                                               'informe_modelos_3d',
+                                                              'firma',
                                                               'observaciones'))->setPaper('a4','portrait')->setWarnings(false);
 
 

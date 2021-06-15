@@ -12,6 +12,7 @@ use App\DetallesLp;
 use App\User;
 use App\Contratistas;
 use App\MetodoEnsayos;
+use App\FirmaUsuario;
 
 
 class PdfInformesLpReferenciasController extends Controller
@@ -24,15 +25,19 @@ class PdfInformesLpReferenciasController extends Controller
         $detalle = DetallesLp::where('detalle_lp_referencia_id',$id)->first();
         $informe_lp = InformesLp::find($detalle->informe_lp_id);
         $informe = Informe::find($informe_lp->informe_id);
+        $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);
         $ot = Ots:: find($informe->ot_id);
         $cliente = Clientes::find($ot->cliente_id);
         $evaluador = User::find($informe->firma);
+        $firma_general = ($evaluador) ? ($evaluador->path ? $evaluador->path : null) : null;
+        $firma_metodo = FirmaUsuario::where('user_id',$informe->firma)->where('metodo_ensayo_id',$metodo_ensayo->id)->first();
+        $firma = $firma_metodo ? ($firma_metodo->path ? $firma_metodo->path : null) : $firma_general;
+        $contratista = Contratistas::find($ot->contratista_id);
         $contratista = Contratistas::find($ot->contratista_id);
         $observaciones = $detalle_referencia->descripcion;
 
         /*  Encabezado */
 
-        $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);
         $titulo = "LÍQUIDOS PENETRANTES (REFERENCIA)";
         $nro = FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo) .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) ;
         $fecha = date('d-m-Y', strtotime($informe->fecha));
@@ -48,7 +53,8 @@ class PdfInformesLpReferenciasController extends Controller
                                                                 'cliente',
                                                                 'contratista',
                                                                 'evaluador',
-                                                                'observaciones'
+                                                                'observaciones',
+                                                                'firma',
                                                                ))->setPaper('a4','portrait')->setWarnings(false);
         return $pdf->stream();
 

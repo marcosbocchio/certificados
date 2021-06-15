@@ -1,4 +1,5 @@
 <template>
+<div>
     <form v-on:submit.prevent="storeRegistro" method="post" autocomplete="off">
         <div class="modal fade" id="nuevo">
             <div class="modal-dialog modal-lg">
@@ -69,7 +70,7 @@
                         <div v-if="isEnod" class="col-md-6">
                             <div class="form-group">
                                 <label>Informes a firmar</label>
-
+                                <button type="button" class="btn btn-xs btn-primary" style="float:right" @click.stop="openFirmas('new')">Firmas</button>
                                 <v-select multiple v-model="metodos_firmas" :options="metodos_no_importables" label='metodo'></v-select>
 
                             </div>
@@ -161,8 +162,8 @@
                             </div>
                         </div>
 
-
                         <div class="clearfix"></div>
+
                         <div class="col-md-12">
                             <div class="form-group">
                                 <strong>Roles</strong>
@@ -185,17 +186,18 @@
             </div>
         </div>
     </form>
+    <firmas-formN :metodos_ensayos='metodos_no_importables' @close-firmas1="updatefirmas($event)"> </firmas-formN>
+</div>
 </template>
 
 <script>
 require('vue-image-lightbox/dist/vue-image-lightbox.min.css')
 import LightBox from 'vue-image-lightbox'
 import {mapState} from 'vuex'
-import { eventNewRegistro } from '../../event-bus';
+import { eventNewRegistro, eventModal} from '../../event-bus';
 export default {
 
     components: {
-
             LightBox,
         },
 
@@ -212,7 +214,8 @@ export default {
             'notificar_por_mail_sn':false,
             'email' : '',
             'password' : '',
-            'path':''
+            'path':'',
+            'firmas':[],
          },
         errors:{},
         isEnod:true,
@@ -271,26 +274,29 @@ export default {
     watch : {
 
           Registro : function(val) {
-
                 this.images[0].src ='/' + val.path;
                 this.images[0].thumb  ='/' + val.path;
-
           },
 
           isEnod : function(val){
-
               if(val){
                   this.user_rol.splice('Cliente');
               }else {
                   this.user_rol.push(' Cliente')
               }
-
-
           },
-
     },
 
     methods: {
+
+            openFirmas (mode,item)  {
+              eventModal.$emit('open', mode,item);
+            },
+
+            updatefirmas: function (item){
+                this.Registro.firmas = item
+                console.log('new',this.Registro)
+            },
 
             openGallery(index) {
                  this.$refs.lightbox.showImage(0)
@@ -380,7 +386,7 @@ export default {
                                                                                     }.bind(this) }
                const fd = new FormData();
 
-               fd.append('firma-digital',this.selectedFile);
+               fd.append('archivo',this.selectedFile);
 
                axios.defaults.baseURL = this.url;
                var url = 'storage/firma-digital';
@@ -428,6 +434,7 @@ export default {
                 'path'      : this.Registro.path,
                 'metodos_firmas' : this.metodos_firmas,
                 'roles'     :this.user_rol,
+                'firmas' : this.Registro.firmas
 
 
                 }).then(response => {
