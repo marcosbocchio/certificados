@@ -25,7 +25,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="obra">Obra Nº </label>
-                                    <input v-model="obra" type="text" class="form-control" id="obra" placeholder="" maxlength = "8" :disabled="otdata.obra">
+                                    <input v-model="obra" type="text" class="form-control" id="obra" placeholder="" maxlength = "15" :disabled="otdata.obra">
                                 </div>
                             </div>
                         </div>
