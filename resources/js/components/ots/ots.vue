@@ -37,7 +37,7 @@
         <div class="col-md-2">
           <div class="form-group">
             <label for="obra">Obra Nº / OC</label>
-            <input v-model="obra" type="text" class="form-control" id="obra" placeholder="" maxlength = "8">
+            <input v-model="obra" type="text" class="form-control" id="obra" placeholder="" maxlength = "15">
           </div>
         </div>
         <div class="col-md-2">

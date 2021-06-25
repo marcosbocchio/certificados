@@ -18,7 +18,7 @@
                     <div class="form-group" >
                         <label for="obra">Obra N°</label>
                         <div v-if="otdata.obra">
-                            <input type="text" v-model="obra" class="form-control" id="obra" min="0" maxlength="8" @input="inputObra" :disabled="otdata.obra">
+                            <input type="text" v-model="obra" class="form-control" id="obra" min="0" maxlength="15" @input="inputObra" :disabled="otdata.obra">
                         </div>
                         <div v-else>
                             <v-select v-model="obra" label="obra" :options="obras" :reduce="obras => obras.obra" @input="inputObra" id="obra"></v-select>

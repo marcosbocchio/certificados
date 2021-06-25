@@ -31,7 +31,7 @@ class OtsRequest extends FormRequest
             'proyecto'                 => 'required|Max:60',
             'fecha'                    => 'required',
             'hora'                     => 'required',
-            'obra'                     => 'Min:1|Max:8 |nullable',
+            'obra'                     => 'Min:1|Max:15|nullable',
             'contacto1'                => 'required',
             'user_empresa'             => 'required',
             'provincia'                => 'required',

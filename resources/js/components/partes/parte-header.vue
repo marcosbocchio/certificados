@@ -17,7 +17,7 @@
                 <div class="col-md-6">
                     <div class="form-group" >
                         <label for="obra">Obra N°</label>
-                        <input type="text" v-model="obra" class="form-control" id="obra" min="0" maxlength="8" :disabled="otdata.obra || certificado_sn">
+                        <input type="text" v-model="obra" class="form-control" id="obra" min="0" maxlength="15" :disabled="otdata.obra || certificado_sn">
                     </div>
                 </div>
                 <div class="col-md-6">
