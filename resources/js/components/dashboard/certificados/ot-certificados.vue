@@ -74,7 +74,7 @@
                         </table>
                     </div>
                     <pagination
-                        :data="ot_certificados" @pagination-change-page="getResults" >
+                        :data="ot_certificados" @pagination-change-page="getResults" :limit="3">
                         <span slot="prev-nav">&lt; Previous</span>
                         <span slot="next-nav">Next &gt;</span>
                     </pagination>
