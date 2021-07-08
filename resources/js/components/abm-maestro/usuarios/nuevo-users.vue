@@ -314,7 +314,8 @@ export default {
                         'notificar_por_mail_sn':false,
                         'email' : '',
                         'password' : '',
-                        'path':''
+                        'path':'',
+                        'firmas': [],
                 },
                 this.password2='',
                 this.isEnod=true,
