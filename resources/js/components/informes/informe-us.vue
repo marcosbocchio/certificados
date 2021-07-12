@@ -1360,15 +1360,15 @@ export default {
                 this.$store.dispatch('loadEspesores',diametro.diametro_code);
                 if(index === -1){
                     if(!this.validarDiametroEspecifico(diametro.diametro)){
-                       this.diametro= {}
+                       this.diametro = {}
                     }
                  }
             }
         },
 
         validarDiametroEspecifico : function(diametro){
-            let exp_posicion = /^[0-9]{1,3}\.[0-9]{0,3}m$/;
-            return (!exp_posicion.test(this.diametro.diametro))
+            let exp_posicion = /^[0-9]{0,3}.[0-9]{0,3}m$/;
+            return (exp_posicion.test(this.diametro.diametro))
         },
 
         getGeneratrices : function(){
