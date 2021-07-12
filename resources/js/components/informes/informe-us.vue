@@ -1367,7 +1367,7 @@ export default {
         },
 
         validarDiametroEspecifico : function(diametro){
-            let exp_posicion = /^[0-9]{0,3}.[0-9]{0,3}m$/;
+            let exp_posicion = /^[0-9]{0,3}.[0-9]{0,2}m$/;
             return (exp_posicion.test(this.diametro.diametro))
         },
 
