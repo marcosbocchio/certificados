@@ -356,8 +356,9 @@ class InformesUsController extends Controller
         $informe_material = Materiales::find($informe->material_id);
         $informe_material_accesorio = Materiales::find($informe->material2_id);
         $informe_tecnica = Tecnicas::find($informe->tecnica_id);
-        $informe_diametroEspesor = DiametrosEspesor::find($informe->diametro_espesor_id);
-        $informe_diametro = DiametroView::where('diametro',$informe_diametroEspesor->diametro)->first();
+
+        $informe_diametroEspesor = $informe->diametro_espesor_id ? DiametrosEspesor::find($informe->diametro_espesor_id) : null ;
+        $informe_diametro = $informe_diametroEspesor ? DiametroView::where('diametro',$informe_diametroEspesor->diametro)->first() : null;
         $informe_interno_equipo = internoEquipos::where('id',$informe->interno_equipo_id)->with('equipo')->first();
         $documetacionesRepository = new DocumentacionesRepository;
         $informe_procedimiento = (new DocumentacionesController($documetacionesRepository))->ProcedimientoInformeId($informe->procedimiento_informe_id);
@@ -366,7 +367,6 @@ class InformesUsController extends Controller
         $informe_ejecutor_ensayo =(new OtOperariosController())->getEjecutorEnsayo($informe->ejecutor_ensayo_id);
         $informe_estado_superficie = EstadosSuperficies::find($informe_us->estado_superficie_id);
         $informe_agente_acoplamiento = AgenteAcoplamientos::find($informe_us->agente_acoplamiento_id);
-
 
         $calibraciones  = $this->getCalibraciones($informe_us->id);
         $tabla_us_pa    = $this->getTabla_us_pa($informe_us->id);
@@ -383,6 +383,13 @@ class InformesUsController extends Controller
 
         $informe_modelos_3d = (new \App\Http\Controllers\InformeModelos3dController)->getInformeModelos3d($id);
 
+        if ($informe_diametroEspesor == null)
+          $informe_diametroEspesor = new DiametrosEspesor();
+
+        if ($informe_diametro == null)
+          $informe_diametro = new DiametroView();
+
+        // dd($informe_diametroEspesor,$informe_diametro);
         return view('informes.us.edit', compact('ot',
                                                  'metodo',
                                                  'user',

@@ -45,7 +45,7 @@ class PdfInformesUsIndicacionesUsPaController extends Controller
          $norma_evaluacion = NormaEvaluaciones::findOrFail($informe->norma_evaluacion_id);
          $ot_procedimiento_propio = OtProcedimientosPropios::findOrFail($informe->procedimiento_informe_id);
          $procedimiento_inf = Documentaciones::findOrFail($ot_procedimiento_propio->documentacion_id);
-         $diametro_espesor = DiametrosEspesor::findOrFail($informe->diametro_espesor_id);
+         $diametro_espesor = $informe->diametro_espesor_id ? DiametrosEspesor::findOrFail($informe->diametro_espesor_id) : null;
          $tecnica = Tecnicas::findOrFail($informe->tecnica_id);
          $interno_equipo = InternoEquipos::findOrFail($informe->interno_equipo_id)->with('equipo')->first();
          $ot_operador = OtOperarios::findOrFail($informe->ejecutor_ensayo_id);

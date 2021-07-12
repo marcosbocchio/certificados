@@ -70,7 +70,7 @@
                     <div class="col-md-3">
                         <div class="form-group" >
                             <label for="Diametro">Ø *</label>
-                            <v-select v-model="diametro" label="diametro" :options="diametros" @input="getEspesores()"></v-select>
+                            <v-select v-model="diametro" label="diametro" :options="diametros" taggable @input="getEspesores(diametro)"></v-select>
                         </div>
                     </div>
 
@@ -543,7 +543,7 @@
                             <div class="col-md-3">
                                 <div class="form-group" >
                                     <label for="diametro_us_pa" title="Diametro">ø</label>
-                                    <v-select v-model="diametro_us_pa" label="diametro" :options="diametros" id="diametro_us_pa"></v-select>
+                                    <v-select v-model="diametro_us_pa" label="diametro" :options="diametros" taggable id="diametro_us_pa"></v-select>
                                 </div>
                             </div>
 
@@ -716,7 +716,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group" >
                                         <label for="diametro_me" title="Diametro">ø</label>
-                                        <v-select v-model="diametro_me" label="diametro" :options="diametros" id="diametro_me"></v-select>
+                                        <v-select v-model="diametro_me" label="diametro" :options="diametros" taggable id="diametro_me"></v-select>
                                     </div>
                                 </div>
 
@@ -949,13 +949,13 @@ export default {
 
             },
         diametrodata : {
-            type : Object,
-            required : false
+            type : [Object,Array],
+            required : false,
             },
 
         diametro_espesordata : {
-            type : Object,
-            required : false
+            type : [Object,Array],
+            required : false,
             },
 
         tecnicadata : {
@@ -1257,7 +1257,9 @@ export default {
                this.material = this.materialdata;
                this.material2 = this.material2data;
                if(this.informedata.material2_tipo) { this.material2_tipo = this.informedata.material2_tipo };
-               this.diametro = this.diametrodata;
+               this.diametro = (this.diametro_espesordata['id'] !== 'undefined' && !(this.diametro_espesordata instanceof  Array)) ? this.diametro_espesordata : { 'diametro' : this.informedata.diametro_especifico };
+               console.log('diametro_espesordata:', this.diametro_espesordata)
+               console.log('diametro :' , this.diametro);
                this.espesor = this.informedata.espesor_especifico ? {'espesor' : this.informedata.espesor_especifico} : this.diametro_espesordata;
                this.espesor_chapa = this.informedata.espesor_chapa;
                this.tecnica = this.tecnicadata;
@@ -1346,15 +1348,27 @@ export default {
 
         },
 
-        getEspesores : function(){
+        getEspesores : function(diametro){
             this.espesor='';
-            if(this.diametro != 'CHAPA')   {
+            if(diametro != 'CHAPA')   {
 
                 this.espesor_chapa = '';
             }
-            if(this.diametro){
-                this.$store.dispatch('loadEspesores',this.diametro.diametro_code);
+            let index = this.diametros.findIndex(e => e.diametro_code === diametro.diametro_code);
+
+            if(diametro){
+                this.$store.dispatch('loadEspesores',diametro.diametro_code);
+                if(index === -1){
+                    if(!this.validarDiametroEspecifico(diametro.diametro)){
+                       this.diametro= {}
+                    }
+                 }
             }
+        },
+
+        validarDiametroEspecifico : function(diametro){
+            let exp_posicion = /^[0-9]{1,3}\.[0-9]{0,3}m$/;
+            return (!exp_posicion.test(this.diametro.diametro))
         },
 
         getGeneratrices : function(){
@@ -1366,6 +1380,7 @@ export default {
             this.$store.commit('loading', false);
             });
         },
+
 
         addCalibraciones : function () {
 

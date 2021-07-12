@@ -5,7 +5,6 @@
                 <informe-header :otdata="otdata" :informe_id="informedata.id" :editmode="editmode" @set-obra="setObra"></informe-header>
                 <div class="box box-custom-enod">
                    <div class="box-body">
-
                          <div class="col-md-3">
                              <div class="form-group" >
                                  <label for="formato">Tipo informe RI **</label>

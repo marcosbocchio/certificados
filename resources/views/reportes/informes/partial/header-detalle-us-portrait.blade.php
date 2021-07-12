@@ -110,7 +110,13 @@
                                 <th colspan="2">Espesor</th>
                            </tr>
                             <tr>
-                                <td colspan="2">{{$diametro_espesor->diametro}}</td>
+                                <td colspan="2">
+                                    @if ($informe->diametro_espesor_id)
+                                        {{$diametro_espesor->diametro}}
+                                    @else
+                                        {{$informe->diametro_especifico}}
+                                    @endif
+                                </td>
                                 <td colspan="2">
                                     @if ($informe->espesor_chapa)
                                         {{ $informe->espesor_chapa }}

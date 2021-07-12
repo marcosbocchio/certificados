@@ -35,8 +35,8 @@ class PdfInformesUsController extends Controller
 
         /* header */
 
-        $informe = Informe::findOrFail($id);
-        $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);
+         $informe = Informe::findOrFail($id);
+         $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);
          $informe_us = InformesUs::where('informe_id',$informe->id)->firstOrFail();
          $ot = Ots::findOrFail($informe->ot_id);
          $cliente = Clientes::findOrFail($ot->cliente_id);
@@ -47,7 +47,7 @@ class PdfInformesUsController extends Controller
          $norma_evaluacion = NormaEvaluaciones::findOrFail($informe->norma_evaluacion_id);
          $ot_procedimiento_propio = OtProcedimientosPropios::findOrFail($informe->procedimiento_informe_id);
          $procedimiento_inf = Documentaciones::findOrFail($ot_procedimiento_propio->documentacion_id);
-         $diametro_espesor = DiametrosEspesor::findOrFail($informe->diametro_espesor_id);
+         $diametro_espesor = $informe->diametro_espesor_id ? DiametrosEspesor::findOrFail($informe->diametro_espesor_id) : null;
          $tecnica = Tecnicas::findOrFail($informe->tecnica_id);
          $interno_equipo =InternoEquipos::where('id',$informe->interno_equipo_id)->with('equipo')->first();
          $ot_operador = OtOperarios::findOrFail($informe->ejecutor_ensayo_id);
