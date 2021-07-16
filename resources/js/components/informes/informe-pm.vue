@@ -705,7 +705,7 @@ export default {
 
         //detalle
         pieza:'',
-        cm:'',
+        cm:'0',
         TablaLp:[],
         indexPosDetalle:0,
 
@@ -1029,8 +1029,9 @@ export default {
                 path3:null,
                 path4:null
 
-                 });
+            });
 
+            this.cm = '0';
 
         },
 

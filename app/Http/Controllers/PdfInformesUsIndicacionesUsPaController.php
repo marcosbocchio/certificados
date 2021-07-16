@@ -21,7 +21,6 @@ use App\DiametrosEspesor;
 use App\Contratistas;
 use App\Tecnicas;
 use App\EstadosSuperficies;
-use App\CalibracionesUs;
 use App\DetalleUsPaUs;
 use App\User;
 use App\OtTipoSoldaduras;

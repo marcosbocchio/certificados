@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use PDF;
 use App\Informe;
 use App\InformesUs;
@@ -16,7 +14,6 @@ use App\OtOperarios;
 use App\OtProcedimientosPropios;
 use App\InternoEquipos;
 use App\Documentaciones;
-use App\Iluminaciones;
 use App\DiametrosEspesor;
 use App\Contratistas;
 use App\Tecnicas;
@@ -26,7 +23,9 @@ use App\User;
 use App\OtTipoSoldaduras;
 use App\AgenteAcoplamientos;
 use App\MetodoEnsayos;
-use App\FirmaUsuario;
+use App\InformesUsMe;
+use App\Generatrices;
+use App\DetalleUsPaUs;
 
 class PdfInformesUsController extends Controller
 {
@@ -61,6 +60,10 @@ class PdfInformesUsController extends Controller
          $observaciones = $informe->observaciones;
          $informe_modelos_3d = (new \App\Http\Controllers\InformeModelos3dController)->getInformeModelos3d($id);
 
+         $generatrices = Generatrices::all();
+         $informes_us_me = InformesUsMe::where('informe_us_id',$informe_us->id)->with('detalle_us_me')->get();
+         $indicaciones_us_pa = DetalleUsPaUs::where('informe_us_id',$informe_us->id)->get();
+
         /*  Encabezado */
 
         $titulo = "INFORME DE ULTRASONIDO"."     " ." (" . mb_strtoupper($tecnica->descripcion,"UTF-8") . ")";
@@ -90,7 +93,10 @@ class PdfInformesUsController extends Controller
                                                                 'calibraciones_us',
                                                                 'evaluador','observaciones',
                                                                 'firma',
-                                                                'informe_modelos_3d'
+                                                                'informe_modelos_3d',
+                                                                'generatrices',
+                                                                'informes_us_me',
+                                                                'indicaciones_us_pa'
 
                                                                 ))->setPaper('a4','portrait')->setWarnings(false);
 

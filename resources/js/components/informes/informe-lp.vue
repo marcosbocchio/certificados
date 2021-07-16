@@ -641,7 +641,7 @@ data() {return {
         TablaModelos3d :[],
         //detalle
         pieza:'',
-        cm:'',
+        cm:'0',
         metodos_trabajo_lp:[],
         aplicaciones_lp:[],
         TablaLp:[],
@@ -920,7 +920,10 @@ data() {return {
             path4:null
             });
 
-        },
+        this.cm = '0';
+
+    },
+
 
     removeDetalle(index) {
 

@@ -22,12 +22,10 @@ use App\Contratistas;
 use App\Tecnicas;
 use App\EstadosSuperficies;
 use App\InformesUsMe;
-use App\DetalleUsMe;
 use App\Generatrices;
 use App\User;
 use App\OtTipoSoldaduras;
 use App\MetodoEnsayos;
-use App\FirmaUsuario;
 
 class PdfInformesUsIndicacionesMeController extends Controller
 {

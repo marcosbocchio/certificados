@@ -35,6 +35,8 @@ footer {
     -o-transform: rotate(-90deg);
 }
 
+.page_break { page-break-before: always; }
+
 </style>
 
 <body>
@@ -49,21 +51,6 @@ footer {
 </header>
 
 <footer>
-
-    <table width="100%">
-        <tbody>
-            <tr>
-                <td style="border: 1px solid #000;background:#D8D8D8;text-align: center;" >
-                   REGISTRO DE MEDICIONES
-                   @if($tecnica->codigo == 'US' || $tecnica->codigo=='PA')
-                   <a href="{{ route('InformeUsIndicacionesUsPa',$informe->id)}}"><img src="{{ public_path('img/fa-file-pdf.png')}}" style="height: 15px;margin-left:3px;;margin-top:2px;text-align: center;"></a>
-                   @elseif($tecnica->codigo ='ME')
-                   <a href="{{ route('InformeUsIndicacionesMe',$informe->id)}}"><img src="{{ public_path('img/fa-file-pdf.png')}}" style="height: 15px;margin-left:3px;;margin-top:2px;text-align: center;"></a>
-                   @endif
-               </td>
-            </tr>
-        </tbody>
-    </table>
 
     @include('reportes.partial.linea-amarilla')
     @include('reportes.informes.partial.observaciones')
@@ -266,8 +253,18 @@ footer {
         </table>
     @endif
 
-    @if( $informe_us->path1_calibracion || $informe_us->path2_calibracion || $informe_us->path3_calibracion || $informe_us->path4_calibracion)
 
+    @if( $informe_us->path1_calibracion || $informe_us->path2_calibracion || $informe_us->path3_calibracion || $informe_us->path4_calibracion)
+        <div class="page_break"></div>
+        <table width="100%">
+            <tbody>
+                <tr>
+                    <td style="border: 1px solid #000;background:#D8D8D8;text-align: center;" >
+                   IMAGENES CALIBRACIONES
+                </td>
+                </tr>
+            </tbody>
+        </table>
         <table style="text-align: center;margin-top: 5px;" width="100%" >
             <tbody>
                 <tr>
@@ -317,6 +314,15 @@ footer {
     @endif
 
     @include('reportes.informes.partial.modelos3d-portrait')
+
+    <div class="page_break"></div>
+
+    @if($tecnica->codigo == 'US' || $tecnica->codigo=='PA')
+      @include('reportes.informes.us-indicaciones-us-pa-v2')
+    @else
+      @include('reportes.informes.us-indicaciones-me-v2')
+    @endif
+
 
 </main>
 

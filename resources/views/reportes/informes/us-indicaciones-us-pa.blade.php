@@ -17,24 +17,24 @@
 
 @page { margin: 290px 30px 103px 60px !important;
         padding: 0px 0px 0px 0px !important; }
-        
+
 body {
     margin: 0px 1px 0px 1px;
     padding: 0 0 0 0;
 }
 header {
     position:fixed;
-    top: -253px;    
+    top: -253px;
     }
 
 main{
-   
+
     margin-top: -2px;
 }
 
 
 footer {
-    position: fixed; bottom: 6px; 
+    position: fixed; bottom: 6px;
     padding-top: -5px;
 }
 .pagenum:before {
@@ -44,22 +44,22 @@ footer {
 .bordered {
     border-color: #000000;
     border-style: solid;
-    border-width: 2px; 
-    border-collapse: collapse;   
+    border-width: 2px;
+    border-collapse: collapse;
 }
 
 .bordered-1 {
     border-color: #000000;
     border-style: solid;
-    border-width: 1px; 
-    border-collapse: collapse;   
+    border-width: 1px;
+    border-collapse: collapse;
 }
 
 .bordered-td {
     border-color: #000000;
     border-style: solid;
-    border-width: 1px; 
-    border-collapse: collapse; 
+    border-width: 1px;
+    border-collapse: collapse;
 }
 .vcenter {
     display: table-cell;
@@ -84,7 +84,7 @@ b {
 }
 </style>
 
-<body class="bordered" style="border-top: none;border-bottom: none;">  
+<body class="bordered" style="border-top: none;border-bottom: none;">
 
 <header>
     <table style="text-align: center" width="100%" class="bordered">
@@ -96,50 +96,50 @@ b {
                             <tr>
                                 <td rowspan="4" style="text-align: right;width: 240px;">
                                     <img src="{{ public_path('img/logo-enod-web.jpg')}}" alt="" style="height: 60px; margin-right: 25px;">
-                                </td>   
+                                </td>
                                 <td style="font-size: 19px; height: 30px;width: 295px; text-align: center;margin-left: 0px" rowspan="4"><b>INFORME DE ULTRASONIDO ({{mb_strtoupper($tecnica->descripcion,"UTF-8")}})</b></td>
-                                <td style="font-size: 11px;">&nbsp;</td>                         
+                                <td style="font-size: 11px;">&nbsp;</td>
                             </tr>
                             <tr>
-                                <td style="font-size: 11px;width: 140px;"><span style="float:right"><b>INFORME N°: </b>{{FormatearNumeroInforme($informe->numero,'US')}}</span></td>                      
+                                <td style="font-size: 11px;width: 140px;"><span style="float:right"><b>INFORME N°: </b>{{FormatearNumeroInforme($informe->numero,'US')}}</span></td>
                             </tr>
                             <tr>
                                 <td style="font-size: 11px;width: 140px;"><span style="float:right;margin-right: 9px;"><b >FECHA: </b>{{ date('d-m-Y', strtotime($informe->fecha)) }}</span></td>
                             </tr>
                             <tr>
-                                <td style="font-size: 11px;"><b></b></td>                     
-                                <td style="font-size: 11px;"><b></td>            
-                            </tr>               
+                                <td style="font-size: 11px;"><b></b></td>
+                                <td style="font-size: 11px;"><b></td>
+                            </tr>
                         </tbody>
-                    </table>     
+                    </table>
                 </td>
             </tr>
             @include('reportes.informes.partial.header-portrait')
             <tr>
                 <td class="bordered">
                     <table width="100%" style="border-collapse: collapse;" >
-                        <tbody>                 
+                        <tbody>
                         <tr>
                             <td style="font-size: 11px; width: 200px;border-right: 1px solid #000;" colspan="2"><b>Componente: </b>{{$informe->componente}}</td>
                             <td style="font-size: 11px;width: 50px;border-right: 1px solid #000; " colspan="4" ><b>Equipo: </b>{{$interno_equipo->equipo->codigo}}</td>
-                            <td style="font-size: 11px;  " colspan="2"  ><b style="font-size: 11px;">Norma Evaluación: </b>{{$norma_evaluacion->codigo}}</td> 
-                           
+                            <td style="font-size: 11px;  " colspan="2"  ><b style="font-size: 11px;">Norma Evaluación: </b>{{$norma_evaluacion->codigo}}</td>
+
                         </tr>
-                        <tr>                
-                            
+                        <tr>
+
                             <td style="font-size: 11px;border-right: 1px solid #000;" colspan="2" ><b>Material: </b>{{$material->codigo}}</td>
                             <td style="font-size: 11px;  width: 270px; border-right: 1px solid #000;" colspan="4"  ><b>Encoder:{{$informe_us->encoder}} </b></td>
-                            <td style="font-size: 11px; " colspan="2"  ><b>Norma Ensayo: </b>{{$norma_ensayo->codigo}}</td>     
-           
+                            <td style="font-size: 11px; " colspan="2"  ><b>Norma Ensayo: </b>{{$norma_ensayo->codigo}}</td>
+
                         </tr>
                         <tr>
                             <td style="font-size: 11px;border-right: 1px solid #000;" colspan="2" ><b>Plano / Isom :</b>{{$informe->plano_isom}}</td>
-                            <td style="font-size: 11px; border-right: 1px solid #000;" colspan="4"  ><b>Estado Superficie: </b>{{$estado_superficie->codigo}}</td>                            
+                            <td style="font-size: 11px; border-right: 1px solid #000;" colspan="4"  ><b>Estado Superficie: </b>{{$estado_superficie->codigo}}</td>
                             <td style="font-size: 11px; " colspan="2" ><b>Tecnica: </b>{{$tecnica->descripcion}}</td>
-                        
+
                         </tr>
                         <tr>
-                            <td style="font-size: 11px;" colspan="1"  ><b>Diametro: </b>{{$diametro_espesor->diametro}}</td>    
+                            <td style="font-size: 11px;" colspan="1"  ><b>Diametro: </b>{{$diametro_espesor->diametro}}</td>
                             <td style="font-size: 11px;border-right: 1px solid #000; " colspan="1" ><b>Espesor: </b>
 
                                 @if ($informe->espesor_chapa)
@@ -148,25 +148,25 @@ b {
                                          &nbsp;
                                 @else
                                     {{  $diametro_espesor->espesor }}
-                                @endif                       
-                            
+                                @endif
+
                             </td>
                             <td style="font-size: 11px;border-right: 1px solid #000;" colspan="4"  ><b>Agente Acoplamiento : </b>{{$informe_us->agente_acoplamiento}}</td>
-                            <td style="font-size: 11px;  " colspan="2" ><b>Ejec. Ensayo: </b>{{$ejecutor_ensayo->name}}</td>  
+                            <td style="font-size: 11px;  " colspan="2" ><b>Ejec. Ensayo: </b>{{$ejecutor_ensayo->name}}</td>
 
                         </tr>
                         <tr>
-                            <td style="font-size: 11px;border-right: 1px solid #000;" colspan="2"><b>Proc. Sold. : </b>{{$informe->procedimiento_soldadura}}</td>                            
+                            <td style="font-size: 11px;border-right: 1px solid #000;" colspan="2"><b>Proc. Sold. : </b>{{$informe->procedimiento_soldadura}}</td>
                             <td style="font-size: 11px;border-right: 1px solid #000;" colspan="4" ><b>EPS: </b>{{$ot_tipo_soldadura->eps}}</td>
                             <td style="font-size: 11px;" colspan="2" >&nbsp;</td>
-                        </tr>  
+                        </tr>
                         <tr>
                             <td style="font-size: 11px; border-right: 1px solid #000;" colspan="2" ><b>Proc. US: </b>{{$procedimiento_inf->titulo}} </td>
                             <td style="font-size: 11px;border-right: 1px solid #000;" colspan="4"><b>PQR: </b>{{$ot_tipo_soldadura->pqr}}</td>
                             <td style="font-size: 11px;" colspan="2" >&nbsp;</td>
-                        </tr>          
+                        </tr>
                         </tbody>
-                    </table>   
+                    </table>
                 </td>
             </tr>
         </tbody>
@@ -175,41 +175,41 @@ b {
 
 <footer>
         <table style="text-align: center" width="100%" class="bordered">
-            <tbody>             
+            <tbody>
                 <tr>
                     <td>
                         <table width="100%" style="border-collapse: collapse;" >
                             <tbody>
-                                <tr>                               
-                                   <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>EVALUADOR </b></td>   
-                                   <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>CLIENTE </b></td> 
-                                   <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>COMITENTE </b></td>                              
+                                <tr>
+                                   <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>EVALUADOR </b></td>
+                                   <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>CLIENTE </b></td>
+                                   <td style="font-size: 13px; text-align: center;" colspan="2" class="bordered-td" ><b>COMITENTE </b></td>
                                 </tr>
-                                
-                                <tr>                               
-                                    <td style="font-size: 11px; text-align: left; height: 25px;width:75px;"><span style="margin-left: 2px">FIRMA:</span></td>   
-    
+
+                                <tr>
+                                    <td style="font-size: 11px; text-align: left; height: 25px;width:75px;"><span style="margin-left: 2px">FIRMA:</span></td>
+
                                     <td style="text-align:left ;font-size: 11px; border-right: 1px solid #000;width: 150px;margin-left: 15px;" rowspan="2">
                                         @if($evaluador && $evaluador->path)
                                         <img src="{{ public_path($evaluador->path)}}" alt="" style="width: 100px;height: 50px;">
                                         @endif
-                                    </td> 
-    
-                                    <td style="font-size: 11px; text-align: left; height: 25px; border-right: 1px solid #000;" colspan="2"> <span style="margin-left: 2px">FIRMA:</span></td> 
-                                    
+                                    </td>
+
+                                    <td style="font-size: 11px; text-align: left; height: 25px; border-right: 1px solid #000;" colspan="2"> <span style="margin-left: 2px">FIRMA:</span></td>
+
                                     <td style="font-size: 11px; text-align: left; height: 25px; border-right: 1px solid #000;" colspan="2"><span style="margin-left: 2px">FIRMA:</span></td>
-                                                            
+
                                 </tr>
-                               
-                                <tr>                               
-                                    <td style="font-size: 11px; text-align: left; height: 25px;width:75px;"><span style="margin-left: 2px">ACLARACIÓN:</span></td>   
+
+                                <tr>
+                                    <td style="font-size: 11px; text-align: left; height: 25px;width:75px;"><span style="margin-left: 2px">ACLARACIÓN:</span></td>
                                     <td style="font-size: 11px; text-align: left; height: 25px; border-right: 1px solid #000;" colspan="2"><span style="margin-left: 2px">ACLARACIÓN:</span></td>
-                                    <td style="font-size: 11px; text-align: left; height: 25px; border-right: 1px solid #000;" colspan="2"><span style="margin-left: 2px">ACLARACIÓN:</span></td>                       
+                                    <td style="font-size: 11px; text-align: left; height: 25px; border-right: 1px solid #000;" colspan="2"><span style="margin-left: 2px">ACLARACIÓN:</span></td>
                                 </tr>
                             </tbody>
-                        </table> 
+                        </table>
                     </td>
-                </tr>          
+                </tr>
             </tbody>
         </table>
     </footer>
@@ -239,7 +239,7 @@ b {
         </thead>
         <tbody>
             @foreach ($indicaciones_us_pa  as $indicacion)
-            <tr>                
+            <tr>
                   <td style="font-size: 10px;height: 16px;text-align: center;" class="bordered-td">{{ strtoupper($indicacion->elemento) }}</td>
                   <td style="font-size: 10px;text-align: center;" class="bordered-td">ø {{ $indicacion->diametro }}</td>
                   <td style="font-size: 10px;text-align: center;" class="bordered-td">{{ $indicacion->nro_indicacion }}</td>
@@ -262,40 +262,17 @@ b {
                   <td style="font-size: 10px;text-align: center;" class="bordered-td">
 
                    @if ($indicacion->detalle_us_pa_us_referencia_id)
-                        <a href="{{ route('InformeUsDetalleUsPaUsReferencias',$indicacion->detalle_us_pa_us_referencia_id)}}"><img src="{{ public_path('img/fa-file-pdf.png')}}" alt="" style="height: 15px;margin-left:3px;;margin-top:2px;text-align: center;"></a>                                                       
+                        <a href="{{ route('InformeUsDetalleUsPaUsReferencias',$indicacion->detalle_us_pa_us_referencia_id)}}"><img src="{{ public_path('img/fa-file-pdf.png')}}" alt="" style="height: 15px;margin-left:3px;;margin-top:2px;text-align: center;"></a>
                     @endif
-                  
-                  </td>
-        
-            </tr>        
-            @endforeach   
-<!--
-            {{ $cantFilasTotal = count($indicaciones_us_pa) }}
-            {{ $filasPage = 27}}
-            {{ $filasACompletar = pdfCantFilasACompletar($filasPage,$cantFilasTotal) }}
 
-            @for ( $x=0 ;  $x < $filasACompletar ; $x++)
-                <tr>
-                    <td style="font-size: 10px; height: 16px;text-align: center;" class="bordered-td">&nbsp;</td>
-                    <td style="font-size: 10px; text-align: center;" class="bordered-td">&nbsp;</td>
-                    <td style="font-size: 10px; text-align: center;" class="bordered-td">&nbsp;</td>
-                    <td style="font-size: 10px; text-align: center;" class="bordered-td">&nbsp;</td>
-                    <td style="font-size: 10px; text-align: center;" class="bordered-td">&nbsp;</td>
-                    <td style="font-size: 10px; text-align: center;" class="bordered-td">&nbsp;</td>
-                    <td style="font-size: 10px; text-align: center;" class="bordered-td">&nbsp;</td>
-                    <td style="font-size: 10px; text-align: center;" class="bordered-td">&nbsp;</td>
-                    <td style="font-size: 10px; text-align: center;" class="bordered-td">&nbsp;</td>
-                    <td style="font-size: 10px; text-align: center;" class="bordered-td">&nbsp;</td>
-                    <td style="font-size: 10px; text-align: center;" class="bordered-td">&nbsp;</td>      
-                    <td style="font-size: 10px; text-align: center;" class="bordered-td">&nbsp;</td>
-                    <td style="font-size: 10px; text-align: center;" class="bordered-td">&nbsp;</td>
-               </tr>
-            @endfor
--->
+                  </td>
+
+            </tr>
+            @endforeach
         </tbody>
     </table>
 
-   
+
     @if($informe_us->path1_indicacion || $informe_us->path2_indicacion || $informe_us->path3_indicacion || $informe_us->path3_indicacion)
 
         <div class="page-break"></div>
@@ -307,40 +284,40 @@ b {
                                 <tbody>
                                     <tr>
                                         <td style="text-align: center; width: 340px;height: 190px;">
-                                                
+
                                             @if ($informe_us->path1_indicacion)
                                                 <img src="{{ public_path($informe_us->path1_indicacion) }}" alt="" style="height: 180px; width: 263px;">
-                                            @endif  
-                            
+                                            @endif
+
                                         </td>
 
                                         <td style="text-align: center; width: 340px;height: 190px;">
-                                                
+
                                             @if ($informe_us->path2_indicacion)
                                                 <img src="{{ public_path($informe_us->path2_indicacion) }}" alt="" style="height: 180px; width: 263px;">
-                                            @endif  
-                            
-                                        </td>  
+                                            @endif
+
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td style="text-align: center; width: 340px;height: 190px;">
-                                            
+
                                             @if ($informe_us->path3_indicacion)
                                                 <img src="{{ public_path($informe_us->path3_indicacion) }}" alt="" style="height: 180px; width: 263px;">
-                                            @endif  
-                                
+                                            @endif
+
                                         </td>
 
                                         <td style="text-align: center; width: 340px;height: 190px;">
 
                                             @if ($informe_us->path4_indicacion)
                                                 <img src="{{ public_path($informe_us->path4_indicacion) }}" alt="" style="height: 180px; width: 263px;">
-                                            @endif  
-                                
+                                            @endif
+
                                         </td>
-                                    </tr>                        
+                                    </tr>
                                 </tbody>
-                            </table>             
+                            </table>
                         </td>
                     </tr>
                 </tbody>
@@ -349,7 +326,7 @@ b {
 
 
 </main>
-     
+
 <script type="text/php">
 
     if ( isset($pdf) ) {
@@ -365,7 +342,7 @@ b {
         $angle = 0.0;   //  default
         $pdf->page_text($x, $y, $text, $font, $size, $color, $word_space, $char_space, $angle);
     }
- 
+
 </script>
 
 
