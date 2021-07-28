@@ -13,21 +13,21 @@ use App\User;
 
 class PdfProductosReferenciasController extends Controller
 {
-    public function imprimir($id){ 
-      
-        $ot_modelos = OtProductos::where('ot_referencia_id',$id)->first();             
-        $ot = Ots::find($ot_modelos->ot_id);   
+    public function imprimir($id){
+
+        $ot_modelos = OtProductos::where('ot_referencia_id',$id)->first();
+        $ot = Ots::find($ot_modelos->ot_id);
         $cliente = Clientes::find($ot->cliente_id);
         $modelo = Productos::find($ot_modelos->producto_id);
         $ot_referencia = OtReferencias::find($id);
-        $tabla = 'Producto';    
-        $evaluador = User::find($ot->firma);   
+        $tabla = 'Producto';
+        $evaluador = User::find($ot->firma);
         $contratista = Contratistas::find($ot->contratista_id);
-        $observaciones = $ot_referencia->descripcion;       
+        $observaciones = $ot_referencia->descripcion;
 
-        
+
         /*  Encabezado */
-      
+
         $titulo = "REFERENCIA OT";
         $tipo_reporte = 'OT Nº:';
         $nro = $ot->numero;
@@ -37,13 +37,13 @@ class PdfProductosReferenciasController extends Controller
                                                                 'cliente',
                                                                 'contratista',
                                                                 'modelo',
-                                                                'ot_modelo',
+                                                                'ot_modelos',
                                                                 'ot_referencia',
                                                                 'evaluador',
                                                                 'tabla'
                                                                ));
         return $pdf->stream();
-        
+
 
 
     }

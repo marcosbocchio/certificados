@@ -2,10 +2,10 @@
     <table style="text-align: center;border-collapse: collapse;" class="bordered-td">
         <thead>
             <tr>
-                <td style="border-bottom: 1px solid #000;background:#D8D8D8" colspan="13" >REGISTRO DE MEDICIONES</td>
+                <td style="border-bottom: 1px solid #000;background:#D8D8D8" colspan="12" >REGISTRO DE MEDICIONES</td>
             </tr>
             <tr>
-                <th id="rotate" style="border-right: 1px solid #000;font-size: 13px;font-weight: normal;"><div id="vertical" style="margin-left: 64px;margin-right:64px;">ELEMENTO</div></th>
+                <th id="rotate" style="border-right: 1px solid #000;font-size: 13px;font-weight: normal;"><div id="vertical" style="margin-left: 85px;margin-right:85px;">ELEMENTO</div></th>
                 <th id="rotate" style="border-right: 1px solid #000;font-size: 13px;font-weight: normal;"><div id="vertical" style="margin-left: -6px;margin-right: -6px;">DIAMETRO</div></th>
                 <th id="rotate" style="border-right: 1px solid #000;font-size: 13px;font-weight: normal;"><div id="vertical" style="margin-left: -30px;margin-right: -30px;">N° INDICACIÓN</div></th>
                 <th id="rotate" style="border-right: 1px solid #000;font-size: 13px;font-weight: normal;"><div id="vertical" style="margin-left: -45px;margin-right: -45px;">POSICION EXAMEN</div></th>
@@ -19,7 +19,6 @@
 
                 <th id="rotate" style="border-right: 1px solid #000;font-size: 13px;font-weight: normal;" ><div id="vertical" style="margin-left: -16px;margin-right: -16px;">RESULTADO</div></th>
 
-                <th id="rotate" style="font-size: 13px;font-weight: normal;" ><div id="vertical" style="margin-left: -20px;margin-right: -20px;" >REFERENCIA</div></th>
             </tr>
         </thead>
         <tbody>
@@ -44,14 +43,6 @@
                    @else
                       RZ
                   @endif
-                  </td>
-
-                  <td style="font-size: 10px;text-align: center;" class="bordered-td">
-
-                   @if ($indicacion->detalle_us_pa_us_referencia_id)
-                        <a href="{{ route('InformeUsDetalleUsPaUsReferencias',$indicacion->detalle_us_pa_us_referencia_id)}}"><img src="{{ public_path('img/fa-file-pdf.png')}}" alt="" style="height: 15px;margin-left:3px;;margin-top:2px;text-align: center;"></a>
-                    @endif
-
                   </td>
             </tr>
             @endforeach
@@ -116,3 +107,5 @@
                 </tbody>
             </table>
     @endif
+
+    @include('reportes.informes.partial.referencias')

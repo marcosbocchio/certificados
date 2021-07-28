@@ -323,7 +323,6 @@ footer {
       @include('reportes.informes.us-indicaciones-me-v2')
     @endif
 
-
 </main>
 
 @include('reportes.partial.nro_pagina')

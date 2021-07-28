@@ -64,6 +64,9 @@ class PdfInformesUsController extends Controller
          $informes_us_me = InformesUsMe::where('informe_us_id',$informe_us->id)->with('detalle_us_me')->get();
          $indicaciones_us_pa = DetalleUsPaUs::where('informe_us_id',$informe_us->id)->get();
 
+         $detalles = DetalleUsPaUs::with('referencia')
+                    ->where('informe_us_id',$informe_us->id)
+                    ->get();
         /*  Encabezado */
 
         $titulo = "INFORME DE ULTRASONIDO"."     " ." (" . mb_strtoupper($tecnica->descripcion,"UTF-8") . ")";
@@ -96,7 +99,8 @@ class PdfInformesUsController extends Controller
                                                                 'informe_modelos_3d',
                                                                 'generatrices',
                                                                 'informes_us_me',
-                                                                'indicaciones_us_pa'
+                                                                'indicaciones_us_pa',
+                                                                'detalles',
 
                                                                 ))->setPaper('a4','portrait')->setWarnings(false);
 

@@ -26,7 +26,7 @@ use App\AplicacionesLp;
 use App\User;
 use App\OtTipoSoldaduras;
 use App\MetodoEnsayos;
-use App\FirmaUsuario;
+use App\DetallesLp;
 
 class PdfInformesLpController extends Controller
 {
@@ -72,18 +72,9 @@ class PdfInformesLpController extends Controller
 
         $informe_modelos_3d = (new \App\Http\Controllers\InformeModelos3dController)->getInformeModelos3d($id);
 
-         $detalles =  DB::select('SELECT
-                                detalles_lp.pieza as pieza,
-                                detalles_lp.cm as cm,
-                                detalles_lp.detalle as detalle,
-                                detalles_lp.aceptable_sn as aceptable_sn,
-                                detalles_lp_referencias.id as referencia_id
-                                FROM
-                                detalles_lp
-                                INNER JOIN informes_lp ON detalles_lp.informe_lp_id = informes_lp.id
-                                LEFT JOIN detalles_lp_referencias ON detalles_lp.detalle_lp_referencia_id = detalles_lp_referencias.id
-                                WHERE
-                                informes_lp.id =:id',['id' => $informe_lp->id ]);
+        $detalles = DetallesLp::with('referencia')
+                                ->where('informe_lp_id',$informe_lp->id)
+                                ->get();
 
 
            $pdf = PDF::loadView('reportes.informes.lp-v2',compact('ot','titulo','nro','tipo_reporte','fecha',

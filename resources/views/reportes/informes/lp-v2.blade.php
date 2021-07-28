@@ -20,6 +20,7 @@ footer {
     position: fixed; bottom:0px;
     padding-top: 0px;
 }
+.page_break { page-break-before: always; }
 
 </style>
 
@@ -52,14 +53,13 @@ footer {
     <table width="100%" style="border-collapse: collapse;">
         <thead>
             <tr>
-                <td colspan="6"><strong style="font-size: 14px;">Indicaciones</strong></td>
+                <td colspan="5"><strong style="font-size: 14px;">Indicaciones</strong></td>
             </tr>
             <tr>
-                <td style="font-size: 11px; width:230px;  text-align: center " rowspan="2" class="bordered-td" >ELEMENTO</td>
+                <td style="font-size: 11px; width:270px;  text-align: center " rowspan="2" class="bordered-td" >ELEMENTO</td>
                 <td style="font-size: 11px; width:40px;  text-align: center;" rowspan="2" class="bordered-td">CM</td>
                 <td style="font-size: 11px; width:312px; text-align: center;" rowspan="2" class="bordered-td">DETALLE</td>
                 <td style="font-size: 11px; width:80px; text-align: center;" colspan="2" class="bordered-td">RESULTADO</td>
-                <td style="font-size: 11px; text-align: center" rowspan="2" class="bordered-td">REF</td>
             </tr>
             <tr>
                 <td style="font-size: 11px; text-align: center;" class="bordered-td">AP</td>
@@ -91,16 +91,12 @@ footer {
                             X
                         @endif
                     </td>
-                    <td class="bordered-td">&nbsp;
-                        @if ($detalle->referencia_id)
-                            <a href="{{ route('InformeLpReferencias',$detalle->referencia_id)}}"><img src="{{ public_path('img/fa-file-pdf.png')}}" alt="" style="height: 15px;margin-left:3px;;margin-top:2px;text-align: center;"></a>
-                        @endif
-                    </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
     @include('reportes.informes.partial.modelos3d-portrait')
+    @include('reportes.informes.partial.referencias')
 
 </main>
 

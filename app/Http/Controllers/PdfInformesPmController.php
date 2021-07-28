@@ -30,8 +30,9 @@ use App\Contratistas;
 use App\OtTipoSoldaduras;
 use App\Particulas;
 use App\Contrastes;
+use App\DetallesPmReferencias;
 use App\MetodoEnsayos;
-use App\FirmaUsuario;
+use App\DetallesPm;
 
 class PdfInformesPmController extends Controller
 {
@@ -71,6 +72,8 @@ class PdfInformesPmController extends Controller
          $observaciones = $informe->observaciones;
          $informe_modelos_3d = (new \App\Http\Controllers\InformeModelos3dController)->getInformeModelos3d($id);
 
+
+
         /*  Encabezado */
 
         $titulo = "PARTÍCULAS MAGNETIZABLES";
@@ -80,18 +83,9 @@ class PdfInformesPmController extends Controller
 
      //   dd($instrumento_medicion);
 
-        $detalles =  DB::select('SELECT
-                                detalles_pm.pieza as pieza,
-                                detalles_pm.cm as cm,
-                                detalles_pm.detalle as detalle,
-                                detalles_pm.aceptable_sn as aceptable_sn,
-                                detalles_pm_referencias.id as referencia_id
-                                FROM
-                                detalles_pm
-                                INNER JOIN informes_pm ON detalles_pm.informe_pm_id = informes_pm.id
-                                LEFT JOIN detalles_pm_referencias ON detalles_pm.detalle_pm_referencia_id = detalles_pm_referencias.id
-                                WHERE
-                                informes_pm.id =:id',['id' => $informe_pm->id ]);
+        $detalles = DetallesPm::with('referencia')
+                                ->where('informe_pm_id',$informe_pm->id)
+                                ->get();
 
            $pdf = PDF::loadView('reportes.informes.pm-v2',compact('ot','titulo','nro','tipo_reporte','fecha',
                                                                 'norma_ensayo',
