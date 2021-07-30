@@ -806,11 +806,11 @@ data() {return {
 
         if(this.metodo_trabajo_lp.tipo == 'TIPO I'){
 
-            this.iluminacion = this.iluminaciones[this.iluminaciones.findIndex(elemento => elemento.codigo == '1076 Lux')];
+            this.iluminacion = this.iluminaciones[this.iluminaciones.findIndex(elemento => elemento.codigo == '1000 uv/cm2')];
 
         }else if(this.metodo_trabajo_lp.tipo == 'TIPO II'){
 
-            this.iluminacion = this.iluminaciones[this.iluminaciones.findIndex(elemento => elemento.codigo == '1000 µv/cm2')];
+            this.iluminacion = this.iluminaciones[this.iluminaciones.findIndex(elemento => elemento.codigo == '1076 Lux')];
 
         }
 
