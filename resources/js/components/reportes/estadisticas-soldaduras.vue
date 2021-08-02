@@ -95,8 +95,11 @@
                             :data-manager="dataManager"
                             pagination-path="pagination"
                             @vuetable:pagination-data="onPaginationData"
-                            :fields = "[{name:'informe_descrip',title:''}]"
+                            :fields = fields
                             >
+                            <div slot="informeDescrip" slot-scope="props">
+                                <span class="list-informes">{{props.rowData.informeDescrip}}</span>
+                            </div>
                             </vuetable>
                             <div class="text-center">
                                 <ul class="pagination">
@@ -574,6 +577,9 @@ export default {
         selObra:false,
         informes : [],
         perPage: 10,
+        fields: [ { name:'informeDescrip',
+                    title:'',
+                }] ,
         css: {
         table: {
             tableClass: 'table table-striped table-bordered table-hovered',
@@ -1101,8 +1107,8 @@ methods : {
         this.informes_ids = this.informes.map(item => item.id).toString();
         console.log(this.informes_ids);
         this.informes.forEach(function(item) {
-            let informe_descrip = item.gasofucto_sn ? 'Informe ' + item.km + '-' + item.tipo_soldadura_codigo + '-' + item.numero_formateado + '-' + item.componente : item.numero_formateado + item.componente ;
-            Object.defineProperty(item,'informe_descrip',{ value: informe_descrip})
+            let informeDescrip = item.gasoducto_sn ? (item.km + '-' + item.tipo_soldadura_codigo + '-' + item.numero_formateado + ' ' + item.componente) : (item.numero_formateado + ' ' + item.componente) ;
+            Object.defineProperty(item,'informeDescrip',{ value: informeDescrip})
         }.bind(this))
         this.valores_indice_rechazos= [];
         await this.getIndicesDeRechazos();
@@ -1903,5 +1909,9 @@ ul li .titulo-li {
       color:#666;
       font-size: 14px;
   }
+
+  .c {
+      color:red
+     }
 </style>
 
