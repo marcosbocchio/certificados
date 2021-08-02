@@ -60,7 +60,7 @@
                     </ul>
 
                     <a  @click="Buscar()">
-                        <button class="btn btn-enod  btn-block" :disabled="!cliente || !ot || !obra"><span class="fa fa-plus-circle"></span>
+                        <button class="btn btn-enod  btn-block" :disabled="!cliente || !ot "><span class="fa fa-plus-circle"></span>
                             Buscar
                         </button>
                     </a>
@@ -89,13 +89,22 @@
                         </div>
                         <ul class="list-group list-group-unbordered">
                             <span class="fa fa-book"><p style="margin-left:15px;display:inline-block;margin-bottom:20x">Informes incluidos</p></span>
-                            <div v-for="(item,k) in (informes)" :key="k" class="list-informes">
-                                <div v-if="item.gasoducto_sn">
-                                   <p>Informe {{item.km}}-{{item.tipo_soldadura_codigo}}-{{item.numero_formateado}} {{ item.componente }} </p>
-                                </div>
-                                <div v-else>
-                                   <p>{{item.numero_formateado}} {{ item.componente }} </p>
-                                </div>
+                            <vuetable
+                            ref="vuetable"
+                            :api-mode="false"
+                            :data-manager="dataManager"
+                            pagination-path="pagination"
+                            @vuetable:pagination-data="onPaginationData"
+                            :fields = "[{name:'informe_descrip',title:''}]"
+                            >
+                            </vuetable>
+                            <div class="text-center">
+                                <ul class="pagination">
+                                    <vuetable-pagination ref="pagination"
+                                        @vuetable-pagination:change-page="onChangePage"
+                                        :css="css.pagination"
+                                    ></vuetable-pagination>
+                                </ul>
                             </div>
                         </ul>
                       </div>
@@ -526,9 +535,10 @@ import PieChart from '../chart.js/PieChart.js'
 import html2canvas from 'html2canvas-render-offscreen';
 import { imgDataLogo } from './imagenes-reportes'
 //import html2canvas from 'html2canvas';
+import Vuetable from "vuetable-2";
+import VuetablePagination from "vuetable-2/src/components/VuetablePagination";
 
 export default {
-
     components: {
 
       Datepicker,
@@ -536,16 +546,16 @@ export default {
       DoughnutChart,
       BarChart,
       PieChart,
-      ChartJsPluginDataLabels
+      ChartJsPluginDataLabels,
+      Vuetable,
+      VuetablePagination,
     },
-
     props: {
 
       user : {
         type : Object,
         required : true,
       },
-
     },
 
     data() { return {
@@ -563,6 +573,30 @@ export default {
         selOt:false,
         selObra:false,
         informes : [],
+        perPage: 10,
+        css: {
+        table: {
+            tableClass: 'table table-striped table-bordered table-hovered',
+            loadingClass: 'loading',
+            ascendingIcon: 'glyphicon glyphicon-chevron-up',
+            descendingIcon: 'glyphicon glyphicon-chevron-down',
+            handleIcon: 'glyphicon glyphicon-menu-hamburger',
+        },
+        pagination: {
+            infoClass: 'pull-left',
+            wrapperClass: 'vuetable-pagination pull-right',
+            activeClass: 'btn-primary',
+            disabledClass: 'disabled',
+            pageClass: 'btn btn-border',
+            linkClass: 'btn btn-border',
+            icons: {
+            first: '',
+            prev: '',
+            next: '',
+            last: '',
+            },
+        },
+        },
         informes_ids :'',
         fecha_actual: moment(new Date()).format('DD-MM-YYYY'),
 
@@ -668,7 +702,6 @@ export default {
     },
 
     created: function () {
-
          this.$store.dispatch('loadClientesOperador',this.user.id).then(response => {
              if(this.clientesOperador.length == 1){
                  this.cliente = this.clientesOperador[0];
@@ -677,16 +710,29 @@ export default {
              }
          });
          this.$store.dispatch('loadColores');
-
     },
 
    computed :{
 
     ...mapState(['isLoading','clientesOperador','colores','url']),
 
+
+  },
+  watch : {
+      informes(newVal, oldVal) {
+        this.$refs.vuetable.refresh();
+      }
+
   },
 
 methods : {
+
+    onPaginationData (paginationData) {
+        this.$refs.pagination.setPaginationData(paginationData)
+    },
+    onChangePage (page) {
+        this.$refs.vuetable.changePage(page)
+    },
 
     generateIndicesRechazos() {
 
@@ -1048,11 +1094,16 @@ methods : {
      this.prepareTituloExcel();
 
     try {
-        let url = 'informes/ot/' + this.ot.id  + '/obra/' +  this.obra.obra.replace('/','--') + '/fecha_desde/' + this.fecha_desde + '/fecha_hasta/' + this.fecha_hasta + '?api_token=' + Laravel.user.api_token;
+
+        let url = 'informes/ot/' + this.ot.id  + '/obra/' + (this.obra !='' ? this.obra.obra.replace('/','--') : 'null') + '/fecha_desde/' + this.fecha_desde + '/fecha_hasta/' + this.fecha_hasta + '?api_token=' + Laravel.user.api_token;
         let res = await axios.get(url);
         this.informes = res.data;
         this.informes_ids = this.informes.map(item => item.id).toString();
         console.log(this.informes_ids);
+        this.informes.forEach(function(item) {
+            let informe_descrip = item.gasofucto_sn ? 'Informe ' + item.km + '-' + item.tipo_soldadura_codigo + '-' + item.numero_formateado + '-' + item.componente : item.numero_formateado + item.componente ;
+            Object.defineProperty(item,'informe_descrip',{ value: informe_descrip})
+        }.bind(this))
         this.valores_indice_rechazos= [];
         await this.getIndicesDeRechazos();
         await this.getDefectologia();
@@ -1066,12 +1117,39 @@ methods : {
     finally  {this.$store.commit('loading', false);}
 
     },
+    dataManager(sortOrder, pagination) {
+      if (this.informes.length < 1) return;
 
+      let local = this.informes;
+
+      // sortOrder can be empty, so we have to check for that as well
+      if (sortOrder.length > 0) {
+        console.log("orderBy:", sortOrder[0].sortField, sortOrder[0].direction);
+        local = _.orderBy(
+          local,
+          sortOrder[0].sortField,
+          sortOrder[0].direction
+        );
+      }
+
+      pagination = this.$refs.vuetable.makePagination(
+        local.length,
+        this.perPage
+      );
+      console.log('pagination:', pagination)
+      let from = pagination.from - 1;
+      let to = from + this.perPage;
+
+      return {
+        pagination: pagination,
+        data: _.slice(local, from, to)
+      };
+    },
     prepareTituloExcel : function() {
 
-    this.excel_titulo = ["Cliente: " + this.cliente.nombre_fantasia + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + "OT Nº: " + this.ot.numero + "&nbsp;&nbsp;&nbsp;&nbsp;" +  "Obra Nº: " + this.obra.obra]
-    this.excel_titulo.push("Desde: " + (this.fecha_desde ? moment( this.fecha_desde).format("DD/MM/YYYY") : '-'));
-    this.excel_titulo.push("Hasta: " + (this.fecha_hasta ? moment( this.fecha_hasta).format("DD/MM/YYYY") : '-'));
+        this.excel_titulo = ["Cliente: " + this.cliente.nombre_fantasia + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + "OT Nº: " + this.ot.numero + "&nbsp;&nbsp;&nbsp;&nbsp;" +  "Obra Nº: " + this.obra.obra]
+        this.excel_titulo.push("Desde: " + (this.fecha_desde ? moment( this.fecha_desde).format("DD/MM/YYYY") : '-'));
+        this.excel_titulo.push("Hasta: " + (this.fecha_hasta ? moment( this.fecha_hasta).format("DD/MM/YYYY") : '-'));
 
     },
 
@@ -1131,13 +1209,14 @@ methods : {
     async CambioObra (){
 
         this.TablaAnalisisRechazosEspesor = [];
+        this.obra = this.obra == null ? '' : this.obra;
         this.selObra = !this.selObra;
 
     },
 
     resetVariables(){
 
-        this.informes                      = [];
+       // this.informes                      = [];
         this.TablaAnalisisRechazosEspesor  = [];
         this.TablaAnalisisRechazosDiametro = [];
         this.TablaDefectosPosicion         = [];
@@ -1824,7 +1903,5 @@ ul li .titulo-li {
       color:#666;
       font-size: 14px;
   }
-
-
-
 </style>
+

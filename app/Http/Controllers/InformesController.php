@@ -375,10 +375,13 @@ class InformesController extends Controller
 
     public function getInformesEstadisticasSoldaduras($ot_id,$obra,$fecha_desde,$fecha_hasta){
 
+        if($obra == 'null'){
+            $obra = '';
+        }
 
         if($fecha_desde == 'null'){
             $fecha_desde =  date('2000-01-01');
-         }
+        }
 
         if($fecha_hasta == 'null'){
             $fecha_hasta =  date('2100-01-01');
@@ -387,12 +390,10 @@ class InformesController extends Controller
         $obra = str_replace('--','/',$obra);
         $informes =  InformesView:: where('metodo','RI')
                             ->where('ot_id',$ot_id)
-                            ->where('obra',$obra)
+                            ->Obra($obra)
                             ->where('importable_sn',0)
                             ->whereBetween('fecha',[$fecha_desde,$fecha_hasta])
                             ->get();
-
-
         return $informes;
 
     }

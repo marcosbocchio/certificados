@@ -11,6 +11,16 @@ class InformesView extends Model
     public function otTiposoldadura(){
 
         return $this->belongsTo('App\OtTipoSoldaduras','ot_tipo_soldadura_id','id');
-  
+
+    }
+
+    public function scopeObra($query,$obra){
+
+        if($obra) {
+
+           $query->Where('obra',$obra);
+
+        }
+
     }
 }

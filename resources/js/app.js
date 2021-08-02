@@ -92,12 +92,6 @@ Vue.component('downloadCsv', JsonCSV)
 import JsonExcel from 'vue-json-excel'
 Vue.component('downloadExcel', JsonExcel)
 /*
-import VueHtml2Canvas from 'vue-html2canvas';
-Vue.use(VueHtml2Canvas);
-
-*/
-
-/*
 vSelect.props.components.default = () => ({
   Deselect: {
     render: createElement => createElement('span', '❌'),

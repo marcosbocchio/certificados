@@ -128,7 +128,7 @@
                     </div>
                 </tab>
             </tabs>
-                <pagination :data="TablaCosturas" @pagination-change-page="Buscar" ><span slot="prev-nav">&lt; Previous</span>
+                <pagination :data="TablaCosturas" @pagination-change-page="Buscar" :limit="3"><span slot="prev-nav">&lt; Previous</span>
                 <span slot="next-nav">Next &gt;</span> </pagination>
         </div>
 
