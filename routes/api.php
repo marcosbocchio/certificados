@@ -307,7 +307,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('estadisticas-soldaduras/analisis_indicaciones_posicion/posicion/{posicion}/diametro/{diametro}/{informes_ids}','EstadisticasSoldadurasController@AnalisisSoldadurasIndicacionesPosicion');
 
     //Costuras
-    Route::get('costuras/ot/{ot_id}/pk/{pk}/plano/{plano}/costura/{costura}/rechazados/{rechazados}/reparaciones/{reparaciones}','CosturasController@getCosturas');
+    Route::get('costuras/ot/{ot_id}/pk/{pk}/plano/{plano}/costura/{costura}/rechazados/{rechazados}/reparaciones/{reparaciones}/soldador/{soldador_id}','CosturasController@getCosturas');
     Route::get('reporte-placas/cliente/{cliente_id}/ot/{ot_id}/obra/{obra}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}/total','ReportePlacasController@getPlacasTotal');
     Route::get('reporte-placas/cliente/{cliente_id}/ot/{ot_id}/obra/{obra}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}/repetidas-testigos','ReportePlacasController@getPlacasRepetidasTestigos');
 

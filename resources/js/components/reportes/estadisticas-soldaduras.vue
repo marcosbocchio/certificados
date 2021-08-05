@@ -106,6 +106,7 @@
                                     <vuetable-pagination ref="pagination"
                                         @vuetable-pagination:change-page="onChangePage"
                                         :css="css.pagination"
+                                        :on-each-side="1"
                                     ></vuetable-pagination>
                                 </ul>
                             </div>

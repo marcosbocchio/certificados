@@ -46,6 +46,16 @@
                              <input type="text"  v-model="costura" class="form-control" id="costura" placeholder="Costura" maxlength="10">
                         </li>
                         <li class="list-group-item pointer">
+                            <div v-show="!selSoldador">
+                                <span class="titulo-li">Soldador</span>
+                                <a @click="selSoldador = !selSoldador" class="pull-right">
+                                    <div v-if="soldador">{{soldador.codigo}}</div>
+                                    <div v-else><span class="seleccionar">Seleccionar</span></div>
+                                </a>
+                            </div>
+                             <v-select v-show="selSoldador" v-model="soldador" id="soldador" label="codigo" :options="soldadores" @input="CambioSoldador()"></v-select>
+                        </li>
+                        <li class="list-group-item pointer">
 
                                 <label>
                                  <input type="checkbox" v-model="rechazados">
@@ -167,11 +177,14 @@ export default {
             ot:'',
             pk : null,
             plano:null,
+            soldador : '',
             costura:null,
             rechazados:false,
             reparaciones:false,
             selCliente:false,
             selOt:false,
+            selSoldador:false,
+            soldadores:[],
             TablaCosturas:{},
         }
     },
@@ -202,7 +215,7 @@ methods : {
      this.TablaCosturas = {};
 
     try {
-        let url = 'costuras/ot/' + this.ot.id  + '/pk/' + (this.pk ? this.pk : 'null' ) + '/plano/' + (this.plano ? this.plano : 'null') + '/costura/' + (this.costura ? this.costura : 'null') + '/rechazados/' + this.rechazados + '/reparaciones/' + this.reparaciones + '?page='+ page + '&api_token=' + Laravel.user.api_token;
+        let url = 'costuras/ot/' + this.ot.id  + '/pk/' + (this.pk ? this.pk : 'null' ) + '/plano/' + (this.plano ? this.plano : 'null') + '/costura/' + (this.costura ? this.costura : 'null') + '/rechazados/' + this.rechazados + '/reparaciones/' + this.reparaciones + '/soldador/' + (this.soldador ? this.soldador.id : 0 ) + '?page='+ page + '&api_token=' + Laravel.user.api_token;
         let res = await axios.get(url);
         this.TablaCosturas = res.data;
 
@@ -217,6 +230,7 @@ methods : {
 
         this.selCliente = !this.selCliente;
         this.ot = '';
+        this.soldador = '';
         this.selOt =false;
         this.obra = '';
         this.selObra =false;
@@ -236,8 +250,16 @@ methods : {
         }
     },
 
-    CambioOt (){
+    CambioOt: async function(){
         this.selOt = !this.selOt;
+        this.soldador = '',
+        this.soldadores = [];
+        let url = 'ot_soldadores/ot/' + this.ot.id + '?api_token=' + Laravel.user.api_token;
+        let res = await axios.get(url);
+        this.soldadores = res.data;
+    },
+    CambioSoldador: function() {
+        this.selSoldador = !this.selSoldador;
     },
         tabClicked (selectedTab) {
           console.log('Current tab re-clicked:' + selectedTab.tab.name);

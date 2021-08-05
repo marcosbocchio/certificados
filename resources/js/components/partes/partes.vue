@@ -779,43 +779,39 @@ export default {
 
     }},
 
-    created : function() {
-
+    created :async function() {
         this.$store.dispatch('loadVehiculos');
         this.getOperadoresOt();
         this.getCms();
-        this.CargaDeDatos();
+        await this.CargaDeDatos();
         this.$store.dispatch('loadServiciosOt',this.otdata.id);
         this.$store.dispatch('loadDiametros');
         this.$store.dispatch('loadMedidasPlaca');
-
     },
 
     watch :{
-
         fecha : function(){
-
             this.resetInformesSelect();
-
         },
-
         TablaResponsables : function(){
-
             this.RecalcularViaticos();
             this.RecalcularHospedaje();
-
-        }
-},
+        },
+        obra: {
+            handler: function(after, before){
+               if (before) {
+                  this.resetInformesSelect()
+               }
+            },
+            inmediate: true
+        },
+    },
 
     computed :{
-
         ...mapState(['url','serviciosOt','vehiculos','diametros','medidas_placa']),
-
         fecha_mysql : function(){
-
             return this.fecha ? moment(this.fecha).format('DD/MM/YYYY') : null;
         },
-
      },
 
     methods : {
@@ -883,6 +879,7 @@ export default {
             this.informes.forEach(function(item){
 
                 item.informe_sel = false;
+
             });
 
             this.TablaInformesRi=[];
