@@ -888,6 +888,7 @@ export default {
             this.TablaInformesUs=[];
             this.TablaInformesImportados=[];
             this.TablaMetodosImportados=[];
+            this.TablaServicios=[];
 
         },
 
