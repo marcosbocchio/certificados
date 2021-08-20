@@ -252,7 +252,7 @@
                                                 <td v-if="item.visible"> {{ item.servicio_descripcion}}</td>
                                                 <td v-if="item.visible">
                                                     <div v-if="indexTablaServicios == k ">
-                                                        <input type="number" v-model.number="TablaServicios[k].cant_final" maxlength="3" min="0" @change="validarCantidad(TablaServicios,k,'cant_final')">
+                                                        <input type="number" v-model.number="TablaServicios[k].cant_final" maxlength="3" step="0.01" min="0" @change="validarCantidad(TablaServicios,k,'cant_final')">
                                                     </div>
                                                     <div v-else>
                                                         {{ item.cant_final }}

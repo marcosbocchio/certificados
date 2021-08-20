@@ -22,14 +22,14 @@ class ParteRequest extends FormRequest
      * @return array
      */
     public function rules()
-    {        
+    {
 
 
         return [
-            'fecha' => 'required',  
+            'fecha' => 'required',
             'tipo_servicio' =>'required',
-            'horario' =>'required|Max:5', 
-            'servicios.*.cant_final' => 'nullable|integer|Min:0',               
+            'horario' =>'required|Max:5',
+            'servicios.*.cant_final' => 'nullable|Min:0',
         ];
     }
 
@@ -38,10 +38,10 @@ class ParteRequest extends FormRequest
     public function attributes()
     {
             return [
-               
+
                 'servicios.*.cant_final' =>'cant de la tabla servicios'
             ];
-     
+
     }
 
 }
