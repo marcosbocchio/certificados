@@ -844,7 +844,7 @@ export default {
         CargaDeDatos : function(){
 
             if(this.editmode) {
-               this.obra = this.parte_data.obra,
+               eventHeaderParte.$emit('set-obra-header',this.parte_data.obra);
                this.TablaVehiculos =  JSON.parse(JSON.stringify(this.vehiculos_data));
                this.TablaResponsables =  JSON.parse(JSON.stringify(this.responsables_data));
                this.fecha  = this.parte_data.fecha;

@@ -104,7 +104,6 @@ export default {
 
         inputObra : function(){
 
-            console.log('mando el inputobra',this.obra);
             this.$emit('set-obra',this.obra)
 
         },
