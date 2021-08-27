@@ -842,9 +842,9 @@ export default {
         },
 
         CargaDeDatos : function(){
+            eventHeaderParte.$emit('set-obra-header',this.parte_data.obra);
 
             if(this.editmode) {
-               eventHeaderParte.$emit('set-obra-header',this.parte_data.obra);
                this.TablaVehiculos =  JSON.parse(JSON.stringify(this.vehiculos_data));
                this.TablaResponsables =  JSON.parse(JSON.stringify(this.responsables_data));
                this.fecha  = this.parte_data.fecha;
@@ -1023,7 +1023,6 @@ export default {
                         if((item_data.informe_importado_id == item_informe.id) && (item_informe.importable_sn)){
 
                                 item_informe.informe_sel = true;
-                                eventHeaderParte.$emit('set-obra-header',item_informe.obra);
                             }
                         });
 
@@ -1060,7 +1059,6 @@ export default {
                             if((item_data.informe_id == item_informe.id) && (!item_informe.importable_sn)){
 
                                   item_informe.informe_sel = true;
-                                  eventHeaderParte.$emit('set-obra-header',item_informe.obra);
 
                                 }
 
@@ -1134,7 +1132,6 @@ export default {
                                 if((item_data.informe_id == item_informe.id) && (!item_informe.importable_sn)){
 
                                     item_informe.informe_sel = true;
-                                    eventHeaderParte.$emit('set-obra-header',item_informe.obra);
 
                                     }
                                 });
@@ -1175,7 +1172,6 @@ export default {
                                 if((item_data.informe_id == item_informe.id) && (!item_informe.importable_sn)){
 
                                     item_informe.informe_sel = true;
-                                    eventHeaderParte.$emit('set-obra-header',item_informe.obra);
 
                                     }
                                 });
@@ -1217,7 +1213,6 @@ export default {
                                 if((item_data.informe_id == item_informe.id) && (!item_informe.importable_sn)){
 
                                     item_informe.informe_sel = true;
-                                    eventHeaderParte.$emit('set-obra-header',item_informe.obra);
                                  }
                                 });
 

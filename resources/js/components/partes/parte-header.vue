@@ -72,6 +72,7 @@ export default {
       this.getObras();
       eventEditRegistro.$on('refreshObra', this.setObra);
       eventHeaderParte.$on('set-obra-header',function(payload){
+          alert('set-obra-header')
           this.obra = payload;
           console.log(payload);
           }.bind(this));
