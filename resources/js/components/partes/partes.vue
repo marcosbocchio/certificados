@@ -2132,6 +2132,7 @@ export default {
               url : urlRegistros,
               data : {
                 'ot'                   : this.otdata,
+                'obra'                 : this.obra,
                 'fecha'                : this.fecha,
                 'tipo_servicio'        : this.tipo_servicio,
                 'horario'              : this.horario,
@@ -2190,6 +2191,7 @@ export default {
               url : urlRegistros,
               data : {
                 'ot'                   : this.otdata,
+                'obra'                 : this.obra,
                 'fecha'                : this.fecha,
                 'tipo_servicio'        : this.tipo_servicio,
                 'horario'              : this.horario,
