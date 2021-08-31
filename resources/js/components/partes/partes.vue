@@ -782,12 +782,13 @@ export default {
         this.$store.dispatch('loadVehiculos');
         this.getOperadoresOt();
         this.getCms();
-        await this.CargaDeDatos();
         this.$store.dispatch('loadServiciosOt',this.otdata.id);
         this.$store.dispatch('loadDiametros');
         this.$store.dispatch('loadMedidasPlaca');
     },
-
+    mounted : function() {
+        this.CargaDeDatos();
+    },
     watch :{
         fecha : function(){
             this.resetInformesSelect();
@@ -842,11 +843,12 @@ export default {
         },
 
         CargaDeDatos : function(){
-            eventHeaderParte.$emit('set-obra-header',this.parte_data.obra);
 
             if(this.editmode) {
                this.TablaVehiculos =  JSON.parse(JSON.stringify(this.vehiculos_data));
                this.TablaResponsables =  JSON.parse(JSON.stringify(this.responsables_data));
+               eventHeaderParte.$emit('set-obra-header',this.parte_data.obra);
+               alert('ahora llama al set obra')
                this.fecha  = this.parte_data.fecha;
                this.tipo_servicio = this.parte_data.tipo_servicio;
                this.horario = this.parte_data.horario;

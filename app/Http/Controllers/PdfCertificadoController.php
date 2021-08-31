@@ -38,8 +38,6 @@ class PdfCertificadoController extends Controller
         $tablas_por_obras = $this->generarTablasPorObras($servicios_obras,$servicios_combinaciones,$productos_parte,$productos_unidades_medidas,$obras,$fechas);
         $evaluador = User::find($certificado->firma);
 
-        /*  Encabezado */
-
         $titulo1 = "CERTIFICADO" ;
         $titulo2 = $certificado->titulo;
         $nro = FormatearNumeroConCeros($certificado->numero,8);
@@ -48,8 +46,6 @@ class PdfCertificadoController extends Controller
 
         $pdf = PDF::loadView('reportes.certificados.certificado-v2',compact('fecha','nro','titulo1','titulo2','tipo_reporte','certificado','ot','cliente','contratista','servicios_parte','productos_parte','modalidadCobro','partes_certificado','servicios_abreviaturas','productos_unidades_medidas','evaluador','obras','tablas_por_obras','servicios_footer'))->setPaper('a4','landscape')->setWarnings(false);
         return $pdf->stream();
-
-
     }
 
     public function getCombinados($servicios_parte){

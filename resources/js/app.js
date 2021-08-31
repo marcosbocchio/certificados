@@ -230,6 +230,7 @@ Vue.component('partes', require('./components/partes/partes.vue').default);
 Vue.component('parte-header', require('./components/partes/parte-header.vue').default);
 
 Vue.component('certificados', require('./components/certificados/certificados.vue').default);
+Vue.component('certificado-header', require('./components/certificados/certificado-header.vue').default);
 
 Vue.component('ots', require('./components/ots/ots.vue').default);
 Vue.component('create-referencias', require('./components/ots/referencias/create.vue').default);

@@ -2,11 +2,9 @@
     <div class="row">
         <div class="col-md-12">
             <form @submit.prevent="editmode ?  Update() : Store()"  method="post">
-                <parte-header :otdata="otdata" :certificado_sn="true"></parte-header>
-
+                <certificado-header :otdata="otdata" :certificado_sn="true"></certificado-header>
                     <div class="box box-custom-enod">
                          <div class="box-body">
-
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="fecha">Fecha *</label>
