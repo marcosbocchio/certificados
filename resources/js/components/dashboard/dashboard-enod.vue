@@ -161,6 +161,7 @@
         <div class="box box-custom-enod">
             <div class="box-header with-border">
                 <h3 class="box-title">Ordenes de trabajo</h3>
+                <button @click.stop="ExportarDocumentacionOt()" class="btn pull-right btn-success">Exportar Doc.</button>
             </div>
             <div class="box-body">
                 <div class="table-responsive">
@@ -521,6 +522,11 @@ export default {
             break;
         }
 
+
+      },
+      ExportarDocumentacionOt: function() {
+
+        window.location.href =  '/area/enod/documentacion/ot/' + this.ot_id_selected;
 
       }
 

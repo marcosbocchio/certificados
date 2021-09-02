@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\Http\Requests\DocumentacionesRequest;
 use App\Repositories\Documentaciones\DocumentacionesRepository;
@@ -10,7 +8,7 @@ use App\UsuarioDocumentaciones;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection as Collection;
-use App\MetodoEnsayos;
+use App\Ots;
 use App\Users;
 use App\VehiculoDocumentaciones;
 use App\InternoEquipoDocumentaciones;
@@ -377,4 +375,20 @@ class DocumentacionesController extends Controller
 
     }
 
+    public function callViewDocOt($ot_id) {
+
+        $user = auth()->user();
+        $ot = Ots::where('id',$ot_id)->with('cliente')->first();
+        $header_sub_titulo =' / ' .$ot->cliente->nombre_fantasia . ' / OT N°: ' . $ot->numero;
+        $header_titulo = "Documentaciones";
+        $header_descripcion ="";
+        return view('documentacion.exportar',compact('user','header_titulo','header_descripcion','header_sub_titulo','ot_id'));
+
+    }
+
+    public function getDocumentosOt($ot_id) {
+
+       return DB::select('CALL getDocumentosOt(?)',array($ot_id));
+
+    }
 }

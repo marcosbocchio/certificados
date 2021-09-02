@@ -1195,7 +1195,6 @@
      methods : {
          setEdit : function(){
              if(this.editmode) {
-
                 this.formato = this.informe_ridata.gasoducto_sn ? 'DUCTO' : 'PLANTA';
                 this.obra = this.informedata.obra;
                 this.fecha   = this.informedata.fecha;
@@ -1253,9 +1252,7 @@
                     this.reparacion_sn = this.informe_ridata.reparacion_sn == 1 ?  true : false;
 
                 });
-
-
-                }
+             }
          },
 
          cambioReparacion_sn : function(){

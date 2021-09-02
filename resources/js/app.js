@@ -202,6 +202,9 @@ Vue.component('table-documentaciones', require('./components/abm-maestro/documen
 Vue.component('editar-documentaciones', require('./components/abm-maestro/documentaciones/editar-documentaciones.vue').default);
 
 Vue.component('abm-doc', require('./components/documentaciones/abm-doc.vue').default);
+Vue.component('exportar-documentacion', require('./components/documentaciones/exportar-documentacion.vue').default);
+Vue.component('marcar-documentos', require('./components/documentaciones/marcar-documentos.vue').default);
+
 Vue.component('abm-placas', require('./components/dashboard/placas/abm-placas.vue').default);
 
 
@@ -404,6 +407,7 @@ state: {
         epss:[],
         pqrs:[],
         modelos_3d:[],
+        documentos:[],
 
     },
 

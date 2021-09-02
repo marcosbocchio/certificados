@@ -183,6 +183,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('interno_equipos', 'InternoEquiposController');
 
     Route::get('tipos_documentos_usuarios', 'TiposDocumentosUsuariosController@index');
+    Route::get('documentos/ot/{ot_id}', 'DocumentacionesController@getDocumentosOt')->name('getDocumentosOt');
 
     // Frentes
     Route::resource('frentes', 'FrentesController');
