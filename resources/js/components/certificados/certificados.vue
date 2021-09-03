@@ -337,6 +337,10 @@ export default {
 
                }
         },
+
+        partes_sel: function() {
+            return this.partes.filter(e => e.parte_sel)
+        },
      },
 
       methods : {
@@ -444,7 +448,7 @@ export default {
              axios.get(urlRegistros).then(response =>{
              this.partes = JSON.parse(JSON.stringify(response.data));
 
-                 this.servicios_data.forEach(function(item){
+               /*  this.servicios_data.forEach(function(item){
 
                      if(this.partes.map(x => x.id).indexOf(item.parte_id) !== -1){
 
@@ -473,7 +477,7 @@ export default {
 
 
                  }.bind(this));
-
+                */
             });
 
         },
@@ -759,6 +763,7 @@ export default {
                 'numero'                             : this.numero,
                 'titulo'                             : this.titulo,
                 'fecha'                              : this.fecha,
+                'partes_sel'                         : this.partes_sel,
                 'info_pedido_cliente'                : this.info_pedido_cliente,
                 'TablaPartesServicios'               : this.TablaPartesServicios,
                 'TablaPartesProductosPorPlacas'      : this.TablaPartesProductosPorPlacas,
@@ -804,6 +809,7 @@ export default {
                 'numero'                             : this.numero,
                 'fecha'                              : this.fecha,
                 'titulo'                             : this.titulo,
+                'partes_sel'                         : this.partes_sel,
                 'info_pedido_cliente'                : this.info_pedido_cliente,
                 'TablaPartesServicios'               : this.TablaPartesServicios,
                 'TablaPartesProductosPorPlacas'      : this.TablaPartesProductosPorPlacas,

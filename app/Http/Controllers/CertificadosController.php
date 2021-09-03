@@ -12,6 +12,8 @@ use App\Certificados;
 use App\CertificadoServicios;
 use App\CertificadoProductos;
 use App\Productos;
+use Illuminate\Support\Facades\Log;
+
 class CertificadosController extends Controller
 {
 
@@ -88,8 +90,7 @@ class CertificadosController extends Controller
           $this->saveCertificadoServicios($request->TablaPartesServicios,$certificado);
           $this->saveCertificadoProductosPorPlaca($request->TablaPartesProductosPorPlacas,$certificado);
           $this->saveCertificadoProductosPorCosturas($request->TablaPartesProductosPorCosturas,$certificado);
-
-
+          $this->saveParteCertificado($certificado,$request->partes_sel);
           DB::commit();
 
         } catch (Exception $e) {
@@ -102,13 +103,14 @@ class CertificadosController extends Controller
         return $certificado;
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    public function saveParteCertificado($certificado,$partes_sel) {
+
+        foreach($partes_sel as $parte) {
+            Log::debug("grabo el parte: ". $parte['id']);
+            (new \App\Http\Controllers\PartesController)->setCertificadoId($certificado->id,$parte['id']);
+
+        }
+    }
 
     public function update(CertificadoRequest $request, $id)
     {
@@ -124,6 +126,7 @@ class CertificadosController extends Controller
             $this->saveCertificadoServicios($request->TablaPartesServicios,$certificado);
             $this->saveCertificadoProductosPorPlaca($request->TablaPartesProductosPorPlacas,$certificado);
             $this->saveCertificadoProductosPorCosturas($request->TablaPartesProductosPorCosturas,$certificado);
+            $this->saveParteCertificado($certificado,$request->partes_sel);
             DB::commit();
 
             } catch (Exception $e) {
@@ -169,7 +172,7 @@ class CertificadosController extends Controller
             $certificadoServicios->combinacion = $servicio['combinacion'];
             $certificadoServicios->save();
 
-            (new \App\Http\Controllers\PartesController)->setCertificadoId($certificado->id,$servicio['parte_id']);
+            // (new \App\Http\Controllers\PartesController)->setCertificadoId($certificado->id,$servicio['parte_id']);
 
         }
 
@@ -188,7 +191,7 @@ class CertificadosController extends Controller
             $certificadoProductos->cm = $producto['cm'];
             $certificadoProductos->save();
 
-            (new \App\Http\Controllers\PartesController)->setCertificadoId($certificado->id,$producto['parte_id']);
+           //  (new \App\Http\Controllers\PartesController)->setCertificadoId($certificado->id,$producto['parte_id']);
         }
 
     }
@@ -205,7 +208,7 @@ class CertificadosController extends Controller
             $certificadoProductos->pulgadas = $producto['pulgadas'];
             $certificadoProductos->save();
 
-            (new \App\Http\Controllers\PartesController)->setCertificadoId($certificado->id,$producto['parte_id']);
+            // (new \App\Http\Controllers\PartesController)->setCertificadoId($certificado->id,$producto['parte_id']);
 
         }
 
