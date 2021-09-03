@@ -47,6 +47,16 @@
                             </div>
                             <v-select v-show="selObra" v-model="obra" label="obra" :options="obras" @input="CambioObra()"></v-select>
                         </li>
+                        <li class="list-group-item pointer">
+                            <div v-show="!selComponente">
+                                <span class="titulo-li">Componente</span>
+                                <a @click="CambioComponente()" class="pull-right">
+                                    <div v-if="componente">{{componente.componente}}</div>
+                                    <div v-else><span class="seleccionar">Seleccionar</span></div>
+                                </a>
+                            </div>
+                            <v-select v-show="selComponente" v-model="componente" label="componente" :options="componentes" @input="CambioComponente()"></v-select>
+                        </li>
                         <li class="list-fecha list-group-item pointer">
                             <div class="row">
                                 <div class="col-sm-12 col-md-12 col-lg-6">
@@ -56,7 +66,6 @@
                                     <date-picker v-model="fecha_hasta" value-type="YYYY-MM-DD" format="DD-MM-YYYY" placeholder="Hasta" ></date-picker>
                                 </div>
                             </div>
-
                         </li>
                     </ul>
 
@@ -144,11 +153,14 @@ export default {
         ot:'',
         obras:[],
         obra:'',
+        componentes: [],
+        componente:'',
         fecha_desde:null,
         fecha_hasta:null,
         selCliente:false,
         selOt:false,
         selObra:false,
+        selComponente:false,
         fecha_actual: moment(new Date()).format('DD-MM-YYYY'),
 
         total_placas_informes : 0,
@@ -190,6 +202,8 @@ methods :{
         this.selOt =false;
         this.obra = '';
         this.selObra =false;
+        this.componente = '';
+        this.selComponente = false;
         this.fecha_desde = null;
         this.fecha_hasta = null;
         if(this.cliente){
@@ -212,6 +226,8 @@ methods :{
         this.selOt = !this.selOt;
         this.obra = '';
         this.selObra = false;
+        this.componente = '';
+        this.selComponente = false;
         this.$store.commit('loading', true);
         var urlRegistros = 'ots/' + this.ot.id + '/obras/' +'?api_token=' + Laravel.user.api_token;
         try {
@@ -223,6 +239,8 @@ methods :{
 
         if(this.ot.obra){
             this.obra = { obra : this.ot.obra}
+            this.selObra = !this.selObra
+            this.CambioObra()
         }
     },
 
@@ -261,21 +279,35 @@ methods :{
     },
 
 
-   seleccionarObra(){
+   async seleccionarObra(){
 
-    //    this.resetVariables();
         if(this.ot && !this.ot.obra){
             this.selObra = !this.selObra;
         }
+
     },
 
     async CambioObra (){
 
-        this.TablaAnalisisRechazosEspesor = [];
         this.selObra = !this.selObra;
+
+        this.componente = '';
+        this.$store.commit('loading', true);
+        var urlRegistros = 'ots/' + this.ot.id + '/obra/' + this.obra.obra + '/componentes/' +'?api_token=' + Laravel.user.api_token;
+        try {
+            let res = await axios.get(urlRegistros);
+            this.componentes = res.data;
+        }catch(error){
+
+            }finally  {this.$store.commit('loading', false);}
 
     },
 
+    CambioComponente() {
+
+        this.selComponente = !this.selComponente;
+    }
+    ,
     generateGraficoPlacasRepetidas() {
 
             this.data_placas_repetidas = {
