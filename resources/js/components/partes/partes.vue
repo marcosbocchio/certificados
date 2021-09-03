@@ -848,7 +848,6 @@ export default {
                this.TablaVehiculos =  JSON.parse(JSON.stringify(this.vehiculos_data));
                this.TablaResponsables =  JSON.parse(JSON.stringify(this.responsables_data));
                eventHeaderParte.$emit('set-obra-header',this.parte_data.obra);
-               alert('ahora llama al set obra')
                this.fecha  = this.parte_data.fecha;
                this.tipo_servicio = this.parte_data.tipo_servicio;
                this.horario = this.parte_data.horario;
