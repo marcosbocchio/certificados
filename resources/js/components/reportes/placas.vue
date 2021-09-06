@@ -264,7 +264,7 @@ methods :{
         try {
             let url = 'reporte-placas' + '/cliente/' + (this.cliente ? this.cliente.id : 'null')  + '/ot/' + (this.ot ? this.ot.id : 'null' )  + '/obra/' + (this.obra ? this.obra.obra : 'null' ) + '/fecha_desde/' + this.fecha_desde + '/fecha_hasta/' + this.fecha_hasta   + '/total/' +'?api_token=' + Laravel.user.api_token;
             let url2 = 'reporte-placas' + '/cliente/' + (this.cliente ? this.cliente.id : 'null')  + '/ot/' + (this.ot ? this.ot.id : 'null' )  + '/obra/' + (this.obra ? this.obra.obra : 'null' ) + '/fecha_desde/' + this.fecha_desde + '/fecha_hasta/' + this.fecha_hasta  + '/repetidas-testigos/' +'?api_token=' + Laravel.user.api_token;
-            let url3 = 'reporte-placas' + '/cliente/' + (this.cliente ? this.cliente.id : 'null')  + '/ot/' + (this.ot ? this.ot.id : 'null' )  + '/obra/' + (this.obra ? this.obra.obra : 'null' ) + '/fecha_desde/' + this.fecha_desde + '/fecha_hasta/' + this.fecha_hasta  + '/rechazadas/' +'?api_token=' + Laravel.user.api_token;
+            let url3 = 'reporte-placas' + '/cliente/' + (this.cliente ? this.cliente.id : 'null')  + '/ot/' + (this.ot ? this.ot.id : 'null' )  + '/obra/' + (this.obra ? this.obra.obra : 'null' ) + '/componente/' +(this.componente ? this.componente.componente : 'null' ) + '/fecha_desde/' + this.fecha_desde + '/fecha_hasta/' + this.fecha_hasta  + '/rechazadas/' +'?api_token=' + Laravel.user.api_token;
 
             let res = await axios.get(url);
             let res2 = await axios.get(url2);

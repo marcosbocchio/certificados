@@ -106,7 +106,6 @@ class CertificadosController extends Controller
     public function saveParteCertificado($certificado,$partes_sel) {
 
         foreach($partes_sel as $parte) {
-            Log::debug("grabo el parte: ". $parte['id']);
             (new \App\Http\Controllers\PartesController)->setCertificadoId($certificado->id,$parte['id']);
 
         }

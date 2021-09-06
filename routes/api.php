@@ -311,7 +311,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('costuras/ot/{ot_id}/pk/{pk}/plano/{plano}/costura/{costura}/rechazados/{rechazados}/reparaciones/{reparaciones}/soldador/{soldador_id}','CosturasController@getCosturas');
     Route::get('reporte-placas/cliente/{cliente_id}/ot/{ot_id}/obra/{obra}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}/total','ReportePlacasController@getPlacasTotal');
     Route::get('reporte-placas/cliente/{cliente_id}/ot/{ot_id}/obra/{obra}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}/repetidas-testigos','ReportePlacasController@getPlacasRepetidasTestigos');
-    Route::get('reporte-placas/cliente/{cliente_id}/ot/{ot_id}/obra/{obra}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}/rechazadas','ReportePlacasController@getPlacasRechazadas');
+    Route::get('reporte-placas/cliente/{cliente_id}/ot/{ot_id}/obra/{obra}/componente/{componente}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}/rechazadas','ReportePlacasController@getPlacasRechazadas');
 
     //Notificaciones
     Route::get('alarmas/dosimetria','AlarmasController@getAlarmaDosimetria');
