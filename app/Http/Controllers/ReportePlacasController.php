@@ -66,6 +66,24 @@ class ReportePlacasController extends Controller
 
     }
 
+    public function getPlacasRechazadas($cliente_id,$ot_id,$obra,$fecha_desde,$fecha_hasta){
 
+        $cliente_id = $cliente_id == 'null' ? 0 : $cliente_id;
+        $ot_id = $ot_id == 'null' ? 0 : $ot_id;
+        $obra = $obra == 'null' ? '' : $obra;
+
+        if($fecha_desde == 'null'){
+            $fecha_desde =  date('2000-01-01');
+         }
+
+        if($fecha_hasta == 'null'){
+            $fecha_hasta =  date('2100-01-01');
+        }
+
+        $res = DB::select('CALL ReportePlacasRechazadas(?,?,?,?,?)',array($cliente_id,$ot_id,$obra,$fecha_desde,$fecha_hasta));
+
+        return $res;
+
+    }
 
 }

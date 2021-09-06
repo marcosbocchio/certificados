@@ -94,6 +94,11 @@
                                     <pie-chart  :chart-data="data_placas_testigos" :options="data_placas_testigos.options" ></pie-chart>
                                 </div>
                             </div>
+                            <div class="col-lg-12">
+                                <div class="div-grafico">
+                                    <pie-chart  :chart-data="data_placas_rechazadas" :options="data_placas_rechazadas.options" ></pie-chart>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div v-else>
@@ -168,6 +173,9 @@ export default {
         total_placas_con_testigos: 0,
         total_placas_testigos:0,
         total_placas_repetidas :0,
+        total_placas_aprobadas:0,
+        total_placas_rechazadas:0,
+        total_placas_con_rechazadas:0,
 
        /* placas repetidas */
         data_placas_repetidas : { options : []},
@@ -177,6 +185,9 @@ export default {
         data_placas_testigos : { options : []},
         valores_placas_testigos:[],
 
+        /* Placas Rechazadas*/
+        data_placas_rechazadas : { options : []},
+        valores_placas_rechazadas:[],
      }
 
     },
@@ -253,14 +264,20 @@ methods :{
         try {
             let url = 'reporte-placas' + '/cliente/' + (this.cliente ? this.cliente.id : 'null')  + '/ot/' + (this.ot ? this.ot.id : 'null' )  + '/obra/' + (this.obra ? this.obra.obra : 'null' ) + '/fecha_desde/' + this.fecha_desde + '/fecha_hasta/' + this.fecha_hasta   + '/total/' +'?api_token=' + Laravel.user.api_token;
             let url2 = 'reporte-placas' + '/cliente/' + (this.cliente ? this.cliente.id : 'null')  + '/ot/' + (this.ot ? this.ot.id : 'null' )  + '/obra/' + (this.obra ? this.obra.obra : 'null' ) + '/fecha_desde/' + this.fecha_desde + '/fecha_hasta/' + this.fecha_hasta  + '/repetidas-testigos/' +'?api_token=' + Laravel.user.api_token;
+            let url3 = 'reporte-placas' + '/cliente/' + (this.cliente ? this.cliente.id : 'null')  + '/ot/' + (this.ot ? this.ot.id : 'null' )  + '/obra/' + (this.obra ? this.obra.obra : 'null' ) + '/fecha_desde/' + this.fecha_desde + '/fecha_hasta/' + this.fecha_hasta  + '/rechazadas/' +'?api_token=' + Laravel.user.api_token;
+
             let res = await axios.get(url);
             let res2 = await axios.get(url2);
+            let res3 = await axios.get(url3);
             this.total_placas_informes = res.data;
             this.total_placas_repetidas = parseInt(res2.data[0].placas_repetidas);
             this.total_placas_testigos =  parseInt(res2.data[0].placas_testigos);
+            this.total_placas_aprobadas = parseInt(res3.data[0].placas_aprobadas);
+            this.total_placas_rechazadas = parseInt(res3.data[0].placas_rechazadas);
 
-            this.total_placas_con_repetidas = parseInt(this.total_placas_informes) + parseInt(this.total_placas_repetidas) ;
-            this.total_placas_con_testigos = parseInt(this.total_placas_informes) + parseInt(this.total_placas_testigos) ;
+            this.total_placas_con_repetidas = parseInt(this.total_placas_informes) + parseInt(this.total_placas_repetidas);
+            this.total_placas_con_testigos = parseInt(this.total_placas_informes) + parseInt(this.total_placas_testigos);
+            this.total_placas_con_rechazadas = this.total_placas_aprobadas + this.total_placas_rechazadas;
 
             this.valores_placas_repetidas = [];
             this.valores_placas_repetidas.push(parseInt(this.total_placas_informes));
@@ -268,9 +285,13 @@ methods :{
             this.valores_placas_testigos = [];
             this.valores_placas_testigos.push(parseInt(this.total_placas_informes));
             this.valores_placas_testigos.push(parseInt(this.total_placas_testigos));
+            this.valores_placas_rechazadas = [];
+            this.valores_placas_rechazadas.push(parseInt(this.total_placas_aprobadas));
+            this.valores_placas_rechazadas.push(parseInt(this.total_placas_rechazadas));
 
             this.generateGraficoPlacasRepetidas();
             this.generateGraficoPlacasTestigos();
+            this.generateGraficoPlacasRechazadas();
 
         }catch(error){
 
@@ -381,6 +402,48 @@ methods :{
                                     color: '#FFFFFF',
                                     formatter: function (value) {
                                     return  ((Math.round(value*100/this.total_placas_con_testigos)) + '%');
+                                    }.bind(this),
+                                    font: {
+                                        weight: 'bold',
+                                        size: 14,
+                                    }
+                                }
+                            }
+                },
+            }
+    },
+
+    generateGraficoPlacasRechazadas() {
+
+            this.data_placas_rechazadas = {
+
+                labels: ["Placas Aprobadas" ,"Placas Rechazadas"],
+
+                datasets: [
+                    {
+                        backgroundColor: ['#3C8DBC' ,'#00C0EF'],
+                        data: this.valores_placas_rechazadas
+                    }
+                ],
+                options :{
+
+                    title : {   display : true,
+                                text :'Placas Rechazadas',
+                        },
+
+                    legend: {
+                        labels: {
+                            boxWidth: 12,
+                            padding: 5
+                        }
+                    },
+
+                    plugins: {
+                                datalabels: {
+
+                                    color: '#FFFFFF',
+                                    formatter: function (value) {
+                                    return  ((Math.round(value*100/this.total_placas_con_rechazadas)) + '%');
                                     }.bind(this),
                                     font: {
                                         weight: 'bold',
