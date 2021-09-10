@@ -770,7 +770,7 @@
                      </div>
                  </div>
 
-                   <button class="btn btn-primary" type="submit">Guardar</button>
+                   <button class="btn btn-primary" type="submit" :disabled="isLoading">Guardar</button>
             </form>
 
          <div class="modal fade " tabindex="-1" role="dialog" id="modal-clonar" data-keyboard="false" data-backdrop="static" >
@@ -2023,6 +2023,7 @@
 
                      let defectos = this.formato =='PLANTA' ? this.TablaDetalle : false
                      var urlRegistros = 'informes_ri' ;
+                     this.$store.commit('loading', true);
                      axios({
                      method: 'post',
                      url : urlRegistros,
@@ -2091,7 +2092,7 @@
                              toastr.error("Ocurrió un error al procesar la solicitud");
 
                          }
-                 });
+                }).finally( () => this.$store.commit('loading', false))
 
          },
          Update : function() {
@@ -2105,6 +2106,7 @@
                          gasoducto_sn= null;
                      let defectos = this.formato =='PLANTA' ? this.TablaDetalle : false
                      var urlRegistros = 'informes_ri/' + this.informedata.id  ;
+                     this.$store.commit('loading', true);
                      axios({
                      method: 'put',
                      url : urlRegistros,
@@ -2177,7 +2179,7 @@
                              toastr.error("Ocurrió un error al procesar la solicitud");
 
                          }
-                 });
+                }).finally( () => this.$store.commit('loading', false) )
          }
      }
 

@@ -478,7 +478,7 @@
                     </div>
                  </div>
 
-                  <button class="btn btn-primary" type="submit">Guardar</button>
+                  <button class="btn btn-primary" type="submit" :disabled="isLoading">Guardar</button>
            </form>
        </div>
 
@@ -910,7 +910,7 @@ export default {
         }else if(this.metodo_trabajo_pm.codigo === 'Húmedo-Fluorescente' || this.metodo_trabajo_pm.codigo === 'Seco-Fluorescente'){
 
             this.tipo_penetrante = 'Fluorescente';
-            this.iluminacion = this.iluminaciones[this.iluminaciones.findIndex(elemento => elemento.codigo == '1000 µv/cm2')];
+            this.iluminacion = this.iluminaciones[this.iluminaciones.findIndex(elemento => elemento.codigo == '1000 uv/cm2')];
 
         }
 
@@ -1090,6 +1090,7 @@ export default {
           else
             desmagnetizacion_sn= null;
 
+            this.$store.commit('loading', true);
             var urlRegistros = 'informes_pm' ;
             axios({
               method: 'post',
@@ -1160,7 +1161,8 @@ export default {
 
                 }
 
-           });
+                }).finally( () => this.$store.commit('loading', false))
+
 
         },
 
@@ -1176,6 +1178,7 @@ export default {
             else
                 desmagnetizacion_sn= null;
 
+            this.$store.commit('loading', true);
             var urlRegistros = 'informes_pm/' + this.informedata.id  ;
             axios({
               method: 'put',
@@ -1247,7 +1250,8 @@ export default {
 
                 }
 
-           });
+                }).finally( () => this.$store.commit('loading', false))
+
 
         }
 

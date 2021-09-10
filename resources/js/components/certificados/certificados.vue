@@ -238,7 +238,7 @@
                             </div>
                         </div>
                     </div>
-                <button class="btn btn-primary" type="submit">Guardar</button>
+                <button class="btn btn-primary" type="submit" :disabled="loading">Guardar</button>
             </form>
         </div>
     </div>
@@ -753,7 +753,7 @@ export default {
 
 
             this.errors =[];
-
+            this.loading = true;
             var urlRegistros = 'certificados' ;
             axios({
               method: 'post',
@@ -793,7 +793,7 @@ export default {
 
                 }
 
-           });
+               }).finally( () => loading = false)
 
         },
 
@@ -801,6 +801,7 @@ export default {
 
             this.errors =[];
             var urlRegistros = 'certificados/' + this.certificado_data.id  ;
+            this.loading = true;
             axios({
               method: 'put',
               url : urlRegistros,
@@ -837,7 +838,7 @@ export default {
 
                 }
 
-           });
+            }).finally( () => loading = false)
 
         }
 

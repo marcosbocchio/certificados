@@ -638,7 +638,7 @@
                         </div>
                     </div>
                 </div>
-                 <button class="btn btn-primary" type="submit">Guardar</button>
+                 <button class="btn btn-primary" type="submit" :disabled="loading" >Guardar</button>
             </form>
 
        </div>
@@ -1059,9 +1059,9 @@ export default {
 
                             if((item_data.informe_id == item_informe.id) && (!item_informe.importable_sn)){
 
-                                  item_informe.informe_sel = true;
+                                item_informe.informe_sel = true;
 
-                                }
+                            }
 
                             }.bind(this));
 
@@ -2120,7 +2120,7 @@ export default {
 
             this.errors =[];
 
-
+            this.loading = true;
             var urlRegistros = 'partes' ;
             axios({
               method: 'post',
@@ -2168,8 +2168,7 @@ export default {
 
                 }
 
-           });
-
+                }).finally( () => loading = false)
         },
 
         Update : function() {
@@ -2178,7 +2177,7 @@ export default {
                 return;
             }
 
-            console.log('entro para actualizar' );
+            this.loading =true;
             this.errors =[];
             var urlRegistros = 'partes/' + this.parte_data.id  ;
             axios({
@@ -2225,7 +2224,7 @@ export default {
 
                 }
 
-           });
+           }).finally( () => loading = false)
 
         }
     }
