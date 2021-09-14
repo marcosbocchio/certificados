@@ -26,7 +26,10 @@ class CosturasController extends Controller
 
     }
 
-    public function  getCosturas($ot_id,$pk,$plano,$costura,$rechazados,$reparaciones,$soldador_id){
+    public function  getCosturas($ot_id,$pk,$plano,$costura,$rechazados,$reparaciones,$soldador_id,$obra,$componente){
+
+        $obra = $obra == 'null' ? '' : str_replace('--','/',$obra);
+        $componente = $componente == 'null' ? '' : str_replace('--','/',$componente);
 
         $pk = $pk == 'null' ? '' : $pk;
         $plano = $plano == 'null' ? '' : $plano;
@@ -37,7 +40,7 @@ class CosturasController extends Controller
         $page = Input::get('page', 1);
         $paginate = 10;
 
-        $data = DB::select(DB::raw('CALL ReporteCosturas(?,?,?,?,?,?,?)'),array($ot_id,$pk,$plano,$costura,$rechazados,$reparaciones,$soldador_id));
+        $data = DB::select(DB::raw('CALL ReporteCosturas(?,?,?,?,?,?,?,?,?)'),array($ot_id,$pk,$plano,$costura,$rechazados,$reparaciones,$soldador_id,$obra,$componente));
         $offSet = ($page * $paginate) - $paginate;
         $itemsForCurrentPage = array_slice($data, $offSet, $paginate, true);
         $data = new \Illuminate\Pagination\LengthAwarePaginator(array_values($itemsForCurrentPage), count($data), $paginate, $page);

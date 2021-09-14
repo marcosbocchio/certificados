@@ -37,6 +37,26 @@
                             <v-select v-show="selOt" v-model="ot" label="numero" :options="ots" @input="CambioOt" ></v-select>
                         </li>
                         <li class="list-group-item pointer">
+                            <div v-show="!selObra">
+                                <span class="titulo-li">Obra</span>
+                                <a @click="seleccionarObra()" class="pull-right">
+                                    <div v-if="obra || ot.obra">{{obra.obra}}</div>
+                                    <div v-else><span class="seleccionar">Seleccionar</span></div>
+                                </a>
+                            </div>
+                            <v-select v-show="selObra" v-model="obra" label="obra" :options="obras" @input="CambioObra()"></v-select>
+                        </li>
+                        <li class="list-group-item pointer">
+                            <div v-show="!selComponente">
+                                <span class="titulo-li">Componente</span>
+                                <a @click="CambioComponente()" class="pull-right">
+                                    <div v-if="componente">{{componente.componente}}</div>
+                                    <div v-else><span class="seleccionar">Seleccionar</span></div>
+                                </a>
+                            </div>
+                            <v-select v-show="selComponente" v-model="componente" label="componente" :options="componentes" @input="CambioComponente()"></v-select>
+                        </li>
+                        <li class="list-group-item pointer">
                              <input type="number"  v-model="pk" class="form-control" id="plano" placeholder="PK">
                         </li>
                         <li class="list-group-item pointer">
@@ -175,6 +195,10 @@ export default {
             cliente:'',
             ots:[],
             ot:'',
+            obras:[],
+            obra:'',
+            componentes: [],
+            componente:'',
             pk : null,
             plano:null,
             soldador : '',
@@ -183,6 +207,8 @@ export default {
             reparaciones:false,
             selCliente:false,
             selOt:false,
+            selObra:false,
+            selComponente:false,
             selSoldador:false,
             soldadores:[],
             TablaCosturas:{},
@@ -215,7 +241,7 @@ methods : {
      this.TablaCosturas = {};
 
     try {
-        let url = 'costuras/ot/' + this.ot.id  + '/pk/' + (this.pk ? this.pk : 'null' ) + '/plano/' + (this.plano ? this.plano : 'null') + '/costura/' + (this.costura ? this.costura : 'null') + '/rechazados/' + this.rechazados + '/reparaciones/' + this.reparaciones + '/soldador/' + (this.soldador ? this.soldador.id : 0 ) + '?page='+ page + '&api_token=' + Laravel.user.api_token;
+        let url = 'costuras/ot/' + this.ot.id  + '/pk/' + (this.pk ? this.pk : 'null' ) + '/plano/' + (this.plano ? this.plano : 'null') + '/costura/' + (this.costura ? this.costura : 'null') + '/rechazados/' + this.rechazados + '/reparaciones/' + this.reparaciones + '/soldador/' + (this.soldador ? this.soldador.id : 0 ) + '/obra/' + (this.obra !='' ? this.obra.obra.replace('/','--') : 'null') + '/componente/' + (this.componente !='' ? this.componente.componente.replace('/','--') : 'null') + '?page='+ page + '&api_token=' + Laravel.user.api_token;
         let res = await axios.get(url);
         this.TablaCosturas = res.data;
 
@@ -234,6 +260,10 @@ methods : {
         this.selOt =false;
         this.obra = '';
         this.selObra =false;
+        this.obras=[]
+        this.componentes = []
+        this.componente = '';
+        this.selComponente = false;
         this.TablaCosturas = {};
 
         if(this.cliente){
@@ -252,17 +282,68 @@ methods : {
 
     CambioOt: async function(){
         this.selOt = !this.selOt;
-        this.soldador = '',
+        this.obra = '';
+        this.selObra = false;
+        this.componente = '';
+        this.selComponente = false;
+        this.componentes = [];
+        this.$store.commit('loading', true);
+        var urlRegistros = 'ots/' + this.ot.id + '/obras/' +'?api_token=' + Laravel.user.api_token;
+        try {
+            let res = await axios.get(urlRegistros);
+            this.obras = res.data;
+        }catch(error){
+
+        }finally  {this.$store.commit('loading', false);}
+
+        if(this.ot.obra){
+            this.obra = { obra : this.ot.obra}
+            this.getComponentes();
+        }
         this.soldadores = [];
         let url = 'ot_soldadores/ot/' + this.ot.id + '?api_token=' + Laravel.user.api_token;
         let res = await axios.get(url);
         this.soldadores = res.data;
     },
+
+    async seleccionarObra(){
+
+        this.componente = '';
+        this.selComponente = false;
+        if(this.ot && !this.ot.obra){
+            this.selObra = !this.selObra;
+        }
+    },
+
+    async CambioObra (){
+
+        this.obra = this.obra == null ? '' : this.obra;
+        this.selObra = !this.selObra;
+        this.componente = '';
+        this.getComponentes();
+
+    },
+    async getComponentes () {
+
+        this.componente = '';
+        this.$store.commit('loading', true);
+        var urlRegistros = 'ots/' + this.ot.id + '/obra/' + this.obra.obra + '/componentes/' +'?api_token=' + Laravel.user.api_token;
+        try {
+            let res = await axios.get(urlRegistros);
+            this.componentes = res.data;
+        }catch(error){ }finally  {this.$store.commit('loading', false);}
+    },
+
+    CambioComponente() {
+        this.selComponente = !this.selComponente;
+    },
+
     CambioSoldador: function() {
         this.selSoldador = !this.selSoldador;
     },
-        tabClicked (selectedTab) {
-          console.log('Current tab re-clicked:' + selectedTab.tab.name);
+
+    tabClicked (selectedTab) {
+        console.log('Current tab re-clicked:' + selectedTab.tab.name);
     },
 
     tabChanged (selectedTab) {

@@ -63,17 +63,9 @@ class EstadisticasSoldadurasController extends Controller
 
         DB::select('CALL CreateTemporaryTableDefectoPosReduce(?)',array($informes_ids));
 
-        $items =  DB::select('CALL AnalisisSoldadurasDefectosSoldador(?)',array($informes_ids));
+        return  DB::select('CALL AnalisisSoldadurasDefectosSoldador(?)',array($informes_ids));
 
-/*         foreach ($items as $item) {
-            $placas_rechazadas = DB::select('select CantPlacasRechazadasSoldador(?,?) as valor',array($informes_ids,$item->soldador_id));
-            Log::debug("informes: " . $informes_ids);
-            Log::debug("soldador id:". $item->soldador_id);
-            Log::debug("placas recha:" . json_encode($placas_rechazadas));
-            $item->placas_rechazadas = $placas_rechazadas[0]->valor;
-         } */
 
-         return $items;
 
     }
 
