@@ -132,7 +132,7 @@
                     <tabs :options="{ useUrlFragment: false }" @clicked="tabClicked" @changed="tabChanged">
                         <tab v-if="$can('R_indices_de_rechazos')" name="Indices de rechazos">
 
-                            <div v-if="data_indice_rechazos.options.length != []">
+                            <div v-if="TablaAnalisisRechazosDiametro.length != []">
 
                                     <div class="col-lg-4">
                                         <button @click="downloadPdf_tab1">Exportar PDF</button>
@@ -1228,6 +1228,7 @@ methods : {
 
         if(this.ot.obra){
             this.obra = { obra : this.ot.obra}
+            this.getComponentes();
         }
 
     },
@@ -1240,14 +1241,18 @@ methods : {
         if(this.ot && !this.ot.obra){
             this.selObra = !this.selObra;
         }
-
     },
 
     async CambioObra (){
 
-        this.TablaAnalisisRechazosEspesor = [];
+        this.resetVariables();
         this.obra = this.obra == null ? '' : this.obra;
         this.selObra = !this.selObra;
+        this.componente = '';
+        this.getComponentes();
+
+    },
+    async getComponentes () {
 
         this.componente = '';
         this.$store.commit('loading', true);
@@ -1256,7 +1261,6 @@ methods : {
             let res = await axios.get(urlRegistros);
             this.componentes = res.data;
         }catch(error){ }finally  {this.$store.commit('loading', false);}
-
     },
 
     CambioComponente() {
@@ -1573,7 +1577,6 @@ methods : {
                 doc.text(this.cliente.nombre_fantasia, 14, 58)
                 doc.text(this.obra ? this.obra.obra : '', 120, 58)
                 doc.text(this.componente ? this.componente.componente : '', 140, 58)
-
 
                 /* linea amarilla */
 
