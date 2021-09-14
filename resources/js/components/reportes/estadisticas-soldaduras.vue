@@ -176,6 +176,7 @@
                                                                 <th class="col-lg-2">Rechaz.</th>
                                                                 <th class="col-lg-2">Total</th>
                                                                 <th class="col-lg-2">%</th>
+                                                                <th class="col-lg-2">Placas Rech.</th>
                                                             </tr>
                                                             <tr v-for="(item,k) in TablaAnalisisRechazosDiametro" :key="k">
                                                                 <td>{{ item.diametro }}</td>
@@ -183,6 +184,7 @@
                                                                 <td>{{ item.rechazados }}</td>
                                                                 <td>{{ item.total }}</td>
                                                                 <td>{{ item.porcentaje_rechazados }}</td>
+                                                                <td>{{ item.placas_rechazadas}}</td>
                                                             </tr>
                                                             <tr>
                                                                 <th>Total</th>
@@ -190,6 +192,7 @@
                                                                 <th>{{ total_rechazos_soldaduras}}</th>
                                                                 <th>{{ total_soldaduras_informes}}</th>
                                                                 <th>{{ total_porcentaje_rechazados}}</th>
+                                                                <th>{{ total_placas_rechazadas }}</th>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -234,6 +237,7 @@
                                                                 <th class="col-lg-2">Rechaz.</th>
                                                                 <th class="col-lg-2">Total</th>
                                                                 <th class="col-lg-2">%</th>
+                                                                <th class="col-lg-2">Placas Rech.</th>
                                                             </tr>
                                                             <tr v-for="(item,k) in TablaAnalisisRechazosEspesor" :key="k">
                                                                 <td>{{ item.espesor }}</td>
@@ -241,6 +245,7 @@
                                                                 <td>{{ item.rechazados }}</td>
                                                                 <td>{{ item.total }}</td>
                                                                 <td>{{ item.porcentaje_rechazados }}</td>
+                                                                <td>{{ item.placas_rechazadas}}</td>
                                                             </tr>
                                                             <tr>
                                                                 <th>Total</th>
@@ -248,6 +253,7 @@
                                                                 <th>{{ total_rechazos_soldaduras}}</th>
                                                                 <th>{{ total_soldaduras_informes}}</th>
                                                                 <th>{{ total_porcentaje_rechazados}}</th>
+                                                                <th>{{ total_placas_rechazadas }}</th>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -628,6 +634,7 @@ export default {
         total_porcentaje_rechazados : 0,
         total_rechazos_soldaduras : 0,
         total_aprobados_soldaduras : 0,
+        total_placas_rechazadas:0,
         TablaAnalisisRechazosEspesor:[],
         TablaAnalisisRechazosDiametro:[],
         valores_indice_rechazos :[],
@@ -675,6 +682,7 @@ export default {
             'Rechazados'  : 'rechazados',
             'Total'       : 'total',
             '%'           :'porcentaje_rechazados',
+            'Placas rechazadas' : 'placas_rechazadas',
         },
 
         excel_titulo : "",
@@ -684,7 +692,8 @@ export default {
             'Aprovados'   : 'aprobados',
             'Rechazados'  : 'rechazados',
             'Total'       : 'total',
-            '%'           :'porcentaje_rechazados'
+            '%'           :'porcentaje_rechazados',
+            'Placas rechazadas' : 'placas_rechazadas',
         },
 
         defectos_json_fields : {
@@ -1439,12 +1448,14 @@ methods : {
         this.total_rechazos_soldaduras = 0;
         this.total_aprobados_soldaduras = 0;
         this.total_porcentaje_rechazados = 0;
+        this.total_placas_rechazadas = 0;
 
         tabla.forEach(function(item){
 
             this.total_rechazos_soldaduras   +=  parseInt(item.rechazados);
             this.total_aprobados_soldaduras  +=  parseInt(item.aprobados);
             this.total_soldaduras_informes   +=  parseInt(item.total);
+            this.total_placas_rechazadas     += parseInt(item.placas_rechazadas)
 
         }.bind(this));
 
@@ -1594,6 +1605,8 @@ methods : {
                 { header: 'Rechazados', dataKey: 'rechazados' },
                 { header: 'Total', dataKey: 'total' },
                 { header: '%', dataKey: 'porcentaje_rechazados' },
+                { header: 'Placas Rech.', dataKey: 'placas_rechazadas' },
+
             ],
             margin: { top: 70 },
             })
@@ -1608,6 +1621,7 @@ methods : {
                 { header: 'Rechazados', dataKey: 'rechazados' },
                 { header: 'Total', dataKey: 'total' },
                 { header: '%', dataKey: 'porcentaje_rechazados' },
+                { header: 'Placas Rech.', dataKey: 'placas_rechazadas' },
 
             ],
             margin: { top: 70 },
