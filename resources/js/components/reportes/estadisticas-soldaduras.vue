@@ -176,7 +176,6 @@
                                                                 <th class="col-lg-2">Rechaz.</th>
                                                                 <th class="col-lg-2">Total</th>
                                                                 <th class="col-lg-2">%</th>
-                                                                <th class="col-lg-2">Placas Rech.</th>
                                                             </tr>
                                                             <tr v-for="(item,k) in TablaAnalisisRechazosDiametro" :key="k">
                                                                 <td>{{ item.diametro }}</td>
@@ -184,7 +183,6 @@
                                                                 <td>{{ item.rechazados }}</td>
                                                                 <td>{{ item.total }}</td>
                                                                 <td>{{ item.porcentaje_rechazados }}</td>
-                                                                <td>{{ item.placas_rechazadas }}</td>
                                                             </tr>
                                                             <tr>
                                                                 <th>Total</th>
@@ -192,7 +190,6 @@
                                                                 <th>{{ total_rechazos_soldaduras}}</th>
                                                                 <th>{{ total_soldaduras_informes}}</th>
                                                                 <th>{{ total_porcentaje_rechazados}}</th>
-                                                                <th>{{ total_placas_rechazadas }}</th>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -237,7 +234,6 @@
                                                                 <th class="col-lg-2">Rechaz.</th>
                                                                 <th class="col-lg-2">Total</th>
                                                                 <th class="col-lg-2">%</th>
-                                                                <th class="col-lg-2">Placas Rech.</th>
                                                             </tr>
                                                             <tr v-for="(item,k) in TablaAnalisisRechazosEspesor" :key="k">
                                                                 <td>{{ item.espesor }}</td>
@@ -245,7 +241,6 @@
                                                                 <td>{{ item.rechazados }}</td>
                                                                 <td>{{ item.total }}</td>
                                                                 <td>{{ item.porcentaje_rechazados }}</td>
-                                                                <td>{{ item.placas_rechazadas }}</td>
                                                             </tr>
                                                             <tr>
                                                                 <th>Total</th>
@@ -253,7 +248,6 @@
                                                                 <th>{{ total_rechazos_soldaduras}}</th>
                                                                 <th>{{ total_soldaduras_informes}}</th>
                                                                 <th>{{ total_porcentaje_rechazados}}</th>
-                                                                <th>{{ total_placas_rechazadas }}</th>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -634,8 +628,6 @@ export default {
         total_porcentaje_rechazados : 0,
         total_rechazos_soldaduras : 0,
         total_aprobados_soldaduras : 0,
-        total_placas_aprobadas:0,
-        total_placas_rechazadas:0,
         TablaAnalisisRechazosEspesor:[],
         TablaAnalisisRechazosDiametro:[],
         valores_indice_rechazos :[],
@@ -683,7 +675,6 @@ export default {
             'Rechazados'  : 'rechazados',
             'Total'       : 'total',
             '%'           :'porcentaje_rechazados',
-            'Placas Rechazadas' : 'placas_rechazadas'
         },
 
         excel_titulo : "",
@@ -708,8 +699,7 @@ export default {
             'Nombre'    : 'nombre_soldador',
             'Cordones'  : 'cordones',
             'Cantidad'  : 'cantidad',
-            '%'         : 'porcentaje',
-            'Placas rechazadas' : 'placas_rechazadas'
+            '%'         : 'porcentaje'
         },
 
         indicaciones_json_fields : {
@@ -1177,7 +1167,7 @@ methods : {
     },
     prepareTituloExcel : function() {
 
-        this.excel_titulo = ["Cliente: " + this.cliente.nombre_fantasia + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + "OT Nº: " + this.ot.numero + "&nbsp;&nbsp;&nbsp;&nbsp;" +  "Obra Nº: " + this.obra.obra + "&nbsp;&nbsp;&nbsp;&nbsp;" + "Componente: " + this.componente.componente]
+        this.excel_titulo = ["Cliente: " + this.cliente.nombre_fantasia + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + "OT Nº: " + this.ot.numero + "&nbsp;&nbsp;&nbsp;&nbsp;" +  "Obra Nº: " + this.obra.obra + "&nbsp;&nbsp;&nbsp;&nbsp;" + "Componente: " + (this.componente  ? this.componente.componente : '')]
         this.excel_titulo.push("Desde: " + (this.fecha_desde ? moment( this.fecha_desde).format("DD/MM/YYYY") : '-'));
         this.excel_titulo.push("Hasta: " + (this.fecha_hasta ? moment( this.fecha_hasta).format("DD/MM/YYYY") : '-'));
 
@@ -1449,16 +1439,12 @@ methods : {
         this.total_rechazos_soldaduras = 0;
         this.total_aprobados_soldaduras = 0;
         this.total_porcentaje_rechazados = 0;
-        this.total_placas_aprobadas = 0;
-        this.total_placas_rechazadas = 0;
 
         tabla.forEach(function(item){
 
             this.total_rechazos_soldaduras   +=  parseInt(item.rechazados);
             this.total_aprobados_soldaduras  +=  parseInt(item.aprobados);
             this.total_soldaduras_informes   +=  parseInt(item.total);
-            this.total_placas_aprobadas      +=  parseInt(item.placas_aprobadas)
-            this.total_placas_rechazadas     += parseInt(item.placas_rechazadas)
 
         }.bind(this));
 
@@ -1608,7 +1594,6 @@ methods : {
                 { header: 'Rechazados', dataKey: 'rechazados' },
                 { header: 'Total', dataKey: 'total' },
                 { header: '%', dataKey: 'porcentaje_rechazados' },
-                { header: 'Placas Rech.', dataKey: 'placas_rechazadas' },
             ],
             margin: { top: 70 },
             })
@@ -1623,7 +1608,6 @@ methods : {
                 { header: 'Rechazados', dataKey: 'rechazados' },
                 { header: 'Total', dataKey: 'total' },
                 { header: '%', dataKey: 'porcentaje_rechazados' },
-                { header: 'Placas Recha.', dataKey: 'placas_rechazadas' },
 
             ],
             margin: { top: 70 },
