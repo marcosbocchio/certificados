@@ -311,24 +311,19 @@ methods :{
     async CambioObra (){
 
         this.selObra = !this.selObra;
-
         this.componente = '';
         this.$store.commit('loading', true);
         var urlRegistros = 'ots/' + this.ot.id + '/obra/' + this.obra.obra + '/componentes/' +'?api_token=' + Laravel.user.api_token;
         try {
             let res = await axios.get(urlRegistros);
             this.componentes = res.data;
-        }catch(error){
-
-            }finally  {this.$store.commit('loading', false);}
+        }catch(error){ }finally  {this.$store.commit('loading', false);}
 
     },
 
     CambioComponente() {
-
         this.selComponente = !this.selComponente;
-    }
-    ,
+    },
     generateGraficoPlacasRepetidas() {
 
             this.data_placas_repetidas = {

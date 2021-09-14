@@ -46,6 +46,16 @@
                             </div>
                             <v-select v-show="selObra" v-model="obra" label="obra" :options="obras" @input="CambioObra()"></v-select>
                         </li>
+                        <li class="list-group-item pointer">
+                            <div v-show="!selComponente">
+                                <span class="titulo-li">Componente</span>
+                                <a @click="CambioComponente()" class="pull-right">
+                                    <div v-if="componente">{{componente.componente}}</div>
+                                    <div v-else><span class="seleccionar">Seleccionar</span></div>
+                                </a>
+                            </div>
+                            <v-select v-show="selComponente" v-model="componente" label="componente" :options="componentes" @input="CambioComponente()"></v-select>
+                        </li>
                         <li class="list-fecha list-group-item pointer">
                             <div class="row">
                                 <div class="col-sm-12 col-md-12 col-lg-6">
@@ -378,16 +388,17 @@
                                             <table class="table table-striped table-hover">
                                                 <tbody>
                                                     <tr>
-                                                        <th class="col-lg-3 col-md-3">Cuño</th>
-                                                        <th class="col-lg-3 col-md-2">Cord.</th>
-                                                        <th class="col-lg-3 col-md-2" style="text-align: center;">Cant.</th>
+                                                        <th class="col-lg-3 col-md-2">Cuño</th>
+                                                        <th class="col-lg-2 col-md-1">Cord.</th>
+                                                        <th class="col-lg-2 col-md-1" style="text-align: center;">Cant.</th>
                                                         <th colspan="2" class="col-lg-3 col-md-5" style="text-align: center;">Porcentaje</th>
+                                                        <th class="col-lg-2 col-md-3" style="text-align: center;">Placas Rech.</th>
                                                     </tr>
                                                     <tr v-for="(item,k) in TablaDefectosSoldador" :key="k" @click="getDetalleDefectosSoldador(item,k)" class="pointer"  :class="{selected: indexDefectosSoldador === k}">
                                                         <td>{{item.codigo_soldador}} - {{item.nombre_soldador }}</td>
                                                         <td>{{ item.cordones }}</td>
                                                         <td style="text-align: center;">{{ item.cantidad }}</td>
-                                                        <td class="col-lg-2 col-md-4" >
+                                                        <td class="col-lg-2 col-md-2" >
                                                             <div class="progress progress-xs">
                                                                 <div class="progress-bar" :style="{width:item.porcentaje,background:colores[k].color}"></div>
                                                             </div>
@@ -395,6 +406,7 @@
                                                         <td >
                                                             <span class="badge" :style="{background:colores[k].color}">{{ item.porcentaje_formateado }}</span>
                                                         </td>
+                                                        <td style="text-align: center;">{{  item.placas_rechazadas }}</td>
 
                                                     </tr>
                                                 </tbody>
@@ -577,11 +589,14 @@ export default {
         ot:'',
         obras:[],
         obra:'',
+        componentes: [],
+        componente:'',
         fecha_desde:null,
         fecha_hasta:null,
         selCliente:false,
         selOt:false,
         selObra:false,
+        selComponente:false,
         informes : [],
         perPage: 10,
         fields: [ { name:'informeDescrip',
@@ -679,7 +694,6 @@ export default {
             'Rechazados'  : 'rechazados',
             'Total'       : 'total',
             '%'           :'porcentaje_rechazados'
-
         },
 
         defectos_json_fields : {
@@ -695,7 +709,7 @@ export default {
             'Cordones'  : 'cordones',
             'Cantidad'  : 'cantidad',
             '%'         : 'porcentaje',
-
+            'Placas rechazadas' : 'placas_rechazadas'
         },
 
         indicaciones_json_fields : {
@@ -706,13 +720,13 @@ export default {
         },
 
         json_meta: [
-                [
-                    {
-                        'key': 'charset',
-                        'value': 'utf-8'
-                    }
-                ]
-            ],
+            [
+                {
+                    'key': 'charset',
+                    'value': 'utf-8'
+                }
+            ]
+        ],
      }
 
     },
@@ -1111,7 +1125,7 @@ methods : {
 
     try {
 
-        let url = 'informes/ot/' + this.ot.id  + '/obra/' + (this.obra !='' ? this.obra.obra.replace('/','--') : 'null') + '/fecha_desde/' + this.fecha_desde + '/fecha_hasta/' + this.fecha_hasta + '?api_token=' + Laravel.user.api_token;
+        let url = 'informes/ot/' + this.ot.id  + '/obra/' + (this.obra !='' ? this.obra.obra.replace('/','--') : 'null') + '/componente/' + (this.componente !='' ? this.componente.componente.replace('/','--') : 'null')  + '/fecha_desde/' + this.fecha_desde + '/fecha_hasta/' + this.fecha_hasta + '?api_token=' + Laravel.user.api_token;
         let res = await axios.get(url);
         this.informes = res.data;
         this.informes_ids = this.informes.map(item => item.id).toString();
@@ -1163,7 +1177,7 @@ methods : {
     },
     prepareTituloExcel : function() {
 
-        this.excel_titulo = ["Cliente: " + this.cliente.nombre_fantasia + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + "OT Nº: " + this.ot.numero + "&nbsp;&nbsp;&nbsp;&nbsp;" +  "Obra Nº: " + this.obra.obra]
+        this.excel_titulo = ["Cliente: " + this.cliente.nombre_fantasia + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + "OT Nº: " + this.ot.numero + "&nbsp;&nbsp;&nbsp;&nbsp;" +  "Obra Nº: " + this.obra.obra + "&nbsp;&nbsp;&nbsp;&nbsp;" + "Componente: " + this.componente.componente]
         this.excel_titulo.push("Desde: " + (this.fecha_desde ? moment( this.fecha_desde).format("DD/MM/YYYY") : '-'));
         this.excel_titulo.push("Hasta: " + (this.fecha_hasta ? moment( this.fecha_hasta).format("DD/MM/YYYY") : '-'));
 
@@ -1176,6 +1190,8 @@ methods : {
         this.selOt =false;
         this.obra = '';
         this.selObra =false;
+        this.componente = '';
+        this.selComponente = false;
         this.fecha_desde = null;
         this.fecha_hasta = null;
         this.resetVariables();
@@ -1198,6 +1214,8 @@ methods : {
         this.selOt = !this.selOt;
         this.obra = '';
         this.selObra = false;
+        this.componente = '';
+        this.selComponente = false;
         this.resetVariables();
         this.$store.commit('loading', true);
         var urlRegistros = 'ots/' + this.ot.id + '/obras/' +'?api_token=' + Laravel.user.api_token;
@@ -1214,12 +1232,15 @@ methods : {
 
     },
 
-    seleccionarObra(){
+    async seleccionarObra(){
 
+        this.componente = '';
+        this.selComponente = false;
         this.resetVariables();
         if(this.ot && !this.ot.obra){
             this.selObra = !this.selObra;
         }
+
     },
 
     async CambioObra (){
@@ -1228,11 +1249,23 @@ methods : {
         this.obra = this.obra == null ? '' : this.obra;
         this.selObra = !this.selObra;
 
+        this.componente = '';
+        this.$store.commit('loading', true);
+        var urlRegistros = 'ots/' + this.ot.id + '/obra/' + this.obra.obra + '/componentes/' +'?api_token=' + Laravel.user.api_token;
+        try {
+            let res = await axios.get(urlRegistros);
+            this.componentes = res.data;
+        }catch(error){ }finally  {this.$store.commit('loading', false);}
+
+    },
+
+    CambioComponente() {
+        this.selComponente = !this.selComponente;
     },
 
     resetVariables(){
 
-       // this.informes                      = [];
+        this.componentes                   = [];
         this.TablaAnalisisRechazosEspesor  = [];
         this.TablaAnalisisRechazosDiametro = [];
         this.TablaDefectosPosicion         = [];
@@ -1379,6 +1412,7 @@ methods : {
                                    'nombre_soldador': item_t.nombre_soldador,
                                    'soldador_id' : item_t.soldador_id,
                                    'cordones' : item_t.cordones,
+                                   'placas_rechazadas' : item_t.placas_rechazadas,
                                });
 
                            }
@@ -1513,29 +1547,33 @@ methods : {
                 /* header entre lineas */
                 doc.setFontSize(10);
                 doc.setFontType("bold");
-                doc.text("Cliente", 14, 39);
-                doc.text("Obra", 150, 39);
-                doc.text("Desde", 170, 39);
+
+                doc.text("Proyecto", 14, 39);
+                doc.text("OT Nº", 120, 39);
+                doc.text("Desde", 140, 39);
+                doc.text("Hasta", 170, 39);
 
                 doc.setLineWidth(0.3);
                 doc.setDrawColor(32,178,170);
                 doc.line(11, 47, 200, 47);
 
-                doc.text("Proyecto", 14, 53);
-                doc.text("OT Nº", 150, 53);
-                doc.text("Hasta", 170, 53);
+                doc.text("Cliente", 14, 53);
+                doc.text("Obra", 120, 53);
+                doc.text("Componente", 140, 53);
 
                 /* Datos del header*/
                 doc.setFontType("normal");
                 doc.setFontType("italic");
 
-                doc.text(this.cliente.nombre_fantasia, 14, 44)
-                doc.text(this.obra.obra, 150, 44)
-                doc.text((this.fecha_desde ? moment( this.fecha_desde).format("DD/MM/YYYY") : ' '), 170, 44)
+                doc.text(this.ot.proyecto, 14, 44)
+                doc.text(this.ot.numero.toString(), 120, 44)
+                doc.text((this.fecha_desde ? moment( this.fecha_desde).format("DD/MM/YYYY") : ' '), 140, 44)
+                doc.text((this.fecha_hasta ? moment( this.fecha_hasta).format("DD/MM/YYYY") : ' '), 170, 44)
 
-                doc.text(this.ot.proyecto, 14, 58)
-                doc.text(this.ot.numero.toString(), 150, 58)
-                doc.text((this.fecha_hasta ? moment( this.fecha_hasta).format("DD/MM/YYYY") : ' '), 170, 58)
+                doc.text(this.cliente.nombre_fantasia, 14, 58)
+                doc.text(this.obra ? this.obra.obra : '', 120, 58)
+                doc.text(this.componente ? this.componente.componente : '', 140, 58)
+
 
                 /* linea amarilla */
 
@@ -1567,6 +1605,7 @@ methods : {
                 { header: 'Rechazados', dataKey: 'rechazados' },
                 { header: 'Total', dataKey: 'total' },
                 { header: '%', dataKey: 'porcentaje_rechazados' },
+                { header: 'Placas Rech.', dataKey: 'placas_rechazadas' },
             ],
             margin: { top: 70 },
             })
@@ -1581,6 +1620,8 @@ methods : {
                 { header: 'Rechazados', dataKey: 'rechazados' },
                 { header: 'Total', dataKey: 'total' },
                 { header: '%', dataKey: 'porcentaje_rechazados' },
+                { header: 'Placas Recha.', dataKey: 'placas_rechazadas' },
+
             ],
             margin: { top: 70 },
             })
@@ -1639,9 +1680,17 @@ methods : {
                 { header: 'Cord.', dataKey: 'cordones' },
                 { header: 'Cantidad', dataKey: 'cantidad' },
                 { header: '%', dataKey: 'porcentaje' },
+                { header: 'Placas Rech.', dataKey: 'placas_rechazadas' },
             ],
-            margin: { top: 70 },
-            })
+          columnStyles: {
+            0: { cellWidth: 40, fontSize: 9 },
+            1: { cellWidth: 30, fontSize: 9 },
+            2: { cellWidth: 40, fontSize: 9 },
+            3: { cellWidth: 50, fontSize: 9 },
+            4: { cellWidth: 45, fontSize: 9 },
+          },
+        margin: { top: 70 },
+        })
 
        var newCanvas = document.getElementById('img_defectologia_produccion');
        var imgData = newCanvas.toDataURL('image/png',1.0)

@@ -373,10 +373,14 @@ class InformesController extends Controller
 
     }
 
-    public function getInformesEstadisticasSoldaduras($ot_id,$obra,$fecha_desde,$fecha_hasta){
+    public function getInformesEstadisticasSoldaduras($ot_id,$obra,$componente,$fecha_desde,$fecha_hasta){
 
         if($obra == 'null'){
             $obra = '';
+        }
+
+        if($componente == 'null'){
+            $componente = '';
         }
 
         if($fecha_desde == 'null'){
@@ -388,8 +392,10 @@ class InformesController extends Controller
         }
 
         $obra = str_replace('--','/',$obra);
+        $componente = str_replace('--','/',$componente);
         $informes =  InformesView:: where('metodo','RI')
                             ->where('ot_id',$ot_id)
+                            ->whereRaw("componente LIKE '%" . $componente . "%'")
                             ->Obra($obra)
                             ->where('importable_sn',0)
                             ->whereBetween('fecha',[$fecha_desde,$fecha_hasta])
