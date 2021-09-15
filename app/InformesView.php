@@ -23,4 +23,18 @@ class InformesView extends Model
         }
 
     }
+
+    public function scopeFiltro($query, $filtro='') {
+
+        if (trim($filtro) != '') {
+
+            $query->WhereRaw("numero LIKE '%" . $filtro . "%'")
+                  ->orWhereRaw("obra LIKE '%" . $filtro . "%'")
+                  ->orWhereRaw("metodo LIKE '%" . $filtro . "%'")
+                  ->orWhereRaw("informe_completo LIKE '%" . $filtro . "%'")
+                  ->orWhereRaw("name LIKE '%" . $filtro . "%'")
+                  ->orWhereRaw("fecha_formateada LIKE '%" . $filtro . "%'");
+        }
+
+    }
 }

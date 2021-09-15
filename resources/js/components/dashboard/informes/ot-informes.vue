@@ -48,6 +48,14 @@
                 </div>
            </div>
        </div>
+        <div class="col-md-3 col-md-offset-9 col-sm-12 col-xs-12">
+        <div class="form-group">
+            <div class="input-group">
+                <input type="text" v-model="search" class="form-control" v-on:keyup.13="aplicarFiltro" placeholder="Buscar...">
+                <span class="input-group-addon btn" @click="aplicarFiltro()" style="background-color: rgb(255, 204, 0);"><i class="fa fa-search"></i></span>
+            </div>
+        </div>
+        </div>
        <div class="col-md-12">
             <div class="box box-custom-enod top-buffer">
                 <div class="box-header with-border">
@@ -195,6 +203,7 @@ export default {
       informe_id_select: 0,
       index_informe:0,
       loading_table : false,
+      search:'',
 
     }
   },
@@ -244,13 +253,20 @@ export default {
 
     methods : {
 
-        getResults :function(page = 1){
+        getResults :function(page = 1,filtro =''){
 
-                axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'informes/ot/' + this.ot_data.id + '/paginate' + '?page='+ page;
-                axios.get(urlRegistros).then(response =>{
+            this.loading_table = true,
+            axios.defaults.baseURL = this.url ;
+            var urlRegistros = 'informes/ot/' + this.ot_data.id + '/paginate' + '?page='+ page + '&search=' + filtro ;
+            axios.get(urlRegistros).then(response =>{
                 this.ot_informes = response.data
-                });
+            }).finally(() => this.loading_table = false)
+       },
+
+        aplicarFiltro : function(){
+
+          this.getResults(1,this.search);
+
         },
 
         NuevoInforme: function(ot_id){
