@@ -253,11 +253,11 @@ export default {
 
     methods : {
 
-        getResults :function(page = 1,filtro =''){
+        getResults :function(page = 1){
 
             this.loading_table = true,
             axios.defaults.baseURL = this.url ;
-            var urlRegistros = 'informes/ot/' + this.ot_data.id + '/paginate' + '?page='+ page + '&search=' + filtro ;
+            var urlRegistros = 'informes/ot/' + this.ot_data.id + '/paginate' + '?page='+ page + '&search=' + this.search ;
             axios.get(urlRegistros).then(response =>{
                 this.ot_informes = response.data
             }).finally(() => this.loading_table = false)
@@ -265,7 +265,7 @@ export default {
 
         aplicarFiltro : function(){
 
-          this.getResults(1,this.search);
+          this.getResults();
 
         },
 
@@ -289,9 +289,8 @@ export default {
                     }
                     else
                     {
-
                         toastr.error('No se puede crear el informe. Existen informes de hace ' + this.ParametroGeneral.valor + ' días' + ' sin parte asociado' );
-                         this.$store.commit('loading', false);
+                        this.$store.commit('loading', false);
                     }
 
                 });
@@ -301,11 +300,12 @@ export default {
 
         ContarInformes : function(){
 
-                this.$store.dispatch('loadContarInformes',this.ot_data.id);
+            this.$store.dispatch('loadContarInformes',this.ot_data.id);
 
-            },
+        },
 
         VerificarRevision : function(informe){
+
             this.informe_id_select = informe.id;
             if(informe.firma){
 
@@ -315,7 +315,6 @@ export default {
 
                 this.EditInforme();
             }
-
         },
 
         EditInforme : function(informe){
