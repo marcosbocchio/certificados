@@ -51,6 +51,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::put('ots/{ot_id}/firmar', 'OtsController@firmar');
     Route::put('ots/{ot_id}/cerrar', 'OtsController@cerrar');
     Route::get('ots/{ot_id}/obras', 'OtsController@getObras');
+    Route::get('ots/{ot_id}/obra/{obra}/componentes', 'OtsController@getComponentes');
     Route::get('ots/{ot_id}/obras_por_tipo_soldaduras', 'OtsController@getObrasTipoSoldaduras');
     Route::resource('ots', 'OtsController');
     Route::get('ot_servicios/informe/{informe_id}/importado_sn/{importado_sn}', 'OtServiciosController@getOtServiciosInforme');
@@ -137,7 +138,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::put('informes/{id}/clonar', 'InformesController@clonar');
     Route::get('informes/ot/{ot_id}/pendientes_parte_diario', 'InformesController@OtInformesPendienteParteDiario');
     Route::get('informes/ot/{ot_id}/parte/{parte_id}/pendientes_editables_parte_diario', 'InformesController@OtInformesPendienteEditableParteDiario');
-    Route::get('informes/ot/{ot_id}/obra/{obra}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}', 'InformesController@getInformesEstadisticasSoldaduras');
+    Route::get('informes/ot/{ot_id}/obra/{obra}/componente/{componente}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}', 'InformesController@getInformesEstadisticasSoldaduras');
     Route::get('informes/revisiones/ot/{ot_id}/metodo/{metodo}/numero/{numero}', 'InformesController@getInformeRevisiones');
 
 
@@ -167,6 +168,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::post('storage/documentos_videos', 'StorageController@saveDocumentosVideos');
 
     Route::get('documentaciones/ot','DocumentacionesController@DocumentacionesDeOt');
+    Route::post('documentacion/generar_link', 'DocumentacionesController@generarLink');
 
     Route::get('documentaciones/total', 'DocumentacionesController@DocumentacionesTotal');
     Route::get('documentaciones/verificar_duplicados/tipo/{tipo?}/titulo/{titulo?}/usuario/{user_id?}/equipo/{interno_equipo_id?}/fuente/{interno_fuente_id?}/vehiculo/{vehiculo_id}', 'DocumentacionesController@verificarDuplicados');
@@ -308,9 +310,10 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('estadisticas-soldaduras/analisis_indicaciones_posicion/posicion/{posicion}/diametro/{diametro}/{informes_ids}','EstadisticasSoldadurasController@AnalisisSoldadurasIndicacionesPosicion');
 
     //Costuras
-    Route::get('costuras/ot/{ot_id}/pk/{pk}/plano/{plano}/costura/{costura}/rechazados/{rechazados}/reparaciones/{reparaciones}/soldador/{soldador_id}','CosturasController@getCosturas');
+    Route::get('costuras/ot/{ot_id}/pk/{pk}/plano/{plano}/costura/{costura}/rechazados/{rechazados}/reparaciones/{reparaciones}/soldador/{soldador_id}/obra/{obra}/componente/{componente}','CosturasController@getCosturas');
     Route::get('reporte-placas/cliente/{cliente_id}/ot/{ot_id}/obra/{obra}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}/total','ReportePlacasController@getPlacasTotal');
     Route::get('reporte-placas/cliente/{cliente_id}/ot/{ot_id}/obra/{obra}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}/repetidas-testigos','ReportePlacasController@getPlacasRepetidasTestigos');
+    Route::get('reporte-placas/cliente/{cliente_id}/ot/{ot_id}/obra/{obra}/componente/{componente}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}/rechazadas','ReportePlacasController@getPlacasRechazadas');
 
     //Notificaciones
     Route::get('alarmas/dosimetria','AlarmasController@getAlarmaDosimetria');

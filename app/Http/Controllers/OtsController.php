@@ -18,7 +18,7 @@ use App\Provincias;
 use App\Localidades;
 use Illuminate\Support\Facades\Auth;
 use \stdClass;
-use\carbon;
+use \carbon;
 use App\Informe;
 use App\OtTipoSoldaduras;
 
@@ -218,5 +218,10 @@ class OtsController extends Controller
 
         return OtTipoSoldaduras::where('ot_id',$ot_id)->select('obra')->distinct()->get();
 
+    }
+
+    public function getComponentes($ot_id,$obra){
+
+        return Informe::where('ot_id',$ot_id)->where('obra',$obra)->select('informes.componente')->distinct()->get();
     }
 }

@@ -434,7 +434,7 @@
                     </div>
                 </div>
 
-                <button class="btn btn-primary" type="submit">Guardar</button>
+                <button class="btn btn-primary" type="submit" :disabled="isLoading">Guardar</button>
 
            </form>
        </div>
@@ -970,7 +970,7 @@ data() {return {
     Store : function(){
 
           this.errors =[];
-
+            this.$store.commit('loading', true);
             var urlRegistros = 'informes_lp' ;
             axios({
               method: 'post',
@@ -1038,7 +1038,7 @@ data() {return {
 
                 }
 
-           });
+               }).finally( () => this.$store.commit('loading', false))
 
         },
 
@@ -1046,7 +1046,7 @@ data() {return {
 
             console.log('entro para actualizar' );
             this.errors =[];
-
+            this.$store.commit('loading', true);
             var urlRegistros = 'informes_lp/' + this.informedata.id  ;
             axios({
               method: 'put',
@@ -1116,7 +1116,7 @@ data() {return {
 
             }
 
-        });
+            }).finally( () => this.$store.commit('loading', false))
 
         }
     }

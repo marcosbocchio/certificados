@@ -129,9 +129,28 @@ export default {
 
     GenerarLink:function () {
 
-        let documentos_ids = this.documentos.filter(function(e) { return e.check }).map(e => e.id)
-        console.log(documentos_ids)
+        let documentos = this.documentos.filter(function(e) { return e.check }).map(e => e.path)
+        console.log(documentos)
+        this.loading_table = true;
+        axios.defaults.baseURL = this.url ;
+        var urlRegistros = 'documentacion/' + 'generar_link';
 
+        axios.post(urlRegistros, {
+
+            'documentos' : documentos,
+
+        }).then(response => {
+
+            this.$showMessagePreset('success','code-store');
+
+        }).catch(error => {
+
+            this.errors = error.response.data.errors;
+            $.each( this.errors, function( key, value ) {
+                this.$showMessages('error',[value]);
+                console.log( key + ": " + value );
+            }.bind(this));
+        });
     }
 
   }

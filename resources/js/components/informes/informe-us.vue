@@ -1943,6 +1943,7 @@ export default {
 
             this.errors =[];
             var urlRegistros = 'informes_us' ;
+            this.$store.commit('loading', true);
             axios({
             method: 'post',
             url : urlRegistros,
@@ -2012,13 +2013,14 @@ export default {
                     toastr.error("Ocurrió un error al procesar la solicitud");
 
                 }
-        });
+           }).finally( () => this.$store.commit('loading', false))
 
         },
 
        Update : function() {
 
             this.errors =[];
+            this.$store.commit('loading', true);
             var urlRegistros = 'informes_us/' + this.informedata.id  ;
             axios({
               method: 'put',
@@ -2092,7 +2094,7 @@ export default {
 
             }
 
-        });
+           }).finally( () => this.$store.commit('loading', false))
 
         }
      }

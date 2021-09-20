@@ -58,15 +58,16 @@ class InformesController extends Controller
 
     public function paginate(Request $request,$id){
 
-          return InformesView::where('ot_id',$id)
-                                ->orderBy('fecha','DESC')
-                                ->orderBy('id','DESC')
-                                ->paginate(10);
+        $filtro = $request->search;
+        return InformesView::where('ot_id',$id)
+                            ->Filtro($filtro)
+                            ->orderBy('fecha','DESC')
+                            ->orderBy('id','DESC')
+                            ->paginate(10);
 
     }
 
     public function OtInformesTotal($ot_id){
-
 
         return InformesView::where('ot_id',$ot_id)->count();
 
@@ -99,34 +100,31 @@ class InformesController extends Controller
 
     public function edit($ot_id,$id) {
 
-    $metodo_ensayo = DB::table('informes')
-              ->join('metodo_ensayos','metodo_ensayos.id','=','informes.metodo_ensayo_id')
-              ->where('informes.id',$id)
-              ->where('informes.ot_id',$ot_id)
-              ->select('metodo_ensayos.*')
-              ->first();
+        $metodo_ensayo = DB::table('informes')
+                ->join('metodo_ensayos','metodo_ensayos.id','=','informes.metodo_ensayo_id')
+                ->where('informes.id',$id)
+                ->where('informes.ot_id',$ot_id)
+                ->select('metodo_ensayos.*')
+                ->first();
 
-    switch ($metodo_ensayo->metodo) {
+        switch ($metodo_ensayo->metodo) {
 
-        case 'RI':
-            return redirect()->route('InformeRiEdit',array('ot_id' => $ot_id, 'id' => $id));
-            break;
+            case 'RI':
+                return redirect()->route('InformeRiEdit',array('ot_id' => $ot_id, 'id' => $id));
+                break;
 
-         case 'PM':
-            return redirect()->route('InformePmEdit',array('ot_id' => $ot_id, 'id' => $id));
-            break;
+            case 'PM':
+                return redirect()->route('InformePmEdit',array('ot_id' => $ot_id, 'id' => $id));
+                break;
 
-         case 'LP':
-            return redirect()->route('InformeLpEdit',array('ot_id' => $ot_id, 'id' => $id));
-            break;
+            case 'LP':
+                return redirect()->route('InformeLpEdit',array('ot_id' => $ot_id, 'id' => $id));
+                break;
 
-        case 'US':
-            return redirect()->route('InformeUsEdit',array('ot_id' => $ot_id, 'id' => $id));
-            break;
-
-    }
-
-
+            case 'US':
+                return redirect()->route('InformeUsEdit',array('ot_id' => $ot_id, 'id' => $id));
+                break;
+        }
     }
 
     public function GenerarNumeroInforme($ot_id,$metodo){
@@ -373,10 +371,14 @@ class InformesController extends Controller
 
     }
 
-    public function getInformesEstadisticasSoldaduras($ot_id,$obra,$fecha_desde,$fecha_hasta){
+    public function getInformesEstadisticasSoldaduras($ot_id,$obra,$componente,$fecha_desde,$fecha_hasta){
 
         if($obra == 'null'){
             $obra = '';
+        }
+
+        if($componente == 'null'){
+            $componente = '';
         }
 
         if($fecha_desde == 'null'){
@@ -388,8 +390,10 @@ class InformesController extends Controller
         }
 
         $obra = str_replace('--','/',$obra);
+        $componente = str_replace('--','/',$componente);
         $informes =  InformesView:: where('metodo','RI')
                             ->where('ot_id',$ot_id)
+                            ->whereRaw("componente LIKE '%" . $componente . "%'")
                             ->Obra($obra)
                             ->where('importable_sn',0)
                             ->whereBetween('fecha',[$fecha_desde,$fecha_hasta])

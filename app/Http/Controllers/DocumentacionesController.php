@@ -15,6 +15,14 @@ use App\InternoEquipoDocumentaciones;
 use App\InternoFuenteDocumentaciones;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Input;
+use Zip;
+
+use Illuminate\Support\Str;
+use STS\ZipStream\ZipStream;
+use ZipArchive;
+use Orchestra\Testbench\TestCase;
+use STS\ZipStream\ZipStreamFacade;
+use STS\ZipStream\ZipStreamServiceProvider;
 
 class DocumentacionesController extends Controller
 {
@@ -390,5 +398,17 @@ class DocumentacionesController extends Controller
 
        return DB::select('CALL getDocumentosOt(?)',array($ot_id));
 
+    }
+
+    public function generarLink(Request $request) {
+
+        $documentos = $request->documentos;
+        foreach ($documentos as $documento) {
+            Log::debug("request: " . $documento);
+        }
+
+        return Zip::create("doc.zip", [
+            "/home/vagrant/code/certificados/public/storage/documentaciones/yGkWOSCGiPcj3xRJp1FBpO5EAxOgaDVad8FUVDKn.pdf"
+        ]);
     }
 }

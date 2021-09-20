@@ -638,7 +638,7 @@
                         </div>
                     </div>
                 </div>
-                 <button class="btn btn-primary" type="submit">Guardar</button>
+                 <button class="btn btn-primary" type="submit" :disabled="loading" >Guardar</button>
             </form>
 
        </div>
@@ -848,7 +848,6 @@ export default {
                this.TablaVehiculos =  JSON.parse(JSON.stringify(this.vehiculos_data));
                this.TablaResponsables =  JSON.parse(JSON.stringify(this.responsables_data));
                eventHeaderParte.$emit('set-obra-header',this.parte_data.obra);
-               alert('ahora llama al set obra')
                this.fecha  = this.parte_data.fecha;
                this.tipo_servicio = this.parte_data.tipo_servicio;
                this.horario = this.parte_data.horario;
@@ -1060,9 +1059,9 @@ export default {
 
                             if((item_data.informe_id == item_informe.id) && (!item_informe.importable_sn)){
 
-                                  item_informe.informe_sel = true;
+                                item_informe.informe_sel = true;
 
-                                }
+                            }
 
                             }.bind(this));
 
@@ -2121,7 +2120,7 @@ export default {
 
             this.errors =[];
 
-
+            this.loading = true;
             var urlRegistros = 'partes' ;
             axios({
               method: 'post',
@@ -2169,8 +2168,7 @@ export default {
 
                 }
 
-           });
-
+                }).finally( () => loading = false)
         },
 
         Update : function() {
@@ -2179,7 +2177,7 @@ export default {
                 return;
             }
 
-            console.log('entro para actualizar' );
+            this.loading =true;
             this.errors =[];
             var urlRegistros = 'partes/' + this.parte_data.id  ;
             axios({
@@ -2226,7 +2224,7 @@ export default {
 
                 }
 
-           });
+           }).finally( () => loading = false)
 
         }
     }

@@ -238,7 +238,7 @@
                             </div>
                         </div>
                     </div>
-                <button class="btn btn-primary" type="submit">Guardar</button>
+                <button class="btn btn-primary" type="submit" :disabled="loading">Guardar</button>
             </form>
         </div>
     </div>
@@ -336,6 +336,10 @@ export default {
                    return   sprintf("%08d",this.numero) ;
 
                }
+        },
+
+        partes_sel: function() {
+            return this.partes.filter(e => e.parte_sel)
         },
      },
 
@@ -444,7 +448,7 @@ export default {
              axios.get(urlRegistros).then(response =>{
              this.partes = JSON.parse(JSON.stringify(response.data));
 
-                 this.servicios_data.forEach(function(item){
+               /*  this.servicios_data.forEach(function(item){
 
                      if(this.partes.map(x => x.id).indexOf(item.parte_id) !== -1){
 
@@ -473,7 +477,7 @@ export default {
 
 
                  }.bind(this));
-
+                */
             });
 
         },
@@ -749,7 +753,7 @@ export default {
 
 
             this.errors =[];
-
+            this.loading = true;
             var urlRegistros = 'certificados' ;
             axios({
               method: 'post',
@@ -759,6 +763,7 @@ export default {
                 'numero'                             : this.numero,
                 'titulo'                             : this.titulo,
                 'fecha'                              : this.fecha,
+                'partes_sel'                         : this.partes_sel,
                 'info_pedido_cliente'                : this.info_pedido_cliente,
                 'TablaPartesServicios'               : this.TablaPartesServicios,
                 'TablaPartesProductosPorPlacas'      : this.TablaPartesProductosPorPlacas,
@@ -788,7 +793,7 @@ export default {
 
                 }
 
-           });
+               }).finally( () => loading = false)
 
         },
 
@@ -796,6 +801,7 @@ export default {
 
             this.errors =[];
             var urlRegistros = 'certificados/' + this.certificado_data.id  ;
+            this.loading = true;
             axios({
               method: 'put',
               url : urlRegistros,
@@ -804,6 +810,7 @@ export default {
                 'numero'                             : this.numero,
                 'fecha'                              : this.fecha,
                 'titulo'                             : this.titulo,
+                'partes_sel'                         : this.partes_sel,
                 'info_pedido_cliente'                : this.info_pedido_cliente,
                 'TablaPartesServicios'               : this.TablaPartesServicios,
                 'TablaPartesProductosPorPlacas'      : this.TablaPartesProductosPorPlacas,
@@ -831,7 +838,7 @@ export default {
 
                 }
 
-           });
+            }).finally( () => loading = false)
 
         }
 

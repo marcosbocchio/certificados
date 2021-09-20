@@ -30,7 +30,9 @@ class EstadisticasSoldadurasController extends Controller
 
     public function AnalisisRechazosEspesor($informes_ids){
 
-        return DB::select('CALL AnalisisSoldadurasRechazosEspesor(?)',array($informes_ids));
+        $items = DB::select('CALL AnalisisSoldadurasRechazosEspesor(?)',array($informes_ids));
+
+        return $items;
 
     }
 
@@ -61,10 +63,9 @@ class EstadisticasSoldadurasController extends Controller
 
         DB::select('CALL CreateTemporaryTableDefectoPosReduce(?)',array($informes_ids));
 
-
-        Log::debug("Infomes para reporte Estadisticas soldaduras" . $informes_ids);
-
         return  DB::select('CALL AnalisisSoldadurasDefectosSoldador(?)',array($informes_ids));
+
+
 
     }
 
