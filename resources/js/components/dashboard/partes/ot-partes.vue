@@ -40,8 +40,9 @@
                             <thead>
                                 <tr>
                                     <th class="col-sm-4">N°</th>
-                                    <th class="col-sm-4">Tipo Servicio</th>
-                                    <th class="col-sm-4">Fecha</th>
+                                    <th class="col-sm-3">Tipo Servicio</th>
+                                    <th class="col-lg-3">Usuario alta</th>
+                                    <th class="col-sm-2">Fecha</th>
                                     <th>&nbsp;</th>
                                 </tr>
                             </thead>
@@ -49,6 +50,7 @@
                                 <tr v-for="(ot_parte,k) in ot_partes.data" :key="k">
                                     <td> {{ot_parte.numero_formateado}}</td>
                                     <td> {{ot_parte.tipo_servicio}} </td>
+                                    <td>{{ ot_parte.name }}</td>
                                     <td> {{ot_parte.fecha}}</td>
                                     <td width="10px">
                                         <button @click.prevent="editParte(ot_parte.id)" class="btn btn-warning btn-sm" title="Editar" :disabled="!$can('T_partes_edita')"><span class="fa fa-edit"></span></button>

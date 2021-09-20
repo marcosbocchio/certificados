@@ -551,7 +551,7 @@
 
                                                             <div class="col-md-2">
                                                                 <div class="form-group" >
-                                                                    <label for="posicionPlacaGosaducto">Posición Indicación</label>
+                                                                    <label for="posicionPlacaGosaducto">Pos. Indicación</label>
                                                                     <input type="text" v-model="posicionPlacaGosaducto" class="form-control" id="posicionPlacaGosaducto" placeholder="XXX-XXX" :disabled="(!TablaDetalle.length)" maxlength="7">
                                                                 </div>
                                                             </div>
@@ -1185,10 +1185,9 @@
              ot_tipo_soldaduras_filter_codigo : function(){
 
                 if(this.isGasoducto)
-                      return this.ot_obra_tipo_soldaduras.filter(item => item.tipo_soldadura.codigo == this.tipo_soldadura.codigo)
+                    return this.ot_obra_tipo_soldaduras.filter(item => item.tipo_soldadura.codigo == this.tipo_soldadura.codigo)
                 else
                     return this.ot_obra_tipo_soldaduras.filter(item => item.tipo_soldadura.codigo != 'R')
-
              },
 
       },
@@ -1254,29 +1253,29 @@
 
                 });
 
-
                 }
          },
 
          cambioReparacion_sn : function(){
 
-             this.ot_tipo_soldadura='';
-             this.TablaDetalle = [];
-             this.TablaPasadas = [];
-             this.TablaImportada= [];
-             this.juntas_reparacion  =[];
-             this.junta_reparacion ='';
-             this.getElementosReparacion();
+            this.ot_tipo_soldadura='';
+            this.TablaDetalle = [];
+            this.TablaPasadas = [];
+            this.TablaImportada= [];
+            this.juntas_reparacion  =[];
+            this.junta_reparacion ='';
+            this.getElementosReparacion();
 
          },
 
          setObra : function(value){
 
-             this.obra = value;
-             this.ot_tipo_soldadura='';
-             this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : (this.obra ? this.obra : 'xxxxxxxxxxx') });
+            this.obra = value;
+            this.ot_tipo_soldadura='';
+            this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : (this.obra ? this.obra : 'xxxxxxxxxxx') });
          },
          cambiopTipoInforme : function(){
+
             this.pk ='' ;
             this.tipo_soldadura='';
             this.reparacion_sn= false;
@@ -1520,8 +1519,8 @@
          AddDetalle (posicion) {
 
 
-             var match = this.posicion.match(/^([0-9]{1,4}[-][0-9]{1,4})$|^([a-zA-Z]{1})$/);
-              if(!match){
+             var match = this.posicion.match(/^([0-9]{1,4}[-][0-9]{1,4})$|^([a-zA-Z]{1})$|^(GAP){3}$/);
+              if(!match && this.posicion != 'GAP'){
                   toastr.error('Ingrese un rango separado por un guion o una letra','Formato inválido');
                   return;
                 }
@@ -1623,8 +1622,13 @@
              if(this.posicionPlacaGosaducto !=''){
 
                 let str_pos_placa = this.TablaDetalle[this.indexDetalle].posicion;
+                if (this.posicionPlacaGosaducto == 'GAP') {
 
-                if (str_pos_placa.length == 1){
+                    if (this.posicionPlacaGosaducto !== str_pos_placa) {
+                        toastr.error('Valores en posición indicación incorrectos');
+                        return;
+                    }
+                }else if (str_pos_placa.length == 1){
 
                     if (this.posicionPlacaGosaducto.length > 1 || str_pos_placa != this.posicionPlacaGosaducto){
 
@@ -1652,7 +1656,6 @@
                     let array_pos_placa = this.TablaDetalle[this.indexDetalle].posicion.split("-");
                     let pos_inicial_placa = parseInt(array_pos_placa[0].trim());
                     let pos_final_placa = parseInt(array_pos_placa[1].trim());
-
                     let longitud_placa = Math.abs(parseInt(this.TablaDetalle[0].posicion.split("-")[1].trim()) - parseInt(this.TablaDetalle[0].posicion.split("-")[0].trim()));
 
                     if(! ( ((pos_inicial_defecto >= pos_inicial_placa && (pos_final_defecto <= (pos_inicial_placa + longitud_placa))) || ((pos_inicial_defecto == pos_inicial_placa) && (pos_final_defecto == pos_final_placa ))))) {
@@ -1663,27 +1666,28 @@
              }
 
              if(this.posicionPlacaGosaducto !='' &&  this.formato=='DUCTO' && !this.defecto_sector){
-                     toastr.error('El campo pasada es obligatorio si existe posicion indicación');
-                     return;
+                toastr.error('El campo pasada es obligatorio si existe posicion indicación');
+                return;
              }
 
              this.TablaDetalle[this.indexDetalle].defectos.push({
 
-                 codigo: this.defectoRiPlanta.codigo,
-                 pasada: this.posicionPlacaGosaducto !='' ? this.defecto_sector : '',
-                 descripcion: this.defectoRiPlanta.descripcion,
-                 id : this.defectoRiPlanta.id,
-                 posicion : this.posicionPlacaGosaducto,
+                codigo: this.defectoRiPlanta.codigo,
+                pasada: this.posicionPlacaGosaducto !='' ? this.defecto_sector : '',
+                descripcion: this.defectoRiPlanta.descripcion,
+                id : this.defectoRiPlanta.id,
+                posicion : this.posicionPlacaGosaducto,
 
-                });
+            });
 
              if(this.posicionPlacaGosaducto != ''){
-                 this.TablaDetalle[this.indexDetalle].aceptable_sn = false;
+                this.TablaDetalle[this.indexDetalle].aceptable_sn = false;
              }
 
             this.defectoRiPlanta='';
             this.posicionPlacaGosaducto='';
             this.defecto_sector='';
+
           },
          RemoveDetalle(index) {
             this.indexDetalle = 0;

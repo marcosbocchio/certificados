@@ -57,10 +57,11 @@ class PartesController extends Controller
     public function paginate(Request $request,$ot_id){
 
      return DB::table('partes')
-                    ->where('ot_id','=',$ot_id)
-                    ->selectRaw('id,ot_id,DATE_FORMAT(partes.fecha,"%d/%m/%Y")as fecha,tipo_servicio,firma,LPAD(partes.id, 8, "0") as numero_formateado')
-                    ->orderBy('id','DESC')
-                    ->paginate(10);
+                ->join('users','users.id','=','partes.user_id')
+                ->where('ot_id','=',$ot_id)
+                ->selectRaw('partes.id as id,ot_id,DATE_FORMAT(partes.fecha,"%d/%m/%Y")as fecha,tipo_servicio,firma,LPAD(partes.id, 8, "0") as numero_formateado,users.name')
+                ->orderBy('id','DESC')
+                ->paginate(10);
       }
 
     public function getPartesOt($ot_id){
@@ -298,7 +299,7 @@ class PartesController extends Controller
             $parteDetalle->informe_importado_id =$informe['id'];
             $parteDetalle->observaciones_original = $informe['observaciones_original'];
             $parteDetalle->observaciones_final = $informe['observaciones_final'];
-            $parteDetalle->save();
+            $parteDetalle->save();ç
 
             (new \App\Http\Controllers\InformesImportadosController)->setParteId($parte->id,$informe['id']);
 
