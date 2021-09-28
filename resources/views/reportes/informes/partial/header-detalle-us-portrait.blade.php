@@ -33,7 +33,7 @@
                            </tr>
 
                            <tr>
-                                <th colspan="4">EPS</th>
+                                <th colspan="4">EPS / WPS</th>
                            </tr>
                            <tr>
                                 <td colspan="4">{{$ot_tipo_soldadura->eps}}</td>

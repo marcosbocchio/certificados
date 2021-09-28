@@ -23,7 +23,7 @@
                             </tr>
 
                             <tr>
-                                <th colspan="4">EPS</th>
+                                <th colspan="4">EPS / WPS</th>
                             </tr>
                             <tr>
                                 @if($informe_ri->reparacion_sn)
