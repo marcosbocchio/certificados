@@ -24,7 +24,7 @@ class NormaEnsayosRequest extends FormRequest
     public function rules()
     {
         return [
-            'codigo' => 'required|Max:15',
+            'codigo' => 'required|Max:30',
             'descripcion'  =>'nullable|Max:100',
         ];
     }
@@ -35,6 +35,6 @@ class NormaEnsayosRequest extends FormRequest
                 'codigo'                   => 'código',
                 'descripcion'              => 'descripción',
             ];
-     
+
     }
 }

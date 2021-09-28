@@ -24,7 +24,7 @@ class NormaEvaluacionesRequest extends FormRequest
     public function rules()
     {
         return [
-            'codigo' => 'required|Max:15',
+            'codigo' => 'required|Max:30',
             'descripcion'  =>'nullable|Max:100',
         ];
     }
@@ -33,8 +33,8 @@ class NormaEvaluacionesRequest extends FormRequest
     {
             return [
                 'codigo'                   => 'código',
-                'descripcion'                  => 'descripción',
+                'descripcion'              => 'descripción',
             ];
-     
+
     }
 }
