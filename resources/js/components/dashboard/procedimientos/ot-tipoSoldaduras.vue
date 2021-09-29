@@ -34,7 +34,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group" >
-                                    <label for="procedimientos_soldadura">Proc. Soldadura (EPS) *</label>
+                                    <label for="procedimientos_soldadura">EPS / WPS *</label>
                                     <input type="text" v-model="eps" class="form-control" id="procedimientos_soldadura" maxlength="30">
                                 </div>
                             </div>

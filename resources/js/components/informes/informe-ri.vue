@@ -159,14 +159,14 @@
 
                          <div v-if="!reparacion_sn" class="col-md-3">
                              <div class="form-group size-pqr-eps"  >
-                                 <label for="procedimientos_soldadura">Proc. Soldadura (EPS) *</label>
+                                 <label for="procedimientos_soldadura">EPS / WPS *</label>
                                  <v-select v-model="ot_tipo_soldadura" label="eps" :options="ot_tipo_soldaduras_filter_codigo" id="procedimientos_soldadura"></v-select>
                              </div>
                          </div>
 
                          <div v-else  class="col-md-3">
                              <div class="form-group size-pqr-eps" >
-                                 <label for="eps_r">Proc. Soldadura (EPS) *</label>
+                                 <label for="eps_r">EPS / WPS *</label>
                                   <v-select v-model="ot_tipo_soldadura" label="proc_reparacion" :options="ot_tipo_soldaduras_filter_codigo" id="procedimientos_soldadura"></v-select>
                              </div>
                          </div>
