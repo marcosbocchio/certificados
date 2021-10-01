@@ -15,14 +15,8 @@ use App\InternoEquipoDocumentaciones;
 use App\InternoFuenteDocumentaciones;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Input;
-use Zip;
-
 use Illuminate\Support\Str;
-use STS\ZipStream\ZipStream;
-use ZipArchive;
-use Orchestra\Testbench\TestCase;
-use STS\ZipStream\ZipStreamFacade;
-use STS\ZipStream\ZipStreamServiceProvider;
+
 
 class DocumentacionesController extends Controller
 {
@@ -390,7 +384,7 @@ class DocumentacionesController extends Controller
         $header_sub_titulo =' / ' .$ot->cliente->nombre_fantasia . ' / OT N°: ' . $ot->numero;
         $header_titulo = "Documentaciones";
         $header_descripcion ="";
-        return view('documentacion.exportar',compact('user','header_titulo','header_descripcion','header_sub_titulo','ot_id'));
+        return view('documentacion.exportar',compact('user','header_titulo','header_descripcion','header_sub_titulo','ot'));
 
     }
 
@@ -400,15 +394,5 @@ class DocumentacionesController extends Controller
 
     }
 
-    public function generarLink(Request $request) {
 
-        $documentos = $request->documentos;
-        foreach ($documentos as $documento) {
-            Log::debug("request: " . $documento);
-        }
-
-        return Zip::create("doc.zip", [
-            "/home/vagrant/code/certificados/public/storage/documentaciones/yGkWOSCGiPcj3xRJp1FBpO5EAxOgaDVad8FUVDKn.pdf"
-        ]);
-    }
 }

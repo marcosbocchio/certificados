@@ -18,8 +18,8 @@
         "laravel/tinker": "^1.0",
         "laravelcollective/html": "^5.4.0",
         "spatie/laravel-permission": "^3.0",
-        "stechstudio/laravel-zipstream": "^4.4"
-    },
+        "chumper/zipper": "1.0.x"
+        },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.6",
         "beyondcode/laravel-dump-server": "^1.0",

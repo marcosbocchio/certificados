@@ -7,7 +7,7 @@
 
 <div id="app">
    <exportar-documentacion
-         :ot_id= "{{ $ot_id }}"
+         :ot= "{{ $ot }}"
    ></exportar-documentacion>
 
 </div>

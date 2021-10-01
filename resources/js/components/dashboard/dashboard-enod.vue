@@ -161,7 +161,6 @@
         <div class="box box-custom-enod">
             <div class="box-header with-border">
                 <h3 class="box-title">Ordenes de trabajo</h3>
-                <button @click.stop="ExportarDocumentacionOt()" class="btn pull-right btn-success">Exportar Doc.</button>
             </div>
             <div class="box-body">
                 <div class="table-responsive">
@@ -175,7 +174,8 @@
                                 <th class="col-lg-1">Fecha</th>
                                 <th class="col-lg-1">Estado</th>
                                 <th class="col-lg-1" colspan="4">
-                                 <small style="margin-left: -2px;">Editar</small>
+                                 <small style="margin-left: -2px;">Exp. Doc.</small>
+                                 <small style="margin-left: 5px;">Editar</small>
                                  <small style="margin-left: 4px;">Informe</small>
                                  <small style="margin-left: 4px;">Acción</small>
                                 </th>
@@ -189,6 +189,13 @@
                                 <td> {{ot.obra}}</td>
                                 <td> {{ot.fecha_formateada}}</td>
                                 <td> {{ot.estado}}</td>
+
+                                <td width="10px">
+                                  <button class="btn btn-default btn-sm" title="Generar link de documentación" @click="ExportarDocumentacionOt(ot.id)" :disabled="!$can('T_edita')">
+                                    <span class="fa fa-cloud-upload">
+                                    </span>
+                                  </button>
+                                </td>
 
                                 <td width="10px">
                                   <button class="btn btn-warning btn-sm" title="Editar" @click="openEditarOt(ot.id)" :disabled="!$can('T_edita')">
@@ -216,7 +223,6 @@
                                       </button>
                                   </div>
                                 </td>
-
                             </tr>
                         </tbody>
                     </table>
@@ -523,9 +529,9 @@ export default {
 
 
       },
-      ExportarDocumentacionOt: function() {
+      ExportarDocumentacionOt: function(ot_id) {
 
-        window.location.href =  '/area/enod/documentacion/ot/' + this.ot_id_selected;
+        window.location.href =  '/area/enod/documentacion/ot/' + ot_id;
 
       }
 

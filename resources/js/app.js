@@ -91,6 +91,10 @@ Vue.component('downloadCsv', JsonCSV)
 
 import JsonExcel from 'vue-json-excel'
 Vue.component('downloadExcel', JsonExcel)
+
+import VueClipboard from 'vue-clipboard2'
+Vue.use(VueClipboard)
+VueClipboard.config.autoSetContainer = true
 /*
 vSelect.props.components.default = () => ({
   Deselect: {
@@ -203,6 +207,8 @@ Vue.component('editar-documentaciones', require('./components/abm-maestro/docume
 
 Vue.component('abm-doc', require('./components/documentaciones/abm-doc.vue').default);
 Vue.component('exportar-documentacion', require('./components/documentaciones/exportar-documentacion.vue').default);
+Vue.component('modal-zip', require('./components/documentaciones/modal-zip.vue').default);
+
 Vue.component('marcar-documentos', require('./components/documentaciones/marcar-documentos.vue').default);
 
 Vue.component('abm-placas', require('./components/dashboard/placas/abm-placas.vue').default);

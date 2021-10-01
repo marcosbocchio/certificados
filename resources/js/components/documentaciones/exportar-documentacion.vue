@@ -5,19 +5,31 @@
       <marcar-documentos v-if="interno_fuentes_header.length" :header="interno_fuentes_header" :documentos="documentos" tipo="FUENTE" titulo="FUENTES"></marcar-documentos>
       <marcar-documentos v-if="procedimientos_header.length" :header="procedimientos_header" :documentos="documentos" tipo="PROCEDIMIENTO" titulo="PROCEDIMIENTOS"></marcar-documentos>
       <marcar-documentos v-if="vehiculos_header.length" :header="vehiculos_header" :documentos="documentos" tipo="VEHICULO" titulo="VEHÍCULOS"></marcar-documentos>
-      <div class="row">
-          <div class="col-md-12">
+      <div class="row" v-if="!isLoading">
+          <div class="col-md-12 text-center">
               <button class="btn btn-primary" @click.prevent="GenerarLink">Generar Link</button>
           </div>
       </div>
+    <loading :active.sync="isLoading"
+        :loader="'bars'"
+        :color="'red'">
+    </loading>
+      <modalZip ref="showModalZip"></modalZip>
     </div>
 </template>
 <script>
 import {mapState} from 'vuex'
+import modalZip from './modal-zip.vue'
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 export default {
+    components: {
+      modalZip,
+      Loading,
+    },
   props :{
-      ot_id : {
-        type : Number,
+      ot : {
+        type : Object,
         required : true
       },
   },
@@ -35,7 +47,7 @@ export default {
       interno_fuentes_header: [],
       procedimientos_header: [],
       vehiculos_header: [],
-
+      path: '',
    }
   },
   computed :{
@@ -49,8 +61,9 @@ export default {
   methods: {
 
     getDocumentos: async function () {
+        this.$store.commit('loading', true);
         axios.defaults.baseURL = this.url ;
-        var urlRegistros = 'documentos/ot/' + this.ot_id + '?api_token=' + Laravel.user.api_token;
+        var urlRegistros = 'documentos/ot/' + this.ot.id + '?api_token=' + Laravel.user.api_token;
         let res = await axios.get(urlRegistros);
         this.documentos = await res.data;
         this.documentos.map(e => Object.defineProperty(e, 'check', { value: true, enumerable: true, writable: true }))
@@ -59,11 +72,6 @@ export default {
         this.interno_fuentes = this.documentos.filter(e => e.tipo == 'FUENTE' )
         this.procedimientos = this.documentos.filter(e => e.tipo == 'PROCEDIMIENTO' )
         this.vehiculos = this.documentos.filter(e => e.tipo == 'VEHICULO' )
-        console.log(this.operadores)
-        console.log(this.interno_equipos)
-        console.log(this.interno_fuentes)
-        console.log(this.procedimientos)
-        console.log(this.vehiculos)
         let operadores_unicos = [...new Set(this.operadores.map(item => item.item_id ))];
         let interno_equipos_unicos = [...new Set(this.interno_equipos.map(item => item.item_id ))];
         let interno_fuentes_unicos = [...new Set(this.interno_fuentes.map(item => item.item_id ))];
@@ -125,11 +133,15 @@ export default {
                 expandir:false,
             })
         }.bind(this))
+
+        this.$store.commit('loading', false);
+
     },
 
     GenerarLink:function () {
 
-        let documentos = this.documentos.filter(function(e) { return e.check }).map(e => e.path)
+        this.$store.commit('loading', true);
+        let documentos = this.documentos.filter(function(e) { return e.check })
         console.log(documentos)
         this.loading_table = true;
         axios.defaults.baseURL = this.url ;
@@ -141,7 +153,8 @@ export default {
 
         }).then(response => {
 
-            this.$showMessagePreset('success','code-store');
+            this.path = response.data;
+            this.$refs.showModalZip.setForm(this.ot,this.path)
 
         }).catch(error => {
 
@@ -150,7 +163,9 @@ export default {
                 this.$showMessages('error',[value]);
                 console.log( key + ": " + value );
             }.bind(this));
-        });
+        }).finally(() =>
+            this.$store.commit('loading', false)
+        )
     }
 
   }
