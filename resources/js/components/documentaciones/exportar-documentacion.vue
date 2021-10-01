@@ -158,11 +158,8 @@ export default {
 
         }).catch(error => {
 
-            this.errors = error.response.data.errors;
-            $.each( this.errors, function( key, value ) {
-                this.$showMessages('error',[value]);
-                console.log( key + ": " + value );
-            }.bind(this));
+             this.$showMessages('error',['Ocurrio un error al comprimir la documentación seleccionada.']);
+
         }).finally(() =>
             this.$store.commit('loading', false)
         )
