@@ -55,7 +55,7 @@ class ZipController extends Controller
             throw $e;
 
         }
-
+        Log::debug("url: ". $url);
         return $url;
 
     }
