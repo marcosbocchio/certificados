@@ -7,7 +7,7 @@
       <marcar-documentos v-if="vehiculos_header.length" :header="vehiculos_header" :documentos="documentos" tipo="VEHICULO" titulo="VEHÍCULOS"></marcar-documentos>
       <div class="row" v-if="!isLoading">
           <div class="col-md-12 text-center">
-              <button class="btn btn-primary" @click.prevent="GenerarLink">Generar Link</button>
+              <button class="btn btn-primary" :disabled="NoSeleccionados" @click.prevent="GenerarLink">Generar Link</button>
           </div>
       </div>
     <loading :active.sync="isLoading"
@@ -53,6 +53,10 @@ export default {
   computed :{
 
        ...mapState(['url','isLoading']),
+
+       NoSeleccionados : function(){
+           return this.documentos.every((e) => !e.check)
+       }
     },
 
    mounted () {

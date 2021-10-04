@@ -19,6 +19,7 @@ class ZipController extends Controller
 
             /* Creo el directorio raiz donde voy a poner los archivos temporales */
             $folderName =  rand(1,99999);
+            Storage::makeDirectory(public_path('storage/temp/'.$folderName));
 
             foreach ($documentos as $documento) {
 
@@ -33,13 +34,16 @@ class ZipController extends Controller
 
             }
 
-            $FileZipName = 'doc' . rand(1,99999);
+            $FileZipName = 'doc' . rand(1,9999999);
             $dir = 'storage/zips/' . $FileZipName . '.zip';
             $url = url('/') . '/'. $dir;
             $zip = new \Chumper\Zipper\Zipper;
             $files = glob('storage/temp/'.$folderName);
             $zip = $zip->make(public_path($dir));
             $zip->add($files)->close();
+
+            Log::debug("file temp: ".public_path('storage/temp/'.$folderName));
+            Storage::disk('public')->deleteDirectory('storage/temp/'.$folderName);
 
           DB::commit();
 
