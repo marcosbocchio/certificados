@@ -1377,7 +1377,7 @@ methods : {
 
                 this.TablaDetalletDefectosSoldador.push({
 
-                    'total_placas': item.total_placas,
+                    'cantidad': item.cantidad,
                     'defecto_codigo' : item.defecto_codigo,
                     'defecto_descripcion' : item.defecto_descripcion
 
