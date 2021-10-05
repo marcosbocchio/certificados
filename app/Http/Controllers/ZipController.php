@@ -16,6 +16,7 @@ class ZipController extends Controller
         try {
 
             $documentos = $request->documentos;
+            Log::debug("documentos: ". json_encode($documentos));
 
             /* Creo el directorio raiz donde voy a poner los archivos temporales */
             $folderName =  rand(1,99999);

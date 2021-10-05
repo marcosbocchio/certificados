@@ -35,8 +35,8 @@
                                                         <table class="table table-condensed">
                                                             <tbody>
                                                                 <tr v-for="(detalle,y) in documentos" :key="y">
-                                                                    <td width="95.2%" v-if="detalle.tipo === tipo && detalle.item_id == item.item_id"> <i><span style="margin-left:90px"> {{ detalle.titulo }} - {{detalle.descripcion}}</span></i></td>
-                                                                    <td width="4.8%" v-if="detalle.tipo === tipo && detalle.item_id == item.item_id"> <input class="pointer" type="checkbox" id="checkbox" v-model="detalle.check"></td>
+                                                                    <td width="95.2%" v-if="tipo.includes(detalle.tipo) && detalle.item_id == item.item_id"> <i><span style="margin-left:90px"> {{ detalle.titulo }} - {{detalle.descripcion}}</span></i></td>
+                                                                    <td width="4.8%" v-if="tipo.includes(detalle.tipo)  && detalle.item_id == item.item_id"> <input class="pointer" type="checkbox" id="checkbox" v-model="detalle.check"></td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
@@ -60,7 +60,7 @@ import {mapState} from 'vuex'
 export default {
   props :{
       tipo: {
-          type: String,
+          type: Array,
           required: true,
       },
       titulo: {
@@ -90,18 +90,20 @@ export default {
     },
   methods : {
       clickTitulo : function() {
+
           this.header.forEach(function(item) {
               item.check = this.check;
           }.bind(this))
+
           this.documentos.forEach(function(item) {
-              if(item.tipo === this.tipo) {
+              if(this.tipo.includes(item.tipo)) {
                 item.check = this.check;
               }
           }.bind(this))
       },
       clickHeader : function(item_id,k) {
           this.documentos.forEach(function (item) {
-              if (item.tipo === this.tipo && item.item_id === item_id){
+              if (this.tipo.includes(item.tipo) && item.item_id === item_id){
                   item.check = this.header[k].check
               }
           }.bind(this));
