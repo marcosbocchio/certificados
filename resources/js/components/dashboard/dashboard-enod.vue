@@ -175,7 +175,7 @@
                                 <th class="col-lg-1">Estado</th>
                                 <th class="col-lg-1" colspan="4">
                                  <small style="margin-left: -2px;">Exp. Doc.</small>
-                                 <small style="margin-left: 5px;">Editar</small>
+                                 <small style="margin-left: 4px;">Editar</small>
                                  <small style="margin-left: 4px;">Informe</small>
                                  <small style="margin-left: 4px;">Acción</small>
                                 </th>
