@@ -388,11 +388,12 @@
                                             <table class="table table-striped table-hover">
                                                 <tbody>
                                                     <tr>
-                                                        <th class="col-lg-3 col-md-2">Cuño</th>
-                                                        <th class="col-lg-2 col-md-1">Cord.</th>
-                                                        <th class="col-lg-2 col-md-1" style="text-align: center;">Cant.</th>
+                                                        <th class="col-lg-2 col-md-1">Cuño</th>
+                                                        <th class="col-lg-1 col-md-1">Cord.</th>
+                                                        <th class="col-lg-1 col-md-1" style="text-align: center;">Cant.</th>
                                                         <th colspan="2" class="col-lg-3 col-md-5" style="text-align: center;">Porcentaje</th>
-                                                        <th class="col-lg-2 col-md-3" style="text-align: center;">Placas Rech.</th>
+                                                        <th class="col-lg-2 col-md-2" style="text-align: center;">Placas Total</th>
+                                                        <th class="col-lg-2 col-md-2" style="text-align: center;">Placas Rech.</th>
                                                     </tr>
                                                     <tr v-for="(item,k) in TablaDefectosSoldador" :key="k" @click="getDetalleDefectosSoldador(item,k)" class="pointer"  :class="{selected: indexDefectosSoldador === k}">
                                                         <td>{{item.codigo_soldador}} - {{item.nombre_soldador }}</td>
@@ -406,8 +407,8 @@
                                                         <td >
                                                             <span class="badge" :style="{background:colores[k].color}">{{ item.porcentaje_formateado }}</span>
                                                         </td>
+                                                        <td style="text-align: center;">{{  item.total_placas }}</td>
                                                         <td style="text-align: center;">{{  item.placas_rechazadas }}</td>
-
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -708,7 +709,9 @@ export default {
             'Nombre'    : 'nombre_soldador',
             'Cordones'  : 'cordones',
             'Cantidad'  : 'cantidad',
-            '%'         : 'porcentaje'
+            '%'         : 'porcentaje',
+            'Placas total' : 'total_placas',
+            'Placas rechazadas' : 'placas_rechazadas'
         },
 
         indicaciones_json_fields : {
@@ -1374,7 +1377,7 @@ methods : {
 
                 this.TablaDetalletDefectosSoldador.push({
 
-                    'cantidad'  : item.cantidad,
+                    'total_placas': item.total_placas,
                     'defecto_codigo' : item.defecto_codigo,
                     'defecto_descripcion' : item.defecto_descripcion
 
@@ -1416,6 +1419,7 @@ methods : {
                                    'soldador_id' : item_t.soldador_id,
                                    'cordones' : item_t.cordones,
                                    'placas_rechazadas' : item_t.placas_rechazadas,
+                                   'total_placas': item_t.total_placas,
                                });
 
                            }
@@ -1681,14 +1685,16 @@ methods : {
                 { header: 'Cord.', dataKey: 'cordones' },
                 { header: 'Cantidad', dataKey: 'cantidad' },
                 { header: '%', dataKey: 'porcentaje' },
+                { header: 'Placas Total', dataKey: 'total_placas' },
                 { header: 'Placas Rech.', dataKey: 'placas_rechazadas' },
             ],
           columnStyles: {
             0: { cellWidth: 40, fontSize: 9 },
-            1: { cellWidth: 30, fontSize: 9 },
-            2: { cellWidth: 40, fontSize: 9 },
-            3: { cellWidth: 50, fontSize: 9 },
-            4: { cellWidth: 45, fontSize: 9 },
+            1: { cellWidth: 20, fontSize: 9 },
+            2: { cellWidth: 30, fontSize: 9 },
+            3: { cellWidth: 20, fontSize: 9 },
+            4: { cellWidth: 40, fontSize: 9 },
+            4: { cellWidth: 40, fontSize: 9 },
           },
         margin: { top: 70 },
         })
