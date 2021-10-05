@@ -27,6 +27,7 @@ class DocumentacionesController extends Controller
     {
 
         $this->middleware(['role_or_permission:Sistemas|M_documentaciones'],['only' => ['callView']]);
+        $this->middleware(['role_or_permission:Sistemas|T_exportar_documentacion'],['only' => ['callViewDocOt']]);
         $this->documentaciones = $documentacionesRepository;
 
     }

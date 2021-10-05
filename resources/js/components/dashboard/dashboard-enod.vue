@@ -191,7 +191,7 @@
                                 <td> {{ot.estado}}</td>
 
                                 <td width="10px">
-                                  <button class="btn btn-default btn-sm" title="Generar link de documentación" @click="ExportarDocumentacionOt(ot.id)" :disabled="!$can('T_edita')">
+                                  <button class="btn btn-default btn-sm" title="Generar link de documentación" @click="ExportarDocumentacionOt(ot.id)" :disabled="!$can('T_exportar_documentacion')">
                                     <span class="fa fa-cloud-upload">
                                     </span>
                                   </button>
