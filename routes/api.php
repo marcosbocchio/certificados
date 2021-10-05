@@ -168,6 +168,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::post('storage/documentos_videos', 'StorageController@saveDocumentosVideos');
 
     Route::get('documentaciones/ot','DocumentacionesController@DocumentacionesDeOt');
+    Route::post('documentacion/generar_link', 'ZipController@generarLink');
 
     Route::get('documentaciones/total', 'DocumentacionesController@DocumentacionesTotal');
     Route::get('documentaciones/verificar_duplicados/tipo/{tipo?}/titulo/{titulo?}/usuario/{user_id?}/equipo/{interno_equipo_id?}/fuente/{interno_fuente_id?}/vehiculo/{vehiculo_id}', 'DocumentacionesController@verificarDuplicados');
@@ -184,6 +185,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('interno_equipos', 'InternoEquiposController');
 
     Route::get('tipos_documentos_usuarios', 'TiposDocumentosUsuariosController@index');
+    Route::get('documentos/ot/{ot_id}', 'DocumentacionesController@getDocumentosOt')->name('getDocumentosOt');
 
     // Frentes
     Route::resource('frentes', 'FrentesController');

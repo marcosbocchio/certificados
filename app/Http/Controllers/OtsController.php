@@ -18,7 +18,7 @@ use App\Provincias;
 use App\Localidades;
 use Illuminate\Support\Facades\Auth;
 use \stdClass;
-use\carbon;
+use \carbon;
 use App\Informe;
 use App\OtTipoSoldaduras;
 
@@ -96,6 +96,7 @@ class OtsController extends Controller
     {
         //
     }
+
 
     /**
      * Show the form for editing the specified resource.

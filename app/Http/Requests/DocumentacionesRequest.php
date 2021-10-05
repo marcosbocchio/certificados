@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Log;
 
 class DocumentacionesRequest extends FormRequest
 {
@@ -20,10 +21,9 @@ class DocumentacionesRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
-    {   
-      
-       if ( $this->tipo == 'USUARIO'){ 
+    public function rules(){
+
+       if ( $this->tipo == 'USUARIO'){
 
         return [
 
@@ -32,7 +32,7 @@ class DocumentacionesRequest extends FormRequest
             'descripcion' => 'max:50',
             'usuario.name' => 'required',
             'fecha_caducidad' =>'required',
-            'path' =>'required',          
+            'path' =>'required',
         ];
         }
         elseif($this->tipo == 'PROCEDIMIENTO'){
@@ -51,16 +51,16 @@ class DocumentacionesRequest extends FormRequest
                'fecha_caducidad' =>'required',
                'path' =>'required',
             ];
-        }     
+        }
 
     }
 
     public function attributes()
     {
     return [
-        'usuario.name'   => 'usuario',   
-        'fecha_caducidad'   => 'fecha caducidad',   
-       
+        'usuario.name'   => 'usuario',
+        'fecha_caducidad'   => 'fecha caducidad',
+
           ];
     }
 

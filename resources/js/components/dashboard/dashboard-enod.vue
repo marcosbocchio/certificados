@@ -174,7 +174,8 @@
                                 <th class="col-lg-1">Fecha</th>
                                 <th class="col-lg-1">Estado</th>
                                 <th class="col-lg-1" colspan="4">
-                                 <small style="margin-left: -2px;">Editar</small>
+                                 <small style="margin-left: -2px;">Exp. Doc.</small>
+                                 <small style="margin-left: 4px;">Editar</small>
                                  <small style="margin-left: 4px;">Informe</small>
                                  <small style="margin-left: 4px;">Acción</small>
                                 </th>
@@ -188,6 +189,13 @@
                                 <td> {{ot.obra}}</td>
                                 <td> {{ot.fecha_formateada}}</td>
                                 <td> {{ot.estado}}</td>
+
+                                <td width="10px">
+                                  <button class="btn btn-default btn-sm" title="Generar link de documentación" @click="ExportarDocumentacionOt(ot.id)" :disabled="!$can('T_exportar_documentacion')">
+                                    <span class="fa fa-cloud-upload">
+                                    </span>
+                                  </button>
+                                </td>
 
                                 <td width="10px">
                                   <button class="btn btn-warning btn-sm" title="Editar" @click="openEditarOt(ot.id)" :disabled="!$can('T_edita')">
@@ -215,7 +223,6 @@
                                       </button>
                                   </div>
                                 </td>
-
                             </tr>
                         </tbody>
                     </table>
@@ -520,6 +527,11 @@ export default {
             break;
         }
 
+
+      },
+      ExportarDocumentacionOt: function(ot_id) {
+
+        window.location.href =  '/area/enod/documentacion/ot/' + ot_id;
 
       }
 

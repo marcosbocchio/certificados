@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Exception as Exception;
 use App\Materiales;
 use App\User;
+use Illuminate\Support\Facades\Log;
 
 class MaterialesController extends Controller
 {
@@ -21,7 +22,7 @@ class MaterialesController extends Controller
 
     public function index()
     {
-         return  Materiales::all();
+        return  Materiales::all();
 
     }
 
@@ -31,8 +32,8 @@ class MaterialesController extends Controller
 
     }
 
-    public function callView()
-    {
+    public function callView(){
+
       $user = auth()->user();
       $header_titulo = "Materiales";
       $header_descripcion ="Alta | Baja | Modificación";
@@ -42,7 +43,9 @@ class MaterialesController extends Controller
 
     public function store(MaterialRequest $request){
 
-      $material = new Materiales;
+       Log::debug("request: " .$request);
+
+       $material = new Materiales;
 
         DB::beginTransaction();
         try {
@@ -54,9 +57,7 @@ class MaterialesController extends Controller
 
             DB::rollback();
             throw $e;
-
         }
-
     }
 
     public function update(MaterialRequest $request, $id){
@@ -67,16 +68,12 @@ class MaterialesController extends Controller
 
       if(is_null($material)){
 
-
            return response()->json(['errors' => ['error' => ['Otro usuario modificó el registro que intenta actualizar, recargue la página y vuelva a intentarlo']]], 404);
 
       }else{
 
         DB::beginTransaction();
         try {
-
-         //   $material = Materiales::find($id);
-
 
             $this->saveMaterial($request,$material);
             DB::commit();
@@ -87,11 +84,8 @@ class MaterialesController extends Controller
               throw $e;
 
             }
-
-      }
-
+        }
     }
-
 
     public function saveMaterial($request,$material){
 
@@ -105,6 +99,6 @@ class MaterialesController extends Controller
 
       $material = Materiales::find($id);
       $material->delete();
-    }
 
+    }
 }

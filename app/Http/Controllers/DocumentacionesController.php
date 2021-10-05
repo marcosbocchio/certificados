@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\Http\Requests\DocumentacionesRequest;
 use App\Repositories\Documentaciones\DocumentacionesRepository;
@@ -10,13 +8,15 @@ use App\UsuarioDocumentaciones;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection as Collection;
-use App\MetodoEnsayos;
+use App\Ots;
 use App\Users;
 use App\VehiculoDocumentaciones;
 use App\InternoEquipoDocumentaciones;
 use App\InternoFuenteDocumentaciones;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Str;
+
 
 class DocumentacionesController extends Controller
 {
@@ -27,6 +27,7 @@ class DocumentacionesController extends Controller
     {
 
         $this->middleware(['role_or_permission:Sistemas|M_documentaciones'],['only' => ['callView']]);
+        $this->middleware(['role_or_permission:Sistemas|T_exportar_documentacion'],['only' => ['callViewDocOt']]);
         $this->documentaciones = $documentacionesRepository;
 
     }
@@ -376,5 +377,23 @@ class DocumentacionesController extends Controller
                                 ->orWhere('documentaciones.tipo','PROCEDIMIENTO GENERAL')->count();
 
     }
+
+    public function callViewDocOt($ot_id) {
+
+        $user = auth()->user();
+        $ot = Ots::where('id',$ot_id)->with('cliente')->first();
+        $header_sub_titulo =' / ' .$ot->cliente->nombre_fantasia . ' / OT N°: ' . $ot->numero;
+        $header_titulo = "Documentaciones";
+        $header_descripcion ="";
+        return view('documentacion.exportar',compact('user','header_titulo','header_descripcion','header_sub_titulo','ot'));
+
+    }
+
+    public function getDocumentosOt($ot_id) {
+
+       return DB::select('CALL getDocumentosOt(?)',array($ot_id));
+
+    }
+
 
 }

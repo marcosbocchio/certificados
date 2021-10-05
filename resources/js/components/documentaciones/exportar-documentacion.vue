@@ -1,23 +1,35 @@
 <template>
     <div>
-      <marcar-documentos v-if="operadores_header.length" :header="operadores_header" :documentos="documentos" tipo="USUARIO" titulo="OPERADORES"></marcar-documentos>
-      <marcar-documentos v-if="interno_equipos_header.length" :header="interno_equipos_header" :documentos="documentos" tipo="EQUIPO" titulo="EQUIPOS"></marcar-documentos>
-      <marcar-documentos v-if="interno_fuentes_header.length" :header="interno_fuentes_header" :documentos="documentos" tipo="FUENTE" titulo="FUENTES"></marcar-documentos>
-      <marcar-documentos v-if="procedimientos_header.length" :header="procedimientos_header" :documentos="documentos" tipo="PROCEDIMIENTO" titulo="PROCEDIMIENTOS"></marcar-documentos>
-      <marcar-documentos v-if="vehiculos_header.length" :header="vehiculos_header" :documentos="documentos" tipo="VEHICULO" titulo="VEHÍCULOS"></marcar-documentos>
-      <div class="row">
-          <div class="col-md-12">
-              <button class="btn btn-primary" @click.prevent="GenerarLink">Generar Link</button>
+      <marcar-documentos v-if="operadores_header.length" :header="operadores_header" :documentos="documentos" :tipo="['USUARIO']" titulo="OPERADORES"></marcar-documentos>
+      <marcar-documentos v-if="interno_equipos_header.length" :header="interno_equipos_header" :documentos="documentos" :tipo="['EQUIPO']" titulo="EQUIPOS"></marcar-documentos>
+      <marcar-documentos v-if="interno_fuentes_header.length" :header="interno_fuentes_header" :documentos="documentos" :tipo="['FUENTE']" titulo="FUENTES"></marcar-documentos>
+      <marcar-documentos v-if="procedimientos_header.length" :header="procedimientos_header" :documentos="documentos" :tipo="['PROCEDIMIENTO','PROCEDIMIENTO GENERAL']" titulo="PROCEDIMIENTOS"></marcar-documentos>
+      <marcar-documentos v-if="vehiculos_header.length" :header="vehiculos_header" :documentos="documentos" :tipo="['VEHICULO']" titulo="VEHÍCULOS"></marcar-documentos>
+      <div class="row" v-if="!isLoading">
+          <div class="col-md-12 text-center">
+              <button class="btn btn-primary" :disabled="NoSeleccionados" @click.prevent="GenerarLink">Generar Link</button>
           </div>
       </div>
+    <loading :active.sync="isLoading"
+        :loader="'bars'"
+        :color="'red'">
+    </loading>
+      <modalZip ref="showModalZip"></modalZip>
     </div>
 </template>
 <script>
 import {mapState} from 'vuex'
+import modalZip from './modal-zip.vue'
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 export default {
+    components: {
+      modalZip,
+      Loading,
+    },
   props :{
-      ot_id : {
-        type : Number,
+      ot : {
+        type : Object,
         required : true
       },
   },
@@ -35,13 +47,16 @@ export default {
       interno_fuentes_header: [],
       procedimientos_header: [],
       vehiculos_header: [],
-      errors: [],
-
+      path: '',
    }
   },
   computed :{
 
        ...mapState(['url','isLoading']),
+
+       NoSeleccionados : function(){
+           return this.documentos.every((e) => !e.check)
+       }
     },
 
    mounted () {
@@ -50,15 +65,16 @@ export default {
   methods: {
 
     getDocumentos: async function () {
+        this.$store.commit('loading', true);
         axios.defaults.baseURL = this.url ;
-        var urlRegistros = 'documentos/ot/' + this.ot_id + '?api_token=' + Laravel.user.api_token;
+        var urlRegistros = 'documentos/ot/' + this.ot.id + '?api_token=' + Laravel.user.api_token;
         let res = await axios.get(urlRegistros);
         this.documentos = await res.data;
         this.documentos.map(e => Object.defineProperty(e, 'check', { value: true, enumerable: true, writable: true }))
         this.operadores = this.documentos.filter(e => e.tipo == 'USUARIO' )
         this.interno_equipos = this.documentos.filter(e => e.tipo == 'EQUIPO' )
         this.interno_fuentes = this.documentos.filter(e => e.tipo == 'FUENTE' )
-        this.procedimientos = this.documentos.filter(e => e.tipo == 'PROCEDIMIENTO' )
+        this.procedimientos = this.documentos.filter(e => e.tipo == 'PROCEDIMIENTO' || e.tipo == 'PROCEDIMIENTO GENERAL')
         this.vehiculos = this.documentos.filter(e => e.tipo == 'VEHICULO' )
         let operadores_unicos = [...new Set(this.operadores.map(item => item.item_id ))];
         let interno_equipos_unicos = [...new Set(this.interno_equipos.map(item => item.item_id ))];
@@ -111,7 +127,7 @@ export default {
             })
         }.bind(this))
 
-        // vehiculos
+        // procedimientos
         procedimientos_unicos.forEach(function(item){
             index = this.procedimientos.findIndex(e2 => e2.item_id == item)
             this.procedimientos_header.push({
@@ -121,51 +137,38 @@ export default {
                 expandir:false,
             })
         }.bind(this))
+
+        this.$store.commit('loading', false);
+
     },
 
     GenerarLink:function () {
 
-        let documentos_ids = this.documentos.filter(function(e) { return e.check }).map(e => e.id)
-        console.log(documentos_ids)
+        this.$store.commit('loading', true);
+        let documentos = this.documentos.filter(function(e) { return e.check })
+        console.log(documentos)
+        this.loading_table = true;
+        axios.defaults.baseURL = this.url ;
+        var urlRegistros = 'documentacion/' + 'generar_link';
 
-    },
+        axios.post(urlRegistros, {
 
-    Store : function(){
+            'documentos' : documentos,
 
-        this.errors =[];
-        var urlRegistros = 'informes_us' ;
-        axios({
-        method: 'post',
-        url : urlRegistros,
-        data : {
-            'ot'              : this.otdata,
+        }).then(response => {
 
-    }}
+            this.path = response.data;
+            this.$refs.showModalZip.setForm(this.ot,this.path)
 
-    ).then(response => {
+        }).catch(error => {
 
-        let informe = response.data;
-        toastr.success('informe N°' + this.numero_inf + ' fue creado con éxito ');
-        window.open(  '/pdf/informe/us/' + informe.id,'_blank');
-        window.location.href =  '/informes/ot/' + this.otdata.id;
+             this.$showMessages('error',['Ocurrio un error al comprimir la documentación seleccionada.']);
 
-    }).catch(error => {
+        }).finally(() =>
+            this.$store.commit('loading', false)
+        )
+    }
 
-        this.errors = error.response.data.errors;
-            console.log(error.response);
-        $.each( this.errors, function( key, value ) {
-            toastr.error(value);
-            console.log( key + ": " + value );
-        });
-
-        if((typeof(this.errors)=='undefined') && (error)){
-
-                toastr.error("Ocurrió un error al procesar la solicitud");
-
-            }
-    });
-
-    },
   }
 }
 </script>

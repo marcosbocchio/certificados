@@ -14,7 +14,7 @@ class IcisController extends Controller
      */
     public function index()
     {
-        return Icis::all();
+        return Icis::orderBy('codigo','ASC')->get();
     }
 
     /**
