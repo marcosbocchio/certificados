@@ -11,15 +11,11 @@
                 <div class="modal-body">
                    <div class="row">
                        <div class="col-md-12">
-                            <div class="col-md-6 col-md-offset-6">
-                                <div class="form-group" style="text-align:right;">
-                                    <input type="checkbox" id="checkboxUser" v-model="Registro.habilitado_sn">
-                                    <label for="checkboxUser" class="pointer">HABILITADO</label>
-                                </div>
-                            </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="numero_interno">N° Interno *</label>
+                                    <input type="checkbox" id="checkbox" v-model="Registro.habilitado_sn" style="float:right">
+                                    <label for="tipo" style="float:right;margin-right: 5px;">ACTIVO</label>
                                     <input autocomplete="off" v-model="Registro.nro_interno" type="number" name="numero_interno" class="form-control" value="" max="99999">
                                 </div>
                             </div>

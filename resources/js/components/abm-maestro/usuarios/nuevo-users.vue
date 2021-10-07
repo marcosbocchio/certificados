@@ -28,6 +28,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Nombre *</label>
+                                    <input type="checkbox" id="checkbox" v-model="Registro.habilitado_sn" style="float:right">
+                                    <label for="tipo" style="float:right;margin-right: 5px;">ACTIVO</label>
                                     <input autocomplete="off" v-model="Registro.name" type="text" name="nombre" class="form-control" value="">
                                 </div>
                             </div>

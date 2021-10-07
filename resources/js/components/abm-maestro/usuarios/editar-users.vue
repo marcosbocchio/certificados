@@ -10,30 +10,24 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="btn-group">
+                                    <label>
+                                        <input type="radio"  name="enod" :value="true"  v-model="isEnod">
+                                            Enod
+                                    </label>
 
-                                        <label>
-                                            <input type="radio"  name="enod" :value="true"  v-model="isEnod">
-                                                Enod
-                                        </label>
-
-                                        <label>&nbsp;&nbsp;
-                                            <input type="radio" name="cliente" :value="false" v-model="isEnod">
-                                            Cliente
-                                        </label>
-
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-md-offset-6">
-                                <div class="form-group" style="text-align:right;">
-                                    <input type="checkbox" id="checkboxUser" v-model="Registro.habilitado_sn">
-                                    <label for="checkboxUser" class="pointer">HABILITADO</label>
+                                    <label>&nbsp;&nbsp;
+                                        <input type="radio" name="cliente" :value="false" v-model="isEnod">
+                                        Cliente
+                                    </label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Nombre *</label>
+                                    <input type="checkbox" id="checkbox" v-model="Registro.habilitado_sn" style="float:right">
+                                    <label for="tipo" style="float:right;margin-right: 5px;">ACTIVO</label>
                                     <input autocomplete="off" v-model="Registro.name" type="text" name="nombre" class="form-control" value="">
                                 </div>
                             </div>

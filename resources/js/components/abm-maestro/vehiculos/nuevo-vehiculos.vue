@@ -15,6 +15,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="numero_interno">N° Interno *</label>
+                                    <input type="checkbox" id="checkbox" v-model="Registro.habilitado_sn" style="float:right">
+                                    <label for="tipo" style="float:right;margin-right: 5px;">ACTIVO</label>
                                     <input autocomplete="off" v-model="Registro.nro_interno" type="number" name="numero_interno" class="form-control" value="" max="99999">
                                 </div>
                             </div>
