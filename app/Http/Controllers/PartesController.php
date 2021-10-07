@@ -198,8 +198,12 @@ class PartesController extends Controller
         $parte->movilidad_propia_sn = $request->movilidad_propia_sn;
         $parte->placas_repetidas = $request->informes_ri ? $request->placas_repetidas : null;
         $parte->placas_testigos = $request->informes_ri ? $request->placas_testigos : null;
-        $parte->user_id = $user_id;
         $parte->observaciones = $request->observaciones;
+
+        if($request->isMethod('post')){
+            $parte->user_id = $user_id;
+         }
+
         $parte->save();
 
         return $parte;
@@ -290,7 +294,6 @@ class PartesController extends Controller
     }
 
     public function saveParteDetalleInformesImportados($informes_importados,$parte){
-
 
         foreach ($informes_importados as $informe) {
 
@@ -429,7 +432,6 @@ class PartesController extends Controller
             ParteVehiculos::where('parte_id',$parte->id)->delete();
             $this->saveVehiculos($request->vehiculos,$parte);
             $this->saveResponsables($request->responsables,$parte);
-          //  $this->saveParteDetalleRi($request->informes_ri,$parte);
             ParteDetalles::where('parte_id',$parte->id)->delete();
             ParteServicios::where('parte_id',$parte->id)->delete();
             (new \App\Http\Controllers\InformesController)->deleteParteId($parte->id);
