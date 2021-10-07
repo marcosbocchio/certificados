@@ -99,6 +99,8 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('modelos_3d/paginate', 'Modelos3dController@paginate');
     Route::resource('modelos_3d', 'Modelos3dController');
     Route::get('vehiculos/ot/{ot_id}/total', 'VehiculosController@OtVehiculosTotal');
+    Route::get('vehiculos/ot/{ot_id}', 'OtVehiculosController@getVehiculosOt');
+
     Route::get('vehiculos/paginate', 'VehiculosController@paginate');
     Route::resource('vehiculos', 'VehiculosController');
 

@@ -18,8 +18,6 @@ class EppsController extends Controller
 
     public function eppsMetodos($servicio_id){
 
-        Log::debug("epps: " . $servicio_id);
-
        if($servicio_id == 'null') {
 
            return Epps::orderBy('epps.descripcion','ASC')->get();

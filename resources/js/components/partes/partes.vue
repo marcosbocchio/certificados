@@ -779,7 +779,7 @@ export default {
     }},
 
     created :async function() {
-        this.$store.dispatch('loadVehiculos');
+        this.$store.dispatch('loadVehiculosOt',this.otdata.id);
         this.getOperadoresOt();
         this.getCms();
         this.$store.dispatch('loadServiciosOt',this.otdata.id);

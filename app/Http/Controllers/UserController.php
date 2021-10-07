@@ -28,7 +28,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
 
-      return User::with('cliente')->with('firmas_usuarios')->orderBy('name','ASC')->get();
+      return User::with('cliente')->with('firmas_usuarios')->where('habilitado_sn',1)->orderBy('name','ASC')->get();
 
     }
 
@@ -130,15 +130,15 @@ class UserController extends Controller
           $User->notificar_por_web_sn = $request['notificar_por_web_sn'];
           $User->notificar_por_mail_sn = $request['notificar_por_mail_sn'];
 
-
         }else {
 
-          $User->cliente_id = $request['cliente']['id'];
+            $User->cliente_id = $request['cliente']['id'];
 
         }
 
         $User->name = $request['name'];
         $User->email = $request['email'];
+        $User->habilitado_sn = $request['habilitado_sn'];
 
         if($request['password'] != '********'){
 
@@ -168,13 +168,13 @@ class UserController extends Controller
 
     public function getUsersEmpresa(){
 
-      return User::where('cliente_id',null)->orderBy('name','ASC')->get();
+      return User::where('cliente_id',null)->where('habilitado_sn',1)->orderBy('name','ASC')->get();
 
     }
 
     public function UserCliente($id){
 
-      return User::where('cliente_id',$id)->orderBy('name','ASC')->get();
+      return User::where('cliente_id',$id)->where('habilitado_sn',1)->orderBy('name','ASC')->get();
 
     }
 

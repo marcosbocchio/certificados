@@ -15,7 +15,6 @@ class OfflineTablesController extends Controller
 {
     public function getDataTable(Request $request)
     {
-        //Log::debug($request->header("tablename"));
         $fechaActualzacion = $request->header("dateupdated");
         $nombreTabla = $request->header("tablename");
         if($nombreTabla == ''){
@@ -31,8 +30,7 @@ class OfflineTablesController extends Controller
                                     ->orWhere("updated_at", ">", $fechaActualzacion)
                                     ->orderBy("created_at", "ASC")->get();
         }
-        //Log::debug('Entro a getDataTable');
-        //Log::debug($dataTable);
+
         return response()->json($dataTable,200,['Content-type'=>'application/json;charset=utf-8'],JSON_UNESCAPED_UNICODE);
     }
 

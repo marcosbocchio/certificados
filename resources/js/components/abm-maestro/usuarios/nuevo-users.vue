@@ -216,6 +216,7 @@ export default {
             'password' : '',
             'path':'',
             'firmas':[],
+            'habilitado_sn':true,
          },
         errors:{},
         isEnod:true,
@@ -316,6 +317,7 @@ export default {
                         'password' : '',
                         'path':'',
                         'firmas': [],
+                        'habilitado_sn':true,
                 },
                 this.password2='',
                 this.isEnod=true,
@@ -435,8 +437,8 @@ export default {
                 'path'      : this.Registro.path,
                 'metodos_firmas' : this.metodos_firmas,
                 'roles'     :this.user_rol,
-                'firmas' : this.Registro.firmas
-
+                'firmas' : this.Registro.firmas,
+                'habilitado_sn': this.Registro.habilitado_sn
 
                 }).then(response => {
                   this.$emit('store');

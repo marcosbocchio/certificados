@@ -50,9 +50,6 @@ class NotificacionesController extends Controller
 
     public function store($user_id,$item)
     {
-        DB::enableQueryLog();
-        Log::debug("Funcion que registra las notificaciones, user: " .$user_id . ' item;: ' .$item );
-
         $notificacion = new notificaciones;
 
         $descripcion = '';

@@ -75,7 +75,6 @@
                                 <td v-if="users_ot_operario.ayudante_sn == 0" @click="selectDoc(k)"> {{users_ot_operario.name}}</td>
                                 <td v-if="users_ot_operario.ayudante_sn == 0"> <i class="fa fa-minus-circle" @click="removeOperarios(k)" ></i></td>
                             </tr>
-
                         </tbody>
                     </table>
                 </div>

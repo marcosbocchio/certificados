@@ -80,7 +80,7 @@ class GestionVideoController extends Controller
         if(!$nuevoVideo){
             $nuevoVideo = new Video;
         }
-        Log::debug('path del archivo: ' . $request->path);
+
         DB::beginTransaction();
         try {
 

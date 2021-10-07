@@ -22,54 +22,40 @@ class TecnicaDistanciasController extends Controller
 
     public function DistanciasDiametro($tecnica_id,$diametro,$espesor,$foco){
 
-        DB::enableQueryLog();
-
         $tecnica = Tecnicas::find($tecnica_id);
 
         $diametro_exterior = DB::select('call DistanciasDiametro(?)',array($diametro));
-
-        Log::debug("distancia fuente pelicula " . $diametro_exterior[0]->distancia_fuente_peliculas);
-        Log::debug("foco " . $foco);
-        Log::debug("espesor " . $espesor);
-        Log::debug("tecnica formula : " . $tecnica->formula);
 
         switch (trim($tecnica->formula)) {
 
             case 'DistanciaFuentePelicula_SSA':
 
                 $dfp = DB::select("select DistanciaFuentePelicula_SSA(?) as valor", array($diametro_exterior[0]->distancia_fuente_peliculas));
-                Log::debug("dfp " . $dfp[0]->valor);
                 break;
 
             case 'DistanciaFuentePelicula_SSB':
                 $dfp = DB::select("select DistanciaFuentePelicula_SSB(?,?) as valor", array($diametro_exterior[0]->distancia_fuente_peliculas,$espesor));
-                Log::debug("dfp " . $dfp[0]->valor);
                 break;
 
             case 'DistanciaFuentePelicula_SSC':
 
                 $dfp = DB::select("select DistanciaFuentePelicula_SSC(?,?) as valor", array($foco,$espesor));
-                Log::debug("dfp " . $dfp[0]->valor);
                 break;
 
             case 'DistanciaFuentePelicula_DSD':
                 $dfp = DB::select("select DistanciaFuentePelicula_DSD(?) as valor", array($diametro_exterior[0]->distancia_fuente_peliculas));
-                Log::debug("dfp " . $dfp[0]->valor);
                 break;
 
             case 'DistanciaFuentePelicula_DSE':
                 $dfp = DB::select("select DistanciaFuentePelicula_DSE(?) as valor", array($diametro_exterior[0]->distancia_fuente_peliculas));
-                Log::debug("dfp " . $dfp[0]->valor);
                 break;
 
             case 'DistanciaFuentePelicula_DDF':
                 $dfp = DB::select("select DistanciaFuentePelicula_DDF(?,?) as valor", array($diametro_exterior[0]->distancia_fuente_peliculas,$foco));
-                Log::debug("dfp " . $dfp[0]->valor);
                 break;
 
             case 'DistanciaFuentePelicula_DDG':
                 $dfp = DB::select("select DistanciaFuentePelicula_DDG(?,?) as valor", array($diametro_exterior[0]->distancia_fuente_peliculas,$foco));
-                Log::debug("dfp " . $dfp[0]->valor);
                 break;
         }
 

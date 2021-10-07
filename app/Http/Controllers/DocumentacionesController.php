@@ -41,8 +41,6 @@ class DocumentacionesController extends Controller
     public function index(Request $request)
     {
 
-        DB::enableQueryLog();
-
         $filtro = $request->search == 'null' ? '' : $request->search;;
         $tipo = $request->tipo == 'null' ? '' : $request->tipo;
         $vencido_sn =  $request->vencido_sn == 'true' ? true : false;
@@ -68,11 +66,7 @@ class DocumentacionesController extends Controller
                                             ->orderBy('documentaciones.id','DESC')
                                             ->paginate(10);
 
-    $queries = DB::getQueryLog();
-    foreach($queries as $i=>$query)
-    {
-        Log::debug("Query $i: " . json_encode($query));
-    }
+
         return $documentaciones;
     }
 

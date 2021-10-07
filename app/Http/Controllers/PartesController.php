@@ -321,23 +321,6 @@ class PartesController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($ot_id,$id)
     {
         $header_titulo = "Parte Diario";
@@ -435,13 +418,6 @@ class PartesController extends Controller
                                             'header_descripcion'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(ParteRequest $request, $id)
     {
         $parte  = Partes::find($id);
@@ -473,17 +449,6 @@ class PartesController extends Controller
             throw $e;
 
             }
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 
     public function getInformeImportado($id){

@@ -13,7 +13,7 @@ class DosimetriaOperadorController extends Controller
     public function __construct()
     {
 
-          $this->middleware(['role_or_permission:Sistemas Admin|D_operador'],['only' => ['callView']]);
+        $this->middleware(['role_or_permission:Sistemas Admin|D_operador'],['only' => ['callView']]);
 
     }
 
@@ -82,7 +82,6 @@ class DosimetriaOperadorController extends Controller
 
     public function deleteDosimetriaOperador($request){
 
-
         $dosimetria_operador = DosimetriaOperador::whereRaw('YEAR(fecha) = ?',[$request->year])
                                 ->whereRaw('MONTH(fecha) = ?',[$request->month])
                                 ->where('operador_id',$request->operador['id'])
@@ -141,48 +140,4 @@ class DosimetriaOperadorController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

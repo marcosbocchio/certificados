@@ -23,15 +23,7 @@ class InternoEquiposController extends Controller
 
 
     }
-
-    public function index()
-    {
-        //
-    }
-
     public function paginate(Request $request){
-
-       DB::enableQueryLog();
 
         $filtro = $request->search;
         $interno_equipos = InternoEquipos::with('equipo.metodoEnsayos')
@@ -41,11 +33,6 @@ class InternoEquiposController extends Controller
                                           ->orderby('nro_interno_numeric','ASC')
                                           ->Filtro($filtro)
                                           ->paginate(10);
-        $queries = DB::getQueryLog();
-        foreach($queries as $i=>$query)
-        {
-            Log::debug("Query $i: " . json_encode($query));
-        }
 
         foreach ( $interno_equipos as $interno_equipo) {
 
@@ -74,15 +61,7 @@ class InternoEquiposController extends Controller
 
       }
 
-    public function create()
-    {
-        //
-    }
-
-
     public function getInternoEquipos($metodo, $activo_sn, $tipo_penetrante){
-
-      DB::enableQueryLog();
 
       $interno_equipos='';
       $instrumento_medicion='';
@@ -133,12 +112,6 @@ class InternoEquiposController extends Controller
                                             ->orderby('nro_interno_numeric','ASC')
                                             ->get();
 
-          }
-
-          $queries = DB::getQueryLog();
-          foreach($queries as $i=>$query)
-          {
-              Log::debug("Query $i: " . json_encode($query));
           }
 
         return $interno_equipos;

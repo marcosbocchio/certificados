@@ -241,8 +241,6 @@ class InformesRiController extends Controller
                                 ->selectRaw('numero as pasada,soldadorl_id,soldadorp_id,soldadorz_id,juntas.codigo as elemento_pasada')
                                 ->get();
 
-        Log::debug("Var pasadas_juntas :" . $pasadas_juntas);
-
         foreach ($pasadas_juntas as $pasadas_junta) {
 
             $obj = new stdClass();
@@ -274,8 +272,6 @@ class InformesRiController extends Controller
             $pasadas_junta->soldador3 = $obj->soldador3;
 
         }
-
-        Log::debug("Var pasadas_juntas :" . $pasadas_juntas);
 
         return $pasadas_juntas;
 

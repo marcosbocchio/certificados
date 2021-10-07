@@ -132,7 +132,7 @@ class VencimientosDocumentaciones extends Command
         return Documentaciones::join('usuario_documentaciones','documentaciones.id','=','usuario_documentaciones.documentacion_id')
                                 ->join('tipos_documentaciones_usuarios','tipos_documentaciones_usuarios.id','=','usuario_documentaciones.tipo_documentacion_usuario_id')
                                 ->join('users','users.id','=','usuario_documentaciones.user_id')
-                                ->whereRaw('users.notificar_doc_vencida_sn = 1 and tipos_documentaciones_usuarios.codigo_alarma = ?  and (DATEDIFF(documentaciones.fecha_caducidad,DATE(now())) = ? or DATEDIFF(documentaciones.fecha_caducidad,DATE(now())) = ?)',[$alarma->tipo,$alarma->aviso1,$alarma->aviso2])
+                                ->whereRaw('users.habilitado_sn = 1 and users.notificar_doc_vencida_sn = 1 and tipos_documentaciones_usuarios.codigo_alarma = ?  and (DATEDIFF(documentaciones.fecha_caducidad,DATE(now())) = ? or DATEDIFF(documentaciones.fecha_caducidad,DATE(now())) = ?)',[$alarma->tipo,$alarma->aviso1,$alarma->aviso2])
                                 ->select('users.id as user_id',
                                             'users.name',
                                             'documentaciones.tipo',
@@ -220,6 +220,7 @@ class VencimientosDocumentaciones extends Command
 
         return Documentaciones::join('vehiculo_documentaciones','documentaciones.id','=','vehiculo_documentaciones.documentacion_id')
                                 ->join('vehiculos','vehiculos.id','=','vehiculo_documentaciones.vehiculo_id')
+                                ->where('vehiculos.habilitado_sn',1)
                                 ->whereRaw('DATEDIFF(documentaciones.fecha_caducidad,DATE(now())) = ? or DATEDIFF(documentaciones.fecha_caducidad,DATE(now())) = ?',[$aviso1,$aviso2])
                                 ->select('vehiculos.patente','vehiculos.marca','vehiculos.modelo','vehiculos.tipo as tipo_vehiculo','documentaciones.tipo','documentaciones.descripcion','documentaciones.titulo','documentaciones.fecha_caducidad','documentaciones.id as documentacion_id')
                                 ->get();

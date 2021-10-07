@@ -184,8 +184,6 @@ class OtSoldadoresController extends Controller
 
             foreach ($soldadores_importados as $codigo_soldador) {
 
-                Log::debug("Var request ImportarSoldadores :" . $codigo_soldador);
-
                 if($codigo_soldador){
 
                         $soldador = Soldadores::firstOrCreate(

@@ -707,6 +707,18 @@ actions : {
           })
         },
 
+        loadVehiculosOt({
+            commit},ot_id) {
+            axios.defaults.baseURL = store.state.url ;
+            var urlRegistros = 'vehiculos' + '/ot/' + ot_id + '?api_token=' + Laravel.user.api_token;
+            return new Promise((resolve, reject) => {
+            axios.get(urlRegistros).then((response) => {
+              commit('getVehiculos', response.data)
+              resolve()
+            })
+            })
+          },
+
         loadPalpadores({
           commit}) {
           axios.defaults.baseURL = store.state.url ;
@@ -1019,7 +1031,6 @@ actions : {
            commit('getServiciosOt', response.data)
           })
         },
-
 
         loadCurie({
           commit},payload ) {

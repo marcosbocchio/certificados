@@ -10,7 +10,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="btn-group">
 
                                         <label>
@@ -23,6 +23,12 @@
                                             Cliente
                                         </label>
 
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="checkbox" id="checkboxUser" v-model="Registro.habilitado_sn">
+                                    <label for="checkboxUser" class="pointer">HABILITADO</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -223,6 +229,7 @@ export default {
             'password' : '',
             'path':'',
             'firmas': [],
+            'habilitado_sn' : true
          },
 
         errors:{},
@@ -336,6 +343,7 @@ export default {
                 this.Registro.notificar_por_mail_sn = this.selectRegistro.notificar_por_mail_sn,
                 this.Registro.email = this.selectRegistro.email;
                 this.Registro.firmas = this.selectRegistro.firmas_usuarios;
+                this.Registro.habilitado_sn = this.selectRegistro.habilitado_sn;
                 this.Registro.password = '********';
                 this.password2 = '********';
                 this.Registro.path = this.selectRegistro.path;
@@ -483,6 +491,7 @@ export default {
                     'metodos_firmas' : this.metodos_firmas,
                     'roles'     :this.user_rol,
                     'firmas'    : this.Registro.firmas,
+                    'habilitado_sn' : this.Registro.habilitado_sn,
 
                 }).then(response => {
                   this.$emit('update');

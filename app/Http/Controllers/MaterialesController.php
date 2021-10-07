@@ -43,8 +43,6 @@ class MaterialesController extends Controller
 
     public function store(MaterialRequest $request){
 
-       Log::debug("request: " .$request);
-
        $material = new Materiales;
 
         DB::beginTransaction();
