@@ -11,7 +11,7 @@
                 <div class="modal-body">
                    <div class="row">
                        <div class="col-md-12">
-                            <div class="col-md-6">
+                            <div class="col-md-6 col-md-offset-6">
                                 <div class="form-group">
                                     <input type="checkbox" id="checkboxUser" v-model="Registro.habilitado_sn">
                                     <label for="checkboxUser" class="pointer">HABILITADO</label>
