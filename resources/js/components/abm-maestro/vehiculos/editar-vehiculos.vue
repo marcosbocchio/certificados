@@ -12,7 +12,7 @@
                    <div class="row">
                        <div class="col-md-12">
                             <div class="col-md-6 col-md-offset-6">
-                                <div class="form-group">
+                                <div class="form-group" style="text-align:right;">
                                     <input type="checkbox" id="checkboxUser" v-model="Registro.habilitado_sn">
                                     <label for="checkboxUser" class="pointer">HABILITADO</label>
                                 </div>

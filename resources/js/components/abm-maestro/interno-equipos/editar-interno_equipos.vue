@@ -7,81 +7,81 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Editar</h4>
                 </div>
-                 <div class="modal-body">    
-                    <div class="row">          
-                          <div class="col-md-12">                    
+                 <div class="modal-body">
+                    <div class="row">
+                          <div class="col-md-12">
 
-                            <div class="col-md-12">    
+                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="numero_serie">N° Serie *</label>  
-                                    <input type="checkbox" id="checkbox" v-model="Registro.activo_sn" style="float:right"> 
-                                    <label for="tipo" style="float:right;margin-right: 5px;">ACTIVO</label>     
+                                    <label for="numero_serie">N° Serie *</label>
+                                    <input type="checkbox" id="checkbox" v-model="Registro.activo_sn" style="float:right">
+                                    <label for="tipo" style="float:right;margin-right: 5px;">ACTIVO</label>
                                     <input autocomplete="off" v-model="Registro.nro_serie" type="text" name="numero_serie" class="form-control" value="">
                                 </div>
                             </div>
-                            <div class="col-md-12">    
+                            <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="numero_interno">N° Interno *</label> 
-                                    <input autocomplete="off" v-model="Registro.nro_interno" type="text" name="numero_interno" class="form-control" value="">                  
+                                    <label for="numero_interno">N° Interno *</label>
+                                    <input autocomplete="off" v-model="Registro.nro_interno" type="text" name="numero_interno" class="form-control" value="">
                                 </div>
                             </div>
 
-                             <div class="col-md-12">    
+                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="equipos">Equipo *</label>      
+                                    <label for="equipos">Equipo *</label>
                                     <v-select v-model="equipo" label="codigo" :options="equipos">
                                         <template slot="option" slot-scope="option">
-                                            <span class="upSelect">{{ option.codigo }}</span> <br> 
-                                            <span class="downSelect"> {{ option.descripcion }} </span> 
+                                            <span class="upSelect">{{ option.codigo }}</span> <br>
+                                            <span class="downSelect"> {{ option.descripcion }} </span>
                                         </template>
-                                    </v-select>              
+                                    </v-select>
                                 </div>
-                            </div>                           
+                            </div>
 
-                            <div class="col-md-12">    
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Fuente </label>
                                     <v-select  v-model="interno_fuente" :options="interno_fuentes" label="nro_serie" @input="Registro.foco = ''">
                                         <template slot="option" slot-scope="option">
-                                            <span class="upSelect">{{ option.nro_serie }}</span> <br> 
+                                            <span class="upSelect">{{ option.nro_serie }}</span> <br>
                                             <span class="downSelect"> {{ option.fuente.codigo }} </span>
                                         </template>
-                                    </v-select>                         
-                                </div>
-                            </div>
-                        
-                            <div v-if="(interno_fuente || (interno_fuente && (equipo && equipo.metodo_ensayos.metodo == 'RI')))" class="col-md-12">    
-                                <div class="form-group">
-                                    <label for="foco">Foco </label>
-                                    <input v-model="interno_fuente.foco" type="number" class="form-control" disabled name="foco">  
-                                </div>
-                            </div>     
-                         
-                            <div v-else="" class="col-md-12">
-                                <div class="form-group">
-                                    <label for="foco">Foco </label>
-                                    <input v-model="Registro.foco" type="number" name="foco" class="form-control" value="" step="0.01">   
-                                </div>
-                            </div> 
-                          
-                           <div class="col-md-12">    
-                                <div class="form-group">
-                                    <label for="voltaje">Voltaje</label>
-                                    <input v-model="Registro.voltaje" type="number" name="voltaje" class="form-control" value="" step="0.1">   
+                                    </v-select>
                                 </div>
                             </div>
 
-                            <div class="col-md-12">    
+                            <div v-if="(interno_fuente || (interno_fuente && (equipo && equipo.metodo_ensayos.metodo == 'RI')))" class="col-md-12">
+                                <div class="form-group">
+                                    <label for="foco">Foco </label>
+                                    <input v-model="interno_fuente.foco" type="number" class="form-control" disabled name="foco">
+                                </div>
+                            </div>
+
+                            <div v-else="" class="col-md-12">
+                                <div class="form-group">
+                                    <label for="foco">Foco </label>
+                                    <input v-model="Registro.foco" type="number" name="foco" class="form-control" value="" step="0.01">
+                                </div>
+                            </div>
+
+                           <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="voltaje">Voltaje</label>
+                                    <input v-model="Registro.voltaje" type="number" name="voltaje" class="form-control" value="" step="0.1">
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="amperaje">Amperaje</label>
-                                    <input v-model="Registro.amperaje" type="number" name="amperaje" class="form-control" value="" step="0.1">             
+                                    <input v-model="Registro.amperaje" type="number" name="amperaje" class="form-control" value="" step="0.1">
                                 </div>
                             </div>
                           </div>
-                    </div>                
-              
+                    </div>
+
                 </div>
-            
+
                 <div class="modal-footer">
                     <input type="submit" class="btn btn-primary" value="Guardar">
                     <button type="button" class="btn btn-default" name="button" data-dismiss="modal" >Cancelar</button>
@@ -101,85 +101,85 @@ export default {
 
         selectRegistro : {
             type : Object,
-            required : false,           
+            required : false,
           }
 
     },
     data() { return {
-    
-        Registro : {           
+
+        Registro : {
             'nro_serie'  : '',
             'nro_interno'  : '',
-            'voltaje' : '', 
-            'amperaje' : '', 
+            'voltaje' : '',
+            'amperaje' : '',
             'foco' :'',
-            'activo_sn' : true,      
+            'activo_sn' : true,
          },
-         equipo :'',          
-         interno_fuente :'', 
-         errors:{},        
+         equipo :'',
+         interno_fuente :'',
+         errors:{},
          }
-    
+
     },
-    
-    created: function () {    
-        
+
+    created: function () {
+
         eventEditRegistro.$on('editar',function() {
-            
+
                     this.openModal();
-                
-        }.bind(this)); 
+
+        }.bind(this));
 
         this.$store.dispatch('loadEquipos');
         this.$store.dispatch('loadInternoFuentes',1);
 
         },
-  
+
     computed :{
-    
+
          ...mapState(['url','equipos','interno_fuentes']),
 
-    }, 
-   
+    },
+
     methods: {
            openModal : function(){
 
-            this.$nextTick(function () { 
+            this.$nextTick(function () {
 
                 this.Registro.nro_serie = this.selectRegistro.nro_serie;
                 this.Registro.nro_interno = this.selectRegistro.nro_interno;
                 this.Registro.foco = this.selectRegistro.foco;
                 this.Registro.voltaje = this.selectRegistro.voltaje;
                 this.Registro.amperaje = this.selectRegistro.amperaje;
-                this.Registro.activo_sn = this.selectRegistro.activo_sn;  
-                this.Registro.curie = this.selectRegistro.curie; 
-                this.equipo = this.selectRegistro.equipo;   
-                this.interno_fuente = this.selectRegistro.interno_fuente;             
-              
-                $('#editar').modal('show');               
+                this.Registro.activo_sn = this.selectRegistro.activo_sn;
+                this.Registro.curie = this.selectRegistro.curie;
+                this.equipo = this.selectRegistro.equipo;
+                this.interno_fuente = this.selectRegistro.interno_fuente;
+
+                $('#editar').modal('show');
 
                 this.$forceUpdate();
             })
             },
 
-            storeRegistro: function(){           
+            storeRegistro: function(){
 
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'interno_equipos/' + this.selectRegistro.id;                         
-                axios.put(urlRegistros, {   
-                    
-                ...this.Registro,     
-                'equipo' : this.equipo,    
-                'interno_fuente' : this.interno_fuente,                    
-              
+                var urlRegistros = 'interno_equipos/' + this.selectRegistro.id;
+                axios.put(urlRegistros, {
+
+                ...this.Registro,
+                'equipo' : this.equipo,
+                'interno_fuente' : this.interno_fuente,
+
                 }).then(response => {
                   this.$emit('update');
                   this.errors=[];
                   $('#editar').modal('hide');
-                  toastr.success('Interno Equipo editado con éxito');         
+                  toastr.success('Interno Equipo editado con éxito');
                   this.Registro={}
-                  
-                }).catch(error => {                   
+
+                }).catch(error => {
                     this.errors = error.response.data.errors;
                     $.each( this.errors, function( key, value ) {
                         toastr.error(value);
@@ -188,13 +188,13 @@ export default {
 
                      if((typeof(this.errors)=='undefined') && (error)){
 
-                     toastr.error("Ocurrió un error al procesar la solicitud");                     
-                  
+                     toastr.error("Ocurrió un error al procesar la solicitud");
+
                 }
                 });
               }
     }
-    
+
 }
 </script>
 
