@@ -1,5 +1,6 @@
 <template>
     <div class="row">
+      <back-dashboard></back-dashboard>
 
        <div class="col-lg-12">
           <cuadro-largo-enod

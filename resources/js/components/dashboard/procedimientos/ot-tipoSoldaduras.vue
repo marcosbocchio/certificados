@@ -1,113 +1,115 @@
 <template>
-  <div class="col-md-12">
-    <div v-if="$can('T_proc_edita')">
-        <div class="box box-custom-enod">
-            <div class="box-header with-border">
-            <h3 class="box-title">Procedimientos clientes</h3>
+  <div>
+    <div class="col-md-12">
+        <div v-if="$can('T_proc_edita')">
+            <div class="box box-custom-enod">
+                <div class="box-header with-border">
+                <h3 class="box-title">Procedimientos clientes</h3>
 
-                <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                    </button>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                    </div>
                 </div>
-            </div>
 
-            <div class="box-body">
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group" >
-                                    <label for="tipo_soldaduras">Tipo Sol.</label>
-                                    <v-select v-model="tipo_soldadura" label="codigo" :options="tipo_soldaduras"></v-select>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group" >
+                                        <label for="tipo_soldaduras">Tipo Sol.</label>
+                                        <v-select v-model="tipo_soldadura" label="codigo" :options="tipo_soldaduras"></v-select>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="obra">Obra Nº </label>
-                                    <input v-model="obra" type="text" class="form-control" id="obra" placeholder="" maxlength = "15" :disabled="otdata.obra">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="obra">Obra Nº </label>
+                                        <input v-model="obra" type="text" class="form-control" id="obra" placeholder="" maxlength = "15" :disabled="otdata.obra">
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-9">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group" >
-                                    <label for="procedimientos_soldadura">EPS / WPS *</label>
-                                    <input type="text" v-model="eps" class="form-control" id="procedimientos_soldadura" maxlength="30">
+                        <div class="col-md-9">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group" >
+                                        <label for="procedimientos_soldadura">EPS / WPS *</label>
+                                        <input type="text" v-model="eps" class="form-control" id="procedimientos_soldadura" maxlength="30">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group" >
+                                        <label for="pqr">PQR *</label>
+                                        <input type="text" v-model="pqr" class="form-control" id="pqr" maxlength="30">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="proc_reparacion">Proc.Reparación *</label>
+                                        <input type="text" v-model="proc_reparacion" class="form-control" id="proc_reparacion" maxlength="30">
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="col-md-4">
-                                <div class="form-group" >
-                                    <label for="pqr">PQR *</label>
-                                    <input type="text" v-model="pqr" class="form-control" id="pqr" maxlength="30">
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="proc_reparacion">Proc.Reparación *</label>
-                                    <input type="text" v-model="proc_reparacion" class="form-control" id="proc_reparacion" maxlength="30">
-                                </div>
-                            </div>
                         </div>
-
+                    </div>
+                    <div class="form-group">
+                        <span>
+                            <button type="button" @click="addTipoSoldaduras()"><span class="fa fa-plus-circle"></span></button>
+                        </span>
                     </div>
                 </div>
-                <div class="form-group">
-                    <span>
-                        <button type="button" @click="addTipoSoldaduras()"><span class="fa fa-plus-circle"></span></button>
-                    </span>
+            </div>
+        </div>
+        <div v-show="TablaTipoSoldaduras.length">
+            <div class="box box-custom-enod">
+                <div class="box-header with-border">
+                    <div class="table-responsive">
+                    <table class="table table-hover table-striped table-condensed">
+                        <thead>
+                            <tr>
+                                <th  class="col-md-1">Tipo Sol.</th>
+                                <th class="col-md-2">Obra</th>
+                                <th class="col-md-3">EPS</th>
+                                <th class="col-md-3">PQR</th>
+                                <th class="col-md-3">Proc. Reparación</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(item,k) in TablaTipoSoldaduras" :key="k" @click="selectPosTablaTipoSoldaduras(k)">
+
+                                <td>{{ item.tipo_soldadura.codigo}}</td>
+                                <td>{{ item.obra}} </td>
+                                <td v-if="indexTablaTipoSoldaduras ==  k">
+                                    <input type="text" v-model="TablaTipoSoldaduras[k].eps" maxlength="30">
+                                </td>
+                                    <td v-else>{{ item.eps}} </td>
+                                <td v-if="indexTablaTipoSoldaduras ==  k">
+                                    <input type="text" v-model="TablaTipoSoldaduras[k].pqr" maxlength="30">
+                                </td>
+                                <td v-else>{{ item.pqr }}</td>
+                                <td v-if="indexTablaTipoSoldaduras ==  k">
+                                    <input type="text" v-model="TablaTipoSoldaduras[k].proc_reparacion" maxlength="30">
+                                </td >
+                                <td v-else>{{ item.proc_reparacion }}</td>
+                                <td style="text-align:center"> <i class="fa fa-minus-circle" @click="removeTipoSoldadura(k)" ></i></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div v-show="TablaTipoSoldaduras.length">
-        <div class="box box-custom-enod">
-            <div class="box-header with-border">
-                <div class="table-responsive">
-                <table class="table table-hover table-striped table-condensed">
-                    <thead>
-                        <tr>
-                            <th  class="col-md-1">Tipo Sol.</th>
-                            <th class="col-md-2">Obra</th>
-                            <th class="col-md-3">EPS</th>
-                            <th class="col-md-3">PQR</th>
-                            <th class="col-md-3">Proc. Reparación</th>
-                            <th>&nbsp;</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="(item,k) in TablaTipoSoldaduras" :key="k" @click="selectPosTablaTipoSoldaduras(k)">
-
-                            <td>{{ item.tipo_soldadura.codigo}}</td>
-                            <td>{{ item.obra}} </td>
-                            <td v-if="indexTablaTipoSoldaduras ==  k">
-                                <input type="text" v-model="TablaTipoSoldaduras[k].eps" maxlength="30">
-                            </td>
-                                <td v-else>{{ item.eps}} </td>
-                            <td v-if="indexTablaTipoSoldaduras ==  k">
-                                <input type="text" v-model="TablaTipoSoldaduras[k].pqr" maxlength="30">
-                            </td>
-                            <td v-else>{{ item.pqr }}</td>
-                            <td v-if="indexTablaTipoSoldaduras ==  k">
-                                <input type="text" v-model="TablaTipoSoldaduras[k].proc_reparacion" maxlength="30">
-                            </td >
-                            <td v-else>{{ item.proc_reparacion }}</td>
-                            <td style="text-align:center"> <i class="fa fa-minus-circle" @click="removeTipoSoldadura(k)" ></i></td>
-                        </tr>
-                    </tbody>
-                </table>
-                </div>
-            </div>
+        <div v-if="$can('T_proc_edita')">
+            <button class="btn btn-primary" v-on:click.prevent="submit()">Actualizar</button>
         </div>
-    </div>
-    <div v-if="$can('T_proc_edita')">
-        <button class="btn btn-primary" v-on:click.prevent="submit()">Actualizar</button>
-    </div>
 
+    </div>
 </div>
 </template>
 <script>

@@ -217,6 +217,7 @@ Vue.component('abm-placas', require('./components/dashboard/placas/abm-placas.vu
 Vue.component('dashboard-enod', require('./components/dashboard/dashboard-enod').default);
 Vue.component('cuadro-enod', require('./components/dashboard/cuadro-enod').default);
 Vue.component('cuadro-largo-enod', require('./components/dashboard/cuadro-largo-enod').default);
+Vue.component('back-dashboard', require('./components/dashboard/back-dashboard').default);
 
 Vue.component('ot-operarios', require('./components/dashboard/operarios/ot-operarios').default);
 Vue.component('ot-interno-equipos', require('./components/dashboard/interno-equipos/ot-interno-equipos').default);
@@ -418,7 +419,9 @@ state: {
     },
 
 actions : {
-
+        getDashboard({commit}) {
+          window.location.href =  '/';
+        },
         loadFechaActual({
           commit}) {
           axios.defaults.baseURL = store.state.url ;

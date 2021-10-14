@@ -1,5 +1,6 @@
 <template>
     <div class="row">
+       <back-dashboard></back-dashboard>
        <div class="col-lg-12">
           <cuadro-largo-enod
               :tablero_sn ="false"
@@ -15,7 +16,7 @@
           </cuadro-largo-enod>
        </div>
 
-       <div class="clearfix"></div>
+      <div class="clearfix"></div>
       <div class="col-md-6">
         <div v-show="$can('T_operador_actualiza')">
             <div class="box box-custom-enod">
@@ -113,9 +114,9 @@
         </div>
     </div>
     <div class="col-md-12">
-            <div v-show="$can('T_operador_actualiza')">
-                <button class="btn btn-primary" v-on:click.prevent="submit()">Actualizar</button>
-            </div>
+        <div v-show="$can('T_operador_actualiza')">
+            <button class="btn btn-primary" v-on:click.prevent="submit()">Actualizar</button>
+        </div>
     </div>
    <div class="clearfix"></div>
      <div class="col-md-12">

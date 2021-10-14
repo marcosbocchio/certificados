@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
 
@@ -163,70 +162,74 @@
                 <h3 class="box-title">Ordenes de trabajo</h3>
             </div>
             <div class="box-body">
-                <div class="table-responsive">
-                    <table class="table table-hover table-striped table-condensed">
-                        <thead>
-                            <tr>
-                                <th class="col-lg-1">OT N°</th>
-                                <th class="col-lg-3" >Cliente</th>
-                                <th class="col-lg-4">Proyecto</th>
-                                <th class="col-lg-1">Obra N°</th>
-                                <th class="col-lg-1">Fecha</th>
-                                <th class="col-lg-1">Estado</th>
-                                <th class="col-lg-1" colspan="4">
-                                 <small style="margin-left: -2px;">Exp. Doc.</small>
-                                 <small style="margin-left: 4px;">Editar</small>
-                                 <small style="margin-left: 4px;">Informe</small>
-                                 <small style="margin-left: 4px;">Acción</small>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="(ot,k) in ots.data" :key="k" @click="selectOt(k)" :class="{selected: ot_id_selected === ots.data[k].id}"  class="pointer" >
-                                <td> {{ot.numero}}</td>
-                                <td> {{ot.cliente.nombre_fantasia}}</td>
-                                <td> {{ot.proyecto}}</td>
-                                <td> {{ot.obra}}</td>
-                                <td> {{ot.fecha_formateada}}</td>
-                                <td> {{ot.estado}}</td>
+                <template>
+                    <keep-alive>
+                        <div class="table-responsive">
+                            <table class="table table-hover table-striped table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th class="col-lg-1">OT N°</th>
+                                        <th class="col-lg-3" >Cliente</th>
+                                        <th class="col-lg-4">Proyecto</th>
+                                        <th class="col-lg-1">Obra N°</th>
+                                        <th class="col-lg-1">Fecha</th>
+                                        <th class="col-lg-1">Estado</th>
+                                        <th class="col-lg-1" colspan="4">
+                                        <small style="margin-left: -2px;">Exp. Doc.</small>
+                                        <small style="margin-left: 4px;">Editar</small>
+                                        <small style="margin-left: 4px;">Informe</small>
+                                        <small style="margin-left: 4px;">Acción</small>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(ot,k) in ots.data" :key="k" @click="selectOt(k)" :class="{selected: ot_id_selected === ots.data[k].id}"  class="pointer" >
+                                        <td> {{ot.numero}}</td>
+                                        <td> {{ot.cliente.nombre_fantasia}}</td>
+                                        <td> {{ot.proyecto}}</td>
+                                        <td> {{ot.obra}}</td>
+                                        <td> {{ot.fecha_formateada}}</td>
+                                        <td> {{ot.estado}}</td>
 
-                                <td width="10px">
-                                  <button class="btn btn-default btn-sm" title="Generar link de documentación" @click="ExportarDocumentacionOt(ot.id)" :disabled="!$can('T_exportar_documentacion')">
-                                    <span class="fa fa-cloud-upload">
-                                    </span>
-                                  </button>
-                                </td>
+                                        <td width="10px">
+                                        <button class="btn btn-default btn-sm" title="Generar link de documentación" @click="ExportarDocumentacionOt(ot.id)" :disabled="!$can('T_exportar_documentacion')">
+                                            <span class="fa fa-cloud-upload">
+                                            </span>
+                                        </button>
+                                        </td>
 
-                                <td width="10px">
-                                  <button class="btn btn-warning btn-sm" title="Editar" @click="openEditarOt(ot.id)" :disabled="!$can('T_edita')">
-                                    <span class="fa fa-edit">
-                                    </span>
-                                  </button>
-                                </td>
+                                        <td width="10px">
+                                        <button class="btn btn-warning btn-sm" title="Editar" @click="openEditarOt(ot.id)" :disabled="!$can('T_edita')">
+                                            <span class="fa fa-edit">
+                                            </span>
+                                        </button>
+                                        </td>
 
-                                <td width="10px"> <a :href="'/pdf/ot/' + ot.id " target="_blank"  class="btn btn-default btn-sm" title="Informe"><span class="fa fa-file-pdf-o"></span></a></td>
+                                        <td width="10px"> <a :href="'/pdf/ot/' + ot.id " target="_blank"  class="btn btn-default btn-sm" title="Informe"><span class="fa fa-file-pdf-o"></span></a></td>
 
-                                <td width="10px">
-                                  <div v-if="ot.estado == 'EDITANDO'">
-                                      <button class="btn btn-default btn-sm" title="Firmar"  @click="CambiarEstado(k,'EDITANDO')" :disabled="!$can('T_accion')">
-                                      <span class="glyphicon glyphicon-pencil"></span>
-                                      </button>
-                                  </div>
-                                  <div v-else-if="ot.estado == 'ACTIVA'">
-                                      <button class="btn btn-default btn-sm" title="Cerrar" @click="CambiarEstado(k,'ACTIVA')" :disabled="!$can('T_accion')">
-                                      <span class="glyphicon glyphicon-arrow-right"></span>
-                                      </button>
-                                  </div>
-                                  <div v-else-if="ot.estado == 'CERRADA'">
-                                      <button class="btn btn-default btn-sm" title='Cerrada'  disabled>
-                                      <span class="glyphicon glyphicon-check"></span>
-                                      </button>
-                                  </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                                        <td width="10px">
+                                        <div v-if="ot.estado == 'EDITANDO'">
+                                            <button class="btn btn-default btn-sm" title="Firmar"  @click="CambiarEstado(k,'EDITANDO')" :disabled="!$can('T_accion')">
+                                            <span class="glyphicon glyphicon-pencil"></span>
+                                            </button>
+                                        </div>
+                                        <div v-else-if="ot.estado == 'ACTIVA'">
+                                            <button class="btn btn-default btn-sm" title="Cerrar" @click="CambiarEstado(k,'ACTIVA')" :disabled="!$can('T_accion')">
+                                            <span class="glyphicon glyphicon-arrow-right"></span>
+                                            </button>
+                                        </div>
+                                        <div v-else-if="ot.estado == 'CERRADA'">
+                                            <button class="btn btn-default btn-sm" title='Cerrada'  disabled>
+                                            <span class="glyphicon glyphicon-check"></span>
+                                            </button>
+                                        </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </keep-alive>
+                </template>
 
                 <pagination :data="ots" @pagination-change-page="getResults" :limit="3" ><span slot="prev-nav">&lt; Previous</span>
                 <span slot="next-nav">Next &gt;</span> </pagination>
@@ -242,6 +245,7 @@
   </div>
     <div class="clearfix"></div>
     <confirmar-modal></confirmar-modal>
+
 </div>
 
 </template>
@@ -293,6 +297,10 @@ export default {
         this.$store.dispatch('loadContarPartes',ot_id);
         this.$store.dispatch('loadContarCertificados',ot_id);
 
+        localStorage.removeItem('ot_id')
+        localStorage.removeItem('search')
+        localStorage.removeItem('page_ot')
+
       }
     },
 
@@ -314,9 +322,11 @@ export default {
         }.bind(this));
     },
 
-    mounted : function() {
+    mounted : async function() {
 
-       this.getResults();
+       let page = parseInt(localStorage.getItem('page_ot'))
+       this.search = localStorage.getItem('search') ? localStorage.getItem('search') : ''
+       await this.getResults(page,this.search);
 
     },
 
@@ -343,18 +353,18 @@ export default {
 
         },
 
-        getResults : function(page = 1,filtro =''){
+        getResults : async function(page = 1,filtro =''){
 
             this.loading = true;
             axios.defaults.baseURL = this.url ;
             var urlRegistros = 'ots?page='+ page + '&search=' + filtro ;
-            axios.get(urlRegistros).then(response =>{
+            await axios.get(urlRegistros).then(response =>{
 
             this.ots = response.data
 
               if(this.ots.data.length){
 
-                 this.ot_id_selected = this.ots.data[0].id;
+                 this.ot_id_selected = parseInt(localStorage.getItem('ot_id')) ? parseInt(localStorage.getItem('ot_id')) : this.ots.data[0].id
 
               }else{
 
@@ -472,6 +482,10 @@ export default {
       EntrarCuadro : function(seccion){
 
         console.log(seccion);
+
+        localStorage.setItem('ot_id', this.ot_id_selected)
+        localStorage.setItem('search', this.search)
+        localStorage.setItem('page_ot', this.ots.current_page)
 
         switch (seccion) {
 

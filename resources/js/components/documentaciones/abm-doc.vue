@@ -1,5 +1,6 @@
 <template>
-    <div>
+    <div class="row">
+        <back-dashboard></back-dashboard>
         <div v-if="modelo == 'ot_procedimientos_propios'">
             <div class="col-lg-12">
                 <cuadro-largo-enod
