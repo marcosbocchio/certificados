@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use App\Fuentes;
 use \stdClass;
 use Illuminate\Support\Facades\Log;
+use App\Frentes;
 
 class InternoEquiposController extends Controller
 {
@@ -184,15 +185,22 @@ class InternoEquiposController extends Controller
 
       public function saveInternoEquipo($request,$interno_equipo){
 
-          $interno_equipo->nro_serie = $request['nro_serie'];
-          $interno_equipo->nro_interno = $request['nro_interno'];
-          $interno_equipo->foco = $request['foco'];
-          $interno_equipo->voltaje = $request['voltaje'];
-          $interno_equipo->amperaje = $request['amperaje'];
-          $interno_equipo->activo_sn = $request['activo_sn'];
-          $interno_equipo->equipo_id = $request['equipo']['id'];
-          $interno_equipo->interno_fuente_id = $request['interno_fuente']['id'];
-          $interno_equipo->save();
+        
+        $interno_equipo->nro_serie = $request['nro_serie'];
+        $interno_equipo->nro_interno = $request['nro_interno'];
+        $interno_equipo->foco = $request['foco'];
+        $interno_equipo->voltaje = $request['voltaje'];
+        $interno_equipo->amperaje = $request['amperaje'];
+        $interno_equipo->activo_sn = $request['activo_sn'];
+        $interno_equipo->equipo_id = $request['equipo']['id'];
+        $interno_equipo->interno_fuente_id = $request['interno_fuente']['id'];
+
+        if($request->isMethod('post')){
+            $frente = Frentes::where('centro_distribucion_sn',1)->first();
+            $interno_equipo->frente_id = $frente->id;
+        }
+
+        $interno_equipo->save();
 
       }
 
