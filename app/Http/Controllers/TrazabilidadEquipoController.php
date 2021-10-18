@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 class TrazabilidadEquipoController extends Controller
 {
 
-    public function saveTrazabilidadEquipo($interno_equipo_id, $frente_id = null){
+    public function saveTrazabilidadEquipo($interno_equipo_id, $frente_id){
 
         $user_id = null;
 

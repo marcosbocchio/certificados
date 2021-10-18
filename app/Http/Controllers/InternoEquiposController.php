@@ -139,6 +139,7 @@ class InternoEquiposController extends Controller
         try {
 
             $this->saveInternoEquipo($request,$interno_equipo);
+            (new \App\Http\Controllers\TrazabilidadEquipoController)->saveTrazabilidadEquipo($interno_equipo->id,$interno_equipo->frente_id);
 
             if($interno_equipo->interno_fuente_id){
                  (new \App\Http\Controllers\TrazabilidadFuenteController)->saveTrazabilidadfuente($interno_equipo->id,$request['interno_fuente']['id']);
@@ -170,7 +171,7 @@ class InternoEquiposController extends Controller
 
           $this->saveInternoEquipo($request,$interno_equipo);
 
-            (new \App\Http\Controllers\TrazabilidadFuenteController)->saveTrazabilidadfuente($interno_equipo->id,$request['interno_fuente']['id']);
+         (new \App\Http\Controllers\TrazabilidadFuenteController)->saveTrazabilidadfuente($interno_equipo->id,$request['interno_fuente']['id']);
 
 
           DB::commit();
@@ -185,7 +186,6 @@ class InternoEquiposController extends Controller
 
       public function saveInternoEquipo($request,$interno_equipo){
 
-        
         $interno_equipo->nro_serie = $request['nro_serie'];
         $interno_equipo->nro_interno = $request['nro_interno'];
         $interno_equipo->foco = $request['foco'];
