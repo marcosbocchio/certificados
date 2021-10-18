@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-
+       <back-dashboard></back-dashboard>
        <div class="col-lg-12">
          <a @click="EntrarCuadro('certificados')">
           <cuadro-largo-enod
