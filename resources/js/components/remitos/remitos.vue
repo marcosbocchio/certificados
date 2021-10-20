@@ -429,7 +429,7 @@ export default {
           let remito = response.data;
           toastr.success('Remito N° ' +  this.prefijo + '-' + this.numero + ' fue creado con éxito ');
           window.open(  '/pdf/remito/' + remito.id,'_blank');
-          window.location.href =  '/remitos/ot/' + this.otdata.id;
+          window.location.href =  '/area/enod/remitos/listado';
 
         }).catch(error => {
 
