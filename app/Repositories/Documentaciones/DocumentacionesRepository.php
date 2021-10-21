@@ -85,6 +85,7 @@ class DocumentacionesRepository extends BaseRepository
           if ($request->tipo == 'USUARIO'){
 
             $usuario_documento = UsuarioDocumentaciones::where('documentacion_id',$documento->id)->first();
+            $usuario_documento = $usuario_documento ? $usuario_documento : new UsuarioDocumentaciones;
             $this->saveUsuarioDocumento($documento,$usuario_documento,$request);
 
           }
