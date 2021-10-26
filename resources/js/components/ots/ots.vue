@@ -178,7 +178,7 @@
 
         <div class="col-md-6">
           <div class="form-group">
-              <label>Servicios</label>
+              <label>Servicios *</label>
               <v-select v-model="servicio" label="descripcion" :options="servicios" id="servicios"></v-select>
           </div>
         </div>
@@ -214,7 +214,7 @@
         <div class="col-md-1">
             <div class="form-group">
               <span>
-                  <button type="button" @click="addServicio()"><span class="fa fa-plus-circle"></span></button>
+                  <button type="button" @click="addServicio()" :disabled="!servicio"><span class="fa fa-plus-circle"></span></button>
               </span>
             </div>
         </div>
@@ -289,13 +289,13 @@
       <div class="box-body">
         <div class="col-md-6">
           <div class="form-group">
-              <label>Productos</label>
+              <label>Productos *</label>
               <v-select v-model="producto" label="descripcion" :options="productos" id="productos" @input="getMedidasProducto()"></v-select>
             </div>
           </div>
           <div class="col-md-3">
             <div class="form-group">
-              <label>Medidas</label>
+              <label>Medidas *</label>
 
               <v-select v-model="medida" :options="medidas" label="descripcion">
               <template slot="option" slot-scope="option">
@@ -315,7 +315,7 @@
           <div class="col-md-1">
               <div class="form-group">
                 <span>
-                    <button type="button" @click="addProducto()"><span class="fa fa-plus-circle"></span></button>
+                    <button type="button" @click="addProducto()" :disabled="!producto || !medida"><span class="fa fa-plus-circle"></span></button>
                 </span>
               </div>
           </div>
@@ -361,13 +361,13 @@
       <div class="box-body">
         <div class="col-md-6">
           <div class="form-group">
-            <label>Elementos de seguridad</label>
+            <label>Elementos de seguridad *</label>
             <v-select v-model="epp" label="descripcion" :options="epps" id="epps"></v-select>
           </div>
 
               <div class="form-group">
                 <span>
-                    <button type="button" @click="addEpp()"><span class="fa fa-plus-circle"></span></button>
+                    <button type="button" @click="addEpp()" :disabled="!epp"><span class="fa fa-plus-circle"></span></button>
                 </span>
               </div>
 
@@ -397,13 +397,13 @@
         </div>
         <div class="col-md-6">
           <div class="form-group">
-            <label>Riesgos</label>
+            <label>Riesgos *</label>
             <v-select v-model="riesgo" label="descripcion" :options="riesgos" id="riesgos"></v-select>
           </div>
 
             <div class="form-group">
               <span>
-                  <button type="button" @click="addRiesgo()"><span class="fa fa-plus-circle"></span></button>
+                  <button type="button" @click="addRiesgo()":disabled="!riesgo"><span class="fa fa-plus-circle"></span></button>
               </span>
             </div>
 
@@ -922,7 +922,12 @@ export default {
                 }
         }.bind(this));
       },
-      addServicio(index) {
+      addServicio() {
+
+            if (this.inputsServicios.findIndex(e => e.id == this.servicio.id) !== -1) {
+                toastr.error("El servicio ingresado existe en la ot");
+                return;
+            }
 
             this.getMetodo(this.servicio.metodo_ensayo_id);
 
@@ -951,27 +956,38 @@ export default {
             this.cantidad_servicios='1'
         },
 
-      addProducto(index) {
-            this.inputsProductos.push({
-                id:this.producto.id,
-                producto:this.producto.descripcion,
-                medida : this.medida.descripcion,
-                medida_id :this.medida.id,
-                unidad_medida_id :this.producto.unidades_medida_id,
-                cantidad_productos:this.cantidad_productos,
-                unidad_medida_codigo : this.medida.codigo,
-                observaciones : '',
-                path1:null,
-                path2:null,
-                path3:null,
-                path4:null
-                 });
-            this.producto='',
-            this.medida ='',
-            this.cantidad_productos='1'
+      addProducto() {
+
+        if (this.inputsProductos.findIndex(e => (e.id == this.producto.id && e.medida_id == this.medida.id)) !== -1  ) {
+            toastr.error("El producto / medida ingresado existe en la ot");
+            return;
+        }
+
+        this.inputsProductos.push({
+            id:this.producto.id,
+            producto:this.producto.descripcion,
+            medida : this.medida.descripcion,
+            medida_id :this.medida.id,
+            unidad_medida_id :this.producto.unidades_medida_id,
+            cantidad_productos:this.cantidad_productos,
+            unidad_medida_codigo : this.medida.codigo,
+            observaciones : '',
+            path1:null,
+            path2:null,
+            path3:null,
+            path4:null
+                });
+        this.producto='',
+        this.medida ='',
+        this.cantidad_productos='1'
 
         },
-      addEpp(index) {
+      addEpp() {
+
+            if (this.inputsEpps.findIndex(e => e.id == this.epp.id) !== -1) {
+                toastr.error("El EPP ingresado existe en la ot");
+                return;
+            }
 
             this.inputsEpps.push({
                 descripcion:this.epp.descripcion,
@@ -980,7 +996,13 @@ export default {
             this.epp=''
 
         },
-      addRiesgo(index) {
+      addRiesgo() {
+
+             if (this.inputsRiesgos.findIndex(e => e.id == this.riesgo.id) !== -1) {
+                toastr.error("El riesgo ingresado existe en la ot");
+                return;
+            }
+
             this.inputsRiesgos.push({
                  descripcion:this.riesgo.descripcion,
                  id:this.riesgo.id
