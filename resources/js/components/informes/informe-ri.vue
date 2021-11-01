@@ -1551,7 +1551,6 @@
          },
          addElementosPasadas : function(aux_junta){
              let index = this.elemento_pasadas.findIndex(elemento => elemento == aux_junta);
-
              if(index == -1){
                  this.elemento_pasadas.push(aux_junta);
              }
@@ -1565,29 +1564,27 @@
              let cant = 0;
              this.TablaPasadas.forEach(function(item){
                  if(elemento == item.elemento_pasada){
-                     cant++;
+                    cant++;
                  }
              }.bind(this));
              return cant;
          },
          AddPasadas () {
              if(this.elemento_pasada == ''){
-
-                 toastr.error('Error :El elemento es obligatorio para ingresar la/s pasadas');
-                 return;
-
+                toastr.error('Error :El elemento es obligatorio para ingresar la/s pasadas');
+                return;
              }
              let cant_pasadas =  this.contarPasadaElemento(this.elemento_pasada);
              if(this.formato == 'PLANTA'){
                  if(cant_pasadas >= 1) {
-                     toastr.error('Error : Formato PLANTA  acepta 1 pasada');
-                     return;
+                    toastr.error('Error : Formato PLANTA  acepta 1 pasada');
+                    return;
                  }
              }
              if(this.formato == 'DUCTO'){
-                 if(cant_pasadas >= 6) {
-                     toastr.error('Error : Formato DUCTO acepta 6 pasadas');
-                      return;
+                 if(cant_pasadas >= 12) {
+                    toastr.error('Error : Formato DUCTO acepta 12 pasadas');
+                    return;
                  }
              }
 
@@ -1601,14 +1598,14 @@
                  });
 
                  if (this.isGasoducto){
-                     if (this.pasada < 6)
-                         this.pasada++;
-                     else if(this.pasada == 6)
-                     this.pasada = 1;
+                    if (this.pasada < 12)
+                        this.pasada++;
+                    else if(this.pasada == 12)
+                        this.pasada = 1;
                  }
              }
              else{
-                 toastr.error('Campo Cunio Z es obligatorio');
+                toastr.error('Campo Cunio Z es obligatorio');
              }
          },
 
@@ -1633,7 +1630,7 @@
                     if (this.posicionPlacaGosaducto.length > 1 || str_pos_placa != this.posicionPlacaGosaducto){
 
                        toastr.error('Valores en posición indicación incorrectos');
-                        return;
+                       return;
                     }
 
                 }else{
@@ -1708,13 +1705,11 @@
              });
 
             }
-
          },
          RemovePasada(index) {
-
-             this.indexPasada = 0;
-             this.TablaPasadas.splice(index, 1);
-             this.autocompletarNumeroPasada();
+            this.indexPasada = 0;
+            this.TablaPasadas.splice(index, 1);
+            this.autocompletarNumeroPasada();
          },
          RemoveDefectos(index) {
 
@@ -1722,7 +1717,7 @@
              let aceptable = true;
              this.TablaDetalle[this.indexDetalle].defectos.forEach(function(defecto){
                  if(defecto.posicion !=''){
-                     aceptable = false;
+                    aceptable = false;
                  }
              })
              this.TablaDetalle[this.indexDetalle].aceptable_sn = aceptable;
@@ -1822,7 +1817,6 @@
                  for (var i = 0; i < length; i++) {
                      binary += String.fromCharCode(bytes[i]);
                  }
-
                  var wb = XLSX.read(binary, {type: 'binary'});
                  var wsname = wb.SheetNames[0];
                  var ws = wb.Sheets[wsname];
@@ -1854,7 +1848,6 @@
                          soldadores_importados.push(item['14']);
                          soldadores_importados.push(item['15']);
                          soldadores_importados.push(item['16']);
-
                      }
                  }
              }.bind(this));
@@ -1864,21 +1857,20 @@
              try{
                  let res = await axios.post(urlRegistros,{
 
-                     'soldadores_importados' : soldadores_importados,
+                    'soldadores_importados' : soldadores_importados,
 
                  });
                  return true;
 
              } catch (error){
-                 toastr.error('Ocurrio un error al importar los soldadores');
-                 return false;
+                toastr.error('Ocurrio un error al importar los soldadores');
+                return false;
              }
 
          },
          async copiarImportacion(){
            let resul_store_soldadores =  await this.StoreSoldadores();
            if(resul_store_soldadores) {
-
                  await this.getSoldadores();
                  this.TablaImportada.forEach(function(item,index){
 
@@ -1909,7 +1901,6 @@
                                          soldador1 :  aux_soldador1,
                                          soldador2 :  aux_soldador2,
                                          soldador3 :  aux_soldador3,
-
                                      });
                                      /*Pasada 2 */
                                      if(item['7']!=''){
@@ -1922,7 +1913,6 @@
                                                  soldador1 :  aux_soldador1,
                                                  soldador2 :  '',
                                                  soldador3 :  aux_soldador3,
-
                                              });
 
                                              /*Pasada 3 */
@@ -1936,9 +1926,8 @@
                                                          soldador1 :  aux_soldador1,
                                                          soldador2 :  '',
                                                          soldador3 :  aux_soldador3,
-
                                                      });
-                                                 }
+                                             }
                                                  /*Pasada 4 */
                                                  if(item['11']!=''){
                                                          aux_soldador1 = (index_soldador1_p4 != -1) ? this.soldadores[index_soldador1_p4] : '';
@@ -1950,9 +1939,8 @@
                                                              soldador1 :  aux_soldador1,
                                                              soldador2 :  '',
                                                              soldador3 :  aux_soldador3,
-
                                                          });
-                                                     }
+                                                 }
                                                  /*Pasada 5 */
                                                  if(item['13']!=''){
                                                          aux_soldador1 = (index_soldador1_p5 != -1) ? this.soldadores[index_soldador1_p5] : '';
@@ -1964,9 +1952,8 @@
                                                              soldador1 :  aux_soldador1,
                                                              soldador2 :  '',
                                                              soldador3 :  aux_soldador3,
-
                                                          });
-                                                     }
+                                                 }
                                                      /*Pasada 6 */
                                                      if(item['15']!=''){
                                                              aux_soldador1 = (index_soldador1_p6 != -1) ? this.soldadores[index_soldador1_p6] : '';
@@ -1978,14 +1965,12 @@
                                                                  soldador1 :  aux_soldador1,
                                                                  soldador2 :  '',
                                                                  soldador3 :  aux_soldador3,
-
                                                              });
-                                                         }
-                                         }
+                                                     }
+                                     }
                                  }
                              }
-
-                         }
+                     }
                  }.bind(this))
 
                  if(this.elemento_pasadas.length > 0){
@@ -2010,8 +1995,8 @@
 
          RemoveModelo : function(index){
 
-              this.TablaModelos3d.splice(index, 1);
-              this.modelo_3d = '';
+            this.TablaModelos3d.splice(index, 1);
+            this.modelo_3d = '';
 
          },
 

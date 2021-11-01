@@ -35,6 +35,7 @@ use App\Contratistas;
 use App\OtTipoSoldaduras;
 use App\MetodoEnsayos;
 use App\FirmaUsuario;
+use App\InformesRiElementosView;
 
 class PdfInformesRiController extends Controller
 {
@@ -81,16 +82,23 @@ class PdfInformesRiController extends Controller
         $fecha = date('d-m-Y', strtotime($informe->fecha));
         $tipo_reporte = "INFORME N°";
 
+
+
         /* Fin encabezado */
         if ($informe_ri->gasoducto_sn){
 
-          $juntas_posiciones = DB::select('CALL InformeRiGasoductoJuntaPosicion(?)',array($informe_ri->id));
-          $pasadas_juntas = DB::select('CALL InformeRiGasoductoPasadasJuntas(?)',array($informe_ri->id));
-          $defectos_posiciones = DB::select('CALL InformeRiGasoductoDefectosPasadasPosicion(?)',array($informe_ri->id));
+        /* Recupero la Max cantidad de pasadas del informe , si tiene más de 6 uso una plantilla especial */
+        $max_pasadas = InformesRiElementosView::where('informe_id',$id)->max('cantidad_pasadas');
+
+        $plantilla = ($max_pasadas > 6) ? 'ri-gasoducto-12-v2' : 'ri-gasoducto-6-v2';
+
+        $juntas_posiciones = DB::select('CALL InformeRiGasoductoJuntaPosicion(?)',array($informe_ri->id));
+        $pasadas_juntas = DB::select('CALL InformeRiGasoductoPasadasJuntas(?)',array($informe_ri->id));
+        $defectos_posiciones = DB::select('CALL InformeRiGasoductoDefectosPasadasPosicion(?)',array($informe_ri->id));
 
         //  dd($juntas_posiciones,$pasadas_juntas,$defectos_posiciones);
 
-          $pdf = PDF::loadView('reportes.informes.ri-gasoducto-v2',compact('titulo','nro','tipo_reporte','fecha',
+          $pdf = PDF::loadView('reportes.informes.' . $plantilla,compact('titulo','nro','tipo_reporte','fecha',
                                                                         'ot',
                                                                         'norma_ensayo',
                                                                         'norma_evaluacion',
