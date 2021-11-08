@@ -70,7 +70,7 @@
                                     <td style="text-align: center; width: 680px;height: 275px;">
 
                                         @if ($informe_us->path1_indicacion)
-                                            <img src="{{ public_path($informe_us->path1_indicacion) }}" alt="" style="width: 400px;height: 270px;">
+                                            <img src="{{ public_path($informe_us->path1_indicacion) }}" alt="" style="width: 700px;height: 270px;">
                                         @endif
 
                                     </td>
@@ -80,7 +80,7 @@
                                     <td style="text-align: center; width: 680px;height: 275px;">
 
                                         @if ($informe_us->path2_indicacion)
-                                            <img src="{{ public_path($informe_us->path2_indicacion) }}" alt="" style="width: 400px;height: 270px;">
+                                            <img src="{{ public_path($informe_us->path2_indicacion) }}" alt="" style="width: 700px;height: 270px;">
                                         @endif
 
                                     </td>
@@ -114,7 +114,7 @@
                                     <td style="text-align: center; width: 680px;height: 275px;">
 
                                         @if ($informe_us->path3_indicacion)
-                                            <img src="{{ public_path($informe_us->path3_indicacion) }}" alt="" style="width: 400px;height: 270px;">
+                                            <img src="{{ public_path($informe_us->path3_indicacion) }}" alt="" style="width: 700px;height: 270px;">
                                         @endif
 
                                     </td>
@@ -123,7 +123,7 @@
                                     <td style="text-align: center; width: 680px;height: 275px;">
 
                                         @if ($informe_us->path4_indicacion)
-                                            <img src="{{ public_path($informe_us->path4_indicacion) }}" alt="" style="width: 400px;height: 270px;">
+                                            <img src="{{ public_path($informe_us->path4_indicacion) }}" alt="" style="width: 700px;height: 270px;">
                                         @endif
 
                                     </td>

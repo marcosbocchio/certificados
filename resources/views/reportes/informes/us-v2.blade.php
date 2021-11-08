@@ -275,7 +275,7 @@ footer {
                                     <td style="text-align: center; width: 680px;height: 275px;">
 
                                         @if ($informe_us->path1_calibracion)
-                                            <img src="{{ public_path($informe_us->path1_calibracion) }}" alt="" style="width: 400px;height: 270px;">
+                                            <img src="{{ public_path($informe_us->path1_calibracion) }}" alt="" style="width: 700px;height: 270px;">
                                         @endif
 
                                     </td>
@@ -285,7 +285,7 @@ footer {
                                     <td style="text-align: center; width: 680px;height: 275px;">
 
                                         @if ($informe_us->path2_calibracion)
-                                            <img src="{{ public_path($informe_us->path2_calibracion) }}" alt="" style="width: 400px;height: 270px;">
+                                            <img src="{{ public_path($informe_us->path2_calibracion) }}" alt="" style="width: 700px;height: 270px;">
                                         @endif
 
                                     </td>
@@ -319,7 +319,7 @@ footer {
                                     <td style="text-align: center; width: 680px;height: 275px;">
 
                                         @if ($informe_us->path3_calibracion)
-                                            <img src="{{ public_path($informe_us->path3_calibracion) }}" alt="" style="width: 400px;height: 270px;">
+                                            <img src="{{ public_path($informe_us->path3_calibracion) }}" alt="" style="width: 700px;height: 270px;">
                                         @endif
 
                                     </td>
@@ -328,7 +328,7 @@ footer {
                                     <td style="text-align: center; width: 680px;height: 275px;">
 
                                         @if ($informe_us->path4_calibracion)
-                                            <img src="{{ public_path($informe_us->path4_calibracion) }}" alt="" style="width: 400px;height: 270px;">
+                                            <img src="{{ public_path($informe_us->path4_calibracion) }}" alt="" style="width: 700px;height: 270px;">
                                         @endif
 
                                     </td>
