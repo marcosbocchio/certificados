@@ -102,63 +102,91 @@
             @endwhile
     @endforeach
 
-    @if($informe_us->path1_indicacion || $informe_us->path2_indicacion || $informe_us->path3_indicacion || $informe_us->path3_indicacion)
-        <div class="page-break"></div>
+    @if( $informe_us->path1_calibracion || $informe_us->path2_calibracion)
+        <div class="page_break"></div>
         <table width="100%">
             <tbody>
                 <tr>
                     <td style="border: 1px solid #000;background:#D8D8D8;text-align: center;" >
-                IMAGENES INDICACIONES
+                   IMAGENES CALIBRACIONES
                 </td>
                 </tr>
             </tbody>
         </table>
-        <table style="text-align: center;" width="100%">
-                <tbody>
-                    <tr>
-                        <td>
-                            <table>
-                                <tbody>
-                                    <tr>
-                                        <td style="text-align: center; width: 340px;height: 190px;">
+        <table style="text-align: center;margin-top: 5px;" width="100%" >
+            <tbody>
+                <tr>
+                    <td>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td style="text-align: center; width: 680px;height: 275px;">
 
-                                            @if ($informe_us->path1_indicacion)
-                                                <img src="{{ public_path($informe_us->path1_indicacion) }}" alt="" style="height: 180px; width: 263px;">
-                                            @endif
+                                        @if ($informe_us->path1_calibracion)
+                                            <img src="{{ public_path($informe_us->path1_calibracion) }}" alt="" style="width: 400px;height: 270px;">
+                                        @endif
 
-                                        </td>
+                                    </td>
 
-                                        <td style="text-align: center; width: 340px;height: 190px;">
+                                </tr>
+                                <tr>
+                                    <td style="text-align: center; width: 680px;height: 275px;">
 
-                                            @if ($informe_us->path2_indicacion)
-                                                <img src="{{ public_path($informe_us->path2_indicacion) }}" alt="" style="height: 180px; width: 263px;">
-                                            @endif
+                                        @if ($informe_us->path2_calibracion)
+                                            <img src="{{ public_path($informe_us->path2_calibracion) }}" alt="" style="width: 400px;height: 270px;">
+                                        @endif
 
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: center; width: 340px;height: 190px;">
-
-                                            @if ($informe_us->path3_indicacion)
-                                                <img src="{{ public_path($informe_us->path3_indicacion) }}" alt="" style="height: 180px; width: 263px;">
-                                            @endif
-
-                                        </td>
-
-                                        <td style="text-align: center; width: 340px;height: 190px;">
-
-                                            @if ($informe_us->path4_indicacion)
-                                                <img src="{{ public_path($informe_us->path4_indicacion) }}" alt="" style="height: 180px; width: 263px;">
-                                            @endif
-
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     @endif
 
+    @if($informe_us->path3_calibracion || $informe_us->path4_calibracion)
+        <div class="page_break"></div>
+        <table width="100%">
+            <tbody>
+                <tr>
+                    <td style="border: 1px solid #000;background:#D8D8D8;text-align: center;" >
+                   IMAGENES CALIBRACIONES
+                </td>
+                </tr>
+            </tbody>
+        </table>
+        <table style="text-align: center;margin-top: 5px;" width="100%" >
+            <tbody>
+                <tr>
+                    <td>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td style="text-align: center; width: 680px;height: 275px;">
+
+                                        @if ($informe_us->path3_calibracion)
+                                            <img src="{{ public_path($informe_us->path3_calibracion) }}" alt="" style="width: 400px;height: 270px;">
+                                        @endif
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: center; width: 680px;height: 275px;">
+
+                                        @if ($informe_us->path4_calibracion)
+                                            <img src="{{ public_path($informe_us->path4_calibracion) }}" alt="" style="width: 400px;height: 270px;">
+                                        @endif
+
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    @endif
 
