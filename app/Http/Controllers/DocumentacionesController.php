@@ -194,6 +194,7 @@ class DocumentacionesController extends Controller
 
     public function getDocOtOperarios($ot_id,$user_id){
 
+        /*
         $documentacion = DB::select('select
                                     documentaciones.id,
                                     documentaciones.tipo,
@@ -206,8 +207,7 @@ class DocumentacionesController extends Controller
                                     users.name
 
                                     from usuario_documentaciones
-                                    inner join documentaciones on
-                                    documentaciones.id = usuario_documentaciones.documentacion_id
+                                    inner join documentaciones on documentaciones.id = usuario_documentaciones.documentacion_id
                                     inner join users on users.id = usuario_documentaciones.user_id
                                     inner join ot_operarios on ot_operarios.user_id = users.id
                                     where
@@ -218,15 +218,43 @@ class DocumentacionesController extends Controller
                                     ot_servicios.ot_id = ot_operarios.ot_id )) and
                                     ot_operarios.ot_id =:ot_id and
                                     ot_operarios.user_id=:user_id',['user_id' => $user_id, 'ot_id' =>$ot_id]);
+        */
+        DB::enableQueryLog();
 
-        $documentacion = Collection::make($documentacion);
+        $documentacion = Documentaciones::selectRaw('documentaciones.id,
+                                                     documentaciones.tipo,
+                                                     documentaciones.descripcion,
+                                                     documentaciones.titulo as titulo,
+                                                     documentaciones.path,
+                                                     usuario_documentaciones.user_id,
+                                                     documentaciones.metodo_ensayo_id,
+                                                     documentaciones.fecha_caducidad,
+                                                     users.name')
+                                        ->join('usuario_documentaciones','usuario_documentaciones.documentacion_id','=','documentaciones.id')
+                                        ->join('users','users.id','=','usuario_documentaciones.user_id')
+                                        ->join('ot_operarios','ot_operarios.user_id','=','users.id')
+                                        ->whereRaw('(documentaciones.metodo_ensayo_id is null or documentaciones.metodo_ensayo_id in (Select servicios.metodo_ensayo_id from servicios
+                                                    inner join ot_servicios on
+                                                    ot_servicios.servicio_id = servicios.id
+                                                    where
+                                                    ot_servicios.ot_id = ot_operarios.ot_id )) and
+                                                    ot_operarios.ot_id = ? and
+                                                    ot_operarios.user_id= ?',array($ot_id,$user_id))
+                                        ->get();
 
+       // $documentacion = Collection::make($documentacion);
+       $queries = DB::getQueryLog();
+       foreach($queries as $i=>$query)
+       {
+           Log::debug("Query $i: " . json_encode($query));
+       }
         return $documentacion;
 
     }
 
     public function getDocVehiculo($vehiculo_id){
 
+        /*
         $documentacion = DB::select('select
                                         documentaciones.id,
                                         documentaciones.tipo,
@@ -242,8 +270,22 @@ class DocumentacionesController extends Controller
                                         inner join vehiculos on vehiculos.id = vehiculo_documentaciones.vehiculo_id
                                         where
                                         vehiculos.id=:vehiculo_id',['vehiculo_id' => $vehiculo_id]);
+        */
 
-        $documentacion = Collection::make($documentacion);
+        $documentacion = Documentaciones::selectRaw('documentaciones.id,
+                                                    documentaciones.tipo,
+                                                    documentaciones.descripcion,
+                                                    documentaciones.titulo as titulo,
+                                                    documentaciones.path,
+                                                    vehiculo_documentaciones.vehiculo_id,
+                                                    documentaciones.metodo_ensayo_id,
+                                                    documentaciones.fecha_caducidad')
+                                                  ->join('vehiculo_documentaciones','documentaciones.id','=','vehiculo_documentaciones.documentacion_id')
+                                                  ->join('vehiculos','vehiculos.id','=','vehiculo_documentaciones.vehiculo_id')
+                                                  ->where('vehiculos.id',$vehiculo_id)
+                                                  ->get();
+
+       // $documentacion = Collection::make($documentacion);
 
         return $documentacion;
 
@@ -340,7 +382,7 @@ class DocumentacionesController extends Controller
     {
         $documento = $this->documentaciones->find($id);
 
-        $usuario_documento = new UsuarioDocumentaciones;
+   /*     $usuario_documento = new UsuarioDocumentaciones;
 
         $usuario_documento->where('documentacion_id',$id)->delete();
 
@@ -355,7 +397,7 @@ class DocumentacionesController extends Controller
         $vehiculo_documento = new VehiculoDocumentaciones;
 
         $vehiculo_documento->where('documentacion_id',$id)->delete();
-
+*/
         $documento->delete();
 
     }

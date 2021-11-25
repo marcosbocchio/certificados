@@ -4,9 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\UsuarioDocumentaciones;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Documentaciones extends Model
 {
+    // use SoftDeletes;
+
     protected $table= 'documentaciones';
 
     public function metodoEnsayo(){
