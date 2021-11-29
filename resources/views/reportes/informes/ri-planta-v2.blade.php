@@ -68,7 +68,7 @@ footer {
                             </tr>
                             <tr>
                                 <td style="font-size: 10px; " class="bordered-td"><b>ME: </b>Escoria Aislada</td>
-                                <td style="font-size: 10px; " class="bordered-td"><b>MEL: </b>n Lineal</td>
+                                <td style="font-size: 10px; " class="bordered-td"><b>MEL: </b>Escoria Lineal</td>
                                 <td style="font-size: 10px; " class="bordered-td"><b>P: </b>Poros</td>
                                 <td style="font-size: 10px; " class="bordered-td"><b>NP: </b>Nido de Poros</td>
                                 <td style="font-size: 10px; " class="bordered-td"><b>PV: </b>Poro Vermicular</td>
