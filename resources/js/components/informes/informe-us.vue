@@ -839,8 +839,28 @@
                                                             <div v-if="p === 1 && g === 1">
                                                                 &nbsp;
                                                             </div>
+                                                            <div v-else-if="p === 1 && g === parseInt(Tabla_me[indexPosTabla_me].cantidad_generatrices_me) + 2">
+                                                                 ACCESORIO
+                                                            </div>
+                                                            <div v-else-if="g === parseInt(Tabla_me[indexPosTabla_me].cantidad_generatrices_me) + 2">
+                                                                 <div v-if="indexPosPos == p && indexPosGeneratriz == g">
+                                                                    <v-select v-model="Tabla_me[indexPosTabla_me].mediciones[g-1][p-1]" label="codigo" :options="accesorios_us"></v-select>
+                                                                 </div>
+                                                                 <div v-else-if="Tabla_me[indexPosTabla_me].mediciones[g-1][p-1]">
+                                                                    {{ Tabla_me[indexPosTabla_me].mediciones[g-1][p-1].codigo }}
+                                                                 </div>
+                                                                 <div v-else>
+                                                                     &nbsp;
+                                                                 </div>
+
+                                                            </div>
                                                             <div v-else-if="indexPosPos == p && indexPosGeneratriz == g">
-                                                                <input style="width:40px;" type="number" v-model="Tabla_me[indexPosTabla_me].mediciones[g-1][p-1]" maxlength="4" :ref="'refInputMediciones'" @keyup.enter="getFocus(g,Tabla_me[indexPosTabla_me].cantidad_generatrices_me,p,Tabla_me[indexPosTabla_me].cantidad_posiciones_me)" step="0.1" max="99.9" :disabled="p === 1  && g === 1">
+                                                                 <div v-if="p === 1 || g === 1">
+                                                                    <input style="width:40px;" v-model="Tabla_me[indexPosTabla_me].mediciones[g-1][p-1]" maxlength="10" :ref="'refInputMediciones'" @keyup.enter="getFocus(g,Tabla_me[indexPosTabla_me].cantidad_generatrices_me,p,Tabla_me[indexPosTabla_me].cantidad_posiciones_me)">
+                                                                 </div>
+                                                                 <div v-else>
+                                                                    <input style="width:40px;" type="number" v-model="Tabla_me[indexPosTabla_me].mediciones[g-1][p-1]" maxlength="4" :ref="'refInputMediciones'" @keyup.enter="getFocus(g,Tabla_me[indexPosTabla_me].cantidad_generatrices_me,p,Tabla_me[indexPosTabla_me].cantidad_posiciones_me)" step="0.1" max="99.9">
+                                                                 </div>
                                                             </div>
                                                             <div v-else>
 
@@ -848,7 +868,7 @@
                                                                     {{ Tabla_me[indexPosTabla_me].mediciones[g-1][p-1] }}
                                                                 </div>
                                                                 <div v-else>
-                                                                    <span style="font-style: oblique; color: cadetblue;"> {{ p-1 }}-{{generatrices[g].valor }} </span>
+                                                                    <span style="font-style: oblique; color: cadetblue;"> {{ p-1 }}-{{generatrices[g-2].valor }} </span>
                                                                 </div>
 
                                                             </div>
@@ -856,12 +876,10 @@
                                                          </td>
                                                     </tr>
                                                 </tbody>
-
                                             </table>
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -1188,6 +1206,7 @@ export default {
         indexPosPos:0,
         Tabla_me:[],
         generatrices:[],
+        accesorios_us:[],
 
         // referencias
         index_referencias:'',
@@ -1221,6 +1240,7 @@ export default {
       this.getGeneratrices();
       this.setEdit();
       this.$store.dispatch('loadModelos3d');
+      this.getAccesoriosUs();
     },
 
     mounted : function() {
@@ -1382,7 +1402,13 @@ export default {
             this.agente_acoplamientos = response.data
             });
          },
-
+         getAccesoriosUs: function(){
+            axios.defaults.baseURL = this.url ;
+            var urlRegistros = 'accesorios_us' + '?api_token=' + Laravel.user.api_token;
+            axios.get(urlRegistros).then(response =>{
+            this.accesorios_us = response.data
+            });
+         },
         getPalpadores : function(){
 
              this.$store.dispatch('loadPalpadores').then(response =>{
@@ -2143,5 +2169,4 @@ table th, table td {
 .colorearLimiteTablaUs {
     color:blue;
 }
-
 </style>
