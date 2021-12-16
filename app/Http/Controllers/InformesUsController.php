@@ -268,9 +268,8 @@ class InformesUsController extends Controller
 
       public function saveInforme_us_me($request,$informeUs){
 
-        $generatrices = Generatrices::all();
-        foreach ($request->tabla_me as $detalle_informe_us_me){
-
+        $generatrices = $request->generatrices;
+        foreach ($request->tabla_me as $detalle_informe_us_me) {
             $informe_us_me  = new InformesUsMe;
             $informe_us_me->informe_us_id = $informeUs->id;
             $informe_us_me->diametro = $detalle_informe_us_me['diametro_me'];
@@ -279,70 +278,38 @@ class InformesUsController extends Controller
             $informe_us_me->elemento = $detalle_informe_us_me['elemento_me'];
             $informe_us_me->cantidad_posiciones = $detalle_informe_us_me['cantidad_posiciones_me'];
             $informe_us_me->cantidad_generatrices = $detalle_informe_us_me['cantidad_generatrices_me'];
-
             $informe_us_me->save();
 
             $this->saveMediciones($detalle_informe_us_me['mediciones'],$informe_us_me,$generatrices);
-
         }
-
     }
 
     public function saveMediciones($mediciones,$informe_us_me,$generatrices){
 
-        $pos_gen= -1;
+        $pos_gen = 1;
         foreach ($mediciones as $medicion){
-
-            $pos_gen++;
-            $generatriz_valor = Generatrices::where('nro',$pos_gen +1)->first()->valor;
-
+            $generatriz_valor = Generatrices::where('nro',$pos_gen)->first()->valor;
             $this->saveDetalle_us_me($medicion,$informe_us_me,$generatriz_valor);
-
+            $pos_gen++;
         }
     }
 
-    public function saveDetalle_us_me($medicion,$informe_us_me,$generatriz_valor){
-
+    public function saveDetalle_us_me($medicion,$informe_us_me,$generatriz_valor) {
 
         $pos_pos= -1;
         foreach ($medicion as $item){
-
             $pos_pos++;
-
-            if($item !=''){
-
-            $detalle_us_me = new DetalleUsMe;
-
-            $detalle_us_me->informe_us_me_id = $informe_us_me->id;
-            $detalle_us_me->posicion = $pos_pos + 1;
-            $detalle_us_me->generatriz = $generatriz_valor;
-            $detalle_us_me->valor = $item;
-
-            $detalle_us_me->save();
-        }
-
+            if($item !='') {
+                $detalle_us_me = new DetalleUsMe;
+                $detalle_us_me->informe_us_me_id = $informe_us_me->id;
+                $detalle_us_me->posicion = $pos_pos + 1;
+                $detalle_us_me->generatriz = $generatriz_valor;
+                $detalle_us_me->valor = $item;
+                $detalle_us_me->save();
+            }
         }
     }
 
-
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($ot_id,$id)
     {
         $header_titulo = "Informe";
@@ -528,16 +495,4 @@ class InformesUsController extends Controller
        return $tabla_me;
     }
 
-
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

@@ -154,18 +154,16 @@ components: {
            this.editmode = false;
            this.uploadPercentage = 0;
            this.Registro = {
-
-            'ot_id' : this.otdata.id,
-            'fecha':new Date(),
-            'numero': '',
-            'obra' : this.Registro.obra,
-            'prefijo'  : '',
-            'observaciones':'',
-            'path':'',
-            'metodo_ensayos' : this.metodo_ensayo,
-            'ejecutor_ensayo' :{}
-
-         }
+                'ot_id' : this.otdata.id,
+                'fecha':new Date(),
+                'numero': '',
+                'obra' : this.Registro.obra,
+                'prefijo'  : '',
+                'observaciones':'',
+                'path':'',
+                'metodo_ensayos' : this.metodo_ensayo,
+                'ejecutor_ensayo' :{}
+            }
 
          this.getNumeroInforme();
          eventDeleteFile.$emit('delete');
@@ -213,15 +211,12 @@ components: {
 
         formatearNumero : function ( number, width )
             {
-
                 width -= number.toString().length;
                 if ( width > 0 )
                 {
                     this.Registro.numero=  new Array( width + (/\./.test( number ) ? 2 : 1) ).join( '0' ) + number;
                 }
-
             },
-
 
         storeRegistro: function(){
 
