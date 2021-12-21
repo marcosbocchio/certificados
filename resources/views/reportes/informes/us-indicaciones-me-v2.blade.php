@@ -19,7 +19,7 @@
             <table>
                 <tbody>
                     <tr>
-                         <td style="font-size: 14px;height:20px;"><span style="margin-left: 22px;">Elemento : {{ strtoupper($informe_us_me->elemento_me)}}</span></td>
+                        <td style="font-size: 14px;height:20px;"><span style="margin-left: 22px;">Elemento : {{ strtoupper($informe_us_me->elemento_me)}}</span></td>
                     </tr>
                     @if ($informe_us_me->umbral_me)
                         <tr>
