@@ -20,14 +20,14 @@ use App\CalibracionesUs;
 use App\DetalleUsPaUs;
 use App\DetallesUsPaUsReferencias;
 use App\InformesUsMe;
+use App\AccesoriosUs;
 use App\DetalleUsMe;
-use App\Generatrices;
 use App\Ots;
 use \stdClass;
 use App\OtTipoSoldaduras;
 use App\AgenteAcoplamientos;
 use Exception as Exception;
-
+use Illuminate\Support\Facades\Log;
 
 class InformesUsController extends Controller
 {
@@ -51,23 +51,7 @@ class InformesUsController extends Controller
                                                  'header_titulo',
                                                  'header_descripcion'));
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
 
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(InformeUsRequest $request,$EsRevision = false)
     {
         $informe  = new Informe;
@@ -83,10 +67,12 @@ class InformesUsController extends Controller
 
           if ($tecnica->codigo == 'ME'){
 
-              $this->saveInforme_us_me($request,$informeUs);
+            $this->saveInforme_us_me($request,$informeUs);
+
           }else{
 
-              $this->saveDetalle_us_pa_us($request,$informeUs);
+            $this->saveDetalle_us_pa_us($request,$informeUs);
+
           }
 
           DB::commit();
@@ -127,8 +113,6 @@ class InformesUsController extends Controller
             DetalleUsPaUs::where('informe_us_id',$informeUs->id)->delete();
             $this->deleteInforme_us_me($informeUs->id);
 
-
-
             if ($tecnica->codigo == 'ME'){
 
                 $this->saveInforme_us_me($request,$informeUs);
@@ -163,7 +147,6 @@ class InformesUsController extends Controller
 
     public function saveInformeUs($request,$informe,$informeUs){
 
-
         $informeUs->informe_id = $informe->id;
         $informeUs->estado_superficie_id = $request->estado_superficie['id'];
         $informeUs->encoder = $request->encoder;
@@ -176,7 +159,6 @@ class InformesUsController extends Controller
         $informeUs->path2_indicacion = $request->path2_indicacion;
         $informeUs->path3_indicacion = $request->path3_indicacion;
         $informeUs->path4_indicacion = $request->path4_indicacion;
-
         $informeUs->save();
 
         return $informeUs;
@@ -268,7 +250,6 @@ class InformesUsController extends Controller
 
       public function saveInforme_us_me($request,$informeUs){
 
-        $generatrices = $request->generatrices;
         foreach ($request->tabla_me as $detalle_informe_us_me) {
             $informe_us_me  = new InformesUsMe;
             $informe_us_me->informe_us_id = $informeUs->id;
@@ -278,36 +259,38 @@ class InformesUsController extends Controller
             $informe_us_me->elemento = $detalle_informe_us_me['elemento_me'];
             $informe_us_me->cantidad_posiciones = $detalle_informe_us_me['cantidad_posiciones_me'];
             $informe_us_me->cantidad_generatrices = $detalle_informe_us_me['cantidad_generatrices_me'];
+            $informe_us_me->cantidad_generatrices_linea_pdf = $detalle_informe_us_me['cantidad_generatrices_linea_pdf_me'];
             $informe_us_me->save();
 
-            $this->saveMediciones($detalle_informe_us_me['mediciones'],$informe_us_me,$generatrices);
+            $this->saveMediciones($informe_us_me->cantidad_generatrices,$informe_us_me->cantidad_posiciones,$detalle_informe_us_me['mediciones'],$informe_us_me);
         }
     }
 
-    public function saveMediciones($mediciones,$informe_us_me,$generatrices){
+    public function saveMediciones($cantidad_generatrices,$cantidad_posiciones,$mediciones,$informe_us_me){
 
-        $pos_gen = 1;
-        foreach ($mediciones as $medicion){
-            $generatriz_valor = Generatrices::where('nro',$pos_gen)->first()->valor;
-            $this->saveDetalle_us_me($medicion,$informe_us_me,$generatriz_valor);
-            $pos_gen++;
-        }
-    }
+        for ($x=1; $x <= $cantidad_generatrices + 1; $x++) {
 
-    public function saveDetalle_us_me($medicion,$informe_us_me,$generatriz_valor) {
+            for ($y=1; $y <= $cantidad_posiciones; $y++) {
 
-        $pos_pos= -1;
-        foreach ($medicion as $item){
-            $pos_pos++;
-            if($item !='') {
                 $detalle_us_me = new DetalleUsMe;
+                $generatriz = $mediciones[$x][0];
+                $posicion = $mediciones[0][$y];
+                $valor = $mediciones[$x][$y];
+
                 $detalle_us_me->informe_us_me_id = $informe_us_me->id;
-                $detalle_us_me->posicion = $pos_pos + 1;
-                $detalle_us_me->generatriz = $generatriz_valor;
-                $detalle_us_me->valor = $item;
+                $detalle_us_me->posicion = $posicion;
+                $detalle_us_me->generatriz = $generatriz;
+
+                if ($x <= $cantidad_generatrices) {
+                    $detalle_us_me->valor = $valor;
+                } else if ($valor != null){
+                    $detalle_us_me->accesorio_us_id = $valor['id'];
+                }
                 $detalle_us_me->save();
+
             }
         }
+
     }
 
     public function edit($ot_id,$id)
@@ -401,49 +384,45 @@ class InformesUsController extends Controller
                             ->leftjoin('detalles_us_pa_us_referencias','detalles_us_pa_us_referencias.id','=','detalle_us_pa_us.detalle_us_pa_us_referencia_id')
                             ->where('informe_us_id',$informe_us_id)
                             ->selectRaw('detalle_us_pa_us.elemento as elemento_us_pa,
-                                      detalle_us_pa_us.diametro as diametro_us_pa,
-                                      detalle_us_pa_us.nro_indicacion as nro_indicacion_us_pa,
-                                      detalle_us_pa_us.posicion_examen as posicion_examen_us_pa,
-                                      detalle_us_pa_us.angulo_incidencia as angulo_incidencia_us_pa,
-                                      detalle_us_pa_us.camino_sonico as camino_sonico_us_pa,
-                                      detalle_us_pa_us.x as x_us_pa,
-                                      detalle_us_pa_us.y as y_us_pa,
-                                      detalle_us_pa_us.z as z_us_pa,
-                                      detalle_us_pa_us.longitud as longitud_us_pa ,
-                                      detalle_us_pa_us.nivel_registro as nivel_registro_us_pa,
-                                      detalle_us_pa_us.aceptable_sn as aceptable_sn_us_pa,
-                                      detalles_us_pa_us_referencias.descripcion as observaciones,
-                                      detalles_us_pa_us_referencias.path1 as path1,
-                                      detalles_us_pa_us_referencias.path2 as path2,
-                                      detalles_us_pa_us_referencias.path3 as path3,
-                                      detalles_us_pa_us_referencias.path4 as path4'
-
-                            )
-
+                                        detalle_us_pa_us.diametro as diametro_us_pa,
+                                        detalle_us_pa_us.nro_indicacion as nro_indicacion_us_pa,
+                                        detalle_us_pa_us.posicion_examen as posicion_examen_us_pa,
+                                        detalle_us_pa_us.angulo_incidencia as angulo_incidencia_us_pa,
+                                        detalle_us_pa_us.camino_sonico as camino_sonico_us_pa,
+                                        detalle_us_pa_us.x as x_us_pa,
+                                        detalle_us_pa_us.y as y_us_pa,
+                                        detalle_us_pa_us.z as z_us_pa,
+                                        detalle_us_pa_us.longitud as longitud_us_pa ,
+                                        detalle_us_pa_us.nivel_registro as nivel_registro_us_pa,
+                                        detalle_us_pa_us.aceptable_sn as aceptable_sn_us_pa,
+                                        detalles_us_pa_us_referencias.descripcion as observaciones,
+                                        detalles_us_pa_us_referencias.path1 as path1,
+                                        detalles_us_pa_us_referencias.path2 as path2,
+                                        detalles_us_pa_us_referencias.path3 as path3,
+                                        detalles_us_pa_us_referencias.path4 as path4')
                             ->get();
 
         return $tabla_us_pa;
 
     }
 
-
     public function getTabla_me($informe_us_id){
 
-        $generatrices = Generatrices::all();
-
+        $obj = new stdClass();
         $tabla_me = DB::table('informes_us_me')
                         ->where('informe_us_id',$informe_us_id)
                         ->selectRaw('informes_us_me.id,
                                     informes_us_me.cantidad_generatrices as cantidad_generatrices_me,
                                     informes_us_me.cantidad_posiciones as cantidad_posiciones_me,
+                                    informes_us_me.cantidad_generatrices_linea_pdf as cantidad_generatrices_linea_pdf_me,
                                     informes_us_me.diametro as diametro_me,
                                     informes_us_me.elemento as elemento_me,
                                     informes_us_me.umbral as umbral_me,
-                                    informes_us_me.espesor_minimo as espesor_minimo_me
-                                    ')
+                                    informes_us_me.espesor_minimo as espesor_minimo_me')
                         ->get();
 
-        foreach ( $tabla_me as $generatriz) {
+
+        foreach ($tabla_me as $generatriz) {
 
             $obj = new stdClass();
             $cant_g = (int) $generatriz->cantidad_generatrices_me;
@@ -451,11 +430,11 @@ class InformesUsController extends Controller
 
             $mediciones = array();
 
-            for ($g=0; $g < $cant_g ; $g++) {
+            for ($g=0; $g < $cant_g + 2 ; $g++) {
 
 
                 $posiciones = array();
-                for ($p=0; $p < $cant_p ; $p++){
+                for ($p=0; $p < $cant_p + 1; $p++){
 
                   array_push($posiciones,'');
 
@@ -470,29 +449,43 @@ class InformesUsController extends Controller
 
         }
 
-        foreach ( $tabla_me as $generatriz) {
+        foreach ($tabla_me as $generatriz) {
 
             $detalle_us_me = DetalleUsMe::where('informe_us_me_id',$generatriz->id)->get();
+            $cant_g = (int) $generatriz->cantidad_generatrices_me;
+            $cant_p = (int) $generatriz->cantidad_posiciones_me;
 
-            foreach ( $detalle_us_me as $item) {
+            for ($y=0; $y < $cant_g * $cant_p ; $y+=$cant_p) {
+               $generatriz->mediciones[$y/$cant_p + 1][0] = $detalle_us_me[$y]->generatriz;
+            }
 
-                $nro = 0;
+            $generatriz->mediciones[$cant_g + 1][0] = 'ACCESORIO';
 
-                foreach($generatrices as $item_generatriz){
+            for ($y=0; $y < $cant_p; $y++) {
+               $generatriz->mediciones[0][$y +1 ] = $detalle_us_me[$y]->posicion;
+            }
 
-                    if($item_generatriz['valor'] == $item['generatriz']){
+            for ($y=$cant_g * $cant_p ; $y < ($cant_g * $cant_p) + $cant_p;$y++) {
 
-                        $nro = $item_generatriz['nro'];
+                $accesorio = AccesoriosUs::find($detalle_us_me[$y]->accesorio_us_id);
+                $generatriz->mediciones[$cant_g + 1][($y - ($cant_g * $cant_p)) + 1] = $accesorio ? $accesorio : null;
+            }
 
-                    }
-                }
+            for ($y= 0; $y < (count($detalle_us_me) - $cant_p); $y++) {
 
-
-                $generatriz->mediciones[$nro-1][$item['posicion']-1] = $item['valor'];
+                $pos_g = (int) ceil(($y + 1)/$cant_p);
+                $pos_p = (int) abs($y + 1 - ($cant_p * ($pos_g - 1)));
+                $generatriz->mediciones[$pos_g][$pos_p] = $detalle_us_me[$y]->valor ? $detalle_us_me[$y]->valor : "";
 
             }
+
         }
        return $tabla_me;
+    }
+
+    public function formarMediciones() {
+
+
     }
 
 }

@@ -454,7 +454,6 @@
                                                     <td>
                                                         <a  @click="removeCalibraciones(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a>
                                                     </td>
-
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -734,6 +733,13 @@
                                     </div>
                                 </div>
 
+                               <div class="col-md-12">
+                                    <div class="form-group" >
+                                        <label for="cantidad_generatrices_linea_pdf_me" title="Cantidad Generatrices por linea en informe">Generatrices por Linea en pdf *</label>
+                                        <input type="number" v-model="cantidad_generatrices_linea_pdf_me" class="form-control" id="cantidad_generatrices_linea_pdf_me" min="1">
+                                    </div>
+                                </div>
+
                                 <div class="clearfix"></div>
 
                                 <div class="col-md-1">
@@ -752,12 +758,13 @@
                                         <table class="table table-hover table-striped table-bordered table-condensed">
                                             <thead>
                                                 <tr>
-                                                    <th  class="col-lg-3">Elemento</th>
+                                                    <th  class="col-lg-2">Elemento</th>
                                                     <th  class="col-lg-1">Nominal</th>
                                                     <th  class="col-lg-1">Mínimo</th>
                                                     <th  class="col-lg-2">ø</th>
                                                     <th  class="col-lg-1">Pos.</th>
                                                     <th  class="col-lg-1">Gen.</th>
+                                                    <th  class="col-lg-1">G.L.P.</th>
                                                     <th  class="col-lg-1">&nbsp;</th>
                                                 </tr>
                                             </thead>
@@ -769,6 +776,7 @@
                                                     <td>{{ item.diametro_me }}</td>
                                                     <td>{{ item.cantidad_posiciones_me}}</td>
                                                     <td>{{ item.cantidad_generatrices_me}}</td>
+                                                    <td>{{ item.cantidad_generatrices_linea_pdf_me}}</td>
                                                     <td><span class="fa fa-minus-circle" @click="removeTabla_me(k)"></span></td>
                                                 </tr>
                                             </tbody>
@@ -778,59 +786,11 @@
                             </div>
 
                             <div class="col-lg-7">
-
-                                <!-- tabla mediciones -->
-<!--                                 <div v-if="Tabla_me[indexPosTabla_me]">
-                                    <div class="col-lg-12">
-                                        <div class="table-responsive">
-                                            <table class="table table-hover table-bordered" style="display: block;max-height: 500px;border-bottom: none;border-right: none;">
-                                                <thead>
-                                                    <tr>
-                                                     <th bgcolor="#bee5eb">&nbsp;</th>
-                                                     <th bgcolor="#bee5eb"  v-for="(h) in parseInt(Tabla_me[indexPosTabla_me].cantidad_generatrices_me)" :key="h" >{{ generatrices[h-1].valor}}</th>
-
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr v-for="(p) in parseInt(Tabla_me[indexPosTabla_me].cantidad_posiciones_me)" :key="p" @click="selectPosPos(p)">
-                                                        <td style="min-width:60px;min-height:60px" bgcolor="#bee5eb"><strong> {{ p }} </strong> </td>
-                                                        <td style="min-width:60px;min-height:60px" v-for="(g) in parseInt(Tabla_me[indexPosTabla_me].cantidad_generatrices_me)" :key="g" @click="selectPosGeneratriz(g)"  >
-
-                                                            <div v-if="indexPosPos == p && indexPosGeneratriz == g">
-                                                                <input style="width:40px;" type="number" v-model="Tabla_me[indexPosTabla_me].mediciones[g-1][p-1]" maxlength="4" :ref="'refInputMediciones'" @keyup.enter="getFocus(g,Tabla_me[indexPosTabla_me].cantidad_generatrices_me,p,Tabla_me[indexPosTabla_me].cantidad_posiciones_me)" step="0.1" max="99.9">
-                                                            </div>
-                                                            <div v-else>
-
-                                                                <div v-if="Tabla_me[indexPosTabla_me].mediciones[g-1][p-1] !=''">
-                                                                    {{ Tabla_me[indexPosTabla_me].mediciones[g-1][p-1] }}
-                                                                </div>
-                                                                <div v-else>
-                                                                    <span style="font-style: oblique; color: cadetblue;"> {{ p }}-{{generatrices[g-1].valor }} </span>
-                                                                </div>
-
-                                                            </div>
-
-                                                         </td>
-                                                    </tr>
-                                                </tbody>
-
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div> -->
                                 <!-- tabla mediciones 2-->
                                 <div v-if="Tabla_me[indexPosTabla_me]">
                                     <div class="col-lg-12">
                                         <div class="table-responsive">
                                             <table class="table table-hover table-bordered" style="display: block;max-height: 500px;border-bottom: none;border-right: none;">
-<!--                                             <thead>
-                                                    <tr>
-                                                        <th bgcolor="#bee5eb">&nbsp;</th>
-                                                        <th bgcolor="#bee5eb"  v-for="(h) in parseInt(Tabla_me[indexPosTabla_me].cantidad_generatrices_me + 2)" :key="h" >{{ generatrices[h].valor}}</th>
-
-                                                    </tr>
-
-                                                </thead> -->
                                                 <tbody>
                                                     <tr v-for="(p) in parseInt(Tabla_me[indexPosTabla_me].cantidad_posiciones_me) + 1" :key="p" @click="selectPosPos(p)" >
 
@@ -1193,6 +1153,7 @@ export default {
         diametro_me:'',
         cantidad_posiciones_me:'',
         cantidad_generatrices_me:'',
+        cantidad_generatrices_linea_pdf_me: 20,
 
         tecnicas:[],
         estados_superficies:[],
@@ -1839,6 +1800,11 @@ export default {
                 return ;
             }
 
+            if (!this.cantidad_generatrices_linea_pdf_me){
+                toastr.error('El campo generatrices por linea en pdf es obligatorio');
+                return ;
+            }
+
             if (this.cantidad_generatrices_me < 1 || this.cantidad_generatrices_me > this.generatrices.length) {
                 toastr.error('La cantidad de generatrices ingresadas no debe ser mayor a las registradas (' + this.generatrices.length + ')');
                 return ;
@@ -1850,19 +1816,21 @@ export default {
               console.log(g)
               let index_generatriz = this.generatrices.findIndex(e => e.nro == g)
               mediciones[g][0] = (g > 0) ? this.generatrices[index_generatriz].valor : '';
-              for (let p = 1; p <= parseInt(this.cantidad_posiciones_me) + 1; p++ ) {
+              for (let p = 1; p < parseInt(this.cantidad_posiciones_me) + 1; p++ ) {
                  mediciones[g][p] = (g > 0) ? '' : p;
               }
             }
+            mediciones[mediciones.length - 1][0] = 'ACCESORIO'
 
             this.Tabla_me.push({
-                elemento_me:               this.elemento_me,
-                umbral_me:                 this.umbral_me,
-                espesor_minimo_me:         this.espesor_minimo_me,
-                diametro_me:               this.diametro_me.diametro,
-                cantidad_posiciones_me  :  this.cantidad_posiciones_me,
-                cantidad_generatrices_me:  this.cantidad_generatrices_me,
-                mediciones :               mediciones,
+                elemento_me:                          this.elemento_me,
+                umbral_me:                            this.umbral_me,
+                espesor_minimo_me:                    this.espesor_minimo_me,
+                diametro_me:                          this.diametro_me.diametro,
+                cantidad_posiciones_me  :             this.cantidad_posiciones_me,
+                cantidad_generatrices_me:             this.cantidad_generatrices_me,
+                cantidad_generatrices_linea_pdf_me :  this.cantidad_generatrices_linea_pdf_me,
+                mediciones :                          mediciones,
             });
         },
 
@@ -2019,7 +1987,6 @@ export default {
                 'calibraciones'   :this.calibraciones,
                 'tabla_us_pa'     :this.Tabla_us_pa,
                 'tabla_me'        :this.Tabla_me,
-                'generatrices'    :this.generatrices,
                 'TablaModelos3d' :this.TablaModelos3d,
 
         }}
@@ -2097,7 +2064,6 @@ export default {
                 'calibraciones'   :this.calibraciones,
                 'tabla_us_pa'     :this.Tabla_us_pa,
                 'tabla_me'        :this.Tabla_me,
-                'generatrices'    :this.generatrices,
                 'TablaModelos3d' :this.TablaModelos3d,
 
           }}
