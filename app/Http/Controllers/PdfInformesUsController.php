@@ -61,7 +61,9 @@ class PdfInformesUsController extends Controller
          $informe_modelos_3d = (new \App\Http\Controllers\InformeModelos3dController)->getInformeModelos3d($id);
 
          $generatrices = Generatrices::all();
-         $informes_us_me = InformesUsMe::where('informe_us_id',$informe_us->id)->with('detalle_us_me')->get();
+//       $informes_us_me = InformesUsMe::where('informe_us_id',$informe_us->id)->with('detalle_us_me')->get();
+        $informes_us_me = (new \App\Http\Controllers\InformesUsController)->getTabla_me($informe_us->id);
+//       dd($informes_us_me);
          $indicaciones_us_pa = DetalleUsPaUs::where('informe_us_id',$informe_us->id)->get();
 
          $detalles = DetalleUsPaUs::with('referencia')
