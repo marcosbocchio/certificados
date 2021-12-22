@@ -15,7 +15,7 @@
             @else
                 <td style="font-size: 12px;"><span class="datosHead"></span>{{$ot->obra}}</td>
             @endif
-            <td style="font-size: 12px;"><span class="datosHead"><span class="datosHead"></span>{{$planta->codigo}}</td>
+            <td style="font-size: 12px;"><span class="datosHead"><span class="datosHead"></span>{{$planta ? $planta->codigo : 'N/A'}}</td>
             <td style="font-size: 12px;"><span class="datosHead"><span class="datosHead"></span>{{$ot->numero}}</td>
         </tr>
     </tbody>
