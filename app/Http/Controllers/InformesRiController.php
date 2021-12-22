@@ -31,6 +31,8 @@ use \stdClass;
 use App\OtTipoSoldaduras;
 use Illuminate\Support\Facades\Log;
 use App\Juntas;
+use App\Tramos;
+use App\Perfil;
 use App\PasadasJunta;
 use App\Posicion;
 use App\DefectosPosicion;
@@ -94,6 +96,7 @@ class InformesRiController extends Controller
           $informe = (new \App\Http\Controllers\InformesController)->saveInforme($request,$informe,$EsRevision);
           $this->saveInformeRi($request,$informe,$informeRi);
           $this->saveDetalle($request,$informeRi);
+          $this->saveTramos($request,$informeRi);
 
           DB::commit();
 
@@ -165,6 +168,7 @@ class InformesRiController extends Controller
         $informe_ejecutor_ensayo =(new OtOperariosController())->getEjecutorEnsayo($informe->ejecutor_ensayo_id);
         $informe_detalle = $this->getDetalle($informe_ri->id);
         $informe_pasada_juntas = $this->getPasadasJuntas($informe_ri->id);
+        $informe_tramos = $this->getTramos($informe_ri->id);
 
         $informe_modelos_3d = (new \App\Http\Controllers\InformeModelos3dController)->getInformeModelos3d($id);
 
@@ -191,6 +195,7 @@ class InformesRiController extends Controller
                                                  'informe_norma_ensayo',
                                                  'informe_ejecutor_ensayo',
                                                  'informe_detalle',
+                                                 'informe_tramos',
                                                  'informe_pasada_juntas',
                                                  'informe_modelos_3d',
                                                  'header_titulo',
@@ -231,6 +236,19 @@ class InformesRiController extends Controller
       return $informe_detalle;
 
     }
+    public function getTramos($id){
+
+        $informe_tramo = DB::table('tramo_perfil')
+                             ->where('tramo_perfil.informes_ri_id',$id)
+                             ->selectRaw('tramo_perfil.*, (round(((espesor*25.4)/bola_comparadora),2)) as espesor_real, observaciones as observacion_tramo, espesor as espesor_tramo')
+                              ->orderBy('tramo_perfil.id','asc')
+                              ->get();
+
+        Log::debug($informe_tramo);
+
+    return $informe_tramo;
+
+  }
 
     public function getPasadasJuntas($id){
 
@@ -315,6 +333,8 @@ class InformesRiController extends Controller
                 $this->saveInformeRi($request,$informe,$informeRi);
                 $this->deleteDetalle($request,$informeRi->id);
                 $this->saveDetalle($request,$informeRi);
+                $this->deleteTramos($request,$informeRi->id);
+                $this->saveTramos($request,$informeRi);
 
             DB::commit();
 
@@ -341,7 +361,6 @@ class InformesRiController extends Controller
     }
 
     public function saveInformeRi($request,$informe,$informeRi){
-
         $informeRi->informe_id = $informe->id;
         $informeRi->reparacion_sn = $request->reparacion_sn;
         $informeRi->kv = $request->kv;
@@ -351,6 +370,7 @@ class InformesRiController extends Controller
         $informeRi->medida = $request->medida['codigo'];
         $informeRi->ici_id  = $request->ici['id'];
         $informeRi->gasoducto_sn = $request->gasoducto_sn;
+        $informeRi->perfil_sn = $request->perfil_sn;
         $informeRi->pantalla = $request->pantalla;
         $informeRi->pos_ant = $request->pos_ant;
         $informeRi->pos_pos = $request->pos_pos;
@@ -361,6 +381,24 @@ class InformesRiController extends Controller
         $informeRi->save();
 
       }
+      public function saveTramos($request,$informeRi){
+          Log::debug('tramo en request:',$request->tramos);
+          foreach ($request->tramos as $tramo){
+            try {
+                $tramox = $this->saveTramo($tramo,$informeRi);
+            }
+            catch(Exception $e){
+
+                if ($e->getCode() != '23000'){
+
+                  throw $e;
+
+                }
+
+            }
+          }
+      }
+
 
       public function saveDetalle($request,$informeRi){
 
@@ -427,6 +465,18 @@ class InformesRiController extends Controller
         return $junta;
       }
 
+      public function saveTramo($tramo,$informeRi){
+        log::debug('tramo en funcion:',$tramo);
+        $tramox =  new Tramos;
+        $tramox->informes_ri_id = $informeRi->id;
+        $tramox->bola_comparadora = $tramo['bola_comparadora'];
+        $tramox->espesor = $tramo['espesor_tramo'];
+        $tramox->tramo = $tramo['tramo'];
+        $tramox->observaciones = $tramo['observacion_tramo'];
+        $tramox->save();
+
+        return $tramox;
+      }
       public function savePosicion($detalle,$junta){
 
         $posicion = new Posicion;
@@ -501,6 +551,13 @@ class InformesRiController extends Controller
                           ir.id= ?',[$id]);
 
       }
+      public function deleteTramos($request,$id){
+
+        DB::delete('delete tramos from tramo_perfil as tramos
+                        where
+                        tramos.informes_ri_id= ?',[$id]);
+
+    }
     public function destroy($id)
     {
         //

@@ -175,6 +175,12 @@ Vue.component('table-soldadores', require('./components/abm-maestro/soldadores/t
 Vue.component('nuevo-soldadores', require('./components/abm-maestro/soldadores/nuevo-soldadores.vue').default);
 Vue.component('editar-soldadores', require('./components/abm-maestro/soldadores/editar-soldadores.vue').default);
 
+Vue.component('plantas', require('./components/abm-maestro/plantas/plantas.vue').default);
+Vue.component('table-plantas', require('./components/abm-maestro/plantas/table-plantas.vue').default);
+Vue.component('nuevo-plantas', require('./components/abm-maestro/plantas/nuevo-plantas.vue').default);
+Vue.component('editar-plantas', require('./components/abm-maestro/plantas/editar-plantas.vue').default);
+
+
 Vue.component('table-materiales', require('./components/abm-maestro/materiales/table-materiales.vue').default);
 Vue.component('nuevo-materiales', require('./components/abm-maestro/materiales/nuevo-materiales.vue').default);
 Vue.component('editar-materiales', require('./components/abm-maestro/materiales/editar-materiales.vue').default);
@@ -353,6 +359,7 @@ state: {
         colores :[],
         operadores:[],
         obra_informe:'',
+        planta_informe:'',
         operadores_empresa:[],
         clientesOperador:[],
         contratistas:[],
@@ -459,6 +466,18 @@ actions : {
             })
           })
         },
+
+        loadPlantaInformes({
+            commit},payload) {
+            axios.defaults.baseURL = store.state.url ;
+            var urlRegistros = 'informes/' + payload.informe_id + '/importado_sn/' + (payload.importado_sn ? 1 : 0) + '/get_planta/' +'?api_token=' + Laravel.user.api_token;
+            return new Promise((resolve, reject) => {
+            axios.get(urlRegistros).then((response) => {
+              commit('getPlantaInforme', response.data)
+              resolve()
+              })
+            })
+          },
 
         loadParametrosGenerales({
           commit},codigo) {
@@ -1097,6 +1116,10 @@ actions : {
 
       getObraInforme(state, obra_informe) {
         state.obra_informe = obra_informe
+      },
+
+      getPlantaInforme(state, planta_informe) {
+        state.planta_informe = planta_informe
       },
 
       getParametroGeneral(state, ParametroGeneral) {

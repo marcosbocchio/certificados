@@ -7,13 +7,14 @@ use App\Http\Requests\InformeImportadosRequest;
 use App\InformesImportados;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 
 class InformesImportadosController extends Controller
 {
     public function __construct()
-    {     
-      $this->middleware(['role_or_permission:Sistemas|T_informes_edita'],['only' => ['store','edit','update']]);  
+    {
+      $this->middleware(['role_or_permission:Sistemas|T_informes_edita'],['only' => ['store','edit','update']]);
 
     }
     /**
@@ -48,38 +49,39 @@ class InformesImportadosController extends Controller
      */
     public function store(InformeImportadosRequest $request)
     {
-              
-        $informe_importados  = new InformesImportados;  
+
+        $informe_importados  = new InformesImportados;
 
         DB::beginTransaction();
-        try {          
-        
+        try {
+
           $this->saveInformeImportados($request,$informe_importados);
-       
-          DB::commit(); 
-    
+
+          DB::commit();
+
         } catch (Exception $e) {
-    
+
           DB::rollback();
-          throw $e;      
-          
+          throw $e;
+
         }
     }
 
     public function saveInformeImportados($request,$informe_importados){
-
+        log::debug($request);
         $user_id = null;
-        
+
         if (Auth::check())
         {
-             $user_id = $userId = Auth::id();    
+             $user_id = $userId = Auth::id();
         }
 
         $informe_importados->ot_id = $request->ot_id;
         $informe_importados->metodo_ensayo_id = $request->metodo_ensayos['id'];
-        $informe_importados->fecha =date('Y-m-d',strtotime($request->fecha)); 
+        $informe_importados->fecha =date('Y-m-d',strtotime($request->fecha));
         $informe_importados->numero = $request->numero;
         $informe_importados->obra = $request->obra;
+        $informe_importados->planta_id = $request->planta['id'];
         $informe_importados->prefijo = $request->prefijo;
         $informe_importados->observaciones = $request->observaciones;
         $informe_importados->path = $request->path;
@@ -107,8 +109,9 @@ class InformesImportadosController extends Controller
      */
     public function edit($id)
     {
-        
+
         return InformesImportados::where('id',$id)
+                                  ->with('planta')
                                   ->with('metodoEnsayos')
                                   ->with('ejecutorEnsayo')
                                   ->first();
@@ -123,21 +126,21 @@ class InformesImportadosController extends Controller
      */
     public function update(InformeImportadosRequest $request, $id)
     {
-                      
+
         $informe_importados =InformesImportados::find($id);
 
         DB::beginTransaction();
-        try {          
-        
+        try {
+
           $this->saveInformeImportados($request,$informe_importados);
-       
-          DB::commit(); 
-    
+
+          DB::commit();
+
         } catch (Exception $e) {
-    
+
           DB::rollback();
-          throw $e;      
-          
+          throw $e;
+
         }
     }
 
@@ -155,7 +158,7 @@ class InformesImportadosController extends Controller
         $informe_importado->parte_id = null;
         $informe_importado->save();
     }
-   
+
  }
 
     /**

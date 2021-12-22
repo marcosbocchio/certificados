@@ -152,7 +152,10 @@ Route::group(['middleware' => ['auth']], function () {
       /* DOCUMENTACIÓN OT*/
       Route::get('/area/enod/documentacion/ot/{ot_id}', 'DocumentacionesController@callViewDocOt')->name('DocumentacionOt');
 
-});
+      /* informe de prueba*/
+      Route::get('informes/prueba','InformePruebaController@index')->name('pruebaInformes');
+      Route::get('/area/enod/plantas', 'PlantasController@index')->name('plantas');
+    });
 
 Route::resource('personas_web', 'PersonaController');
 

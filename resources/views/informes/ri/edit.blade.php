@@ -35,6 +35,7 @@
      :detalledata="{{$informe_detalle}}"
      :pasada_juntas_data="{{$informe_pasada_juntas}}"
      :tablaModelos3d_data="{{$informe_modelos_3d}}"
+     :tablatramos_data="{{$informe_tramos}}"
      editmode
 
   ></informe-ri>

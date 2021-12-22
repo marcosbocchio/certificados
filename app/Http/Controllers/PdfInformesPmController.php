@@ -6,6 +6,7 @@ use App\Informe;
 use App\InformesPm;
 use App\Ots;
 use App\Clientes;
+use App\Plantas;
 use App\Materiales;
 use App\NormaEnsayos;
 use App\NormaEvaluaciones;
@@ -43,6 +44,7 @@ class PdfInformesPmController extends Controller
          $informe = Informe::findOrFail($id);
          $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);
          $informe_pm = InformesPm::where('informe_id',$informe->id)->firstOrFail();
+         $planta= Plantas::where('id',$informe->planta_id)->first();
          $ot = Ots::findOrFail($informe->ot_id);
          $cliente = Clientes::findOrFail($ot->cliente_id);
          $ot_tipo_soldadura = OtTipoSoldaduras::where('id',$informe->ot_tipo_soldadura_id)->with('Tiposoldadura')->first();
@@ -90,6 +92,7 @@ class PdfInformesPmController extends Controller
            $pdf = PDF::loadView('reportes.informes.pm-v2',compact('ot','titulo','nro','tipo_reporte','fecha',
                                                                 'norma_ensayo',
                                                                 'norma_evaluacion',
+                                                                'planta',
                                                                 'procedimiento_inf',
                                                                 'fuente',
                                                                 'diametro_espesor',

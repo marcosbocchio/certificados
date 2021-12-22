@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 // use App\helpers;
 use App\Informe;
 use App\InformesRi;
+use App\Plantas;
 use App\Ots;
 use App\Clientes;
 use App\Materiales;
@@ -26,6 +27,7 @@ use App\TecnicasGraficos;
 use PDF;
 use App\Juntas;
 use App\Soldadores;
+use Illuminate\Support\Facades\Log;
 use App\Posicion;
 use App\PasadasPosicion;
 use App\DefectosPasadasPosicion;
@@ -43,10 +45,11 @@ class PdfInformesRiController extends Controller
     public function imprimir($id){
 
        /* header */
-
         $informe = Informe::findOrFail($id);
         $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);
         $informe_ri = InformesRi::where('informe_id',$informe->id)->firstOrFail();
+        $planta = Plantas::where('id',$informe->planta_id)->first();
+        Log::debug($planta);
         $ot = Ots::findOrFail($informe->ot_id);
         $cliente = Clientes::findOrFail($ot->cliente_id);
 
@@ -83,8 +86,44 @@ class PdfInformesRiController extends Controller
         $tipo_reporte = "INFORME N°";
 
 
-
         /* Fin encabezado */
+        if ($informe_ri->perfil_sn){
+            $tamaño_bola = '25,4 mm';
+            $tramos = (new \App\Http\Controllers\InformesRiController)->getTramos($informe_ri->id);
+
+            $pdf = PDF::loadView('reportes.informes.ri-perfiles-v2',compact('titulo','nro','tipo_reporte','fecha',
+                                                                        'ot',
+                                                                        'norma_ensayo',
+                                                                        'planta',
+                                                                        'norma_evaluacion',
+                                                                        'procedimiento_inf',
+                                                                        'ot_tipo_soldadura',
+                                                                        'interno_equipo',
+                                                                        'actividad',
+                                                                        'interno_fuente',
+                                                                        'tipo_pelicula',
+                                                                        'diametro_espesor',
+                                                                        'ici',
+                                                                        'tecnica',
+                                                                        'ejecutor_ensayo',
+                                                                        'cliente',
+                                                                        'contratista',
+                                                                        'informe',
+                                                                        'informe_ri',
+                                                                        'material',
+                                                                        'material2',
+                                                                        'tecnicas_grafico',
+                                                                        'tramos',
+                                                                        'tamaño_bola',
+                                                                        'evaluador',
+                                                                        'informe_modelos_3d',
+                                                                        'firma',
+                                                                        'observaciones'))->setPaper('a4','portrait')->setWarnings(false);
+
+
+            return $pdf->stream();
+
+        }
         if ($informe_ri->gasoducto_sn){
 
         /* Recupero la Max cantidad de pasadas del informe , si tiene más de 6 uso una plantilla especial */
@@ -100,6 +139,7 @@ class PdfInformesRiController extends Controller
 
           $pdf = PDF::loadView('reportes.informes.' . $plantilla,compact('titulo','nro','tipo_reporte','fecha',
                                                                         'ot',
+                                                                        'planta',
                                                                         'norma_ensayo',
                                                                         'norma_evaluacion',
                                                                         'procedimiento_inf',
@@ -143,6 +183,7 @@ class PdfInformesRiController extends Controller
           $pdf = PDF::loadView('reportes.informes.ri-planta-v2',compact('titulo','nro','tipo_reporte','fecha',
                                                               'ot',
                                                               'norma_ensayo',
+                                                              'planta',
                                                               'norma_evaluacion',
                                                               'procedimiento_inf',
                                                               'ot_tipo_soldadura',

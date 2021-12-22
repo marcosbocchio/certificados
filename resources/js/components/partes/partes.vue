@@ -1381,7 +1381,7 @@ export default {
 
         },
 
-        RemoveTablaInformeLP(index){
+        RemoveTablaInformeLp(index){
 
             this.TablaInformesLp[index].visible = false;
             this.TablaInformesLp[index].pieza_final='';

@@ -14,6 +14,12 @@ class InformesImportados extends Model
     
     }
 
+    public function planta(){
+
+        return $this->belongsTo('App\Plantas','planta_id','id');
+   
+   }
+
     public function ejecutorEnsayo(){
 
         return $this->belongsTo('App\User','ejecutor_ensayo_id','id');
