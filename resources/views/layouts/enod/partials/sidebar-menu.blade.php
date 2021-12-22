@@ -73,6 +73,11 @@
                   <li><a href="{{ route('soldadores') }}">Soldadores</a></li>
                 @endcan
 
+                @can('M_soldadores')
+                <li><a href="{{ route('plantas') }}">Plantas</a></li>
+                @endcan
+
+
                 @can('M_equipos')
                   <li><a href="{{ route('equipos') }}">Equipos</a></li>
                 @endcan

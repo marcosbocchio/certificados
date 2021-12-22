@@ -195,13 +195,23 @@
                                 <td colspan="2">{{$norma_evaluacion->codigo}}</td>
                                 <td colspan="2">{{$norma_ensayo->codigo}}</td>
                             </tr>
-
-                            <tr>
-                                <th colspan="4">Ejecutor Ensayo</th>
-                            </tr>
-                            <tr>
-                                <td colspan="4" class="borderFilabottom">{{$ejecutor_ensayo->name}}</td>
-                            </tr>
+                            @if($informe_ri->perfil_sn)
+                                <tr>
+                                    <th colspan="2">Ejecutor Ensayo</th>
+                                    <th colspan="2">Tamaño bola comparadora</th>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="borderFilabottom">{{$ejecutor_ensayo->name}}</td>
+                                    <td colspan="2" class="borderFilabottom">{{'25.4 mm'}}</td>
+                                </tr>
+                                @else
+                                <tr>
+                                    <th colspan="4">Ejecutor Ensayo</th>
+                                </tr>
+                                <tr>
+                                    <td colspan="4" class="borderFilabottom">{{$ejecutor_ensayo->name}}</td>
+                                </tr>
+                            @endif
 
                         </tbody>
                     </table>

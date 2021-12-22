@@ -2,7 +2,7 @@
     <div class="row">
        <div class="col-md-12">
            <form @submit.prevent="editmode ? Update() : Store()"  method="post">
-               <informe-header :otdata="otdata" :informe_id="informedata.id" :editmode="editmode" @set-obra="setObra($event)"></informe-header>
+               <informe-header :otdata="otdata" :informe_id="informedata.id" :editmode="editmode" @set-obra="setObra($event)" @set-planta="setPlanta($event)"></informe-header>
                <div class="box box-custom-enod">
                   <div class="box-body">
                       <div class="col-md-3">
@@ -1081,6 +1081,7 @@ export default {
         errors:[],
 
         obra:'',
+        planta:'',
         cliente:'',
         fecha: moment(new Date()).format('YYYY-MM-DD'),
         observaciones:'',
@@ -1274,6 +1275,7 @@ export default {
                this.fecha   = this.informedata.fecha;
                this.numero_inf = this.informedata.numero;
                this.obra = this.informedata.obra;
+               this.planta = this.informedata.planta;
                this.componente = this.informedata.componente;
                this.ot_tipo_soldadura = this.ot_tipo_soldaduradata;
                this.linea = this.informedata.linea;
@@ -1318,6 +1320,9 @@ export default {
             this.obra = value;
             this.ot_tipo_soldadura='';
             this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.obra });
+        },
+        setPlanta : function(value){
+            this.planta = value;
         },
 
 
@@ -1951,6 +1956,7 @@ export default {
 
                 'ot'              : this.otdata,
                 'obra'            : this.obra,
+                'planta'          : this.planta,
                 'fecha':          this.fecha,
                 'ot_tipo_soldadura' : this.ot_tipo_soldadura,
                 'observaciones':  this.observaciones,
@@ -2027,6 +2033,7 @@ export default {
 
                 'ot'              : this.otdata,
                 'obra'            : this.obra,
+                'planta'          : this.planta,
                 'fecha':          this.fecha,
                 'observaciones':  this.observaciones,
                 'numero_inf':     this.numero_inf,

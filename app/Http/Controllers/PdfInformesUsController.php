@@ -7,6 +7,7 @@ use App\Informe;
 use App\InformesUs;
 use App\Ots;
 use App\Clientes;
+use App\Plantas;
 use App\Materiales;
 use App\NormaEnsayos;
 use App\NormaEvaluaciones;
@@ -37,6 +38,7 @@ class PdfInformesUsController extends Controller
          $informe = Informe::findOrFail($id);
          $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);
          $informe_us = InformesUs::where('informe_id',$informe->id)->firstOrFail();
+         $planta= Plantas::where('id',$informe->planta_id)->first();
          $ot = Ots::findOrFail($informe->ot_id);
          $cliente = Clientes::findOrFail($ot->cliente_id);
          $ot_tipo_soldadura = OtTipoSoldaduras::where('id',$informe->ot_tipo_soldadura_id)->with('Tiposoldadura')->first();
@@ -59,7 +61,6 @@ class PdfInformesUsController extends Controller
          $calibraciones_us = CalibracionesUs::where('informe_us_id',$informe_us->id)->with('Palpador')->get();
          $observaciones = $informe->observaciones;
          $informe_modelos_3d = (new \App\Http\Controllers\InformeModelos3dController)->getInformeModelos3d($id);
-
          $generatrices = Generatrices::all();
 //       $informes_us_me = InformesUsMe::where('informe_us_id',$informe_us->id)->with('detalle_us_me')->get();
         $informes_us_me = (new \App\Http\Controllers\InformesUsController)->getTabla_me($informe_us->id);
@@ -80,6 +81,7 @@ class PdfInformesUsController extends Controller
         //  dd($calibraciones_us);
         $pdf = PDF::loadView('reportes.informes.us-v2',compact('ot','titulo','nro','tipo_reporte','fecha',
                                                                 'norma_ensayo',
+                                                                'planta',
                                                                 'norma_evaluacion',
                                                                 'procedimiento_inf',
                                                                 'ot_tipo_soldadura',

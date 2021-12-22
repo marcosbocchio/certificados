@@ -137,6 +137,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('informes/ot/{ot_id}/total', 'InformesController@OtInformesTotal');
     Route::get('informes/ot/{ot_id}/paginate', 'InformesController@paginate');
     Route::get('informes/{id}/importado_sn/{importado_sn}', 'InformesController@getObraInforme');
+    Route::get('informes/{id}/importado_sn/{importado_sn}/get_planta', 'InformesController@getPlantaInforme');
     Route::put('informes/{id}/firmar', 'InformesController@firmar');
     Route::put('informes/{id}/clonar', 'InformesController@clonar');
     Route::get('informes/ot/{ot_id}/pendientes_parte_diario', 'InformesController@OtInformesPendienteParteDiario');
@@ -332,6 +333,11 @@ Route::group(['middleware' => 'auth:api'], function()
     // Firmas
     Route::get('firmas_usuarios/usuario/{id}','FirmaUsuarioController@index');
 
+    // Plantas
+    Route::resource('plantas', 'PlantasController');
+    Route::get('plantas/cliente/{id}/paginate', 'PlantasController@paginate');
+    Route::get('plantas/cliente/{id}','PlantasController@PlantasCliente');
+    Route::post('plantas/cliente/{id}','PlantasController@store');
 
 });
 

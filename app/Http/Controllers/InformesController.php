@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Ots;
 use Illuminate\Support\Facades\DB;
 use App\Informe;
+use App\Plantas;
 use App\InformesView;
 use App\InformesRev;
 use App\MetodoEnsayos;
@@ -180,6 +181,8 @@ class InformesController extends Controller
 
         $informe->ot_id  = $request->ot['id'];
         $informe->obra = $request->obra;
+        $informe->planta_id = $request->planta['id'];
+
 
         $informe->espesor_especifico = null;
         $informe->diametro_especifico = null;
@@ -370,6 +373,28 @@ class InformesController extends Controller
        return $valor[0]->obra;
 
     }
+
+    public function getPlantaInforme($informe_id,$importado_sn){
+        log::debug($informe_id);
+        if($importado_sn == '1') {
+            $planta = Plantas::join('informes_importados','informes_importados.planta_id','=','plantas.id')
+                            ->where('informes_importados.id',$informe_id)
+                            ->first();
+            Log::debug('planta:'.$planta);
+            return $planta;
+        } else {
+            $planta = Plantas::join('informes','informes.planta_id','=','plantas.id')
+                             ->where('informes.id',$informe_id)
+                             ->first();
+            Log::debug('planta:'.$planta);
+            return $planta;
+        }
+        //  
+        // $valor = DB::select('CALL getPlantaInforme(?,?)',array($informe_id,$importado_sn)));
+        // Log::debug($valor);
+        // return $valor[0]->codigo;
+
+     }
 
     public function getInformesEstadisticasSoldaduras($ot_id,$obra,$componente,$fecha_desde,$fecha_hasta){
 

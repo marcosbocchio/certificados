@@ -14,7 +14,7 @@
                         <input type="text" v-model="otdata.proyecto" class="form-control" id="proyecto" disabled>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-3">
                     <div class="form-group" >
                         <label for="obra">Obra N°</label>
                         <div v-if="otdata.obra">
@@ -22,6 +22,15 @@
                         </div>
                         <div v-else>
                             <v-select v-model="obra" label="obra" :options="obras" :reduce="obras => obras.obra" @input="inputObra" id="obra"></v-select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group" >
+                        <label for="planta" >Planta</label>
+                        <div>
+                            <v-select v-model="planta" label="codigo" @input="inputPlanta" :options="plantas" id="planta" ></v-select>
                         </div>
                     </div>
                 </div>
@@ -71,7 +80,9 @@ export default {
 
         cliente:'',
         obra:'',
+        planta:'',
         obras:[],
+        plantas:[],
 
     }},
 
@@ -79,19 +90,19 @@ export default {
 
       this.getCliente();
       this.getObras();
-      eventEditRegistro.$on('refreshObra', this.setObra);
+      eventEditRegistro.$on('refreshObra', this.setDatos);
 
     },
 
     mounted : function() {
 
-        this.setObra()
+        this.setDatos()
 
     },
 
     computed :{
 
-        ...mapState(['url','obra_informe']),
+        ...mapState(['url','obra_informe','planta_informe']),
 
      },
 
@@ -104,22 +115,38 @@ export default {
 
         },
 
-        setObra : function(){
+        inputPlanta :  function(){
+
+            console.log('mando el inputplanta',this.planta);
+            this.$emit('set-planta',this.planta)
+
+        },
+
+        setDatos : function(){
 
            console.log('entro en set obra');
            this.$forceUpdate();
            this.obra = '';
+           this.planta = '';
            if(this.editmode){
 
                 this.$store.dispatch('loadObraInformes',{ informe_id: this.informe_id , importado_sn: this.importado_sn}).then(response => {
-
+                    console.log(this.obra_informe)
                     this.obra = this.obra_informe
 
                 })
 
+                this.$store.dispatch('loadPlantaInformes',{ informe_id: this.informe_id , importado_sn: this.importado_sn}).then(response => {
+                    console.log(this.planta_informe)
+                    this.planta = this.planta_informe
+
+                })
+
+
             }else{
 
                 this.obra =  this.otdata.obra
+                this.inputPlanta()
                 this.inputObra();
 
             }
@@ -132,6 +159,8 @@ export default {
             var urlRegistros = 'clientes/' + this.otdata.cliente_id + '?api_token=' + Laravel.user.api_token;
             axios.get(urlRegistros).then(response =>{
             this.cliente = response.data
+            console.log(this.cliente)
+            this.getPlantas();
 
             });
         },
@@ -142,6 +171,16 @@ export default {
             var urlRegistros = 'ots/' + this.otdata.id + '/obras_por_tipo_soldaduras' + '?api_token=' + Laravel.user.api_token;
             axios.get(urlRegistros).then(response =>{
             this.obras = response.data
+            });
+        },
+
+        getPlantas : function(){
+
+            console.log('el cliente es', this.cliente)
+            axios.defaults.baseURL = this.url ;
+            var urlRegistros = 'plantas/cliente/' + this.cliente.id + '?api_token=' + Laravel.user.api_token;
+            axios.get(urlRegistros).then(response =>{
+            this.plantas = response.data
             });
         }
 

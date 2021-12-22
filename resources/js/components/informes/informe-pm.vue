@@ -2,7 +2,7 @@
   <div class="row">
        <div class="col-md-12">
            <form @submit.prevent="editmode ?  Update() : Store()"  method="post">
-               <informe-header :otdata="otdata" :informe_id="informedata.id" :editmode="editmode" @set-obra="setObra($event)"></informe-header>
+               <informe-header :otdata="otdata" :informe_id="informedata.id" :editmode="editmode" @set-obra="setObra($event)" @set-planta="setPlanta($event)"></informe-header>
                 <div class="box box-custom-enod">
                   <div class="box-body">
                     <div class="col-md-3">
@@ -655,6 +655,7 @@ export default {
 
         errors:[],
         obra:'',
+        planta:'',
         cliente:'',
         fecha: moment(new Date()).format('YYYY-MM-DD'),
         observaciones:'',
@@ -790,6 +791,7 @@ export default {
 
                this.fecha   = this.informedata.fecha;
                this.obra = this.informedata.obra;
+               this.planta = this.informedata.planta;
                this.numero_inf = this.informedata.numero;
                this.componente = this.informedata.componente;
                this.ot_tipo_soldadura = this.ot_tipo_soldaduradata;
@@ -849,7 +851,10 @@ export default {
             this.ot_tipo_soldadura='';
             this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.obra });
         },
-
+        setPlanta : function(value){
+            console.log('el value pm es',value)
+            this.planta = value;
+        },
         getCliente : function(){
 
             axios.defaults.baseURL = this.url ;
@@ -1098,6 +1103,7 @@ export default {
               data : {
                 'ot'              : this.otdata,
                 'obra'            : this.obra,
+                'planta'          : this.planta,
                 'ejecutor_ensayo' : this.ejecutor_ensayo,
                 'metodo_ensayo'   : this.metodo,
                 'fecha':          this.fecha,
@@ -1186,6 +1192,7 @@ export default {
               data : {
                 'ot'              : this.otdata,
                 'obra'            : this.obra,
+                'planta'          : this.planta,
                 'ejecutor_ensayo' : this.ejecutor_ensayo,
                 'metodo_ensayo'   : this.metodo,
                 'fecha':          this.fecha,

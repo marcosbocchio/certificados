@@ -2,13 +2,13 @@
     <div class="row">
         <div class="col-md-12">
             <form @submit.prevent="editmode ?  Update() : Store()"  method="post">
-                <informe-header :otdata="otdata" :informe_id="informedata.id" :editmode="editmode" @set-obra="setObra"></informe-header>
+                <informe-header :otdata="otdata" :informe_id="informedata.id" :editmode="editmode" @set-obra="setObra" @set-planta="setPlanta"></informe-header>
                 <div class="box box-custom-enod">
                    <div class="box-body">
                          <div class="col-md-3">
                              <div class="form-group" >
-                                 <label for="formato">Tipo informe RI **</label>
-                                 <v-select v-model="formato" :options="['PLANTA', 'DUCTO']" @input="cambiopTipoInforme" ></v-select>
+                                 <label for="formato">Tipo informe RI *</label>
+                                 <v-select v-model="formato" :options="['PLANTA', 'DUCTO','PERFILES']" @input="cambiopTipoInforme" ></v-select>
                              </div>
                          </div>
                          <div class="col-md-3">
@@ -22,7 +22,7 @@
 
                          <div class="col-md-6">
                              <div class="row">
-                                 <div class="col-md-3">
+                                 <div class="col-md-3" v-if="formato=='DUCTO'">
                                      <div class="form-group" >
                                          <div v-if="isGasoducto">
                                              <label for="pk">PK *</label>
@@ -30,27 +30,27 @@
                                          <div v-else>
                                              <label for="pk">PK</label>
                                          </div>
-                                     <input type="number" v-model="pk" class="form-control" id="pk" :disabled="((!isGasoducto) || reparacion_sn== true || reparacion_sn == 1)" min="0">
+                                       <input type="number" v-model="pk" class="form-control" id="pk" :disabled="((!isGasoducto) || reparacion_sn== true || reparacion_sn == 1)" min="0">
                                      </div>
                                  </div>
 
+                                    <div v-if="isGasoducto">
                                  <div class="col-md-3">
-                                     <div class="form-group" >
-                                         <div v-if="isGasoducto">
-                                             <label for="ot_obra_tipo_soldaduras">Tipo Sol *</label>
+                                        <div class="form-group" >
+                                            <label for="ot_obra_tipo_soldaduras">Tipo Sol *</label>
                                             <input type="checkbox" id="reparacion_sn" v-model="reparacion_sn" :disabled="!pk || !tipo_soldadura" @change="cambioReparacion_sn()" style="float:right">
                                             <label for="reparacion_sn" style="float:right;margin-right: 5px;">R</label>
                                             <v-select v-model="tipo_soldadura" label="codigo" :options="ot_tipo_soldaduras_filter_R" id="ot_obra_tipo_soldaduras" @input="cambioOtTipoSoldadura" :disabled="(!isGasoducto || !obra || !pk )"></v-select>
-
-                                         </div>
-                                         <div v-else>
-                                             <label >Tipo Sol</label>
-                                             <input type="checkbox" id="reparacion_sn" v-model="reparacion_sn" @change="cambioReparacion_sn()" :disabled="!obra" style="float:right">
-                                             <label for="reparacion_sn" style="float:right;margin-right: 5px;">R</label>
-                                             <v-select  :options="[]" :disabled="(!isGasoducto)"></v-select>
-                                         </div>
-                                     </div>
+                                        </div>
                                  </div>
+                                    </div>
+                                    <div v-else>
+                                    <div class="col-md-6">
+                                        <label for="reparacion_sn" v-if="formato=='PLANTA'" style="display:block">&nbsp;</label>
+                                        <input type="checkbox" id="reparacion_sn" style="float:left;margin-right: 5px;" v-model="reparacion_sn" @change="cambioReparacion_sn()" :disabled="!obra" v-if="formato=='PLANTA'">
+                                        <label for="reparacion_sn" v-if="formato=='PLANTA'">Reparación s/n</label>
+                                    </div>
+                                    </div>
 
                                  <div class="col-md-6">
                                      <div class="form-group" >
@@ -435,7 +435,7 @@
                     </div>
                 </div>
 
-                <div class="box box-custom-enod">
+                <div class="box box-custom-enod" v-if="formato != 'PERFILES'">
                       <div class="box-header with-border">
                          <h3 class="box-title">ELEMENTOS/POSICIONES</h3>
                          <div class="box-tools pull-right">
@@ -617,7 +617,86 @@
                      </div>
                     </div>
 
-                <div class="box box-custom-enod">
+                <div class="box box-custom-enod" v-if="formato == 'PERFILES'">
+                    <div class="box-header with-border">
+                         <h3 class="box-title">TRAMOS</h3>
+                         <div class="box-tools pull-right">
+                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                             </button>
+                         </div>
+                     </div>
+
+                 <div class="box-body">
+                <div class="col-md-2">
+                     <div class="form-group" >
+                         <label for="tramo">Tramo</label>
+                         <input type="text" v-model="tramo" class="form-control" id="tramo" maxlength="10">
+                     </div>
+                 </div>
+                    <div class="col-md-2">
+                        <div class="form-group" >
+                            <label for="bola_comparadora">Bola comparadora</label>
+                            <input type="number" v-model="bola_comparadora" class="form-control" id="bola_comparadora" step=".01" min="0.01">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group" >
+                            <label for="espesor">Espesor</label>
+                            <input type="number" v-model="espesor_tramo" class="form-control" id="espesor_tramo" step=".01" min="0.01">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                     <div class="form-group" >
+                         <label for="observaciones">Observaciones</label>
+                         <input type="text" v-model="observacion_tramo" class="form-control" id="observacion_tramo" maxlength="100">
+                     </div>
+                     </div>
+
+                      <div class="col-md-2">
+                           <p>&nbsp;</p>
+                           <span>
+                             <button type="button" @click="AddTramos()" title="Agregar Pasada"><app-icon img="plus-circle" color="black"></app-icon></button>
+                           </span>
+                     </div>
+
+                     <div class="form-group">
+                         &nbsp;
+                     </div>
+
+                     <div v-if="TablaTramos.length">
+                            <div class="col-md-11">
+                                 <div class="table-responsive">
+                                     <table class="table table-hover table-striped table-bordered table-condensed">
+                                         <thead>
+                                             <tr>
+                                                 <th class="col-md-1">Tramo</th>
+                                                 <th class="col-md-1.5">Bola comp.</th>
+                                                 <th class="col-md-1">Espesor</th>
+                                                 <th class="col-md-2">Espesor real</th>
+                                                 <th class="col-md-6">Observaciones</th>
+                                                 <th>&nbsp;</th>
+                                             </tr>
+                                         </thead>
+                                            <tbody>
+                                                <tr v-for="(tramos,k) in ( (TablaTramos.length > 0 )  ? TablaTramos : [])"  :key="k">
+                                                    <td>{{ tramos.tramo }}</td>
+                                                    <td>{{ tramos.bola_comparadora }}</td>
+                                                    <td>{{ tramos.espesor_tramo }}</td>
+                                                    <td>{{ tramos.espesor_real }}</td>
+                                                    <td>{{ tramos.observacion_tramo }}</td>
+                                                    <td class="pointer">
+                                                        <a  @click="RemoveTramos(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                     </table>
+                                 </div>
+                             </div>
+                         </div>
+                   </div>
+                 </div>
+
+                 <div class="box box-custom-enod" v-if="formato != 'PERFILES'">
                     <div class="box-header with-border">
                          <h3 class="box-title">PASADAS</h3>
                          <div class="box-tools pull-right">
@@ -961,6 +1040,10 @@
       tablamodelos3d_data : {
         type : [ Array ],
         required : false
+        },
+      tablatramos_data : {
+        type : [ Array ],
+        required : false
         }
      },
      data() {return {
@@ -972,6 +1055,7 @@
             // Formulario encabezado
              reparacion_sn:false,
              obra:'',
+             planta:'',
              fecha: moment(new Date()).format('YYYY-MM-DD'),
              numero_inf:'',
              numero_inf_generado:'',
@@ -1040,6 +1124,7 @@
              isRX:false,
              isChapa:false,
              isGasoducto:false,
+             isPerfil:false,
              EnableClonarPasadas:false,
              medida:'',
              equipos:[],
@@ -1064,6 +1149,11 @@
              TablaImportada :[],
              sel_todos_clonar: false,
              indicaciones_sn : false,
+             bola_comparadora: 0.1,
+             espesor_tramo: 0.1,
+             observacion_tramo: '',
+             tramo:'',
+             TablaTramos:[],
          }},
      created : function(){
 
@@ -1113,6 +1203,7 @@
          formato : function (val){
              this.isGasoducto =  (val == 'DUCTO') ? true : false;
              this.reparacion_sn = (val == 'PLANTA') ? false : this.reparacion_sn;
+             this.isPerfil = (val == 'PERFILES') ? true : false;
          },
          pasada : function (val){
              this.soldador2 =  (val == '1') ? this.soldador2 : '';
@@ -1195,8 +1286,9 @@
          setEdit : function(){
              if(this.editmode) {
 
-                this.formato = this.informe_ridata.gasoducto_sn ? 'DUCTO' : 'PLANTA';
+                this.formato = this.informe_ridata.gasoducto_sn ? 'DUCTO' : (this.informe_ridata.perfil_sn ? 'PERFILES' : 'PLANTA');
                 this.obra = this.informedata.obra;
+                this.planta = this.informedata.planta;
                 this.fecha   = this.informedata.fecha;
                 this.pk = this.informedata.km;
                 this.ot_tipo_soldadura = this.ot_tipo_soldaduradata;
@@ -1236,6 +1328,7 @@
                 this.InicializarElementosPasadas();
                 this.observaciones = this.informedata.observaciones
                 this.TablaModelos3d = this.tablamodelos3d_data;
+                this.TablaTramos = this.tablatramos_data;
 
                 if(this.informe_ridata.reparacion_sn){
                      this.getElementosReparacion();
@@ -1273,6 +1366,9 @@
             this.obra = value;
             this.ot_tipo_soldadura='';
             this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : (this.obra ? this.obra : 'xxxxxxxxxxx') });
+         },
+        setPlanta : function(value){
+            this.planta = value;
          },
          cambiopTipoInforme : function(){
 
@@ -1608,6 +1704,27 @@
                 toastr.error('Campo Cunio Z es obligatorio');
              }
          },
+         AddTramos () {
+            if(this.tramo == ''){
+               toastr.error('Error :El tramo es obligatorio');
+               return;
+            }
+            if(this.bola_comparadora == 0){
+               toastr.error('Error :El campo bola comparadora es obligatorio');
+               return;
+            }
+            if(this.espesor == 0){
+                toastr.error('Error :El espesor es obligatorio');
+                return;
+            }
+            this.TablaTramos.push({
+                    tramo : this.tramo,
+                    bola_comparadora : this.bola_comparadora,
+                    espesor_tramo: this.espesor_tramo,
+                    espesor_real: (((this.espesor_tramo)*(25.4))/this.bola_comparadora).toFixed(2),
+                    observacion_tramo : this.observacion_tramo,
+            });
+         },
 
          addDefectos () {
 
@@ -1721,6 +1838,9 @@
                  }
              })
              this.TablaDetalle[this.indexDetalle].aceptable_sn = aceptable;
+         },
+        RemoveTramos(index) {
+             this.TablaTramos.splice(index, 1);
          },
          insertarClonacion : function (posicion){
             this.AddDetalle(posicion);
@@ -2005,11 +2125,18 @@
                      let gasoducto_sn ;
                      if(this.formato =='DUCTO')
                          gasoducto_sn = true;
-                     else if(this.formato =='PLANTA')
+                     else if(this.formato =='PLANTA' || this.formato == 'PERFILES')
                          gasoducto_sn = false;
                      else
                          gasoducto_sn= null;
-
+                     let perfil_sn ;
+                     if(this.formato == 'PERFILES')
+                        perfil_sn = true;
+                     else if(this.formato =='PLANTA' || this.formato =='DUCTO')
+                         perfil_sn = false;
+                     else
+                         perfil_sn= null;
+                     console.log(perfil_sn);
                      let defectos = this.formato =='PLANTA' ? this.TablaDetalle : false
                      var urlRegistros = 'informes_ri' ;
                      this.$store.commit('loading', true);
@@ -2020,6 +2147,7 @@
 
                          'ot'              : this.otdata,
                          'obra'            : this.obra,
+                         'planta'          : this.planta,
                          'ejecutor_ensayo' : this.ejecutor_ensayo,
                          'metodo_ensayo'   : this.metodo,
                          'fecha'           : this.fecha,
@@ -2029,6 +2157,7 @@
                          'reparacion_sn'     :this.reparacion_sn,
                          'prefijo'         :this.prefijo,
                          'gasoducto_sn'    :gasoducto_sn,
+                         'perfil_sn'       :perfil_sn,
                          'componente'      :this.componente,
                          'linea'      :    this.linea,
                          'plano_isom' :    this.plano_isom,
@@ -2061,6 +2190,7 @@
                          'detalles'  : this.TablaDetalle,
                          'TablaPasadas' : this.TablaPasadas,
                          'TablaModelos3d' :this.TablaModelos3d,
+                         'tramos'    : this.TablaTramos,
                  }}
 
 
@@ -2089,10 +2219,17 @@
                      let gasoducto_sn ;
                      if(this.formato =='DUCTO')
                          gasoducto_sn = true;
-                     else if(this.formato =='PLANTA')
+                     else if(this.formato =='PLANTA' || this.formato == 'PERFILES')
                          gasoducto_sn = false;
                      else
                          gasoducto_sn= null;
+                     let perfil_sn ;
+                     if(this.formato == 'PERFILES')
+                        perfil_sn = true;
+                     else if(this.formato =='PLANTA' || this.formato =='DUCTO')
+                         perfil_sn = false;
+                     else
+                         perfil_sn= null;
                      let defectos = this.formato =='PLANTA' ? this.TablaDetalle : false
                      var urlRegistros = 'informes_ri/' + this.informedata.id  ;
                      this.$store.commit('loading', true);
@@ -2104,6 +2241,7 @@
                          'ot'              : this.otdata,
                          'updated_at'      : this.informedata.updated_at,
                          'obra'            : this.obra,
+                         'planta'          : this.planta,
                          'ejecutor_ensayo' : this.ejecutor_ensayo,
                          'metodo_ensayo'   : this.metodo,
                          'fecha':          this.fecha,
@@ -2113,6 +2251,7 @@
                          'reparacion_sn'     :this.reparacion_sn,
                          'prefijo'        :this.prefijo,
                          'gasoducto_sn' :  gasoducto_sn,
+                         'perfil_sn'       :perfil_sn,
                          'componente' :    this.componente,
                          'linea'      :    this.linea,
                          'plano_isom' :    this.plano_isom,
@@ -2145,6 +2284,7 @@
                          'detalles'  : this.TablaDetalle,
                          'TablaPasadas' : this.TablaPasadas,
                          'TablaModelos3d' :this.TablaModelos3d,
+                         'tramos'    : this.TablaTramos,
 
                  }}
 
