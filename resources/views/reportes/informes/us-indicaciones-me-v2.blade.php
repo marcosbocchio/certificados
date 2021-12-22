@@ -12,91 +12,88 @@
 
             @php
                 $pos_gen = 1;
-                $max_cant_genetratices_fila = 20;
+                $pos_pos = 1;
+                $max_cant_genetratices_fila = $informe_us_me->cantidad_generatrices_linea_pdf_me;
                 $genetratrices_fila = $max_cant_genetratices_fila;
             @endphp
             <table>
                 <tbody>
                     <tr>
-                         <td style="font-size: 14px;height:20px;"><span style="margin-left: 22px;">Elemento : {{ strtoupper($informe_us_me->elemento)}}</span></td>
+                        <td style="font-size: 14px;height:20px;"><span style="margin-left: 22px;">Elemento : {{ strtoupper($informe_us_me->elemento_me)}}</span></td>
                     </tr>
-                    @if ($informe_us_me->umbral)
+                    @if ($informe_us_me->umbral_me)
                         <tr>
-                             <td style="font-size: 14px;height:20px;"><span style="margin-left: 22px;">Espesor Nominal : {{ strtoupper($informe_us_me->umbral)}}</span></td>
+                             <td style="font-size: 14px;height:20px;"><span style="margin-left: 22px;">Espesor Nominal : {{ strtoupper($informe_us_me->umbral_me)}}</span></td>
                         </tr>
                     @endif
 
-                    @if ($informe_us_me->espesor_minimo)
+                    @if ($informe_us_me->espesor_minimo_me)
                         <tr>
-                             <td style="font-size: 14px;height:20px;"><span style="margin-left: 22px;">Espesor Mínimo : {{ strtoupper($informe_us_me->espesor_minimo)}}</span></td>
+                             <td style="font-size: 14px;height:20px;"><span style="margin-left: 22px;">Espesor Mínimo : {{ strtoupper($informe_us_me->espesor_minimo_me)}}</span></td>
                         </tr>
                     @endif
                     <tr>
-                        <td style="font-size: 14px;height:20px;"><span style="margin-left: 22px;">Ø : {{ $informe_us_me->diametro}}</span></td>
+                        <td style="font-size: 14px;height:20px;"><span style="margin-left: 22px;">Ø : {{ $informe_us_me->diametro_me}}</span></td>
                     </tr>
                 </tbody>
             </table>
-            @while($pos_gen <= $informe_us_me->cantidad_generatrices)
+            @while($pos_gen <= $informe_us_me->cantidad_generatrices_me)
                 <table  style="text-align: center;margin-left:18px;border-collapse: collapse;margin-bottom: 20px;"  class="bordered">
                     <thead>
                         <tr>
                             <th style="font-size: 13px; text-align: left;width:28px;text-align: center;background:#D8D8D8"  class="bordered-td">&nbsp;</th>
-                            @while( ($pos_gen <= $genetratrices_fila) && ($pos_gen <= $informe_us_me->cantidad_generatrices))
-                                <th style="font-size: 13px; text-align: left;width:28px;text-align: center;background:#D8D8D8" class="bordered-td">
-                                    @foreach ($generatrices as $generatriz )
-
-                                        @if($generatriz->nro == $pos_gen)
-                                            {{  $generatriz->valor }}
-                                        @endif
-
-                                    @endforeach
-
-                                </th>
-                                {{ $pos_gen = $pos_gen + 1}}
+                            @while( ($pos_gen <= $genetratrices_fila) && ($pos_gen <= $informe_us_me->cantidad_generatrices_me))
+                                    <th style="font-size: 13px; text-align: left;width:28px;text-align: center;background:#D8D8D8" class="bordered-td">
+                                        {{ $informe_us_me->mediciones[$pos_gen][0] }}
+                                    </th>
+                                    {{ $pos_gen = $pos_gen + 1}}
                             @endwhile
+                            @if ($pos_gen == $informe_us_me->cantidad_generatrices_me + 1)
+                                <th style="font-size: 13px; text-align: left;width:28px;text-align: center;background:#D8D8D8" class="bordered-td">
+                                    {{ $informe_us_me->mediciones[$pos_gen][0] }}
+                                </th>
+                            @endif
                             {{ $genetratrices_fila = $genetratrices_fila + $max_cant_genetratices_fila }}
                         </tr>
                       </thead>
                       <tbody>
-                        @for ( $pos_pos= 1 ;  $pos_pos <= $informe_us_me->cantidad_posiciones ; $pos_pos++)
-                                <tr>
-                                    <td style="font-size: 13px; text-align: left;width:28px;text-align: center;background:#D8D8D8" class="bordered-td">{{$pos_pos}}</td>
-                                    @for ($pos_gen_fila = ($genetratrices_fila - (2*$max_cant_genetratices_fila)+1) ; $pos_gen_fila <= $pos_gen - 1 ; $pos_gen_fila++)
 
-                                    {{ $x =0  }}
-
-                                        @foreach ($informe_us_me->detalle_us_me as $item_detalle )
-
-                                            @foreach ($generatrices as $generatriz)
-
-                                                @if ($pos_pos==$item_detalle->posicion && $pos_gen_fila == $generatriz->nro && $item_detalle->generatriz==$generatriz->valor)
-
-                                                    @if(($informe_us_me->espesor_minimo) && (strval($item_detalle->valor) < strval($informe_us_me->espesor_minimo)))
-
-                                                       <td style="font-size: 13px; text-align: left;width:28px;text-align: center;color:red" class="bordered-td">{{$item_detalle->valor}}</td>
-
-                                                    @else
-
-                                                        <td style="font-size: 13px; text-align: left;width:28px;text-align: center" class="bordered-td">{{$item_detalle->valor}}</td>
-
-                                                    @endif
-
-                                                    {{ $x =1  }}
-
-                                                @endif
-
-                                            @endforeach
-
-                                    @endforeach
-
-                                    @if ($x==0)
-                                            <td style="font-size: 13px; text-align: left;width:28px;text-align: center" class="bordered-td">X</td>
+                          @for ($pos_pos_fila = 1 ; $pos_pos_fila <= $informe_us_me->cantidad_posiciones_me; $pos_pos_fila++)
+                            {{ $pos_gen_fila = ($genetratrices_fila - (2*$max_cant_genetratices_fila)+1) }}
+                            <tr>
+                                <td style="font-size: 13px; text-align: left;width:28px;text-align: center" class="bordered-td">
+                                    {{ $informe_us_me->mediciones[0][$pos_pos_fila] }}
+                                </td>
+                                @while ($pos_gen_fila < $pos_gen)
+                                    @if ($informe_us_me->mediciones[$pos_gen_fila][$pos_pos_fila])
+                                       @if(($informe_us_me->espesor_minimo_me) && (strval($informe_us_me->mediciones[$pos_gen_fila][$pos_pos_fila]) < strval($informe_us_me->espesor_minimo_me)))
+                                            <td style="font-size: 13px; text-align: left;width:28px;text-align: center;color:red" class="bordered-td">
+                                                {{ $informe_us_me->mediciones[$pos_gen_fila][$pos_pos_fila] }}
+                                            </td>
+                                       @else
+                                            <td style="font-size: 13px; text-align: left;width:28px;text-align: center" class="bordered-td">
+                                                {{ $informe_us_me->mediciones[$pos_gen_fila][$pos_pos_fila] }}
+                                            </td>
+                                       @endif
+                                    @else
+                                    <td style="font-size: 13px; text-align: left;width:28px;text-align: center" class="bordered-td">
+                                      S/A
+                                    </td>
                                     @endif
+                                {{ $pos_gen_fila = $pos_gen_fila + 1 }}
+                                @endwhile
+                                @if ($pos_gen_fila == $informe_us_me->cantidad_generatrices_me + 1)
+                                    <td style="font-size: 13px; text-align: left;width:28px;text-align: center;background:#D8D8D8" class="bordered-td">
+                                        @if ($informe_us_me->mediciones[$pos_gen_fila][$pos_pos_fila])
+                                            {{$informe_us_me->mediciones[$pos_gen_fila][$pos_pos_fila]->codigo }}
+                                        @else
+                                        &nbsp;
+                                        @endif
+                                    </td>
+                                @endif
+                            </tr>
 
-                                    @endfor
-                                </tr>
-                            @endfor
-                        </tr>
+                        @endfor
                     </tbody>
                 </table>
             @endwhile

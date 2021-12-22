@@ -454,7 +454,6 @@
                                                     <td>
                                                         <a  @click="removeCalibraciones(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a>
                                                     </td>
-
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -734,6 +733,13 @@
                                     </div>
                                 </div>
 
+                               <div class="col-md-12">
+                                    <div class="form-group" >
+                                        <label for="cantidad_generatrices_linea_pdf_me" title="Cantidad Generatrices por linea en informe">Generatrices por Linea en pdf *</label>
+                                        <input type="number" v-model="cantidad_generatrices_linea_pdf_me" class="form-control" id="cantidad_generatrices_linea_pdf_me" min="1">
+                                    </div>
+                                </div>
+
                                 <div class="clearfix"></div>
 
                                 <div class="col-md-1">
@@ -752,12 +758,13 @@
                                         <table class="table table-hover table-striped table-bordered table-condensed">
                                             <thead>
                                                 <tr>
-                                                    <th  class="col-lg-3">Elemento</th>
+                                                    <th  class="col-lg-2">Elemento</th>
                                                     <th  class="col-lg-1">Nominal</th>
                                                     <th  class="col-lg-1">Mínimo</th>
                                                     <th  class="col-lg-2">ø</th>
                                                     <th  class="col-lg-1">Pos.</th>
                                                     <th  class="col-lg-1">Gen.</th>
+                                                    <th  class="col-lg-1">G.L.P.</th>
                                                     <th  class="col-lg-1">&nbsp;</th>
                                                 </tr>
                                             </thead>
@@ -769,6 +776,7 @@
                                                     <td>{{ item.diametro_me }}</td>
                                                     <td>{{ item.cantidad_posiciones_me}}</td>
                                                     <td>{{ item.cantidad_generatrices_me}}</td>
+                                                    <td>{{ item.cantidad_generatrices_linea_pdf_me}}</td>
                                                     <td><span class="fa fa-minus-circle" @click="removeTabla_me(k)"></span></td>
                                                 </tr>
                                             </tbody>
@@ -778,26 +786,41 @@
                             </div>
 
                             <div class="col-lg-7">
-
-                                <!-- tabla mediciones -->
+                                <!-- tabla mediciones 2-->
                                 <div v-if="Tabla_me[indexPosTabla_me]">
                                     <div class="col-lg-12">
-                                        <div class="table-responsive">
+                                        <div class="table-responsive" style="overflow:visible !important">
                                             <table class="table table-hover table-bordered" style="display: block;max-height: 500px;border-bottom: none;border-right: none;">
-                                                <thead>
-                                                    <tr>
-                                                     <th bgcolor="#bee5eb">&nbsp;</th>
-                                                     <th bgcolor="#bee5eb"  v-for="(h) in parseInt(Tabla_me[indexPosTabla_me].cantidad_generatrices_me)" :key="h" >{{ generatrices[h-1].valor}}</th>
-
-                                                    </tr>
-                                                </thead>
                                                 <tbody>
-                                                    <tr v-for="(p) in parseInt(Tabla_me[indexPosTabla_me].cantidad_posiciones_me)" :key="p" @click="selectPosPos(p)">
-                                                        <td style="min-width:60px;min-height:60px" bgcolor="#bee5eb"><strong> {{ p }} </strong> </td>
-                                                        <td style="min-width:60px;min-height:60px" v-for="(g) in parseInt(Tabla_me[indexPosTabla_me].cantidad_generatrices_me)" :key="g" @click="selectPosGeneratriz(g)"  >
+                                                    <tr v-for="(p) in parseInt(Tabla_me[indexPosTabla_me].cantidad_posiciones_me) + 1" :key="p" @click="selectPosPos(p)" >
 
-                                                            <div v-if="indexPosPos == p && indexPosGeneratriz == g">
-                                                                <input style="width:40px;" type="number" v-model="Tabla_me[indexPosTabla_me].mediciones[g-1][p-1]" maxlength="4" :ref="'refInputMediciones'" @keyup.enter="getFocus(g,Tabla_me[indexPosTabla_me].cantidad_generatrices_me,p,Tabla_me[indexPosTabla_me].cantidad_posiciones_me)" step="0.1" max="99.9">
+                                                         <td style="min-width:60px;min-height:60px" v-for="(g) in parseInt(Tabla_me[indexPosTabla_me].cantidad_generatrices_me) + 2" :key="g"  :bgcolor="colorLimiteTabla(p,g)" @click="selectPosGeneratriz(g)" >
+
+                                                            <div v-if="p === 1 && g === 1">
+                                                                &nbsp;
+                                                            </div>
+                                                            <div v-else-if="p === 1 && g === parseInt(Tabla_me[indexPosTabla_me].cantidad_generatrices_me) + 2">
+                                                                 ACCESORIO
+                                                            </div>
+                                                            <div v-else-if="g === parseInt(Tabla_me[indexPosTabla_me].cantidad_generatrices_me) + 2">
+                                                                 <div v-if="indexPosPos == p && indexPosGeneratriz == g">
+                                                                    <v-select v-model="Tabla_me[indexPosTabla_me].mediciones[g-1][p-1]" label="codigo" :options="accesorios_us"></v-select>
+                                                                 </div>
+                                                                 <div v-else-if="Tabla_me[indexPosTabla_me].mediciones[g-1][p-1]">
+                                                                    {{ Tabla_me[indexPosTabla_me].mediciones[g-1][p-1].codigo }}
+                                                                 </div>
+                                                                 <div v-else>
+                                                                     &nbsp;
+                                                                 </div>
+
+                                                            </div>
+                                                            <div v-else-if="indexPosPos == p && indexPosGeneratriz == g">
+                                                                 <div v-if="p === 1 || g === 1">
+                                                                    <input style="width:40px;" v-model="Tabla_me[indexPosTabla_me].mediciones[g-1][p-1]" maxlength="10" :ref="'refInputMediciones'" @keyup.enter="getFocus(g,Tabla_me[indexPosTabla_me].cantidad_generatrices_me,p,Tabla_me[indexPosTabla_me].cantidad_posiciones_me)">
+                                                                 </div>
+                                                                 <div v-else>
+                                                                    <input style="width:40px;" type="number" v-model="Tabla_me[indexPosTabla_me].mediciones[g-1][p-1]" maxlength="4" :ref="'refInputMediciones'" @keyup.enter="getFocus(g,Tabla_me[indexPosTabla_me].cantidad_generatrices_me,p,Tabla_me[indexPosTabla_me].cantidad_posiciones_me)" step="0.1" max="99.9">
+                                                                 </div>
                                                             </div>
                                                             <div v-else>
 
@@ -805,7 +828,7 @@
                                                                     {{ Tabla_me[indexPosTabla_me].mediciones[g-1][p-1] }}
                                                                 </div>
                                                                 <div v-else>
-                                                                        <span style="font-style: oblique; color: cadetblue;"> {{ p }}-{{generatrices[g-1].valor }} </span>
+                                                                    <span style="font-style: oblique; color: cadetblue;"> {{ p-1 }}-{{generatrices[g-2].valor }} </span>
                                                                 </div>
 
                                                             </div>
@@ -813,14 +836,11 @@
                                                          </td>
                                                     </tr>
                                                 </tbody>
-
                                             </table>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-
                         </div>
                     </div>
                </div>
@@ -1134,6 +1154,7 @@ export default {
         diametro_me:'',
         cantidad_posiciones_me:'',
         cantidad_generatrices_me:'',
+        cantidad_generatrices_linea_pdf_me: 20,
 
         tecnicas:[],
         estados_superficies:[],
@@ -1147,6 +1168,7 @@ export default {
         indexPosPos:0,
         Tabla_me:[],
         generatrices:[],
+        accesorios_us:[],
 
         // referencias
         index_referencias:'',
@@ -1180,6 +1202,7 @@ export default {
       this.getGeneratrices();
       this.setEdit();
       this.$store.dispatch('loadModelos3d');
+      this.getAccesoriosUs();
     },
 
     mounted : function() {
@@ -1197,7 +1220,6 @@ export default {
 
                 return this.metodo + (this.numero_inf <10? '00' : this.numero_inf<100? '0' : '') + this.numero_inf ;
         },
-
      },
 
       watch : {
@@ -1233,6 +1255,12 @@ export default {
 
      methods : {
 
+        colorLimiteTabla : function(p,g) {
+
+          return (p === 1 || g === 1) ? '#bee5eb' : null
+
+        },
+
          setEdit : function(){
 
             if(this.editmode) {
@@ -1260,8 +1288,6 @@ export default {
                this.material2 = this.material2data;
                if(this.informedata.material2_tipo) { this.material2_tipo = this.informedata.material2_tipo };
                this.diametro = (this.diametro_espesordata['id'] !== 'undefined' && !(this.diametro_espesordata instanceof  Array)) ? this.diametro_espesordata : { 'diametro' : this.informedata.diametro_especifico };
-               console.log('diametro_espesordata:', this.diametro_espesordata)
-               console.log('diametro :' , this.diametro);
                this.espesor = this.informedata.espesor_especifico ? {'espesor' : this.informedata.espesor_especifico} : this.diametro_espesordata;
                this.espesor_chapa = this.informedata.espesor_chapa;
                this.tecnica = this.tecnicadata;
@@ -1342,7 +1368,13 @@ export default {
             this.agente_acoplamientos = response.data
             });
          },
-
+         getAccesoriosUs: function(){
+            axios.defaults.baseURL = this.url ;
+            var urlRegistros = 'accesorios_us' + '?api_token=' + Laravel.user.api_token;
+            axios.get(urlRegistros).then(response =>{
+            this.accesorios_us = response.data
+            });
+         },
         getPalpadores : function(){
 
              this.$store.dispatch('loadPalpadores').then(response =>{
@@ -1376,8 +1408,7 @@ export default {
             return (exp_posicion.test(this.diametro.diametro))
         },
 
-        getGeneratrices : function(){
-
+        getGeneratrices : function() {
             axios.defaults.baseURL = this.url ;
             var urlRegistros = 'generatrices' + '?api_token=' + Laravel.user.api_token;
             axios.get(urlRegistros).then(response =>{
@@ -1600,244 +1631,210 @@ export default {
 
          addTabla_us_pa : function () {
 
-            if (!this.elemento_us_pa){
-
-                 toastr.error('El campo elemento es obligatorio');
-                 return ;
+            if (!this.elemento_us_pa) {
+                toastr.error('El campo elemento es obligatorio');
+                return ;
             }
 
-            if(this.elemento_us_pa.length  > 30){
-
+            if(this.elemento_us_pa.length  > 30) {
                 toastr.error('El campo elemento no debe contener más de 30 caracteres');
                 return ;
              }
 
-            if(this.diametro_us_pa && this.diametro_us_pa.length  > 10){
-
+            if(this.diametro_us_pa && this.diametro_us_pa.length  > 10) {
                 toastr.error('El campo diametro no debe contener más de 10 caracteres');
                 return ;
              }
 
-             if (!this.nro_indicacion_us_pa){
-
-                 toastr.error('El campo nivel registro es obligatorio');
-                 return ;
+             if (!this.nro_indicacion_us_pa) {
+                toastr.error('El campo nivel registro es obligatorio');
+                return ;
             }
 
-            if(this.nivel_nro_indicacion_us_paregistro  > 9999){
-
+            if(this.nivel_nro_indicacion_us_paregistro  > 9999) {
                 toastr.error('El campo nivel nro indicacion no debe ser mayor a 9999');
                 return ;
              }
 
-            if (!this.posicion_examen_us_pa){
-
-                 toastr.error('El campo posicion examen es obligatorio');
-                 return ;
+            if (!this.posicion_examen_us_pa) {
+                toastr.error('El campo posicion examen es obligatorio');
+                return ;
             }
 
-            if(this.posicion_examen_us_pa.length  > 5){
-
+            if(this.posicion_examen_us_pa.length  > 5) {
                 toastr.error('El campo posicion examen no debe contener más de 5 caracteres');
                 return ;
              }
 
-            if (!this.angulo_incidencia_us_pa){
-
-                 toastr.error('El campo angulo incidencia es obligatorio');
-                 return ;
+            if (!this.angulo_incidencia_us_pa) {
+                toastr.error('El campo angulo incidencia es obligatorio');
+                return ;
             }
 
-            if(this.angulo_incidencia_us_pa.length  > 10){
-
+            if(this.angulo_incidencia_us_pa.length  > 10) {
                 toastr.error('El campo angulo incidencia no debe contener más de 10 caracteres');
                 return ;
              }
 
-            if (!this.camino_sonico_us_pa){
-
-                 toastr.error('El campo camino sonico es obligatorio');
-                 return ;
+            if (!this.camino_sonico_us_pa) {
+                toastr.error('El campo camino sonico es obligatorio');
+                return ;
             }
 
-            if(this.camino_sonico_us_pa.length  > 6){
-
+            if(this.camino_sonico_us_pa.length  > 6) {
                 toastr.error('El campo camino sonico no debe contener más de 6 caracteres');
                 return ;
              }
 
-            if (!this.x_us_pa){
-
-                 toastr.error('El campo X es obligatorio');
-                 return ;
+            if (!this.x_us_pa) {
+                toastr.error('El campo X es obligatorio');
+                return ;
             }
 
-            if(this.x_us_pa  > 9999){
-
+            if(this.x_us_pa  > 9999) {
                 toastr.error('El campo X no debe ser mayor a 9999');
                 return ;
              }
 
-            if (!this.y_us_pa){
-
-                 toastr.error('El campo Y es obligatorio');
-                 return ;
+            if (!this.y_us_pa) {
+                toastr.error('El campo Y es obligatorio');
+                return ;
             }
 
-            if(this.y_us_pa  > 9999){
-
+            if(this.y_us_pa  > 9999) {
                 toastr.error('El campo Y no debe ser mayor a 9999');
                 return ;
              }
 
-            if (!this.z_us_pa){
-
-                 toastr.error('El campo Z es obligatorio');
-                 return ;
+            if (!this.z_us_pa) {
+                toastr.error('El campo Z es obligatorio');
+                return ;
             }
 
-            if(this.z_us_pa  > 9999){
-
+            if(this.z_us_pa  > 9999) {
                 toastr.error('El campo Z no debe ser mayor a 9999');
                 return ;
              }
 
-            if (!this.longitud_us_pa){
-
-                 toastr.error('El campo longitud es obligatorio');
-                 return ;
+            if (!this.longitud_us_pa) {
+                toastr.error('El campo longitud es obligatorio');
+                return ;
             }
 
-            if(this.longitud_us_pa  > 9999){
-
+            if(this.longitud_us_pa  > 9999) {
                 toastr.error('El campo longitud no debe ser mayor a 9999');
                 return ;
              }
 
-            if (!this.nivel_registro_us_pa){
-
-                 toastr.error('El campo nivel registro es obligatorio');
-                 return ;
+            if (!this.nivel_registro_us_pa) {
+                toastr.error('El campo nivel registro es obligatorio');
+                return ;
             }
 
-            if(this.nivel_registro_us_pa.length  > 3){
-
+            if(this.nivel_registro_us_pa.length  > 3) {
                 toastr.error('El campo nivel registro no debe contener más de 3 caracteres');
                 return ;
              }
 
-
-                this.Tabla_us_pa.push({
-                    elemento_us_pa: this.elemento_us_pa,
-                    diametro_us_pa: this.diametro_us_pa ? this.diametro_us_pa.diametro : '',
-                    nro_indicacion_us_pa:this.nro_indicacion_us_pa,
-                    posicion_examen_us_pa:this.posicion_examen_us_pa,
-                    angulo_incidencia_us_pa:this.angulo_incidencia_us_pa,
-                    camino_sonico_us_pa:this.camino_sonico_us_pa,
-                    x_us_pa:this.x_us_pa,
-                    y_us_pa:this.y_us_pa,
-                    z_us_pa:this.z_us_pa,
-                    longitud_us_pa:this.longitud_us_pa,
-                    nivel_registro_us_pa:this.nivel_registro_us_pa,
-                    aceptable_sn_us_pa : false,
-                    observaciones : '',
-                    path1:null,
-                    path2:null,
-                    path3:null,
-                    path4:null
-
-                });
-
+            this.Tabla_us_pa.push({
+                elemento_us_pa: this.elemento_us_pa,
+                diametro_us_pa: this.diametro_us_pa ? this.diametro_us_pa.diametro : '',
+                nro_indicacion_us_pa:this.nro_indicacion_us_pa,
+                posicion_examen_us_pa:this.posicion_examen_us_pa,
+                angulo_incidencia_us_pa:this.angulo_incidencia_us_pa,
+                camino_sonico_us_pa:this.camino_sonico_us_pa,
+                x_us_pa:this.x_us_pa,
+                y_us_pa:this.y_us_pa,
+                z_us_pa:this.z_us_pa,
+                longitud_us_pa:this.longitud_us_pa,
+                nivel_registro_us_pa:this.nivel_registro_us_pa,
+                aceptable_sn_us_pa : false,
+                observaciones : '',
+                path1:null,
+                path2:null,
+                path3:null,
+                path4:null
+            });
         },
 
         addTabla_me : function () {
 
-            if (!this.elemento_me){
-
-                 toastr.error('El campo elemento es obligatorio');
-                 return ;
+            if (!this.elemento_me) {
+                toastr.error('El campo elemento es obligatorio');
+                return ;
             }
 
-            if(this.elemento_me.length  > 30){
-
+            if(this.elemento_me.length  > 30) {
                 toastr.error('El campo elemento no debe contener más de 30 caracteres');
                 return ;
              }
 
-            if(this.umbral_me && this.umbral_me  > 99.9){
-
+            if(this.umbral_me && this.umbral_me  > 99.9) {
                 toastr.error('El campo umbral no debe ser mayor a 99,9');
                 return ;
              }
 
-             if(this.espesor_minimo_me && this.espesor_minimo_me  > 99.9){
-
+             if(this.espesor_minimo_me && this.espesor_minimo_me  > 99.9) {
                 toastr.error('El campo espesor mínimo no debe ser mayor a 99,9');
                 return ;
-                }
+             }
 
-            if (!this.diametro_me){
-
-                 toastr.error('El campo diametro es obligatorio');
-                 return ;
+            if (!this.diametro_me) {
+                toastr.error('El campo diametro es obligatorio');
+                return ;
             }
 
-            if(this.diametro_me.length  > 10){
-
+            if(this.diametro_me.length  > 10) {
                 toastr.error('El campo diametro no debe contener más de 10 caracteres');
                 return ;
              }
 
-            if (!this.cantidad_posiciones_me){
-
-                 toastr.error('El campo posiciones es obligatorio');
-                 return ;
+            if (!this.cantidad_posiciones_me) {
+                toastr.error('El campo posiciones es obligatorio');
+                return ;
             }
 
-            if(this.cantidad_posiciones_me  > 100){
-
+            if(this.cantidad_posiciones_me  > 100) {
                 toastr.error('El campo posiciones o debe ser mayor a 100');
                 return ;
              }
 
             if (!this.cantidad_generatrices_me){
-
-                 toastr.error('El campo generatrices es obligatorio');
-                 return ;
+                toastr.error('El campo generatrices es obligatorio');
+                return ;
             }
 
+            if (!this.cantidad_generatrices_linea_pdf_me){
+                toastr.error('El campo generatrices por linea en pdf es obligatorio');
+                return ;
+            }
 
-            if (this.cantidad_generatrices_me < 1 || this.cantidad_generatrices_me > this.generatrices.length){
-
+            if (this.cantidad_generatrices_me < 1 || this.cantidad_generatrices_me > this.generatrices.length) {
                 toastr.error('La cantidad de generatrices ingresadas no debe ser mayor a las registradas (' + this.generatrices.length + ')');
                 return ;
             }
 
-
-            let mediciones =  new Array(this.cantidad_generatrices_me);
-            for (let g = 0; g < this.cantidad_generatrices_me; g++) {
-
+            let mediciones =  new Array(parseInt(this.cantidad_generatrices_me));
+            for (let g = 0; g < parseInt(this.cantidad_generatrices_me) + 2; g++) {
               mediciones[g] = [];
-              for (let p = 0; p < this.cantidad_posiciones_me; p++) {
-
-                   mediciones[g][p] = '';
-
+              let index_generatriz = this.generatrices.findIndex(e => e.nro == g)
+              mediciones[g][0] = (g > 0) ? this.generatrices[index_generatriz].valor : '';
+              for (let p = 1; p < parseInt(this.cantidad_posiciones_me) + 1; p++ ) {
+                 mediciones[g][p] = (g > 0) ? '' : p;
               }
-
             }
+            mediciones[mediciones.length - 1][0] = 'ACCESORIO'
 
             this.Tabla_me.push({
-
-                elemento_me:               this.elemento_me,
-                umbral_me:                 this.umbral_me,
-                espesor_minimo_me:         this.espesor_minimo_me,
-                diametro_me:               this.diametro_me.diametro,
-                cantidad_posiciones_me  :  this.cantidad_posiciones_me,
-                cantidad_generatrices_me:  this.cantidad_generatrices_me,
-                mediciones :               mediciones,
-
+                elemento_me:                          this.elemento_me,
+                umbral_me:                            this.umbral_me,
+                espesor_minimo_me:                    this.espesor_minimo_me,
+                diametro_me:                          this.diametro_me.diametro,
+                cantidad_posiciones_me  :             this.cantidad_posiciones_me,
+                cantidad_generatrices_me:             this.cantidad_generatrices_me,
+                cantidad_generatrices_linea_pdf_me :  this.cantidad_generatrices_linea_pdf_me,
+                mediciones :                          mediciones,
             });
-
         },
 
         selectPosTabla_us_pa :function(index){
@@ -1855,27 +1852,23 @@ export default {
         },
 
         getFocus(g,cant_g,p,cant_p){
-
-            if(g + 1 > cant_g  ){
-                if(p + 1 > cant_p ){
-                    this.indexPosGeneratriz = 1;
+            if(g > cant_g ){
+                if(p > cant_p ){       
+                    this.indexPosGeneratriz = 2;
                     this.indexPosPos = 1;
                 }else{
                     this.indexPosGeneratriz = 1;
                     this.indexPosPos = p + 1;
                 }
             }else{
-                     this.indexPosGeneratriz = g + 1;
-
+                this.indexPosGeneratriz = g + 1;
             }
 
             setTimeout(x => {
-
                     this.$nextTick(() => {
                         this.$refs['refInputMediciones'][0].focus();
-                        });
-            }, 250);
-
+                   });
+            }, 350);
         },
 
         selectPosGeneratriz :function(index){
@@ -2008,10 +2001,8 @@ export default {
         }).catch(error => {
 
             this.errors = error.response.data.errors;
-                console.log(error.response);
             $.each( this.errors, function( key, value ) {
                 toastr.error(value);
-                console.log( key + ": " + value );
             });
 
             if((typeof(this.errors)=='undefined') && (error)){
@@ -2089,10 +2080,8 @@ export default {
         }).catch(error => {
 
             this.errors = error.response.data.errors;
-            console.log(error.response);
             $.each( this.errors, function( key, value ) {
                 toastr.error(value);
-                console.log( key + ": " + value );
             });
 
             if((typeof(this.errors)=='undefined') && (error)){
@@ -2144,6 +2133,7 @@ table th, table td {
     text-align: center;
 }
 
-
-
+.colorearLimiteTablaUs {
+    color:blue;
+}
 </style>

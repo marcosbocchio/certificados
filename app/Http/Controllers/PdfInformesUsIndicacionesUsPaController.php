@@ -62,7 +62,7 @@ class PdfInformesUsIndicacionesUsPaController extends Controller
          $fecha = date('d-m-Y', strtotime($informe->fecha));
          $tipo_reporte = "INFORME N°";
 
-        $pdf = PDF::loadView('reportes.informes.us-indicaciones-us-pa-v2',compact('ot','titulo','nro','tipo_reporte','fecha','metodo_ensayo',
+         $pdf = PDF::loadView('reportes.informes.us-indicaciones-us-pa-v2',compact('ot','titulo','nro','tipo_reporte','fecha','metodo_ensayo',
                                                                 'norma_ensayo',
                                                                 'norma_evaluacion',
                                                                 'procedimiento_inf',

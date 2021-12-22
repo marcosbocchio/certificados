@@ -9,7 +9,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                         <informe-header :otdata="otdata" :informe_id="informe_id" :editmode="editmode" :importado_sn="true" @set-obra="setObra($event)" @set-planta="setPlanta($event)"></informe-header>
+                         <informe-header :otdata="otdata" :informe_id="informe_id" :editmode="editmode" :importado_sn="true" @set-obra="setObra($event)"></informe-header>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="fecha">Fecha *</label>
@@ -119,7 +119,6 @@ components: {
             'fecha':new Date(),
             'numero': '',
             'obra' : '',
-            'planta': '',
             'prefijo'  : '',
             'observaciones':'',
             'path':'',
@@ -155,19 +154,16 @@ components: {
            this.editmode = false;
            this.uploadPercentage = 0;
            this.Registro = {
-
-            'ot_id' : this.otdata.id,
-            'fecha':new Date(),
-            'numero': '',
-            'obra' : this.Registro.obra,
-            'planta': this.Registro.planta,
-            'prefijo'  : '',
-            'observaciones':'',
-            'path':'',
-            'metodo_ensayos' : this.metodo_ensayo,
-            'ejecutor_ensayo' :{}
-
-         }
+                'ot_id' : this.otdata.id,
+                'fecha':new Date(),
+                'numero': '',
+                'obra' : this.Registro.obra,
+                'prefijo'  : '',
+                'observaciones':'',
+                'path':'',
+                'metodo_ensayos' : this.metodo_ensayo,
+                'ejecutor_ensayo' :{}
+            }
 
          this.getNumeroInforme();
          eventDeleteFile.$emit('delete');
@@ -215,15 +211,12 @@ components: {
 
         formatearNumero : function ( number, width )
             {
-
                 width -= number.toString().length;
                 if ( width > 0 )
                 {
                     this.Registro.numero=  new Array( width + (/\./.test( number ) ? 2 : 1) ).join( '0' ) + number;
                 }
-
             },
-
 
         storeRegistro: function(){
 
@@ -256,11 +249,6 @@ components: {
         setObra : function(value){
 
             this.Registro.obra = value;
-        },
-        setPlanta : function(value){
-
-            console.log('el value es',value)
-            this.Registro.planta = value;
         },
 
         updateRegistro: function(){
