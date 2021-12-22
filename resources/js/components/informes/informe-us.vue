@@ -789,7 +789,7 @@
                                 <!-- tabla mediciones 2-->
                                 <div v-if="Tabla_me[indexPosTabla_me]">
                                     <div class="col-lg-12">
-                                        <div class="table-responsive">
+                                        <div class="table-responsive" style="overflow:visible !important">
                                             <table class="table table-hover table-bordered" style="display: block;max-height: 500px;border-bottom: none;border-right: none;">
                                                 <tbody>
                                                     <tr v-for="(p) in parseInt(Tabla_me[indexPosTabla_me].cantidad_posiciones_me) + 1" :key="p" @click="selectPosPos(p)" >
@@ -1408,7 +1408,6 @@ export default {
             var urlRegistros = 'generatrices' + '?api_token=' + Laravel.user.api_token;
             axios.get(urlRegistros).then(response =>{
             this.generatrices = response.data;
-            console.log(response.data)
             this.$store.commit('loading', false);
             });
         },
@@ -1813,7 +1812,6 @@ export default {
             let mediciones =  new Array(parseInt(this.cantidad_generatrices_me));
             for (let g = 0; g < parseInt(this.cantidad_generatrices_me) + 2; g++) {
               mediciones[g] = [];
-              console.log(g)
               let index_generatriz = this.generatrices.findIndex(e => e.nro == g)
               mediciones[g][0] = (g > 0) ? this.generatrices[index_generatriz].valor : '';
               for (let p = 1; p < parseInt(this.cantidad_posiciones_me) + 1; p++ ) {
@@ -1849,27 +1847,23 @@ export default {
         },
 
         getFocus(g,cant_g,p,cant_p){
-
-            if(g + 1 > cant_g  ){
-                if(p + 1 > cant_p ){
-                    this.indexPosGeneratriz = 1;
+            if(g > cant_g ){
+                if(p > cant_p ){       
+                    this.indexPosGeneratriz = 2;
                     this.indexPosPos = 1;
                 }else{
                     this.indexPosGeneratriz = 1;
                     this.indexPosPos = p + 1;
                 }
             }else{
-                     this.indexPosGeneratriz = g + 1;
-
+                this.indexPosGeneratriz = g + 1;
             }
 
             setTimeout(x => {
-
                     this.$nextTick(() => {
                         this.$refs['refInputMediciones'][0].focus();
-                        });
-            }, 250);
-
+                   });
+            }, 350);
         },
 
         selectPosGeneratriz :function(index){
