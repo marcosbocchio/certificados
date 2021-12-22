@@ -1154,7 +1154,7 @@ export default {
         diametro_me:'',
         cantidad_posiciones_me:'',
         cantidad_generatrices_me:'',
-        cantidad_generatrices_linea_pdf_me: 20,
+        cantidad_generatrices_linea_pdf_me: 18,
 
         tecnicas:[],
         estados_superficies:[],
@@ -1853,7 +1853,7 @@ export default {
 
         getFocus(g,cant_g,p,cant_p){
             if(g > cant_g ){
-                if(p > cant_p ){       
+                if(p > cant_p ){
                     this.indexPosGeneratriz = 2;
                     this.indexPosPos = 1;
                 }else{

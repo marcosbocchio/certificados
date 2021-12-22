@@ -7,7 +7,7 @@
                    <div class="box-body">
                          <div class="col-md-3">
                              <div class="form-group" >
-                                 <label for="formato">Tipo informe RI **</label>
+                                 <label for="formato">Tipo informe RI *</label>
                                  <v-select v-model="formato" :options="['PLANTA', 'DUCTO','PERFILES']" @input="cambiopTipoInforme" ></v-select>
                              </div>
                          </div>
@@ -22,7 +22,7 @@
 
                          <div class="col-md-6">
                              <div class="row">
-                                 <div class="col-md-3" :style="{visibility: formato=='DUCTO' ? 'visible' : 'hidden'}">
+                                 <div class="col-md-3" v-if="formato=='DUCTO'">
                                      <div class="form-group" >
                                          <div v-if="isGasoducto">
                                              <label for="pk">PK *</label>
@@ -30,25 +30,27 @@
                                          <div v-else>
                                              <label for="pk">PK</label>
                                          </div>
-                                     <input type="number" v-model="pk" class="form-control" id="pk" :disabled="((!isGasoducto) || reparacion_sn== true || reparacion_sn == 1)" min="0">
+                                       <input type="number" v-model="pk" class="form-control" id="pk" :disabled="((!isGasoducto) || reparacion_sn== true || reparacion_sn == 1)" min="0">
                                      </div>
                                  </div>
 
+                                    <div v-if="isGasoducto">
                                  <div class="col-md-3">
-                                     <div class="form-group" >
-                                         <div v-if="isGasoducto">
-                                             <label for="ot_obra_tipo_soldaduras">Tipo Sol *</label>
+                                        <div class="form-group" >
+                                            <label for="ot_obra_tipo_soldaduras">Tipo Sol *</label>
                                             <input type="checkbox" id="reparacion_sn" v-model="reparacion_sn" :disabled="!pk || !tipo_soldadura" @change="cambioReparacion_sn()" style="float:right">
                                             <label for="reparacion_sn" style="float:right;margin-right: 5px;">R</label>
                                             <v-select v-model="tipo_soldadura" label="codigo" :options="ot_tipo_soldaduras_filter_R" id="ot_obra_tipo_soldaduras" @input="cambioOtTipoSoldadura" :disabled="(!isGasoducto || !obra || !pk )"></v-select>
-
-                                         </div>
-                                         <div v-else>
-                                             <input type="checkbox" id="reparacion_sn" v-model="reparacion_sn" @change="cambioReparacion_sn()" :disabled="!obra" :style="{visibility: formato=='PLANTA' ? 'visible' : 'hidden'}">
-                                             <label for="reparacion_sn" :style="{visibility: formato=='PLANTA' ? 'visible' : 'hidden'}">R</label>
-                                         </div>
-                                     </div>
+                                        </div>
                                  </div>
+                                    </div>
+                                    <div v-else>
+                                    <div class="col-md-6">
+                                        <label for="reparacion_sn" v-if="formato=='PLANTA'" style="display:block">&nbsp;</label>
+                                        <input type="checkbox" id="reparacion_sn" style="float:left;margin-right: 5px;" v-model="reparacion_sn" @change="cambioReparacion_sn()" :disabled="!obra" v-if="formato=='PLANTA'">
+                                        <label for="reparacion_sn" v-if="formato=='PLANTA'">Reparación s/n</label>
+                                    </div>
+                                    </div>
 
                                  <div class="col-md-6">
                                      <div class="form-group" >
