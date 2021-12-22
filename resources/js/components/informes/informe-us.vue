@@ -736,7 +736,7 @@
                                <div class="col-md-12">
                                     <div class="form-group" >
                                         <label for="cantidad_generatrices_linea_pdf_me" title="Cantidad Generatrices por linea en informe">Generatrices por Linea en pdf *</label>
-                                        <input type="number" v-model="cantidad_generatrices_linea_pdf_me" class="form-control" id="cantidad_generatrices_linea_pdf_me" min="1">
+                                        <input type="number" v-model="cantidad_generatrices_linea_pdf_me" class="form-control" id="cantidad_generatrices_linea_pdf_me" min="1" max="18">
                                     </div>
                                 </div>
 
@@ -769,14 +769,21 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr v-for="(item,k) in (Tabla_me)" :key="k" @click="selectPosTabla_me(k)" :class="{selected: indexPosTabla_me === k}" >
+                                                <tr v-for="(item,k) in (Tabla_me)" :key="k" @click="selectPosTabla_me(k)" class="pointer" :class="{selected: indexPosTabla_me === k}" >
                                                     <td>{{ item.elemento_me }}</td>
                                                     <td>{{ item.umbral_me }}</td>
                                                     <td>{{ item.espesor_minimo_me }}</td>
                                                     <td>{{ item.diametro_me }}</td>
                                                     <td>{{ item.cantidad_posiciones_me}}</td>
                                                     <td>{{ item.cantidad_generatrices_me}}</td>
-                                                    <td>{{ item.cantidad_generatrices_linea_pdf_me}}</td>
+                                                    <td>
+                                                        <div v-if="indexPosTabla_me === k">
+                                                           <input type="number" v-model="item.cantidad_generatrices_linea_pdf_me" min="1" max="18">
+                                                        </div>
+                                                        <div v-else>
+                                                             {{ item.cantidad_generatrices_linea_pdf_me}}
+                                                        </div>
+                                                    </td>
                                                     <td><span class="fa fa-minus-circle" @click="removeTabla_me(k)"></span></td>
                                                 </tr>
                                             </tbody>
@@ -789,7 +796,7 @@
                                 <!-- tabla mediciones 2-->
                                 <div v-if="Tabla_me[indexPosTabla_me]">
                                     <div class="col-lg-12">
-                                        <div class="table-responsive" style="overflow:visible !important">
+                                        <div class="table-responsive">
                                             <table class="table table-hover table-bordered" style="display: block;max-height: 500px;border-bottom: none;border-right: none;">
                                                 <tbody>
                                                     <tr v-for="(p) in parseInt(Tabla_me[indexPosTabla_me].cantidad_posiciones_me) + 1" :key="p" @click="selectPosPos(p)" >
@@ -800,7 +807,7 @@
                                                                 &nbsp;
                                                             </div>
                                                             <div v-else-if="p === 1 && g === parseInt(Tabla_me[indexPosTabla_me].cantidad_generatrices_me) + 2">
-                                                                 ACCESORIO
+                                                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ACCESORIO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                             </div>
                                                             <div v-else-if="g === parseInt(Tabla_me[indexPosTabla_me].cantidad_generatrices_me) + 2">
                                                                  <div v-if="indexPosPos == p && indexPosGeneratriz == g">
@@ -1153,7 +1160,7 @@ export default {
         diametro_me:'',
         cantidad_posiciones_me:'',
         cantidad_generatrices_me:'',
-        cantidad_generatrices_linea_pdf_me: 20,
+        cantidad_generatrices_linea_pdf_me: 18,
 
         tecnicas:[],
         estados_superficies:[],
@@ -1162,7 +1169,7 @@ export default {
         calibraciones:[],
         Tabla_us_pa:[],
         indexPosTabla_us_pa:0,
-        indexPosTabla_me:0,
+        indexPosTabla_me:-1,
         indexPosGeneratriz:0,
         indexPosPos:0,
         Tabla_me:[],
@@ -1848,7 +1855,7 @@ export default {
 
         getFocus(g,cant_g,p,cant_p){
             if(g > cant_g ){
-                if(p > cant_p ){       
+                if(p > cant_p ){
                     this.indexPosGeneratriz = 2;
                     this.indexPosPos = 1;
                 }else{
