@@ -1319,7 +1319,9 @@ export default {
         setObra : function(value){
             this.obra = value;
             this.ot_tipo_soldadura='';
-            this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.obra });
+            if(this.obra){
+                this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.obra });
+            }
         },
         setPlanta : function(value){
             this.planta = value;

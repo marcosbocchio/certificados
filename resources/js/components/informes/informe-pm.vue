@@ -843,16 +843,13 @@ export default {
 
         setObra : function(value){
 
-            console.log('entro en el setobra del ri',this.obra);
-
             this.obra = value;
-
-           console.log('entro en el setobra del ri',this.obra);
             this.ot_tipo_soldadura='';
-            this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.obra });
+            if(this.obra){
+                this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.obra });
+            }
         },
         setPlanta : function(value){
-            console.log('el value pm es',value)
             this.planta = value;
         },
         getCliente : function(){
@@ -948,7 +945,6 @@ export default {
 
         setKvMa : function() {
 
-           console.log('seteamos el kv y el ma',this.interno_equipo.voltaje) ;
 
             this.voltaje = this.interno_equipo.voltaje;
             this.am = this.interno_equipo.amperaje;
@@ -1003,10 +999,7 @@ export default {
          },
 
          selectPosDetalle :function(index){
-
-
             this.indexPosDetalle = index ;
-
         },
 
           addDetalle : function () {
@@ -1174,7 +1167,6 @@ export default {
 
         Update : function() {
 
-            console.log('entro para actualizar' );
             this.errors =[];
             let desmagnetizacion_sn ;
             if(this.desmagnetizacion =='SI')

@@ -760,20 +760,14 @@ data() {return {
         },
 
     setObra : function(value){
-
-            console.log('entro en el setobra del ri',this.obra);
-
             this.obra = value;
-
-           console.log('entro en el setobra del ri',this.obra);
             this.ot_tipo_soldadura='';
-            this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.obra });
+            if(this.obra){
+                this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.obra });
+            }
         },
 
     setPlanta : function(value){
-
-            console.log('entro en el value setplanta del lp',value);
-
             this.planta = value;
         },
 
@@ -1054,7 +1048,6 @@ data() {return {
 
         Update : function() {
 
-            console.log('entro para actualizar' );
             this.errors =[];
             this.$store.commit('loading', true);
             var urlRegistros = 'informes_lp/' + this.informedata.id  ;

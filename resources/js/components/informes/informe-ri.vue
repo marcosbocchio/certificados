@@ -1365,8 +1365,10 @@
 
             this.obra = value;
             this.ot_tipo_soldadura='';
-            this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : (this.obra ? this.obra : 'xxxxxxxxxxx') });
-         },
+            if(this.obra){
+                this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.obra });
+            }
+        },
         setPlanta : function(value){
             this.planta = value;
          },
@@ -2136,15 +2138,12 @@
                          perfil_sn = false;
                      else
                          perfil_sn= null;
-                     console.log(perfil_sn);
-                     let defectos = this.formato =='PLANTA' ? this.TablaDetalle : false
                      var urlRegistros = 'informes_ri' ;
                      this.$store.commit('loading', true);
                      axios({
                      method: 'post',
                      url : urlRegistros,
                      data : {
-
                          'ot'              : this.otdata,
                          'obra'            : this.obra,
                          'planta'          : this.planta,
@@ -2230,7 +2229,6 @@
                          perfil_sn = false;
                      else
                          perfil_sn= null;
-                     let defectos = this.formato =='PLANTA' ? this.TablaDetalle : false
                      var urlRegistros = 'informes_ri/' + this.informedata.id  ;
                      this.$store.commit('loading', true);
                      axios({
