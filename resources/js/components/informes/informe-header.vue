@@ -49,85 +49,63 @@
 import {eventEditRegistro} from '../event-bus';
 import {mapState} from 'vuex';
 export default {
-
     props :{
-
-      otdata : {
-        type : Object,
-        required : true
-      },
-
-      informe_id: {
-          type :Number,
-          required:false,
-          default:0,
-      },
-
-     editmode : {
-        type : Boolean,
-        required : false,
-        default : false
+        otdata : {
+            type : Object,
+            required : true
+        },
+        informe_id: {
+            type :Number,
+            required:false,
+            default:0,
+        },
+        editmode : {
+            type : Boolean,
+            required : false,
+            default : false
+        },
+        deshabilitarPlanta_sn : {
+            type : Boolean,
+            required : false,
+            default : false
+        },
+        importado_sn : {
+            type : Boolean,
+            required : false,
+            default : false
+        }
     },
-     deshabilitarPlanta_sn : {
-        type : Boolean,
-        required : false,
-        default : false
-    },
-     importado_sn : {
-        type : Boolean,
-        required : false,
-        default : false
-     }
-     },
-
     data() {return {
-
         cliente:'',
         obra:'',
         planta:'',
         obras:[],
         plantas:[],
-
     }},
-
     created : function() {
-
       this.getCliente();
       this.getObras();
       eventEditRegistro.$on('refreshObra', this.setDatos);
-
     },
-
     mounted : function() {
-
         this.setDatos()
-
     },
-
     computed :{
-
         ...mapState(['url','obra_informe','planta_informe']),
-
      },
-
     methods : {
-
         inputObra :  function(){
-
             console.log('mando el inputobra',this.obra);
             this.$emit('set-obra',this.obra)
-
         },
-
         inputPlanta :  function(){
-
             console.log('mando el inputplanta',this.planta);
             this.$emit('set-planta',this.planta)
-
         },
-
+        resetPlanta : function(){
+            this.planta = ''
+        },
         setDatos : function(){
-
            console.log('entro en set obra');
            this.$forceUpdate();
            this.obra = '';
@@ -143,43 +121,30 @@ export default {
                 this.$store.dispatch('loadPlantaInformes',{ informe_id: this.informe_id , importado_sn: this.importado_sn}).then(response => {
                     console.log(this.planta_informe)
                     this.planta = this.planta_informe
-
                 })
-
-
             }else{
-
                 this.obra =  this.otdata.obra
                 this.inputPlanta()
                 this.inputObra();
-
             }
-
         },
-
         getCliente : function(){
-
             axios.defaults.baseURL = this.url ;
             var urlRegistros = 'clientes/' + this.otdata.cliente_id + '?api_token=' + Laravel.user.api_token;
             axios.get(urlRegistros).then(response =>{
             this.cliente = response.data
             console.log(this.cliente)
             this.getPlantas();
-
             });
         },
-
         getObras : function(){
-
             axios.defaults.baseURL = this.url ;
             var urlRegistros = 'ots/' + this.otdata.id + '/obras_por_tipo_soldaduras' + '?api_token=' + Laravel.user.api_token;
             axios.get(urlRegistros).then(response =>{
             this.obras = response.data
             });
         },
-
         getPlantas : function(){
-
             console.log('el cliente es', this.cliente)
             axios.defaults.baseURL = this.url ;
             var urlRegistros = 'plantas/cliente/' + this.cliente.id + '?api_token=' + Laravel.user.api_token;

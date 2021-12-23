@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-12">
             <form @submit.prevent="editmode ?  Update() : Store()"  method="post">
-                <informe-header :otdata="otdata" :deshabilitarPlanta_sn="isGasoducto" :informe_id="informedata.id" :editmode="editmode" @set-obra="setObra" @set-planta="setPlanta"></informe-header>
+                <informe-header :otdata="otdata" :deshabilitarPlanta_sn="isGasoducto" :informe_id="informedata.id" :editmode="editmode" @set-obra="setObra" @set-planta="setPlanta" ref="informeHeader"></informe-header>
                 <div class="box box-custom-enod">
                    <div class="box-body">
                          <div class="col-md-3">
@@ -1204,6 +1204,9 @@
              this.isGasoducto =  (val == 'DUCTO') ? true : false;
              this.reparacion_sn = (val == 'PLANTA') ? false : this.reparacion_sn;
              this.isPerfil = (val == 'PERFILES') ? true : false;
+             if (this.isGasoducto){
+                this.$refs.informeHeader.resetPlanta()
+             }
          },
          pasada : function (val){
              this.soldador2 =  (val == '1') ? this.soldador2 : '';
@@ -2283,19 +2286,13 @@
                          'TablaPasadas' : this.TablaPasadas,
                          'TablaModelos3d' :this.TablaModelos3d,
                          'tramos'    : this.TablaTramos,
-
                  }}
-
-
                  ).then( response => {
-
                      let informe = response.data;
                      toastr.success('informe N°' + this.numero_inf + ' fue actualizado con éxito ');
                      window.open(  '/pdf/informe/ri/' + informe.id,'_blank');
                      window.location.href =  '/informes/ot/' + this.otdata.id;
-
                  }).catch(error => {
-
                      this.errors = error.response.data.errors;
                          console.log(error.response);
                      $.each( this.errors, function( key, value ) {
@@ -2304,7 +2301,6 @@
                      });
                      if((typeof(this.errors)=='undefined') && (error)){
                              toastr.error("Ocurrió un error al procesar la solicitud");
-
                          }
                 }).finally( () => this.$store.commit('loading', false) )
          }
