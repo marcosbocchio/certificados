@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-12">
             <form @submit.prevent="editmode ?  Update() : Store()"  method="post">
-                <informe-header :otdata="otdata" :informe_id="informedata.id" :editmode="editmode" @set-obra="setObra" @set-planta="setPlanta"></informe-header>
+                <informe-header :otdata="otdata" :deshabilitarPlanta_sn="isGasoducto" :informe_id="informedata.id" :editmode="editmode" @set-obra="setObra" @set-planta="setPlanta"></informe-header>
                 <div class="box box-custom-enod">
                    <div class="box-body">
                          <div class="col-md-3">

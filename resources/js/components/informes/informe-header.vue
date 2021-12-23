@@ -27,10 +27,10 @@
                 </div>
 
                 <div class="col-md-3">
-                    <div class="form-group" >
+                    <div class="form-group">
                         <label for="planta" >Planta</label>
                         <div>
-                            <v-select v-model="planta" label="codigo" @input="inputPlanta" :options="plantas" id="planta" ></v-select>
+                            <v-select :disabled="deshabilitarPlanta_sn" v-model="planta" label="codigo" @input="inputPlanta" :options="plantas" id="planta" ></v-select>
                         </div>
                     </div>
                 </div>
@@ -68,7 +68,11 @@ export default {
         required : false,
         default : false
     },
-
+     deshabilitarPlanta_sn : {
+        type : Boolean,
+        required : false,
+        default : false
+    },
      importado_sn : {
         type : Boolean,
         required : false,
