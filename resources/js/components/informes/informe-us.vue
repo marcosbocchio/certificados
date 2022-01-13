@@ -1327,7 +1327,6 @@ export default {
             this.planta = value;
         },
 
-
          getCliente : function(){
 
             axios.defaults.baseURL = this.url ;

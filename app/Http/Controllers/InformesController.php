@@ -95,6 +95,10 @@ class InformesController extends Controller
                 return redirect()->route('InformeUsCreate',array('ot_id' => $ot_id));
                 break;
 
+            case 'TT':
+                return redirect()->route('InformeTtCreate',array('ot_id' => $ot_id));
+                break;
+
         }
 
     }
@@ -389,7 +393,7 @@ class InformesController extends Controller
             Log::debug('planta:'.$planta);
             return $planta;
         }
-        //  
+        //
         // $valor = DB::select('CALL getPlantaInforme(?,?)',array($informe_id,$importado_sn)));
         // Log::debug($valor);
         // return $valor[0]->codigo;

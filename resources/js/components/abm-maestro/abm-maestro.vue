@@ -7,7 +7,7 @@
               <button class="btn btn-enod" v-on:click.prevent="openNuevoRegistro()" :disabled="!$can(permiso_create)"><span class="fa fa-plus-circle"></span> Nuevo</button>
             </div>
 
-            <div v-show="modelo == 'users' || modelo == 'interno_equipos' || modelo == 'clientes' || modelo == 'equipos'" >
+            <div v-show="inputSearch.includes(modelo)">
               <div class="col-md-3 col-md-offset-8 col-xs-9 col-xs-offset-1">
                 <div class="input-group">
                     <input type="text" v-model="search" class="form-control" v-on:keyup.13="aplicarFiltro" placeholder="Buscar...">
@@ -64,6 +64,7 @@
 
       data () { return {
 
+        inputSearch : ['users','interno_equipos','clientes','equipos','servicios'],
         fillRegistro: {},
         errors:[],
         registros: {},

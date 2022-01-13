@@ -37,7 +37,7 @@
                             </div>
                             <div class="form-group">
                                 <span>
-                                    <a  @click="NuevoInforme(ot_data.id)">
+                                    <a  @click="NuevoInforme">
                                         <button class="btn btn-enod" :disabled="!metodo_selected"><span class="fa fa-plus-circle"></span>
                                             Nuevo
                                     </button>
@@ -270,7 +270,7 @@ export default {
 
         },
 
-        NuevoInforme: function(ot_id){
+        NuevoInforme: function(){
 
             this.$store.commit('loading', true);
             this.$store.dispatch('loadParametrosGenerales','ddppi').then(response => {
@@ -366,7 +366,6 @@ export default {
 
             }
             }).finally(()=> { this.loading_table = false;});
-
 
         },
 

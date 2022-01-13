@@ -258,6 +258,7 @@ Vue.component('informe-ri', require('./components/informes/informe-ri.vue').defa
 Vue.component('informe-pm', require('./components/informes/informe-pm.vue').default);
 Vue.component('informe-lp', require('./components/informes/informe-lp.vue').default);
 Vue.component('informe-us', require('./components/informes/informe-us.vue').default);
+Vue.component('informe-tt', require('./components/informes/informe-tt.vue').default);
 Vue.component('informe-header', require('./components/informes/informe-header.vue').default);
 
 /* Dosimetria */

@@ -14,11 +14,11 @@ class ServiciosController extends Controller
     public function __construct()
     {
 
-          $this->middleware(['role_or_permission:Sistemas|M_servicios'],['only' => ['callView']]);  
-    
+          $this->middleware(['role_or_permission:Sistemas|M_servicios'],['only' => ['callView']]);
+
     }
 
-  
+
     /**
      * Display a listing of the resource.
      *
@@ -26,19 +26,27 @@ class ServiciosController extends Controller
      */
     public function index()
     {
-        return  Servicios::with('metodoEnsayos')->with('unidadMedidas')->orderBy('abreviatura','ASC')->get();
+        return  Servicios::with('metodoEnsayos')
+                           ->with('unidadMedidas')
+                           ->orderBy('abreviatura','ASC')
+                           ->get();
     }
 
     public function paginate(Request $request){
 
-        return  Servicios::with('metodoEnsayos')->with('unidadMedidas')->orderBy('abreviatura','ASC')->paginate(10);
+        $filtro = $request->search;
+        return  Servicios::with('metodoEnsayos')
+                            ->with('unidadMedidas')
+                            ->Filtro($filtro)
+                            ->orderBy('abreviatura','ASC')
+                            ->paginate(10);
     }
 
     public function callView()
-    {   
-        $user = auth()->user(); 
+    {
+        $user = auth()->user();
         $header_titulo = "Servicios";
-        $header_descripcion ="Alta | Baja | Modificación";  
+        $header_descripcion ="Alta | Baja | Modificación";
         return view('servicios',compact('user','header_titulo','header_descripcion'));
 
     }
@@ -61,19 +69,19 @@ class ServiciosController extends Controller
      */
     public function store(ServicioStoreRequest $request)
     {
-        $servicio = new Servicios;   
+        $servicio = new Servicios;
 
         DB::beginTransaction();
-        try { 
+        try {
 
             $this->saveServicio($request,$servicio);
-            DB::commit(); 
+            DB::commit();
 
         } catch (Exception $e) {
-    
+
             DB::rollback();
-            throw $e;      
-            
+            throw $e;
+
         }
     }
 
@@ -108,19 +116,19 @@ class ServiciosController extends Controller
      */
     public function update(ServicioUpdateRequest $request, $id)
     {
-       
-        $servicio = Servicios::find($id);     
-    
+
+        $servicio = Servicios::find($id);
+
         DB::beginTransaction();
         try {
             $this->saveServicio($request,$servicio);
-            DB::commit(); 
-    
+            DB::commit();
+
           } catch (Exception $e) {
-      
+
             DB::rollback();
-            throw $e;      
-            
+            throw $e;
+
           }
     }
 
@@ -131,7 +139,7 @@ class ServiciosController extends Controller
         $servicio->metodo_ensayo_id = $request['metodo_ensayo']['id'];
         $servicio->abreviatura = strtoupper($request['abreviatura']);
         $servicio->save();
-        
+
     }
 
     /**
