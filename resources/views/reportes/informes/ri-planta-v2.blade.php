@@ -140,7 +140,7 @@ footer {
                         </td>
                         <td style="font-size: 11px;  width:64.5px;text-align: center" class="bordered-td">{{$junta_posicion->posicion}}</td>
                         <td style="font-size: 11px;  width:23.5px;text-align: center" class="bordered-td">{{$junta_posicion->densidad}}</td>
-                        <td style="font-size: 9px;   width:370px; " class="bordered-td">&nbsp;
+                        <td style="font-size: 9px;   width:385px; " class="bordered-td">&nbsp;
                         @php $primero = true; @endphp
                             @foreach ($defectos_posiciones as $key => $defecto_posicion)
 
@@ -175,13 +175,13 @@ footer {
                         </td>
 
                         <td style="font-size: 11px; text-align: center;width:37px; " class="bordered-td">
-                            @if ($junta_posicion->aceptable_sn)
+                            @if ($informe_ri->resultado_pdf_sn && $junta_posicion->aceptable_sn)
                                 X
                             @endif
                         </td>
 
                         <td style="font-size: 11px; text-align: center;" class="bordered-td">
-                            @if (!$junta_posicion->aceptable_sn)
+                            @if ($informe_ri->resultado_pdf_sn && !$junta_posicion->aceptable_sn)
                                 X
                             @endif
                         </td>

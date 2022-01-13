@@ -226,13 +226,13 @@ footer {
 
                     <!-- Resultado-->
                     <td style="font-size: 9px;width:32.7px; text-align: center; " class="bordered-td" rowspan="4">
-                        @if ($junta_posiciones->aceptable_sn == 1)
+                        @if ($informe_ri->resultado_pdf_sn && $junta_posiciones->aceptable_sn)
                             X
                         @endif
                     </td>
 
                     <td style="font-size: 9px; text-align: center;" class="bordered-td" rowspan="4">
-                        @if ($junta_posiciones->aceptable_sn == 0)
+                        @if ($informe_ri->resultado_pdf_sn && !$junta_posiciones->aceptable_sn)
                             X
                         @endif
                     </td>
