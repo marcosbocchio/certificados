@@ -1,11 +1,11 @@
 <template>
    <div class="row">
-       <div class="col-md-12">
+        <div class="col-md-12">
            <form @submit.prevent="editmode ?  Update() : Store()"  method="post">
-               <informe-header :otdata="otdata" :informe_id="dataForm.informe_id" :editmode="editmode" @set-obra="setObra($event)" @set-planta="setPlanta($event)"></informe-header>
+                <informe-header :otdata="otdata" :informe_id="dataForm.informe_id" :editmode="editmode" @set-obra="setObra($event)" @set-planta="setPlanta($event)"></informe-header>
                     <div class="box box-custom-enod">
                         <div class="box-body">
-                            <div class="col-md-3">
+                           <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="fecha">Fecha *</label>
                                     <div>
@@ -16,7 +16,7 @@
                             <div class="col-md-3">
                                 <div class="form-group" >
                                     <label for="numero_inf">Informe N°</label>
-                                    <input type="text"  v-model="numero_inf_code" class="form-control" id="numero_inf" disabled>
+                                    <input type="text" v-model="numero_inf_code" class="form-control" id="numero_inf" disabled>
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -49,7 +49,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="procRadio">Procedimiento TT *</label>
-                                    <v-select v-model="dataForm.procedimiento" label="titulo" :options="procedimientos" id="procRadio" :appendToBody="'false'" :autoscroll="true"></v-select>
+                                    <v-select v-model="dataForm.procedimiento" label="titulo" :options="procedimientos" id="procRadio" :appendToBody="false" :autoscroll="true"></v-select>
                                 </div>
                             </div>
 
@@ -75,45 +75,180 @@
                          </div>
 
                         <div class="col-md-3">
+                            <div class="form-group size-pqr-eps" >
+                                <label for="procedimientos_soldadura">EPS / WPS</label>
+                                <v-select v-model="dataForm.ot_tipo_soldadura" label="eps" :options="ot_obra_tipo_soldaduras" id="procedimientos_soldadura"></v-select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group size-pqr-eps">
+                                <label for="pqr">PQR</label>
+                                <v-select v-model="dataForm.ot_tipo_soldadura" label="pqr" :options="ot_obra_tipo_soldaduras" id="pqr"></v-select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Equipo *</label>
+                                <v-select  v-model="dataForm.interno_equipo" :options="interno_equipos" label="nro_interno">
+                                    <template slot="option" slot-scope="option">
+                                        <span class="upSelect">{{ option.nro_interno }}</span> <br>
+                                        <span class="downSelect"> {{ option.equipo.codigo }} </span>
+                                    </template>
+                                </v-select>
+                            </div>
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                        <div class="col-md-3">
                             <div class="form-group" >
-                                <label for="Diametro">Ø *</label>
-                                <v-select v-model="dataForm.diametro" label="diametro" :options="diametros" @input="getEspesores()"></v-select>
+                                <label for="temperatura_inicial">Temp. Inicial</label>
+                                <input type="number" v-model="dataForm.temperatura_inicial" @input="generarGrafico" class="form-control" id="temperatura_inicial" step="0.1">
                             </div>
                         </div>
 
                         <div class="col-md-3">
                             <div class="form-group" >
-                                <label>Espesor</label>
-                                <v-select v-model="dataForm.espesor" label="espesor" :options="espesores" taggable :disabled="isChapa">
+                                <label for="temperatura_subida">Temp. Subida</label>
+                                <input type="number" v-model="dataForm.temperatura_subida" @input="generarGrafico" class="form-control" id="temperatura_subida" step="0.1">
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group" >
+                                <label for="temperatura_mantenimiento">Temp. Mantenimiento</label>
+                                <input type="number" v-model="dataForm.temperatura_mantenimiento" @input="generarGrafico" class="form-control" id="temperatura_mantenimiento" step="0.1">
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group" >
+                                <label for="temperatura_enfriado">Temp. Enfriado</label>
+                                <input type="number" v-model="dataForm.temperatura_enfriado" @input="generarGrafico" class="form-control" id="temperatura_enfriado" step="0.1">
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group" >
+                                <label for="temperatura_final">Temp. Final</label>
+                                <input type="number" v-model="dataForm.temperatura_final" @input="generarGrafico"  class="form-control" id="temperatura_final" step="0.1">
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Norma Evaluación *</label>
+                                <v-select v-model="dataForm.norma_evaluacion" label="codigo" :options="norma_evaluaciones">
                                     <template slot="option" slot-scope="option">
-                                        <span class="upSelect">{{ option.espesor }} </span> <br>
-                                        <span class="downSelect"> {{ option.cuadrante }} </span>
+                                        <span class="upSelect">{{ option.codigo }}</span> <br>
+                                        <span class="downSelect"> {{ option.descripcion }} </span>
                                     </template>
                                 </v-select>
                             </div>
                         </div>
 
                         <div class="col-md-3">
-                             <div class="form-group" >
-                                <div v-if="isChapa">
-                                    <label for="espesor_chapa">Espesor Chapa *</label>
-                                </div>
-                                <div v-else>
-                                     <label for="espesor_chapa">Espesor Chapa </label>
-                                </div>
-                                <input  type="number" class="form-control" v-model="dataForm.espesor_chapa"  id="espesor_chapa" :disabled="!isChapa" step="0.1" >
-                             </div>
+                            <div class="form-group">
+                                <label>Norma Ensayo *</label>
+                                <v-select v-model="dataForm.norma_ensayo" label="codigo" :options="norma_ensayos">
+                                    <template slot="option" slot-scope="option">
+                                        <span class="upSelect">{{ option.codigo }}</span> <br>
+                                        <span class="downSelect"> {{ option.descripcion }} </span>
+                                    </template>
+                                </v-select>
+                            </div>
                         </div>
 
+                        <div class="col-md-3">
+                            <div class="form-group" >
+                                <label for="ejecutor_ensayo">Ejecutor Ensayo *</label>
+                                <v-select v-model="dataForm.ejecutor_ensayo" label="name" :options="ejecutor_ensayos"></v-select>
+                            </div>
+                        </div>
+
+                         <div class="col-md-6">
+                            <line-chart :chart-data="data_indicaciones_temperatura" :options="data_indicaciones_temperatura.options" :chart-id="'img_temp'"></line-chart>
+                        </div>
+
+                    </div>
+
+
+                <div class="box box-custom-enod">
+                    <div class="box-body">
+
+                        <div class="col-md-3">
+                            <div class="form-group" >
+                                <label for="elemento">ELEMENTO</label>
+                                <input type="text" v-model="elemento" class="form-control" id="elemento"  maxlength="30">
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-3">
+                            <div class="form-group" >
+                                <label for="Termocupla">Termocupla Nº</label>
+                                <input type="number" v-model="termocupla" class="form-control" id="Termocupla">
+                            </div>
+                        </div>
+
+                       <div class="clearfix"></div>
+
+                        <div class="col-md-1">
+                            <span>
+                              <button type="button" @click="addDetalle()"><span class="fa fa-plus-circle"></span></button>
+                            </span>
+                        </div>
+
+                         <div class="form-group">
+                            &nbsp;
+                        </div>
+
+                        <div v-if="dataForm.detalle.length">
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-striped table-bordered table-condensed">
+                                        <thead>
+                                            <tr>
+                                                <th class="col-md-4">Elemento</th>
+                                                <th class="col-md-4">Termocupla</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="(item,k) in (dataForm.detalle)" :key="k" @click="selectPosDetalle(k)" :class="{selected: indexPosDetalle === k}" >
+                                                <td>{{ item.elemento }}</td>
+                                                <td>{{ item.termocupla }}</td>
+                                                <td style="text-align:center"><span class="fa fa-minus-circle" @click="removeDetalle(k)"></span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                        </div>
+                       </div>
+
+                  </div>
+                </div>
+
+                    <div class="box box-custom-enod">
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label>Observaciones</label>
+                                <textarea v-model="dataForm.observaciones" class="form-control noresize" rows="3" placeholder="" maxlength="250"></textarea>
+                            </div>
                         </div>
                     </div>
+
+                    <button class="btn btn-primary" type="submit" :disabled="isLoading">Guardar</button>
+
+                </div>
            </form>
             <loading
                 :active.sync="isLoading"
                 :loader="'bars'"
                 :color="'red'">
             </loading>
-       </div>
+        </div>
    </div>
 </template>
 <script>
@@ -127,9 +262,13 @@ import { toastrInfo,toastrDefault } from '../toastrConfig';
 import moment from 'moment';
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
+import LineChart from '../chart.js/LineChart.js'
+import html2canvas from 'html2canvas-render-offscreen';
+
 export default {
     components: {
-        Loading
+        Loading,
+        LineChart,
     },
     props:{
         editmode : {
@@ -147,7 +286,13 @@ export default {
     },
     data() { return {
         procedimiento: [],
+        data_indicaciones_temperatura : { options : []},
+        elemento:'',
+        termocupla:'',
+        indexPosDetalle:0,
         dataForm: {
+            ot: this.otdata,
+            metodo_ensayo: this.metodo,
             obra:'',
             planta:'',
             fecha:'',
@@ -160,6 +305,19 @@ export default {
             linea:'',
             plano_isom:'',
             hojas:'',
+            ot_tipo_soldadura:'',
+            norma_evaluacion:'',
+            norma_ensayo:'',
+            ejecutor_ensayo:'',
+            temperatura_inicial:'',
+            temperatura_subida:'',
+            temperatura_mantenimiento:'',
+            temperatura_enfriado:'',
+            temperatura_final:'',
+            imgData:'',
+            detalle: [],
+            observaciones:'',
+            TablaModelos3d : [],
         }
 
     }},
@@ -174,28 +332,91 @@ export default {
                         toastr.options = toastrDefault;
                     }
             });
+        await this.$store.dispatch('loadInternoEquipos',{ 'metodo' : this.metodo, 'activo_sn' : 1, 'tipo_penetrante' : 'null' });
+        await this.$store.dispatch('loadNormaEvaluaciones');
+        await this.$store.dispatch('loadNormaEnsayos');
+        await this.$store.dispatch('loadEjecutorEnsayo', this.otdata.id);
         this.$store.commit('loading', false);
     },
     mounted : function() {
         this.getNumeroInforme();
+        this.generarGrafico();
+
      },
     computed :{
 
-        ...mapState(['isLoading','url','materiales','ot_obra_tipo_soldaduras','diametros','espesores','procedimientos','norma_evaluaciones','particulas','norma_ensayos','iluminaciones','ejecutor_ensayos','interno_equipos','instrumentos_mediciones','modelos_3d']),
+        ...mapState(['isLoading','url','materiales','ot_obra_tipo_soldaduras','procedimientos','norma_evaluaciones','particulas','norma_ensayos','iluminaciones','ejecutor_ensayos','interno_equipos','instrumentos_mediciones','modelos_3d']),
 
         numero_inf_code : function()  {
-
-               if(this.dataForm.numero_inf)
-                   return this.metodo + (this.dataForm.numero_inf <10? '00' : this.dataForm.numero_inf<100? '0' : '') + this.dataForm.numero_inf ;
+            if(this.dataForm.numero_inf)
+                return this.metodo + (this.dataForm.numero_inf <10? '00' : this.dataForm.numero_inf<100? '0' : '') + this.dataForm.numero_inf ;
         },
+
+        existenTemperaturas : function() {
+
+           return (this.dataForm.temperatura_inicial && this.dataForm.temperatura_subida && this.dataForm.temperatura_mantenimiento && this.dataForm.temperatura_enfriado && this.dataForm.temperatura_final)
+        }
 
      },
     methods : {
+        generarGrafico : function() {
+
+            if (!this.existenTemperaturas)
+                return
+
+            var SegundoPunto = (parseFloat(this.dataForm.temperatura_mantenimiento) - parseFloat(this.dataForm.temperatura_inicial)) / parseFloat(this.dataForm.temperatura_subida)
+
+/*             if(Number.isInteger(SegundoPundo)){
+
+            } */
+            var x = 0
+            var labels=[]
+            while (SegundoPunto > x ) {
+                labels.push(x)
+                x++;
+            }
+            labels.push(SegundoPunto)
+            labels.push(x)
+            labels.push(x + 1)
+            labels.push(SegundoPunto + 2)
+            x = x + 2
+            while (x <= 10) {
+                labels.push(x)
+                x++
+            }
+            console.log('SegundoPunto:', SegundoPunto)
+            console.log('labels:', labels)
+
+            //const labels = ['0','1','2','3','4','5','6','7','8','9','10']
+            this.data_indicaciones_temperatura = {
+            labels: labels,
+            datasets: [{
+                label: 'Tratamiento termico',
+                data:[this.dataForm.temperatura_inicial,this.dataForm.temperatura_subida,this.dataForm.temperatura_mantenimiento,this.dataForm.temperatura_mantenimiento,this.dataForm.temperatura_mantenimiento,this.dataForm.temperatura_mantenimiento,this.dataForm.temperatura_enfriado,this.dataForm.temperatura_final],
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
+            }],
+
+            options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                    suggestedMax: parseInt(this.dataForm.temperatura_mantenimiento) + 300,
+                    suggestedMin: 0,
+                    }
+                }],
+              }
+            }
+            };
+
+            var newCanvas = document.getElementById('img_temp');
+            this.dataForn.imgData = newCanvas.toDataURL()
+        },
 
         setObra : function(value){
             this.dataForm.obra = value;
             this.dataForm.ot_tipo_soldadura='';
-            if(this.obra){
+            if(this.dataForm.obra){
                 this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.dataForm.obra });
                 }
         },
@@ -214,7 +435,67 @@ export default {
               }
          },
 
-    }
+          addDetalle : function () {
+
+            if (!this.elemento){
+                 toastr.error('El campo elemento es obligatorio');
+                 return ;
+            }
+
+            if (!this.termocupla){
+                 toastr.error('El campo termocupla es obligatorio');
+                 return ;
+            }
+
+            this.dataForm.detalle.push({
+                elemento : this.elemento,
+                termocupla:     this.termocupla,
+            });
+            this.elemento = '',
+            this.termocupla = '';
+
+        },
+
+         removeDetalle(index) {
+            this.indexPosDetalle = 0;
+            this.dataForm.detalle.splice(index, 1);
+
+        },
+
+        Store : function () {
+
+            var errors = [];
+            this.$store.commit('loading', true);
+            var urlRegistros = 'informes_tt' ;
+            axios({
+              method: 'post',
+              url : urlRegistros,
+              data : {
+                ...this.dataForm
+            }
+
+          }).then(response => {
+
+          let informe = response.data;
+          toastr.success('informe N°' + this.numero_inf + ' fue creado con éxito ');
+          window.open('/pdf/informe/tt/' + informe.id,'_blank');
+          window.location.href =  '/informes/ot/' + this.otdata.id;
+
+        }).catch(error => {
+            errors = error.response.data.errors;
+            console.log(error.response);
+            $.each( errors, function( key, value ) {
+                toastr.error(value);
+                console.log( key + ": " + value );
+            });
+
+            if((typeof(errors)=='undefined') && (error)){
+                toastr.error("Ocurrió un error al procesar la solicitud");
+            }
+
+            }).finally( () => this.$store.commit('loading', false))
+        }
+    },
 }
 </script>
  <style scoped>

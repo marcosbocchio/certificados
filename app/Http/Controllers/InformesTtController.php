@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Ots;
 use App\InformesTt;
+use App\Informe;
+use App\DetallesTt;
+use Illuminate\Support\Facades\DB;
 use Exception as Exception;
 use Illuminate\Support\Facades\Log;
 
@@ -47,21 +50,56 @@ class InformesTtController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,$EsRevision = false)
     {
-        //
-    }
+        $informe  = new Informe;
+        $informeTt  = new InformesTt;
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+        DB::beginTransaction();
+        try {
+
+          $informe = (new \App\Http\Controllers\InformesController)->saveInforme($request,$informe,$EsRevision);
+          $informeTt = $this->saveInformeTt($request,$informe,$informeTt);
+          $this->saveDetalle($request,$informeTt);
+          DB::commit();
+
+        } catch (Exception $e) {
+
+          DB::rollback();
+          throw $e;
+
+        }
+
+        return $informe;
+      }
+
+      public function saveInformeTt($request,$informe,$informeTt) {
+
+        $informeTt->informe_id = $informe->id;
+        $informeTt->temperatura_inicial = $request->temperatura_inicial;
+        $informeTt->temperatura_subida = $request->temperatura_subida;
+        $informeTt->temperatura_mantenimiento = $request->temperatura_mantenimiento;
+        $informeTt->temperatura_enfriado = $request->temperatura_enfriado;
+        $informeTt->temperatura_final = $request->temperatura_final;
+        $informeTt->save();
+
+        return $informeTt;
+
+      }
+
+      public function saveDetalle($request,$informeTt) {
+
+        foreach ($request->detalle as $item) {
+
+           $detalleTt = new DetallesTt;
+           $detalleTt->elemento = $item['elemento'];
+           $detalleTt->termocupla = $item['termocupla'];
+           $detalleTt->informe_tt_id =  $informeTt->id;
+           $detalleTt->save();
+        }
+      }
+
+
 
     /**
      * Show the form for editing the specified resource.

@@ -227,6 +227,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('informes_pm','InformesPmController');
     Route::resource('informes_lp','InformesLpController');
     Route::resource('informes_us','InformesUsController');
+    Route::resource('informes_tt','InformesTtController');
 
      /*  informes importados */
     Route::resource('informes_importados','InformesImportadosController');
