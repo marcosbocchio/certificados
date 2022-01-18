@@ -122,9 +122,12 @@
 
                 this.loading = true;
                 axios.defaults.baseURL = this.url ;
+                console.log('modelo',this.modelo)
                 var urlRegistros = this.modelo + '/paginate' + '?page='+ page + '&search=' + this.search;
+                console.log(urlRegistros)
                 axios.get(urlRegistros).then(response =>{
                      this.registros = response.data
+                     console.log(this.registros)
                 }).finally(() =>
                     this.loading = false,
                     )

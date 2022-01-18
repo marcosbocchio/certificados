@@ -26,14 +26,19 @@
                             </div>
                         </div>
 
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Extensión de ensayo</label>
+                                <input type="text" v-model="extension_ensayo" class="form-control"  placeholder="" maxlength="40">
+                            </div>
+                        </div>
+
                         <div class="col-md-3" >
                             <div class="form-group">
                                 <label for="material">Material *</label>
                                 <v-select v-model="material" label="codigo" :options="materiales" id="material"></v-select>
                             </div>
                         </div>
-
-                        <div class="clearfix"></div>
 
                          <div class="col-md-3" >
                              <div class="form-group">
@@ -68,44 +73,11 @@
                         </div>
 
                         <div class="col-md-3">
-                            <div class="form-group" >
-                                <label for="Diametro">Ø *</label>
-                                <v-select v-model="diametro" label="diametro" :options="diametros" @input="getEspesores()"></v-select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="form-group" >
-                                <label>Espesor</label>
-                                <v-select v-model="espesor" label="espesor" :options="espesores" taggable :disabled="isChapa">
-                                    <template slot="option" slot-scope="option">
-                                        <span class="upSelect">{{ option.espesor }} </span> <br>
-                                        <span class="downSelect"> {{ option.cuadrante }} </span>
-                                    </template>
-                                </v-select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                             <div class="form-group" >
-                                <div v-if="isChapa">
-                                    <label for="espesor_chapa">Espesor Chapa *</label>
-                                </div>
-                                <div v-else>
-                                     <label for="espesor_chapa">Espesor Chapa </label>
-                                </div>
-                                <input  type="number" class="form-control" v-model="espesor_chapa"  id="espesor_chapa" :disabled="!isChapa" step="0.1" >
-                             </div>
-                        </div>
-
-                        <div class="col-md-3">
                             <div class="form-group size-pqr-eps">
                                 <label for="procedimientos_soldadura">EPS / WPS *</label>
                                 <v-select v-model="ot_tipo_soldadura" label="eps" :options="ot_obra_tipo_soldaduras" id="procedimientos_soldadura"></v-select>
                             </div>
                         </div>
-
-                        <div class="clearfix"></div>
 
                         <div class="col-md-3">
                             <div class="form-group size-pqr-eps">
@@ -116,10 +88,12 @@
 
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="procRadio">Procedimiento LP *</label>
+                                <label for="procRadio">Procedimiento CV *</label>
                                 <v-select v-model="procedimiento" label="titulo" :options="procedimientos" id="procRadio"></v-select>
                             </div>
                         </div>
+
+                        <div class="clearfix"></div>
 
                         <div class="col-md-3">
                             <div class="form-group">
@@ -132,7 +106,6 @@
                                 </v-select>
                             </div>
                         </div>
-
 
                         <div class="col-md-3">
                             <div class="form-group">
@@ -147,146 +120,104 @@
                         </div>
 
                         <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Metodo Trabajo *</label>
-                                    <v-select  v-model="metodo_trabajo_lp" :options="metodos_trabajo_lp" label="tipo_metodo"  @input="getInstrumentoMediciones()">
-                                        <template slot="option" slot-scope="option">
-                                            <span class="upSelect">{{ option.tipo }}</span> <br>
-                                            <span class="downSelect"> {{ option.metodo }} </span>
-                                        </template>
-                                    </v-select>
-                            </div>
-                        </div>
+                             <div class="form-group" >
+                                 <label>Campana *</label>
+                                 <v-select v-model="campana" :options="campanas" label="designacion"  :clearable="false">
+                                    <template slot="option" slot-scope="option">
+                                        <span class="upSelect">{{ option.designacion }}</span> <br>
+                                        <span class="downSelect"> {{ option.tipo_angular_sn ? 'ANGULAR' : 'RECTANGULAR' }} </span>
+                                    </template>
+                                 </v-select>
+                             </div>
+                         </div>
+                        <div class="col-md-3">
+                             <div class="form-group" >
+                                 <label for="formato">Presión máx. Manómetro*</label>
+                                <input type="number" v-model="campana.presion_max_manometro" class="form-control" step="0.01">
+                             </div>
+                         </div>
 
                         <div class="col-md-3">
-                            <div class="form-group">
-                                <label> Tipo Penetrante *</label>
-                                <input type="text" v-model="tipo_penetrante" class="form-control" id="tipo_penetrante" disabled>
-                            </div>
-                        </div>
+                             <div class="form-group" >
+                                 <label for="formato">Presión trabajo min.*</label>
+                                <input type="number" v-model="campana.presion_trabajo_min" class="form-control" step="0.01">
+                             </div>
+                         </div>
 
                         <div class="col-md-3">
+                             <div class="form-group" >
+                                 <label for="formato">Presión trabajo máx.*</label>
+                                <input type="number" v-model="campana.presion_trabajo_max" class="form-control" step="0.01" >
+                             </div>
+                         </div>
+
+                        <div class="col-xs-12 col-md-3">
                             <div class="form-group">
-                                <label>Inst. Medición *</label>
-
-                                    <v-select  v-model="interno_equipo" :options="interno_equipos" label="nro_interno" @input="getFuente()">
-                                        <template slot="option" slot-scope="option">
-                                            <span class="upSelect">{{ option.nro_interno }}</span> <br>
-                                            <span class="downSelect"> {{ option.equipo.codigo }} </span>
-                                        </template>
-                                    </v-select>
-
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="form-group" >
-                                <label for="instrumento_medicion">Tipo</label>
-                                <div v-if="interno_equipo">
-                                    <input type="text" v-model="interno_equipo.equipo.instrumento_medicion" class="form-control" id="instrumento_medicion" disabled>
+                                <label>Dimensiones (mm)</label>
+                                <div class="row">
+                                   <div class="col-md-4 col-xs-3">
+                                        <input type="number" v-model="campana.ancho" class="form-control" :disabled="!this.campana.tipo_angular_sn" step="0.01">
+                                   </div>
+                                   <div class="col-md-4 col-xs-3">
+                                        <input type="number" v-model="campana.alto" class="form-control" :disabled="!this.campana.tipo_angular_sn" step="0.01" >
+                                   </div>
+                                   <div class="col-md-4 col-xs-3">
+                                        <input type="number" v-model="campana.profundidad" class="form-control" :disabled="!this.campana.tipo_angular_sn" step="0.01">
+                                   </div>
                                 </div>
-                                 <div v-else>
-                                    <input type="text" class="form-control" id="instrumento_medicion" disabled>
-                                </div>
-
                             </div>
                         </div>
+
+                        <div class="col-md-3">
+                             <div class="form-group" >
+                                 <label>Bomba *</label>
+                                 <v-select v-model="bomba" :options="bombas" label="designacion" :clearable="false">
+                                    <template slot="option" slot-scope="option">
+                                        <span class="upSelect">{{ option.designacion }}</span> <br>
+                                        <span class="downSelect"> {{ option.marca }} </span>
+                                    </template>
+                                 </v-select>
+                             </div>
+                         </div>
+
+                        <div class="clearfix"></div>
+
+                        <div class="col-md-3">
+                             <div class="form-group" >
+                                 <label>Caudal (CFM) *</label>
+                                <input type="number" v-model="bomba.caudal" class="form-control" step="0.01">
+                             </div>
+                         </div>
+
+                        <div class="col-md-3">
+                             <div class="form-group" >
+                                 <label>Voltaje *</label>
+                                <input type="number" v-model="bomba.voltaje" class="form-control" step="0.01">
+                             </div>
+                         </div>
+
+                        <div class="col-md-3">
+                             <div class="form-group" >
+                                 <label>Liquido *</label>
+                                <input type="text" v-model="liquido" class="form-control" disabled>
+                             </div>
+                         </div>
 
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label>Líquido Penetrante *</label>
-                                    <v-select  v-model="penetrante_tipo_liquido" :options="penetrantes_tipo_liquido" label="tipo">
-                                        <template slot="option" slot-scope="option">
-                                            <span class="upSelect">{{ option.tipo }}</span> <br>
-                                            <span class="downSelect"> {{ option.marca }} </span>
-                                        </template>
-                                    </v-select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Aplicación  Penetrante</label>
-                                <v-select v-model="penetrante_aplicacion" label="codigo" :options="aplicaciones_lp"></v-select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="form-group" >
-                                <label for="tiempo_penetracion">Tiempo Penetración</label>
-                                <input type="number" v-model="tiempo_penetracion" class="form-control" id="tiempo_penetracion">
-                            </div>
-                        </div>
-
-
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Líquido Revelador *</label>
-                                    <v-select  v-model="revelador_tipo_liquido" :options="reveladores_tipo_liquido" label="tipo">
-                                        <template slot="option" slot-scope="option">
-                                            <span class="upSelect">{{ option.tipo }}</span> <br>
-                                            <span class="downSelect"> {{ option.marca }} </span>
-                                        </template>
-                                    </v-select>
+                                <label>Modo de aplicación *</label>
+                                <v-select v-model="modo_aplicacion" label="codigo" :options="aplicaciones"></v-select>
                             </div>
                         </div>
 
                         <div class="clearfix"></div>
 
                         <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Aplicación  Revelador *</label>
-                                <v-select v-model="revelador_aplicacion" label="codigo" :options="aplicaciones_lp"></v-select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Líquido Removedor *</label>
-                                    <v-select  v-model="removedor_tipo_liquido" :options="removedores_tipo_liquido" label="tipo">
-                                        <template slot="option" slot-scope="option">
-                                            <span class="upSelect">{{ option.tipo }}</span> <br>
-                                            <span class="downSelect"> {{ option.marca }} </span>
-                                        </template>
-                                    </v-select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Aplicación  Removedor *</label>
-                                <v-select v-model="removedor_aplicacion" label="codigo" :options="aplicaciones_lp"></v-select>
-                            </div>
-                        </div>
-
-
-                        <div class="col-md-3">
-                            <div class="form-group" >
-                                <label for="limpieza_previa">Limpieza Previa</label>
-                                <input type="text" v-model="limpieza_previa" class="form-control" id="limpieza_previa">
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="form-group" >
-                                <label for="limpieza_intermedia">Limpieza Intermedia</label>
-                                <input type="text" v-model="limpieza_intermedia" class="form-control" id="limpieza_intermedia">
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="form-group" >
-                                <label for="limpieza_final">Limpieza final</label>
-                                <input type="text" v-model="limpieza_final" class="form-control" id="limpieza_final">
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="form-group" >
-                                <label for="iluminaciones">Iluminaciones *</label>
-                                <v-select v-model="iluminacion" label="codigo" :options="iluminaciones" disabled ></v-select>
-                            </div>
-                        </div>
+                             <div class="form-group" >
+                                 <label>Estado del producto *</label>
+                                <input type="text" v-model="estado_producto" class="form-control" disabled>
+                             </div>
+                         </div>
 
                         <div class="col-md-3">
                             <div class="form-group" >
@@ -294,7 +225,6 @@
                                 <v-select v-model="ejecutor_ensayo" label="name" :options="ejecutor_ensayos"></v-select>
                             </div>
                         </div>
-
                   </div>
                </div>
 
@@ -311,6 +241,8 @@
                          <div class="clearfix"></div>
 
                          <div class="col-md-1">
+                            <span>
+                            </span>
                             <span>
                               <button type="button" @click="addModelo()"><span class="fa fa-plus-circle"></span></button>
                             </span>
@@ -350,21 +282,26 @@
 
                         <div class="col-md-3">
                             <div class="form-group" >
-                                <label for="pieza">ELEMENTO</label>
-                                <input type="text" v-model="pieza" class="form-control" id="pieza" maxlength="30">
+                                <label for="elemento">ELEMENTO</label>
+                                <input type="text" v-model="elemento" class="form-control" id="elemento" maxlength="30">
                             </div>
                         </div>
-
-
+                         <div class="col-md-3">
+                             <div class="form-group" >
+                                 <label for="diametro">Diámetro</label>
+                                 <v-select v-model="diametro" label="diametro" :options="diametros"></v-select>
+                             </div>
+                         </div>
                         <div class="col-md-3">
-                            <div class="form-group" >
-                                <label for="cm">CM</label>
-                                <input type="number" v-model="cm" class="form-control" id="cm">
-                            </div>
+
+                            <label>Cuño</label>
+                            <v-select v-model="soldador" :options="soldadores" label="codigo">
+                                <template slot="option" slot-scope="option">
+                                    <span class="upSelect">{{ option.nombre }} </span> <br>
+                                    <span class="downSelect"> {{ option.codigo }} </span>
+                                </template>
+                            </v-select>
                         </div>
-
-                       <div class="clearfix"></div>
-
                         <div class="col-md-1">
                             <span>
                               <button type="button" @click="addDetalle()"><span class="fa fa-plus-circle"></span></button>
@@ -375,41 +312,35 @@
                             &nbsp;
                         </div>
 
-                        <div v-if="TablaLp.length">
+                        <div v-if="TablaCv.length">
                             <div class="col-md-12">
                                 <div class="table-responsive">
                                     <table class="table table-hover table-striped table-bordered table-condensed">
                                         <thead>
                                             <tr>
-                                                <th class="col-md-2">Elemento</th>
-                                                <th class="col-md-1">CM</th>
-                                                <th class="col-md-5">Detalle</th>
+                                                <th class="col-md-4">Elemento</th>
+                                                <th class="col-md-4">Diámetro</th>
+                                                <th class="col-md-4">Cuño</th>
                                                 <th class="col-md-1">Aceptable</th>
                                                 <th class="col-md-1">Referencia</th>
-                                                <th class="col-md-2">&nbsp;</th>
+                                                <th class="col-md-1"> &nbsp;</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr v-for="(item,k) in (TablaLp)" :key="k" @click="selectPosDetalle(k)" :class="{selected: indexPosDetalle === k}" >
-                                                <td>{{ item.pieza }}</td>
-                                                <td>{{ item.cm }}</td>
-                                                <td>
-                                                    <div v-if="indexPosDetalle == k ">
-                                                    <input type="text" v-model="TablaLp[k].detalle" maxlength="50" size="100%">
-                                                    </div>
-                                                    <div v-else>
-                                                    {{ TablaLp[k].detalle }}
-                                                    </div>
-                                                </td>
+                                            <tr v-for="(item,k) in (TablaCv)" :key="k" :class="{selected: indexPosDetalle === k}" >
+                                                <td>{{ item.elemento }}</td>
+                                                <td>{{ item.diametro.diametro }}</td>
+                                                <td>{{ item.soldador.codigo}}</td>
                                                 <td style="text-align:center">
-                                                    <input type="checkbox" id="checkbox" v-model="TablaLp[k].aceptable_sn">  </td>
+                                                    <input type="checkbox" id="checkbox" v-model="TablaCv[k].aceptable_sn">
+                                                </td>
                                                 <td style="text-align:center">
                                                     <span :class="{ existe : (item.observaciones ||
                                                                                 item.path1 ||
                                                                                 item.path2 ||
                                                                                 item.path3 ||
                                                                                 item.path4 )
-                                                }" class="fa fa-file-archive-o" @click="OpenReferencias($event,k,'Informe PM',item)" ></span>
+                                                }" class="fa fa-file-archive-o" @click="OpenReferencias($event,k,'Informe CV',item)" ></span>
                                                 </td>
 
 
@@ -490,7 +421,7 @@ props :{
             default : function () { return {}}
             },
 
-        informe_lpdata : {
+        informe_cvdata : {
             type : Object,
             required : false
             },
@@ -511,20 +442,6 @@ props :{
             required : false,
         },
 
-        diametrodata : {
-            type : Object,
-            required : false
-            },
-
-        diametro_espesordata : {
-            type : Object,
-            required : false
-                },
-
-        interno_equipodata : {
-            type : [ Object ],
-            required : false
-            },
 
         procedimientodata : {
             type : [ Object ],
@@ -541,51 +458,23 @@ props :{
             required : false
             },
 
+        campanadata : {
+            type : [ Object ],
+            required : false
+            },
+        bombadata : {
+            type : [ Object ],
+            required : false
+            },
+
         ejecutor_ensayodata : {
             type : [ Object ],
             required : false
             },
-
-         metodo_trabajo_lpdata : {
+        aplicaciondata : {
             type : [ Object ],
             required : false
             },
-
-        penetrante_tipo_liquido_data : {
-            type : [ Object ],
-            required : false
-            },
-
-        revelador_tipo_liquido_data : {
-            type : [ Object ],
-            required : false
-            },
-
-        removedor_tipo_liquido_data : {
-            type : [ Object ],
-            required : false
-            },
-
-        penetrante_aplicacion_data : {
-            type : [ Object ],
-            required : false
-            },
-
-        revelador_aplicacion_data : {
-            type : [ Object ],
-            required : false
-            },
-
-        removedor_aplicacion_data : {
-            type : [ Object ],
-            required : false
-            },
-
-        iluminacion_data : {
-            type : [ Object ],
-            required : false
-            },
-
          detalledata : {
             type : [ Array ],
             required : false
@@ -599,6 +488,10 @@ props :{
 
 data() {return {
 
+        bombas:[],
+        bomba:'',
+        campanas:[],
+        campana:'',
         errors:[],
         obra:'',
         planta:'',
@@ -608,44 +501,32 @@ data() {return {
         componente:'',
         tipo_soldadura:'',
         ot_tipo_soldadura:'',
+        modo_aplicacion:'',
         material:'',
         material2:'',
         material2_tipo:'Accesorio',
+        liquido:'PROOF CHECK',
+        estado_producto:'LIQUIDO',
         linea:'',
         plano_isom:'',
+        soldadores:[],
         hoja:'',
-        diametro:'',
-        espesor:'',
-        espesor_chapa:'',
-        tecnica:'',
-        interno_equipo:{ equipo:'' },
         procedimiento:'',
         norma_ensayo:'',
         norma_evaluacion:'',
-        metodo_trabajo_lp:'',
-        tipo_penetrante:'',
-        penetrante_tipo_liquido:'',
-        tiempo_penetracion:'',
-        revelador_tipo_liquido:'',
-        removedor_tipo_liquido:'',
-        penetrante_aplicacion:'',
-        revelador_aplicacion:'',
-        removedor_aplicacion:'',
-        limpieza_previa:'',
-        limpieza_intermedia:'',
-        limpieza_final:'',
         ejecutor_ensayo:'',
-        iluminacion:'',
         isChapa:false,
+        formato:'',
         observaciones:'',
+        extension_ensayo:'',
         modelo_3d:'',
         TablaModelos3d :[],
+        aplicaciones:[],
         //detalle
-        pieza:'',
-        cm:'0',
-        metodos_trabajo_lp:[],
-        aplicaciones_lp:[],
-        TablaLp:[],
+        elemento:'',
+        soldador:'',
+        diametro:'',
+        TablaCv:[],
         indexPosDetalle:0,
 
         index_referencias:'',
@@ -659,7 +540,6 @@ data() {return {
     created :  function() {
         this.$store.commit('loading', true)
         this.$store.dispatch('loadMateriales');
-        this.$store.dispatch('loadDiametros');
         this.$store.dispatch('loadProcedimietosOtMetodo',
         { 'ot_id' : this.otdata.id, 'metodo' : this.metodo }).then(response =>{
                 if(this.procedimientos.length == 0  ){
@@ -668,14 +548,17 @@ data() {return {
                     toastr.options = toastrDefault;
                 }
         });
+        this.getSoldadores();
         this.$store.dispatch('loadNormaEvaluaciones');
         this.$store.dispatch('loadNormaEnsayos');
-        this.$store.dispatch('loadIluminaciones');
         this.$store.dispatch('loadEjecutorEnsayo', this.otdata.id);
+        this.$store.dispatch('loadDiametros');
         this.$store.dispatch('loadModelos3d');
-        this.getMetodosTrabajoLp();
-        this.getAplicacionesLp();
+        this.getAplicaciones()
+        this.getBombas();
+        this.getCampanas();
         this.setEdit();
+        this.$store.commit('loading', false)
     },
 
     mounted : function() {
@@ -697,7 +580,7 @@ data() {return {
 
     computed :{
 
-        ...mapState(['isLoading','url','materiales','ot_obra_tipo_soldaduras','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','interno_equipos','iluminaciones','penetrantes_tipo_liquido','reveladores_tipo_liquido','removedores_tipo_liquido','ejecutor_ensayos','fuentePorInterno','modelos_3d']),
+        ...mapState(['isLoading','url','diametros','materiales','ot_obra_tipo_soldaduras','procedimientos','norma_evaluaciones','norma_ensayos','ejecutor_ensayos','fuentePorInterno','modelos_3d']),
 
         numero_inf_code : function()  {
 
@@ -718,47 +601,61 @@ data() {return {
                this.obra = this.informedata.obra;
                this.planta = this.informedata.planta;
                this.numero_inf = this.informedata.numero;
+               this.extension_ensayo = this.informe_cvdata.extension_ensayo;
+                this.ot_tipo_soldadura = this.ot_tipo_soldaduradata;
                this.componente = this.informedata.componente;
-               this.ot_tipo_soldadura = this.ot_tipo_soldaduradata;
                this.material = this.materialdata;
                this.material2 = this.material2data;
                if(this.informedata.material2_tipo) { this.material2_tipo = this.informedata.material2_tipo };
                this.linea = this.informedata.linea;
                this.plano_isom = this.informedata.plano_isom;
                this.hoja = this.informedata.hoja;
-               this.diametro = this.diametrodata;
-               this.espesor = this.informedata.espesor_especifico ? {'espesor' : this.informedata.espesor_especifico} : this.diametro_espesordata;
-               this.tecnica = this.tecnicadata;
-               this.interno_equipo = this.interno_equipodata;
                this.procedimiento = this.procedimientodata;
                this.norma_evaluacion = this.norma_evaluaciondata;
                this.norma_ensayo = this.norma_ensayodata;
-               this.espesor_chapa = this.informedata.espesor_chapa;
-               this.metodo_trabajo_lp = this.metodo_trabajo_lpdata;
-               this.tipo_penetrante = (this.metodo_trabajo_lp.tipo == 'TIPO I') ? 'Fluorescente' : 'Visible';
                this.ejecutor_ensayo = this.ejecutor_ensayodata;
                this.observaciones = this.informedata.observaciones;
-               this.penetrante_tipo_liquido = this.penetrante_tipo_liquido_data;
-               this.revelador_tipo_liquido  = this.revelador_tipo_liquido_data;
-               this.removedor_tipo_liquido  = this.removedor_tipo_liquido_data;
-               this.penetrante_aplicacion   = this.penetrante_aplicacion_data;
-               this.tiempo_penetracion      = this.informe_lpdata.tiempo_penetracion;
-               this.revelador_aplicacion    = this.revelador_aplicacion_data;
-               this.removedor_aplicacion    = this.removedor_aplicacion_data;
-               this.limpieza_previa         = this.informe_lpdata.limpieza_previa;
-               this.limpieza_intermedia     = this.informe_lpdata.limpieza_intermedia;
-               this.limpieza_final          = this.informe_lpdata.limpieza_final;
-               this.iluminacion = this.iluminacion_data;
-               this.TablaLp = this.detalledata;
+               this.presion_trabajo_max = this.informe_cvdata.presion_trabajo_max;
+               this.bomba = this.bombadata;
+               this.campana = this.campanadata;
+               this.campana.presion_max_manometro = this.informe_cvdata.presion_max_manometro;
+               this.campana.presion_trabajo_min = this.informe_cvdata.presion_trabajo_min;
+               this.campana.presion_trabajo_max = this.informe_cvdata.presion_trabajo_max;
+               this.campana.ancho = this.informe_cvdata.ancho;
+               this.campana.alto = this.informe_cvdata.alto;
+               this.campana.profundidad = this.informe_cvdata.profundidad;
+               this.modo_aplicacion = this.aplicaciondata
+
+               this.TablaCv = this.detalledata;
                this.TablaModelos3d = this.tablamodelos3d_data;
-               this.getTipoLiquidos();
-               this.$store.dispatch('loadInternoEquipos',{ 'metodo' : this.metodo, 'activo_sn' : 1, 'tipo_penetrante' : this.tipo_penetrante });
-               this.setearTipoPenetrante();
                this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.informedata.obra });
             }
 
         },
+    async getSoldadores(){
+            axios.defaults.baseURL = this.url ;
+            var urlRegistros = 'ot_soldadores/ot/' + this.otdata.id + '?api_token=' + Laravel.user.api_token;
+            await axios.get(urlRegistros).then(response =>{
+            this.soldadores = response.data
+            });
 
+        },
+    getBombas: function(){
+
+        axios.defaults.baseURL = this.url ;
+        var urlRegistros = 'bombas' + '?api_token=' + Laravel.user.api_token;
+        axios.get(urlRegistros).then(response =>{
+        this.bombas = response.data
+        });
+    },
+    getCampanas: function(){
+
+        axios.defaults.baseURL = this.url ;
+        var urlRegistros = 'campanas' + '?api_token=' + Laravel.user.api_token;
+        axios.get(urlRegistros).then(response =>{
+        this.campanas = response.data
+        });
+    },
     setObra : function(value){
             this.obra = value;
             this.ot_tipo_soldadura='';
@@ -785,135 +682,35 @@ data() {return {
              }
         },
 
-    getEspesores : function(){
-            this.espesor='';
-            this.tecnica ='';
-            if(this.diametro != 'CHAPA')   {
-
-                this.espesor_chapa = '';
-            }
-            if(this.diametro){
-                this.$store.dispatch('loadEspesores',this.diametro.diametro_code);
-            }
-        },
-
-    getFuente : function(){
-
-        this.$store.dispatch('loadFuentePorInterno',this.interno_equipo.interno_fuente_id);
-
-      },
-
-     getInstrumentoMediciones(){
-
-        this.tipo_penetrante = (this.metodo_trabajo_lp.tipo == 'TIPO I') ? 'Fluorescente' : 'Visible';
-
-        if(this.metodo_trabajo_lp.tipo == 'TIPO I'){
-
-            this.iluminacion = this.iluminaciones[this.iluminaciones.findIndex(elemento => elemento.codigo == '1000 uv/cm2')];
-
-        }else if(this.metodo_trabajo_lp.tipo == 'TIPO II'){
-
-            this.iluminacion = this.iluminaciones[this.iluminaciones.findIndex(elemento => elemento.codigo == '1076 Lux')];
-
-        }
-
-        this.getInternoEquipos();
-
-        this.setearTipoPenetrante();
-        this.penetrante_tipo_liquido = '';
-        this.removedor_tipo_liquido = '';
-        this.removedor_tipo_liquido = '';
-
-        this.getTipoLiquidos();
-    },
-
-    getTipoLiquidos : function(){
-
-        this.$store.dispatch('loadTipoLiquidos', { 'penetrante_sn' : 1,'revelador_sn' : 0,'removedor_sn' : 0, 'metodo_trabajo_lp_id' : this.metodo_trabajo_lp.id });
-        this.$store.dispatch('loadTipoLiquidos', { 'penetrante_sn' : 0,'revelador_sn' : 1,'removedor_sn' : 0, 'metodo_trabajo_lp_id' : this.metodo_trabajo_lp.id });
-        this.$store.dispatch('loadTipoLiquidos', { 'penetrante_sn' : 0,'revelador_sn' : 0,'removedor_sn' : 1, 'metodo_trabajo_lp_id' : this.metodo_trabajo_lp.id });
-
-    },
-
-    getInternoEquipos : function(){
-
-        this.$store.dispatch('loadInternoEquipos',{ 'metodo' : this.metodo, 'activo_sn' : 1, 'tipo_penetrante' : this.tipo_penetrante }).then(response =>{
-
-            this.interno_equipo = '';
-
-        });
-
-    },
-
-    setearTipoPenetrante : function(){
-
-        switch (this.metodo_trabajo_lp.metodo) {
-
-            case 'METODO A':
-
-                this.tipo_penetrante +=' - Lavable con agua';
-                break;
-
-            case 'METODO B':
-
-                this.tipo_penetrante +=' - Emusificante Lipofilico';
-                break;
-
-            case 'METODO C':
-
-                this.tipo_penetrante +=' - Lavable con Solvente';
-                break;
-
-            case 'METODO D':
-
-                this.tipo_penetrante +=' - Emusificante hidrofilico';
-                break;
-
-        }
-    },
-
     selectPosDetalle :function(index){
 
             this.indexPosDetalle = index ;
 
         },
 
-    getMetodosTrabajoLp: function(){
-
-            axios.defaults.baseURL = this.url ;
-            var urlRegistros = 'metodos_trabajo_lp' + '?api_token=' + Laravel.user.api_token;
-            axios.get(urlRegistros).then(response =>{
-            this.metodos_trabajo_lp = response.data
-            });
-         },
-
-    getAplicacionesLp: function(){
-
-            axios.defaults.baseURL = this.url ;
-            var urlRegistros = 'aplicaciones_lp' + '?api_token=' + Laravel.user.api_token;
-            axios.get(urlRegistros).then(response =>{
-                this.aplicaciones_lp = response.data;
-                this.$store.commit('loading', false);
-            });
-         },
 
     addDetalle : function () {
 
-            if (!this.pieza){
+            if (!this.elemento){
 
                  toastr.error('El campo elemento es obligatorio');
                  return ;
             }
 
-            if (!this.cm){
+            if (!this.diametro){
 
-                 toastr.error('El campo cm es obligatorio');
+                 toastr.error('El campo diámetro es obligatorio');
                  return ;
             }
+            if (!this.soldador){
 
-        this.TablaLp.push({
-            pieza : this.pieza,
-            cm:this.cm,
+                 toastr.error('El campo soldador es obligatorio');
+                 return ;
+            }
+        this.TablaCv.push({
+            elemento : this.elemento,
+            diametro:this.diametro,
+            soldador : this.soldador,
             detalle : 'OK',
             aceptable_sn : 1 ,
             observaciones : '',
@@ -923,17 +720,26 @@ data() {return {
             path4:null
             });
 
-        this.cm = '0';
-
     },
 
-
+    resetBomba(){
+        this.bomba.caudal = 0;
+        this.bomba.voltaje = 0;
+    },
     removeDetalle(index) {
 
         this.indexPosDetalle = 0;
-        this.TablaLp.splice(index, 1);
+        this.TablaCv.splice(index, 1);
     },
+    getAplicaciones: function(){
 
+            axios.defaults.baseURL = this.url ;
+            var urlRegistros = 'aplicaciones_lp' + '?api_token=' + Laravel.user.api_token;
+            axios.get(urlRegistros).then(response =>{
+                this.aplicaciones = response.data;
+                this.$store.commit('loading', false);
+            });
+         },
     OpenReferencias(event,index,tabla,inputsReferencia){
 
         this.index_referencias = index ;
@@ -942,13 +748,14 @@ data() {return {
         eventSetReferencia.$emit('open');
     },
 
+
     AddReferencia(Ref){
 
-        this.TablaLp[this.index_referencias].observaciones = Ref.observaciones;
-        this.TablaLp[this.index_referencias].path1 = Ref.path1;
-        this.TablaLp[this.index_referencias].path2 = Ref.path2;
-        this.TablaLp[this.index_referencias].path3 = Ref.path3;
-        this.TablaLp[this.index_referencias].path4 = Ref.path4;
+        this.TablaCv[this.index_referencias].observaciones = Ref.observaciones;
+        this.TablaCv[this.index_referencias].path1 = Ref.path1;
+        this.TablaCv[this.index_referencias].path2 = Ref.path2;
+        this.TablaCv[this.index_referencias].path3 = Ref.path3;
+        this.TablaCv[this.index_referencias].path4 = Ref.path4;
 
         $('#nuevo').modal('hide');
     },
@@ -974,8 +781,7 @@ data() {return {
 
           this.errors =[];
             this.$store.commit('loading', true);
-            var urlRegistros = 'informes_lp' ;
-            console.log(this.metodo)
+            var urlRegistros = 'informes_cv' ;
             axios({
               method: 'post',
               url : urlRegistros,
@@ -996,36 +802,23 @@ data() {return {
                 'ot_tipo_soldadura' : this.ot_tipo_soldadura,
                 'material':       this.material,
                 'material2':      this.material2,
-                'material2_tipo': this.material2_tipo,
-                'diametro':       this.diametro,
-                'espesor':        this.espesor,
-                'espesor_chapa'  :  this.espesor_chapa,
-                'interno_equipo'        :  this.interno_equipo,
-                'norma_evaluacion': this.norma_evaluacion,
+                'material2_tipo'    : this.material2_tipo,
+                'norma_evaluacion'  : this.norma_evaluacion,
                 'norma_ensayo'      : this.norma_ensayo,
-                'tecnica'           :this.tecnica,
-                'metodo_trabajo_lp'             : this.metodo_trabajo_lp,
-                'penetrante_tipo_liquido'       :this.penetrante_tipo_liquido,
-                'penetrante_aplicacion'         :this.penetrante_aplicacion,
-                'tiempo_penetracion'            :this.tiempo_penetracion,
-                'iluminacion'                   :this.iluminacion,
-                'revelador_tipo_liquido'        :this.revelador_tipo_liquido,
-                'revelador_aplicacion'          :this.revelador_aplicacion,
-                'removedor_tipo_liquido'        :this.removedor_tipo_liquido,
-                'removedor_aplicacion'          :this.removedor_aplicacion,
-                'limpieza_previa'               :this.limpieza_previa,
-                'limpieza_intermedia'           :this.limpieza_intermedia,
-                'limpieza_final'                :this.limpieza_final,
-                'detalles'                      :this.TablaLp,
-                'TablaModelos3d' :this.TablaModelos3d,
-
+                'campana'           :   this.campana,
+                'extension_ensayo'  : this.extension_ensayo,
+                'bomba'             :   this.bomba,
+                'liquido'           : this.liquido,
+                'modo_aplicacion'   : this.modo_aplicacion,
+                'estado_producto'   : this.estado_producto,
+                'detalles'          : this.TablaCv,
+                'TablaModelos3d'    : this.TablaModelos3d,
           }
 
           }).then(response => {
-
           let informe = response.data;
+          window.open(  '/pdf/informe/cv/' + informe.id,'_blank');
           toastr.success('informe N°' + this.numero_inf + ' fue creado con éxito ');
-          window.open(  '/pdf/informe/lp/' + informe.id,'_blank');
           window.location.href =  '/informes/ot/' + this.otdata.id;
 
         }).catch(error => {
@@ -1051,7 +844,7 @@ data() {return {
 
             this.errors =[];
             this.$store.commit('loading', true);
-            var urlRegistros = 'informes_lp/' + this.informedata.id  ;
+            var urlRegistros = 'informes_cv/' + this.informedata.id  ;
             axios({
               method: 'put',
               url : urlRegistros,
@@ -1074,36 +867,24 @@ data() {return {
                 'material':       this.material,
                 'material2':      this.material2,
                 'material2_tipo': this.material2_tipo,
-                'diametro':       this.diametro,
-                'espesor':        this.espesor,
-                'espesor_chapa'  :  this.espesor_chapa,
-                'interno_equipo'     :  this.interno_equipo,
                 'norma_evaluacion'  : this.norma_evaluacion,
                 'norma_ensayo'      : this.norma_ensayo,
-                'tecnica'           :this.tecnica,
-                'metodo_trabajo_lp'             : this.metodo_trabajo_lp,
-                'penetrante_tipo_liquido'       :this.penetrante_tipo_liquido,
-                'penetrante_aplicacion'         :this.penetrante_aplicacion,
-                'tiempo_penetracion'            :this.tiempo_penetracion,
-                'iluminacion'                   :this.iluminacion,
-                'revelador_tipo_liquido'        :this.revelador_tipo_liquido,
-                'revelador_aplicacion'          :this.revelador_aplicacion,
-                'removedor_tipo_liquido'        :this.removedor_tipo_liquido,
-                'removedor_aplicacion'          :this.removedor_aplicacion,
-                'limpieza_previa'               :this.limpieza_previa,
-                'limpieza_intermedia'           :this.limpieza_intermedia,
-                'limpieza_final'                :this.limpieza_final,
-                'detalles'                      :this.TablaLp,
+                'campana'           :   this.campana,
+                'extension_ensayo'  : this.extension_ensayo,
+                'bomba'           :   this.bomba,
+                'liquido'           : this.liquido,
+                'modo_aplicacion'   : this.modo_aplicacion,
+                'estado_producto'   : this.estado_producto,
+                'detalles'                      :this.TablaCv,
                 'TablaModelos3d' :this.TablaModelos3d,
 
           }}
 
 
         ).then( response => {
-
           let informe = response.data;
+          window.open(  '/pdf/informe/cv/' + informe.id,'_blank');
           toastr.success('informe N°' + this.numero_inf + ' fue actualizado con éxito ');
-          window.open(  '/pdf/informe/lp/' + informe.id,'_blank');
           window.location.href =  '/informes/ot/' + this.otdata.id;
 
         }).catch(error => {
@@ -1137,6 +918,16 @@ data() {return {
 
 .checkbox-inline {
     margin-left: 0px;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.sinpadding [class*="col-"] {
+    padding-right: 0;
 }
 
 

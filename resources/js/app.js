@@ -158,6 +158,16 @@ Vue.component('table-fuentes', require('./components/abm-maestro/fuentes/table-f
 Vue.component('editar-fuentes', require('./components/abm-maestro/fuentes/editar-fuentes.vue').default);
 Vue.component('nuevo-fuentes', require('./components/abm-maestro/fuentes/nuevo-fuentes.vue').default);
 
+Vue.component('table-campanas', require('./components/abm-maestro/campanas/table-campanas.vue').default);
+Vue.component('editar-campanas', require('./components/abm-maestro/campanas/editar-campanas.vue').default);
+Vue.component('nuevo-campanas', require('./components/abm-maestro/campanas/nuevo-campanas.vue').default);
+
+Vue.component('table-bombas', require('./components/abm-maestro/bombas/table-bombas.vue').default);
+Vue.component('editar-bombas', require('./components/abm-maestro/bombas/editar-bombas.vue').default);
+Vue.component('nuevo-bombas', require('./components/abm-maestro/bombas/nuevo-bombas.vue').default);
+
+
+
 Vue.component('table-interno_fuentes', require('./components/abm-maestro/interno-fuentes/table-interno_fuentes.vue').default);
 Vue.component('editar-interno_fuentes', require('./components/abm-maestro/interno-fuentes/editar-interno_fuentes.vue').default);
 Vue.component('nuevo-interno_fuentes', require('./components/abm-maestro/interno-fuentes/nuevo-interno_fuentes.vue').default);
@@ -255,6 +265,7 @@ Vue.component('remitos', require('./components/remitos/remitos.vue').default);
 
 /* Informes    */
 Vue.component('informe-ri', require('./components/informes/informe-ri.vue').default);
+Vue.component('informe-cv', require('./components/informes/informe-cv.vue').default);
 Vue.component('informe-pm', require('./components/informes/informe-pm.vue').default);
 Vue.component('informe-lp', require('./components/informes/informe-lp.vue').default);
 Vue.component('informe-us', require('./components/informes/informe-us.vue').default);

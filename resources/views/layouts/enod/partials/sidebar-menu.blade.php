@@ -73,10 +73,17 @@
                   <li><a href="{{ route('soldadores') }}">Soldadores</a></li>
                 @endcan
 
-                @can('M_soldadores')
+                @can('M_plantas')
                 <li><a href="{{ route('plantas') }}">Plantas</a></li>
                 @endcan
 
+                @can('M_campanas')
+                <li><a href="{{ route('campanas') }}">Campanas</a></li>
+                @endcan
+
+                @can('M_bombas')
+                <li><a href="{{ route('bombas') }}">Bombas</a></li>
+                @endcan
 
                 @can('M_equipos')
                   <li><a href="{{ route('equipos') }}">Equipos</a></li>
