@@ -189,19 +189,34 @@
                                             <th>Tipo</th>
                                             <th>Informe</th>
                                             <th>Obra</th>
+                                            <th>Planta</th>
                                             <th>Fecha</th>
+                                            <th>Solicitado por</th>
 
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr v-for="(informe,k) in informes" :key="k">
                                             <td>
-                                                <input type="checkbox" id="informe_sel" v-model="informes[k].informe_sel" @change="getInforme(k)" :disabled="deshabilitarInformes(informe.fecha_formateada,informe.obra,informe.informe_sel) || loading">
+                                                <input type="checkbox" id="informe_sel" v-model="informes[k].informe_sel" @click="selectPosTablaInformesSinParteDiario(k)" @change="getInforme(k)" :disabled="deshabilitarInformes(informe.fecha_formateada,informe.obra,informe.informe_sel) || loading">
                                             </td>
                                             <td> {{ informe.metodo}}</td>
                                             <td> {{ informe.numero_formateado}}</td>
                                             <td> {{ informe.obra}}</td>
+                                            <td> {{ informe.planta}}</td>
                                             <td> {{ informe.fecha_formateada}}</td>
+                                            <td>
+
+                                                <div v-if="indexTablaInformesSinParteDiario == k && informes[k].informe_sel == true">
+                                                    <v-select type="text" v-model="informes[k].solicitado_por" id="solicitado_por" label="name" :options="usuarios_cliente" ></v-select>
+                                                </div>
+                                               <div v-else-if="informe.solicitado_por">
+                                                   {{ informe.solicitado_por.name }}
+                                               </div>
+                                                <div v-else>
+                                                    &nbsp;
+                                                </div>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -754,7 +769,7 @@ export default {
 
         informes:[],
         informe_sel:false,
-
+        usuarios_cliente:[],
         TablaInformesRi:[],
         TablaInformesPm:[],
         TablaInformesLp:[],
@@ -763,6 +778,7 @@ export default {
         TablaMetodosImportados:[],
         TablaServicios:[],
         indexTablaInformesRi:'-1',
+        indexTablaInformesSinParteDiario:'-1',
         indexTablaInformesPm:'-1',
         indexTablaInformesLp:'-1',
         indexTablaInformesUs:'-1',
@@ -788,6 +804,7 @@ export default {
     },
     mounted : function() {
         this.CargaDeDatos();
+        this.getUsuariosCliente();
     },
     watch :{
         fecha : function(){
@@ -915,6 +932,10 @@ export default {
             this.indexTablaInformesRi = index ;
 
         },
+        selectPosTablaInformesSinParteDiario :function(index){
+
+            this.indexTablaInformesSinParteDiario = index ;
+        },
 
        selectPosTablaInformesImportables :function(index){
 
@@ -983,11 +1004,12 @@ export default {
         },
 
         getInformesPendientesParte: function(){
-
+            console.log(this.otdata)
             axios.defaults.baseURL = this.url ;
             var urlRegistros = 'informes/ot/' + this.otdata.id + '/pendientes_parte_diario' + '?api_token=' + Laravel.user.api_token;
             axios.get(urlRegistros).then(response =>{
-            this.informes = response.data
+                this.informes = response.data
+                console.log(this.informes)
             });
 
         },
@@ -1406,10 +1428,17 @@ export default {
             this.TablaServicios[index].cant_final='';
 
         },
+        getUsuariosCliente : function(){
+
+            axios.defaults.baseURL = this.url ;
+            var urlRegistros = 'users/ot_id/' + this.otdata.id + '?api_token=' + Laravel.user.api_token;
+            axios.get(urlRegistros).then(response =>{
+            this.usuarios_cliente = response.data
+            });
+
+        },
 
        async getInforme(index){
-
-
             if(this.informes[index].informe_sel){
 
                 this.loading = true;
@@ -1437,7 +1466,7 @@ export default {
             this.loading = false;
 
             } else{
-
+                this.informes[index].solicitado_por = null
                 if(this.informes[index].importable_sn){
 
                     let id  = this.informes[index].id ;
@@ -2143,6 +2172,7 @@ export default {
                 'informes_us'          :this.TablaInformesUs,
                 'informes_importados'  :this.TablaInformesImportados,
                 'servicios'            :this.TablaServicios,
+                'informes'             :this.informes,
 
           }
 
@@ -2201,6 +2231,7 @@ export default {
                 'informes_us'          :this.TablaInformesUs,
                 'informes_importados'  :this.TablaInformesImportados,
                 'servicios'            :this.TablaServicios,
+                'informes'             :this.informes,
           }}
 
         ).then( () => {

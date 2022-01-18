@@ -178,6 +178,7 @@ class UserController extends Controller
 
     }
 
+
     public function callviewPerfil(){
 
        $user = auth()->user();

@@ -975,6 +975,7 @@ data() {return {
           this.errors =[];
             this.$store.commit('loading', true);
             var urlRegistros = 'informes_lp' ;
+            console.log(this.metodo)
             axios({
               method: 'post',
               url : urlRegistros,

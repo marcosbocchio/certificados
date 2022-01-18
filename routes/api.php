@@ -118,6 +118,7 @@ Route::group(['middleware' => 'auth:api'], function()
 
     Route::resource('tipo_soldaduras', 'TipoSoldadurasController');
     Route::get('users/cliente/{id}','UserController@UserCliente');
+    Route::get('users/ot_id/{id}','ClientesController@UserClienteOT');
     Route::get('users/usuario_metodos/{id}','UserController@getUsuarioMetodos');
 
     Route::resource('soldadores', 'SoldadoresController');
@@ -226,6 +227,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('informes_ri/elementos_reparacion/ot/{ot_id}/obra/{obra}/km/{km}/linea/{linea}/plano_isom/{plano_isom}/hoja/{hoja}', 'InformesRiController@getElementosReparacion');
     Route::resource('informes_pm','InformesPmController');
     Route::resource('informes_lp','InformesLpController');
+    Route::resource('informes_cv','InformesCvController');
     Route::resource('informes_us','InformesUsController');
 
      /*  informes importados */
@@ -338,7 +340,12 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('plantas/cliente/{id}/paginate', 'PlantasController@paginate');
     Route::get('plantas/cliente/{id}','PlantasController@PlantasCliente');
     Route::post('plantas/cliente/{id}','PlantasController@store');
+    // CAMPANAS
+    Route::get('campanas/paginate', 'CampanasController@paginate');
+    Route::resource('campanas', 'CampanasController');
 
+    Route::get('bombas/paginate', 'BombasController@paginate');
+    Route::resource('bombas', 'BombasController');
 });
 
 Route::get('/fecha_actual',function(){

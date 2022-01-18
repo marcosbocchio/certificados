@@ -14,6 +14,7 @@ use App\DiametrosEspesor;
 use Illuminate\Support\Facades\Auth;
 use App\OtProcedimientosPropios;
 use App\InformesImportados;
+use App\User;
 use \stdClass;
 use Illuminate\Support\Facades\Log;
 use Exception as Exception;
@@ -95,6 +96,9 @@ class InformesController extends Controller
                 return redirect()->route('InformeUsCreate',array('ot_id' => $ot_id));
                 break;
 
+            case 'CV':
+                return redirect()->route('InformeCvCreate',array('ot_id' => $ot_id));
+                break;
         }
 
     }
@@ -124,6 +128,10 @@ class InformesController extends Controller
 
             case 'US':
                 return redirect()->route('InformeUsEdit',array('ot_id' => $ot_id, 'id' => $id));
+                break;
+
+            case 'CV':
+                return redirect()->route('InformeCvEdit',array('ot_id' => $ot_id, 'id' => $id));
                 break;
         }
     }
@@ -165,9 +173,19 @@ class InformesController extends Controller
         }
 
     }
+    public function saveInformeDesdeParte($informeRecibido, $solicitadoPor,$importable_sn){
+        if ($importable_sn){
+                $informe  = InformesImportados::find($informeRecibido['id']);
+                $informe->solicitado_por = $solicitadoPor['id'];
+                $informe->save();
+            }else{
+                $informe  = Informe::find($informeRecibido['id']);
+                $informe->solicitado_por = $solicitadoPor['id'];
+                $informe->save();
+            }
+    }
 
     public function saveInforme($request,$informe,$EsRevision = false){
-
         DB::enableQueryLog();
 
         $user_id = null;
@@ -297,21 +315,29 @@ class InformesController extends Controller
      public function OtInformesPendienteParteDiario($ot_id){
 
         $informes = DB::select('CALL InformesPendientesSinParteDiario(?,?)',array($ot_id,0));
-
+        $this->addObjectSolicitadoPor($informes);
         return $informes;
 
      }
 
      public function OtInformesPendienteEditableParteDiario($ot_id,$parte_id){
 
-        $infomes_pendientes = DB::select('CALL InformesPendientesSinParteDiario(?,?)',array($ot_id,$parte_id));
+        $informes_pendientes = DB::select('CALL InformesPendientesSinParteDiario(?,?)',array($ot_id,$parte_id));
+        $this->addObjectSolicitadoPor($informes_pendientes);
+        return $informes_pendientes;
+     }
 
-        return $infomes_pendientes;
+     public function addObjectSolicitadoPor($items){
+        foreach ($items as $item) {
+            $obj = new stdClass();
+            $user = User::find($item->solicitado_por_id);
+            $obj = $user ? $user : null;
+            $item->solicitado_por = $obj;
+        }
      }
 
 
      public function setParteId($parte_id,$informe_id){
-
         $informe  = Informe::find($informe_id);
         $informe->parte_id = $parte_id;
         $informe->save();
@@ -375,21 +401,18 @@ class InformesController extends Controller
     }
 
     public function getPlantaInforme($informe_id,$importado_sn){
-        log::debug($informe_id);
         if($importado_sn == '1') {
             $planta = Plantas::join('informes_importados','informes_importados.planta_id','=','plantas.id')
                             ->where('informes_importados.id',$informe_id)
                             ->first();
-            Log::debug('planta:'.$planta);
             return $planta;
         } else {
             $planta = Plantas::join('informes','informes.planta_id','=','plantas.id')
                              ->where('informes.id',$informe_id)
                              ->first();
-            Log::debug('planta:'.$planta);
             return $planta;
         }
-        //  
+        //
         // $valor = DB::select('CALL getPlantaInforme(?,?)',array($informe_id,$importado_sn)));
         // Log::debug($valor);
         // return $valor[0]->codigo;

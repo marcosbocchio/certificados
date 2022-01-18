@@ -199,6 +199,7 @@ class PartesController extends Controller
         $parte->placas_repetidas = $request->informes_ri ? $request->placas_repetidas : null;
         $parte->placas_testigos = $request->informes_ri ? $request->placas_testigos : null;
         $parte->observaciones = $request->observaciones;
+        $this->saveInformeEDITADO($request->informes);
 
         if($request->isMethod('post')){
             $parte->user_id = $user_id;
@@ -231,6 +232,12 @@ class PartesController extends Controller
             if($informe['manual_sn']=='0'){
                 (new \App\Http\Controllers\InformesController)->setParteId($parte->id,$informe['id']);
             }
+        }
+
+    }
+    public function saveInformeEDITADO($informes){
+        foreach ($informes as $informe) {
+            (new \App\Http\Controllers\InformesController)->saveInformeDesdeParte($informe,$informe['solicitado_por'],$informe['importable_sn']);
         }
 
     }

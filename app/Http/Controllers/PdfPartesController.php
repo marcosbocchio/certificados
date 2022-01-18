@@ -8,6 +8,7 @@ use App\Partes;
 use App\Ots;
 use App\Clientes;
 use App\User;
+use Illuminate\Support\Facades\Log;
 use App\Contratistas;
 use Illuminate\Support\Collection as Collection;
 
@@ -86,12 +87,13 @@ class PdfPartesController extends Controller
                                 ->orderBy('numero_formateado','ASC')
                                 ->get();
 
-
         $informes_detalle = DB::table('metodo_ensayos')
                                 ->join('informes','metodo_ensayos.id','=','informes.metodo_ensayo_id')
                                 ->join('parte_detalles','parte_detalles.informe_id','=','informes.id')
+                                ->leftjoin('plantas','plantas.id','=','informes.planta_id')
+                                ->leftjoin('users','users.id','=','informes.solicitado_por')
                                 ->where('parte_detalles.parte_id',$id)
-                                ->selectRaw('metodo_ensayos.metodo as metodo,informes.id as informe_id,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado')
+                                ->selectRaw('metodo_ensayos.metodo as metodo,informes.id as informe_id,plantas.codigo as planta,users.name as solicitado_por,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado')
                                 ->groupBy('informes.id','metodo','numero_formateado')
                                 ->get();
 
@@ -105,7 +107,7 @@ class PdfPartesController extends Controller
                                     ->selectRaw('parte_detalles.costura_final as costura,parte_detalles.pulgadas_final as pulgadas,parte_detalles.placas_final as placas,parte_detalles.cm_final as cm, 0 as informe_sel')
                                     ->get();
         }
-
+        Log::debug($parte_detalle);
      //  dd($informes_ri_adicionales);
 
         $pdf = \PDF::loadView('reportes.partes.parte-v2',compact('ot','titulo','nro','fecha','observaciones','tipo_reporte',

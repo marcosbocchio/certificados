@@ -191,19 +191,23 @@ footer {
                 @endif
                     <tr>
                         <td style="font-size: 12px;width: 50px;">&nbsp;</td>
-                        <td style="font-size: 12px;width: 180px; text-align: center;"><b>Costuras</b></td>
-                        <td style="font-size: 12px;width: 180px; text-align: center;"><b>Pulgadas</b></td>
-                        <td style="font-size: 12px;width: 180px; text-align: center;"><b>Placas</b></td>
-                        <td style="font-size: 12px; text-align: center;"><b>Cm </b></td>
+                        <td style="font-size: 12px;width: 100px; text-align: center;"><b>Planta</b></td>
+                        <td style="font-size: 12px;width: 100px; text-align: center;"><b>Costuras</b></td>
+                        <td style="font-size: 12px;width: 100px; text-align: center;"><b>Pulgadas</b></td>
+                        <td style="font-size: 12px;width: 100px; text-align: center;"><b>Placas</b></td>
+                        <td style="font-size: 12px;width: 100px; text-align: center;"><b>Cm </b></td>
+                        <td style="font-size: 12px; text-align: center;"><b>Solicitado por </b></td>
                     </tr>
                 @foreach ($parte_detalle as $item)
                     @if ($item->metodo == 'RI')
                         <tr>
                             <td style="font-size: 12px;height: 20px;">{{$item->numero_formateado}}</td>
+                            <td style="font-size: 12px; text-align: center;">{{$item->planta ? $item->planta : ''}}</td>
                             <td style="font-size: 12px; text-align: center;">{{$item->costura}}</td>
                             <td style="font-size: 12px; text-align: center;">{{$item->pulgadas}}</td>
                             <td style="font-size: 12px; text-align: center;">{{$item->placas}}</td>
                             <td style="font-size: 12px; text-align: center;">{{$item->cm}}</td>
+                            <td style="font-size: 12px; text-align: center;">{{$item->solicitado_por ? $item->solicitado_por : ''}}</td>
                         </tr>
                     @endif
                 @endforeach
@@ -246,7 +250,9 @@ footer {
                 @foreach ($informes_detalle as $item)
                     @if ($item->metodo == 'PM')
                         <tr>
-                            <td style="font-size: 12px;height: 20px;" colspan="5"><b style="margin-left: 8px;">{{$item->numero_formateado}} </b></td>
+                            <td style="font-size: 12px;height: 10%;"><b style="margin-left: 8px;">{{$item->numero_formateado}} </b></td>
+                            <td style="font-size: 12px;width: 5%;text-align: center"><b>{{'Planta:   '}}{{$item->planta ? $item->planta : '-'}} </b></td>
+                            <td style="font-size: 12px;width: 20%;"><b>{{'Solicitado por:   '}}{{$item->solicitado_por ? $item->solicitado_por : '-'}} </b></td>
                         </tr>
                         <tr>
                             <td style="font-size: 12px;width: 50px;">&nbsp;</td>
@@ -296,8 +302,10 @@ footer {
                 </tr>
                 @foreach ($informes_detalle as $item)
                     @if ($item->metodo == 'LP')
-                        <tr>
-                            <td style="font-size: 12px;height: 20px;" colspan="5"><b style="margin-left: 8px;">{{$item->numero_formateado}} </b></td>
+                        <tr colspan="5">
+                            <td style="font-size: 12px;height: 10%;"><b style="margin-left: 8px;">{{$item->numero_formateado}} </b></td>
+                            <td style="font-size: 12px;width: 5%;text-align: center"><b>{{'Planta:   '}}{{$item->planta ? $item->planta : '-'}} </b></td>
+                            <td style="font-size: 12px;width: 20%;"><b>{{'Solicitado por:   '}}{{$item->solicitado_por ? $item->solicitado_por : '-'}} </b></td>
                         </tr>
                         <tr>
                             <td style="font-size: 12px;text-align: center;width: 50px;"><b>&nbsp;</b></td>
@@ -350,9 +358,10 @@ footer {
                     @foreach ($informes_detalle as $item)
                         @if ($item->metodo == 'US')
                             <tr>
-                                <td style="font-size: 12px;height: 20px;" colspan="5"><b style="margin-left: 8px;">{{$item->numero_formateado}} </b></td>
-                            </tr>
-                            <tr>
+                                <td style="font-size: 12px;height: 10%;"><b style="margin-left: 8px;">{{$item->numero_formateado}} </b></td>
+                                <td style="font-size: 12px;width: 5%;text-align: center"><b>{{'Planta:   '}}{{$item->planta ? $item->planta : '-'}} </b></td>
+                                <td style="font-size: 12px;width: 20%;"><b>{{'Solicitado por:   '}}{{$item->solicitado_por ? $item->solicitado_por : '-'}} </b></td>
+                                <tr>
                                 <td style="font-size: 12px;text-align: center;width: 50px;"><b>&nbsp;</b></td>
                                 <td style="font-size: 12px;text-align: center;width: 180px; "><b>Elemento </b></td>
                                 <td style="font-size: 12px;text-align: center;width: 180px;"><b>Diametro </b></td>
