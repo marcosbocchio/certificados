@@ -100,7 +100,6 @@ class InformesCvController extends Controller
     public function saveInformeCv($request,$informe,$informeCv){
         $informeCv->informe_id = $informe->id;
         $informeCv->campana_id = $request->campana['id'];
-        $informeCv->tipo_angular_sn = $request->campana['tipo_angular_sn'];
         $informeCv->presion_max_manometro = $request->campana['presion_max_manometro'];
         $informeCv->presion_trabajo_min = $request->campana['presion_trabajo_min'];
         $informeCv->presion_trabajo_max = $request->campana['presion_trabajo_max'];
