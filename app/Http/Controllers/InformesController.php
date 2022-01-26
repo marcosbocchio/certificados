@@ -129,6 +129,12 @@ class InformesController extends Controller
             case 'US':
                 return redirect()->route('InformeUsEdit',array('ot_id' => $ot_id, 'id' => $id));
                 break;
+
+            case 'TT':
+                return redirect()->route('InformeTtEdit',array('ot_id' => $ot_id, 'id' => $id));
+                break;
+
+
         }
     }
 

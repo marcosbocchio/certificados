@@ -13,6 +13,11 @@ use Illuminate\Support\Facades\Log;
 
 class InformesTtController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('ddppi')->only('create');
+        $this->middleware(['role_or_permission:Sistemas|T_informes_edita'],['only' => ['create','edit']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -107,10 +112,22 @@ class InformesTtController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($ot_id,$id)
     {
-        //
-    }
+        $metodo = 'TT';
+        $user = auth()->user();
+        $header_titulo = "Informe";
+        $header_descripcion ="Editar";
+        $editMode = true;
+        $ot = Ots::findOrFail($ot_id);
+        $informe_id = $id;
+        return view('informes.tt.index', compact('ot',
+                                                'informe_id',
+                                                 'metodo',
+                                                 'user',
+                                                 'header_titulo',
+                                                 'header_descripcion',
+                                                 'editMode'));    }
 
     /**
      * Update the specified resource in storage.

@@ -283,6 +283,10 @@ export default {
           type : String,
           required :true
         },
+        informe_id : {
+           type : Number,
+           required : false,
+        }
     },
     data() { return {
         procedimiento: [],
@@ -326,16 +330,17 @@ export default {
         await this.$store.dispatch('loadMateriales');
         await this.$store.dispatch('loadProcedimietosOtMetodo',
             { 'ot_id' : this.otdata.id, 'metodo' : this.metodo }).then(() =>{
-                    if(this.procedimientos.length == 0  ){
-                        toastr.options = toastrInfo;
-                        toastr.info('No existe ningún procedimiento para el método de ensayo seleccionado');
-                        toastr.options = toastrDefault;
-                    }
+                if(this.procedimientos.length == 0  ){
+                    toastr.options = toastrInfo;
+                    toastr.info('No existe ningún procedimiento para el método de ensayo seleccionado');
+                    toastr.options = toastrDefault;
+                }
             });
         await this.$store.dispatch('loadInternoEquipos',{ 'metodo' : this.metodo, 'activo_sn' : 1, 'tipo_penetrante' : 'null' });
         await this.$store.dispatch('loadNormaEvaluaciones');
         await this.$store.dispatch('loadNormaEnsayos');
         await this.$store.dispatch('loadEjecutorEnsayo', this.otdata.id);
+        await this.setEdit();
         this.$store.commit('loading', false);
     },
     mounted : function() {
@@ -359,8 +364,10 @@ export default {
 
      },
     methods : {
+        setEdit :  function(){
+            alert('entro en edit')
+        },
         generarGrafico : function() {
-
             if (!this.existenTemperaturas)
                 return
 
@@ -389,7 +396,7 @@ export default {
 
             //const labels = ['0','1','2','3','4','5','6','7','8','9','10']
             this.data_indicaciones_temperatura = {
-            labels: labels,
+            labels: ['0','1','2','3','4','5','6','7','8','9','10'],
             datasets: [{
                 label: 'Tratamiento termico',
                 data:[this.dataForm.temperatura_inicial,this.dataForm.temperatura_subida,this.dataForm.temperatura_mantenimiento,this.dataForm.temperatura_mantenimiento,this.dataForm.temperatura_mantenimiento,this.dataForm.temperatura_mantenimiento,this.dataForm.temperatura_enfriado,this.dataForm.temperatura_final],

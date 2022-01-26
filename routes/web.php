@@ -51,6 +51,7 @@ Route::group(['middleware' => ['auth']], function () {
   Route::get('/area/enod/ot/{ot_id}/informe/{id}/edit/pm','InformesPmController@edit')->name('InformePmEdit');
   Route::get('/area/enod/ot/{ot_id}/informe/{id}/edit/lp','InformesLpController@edit')->name('InformeLpEdit');
   Route::get('/area/enod/ot/{ot_id}/informe/{id}/edit/us','InformesUsController@edit')->name('InformeUsEdit');
+  Route::get('/area/enod/ot/{ot_id}/informe/{id}/edit/tt','InformesTtController@edit')->name('InformeTtEdit');
   Route::get('/area/enod/ot/{ot_id}/remito','RemitosController@create')->name('RemitoCreate');
   Route::get('/area/enod/remito/{id}/edit','RemitosController@edit')->name('RemitoEdit');
   Route::get('/area/enod/ot/{ot_id}/parte','PartesController@create')->name('ParteCreate');

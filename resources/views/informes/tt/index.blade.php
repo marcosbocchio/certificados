@@ -17,8 +17,9 @@
       metodo="{{$metodo}}"
      :otdata="{{$ot}}"
      :editmode="@json($editMode)"
+     :informe_id="{{$informe_id}}"
 
-  ></informe-tt   >
+  ></informe-tt>
 
  </div>
 

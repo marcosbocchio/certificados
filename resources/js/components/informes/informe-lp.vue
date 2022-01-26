@@ -685,11 +685,10 @@ data() {return {
 
      watch : {
 
-
         diametro : function(val){
 
            if(val){
-                 this.isChapa = (val.diametro =='CHAPA') ? true : false;
+                this.isChapa = (val.diametro =='CHAPA') ? true : false;
             }
         },
 
@@ -703,7 +702,7 @@ data() {return {
 
                if(this.numero_inf)
 
-                      return this.metodo + (this.numero_inf <10? '00' : this.numero_inf<100? '0' : '') + this.numero_inf ;
+                    return this.metodo + (this.numero_inf <10? '00' : this.numero_inf<100? '0' : '') + this.numero_inf ;
         },
 
      },
