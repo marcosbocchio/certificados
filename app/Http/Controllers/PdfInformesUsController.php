@@ -62,9 +62,7 @@ class PdfInformesUsController extends Controller
          $observaciones = $informe->observaciones;
          $informe_modelos_3d = (new \App\Http\Controllers\InformeModelos3dController)->getInformeModelos3d($id);
          $generatrices = Generatrices::all();
-//       $informes_us_me = InformesUsMe::where('informe_us_id',$informe_us->id)->with('detalle_us_me')->get();
-        $informes_us_me = (new \App\Http\Controllers\InformesUsController)->getTabla_me($informe_us->id);
-//       dd($informes_us_me);
+         $informes_us_me = (new \App\Http\Controllers\InformesUsController)->getTabla_me($informe_us->id);
          $indicaciones_us_pa = DetalleUsPaUs::where('informe_us_id',$informe_us->id)->get();
 
          $detalles = DetalleUsPaUs::with('referencia')
@@ -73,12 +71,10 @@ class PdfInformesUsController extends Controller
         /*  Encabezado */
 
         $titulo = "INFORME DE ULTRASONIDO"."     " ." (" . mb_strtoupper($tecnica->descripcion,"UTF-8") . ")";
-     //   dd($titulo);
-        $nro = FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo) .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) ;
+        $nro = FormatearNumeroInforme($informe->numero,$tecnica->codigo) .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) ;
         $fecha = date('d-m-Y', strtotime($informe->fecha));
         $tipo_reporte = "INFORME N°";
 
-        //  dd($calibraciones_us);
         $pdf = PDF::loadView('reportes.informes.us-v2',compact('ot','titulo','nro','tipo_reporte','fecha',
                                                                 'norma_ensayo',
                                                                 'planta',
