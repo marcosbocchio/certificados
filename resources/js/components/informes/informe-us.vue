@@ -1321,11 +1321,12 @@ export default {
                this.solicitado_por = this.solicitado_pordata ;
                this.SetearBlockCalibraciones();
                this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.informedata.obra });
+               await this.getTecnicas();
             } else {
+                await this.getTecnicas();
                 this.tecnica = this.tecnicas[0]
                 this.getNumeroInforme();
             }
-            await this.getTecnicas();
          },
 
         setObra : function(value){
@@ -1354,9 +1355,10 @@ export default {
 
             if(!this.editmode) {
                 axios.defaults.baseURL = this.url ;
-                  axios.get(urlRegistros).then(response =>{
-                    this.numero_inf = response.data
-                    });
+                var urlRegistros = 'informes/ot/' + this.otdata.id + '/metodo/' + this.metodo + '/tecnica/' + this.tecnica.id + '/generar-numero-informe/'  + '?api_token=' + Laravel.user.api_token;
+                axios.get(urlRegistros).then(response =>{
+                   this.numero_inf = response.data
+                });
              }
         },
 
