@@ -249,16 +249,16 @@ footer {
                 <tr>
                     <td style="font-size: 12px;height: 30px;" colspan="5"><b>METODO ENSAYO: PM </b></td>
                 </tr>
+                <tr>
+                    <td style="font-size: 12px;width: 50px;"><b>N° Informe</b></td>
+                    <td style="font-size: 12px;width: 90px; text-align: center;"><b>Planta</b></td>
+                    <td style="font-size: 12px;width: 110px; text-align: center;"><b>Componente</b></td>
+                    <td style="font-size: 12px;width: 45px; text-align: center;"><b>Diámetro</b></td>
+                    <td style="font-size: 12px;width: 80px; text-align: center;"><b>Solicitante</b></td>
+                    <td style="font-size: 12px;width: 80px; text-align: center;"><b>Firma</b></td>
+                </tr>
                 @foreach ($informes_detalle as $item)
                     @if ($item->metodo == 'PM')
-                        <tr>
-                            <td style="font-size: 12px;width: 50px;"><b>N° Informe</b></td>
-                            <td style="font-size: 12px;width: 90px; text-align: center;"><b>Planta</b></td>
-                            <td style="font-size: 12px;width: 110px; text-align: center;"><b>Componente</b></td>
-                            <td style="font-size: 12px;width: 45px; text-align: center;"><b>Diámetro</b></td>
-                            <td style="font-size: 12px;width: 80px; text-align: center;"><b>Solicitante</b></td>
-                            <td style="font-size: 12px;width: 80px; text-align: center;"><b>Firma</b></td>
-                        </tr>
                         @foreach ($parte_detalle as $item_pm)
                             @if ($item->informe_id == $item_pm->informe_id)
                                 <tr>
@@ -299,17 +299,16 @@ footer {
                 <tr>
                     <td style="font-size: 12px;height: 30px;" colspan="5"><b>METODO ENSAYO: LP </b></td>
                 </tr>
+                <tr>
+                    <td style="font-size: 12px;width: 50px;"><b>N° Informe</b></td>
+                    <td style="font-size: 12px;width: 90px; text-align: center;"><b>Planta</b></td>
+                    <td style="font-size: 12px;width: 110px; text-align: center;"><b>Componente</b></td>
+                    <td style="font-size: 12px;width: 45px; text-align: center;"><b>Diámetro</b></td>
+                    <td style="font-size: 12px;width: 80px; text-align: center;"><b>Solicitante</b></td>
+                    <td style="font-size: 12px;width: 80px; text-align: center;"><b>Firma</b></td>
+                </tr>
                 @foreach ($informes_detalle as $item)
                     @if ($item->metodo == 'LP')
-                    <tr>
-                        <td style="font-size: 12px;width: 50px;"><b>N° Informe</b></td>
-                        <td style="font-size: 12px;width: 90px; text-align: center;"><b>Planta</b></td>
-                        <td style="font-size: 12px;width: 110px; text-align: center;"><b>Componente</b></td>
-                        <td style="font-size: 12px;width: 45px; text-align: center;"><b>Diámetro</b></td>
-                        <td style="font-size: 12px;width: 80px; text-align: center;"><b>Solicitante</b></td>
-                        <td style="font-size: 12px;width: 80px; text-align: center;"><b>Firma</b></td>
-                    </tr>
-                        </tr>
                         @foreach ($parte_detalle as $item_lp)
                             @if ($item->informe_id == $item_lp->informe_id)
                                 <tr>
@@ -352,16 +351,16 @@ footer {
                     <tr>
                         <td style="font-size: 12px;height: 30px;" colspan="5"><b>METODO ENSAYO: US </b></td>
                     </tr>
+                    <tr>
+                        <td style="font-size: 12px;width: 50px;"><b>N° Informe</b></td>
+                        <td style="font-size: 12px;width: 90px; text-align: center;"><b>Planta</b></td>
+                        <td style="font-size: 12px;width: 110px; text-align: center;"><b>Componente</b></td>
+                        <td style="font-size: 12px;width: 45px; text-align: center;"><b>Diámetro</b></td>
+                        <td style="font-size: 12px;width: 80px; text-align: center;"><b>Solicitante</b></td>
+                        <td style="font-size: 12px;width: 80px; text-align: center;"><b>Firma</b></td>
+                    </tr>
                     @foreach ($informes_detalle as $item)
                         @if ($item->metodo == 'US')
-                            <tr>
-                                <td style="font-size: 12px;width: 50px;"><b>N° Informe</b></td>
-                                <td style="font-size: 12px;width: 90px; text-align: center;"><b>Planta</b></td>
-                                <td style="font-size: 12px;width: 110px; text-align: center;"><b>Componente</b></td>
-                                <td style="font-size: 12px;width: 45px; text-align: center;"><b>Diámetro</b></td>
-                                <td style="font-size: 12px;width: 80px; text-align: center;"><b>Solicitante</b></td>
-                                <td style="font-size: 12px;width: 80px; text-align: center;"><b>Firma</b></td>
-                            </tr>
                             @foreach ($parte_detalle as $item_us)
                                 @if ($item->informe_id == $item_us->informe_id)
                                     <tr>
@@ -401,17 +400,16 @@ footer {
                 <tr>
                     <td style="font-size: 12px;height: 30px;" colspan="5"><b>METODO ENSAYO: CV </b></td>
                 </tr>
-                @foreach ($informes_detalle as $item)
+                <tr>
+                    <td style="font-size: 12px;width: 50px;"><b>N° Informe</b></td>
+                    <td style="font-size: 12px;width: 90px; text-align: center;"><b>Planta</b></td>
+                    <td style="font-size: 12px;width: 110px; text-align: center;"><b>Componente</b></td>
+                    <td style="font-size: 12px;width: 45px; text-align: center;"><b>Diámetro</b></td>
+                    <td style="font-size: 12px;width: 80px; text-align: center;"><b>Solicitante</b></td>
+                    <td style="font-size: 12px;width: 80px; text-align: center;"><b>Firma</b></td>
+                </tr>
+            @foreach ($informes_detalle as $item)
                     @if ($item->metodo == 'CV')
-                    <tr>
-                        <td style="font-size: 12px;width: 50px;"><b>N° Informe</b></td>
-                        <td style="font-size: 12px;width: 90px; text-align: center;"><b>Planta</b></td>
-                        <td style="font-size: 12px;width: 110px; text-align: center;"><b>Componente</b></td>
-                        <td style="font-size: 12px;width: 45px; text-align: center;"><b>Diámetro</b></td>
-                        <td style="font-size: 12px;width: 80px; text-align: center;"><b>Solicitante</b></td>
-                        <td style="font-size: 12px;width: 80px; text-align: center;"><b>Firma</b></td>
-                    </tr>
-                        </tr>
                         @foreach ($parte_detalle as $item_cv)
                             @if ($item->informe_id == $item_cv->informe_id)
                                 <tr>
@@ -449,17 +447,16 @@ footer {
                     <tr>
                         <td style="font-size: 12px;height: 30px;" colspan="5"><b>METODO ENSAYO: DZ </b></td>
                     </tr>
+                    <tr>
+                        <td style="font-size: 12px;width: 50px;"><b>N° Informe</b></td>
+                        <td style="font-size: 12px;width: 90px; text-align: center;"><b>Planta</b></td>
+                        <td style="font-size: 12px;width: 110px; text-align: center;"><b>Componente</b></td>
+                        <td style="font-size: 12px;width: 45px; text-align: center;"><b>Diámetro</b></td>
+                        <td style="font-size: 12px;width: 80px; text-align: center;"><b>Solicitante</b></td>
+                        <td style="font-size: 12px;width: 80px; text-align: center;"><b>Firma</b></td>
+                    </tr>
                     @foreach ($informes_detalle as $item)
                         @if ($item->metodo == 'DZ')
-                        <tr>
-                            <td style="font-size: 12px;width: 50px;"><b>N° Informe</b></td>
-                            <td style="font-size: 12px;width: 90px; text-align: center;"><b>Planta</b></td>
-                            <td style="font-size: 12px;width: 110px; text-align: center;"><b>Componente</b></td>
-                            <td style="font-size: 12px;width: 45px; text-align: center;"><b>Diámetro</b></td>
-                            <td style="font-size: 12px;width: 80px; text-align: center;"><b>Solicitante</b></td>
-                            <td style="font-size: 12px;width: 80px; text-align: center;"><b>Firma</b></td>
-                        </tr>
-                            </tr>
                             @foreach ($parte_detalle as $item_dz)
                                 @if ($item->informe_id == $item_dz->informe_id)
                                     <tr>

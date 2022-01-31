@@ -330,7 +330,7 @@ class PartesController extends Controller
             $parteDetalle->informe_importado_id =$informe['id'];
             $parteDetalle->observaciones_original = $informe['observaciones_original'];
             $parteDetalle->observaciones_final = $informe['observaciones_final'];
-            $parteDetalle->save();ç
+            $parteDetalle->save();
 
             (new \App\Http\Controllers\InformesImportadosController)->setParteId($parte->id,$informe['id']);
 

@@ -152,9 +152,12 @@ class InformesController extends Controller
 
         $metodo_ensayo = MetodoEnsayos::where('metodo',$metodo)->first();
 
+        log::debug("metodo de ensayo: ".$metodo_ensayo);
+
+
         $numero_inf =  DB::select('select GenerarNumeroInforme(?,?,?,?) as valor',array($ot_id,$metodo_ensayo->importable_sn,$metodo_ensayo->metodo,$tecnica_id));
 
-        log::debug("numero inf: ",$numero_inf);
+        log::debug("numero inf: ".json_encode($numero_inf));
 
         return $numero_inf[0]->valor;
 

@@ -215,7 +215,7 @@ class InformesDzController extends Controller
         $accion = 'edit';
         $user = auth()->user();
         $ot = Ots::findOrFail($ot_id);
-        $informe = Informe::findOrFail($id);
+        $informe = Informe::where('id',$id)->with('planta')->first();
         $informe_dz =InformesDz::where('informe_id',$informe->id)->first();
         $informe_material = Materiales::find($informe->material_id);
         $documetacionesRepository = new DocumentacionesRepository;

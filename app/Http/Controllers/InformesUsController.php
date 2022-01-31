@@ -302,7 +302,7 @@ class InformesUsController extends Controller
         $accion = 'edit';
         $user = auth()->user();
         $ot = Ots::findOrFail($ot_id);
-        $informe = Informe::findOrFail($id);
+        $informe = Informe::where('id',$id)->with('planta')->first();
         $informe_us =InformesUs::where('informe_id',$informe->id)->first();
         $informe_material = Materiales::find($informe->material_id);
         $informe_material_accesorio = Materiales::find($informe->material2_id);

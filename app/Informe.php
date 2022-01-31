@@ -20,6 +20,12 @@ class Informe extends Model
 
      }
 
+     public function planta(){
+
+        return $this->belongsTo('App\Plantas','planta_id','id');
+
+     }
+
      public function scopeUs($query, $metodo, $tecnica = null) {
 
             if($metodo == 'US') {
@@ -27,4 +33,5 @@ class Informe extends Model
                 ->where('tecnicas.codigo',$tecnica);
             }
      }
+
 }

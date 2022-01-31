@@ -92,7 +92,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="procRadio">Procedimiento RI *</label>
-                                <v-select v-model="procedimiento" label="titulo" :options="procedimientos" id="procRadio" :appendToBody="'false'" :autoscroll="true"></v-select>
+                                <v-select v-model="procedimiento" label="titulo" :options="procedimientos" id="procRadio" :appendToBody="appendToBody" :autoscroll="true"></v-select>
                             </div>
                         </div>
 
@@ -1176,6 +1176,7 @@
              tramo:'',
              TablaTramos:[],
              resultado_pdf_sn: true,
+             appendToBody: false,
          }},
      created : function(){
 
@@ -1430,8 +1431,8 @@
 
              if(!this.editmode) {
                  axios.defaults.baseURL = this.url ;
-                 var urlRegistros = 'informes/ot/' + this.otdata.id + '/metodo/' + this.metodo + '/generar-numero-informe'  + '?api_token=' + Laravel.user.api_token;
-                 axios.get(urlRegistros).then(response =>{
+                var urlRegistros = 'informes/ot/' + this.otdata.id + '/metodo/' + this.metodo + '/tecnica/0' + '/generar-numero-informe/'  + '?api_token=' + Laravel.user.api_token;
+                axios.get(urlRegistros).then(response =>{
                  this.numero_inf = response.data
 
                  });

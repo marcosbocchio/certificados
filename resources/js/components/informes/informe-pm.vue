@@ -882,7 +882,7 @@ export default {
             if(!this.editmode) {
 
                 axios.defaults.baseURL = this.url ;
-                    var urlRegistros = 'informes/ot/' + this.otdata.id + '/metodo/' + this.metodo + '/generar-numero-informe'  + '?api_token=' + Laravel.user.api_token;
+                    var urlRegistros = 'informes/ot/' + this.otdata.id + '/metodo/' + this.metodo + '/tecnica/0' + '/generar-numero-informe/'  + '?api_token=' + Laravel.user.api_token;
                     axios.get(urlRegistros).then(response =>{
                     this.numero_inf = response.data
 
