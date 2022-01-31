@@ -20,6 +20,7 @@ use App\AplicacionesLp;
 use App\DetallesLp;
 use App\MetodosTrabajoLp;
 use App\Iluminaciones;
+use App\User;
 use App\DetallesLpReferencias;
 use App\OtTipoSoldaduras;
 use Exception as Exception;
@@ -203,6 +204,10 @@ class InformesLpController extends Controller
         $revelador_aplicacion  = AplicacionesLp::findOrFail($informe_lp->revelador_aplicacion_lp_id);
         $removedor_aplicacion  = AplicacionesLp::findOrFail($informe_lp->removedor_aplicacion_lp_id);
         $informe_lp_iluminacion = Iluminaciones::find($informe_lp->iluminacion_id);
+        $informe_solicitado_por = User::where('id',$informe->solicitado_por)->first();
+        if ($informe_solicitado_por == null){
+            $informe_solicitado_por = new User();
+        }
 
         if ($informe_material_accesorio == null)
              $informe_material_accesorio = new Materiales();
@@ -243,6 +248,7 @@ class InformesLpController extends Controller
                                                  'informe_detalle',
                                                  'informe_modelos_3d',
                                                  'header_titulo',
+                                                 'informe_solicitado_por',
                                                  'header_descripcion'));
     }
 

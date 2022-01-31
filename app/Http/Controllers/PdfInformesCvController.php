@@ -63,6 +63,7 @@ class PdfInformesCvController extends Controller
          $aplicacion = AplicacionesLp::findOrFail($informe_cv->aplicacion_id);
 
         /*  Encabezado */
+        $informe_solicitado_por = User::where('id',$informe->solicitado_por)->first();
 
         $titulo = "CAMPANA DE VACÍO";
         $nro = FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo) .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) ;
@@ -98,6 +99,7 @@ class PdfInformesCvController extends Controller
                                                                 'detalles',
                                                                 'informe_modelos_3d',
                                                                 'observaciones',
+                                                                'informe_solicitado_por',
                                                                 'firma',
                                                                 ))->setPaper('a4','portrait')->setWarnings(false);
 

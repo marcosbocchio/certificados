@@ -344,7 +344,14 @@
                                     </div>
                                 </div>
                            </div>
-
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group" >
+                                        <label for="ejecutor_ensayo">Solicitante </label>
+                                        <v-select v-model="solicitado_por" label="name" :options="usuarios_cliente"></v-select>
+                                    </div>
+                                </div>
+                           </div>
                         </div>
 
                         <div class="col-md-3">
@@ -1044,6 +1051,10 @@
       tablatramos_data : {
         type : [ Array ],
         required : false
+        },
+      solicitado_pordata : {
+        type : [ Object, Array ],
+        required : false
         }
      },
      data() {return {
@@ -1076,6 +1087,8 @@
              material2:'',
              material2_tipo:'Accesorio',
              diametro:'',
+             solicitado_por:'',
+             usuarios_cliente:[],
              espesor:'',
              espesor_chapa:'',
              interno_equipo:'',
@@ -1178,6 +1191,7 @@
          this.getTecnicas();
          this.$store.dispatch('loadEjecutorEnsayo', this.otdata.id);
          this.getSoldadores();
+         this.getUsuariosCliente();
          this.getDefectosRiPlanta();
          this.pasada = 1;
          this.formato = 'PLANTA'
@@ -1331,6 +1345,7 @@
                 this.InicializarElementosPasadas();
                 this.observaciones = this.informedata.observaciones
                 this.TablaModelos3d = this.tablamodelos3d_data;
+                this.solicitado_por = this.solicitado_pordata ;
                 this.TablaTramos = this.tablatramos_data;
 
                 if(this.informe_ridata.reparacion_sn){
@@ -1460,7 +1475,15 @@
              }
              this.resetInputsEquipos();
          },
+        getUsuariosCliente : function(){
 
+            axios.defaults.baseURL = this.url ;
+            var urlRegistros = 'users/ot_id/' + this.otdata.id + '?api_token=' + Laravel.user.api_token;
+            axios.get(urlRegistros).then(response =>{
+            this.usuarios_cliente = response.data
+            });
+
+        },
          resetInputsEquipos : function() {
 
              this.kv = this.interno_equipo.voltaje;
@@ -2192,6 +2215,7 @@
                          'detalles'  : this.TablaDetalle,
                          'TablaPasadas' : this.TablaPasadas,
                          'TablaModelos3d' :this.TablaModelos3d,
+                         'solicitado_por'    : this.solicitado_por,
                          'tramos'    : this.TablaTramos,
                  }}
 
@@ -2285,6 +2309,7 @@
                          'detalles'  : this.TablaDetalle,
                          'TablaPasadas' : this.TablaPasadas,
                          'TablaModelos3d' :this.TablaModelos3d,
+                         'solicitado_por'    : this.solicitado_por,
                          'tramos'    : this.TablaTramos,
                  }}
                  ).then( response => {

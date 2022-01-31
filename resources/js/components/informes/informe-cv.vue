@@ -225,6 +225,12 @@
                                 <v-select v-model="ejecutor_ensayo" label="name" :options="ejecutor_ensayos"></v-select>
                             </div>
                         </div>
+                        <div class="col-md-3">
+                            <div class="form-group" >
+                                <label for="ejecutor_ensayo">Solicitante </label>
+                                <v-select v-model="solicitado_por" label="name" :options="usuarios_cliente"></v-select>
+                            </div>
+                        </div>
                   </div>
                </div>
 
@@ -483,6 +489,10 @@ props :{
          tablamodelos3d_data : {
             type : [ Array ],
             required : false
+            },
+         solicitado_pordata : {
+            type : [ Object, Array ],
+            required : false
             }
     },
 
@@ -528,7 +538,8 @@ data() {return {
         diametro:'',
         TablaCv:[],
         indexPosDetalle:0,
-
+        solicitado_por:'',
+        usuarios_cliente:[],
         index_referencias:'',
         tabla:'',
         inputsData:{},
@@ -557,6 +568,7 @@ data() {return {
         this.getAplicaciones()
         this.getBombas();
         this.getCampanas();
+        this.getUsuariosCliente();
         this.setEdit();
         this.$store.commit('loading', false)
     },
@@ -618,6 +630,7 @@ data() {return {
                this.presion_trabajo_max = this.informe_cvdata.presion_trabajo_max;
                this.bomba = this.bombadata;
                this.campana = this.campanadata;
+               this.solicitado_por = this.solicitado_pordata ;
                this.campana.presion_max_manometro = this.informe_cvdata.presion_max_manometro;
                this.campana.presion_trabajo_min = this.informe_cvdata.presion_trabajo_min;
                this.campana.presion_trabajo_max = this.informe_cvdata.presion_trabajo_max;
@@ -655,6 +668,15 @@ data() {return {
         axios.get(urlRegistros).then(response =>{
         this.campanas = response.data
         });
+    },
+    getUsuariosCliente : function(){
+
+        axios.defaults.baseURL = this.url ;
+        var urlRegistros = 'users/ot_id/' + this.otdata.id + '?api_token=' + Laravel.user.api_token;
+        axios.get(urlRegistros).then(response =>{
+        this.usuarios_cliente = response.data
+        });
+
     },
     setObra : function(value){
             this.obra = value;
@@ -811,6 +833,7 @@ data() {return {
                 'liquido'           : this.liquido,
                 'modo_aplicacion'   : this.modo_aplicacion,
                 'estado_producto'   : this.estado_producto,
+                'solicitado_por'    : this.solicitado_por,
                 'detalles'          : this.TablaCv,
                 'TablaModelos3d'    : this.TablaModelos3d,
           }
@@ -875,6 +898,7 @@ data() {return {
                 'liquido'           : this.liquido,
                 'modo_aplicacion'   : this.modo_aplicacion,
                 'estado_producto'   : this.estado_producto,
+                'solicitado_por'    : this.solicitado_por,
                 'detalles'                      :this.TablaCv,
                 'TablaModelos3d' :this.TablaModelos3d,
 

@@ -22,6 +22,8 @@
   :informes_pm_data="{{$informes_pm}}"
   :informes_lp_data="{{$informes_lp}}"
   :informes_us_data="{{$informes_us}}"
+  :informes_cv_data="{{$informes_cv}}"
+  :informes_dz_data="{{$informes_dz}}"
   :informes_importados_data="{{$informes_importados}}"
   :servicios_data="{{$servicios}}"
   :vehiculos_data="{{$vehiculos}}"

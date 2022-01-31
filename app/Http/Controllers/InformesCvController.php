@@ -25,6 +25,7 @@ use App\DetallesCv;
 use App\MetodosTrabajoLp;
 use App\DetallesCvReferencias;
 use \stdClass;
+use App\User;
 use App\OtTipoSoldaduras;
 use Exception as Exception;
 
@@ -100,7 +101,6 @@ class InformesCvController extends Controller
     public function saveInformeCv($request,$informe,$informeCv){
         $informeCv->informe_id = $informe->id;
         $informeCv->campana_id = $request->campana['id'];
-        $informeCv->tipo_angular_sn = $request->campana['tipo_angular_sn'];
         $informeCv->presion_max_manometro = $request->campana['presion_max_manometro'];
         $informeCv->presion_trabajo_min = $request->campana['presion_trabajo_min'];
         $informeCv->presion_trabajo_max = $request->campana['presion_trabajo_max'];
@@ -209,6 +209,10 @@ class InformesCvController extends Controller
         if ($informe_ot_tipo_soldadura == null){
             $informe_ot_tipo_soldadura = new OtTipoSoldaduras();
         }
+        $informe_solicitado_por = User::where('id',$informe->solicitado_por)->first();
+        if ($informe_solicitado_por == null){
+            $informe_solicitado_por = new User();
+        }
         $informe_detalle = $this->getDetalle($informe_cv->id);
         $informe_modo_aplicacion = AplicacionesLp::find($informe_cv->aplicacion_id);
         $informe_modelos_3d = (new \App\Http\Controllers\InformeModelos3dController)->getInformeModelos3d($id);
@@ -231,6 +235,7 @@ class InformesCvController extends Controller
                                                  'informe_detalle',
                                                  'informe_modo_aplicacion',
                                                  'informe_ot_tipo_soldadura',
+                                                 'informe_solicitado_por',
                                                  'header_descripcion'));
     }
 

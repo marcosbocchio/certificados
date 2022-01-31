@@ -29,7 +29,7 @@
                              <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="equipos">Equipo *</label>
-                                    <v-select v-model="equipo" label="codigo" :options="equipos">
+                                    <v-select v-model="equipo" label="codigo" :options="equipos" @input="resetVariables">
                                         <template slot="option" slot-scope="option">
                                             <span class="upSelect">{{ option.codigo }}</span> <br>
                                             <span class="downSelect"> {{ option.descripcion }} </span>
@@ -38,7 +38,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-12">
+                            <div v-if="this.equipo ? (this.equipo.metodo_ensayos.metodo === 'RI' ? true : false) : false" class="col-md-12">
                                 <div class="form-group">
                                     <label>Fuente </label>
                                     <v-select  v-model="interno_fuente" :options="interno_fuentes" label="nro_serie" @input="Registro.foco = ''">
@@ -57,24 +57,36 @@
                                 </div>
                             </div>
 
-                            <div v-else="" class="col-md-12">
+                            <div v-if="(equipo ? (equipo.metodo_ensayos.metodo === 'RI' ? true : false) : false) && (!interno_fuente.foco)" class="col-md-12">
                                 <div class="form-group">
                                     <label for="foco">Foco </label>
                                     <input v-model="Registro.foco" type="number" name="foco" class="form-control" value="" step="0.01">
                                 </div>
                             </div>
 
-                           <div class="col-md-12">
+                            <div v-if="equipo ? (equipo.metodo_ensayos.metodo === 'RI' ? true : false) : false" class="col-md-12">
                                 <div class="form-group">
                                     <label for="voltaje">Voltaje</label>
-                                    <input v-model="Registro.voltaje" type="number" name="voltaje" class="form-control" value="" step="0.1">
+                                    <input v-model="Registro.voltaje" type="number" name="voltaje" class="form-control" max="9999" value="" step="0.1">
                                 </div>
                             </div>
 
-                            <div class="col-md-12">
+                            <div  v-if="equipo ? (equipo.metodo_ensayos.metodo === 'RI' ? true : false) : false" class="col-md-12">
                                 <div class="form-group">
                                     <label for="amperaje">Amperaje</label>
-                                    <input v-model="Registro.amperaje" type="number" name="amperaje" class="form-control" value="" step="0.1">
+                                    <input v-model="Registro.amperaje" type="number" name="amperaje" class="form-control" max="9999" value="" step="0.1">
+                                </div>
+                            </div>
+                            <div  v-if="equipo ? (equipo.metodo_ensayos.metodo === 'DZ' ? true : false) : false" class="col-md-12">
+                                <div class="form-group">
+                                    <label for="amperaje">Probeta *</label>
+                                    <input v-model="Registro.probeta" type="text" name="probeta" class="form-control" value="">
+                                </div>
+                            </div>
+                            <div  v-if="equipo ? (equipo.metodo_ensayos.metodo === 'DZ' ? true : false) : false" class="col-md-12">
+                                <div class="form-group">
+                                    <label for="amperaje">Dureza de calibración *</label>
+                                    <input v-model="Registro.dureza_calibracion" type="text" name="dureza_calibracion" class="form-control" value="">
                                 </div>
                             </div>
                           </div>
@@ -113,6 +125,8 @@ export default {
             'voltaje' : '',
             'amperaje' : '',
             'foco' :'',
+            'probeta' : '',
+            'dureza_calibracion': '',
             'activo_sn' : true,
          },
          equipo :'',
@@ -160,6 +174,14 @@ export default {
 
                 this.$forceUpdate();
             })
+            },
+            resetVariables : function (){
+                this.interno_fuente ='';
+                this.Registro.foco = ''
+                this.Registro.voltaje = ''
+                this.Registro.amperaje = ''
+                this.Registro.probeta = ''
+                this.Registro.dureza_calibracion = ''
             },
 
             storeRegistro: function(){

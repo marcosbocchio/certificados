@@ -41,7 +41,7 @@
      :detalledata="{{$informe_detalle}}"
      :instrumento_medicion_data = "{{$informe_instrumento_medicion}}"
      :tablaModelos3d_data="{{$informe_modelos_3d}}"
-
+     :solicitado_pordata = "{{$informe_solicitado_por}}"
      editmode
 
   ></informe-pm>

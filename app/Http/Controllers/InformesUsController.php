@@ -24,6 +24,7 @@ use App\AccesoriosUs;
 use App\DetalleUsMe;
 use App\Ots;
 use \stdClass;
+use App\User;
 use App\OtTipoSoldaduras;
 use App\AgenteAcoplamientos;
 use Exception as Exception;
@@ -306,7 +307,10 @@ class InformesUsController extends Controller
         $informe_material = Materiales::find($informe->material_id);
         $informe_material_accesorio = Materiales::find($informe->material2_id);
         $informe_tecnica = Tecnicas::find($informe->tecnica_id);
-
+        $informe_solicitado_por = User::where('id',$informe->solicitado_por)->first();
+        if ($informe_solicitado_por == null){
+            $informe_solicitado_por = new User();
+        }
         $informe_diametroEspesor = $informe->diametro_espesor_id ? DiametrosEspesor::find($informe->diametro_espesor_id) : null ;
         $informe_diametro = $informe_diametroEspesor ? DiametroView::where('diametro',$informe_diametroEspesor->diametro)->first() : null;
         $informe_interno_equipo = internoEquipos::where('id',$informe->interno_equipo_id)->with('equipo')->first();
@@ -363,6 +367,7 @@ class InformesUsController extends Controller
                                                  'tabla_me',
                                                  'informe_modelos_3d',
                                                  'header_titulo',
+                                                 'informe_solicitado_por',
                                                  'header_descripcion'));
     }
 

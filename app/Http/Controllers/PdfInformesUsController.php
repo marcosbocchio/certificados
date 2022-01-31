@@ -71,6 +71,7 @@ class PdfInformesUsController extends Controller
                     ->where('informe_us_id',$informe_us->id)
                     ->get();
         /*  Encabezado */
+        $informe_solicitado_por = User::where('id',$informe->solicitado_por)->first();
 
         $titulo = "INFORME DE ULTRASONIDO"."     " ." (" . mb_strtoupper($tecnica->descripcion,"UTF-8") . ")";
      //   dd($titulo);
@@ -105,7 +106,7 @@ class PdfInformesUsController extends Controller
                                                                 'informes_us_me',
                                                                 'indicaciones_us_pa',
                                                                 'detalles',
-
+                                                                'informe_solicitado_por',
                                                                 ))->setPaper('a4','portrait')->setWarnings(false);
 
 

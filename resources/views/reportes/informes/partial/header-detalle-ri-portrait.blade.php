@@ -204,12 +204,26 @@
                                     <td colspan="2" class="borderFilabottom">{{$ejecutor_ensayo->name}}</td>
                                     <td colspan="2" class="borderFilabottom">{{'25.4 mm'}}</td>
                                 </tr>
-                                @else
                                 <tr>
-                                    <th colspan="4">Ejecutor Ensayo</th>
+                                    <th colspan="4">Solicitante</th>
                                 </tr>
                                 <tr>
-                                    <td colspan="4" class="borderFilabottom">{{$ejecutor_ensayo->name}}</td>
+                                    <td colspan="4">
+                                        @if ($informe_solicitado_por)
+                                        {{$informe_solicitado_por ? $informe_solicitado_por->name : '' }}
+                                        @else
+                                              &nbsp;
+                                        @endif
+                                    </td>
+                               </tr>
+                                 @else
+                                <tr>
+                                    <th colspan="2">Ejecutor Ensayo</th>
+                                    <th colspan="2">Solicitante</th>
+                                    </tr>
+                                    <tr>
+                                     <td colspan="2" class="borderFilabottom">{{$ejecutor_ensayo->name}}</td>
+                                     <td colspan="2" class="borderFilabottom">{{$informe_solicitado_por ? $informe_solicitado_por->name : '' }}</td>
                                 </tr>
                             @endif
 

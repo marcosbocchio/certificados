@@ -99,6 +99,10 @@ class InformesController extends Controller
             case 'CV':
                 return redirect()->route('InformeCvCreate',array('ot_id' => $ot_id));
                 break;
+
+            case 'DZ':
+                return redirect()->route('InformeDzCreate',array('ot_id' => $ot_id));
+                break;
         }
 
     }
@@ -132,6 +136,9 @@ class InformesController extends Controller
 
             case 'CV':
                 return redirect()->route('InformeCvEdit',array('ot_id' => $ot_id, 'id' => $id));
+                break;
+            case 'DZ':
+                return redirect()->route('InformeDzEdit',array('ot_id' => $ot_id, 'id' => $id));
                 break;
         }
     }
@@ -187,7 +194,6 @@ class InformesController extends Controller
 
     public function saveInforme($request,$informe,$EsRevision = false){
         DB::enableQueryLog();
-
         $user_id = null;
 
         if (Auth::check())
@@ -265,6 +271,7 @@ class InformesController extends Controller
         $informe->linea = $request->linea;
         $informe->plano_isom = $request->plano_isom;
         $informe->hoja = $request->hoja;
+        $informe->solicitado_por = $request->solicitado_por ? $request->solicitado_por['id'] : null;
         $informe->observaciones = $request->observaciones;
 
         if($request->isMethod('post')){
