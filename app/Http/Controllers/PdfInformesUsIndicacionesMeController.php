@@ -59,12 +59,12 @@ class PdfInformesUsIndicacionesMeController extends Controller
          /*  Encabezado */
 
          $titulo = "INFORME DE ULTRASONIDO"." (" . mb_strtoupper($tecnica->descripcion,"UTF-8") . ")";
-         $nro = FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo) .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) ;
+         $nro = FormatearNumeroInforme($informe->numero,$tecnica->codigo) .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) ;
          $fecha = date('d-m-Y', strtotime($informe->fecha));
          $tipo_reporte = "INFORME N°";
 
-        dd($informes_us_me);
-        // $pdf = PDF::loadView('reportes.informes.us-indicaciones-me-v2',compact('ot','titulo','nro','tipo_reporte','fecha','metodo_ensayo',
+       // dd($informes_us_me);
+         $pdf = PDF::loadView('reportes.informes.us-indicaciones-me-v2',compact('ot','titulo','nro','tipo_reporte','fecha','metodo_ensayo',
                                                                 'norma_ensayo',
                                                                 'norma_evaluacion',
                                                                 'procedimiento_inf',

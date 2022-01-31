@@ -194,31 +194,6 @@ class DocumentacionesController extends Controller
 
     public function getDocOtOperarios($ot_id,$user_id){
 
-        /*
-        $documentacion = DB::select('select
-                                    documentaciones.id,
-                                    documentaciones.tipo,
-                                    documentaciones.descripcion,
-                                    documentaciones.titulo as titulo,
-                                    documentaciones.path,
-                                    usuario_documentaciones.user_id,
-                                    documentaciones.metodo_ensayo_id,
-                                    documentaciones.fecha_caducidad,
-                                    users.name
-
-                                    from usuario_documentaciones
-                                    inner join documentaciones on documentaciones.id = usuario_documentaciones.documentacion_id
-                                    inner join users on users.id = usuario_documentaciones.user_id
-                                    inner join ot_operarios on ot_operarios.user_id = users.id
-                                    where
-                                    (documentaciones.metodo_ensayo_id is null or documentaciones.metodo_ensayo_id in (Select servicios.metodo_ensayo_id from servicios
-                                    inner join ot_servicios on
-                                    ot_servicios.servicio_id = servicios.id
-                                    where
-                                    ot_servicios.ot_id = ot_operarios.ot_id )) and
-                                    ot_operarios.ot_id =:ot_id and
-                                    ot_operarios.user_id=:user_id',['user_id' => $user_id, 'ot_id' =>$ot_id]);
-        */
         DB::enableQueryLog();
 
         $documentacion = Documentaciones::selectRaw('documentaciones.id,

@@ -86,7 +86,6 @@ class PdfInformesRiController extends Controller
         $fecha = date('d-m-Y', strtotime($informe->fecha));
         $tipo_reporte = "INFORME N°";
 
-
         /* Fin encabezado */
         if ($informe_ri->perfil_sn){
             $tamaño_bola = '25,4 mm';

@@ -19,6 +19,7 @@ use \stdClass;
 use Illuminate\Support\Facades\Log;
 use Exception as Exception;
 use PhpParser\Node\Stmt\Else_;
+use App\Tecnicas;
 
 class InformesController extends Controller
 {
@@ -143,41 +144,19 @@ class InformesController extends Controller
         }
     }
 
-    public function GenerarNumeroInforme($ot_id,$metodo){
+    public function GenerarNumeroInforme($ot_id,$metodo,$tecnica_id = null){
+
+        log::debug($ot_id);
+        log::debug($metodo);
+        log::debug($tecnica_id);
 
         $metodo_ensayo = MetodoEnsayos::where('metodo',$metodo)->first();
 
-        if ($metodo_ensayo->importable_sn){
+        $numero_inf =  DB::select('select GenerarNumeroInforme(?,?,?,?) as valor',array($ot_id,$metodo_ensayo->importable_sn,$metodo_ensayo->metodo,$tecnica_id));
 
-            $numero_informe = DB::table('informes_importados')
-                                ->join('metodo_ensayos','metodo_ensayos.id','=','informes_importados.metodo_ensayo_id')
-                                ->where('informes_importados.ot_id',$ot_id)
-                                ->where('metodo_ensayos.metodo',$metodo)
-                                ->orderBy('informes_importados.numero', 'DESC')
-                                ->limit(1)
-                                ->selectRaw('informes_importados.numero + 1 as numero_informe')
-                                ->get();
+        log::debug("numero inf: ",$numero_inf);
 
-        }else{
-
-            $numero_informe = DB::table('informes')
-                                ->join('metodo_ensayos','metodo_ensayos.id','=','informes.metodo_ensayo_id')
-                                ->where('informes.ot_id',$ot_id)
-                                ->where('metodo_ensayos.metodo',$metodo)
-                                ->orderBy('informes.numero', 'DESC')
-                                ->limit(1)
-                                ->selectRaw('informes.numero + 1 as numero_informe')
-                                ->get();
-        }
-
-        if (count($numero_informe) > 0){
-
-            return $numero_informe[0]->numero_informe;
-
-        }else{
-
-            return 1;
-        }
+        return $numero_inf[0]->valor;
 
     }
     public function saveInformeDesdeParte($informeRecibido, $solicitadoPor,$importable_sn){
@@ -276,7 +255,7 @@ class InformesController extends Controller
 
         if($request->isMethod('post')){
 
-            $informe->numero = $this->GenerarNumeroInforme($request->ot['id'],$request->metodo_ensayo);
+            $informe->numero = $this->GenerarNumeroInforme($request->ot['id'],$request->metodo_ensayo,$request->tecnica['id']);
 
         }else{
 
@@ -294,19 +273,36 @@ class InformesController extends Controller
         if($request->isMethod('post') || ($EsRevision)){
 
             $informe->user_id = $user_id;
-            $res = $this->getUltimaRevision($informe->ot_id,$informe->metodo_ensayo_id,$informe->numero);
+            $res = $this->getUltimaRevision($informe->ot_id,$informe->metodo_ensayo_id,$informe->numero,$request->tecnica['id']);
             $revision_ant = $res[0]->valor;
-            $informe->revision = (int)$revision_ant + 1 ;
+            $informe->revision = (int)$revision_ant + 1;
 
          }
 
          if( $EsRevision){
 
-              informe::where('ot_id',$informe->ot_id)
-                       ->where('metodo_ensayo_id',$informe->metodo_ensayo_id)
-                       ->where('numero',$informe->numero)
-                       ->update(['ultima_revision_sn'=>0]);
+             informe::select('informes.*')
+                      ->where('ot_id',$informe->ot_id)
+                      ->where('informes.metodo_ensayo_id',$informe->metodo_ensayo_id)
+                      ->where('numero',$informe->numero)
+                      ->Us($metodo_ensayo['metodo'],$request->tecnica['codigo'])
+                      ->update(['ultima_revision_sn'=>0]);
+            /*
+             if($metodo_ensayo['metodo'] != 'US') {
+                 informe::where('ot_id',$informe->ot_id)
+                          ->where('metodo_ensayo_id',$informe->metodo_ensayo_id)
+                          ->where('numero',$informe->numero)
+                          ->update(['ultima_revision_sn'=>0]);
+             }
 
+             if($metodo_ensayo['metodo'] == 'US') {
+                informe::where('ot_id',$informe->ot_id)
+                         ->where('metodo_ensayo_id',$informe->metodo_ensayo_id)
+                         ->where('numero',$informe->numero)
+                         ->where('tecnica_id',$informe->tecnica_id)
+                         ->update(['ultima_revision_sn'=>0]);
+            }
+            */
               $informe->ultima_revision_sn = 1;
 
          }
@@ -494,20 +490,28 @@ class InformesController extends Controller
     }
 
 
-    public function getUltimaRevision($ot_id,$metodo_ensayo_id,$numero){
+    public function getUltimaRevision($ot_id,$metodo_ensayo_id,$numero,$tecnica_id){
 
-        return  DB::select('select getUltimaRevision(?,?,?) as valor',array($ot_id,$metodo_ensayo_id,$numero));
+        return  DB::select('select getUltimaRevision(?,?,?,?) as valor',array($ot_id,$metodo_ensayo_id,$numero,$tecnica_id));
 
     }
 
-    public function getInformeRevisiones($ot_id,$metodo,$numero){
+    public function getInformeRevisiones($ot_id,$metodo,$informe_id){
+
+        $tecnica = tecnicas::join('informes','informes.tecnica_id','=','tecnicas.id')
+                             ->where('informes.id',$informe_id)
+                             ->select('tecnicas.*')
+                             ->first();
+
+        $informe = informe::find($informe_id);
 
         return informe::join('metodo_ensayos','metodo_ensayos.id','=','informes.metodo_ensayo_id')
                         ->join('users','users.id','=','informes.user_id')
                         ->where('informes.ot_id',$ot_id)
                         ->where('metodo_ensayos.metodo',$metodo)
-                        ->where('informes.numero',$numero)
+                        ->where('informes.numero',$informe->numero)
                         ->where('ultima_revision_sn',0)
+                        ->Us($metodo,$tecnica->codigo)
                         ->selectRaw('informes.fecha,users.name,LPAD(informes.revision, 2, 0) as revision,informes.id')
                         ->paginate(10);
 

@@ -144,14 +144,14 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('informes/ot/{ot_id}/pendientes_parte_diario', 'InformesController@OtInformesPendienteParteDiario');
     Route::get('informes/ot/{ot_id}/parte/{parte_id}/pendientes_editables_parte_diario', 'InformesController@OtInformesPendienteEditableParteDiario');
     Route::get('informes/ot/{ot_id}/obra/{obra}/componente/{componente}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}', 'InformesController@getInformesEstadisticasSoldaduras');
-    Route::get('informes/revisiones/ot/{ot_id}/metodo/{metodo}/numero/{numero}', 'InformesController@getInformeRevisiones');
+    Route::get('informes/revisiones/ot/{ot_id}/metodo/{metodo}/informe_id/{informe_id}', 'InformesController@getInformeRevisiones');
 
 
     Route::get('certificados/parte/{parte_id}/servicios', 'CertificadosController@getParteServicios');
     Route::get('certificados/parte/{parte_id}/modo_cobro/{modo_cobro}/productos', 'CertificadosController@getParteProductos');
     Route::get('certificados/ot/{ot_id}/modalidad_cobro', 'CertificadosController@getModalidadCobro');
 
-    Route::get('informes/ot/{ot_id}/metodo/{metodo}/generar-numero-informe', 'InformesController@GenerarNumeroInforme');
+    Route::get('informes/ot/{ot_id}/metodo/{metodo}/tecnica/{tecnica_id}/generar-numero-informe', 'InformesController@GenerarNumeroInforme');
     Route::get('certificados/generar-numero-certificado', 'CertificadosController@GenerarNumeroCertificado');
 
     Route::post('storage/referencia', 'StorageController@saveReferencia');

@@ -481,12 +481,21 @@
                      </div>
                  </div>
 
+
                  <div class="col-md-2">
                         <p>&nbsp;</p>
                         <button type="button" @click="AddDetalle()" title="Agregar Junta/Posición"><app-icon img="plus-circle" color="black"></app-icon></button>
                         <button type="button" @click="ClonarPosPlanta()" title="Clonar Posición"><app-icon img="clone" color="black"></app-icon></button>
                         <button type="button" @click="resetDetalle()" title="Limpiar Todo"><app-icon img="trash" color="black"></app-icon></button>
                  </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="resultado_pdf_label" style="display:block">&nbsp;</label>
+                        <input type="checkbox" id="checkbox" v-model="resultado_pdf_sn" style="float:right">
+                        <label for="resultado_pdf_sn" style="float:right;margin-right: 5px;">Mostrar resultado en PDF</label>
+                    </div>
+                </div>
 
                  <div class="form-group">
                      &nbsp;
@@ -907,7 +916,6 @@
                      </div>
                  <div class="modal-body">
                      <div class="row">
-
                          <div class="col-md-12" style="margin-top: 15px;">
                              <div class="form-group">
                                  <input style="display: inline;" type="file" multiple="false" id="sheetjs-input" :accept="SheetJSFT"  @change="onchange"/>
@@ -1167,6 +1175,7 @@
              observacion_tramo: '',
              tramo:'',
              TablaTramos:[],
+             resultado_pdf_sn: true,
          }},
      created : function(){
 
@@ -1347,6 +1356,7 @@
                 this.TablaModelos3d = this.tablamodelos3d_data;
                 this.solicitado_por = this.solicitado_pordata ;
                 this.TablaTramos = this.tablatramos_data;
+                this.resultado_pdf_sn = this.informe_ridata.resultado_pdf_sn;
 
                 if(this.informe_ridata.reparacion_sn){
                      this.getElementosReparacion();
@@ -2217,6 +2227,7 @@
                          'TablaModelos3d' :this.TablaModelos3d,
                          'solicitado_por'    : this.solicitado_por,
                          'tramos'    : this.TablaTramos,
+                         'resultado_pdf_sn' : this.resultado_pdf_sn,
                  }}
 
 
@@ -2311,6 +2322,8 @@
                          'TablaModelos3d' :this.TablaModelos3d,
                          'solicitado_por'    : this.solicitado_por,
                          'tramos'    : this.TablaTramos,
+                         'resultado_pdf_sn' : this.resultado_pdf_sn,
+
                  }}
                  ).then( response => {
                      let informe = response.data;

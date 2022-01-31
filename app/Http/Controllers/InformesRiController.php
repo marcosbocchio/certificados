@@ -383,6 +383,7 @@ class InformesRiController extends Controller
         $informeRi->distancia_fuente_pelicula = $request->distancia_fuente_pelicula;
         $informeRi->tecnicas_grafico_id = $request->tecnica['grafico_id'];
         $informeRi->exposicion = $request->exposicion;
+        $informeRi->resultado_pdf_sn = $request->resultado_pdf_sn;
         $informeRi->save();
 
       }

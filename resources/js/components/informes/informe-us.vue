@@ -127,7 +127,7 @@
                     <div class="col-md-3" >
                         <div class="form-group">
                             <label for="tecnicas">Tecnica *</label>
-                            <v-select v-model="tecnica" label="descripcion" :options="tecnicas" id="tecnicas" @input="borrarTodasLasCalibraciones"></v-select>
+                            <v-select v-model="tecnica" label="descripcion" :options="tecnicas" id="tecnicas" @input="resetTecnica"></v-select>
                         </div>
                     </div>
 
@@ -1113,7 +1113,7 @@ export default {
         espesor_chapa:'',
         isVarios:false,
         isChapa:false,
-        tecnica:'',
+        tecnica:{ codigo: ''},
         interno_equipo:'',
         procedimiento:'',
         norma_ensayo:'',
@@ -1202,7 +1202,6 @@ export default {
       this.getCliente();
       this.$store.dispatch('loadMateriales');
       this.$store.dispatch('loadDiametros');
-      this.getTecnicas();
       this.getAgenteAcomplamiento();
       this.$store.dispatch('loadInternoEquipos',{ 'metodo' : this.metodo, 'activo_sn' : 1, 'tipo_penetrante' : 'null' });
       this.$store.dispatch('loadProcedimietosOtMetodo',
@@ -1225,11 +1224,6 @@ export default {
       this.getAccesoriosUs();
     },
 
-    mounted : function() {
-
-         this.getNumeroInforme();
-    },
-
     computed :{
 
         ...mapState(['isLoading','url','ot_obra_tipo_soldaduras','materiales','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','ejecutor_ensayos','interno_equipos','palpadores','modelos_3d']),
@@ -1238,7 +1232,7 @@ export default {
 
                if(this.numero_inf)
 
-                return this.metodo + (this.numero_inf <10? '00' : this.numero_inf<100? '0' : '') + this.numero_inf ;
+                return this.tecnica.codigo + (this.numero_inf <10? '00' : this.numero_inf<100? '0' : '') + this.numero_inf ;
         },
      },
 
@@ -1281,7 +1275,7 @@ export default {
 
         },
 
-         setEdit : function(){
+         setEdit : async function(){
 
             if(this.editmode) {
 
@@ -1327,6 +1321,10 @@ export default {
                this.solicitado_por = this.solicitado_pordata ;
                this.SetearBlockCalibraciones();
                this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.informedata.obra });
+            } else {
+                 await this.getTecnicas();
+                 this.tecnica = this.tecnicas[0]
+                 this.getNumeroInforme();
             }
          },
 
@@ -1357,20 +1355,19 @@ export default {
             if(!this.editmode) {
 
                 axios.defaults.baseURL = this.url ;
-                    var urlRegistros = 'informes/ot/' + this.otdata.id + '/metodo/' + this.metodo + '/generar-numero-informe'  + '?api_token=' + Laravel.user.api_token;
+                    var urlRegistros = 'informes/ot/' + this.otdata.id + '/metodo/' + this.metodo + '/tecnica/' + this.tecnica.id + '/generar-numero-informe/'  + '?api_token=' + Laravel.user.api_token;
                     axios.get(urlRegistros).then(response =>{
                     this.numero_inf = response.data
-
                     });
              }
         },
 
-        getTecnicas: function(){
+        getTecnicas: async function(){
 
             axios.defaults.baseURL = this.url ;
             var urlRegistros = 'tecnicas/metodo/'+ this.metodo + '?api_token=' + Laravel.user.api_token;
-            axios.get(urlRegistros).then(response =>{
-            this.tecnicas = response.data
+            await axios.get(urlRegistros).then(response =>{
+                this.tecnicas = response.data
             });
          },
 
@@ -1911,10 +1908,11 @@ export default {
             this.indexPosPos = index ;
         },
 
-        borrarTodasLasCalibraciones(){
+        resetTecnica(){
 
             this.calibraciones = [];
             this.SetearBlockCalibraciones();
+            this.getNumeroInforme();
         },
 
         SetearBlockCalibraciones(){
