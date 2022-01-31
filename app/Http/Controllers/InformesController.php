@@ -100,6 +100,10 @@ class InformesController extends Controller
             case 'CV':
                 return redirect()->route('InformeCvCreate',array('ot_id' => $ot_id));
                 break;
+
+            case 'DZ':
+                return redirect()->route('InformeDzCreate',array('ot_id' => $ot_id));
+                break;
         }
 
     }
@@ -134,6 +138,9 @@ class InformesController extends Controller
             case 'CV':
                 return redirect()->route('InformeCvEdit',array('ot_id' => $ot_id, 'id' => $id));
                 break;
+            case 'DZ':
+                return redirect()->route('InformeDzEdit',array('ot_id' => $ot_id, 'id' => $id));
+                break;
         }
     }
 
@@ -145,9 +152,12 @@ class InformesController extends Controller
 
         $metodo_ensayo = MetodoEnsayos::where('metodo',$metodo)->first();
 
+        log::debug("metodo de ensayo: ".$metodo_ensayo);
+
+
         $numero_inf =  DB::select('select GenerarNumeroInforme(?,?,?,?) as valor',array($ot_id,$metodo_ensayo->importable_sn,$metodo_ensayo->metodo,$tecnica_id));
 
-        log::debug("numero inf: ",$numero_inf);
+        log::debug("numero inf: ".json_encode($numero_inf));
 
         return $numero_inf[0]->valor;
 
@@ -166,7 +176,6 @@ class InformesController extends Controller
 
     public function saveInforme($request,$informe,$EsRevision = false){
         DB::enableQueryLog();
-
         $user_id = null;
 
         if (Auth::check())
@@ -244,6 +253,7 @@ class InformesController extends Controller
         $informe->linea = $request->linea;
         $informe->plano_isom = $request->plano_isom;
         $informe->hoja = $request->hoja;
+        $informe->solicitado_por = $request->solicitado_por ? $request->solicitado_por['id'] : null;
         $informe->observaciones = $request->observaciones;
 
         if($request->isMethod('post')){

@@ -338,6 +338,13 @@
                             </div>
                         </div>
 
+                        <div class="col-md-3">
+                            <div class="form-group" >
+                                <label for="ejecutor_ensayo">Solicitante </label>
+                                <v-select v-model="solicitado_por" label="name" :options="usuarios_cliente"></v-select>
+                            </div>
+                        </div>
+
                   </div>
                 </div>
 
@@ -648,6 +655,10 @@ export default {
       tablamodelos3d_data : {
         type : [ Array ],
         required : false
+        },
+      solicitado_pordata : {
+        type : [ Object, Array ],
+        required : false
         }
 
     },
@@ -690,6 +701,8 @@ export default {
         fuerza_portante:'',
         voltaje:'',
         am:'',
+        solicitado_por:'',
+        usuarios_cliente:[],
         contraste:'',
         iluminacion:'',
         particula:'',
@@ -739,6 +752,7 @@ export default {
       this.getTiposMagnetizacon();
       this.getCorrientes();
       this.getConstrastes();
+      this.getUsuariosCliente();
       this.$store.dispatch('loadIluminaciones').then( res=>{ this.$store.commit('loading', false)});
       this.setEdit();
       this.$store.dispatch('loadModelos3d');
@@ -812,6 +826,7 @@ export default {
                this.norma_evaluacion = this.norma_evaluaciondata;
                this.norma_ensayo = this.norma_ensayodata;
                this.espesor_chapa = this.informedata.espesor_chapa;
+               this.solicitado_por = this.solicitado_pordata ;
                this.procedimiento_soldadura = this.informedata.procedimiento_soldadura;
                this.pqr = this.informedata.pqr;
                this.metodo_trabajo_pm = this.metodo_trabajo_pmdata;
@@ -867,7 +882,7 @@ export default {
             if(!this.editmode) {
 
                 axios.defaults.baseURL = this.url ;
-                    var urlRegistros = 'informes/ot/' + this.otdata.id + '/metodo/' + this.metodo + '/generar-numero-informe'  + '?api_token=' + Laravel.user.api_token;
+                    var urlRegistros = 'informes/ot/' + this.otdata.id + '/metodo/' + this.metodo + '/tecnica/0' + '/generar-numero-informe/'  + '?api_token=' + Laravel.user.api_token;
                     axios.get(urlRegistros).then(response =>{
                     this.numero_inf = response.data
 
@@ -885,6 +900,15 @@ export default {
             if(this.diametro){
                  this.$store.dispatch('loadEspesores',this.diametro.diametro_code);
              }
+        },
+        getUsuariosCliente : function(){
+
+            axios.defaults.baseURL = this.url ;
+            var urlRegistros = 'users/ot_id/' + this.otdata.id + '?api_token=' + Laravel.user.api_token;
+            axios.get(urlRegistros).then(response =>{
+            this.usuarios_cliente = response.data
+            });
+
         },
 
         getInstrumentoMediciones : function(){
@@ -1133,6 +1157,7 @@ export default {
                 'iluminacion'       :this.iluminacion,
                 'particula'         :this.particula,
                 'contraste'         :this.contraste,
+                'solicitado_por'    : this.solicitado_por,
                 'detalles'  :      this.TablaLp,
                 'TablaModelos3d' :this.TablaModelos3d,
 
@@ -1221,6 +1246,7 @@ export default {
                 'iluminacion'       :this.iluminacion,
                 'particula'         :this.particula,
                 'contraste'         :this.contraste,
+                'solicitado_por'    : this.solicitado_por,
                 'detalles'  :      this.TablaLp,
                 'TablaModelos3d' :this.TablaModelos3d,
 

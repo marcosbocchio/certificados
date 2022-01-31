@@ -25,6 +25,7 @@ use App\DetallesCv;
 use App\MetodosTrabajoLp;
 use App\DetallesCvReferencias;
 use \stdClass;
+use App\User;
 use App\OtTipoSoldaduras;
 use Exception as Exception;
 
@@ -189,7 +190,7 @@ class InformesCvController extends Controller
         $accion = 'edit';
         $user = auth()->user();
         $ot = Ots::findOrFail($ot_id);
-        $informe = Informe::findOrFail($id);
+        $informe = Informe::where('id',$id)->with('planta')->first();
         $informe_cv =InformesCv::where('informe_id',$informe->id)->first();
         $informe_material = Materiales::find($informe->material_id);
         $documetacionesRepository = new DocumentacionesRepository;
@@ -207,6 +208,10 @@ class InformesCvController extends Controller
         ->where('ot_tipo_soldaduras.id',$informe->ot_tipo_soldadura_id)->with('tipoSoldadura')->select('ot_tipo_soldaduras.*','tipo_soldaduras.codigo')->first();
         if ($informe_ot_tipo_soldadura == null){
             $informe_ot_tipo_soldadura = new OtTipoSoldaduras();
+        }
+        $informe_solicitado_por = User::where('id',$informe->solicitado_por)->first();
+        if ($informe_solicitado_por == null){
+            $informe_solicitado_por = new User();
         }
         $informe_detalle = $this->getDetalle($informe_cv->id);
         $informe_modo_aplicacion = AplicacionesLp::find($informe_cv->aplicacion_id);
@@ -230,6 +235,7 @@ class InformesCvController extends Controller
                                                  'informe_detalle',
                                                  'informe_modo_aplicacion',
                                                  'informe_ot_tipo_soldadura',
+                                                 'informe_solicitado_por',
                                                  'header_descripcion'));
     }
 

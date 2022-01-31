@@ -32,7 +32,7 @@
       :ot_tipo_soldaduradata = "{{$informe_ot_tipo_soldadura}}"
       :aplicaciondata = "{{$informe_modo_aplicacion}}"
       :detalledata = "{{$informe_detalle}}"
-
+      :solicitado_pordata = "{{$informe_solicitado_por}}"
       editmode
 
   ></informe-cv>

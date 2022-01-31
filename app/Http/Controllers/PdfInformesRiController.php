@@ -76,6 +76,7 @@ class PdfInformesRiController extends Controller
         $contratista = Contratistas::find($ot->contratista_id);
         $observaciones = $informe->observaciones;
         $informe_modelos_3d = (new \App\Http\Controllers\InformeModelos3dController)->getInformeModelos3d($id);
+        $informe_solicitado_por = User::where('id',$informe->solicitado_por)->first();
 
         /*  Encabezado */
 
@@ -117,6 +118,7 @@ class PdfInformesRiController extends Controller
                                                                         'evaluador',
                                                                         'informe_modelos_3d',
                                                                         'firma',
+                                                                        'informe_solicitado_por',
                                                                         'observaciones'))->setPaper('a4','portrait')->setWarnings(false);
 
 
@@ -164,6 +166,7 @@ class PdfInformesRiController extends Controller
                                                                         'evaluador',
                                                                         'informe_modelos_3d',
                                                                         'firma',
+                                                                        'informe_solicitado_por',
                                                                         'observaciones'))->setPaper('a4','landscape')->setWarnings(false);
 
 
@@ -206,6 +209,7 @@ class PdfInformesRiController extends Controller
                                                               'evaluador',
                                                               'informe_modelos_3d',
                                                               'firma',
+                                                              'informe_solicitado_por',
                                                               'observaciones'))->setPaper('a4','portrait')->setWarnings(false);
 
 

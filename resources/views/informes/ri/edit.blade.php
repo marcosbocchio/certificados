@@ -36,6 +36,7 @@
      :pasada_juntas_data="{{$informe_pasada_juntas}}"
      :tablaModelos3d_data="{{$informe_modelos_3d}}"
      :tablatramos_data="{{$informe_tramos}}"
+     :solicitado_pordata = "{{$informe_solicitado_por}}"
      editmode
 
   ></informe-ri>

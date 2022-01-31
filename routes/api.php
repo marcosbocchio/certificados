@@ -190,6 +190,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('interno_equipos', 'InternoEquiposController');
 
     Route::get('tipos_documentos_usuarios', 'TiposDocumentosUsuariosController@index');
+    Route::get('unidades_medicion_dureza', 'InformesDzController@getMedicionDureza');
     Route::get('documentos/ot/{ot_id}', 'DocumentacionesController@getDocumentosOt')->name('getDocumentosOt');
 
     // Frentes
@@ -229,6 +230,8 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('informes_lp','InformesLpController');
     Route::resource('informes_cv','InformesCvController');
     Route::resource('informes_us','InformesUsController');
+    Route::resource('informes_dz','InformesDzController');
+
 
      /*  informes importados */
     Route::resource('informes_importados','InformesImportadosController');
@@ -291,7 +294,8 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('partes/informe_pm/{id}','PartesController@getInformePmParte');
     Route::get('partes/informe_lp/{id}','PartesController@getInformeLpParte');
     Route::get('partes/informe_us/{id}','PartesController@getInformeUsParte');
-
+    Route::get('partes/informe_cv/{id}','PartesController@getInformeCvParte');
+    Route::get('partes/informe_dz/{id}','PartesController@getInformeDzParte');
     //certificados
     Route::put('certificados/{id}/firmar', 'CertificadosController@firmar');
     Route::get('certificados/ot/{ot_id}/total','CertificadosController@CertificadosTotal');

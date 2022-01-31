@@ -208,6 +208,13 @@
                         </div>
                     </div>
 
+                    <div class="col-md-3">
+                        <div class="form-group" >
+                            <label for="ejecutor_ensayo">Solicitante </label>
+                            <v-select v-model="solicitado_por" label="name" :options="usuarios_cliente"></v-select>
+                        </div>
+                    </div>
+
                   </div>
                </div>
 
@@ -1067,6 +1074,10 @@ export default {
       tablamodelos3d_data : {
             type : [ Array ],
             required : false
+            },
+         solicitado_pordata : {
+            type : [ Object, Array ],
+            required : false
             }
 
     },
@@ -1079,7 +1090,8 @@ export default {
         tipos_archivo_soportados:['jpg','bmp','jpeg','png'],
 
         errors:[],
-
+        solicitado_por:'',
+        usuarios_cliente:[],
         obra:'',
         planta:'',
         cliente:'',
@@ -1206,6 +1218,7 @@ export default {
       this.getPalpadores();
       this.$store.dispatch('loadEjecutorEnsayo', this.otdata.id);
       this.getGeneratrices();
+      this.getUsuariosCliente();
       this.setEdit();
       this.$store.dispatch('loadModelos3d');
       this.getAccesoriosUs();
@@ -1305,6 +1318,7 @@ export default {
                this.Tabla_us_pa = this.tabla_us_pa_data;
                this.Tabla_me = this.tabla_me_data;
                this.TablaModelos3d = this.tablamodelos3d_data;
+               this.solicitado_por = this.solicitado_pordata ;
                this.SetearBlockCalibraciones();
                this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.informedata.obra });
             } else {
@@ -1363,6 +1377,15 @@ export default {
             this.estados_superficies = response.data
             });
          },
+        getUsuariosCliente : function(){
+
+            axios.defaults.baseURL = this.url ;
+            var urlRegistros = 'users/ot_id/' + this.otdata.id + '?api_token=' + Laravel.user.api_token;
+            axios.get(urlRegistros).then(response =>{
+            this.usuarios_cliente = response.data
+            });
+
+        },
 
          getAgenteAcomplamiento: function(){
 
@@ -1992,6 +2015,7 @@ export default {
                 'calibraciones'   :this.calibraciones,
                 'tabla_us_pa'     :this.Tabla_us_pa,
                 'tabla_me'        :this.Tabla_me,
+                'solicitado_por'    : this.solicitado_por,
                 'TablaModelos3d' :this.TablaModelos3d,
 
         }}
@@ -2070,6 +2094,7 @@ export default {
                 'calibraciones'   :this.calibraciones,
                 'tabla_us_pa'     :this.Tabla_us_pa,
                 'tabla_me'        :this.Tabla_me,
+                'solicitado_por'    : this.solicitado_por,
                 'TablaModelos3d' :this.TablaModelos3d,
 
           }}

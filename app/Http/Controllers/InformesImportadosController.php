@@ -84,6 +84,7 @@ class InformesImportadosController extends Controller
         $informe_importados->planta_id = $request->planta['id'];
         $informe_importados->prefijo = $request->prefijo;
         $informe_importados->observaciones = $request->observaciones;
+        $informe_importados->solicitado_por = $request->solicitado_por['id'];
         $informe_importados->path = $request->path;
         $informe_importados->ejecutor_ensayo_id = $request->ejecutor_ensayo['id'];
         $informe_importados->user_id = $user_id;
@@ -114,6 +115,7 @@ class InformesImportadosController extends Controller
                                   ->with('planta')
                                   ->with('metodoEnsayos')
                                   ->with('ejecutorEnsayo')
+                                  ->with('solicitante')
                                   ->first();
     }
 

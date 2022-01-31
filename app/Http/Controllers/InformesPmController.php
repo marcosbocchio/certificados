@@ -26,6 +26,7 @@ use App\DetallesPm;
 use App\DetallesPmReferencias;
 use App\OtTipoSoldaduras;
 use App\Particulas;
+use App\User;
 use App\Contrastes;
 use Exception as Exception;
 
@@ -187,7 +188,7 @@ class InformesPmController extends Controller
         $accion = 'edit';
         $user = auth()->user();
         $ot = Ots::findOrFail($ot_id);
-        $informe = Informe::findOrFail($id);
+        $informe = Informe::where('id',$id)->with('planta')->first();
         $informe_pm =InformesPm::where('informe_id',$informe->id)->first();
         $informe_material = Materiales::find($informe->material_id);
         $informe_material_accesorio = Materiales::find($informe->material2_id);
@@ -208,6 +209,10 @@ class InformesPmController extends Controller
         $informe_pm_iluminacion = Iluminaciones::find($informe_pm->iluminacion_id);
         $informe_pm_particula = Particulas::where('id',$informe_pm->particula_id)->with('color')->first();
         $informe_pm_contraste = Contrastes::find($informe_pm->tinta_contraste_id);
+        $informe_solicitado_por = User::where('id',$informe->solicitado_por)->first();
+        if ($informe_solicitado_por == null){
+            $informe_solicitado_por = new User();
+        }
 
         if ($informe_pm_contraste == null)
             $informe_pm_contraste = new Contrastes();
@@ -252,6 +257,7 @@ class InformesPmController extends Controller
                                                  'informe_detalle',
                                                  'informe_modelos_3d',
                                                  'header_titulo',
+                                                 'informe_solicitado_por',
                                                  'header_descripcion'));
     }
 
