@@ -227,6 +227,7 @@ class InformesController extends Controller
                 $diametro_espesor = DiametrosEspesor::where('diametro',$request->diametro['diametro'])
                                                       ->first();
             }else {
+
                 $diametro_espesor = DiametrosEspesor::where('diametro',$request->diametro['diametro'])
                                                     ->where('espesor',$request->espesor['espesor'])
                                                     ->first();
@@ -271,7 +272,6 @@ class InformesController extends Controller
             $informe->numero_offline = $request->numero_offline;
 
         }
-
 
         if($request->isMethod('post') || ($EsRevision)){
 

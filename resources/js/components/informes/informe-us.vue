@@ -1340,7 +1340,6 @@ export default {
             this.planta = value;
         },
 
-
          getCliente : function(){
 
             axios.defaults.baseURL = this.url ;
@@ -1351,15 +1350,15 @@ export default {
             });
         },
 
-         getNumeroInforme:function(){
+         getNumeroInforme:function() {
 
-            if(!this.editmode) {
-                axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'informes/ot/' + this.otdata.id + '/metodo/' + this.metodo + '/tecnica/' + this.tecnica.id + '/generar-numero-informe/'  + '?api_token=' + Laravel.user.api_token;
-                axios.get(urlRegistros).then(response =>{
-                   this.numero_inf = response.data
-                });
-             }
+            axios.defaults.baseURL = this.url ;
+            var urlRegistros = 'informes/ot/' + this.otdata.id + '/metodo/' + this.metodo + '/tecnica/' + this.tecnica.id + '/generar-numero-informe/'  + '?api_token=' + Laravel.user.api_token;
+            console.log(urlRegistros)
+            axios.get(urlRegistros).then(response =>{
+                this.numero_inf = response.data
+            });
+
         },
 
         getTecnicas: async function(){

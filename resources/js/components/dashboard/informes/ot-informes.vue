@@ -85,12 +85,7 @@
                             <tbody>
                                 <tr v-for="(ot_informe,k) in ot_informes.data" :key="k">
                                     <td>
-                                        <div v-if="ot_informe.metodo != 'US'">
-                                           {{ot_informe.metodo}}
-                                        </div>
-                                        <div v-else>
-                                            {{ot_informe.tecnica}}
-                                        </div>
+                                        {{ot_informe.metodo}}
                                     </td>
                                     <td>
                                         <div v-if="ot_informe.metodo == 'RI' && ot_informe.gasoducto_sn">
