@@ -34,14 +34,12 @@ class InformeDzRequest extends FormRequest
             'norma_evaluacion'          => 'required',
             'norma_ensayo'              => 'required',
             'ot_tipo_soldadura'         => 'required',
+            'temperatura_material'      => 'required',
             'estado_superficie'          => 'required',
             'interno_equipo'             => 'required',
             'unidad_medicion_dureza'     => 'required',
             'observaciones'             => 'Max:250',
-            'detalles.*.elemento'        => 'required|Max:30',
-            'detalles.*.diametro'        => 'required',
-            'detalles.*.soldador'        => 'required',
-
+            'ejecutor_ensayo'             => 'required',
         ];
     }
 
@@ -52,13 +50,12 @@ class InformeDzRequest extends FormRequest
             'norma_evaluacion'            => 'norma evaluación',
             'norma_ensayo'                => 'norma ensayo',
             'ejecutor_ensayo'             => 'ejecutor ensayo',
-            'detalles.*.elemento'         => 'elemento',
-            'detalles.*.diametro'         => 'diametro',
-            'detalles.*.soldador'         => 'soldador',
             'ot_tipo_soldadura'           => 'Eps',
             'estado_superficie'          => 'estado superficie',
             'interno_equipo'             => 'equipo ',
             'unidad_medicion_dureza'     => 'medición dureza',
+            'plano_isom'                => 'plano',
+            'temperatura_material'      => 'temperatura material',
         ];
     }
 }

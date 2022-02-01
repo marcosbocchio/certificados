@@ -288,7 +288,7 @@
 
                         <div class="col-md-3">
                             <div class="form-group" >
-                                <label for="elemento">ELEMENTO</label>
+                                <label for="elemento">Elemento</label>
                                 <input type="text" v-model="elemento" class="form-control" id="elemento" maxlength="30">
                             </div>
                         </div>
@@ -637,8 +637,9 @@ data() {return {
                this.campana.ancho = this.informe_cvdata.ancho;
                this.campana.alto = this.informe_cvdata.alto;
                this.campana.profundidad = this.informe_cvdata.profundidad;
-               this.modo_aplicacion = this.aplicaciondata
-
+               this.modo_aplicacion = this.aplicaciondata;
+               this.bomba.caudal = this.informe_cvdata.caudal;
+               this.bomba.voltaje = this.informe_cvdata.voltaje;
                this.TablaCv = this.detalledata;
                this.TablaModelos3d = this.tablamodelos3d_data;
                this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.informedata.obra });
