@@ -288,19 +288,19 @@
 
                         <div class="col-md-3">
                             <div class="form-group" >
-                                <label for="elemento">Elemento</label>
+                                <label for="elemento">Elemento *</label>
                                 <input type="text" v-model="elemento" class="form-control" id="elemento" maxlength="30">
                             </div>
                         </div>
                          <div class="col-md-3">
                              <div class="form-group" >
-                                 <label for="diametro">Diámetro</label>
+                                 <label for="diametro">Diámetro *</label>
                                  <v-select v-model="diametro" label="diametro" :options="diametros"></v-select>
                              </div>
                          </div>
                         <div class="col-md-3">
 
-                            <label>Cuño</label>
+                            <label>Cuño *</label>
                             <v-select v-model="soldador" :options="soldadores" label="codigo">
                                 <template slot="option" slot-scope="option">
                                     <span class="upSelect">{{ option.nombre }} </span> <br>
