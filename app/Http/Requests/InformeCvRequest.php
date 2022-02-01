@@ -39,9 +39,7 @@ class InformeCvRequest extends FormRequest
             'campana'                   => 'required',
             'modo_aplicacion'           => 'required',
             'observaciones'             => 'Max:250',
-            'detalles.*.elemento'        => 'required|Max:30',
-            'detalles.*.diametro'        => 'required',
-            'detalles.*.soldador'        => 'required',
+            'ejecutor_ensayo'             => 'required',
 
         ];
     }
@@ -50,14 +48,13 @@ class InformeCvRequest extends FormRequest
     {
         return [
 
-            'norma_evaluacion'            => 'norma evaluación',
-            'norma_ensayo'                => 'norma ensayo',
-            'ejecutor_ensayo'             => 'ejecutor ensayo',
-            'detalles.*.elemento'         => 'elemento',
-            'detalles.*.diametro'         => 'diametro',
-            'detalles.*.soldador'         => 'soldador',
-            'ot_tipo_soldadura'           => 'Eps',
-            'modo_aplicacion'           => 'modo de aplicación',
+              'norma_evaluacion'            => 'norma evaluación',
+              'norma_ensayo'                => 'norma ensayo',
+              'ejecutor_ensayo'             => 'ejecutor ensayo',
+              'ot_tipo_soldadura'           => 'Eps',
+              'modo_aplicacion'           => 'modo de aplicación',
+              'extension_ensayo'          => 'extensión de ensayo',
+              'plano_isom'                => 'plano',
             ];
     }
 }

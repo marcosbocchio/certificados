@@ -260,7 +260,7 @@
 
                         <div class="col-md-2">
                             <div class="form-group" >
-                                <label for="elemento">ELEMENTO</label>
+                                <label for="elemento">Elemento *</label>
                                 <input type="text" v-model="elemento" class="form-control" id="elemento" maxlength="30">
                             </div>
                         </div>
@@ -273,7 +273,7 @@
 
                         <div class="col-md-2">
                             <div class="form-group" >
-                                <label>Espesor</label>
+                                <label>Espesor *</label>
                                 <v-select v-model="espesor" label="espesor" :options="espesores" taggable :disabled="isChapa">
                                     <template slot="option" slot-scope="option">
                                         <span class="upSelect">{{ option.espesor }} </span> <br>
@@ -285,7 +285,7 @@
 
                         <div class="col-md-2">
 
-                            <label>Cuño</label>
+                            <label>Cuño *</label>
                             <v-select v-model="soldador" :options="soldadores" label="codigo">
                                 <template slot="option" slot-scope="option">
                                     <span class="upSelect">{{ option.nombre }} </span> <br>
@@ -295,21 +295,21 @@
                         </div>
                         <div class="col-md-2">
                             <div class="form-group" >
-                                <label for="material_base_izq">Material base</label>
+                                <label for="material_base_izq">Material base *</label>
                                 <input type="text" v-model="material_base_izq" class="form-control" id="material_base_izq" maxlength="10">
                             </div>
                         </div>
 
                         <div class="col-md-2">
                             <div class="form-group" >
-                                <label for="soldadura">Soldadura</label>
+                                <label for="soldadura">Soldadura * </label>
                                 <input type="text" v-model="soldadura" class="form-control" id="soldadura" maxlength="10">
                             </div>
                         </div>
 
                         <div class="col-md-2">
                             <div class="form-group" >
-                                <label for="material_base_der">Material Base</label>
+                                <label for="material_base_der">Material base *</label>
                                 <input type="text" v-model="material_base_der" class="form-control" id="material_base_der" maxlength="10">
                             </div>
                         </div>
