@@ -177,7 +177,7 @@
 
                         <div class="col-md-3">
                             <div class="form-group" >
-                                <label for="dureza_calibracion">Dureza de calibración</label>
+                                <label for="dureza_calibracion">Dureza de calibración (HLD)</label>
                                 <div v-if="interno_equipo">
                                     <input type="text" v-model="interno_equipo.dureza_calibracion" class="form-control" id="dureza_calibracion" disabled>
                                 </div>
@@ -637,7 +637,7 @@ data() {return {
                this.unidad_medicion_dureza = this.unidad_medicion_durezadata;
                this.interno_equipo = this.interno_equipodata;
                this.interno_equipo.probeta = this.interno_equipodata.probeta;
-               this.interno_equipo.dureza_calibracion = this.interno_equipodata.probeta;
+               this.interno_equipo.dureza_calibracion = this.interno_equipodata.dureza_calibracion;
                this.temperatura_material = this.informe_dzdata.temperatura_material;
                this.estado_superficie = this.estado_superficiedata;
                this.TablaDz = this.detalledata;

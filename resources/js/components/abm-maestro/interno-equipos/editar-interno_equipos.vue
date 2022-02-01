@@ -168,6 +168,8 @@ export default {
                 this.Registro.activo_sn = this.selectRegistro.activo_sn;
                 this.Registro.curie = this.selectRegistro.curie;
                 this.equipo = this.selectRegistro.equipo;
+                this.Registro.probeta = this.selectRegistro.probeta;
+                this.Registro.dureza_calibracion = this.selectRegistro.dureza_calibracion;
                 this.interno_fuente = this.selectRegistro.interno_fuente;
 
                 $('#editar').modal('show');

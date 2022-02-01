@@ -1655,6 +1655,20 @@ export default {
                         }
                     }
 
+                    for( var i = 0; i < this.TablaInformesDz.length; i++){
+                        if (this.TablaInformesDz[i].id == id) {
+                                this.TablaInformesDz.splice(i, 1);
+                            i--;
+                        }
+                    }
+
+                    for( var i = 0; i < this.TablaInformesCv.length; i++){
+                        if (this.TablaInformesCv[i].id == id) {
+                                this.TablaInformesCv.splice(i, 1);
+                            i--;
+                        }
+                    }
+
                 }
 
                 //borro los servicios

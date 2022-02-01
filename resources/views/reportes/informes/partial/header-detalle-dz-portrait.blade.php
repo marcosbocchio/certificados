@@ -50,7 +50,7 @@
                        </tr>
                        <tr>
                         <td colspan="2">{{$informe_interno_equipo->probeta}}</td>
-                        <td colspan="2">{{$informe_interno_equipo->dureza_calibracion}}</td>
+                        <td colspan="2">{{$informe_interno_equipo->dureza_calibracion}} HLD</td>
                        </tr>
                        <tr>
                         <th colspan="2">Ejecutor Ensayo</th>
