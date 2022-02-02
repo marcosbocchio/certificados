@@ -1340,8 +1340,7 @@ export default {
             this.planta = value;
         },
 
-         getCliente : function(){
-
+        getCliente : function(){
             axios.defaults.baseURL = this.url ;
             var urlRegistros = 'clientes/' + this.otdata.cliente_id + '?api_token=' + Laravel.user.api_token;
             axios.get(urlRegistros).then(response =>{
@@ -1911,7 +1910,12 @@ export default {
 
             this.calibraciones = [];
             this.SetearBlockCalibraciones();
-            this.getNumeroInforme();
+            // si entro en modo edicion no debo cambiar nunca la numeracion si mantengo la tecnica
+            if (this.editmode && this.tecnica.id == this.informedata.tecnica_id) {
+                this.numero_inf = this.informedata.numero;
+            } else {
+                this.getNumeroInforme();
+            }
         },
 
         SetearBlockCalibraciones(){
