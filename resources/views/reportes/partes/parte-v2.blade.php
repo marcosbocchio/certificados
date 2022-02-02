@@ -217,6 +217,7 @@ footer {
                 @foreach ($informes_ri_adicionales as $item)
                         <tr>
                             <td style="font-size: 12px;height: 20px;">MANUAL</td>
+                            <td style="font-size: 12px; text-align: center;">&nbsp;</td>
                             <td style="font-size: 12px; text-align: center;">{{$item->costura}}</td>
                             <td style="font-size: 12px; text-align: center;">{{$item->pulgadas}}</td>
                             <td style="font-size: 12px; text-align: center;">{{$item->placas}}</td>
