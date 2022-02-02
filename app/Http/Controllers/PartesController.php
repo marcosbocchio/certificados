@@ -375,6 +375,7 @@ class PartesController extends Controller
 
         $informes_ri  = DB::table('parte_detalles')
                             ->join('informes','informes.id','=','parte_detalles.informe_id')
+                            ->join('informes_view','informes_view.informe_id','=','informes.id')
                             ->join('metodo_ensayos','metodo_ensayos.id','=','informes.metodo_ensayo_id')
                             ->where('parte_detalles.parte_id',$id)
                             ->where('metodo_ensayos.metodo','RI')
