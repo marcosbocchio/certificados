@@ -378,7 +378,7 @@ class PartesController extends Controller
                             ->join('metodo_ensayos','metodo_ensayos.id','=','informes.metodo_ensayo_id')
                             ->where('parte_detalles.parte_id',$id)
                             ->where('metodo_ensayos.metodo','RI')
-                            ->selectRaw('parte_detalles.* , 0 as informe_sel,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada')
+                            ->selectRaw('parte_detalles.* , 0 as informe_sel,informes_view.numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada')
                             ->get();
 
         /* Si no tengo informes asociado al detalle del parte quiere decir que se agregó manualmente en RI. */
@@ -393,45 +393,50 @@ class PartesController extends Controller
 
         $informes_pm  = DB::table('parte_detalles')
                              ->join('informes','informes.id','=','parte_detalles.informe_id')
+                             ->join('informes_view','informes_view.informe_id','=','informes.id')
                              ->join('metodo_ensayos','metodo_ensayos.id','=','informes.metodo_ensayo_id')
                              ->leftjoin('diametros_espesor','diametros_espesor.id','=','informes.diametro_espesor_id')
                              ->where('metodo_ensayos.metodo','PM')
                              ->where('parte_detalles.parte_id',$id)
-                             ->selectRaw('parte_detalles.* , 0 as informe_sel,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada, informes.componente as componente,diametros_espesor.diametro as diametro, informes.diametro_especifico as diametro_especifico')
+                             ->selectRaw('parte_detalles.* , 0 as informe_sel,informes_view.numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada, informes.componente as componente,diametros_espesor.diametro as diametro, informes.diametro_especifico as diametro_especifico')
                              ->get();
 
         $informes_cv  = DB::table('parte_detalles')
                              ->join('informes','informes.id','=','parte_detalles.informe_id')
+                             ->join('informes_view','informes_view.informe_id','=','informes.id')
                              ->join('metodo_ensayos','metodo_ensayos.id','=','informes.metodo_ensayo_id')
                              ->where('metodo_ensayos.metodo','CV')
                              ->where('parte_detalles.parte_id',$id)
-                             ->selectRaw('parte_detalles.* , 0 as informe_sel,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada, informes.componente as componente')
+                             ->selectRaw('parte_detalles.* , 0 as informe_sel,informes_view.numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada, informes.componente as componente')
                              ->get();
 
         $informes_dz  = DB::table('parte_detalles')
                              ->join('informes','informes.id','=','parte_detalles.informe_id')
+                             ->join('informes_view','informes_view.informe_id','=','informes.id')
                              ->join('metodo_ensayos','metodo_ensayos.id','=','informes.metodo_ensayo_id')
                              ->where('metodo_ensayos.metodo','DZ')
                              ->where('parte_detalles.parte_id',$id)
-                             ->selectRaw('parte_detalles.* , 0 as informe_sel,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada, informes.componente as componente')
+                             ->selectRaw('parte_detalles.* , 0 as informe_sel,informes_view.numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada, informes.componente as componente')
                              ->get();
 
         $informes_lp  = DB::table('parte_detalles')
                               ->join('informes','informes.id','=','parte_detalles.informe_id')
+                              ->join('informes_view','informes_view.informe_id','=','informes.id')
                               ->join('metodo_ensayos','metodo_ensayos.id','=','informes.metodo_ensayo_id')
                               ->leftjoin('diametros_espesor','diametros_espesor.id','=','informes.diametro_espesor_id')
                               ->where('metodo_ensayos.metodo','LP')
                               ->where('parte_detalles.parte_id',$id)
-                              ->selectRaw('parte_detalles.* , 0 as informe_sel,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada, informes.componente as componente,diametros_espesor.diametro as diametro, informes.diametro_especifico as diametro_especifico ')
+                              ->selectRaw('parte_detalles.* , 0 as informe_sel,informes_view.numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada, informes.componente as componente,diametros_espesor.diametro as diametro, informes.diametro_especifico as diametro_especifico ')
                               ->get();
 
        $informes_us  = DB::table('parte_detalles')
                                ->join('informes','informes.id','=','parte_detalles.informe_id')
+                               ->join('informes_view','informes_view.informe_id','=','informes.id')
                                ->join('metodo_ensayos','metodo_ensayos.id','=','informes.metodo_ensayo_id')
                                ->join('tecnicas','tecnicas.id','=','informes.tecnica_id')
                                ->where('metodo_ensayos.metodo','US')
                                ->where('parte_detalles.parte_id',$id)
-                               ->selectRaw('parte_detalles.* , 0 as informe_sel,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada,tecnicas.codigo as tecnica')
+                               ->selectRaw('parte_detalles.* , 0 as informe_sel,informes_view.numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada,tecnicas.codigo as tecnica')
                                ->get();
 
 
