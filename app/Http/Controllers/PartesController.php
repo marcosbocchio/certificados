@@ -379,7 +379,7 @@ class PartesController extends Controller
                             ->join('metodo_ensayos','metodo_ensayos.id','=','informes.metodo_ensayo_id')
                             ->where('parte_detalles.parte_id',$id)
                             ->where('metodo_ensayos.metodo','RI')
-                            ->where('informes_view.importable_sn,0')
+                            ->where('informes_view.importable_sn',0)
                             ->selectRaw('parte_detalles.* , 0 as informe_sel,informes_view.numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada')
                             ->get();
 
@@ -400,7 +400,7 @@ class PartesController extends Controller
                              ->leftjoin('diametros_espesor','diametros_espesor.id','=','informes.diametro_espesor_id')
                              ->where('metodo_ensayos.metodo','PM')
                              ->where('parte_detalles.parte_id',$id)
-                             ->where('informes_view.importable_sn,0')
+                             ->where('informes_view.importable_sn',0)
                              ->selectRaw('parte_detalles.* , 0 as informe_sel,informes_view.numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada, informes.componente as componente,diametros_espesor.diametro as diametro, informes.diametro_especifico as diametro_especifico')
                              ->get();
 
@@ -410,7 +410,7 @@ class PartesController extends Controller
                              ->join('metodo_ensayos','metodo_ensayos.id','=','informes.metodo_ensayo_id')
                              ->where('metodo_ensayos.metodo','CV')
                              ->where('parte_detalles.parte_id',$id)
-                             ->where('informes_view.importable_sn,0')
+                             ->where('informes_view.importable_sn',0)
                              ->selectRaw('parte_detalles.* , 0 as informe_sel,informes_view.numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada, informes.componente as componente')
                              ->get();
 
@@ -420,7 +420,7 @@ class PartesController extends Controller
                              ->join('metodo_ensayos','metodo_ensayos.id','=','informes.metodo_ensayo_id')
                              ->where('metodo_ensayos.metodo','DZ')
                              ->where('parte_detalles.parte_id',$id)
-                             ->where('informes_view.importable_sn,0')
+                             ->where('informes_view.importable_sn',0)
                              ->selectRaw('parte_detalles.* , 0 as informe_sel,informes_view.numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada, informes.componente as componente')
                              ->get();
 
@@ -431,7 +431,7 @@ class PartesController extends Controller
                               ->leftjoin('diametros_espesor','diametros_espesor.id','=','informes.diametro_espesor_id')
                               ->where('metodo_ensayos.metodo','LP')
                               ->where('parte_detalles.parte_id',$id)
-                              ->where('informes_view.importable_sn,0')
+                              ->where('informes_view.importable_sn',0)
                               ->selectRaw('parte_detalles.* , 0 as informe_sel,informes_view.numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada, informes.componente as componente,diametros_espesor.diametro as diametro, informes.diametro_especifico as diametro_especifico ')
                               ->get();
 
@@ -442,7 +442,7 @@ class PartesController extends Controller
                                ->join('tecnicas','tecnicas.id','=','informes.tecnica_id')
                                ->where('metodo_ensayos.metodo','US')
                                ->where('parte_detalles.parte_id',$id)
-                               ->where('informes_view.importable_sn,0')
+                               ->where('informes_view.importable_sn',0)
                                ->selectRaw('parte_detalles.* , 0 as informe_sel,informes_view.numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada,tecnicas.codigo as tecnica')
                                ->get();
 
