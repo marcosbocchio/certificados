@@ -68,7 +68,6 @@ class InformeRiRequest extends FormRequest
 
      $validacion = [
 
-                'numero_inf'                => 'required | integer| digits_between:1,3',
                 'gasoducto_sn'              => 'required',
                 'fecha'                     => 'required',
                 'obra'                      => 'required|min:1',

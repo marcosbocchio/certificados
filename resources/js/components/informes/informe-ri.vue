@@ -954,6 +954,7 @@
  import { toastrInfo,toastrDefault } from '../toastrConfig';
  import {isInt} from '../../functions/isInt.js';
  import {isFloat} from '../../functions/isFloat.js';
+ import {sprintf} from '../../functions/sprintf.js'
 
  export default {
 
@@ -1274,10 +1275,8 @@
             },
 
             numero_inf_code : function()  {
-
                 if(this.numero_inf)
-                 return this.metodo + (this.numero_inf <10? '00' : this.numero_inf<100? '0' : '') + this.numero_inf ;
-
+                   return this.metodo +  sprintf("%04d",this.numero_inf);
              },
 
              ot_tipo_soldaduras_filter_R :function(){

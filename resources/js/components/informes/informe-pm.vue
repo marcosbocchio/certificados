@@ -510,6 +510,7 @@ import { toastrInfo,toastrDefault } from '../toastrConfig';
 import moment from 'moment';
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
+import {sprintf} from '../../functions/sprintf.js'
 
 export default {
     components: {
@@ -766,12 +767,9 @@ export default {
     computed :{
 
         ...mapState(['isLoading','url','materiales','ot_obra_tipo_soldaduras','diametros','espesores','procedimientos','norma_evaluaciones','particulas','norma_ensayos','iluminaciones','ejecutor_ensayos','interno_equipos','instrumentos_mediciones','modelos_3d']),
-
         numero_inf_code : function()  {
-
-               if(this.numero_inf)
-
-                      return this.metodo + (this.numero_inf <10? '00' : this.numero_inf<100? '0' : '') + this.numero_inf ;
+            if(this.numero_inf)
+                return this.metodo +  sprintf("%04d",this.numero_inf);
         },
 
      },
