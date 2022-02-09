@@ -71,6 +71,7 @@ class PdfInformesLpController extends Controller
         $nro = FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo) .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) ;
         $fecha = date('d-m-Y', strtotime($informe->fecha));
         $tipo_reporte = "INFORME N°";
+        $informe_solicitado_por = User::where('id',$informe->solicitado_por)->first();
 
         $informe_modelos_3d = (new \App\Http\Controllers\InformeModelos3dController)->getInformeModelos3d($id);
 
@@ -108,6 +109,7 @@ class PdfInformesLpController extends Controller
                                                                 'informe_modelos_3d',
                                                                 'observaciones',
                                                                 'firma',
+                                                                'informe_solicitado_por',
                                                                 ))->setPaper('a4','portrait')->setWarnings(false);
 
 

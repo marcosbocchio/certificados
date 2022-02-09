@@ -123,7 +123,7 @@ export default {
             this.registros = [];
             this.loading = true,
             axios.defaults.baseURL = this.url ;
-            var urlRegistros = 'informes/revisiones/ot/' + this.registro_revisiones.ot_id + '/metodo/' + this.registro_revisiones.metodo + '/numero/' + this.registro_revisiones.numero + '?page='+ page + '&api_token=' + Laravel.user.api_token;
+            var urlRegistros = 'informes/revisiones/ot/' + this.registro_revisiones.ot_id + '/metodo/' + this.registro_revisiones.metodo + '/informe_id/' + this.registro_revisiones.id + '?page='+ page + '&api_token=' + Laravel.user.api_token;
             console.log(urlRegistros);
             axios.get(urlRegistros).then(response =>{
 

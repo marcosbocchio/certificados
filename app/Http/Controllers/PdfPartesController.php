@@ -8,6 +8,7 @@ use App\Partes;
 use App\Ots;
 use App\Clientes;
 use App\User;
+use Illuminate\Support\Facades\Log;
 use App\Contratistas;
 use Illuminate\Support\Collection as Collection;
 
@@ -72,7 +73,8 @@ class PdfPartesController extends Controller
 
 
         $metodos_informe = DB::table('parte_detalles')
-                                ->leftjoin('informes','parte_detalles.informe_id','=','informes.id')
+                                 ->leftjoin('informes','parte_detalles.informe_id','=','informes.id')
+                                 ->join('informes_view','informes_view.informe_id','=','informes.id')
                                 ->leftjoin('informes_importados','parte_detalles.informe_importado_id','=','informes_importados.id')
                                 ->join('metodo_ensayos',function($join){
 
@@ -81,17 +83,20 @@ class PdfPartesController extends Controller
 
                                 })
                                 ->where('parte_detalles.parte_id',$id)
-                                ->selectRaw('metodo_ensayos.metodo as metodo,IF(informes_importados.numero,CONCAT(metodo_ensayos.metodo,LPAD(informes_importados.numero, 3, "0")),CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0"))) as numero_formateado,IFNULL(informes.id,informes_importados.id) as informe_id,informes.id as no_importado')
+                                ->selectRaw('metodo_ensayos.metodo as metodo,informes_view.numero_formateado,IFNULL(informes.id,informes_importados.id) as informe_id,informes.id as no_importado')
                                 ->groupby('numero_formateado','metodo','informes.id','informes_importados.id')
                                 ->orderBy('numero_formateado','ASC')
                                 ->get();
 
-
         $informes_detalle = DB::table('metodo_ensayos')
                                 ->join('informes','metodo_ensayos.id','=','informes.metodo_ensayo_id')
+                                ->join('informes_view','informes_view.informe_id','=','informes.id')
                                 ->join('parte_detalles','parte_detalles.informe_id','=','informes.id')
+                                ->leftjoin('plantas','plantas.id','=','informes.planta_id')
+                                ->leftjoin('users','users.id','=','informes.solicitado_por')
+                                ->leftjoin('diametros_espesor','diametros_espesor.id','=','informes.diametro_espesor_id')
                                 ->where('parte_detalles.parte_id',$id)
-                                ->selectRaw('metodo_ensayos.metodo as metodo,informes.id as informe_id,CONCAT(metodo_ensayos.metodo,LPAD(informes.numero, 3, "0")) as numero_formateado')
+                                ->selectRaw('metodo_ensayos.metodo as metodo,informes.id as informe_id,plantas.codigo as planta,users.name as solicitado_por,informes_view.numero_formateado,informes.componente as componente, diametros_espesor.diametro as diametro, informes.diametro_especifico as diametro_especifico')
                                 ->groupBy('informes.id','metodo','numero_formateado')
                                 ->get();
 
@@ -105,7 +110,7 @@ class PdfPartesController extends Controller
                                     ->selectRaw('parte_detalles.costura_final as costura,parte_detalles.pulgadas_final as pulgadas,parte_detalles.placas_final as placas,parte_detalles.cm_final as cm, 0 as informe_sel')
                                     ->get();
         }
-
+        Log::debug($informes_detalle);
      //  dd($informes_ri_adicionales);
 
         $pdf = \PDF::loadView('reportes.partes.parte-v2',compact('ot','titulo','nro','fecha','observaciones','tipo_reporte',

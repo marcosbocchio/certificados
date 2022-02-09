@@ -37,7 +37,7 @@
      :penetrante_aplicacion_data="{{$penetrante_aplicacion}}"
      :revelador_aplicacion_data="{{$revelador_aplicacion}}"
      :removedor_aplicacion_data="{{$removedor_aplicacion}}"
-
+     :solicitado_pordata = "{{$informe_solicitado_por}}"
      :iluminacion_data = "{{$informe_lp_iluminacion}}"
      :detalledata="{{$informe_detalle}}"
      :tablaModelos3d_data="{{$informe_modelos_3d}}"

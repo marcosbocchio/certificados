@@ -19,4 +19,19 @@ class Informe extends Model
         return $this->belongsTo('App\Tecnicas','tecnica_id','id');
 
      }
+
+     public function planta(){
+
+        return $this->belongsTo('App\Plantas','planta_id','id');
+
+     }
+
+     public function scopeUs($query, $metodo, $tecnica = null) {
+
+            if($metodo == 'US') {
+                $query->join('tecnicas','tecnicas.id','=','informes.tecnica_id')
+                ->where('tecnicas.codigo',$tecnica);
+            }
+     }
+
 }

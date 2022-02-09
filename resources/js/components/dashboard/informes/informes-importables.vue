@@ -36,10 +36,16 @@
                                     </div>
                                </div>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group" >
                                     <label for="ejecutor_ensayo">Ejecutor Ensayo *</label>
                                     <v-select v-model="Registro.ejecutor_ensayo" label="name" :options="ejecutor_ensayos"></v-select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group" >
+                                    <label for="ejecutor_ensayo">Solicitante </label>
+                                    <v-select v-model="Registro.solicitado_por" label="name" :options="usuarios_cliente"></v-select>
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -111,6 +117,7 @@ components: {
         editmode : false,
         ruta: 'informes_importados',
         max_size :50000, //KB
+        usuarios_cliente: [],
         tipos_archivo_soportados:['pdf'],
 
          informe_id : 0,
@@ -122,6 +129,7 @@ components: {
             'planta' : '',
             'prefijo'  : '',
             'observaciones':'',
+            'solicitado_por':{},
             'path':'',
             'metodo_ensayos' : {},
             'ejecutor_ensayo' :{}
@@ -138,7 +146,7 @@ components: {
     eventNewRegistro.$on('open', this.nuevoRegistro);
     eventEditRegistro.$on('edit', this.EditRegistro);
     this.$store.dispatch('loadEjecutorEnsayo', this.otdata.id);
-
+    this.getUsuariosCliente();
     },
 
 
@@ -162,6 +170,7 @@ components: {
                 'planta': this.Registro.planta,
                 'prefijo'  : '',
                 'observaciones':'',
+                'solicitado_por':{},
                 'path':'',
                 'metodo_ensayos' : this.metodo_ensayo,
                 'ejecutor_ensayo' :{}
@@ -179,7 +188,15 @@ components: {
          $('#nuevo').modal('show');
 
         },
+    getUsuariosCliente : function(){
 
+        axios.defaults.baseURL = this.url ;
+        var urlRegistros = 'users/ot_id/' + this.otdata.id + '?api_token=' + Laravel.user.api_token;
+        axios.get(urlRegistros).then(response =>{
+        this.usuarios_cliente = response.data
+        });
+
+    },
         EditRegistro : function(informe_id){
             this.informe_id = informe_id;
             console.log('estoy dentro del modal edit:' + informe_id);
@@ -188,8 +205,9 @@ components: {
             var urlRegistros = 'informes_importados/'+ informe_id + '/edit'  + '?api_token=' + Laravel.user.api_token;
             $('#nuevo').modal('show');
             axios.get(urlRegistros).then(response =>{
-                console.log(response.data );
+                console.log(response.data.solicitante );
                 this.Registro = response.data;
+                this.Registro.solicitado_por = response.data.solicitante
                 this.formatearNumero(this.Registro.numero,3);
                 this.$forceUpdate();
                 eventEditRegistro.$emit('refreshObra');
@@ -201,7 +219,7 @@ components: {
             if(!this.editmode) {
 
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'informes/ot/' + this.otdata.id + '/metodo/' + this.metodo_ensayo.metodo + '/generar-numero-informe'  + '?api_token=' + Laravel.user.api_token;
+                var urlRegistros = 'informes/ot/' + this.otdata.id + '/metodo/' + this.metodo + '/tecnica/0' + '/generar-numero-informe/'  + '?api_token=' + Laravel.user.api_token;
                 axios.get(urlRegistros).then(response =>{
 
                     this.Registro.numero = response.data;

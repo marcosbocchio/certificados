@@ -127,7 +127,7 @@
                     <div class="col-md-3" >
                         <div class="form-group">
                             <label for="tecnicas">Tecnica *</label>
-                            <v-select v-model="tecnica" label="descripcion" :options="tecnicas" id="tecnicas" @input="borrarTodasLasCalibraciones"></v-select>
+                            <v-select v-model="tecnica" label="descripcion" :options="tecnicas" id="tecnicas" @input="resetTecnica"></v-select>
                         </div>
                     </div>
 
@@ -205,6 +205,13 @@
                         <div class="form-group" >
                             <label for="ejecutor_ensayo">Ejecutor Ensayo *</label>
                             <v-select v-model="ejecutor_ensayo" label="name" :options="ejecutor_ensayos"></v-select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group" >
+                            <label for="ejecutor_ensayo">Solicitante </label>
+                            <v-select v-model="solicitado_por" label="name" :options="usuarios_cliente"></v-select>
                         </div>
                     </div>
 
@@ -942,6 +949,7 @@ import { toastrInfo,toastrDefault } from '../toastrConfig';
 import moment from 'moment';
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
+import {sprintf} from '../../functions/sprintf.js'
 
 export default {
 
@@ -1067,6 +1075,10 @@ export default {
       tablamodelos3d_data : {
             type : [ Array ],
             required : false
+            },
+         solicitado_pordata : {
+            type : [ Object, Array ],
+            required : false
             }
 
     },
@@ -1079,7 +1091,8 @@ export default {
         tipos_archivo_soportados:['jpg','bmp','jpeg','png'],
 
         errors:[],
-
+        solicitado_por:'',
+        usuarios_cliente:[],
         obra:'',
         planta:'',
         cliente:'',
@@ -1101,7 +1114,7 @@ export default {
         espesor_chapa:'',
         isVarios:false,
         isChapa:false,
-        tecnica:'',
+        tecnica:{ codigo: ''},
         interno_equipo:'',
         procedimiento:'',
         norma_ensayo:'',
@@ -1190,7 +1203,6 @@ export default {
       this.getCliente();
       this.$store.dispatch('loadMateriales');
       this.$store.dispatch('loadDiametros');
-      this.getTecnicas();
       this.getAgenteAcomplamiento();
       this.$store.dispatch('loadInternoEquipos',{ 'metodo' : this.metodo, 'activo_sn' : 1, 'tipo_penetrante' : 'null' });
       this.$store.dispatch('loadProcedimietosOtMetodo',
@@ -1207,25 +1219,19 @@ export default {
       this.getPalpadores();
       this.$store.dispatch('loadEjecutorEnsayo', this.otdata.id);
       this.getGeneratrices();
+      this.getUsuariosCliente();
       this.setEdit();
       this.$store.dispatch('loadModelos3d');
       this.getAccesoriosUs();
     },
 
-    mounted : function() {
-
-         this.getNumeroInforme();
-    },
-
     computed :{
 
         ...mapState(['isLoading','url','ot_obra_tipo_soldaduras','materiales','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','ejecutor_ensayos','interno_equipos','palpadores','modelos_3d']),
-
         numero_inf_code : function()  {
 
-               if(this.numero_inf)
-
-                return this.metodo + (this.numero_inf <10? '00' : this.numero_inf<100? '0' : '') + this.numero_inf ;
+            if(this.numero_inf)
+                return this.metodo +  sprintf("%04d",this.numero_inf);
         },
      },
 
@@ -1268,7 +1274,7 @@ export default {
 
         },
 
-         setEdit : function(){
+         setEdit : async function(){
 
             if(this.editmode) {
 
@@ -1311,8 +1317,14 @@ export default {
                this.Tabla_us_pa = this.tabla_us_pa_data;
                this.Tabla_me = this.tabla_me_data;
                this.TablaModelos3d = this.tablamodelos3d_data;
+               this.solicitado_por = this.solicitado_pordata ;
                this.SetearBlockCalibraciones();
                this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.informedata.obra });
+               await this.getTecnicas();
+            } else {
+                await this.getTecnicas();
+                this.tecnica = this.tecnicas[0]
+                this.getNumeroInforme();
             }
          },
 
@@ -1327,8 +1339,7 @@ export default {
             this.planta = value;
         },
 
-         getCliente : function(){
-
+        getCliente : function(){
             axios.defaults.baseURL = this.url ;
             var urlRegistros = 'clientes/' + this.otdata.cliente_id + '?api_token=' + Laravel.user.api_token;
             axios.get(urlRegistros).then(response =>{
@@ -1337,25 +1348,23 @@ export default {
             });
         },
 
-         getNumeroInforme:function(){
+         getNumeroInforme:function() {
 
-            if(!this.editmode) {
+            axios.defaults.baseURL = this.url ;
+            var urlRegistros = 'informes/ot/' + this.otdata.id + '/metodo/' + this.metodo + '/tecnica/' + this.tecnica.id + '/generar-numero-informe/'  + '?api_token=' + Laravel.user.api_token;
+            console.log(urlRegistros)
+            axios.get(urlRegistros).then(response =>{
+                this.numero_inf = response.data
+            });
 
-                axios.defaults.baseURL = this.url ;
-                    var urlRegistros = 'informes/ot/' + this.otdata.id + '/metodo/' + this.metodo + '/generar-numero-informe'  + '?api_token=' + Laravel.user.api_token;
-                    axios.get(urlRegistros).then(response =>{
-                    this.numero_inf = response.data
-
-                    });
-             }
         },
 
-        getTecnicas: function(){
+        getTecnicas: async function(){
 
             axios.defaults.baseURL = this.url ;
             var urlRegistros = 'tecnicas/metodo/'+ this.metodo + '?api_token=' + Laravel.user.api_token;
-            axios.get(urlRegistros).then(response =>{
-            this.tecnicas = response.data
+            await axios.get(urlRegistros).then(response =>{
+                this.tecnicas = response.data
             });
          },
 
@@ -1367,6 +1376,15 @@ export default {
             this.estados_superficies = response.data
             });
          },
+        getUsuariosCliente : function(){
+
+            axios.defaults.baseURL = this.url ;
+            var urlRegistros = 'users/ot_id/' + this.otdata.id + '?api_token=' + Laravel.user.api_token;
+            axios.get(urlRegistros).then(response =>{
+            this.usuarios_cliente = response.data
+            });
+
+        },
 
          getAgenteAcomplamiento: function(){
 
@@ -1887,10 +1905,16 @@ export default {
             this.indexPosPos = index ;
         },
 
-        borrarTodasLasCalibraciones(){
+        resetTecnica(){
 
             this.calibraciones = [];
             this.SetearBlockCalibraciones();
+            // si entro en modo edicion no debo cambiar nunca la numeracion si mantengo la tecnica
+            if (this.editmode && this.tecnica.id == this.informedata.tecnica_id) {
+                this.numero_inf = this.informedata.numero;
+            } else {
+                this.getNumeroInforme();
+            }
         },
 
         SetearBlockCalibraciones(){
@@ -1995,6 +2019,7 @@ export default {
                 'calibraciones'   :this.calibraciones,
                 'tabla_us_pa'     :this.Tabla_us_pa,
                 'tabla_me'        :this.Tabla_me,
+                'solicitado_por'    : this.solicitado_por,
                 'TablaModelos3d' :this.TablaModelos3d,
 
         }}
@@ -2073,6 +2098,7 @@ export default {
                 'calibraciones'   :this.calibraciones,
                 'tabla_us_pa'     :this.Tabla_us_pa,
                 'tabla_me'        :this.Tabla_me,
+                'solicitado_por'    : this.solicitado_por,
                 'TablaModelos3d' :this.TablaModelos3d,
 
           }}

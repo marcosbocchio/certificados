@@ -6,6 +6,7 @@ use App\Http\Requests\ClienteRequest;
 use Illuminate\Support\Collection as Collection;
 use Illuminate\Support\Facades\Auth;
 use App\Clientes;
+use App\OtUsuariosClientes;
 use Illuminate\Support\Facades\DB;
 use App\Contactos;
 use App\User;
@@ -252,6 +253,11 @@ class ClientesController extends Controller
       }
 
     }
+    public function UserClienteOT($ot_id){
+        return OtUsuariosClientes::where('ot_id',$ot_id)
+                                 ->join('users','users.id','=','ot_usuarios_clientes.user_id')
+                                 ->get();
+    }
 
    public function getOts($cliente_id){
 
@@ -283,5 +289,4 @@ class ClientesController extends Controller
 
 
     }
-
 }

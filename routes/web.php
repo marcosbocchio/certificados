@@ -46,12 +46,16 @@ Route::group(['middleware' => ['auth']], function () {
   Route::get('/area/enod/ot/{ot_id}/informe/metodo/lp','InformesLpController@create')->name('InformeLpCreate');
   Route::get('/area/enod/ot/{ot_id}/informe/metodo/us','InformesUsController@create')->name('InformeUsCreate');
   Route::get('/area/enod/ot/{ot_id}/informe/metodo/tt','InformesTtController@create')->name('InformeTtCreate');
+  Route::get('/area/enod/ot/{ot_id}/informe/metodo/cv','InformesCvController@create')->name('InformeCvCreate');
+  Route::get('/area/enod/ot/{ot_id}/informe/metodo/dz','InformesDzController@create')->name('InformeDzCreate');
   Route::get('/area/enod/ot/{ot_id}/informe/{id}/edit','InformesController@edit');
   Route::get('/area/enod/ot/{ot_id}/informe/{id}/edit/ri','InformesRiController@edit')->name('InformeRiEdit');
   Route::get('/area/enod/ot/{ot_id}/informe/{id}/edit/pm','InformesPmController@edit')->name('InformePmEdit');
   Route::get('/area/enod/ot/{ot_id}/informe/{id}/edit/lp','InformesLpController@edit')->name('InformeLpEdit');
   Route::get('/area/enod/ot/{ot_id}/informe/{id}/edit/us','InformesUsController@edit')->name('InformeUsEdit');
   Route::get('/area/enod/ot/{ot_id}/informe/{id}/edit/tt','InformesTtController@edit')->name('InformeTtEdit');
+  Route::get('/area/enod/ot/{ot_id}/informe/{id}/edit/dz','InformesDzController@edit')->name('InformeDzEdit');
+  Route::get('/area/enod/ot/{ot_id}/informe/{id}/edit/cv','InformesCvController@edit')->name('InformeCvEdit');
   Route::get('/area/enod/ot/{ot_id}/remito','RemitosController@create')->name('RemitoCreate');
   Route::get('/area/enod/remito/{id}/edit','RemitosController@edit')->name('RemitoEdit');
   Route::get('/area/enod/ot/{ot_id}/parte','PartesController@create')->name('ParteCreate');
@@ -73,6 +77,8 @@ Route::group(['middleware' => ['auth']], function () {
   Route::get('/area/enod/servicios', 'ServiciosController@callView')->name('servicios');
   Route::get('/area/enod/soldadores', 'SoldadoresController@index')->name('soldadores');
   Route::get('/area/enod/fuentes', 'FuentesController@callView')->name('fuentes');
+  Route::get('/area/enod/campanas', 'CampanasController@callView')->name('campanas');
+  Route::get('/area/enod/bombas', 'BombasController@callView')->name('bombas');
   Route::get('/area/enod/equipos', 'EquiposController@callView')->name('equipos');
   Route::get('/area/enod/interno_fuentes', 'InternoFuentesController@callView')->name('Interno-fuentes');
   Route::get('/area/enod/interno_equipos', 'InternoEquiposController@callView')->name('Interno-equipos');
@@ -115,6 +121,8 @@ Route::group(['middleware' => ['auth']], function () {
       Route::get('/pdf/informe/ri/{informe}','PdfInformesRiController@imprimir')->name('pdfInformeRi');
       Route::get('/pdf/informe/pm/{informe}','PdfInformesPmController@imprimir')->name('pdfInformePm');
       Route::get('/pdf/informe/us/{informe}','PdfInformesUsController@imprimir')->name('pdfInformeUs');
+      Route::get('/pdf/informe/cv/{informe}','PdfInformesCvController@imprimir')->name('pdfInformeCv');
+      Route::get('/pdf/informe/dz/{informe}','PdfInformesDzController@imprimir')->name('pdfInformeDz');
       Route::get('/pdf/informe/us/indicaciones/referencia/{id}','PdfInformesUsReferenciaController@imprimir')->name('InformeUsDetalleUsPaUsReferencias');
       Route::get('/pdf/informe/us/{informe}/indicaciones_us_pa','PdfInformesUsIndicacionesUsPaController@imprimir')->name('InformeUsIndicacionesUsPa');
       Route::get('/pdf/informe/us/{informe}/indicaciones_me','PdfInformesUsIndicacionesMeController@imprimir')->name('InformeUsIndicacionesMe');

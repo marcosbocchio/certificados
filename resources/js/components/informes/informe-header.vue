@@ -95,11 +95,9 @@ export default {
      },
     methods : {
         inputObra :  function(){
-            console.log('mando el inputobra',this.obra);
             this.$emit('set-obra',this.obra)
         },
         inputPlanta :  function(){
-            console.log('mando el inputplanta',this.planta);
             this.$emit('set-planta',this.planta)
         },
         resetPlanta : function(){
@@ -119,7 +117,7 @@ export default {
                 })
 
                 this.$store.dispatch('loadPlantaInformes',{ informe_id: this.informe_id , importado_sn: this.importado_sn}).then(response => {
-                    console.log(this.planta_informe)
+                    console.log('planta : ',this.planta_informe)
                     this.planta = this.planta_informe
                 })
             }else{
@@ -133,7 +131,6 @@ export default {
             var urlRegistros = 'clientes/' + this.otdata.cliente_id + '?api_token=' + Laravel.user.api_token;
             axios.get(urlRegistros).then(response =>{
             this.cliente = response.data
-            console.log(this.cliente)
             this.getPlantas();
             });
         },
@@ -145,7 +142,6 @@ export default {
             });
         },
         getPlantas : function(){
-            console.log('el cliente es', this.cliente)
             axios.defaults.baseURL = this.url ;
             var urlRegistros = 'plantas/cliente/' + this.cliente.id + '?api_token=' + Laravel.user.api_token;
             axios.get(urlRegistros).then(response =>{

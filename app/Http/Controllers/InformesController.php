@@ -14,10 +14,12 @@ use App\DiametrosEspesor;
 use Illuminate\Support\Facades\Auth;
 use App\OtProcedimientosPropios;
 use App\InformesImportados;
+use App\User;
 use \stdClass;
 use Illuminate\Support\Facades\Log;
 use Exception as Exception;
 use PhpParser\Node\Stmt\Else_;
+use App\Tecnicas;
 
 class InformesController extends Controller
 {
@@ -99,6 +101,13 @@ class InformesController extends Controller
                 return redirect()->route('InformeTtCreate',array('ot_id' => $ot_id));
                 break;
 
+            case 'CV':
+                return redirect()->route('InformeCvCreate',array('ot_id' => $ot_id));
+                break;
+
+            case 'DZ':
+                return redirect()->route('InformeDzCreate',array('ot_id' => $ot_id));
+                break;
         }
 
     }
@@ -134,52 +143,47 @@ class InformesController extends Controller
                 return redirect()->route('InformeTtEdit',array('ot_id' => $ot_id, 'id' => $id));
                 break;
 
-
+            case 'CV':
+                return redirect()->route('InformeCvEdit',array('ot_id' => $ot_id, 'id' => $id));
+                break;
+            case 'DZ':
+                return redirect()->route('InformeDzEdit',array('ot_id' => $ot_id, 'id' => $id));
+                break;
         }
     }
 
-    public function GenerarNumeroInforme($ot_id,$metodo){
+    public function GenerarNumeroInforme($ot_id,$metodo,$tecnica_id = null){
+
+        log::debug($ot_id);
+        log::debug($metodo);
+        log::debug($tecnica_id);
 
         $metodo_ensayo = MetodoEnsayos::where('metodo',$metodo)->first();
 
-        if ($metodo_ensayo->importable_sn){
+        log::debug("metodo de ensayo: ".$metodo_ensayo);
 
-            $numero_informe = DB::table('informes_importados')
-                                ->join('metodo_ensayos','metodo_ensayos.id','=','informes_importados.metodo_ensayo_id')
-                                ->where('informes_importados.ot_id',$ot_id)
-                                ->where('metodo_ensayos.metodo',$metodo)
-                                ->orderBy('informes_importados.numero', 'DESC')
-                                ->limit(1)
-                                ->selectRaw('informes_importados.numero + 1 as numero_informe')
-                                ->get();
 
-        }else{
+        $numero_inf =  DB::select('select GenerarNumeroInforme(?,?,?,?) as valor',array($ot_id,$metodo_ensayo->importable_sn,$metodo_ensayo->metodo,$tecnica_id));
 
-            $numero_informe = DB::table('informes')
-                                ->join('metodo_ensayos','metodo_ensayos.id','=','informes.metodo_ensayo_id')
-                                ->where('informes.ot_id',$ot_id)
-                                ->where('metodo_ensayos.metodo',$metodo)
-                                ->orderBy('informes.numero', 'DESC')
-                                ->limit(1)
-                                ->selectRaw('informes.numero + 1 as numero_informe')
-                                ->get();
-        }
+        log::debug("numero inf: ".json_encode($numero_inf));
 
-        if (count($numero_informe) > 0){
+        return $numero_inf[0]->valor;
 
-            return $numero_informe[0]->numero_informe;
-
-        }else{
-
-            return 1;
-        }
-
+    }
+    public function saveInformeDesdeParte($informeRecibido, $solicitadoPor,$importable_sn){
+        if ($importable_sn){
+                $informe  = InformesImportados::find($informeRecibido['id']);
+                $informe->solicitado_por = $solicitadoPor['id'];
+                $informe->save();
+            }else{
+                $informe  = Informe::find($informeRecibido['id']);
+                $informe->solicitado_por = $solicitadoPor['id'];
+                $informe->save();
+            }
     }
 
     public function saveInforme($request,$informe,$EsRevision = false){
-
         DB::enableQueryLog();
-
         $user_id = null;
 
         if (Auth::check())
@@ -231,6 +235,7 @@ class InformesController extends Controller
                 $diametro_espesor = DiametrosEspesor::where('diametro',$request->diametro['diametro'])
                                                       ->first();
             }else {
+
                 $diametro_espesor = DiametrosEspesor::where('diametro',$request->diametro['diametro'])
                                                     ->where('espesor',$request->espesor['espesor'])
                                                     ->first();
@@ -257,11 +262,12 @@ class InformesController extends Controller
         $informe->linea = $request->linea;
         $informe->plano_isom = $request->plano_isom;
         $informe->hoja = $request->hoja;
+        $informe->solicitado_por = $request->solicitado_por ? $request->solicitado_por['id'] : null;
         $informe->observaciones = $request->observaciones;
 
         if($request->isMethod('post')){
 
-            $informe->numero = $this->GenerarNumeroInforme($request->ot['id'],$request->metodo_ensayo);
+            $informe->numero = $this->GenerarNumeroInforme($request->ot['id'],$request->metodo_ensayo,$request->tecnica['id']);
 
         }else{
 
@@ -275,23 +281,39 @@ class InformesController extends Controller
 
         }
 
-
         if($request->isMethod('post') || ($EsRevision)){
 
             $informe->user_id = $user_id;
-            $res = $this->getUltimaRevision($informe->ot_id,$informe->metodo_ensayo_id,$informe->numero);
+            $res = $this->getUltimaRevision($informe->ot_id,$informe->metodo_ensayo_id,$informe->numero,$request->tecnica['id']);
             $revision_ant = $res[0]->valor;
-            $informe->revision = (int)$revision_ant + 1 ;
+            $informe->revision = (int)$revision_ant + 1;
 
          }
 
          if( $EsRevision){
 
-              informe::where('ot_id',$informe->ot_id)
-                       ->where('metodo_ensayo_id',$informe->metodo_ensayo_id)
-                       ->where('numero',$informe->numero)
-                       ->update(['ultima_revision_sn'=>0]);
+             informe::select('informes.*')
+                      ->where('ot_id',$informe->ot_id)
+                      ->where('informes.metodo_ensayo_id',$informe->metodo_ensayo_id)
+                      ->where('numero',$informe->numero)
+                      ->Us($metodo_ensayo['metodo'],$request->tecnica['codigo'])
+                      ->update(['ultima_revision_sn'=>0]);
+            /*
+             if($metodo_ensayo['metodo'] != 'US') {
+                 informe::where('ot_id',$informe->ot_id)
+                          ->where('metodo_ensayo_id',$informe->metodo_ensayo_id)
+                          ->where('numero',$informe->numero)
+                          ->update(['ultima_revision_sn'=>0]);
+             }
 
+             if($metodo_ensayo['metodo'] == 'US') {
+                informe::where('ot_id',$informe->ot_id)
+                         ->where('metodo_ensayo_id',$informe->metodo_ensayo_id)
+                         ->where('numero',$informe->numero)
+                         ->where('tecnica_id',$informe->tecnica_id)
+                         ->update(['ultima_revision_sn'=>0]);
+            }
+            */
               $informe->ultima_revision_sn = 1;
 
          }
@@ -307,21 +329,29 @@ class InformesController extends Controller
      public function OtInformesPendienteParteDiario($ot_id){
 
         $informes = DB::select('CALL InformesPendientesSinParteDiario(?,?)',array($ot_id,0));
-
+        $this->addObjectSolicitadoPor($informes);
         return $informes;
 
      }
 
      public function OtInformesPendienteEditableParteDiario($ot_id,$parte_id){
 
-        $infomes_pendientes = DB::select('CALL InformesPendientesSinParteDiario(?,?)',array($ot_id,$parte_id));
+        $informes_pendientes = DB::select('CALL InformesPendientesSinParteDiario(?,?)',array($ot_id,$parte_id));
+        $this->addObjectSolicitadoPor($informes_pendientes);
+        return $informes_pendientes;
+     }
 
-        return $infomes_pendientes;
+     public function addObjectSolicitadoPor($items){
+        foreach ($items as $item) {
+            $obj = new stdClass();
+            $user = User::find($item->solicitado_por_id);
+            $obj = $user ? $user : null;
+            $item->solicitado_por = $obj;
+        }
      }
 
 
      public function setParteId($parte_id,$informe_id){
-
         $informe  = Informe::find($informe_id);
         $informe->parte_id = $parte_id;
         $informe->save();
@@ -385,18 +415,15 @@ class InformesController extends Controller
     }
 
     public function getPlantaInforme($informe_id,$importado_sn){
-        log::debug($informe_id);
         if($importado_sn == '1') {
             $planta = Plantas::join('informes_importados','informes_importados.planta_id','=','plantas.id')
                             ->where('informes_importados.id',$informe_id)
                             ->first();
-            Log::debug('planta:'.$planta);
             return $planta;
         } else {
             $planta = Plantas::join('informes','informes.planta_id','=','plantas.id')
                              ->where('informes.id',$informe_id)
                              ->first();
-            Log::debug('planta:'.$planta);
             return $planta;
         }
         //
@@ -474,20 +501,28 @@ class InformesController extends Controller
     }
 
 
-    public function getUltimaRevision($ot_id,$metodo_ensayo_id,$numero){
+    public function getUltimaRevision($ot_id,$metodo_ensayo_id,$numero,$tecnica_id){
 
-        return  DB::select('select getUltimaRevision(?,?,?) as valor',array($ot_id,$metodo_ensayo_id,$numero));
+        return  DB::select('select getUltimaRevision(?,?,?,?) as valor',array($ot_id,$metodo_ensayo_id,$numero,$tecnica_id));
 
     }
 
-    public function getInformeRevisiones($ot_id,$metodo,$numero){
+    public function getInformeRevisiones($ot_id,$metodo,$informe_id){
+
+        $tecnica = tecnicas::join('informes','informes.tecnica_id','=','tecnicas.id')
+                             ->where('informes.id',$informe_id)
+                             ->select('tecnicas.*')
+                             ->first();
+
+        $informe = informe::find($informe_id);
 
         return informe::join('metodo_ensayos','metodo_ensayos.id','=','informes.metodo_ensayo_id')
                         ->join('users','users.id','=','informes.user_id')
                         ->where('informes.ot_id',$ot_id)
                         ->where('metodo_ensayos.metodo',$metodo)
-                        ->where('informes.numero',$numero)
+                        ->where('informes.numero',$informe->numero)
                         ->where('ultima_revision_sn',0)
+                        ->Us($metodo,$tecnica->codigo)
                         ->selectRaw('informes.fecha,users.name,LPAD(informes.revision, 2, 0) as revision,informes.id')
                         ->paginate(10);
 

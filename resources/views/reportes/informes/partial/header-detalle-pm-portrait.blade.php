@@ -239,7 +239,12 @@
                                 <td colspan="2" class="borderFilabottom">{{$norma_evaluacion->codigo}}</td>
                                 <td colspan="2" class="borderFilabottom">{{$norma_ensayo->codigo}}</td>
                             </tr>
-
+                            <tr>
+                                <th colspan="4">Solicitante</th>
+                            </tr>
+                            <tr>
+                                <td colspan="4">{{$informe_solicitado_por ? $informe_solicitado_por->name : '' }}</td>
+                            </tr>
                        </tbody>
                     </table>
                 </td>

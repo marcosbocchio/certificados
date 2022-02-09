@@ -82,7 +82,7 @@ function pdfCantFilasACompletar($filasPage,$cantFilasTotal){
 
 function FormatearNumeroInforme(int $numero,$metodo){
 
-  return $metodo . sprintf("%03d",$numero) ;
+  return $metodo . sprintf("%04d",$numero) ;
 
 }
 

@@ -294,7 +294,14 @@
                                 <v-select v-model="ejecutor_ensayo" label="name" :options="ejecutor_ensayos"></v-select>
                             </div>
                         </div>
+                        <div class="clearfix"></div>
 
+                        <div class="col-md-3">
+                            <div class="form-group" >
+                                <label for="ejecutor_ensayo">Solicitante </label>
+                                <v-select v-model="solicitado_por" label="name" :options="usuarios_cliente"></v-select>
+                            </div>
+                        </div>
                   </div>
                </div>
 
@@ -457,7 +464,7 @@ import { toastrInfo,toastrDefault } from '../toastrConfig';
 import moment from 'moment';
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
-
+import {sprintf} from '../../functions/sprintf.js'
 export default {
 
 components: {
@@ -594,6 +601,10 @@ props :{
          tablamodelos3d_data : {
             type : [ Array ],
             required : false
+            },
+         solicitado_pordata : {
+            type : [ Object, Array ],
+            required : false
             }
     },
 
@@ -640,6 +651,8 @@ data() {return {
         observaciones:'',
         modelo_3d:'',
         TablaModelos3d :[],
+        usuarios_cliente:[],
+        solicitado_por:'',
         //detalle
         pieza:'',
         cm:'0',
@@ -674,6 +687,7 @@ data() {return {
         this.$store.dispatch('loadEjecutorEnsayo', this.otdata.id);
         this.$store.dispatch('loadModelos3d');
         this.getMetodosTrabajoLp();
+        this.getUsuariosCliente();
         this.getAplicacionesLp();
         this.setEdit();
     },
@@ -697,12 +711,9 @@ data() {return {
     computed :{
 
         ...mapState(['isLoading','url','materiales','ot_obra_tipo_soldaduras','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','interno_equipos','iluminaciones','penetrantes_tipo_liquido','reveladores_tipo_liquido','removedores_tipo_liquido','ejecutor_ensayos','fuentePorInterno','modelos_3d']),
-
         numero_inf_code : function()  {
-
-               if(this.numero_inf)
-
-                    return this.metodo + (this.numero_inf <10? '00' : this.numero_inf<100? '0' : '') + this.numero_inf ;
+            if(this.numero_inf)
+                return this.metodo +  sprintf("%04d",this.numero_inf);
         },
 
      },
@@ -747,6 +758,7 @@ data() {return {
                this.limpieza_previa         = this.informe_lpdata.limpieza_previa;
                this.limpieza_intermedia     = this.informe_lpdata.limpieza_intermedia;
                this.limpieza_final          = this.informe_lpdata.limpieza_final;
+               this.solicitado_por = this.solicitado_pordata ;
                this.iluminacion = this.iluminacion_data;
                this.TablaLp = this.detalledata;
                this.TablaModelos3d = this.tablamodelos3d_data;
@@ -775,7 +787,7 @@ data() {return {
             if(!this.editmode) {
 
                     axios.defaults.baseURL = this.url ;
-                    var urlRegistros = 'informes/ot/' + this.otdata.id + '/metodo/' + this.metodo + '/generar-numero-informe'  + '?api_token=' + Laravel.user.api_token;
+                    var urlRegistros = 'informes/ot/' + this.otdata.id + '/metodo/' + this.metodo + '/tecnica/0' + '/generar-numero-informe/'  + '?api_token=' + Laravel.user.api_token;
                     axios.get(urlRegistros).then(response =>{
 
                      this.numero_inf = response.data
@@ -795,7 +807,15 @@ data() {return {
                 this.$store.dispatch('loadEspesores',this.diametro.diametro_code);
             }
         },
+    getUsuariosCliente : function(){
 
+            axios.defaults.baseURL = this.url ;
+            var urlRegistros = 'users/ot_id/' + this.otdata.id + '?api_token=' + Laravel.user.api_token;
+            axios.get(urlRegistros).then(response =>{
+            this.usuarios_cliente = response.data
+            });
+
+        },
     getFuente : function(){
 
         this.$store.dispatch('loadFuentePorInterno',this.interno_equipo.interno_fuente_id);
@@ -974,6 +994,7 @@ data() {return {
           this.errors =[];
             this.$store.commit('loading', true);
             var urlRegistros = 'informes_lp' ;
+            console.log(this.metodo)
             axios({
               method: 'post',
               url : urlRegistros,
@@ -1014,6 +1035,7 @@ data() {return {
                 'limpieza_previa'               :this.limpieza_previa,
                 'limpieza_intermedia'           :this.limpieza_intermedia,
                 'limpieza_final'                :this.limpieza_final,
+                'solicitado_por'    : this.solicitado_por,
                 'detalles'                      :this.TablaLp,
                 'TablaModelos3d' :this.TablaModelos3d,
 
@@ -1091,6 +1113,7 @@ data() {return {
                 'limpieza_previa'               :this.limpieza_previa,
                 'limpieza_intermedia'           :this.limpieza_intermedia,
                 'limpieza_final'                :this.limpieza_final,
+                'solicitado_por'    : this.solicitado_por,
                 'detalles'                      :this.TablaLp,
                 'TablaModelos3d' :this.TablaModelos3d,
 

@@ -189,19 +189,30 @@
                                             <th>Tipo</th>
                                             <th>Informe</th>
                                             <th>Obra</th>
+                                            <th>Planta</th>
                                             <th>Fecha</th>
+                                            <th>Solicitante</th>
 
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr v-for="(informe,k) in informes" :key="k">
                                             <td>
-                                                <input type="checkbox" id="informe_sel" v-model="informes[k].informe_sel" @change="getInforme(k)" :disabled="deshabilitarInformes(informe.fecha_formateada,informe.obra,informe.informe_sel) || loading">
+                                                <input type="checkbox" id="informe_sel" v-model="informes[k].informe_sel" @click="selectPosTablaInformesSinParteDiario(k)" @change="getInforme(k)" :disabled="deshabilitarInformes(informe.fecha_formateada,informe.obra,informe.informe_sel) || loading">
                                             </td>
                                             <td> {{ informe.metodo}}</td>
                                             <td> {{ informe.numero_formateado}}</td>
                                             <td> {{ informe.obra}}</td>
+                                            <td> {{ informe.planta}}</td>
                                             <td> {{ informe.fecha_formateada}}</td>
+                                            <td>
+                                               <div v-if="informe.solicitado_por">
+                                                   {{ informe.solicitado_por.name }}
+                                               </div>
+                                                <div v-else>
+                                                    &nbsp;
+                                                </div>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -411,33 +422,25 @@
                                             <thead>
                                                 <tr>
                                                     <th>Informe</th>
-                                                    <th>Elemento</th>
-                                                    <th>CM</th>
+                                                    <th>Componente</th>
+                                                    <th>Diámetro</th>
                                                     <th colspan="2">&nbsp;</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr v-for="(item,k) in TablaInformesPm" :key="k"  @click="selectPosTablaInformesPm(k)">
-                                                    <td v-if="item.visible"> {{ item.numero_formateado}}</td>
-                                                    <td v-if="item.visible">
-                                                        <div v-if="indexTablaInformesPm == k ">
-                                                          <input type="text" v-model="TablaInformesPm[k].pieza_final" maxlength="10">
-                                                        </div>
-                                                        <div v-else>
-                                                           {{ item.pieza_final }}
+                                                <tr v-for="(item,k) in TablaInformesPm" :key="k">
+                                                    <td> {{ item.numero_formateado}}</td>
+                                                    <td>
+                                                        <div >
+                                                           {{ item.componente }}
                                                         </div>
                                                     </td>
-                                                    <td v-if="item.visible">
-                                                        <div v-if="indexTablaInformesPm == k ">
-                                                          <input type="number" v-model="TablaInformesPm[k].cm_final" maxlength="4"  @input="RecalcularMetros('PM')">
-                                                        </div>
-                                                        <div v-else>
-                                                           {{ item.cm_final }}
+                                                    <td >
+                                                        <div >
+                                                           {{ item.diametro_especifico ? item.diametro_especifico : item.diametro }}
                                                         </div>
                                                     </td>
-
-                                                    <td style="text-align:center" v-if="item.visible"> <a  @click="RemoveTablaInformePm(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a></td>
-
+                                                    <td style="text-align:center"> <a  @click="RemoveTablaPm(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a></td>
                                                 </tr>
                                                 <tr v-for="fila in 4" >
                                                     <td colspan="6" style="background: #FFFFFF"> &nbsp;</td>
@@ -469,34 +472,25 @@
                                             <thead>
                                                 <tr>
                                                     <th>Informe</th>
-                                                    <th>Elemento</th>
-                                                    <th>CM</th>
+                                                    <th>Componente</th>
+                                                    <th>Diámetro</th>
                                                     <th colspan="2">&nbsp;</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr v-for="(item,k) in TablaInformesLp" :key="k"  @click="selectPosTablaInformesLp(k)">
-                                                    <td v-if="item.visible"> {{ item.numero_formateado}}</td>
-                                                    <td v-if="item.visible">
-                                                        <div v-if="indexTablaInformesLp == k ">
-                                                          <input type="text" v-model="TablaInformesLp[k].pieza_final" maxlength="10">
-                                                        </div>
-                                                        <div v-else>
-                                                           {{ item.pieza_final }}
+                                                <tr v-for="(item,k) in TablaInformesLp" :key="k" >
+                                                    <td> {{ item.numero_formateado}}</td>
+                                                    <td>
+                                                        <div >
+                                                           {{ item.componente }}
                                                         </div>
                                                     </td>
-
-                                                    <td v-if="item.visible">
-                                                        <div v-if="indexTablaInformesLp == k ">
-                                                          <input type="number" v-model="TablaInformesLp[k].cm_final" maxlength="4" @input="RecalcularMetros('LP')">
-                                                        </div>
-                                                        <div v-else>
-                                                           {{ item.cm_final }}
+                                                    <td >
+                                                        <div >
+                                                           {{ item.diametro_especifico ? item.diametro_especifico : item.diametro }}
                                                         </div>
                                                     </td>
-
-                                                    <td style="text-align:center" v-if="item.visible"> <a  @click="RemoveTablaInformeLp(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a></td>
-
+                                                    <td style="text-align:center"> <a  @click="RemoveTablaLp(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a></td>
                                                 </tr>
                                                 <tr v-for="fila in 4" >
                                                     <td colspan="6" style="background: #FFFFFF"> &nbsp;</td>
@@ -565,9 +559,7 @@
                                                            {{ item.cm_final }}
                                                         </div>
                                                     </td>
-
                                                     <td style="text-align:center" v-if="item.visible"> <a  @click="RemoveTablaInformeUs(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a></td>
-
                                                 </tr>
                                                 <tr v-for="fila in 4" >
                                                     <td colspan="6" style="background: #FFFFFF"> &nbsp;</td>
@@ -580,6 +572,99 @@
                         </div>
                     </div>
                 </div>
+                <!--Informe CV -->
+                <div v-show="TablaInformesCv.length">
+                    <div class="box box-custom-enod" >
+                        <div class="box-header with-border">
+                        <h3 class="box-title">Informes CV</h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-striped table-bordered table-condensed">
+                                            <thead>
+                                                <tr>
+                                                    <th>Informe</th>
+                                                    <th>Componente</th>
+                                                    <th>Diámetro</th>
+                                                    <th colspan="2">&nbsp;</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr v-for="(item,k) in TablaInformesCv" :key="k">
+                                                    <td> {{ item.numero_formateado}}</td>
+                                                    <td>
+                                                        <div >
+                                                           {{ item.componente }}
+                                                        </div>
+                                                    </td>
+                                                    <td > N/A </td>
+                                                    <td style="text-align:center"> <a  @click="RemoveTablaCv(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a></td>
+                                                </tr>
+                                                <tr v-for="fila in 4" >
+                                                    <td colspan="6" style="background: #FFFFFF"> &nbsp;</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!--Informe Dz -->
+                <div v-show="TablaInformesDz.length">
+                    <div class="box box-custom-enod" >
+                        <div class="box-header with-border">
+                        <h3 class="box-title">Informes DZ</h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-striped table-bordered table-condensed">
+                                            <thead>
+                                                <tr>
+                                                    <th>Informe</th>
+                                                    <th>Componente</th>
+                                                    <th>Diámetro</th>
+                                                    <th colspan="2">&nbsp;</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr v-for="(item,k) in TablaInformesDz" :key="k">
+                                                    <td> {{ item.numero_formateado}}</td>
+                                                    <td>
+                                                        <div >
+                                                           {{ item.componente }}
+                                                        </div>
+                                                    </td>
+                                                    <td > N/A </td>
+                                                    <td style="text-align:center"> <a  @click="RemoveTablaDz(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a></td>
+                                                </tr>
+                                                <tr v-for="fila in 4" >
+                                                    <td colspan="6" style="background: #FFFFFF"> &nbsp;</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                        </div>
+                    </div>
+                </div>
+
 
                 <div v-for="(itemMetodo,m) in TablaMetodosImportados" :key="m">
                        <!--Informes IMPORTADOS -->
@@ -705,6 +790,16 @@ export default {
       required : false
       },
 
+      informes_cv_data : {
+      type : [ Array ],
+      required : false
+      },
+
+      informes_dz_data : {
+      type : [ Array ],
+      required : false
+      },
+
       informes_importados_data : {
       type : [ Array ],
       required : false
@@ -754,18 +849,23 @@ export default {
 
         informes:[],
         informe_sel:false,
-
+        usuarios_cliente:[],
         TablaInformesRi:[],
         TablaInformesPm:[],
         TablaInformesLp:[],
         TablaInformesUs:[],
+        TablaInformesCv:[],
+        TablaInformesDz:[],
         TablaInformesImportados:[],
         TablaMetodosImportados:[],
         TablaServicios:[],
         indexTablaInformesRi:'-1',
+        indexTablaInformesSinParteDiario:'-1',
         indexTablaInformesPm:'-1',
         indexTablaInformesLp:'-1',
         indexTablaInformesUs:'-1',
+        indexTablaInformesDz:'-1',
+        indexTablaInformesCv:'-1',
         indexTablaInformesImportados:'-1',
         indexTablaServicios:'-1',
         cms:[],
@@ -788,6 +888,7 @@ export default {
     },
     mounted : function() {
         this.CargaDeDatos();
+        this.getUsuariosCliente();
     },
     watch :{
         fecha : function(){
@@ -886,6 +987,8 @@ export default {
             this.TablaInformesLp=[];
             this.TablaInformesPm=[];
             this.TablaInformesUs=[];
+            this.TablaInformesCv=[];
+            this.TablaInformesDz=[];
             this.TablaInformesImportados=[];
             this.TablaMetodosImportados=[];
             this.TablaServicios=[];
@@ -914,6 +1017,10 @@ export default {
 
             this.indexTablaInformesRi = index ;
 
+        },
+        selectPosTablaInformesSinParteDiario :function(index){
+
+            this.indexTablaInformesSinParteDiario = index ;
         },
 
        selectPosTablaInformesImportables :function(index){
@@ -983,11 +1090,12 @@ export default {
         },
 
         getInformesPendientesParte: function(){
-
+            console.log(this.otdata)
             axios.defaults.baseURL = this.url ;
             var urlRegistros = 'informes/ot/' + this.otdata.id + '/pendientes_parte_diario' + '?api_token=' + Laravel.user.api_token;
             axios.get(urlRegistros).then(response =>{
-            this.informes = response.data
+                this.informes = response.data
+                console.log(this.informes)
             });
 
         },
@@ -1142,23 +1250,15 @@ export default {
                         this.informes_pm_data.forEach(function(item){
 
                         let visible_sn = true;
-                        if( !item.pieza_final  &&  !item.nro_final && !item.cm_final){
-
-                            visible_sn = false
-
-                        }
 
                         this.TablaInformesPm.push({
 
                             numero_formateado  : item.numero_formateado,
-                            pieza_original: item.pieza_original,
-                            pieza_final: item.pieza_final,
-                            nro_original : item.nro_original,
-                            nro_final : item.nro_final,
                             id      : item.informe_id,
                             visible : visible_sn,
-                            cm_original : item.cm_original,
-                            cm_final: item.cm_final,
+                            componente : item.componente,
+                            diametro_especifico : item.diametro_especifico,
+                            diametro: item.diametro
 
                             });
                         }.bind(this));
@@ -1182,28 +1282,76 @@ export default {
                         this.informes_lp_data.forEach(function(item){
 
                         let visible_sn = true;
-                        if( !item.pieza_final  &&  !item.nro_final && !item.cm_final){
-
-                            visible_sn = false
-
-                        }
 
                         this.TablaInformesLp.push({
 
                             numero_formateado  : item.numero_formateado,
-                            pieza_original: item.pieza_original,
-                            pieza_final: item.pieza_final,
-                            nro_original : item.nro_original,
-                            nro_final : item.nro_final,
-                            pieza_original: item.pieza_original,
-                            pieza_final: item.pieza_final,
                             id      : item.informe_id,
                             visible : visible_sn,
-                            cm_original : item.cm_original,
-                            cm_final: item.cm_final,
-
+                            componente : item.componente,
+                            diametro_especifico : item.diametro_especifico,
+                            diametro: item.diametro
                             });
                         }.bind(this));
+
+              //Informe CV
+
+                        this.informes_cv_data.forEach(function(item_data){
+
+
+                            this.informes.forEach(function(item_informe){
+
+                                if((item_data.informe_id == item_informe.id) && (!item_informe.importable_sn)){
+
+                                    item_informe.informe_sel = true;
+
+                                    }
+                                });
+
+                        }.bind(this));
+
+                        this.informes_cv_data.forEach(function(item){
+
+                        let visible_sn = true;
+
+                        this.TablaInformesCv.push({
+
+                            numero_formateado  : item.numero_formateado,
+                            id      : item.informe_id,
+                            visible : visible_sn,
+                            componente : item.componente,
+                            });
+                        }.bind(this));
+
+                        //Informe DZ
+
+                        this.informes_dz_data.forEach(function(item_data){
+
+
+                            this.informes.forEach(function(item_informe){
+
+                                if((item_data.informe_id == item_informe.id) && (!item_informe.importable_sn)){
+
+                                    item_informe.informe_sel = true;
+
+                                    }
+                                });
+
+                        }.bind(this));
+
+                        this.informes_dz_data.forEach(function(item){
+
+                        let visible_sn = true;
+
+                        this.TablaInformesDz.push({
+
+                            numero_formateado  : item.numero_formateado,
+                            id      : item.informe_id,
+                            visible : visible_sn,
+                            componente : item.componente,
+                            });
+                        }.bind(this));
+
 
                        //Informe Us
 
@@ -1347,6 +1495,26 @@ export default {
            this.TablaResponsables.splice(index, 1);
 
         },
+        RemoveTablaDz(index) {
+
+           this.TablaInformesDz.splice(index, 1);
+
+        },
+        RemoveTablaCv(index) {
+
+           this.TablaInformesCv.splice(index, 1);
+
+        },
+        RemoveTablaLp(index) {
+
+           this.TablaInformesLp.splice(index, 1);
+
+        },
+        RemoveTablaPm(index) {
+
+           this.TablaInformesPm.splice(index, 1);
+
+        },
 
         RemoveTablaInformeiImportable(index){
 
@@ -1372,23 +1540,6 @@ export default {
 
         },
 
-        RemoveTablaInformePm(index){
-
-            this.TablaInformesPm[index].visible = false;
-            this.TablaInformesPm[index].pieza_final='';
-            this.TablaInformesPm[index].nro_final='';
-            this.TablaInformesPm[index].cm_final=''
-
-        },
-
-        RemoveTablaInformeLp(index){
-
-            this.TablaInformesLp[index].visible = false;
-            this.TablaInformesLp[index].pieza_final='';
-            this.TablaInformesLp[index].nro_final='';
-            this.TablaInformesLp[index].cm_final=''
-
-        },
 
         RemoveTablaInformeUs(index){
 
@@ -1406,10 +1557,17 @@ export default {
             this.TablaServicios[index].cant_final='';
 
         },
+        getUsuariosCliente : function(){
+
+            axios.defaults.baseURL = this.url ;
+            var urlRegistros = 'users/ot_id/' + this.otdata.id + '?api_token=' + Laravel.user.api_token;
+            axios.get(urlRegistros).then(response =>{
+            this.usuarios_cliente = response.data
+            });
+
+        },
 
        async getInforme(index){
-
-
             if(this.informes[index].informe_sel){
 
                 this.loading = true;
@@ -1430,6 +1588,10 @@ export default {
 
                       case 'US' : await this.getInformeUs(this.informes[index].id,index);break;
 
+                      case 'CV' : await this.getInformeCv(this.informes[index].id,index);break;
+
+                      case 'DZ' : await this.getInformeDz(this.informes[index].id,index);break;
+
                     }
 
                   await this.getServiciosInformes(this.informes[index].id,0);
@@ -1437,7 +1599,6 @@ export default {
             this.loading = false;
 
             } else{
-
                 if(this.informes[index].importable_sn){
 
                     let id  = this.informes[index].id ;
@@ -1490,6 +1651,20 @@ export default {
                     for( var i = 0; i < this.TablaInformesUs.length; i++){
                         if (this.TablaInformesUs[i].id == id) {
                                 this.TablaInformesUs.splice(i, 1);
+                            i--;
+                        }
+                    }
+
+                    for( var i = 0; i < this.TablaInformesDz.length; i++){
+                        if (this.TablaInformesDz[i].id == id) {
+                                this.TablaInformesDz.splice(i, 1);
+                            i--;
+                        }
+                    }
+
+                    for( var i = 0; i < this.TablaInformesCv.length; i++){
+                        if (this.TablaInformesCv[i].id == id) {
+                                this.TablaInformesCv.splice(i, 1);
                             i--;
                         }
                     }
@@ -1921,14 +2096,11 @@ export default {
                     id      : id,
                     numero_formateado  : this.informes[index].numero_formateado,
                     visible : true,
-                    pieza_original : item.pieza,
-                    pieza_final : item.pieza,
-                    metros_lineales : '',
+                    componente : item.componente,
+                    diametro_especifico : item.diametro_especifico,
+                    diametro : item.diametro,
                     metodo : item.metodo,
-                    cm_original : item.cm,
-                    cm_final : item.cm,
                     });
-
                 }.bind(this));
          },
 
@@ -1938,6 +2110,7 @@ export default {
             var urlRegistros = 'partes/informe_lp/' + id + '?api_token=' + Laravel.user.api_token;
             let res = await axios.get(urlRegistros);
             let informe_lp_parte = await res.data;
+            console.log(informe_lp_parte)
 
             informe_lp_parte.forEach(function(item){
 
@@ -1946,13 +2119,54 @@ export default {
                     id      : id,
                     numero_formateado  : this.informes[index].numero_formateado,
                     visible : true,
-                    pieza_original : item.pieza,
-                    pieza_final : item.pieza,
-                    metros_lineales : '',
+                    componente : item.componente,
+                    diametro_especifico : item.diametro_especifico,
+                    diametro : item.diametro,
                     metodo : item.metodo,
-                    cm_original : item.cm,
-                    cm_final : item.cm
+                    });
 
+                }.bind(this));
+
+        },
+
+        async getInformeCv(id,index){
+
+            axios.defaults.baseURL = this.url ;
+            var urlRegistros = 'partes/informe_cv/' + id + '?api_token=' + Laravel.user.api_token;
+            let res = await axios.get(urlRegistros);
+            let informe_cv_parte = await res.data;
+
+            informe_cv_parte.forEach(function(item){
+
+                this.TablaInformesCv.push({
+
+                    id      : id,
+                    numero_formateado  : this.informes[index].numero_formateado,
+                    visible : true,
+                    componente : item.componente,
+                    metodo : item.metodo,
+                    });
+
+                }.bind(this));
+
+        },
+
+        async getInformeDz(id,index){
+
+            axios.defaults.baseURL = this.url ;
+            var urlRegistros = 'partes/informe_dz/' + id + '?api_token=' + Laravel.user.api_token;
+            let res = await axios.get(urlRegistros);
+            let informe_dz_parte = await res.data;
+
+            informe_dz_parte.forEach(function(item){
+
+                this.TablaInformesDz.push({
+
+                    id      : id,
+                    numero_formateado  : this.informes[index].numero_formateado,
+                    visible : true,
+                    componente : item.componente,
+                    metodo : item.metodo,
                     });
 
                 }.bind(this));
@@ -2141,8 +2355,11 @@ export default {
                 'informes_pm'          :this.TablaInformesPm,
                 'informes_lp'          :this.TablaInformesLp,
                 'informes_us'          :this.TablaInformesUs,
+                'informes_dz'          :this.TablaInformesDz,
+                'informes_cv'          :this.TablaInformesCv,
                 'informes_importados'  :this.TablaInformesImportados,
                 'servicios'            :this.TablaServicios,
+                'informes'             :this.informes,
 
           }
 
@@ -2199,8 +2416,11 @@ export default {
                 'informes_pm'          :this.TablaInformesPm,
                 'informes_lp'          :this.TablaInformesLp,
                 'informes_us'          :this.TablaInformesUs,
+                'informes_dz'          :this.TablaInformesDz,
+                'informes_cv'          :this.TablaInformesCv,
                 'informes_importados'  :this.TablaInformesImportados,
                 'servicios'            :this.TablaServicios,
+                'informes'             :this.informes,
           }}
 
         ).then( () => {

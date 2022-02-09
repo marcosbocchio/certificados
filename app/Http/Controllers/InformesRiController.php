@@ -136,7 +136,7 @@ class InformesRiController extends Controller
         $accion = 'edit';
         $user = auth()->user();
         $ot = Ots::findOrFail($ot_id);
-        $informe = Informe::findOrFail($id);
+        $informe = Informe::where('id',$id)->with('planta')->first();
         $informe_ri =InformesRi::where('informe_id',$informe->id)->first();
         $informe_material = Materiales::find($informe->material_id);
         $informe_material_accesorio = Materiales::find($informe->material2_id);
@@ -169,6 +169,10 @@ class InformesRiController extends Controller
         $informe_detalle = $this->getDetalle($informe_ri->id);
         $informe_pasada_juntas = $this->getPasadasJuntas($informe_ri->id);
         $informe_tramos = $this->getTramos($informe_ri->id);
+        $informe_solicitado_por = User::where('id',$informe->solicitado_por)->first();
+        if ($informe_solicitado_por == null){
+            $informe_solicitado_por = new User();
+        }
 
         $informe_modelos_3d = (new \App\Http\Controllers\InformeModelos3dController)->getInformeModelos3d($id);
 
@@ -199,6 +203,7 @@ class InformesRiController extends Controller
                                                  'informe_pasada_juntas',
                                                  'informe_modelos_3d',
                                                  'header_titulo',
+                                                 'informe_solicitado_por',
                                                  'header_descripcion'));
     }
 
@@ -378,6 +383,7 @@ class InformesRiController extends Controller
         $informeRi->distancia_fuente_pelicula = $request->distancia_fuente_pelicula;
         $informeRi->tecnicas_grafico_id = $request->tecnica['grafico_id'];
         $informeRi->exposicion = $request->exposicion;
+        $informeRi->resultado_pdf_sn = $request->resultado_pdf_sn;
         $informeRi->save();
 
       }

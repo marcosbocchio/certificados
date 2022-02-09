@@ -35,6 +35,7 @@
      :tabla_us_pa_data = "{{ $tabla_us_pa}}"
      :tabla_me_data = "{{ $tabla_me}}"
      :tablaModelos3d_data="{{$informe_modelos_3d}}"
+     :solicitado_pordata = "{{$informe_solicitado_por}}"
 
      editmode
 

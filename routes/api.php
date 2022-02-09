@@ -118,6 +118,7 @@ Route::group(['middleware' => 'auth:api'], function()
 
     Route::resource('tipo_soldaduras', 'TipoSoldadurasController');
     Route::get('users/cliente/{id}','UserController@UserCliente');
+    Route::get('users/ot_id/{id}','ClientesController@UserClienteOT');
     Route::get('users/usuario_metodos/{id}','UserController@getUsuarioMetodos');
 
     Route::resource('soldadores', 'SoldadoresController');
@@ -143,14 +144,14 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('informes/ot/{ot_id}/pendientes_parte_diario', 'InformesController@OtInformesPendienteParteDiario');
     Route::get('informes/ot/{ot_id}/parte/{parte_id}/pendientes_editables_parte_diario', 'InformesController@OtInformesPendienteEditableParteDiario');
     Route::get('informes/ot/{ot_id}/obra/{obra}/componente/{componente}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}', 'InformesController@getInformesEstadisticasSoldaduras');
-    Route::get('informes/revisiones/ot/{ot_id}/metodo/{metodo}/numero/{numero}', 'InformesController@getInformeRevisiones');
+    Route::get('informes/revisiones/ot/{ot_id}/metodo/{metodo}/informe_id/{informe_id}', 'InformesController@getInformeRevisiones');
 
 
     Route::get('certificados/parte/{parte_id}/servicios', 'CertificadosController@getParteServicios');
     Route::get('certificados/parte/{parte_id}/modo_cobro/{modo_cobro}/productos', 'CertificadosController@getParteProductos');
     Route::get('certificados/ot/{ot_id}/modalidad_cobro', 'CertificadosController@getModalidadCobro');
 
-    Route::get('informes/ot/{ot_id}/metodo/{metodo}/generar-numero-informe', 'InformesController@GenerarNumeroInforme');
+    Route::get('informes/ot/{ot_id}/metodo/{metodo}/tecnica/{tecnica_id}/generar-numero-informe', 'InformesController@GenerarNumeroInforme');
     Route::get('certificados/generar-numero-certificado', 'CertificadosController@GenerarNumeroCertificado');
 
     Route::post('storage/referencia', 'StorageController@saveReferencia');
@@ -189,6 +190,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('interno_equipos', 'InternoEquiposController');
 
     Route::get('tipos_documentos_usuarios', 'TiposDocumentosUsuariosController@index');
+    Route::get('unidades_medicion_dureza', 'InformesDzController@getMedicionDureza');
     Route::get('documentos/ot/{ot_id}', 'DocumentacionesController@getDocumentosOt')->name('getDocumentosOt');
 
     // Frentes
@@ -226,8 +228,11 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('informes_ri/elementos_reparacion/ot/{ot_id}/obra/{obra}/km/{km}/linea/{linea}/plano_isom/{plano_isom}/hoja/{hoja}', 'InformesRiController@getElementosReparacion');
     Route::resource('informes_pm','InformesPmController');
     Route::resource('informes_lp','InformesLpController');
+    Route::resource('informes_cv','InformesCvController');
     Route::resource('informes_us','InformesUsController');
     Route::resource('informes_tt','InformesTtController');
+    Route::resource('informes_dz','InformesDzController');
+
 
      /*  informes importados */
     Route::resource('informes_importados','InformesImportadosController');
@@ -290,7 +295,8 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('partes/informe_pm/{id}','PartesController@getInformePmParte');
     Route::get('partes/informe_lp/{id}','PartesController@getInformeLpParte');
     Route::get('partes/informe_us/{id}','PartesController@getInformeUsParte');
-
+    Route::get('partes/informe_cv/{id}','PartesController@getInformeCvParte');
+    Route::get('partes/informe_dz/{id}','PartesController@getInformeDzParte');
     //certificados
     Route::put('certificados/{id}/firmar', 'CertificadosController@firmar');
     Route::get('certificados/ot/{ot_id}/total','CertificadosController@CertificadosTotal');
@@ -339,7 +345,12 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('plantas/cliente/{id}/paginate', 'PlantasController@paginate');
     Route::get('plantas/cliente/{id}','PlantasController@PlantasCliente');
     Route::post('plantas/cliente/{id}','PlantasController@store');
+    // CAMPANAS
+    Route::get('campanas/paginate', 'CampanasController@paginate');
+    Route::resource('campanas', 'CampanasController');
 
+    Route::get('bombas/paginate', 'BombasController@paginate');
+    Route::resource('bombas', 'BombasController');
 });
 
 Route::get('/fecha_actual',function(){
