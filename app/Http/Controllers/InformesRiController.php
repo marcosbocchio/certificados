@@ -49,21 +49,7 @@ class InformesRiController extends Controller
       $this->middleware(['role_or_permission:Sistemas|T_informes_edita'],['only' => ['create','edit']]);
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
 
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create($ot_id)
     {
         $metodo = 'RI';
@@ -112,22 +98,6 @@ class InformesRiController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($ot_id,$id)
     {
         $header_titulo = "Informe";

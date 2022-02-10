@@ -2,7 +2,7 @@
    <div class="row">
         <div class="col-md-12">
            <form @submit.prevent="editmode ?  Update() : Store()"  method="post">
-                <informe-header :otdata="otdata" :informe_id="dataForm.informe_id" :editmode="editmode" @set-obra="setObra($event)" @set-planta="setPlanta($event)"></informe-header>
+                <informe-header :otdata="otdata" :informe_id="informe_id" :editmode="editmode" @set-obra="setObra($event)" @set-planta="setPlanta($event)"></informe-header>
                     <div class="box box-custom-enod">
                         <div class="box-body">
                            <div class="col-md-3">
@@ -264,6 +264,7 @@ import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 import LineChart from '../chart.js/LineChart.js'
 import html2canvas from 'html2canvas-render-offscreen';
+import {sprintf} from '../../functions/sprintf.js'
 
 export default {
     components: {
@@ -272,12 +273,12 @@ export default {
     },
     props:{
         editmode : {
-            type : Boolean,
-            required : true,
+          type : Boolean,
+          required : true,
         },
         otdata : {
-            type : Object,
-            required : true
+          type : Object,
+          required : true
         },
         metodo : {
           type : String,
@@ -308,7 +309,7 @@ export default {
             material2_tipo:'Accesorio',
             linea:'',
             plano_isom:'',
-            hojas:'',
+            hoja:'',
             ot_tipo_soldadura:'',
             norma_evaluacion:'',
             norma_ensayo:'',
@@ -323,7 +324,6 @@ export default {
             observaciones:'',
             TablaModelos3d : [],
         }
-
     }},
     created : async function() {
         this.$store.commit('loading', true);
@@ -346,7 +346,6 @@ export default {
     mounted : function() {
         this.getNumeroInforme();
         this.generarGrafico();
-
      },
     computed :{
 
@@ -354,8 +353,8 @@ export default {
 
         numero_inf_code : function()  {
             if(this.dataForm.numero_inf)
-                return this.metodo + (this.dataForm.numero_inf <10? '00' : this.dataForm.numero_inf<100? '0' : '') + this.dataForm.numero_inf ;
-        },
+                return this.metodo +  sprintf("%04d",this.dataForm.numero_inf);
+            },
 
         existenTemperaturas : function() {
 
@@ -364,8 +363,44 @@ export default {
 
      },
     methods : {
-        setEdit :  function(){
-            alert('entro en edit')
+        setEdit: function() {
+           if(this.editmode){
+                let data = {};
+                axios.defaults.baseURL = this.url ;
+                var urlRegistros = 'informes/metodo/' + this.metodo + '/id/' + this.informe_id + '/data/' + '?api_token=' + Laravel.user.api_token;
+                axios.get(urlRegistros).then(response =>{
+                    console.log(response.data)
+                    data = response.data
+                    this.dataForm.informe_id = this.informe_id
+                    this.dataForm.ot = this.otdata
+                    this.dataForm.obra = data.obra
+                    this.dataForm.planta = data.planta
+                    this.dataForm.fecha = data.fecha
+                    this.dataForm.componente = data.componente
+                    this.dataForm.metodo_ensayo = this.metodo
+                    this.dataForm.numero_inf = data.numero
+                    this.dataForm.material = data.material
+                    this.dataForm.material2 = data.material2
+                    this.dataForm.material2_tipo = data.material2_tipo
+                    if(data.material2_tipo) { this.dataForm.material2_tipo = data.material2_tipo }
+                    this.dataForm.linea = data.linea
+                    this.dataForm.plano_isom = data.plano_isom
+                    this.dataForm.hoja = data.hoja
+                    this.dataForm.ot_tipo_soldadura = data.ot_tipo_soldadura
+                    this.dataForm.procedimiento = data.procedimiento
+                    this.dataForm.interno_equipo = data.interno_equipo
+                    this.dataForm.norma_evaluacion = data.norma_evaluacion
+                    this.dataForm.norma_ensayo = data.norma_ensayo
+                    this.dataForm.ejecutor_ensayo = data.ejecutor_ensayo
+                    this.dataForm.temperatura_inicial  = data.informe_tt.temperatura_inicial,
+                    this.dataForm.temperatura_subida = data.informe_tt.temperatura_subida
+                    this.dataForm.temperatura_mantenimiento = data.informe_tt.temperatura_mantenimiento
+                    this.dataForm.temperatura_enfriado =  data.informe_tt.temperatura_enfriado
+                    this.dataForm.temperatura_final = data.informe_tt.temperatura_final
+                    this.dataForm.detalle = data.informe_tt.detalle
+                    this.generarGrafico();
+                })
+           }
         },
         generarGrafico : function() {
             if (!this.existenTemperaturas)
@@ -422,8 +457,8 @@ export default {
 
         setObra : function(value){
             this.dataForm.obra = value;
-            this.dataForm.ot_tipo_soldadura='';
-            if(this.dataForm.obra){
+            this.dataForm.ot_tipo_soldadura = '';
+            if(this.dataForm.obra) {
                 this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.dataForm.obra });
                 }
         },
@@ -433,11 +468,13 @@ export default {
         },
 
         getNumeroInforme:function(){
+            console.log('entro en generar numero informe')
              if(!this.editmode) {
                  axios.defaults.baseURL = this.url ;
-                 var urlRegistros = 'informes/ot/' + this.otdata.id + '/metodo/' + this.metodo + '/generar-numero-informe'  + '?api_token=' + Laravel.user.api_token;
+                 var urlRegistros = 'informes/ot/' + this.otdata.id + '/metodo/' + this.metodo + '/tecnica/0' + '/generar-numero-informe/'  + '?api_token=' + Laravel.user.api_token;
                  axios.get(urlRegistros).then(response =>{
                     this.dataForm.numero_inf = response.data
+                    console.log('numero_inf: ',this.dataForm.numero_inf)
                  });
               }
          },
@@ -445,13 +482,13 @@ export default {
           addDetalle : function () {
 
             if (!this.elemento){
-                 toastr.error('El campo elemento es obligatorio');
-                 return ;
+                toastr.error('El campo elemento es obligatorio');
+                return ;
             }
 
             if (!this.termocupla){
-                 toastr.error('El campo termocupla es obligatorio');
-                 return ;
+                toastr.error('El campo termocupla es obligatorio');
+                return ;
             }
 
             this.dataForm.detalle.push({
@@ -466,7 +503,6 @@ export default {
          removeDetalle(index) {
             this.indexPosDetalle = 0;
             this.dataForm.detalle.splice(index, 1);
-
         },
 
         Store : function () {
@@ -483,24 +519,24 @@ export default {
 
           }).then(response => {
 
-          let informe = response.data;
-          toastr.success('informe N°' + this.numero_inf + ' fue creado con éxito ');
-          window.open('/pdf/informe/tt/' + informe.id,'_blank');
-          window.location.href =  '/informes/ot/' + this.otdata.id;
+            let informe = response.data;
+            toastr.success('informe N°' + this.numero_inf + ' fue creado con éxito ');
+            window.open('/pdf/informe/tt/' + informe.id,'_blank');
+            window.location.href =  '/informes/ot/' + this.otdata.id;
 
-        }).catch(error => {
-            errors = error.response.data.errors;
-            console.log(error.response);
-            $.each( errors, function( key, value ) {
-                toastr.error(value);
-                console.log( key + ": " + value );
-            });
+            }).catch(error => {
+                errors = error.response.data.errors;
+                console.log(error.response);
+                $.each( errors, function( key, value ) {
+                    toastr.error(value);
+                    console.log( key + ": " + value );
+                });
 
-            if((typeof(errors)=='undefined') && (error)){
-                toastr.error("Ocurrió un error al procesar la solicitud");
-            }
+                if((typeof(errors)=='undefined') && (error)){
+                    toastr.error("Ocurrió un error al procesar la solicitud");
+                }
 
-            }).finally( () => this.$store.commit('loading', false))
+                }).finally( () => this.$store.commit('loading', false))
         }
     },
 }

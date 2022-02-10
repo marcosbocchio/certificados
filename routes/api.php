@@ -233,6 +233,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('informes_tt','InformesTtController');
     Route::resource('informes_dz','InformesDzController');
 
+    Route::get('informes/metodo/TT/id/{id}/data', 'InformesTtController@show');
 
      /*  informes importados */
     Route::resource('informes_importados','InformesImportadosController');

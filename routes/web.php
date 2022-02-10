@@ -24,7 +24,7 @@ Route::group(['middleware' => ['auth']], function () {
   Route::put('users/{id}/update', 'UserController@updatePerfil')->name('users.updatePerfil');
 
   Route::get('institucionales/{id}','DocumentacionesController@institucionales')->name('institucionales');
-  Route::get('informes_importados/{id}','InformesImportadosController@open')->name('pdfinformes_importados');
+  Route::get('informes_importados/{id}','InformesImportadosController@open')->name('pdfInformes_importados');
 
   Route::get('download/{name}','SoftwareDownloadController@software_download')->name('software_download');
   Route::get('operadores/ot/{id}','OtOperariosController@index')->name('otOperadores');
@@ -108,8 +108,8 @@ Route::group(['middleware' => ['auth']], function () {
       Route::get('/pdf/ot/{id}','PdfOtController@imprimir')->name('pdfot');
       Route::get('/pdf/servicios/referencias/{id}','PdfServiciosReferenciasController@imprimir')->name('ServiciosReferencias');
       Route::get('/pdf/productos/referencias/{id}','PdfProductosReferenciasController@imprimir')->name('ProductosReferencias');
-      Route::get('/pdf/productos/referencias/informe/pm/{id}','PdfInformesPmReferenciasController@imprimir')->name('InformePmReferencias');
-      Route::get('/pdf/productos/referencias/informe/lp/{id}','PdfInformesLpReferenciasController@imprimir')->name('InformeLpReferencias');
+      Route::get('/pdf/productos/referencias/informe/pm/{id}','pdfInformesPmReferenciasController@imprimir')->name('InformePmReferencias');
+      Route::get('/pdf/productos/referencias/informe/lp/{id}','pdfInformesLpReferenciasController@imprimir')->name('InformeLpReferencias');
 
       Route::get('/pdf/dosimetria/year/{year}/operadores/{str_list_of_ids?}/rs/{cliente_sn}/months/{str_list_of_months}','PdfDosimetriaController@imprimir')->name('pdfDosimetriaAnual');
       Route::get('/pdf/dosimetria_mensual_operadores/year/{year}/month/{month}/operadores_ids/{operadores_ids}','PdfDosimetriaMensualOperadores@imprimir');
@@ -123,9 +123,10 @@ Route::group(['middleware' => ['auth']], function () {
       Route::get('/pdf/informe/us/{informe}','PdfInformesUsController@imprimir')->name('pdfInformeUs');
       Route::get('/pdf/informe/cv/{informe}','PdfInformesCvController@imprimir')->name('pdfInformeCv');
       Route::get('/pdf/informe/dz/{informe}','PdfInformesDzController@imprimir')->name('pdfInformeDz');
-      Route::get('/pdf/informe/us/indicaciones/referencia/{id}','PdfInformesUsReferenciaController@imprimir')->name('InformeUsDetalleUsPaUsReferencias');
-      Route::get('/pdf/informe/us/{informe}/indicaciones_us_pa','PdfInformesUsIndicacionesUsPaController@imprimir')->name('InformeUsIndicacionesUsPa');
-      Route::get('/pdf/informe/us/{informe}/indicaciones_me','PdfInformesUsIndicacionesMeController@imprimir')->name('InformeUsIndicacionesMe');
+      Route::get('/pdf/informe/tt/{informe}','pdfInformesTtController@imprimir')->name('pdfInformeTt');
+      Route::get('/pdf/informe/us/indicaciones/referencia/{id}','pdfInformesUsReferenciaController@imprimir')->name('InformeUsDetalleUsPaUsReferencias');
+      Route::get('/pdf/informe/us/{informe}/indicaciones_us_pa','pdfInformesUsIndicacionesUsPaController@imprimir')->name('InformeUsIndicacionesUsPa');
+      Route::get('/pdf/informe/us/{informe}/indicaciones_me','pdfInformesUsIndicacionesMeController@imprimir')->name('InformeUsIndicacionesMe');
 
 
       /* Reportes */

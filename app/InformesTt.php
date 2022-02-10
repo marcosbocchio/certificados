@@ -8,4 +8,10 @@ class InformesTt extends Model
 {
     protected $table='informes_tt';
 
+    public function detalle(){
+
+        return $this->hasMany('App\DetallesTt','informe_tt_id','id');
+
+    }
+
 }

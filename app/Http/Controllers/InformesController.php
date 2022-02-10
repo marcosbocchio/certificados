@@ -146,6 +146,7 @@ class InformesController extends Controller
             case 'CV':
                 return redirect()->route('InformeCvEdit',array('ot_id' => $ot_id, 'id' => $id));
                 break;
+
             case 'DZ':
                 return redirect()->route('InformeDzEdit',array('ot_id' => $ot_id, 'id' => $id));
                 break;

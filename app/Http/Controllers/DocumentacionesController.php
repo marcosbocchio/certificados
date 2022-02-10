@@ -313,10 +313,10 @@ class DocumentacionesController extends Controller
     public function ProcedimientoInformeId($id)
     {
         $procedimiento = DB::table('documentaciones')
-        ->join('ot_procedimientos_propios','ot_procedimientos_propios.documentacion_id','=','documentaciones.id')
-        ->where('ot_procedimientos_propios.id','=',$id)
-        ->select('documentaciones.*','ot_procedimientos_propios.id as ot_procedimientos_propios_id')
-        ->first();
+                            ->join('ot_procedimientos_propios','ot_procedimientos_propios.documentacion_id','=','documentaciones.id')
+                            ->where('ot_procedimientos_propios.id','=',$id)
+                            ->select('documentaciones.*','ot_procedimientos_propios.id as ot_procedimientos_propios_id')
+                            ->first();
 
         return  $procedimiento = Collection::make($procedimiento);
     }

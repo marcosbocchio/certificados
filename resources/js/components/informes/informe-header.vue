@@ -104,7 +104,6 @@ export default {
             this.planta = ''
         },
         setDatos : function(){
-           console.log('entro en set obra');
            this.$forceUpdate();
            this.obra = '';
            this.planta = '';

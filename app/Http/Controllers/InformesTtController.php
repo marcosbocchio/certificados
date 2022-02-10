@@ -28,11 +28,22 @@ class InformesTtController extends Controller
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function show($id)
+    {
+        return Informe::where('id', $id)
+                        ->with('planta')
+                        ->with('material')
+                        ->with('material2')
+                        ->with('otTipoSoldadura')
+                        ->with('NormaEnsayo')
+                        ->with('NormaEvaluacion')
+                        ->with('ejecutorEnsayo')
+                        ->with('internoEquipo')
+                        ->with('procedimiento')
+                        ->with('informeTt.detalle')
+                        ->first();
+    }
+
     public function create($ot_id)
     {
         $metodo = 'TT';
@@ -41,20 +52,16 @@ class InformesTtController extends Controller
         $header_descripcion ="Crear";
         $editMode = false;
         $ot = Ots::findOrFail($ot_id);
+        $informe_id = 0;
         return view('informes.tt.index', compact('ot',
                                                  'metodo',
+                                                 'informe_id',
                                                  'user',
                                                  'header_titulo',
                                                  'header_descripcion',
                                                  'editMode'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request,$EsRevision = false)
     {
         $informe  = new Informe;
@@ -92,26 +99,19 @@ class InformesTtController extends Controller
 
       }
 
-      public function saveDetalle($request,$informeTt) {
+    public function saveDetalle($request,$informeTt) {
 
-        foreach ($request->detalle as $item) {
+    foreach ($request->detalle as $item) {
 
-           $detalleTt = new DetallesTt;
-           $detalleTt->elemento = $item['elemento'];
-           $detalleTt->termocupla = $item['termocupla'];
-           $detalleTt->informe_tt_id =  $informeTt->id;
-           $detalleTt->save();
-        }
-      }
+        $detalleTt = new DetallesTt;
+        $detalleTt->elemento = $item['elemento'];
+        $detalleTt->termocupla = $item['termocupla'];
+        $detalleTt->informe_tt_id =  $informeTt->id;
+        $detalleTt->save();
+    }
+    }
 
 
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($ot_id,$id)
     {
         $metodo = 'TT';
@@ -129,24 +129,11 @@ class InformesTtController extends Controller
                                                  'header_descripcion',
                                                  'editMode'));    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         //
