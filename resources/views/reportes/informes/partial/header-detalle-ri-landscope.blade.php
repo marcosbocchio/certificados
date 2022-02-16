@@ -217,12 +217,11 @@
                             <tr>
                                 <th colspan="2">Ejecutor Ensayo</th>
                                 <th colspan="2">Solicitante</th>
-                                </tr>
-                                <tr>
-                                 <td colspan="2" class="borderFilabottom">{{$ejecutor_ensayo->name}}</td>
-                                 <td colspan="2" class="borderFilabottom">{{$informe_solicitado_por ? $informe_solicitado_por->name : '' }}</td>
-                                </tr>
-
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="borderFilabottom">{{$ejecutor_ensayo->name}}</td>
+                                <td colspan="2" class="borderFilabottom">{{$informe_solicitado_por ? $informe_solicitado_por->name : '' }}</td>
+                            </tr>
                         </tbody>
                     </table>
                 </td>

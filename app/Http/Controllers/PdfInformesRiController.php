@@ -49,7 +49,6 @@ class PdfInformesRiController extends Controller
         $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);
         $informe_ri = InformesRi::where('informe_id',$informe->id)->firstOrFail();
         $planta = Plantas::where('id',$informe->planta_id)->first();
-        Log::debug($planta);
         $ot = Ots::findOrFail($informe->ot_id);
         $cliente = Clientes::findOrFail($ot->cliente_id);
 

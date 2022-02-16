@@ -168,7 +168,18 @@
                             </div>
                         </div>
 
-                         <div class="col-md-6">
+                        <div class="clearfix"></div>
+
+                        <div class="col-md-3">
+                            <div class="form-group" >
+                                <label for="ejecutor_ensayo">Solicitante </label>
+                                <v-select v-model="dataForm.solicitado_por" label="name" :options="usuarios_cliente"></v-select>
+                            </div>
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                         <div class="col-md-4 col-md-offset-4">
                             <line-chart :chart-data="data_indicaciones_temperatura" :options="data_indicaciones_temperatura.options" :chart-id="'img_temp'"></line-chart>
                         </div>
 
@@ -263,6 +274,7 @@ import moment from 'moment';
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 import LineChart from '../chart.js/LineChart.js'
+import ChartJsPluginDataLabels from 'chartjs-plugin-datalabels';
 import html2canvas from 'html2canvas-render-offscreen';
 import {sprintf} from '../../functions/sprintf.js'
 
@@ -295,6 +307,7 @@ export default {
         elemento:'',
         termocupla:'',
         indexPosDetalle:0,
+        usuarios_cliente:[],
         dataForm: {
             ot: this.otdata,
             metodo_ensayo: this.metodo,
@@ -314,6 +327,7 @@ export default {
             norma_evaluacion:'',
             norma_ensayo:'',
             ejecutor_ensayo:'',
+            solicitado_por:'',
             temperatura_inicial:'',
             temperatura_subida:'',
             temperatura_mantenimiento:'',
@@ -340,6 +354,7 @@ export default {
         await this.$store.dispatch('loadNormaEvaluaciones');
         await this.$store.dispatch('loadNormaEnsayos');
         await this.$store.dispatch('loadEjecutorEnsayo', this.otdata.id);
+        await this.getUsuariosCliente();
         await this.setEdit();
         this.$store.commit('loading', false);
     },
@@ -392,6 +407,7 @@ export default {
                     this.dataForm.norma_evaluacion = data.norma_evaluacion
                     this.dataForm.norma_ensayo = data.norma_ensayo
                     this.dataForm.ejecutor_ensayo = data.ejecutor_ensayo
+                    this.dataForm.solicitado_por = data.solicitado_por
                     this.dataForm.temperatura_inicial  = data.informe_tt.temperatura_inicial,
                     this.dataForm.temperatura_subida = data.informe_tt.temperatura_subida
                     this.dataForm.temperatura_mantenimiento = data.informe_tt.temperatura_mantenimiento
@@ -405,56 +421,86 @@ export default {
         generarGrafico : function() {
             if (!this.existenTemperaturas)
                 return
-
+            var PrimerPunto = 0;
             var SegundoPunto = (parseFloat(this.dataForm.temperatura_mantenimiento) - parseFloat(this.dataForm.temperatura_inicial)) / parseFloat(this.dataForm.temperatura_subida)
+            var TercerPunto =  SegundoPunto + 1;
+            var CuartosPunto = (parseFloat(this.dataForm.temperatura_mantenimiento) - parseFloat(this.dataForm.temperatura_final)) / parseFloat(this.dataForm.temperatura_enfriado)
+            var data = []
+            data.push({x:PrimerPunto.toFixed(2),y:parseFloat(this.dataForm.temperatura_inicial)})
+            data.push({x:SegundoPunto.toFixed(2), y:parseFloat(this.dataForm.temperatura_mantenimiento)})
+            data.push({x:TercerPunto.toFixed(2), y:parseFloat(this.dataForm.temperatura_mantenimiento)})
+            data.push({x:(TercerPunto + CuartosPunto).toFixed(2),y:parseFloat(this.dataForm.temperatura_final)})
 
-/*             if(Number.isInteger(SegundoPundo)){
-
-            } */
-            var x = 0
-            var labels=[]
-            while (SegundoPunto > x ) {
-                labels.push(x)
-                x++;
-            }
-            labels.push(SegundoPunto)
-            labels.push(x)
-            labels.push(x + 1)
-            labels.push(SegundoPunto + 2)
-            x = x + 2
-            while (x <= 10) {
-                labels.push(x)
-                x++
-            }
-            console.log('SegundoPunto:', SegundoPunto)
-            console.log('labels:', labels)
-
-            //const labels = ['0','1','2','3','4','5','6','7','8','9','10']
             this.data_indicaciones_temperatura = {
-            labels: ['0','1','2','3','4','5','6','7','8','9','10'],
-            datasets: [{
-                label: 'Tratamiento termico',
-                data:[this.dataForm.temperatura_inicial,this.dataForm.temperatura_subida,this.dataForm.temperatura_mantenimiento,this.dataForm.temperatura_mantenimiento,this.dataForm.temperatura_mantenimiento,this.dataForm.temperatura_mantenimiento,this.dataForm.temperatura_enfriado,this.dataForm.temperatura_final],
-                borderColor: 'rgb(75, 192, 192)',
-                tension: 0.1
-            }],
-
-            options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                    suggestedMax: parseInt(this.dataForm.temperatura_mantenimiento) + 300,
-                    suggestedMin: 0,
-                    }
+                datasets: [{
+                    label: 'Tratamiento termico',
+                    pointStyle: 'circle',
+                    data: data,
+                    borderColor: 'rgb(75, 192, 192)',
+                    lineTension: 0,
                 }],
-              }
-            }
+                options: {
+                    legend: {
+                            display: false
+                        },
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                            suggestedMax: parseFloat(this.dataForm.temperatura_mantenimiento) + 100,
+                            suggestedMin: 0,
+                            }
+                        }],
+                        xAxes: [{
+                            type: 'linear',
+                            ticks: {
+                            suggestedMax: TercerPunto + CuartosPunto + 0.5,
+                            suggestedMin: 0,
+                            }
+
+                        }]
+                    },
+                    plugins: {
+                        datalabels: {
+                            color: '#FFFFFF',
+                            formatter: function (item, index) {
+                                return  ('P' + (parseInt(index.dataIndex ) + 1) + ': ' + 'x=' + item.x + ', y=' + item.y);
+                            }.bind(this),
+                            display: true,
+                            color: '#000000',
+                            align: function(index) {
+                                let position
+                                if (index.dataIndex == 0)
+                                   return 'right'
+                                if(index.dataIndex == 3)
+                                    return 'left'
+                                return 'top'
+
+                            }.bind(this),
+                            font: {
+                                weight: 'normal',
+                                size: 12,
+                            }
+                        }
+                    }
+                }
             };
 
-            var newCanvas = document.getElementById('img_temp');
-            this.dataForn.imgData = newCanvas.toDataURL()
-        },
+            setTimeout(() => {
+                var newCanvas = document.getElementById('img_temp');
+                this.dataForm.imgData = newCanvas.toDataURL('image/png',1.0);
 
+            }, 1000);
+
+        },
+        getUsuariosCliente : async function(){
+
+            axios.defaults.baseURL = this.url ;
+            var urlRegistros = 'users/ot_id/' + this.otdata.id + '?api_token=' + Laravel.user.api_token;
+            await axios.get(urlRegistros).then(response =>{
+               this.usuarios_cliente = response.data
+            });
+
+        },
         setObra : function(value){
             this.dataForm.obra = value;
             this.dataForm.ot_tipo_soldadura = '';
@@ -537,7 +583,41 @@ export default {
                 }
 
                 }).finally( () => this.$store.commit('loading', false))
-        }
+        },
+
+        Update : function() {
+
+            this.errors =[];
+
+            this.$store.commit('loading', true);
+            var urlRegistros = 'informes_tt/' + this.informe_id;
+            axios({
+              method: 'put',
+              url : urlRegistros,
+              data : {
+                ...this.dataForm
+              }
+            }).then(response => {
+
+            let informe = response.data;
+            toastr.success('informe N°' + this.numero_inf + ' fue actualizado con éxito ');
+            window.open('/pdf/informe/tt/' + informe.id,'_blank');
+            window.location.href =  '/informes/ot/' + this.otdata.id;
+
+            }).catch(error => {
+
+                this.errors = error.response.data.errors;
+                    console.log(error.response);
+                $.each( this.errors, function( key, value ) {
+                    toastr.error(value);
+                    console.log( key + ": " + value );
+                });
+
+                if((typeof(this.errors)=='undefined') && (error)){
+                    toastr.error("Ocurrió un error al procesar la solicitud");
+                }
+                }).finally( () => this.$store.commit('loading', false))
+            }
     },
 }
 </script>

@@ -3,10 +3,16 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\User;
 class Informe extends Model
 {
     protected $table='informes';
+
+    public function ot(){
+
+        return $this->belongsTo('App\Ots','ot_id','id');
+
+    }
 
     public function metodoEnsayos(){
 
@@ -35,12 +41,6 @@ class Informe extends Model
      public function planta(){
 
         return $this->belongsTo('App\Plantas','planta_id','id');
-
-     }
-
-     public function ejecutorEnsayo(){
-
-        return $this->belongsTo('App\User','ejecutor_ensayo_id','id');
 
      }
 
@@ -78,6 +78,10 @@ class Informe extends Model
 
        return $this->hasOne('App\InformesTt','informe_id','id');
 
+   }
+
+   public function solicitadoPor() {
+        return $this->belongsTo('App\User','solicitado_por','id');
    }
 
     public function scopeUs($query, $metodo, $tecnica = null) {

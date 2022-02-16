@@ -44,15 +44,14 @@ class User extends Authenticatable
 
     protected $with = ['notificaciones_resumen','firmas_usuarios'];
 
-    public function getId(){
+    public function getId() {
 
         return $this->id;
     }
 
    // protected $appends = ['all_permissions','can'];
 
-    public function getAllPermissionsAttribute()
-    {
+    public function getAllPermissionsAttribute() {
         return $this->getAllPermissions();
     }
 
@@ -61,8 +60,7 @@ class User extends Authenticatable
      *
      * @return array
      */
-    public function getCanAttribute()
-    {
+    public function getCanAttribute() {
         $permissions = [];
         foreach (Permission::all() as $permission) {
             if (Auth::user()->can($permission->name)) {
@@ -75,25 +73,21 @@ class User extends Authenticatable
     }
 
 
-    public function cliente(){
-
+    public function cliente() {
         return $this->belongsTo('App\Clientes','cliente_id','id');
 
     }
 
-    public function notificaciones_resumen()
-    {
-        return $this->hasMany('App\NotificacionesResumenView','user_id','id')->orderBy('tipo','asc');
+    public function notificaciones_resumen() {
+        return $this->hasMany('App\NotificacionesResumenView','user_id','id')
+                    ->orderBy('tipo','asc');
     }
 
-    public function firmas_usuarios()
-    {
+    public function firmas_usuarios() {
         return $this->hasMany('App\FirmaUsuario','user_id','id');
     }
 
-
-    public function periodos()
-    {
+    public function periodos() {
         return $this->hasMAny('App\OperadorPeriodoRx','operador_id','id');
     }
 
