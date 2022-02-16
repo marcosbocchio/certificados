@@ -523,7 +523,7 @@ class InformesController extends Controller
                         ->where('metodo_ensayos.metodo',$metodo)
                         ->where('informes.numero',$informe->numero)
                         ->where('ultima_revision_sn',0)
-                        ->Us($metodo,$tecnica->codigo)
+                        ->Us($metodo,$tecnica ? $tecnica->codigo : null)
                         ->selectRaw('informes.fecha,users.name,LPAD(informes.revision, 2, 0) as revision,informes.id')
                         ->paginate(10);
 

@@ -186,60 +186,60 @@
                     </div>
 
 
-                <div class="box box-custom-enod">
-                    <div class="box-body">
+                    <div class="box box-custom-enod">
+                        <div class="box-body">
 
-                        <div class="col-md-3">
-                            <div class="form-group" >
-                                <label for="elemento">ELEMENTO</label>
-                                <input type="text" v-model="elemento" class="form-control" id="elemento"  maxlength="30">
-                            </div>
-                        </div>
-
-
-                        <div class="col-md-3">
-                            <div class="form-group" >
-                                <label for="Termocupla">Termocupla Nº</label>
-                                <input type="number" v-model="termocupla" class="form-control" id="Termocupla" min="0" max="9999">
-                            </div>
-                        </div>
-
-                       <div class="clearfix"></div>
-
-                        <div class="col-md-1">
-                            <span>
-                              <button type="button" @click="addDetalle()"><span class="fa fa-plus-circle"></span></button>
-                            </span>
-                        </div>
-
-                         <div class="form-group">
-                            &nbsp;
-                        </div>
-
-                        <div v-if="dataForm.detalle.length">
-                            <div class="col-md-12">
-                                <div class="table-responsive">
-                                    <table class="table table-hover table-striped table-bordered table-condensed">
-                                        <thead>
-                                            <tr>
-                                                <th class="col-md-4">Elemento</th>
-                                                <th class="col-md-4">Termocupla</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr v-for="(item,k) in (dataForm.detalle)" :key="k" @click="selectPosDetalle(k)" :class="{selected: indexPosDetalle === k}" >
-                                                <td>{{ item.elemento }}</td>
-                                                <td>{{ item.termocupla }}</td>
-                                                <td style="text-align:center"><span class="fa fa-minus-circle" @click="removeDetalle(k)"></span></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                            <div class="col-md-3">
+                                <div class="form-group" >
+                                    <label for="elemento">ELEMENTO</label>
+                                    <input type="text" v-model="elemento" class="form-control" id="elemento"  maxlength="30">
                                 </div>
-                        </div>
-                       </div>
+                            </div>
 
-                  </div>
-                </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group" >
+                                    <label for="Termocupla">Termocupla Nº</label>
+                                    <input type="number" v-model="termocupla" class="form-control" id="Termocupla" min="0" max="9999">
+                                </div>
+                            </div>
+
+                        <div class="clearfix"></div>
+
+                            <div class="col-md-1">
+                                <span>
+                                <button type="button" @click="addDetalle()"><span class="fa fa-plus-circle"></span></button>
+                                </span>
+                            </div>
+
+                            <div class="form-group">
+                                &nbsp;
+                            </div>
+
+                            <div v-if="dataForm.detalle.length">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-striped table-bordered table-condensed">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-md-4">Elemento</th>
+                                                    <th class="col-md-4">Termocupla</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr v-for="(item,k) in (dataForm.detalle)" :key="k" @click="selectPosDetalle(k)" :class="{selected: indexPosDetalle === k}" >
+                                                    <td>{{ item.elemento }}</td>
+                                                    <td>{{ item.termocupla }}</td>
+                                                    <td style="text-align:center"><span class="fa fa-minus-circle" @click="removeDetalle(k)"></span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    </div>
 
                     <div class="box box-custom-enod">
                         <div class="box-body">
