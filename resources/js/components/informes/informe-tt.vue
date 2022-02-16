@@ -200,7 +200,7 @@
                         <div class="col-md-3">
                             <div class="form-group" >
                                 <label for="Termocupla">Termocupla Nº</label>
-                                <input type="number" v-model="termocupla" class="form-control" id="Termocupla">
+                                <input type="number" v-model="termocupla" class="form-control" id="Termocupla" min="0" max="9999">
                             </div>
                         </div>
 
@@ -566,7 +566,7 @@ export default {
           }).then(response => {
 
             let informe = response.data;
-            toastr.success('informe N°' + this.numero_inf + ' fue creado con éxito ');
+            toastr.success('informe N°' + this.dataForm.numero_inf + ' fue creado con éxito ');
             window.open('/pdf/informe/tt/' + informe.id,'_blank');
             window.location.href =  '/informes/ot/' + this.otdata.id;
 
@@ -600,7 +600,7 @@ export default {
             }).then(response => {
 
             let informe = response.data;
-            toastr.success('informe N°' + this.numero_inf + ' fue actualizado con éxito ');
+            toastr.success('informe N°' + this.dataForm.numero_inf + ' fue actualizado con éxito ');
             window.open('/pdf/informe/tt/' + informe.id,'_blank');
             window.location.href =  '/informes/ot/' + this.otdata.id;
 

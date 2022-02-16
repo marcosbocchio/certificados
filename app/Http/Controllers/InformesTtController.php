@@ -8,6 +8,7 @@ use App\InformesTt;
 use App\Informe;
 use App\DetallesTt;
 use App\Repositories\Documentaciones\DocumentacionesRepository;
+use App\Http\Requests\InformeTtRequest;
 use Illuminate\Support\Facades\DB;
 use Exception as Exception;
 use Illuminate\Support\Facades\Log;
@@ -71,7 +72,7 @@ class InformesTtController extends Controller
                                                  'editMode'));
     }
 
-    public function store(Request $request,$EsRevision = false)
+    public function store(InformeTtRequest $request,$EsRevision = false)
     {
         $informe  = new Informe;
         $informeTt  = new InformesTt;
@@ -140,7 +141,7 @@ class InformesTtController extends Controller
                                                  'header_descripcion',
                                                  'editMode'));    }
 
-    public function update(Request $request, $id)
+    public function update(InformeTtRequest $request, $id)
     {
         $EsRevision = (new \App\Http\Controllers\InformesController)->EsRevision($id);
 

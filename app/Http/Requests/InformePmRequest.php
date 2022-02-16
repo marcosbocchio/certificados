@@ -58,7 +58,6 @@ class InformePmRequest extends FormRequest
             'detalles.*.detalle'        => 'required|Max:250',
             'detalles.*.pieza'          => 'required|Max:30',
             'detalles.*.cm'             => 'nullable|integer',
-
         ];
 
     $validacion_completa =array_merge($condicional,$validacion);
