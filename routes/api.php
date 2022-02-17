@@ -298,6 +298,8 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('partes/informe_us/{id}','PartesController@getInformeUsParte');
     Route::get('partes/informe_cv/{id}','PartesController@getInformeCvParte');
     Route::get('partes/informe_dz/{id}','PartesController@getInformeDzParte');
+    Route::get('partes/informe_tt/{id}','PartesController@getInformeTtParte');
+
     //certificados
     Route::put('certificados/{id}/firmar', 'CertificadosController@firmar');
     Route::get('certificados/ot/{ot_id}/total','CertificadosController@CertificadosTotal');

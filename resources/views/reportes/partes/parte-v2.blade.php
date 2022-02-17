@@ -475,6 +475,53 @@ footer {
                 </tbody>
             </table>
         @endif
+
+        <!-- DETALLE INFORME TT -->
+
+        @php $ExisteDZ = false @endphp
+
+        @foreach ($parte_detalle as $item)
+
+            @if ($item->metodo == 'TT')
+                @php $ExisteDZ = true @endphp
+            @endif
+
+        @endforeach
+
+        @if ($ExisteDZ)
+            @include('reportes.partial.linea-amarilla-fina')
+            <table width="100%" style="margin-top: -5px;">
+                <tbody>
+                    <tr>
+                        <td style="font-size: 12px;height: 30px;" colspan="5"><b>METODO ENSAYO: TT </b></td>
+                    </tr>
+                    <tr>
+                        <td style="font-size: 12px;width: 50px;"><b>N° Informe</b></td>
+                        <td style="font-size: 12px;width: 90px; text-align: center;"><b>Planta</b></td>
+                        <td style="font-size: 12px;width: 110px; text-align: center;"><b>Componente</b></td>
+                        <td style="font-size: 12px;width: 45px; text-align: center;"><b>Diámetro</b></td>
+                        <td style="font-size: 12px;width: 80px; text-align: center;"><b>Solicitante</b></td>
+                        <td style="font-size: 12px;width: 80px; text-align: center;"><b>Firma</b></td>
+                    </tr>
+                    @foreach ($informes_detalle as $item)
+                        @if ($item->metodo == 'TT')
+                            @foreach ($parte_detalle as $item_tt)
+                                @if ($item->informe_id == $item_tt->informe_id)
+                                    <tr>
+                                        <td style="font-size: 12px;text-align: center;">{{$item->numero_formateado}}</td>
+                                        <td style="font-size: 12px;text-align: center; ">{{$item->planta ? $item->planta : ''}}</td>
+                                        <td style="font-size: 12px;text-align: center;">{{$item->componente}}</td>
+                                        <td style="font-size: 12px;text-align: center;">N/A</td>
+                                        <td style="font-size: 12px;text-align: center;">{{$item->solicitado_por ? $item->solicitado_por : ''}}</td>
+                                        <td style="font-size: 12px;text-align: center;">&nbsp;</td>
+                                    </tr>
+                                    @endif
+                                @endforeach
+                        @endif
+                    @endforeach
+                </tbody>
+            </table>
+        @endif
 </main>
 
 @include('reportes.partial.nro_pagina')

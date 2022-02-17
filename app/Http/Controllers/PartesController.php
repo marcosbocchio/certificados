@@ -114,6 +114,7 @@ class PartesController extends Controller
           $this->saveParteDetalleUs($request->informes_us,$parte);
           $this->saveParteDetalleDz($request->informes_dz,$parte);
           $this->saveParteDetalleCv($request->informes_cv,$parte);
+          $this->saveParteDetalleTt($request->informes_tt,$parte);
           $this->saveParteDetalleInformesImportados($request->informes_importados,$parte);
           $this->saveParteServicios($request->servicios,$parte);
 
@@ -248,6 +249,21 @@ class PartesController extends Controller
 
 
         foreach ($informes_pm as $informe) {
+
+            $parteDetalle  = new ParteDetalles;
+            $parteDetalle->parte_id = $parte->id;
+            $parteDetalle->informe_id =$informe['id'];
+            $parteDetalle->save();
+
+            (new \App\Http\Controllers\InformesController)->setParteId($parte->id,$informe['id']);
+
+        }
+
+    }
+
+    public function saveParteDetalleTt($informes_tt,$parte){
+
+        foreach ($informes_tt as $informe) {
 
             $parteDetalle  = new ParteDetalles;
             $parteDetalle->parte_id = $parte->id;
@@ -424,6 +440,16 @@ class PartesController extends Controller
                              ->selectRaw('parte_detalles.* , 0 as informe_sel,informes_view.numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada, informes.componente as componente')
                              ->get();
 
+        $informes_tt  = DB::table('parte_detalles')
+                             ->join('informes','informes.id','=','parte_detalles.informe_id')
+                             ->join('informes_view','informes_view.informe_id','=','informes.id')
+                             ->join('metodo_ensayos','metodo_ensayos.id','=','informes.metodo_ensayo_id')
+                             ->where('metodo_ensayos.metodo','TT')
+                             ->where('parte_detalles.parte_id',$id)
+                             ->where('informes_view.importable_sn',0)
+                             ->selectRaw('parte_detalles.* , 0 as informe_sel,informes_view.numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada, informes.componente as componente')
+                             ->get();
+
         $informes_lp  = DB::table('parte_detalles')
                               ->join('informes','informes.id','=','parte_detalles.informe_id')
                               ->join('informes_view','informes_view.informe_id','=','informes.id')
@@ -473,6 +499,7 @@ class PartesController extends Controller
                                             'informes_us',
                                             'informes_cv',
                                             'informes_dz',
+                                            'informes_tt',
                                             'informes_importados',
                                             'servicios',
                                             'ot',
@@ -502,6 +529,7 @@ class PartesController extends Controller
             $this->saveParteDetalleUs($request->informes_us,$parte);
             $this->saveParteDetalleDz($request->informes_dz,$parte);
             $this->saveParteDetalleCv($request->informes_cv,$parte);
+            $this->saveParteDetalleTt($request->informes_tt,$parte);
             $this->saveParteDetalleInformesImportados($request->informes_importados,$parte);
             $this->saveParteServicios($request->servicios,$parte);
 
@@ -593,6 +621,7 @@ class PartesController extends Controller
       return $informe_cv;
 
     }
+
     public function getInformeDzParte($id){
 
         $informe_dz = DB::select('select
@@ -601,6 +630,21 @@ class PartesController extends Controller
                                     FROM informes
 
                                     inner join informes_dz on informes.id = informes_dz.informe_id
+                                    WHERE
+                                    informes.id =:id',['id' => $id ]);
+
+      return $informe_dz;
+
+    }
+
+    public function getInformeTtParte($id){
+
+        $informe_dz = DB::select('select
+                                    informes.componente,
+                                    "TT" as metodo
+                                    FROM informes
+
+                                    inner join informes_tt on informes.id = informes_tt.informe_id
                                     WHERE
                                     informes.id =:id',['id' => $id ]);
 
