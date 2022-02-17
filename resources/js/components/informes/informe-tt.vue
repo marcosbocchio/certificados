@@ -104,35 +104,35 @@
 
                         <div class="col-md-3">
                             <div class="form-group" >
-                                <label for="temperatura_inicial">Temp. Inicial</label>
+                                <label for="temperatura_inicial">Temp. Inicial °C *</label>
                                 <input type="number" v-model="dataForm.temperatura_inicial" @input="generarGrafico" class="form-control" id="temperatura_inicial" step="0.1">
                             </div>
                         </div>
 
                         <div class="col-md-3">
                             <div class="form-group" >
-                                <label for="temperatura_subida">Temp. Subida</label>
+                                <label for="temperatura_subida">Temp. Subida °C/Hs *</label>
                                 <input type="number" v-model="dataForm.temperatura_subida" @input="generarGrafico" class="form-control" id="temperatura_subida" step="0.1">
                             </div>
                         </div>
 
                         <div class="col-md-3">
                             <div class="form-group" >
-                                <label for="temperatura_mantenimiento">Temp. Mantenimiento</label>
+                                <label for="temperatura_mantenimiento">Temp. Mantenimiento °C *</label>
                                 <input type="number" v-model="dataForm.temperatura_mantenimiento" @input="generarGrafico" class="form-control" id="temperatura_mantenimiento" step="0.1">
                             </div>
                         </div>
 
                         <div class="col-md-3">
                             <div class="form-group" >
-                                <label for="temperatura_enfriado">Temp. Enfriado</label>
+                                <label for="temperatura_enfriado">Temp. Enfriado °C/Hs *</label>
                                 <input type="number" v-model="dataForm.temperatura_enfriado" @input="generarGrafico" class="form-control" id="temperatura_enfriado" step="0.1">
                             </div>
                         </div>
 
                         <div class="col-md-3">
                             <div class="form-group" >
-                                <label for="temperatura_final">Temp. Final</label>
+                                <label for="temperatura_final">Temp. Final °C *</label>
                                 <input type="number" v-model="dataForm.temperatura_final" @input="generarGrafico"  class="form-control" id="temperatura_final" step="0.1">
                             </div>
                         </div>
@@ -179,7 +179,7 @@
 
                         <div class="clearfix"></div>
 
-                         <div class="col-md-4 col-md-offset-4">
+                         <div class="col-md-6 col-md-offset-3">
                             <line-chart :chart-data="data_indicaciones_temperatura" :options="data_indicaciones_temperatura.options" :chart-id="'img_temp'"></line-chart>
                         </div>
 
@@ -363,7 +363,6 @@ export default {
         this.generarGrafico();
      },
     computed :{
-
         ...mapState(['isLoading','url','materiales','ot_obra_tipo_soldaduras','procedimientos','norma_evaluaciones','particulas','norma_ensayos','iluminaciones','ejecutor_ensayos','interno_equipos','instrumentos_mediciones','modelos_3d']),
 
         numero_inf_code : function()  {
@@ -372,10 +371,8 @@ export default {
             },
 
         existenTemperaturas : function() {
-
-           return (this.dataForm.temperatura_inicial && this.dataForm.temperatura_subida && this.dataForm.temperatura_mantenimiento && this.dataForm.temperatura_enfriado && this.dataForm.temperatura_final)
+           return (this.dataForm.temperatura_inicial !== '' && this.dataForm.temperatura_subida !== '' && this.dataForm.temperatura_mantenimiento !== '' && this.dataForm.temperatura_enfriado !== '' && this.dataForm.temperatura_final !== '')
         }
-
      },
     methods : {
         setEdit: function() {
@@ -424,37 +421,76 @@ export default {
             var PrimerPunto = 0;
             var SegundoPunto = (parseFloat(this.dataForm.temperatura_mantenimiento) - parseFloat(this.dataForm.temperatura_inicial)) / parseFloat(this.dataForm.temperatura_subida)
             var TercerPunto =  SegundoPunto + 1;
-            var CuartosPunto = (parseFloat(this.dataForm.temperatura_mantenimiento) - parseFloat(this.dataForm.temperatura_final)) / parseFloat(this.dataForm.temperatura_enfriado)
+            var CuartosPunto = (parseFloat(this.dataForm.temperatura_mantenimiento) - parseFloat(this.dataForm.temperatura_final)) / parseFloat(this.dataForm.temperatura_enfriado) + TercerPunto
+            console.log(PrimerPunto)
+            console.log(SegundoPunto)
+            console.log(TercerPunto)
+            console.log(CuartosPunto)
+
             var data = []
             data.push({x:PrimerPunto.toFixed(2),y:parseFloat(this.dataForm.temperatura_inicial)})
             data.push({x:SegundoPunto.toFixed(2), y:parseFloat(this.dataForm.temperatura_mantenimiento)})
             data.push({x:TercerPunto.toFixed(2), y:parseFloat(this.dataForm.temperatura_mantenimiento)})
-            data.push({x:(TercerPunto + CuartosPunto).toFixed(2),y:parseFloat(this.dataForm.temperatura_final)})
+            data.push({x:(CuartosPunto).toFixed(2),y:parseFloat(this.dataForm.temperatura_final)})
 
             this.data_indicaciones_temperatura = {
-                datasets: [{
-                    label: 'Tratamiento termico',
-                    pointStyle: 'circle',
-                    data: data,
-                    borderColor: 'rgb(75, 192, 192)',
-                    lineTension: 0,
-                }],
+                datasets: [
+                    {
+                        label: 'P1' +  ': ' + '( x=' + PrimerPunto.toFixed(2) + ', y=' + parseFloat(this.dataForm.temperatura_inicial) + ' )',
+                        pointStyle: 'circle',
+                        data: data,
+                        borderColor: 'rgb(75, 192, 192)',
+                        lineTension: 0,
+                    },
+                    {
+                        label: 'P2' + ': ' + '( x=' + SegundoPunto.toFixed(2) + ', y=' + parseFloat(this.dataForm.temperatura_mantenimiento) + ' )',
+                    },
+                    {
+                        label: 'P3' + ': ' + '( x=' + TercerPunto.toFixed(2) + ', y=' + parseFloat(this.dataForm.temperatura_mantenimiento) + ' )',
+                    },
+                    {
+                        label: 'P4' + ': ' + '( x=' + TercerPunto.toFixed(2) + ', y=' + parseFloat(this.dataForm.temperatura_final) + ' )',
+                    }
+
+                ],
+
                 options: {
                     legend: {
-                            display: false
-                        },
+                        position: 'right',
+                        display: true,
+                        labels: {
+                            boxWidth: 0,
+                            padding: 20,
+                            fontSize: 16,
+                            fontStyle: 'bold',
+                        }
+                    },
                     scales: {
                         yAxes: [{
+                            autoSkip: false,
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'X: Grados Celsius (°C)',
+                                fontSize: 16,
+                                fontStyle: 'bold',
+                            },
                             ticks: {
-                            suggestedMax: parseFloat(this.dataForm.temperatura_mantenimiento) + 100,
-                            suggestedMin: 0,
+                                suggestedMax: parseFloat(this.dataForm.temperatura_mantenimiento) + 100,
+                                suggestedMin: 0,
                             }
                         }],
                         xAxes: [{
+                            autoSkip: false,
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Y: Horas',
+                                fontSize: 16,
+                                fontStyle: 'bold',
+                            },
                             type: 'linear',
                             ticks: {
-                            suggestedMax: TercerPunto + CuartosPunto + 0.5,
-                            suggestedMin: 0,
+                                suggestedMax: CuartosPunto,
+                                suggestedMin: 0,
                             }
 
                         }]
@@ -463,8 +499,8 @@ export default {
                         datalabels: {
                             color: '#FFFFFF',
                             formatter: function (item, index) {
-                                return  ('P' + (parseInt(index.dataIndex ) + 1) + ': ' + 'x=' + item.x + ', y=' + item.y);
-                            }.bind(this),
+                                return  'P' + (parseInt(index.dataIndex ) + 1)
+                            },
                             display: true,
                             color: '#000000',
                             align: function(index) {
@@ -480,16 +516,15 @@ export default {
                                 weight: 'normal',
                                 size: 12,
                             }
-                        }
+                        },
                     }
                 }
-            };
+            }
 
             setTimeout(() => {
                 var newCanvas = document.getElementById('img_temp');
                 this.dataForm.imgData = newCanvas.toDataURL('image/png',1.0);
-
-            }, 1000);
+            }, 1500);
 
         },
         getUsuariosCliente : async function(){
@@ -506,7 +541,7 @@ export default {
             this.dataForm.ot_tipo_soldadura = '';
             if(this.dataForm.obra) {
                 this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.dataForm.obra });
-                }
+            }
         },
 
         setPlanta : function(value){
@@ -542,11 +577,10 @@ export default {
                 termocupla:     this.termocupla,
             });
             this.elemento = '',
-            this.termocupla = '';
-
+            this.termocupla = ''
         },
 
-         removeDetalle(index) {
+        removeDetalle(index) {
             this.indexPosDetalle = 0;
             this.dataForm.detalle.splice(index, 1);
         },
@@ -588,7 +622,6 @@ export default {
         Update : function() {
 
             this.errors =[];
-
             this.$store.commit('loading', true);
             var urlRegistros = 'informes_tt/' + this.informe_id;
             axios({

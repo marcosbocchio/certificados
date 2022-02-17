@@ -44,7 +44,7 @@
                        </tr>
                        <tr>
                            <td colspan="2">{{$informe->informeTt->temperatura_inicial}} °C</td>
-                           <td colspan="2">{{$informe->informeTt->temperatura_subida}} °C/h</td>
+                           <td colspan="2">{{$informe->informeTt->temperatura_subida}} °C/Hs</td>
                        </tr>
                        <tr>
                         <th colspan="4">Temp. Final </th>
@@ -128,7 +128,7 @@
                         </tr>
                         <tr>
                             <td colspan="2">{{$informe->informeTt->temperatura_mantenimiento}} °C</td>
-                            <td colspan="2">{{$informe->informeTt->temperatura_enfriado}} °C/h</td>
+                            <td colspan="2">{{$informe->informeTt->temperatura_enfriado}} °C/Hs</td>
                         </tr>
                         <tr>
                             <th colspan="2">Norma Evaluación</th>
