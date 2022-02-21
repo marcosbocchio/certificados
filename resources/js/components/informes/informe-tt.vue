@@ -180,7 +180,7 @@
                         <div class="clearfix"></div>
 
                          <div class="col-md-6 col-md-offset-3">
-                            <line-chart :chart-data="data_indicaciones_temperatura" :options="data_indicaciones_temperatura.options" :chart-id="'img_temp'"></line-chart>
+                            <line-chart :chart-data="data_indicaciones_temperatura" :options="data_indicaciones_temperatura.options" :chart-id="'img_temp'" ></line-chart>
                         </div>
 
                     </div>
@@ -420,12 +420,8 @@ export default {
                 return
             var PrimerPunto = 0;
             var SegundoPunto = (parseFloat(this.dataForm.temperatura_mantenimiento) - parseFloat(this.dataForm.temperatura_inicial)) / parseFloat(this.dataForm.temperatura_subida)
-            var TercerPunto =  SegundoPunto + 1;
+            var TercerPunto =  SegundoPunto + 2;
             var CuartosPunto = (parseFloat(this.dataForm.temperatura_mantenimiento) - parseFloat(this.dataForm.temperatura_final)) / parseFloat(this.dataForm.temperatura_enfriado) + TercerPunto
-            console.log(PrimerPunto)
-            console.log(SegundoPunto)
-            console.log(TercerPunto)
-            console.log(CuartosPunto)
 
             var data = []
             data.push({x:PrimerPunto.toFixed(2),y:parseFloat(this.dataForm.temperatura_inicial)})
@@ -449,12 +445,14 @@ export default {
                         label: 'P3' + ': ' + '( x=' + TercerPunto.toFixed(2) + ', y=' + parseFloat(this.dataForm.temperatura_mantenimiento) + ' )',
                     },
                     {
-                        label: 'P4' + ': ' + '( x=' + TercerPunto.toFixed(2) + ', y=' + parseFloat(this.dataForm.temperatura_final) + ' )',
+                        label: 'P4' + ': ' + '( x=' + CuartosPunto.toFixed(2) + ', y=' + parseFloat(this.dataForm.temperatura_final) + ' )',
                     }
 
                 ],
 
                 options: {
+                    maintainAspectRatio: false,
+                    responsive: true,
                     legend: {
                         position: 'right',
                         display: true,
@@ -489,7 +487,7 @@ export default {
                             },
                             type: 'linear',
                             ticks: {
-                                suggestedMax: CuartosPunto,
+                                suggestedMax: CuartosPunto + 2,
                                 suggestedMin: 0,
                             }
 
