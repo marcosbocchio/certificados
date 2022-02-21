@@ -423,6 +423,11 @@ export default {
             var TercerPunto =  SegundoPunto + 2;
             var CuartosPunto = (parseFloat(this.dataForm.temperatura_mantenimiento) - parseFloat(this.dataForm.temperatura_final)) / parseFloat(this.dataForm.temperatura_enfriado) + TercerPunto
 
+            console.log(PrimerPunto)
+            console.log(SegundoPunto)
+            console.log(TercerPunto)
+            console.log(CuartosPunto)
+
             var data = []
             data.push({x:PrimerPunto.toFixed(2),y:parseFloat(this.dataForm.temperatura_inicial)})
             data.push({x:SegundoPunto.toFixed(2), y:parseFloat(this.dataForm.temperatura_mantenimiento)})
@@ -432,20 +437,20 @@ export default {
             this.data_indicaciones_temperatura = {
                 datasets: [
                     {
-                        label: 'P1' +  ': ' + '( x=' + PrimerPunto.toFixed(2) + ', y=' + parseFloat(this.dataForm.temperatura_inicial) + ' )',
+                        label: 'P1' +  ' ' + '( x : ' + Math.round(parseFloat(PrimerPunto) * 60) + ' min. , y : ' + parseFloat(this.dataForm.temperatura_inicial) + ' °C )',
                         pointStyle: 'circle',
                         data: data,
                         borderColor: 'rgb(75, 192, 192)',
                         lineTension: 0,
                     },
                     {
-                        label: 'P2' + ': ' + '( x=' + SegundoPunto.toFixed(2) + ', y=' + parseFloat(this.dataForm.temperatura_mantenimiento) + ' )',
+                        label: 'P2' + ' ' + '( x : ' + Math.round(parseFloat(SegundoPunto) * 60) + ' min. , y : ' + parseFloat(this.dataForm.temperatura_mantenimiento) + ' °C )',
                     },
                     {
-                        label: 'P3' + ': ' + '( x=' + TercerPunto.toFixed(2) + ', y=' + parseFloat(this.dataForm.temperatura_mantenimiento) + ' )',
+                        label: 'P3' + ' ' + '( x : ' + Math.round(parseFloat(TercerPunto) * 60) + ' min. , y : ' + parseFloat(this.dataForm.temperatura_mantenimiento) + ' °C )',
                     },
                     {
-                        label: 'P4' + ': ' + '( x=' + CuartosPunto.toFixed(2) + ', y=' + parseFloat(this.dataForm.temperatura_final) + ' )',
+                        label: 'P4' + ' ' + '( x : ' + Math.round(parseFloat(CuartosPunto) * 60) + ' min. , y : ' + parseFloat(this.dataForm.temperatura_final) + ' °C )',
                     }
 
                 ],
