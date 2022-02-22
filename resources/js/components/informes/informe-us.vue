@@ -1231,7 +1231,7 @@ export default {
         numero_inf_code : function()  {
 
             if(this.numero_inf)
-                return this.metodo +  sprintf("%04d",this.numero_inf);
+                return this.tecnica.codigo +  sprintf("%04d",this.numero_inf);
         },
      },
 
