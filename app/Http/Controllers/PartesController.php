@@ -114,6 +114,8 @@ class PartesController extends Controller
           $this->saveParteDetalleUs($request->informes_us,$parte);
           $this->saveParteDetalleDz($request->informes_dz,$parte);
           $this->saveParteDetalleCv($request->informes_cv,$parte);
+          $this->saveParteDetallePmi($request->informes_pmi,$parte);
+          $this->saveParteDetalleRg($request->informes_rg,$parte);
           $this->saveParteDetalleTt($request->informes_tt,$parte);
           $this->saveParteDetalleInformesImportados($request->informes_importados,$parte);
           $this->saveParteServicios($request->servicios,$parte);
@@ -303,6 +305,35 @@ class PartesController extends Controller
 
         }
     }
+
+    public function saveParteDetallePmi($informes_pmi,$parte){
+
+        foreach ($informes_pmi as $informe) {
+
+            $parteDetalle  = new ParteDetalles;
+            $parteDetalle->parte_id = $parte->id;
+            $parteDetalle->informe_id =$informe['id'];
+            $parteDetalle->save();
+
+            (new \App\Http\Controllers\InformesController)->setParteId($parte->id,$informe['id']);
+
+        }
+    }
+
+    public function saveParteDetalleRg($informes_rg,$parte){
+
+        foreach ($informes_rg as $informe) {
+
+            $parteDetalle  = new ParteDetalles;
+            $parteDetalle->parte_id = $parte->id;
+            $parteDetalle->informe_id =$informe['id'];
+            $parteDetalle->save();
+
+            (new \App\Http\Controllers\InformesController)->setParteId($parte->id,$informe['id']);
+
+        }
+    }
+
     public function saveParteDetalleDz($informes_dz,$parte){
 
         foreach ($informes_dz as $informe) {
@@ -429,6 +460,25 @@ class PartesController extends Controller
                              ->where('informes_view.importable_sn',0)
                              ->selectRaw('parte_detalles.* , 0 as informe_sel,informes_view.numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada, informes.componente as componente')
                              ->get();
+        $informes_pmi  = DB::table('parte_detalles')
+                             ->join('informes','informes.id','=','parte_detalles.informe_id')
+                             ->join('informes_view','informes_view.informe_id','=','informes.id')
+                             ->join('metodo_ensayos','metodo_ensayos.id','=','informes.metodo_ensayo_id')
+                             ->where('metodo_ensayos.metodo','PMI')
+                             ->where('parte_detalles.parte_id',$id)
+                             ->where('informes_view.importable_sn',0)
+                             ->selectRaw('parte_detalles.* , 0 as informe_sel,informes_view.numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada, informes.componente as componente')
+                             ->get();
+
+        $informes_rg  = DB::table('parte_detalles')
+                            ->join('informes','informes.id','=','parte_detalles.informe_id')
+                            ->join('informes_view','informes_view.informe_id','=','informes.id')
+                            ->join('metodo_ensayos','metodo_ensayos.id','=','informes.metodo_ensayo_id')
+                            ->where('metodo_ensayos.metodo','RG')
+                            ->where('parte_detalles.parte_id',$id)
+                            ->where('informes_view.importable_sn',0)
+                            ->selectRaw('parte_detalles.* , 0 as informe_sel,informes_view.numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada, informes.componente as componente')
+                            ->get();
 
         $informes_dz  = DB::table('parte_detalles')
                              ->join('informes','informes.id','=','parte_detalles.informe_id')
@@ -460,6 +510,7 @@ class PartesController extends Controller
                               ->where('informes_view.importable_sn',0)
                               ->selectRaw('parte_detalles.* , 0 as informe_sel,informes_view.numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada, informes.componente as componente,diametros_espesor.diametro as diametro, informes.diametro_especifico as diametro_especifico ')
                               ->get();
+
 
        $informes_us  = DB::table('parte_detalles')
                                ->join('informes','informes.id','=','parte_detalles.informe_id')
@@ -498,7 +549,9 @@ class PartesController extends Controller
                                             'informes_lp',
                                             'informes_us',
                                             'informes_cv',
+                                            'informes_pmi',
                                             'informes_dz',
+                                            'informes_rg',
                                             'informes_tt',
                                             'informes_importados',
                                             'servicios',
@@ -529,6 +582,8 @@ class PartesController extends Controller
             $this->saveParteDetalleUs($request->informes_us,$parte);
             $this->saveParteDetalleDz($request->informes_dz,$parte);
             $this->saveParteDetalleCv($request->informes_cv,$parte);
+            $this->saveParteDetallePmi($request->informes_pmi,$parte);
+            $this->saveParteDetalleRg($request->informes_rg,$parte);
             $this->saveParteDetalleTt($request->informes_tt,$parte);
             $this->saveParteDetalleInformesImportados($request->informes_importados,$parte);
             $this->saveParteServicios($request->servicios,$parte);
@@ -621,7 +676,34 @@ class PartesController extends Controller
       return $informe_cv;
 
     }
+    public function getInformePmiParte($id){
 
+        $informe_pmi = DB::select('select
+                                    informes.componente,
+                                    "PMI" as metodo
+                                    FROM informes
+
+                                    inner join informes_pmi on informes.id = informes_pmi.informe_id
+                                    WHERE
+                                    informes.id =:id',['id' => $id ]);
+
+      return $informe_pmi;
+
+    }
+    public function getInformeRgParte($id){
+
+        $informe_rg = DB::select('select
+                                    informes.componente,
+                                    "RG" as metodo
+                                    FROM informes
+
+                                    inner join informes_rg on informes.id = informes_rg.informe_id
+                                    WHERE
+                                    informes.id =:id',['id' => $id ]);
+
+      return $informe_rg;
+
+    }
     public function getInformeDzParte($id){
 
         $informe_dz = DB::select('select

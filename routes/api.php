@@ -162,6 +162,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::post('storage/calibraciones_us', 'StorageController@saveCalibraciones');
     Route::post('storage/indicaciones_us', 'StorageController@saveIndicacionesUs');
     Route::post('storage/informes_importados', 'StorageController@saveInformesImportados');
+    Route::post('storage/informes_pmi', 'StorageController@saveInformesPmi');
 
     Route::post('storage/documentos_escaneados', 'StorageController@saveDocumentosEscaneados');
     Route::post('storage/logo-cliente', 'StorageController@saveLogoCliente');
@@ -229,9 +230,11 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('informes_pm','InformesPmController');
     Route::resource('informes_lp','InformesLpController');
     Route::resource('informes_cv','InformesCvController');
+    Route::resource('informes_rg','InformesRgController');
     Route::resource('informes_us','InformesUsController');
     Route::resource('informes_tt','InformesTtController');
     Route::resource('informes_dz','InformesDzController');
+    Route::resource('informes_pmi','InformesPmiController');
 
     Route::get('informes/metodo/TT/id/{id}/data', 'InformesTtController@show');
 
@@ -297,8 +300,11 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('partes/informe_lp/{id}','PartesController@getInformeLpParte');
     Route::get('partes/informe_us/{id}','PartesController@getInformeUsParte');
     Route::get('partes/informe_cv/{id}','PartesController@getInformeCvParte');
+    Route::get('partes/informe_rg/{id}','PartesController@getInformeRgParte');
     Route::get('partes/informe_dz/{id}','PartesController@getInformeDzParte');
     Route::get('partes/informe_tt/{id}','PartesController@getInformeTtParte');
+    Route::get('partes/informe_pmi/{id}','PartesController@getInformePmiParte');
+
 
     //certificados
     Route::put('certificados/{id}/firmar', 'CertificadosController@firmar');

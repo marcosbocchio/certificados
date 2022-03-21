@@ -108,6 +108,12 @@ class InformesController extends Controller
             case 'DZ':
                 return redirect()->route('InformeDzCreate',array('ot_id' => $ot_id));
                 break;
+            case 'RG':
+                return redirect()->route('InformeRgCreate',array('ot_id' => $ot_id));
+                break;
+            case 'PMI':
+                return redirect()->route('InformePmiCreate',array('ot_id' => $ot_id));
+                break;
         }
 
     }
@@ -149,6 +155,12 @@ class InformesController extends Controller
 
             case 'DZ':
                 return redirect()->route('InformeDzEdit',array('ot_id' => $ot_id, 'id' => $id));
+                break;
+            case 'RG':
+                return redirect()->route('InformeRgEdit',array('ot_id' => $ot_id, 'id' => $id));
+                break;
+            case 'PMI':
+                return redirect()->route('InformePmiEdit',array('ot_id' => $ot_id, 'id' => $id));
                 break;
         }
     }

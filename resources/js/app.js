@@ -266,6 +266,8 @@ Vue.component('remitos', require('./components/remitos/remitos.vue').default);
 /* Informes    */
 Vue.component('informe-ri', require('./components/informes/informe-ri.vue').default);
 Vue.component('informe-cv', require('./components/informes/informe-cv.vue').default);
+Vue.component('informe-rg', require('./components/informes/informe-rg.vue').default);
+Vue.component('informe-pmi', require('./components/informes/informe-pmi.vue').default);
 Vue.component('informe-pm', require('./components/informes/informe-pm.vue').default);
 Vue.component('informe-lp', require('./components/informes/informe-lp.vue').default);
 Vue.component('informe-us', require('./components/informes/informe-us.vue').default);

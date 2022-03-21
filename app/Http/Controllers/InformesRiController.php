@@ -442,7 +442,6 @@ class InformesRiController extends Controller
       }
 
       public function saveTramo($tramo,$informeRi){
-        log::debug('tramo en funcion:',$tramo);
         $tramox =  new Tramos;
         $tramox->informes_ri_id = $informeRi->id;
         $tramox->bola_comparadora = $tramo['bola_comparadora'];

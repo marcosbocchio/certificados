@@ -618,6 +618,98 @@
                         </div>
                     </div>
                 </div>
+                <!--Informe PMI -->
+                <div v-show="TablaInformesPmi.length">
+                    <div class="box box-custom-enod" >
+                        <div class="box-header with-border">
+                        <h3 class="box-title">Informes PMI</h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-striped table-bordered table-condensed">
+                                            <thead>
+                                                <tr>
+                                                    <th>Informe</th>
+                                                    <th>Componente</th>
+                                                    <th>Diámetro</th>
+                                                    <th colspan="2">&nbsp;</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr v-for="(item,k) in TablaInformesPmi" :key="k">
+                                                    <td> {{ item.numero_formateado}}</td>
+                                                    <td>
+                                                        <div >
+                                                           {{ item.componente }}
+                                                        </div>
+                                                    </td>
+                                                    <td > N/A </td>
+                                                    <td style="text-align:center"> <a  @click="RemoveTablaPmi(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a></td>
+                                                </tr>
+                                                <tr v-for="fila in 4" >
+                                                    <td colspan="6" style="background: #FFFFFF"> &nbsp;</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!--Informe RG -->
+                <div v-show="TablaInformesRg.length">
+                    <div class="box box-custom-enod" >
+                        <div class="box-header with-border">
+                        <h3 class="box-title">Informes RG</h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-striped table-bordered table-condensed">
+                                            <thead>
+                                                <tr>
+                                                    <th>Informe</th>
+                                                    <th>Componente</th>
+                                                    <th>Diámetro</th>
+                                                    <th colspan="2">&nbsp;</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr v-for="(item,k) in TablaInformesRg" :key="k">
+                                                    <td> {{ item.numero_formateado}}</td>
+                                                    <td>
+                                                        <div >
+                                                           {{ item.componente }}
+                                                        </div>
+                                                    </td>
+                                                    <td > N/A </td>
+                                                    <td style="text-align:center"> <a  @click="RemoveTablaRg(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a></td>
+                                                </tr>
+                                                <tr v-for="fila in 4" >
+                                                    <td colspan="6" style="background: #FFFFFF"> &nbsp;</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                        </div>
+                    </div>
+                </div>
                 <!--Informe Dz -->
                 <div v-show="TablaInformesDz.length">
                     <div class="box box-custom-enod" >
@@ -842,6 +934,11 @@ export default {
       required : false
       },
 
+      informes_rg_data : {
+      type : [ Array ],
+      required : false
+      },
+
       informes_tt_data : {
       type : [ Array ],
       required : false
@@ -907,6 +1004,8 @@ export default {
         TablaInformesLp:[],
         TablaInformesUs:[],
         TablaInformesCv:[],
+        TablaInformesPmi:[],
+        TablaInformesRg:[],
         TablaInformesDz:[],
         TablaInformesTt:[],
         TablaInformesImportados:[],
@@ -919,6 +1018,8 @@ export default {
         indexTablaInformesUs:'-1',
         indexTablaInformesDz:'-1',
         indexTablaInformesCv:'-1',
+        indexTablaInformesPmi:'-1',
+        indexTablaInformesRg:'-1',
         indexTablaInformesTt:'-1',
         indexTablaInformesImportados:'-1',
         indexTablaServicios:'-1',
@@ -1042,6 +1143,8 @@ export default {
             this.TablaInformesPm=[];
             this.TablaInformesUs=[];
             this.TablaInformesCv=[];
+            this.TablaInformesPmi=[];
+            this.TablaInformesRg=[];
             this.TablaInformesDz=[];
             this.TablaInformesTt=[];
             this.TablaInformesImportados=[];
@@ -1384,6 +1487,35 @@ export default {
                             });
                         }.bind(this));
 
+              //Informe PMI
+
+                        this.informes_pmi_data.forEach(function(item_data){
+
+
+                            this.informes.forEach(function(item_informe){
+
+                                if((item_data.informe_id == item_informe.id) && (!item_informe.importable_sn)){
+
+                                    item_informe.informe_sel = true;
+
+                                    }
+                                });
+
+                        }.bind(this));
+
+                        this.informes_pmi_data.forEach(function(item){
+
+                        let visible_sn = true;
+
+                        this.TablaInformesPmi.push({
+
+                            numero_formateado  : item.numero_formateado,
+                            id      : item.informe_id,
+                            visible : visible_sn,
+                            componente : item.componente,
+                            });
+                        }.bind(this));
+
                         //Informe DZ
 
                         this.informes_dz_data.forEach(function(item_data){
@@ -1405,6 +1537,35 @@ export default {
                         let visible_sn = true;
 
                         this.TablaInformesDz.push({
+
+                            numero_formateado  : item.numero_formateado,
+                            id      : item.informe_id,
+                            visible : visible_sn,
+                            componente : item.componente,
+                            });
+                        }.bind(this));
+
+                        //Informe Rg
+
+                        this.informes_rg_data.forEach(function(item_data){
+
+
+                            this.informes.forEach(function(item_informe){
+
+                                if((item_data.informe_id == item_informe.id) && (!item_informe.importable_sn)){
+
+                                    item_informe.informe_sel = true;
+
+                                    }
+                                });
+
+                        }.bind(this));
+
+                        this.informes_rg_data.forEach(function(item){
+
+                        let visible_sn = true;
+
+                        this.TablaInformesRg.push({
 
                             numero_formateado  : item.numero_formateado,
                             id      : item.informe_id,
@@ -1595,6 +1756,16 @@ export default {
            this.TablaInformesCv.splice(index, 1);
 
         },
+        RemoveTablaPmi(index) {
+
+           this.TablaInformesPmi.splice(index, 1);
+
+        },
+        RemoveTablaRg(index) {
+
+           this.TablaInformesRg.splice(index, 1);
+
+        },
         RemoveTablaLp(index) {
 
            this.TablaInformesLp.splice(index, 1);
@@ -1686,7 +1857,11 @@ export default {
 
                       case 'CV' : await this.getInformeCV(this.informes[index].id,index);break;
 
-                      case 'DZ' : await this.getInformeDZ(this.informes[index].id,index);break;
+                      case 'RG' : await this.getInformeRG(this.informes[index].id,index);break;
+
+                      case 'PMI' : await this.getInformePmi(this.informes[index].id,index);break;
+
+                      case 'DZ' : await this.getInformeDz(this.informes[index].id,index);break;
 
                       case 'TT' : await this.getInformeTT(this.informes[index].id,index);break;
 
@@ -1763,6 +1938,20 @@ export default {
                     for( var i = 0; i < this.TablaInformesCv.length; i++){
                         if (this.TablaInformesCv[i].id == id) {
                                 this.TablaInformesCv.splice(i, 1);
+                            i--;
+                        }
+                    }
+
+                    for( var i = 0; i < this.TablaInformesPmi.length; i++){
+                        if (this.TablaInformesPmi[i].id == id) {
+                                this.TablaInformesPmi.splice(i, 1);
+                            i--;
+                        }
+                    }
+
+                    for( var i = 0; i < this.TablaInformesRg.length; i++){
+                        if (this.TablaInformesRg[i].id == id) {
+                                this.TablaInformesRg.splice(i, 1);
                             i--;
                         }
                     }
@@ -1953,6 +2142,11 @@ export default {
                             let metros = this.CalcularMetrosCV(item);
                             this.TablaServicios[this.TablaServicios.findIndex(elemento => elemento.servicio_descripcion == item.servicio_descripcion)].cant_final = metros;
 
+                       }else if(item.unidad_medida == 'Metro' && item.metodo == 'RG'){
+
+                            let metros = this.CalcularMetrosRG(item);
+                            this.TablaServicios[this.TablaServicios.findIndex(elemento => elemento.servicio_descripcion == item.servicio_descripcion)].cant_final = metros;
+
                        }else if(item.unidad_medida == 'Metro' && item.metodo == 'DZ'){
                             let metros = this.CalcularMetrosDZ(item);
                             this.TablaServicios[this.TablaServicios.findIndex(elemento => elemento.servicio_descripcion == item.servicio_descripcion)].cant_final = metros;
@@ -1995,6 +2189,8 @@ export default {
                                 cantidad = this.CalcularMetrosTT(item)
                             }else if(item.metodo == 'CV'){
                                 cantidad = this.CalcularMetrosCV(item)
+                            }else if(item.metodo == 'RG'){
+                                cantidad = this.CalcularMetrosRG(item)
                             }else if(item.metodo == 'DZ'){
                                 cantidad = this.CalcularMetrosDZ(item)
                             }
@@ -2047,6 +2243,10 @@ export default {
 
                case 'CV':
                    this.TablaServicios[this.TablaServicios.findIndex(elemento => elemento.unidad_medida == 'Metro' && elemento.metodo =='CV')].cant_final = this.CalcularMetrosCV();
+                   break;
+
+               case 'RG':
+                   this.TablaServicios[this.TablaServicios.findIndex(elemento => elemento.unidad_medida == 'Metro' && elemento.metodo =='RG')].cant_final = this.CalcularMetrosRG();
                    break;
 
                case 'DZ':
@@ -2177,6 +2377,37 @@ export default {
            let metros = 0 ;
            let cms = 0;
            this.TablaInformesCv.forEach(function(item){
+
+               if(item.cm_final){
+
+                   cms += parseFloat(item.cm_final);
+               }
+
+           }.bind(this))
+           metros = parseFloat(cms/100).toFixed(2);
+           return metros;
+        },
+
+        CalcularMetrosPMI : function(){
+
+           let metros = 0 ;
+           let cms = 0;
+           this.TablaInformesPmi.forEach(function(item){
+
+               if(item.cm_final){
+
+                   cms += parseFloat(item.cm_final);
+               }
+
+           }.bind(this))
+           metros = parseFloat(cms/100).toFixed(2);
+           return metros;
+        },
+        CalcularMetrosRG : function(){
+
+           let metros = 0 ;
+           let cms = 0;
+           this.TablaInformesRg.forEach(function(item){
 
                if(item.cm_final){
 
@@ -2339,6 +2570,50 @@ export default {
 
         },
 
+        async getInformePmi(id,index){
+
+            axios.defaults.baseURL = this.url ;
+            var urlRegistros = 'partes/informe_pmi/' + id + '?api_token=' + Laravel.user.api_token;
+            let res = await axios.get(urlRegistros);
+            let informe_pmi_parte = await res.data;
+
+            informe_pmi_parte.forEach(function(item){
+
+                this.TablaInformesPmi.push({
+
+                    id      : id,
+                    numero_formateado  : this.informes[index].numero_formateado,
+                    visible : true,
+                    componente : item.componente,
+                    metodo : item.metodo,
+                    });
+
+                }.bind(this));
+
+        },
+
+
+        async getInformeRG(id,index){
+
+            axios.defaults.baseURL = this.url ;
+            var urlRegistros = 'partes/informe_rg/' + id + '?api_token=' + Laravel.user.api_token;
+            let res = await axios.get(urlRegistros);
+            let informe_rg_parte = await res.data;
+
+            informe_rg_parte.forEach(function(item){
+
+                this.TablaInformesRg.push({
+
+                    id      : id,
+                    numero_formateado  : this.informes[index].numero_formateado,
+                    visible : true,
+                    componente : item.componente,
+                    metodo : item.metodo,
+                    });
+
+                }.bind(this));
+
+        },
         async getInformeDz(id,index){
 
             axios.defaults.baseURL = this.url ;
@@ -2545,6 +2820,8 @@ export default {
                 'informes_us'          :this.TablaInformesUs,
                 'informes_dz'          :this.TablaInformesDz,
                 'informes_cv'          :this.TablaInformesCv,
+                'informes_pmi'          :this.TablaInformesPmi,
+                'informes_rg'          :this.TablaInformesRg,
                 'informes_tt'           :this.TablaInformesTt,
                 'informes_importados'  :this.TablaInformesImportados,
                 'servicios'            :this.TablaServicios,
@@ -2607,6 +2884,8 @@ export default {
                 'informes_us'          :this.TablaInformesUs,
                 'informes_dz'          :this.TablaInformesDz,
                 'informes_cv'          :this.TablaInformesCv,
+                'informes_pmi'          :this.TablaInformesPmi,
+                'informes_rg'          :this.TablaInformesRg,
                 'informes_tt'           :this.TablaInformesTt,
                 'informes_importados'  :this.TablaInformesImportados,
                 'servicios'            :this.TablaServicios,

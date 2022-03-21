@@ -195,6 +195,23 @@ class StorageController extends Controller
 
     }
 
+    public function saveinformesPmi(Request $request){
+
+
+        if ($request->hasFile('archivo')){
+
+
+            $path = Storage::disk('public')->putFile('storage/informes_pmi',$request->file('archivo'));
+
+          return $path;
+        }
+        else
+        {
+          return "Seleccione un archivo";
+        }
+
+      }
+
     public function saveDocumentosEscaneados(Request $request){
 
 

@@ -63,12 +63,10 @@ class InternoEquiposController extends Controller
       }
 
     public function getInternoEquipos($metodo, $activo_sn, $tipo_penetrante){
-        Log::debug($tipo_penetrante);
       $interno_equipos='';
       $instrumento_medicion='';
 
       if($tipo_penetrante != 'null'){
-            Log::debug("entroaqui1");
             $instrumento_medicion = ($tipo_penetrante == 'Fluorescente') ? 'Lampara luz UV' : 'Luxometro luz blanca';
 
             $interno_equipos =  InternoEquipos::join('equipos','equipos.id','=','interno_equipos.equipo_id')
@@ -82,7 +80,6 @@ class InternoEquiposController extends Controller
                                               ->get();
 
       }elseif(($metodo != 'null')&&($activo_sn)){
-        Log::debug("entroaqui2");
             $interno_equipos = InternoEquipos::join('equipos','equipos.id','=','interno_equipos.equipo_id')
                                                 ->join('metodo_ensayos','equipos.metodo_ensayo_id','=','metodo_ensayos.id')
                                                 ->where('metodo_ensayos.metodo',$metodo)
@@ -97,7 +94,6 @@ class InternoEquiposController extends Controller
 
 
       }elseif($activo_sn !='null'){
-        Log::debug("entroaqui3");
         $interno_equipos = InternoEquipos::where('interno_equipos.activo_sn',1)
                                             ->with('equipo')
                                             ->with('internoFuente')
@@ -106,7 +102,6 @@ class InternoEquiposController extends Controller
                                             ->get();
 
       }else{
-        Log::debug("entroaqui4");
           $interno_equipos = InternoEquipos::with('equipo')
                                             ->with('internoFuente')
                                             ->selectRaw('interno_equipos.*,CONVERT(nro_interno,UNSIGNED) as nro_interno_numeric' )
@@ -185,7 +180,6 @@ class InternoEquiposController extends Controller
       }
 
       public function saveInternoEquipo($request,$interno_equipo){
-        Log::debug($request);
         $interno_equipo->nro_serie = $request['nro_serie'];
         $interno_equipo->nro_interno = $request['nro_interno'];
         $interno_equipo->foco = $request['foco'];

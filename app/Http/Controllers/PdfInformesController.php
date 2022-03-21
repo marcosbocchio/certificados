@@ -35,7 +35,13 @@ class PdfInformesController extends Controller
             case 'TT':
                 return redirect()->route('pdfInformeTt',array('id' => $id));
                 break;
-        }
+            case 'RG':
+                return redirect()->route('pdfInformeRg',array('id' => $id));
+                break;
+            case 'PMI':
+                return redirect()->route('pdfInformePmi',array('id' => $id));
+                break;
+            }
 
     }
 

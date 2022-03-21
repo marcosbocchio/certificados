@@ -47,6 +47,8 @@ Route::group(['middleware' => ['auth']], function () {
   Route::get('/area/enod/ot/{ot_id}/informe/metodo/us','InformesUsController@create')->name('InformeUsCreate');
   Route::get('/area/enod/ot/{ot_id}/informe/metodo/tt','InformesTtController@create')->name('InformeTtCreate');
   Route::get('/area/enod/ot/{ot_id}/informe/metodo/cv','InformesCvController@create')->name('InformeCvCreate');
+  Route::get('/area/enod/ot/{ot_id}/informe/metodo/rg','InformesRgController@create')->name('InformeRgCreate');
+  Route::get('/area/enod/ot/{ot_id}/informe/metodo/pmi','InformesPmiController@create')->name('InformePmiCreate');
   Route::get('/area/enod/ot/{ot_id}/informe/metodo/dz','InformesDzController@create')->name('InformeDzCreate');
   Route::get('/area/enod/ot/{ot_id}/informe/{id}/edit','InformesController@edit');
   Route::get('/area/enod/ot/{ot_id}/informe/{id}/edit/ri','InformesRiController@edit')->name('InformeRiEdit');
@@ -56,6 +58,8 @@ Route::group(['middleware' => ['auth']], function () {
   Route::get('/area/enod/ot/{ot_id}/informe/{id}/edit/tt','InformesTtController@edit')->name('InformeTtEdit');
   Route::get('/area/enod/ot/{ot_id}/informe/{id}/edit/dz','InformesDzController@edit')->name('InformeDzEdit');
   Route::get('/area/enod/ot/{ot_id}/informe/{id}/edit/cv','InformesCvController@edit')->name('InformeCvEdit');
+  Route::get('/area/enod/ot/{ot_id}/informe/{id}/edit/rg','InformesRgController@edit')->name('InformeRgEdit');
+  Route::get('/area/enod/ot/{ot_id}/informe/{id}/edit/pmi','InformesPmiController@edit')->name('InformePmiEdit');
   Route::get('/area/enod/ot/{ot_id}/remito','RemitosController@create')->name('RemitoCreate');
   Route::get('/area/enod/remito/{id}/edit','RemitosController@edit')->name('RemitoEdit');
   Route::get('/area/enod/ot/{ot_id}/parte','PartesController@create')->name('ParteCreate');
@@ -122,8 +126,10 @@ Route::group(['middleware' => ['auth']], function () {
       Route::get('/pdf/informe/pm/{informe}','PdfInformesPmController@imprimir')->name('pdfInformePm');
       Route::get('/pdf/informe/us/{informe}','PdfInformesUsController@imprimir')->name('pdfInformeUs');
       Route::get('/pdf/informe/cv/{informe}','PdfInformesCvController@imprimir')->name('pdfInformeCv');
+      Route::get('/pdf/informe/rg/{informe}','PdfInformesRgController@imprimir')->name('pdfInformeRg');
       Route::get('/pdf/informe/dz/{informe}','PdfInformesDzController@imprimir')->name('pdfInformeDz');
       Route::get('/pdf/informe/tt/{informe}','pdfInformesTtController@imprimir')->name('pdfInformeTt');
+      Route::get('/pdf/informe/pmi/{informe}','pdfInformesPmiController@imprimir')->name('pdfInformePmi');
       Route::get('/pdf/informe/us/indicaciones/referencia/{id}','pdfInformesUsReferenciaController@imprimir')->name('InformeUsDetalleUsPaUsReferencias');
       Route::get('/pdf/informe/us/{informe}/indicaciones_us_pa','pdfInformesUsIndicacionesUsPaController@imprimir')->name('InformeUsIndicacionesUsPa');
       Route::get('/pdf/informe/us/{informe}/indicaciones_me','pdfInformesUsIndicacionesMeController@imprimir')->name('InformeUsIndicacionesMe');
