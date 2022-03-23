@@ -129,7 +129,7 @@ Route::group(['middleware' => ['auth']], function () {
       Route::get('/pdf/informe/rg/{informe}','PdfInformesRgController@imprimir')->name('pdfInformeRg');
       Route::get('/pdf/informe/dz/{informe}','PdfInformesDzController@imprimir')->name('pdfInformeDz');
       Route::get('/pdf/informe/tt/{informe}','pdfInformesTtController@imprimir')->name('pdfInformeTt');
-      Route::get('/pdf/informe/pmi/{informe}','pdfInformesPmiController@imprimir')->name('pdfInformePmi');
+      Route::get('/pdf/informe/pmi/{informe}','PdfInformesPmiController@imprimir')->name('pdfInformePmi');
       Route::get('/pdf/informe/us/indicaciones/referencia/{id}','pdfInformesUsReferenciaController@imprimir')->name('InformeUsDetalleUsPaUsReferencias');
       Route::get('/pdf/informe/us/{informe}/indicaciones_us_pa','pdfInformesUsIndicacionesUsPaController@imprimir')->name('InformeUsIndicacionesUsPa');
       Route::get('/pdf/informe/us/{informe}/indicaciones_me','pdfInformesUsIndicacionesMeController@imprimir')->name('InformeUsIndicacionesMe');
