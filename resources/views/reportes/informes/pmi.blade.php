@@ -76,7 +76,7 @@ footer {
         <tbody>
             <tr>
                 <td>
-                    <a href=" {{ URL::to($informe_pmi->path) }} ">PDF Equipo</a>
+                    <a href=" {{ URL::to($informe_pmi->path) }} ">ver PDF Equipo</a>
                 </td>
             </tr>
         </tbody>
