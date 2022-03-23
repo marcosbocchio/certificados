@@ -1855,7 +1855,7 @@ export default {
 
                       case 'US' : await this.getInformeUS(this.informes[index].id,index);break;
 
-                      case 'CV' : await this.getInformeCV(this.informes[index].id,index);break;
+                      case 'CV' : await this.getInformeCv(this.informes[index].id,index);break;
 
                       case 'RG' : await this.getInformeRG(this.informes[index].id,index);break;
 
