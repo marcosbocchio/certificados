@@ -71,18 +71,17 @@ footer {
             @endforeach
         </tbody>
     </table>
-
-    <table style="text-align: center;" width="100%">
+    @if ($informe_pmi->path)
+    <table style="text-align: left;" width="100%">
         <tbody>
             <tr>
                 <td>
-                    <tr>
-                        <a href={{($informe_pmi->path)}}>{{$informe_pmi->path}}</a>
-                    </tr>
+                    <a href=" {{ URL::to($informe_pmi->path) }} ">PDF Equipo</a>
                 </td>
             </tr>
         </tbody>
     </table>
+    @endif
 
     @include('reportes.informes.partial.modelos3d-portrait')
 

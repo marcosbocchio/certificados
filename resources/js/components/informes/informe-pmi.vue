@@ -152,19 +152,21 @@
                                 <v-select v-model="solicitado_por" label="name" :options="usuarios_cliente"></v-select>
                             </div>
                         </div>
-                            <div class="col-md-6">
-                                <div class="form-group" >
-                                    <subir-imagen
-                                        :ruta="ruta"
-                                        :max_size="max_size"
-                                        :path_inicial="path"
-                                        :tipos_archivo_soportados ="tipos_archivo_soportados"
-                                        :mostrar_formatos_soportados="true"
-                                        @path="path = $event"
-                                        :path_requerido_sn="false"
-                                    ></subir-imagen>
-                                </div>
+                        <div class="col-md-3" v-if="!this.path">
+                            <div class="form-group" >
+                                <label for="ejecutor_ensayo">PDF Equipo </label>
+                                <input type="file" class="form-control" id="inputFile" ref="inputFile1" name="file" @change="onFileSelected($event)">
                             </div>
+                        </div>
+                        <div class="col-md-3" v-if="this.path">
+                            <div class="form-group" >
+                                <label for="iconos">PDF Equipo </label>
+                                    <div ref="iconos">
+                                        <a :href="'/' + this.path" target="_blank" class="btn btn-default btn-sm" title="pdf"><span class="fa fa-file-pdf-o"></span></a>
+                                        <a style="margin-left:3px" class="btn btn-default btn-xs mt-3" @click="DeleteArchivo"><span>X</span ></a><br>
+                                    </div>
+                            </div>
+                        </div>
                     </div>
                </div>
 
@@ -455,6 +457,7 @@ data() {return {
         tabla:'',
         inputsData:{},
         loading : false,
+        selectedFile : null,
 
       }
     },
@@ -514,7 +517,6 @@ data() {return {
     setEdit : function(){
 
             if(this.editmode) {
-                this.path = this.informe_pmidata.path
                this.fecha   = this.informedata.fecha;
                this.obra = this.informedata.obra;
                this.planta = this.informedata.planta;
@@ -535,6 +537,7 @@ data() {return {
                this.solicitado_por = this.solicitado_pordata ;
                this.interno_equipo = this.interno_equipodata
                this.TablaPmi = this.detalledata;
+               this.path = JSON.parse(JSON.stringify(this.informe_pmidata.path))
                this.TablaModelos3d = this.tablamodelos3d_data;
                this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.informedata.obra });
             }
@@ -555,6 +558,13 @@ data() {return {
         axios.get(urlRegistros).then(response =>{
         this.bombas = response.data
         });
+    },
+    DeleteArchivo(){
+
+        this.path = '';
+        this.selectedFile = null;
+        this.$emit('path',this.path);
+
     },
     getCampanas: function(){
 
@@ -704,6 +714,74 @@ data() {return {
 
         $('#nuevo').modal('hide');
     },
+
+        onFileSelected(event) {
+
+           this.selectedFile = event.target.files[0];
+            let fileName = this.selectedFile.name;
+            let FileSize = this.selectedFile.size / 1024  // in KB
+            let FileType=this.selectedFile.type;
+            let extension = (fileName.substring(fileName.lastIndexOf(".") + 1)).toLowerCase();
+            this.extension = extension;
+            let aceptado = false;
+            console.log(extension);
+            this.tipos_archivo_soportados.forEach(function(item) {
+                if (item == extension){
+                    aceptado = true;
+                }
+            });
+
+          if(aceptado){
+
+               if (FileType == 'application/pdf') {
+                   this.isPdf = true;
+                }else {
+                  this.isPdf = false;
+                }
+          }else{
+            this.$refs.inputFile1.type = 'text';
+            this.$refs.inputFile1.type = 'file';
+              this.selectedFile = null;
+            toastr.error('El tipo de archivo no es aceptado');
+            return;
+
+            }
+            if(FileSize > this.max_size ){
+                 event.preventDefault();
+                 this.selectedFile = null;
+                 toastr.error('Archivo demasiado grande. (Max ' + this.max_size + ' KB)');
+            }else{
+
+                this.onUpload();
+
+            }
+
+        },
+
+            onUpload() {
+              this.$emit('uploading', true);
+              let settings = { headers: { 'content-type': 'multipart/form-data'} }
+               const fd = new FormData();
+               fd.append('archivo',this.selectedFile);
+              // fd.append('path',this.path_storage);
+
+               axios.defaults.baseURL = this.url;
+               var url = 'storage/' + this.ruta;
+               console.log(url);
+
+               axios.post(url,fd,settings)
+               .then (response => {
+                  this.path = response.data;
+                  this.images[0].src ='/' + response.data;
+                  this.images[0].thumb  ='/' + response.data;
+                  this.$emit('path',response.data);
+               }).catch(response => {
+                   this.errors = error.response.data.errors;
+                })
+                .finally(() => this.$emit('uploading', false))
+            },
+
+
 
     addModelo : function(){
 
