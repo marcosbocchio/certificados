@@ -689,17 +689,27 @@
                                                  <th class="col-md-1.5">Bola comp.</th>
                                                  <th class="col-md-1">Espesor</th>
                                                  <th class="col-md-2">Espesor real</th>
-                                                 <th class="col-md-6">Observaciones</th>
+                                                 <th class="col-md-5">Observaciones</th>
+                                                 <th class="col-md-1">Ref.</th>
                                                  <th>&nbsp;</th>
                                              </tr>
                                          </thead>
                                             <tbody>
-                                                <tr v-for="(tramos,k) in ( (TablaTramos.length > 0 )  ? TablaTramos : [])"  :key="k">
+                                                <tr v-for="(tramos,k) in ( (TablaTramos.length > 0 )  ? TablaTramos : [])"  :key="k" :class="{selected: indexPosDetalle === k}">
                                                     <td>{{ tramos.tramo }}</td>
                                                     <td>{{ tramos.bola_comparadora }}</td>
                                                     <td>{{ tramos.espesor_tramo }}</td>
                                                     <td>{{ tramos.espesor_real }}</td>
                                                     <td>{{ tramos.observacion_tramo }}</td>
+                                                    <td style="text-align:center" v-if=" k === 0">
+                                                        <span :class="{ existe : (tramos.observaciones ||
+                                                                                    tramos.path1 ||
+                                                                                    tramos.path2 ||
+                                                                                    tramos.path3 ||
+                                                                                    tramos.path4 )
+                                                    }"  class="fa fa-file-archive-o" @click="OpenReferencias($event,k,'Informe RI',tramos)" ></span>
+                                                    </td>
+                                                    <td v-else-if=" k != 0">&nbsp;</td>
                                                     <td class="pointer">
                                                         <a  @click="RemoveTramos(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a>
                                                     </td>
@@ -939,6 +949,7 @@
          </loading>
 
         </div>
+        <create-referencias :index="index_referencias" :tabla="tabla" :inputsData="inputsData" @setReferencia="AddReferencia"></create-referencias>
     </div>
 </template>
 
@@ -947,6 +958,7 @@
  import uniq from 'lodash/uniq';
  import DatePicker from 'vue2-datepicker';
  import 'vue2-datepicker/index.css';
+import { eventSetReferencia } from '../event-bus';
  import 'vue2-datepicker/locale/es';import {mapState} from 'vuex';
  import Loading from 'vue-loading-overlay';
  import 'vue-loading-overlay/dist/vue-loading.css';
@@ -1087,6 +1099,7 @@
              hoja:'',
              procedimiento:{},
              observaciones:'',
+             index_referencias:'',
              tipo_soldadura:'',
              ot_tipo_soldadura:'',
              ot_tipo_soldaduras_codigo:'',
@@ -1140,9 +1153,10 @@
              posicionPlacaGosaducto:'',
              defecto_sector:'',
              indexDetalle:-1,
+             indexPosDetalle:0,
              indexPasada:0,
              //Fin Formulario detalle
-
+             tabla:'',
              isRX:false,
              isChapa:false,
              isGasoducto:false,
@@ -1178,6 +1192,7 @@
              TablaTramos:[],
              resultado_pdf_sn: true,
              appendToBody: false,
+             inputsData:{},
          }},
      created : function(){
 
@@ -1761,9 +1776,16 @@
                     espesor_tramo: this.espesor_tramo,
                     espesor_real: (((this.espesor_tramo)*(25.4))/this.bola_comparadora).toFixed(2),
                     observacion_tramo : this.observacion_tramo,
+                    observaciones:null,
+                    path1:null,
+                    path2:null,
+                    path3:null,
+                    path4:null
             });
          },
-
+        selectPosDetalle :function(index){
+            this.indexPosDetalle = index ;
+        },
          addDefectos () {
 
              if(this.defectoRiPlanta == '' ){
@@ -1866,7 +1888,24 @@
             this.TablaPasadas.splice(index, 1);
             this.autocompletarNumeroPasada();
          },
-         RemoveDefectos(index) {
+         OpenReferencias(event,index,tabla,inputsReferencia){
+             console.log("hola")
+             this.index_referencias = index ;
+             this.tabla = tabla;
+             this.inputsData = inputsReferencia ;
+             eventSetReferencia.$emit('open');
+         },
+         AddReferencia(Ref){
+
+             this.TablaTramos[this.index_referencias].observaciones = Ref.observaciones;
+             this.TablaTramos[this.index_referencias].path1 = Ref.path1;
+             this.TablaTramos[this.index_referencias].path2 = Ref.path2;
+             this.TablaTramos[this.index_referencias].path3 = Ref.path3;
+             this.TablaTramos[this.index_referencias].path4 = Ref.path4;
+
+             $('#nuevo').modal('hide');
+         },
+             RemoveDefectos(index) {
 
              this.TablaDetalle[this.indexDetalle].defectos.splice(index, 1);
              let aceptable = true;

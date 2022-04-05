@@ -26,6 +26,7 @@ use App\User;
 use App\TecnicasGraficos;
 use PDF;
 use App\Juntas;
+use App\Tramos;
 use App\Soldadores;
 use Illuminate\Support\Facades\Log;
 use App\Posicion;
@@ -88,7 +89,11 @@ class PdfInformesRiController extends Controller
         /* Fin encabezado */
         if ($informe_ri->perfil_sn){
             $tamaño_bola = '25,4 mm';
-            $tramos = (new \App\Http\Controllers\InformesRiController)->getTramos($informe_ri->id);
+            $detalles2 = (new \App\Http\Controllers\InformesRiController)->getTramos($informe_ri->id);
+            $detalles = Tramos::with('referencia')
+                                ->where('informes_ri_id',$informe_ri->id)
+                                ->get();
+            Log::debug($detalles);
 
             $pdf = PDF::loadView('reportes.informes.ri-perfiles-v2',compact('titulo','nro','tipo_reporte','fecha',
                                                                         'ot',
@@ -112,7 +117,7 @@ class PdfInformesRiController extends Controller
                                                                         'material',
                                                                         'material2',
                                                                         'tecnicas_grafico',
-                                                                        'tramos',
+                                                                        'detalles',
                                                                         'tamaño_bola',
                                                                         'evaluador',
                                                                         'informe_modelos_3d',

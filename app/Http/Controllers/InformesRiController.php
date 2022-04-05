@@ -34,6 +34,7 @@ use App\Juntas;
 use App\Tramos;
 use App\Perfil;
 use App\PasadasJunta;
+use App\DetallesRiReferencias;
 use App\Posicion;
 use App\DefectosPosicion;
 use Exception as Exception;
@@ -214,8 +215,9 @@ class InformesRiController extends Controller
     public function getTramos($id){
 
         $informe_tramo = DB::table('tramo_perfil')
+                             ->leftjoin('detalles_ri_referencias','detalles_ri_referencias.id','=','tramo_perfil.tramo_ri_referencia_id')
                              ->where('tramo_perfil.informes_ri_id',$id)
-                             ->selectRaw('tramo_perfil.*, (round(((espesor*25.4)/bola_comparadora),2)) as espesor_real, observaciones as observacion_tramo, espesor as espesor_tramo')
+                             ->selectRaw('tramo_perfil.*, (round(((espesor*25.4)/bola_comparadora),2)) as espesor_real, observaciones as observacion_tramo, espesor as espesor_tramo, detalles_ri_referencias.descripcion as observaciones, detalles_ri_referencias.path1 as path1,detalles_ri_referencias.path2 as path2,detalles_ri_referencias.path3 as path3,detalles_ri_referencias.path4 as path4')
                               ->orderBy('tramo_perfil.id','asc')
                               ->get();
 
@@ -358,10 +360,17 @@ class InformesRiController extends Controller
 
       }
       public function saveTramos($request,$informeRi){
-          Log::debug('tramo en request:',$request->tramos);
           foreach ($request->tramos as $tramo){
             try {
-                $tramox = $this->saveTramo($tramo,$informeRi);
+                $referencia_id = $this->saveReferencia($tramo);
+                $tramox =  new Tramos;
+                $tramox->informes_ri_id = $informeRi->id;
+                $tramox->bola_comparadora = $tramo['bola_comparadora'];
+                $tramox->espesor = $tramo['espesor_tramo'];
+                $tramox->tramo = $tramo['tramo'];
+                $tramox->observaciones = $tramo['observacion_tramo'];
+                $tramox->tramo_ri_referencia_id = $referencia_id;
+                $tramox->save();
             }
             catch(Exception $e){
 
@@ -374,8 +383,27 @@ class InformesRiController extends Controller
             }
           }
       }
+      public function saveReferencia($detalle){
+        if (($detalle['path1']) ||
+            ($detalle['path2']) ||
+            ($detalle['path3']) ||
+            ($detalle['path4'])){
 
+              $detalle_ri_referencia                     = new DetallesRiReferencias;
+              $detalle_ri_referencia->descripcion        = $detalle['observaciones'];
+              $detalle_ri_referencia->path1              = $detalle['path1'];
+              $detalle_ri_referencia->path2              = $detalle['path2'];
+              $detalle_ri_referencia->path3              = $detalle['path3'];
+              $detalle_ri_referencia->path4              = $detalle['path4'];
+              $detalle_ri_referencia->save();
 
+              return $detalle_ri_referencia->id;
+           }
+           else{
+              return null;
+           }
+
+      }
       public function saveDetalle($request,$informeRi){
 
           foreach ($request->detalles as $detalle){
