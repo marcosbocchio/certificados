@@ -44,7 +44,6 @@ class PdfInformesRiController extends Controller
 {
 
     public function imprimir($id){
-
        /* header */
         $informe = Informe::findOrFail($id);
         $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);
@@ -65,7 +64,7 @@ class PdfInformesRiController extends Controller
         $interno_fuente = InternoFuentes::where('id',$informe_ri->interno_fuente_id)->first();
         $actividad = $interno_fuente ? curie($interno_fuente->id,$informe->fecha) : '';
         $tipo_pelicula = TipoPeliculas::findOrFail($informe_ri->tipo_pelicula_id);
-        $diametro_espesor = DiametrosEspesor::findOrFail($informe->diametro_espesor_id);
+        $diametro_espesor = $informe->diametro_espesor_id ? DiametrosEspesor::findOrFail($informe->diametro_espesor_id) : null;
         $ici = Icis::findOrFail($informe_ri->ici_id);
         $tecnica = Tecnicas::findOrFail($informe->tecnica_id);
         $ot_operador = OtOperarios::findOrFail($informe->ejecutor_ensayo_id);

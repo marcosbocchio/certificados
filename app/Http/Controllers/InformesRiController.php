@@ -111,8 +111,8 @@ class InformesRiController extends Controller
         $informe_ri =InformesRi::where('informe_id',$informe->id)->first();
         $informe_material = Materiales::find($informe->material_id);
         $informe_material_accesorio = Materiales::find($informe->material2_id);
-        $informe_diametroEspesor = DiametrosEspesor::find($informe->diametro_espesor_id);
-        $informe_diametro = DiametroView::where('diametro',$informe_diametroEspesor->diametro)->first();
+        $informe_diametroEspesor = $informe->diametro_espesor_id ? DiametrosEspesor::find($informe->diametro_espesor_id) : null ;
+        $informe_diametro = $informe_diametroEspesor ? DiametroView::where('diametro',$informe_diametroEspesor->diametro)->first() : null;
         $informe_interno_fuente = InternoFuentes::where('id',$informe_ri->interno_fuente_id)->with('fuente')->first();
 
         if ($informe_interno_fuente == null)
@@ -147,8 +147,11 @@ class InformesRiController extends Controller
 
         $informe_modelos_3d = (new \App\Http\Controllers\InformeModelos3dController)->getInformeModelos3d($id);
 
-       // dd($informe_interno_equipo);
-       //  dd($informe_detalle);
+        if ($informe_diametroEspesor == null)
+          $informe_diametroEspesor = new DiametrosEspesor();
+
+        if ($informe_diametro == null)
+          $informe_diametro = new DiametroView();
 
         return view('informes.ri.edit', compact('ot',
                                                  'metodo',

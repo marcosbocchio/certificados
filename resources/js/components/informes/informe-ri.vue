@@ -122,7 +122,7 @@
                          <div class="col-md-3">
                              <div class="form-group" >
                                  <label for="Diametro">Ø *</label>
-                                 <v-select v-model="diametro" label="diametro" :options="diametros" @input="getEspesores()"></v-select>
+                                 <v-select v-model="diametro" label="diametro" :options="diametros" taggable @input="getEspesores(diametro)"></v-select>
                              </div>
                          </div>
 
@@ -372,7 +372,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group" >
                                         <label for="distancia_fuente_pelicula">Dist. Fuente/Film *</label>
-                                        <input type="number" step="0.01" v-model="distancia_fuente_pelicula" class="form-control" :disabled="diametro.diametro!='VARIOS'" id="distancia_fuente_pelicula">
+                                        <input type="number" step="0.01" v-model="distancia_fuente_pelicula" class="form-control" :disabled="diametro.diametro!='VARIOS' && !dist_fuente_pel_edit_sn" id="distancia_fuente_pelicula">
                                     </div>
                                 </div>
                             </div>
@@ -1011,14 +1011,15 @@ import { eventSetReferencia } from '../event-bus';
         required : false,
        },
 
-       diametrodata : {
-       type : Object,
-       required : false
-       },
-       diametro_espesordata : {
-       type : Object,
-       required : false
-       },
+        diametrodata : {
+            type : [Object,Array],
+            required : false,
+            },
+
+        diametro_espesordata : {
+            type : [Object,Array],
+            required : false,
+            },
        interno_fuentedata : {
        type : [ Object, Array ],
        required : false
@@ -1193,6 +1194,7 @@ import { eventSetReferencia } from '../event-bus';
              resultado_pdf_sn: true,
              appendToBody: false,
              inputsData:{},
+             dist_fuente_pel_edit_sn: false,
          }},
      created : function(){
 
@@ -1342,9 +1344,9 @@ import { eventSetReferencia } from '../event-bus';
                 this.linea = this.informedata.linea;
                 this.plano_isom = this.informedata.plano_isom;
                 this.hoja = this.informedata.hoja;
-                this.diametro = this.diametrodata;
+                this.diametro = (this.diametro_espesordata['id'] !== 'undefined' && !(this.diametro_espesordata instanceof  Array)) ? this.diametro_espesordata : { 'diametro' : this.informedata.diametro_especifico };
                 this.espesor = this.informedata.espesor_especifico ? {'espesor' : this.informedata.espesor_especifico} : this.diametro_espesordata;
-                this.getEspesores();
+                this.getEspesores(this.espesor);
                 this.tecnica = this.tecnicadata;
                 this.interno_equipo = this.interno_equipodata;
                 this.interno_fuente = this.interno_fuentedata ;
@@ -1452,29 +1454,47 @@ import { eventSetReferencia } from '../event-bus';
                  });
               }
          },
-         getEspesores : function(){
+         getEspesores : function(diametro){
+
+            let index = this.diametros.findIndex(e => e.diametro_code === diametro.diametro_code);
              if(!this.isLoading){
                  this.espesor='';
                  this.distancia_fuente_pelicula='';
+             }
+            if ( index !== -1) {
+                this.dist_fuente_pel_edit_sn = false;
+                if(diametro != 'CHAPA')   {
+                    this.espesor_chapa = '';
+                }else{
+                  this.tecnica = this.tecnicas[this.tecnicas.findIndex(elemento =>elemento.codigo == 'CHAPA')];
+                  if(!this.isLoading){
+                        this.ActualizarDistFuentePelicula();
+                  }
+                }
+   
+                if(diametro){
+                  this.$store.commit('loading', true);
+                   this.$store.dispatch('loadEspesores',diametro.diametro_code).then(res =>{
+                        this.$store.commit('loading', false);
+                   });
+                 }
+            }
 
-             }
-             if(this.diametro.diametro != 'CHAPA')   {
-                 this.espesor_chapa = '';
-             }else{
-               this.tecnica = this.tecnicas[this.tecnicas.findIndex(elemento =>elemento.codigo == 'CHAPA')];
-               if(!this.isLoading){
-                     this.ActualizarDistFuentePelicula();
-               }
-             }
-             if(this.diametro){
-               this.$store.commit('loading', true);
-                this.$store.dispatch('loadEspesores',this.diametro.diametro_code).then(res =>{
-                     this.$store.commit('loading', false);
-                });
-              }
+            if (index === -1) {
+                this.dist_fuente_pel_edit_sn = true;
+                if(diametro){
+                    if(!this.validarDiametroEspecifico(diametro)){
+                        this.diametro = {}
+                    }                   
+                }                
+            }
+            
          },
 
-
+        validarDiametroEspecifico : function(diametro){
+            let exp_posicion = /^[0-9]{0,3}.[0-9]{0,2}m$/;
+            return (exp_posicion.test(this.diametro.diametro))
+        },
 
          getFuente : function(){
 
