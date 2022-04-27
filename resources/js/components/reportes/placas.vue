@@ -45,17 +45,7 @@
                                     <div v-else><span class="seleccionar">Seleccionar</span></div>
                                 </a>
                             </div>
-                            <v-select v-show="selObra" v-model="obra" label="obra" :options="obras" @input="CambioObra()"></v-select>
-                        </li>
-                        <li class="list-group-item pointer">
-                            <div v-show="!selComponente">
-                                <span class="titulo-li">Componente</span>
-                                <a @click="CambioComponente()" class="pull-right">
-                                    <div v-if="componente">{{componente.componente}}</div>
-                                    <div v-else><span class="seleccionar">Seleccionar</span></div>
-                                </a>
-                            </div>
-                            <v-select v-show="selComponente" v-model="componente" label="componente" :options="componentes" @input="CambioComponente()"></v-select>
+                            <v-select v-show="selObra" v-model="obra" label="obra" :options="obras"></v-select>
                         </li>
                         <li class="list-fecha list-group-item pointer">
                             <div class="row">
@@ -81,7 +71,7 @@
         <div class="col-md-9">
 
             <tabs :options="{ useUrlFragment: false }">
-                <tab name="Placas Repetidas/Testigos">
+                <tab name="Placas">
                     <div v-if="total_placas_informes">
                         <div class="row">
                             <div class="col-lg-12">
@@ -99,6 +89,31 @@
                                     <pie-chart  :chart-data="data_placas_rechazadas" :options="data_placas_rechazadas.options" ></pie-chart>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div v-else>
+                        <h4>No hay datos para mostrar</h4>
+                    </div>
+                </tab>
+                <tab name="Servicios">
+                    <div v-if="tablaServicios.length > 0">
+                        <div class="row">
+                          <div class="col-lg-12">
+                            <table class="table table-hover table-striped table-bordered table-condensed">
+                              <thead>
+                                  <tr>
+                                      <th class="col-md-8">Servicios</th>
+                                      <th class="col-md-4">Cantidad</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  <tr v-for="(item,k) in tablaServicios" :key="k">
+                                      <td> {{ item.descripcion}}</td>
+                                      <td style="text-align:center"> {{ item.cantidad}}</td>
+                                  </tr>
+                              </tbody>
+                            </table>
+                          </div>
                         </div>
                     </div>
                     <div v-else>
@@ -158,8 +173,6 @@ export default {
         ot:'',
         obras:[],
         obra:'',
-        componentes: [],
-        componente:'',
         fecha_desde:null,
         fecha_hasta:null,
         selCliente:false,
@@ -188,6 +201,9 @@ export default {
         /* Placas Rechazadas*/
         data_placas_rechazadas : { options : []},
         valores_placas_rechazadas:[],
+
+        /* Tabla Servicios */
+        tablaServicios:[],
      }
 
     },
@@ -251,7 +267,6 @@ methods :{
         if(this.ot.obra){
             this.obra = { obra : this.ot.obra}
             this.selObra = !this.selObra
-            this.CambioObra()
         }
     },
 
@@ -262,13 +277,16 @@ methods :{
      this.total_placas = 0;
 
         try {
-            let url = 'reporte-placas' + '/cliente/' + (this.cliente ? this.cliente.id : 'null')  + '/ot/' + (this.ot ? this.ot.id : 'null' )  + '/obra/' + (this.obra ? this.obra.obra : 'null' ) + '/fecha_desde/' + this.fecha_desde + '/fecha_hasta/' + this.fecha_hasta   + '/total/' +'?api_token=' + Laravel.user.api_token;
-            let url2 = 'reporte-placas' + '/cliente/' + (this.cliente ? this.cliente.id : 'null')  + '/ot/' + (this.ot ? this.ot.id : 'null' )  + '/obra/' + (this.obra ? this.obra.obra : 'null' ) + '/fecha_desde/' + this.fecha_desde + '/fecha_hasta/' + this.fecha_hasta  + '/repetidas-testigos/' +'?api_token=' + Laravel.user.api_token;
-            let url3 = 'reporte-placas' + '/cliente/' + (this.cliente ? this.cliente.id : 'null')  + '/ot/' + (this.ot ? this.ot.id : 'null' )  + '/obra/' + (this.obra ? this.obra.obra : 'null' ) + '/componente/' +(this.componente ? this.componente.componente : 'null' ) + '/fecha_desde/' + this.fecha_desde + '/fecha_hasta/' + this.fecha_hasta  + '/rechazadas/' +'?api_token=' + Laravel.user.api_token;
+            let url = 'reporte-placas' + '/cliente/' + (this.cliente ? this.cliente.id : 'null')  + '/ot/' + (this.ot ? this.ot.id : 'null' )  + '/obra/' + (this.obra ? this.obra.obra.replace('/','--') : 'null' ) + '/fecha_desde/' + this.fecha_desde + '/fecha_hasta/' + this.fecha_hasta   + '/total/' +'?api_token=' + Laravel.user.api_token;
+            let url2 = 'reporte-placas' + '/cliente/' + (this.cliente ? this.cliente.id : 'null')  + '/ot/' + (this.ot ? this.ot.id : 'null' )  + '/obra/' + (this.obra ? this.obra.obra.replace('/','--') : 'null' ) + '/fecha_desde/' + this.fecha_desde + '/fecha_hasta/' + this.fecha_hasta  + '/repetidas-testigos/' +'?api_token=' + Laravel.user.api_token;
+            let url3 = 'reporte-placas' + '/cliente/' + (this.cliente ? this.cliente.id : 'null')  + '/ot/' + (this.ot ? this.ot.id : 'null' )  + '/obra/' + (this.obra ? this.obra.obra.replace('/','--') : 'null' ) + '/fecha_desde/' + this.fecha_desde + '/fecha_hasta/' + this.fecha_hasta  + '/rechazadas/' +'?api_token=' + Laravel.user.api_token;
+            let url4 = 'reporte-servicios' + '/cliente/' + (this.cliente ? this.cliente.id : 'null')  + '/ot/' + (this.ot ? this.ot.id : 'null' )  + '/obra/' + (this.obra ? this.obra.obra.replace('/','--') : 'null' ) + '/fecha_desde/' + this.fecha_desde + '/fecha_hasta/' + this.fecha_hasta +'?api_token=' + Laravel.user.api_token;
 
             let res = await axios.get(url);
             let res2 = await axios.get(url2);
             let res3 = await axios.get(url3);
+            let res4 = await axios.get(url4);
+            this.tablaServicios = res4.data;
             this.total_placas_informes = res.data;
             this.total_placas_repetidas = parseInt(res2.data[0].placas_repetidas);
             this.total_placas_testigos =  parseInt(res2.data[0].placas_testigos);
@@ -308,22 +326,6 @@ methods :{
 
     },
 
-    async CambioObra (){
-
-        this.selObra = !this.selObra;
-        this.componente = '';
-        this.$store.commit('loading', true);
-        var urlRegistros = 'ots/' + this.ot.id + '/obra/' + this.obra.obra + '/componentes/' +'?api_token=' + Laravel.user.api_token;
-        try {
-            let res = await axios.get(urlRegistros);
-            this.componentes = res.data;
-        }catch(error){ }finally  {this.$store.commit('loading', false);}
-
-    },
-
-    CambioComponente() {
-        this.selComponente = !this.selComponente;
-    },
     generateGraficoPlacasRepetidas() {
 
             this.data_placas_repetidas = {

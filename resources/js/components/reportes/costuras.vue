@@ -327,7 +327,7 @@ methods : {
 
         this.componente = '';
         this.$store.commit('loading', true);
-        var urlRegistros = 'ots/' + this.ot.id + '/obra/' + this.obra.obra + '/componentes/' +'?api_token=' + Laravel.user.api_token;
+        var urlRegistros = 'ots/' + this.ot.id + '/obra/' + this.obra.obra.replace('/','--') + '/componentes/' +'?api_token=' + Laravel.user.api_token;
         try {
             let res = await axios.get(urlRegistros);
             this.componentes = res.data;
