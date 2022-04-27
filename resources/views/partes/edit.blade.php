@@ -26,6 +26,7 @@
   :informes_rg_data="{{$informes_rg}}"
   :informes_dz_data="{{$informes_dz}}"
   :informes_tt_data="{{$informes_tt}}"
+  :informes_pmi_data="{{$informes_pmi}}"
   :informes_importados_data="{{$informes_importados}}"
   :servicios_data="{{$servicios}}"
   :vehiculos_data="{{$vehiculos}}"

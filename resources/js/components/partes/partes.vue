@@ -919,6 +919,11 @@ export default {
       required : false
       },
 
+      informes_pmi_data : {
+      type : [ Array ],
+      required : false
+      },
+
       informes_lp_data : {
       type : [ Array ],
       required : false
@@ -2150,7 +2155,12 @@ export default {
                        }else if(item.unidad_medida == 'Metro' && item.metodo == 'DZ'){
                             let metros = this.CalcularMetrosDZ(item);
                             this.TablaServicios[this.TablaServicios.findIndex(elemento => elemento.servicio_descripcion == item.servicio_descripcion)].cant_final = metros;
+
+                       }else if(item.unidad_medida == 'Metro' && item.metodo == 'PMI'){
+                            let metros = this.CalcularMetrosPMI(item);
+                            this.TablaServicios[this.TablaServicios.findIndex(elemento => elemento.servicio_descripcion == item.servicio_descripcion)].cant_final = metros;
                        }
+
 
                        else{
                            this.TablaServicios[this.TablaServicios.findIndex(elemento => elemento.servicio_descripcion ==item.servicio_descripcion)].cant_original+=item.cantidad;
@@ -2187,6 +2197,8 @@ export default {
                                 cantidad = this.CalcularMetrosUS(item)
                            }else if(item.metodo == 'TT'){
                                 cantidad = this.CalcularMetrosTT(item)
+                           }else if(item.metodo == 'PMI'){
+                                cantidad = this.CalcularMetrosPMI(item)
                             }else if(item.metodo == 'CV'){
                                 cantidad = this.CalcularMetrosCV(item)
                             }else if(item.metodo == 'RG'){
@@ -2247,6 +2259,10 @@ export default {
 
                case 'RG':
                    this.TablaServicios[this.TablaServicios.findIndex(elemento => elemento.unidad_medida == 'Metro' && elemento.metodo =='RG')].cant_final = this.CalcularMetrosRG();
+                   break;
+
+                case 'PMI':
+                   this.TablaServicios[this.TablaServicios.findIndex(elemento => elemento.unidad_medida == 'Metro' && elemento.metodo =='PMI')].cant_final = this.CalcularMetrosPMI();
                    break;
 
                case 'DZ':
