@@ -165,13 +165,10 @@ export default {
         exportarAExcel: async function (id, estado = 'final') {
             
             let data
-            console.log(id)
-            console.log(estado)
             axios.defaults.baseURL = this.url ;
             var urlRegistros = 'certificados/id/'+ id + '/estado/' + estado + '?api_token=' + Laravel.user.api_token;
             await axios.get(urlRegistros).then(response =>{
                data = response.data
-               console.log(response.data)
             });
             
             var rowsCertificadoParte = await this.getCertificadosParteData(data)
@@ -219,7 +216,7 @@ export default {
             })  
             const wb = XLSX.utils.book_new()
             XLSX.utils.book_append_sheet(wb, ws, 'SheetJS')
-            XLSX.writeFile(wb, 'certificado.xlsx')            
+            XLSX.writeFile(wb, 'CERTIFICADO-' + sprintf("%08d",data.certificado.numero) + '.xlsx')            
         },
 
         getCertificadosParteData: async function (data) {
