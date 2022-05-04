@@ -11,6 +11,7 @@ use App\Clientes;
 use App\Contratistas;
 use App\User;
 use \stdClass;
+use Illuminate\Support\Facades\Log;
 
 class PdfCertificadoController extends Controller
 {
@@ -47,6 +48,33 @@ class PdfCertificadoController extends Controller
         $pdf = PDF::loadView('reportes.certificados.certificado-v2',compact('fecha','nro','titulo1','titulo2','tipo_reporte','certificado','ot','cliente','contratista','servicios_parte','productos_parte','modalidadCobro','partes_certificado','servicios_abreviaturas','productos_unidades_medidas','evaluador','obras','tablas_por_obras','servicios_footer'))->setPaper('a4','landscape')->setWarnings(false);
         return $pdf->stream();
     }
+
+    public function exportarAExcel($id){
+        $estado = "final";
+        $result = [];
+        $certificado = Certificados::findOrFail($id);
+        $ot = Ots::find($certificado->ot_id);
+        $cliente = Clientes::find($ot->cliente_id);
+        $productoCosturaOt = (new \App\Http\Controllers\CertificadosController)->getModalidadCobro($certificado->ot_id);
+        $modalidadCobro = ( $productoCosturaOt->count() > 0 ) ? 'COSTURAS' : 'PLACAS';
+        $servicios_parte = DB::select('CALL getServiciosCertificados(?,?)',array($id,$estado));
+        $servicios_abreviaturas = $this->abreviaturasUnicas($servicios_parte);
+        $productos_parte = DB::select('CALL getProductosCertificados(?,?,?)',array($id,$estado,$modalidadCobro));
+        $productos_unidades_medidas = $this->productosUnicos($productos_parte,$modalidadCobro);
+        $partes_certificado =DB::select('CALL PartesCertificadoReporte(?)',array($id));
+        $servicios_footer = $this->ServiciosParteUnicas($servicios_parte);
+        $result = array('certificado' => $certificado, 
+                        'ot'=> $ot, 
+                        'modalidadCobro' => $modalidadCobro, 
+                        'servicios_abreviaturas' => array_values($servicios_abreviaturas), 
+                        'productos_unidades_medidas' => array_values($productos_unidades_medidas), 
+                        'partes_certificados' => $partes_certificado,
+                        'productos_parte' => $productos_parte,
+                        'servicios_parte' => $servicios_parte,
+                        'cliente' => $cliente,
+                        'servicios_footer' => $servicios_footer);
+        return response()->json($result);
+    }    
 
     public function getCombinados($servicios_parte){
 
@@ -223,13 +251,13 @@ class PdfCertificadoController extends Controller
 
     public function abreviaturasUnicas($servicios_parte){
 
-        $array_temp = [];
+        $array_temp = array();
 
         foreach ($servicios_parte as $servicio) {
 
             $array_temp[] = $servicio->abreviatura;
 
-        }
+        }      
 
         return array_unique($array_temp);
 
