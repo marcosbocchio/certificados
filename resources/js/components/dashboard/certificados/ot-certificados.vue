@@ -64,6 +64,9 @@
                                     <td width="10px">
                                         <button @click="informesEscaneados(ot_certificado.id)" :disabled="!$can('T_certif_edita')" class="btn btn-default btn-sm" title="Informes escaneados"><span class="fa fa-cloud-upload"></span></button>
                                     </td>
+                                    <td width="10px">
+                                        <button @click="exportarAExcel(ot_certificado.id)" class="btn btn-default btn-sm" title="Informes escaneados"><span class="fa fa-file-excel-o"></span></button>
+                                    </td>                                    
                                     <td v-if="!ot_certificado.firma" width="10px">
                                         <button @click="confirmarfirma(k)" class="btn btn-default btn-sm" title="Firmar" :disabled="!$can('T_certif_edita')"><span class="glyphicon glyphicon-pencil"></span></button>
                                    </td>
@@ -92,7 +95,10 @@
 <script>
 import { eventModal } from '../../event-bus';
 import {mapState} from 'vuex'
+import XLSX from 'xlsx'
 import {sprintf} from '../../../functions/sprintf.js'
+import moment from 'moment';
+
 export default {
 
     props :{
@@ -129,8 +135,7 @@ export default {
 
   },
 
-  computed :{
-
+  computed: {
        ...mapState(['url','CantCertificados'])
      },
 
@@ -157,8 +162,151 @@ export default {
 
         },
 
-        firmar : function(){
+        exportarAExcel: async function (id, estado = 'final') {
+            
+            let data
+            console.log(id)
+            console.log(estado)
+            axios.defaults.baseURL = this.url ;
+            var urlRegistros = 'certificados/id/'+ id + '/estado/' + estado + '?api_token=' + Laravel.user.api_token;
+            await axios.get(urlRegistros).then(response =>{
+               data = response.data
+               console.log(response.data)
+            });
+            
+            var rowsCertificadoParte = await this.getCertificadosParteData(data)
+            var rowsCertificadoServiciosParte = await this.getCertificadosServiciosData(data)
+            var rowsCertificadoProdutoParte = await this.getCertificadosProductoData(data)
+            var rowsCertificadoServiciosTotaltes = await this.getCertificadosServiciosTotaltesData(data)
+            var rowsCertificadoProductoTotaltes = await this.getCertificadosProductosTotaltesData(data)
 
+            const cellsMerge = [ { s: {c:0, r:0}, e: {c:8, r:0} },
+                                 { s: {c:0, r:1}, e: {c:8, r:1} },
+                                 { s: {c:0, r:2}, e: {c:8, r:2} },
+                                 { s: {c:0, r:3}, e: {c:8, r:3} },
+                                 { s: {c:0, r:4}, e: {c:8, r:4} },
+
+                                 { s: {c:0, r:6}, e: {c:0, r:7} },
+                                 { s: {c:1, r:6}, e: {c:1, r:7} },
+                                 { s: {c:2, r:6}, e: {c:2, r:7} },
+                                 { s: {c:3, r:6}, e: {c:11, r:6} },
+                                 { s: {c:12, r:6}, e: {c:28, r:6} }
+                                ]
+            var ws = XLSX.utils.aoa_to_sheet([ "SheetJS".split("") ]);
+            /* Header de la tabla*/ 
+            var unidad_medida = (data.modalidadCobro == 'COSTURAS') ? '"' : 'Cm'
+            XLSX.utils.sheet_add_aoa(ws, [['Día','Parte','Obra','SERVICIOS']], {origin: "A7"});
+            XLSX.utils.sheet_add_aoa(ws, [[data.modalidadCobro + ' en ' + unidad_medida]], {origin: "M7"});            
+            XLSX.utils.sheet_add_aoa(ws, [data.servicios_abreviaturas], {origin: "D8"});
+            XLSX.utils.sheet_add_aoa(ws, [data.productos_unidades_medidas], {origin: "M8"});
+
+            XLSX.utils.sheet_add_json(ws, rowsCertificadoParte, { skipHeader: true, origin: 'A9' })
+            XLSX.utils.sheet_add_json(ws, rowsCertificadoServiciosParte.concat(rowsCertificadoServiciosTotaltes), { skipHeader: true, origin: 'D9' })
+            XLSX.utils.sheet_add_json(ws, rowsCertificadoProdutoParte.concat(rowsCertificadoProductoTotaltes), { skipHeader: true, origin: 'M9' })
+            XLSX.utils.sheet_add_json(ws, data.servicios_footer, { skipHeader: true, origin: -1 })
+
+            /* Header de Excel */
+            ws.A1 = { v: 'CERTIFICADO Nº: ' + sprintf("%08d",data.certificado.numero) + ' / ' + data.certificado.titulo}
+            ws.A2 = { v: 'FECHA: ' + moment(data.certificado.fecha).format('DD-MM-YYYY') }
+            ws.A3 = { v: 'CLIENTE: ' + data.cliente.nombre_fantasia }
+            ws.A4 = { v: 'PROYECTO: ' + data.ot.proyecto }
+            ws.A5 = { v: ('OBRA: ' + (data.ot.obra ? data.ot.obra : ' - ') + ' / OT Nº: ' + data.ot.numero + ' / FST Nº: ' + data.ot.presupuesto) }
+            // Combino las columnas que están definidas en cellMerge
+            cellsMerge.forEach(function (item) {
+                // var merge = XLSX.utils.decode_range(item)
+                if (!ws['!merges']) ws['!merges'] = []
+                ws['!merges'].push(item)
+            })  
+            const wb = XLSX.utils.book_new()
+            XLSX.utils.book_append_sheet(wb, ws, 'SheetJS')
+            XLSX.writeFile(wb, 'certificado.xlsx')            
+        },
+
+        getCertificadosParteData: async function (data) {
+
+          var resultado =  data.partes_certificados.map(function(obj) {
+                var objTemp = {}
+                objTemp.fecha = moment(obj.fecha).format('DD/MM/YYYY')
+                objTemp.parte_numero = obj.parte_numero
+                objTemp.obra =  !data.ot.obra ? obj.obra : ''                
+                return objTemp 
+            })
+        return resultado
+        },
+
+        getCertificadosServiciosData: async function (data) {
+
+          var resultado =  data.partes_certificados.map(function(obj) {
+                var objTemp = {}               
+                data.servicios_abreviaturas.forEach (function(item_abreviatura,index) {
+                    var existeServicioEnParte = false
+                    data.servicios_parte.forEach(function(item_servicio) {
+                        if ((item_abreviatura == item_servicio.abreviatura)&&(item_servicio.parte_numero == obj.parte_numero)) {
+                            objTemp[index] = item_servicio.cantidad
+                            existeServicioEnParte = true
+                        } 
+                    })
+                    
+                    if (!existeServicioEnParte) objTemp[index] = ''                        
+
+                } )
+                return objTemp 
+            }.bind(this))
+        return resultado
+        },  
+        getCertificadosProductoData: async function (data) {
+
+          var resultado =  data.partes_certificados.map(function(obj) {
+                var objTemp = {}               
+                data.productos_unidades_medidas.forEach (function(item_pro_uni_med,index) {
+                    var existeProductoEnParte = false
+                    data.productos_parte.forEach(function(item_producto) {
+                        if ((item_pro_uni_med == item_producto.unidad_medida_producto)&&(item_producto.parte_numero == obj.parte_numero)) {
+                            objTemp[index] = item_producto.cantidad
+                            existeProductoEnParte = true
+                        }  
+                    })
+
+                    if (!existeProductoEnParte) objTemp[index] = ''
+
+                } )
+                return objTemp 
+            }.bind(this))
+        return resultado
+        },          
+
+        getCertificadosServiciosTotaltesData: async function (data) {
+            var resultado = []
+            var objTemp = {}
+                data.servicios_abreviaturas.forEach(function(obj,index) {
+                    var total_servicio = 0;
+                    data.servicios_parte.forEach(function(item_servicio) {
+                        if(obj == item_servicio.abreviatura) {
+                            total_servicio += item_servicio.cantidad
+                        }
+                    })
+                objTemp[index] = total_servicio
+            }.bind(this))            
+            resultado.push(objTemp)
+            return resultado
+        },
+
+        getCertificadosProductosTotaltesData: async function (data) {
+            var resultado = []
+            var objTemp = {}
+                data.productos_unidades_medidas.forEach(function(obj,index) {
+                    var total_producto = 0;
+                    data.productos_parte.forEach(function(item_producto) {
+                        if(obj == item_producto.unidad_medida_producto) {
+                            total_producto += item_producto.cantidad
+                        }
+                    })
+                objTemp[index] = total_producto
+            }.bind(this))            
+            resultado.push(objTemp)
+            return resultado
+        },        
+        firmar: function() {
             this.loading_table = true;
             axios.defaults.baseURL = this.url ;
             var urlRegistros = 'certificados/' + this.ot_certificados.data[this.index_certificado].id + '/firmar';

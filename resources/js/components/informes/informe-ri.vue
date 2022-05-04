@@ -1525,10 +1525,10 @@ import { eventSetReferencia } from '../event-bus';
              }
 
              }else{
-                 this.interno_fuente = '' ;
-                 this.fuente ='';
-                 this.actividad = '';
-                 this.ActualizarDistFuentePelicula();
+                this.interno_fuente = '' ;
+                this.fuente ='';
+                this.actividad = '';
+                this.ActualizarDistFuentePelicula();
              }
              this.resetInputsEquipos();
          },
@@ -1608,65 +1608,64 @@ import { eventSetReferencia } from '../event-bus';
              this.ActualizarDistFuentePelicula();
          },
 
-         ActualizarDistFuentePelicula : function(){
+         ActualizarDistFuentePelicula : function() {
 
-                 axios.defaults.baseURL = this.url ;
-                 let foco = (this.interno_fuente) ? this.interno_fuente.foco : this.interno_equipo.foco ;
-                     foco = foco ? foco : 0;
-                 if(this.tecnica.codigo == 'CHAPA'){
-                     if(this.tecnica &&  this.medida){
-                          this.$store.commit('loading', true);
-                         var urlRegistros = 'tecnica_distancias/tecnica/' + this.tecnica.id + '/medida/'+ this.medida.codigo + '?api_token=' + Laravel.user.api_token;
-                         axios.get(urlRegistros).then(response =>{
-                             this.tecnica_distancia = response.data
-                             this.distancia_fuente_pelicula=this.tecnica_distancia[0].valor;
+            axios.defaults.baseURL = this.url ;
+            let foco = (this.interno_fuente) ? this.interno_fuente.foco : this.interno_equipo.foco ;
+                foco = foco ? foco : 0;
+            if(this.tecnica.codigo == 'CHAPA'){
+                if(this.tecnica &&  this.medida){
+                    this.$store.commit('loading', true);
+                    var urlRegistros = 'tecnica_distancias/tecnica/' + this.tecnica.id + '/medida/'+ this.medida.codigo + '?api_token=' + Laravel.user.api_token;
+                    axios.get(urlRegistros).then(response =>{
+                        this.tecnica_distancia = response.data
+                        this.distancia_fuente_pelicula=this.tecnica_distancia[0].valor;
 
-                         }).finally(res => { this.$store.commit('loading', false); });
-                     }
-                 }else{
-                     if(this.tecnica && this.diametro && this.espesor && foco){
-                         this.$store.commit('loading', true);
-                         var urlRegistros = 'tecnica_distancias/tecnica/' + this.tecnica.id + '/diametro/'+ this.diametro.diametro_code + '/espesor/' + this.espesor.espesor + '/foco/' + foco + '?api_token=' + Laravel.user.api_token;
-                         axios.get(urlRegistros).then(response =>{
-                             this.tecnica_distancia = response.data
-                             this.distancia_fuente_pelicula=this.tecnica_distancia[0].valor;
-                         }).finally(res => { this.$store.commit('loading', false); });
-                     }
-
-                 }
+                    }).finally(res => { this.$store.commit('loading', false); });
+                }
+            }else{
+                if(this.tecnica && this.diametro && this.espesor && foco){
+                    this.$store.commit('loading', true);
+                    var urlRegistros = 'tecnica_distancias/tecnica/' + this.tecnica.id + '/diametro/'+ this.diametro.diametro_code + '/espesor/' + this.espesor.espesor + '/foco/' + foco + '?api_token=' + Laravel.user.api_token;
+                    axios.get(urlRegistros).then(response =>{
+                        this.tecnica_distancia = response.data
+                        this.distancia_fuente_pelicula=this.tecnica_distancia[0].valor;
+                    }).finally(res => { this.$store.commit('loading', false); });
+                }
+            }
          },
 
-         getEjecutorEnsayo: function(){
-
+         getEjecutorEnsayo: function() {
                  axios.defaults.baseURL = this.url ;
                  var urlRegistros = 'ot-operarios/ot/' + this.otdata.id + '?api_token=' + Laravel.user.api_token;
                  axios.get(urlRegistros).then(response =>{
                  this.ejecutor_ensayos = response.data
                  });
-               },
-         resetDetalle : function(){
-             this.TablaDetalle = [];
-             this.TablaPasadas = [];
-             this.TablaImportada= [];
-             this.elemento_pasadas=[];
-             this.elemento_pasada='';
-             this.pk = '';
-             this.tipo_soldadura='';
-             this.pasada='';
-             this.junta='';
-             this.soldador1='',
-             this.soldador2='',
-             this.soldador3='',
-             this.posicion='',
-             this.posicionPlacaGosaducto=''
+        },
+
+        resetDetalle : function(){
+            this.TablaDetalle = [];
+            this.TablaPasadas = [];
+            this.TablaImportada= [];
+            this.elemento_pasadas=[];
+            this.elemento_pasada='';
+            this.pk = '';
+            this.tipo_soldadura='';
+            this.pasada='';
+            this.junta='';
+            this.soldador1='',
+            this.soldador2='',
+            this.soldador3='',
+            this.posicion='',
+            this.posicionPlacaGosaducto=''
          },
          //detalle
          async getSoldadores(){
-                 axios.defaults.baseURL = this.url ;
-                 var urlRegistros = 'ot_soldadores/ot/' + this.otdata.id + '?api_token=' + Laravel.user.api_token;
-                 await axios.get(urlRegistros).then(response =>{
-                 this.soldadores = response.data
-                 });
+                axios.defaults.baseURL = this.url ;
+                var urlRegistros = 'ot_soldadores/ot/' + this.otdata.id + '?api_token=' + Laravel.user.api_token;
+                await axios.get(urlRegistros).then(response =>{
+                this.soldadores = response.data
+                });
 
          },
          getDefectosRiPlanta : function(){
@@ -1678,23 +1677,23 @@ import { eventSetReferencia } from '../event-bus';
 
          },
          getDefectosRiGasoducto : function(){
-                 axios.defaults.baseURL = this.url ;
-                 var urlRegistros = 'defectos_ri/gasoducto/' + '?api_token=' + Laravel.user.api_token;
-                 axios.get(urlRegistros).then(response =>{
-                 this.defectosRiGasoducto = response.data
-                 });
+                axios.defaults.baseURL = this.url ;
+                var urlRegistros = 'defectos_ri/gasoducto/' + '?api_token=' + Laravel.user.api_token;
+                axios.get(urlRegistros).then(response =>{
+                this.defectosRiGasoducto = response.data
+                });
 
          },
          selectPosDetalle :function(index){
-             this.indicaciones_sn = true;
-             this.indexDetalle = index ;
-             this.pasada =1 ;
+            this.indicaciones_sn = true;
+            this.indexDetalle = index ;
+            this.pasada =1 ;
 
          },
          InicializarElementosPasadas : function(){
-             this.detalledata.forEach(function(item) {
-                 this.addElementosPasadas(item.junta);
-             }.bind(this));
+            this.detalledata.forEach(function(item) {
+                this.addElementosPasadas(item.junta);
+            }.bind(this));
          },
 
          AddDetalle (posicion) {
