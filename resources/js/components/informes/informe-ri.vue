@@ -695,7 +695,7 @@
                                              </tr>
                                          </thead>
                                             <tbody>
-                                                <tr v-for="(tramos,k) in ( (TablaTramos.length > 0 )  ? TablaTramos : [])"  :key="k" :class="{selected: indexPosDetalle === k}">
+                                                <tr v-for="(tramos,k) in ( (TablaTramos.length > 0 )  ? TablaTramos : [])"  :key="k">
                                                     <td>{{ tramos.tramo }}</td>
                                                     <td>{{ tramos.bola_comparadora }}</td>
                                                     <td>{{ tramos.espesor_tramo }}</td>
@@ -1154,7 +1154,6 @@ import { eventSetReferencia } from '../event-bus';
              posicionPlacaGosaducto:'',
              defecto_sector:'',
              indexDetalle:-1,
-             indexPosDetalle:0,
              indexPasada:0,
              //Fin Formulario detalle
              tabla:'',
@@ -1698,42 +1697,40 @@ import { eventSetReferencia } from '../event-bus';
 
          AddDetalle (posicion) {
 
-
              var match = this.posicion.match(/^([0-9]{1,4}[-][0-9]{1,4})$|^([a-zA-Z]{1})$|^(GAP){3}$/);
               if(!match && this.posicion != 'GAP'){
                   toastr.error('Ingrese un rango separado por un guion o una letra','Formato inválido');
                   return;
                 }
 
-
              if( (this.reparacion_sn && this.junta_reparacion == '') ||(!this.reparacion_sn && this.junta == '') ){
-                  toastr.error('Campo Elemento es obligatorio');
-                  return;
+                toastr.error('Campo Elemento es obligatorio');
+                return;
              }else if(this.posicion == '' && this.clonando == false) {
-                  toastr.error('Campo posición es obligatorio');
-                   return;
+                toastr.error('Campo posición es obligatorio');
+                return;
              }else if (this.densidad == ''){
-                     toastr.error('Campo densidad es obligatorio');
-                     return;
+                toastr.error('Campo densidad es obligatorio');
+                return;
              }
 
              let aux_junta = this.reparacion_sn ? this.junta_reparacion.codigo + 'R' :  this.junta;
              this.addElementosPasadas(aux_junta);
              this.TablaDetalle.push({
-                 junta: aux_junta,
-                 densidad : this.densidad,
-                 posicion : (typeof(posicion) !== 'undefined') ? posicion : this.posicion,
-                 aceptable_sn : 1 ,
-                 observacion : '',
-                 defectos : []
+                junta: aux_junta,
+                densidad : this.densidad,
+                posicion : (typeof(posicion) !== 'undefined') ? posicion : this.posicion,
+                aceptable_sn : 1 ,
+                observacion : '',
+                defectos : []
              });
 
          },
          addElementosPasadas : function(aux_junta){
-             let index = this.elemento_pasadas.findIndex(elemento => elemento == aux_junta);
-             if(index == -1){
-                 this.elemento_pasadas.push(aux_junta);
-             }
+            let index = this.elemento_pasadas.findIndex(elemento => elemento == aux_junta);
+            if(index == -1){
+            this.elemento_pasadas.push(aux_junta);
+            }
          },
          autocompletarNumeroPasada : function(){
              let cant_pasadas =  this.contarPasadaElemento(this.elemento_pasada);
@@ -1814,9 +1811,6 @@ import { eventSetReferencia } from '../event-bus';
                     path4:null
             });
          },
-        selectPosDetalle :function(index){
-            this.indexPosDetalle = index ;
-        },
          addDefectos () {
 
              if(this.defectoRiPlanta == '' ){
