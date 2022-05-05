@@ -35,14 +35,14 @@
                                  </div>
 
                                     <div v-if="isGasoducto">
-                                 <div class="col-md-3">
-                                        <div class="form-group" >
-                                            <label for="ot_obra_tipo_soldaduras">Tipo Sol *</label>
-                                            <input type="checkbox" id="reparacion_sn" v-model="reparacion_sn" :disabled="!pk || !tipo_soldadura" @change="cambioReparacion_sn()" style="float:right">
-                                            <label for="reparacion_sn" style="float:right;margin-right: 5px;">R</label>
-                                            <v-select v-model="tipo_soldadura" label="codigo" :options="ot_tipo_soldaduras_filter_R" id="ot_obra_tipo_soldaduras" @input="cambioOtTipoSoldadura" :disabled="(!isGasoducto || !obra || !pk )"></v-select>
+                                        <div class="col-md-3">
+                                                <div class="form-group" >
+                                                    <label for="ot_obra_tipo_soldaduras">Tipo Sol *</label>
+                                                    <input type="checkbox" id="reparacion_sn" v-model="reparacion_sn" :disabled="!pk || !tipo_soldadura" @change="cambioReparacion_sn()" style="float:right">
+                                                    <label for="reparacion_sn" style="float:right;margin-right: 5px;">R</label>
+                                                    <v-select v-model="tipo_soldadura" label="codigo" :options="ot_tipo_soldaduras_filter_R" id="ot_obra_tipo_soldaduras" @input="cambioOtTipoSoldadura" :disabled="(!isGasoducto || !obra || !pk )"></v-select>
+                                                </div>
                                         </div>
-                                 </div>
                                     </div>
                                     <div v-else>
                                     <div class="col-md-6">
@@ -943,9 +943,9 @@
          </div>
 
          <loading
-                  :active.sync="isLoading"
-                  :loader="'bars'"
-                  :color="'red'">
+            :active.sync="isLoading"
+            :loader="'bars'"
+            :color="'red'">
          </loading>
 
         </div>
@@ -971,9 +971,7 @@ import { eventSetReferencia } from '../event-bus';
  export default {
 
      components: {
-
        Loading
-
      },
      props : {
        editmode : {
@@ -1010,7 +1008,6 @@ import { eventSetReferencia } from '../event-bus';
         type : [ Object, Array ],
         required : false,
        },
-
         diametrodata : {
             type : [Object,Array],
             required : false,
@@ -1228,50 +1225,42 @@ import { eventSetReferencia } from '../event-bus';
      mounted : function() {
           this.getNumeroInforme();
      },
- Update : function(){ },
-
      watch : {
-
-         equipo : function(val){
-             this.isRX = (val.codigo =='RX') ? true : false;
+         equipo : function(val) {
+            this.isRX = (val.codigo =='RX') ? true : false;
          },
-
-         diametro : function(val){
-             if(val){
-                   this.isChapa = (val.diametro =='CHAPA') ? true : false;
-             }
+         diametro : function(val) {
+            if(val){
+                this.isChapa = (val.diametro =='CHAPA') ? true : false;
+            }
          },
-         formato : function (val){
-             this.isGasoducto =  (val == 'DUCTO') ? true : false;
-             this.reparacion_sn = (val == 'PLANTA') ? false : this.reparacion_sn;
-             this.isPerfil = (val == 'PERFILES') ? true : false;
-             if (this.isGasoducto){
+         formato : function (val) {
+            this.isGasoducto =  (val == 'DUCTO') ? true : false;
+            this.reparacion_sn = (val == 'PLANTA') ? false : this.reparacion_sn;
+            this.isPerfil = (val == 'PERFILES') ? true : false;
+            if (this.isGasoducto){
                 this.$refs.informeHeader.resetPlanta()
-             }
+            }
          },
          pasada : function (val){
-             this.soldador2 =  (val == '1') ? this.soldador2 : '';
+            this.soldador2 =  (val == '1') ? this.soldador2 : '';
          },
-
          posicionPlacaGosaducto : function(val){
-             if (val != '' && this.formato =='PLANTA'){
-                   this.defecto_sector = 'RAIZ' ;
-             }else if(val == '')  {
-                   this.defecto_sector = '' ;
-             }
+            if (val != '' && this.formato =='PLANTA'){
+            this.defecto_sector = 'RAIZ' ;
+            }else if(val == '')  {
+            this.defecto_sector = '' ;
+            }
          },
          fuentePorInterno: function(val){
-
-               this.fuente = val;
-
+            this.fuente = val;
          },
         fecha : function(val) {
-               if(this.interno_fuente){
-
-                   this.$store.dispatch('loadCurie',{ 'interno_fuente_id' : this.interno_fuente.id, 'fecha_final': this.fecha_mysql }).then(response => {
-                          this.actividad = this.curie;
-                    });
-               }
+            if(this.interno_fuente){
+                this.$store.dispatch('loadCurie',{ 'interno_fuente_id' : this.interno_fuente.id, 'fecha_final': this.fecha_mysql }).then(response => {
+                    this.actividad = this.curie;
+                });
+            }
          },
      },
      computed :{
@@ -1315,8 +1304,7 @@ import { eventSetReferencia } from '../event-bus';
 
              },
 
-             ot_tipo_soldaduras_filter_codigo : function(){
-
+             ot_tipo_soldaduras_filter_codigo : function() {
                 if(this.isGasoducto)
                     return this.ot_obra_tipo_soldaduras.filter(item => item.tipo_soldadura.codigo == this.tipo_soldadura.codigo)
                 else
@@ -1405,22 +1393,19 @@ import { eventSetReferencia } from '../event-bus';
             this.juntas_reparacion  =[];
             this.junta_reparacion ='';
             this.getElementosReparacion();
-
          },
 
-         setObra : function(value){
-
+         setObra: function(value){
             this.obra = value;
             this.ot_tipo_soldadura='';
             if(this.obra){
                 this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.obra });
             }
         },
-        setPlanta : function(value){
+        setPlanta: function(value){
             this.planta = value;
-         },
-         cambiopTipoInforme : function(){
-
+        },
+        cambiopTipoInforme: function() {
             this.pk ='' ;
             this.tipo_soldadura='';
             this.reparacion_sn= false;
@@ -1428,25 +1413,22 @@ import { eventSetReferencia } from '../event-bus';
             this.resetDetalle();
          },
 
-         cambioOtTipoSoldadura(){
-
+         cambioOtTipoSoldadura() {
             this.ot_tipo_soldadura = '';
-
          },
 
-         async getElementosReparacion(){
+         async getElementosReparacion() {
             this.$store.commit('loading', true);
              axios.defaults.baseURL = this.url ;
              let urlRegistros = 'informes_ri/elementos_reparacion/ot/' + this.otdata.id +  '/obra/' + (this.obra ? this.obra.replace('/','--') :'null') + '/km/' + (this.pk ? this.pk : 'null') + '/linea/' + (this.linea ? this.linea.replace('/','--') :'null') + '/plano_isom/' + (this.plano_isom ? this.plano_isom.replace('/','--') : 'null') + '/hoja/' + (this.hoja ? this.hoja.replace('/','--') : 'null') + '?api_token=' + Laravel.user.api_token;
 
              await axios.get(urlRegistros).then(response =>{
-                 this.juntas_reparacion = response.data
+                this.juntas_reparacion = response.data
             });
             this.$store.commit('loading', false);
          },
 
-         getNumeroInforme:function(){
-
+         getNumeroInforme:function() {
              if(!this.editmode) {
                  axios.defaults.baseURL = this.url ;
                 var urlRegistros = 'informes/ot/' + this.otdata.id + '/metodo/' + this.metodo + '/tecnica/0' + '/generar-numero-informe/'  + '?api_token=' + Laravel.user.api_token;

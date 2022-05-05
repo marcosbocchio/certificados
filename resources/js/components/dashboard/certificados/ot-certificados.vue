@@ -169,6 +169,7 @@ export default {
             var urlRegistros = 'certificados/id/'+ id + '/estado/' + estado + '?api_token=' + Laravel.user.api_token;
             await axios.get(urlRegistros).then(response =>{
                data = response.data
+               console.log(data)
             });
             
             var rowsCertificadoParte = await this.getCertificadosParteData(data)
@@ -223,7 +224,7 @@ export default {
 
           var resultado =  data.partes_certificados.map(function(obj) {
                 var objTemp = {}
-                objTemp.fecha = moment(obj.fecha).format('DD/MM/YYYY')
+                objTemp.fecha = obj.fecha_formateada
                 objTemp.parte_numero = obj.parte_numero
                 objTemp.obra =  !data.ot.obra ? obj.obra : ''                
                 return objTemp 
