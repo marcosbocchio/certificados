@@ -330,24 +330,13 @@ class CertificadosController extends Controller
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
     public function firmar($id){
 
         $user_id = null;
 
         if (Auth::check())
         {
-                $user_id = $userId = Auth::id();
+            $user_id = $userId = Auth::id();
         }
 
         $certificado = Certificados::findOrFail($id);

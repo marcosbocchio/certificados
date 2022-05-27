@@ -35,14 +35,14 @@
                                  </div>
 
                                     <div v-if="isGasoducto">
-                                 <div class="col-md-3">
-                                        <div class="form-group" >
-                                            <label for="ot_obra_tipo_soldaduras">Tipo Sol *</label>
-                                            <input type="checkbox" id="reparacion_sn" v-model="reparacion_sn" :disabled="!pk || !tipo_soldadura" @change="cambioReparacion_sn()" style="float:right">
-                                            <label for="reparacion_sn" style="float:right;margin-right: 5px;">R</label>
-                                            <v-select v-model="tipo_soldadura" label="codigo" :options="ot_tipo_soldaduras_filter_R" id="ot_obra_tipo_soldaduras" @input="cambioOtTipoSoldadura" :disabled="(!isGasoducto || !obra || !pk )"></v-select>
+                                        <div class="col-md-3">
+                                                <div class="form-group" >
+                                                    <label for="ot_obra_tipo_soldaduras">Tipo Sol *</label>
+                                                    <input type="checkbox" id="reparacion_sn" v-model="reparacion_sn" :disabled="!pk || !tipo_soldadura" @change="cambioReparacion_sn()" style="float:right">
+                                                    <label for="reparacion_sn" style="float:right;margin-right: 5px;">R</label>
+                                                    <v-select v-model="tipo_soldadura" label="codigo" :options="ot_tipo_soldaduras_filter_R" id="ot_obra_tipo_soldaduras" @input="cambioOtTipoSoldadura" :disabled="(!isGasoducto || !obra || !pk )"></v-select>
+                                                </div>
                                         </div>
-                                 </div>
                                     </div>
                                     <div v-else>
                                     <div class="col-md-6">
@@ -943,9 +943,9 @@
          </div>
 
          <loading
-                  :active.sync="isLoading"
-                  :loader="'bars'"
-                  :color="'red'">
+            :active.sync="isLoading"
+            :loader="'bars'"
+            :color="'red'">
          </loading>
 
         </div>
@@ -971,9 +971,7 @@ import { eventSetReferencia } from '../event-bus';
  export default {
 
      components: {
-
        Loading
-
      },
      props : {
        editmode : {
@@ -1010,7 +1008,6 @@ import { eventSetReferencia } from '../event-bus';
         type : [ Object, Array ],
         required : false,
        },
-
         diametrodata : {
             type : [Object,Array],
             required : false,
@@ -1228,50 +1225,42 @@ import { eventSetReferencia } from '../event-bus';
      mounted : function() {
           this.getNumeroInforme();
      },
- Update : function(){ },
-
      watch : {
-
-         equipo : function(val){
-             this.isRX = (val.codigo =='RX') ? true : false;
+         equipo : function(val) {
+            this.isRX = (val.codigo =='RX') ? true : false;
          },
-
-         diametro : function(val){
-             if(val){
-                   this.isChapa = (val.diametro =='CHAPA') ? true : false;
-             }
+         diametro : function(val) {
+            if(val){
+                this.isChapa = (val.diametro =='CHAPA') ? true : false;
+            }
          },
-         formato : function (val){
-             this.isGasoducto =  (val == 'DUCTO') ? true : false;
-             this.reparacion_sn = (val == 'PLANTA') ? false : this.reparacion_sn;
-             this.isPerfil = (val == 'PERFILES') ? true : false;
-             if (this.isGasoducto){
+         formato : function (val) {
+            this.isGasoducto =  (val == 'DUCTO') ? true : false;
+            this.reparacion_sn = (val == 'PLANTA') ? false : this.reparacion_sn;
+            this.isPerfil = (val == 'PERFILES') ? true : false;
+            if (this.isGasoducto){
                 this.$refs.informeHeader.resetPlanta()
-             }
+            }
          },
          pasada : function (val){
-             this.soldador2 =  (val == '1') ? this.soldador2 : '';
+            this.soldador2 =  (val == '1') ? this.soldador2 : '';
          },
-
          posicionPlacaGosaducto : function(val){
-             if (val != '' && this.formato =='PLANTA'){
-                   this.defecto_sector = 'RAIZ' ;
-             }else if(val == '')  {
-                   this.defecto_sector = '' ;
-             }
+            if (val != '' && this.formato =='PLANTA'){
+            this.defecto_sector = 'RAIZ' ;
+            }else if(val == '')  {
+            this.defecto_sector = '' ;
+            }
          },
          fuentePorInterno: function(val){
-
-               this.fuente = val;
-
+            this.fuente = val;
          },
         fecha : function(val) {
-               if(this.interno_fuente){
-
-                   this.$store.dispatch('loadCurie',{ 'interno_fuente_id' : this.interno_fuente.id, 'fecha_final': this.fecha_mysql }).then(response => {
-                          this.actividad = this.curie;
-                    });
-               }
+            if(this.interno_fuente){
+                this.$store.dispatch('loadCurie',{ 'interno_fuente_id' : this.interno_fuente.id, 'fecha_final': this.fecha_mysql }).then(response => {
+                    this.actividad = this.curie;
+                });
+            }
          },
      },
      computed :{
@@ -1315,8 +1304,7 @@ import { eventSetReferencia } from '../event-bus';
 
              },
 
-             ot_tipo_soldaduras_filter_codigo : function(){
-
+             ot_tipo_soldaduras_filter_codigo : function() {
                 if(this.isGasoducto)
                     return this.ot_obra_tipo_soldaduras.filter(item => item.tipo_soldadura.codigo == this.tipo_soldadura.codigo)
                 else
@@ -1405,22 +1393,19 @@ import { eventSetReferencia } from '../event-bus';
             this.juntas_reparacion  =[];
             this.junta_reparacion ='';
             this.getElementosReparacion();
-
          },
 
-         setObra : function(value){
-
+         setObra: function(value){
             this.obra = value;
             this.ot_tipo_soldadura='';
             if(this.obra){
                 this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.obra });
             }
         },
-        setPlanta : function(value){
+        setPlanta: function(value){
             this.planta = value;
-         },
-         cambiopTipoInforme : function(){
-
+        },
+        cambiopTipoInforme: function() {
             this.pk ='' ;
             this.tipo_soldadura='';
             this.reparacion_sn= false;
@@ -1428,25 +1413,22 @@ import { eventSetReferencia } from '../event-bus';
             this.resetDetalle();
          },
 
-         cambioOtTipoSoldadura(){
-
+         cambioOtTipoSoldadura() {
             this.ot_tipo_soldadura = '';
-
          },
 
-         async getElementosReparacion(){
+         async getElementosReparacion() {
             this.$store.commit('loading', true);
              axios.defaults.baseURL = this.url ;
              let urlRegistros = 'informes_ri/elementos_reparacion/ot/' + this.otdata.id +  '/obra/' + (this.obra ? this.obra.replace('/','--') :'null') + '/km/' + (this.pk ? this.pk : 'null') + '/linea/' + (this.linea ? this.linea.replace('/','--') :'null') + '/plano_isom/' + (this.plano_isom ? this.plano_isom.replace('/','--') : 'null') + '/hoja/' + (this.hoja ? this.hoja.replace('/','--') : 'null') + '?api_token=' + Laravel.user.api_token;
 
              await axios.get(urlRegistros).then(response =>{
-                 this.juntas_reparacion = response.data
+                this.juntas_reparacion = response.data
             });
             this.$store.commit('loading', false);
          },
 
-         getNumeroInforme:function(){
-
+         getNumeroInforme:function() {
              if(!this.editmode) {
                  axios.defaults.baseURL = this.url ;
                 var urlRegistros = 'informes/ot/' + this.otdata.id + '/metodo/' + this.metodo + '/tecnica/0' + '/generar-numero-informe/'  + '?api_token=' + Laravel.user.api_token;
@@ -1524,10 +1506,10 @@ import { eventSetReferencia } from '../event-bus';
              }
 
              }else{
-                 this.interno_fuente = '' ;
-                 this.fuente ='';
-                 this.actividad = '';
-                 this.ActualizarDistFuentePelicula();
+                this.interno_fuente = '' ;
+                this.fuente ='';
+                this.actividad = '';
+                this.ActualizarDistFuentePelicula();
              }
              this.resetInputsEquipos();
          },
@@ -1607,65 +1589,64 @@ import { eventSetReferencia } from '../event-bus';
              this.ActualizarDistFuentePelicula();
          },
 
-         ActualizarDistFuentePelicula : function(){
+         ActualizarDistFuentePelicula : function() {
 
-                 axios.defaults.baseURL = this.url ;
-                 let foco = (this.interno_fuente) ? this.interno_fuente.foco : this.interno_equipo.foco ;
-                     foco = foco ? foco : 0;
-                 if(this.tecnica.codigo == 'CHAPA'){
-                     if(this.tecnica &&  this.medida){
-                          this.$store.commit('loading', true);
-                         var urlRegistros = 'tecnica_distancias/tecnica/' + this.tecnica.id + '/medida/'+ this.medida.codigo + '?api_token=' + Laravel.user.api_token;
-                         axios.get(urlRegistros).then(response =>{
-                             this.tecnica_distancia = response.data
-                             this.distancia_fuente_pelicula=this.tecnica_distancia[0].valor;
+            axios.defaults.baseURL = this.url ;
+            let foco = (this.interno_fuente) ? this.interno_fuente.foco : this.interno_equipo.foco ;
+                foco = foco ? foco : 0;
+            if(this.tecnica.codigo == 'CHAPA'){
+                if(this.tecnica &&  this.medida){
+                    this.$store.commit('loading', true);
+                    var urlRegistros = 'tecnica_distancias/tecnica/' + this.tecnica.id + '/medida/'+ this.medida.codigo + '?api_token=' + Laravel.user.api_token;
+                    axios.get(urlRegistros).then(response =>{
+                        this.tecnica_distancia = response.data
+                        this.distancia_fuente_pelicula=this.tecnica_distancia[0].valor;
 
-                         }).finally(res => { this.$store.commit('loading', false); });
-                     }
-                 }else{
-                     if(this.tecnica && this.diametro && this.espesor && foco){
-                         this.$store.commit('loading', true);
-                         var urlRegistros = 'tecnica_distancias/tecnica/' + this.tecnica.id + '/diametro/'+ this.diametro.diametro_code + '/espesor/' + this.espesor.espesor + '/foco/' + foco + '?api_token=' + Laravel.user.api_token;
-                         axios.get(urlRegistros).then(response =>{
-                             this.tecnica_distancia = response.data
-                             this.distancia_fuente_pelicula=this.tecnica_distancia[0].valor;
-                         }).finally(res => { this.$store.commit('loading', false); });
-                     }
-
-                 }
+                    }).finally(res => { this.$store.commit('loading', false); });
+                }
+            }else{
+                if(this.tecnica && this.diametro && this.espesor && foco){
+                    this.$store.commit('loading', true);
+                    var urlRegistros = 'tecnica_distancias/tecnica/' + this.tecnica.id + '/diametro/'+ this.diametro.diametro_code + '/espesor/' + this.espesor.espesor + '/foco/' + foco + '?api_token=' + Laravel.user.api_token;
+                    axios.get(urlRegistros).then(response =>{
+                        this.tecnica_distancia = response.data
+                        this.distancia_fuente_pelicula=this.tecnica_distancia[0].valor;
+                    }).finally(res => { this.$store.commit('loading', false); });
+                }
+            }
          },
 
-         getEjecutorEnsayo: function(){
-
+         getEjecutorEnsayo: function() {
                  axios.defaults.baseURL = this.url ;
                  var urlRegistros = 'ot-operarios/ot/' + this.otdata.id + '?api_token=' + Laravel.user.api_token;
                  axios.get(urlRegistros).then(response =>{
                  this.ejecutor_ensayos = response.data
                  });
-               },
-         resetDetalle : function(){
-             this.TablaDetalle = [];
-             this.TablaPasadas = [];
-             this.TablaImportada= [];
-             this.elemento_pasadas=[];
-             this.elemento_pasada='';
-             this.pk = '';
-             this.tipo_soldadura='';
-             this.pasada='';
-             this.junta='';
-             this.soldador1='',
-             this.soldador2='',
-             this.soldador3='',
-             this.posicion='',
-             this.posicionPlacaGosaducto=''
+        },
+
+        resetDetalle : function(){
+            this.TablaDetalle = [];
+            this.TablaPasadas = [];
+            this.TablaImportada= [];
+            this.elemento_pasadas=[];
+            this.elemento_pasada='';
+            this.pk = '';
+            this.tipo_soldadura='';
+            this.pasada='';
+            this.junta='';
+            this.soldador1='',
+            this.soldador2='',
+            this.soldador3='',
+            this.posicion='',
+            this.posicionPlacaGosaducto=''
          },
          //detalle
          async getSoldadores(){
-                 axios.defaults.baseURL = this.url ;
-                 var urlRegistros = 'ot_soldadores/ot/' + this.otdata.id + '?api_token=' + Laravel.user.api_token;
-                 await axios.get(urlRegistros).then(response =>{
-                 this.soldadores = response.data
-                 });
+                axios.defaults.baseURL = this.url ;
+                var urlRegistros = 'ot_soldadores/ot/' + this.otdata.id + '?api_token=' + Laravel.user.api_token;
+                await axios.get(urlRegistros).then(response =>{
+                this.soldadores = response.data
+                });
 
          },
          getDefectosRiPlanta : function(){
@@ -1677,27 +1658,26 @@ import { eventSetReferencia } from '../event-bus';
 
          },
          getDefectosRiGasoducto : function(){
-                 axios.defaults.baseURL = this.url ;
-                 var urlRegistros = 'defectos_ri/gasoducto/' + '?api_token=' + Laravel.user.api_token;
-                 axios.get(urlRegistros).then(response =>{
-                 this.defectosRiGasoducto = response.data
-                 });
+                axios.defaults.baseURL = this.url ;
+                var urlRegistros = 'defectos_ri/gasoducto/' + '?api_token=' + Laravel.user.api_token;
+                axios.get(urlRegistros).then(response =>{
+                this.defectosRiGasoducto = response.data
+                });
 
          },
          selectPosDetalle :function(index){
-             this.indicaciones_sn = true;
-             this.indexDetalle = index ;
-             this.pasada =1 ;
+            this.indicaciones_sn = true;
+            this.indexDetalle = index ;
+            this.pasada =1 ;
 
          },
          InicializarElementosPasadas : function(){
-             this.detalledata.forEach(function(item) {
-                 this.addElementosPasadas(item.junta);
-             }.bind(this));
+            this.detalledata.forEach(function(item) {
+                this.addElementosPasadas(item.junta);
+            }.bind(this));
          },
 
          AddDetalle (posicion) {
-
 
              var match = this.posicion.match(/^([0-9]{1,4}[-][0-9]{1,4})$|^([a-zA-Z]{1})$|^(GAP){3}$/);
               if(!match && this.posicion != 'GAP'){
@@ -1705,35 +1685,34 @@ import { eventSetReferencia } from '../event-bus';
                   return;
                 }
 
-
              if( (this.reparacion_sn && this.junta_reparacion == '') ||(!this.reparacion_sn && this.junta == '') ){
-                  toastr.error('Campo Elemento es obligatorio');
-                  return;
+                toastr.error('Campo Elemento es obligatorio');
+                return;
              }else if(this.posicion == '' && this.clonando == false) {
-                  toastr.error('Campo posición es obligatorio');
-                   return;
+                toastr.error('Campo posición es obligatorio');
+                return;
              }else if (this.densidad == ''){
-                     toastr.error('Campo densidad es obligatorio');
-                     return;
+                toastr.error('Campo densidad es obligatorio');
+                return;
              }
 
              let aux_junta = this.reparacion_sn ? this.junta_reparacion.codigo + 'R' :  this.junta;
              this.addElementosPasadas(aux_junta);
              this.TablaDetalle.push({
-                 junta: aux_junta,
-                 densidad : this.densidad,
-                 posicion : (typeof(posicion) !== 'undefined') ? posicion : this.posicion,
-                 aceptable_sn : 1 ,
-                 observacion : '',
-                 defectos : []
+                junta: aux_junta,
+                densidad : this.densidad,
+                posicion : (typeof(posicion) !== 'undefined') ? posicion : this.posicion,
+                aceptable_sn : 1 ,
+                observacion : '',
+                defectos : []
              });
 
          },
          addElementosPasadas : function(aux_junta){
-             let index = this.elemento_pasadas.findIndex(elemento => elemento == aux_junta);
-             if(index == -1){
-                 this.elemento_pasadas.push(aux_junta);
-             }
+            let index = this.elemento_pasadas.findIndex(elemento => elemento == aux_junta);
+            if(index == -1){
+            this.elemento_pasadas.push(aux_junta);
+            }
          },
          autocompletarNumeroPasada : function(){
              let cant_pasadas =  this.contarPasadaElemento(this.elemento_pasada);

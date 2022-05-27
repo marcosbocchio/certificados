@@ -150,10 +150,10 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('informes/ot/{ot_id}/obra/{obra}/componente/{componente}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}', 'InformesController@getInformesEstadisticasSoldaduras');
     Route::get('informes/revisiones/ot/{ot_id}/metodo/{metodo}/informe_id/{informe_id}', 'InformesController@getInformeRevisiones');
 
-
     Route::get('certificados/parte/{parte_id}/servicios', 'CertificadosController@getParteServicios');
     Route::get('certificados/parte/{parte_id}/modo_cobro/{modo_cobro}/productos', 'CertificadosController@getParteProductos');
     Route::get('certificados/ot/{ot_id}/modalidad_cobro', 'CertificadosController@getModalidadCobro');
+    Route::get('certificados/id/{id}/estado/{estado}', 'PdfCertificadoController@exportarAExcel');
 
     Route::get('informes/ot/{ot_id}/metodo/{metodo}/tecnica/{tecnica_id}/generar-numero-informe', 'InformesController@GenerarNumeroInforme');
     Route::get('certificados/generar-numero-certificado', 'CertificadosController@GenerarNumeroCertificado');
@@ -174,7 +174,6 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::post('storage/modelos_3d', 'StorageController@saveModelos3d');
 
     Route::post('storage/firma-digital', 'StorageController@saveFirmaDigital');
-
     Route::post('storage/documentos_videos', 'StorageController@saveDocumentosVideos');
 
     Route::get('documentaciones/ot','DocumentacionesController@DocumentacionesDeOt');
