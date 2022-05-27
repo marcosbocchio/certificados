@@ -93,7 +93,7 @@ footer {
 
 
 <main>
-    @include('reportes.informes.partial.header-detalle-ri-landscope')
+    @include('reportes.informes.partial.header-detalle-rd-landscope')
 
     <table width="100%" style="border-collapse: collapse;">
         <thead>

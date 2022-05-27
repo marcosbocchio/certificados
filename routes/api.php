@@ -131,6 +131,10 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('defectos_ri/planta', 'DefectosRiController@DefectosPlanta');
     Route::get('defectos_ri/gasoducto', 'DefectosRiController@DefectosGasoducto');
 
+    Route::get('defectos_rd/planta', 'DefectosRdController@DefectosPlanta');
+    Route::get('defectos_rd/gasoducto', 'DefectosRdController@DefectosGasoducto');
+
+
     Route::get('diametros', 'DiametrosEspesorController@getDiametros');
     Route::get('espesor/{id}', 'DiametrosEspesorController@getEspesor');
 
@@ -226,6 +230,7 @@ Route::group(['middleware' => 'auth:api'], function()
 
     /*  informes */
     Route::resource('informes_ri','InformesRiController');
+    Route::resource('informes_rd','InformesRdController');
     Route::get('informes_ri/elementos_reparacion/ot/{ot_id}/obra/{obra}/km/{km}/linea/{linea}/plano_isom/{plano_isom}/hoja/{hoja}', 'InformesRiController@getElementosReparacion');
     Route::resource('informes_pm','InformesPmController');
     Route::resource('informes_lp','InformesLpController');
@@ -296,6 +301,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('partes', 'PartesController');
     Route::get('partes/informe_importado/{id}','PartesController@getInformeImportado');
     Route::get('partes/informe_ri/{id}','PartesController@getInformeRiParte');
+    Route::get('partes/informe_rd/{id}','PartesController@getInformeRdParte');
     Route::get('partes/informe_pm/{id}','PartesController@getInformePmParte');
     Route::get('partes/informe_lp/{id}','PartesController@getInformeLpParte');
     Route::get('partes/informe_us/{id}','PartesController@getInformeUsParte');

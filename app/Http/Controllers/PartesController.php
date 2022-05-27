@@ -111,6 +111,7 @@ class PartesController extends Controller
           $this->saveParteDetalleRi($request->informes_ri,$parte);
           $this->saveParteDetallePm($request->informes_pm,$parte);
           $this->saveParteDetalleLp($request->informes_lp,$parte);
+          $this->saveParteDetalleRd($request->informes_rd,$parte);
           $this->saveParteDetalleUs($request->informes_us,$parte);
           $this->saveParteDetalleDz($request->informes_dz,$parte);
           $this->saveParteDetalleCv($request->informes_cv,$parte);
@@ -291,6 +292,21 @@ class PartesController extends Controller
 
         }
     }
+
+    public function saveParteDetalleRd($informes_rd,$parte){
+
+        foreach ($informes_rd as $informe) {
+
+            $parteDetalle  = new ParteDetalles;
+            $parteDetalle->parte_id = $parte->id;
+            $parteDetalle->informe_id =$informe['id'];
+            $parteDetalle->save();
+
+            (new \App\Http\Controllers\InformesController)->setParteId($parte->id,$informe['id']);
+
+        }
+    }
+
 
     public function saveParteDetalleCv($informes_cv,$parte){
 
@@ -511,6 +527,17 @@ class PartesController extends Controller
                               ->selectRaw('parte_detalles.* , 0 as informe_sel,informes_view.numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada, informes.componente as componente,diametros_espesor.diametro as diametro, informes.diametro_especifico as diametro_especifico ')
                               ->get();
 
+        $informes_rd  = DB::table('parte_detalles')
+                              ->join('informes','informes.id','=','parte_detalles.informe_id')
+                              ->join('informes_view','informes_view.informe_id','=','informes.id')
+                              ->join('metodo_ensayos','metodo_ensayos.id','=','informes.metodo_ensayo_id')
+                              ->leftjoin('diametros_espesor','diametros_espesor.id','=','informes.diametro_espesor_id')
+                              ->where('metodo_ensayos.metodo','RD')
+                              ->where('parte_detalles.parte_id',$id)
+                              ->where('informes_view.importable_sn',0)
+                              ->selectRaw('parte_detalles.* , 0 as informe_sel,informes_view.numero_formateado,DATE_FORMAT(informes.fecha,"%d/%m/%Y")as fecha_formateada, informes.componente as componente,diametros_espesor.diametro as diametro, informes.diametro_especifico as diametro_especifico ')
+                              ->get();
+
 
        $informes_us  = DB::table('parte_detalles')
                                ->join('informes','informes.id','=','parte_detalles.informe_id')
@@ -547,6 +574,7 @@ class PartesController extends Controller
                                             'informes_ri_adicionales',
                                             'informes_pm',
                                             'informes_lp',
+                                            'informes_rd',
                                             'informes_us',
                                             'informes_cv',
                                             'informes_pmi',
@@ -579,6 +607,7 @@ class PartesController extends Controller
             $this->saveParteDetalleRi($request->informes_ri,$parte);
             $this->saveParteDetallePm($request->informes_pm,$parte);
             $this->saveParteDetalleLp($request->informes_lp,$parte);
+            $this->saveParteDetalleRd($request->informes_rd,$parte);
             $this->saveParteDetalleUs($request->informes_us,$parte);
             $this->saveParteDetalleDz($request->informes_dz,$parte);
             $this->saveParteDetalleCv($request->informes_cv,$parte);
@@ -627,6 +656,25 @@ class PartesController extends Controller
       return $informe_ri;
 
     }
+
+    public function getInformeRdParte($id){
+
+        $informe_rd = DB::select('select
+                                    informes.componente,
+                                    diametros_espesor.diametro,
+                                    informes.diametro_especifico,
+                                    "RD" as metodo
+                                    FROM informes
+
+                                    inner join informes_rd on informes.id = informes_rd.informe_id
+                                    left join diametros_espesor on diametros_espesor.id = informes.diametro_espesor_id
+                                    WHERE
+                                    informes.id =:id',['id' => $id ]);
+
+      return $informe_rd;
+
+    }
+
 
     public function getInformePmParte($id){
 

@@ -695,7 +695,7 @@
                                              </tr>
                                          </thead>
                                             <tbody>
-                                                <tr v-for="(tramos,k) in ( (TablaTramos.length > 0 )  ? TablaTramos : [])"  :key="k" :class="{selected: indexPosDetalle === k}">
+                                                <tr v-for="(tramos,k) in ( (TablaTramos.length > 0 )  ? TablaTramos : [])"  :key="k">
                                                     <td>{{ tramos.tramo }}</td>
                                                     <td>{{ tramos.bola_comparadora }}</td>
                                                     <td>{{ tramos.espesor_tramo }}</td>
@@ -1154,7 +1154,6 @@ import { eventSetReferencia } from '../event-bus';
              posicionPlacaGosaducto:'',
              defecto_sector:'',
              indexDetalle:-1,
-             indexPosDetalle:0,
              indexPasada:0,
              //Fin Formulario detalle
              tabla:'',
@@ -1470,13 +1469,13 @@ import { eventSetReferencia } from '../event-bus';
                         this.ActualizarDistFuentePelicula();
                     }
             }
-            
+
             if(!this.Loading) {
                 let index = this.diametros.findIndex(e => e.diametro_code === diametro.diametro_code);
                 this.espesor='';
                 this.distancia_fuente_pelicula='';
                 if ( index !== -1) {
-                    this.dist_fuente_pel_edit_sn = false;    
+                    this.dist_fuente_pel_edit_sn = false;
                     if(diametro){
                         this.$store.commit('loading', true);
                         this.$store.dispatch('loadEspesores',diametro.diametro_code).then(() =>{
@@ -1490,9 +1489,9 @@ import { eventSetReferencia } from '../event-bus';
                     if(diametro){
                         if(!this.validarDiametroEspecifico(diametro)){
                             this.diametro = {}
-                        }                   
-                    }                
-                }    
+                        }
+                    }
+                }
             }
         },
 
@@ -1500,7 +1499,7 @@ import { eventSetReferencia } from '../event-bus';
             this.$store.commit('loading', true);
             this.$store.dispatch('loadEspesores', diametro_code).then(() =>{
                 this.$store.commit('loading', false);
-            });            
+            });
         },
 
         validarDiametroEspecifico : function(diametro){
@@ -1815,9 +1814,6 @@ import { eventSetReferencia } from '../event-bus';
                     path4:null
             });
          },
-        selectPosDetalle :function(index){
-            this.indexPosDetalle = index ;
-        },
          addDefectos () {
 
              if(this.defectoRiPlanta == '' ){

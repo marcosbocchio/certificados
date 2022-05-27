@@ -114,6 +114,9 @@ class InformesController extends Controller
             case 'PMI':
                 return redirect()->route('InformePmiCreate',array('ot_id' => $ot_id));
                 break;
+            case 'RD':
+                return redirect()->route('InformeRdCreate',array('ot_id' => $ot_id));
+                break;
         }
 
     }
@@ -161,6 +164,9 @@ class InformesController extends Controller
                 break;
             case 'PMI':
                 return redirect()->route('InformePmiEdit',array('ot_id' => $ot_id, 'id' => $id));
+                break;
+            case 'RD':
+                return redirect()->route('InformeRdEdit',array('ot_id' => $ot_id, 'id' => $id));
                 break;
         }
     }
@@ -238,7 +244,7 @@ class InformesController extends Controller
             if (!isset($request->diametro['diametro_code'])){
 
                 $informe->diametro_especifico = $request->diametro['diametro'];
-            } 
+            }
 
             if(!isset($request->espesor['id'])){
 

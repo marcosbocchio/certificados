@@ -22,6 +22,7 @@
   :informes_pm_data="{{$informes_pm}}"
   :informes_lp_data="{{$informes_lp}}"
   :informes_us_data="{{$informes_us}}"
+  :informes_rd_data="{{$informes_rd}}"
   :informes_cv_data="{{$informes_cv}}"
   :informes_rg_data="{{$informes_rg}}"
   :informes_dz_data="{{$informes_dz}}"
