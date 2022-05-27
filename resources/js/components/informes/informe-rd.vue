@@ -7,7 +7,7 @@
                    <div class="box-body">
                          <div class="col-md-3">
                              <div class="form-group" >
-                                 <label for="formato">Tipo informe RI *</label>
+                                 <label for="formato">Tipo informe RD *</label>
                                  <v-select v-model="formato" :options="['PLANTA', 'DUCTO','PERFILES']" @input="cambiopTipoInforme" ></v-select>
                              </div>
                          </div>
