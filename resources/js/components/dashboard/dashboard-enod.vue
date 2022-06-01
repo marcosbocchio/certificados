@@ -355,6 +355,7 @@ export default {
 
         getResults : async function(page = 1,filtro =''){
 
+            this.search.length > 0 ? filtro = this.search : filtro = '';
             this.loading = true;
             axios.defaults.baseURL = this.url ;
             var urlRegistros = 'ots?page='+ page + '&search=' + filtro ;
