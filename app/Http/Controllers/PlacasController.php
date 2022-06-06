@@ -31,6 +31,11 @@ class PlacasController extends Controller
                    $modelo = 'placas_us';
 
                 break;
+            case 'RD':
+
+                $modelo = 'placas_rd';
+
+            break;
 
         }
 

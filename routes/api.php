@@ -162,6 +162,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::post('storage/documento', 'StorageController@saveDocumento');
     Route::post('storage/placas_ri', 'StorageController@savePlacasRi');
     Route::post('storage/placas_us', 'StorageController@savePlacasUs');
+    Route::post('storage/placas_rd', 'StorageController@savePlacasRd');
 
     Route::post('storage/calibraciones_us', 'StorageController@saveCalibraciones');
     Route::post('storage/indicaciones_us', 'StorageController@saveIndicacionesUs');
@@ -265,6 +266,9 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('placas_ri','PlacasRiController');
     Route::get('placas_ri/informe/{id}','PlacasRiController@PlacasInforme');
 
+    Route::resource('placas_rd','PlacasRdController');
+    Route::get('placas_rd/informe/{id}','PlacasRdController@PlacasInforme');
+
     Route::resource('placas_us','PlacasUsController');
     Route::get('placas_us/informe/{id}','PlacasUsController@PlacasInforme');
 
@@ -340,7 +344,8 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('reporte-placas/cliente/{cliente_id}/ot/{ot_id}/obra/{obra}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}/repetidas-testigos','ReportePlacasController@getPlacasRepetidasTestigos');
     Route::get('reporte-placas/cliente/{cliente_id}/ot/{ot_id}/obra/{obra}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}/rechazadas','ReportePlacasController@getPlacasRechazadas');
     Route::get('reporte-servicios/cliente/{cliente_id}/ot/{ot_id}/obra/{obra}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}','ReportePlacasController@getServicios');
-
+    Route::get('reporte-partes/cliente/{cliente_id}/ot/{ot_id}/obra/{obra}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}','ReporteCertificadosPartesController@getPartes');
+    Route::get('reporte-certificados/cliente/{cliente_id}/ot/{ot_id}/obra/{obra}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}','ReporteCertificadosPartesController@getCertificados');
     //Notificaciones
     Route::get('alarmas/dosimetria','AlarmasController@getAlarmaDosimetria');
     Route::get('alarmas/todas','AlarmasController@getTodas');

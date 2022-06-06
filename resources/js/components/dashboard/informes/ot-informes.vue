@@ -120,6 +120,9 @@
                                     <td v-if="ot_informe.metodo == 'US'">
                                         <a :href="'/placas/informe/' + ot_informe.id" class="btn btn-default btn-sm" title="Digitalización"><img width="16px" :src="'/img/IconoUS.ico'"></a>
                                     </td>
+                                    <td v-if="ot_informe.metodo == 'RD'">
+                                        <a :href="'/placas/informe/' + ot_informe.id" class="btn btn-default btn-sm" title="Digitalización"><img width="16px" :src="'/img/carestream.ico'"></a>
+                                    </td>
                                     <td v-if="!ot_informe.importable_sn" width="10px"> <a :href="'/pdf/informe/' + ot_informe.id " target="_blank"  class="btn btn-default btn-sm" title="Informe"><span class="fa fa-file-pdf-o"></span></a></td>
                                     <td v-else><a :href="'/' + ot_informe.path " target="_blank" title="Informe" class="btn btn-default btn-sm"><span class="fa fa-file-pdf-o"></span></a></td>
                                     <td v-if="!ot_informe.importable_sn" width="10px">

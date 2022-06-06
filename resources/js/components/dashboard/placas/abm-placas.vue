@@ -5,12 +5,12 @@
                  <button class="btn btn-enod pull-right" v-on:click.prevent="openNuevoRegistro()">Nuevo </button>
             </div>
         </div>
-        <div class="clearfix"></div> 
+        <div class="clearfix"></div>
         <div class="col-sm-10">
             <table-placas :registros="registros"  @confirmarDelete="confirmDeleteRegistro" @editRegistroEvent="editRegistro"></table-placas>
-            <delete-registro :datoDelete="datoDelete" :fillRegistro="fillRegistro" @close-modal="getRegistros" :modelo="modelo"></delete-registro>  
+            <delete-registro :datoDelete="datoDelete" :fillRegistro="fillRegistro" @close-modal="getRegistros" :modelo="modelo"></delete-registro>
 
-        </div>         
+        </div>
         <div class="clearfix"></div>
         <!--  Modal -->
         <form v-on:submit.prevent="editmode ? updateRegistro() : storeRegistro()">
@@ -27,43 +27,43 @@
                             </div>
                         </div>
                         <div class="modal-body">
-                            
+
                             <div class="form-group">
                                 <label  for="tipo">Descripción *</label>
-                                <input type="text" id="descripcion" class="form-control" v-model="newRegistro.descripcion">    
-                            </div>   
+                                <input type="text" id="descripcion" class="form-control" v-model="newRegistro.descripcion">
+                            </div>
 
                             <div class="form-group" >
-                                <subir-imagen                                
-                                    :ruta="ruta"                               
+                                <subir-imagen
+                                    :ruta="ruta"
                                     :max_size="max_size"
                                     :path_inicial="newRegistro.path"
-                                    :tipos_archivo_soportados ="tipos_archivo_soportados"    
-                                    :mostrar_formatos_soportados="true"                          
+                                    :tipos_archivo_soportados ="tipos_archivo_soportados"
+                                    :mostrar_formatos_soportados="true"
                                     @path="newRegistro.path = $event"
-                                ></subir-imagen> 
-                            </div>                          
-               
+                                ></subir-imagen>
+                            </div>
+
                         </div>
                         <div class="modal-footer">
                             <input type="submit" class="btn btn-primary" value="Guardar" :disabled="!HabilitarGuardar">
-                            <button type="button" class="btn btn-default" name="button" data-dismiss="modal" >Cancelar</button>                      
-                       
+                            <button type="button" class="btn btn-default" name="button" data-dismiss="modal" >Cancelar</button>
+
                         </div>
                     </div>
-                    <!-- End Modal     
-                    <loading :active.sync="isLoading_file"           
+                    <!-- End Modal
+                    <loading :active.sync="isLoading_file"
                              :is-full-page="fullPage">
-                     </loading> -->   
+                     </loading> -->
                 </div>
             </div>
 
         </form>
 
-        <loading :active.sync="isLoading"           
+        <loading :active.sync="isLoading"
                 :is-full-page="fullPage">
         </loading>
-    </div>    
+    </div>
 </template>
 
 <script>
@@ -75,7 +75,7 @@ import 'vue-loading-overlay/dist/vue-loading.css';
 
 export default {
     name: 'abm-doc',
-      props : {      
+      props : {
 
           modelo : {
             type : String,
@@ -84,7 +84,7 @@ export default {
           },
 
           informe_id_data : {
-          type: Number,      
+          type: Number,
           required: false
           },
 
@@ -99,23 +99,23 @@ export default {
         editmode: false,
         fillRegistro: {},
         datoDelete: '',
-        registros: [],     
-        newRegistro : {  
+        registros: [],
+        newRegistro : {
             descripcion  : '',
-            path : '',            
-               
-         },   
-      
-        ruta: '',    
+            path : '',
+
+         },
+
+        ruta: '',
         max_size :'', //KB
         tipos_archivo_soportados:[],
 
          isLoading: false,
          fullPage: false,
-         isLoading_file: false,         
-      
-         errors:[],      
-         HabilitarGuardar : true,  
+         isLoading_file: false,
+
+         errors:[],
+         HabilitarGuardar : true,
         }
     },
 
@@ -123,56 +123,61 @@ export default {
 
             this.getRegistros();
             this.inicializarParametrosArchivos();
-            
-      },  
-       
+
+      },
+
     computed :{
 
          setTablaComponente : function(){
 
              return 'table-' + this.modelo ;
-         },       
-         
+         },
+
          ...mapState(['url'])
      },
-     
+
     methods :{
 
     inicializarParametrosArchivos :  function(){
 
         if (this.modelo == 'placas_ri'){
-            
-            this.ruta ='placas_ri';   
+
+            this.ruta ='placas_ri';
             this.max_size =  20000; //KB
             this.tipos_archivo_soportados= ['dcm'];
 
         }else if(this.modelo == 'placas_us'){
 
-            this.ruta ='placas_us';  
+            this.ruta ='placas_us';
             this.max_size = 50000; //KB
-            this.tipos_archivo_soportados = ['rdt','scn','ebwk'];                 
+            this.tipos_archivo_soportados = ['rdt','scn','ebwk'];
 
+        }else if(this.modelo == 'placas_rd'){
+
+            this.ruta ='placas_rd';
+            this.max_size =  20000; //KB
+            this.tipos_archivo_soportados= ['dcm'];
         }
-    },    
-        
-    openNuevoRegistro : function(){      
-            
-           this.editmode = false;         
+    },
 
-           this.newRegistro = {  
+    openNuevoRegistro : function(){
+
+           this.editmode = false;
+
+           this.newRegistro = {
                 descripcion  : '',
-                path : '',            
+                path : '',
              };
           eventDeleteFile.$emit('delete');
-           $('#nuevo').modal('show');    
-           }, 
+           $('#nuevo').modal('show');
+           },
 
     getRegistros : function(){
 
             this.isLoading = true;
             axios.defaults.baseURL = this.url ;
-            var urlRegistros = this.modelo + '/informe/' + this.informe_id_data;      
-          
+            var urlRegistros = this.modelo + '/informe/' + this.informe_id_data;
+
             axios.get(urlRegistros).then(response =>{
                 this.registros = response.data;
                 this.isLoading = false;
@@ -180,9 +185,9 @@ export default {
         },
 
     getUsuarios: function(){
-            
+
             axios.defaults.baseURL = this.url ;
-            var urlRegistros = 'users' + '?api_token=' + Laravel.user.api_token;        
+            var urlRegistros = 'users' + '?api_token=' + Laravel.user.api_token;
             axios.get(urlRegistros).then(response =>{
             this.usuarios = response.data
             });
@@ -191,29 +196,29 @@ export default {
     storeRegistro: function(){
 
             axios.defaults.baseURL = this.url ;
-            var urlRegistros = this.modelo;  
-                        
-            axios.post(urlRegistros, {   
-     
+            var urlRegistros = this.modelo;
+
+            axios.post(urlRegistros, {
+
                 'descripcion'        : this.newRegistro.descripcion,
                 'path'               : this.newRegistro.path,
-                'informe_id'         : this.informe_id_data,   
-                
+                'informe_id'         : this.informe_id_data,
 
-            }).then(response => {              
+
+            }).then(response => {
                 this.errors=[];
                 $('#nuevo').modal('hide');
 
-                this.newRegistro ={  
+                this.newRegistro ={
                     descripcion  : '',
-                    path : '',                                          
-                };          
+                    path : '',
+                };
 
-                toastr.success('Nuevo registro creado con éxito');  
-                this.getRegistros();              
-                
+                toastr.success('Nuevo registro creado con éxito');
+                this.getRegistros();
+
              }).catch(error => {
-               
+
                this.errors = error.response.data.errors;
                 console.log(error.response);
                $.each( this.errors, function( key, value ) {
@@ -223,37 +228,37 @@ export default {
 
                if((typeof(this.errors)=='undefined') && (error)){
 
-                     toastr.error("Ocurrió un error al procesar la solicitud");                     
-                  
+                     toastr.error("Ocurrió un error al procesar la solicitud");
+
                 }
 
-           });  
-        },   
-        
+           });
+        },
+
     updateRegistro: function(){
 
             axios.defaults.baseURL = this.url ;
-            var urlRegistros = this.modelo + '/' + this.newRegistro.id;                  
-            axios.put(urlRegistros, {   
-                
+            var urlRegistros = this.modelo + '/' + this.newRegistro.id;
+            axios.put(urlRegistros, {
+
             'descripcion'        : this.newRegistro.descripcion,
             'path'               : this.newRegistro.path,
-            'informe_id'          : this.informe_id_data,         
-                
+            'informe_id'          : this.informe_id_data,
 
-            }).then(response => {              
+
+            }).then(response => {
                 this.errors=[];
                 $('#nuevo').modal('hide');
-                this.newRegistro ={  
+                this.newRegistro ={
                     descripcion  : '',
-                    path : '',                                          
-                };            
-                toastr.success('Nuevo registro creado con éxito');  
-                this.getRegistros();              
+                    path : '',
+                };
+                toastr.success('Nuevo registro creado con éxito');
+                this.getRegistros();
                 console.log(response);
-                
+
              }).catch(error => {
-               
+
                this.errors = error.response.data.errors;
                 console.log(error.response);
                $.each( this.errors, function( key, value ) {
@@ -263,19 +268,19 @@ export default {
 
                if((typeof(this.errors)=='undefined') && (error)){
 
-                     toastr.error("Ocurrió un error al procesar la solicitud");                     
-                  
+                     toastr.error("Ocurrió un error al procesar la solicitud");
+
                 }
 
-           });  
+           });
 
 
 
     },
 
-    confirmDeleteRegistro: function(registro,dato){            
+    confirmDeleteRegistro: function(registro,dato){
               this.fillRegistro.id = registro.id;
-              this.datoDelete = dato;             
+              this.datoDelete = dato;
              $('#delete-registro').modal('show');
           },
 
@@ -283,11 +288,11 @@ export default {
 
                 this.editmode = true;
                 this.HabilitarGuardar = true;
-                this.newRegistro = {};    
-                this.selectedFile =  null,      
-                $('#nuevo').modal('show');  
-                this.newRegistro = registro;  
-                    
+                this.newRegistro = {};
+                this.selectedFile =  null,
+                $('#nuevo').modal('show');
+                this.newRegistro = registro;
+
             },
 }
 }

@@ -218,6 +218,10 @@
                    <li><a href="{{ route('reporte-placas-repetidas-testigos') }}">Placas</a></li>
               @endcan
 
+              @can('R_certificados_partes')
+                   <li><a href="{{ route('reporte-certificados-partes') }}">Certificados/Partes</a></li>
+              @endcan
+
             </ul>
           </li>
         @endcan
