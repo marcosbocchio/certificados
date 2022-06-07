@@ -1565,27 +1565,24 @@ import { eventSetReferencia } from '../event-bus';
 
          cambioMedida : function(){
 
-            if(this.medida.id == undefined) {
-                 this.ActualizarDistFuentePelicula();
-            }else{
+             if(this.medida.id == undefined) {
+                this.medida.codigo = this.medida.codigo.replace('X','x');
+                this.medida.codigo = this.medida.codigo.replace('-','x');
+                let existe_alto = this.medida.codigo.includes('x');
+                if(!existe_alto){
+                    this.medida.codigo = '7 x ' + this.medida.codigo;
+                }else{
+                    this.medida.codigo = this.medida.codigo.replace('x',' x ');
+                }
 
-              var match = this.espesor.espesor.match(/[+]?([0-9]+?[xX-]{1})?[0-9]+?$/);
-              if(!match){
-                  this.espesor.espesor = 0;
-              }
-                 this.ActualizarDistFuentePelicula();
+            }else if(this.espesor.espesor != undefined){
+                var match = this.espesor.espesor.match(/[+]?([0-9]+?[xX-]{1})?[0-9]+?$/);
+                if(!match){
+                    this.espesor.espesor = 0;
+                }  
              }
 
-             this.medida.codigo = this.medida.codigo.replace('X','x');
-             this.medida.codigo = this.medida.codigo.replace('-','x');
-             let existe_alto = this.medida.codigo.includes('x');
-             if(!existe_alto){
-                 this.medida.codigo = '7 x ' + this.medida.codigo;
-             }else{
-                 this.medida.codigo = this.medida.codigo.replace('x',' x ');
-             }
-
-             this.ActualizarDistFuentePelicula();
+            this.ActualizarDistFuentePelicula();
          },
 
          ActualizarDistFuentePelicula : function() {
@@ -1596,6 +1593,7 @@ import { eventSetReferencia } from '../event-bus';
             if(this.tecnica.codigo == 'CHAPA'){
                 if(this.tecnica &&  this.medida){
                     this.$store.commit('loading', true);
+                    alert(this.medida.codigo)
                     var urlRegistros = 'tecnica_distancias/tecnica/' + this.tecnica.id + '/medida/'+ this.medida.codigo + '?api_token=' + Laravel.user.api_token;
                     axios.get(urlRegistros).then(response =>{
                         this.tecnica_distancia = response.data
