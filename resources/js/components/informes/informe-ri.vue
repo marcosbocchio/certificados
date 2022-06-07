@@ -1440,12 +1440,11 @@ import { eventSetReferencia } from '../event-bus';
          },
 
         changeDiametro: function(diametro) {
-
-            if(diametro != 'CHAPA')   {
+            if(diametro.diametro != 'CHAPA')   {
                 this.espesor_chapa = '';
             }
 
-            if(diametro == 'CHAPA')   {
+            if(diametro.diametro == 'CHAPA')   {
                 this.tecnica = this.tecnicas[this.tecnicas.findIndex(elemento =>elemento.codigo == 'CHAPA')];
                     if(!this.isLoading){
                         this.ActualizarDistFuentePelicula();
