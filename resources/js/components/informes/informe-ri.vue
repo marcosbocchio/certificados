@@ -1593,7 +1593,6 @@ import { eventSetReferencia } from '../event-bus';
             if(this.tecnica.codigo == 'CHAPA'){
                 if(this.tecnica &&  this.medida){
                     this.$store.commit('loading', true);
-                    alert(this.medida.codigo)
                     var urlRegistros = 'tecnica_distancias/tecnica/' + this.tecnica.id + '/medida/'+ this.medida.codigo + '?api_token=' + Laravel.user.api_token;
                     axios.get(urlRegistros).then(response =>{
                         this.tecnica_distancia = response.data
