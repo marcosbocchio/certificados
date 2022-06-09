@@ -66,8 +66,10 @@ class TecnicaDistanciasController extends Controller
 
 
     public function DistanciasDiametroChapa($tecnica_id,$medida){
-
+        log::debug("DistanciasDiametroChapa;" . $medida);
         $medidas = explode('x',$medida);
+        log::debug("DistanciasDiametroChapa array" . $medida);
+
         $alto = $medidas[0];
         $ancho = $medidas[1];
 
