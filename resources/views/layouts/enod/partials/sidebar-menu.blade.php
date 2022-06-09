@@ -219,9 +219,11 @@
               @endcan
 
               @can('R_certificados_partes')
-                   <li><a href="{{ route('reporte-certificados-partes') }}">Certificados/Partes</a></li>
+                   <li><a href="{{ route('reporte-certificados') }}">Certificados</a></li>
               @endcan
-
+              @can('R_certificados_partes')
+                   <li><a href="{{ route('reporte-partes') }}">Partes</a></li>
+              @endcan
             </ul>
           </li>
         @endcan

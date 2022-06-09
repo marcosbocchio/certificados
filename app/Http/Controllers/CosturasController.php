@@ -38,6 +38,7 @@ class CosturasController extends Controller
         $reparaciones = $reparaciones == 'true' ? 1 : 0;
 
         $page = Input::get('page', 1);
+        Log::debug($page);
         $paginate = 10;
 
         $data = DB::select(DB::raw('CALL ReporteCosturas(?,?,?,?,?,?,?,?,?)'),array($ot_id,$pk,$plano,$costura,$rechazados,$reparaciones,$soldador_id,$obra,$componente));

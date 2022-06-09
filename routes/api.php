@@ -344,7 +344,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('reporte-placas/cliente/{cliente_id}/ot/{ot_id}/obra/{obra}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}/repetidas-testigos','ReportePlacasController@getPlacasRepetidasTestigos');
     Route::get('reporte-placas/cliente/{cliente_id}/ot/{ot_id}/obra/{obra}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}/rechazadas','ReportePlacasController@getPlacasRechazadas');
     Route::get('reporte-servicios/cliente/{cliente_id}/ot/{ot_id}/obra/{obra}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}','ReportePlacasController@getServicios');
-    Route::get('reporte-partes/cliente/{cliente_id}/ot/{ot_id}/obra/{obra}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}','ReporteCertificadosPartesController@getPartes');
+    Route::get('reporte-partes/cliente/{cliente_id}/ot/{ot_id}/obra/{obra}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}/filtrado/{filtrado}','ReporteCertificadosPartesController@getPartes');
     Route::get('reporte-certificados/cliente/{cliente_id}/ot/{ot_id}/obra/{obra}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}','ReporteCertificadosPartesController@getCertificados');
     //Notificaciones
     Route::get('alarmas/dosimetria','AlarmasController@getAlarmaDosimetria');

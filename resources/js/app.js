@@ -293,7 +293,8 @@ Vue.component('form-documentos-escaneados', require('./components/dashboard/docu
 Vue.component('estadisticas-soldaduras', require('./components/reportes/estadisticas-soldaduras.vue').default);
 Vue.component('costuras', require('./components/reportes/costuras.vue').default);
 Vue.component('placas', require('./components/reportes/placas.vue').default);
-Vue.component('certificados-partes', require('./components/reportes/certificados-partes.vue').default);
+Vue.component('certificados', require('./components/reportes/certificados.vue').default);
+Vue.component('partes', require('./components/reportes/partes.vue').default);
 /* Trazabilidad */
 Vue.component('trazabilidad-fuente', require('./components/trazabilidad/trazabilidad-fuente.vue').default);
 

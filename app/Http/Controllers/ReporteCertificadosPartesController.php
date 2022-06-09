@@ -23,10 +23,18 @@ class ReporteCertificadosPartesController extends Controller
         $user = auth()->user();
         $header_titulo = "Reportes";
         $header_descripcion ="Certificados";
-        return view('certificados-partes.certificados-partes',compact('user','header_titulo','header_descripcion'));
+        return view('reporte-certificados.certificados',compact('user','header_titulo','header_descripcion'));
 
     }
-    public function getPartes($cliente_id,$ot_id,$obra,$fecha_desde,$fecha_hasta){
+    public function callViewPartes(){
+
+        $user = auth()->user();
+        $header_titulo = "Reportes";
+        $header_descripcion ="Partes";
+        return view('reporte-partes.partes',compact('user','header_titulo','header_descripcion'));
+
+    }
+    public function getPartes($cliente_id,$ot_id,$obra,$fecha_desde,$fecha_hasta,$filtrado){
 
         $cliente_id = $cliente_id == 'null' ? 0 : $cliente_id;
         $ot_id = $ot_id == 'null' ? 0 : $ot_id;
@@ -40,10 +48,15 @@ class ReporteCertificadosPartesController extends Controller
             $fecha_hasta =  date('2100-01-01');
         }
         $obra = str_replace('--','/',$obra);
+        Log::debug($fecha_hasta);
+        $page = Input::get('page', 1);
+        $paginate = 10;
 
-
-        $res = DB::select('CALL getPartes(?,?,?,?,?)',array($cliente_id,$ot_id,$obra,$fecha_desde,$fecha_hasta));
-        return $res;
+        $data = DB::select('CALL getPartes(?,?,?,?,?,?)',array($cliente_id,$ot_id,$obra,$fecha_desde,$fecha_hasta,$filtrado));
+        $offSet = ($page * $paginate) - $paginate;
+        $itemsForCurrentPage = array_slice($data, $offSet, $paginate, true);
+        $data = new \Illuminate\Pagination\LengthAwarePaginator(array_values($itemsForCurrentPage), count($data), $paginate, $page);
+        return $data;
 
     }
 
@@ -62,9 +75,16 @@ class ReporteCertificadosPartesController extends Controller
         }
         $obra = str_replace('--','/',$obra);
 
+        $page = Input::get('page', 1);
+        Log::debug($page);
+        $paginate = 10;
 
-        $res = DB::select('CALL getCertificados(?,?,?,?,?)',array($cliente_id,$ot_id,$obra,$fecha_desde,$fecha_hasta));
-        return $res;
+        $data = DB::select('CALL getCertificados(?,?,?,?,?)',array($cliente_id,$ot_id,$obra,$fecha_desde,$fecha_hasta));
+        $offSet = ($page * $paginate) - $paginate;
+        $itemsForCurrentPage = array_slice($data, $offSet, $paginate, true);
+        $data = new \Illuminate\Pagination\LengthAwarePaginator(array_values($itemsForCurrentPage), count($data), $paginate, $page);
+        Log::debug($data);
+        return $data;
 
     }
 
