@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\DocumentacionesRequest;
 use App\Repositories\Documentaciones\DocumentacionesRepository;
 use App\Documentaciones;
+use App\Notificaciones;
 use App\UsuarioDocumentaciones;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
@@ -355,26 +356,33 @@ class DocumentacionesController extends Controller
      */
     public function destroy($id)
     {
+
         $documento = $this->documentaciones->find($id);
+        DB::beginTransaction();
+        try {
+            $usuario_documento = new UsuarioDocumentaciones;
+            $usuario_documento->where('documentacion_id',$id)->delete();
 
-   /*     $usuario_documento = new UsuarioDocumentaciones;
+            $equipo_documento = new InternoEquipoDocumentaciones;
+            $equipo_documento->where('documentacion_id',$id)->delete();
 
-        $usuario_documento->where('documentacion_id',$id)->delete();
+            $fuente_documento = new InternoFuenteDocumentaciones;
+            $fuente_documento->where('documentacion_id',$id)->delete();
 
-        $equipo_documento = new InternoEquipoDocumentaciones;
+            $vehiculo_documento = new VehiculoDocumentaciones;
+            $vehiculo_documento->where('documentacion_id',$id)->delete();
 
-        $equipo_documento->where('documentacion_id',$id)->delete();
+            Notificaciones::where('documentacion_id',$id)->forceDelete();
 
-        $fuente_documento = new InternoFuenteDocumentaciones;
+            $documento->delete();
+            DB::commit();
 
-        $fuente_documento->where('documentacion_id',$id)->delete();
+        } catch (Exception $e) {
 
-        $vehiculo_documento = new VehiculoDocumentaciones;
+            DB::rollback();
+            throw $e;
 
-        $vehiculo_documento->where('documentacion_id',$id)->delete();
-*/
-        $documento->delete();
-
+        }
     }
 
     public function DocumentacionesTotal(){
