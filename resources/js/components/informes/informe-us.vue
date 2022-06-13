@@ -1324,6 +1324,7 @@ export default {
             } else {
                 await this.getTecnicas();
                 this.tecnica = this.tecnicas[0]
+                this.SetearBlockCalibraciones();
                 this.getNumeroInforme();
             }
          },
