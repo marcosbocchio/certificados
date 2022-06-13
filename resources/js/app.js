@@ -294,7 +294,7 @@ Vue.component('estadisticas-soldaduras', require('./components/reportes/estadist
 Vue.component('costuras', require('./components/reportes/costuras.vue').default);
 Vue.component('placas', require('./components/reportes/placas.vue').default);
 Vue.component('certificados', require('./components/reportes/certificados.vue').default);
-Vue.component('partes', require('./components/reportes/partes.vue').default);
+Vue.component('reporte-partes', require('./components/reportes/reporte-partes.vue').default);
 /* Trazabilidad */
 Vue.component('trazabilidad-fuente', require('./components/trazabilidad/trazabilidad-fuente.vue').default);
 

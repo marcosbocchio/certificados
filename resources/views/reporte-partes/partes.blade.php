@@ -4,9 +4,9 @@
 
     <div id="app">
 
-    <partes
+    <reporte-partes
             :user= "{{ $user }}"
-    ></partes>
+    ></reporte-partes>
 
     </div>
 
