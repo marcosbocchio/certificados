@@ -41,11 +41,15 @@
                             <div v-show="!selObra">
                                 <span class="titulo-li">Obra</span>
                                 <a @click="seleccionarObra()" class="pull-right">
-                                    <div v-if="obra || ot.obra">{{obra.obra}}</div>
-                                    <div v-else><span class="seleccionar">Seleccionar</span></div>
+                                    <div v-if="obra || ot.obra">
+                                        {{obra.obra}}
+                                    </div>
+                                    <div v-else>
+                                        <span class="seleccionar">Seleccionar</span>
+                                    </div>
                                 </a>
                             </div>
-                            <v-select v-show="selObra" v-model="obra" label="obra" :options="obras"></v-select>
+                            <v-select v-show="selObra" v-model="obra" label="obra" :options="obras" @input="CambioObra()"></v-select>
                         </li>
                         <li class="list-group-item pointer">
                             <span class="titulo-li">Solo sin certificado</span>  <input class="checkbox-right" type="checkbox" v-model="filtrado" >
@@ -97,13 +101,13 @@
                                   <tr v-for="(item,k) in tablaPartes.data" :key="k">
                                       <td> {{ item.fecha}}</td>
                                       <td style="text-align:center">
-                                        <a :href="'/pdf/parte/' + item.numero + '/original' " target="_blank" title="Informe"><span>{{ item.numero_formateado }}</span></a>
+                                        <a :href="'/pdf/parte/' + item.numero + '/final' " target="_blank" title="Informe"><span>{{ item.numero_formateado }}</span></a>
                                       </td>
                                       <td style="text-align:center"> {{ item.cliente}}</td>
                                       <td style="text-align:center"> {{ item.obra}}</td>
                                       <td style="text-align:center"> {{ item.ot}}</td>
                                       <td style="text-align:center">
-                                        <a :href="'/pdf/certificado/' + item.certificado + '/original' " target="_blank" title="Informe"><span>{{ item.certificado_formateado }}</span></a>
+                                        <a :href="'/pdf/certificado/' + item.certificado + '/final' " target="_blank" title="Informe"><span>{{ item.certificado_formateado }}</span></a>
                                       </td>
                                   </tr>
                               </tbody>
@@ -251,7 +255,6 @@ methods :{
 
         if(this.ot.obra){
             this.obra = { obra : this.ot.obra}
-            this.selObra = !this.selObra
         }
     },
 
@@ -271,12 +274,17 @@ methods :{
    },
 
    async seleccionarObra(){
-
         if(this.ot && !this.ot.obra){
             this.selObra = !this.selObra;
         }
-
     },
+
+    async CambioObra (){
+    
+        this.obra = this.obra == null ? '' : this.obra;
+        this.selObra = !this.selObra;
+
+    },    
 
 
 }}

@@ -45,7 +45,7 @@
                                     <div v-else><span class="seleccionar">Seleccionar</span></div>
                                 </a>
                             </div>
-                            <v-select v-show="selObra" v-model="obra" label="obra" :options="obras"></v-select>
+                            <v-select v-show="selObra" v-model="obra" label="obra" :options="obras" @input="CambioObra()"></v-select>
                         </li>
                         <li class="list-fecha list-group-item pointer">
                             <div class="row">
@@ -95,7 +95,7 @@
                                   <tr v-for="(item,k) in tablaCertificados.data" :key="k">
                                       <td> {{ item.fecha}}</td>
                                       <td style="text-align:center">
-                                        <a :href="'/pdf/certificado/' + item.numero + '/original' " target="_blank" title="Informe"><span>{{ item.numero_formateado }}</span></a>
+                                        <a :href="'/pdf/certificado/' + item.numero + '/final' " target="_blank" title="Informe"><span>{{ item.numero_formateado }}</span></a>
                                       </td>
                                       <td style="text-align:center"> {{ item.cliente}}</td>
                                       <td style="text-align:center"> {{ item.obra}}</td>
@@ -252,7 +252,6 @@ methods :{
 
         if(this.ot.obra){
             this.obra = { obra : this.ot.obra}
-            this.selObra = !this.selObra
         }
     },
 
@@ -264,20 +263,24 @@ methods :{
             let url3 = 'reporte-certificados' + '/cliente/' + (this.cliente ? this.cliente.id : 'null')  + '/ot/' + (this.ot ? this.ot.id : 'null' )  + '/obra/' + (this.obra ? this.obra.obra.replace('/','--') : 'null' ) + '/fecha_desde/' + this.fecha_desde + '/fecha_hasta/' + this.fecha_hasta + '?page='+ page + '&api_token=' + Laravel.user.api_token;
             let res3 = await axios.get(url3);
             this.tablaCertificados = res3.data;
-
         }catch(error){
 
         }finally  {this.$store.commit('loading', false);}
 
    },
 
-   async seleccionarObra(){
-
+   async seleccionarObra() {
         if(this.ot && !this.ot.obra){
             this.selObra = !this.selObra;
         }
-
     },
+
+    async CambioObra (){
+    
+        this.obra = this.obra == null ? '' : this.obra;
+        this.selObra = !this.selObra;
+
+    },       
 
 
 }}
