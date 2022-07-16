@@ -8,6 +8,7 @@
             <th>código</th>
             <th>Descripción</th>
             <th>Método</th>
+            <th>Tipo Equipamiento</th>
             <th>Inst. Medición</th>      
             <th colspan="2">&nbsp;</th>
           </tr>
@@ -17,6 +18,8 @@
             <td>{{ registro.codigo }}</td>
             <td>{{ registro.descripcion }}</td>
             <td>{{ registro.metodo_ensayos.metodo }}</td>  
+            <td v-if ="registro.tipo_equipamiento"> {{ registro.tipo_equipamiento.codigo }} </td>  
+            <td v-else>&nbsp;</td>
             <td>{{ registro.instrumento_medicion }}</td>   
             
             <td width="10px">

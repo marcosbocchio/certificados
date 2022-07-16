@@ -36,6 +36,14 @@
 
                     <div class="col-md-12">
                        <div class="form-group">          
+                          <label v-if="metodo_ensayos.metodo == 'RI'" for="instrumento_medicion">Tipo Equipamiento *</label>
+                          <label v-else for="instrumento_medicion">Tipo Equipamiento</label>
+                          <v-select v-model="tipo_equipamiento" :options="tipos_equipamiento" label="codigo"></v-select>
+                       </div>
+                    </div>                     
+
+                    <div class="col-md-12">
+                       <div class="form-group">          
                           <label for="instrumento_medicion">Instrumento Medición </label>
                           <v-select v-model="Registro.instrumento_medicion" :options="instrumentos_mediciones" :disabled="((metodo_ensayos.metodo != 'LP') && (metodo_ensayos.metodo != 'PM'))"></v-select>
                        </div>
@@ -63,27 +71,21 @@ export default {
             'codigo'  : '',
             'descripcion'  : '',
             'instrumento_medicion' : '',     
-            'palpador_sn':false,        
+            'palpador_sn':false,    
          },   
-
-         instrumentos_mediciones :  ['Luxómetro luz blanca','Lampara luz UV'] ,
-         metodo_ensayos :'',          
-        
+        tipo_equipamiento: '',
+        instrumentos_mediciones :  ['Luxómetro luz blanca','Lampara luz UV'] ,
+        metodo_ensayos :'',             
         errors:{},        
-         }
-    
+        }    
     },
- created: function () {
-     
-    eventNewRegistro.$on('open', this.openModal)   
-  
+    created: function () {     
+        this.$store.dispatch('loadTiposEquipamiento');
+        eventNewRegistro.$on('open', this.openModal)     
+        },
+    computed :{    
+        ...mapState(['url','metodos_ensayos','tipos_equipamiento'])
     },
-    computed :{
-    
-         ...mapState(['url','metodos_ensayos'])
-    },
- 
-   
     methods: {
            openModal : function(){
 
@@ -91,12 +93,10 @@ export default {
                     'codigo'  : '',
                     'descripcion'  : '',
                     'instrumento_medicion' : '',    
-                    'palpador_sn':false,        
+                    'palpador_sn':false,      
                 };
-
-
-                this.metodo_ensayos = '';  
-              
+                this.tipo_equipamiento = '',
+                this.metodo_ensayos = '';             
 
                 $('#nuevo').modal('show');    
                       
@@ -115,7 +115,8 @@ export default {
                 axios.post(urlRegistros, {   
                     
                 ...this.Registro,              
-                'metodo_ensayos' : this.metodo_ensayos,                   
+                'metodo_ensayos' : this.metodo_ensayos,     
+                    'tipo_equipamiento': this.tipo_equipamiento,         
                   
                 }).then(response => {
                   this.$emit('store');

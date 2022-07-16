@@ -87,6 +87,7 @@ Route::group(['middleware' => ['auth']], function () {
   Route::get('/area/enod/bombas', 'BombasController@callView')->name('bombas');
   Route::get('/area/enod/equipos', 'EquiposController@callView')->name('equipos');
   Route::get('/area/enod/interno_fuentes', 'InternoFuentesController@callView')->name('Interno-fuentes');
+  Route::get('/area/enod/tipo_equipamiento', 'TipoEquipamientoController@callView')->name('tipo-equipamiento');
   Route::get('/area/enod/interno_equipos', 'InternoEquiposController@callView')->name('Interno-equipos');
   Route::get('/area/enod/vehiculos', 'VehiculosController@callView')->name('vehiculos');
   Route::get('/area/enod/modelos_3d', 'Modelos3dController@callView')->name('modelos-3d');

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Log;
 
 class EquipoRequest extends FormRequest
 {
@@ -19,13 +20,27 @@ class EquipoRequest extends FormRequest
 
     public function rules()
     {
-        return [
+        $condicional = [];
+        $metodo_ensayo = $this->metodo_ensayos;
+        log::debug('metodo: ' . $metodo_ensayo['metodo']);
+
+        if ($metodo_ensayo['metodo'] == 'RI') { 
+            $condicional = [
+                'tipo_equipamiento' => 'required',
+            ];
+        }
+
+        $validacion = [
 
             'codigo'            => 'required|Max:20',
             'descripcion'       =>'nullable|Max:100',
             'metodo_ensayos'    => 'required',
           
         ];
+
+        $validacion_completa = array_merge($condicional,$validacion);
+
+        return $validacion_completa;
     }
 
     public function attributes()

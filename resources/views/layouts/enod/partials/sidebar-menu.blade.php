@@ -90,6 +90,10 @@
                 @endcan
 
                 @can('M_interno_equipos')
+                  <li><a href="{{ route('tipo-equipamiento') }}">Tipos Equipamiento</a></li>
+                @endcan                
+
+                @can('M_interno_equipos')
                   <li><a href="{{ route('Interno-equipos') }}">Interno Equipos</a></li>
                 @endcan
 

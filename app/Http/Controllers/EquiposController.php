@@ -31,7 +31,11 @@ class EquiposController extends Controller
 
         $filtro = $request->search;
 
-        return Equipos::orderBy('id','DESC')->with('metodoEnsayos')->Filtro($filtro)->paginate(10);
+        return Equipos::orderBy('id','DESC')
+                      ->with('metodoEnsayos')
+                      ->with('tipoEquipamiento')
+                      ->Filtro($filtro)
+                      ->paginate(10);
 
       }
 
@@ -79,7 +83,7 @@ class EquiposController extends Controller
           DB::beginTransaction();
           try {
 
-              $this->saveMaterial($request,$equipo);
+              $this->saveEquipo($request,$equipo);
               DB::commit();
 
           } catch (Exception $e) {
@@ -96,15 +100,15 @@ class EquiposController extends Controller
         $equipo = Equipos::find($id);
 
         $equipo_aux = Equipos::where('codigo',$request['codigo'])
-        ->where('descripcion',$request['descripcion'])
-        ->first();
+                              ->where('descripcion',$request['descripcion'])
+                              ->first();
 
         if(!is_null($equipo_aux) && ($equipo_aux->id != $id)){
            return response()->json(['errors' => ['error' => ['Existe un Equipo con ese código y descripción']]], 422);
         }
           DB::beginTransaction();
           try {
-              $this->saveMaterial($request,$equipo);
+              $this->saveEquipo($request,$equipo);
               DB::commit();
 
             } catch (Exception $e) {
@@ -115,12 +119,13 @@ class EquiposController extends Controller
             }
       }
 
-      public function saveMaterial($request,$equipo){
+      public function saveEquipo($request,$equipo){
 
         $equipo->codigo = $request['codigo'];
         $equipo->descripcion = $request['descripcion'];
         $equipo->metodo_ensayo_id = $request['metodo_ensayos']['id'];
         $equipo->instrumento_medicion = $request['instrumento_medicion'];
+        $equipo->tipo_equipamiento_id = $request['tipo_equipamiento']['id'];
         if($request['metodo_ensayos']['metodo'] == 'US'){
           $equipo->palpador_sn = $request['palpador_sn'];
         }else{

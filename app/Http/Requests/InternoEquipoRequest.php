@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Log;
 
 class InternoEquipoRequest extends FormRequest
 {
@@ -27,7 +26,6 @@ class InternoEquipoRequest extends FormRequest
     $probeta= '';
     $dureza_calibracion= '';
     $metodo_ensayo = $this->equipo['metodo_ensayos'];
-    Log::debug($metodo_ensayo);
     if($metodo_ensayo['metodo'] == 'DZ'){
 
         $probeta = 'required|max:15';

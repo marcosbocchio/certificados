@@ -190,6 +190,9 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('documentaciones/interno_equipo/{interno_equipo_id}', 'DocumentacionesController@getDocInternoEquipo');
     Route::get('documentaciones/ot/{ot_id}/interno_equipo/{interno_equipo_id}/fuentes_documentaciones', 'DocumentacionesController@getDocPorInternoOt');
 
+    Route::get('tipos_equipamiento/paginate', 'TipoEquipamientoController@paginate');
+    Route::resource('tipos_equipamiento', 'TipoEquipamientoController');
+
     Route::get('interno_equipos/metodo/{metodo}/activo_sn/{activo_sn?}/tipo_penetrante/{tipo_penetrante?}', 'InternoEquiposController@getInternoEquipos');
     Route::get('interno_equipos/paginate', 'InternoEquiposController@paginate');
     Route::resource('interno_equipos', 'InternoEquiposController');

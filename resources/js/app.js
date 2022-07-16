@@ -172,6 +172,10 @@ Vue.component('table-interno_fuentes', require('./components/abm-maestro/interno
 Vue.component('editar-interno_fuentes', require('./components/abm-maestro/interno-fuentes/editar-interno_fuentes.vue').default);
 Vue.component('nuevo-interno_fuentes', require('./components/abm-maestro/interno-fuentes/nuevo-interno_fuentes.vue').default);
 
+Vue.component('table-tipos_equipamiento', require('./components/abm-maestro/tipo-equipamiento/table-tipos_equipamiento.vue').default);
+Vue.component('editar-tipos_equipamiento', require('./components/abm-maestro/tipo-equipamiento/editar-tipos_equipamiento.vue').default);
+Vue.component('nuevo-tipos_equipamiento', require('./components/abm-maestro/tipo-equipamiento/nuevo-tipos_equipamiento.vue').default);
+
 Vue.component('table-equipos', require('./components/abm-maestro/equipos/table-equipos.vue').default);
 Vue.component('editar-equipos', require('./components/abm-maestro/equipos/editar-equipos.vue').default);
 Vue.component('nuevo-equipos', require('./components/abm-maestro/equipos/nuevo-equipos.vue').default);
@@ -393,6 +397,7 @@ state: {
         metodos_ensayos:[],
         norma_evaluaciones:[],
         norma_ensayos:[],
+        tipos_equipamiento:[],
         interno_equipo_show:{},
         interno_equipos:[],
         instrumentos_mediciones:[],
@@ -709,6 +714,16 @@ actions : {
             commit('getMetodosEnsayos', response.data)
           })
         },
+
+        loadTiposEquipamiento({
+          commit
+        }) {
+          axios.defaults.baseURL = store.state.url ;
+          var urlRegistros = 'tipos_equipamiento' + '?api_token=' + Laravel.user.api_token;
+          axios.get(urlRegistros).then((response) => {
+            commit('getTiposEquipamiento', response.data)
+          })
+        },        
 
         loadInternoEquipos({
           commit},payload) {
@@ -1150,6 +1165,10 @@ actions : {
       getContratistas(state, contratistas) {
         state.contratistas = contratistas
       },
+
+      getTiposEquipamiento(state, tipos_equipamiento) {
+        state.tipos_equipamiento = tipos_equipamiento 
+      },      
 
       getProvincias(state, provincias) {
         state.provincias = provincias

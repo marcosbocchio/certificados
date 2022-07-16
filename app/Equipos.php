@@ -12,8 +12,12 @@ class Equipos extends Model
 
         return $this->belongsTo('App\MetodoEnsayos','metodo_ensayo_id','id');
         
-        }
+    }
 
+    public function tipoEquipamiento () {
+
+        return $this->belongsTo('App\TipoEquipamiento','tipo_equipamiento_id','id');
+    }
 
     public function scopeFiltro($query, $filtro='') {
 
