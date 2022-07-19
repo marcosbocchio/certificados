@@ -170,7 +170,7 @@ components: {
                 'planta': this.Registro.planta,
                 'prefijo'  : '',
                 'observaciones':'',
-                'solicitado_por':{},
+                'solicitado_por':'',
                 'path':'',
                 'metodo_ensayos' : this.metodo_ensayo,
                 'ejecutor_ensayo' :{}
@@ -219,7 +219,7 @@ components: {
             if(!this.editmode) {
 
                 axios.defaults.baseURL = this.url ;
-                var urlRegistros = 'informes/ot/' + this.otdata.id + '/metodo/' + this.metodo + '/tecnica/0' + '/generar-numero-informe/'  + '?api_token=' + Laravel.user.api_token;
+                var urlRegistros = 'informes/ot/' + this.otdata.id + '/metodo/' + this.metodo_ensayo.metodo + '/tecnica/0' + '/generar-numero-informe/'  + '?api_token=' + Laravel.user.api_token;
                 axios.get(urlRegistros).then(response =>{
 
                     this.Registro.numero = response.data;
