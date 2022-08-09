@@ -64,10 +64,13 @@ function getNombreMes($nro_mes){
 
 function pdfCantFilasACompletar($filasPage,$cantFilasTotal){
 
-
-    $filas_completar = ($filasPage - ($cantFilasTotal % $filasPage)) ;
-
-    if($filas_completar == $filasPage){
+  
+  $filas_completar = ($filasPage - ($cantFilasTotal % $filasPage)) ;
+  Log::Debug('filasPage: ' . $filasPage);
+  Log::Debug('cantFilasTotal: '.$cantFilasTotal);
+  Log::debug('resto:'. ($cantFilasTotal % $filasPage));
+  Log::Debug('filas_completar:'.$filas_completar);
+  if($filas_completar == $filasPage){
 
       return 0 ;
 

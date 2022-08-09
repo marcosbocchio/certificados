@@ -11,6 +11,7 @@ use App\Fuentes;
 use \stdClass;
 use Illuminate\Support\Facades\Log;
 use App\Frentes;
+use Illuminate\Support\Facades\Input;
 
 class InternoEquiposController extends Controller
 {
@@ -61,6 +62,16 @@ class InternoEquiposController extends Controller
           return view('interno_equipos',compact('user','header_titulo','header_descripcion'));
 
       }
+
+      public function callViewReporte(){
+
+        $user = auth()->user();
+        $header_titulo = "Reporte";
+        $header_descripcion ="Interno equipos";
+        
+        return view('reporte_interno_equipos',compact('user','header_titulo','header_descripcion'));
+
+    }      
 
     public function getInternoEquipos($metodo, $activo_sn, $tipo_penetrante){
       $interno_equipos='';
@@ -212,46 +223,38 @@ class InternoEquiposController extends Controller
         $interno_equipo->delete();
     }
 
-    /*
-  public function StoreOtInternoEquipos(Request $request,$ot_id){
+    public function ReporteInternoEquipos($tipo_equipamiento_id, $vencida_sn, $noVencidas_sn) {
 
-    $ot_interno_equipos = InternoEquipos::where('ot_id',$ot_id)->get();
+      $tipo_equipamiento_id = $tipo_equipamiento_id !== 'null' ? $tipo_equipamiento_id : '0';
+      $vencida_sn = $vencida_sn == 'true' ? 1 : 0;
+      $noVencidas_sn = $noVencidas_sn == 'true' ? 1 : 0;
 
-    DB::beginTransaction();
-    try {
+      $page = Input::get('page', 1);
+      Log::debug($page);
+      $paginate = 10;
 
-        foreach ($ot_interno_equipos as $ot_interno_equipo) {
+      $data = DB::select(DB::raw('CALL ReporteInternoEquipos(?,?,?)'),array($tipo_equipamiento_id,$vencida_sn,$noVencidas_sn));
+      Log::debug('data:' . json_encode($data));
+      Log::debug($tipo_equipamiento_id. '-' .$vencida_sn. '-' .$noVencidas_sn);
+      $offSet = ($page * $paginate) - $paginate;
+      $itemsForCurrentPage = array_slice($data, $offSet, $paginate, true);
+      $data = new \Illuminate\Pagination\LengthAwarePaginator(array_values($itemsForCurrentPage), count($data), $paginate, $page);
+      return $data;      
+    }
 
-            $existe = false;
-            foreach ($request->interno_equipos as $interno_equipo) {
+    public function getDosimetros() {
+      return  InternoEquipos::join('equipos','equipos.id','=','interno_equipos.equipo_id')
+                            ->join('tipos_equipamiento','tipos_equipamiento.id','=','equipos.tipo_equipamiento_id')             
+                            ->where('dosimetro_integrador_sn',1)
+                            ->with('equipo')
+                            ->selectRaw('interno_equipos.*,CONVERT(nro_interno,UNSIGNED) as nro_interno_numeric' )
+                            ->orderby('nro_interno_numeric','ASC')
+                            ->get();
+    }
 
-                if( ($ot_interno_equipo['id'] == $interno_equipo['id'])){
-                  $existe = true;
-                }
-
-            }
-
-          if (!$existe){
-
-            InternoEquipos::where('ot_id',$ot_id)
-                          ->where('id',$ot_interno_equipo['id'])
-                          ->update(['ot_id' => null]);
-
-            (new \App\Http\Controllers\TrazabilidadEquipoController)->saveTrazabilidadEquipo($ot_interno_equipo['id']);
-
-            }
-        }
-
-        DB::commit();
-
-      } catch (Exception $e) {
-
-        DB::rollback();
-        throw $e;
-
-      }
-
-  }
-*/
-
+    public function updateIntEquipoUser($interno_equipo_id, $user_id) {
+      $interno_equipo = InternoEquipos::find($interno_equipo_id);
+      $interno_equipo->user_dosimetro_id = $user_id;
+      $interno_equipo->save();
+    }
 }

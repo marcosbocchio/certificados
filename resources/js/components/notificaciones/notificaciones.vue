@@ -38,7 +38,7 @@
                                             {{item.descripcion}}
                                         </div>
                                         <div class="timeline-footer">
-                                            <a class="btn btn-primary btn-xs"  @click="MarcarDesmarcar(k)">
+                                            <a class="btn btn-primary btn-xs" @click="MarcarDesmarcar(k)">
                                              <span  v-if="!item.notificado_sn">Marcar leído</span>
                                              <span v-else>Desmarcar leído</span>
                                             </a>

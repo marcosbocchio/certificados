@@ -57,17 +57,16 @@ class DocumentacionesController extends Controller
                                             ->with('metodoEnsayo')
                                             ->with('usuario')
                                             ->with('TipoDocumentoUsuario')
-                                            ->with('internoEquipo')
+                                            ->with('internoEquipo.equipo.tipoEquipamiento')
                                             ->with('internoFuente')
                                             ->with('vehiculo')
+                                            ->with('userInternoEquipo')
                                             ->Filtro($filtro,$tipo)
                                             ->vencido($vencido_sn)
                                             ->selectRaw('documentaciones.*')
                                             ->orderBy('documentaciones.tipo','ASC')
                                             ->orderBy('documentaciones.id','DESC')
                                             ->paginate(10);
-
-
         return $documentaciones;
     }
 
@@ -342,7 +341,7 @@ class DocumentacionesController extends Controller
      */
     public function update(DocumentacionesRequest $request, $id)
     {
-
+      
        return $this->documentaciones->updateDocumentacion($request,$id);
 
 

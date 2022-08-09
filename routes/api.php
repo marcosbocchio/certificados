@@ -194,6 +194,7 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::resource('tipos_equipamiento', 'TipoEquipamientoController');
 
     Route::get('interno_equipos/metodo/{metodo}/activo_sn/{activo_sn?}/tipo_penetrante/{tipo_penetrante?}', 'InternoEquiposController@getInternoEquipos');
+    Route::get('interno_equipos/dosimetros', 'InternoEquiposController@getDosimetros');
     Route::get('interno_equipos/paginate', 'InternoEquiposController@paginate');
     Route::resource('interno_equipos', 'InternoEquiposController');
 
@@ -343,9 +344,13 @@ Route::group(['middleware' => 'auth:api'], function()
 
     //Costuras
     Route::get('costuras/ot/{ot_id}/pk/{pk}/plano/{plano}/costura/{costura}/rechazados/{rechazados}/reparaciones/{reparaciones}/soldador/{soldador_id}/obra/{obra}/componente/{componente}','CosturasController@getCosturas');
+    // Placas
     Route::get('reporte-placas/cliente/{cliente_id}/ot/{ot_id}/obra/{obra}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}/total','ReportePlacasController@getPlacasTotal');
     Route::get('reporte-placas/cliente/{cliente_id}/ot/{ot_id}/obra/{obra}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}/repetidas-testigos','ReportePlacasController@getPlacasRepetidasTestigos');
     Route::get('reporte-placas/cliente/{cliente_id}/ot/{ot_id}/obra/{obra}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}/rechazadas','ReportePlacasController@getPlacasRechazadas');
+    // Interno Equipos
+    Route::get('reporte-interno-equipos-ri/tipo_equipamiento/{tipo_equipamiento_id}/vencidas_sn/{vencidas_sn}/noVencidas_sn/{noVencidas_sn}','InternoEquiposController@ReporteInternoEquipos');
+
     Route::get('reporte-servicios/cliente/{cliente_id}/ot/{ot_id}/obra/{obra}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}','ReportePlacasController@getServicios');
     Route::get('reporte-partes/cliente/{cliente_id}/ot/{ot_id}/obra/{obra}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}/filtrado/{filtrado}','ReporteCertificadosPartesController@getPartes');
     Route::get('reporte-certificados/cliente/{cliente_id}/ot/{ot_id}/obra/{obra}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}','ReporteCertificadosPartesController@getCertificados');

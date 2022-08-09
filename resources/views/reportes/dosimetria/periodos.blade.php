@@ -96,7 +96,7 @@ text-decoration: underline;
                             </tr>
 
                             <tr>
-                                <td style="font-size: 13px;" colspan="2"><b style="margin-left: 130px">FECHA: </b>{{ date('d-m-Y', strtotime($fecha)) }}</td>
+                                <td style="font-size: 12px;" colspan="2"><b style="margin-left: 130px">FECHA: </b>{{ date('d-m-Y', strtotime($fecha)) }}</td>
                             </tr>
                             <tr>
                                 <td style="font-size: 12px;"><b style="margin-left: 130px"></b></td>                     
@@ -107,8 +107,7 @@ text-decoration: underline;
                 </td>
             </tr>            
         </tbody>
-    </table>
-    
+    </table>    
 </header>
 
 <main>

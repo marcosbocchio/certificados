@@ -103,7 +103,6 @@
         </div>
 
         <div class="col-md-9">
-
             <tabs :options="{ useUrlFragment: false }" @clicked="tabClicked" @changed="tabChanged">
                 <tab name="Costuras/Plano Isom">
                     <div class="row">

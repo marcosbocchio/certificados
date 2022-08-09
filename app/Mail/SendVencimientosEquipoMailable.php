@@ -20,10 +20,10 @@ class SendVencimientosEquipoMailable extends Mailable
      *
      * @return void
      */
-    public function __construct($item)
+    public function __construct($item,$tipo_equipamiento)
     {
         $this->item  = $item;
-        $this->subject = "Notificación : Vencimiento de documentación de equipos (". $item->titulo .")"  ;
+        $this->subject = "Notificación : Vencimiento de documentación de EQUIPOS-".$tipo_equipamiento. " (". $item->titulo .")"  ;
 
     }
 

@@ -7,6 +7,7 @@ use App\TipoEquipamiento;
 use App\Http\Requests\TipoEquipamientoRequest;
 use Illuminate\Support\Facades\DB;
 use Exception as Exception;
+use Illuminate\Support\Facades\Log;
 
 class TipoEquipamientoController extends Controller
 {
@@ -61,6 +62,7 @@ class TipoEquipamientoController extends Controller
          try {
  
              $this->saveTipoEquipamiento($request,$tipo_equipamiento);
+             (new \App\Http\Controllers\AlarmasController)->storeNuevaAlarma($request['codigo'],$request['descripcion']);
              DB::commit();
  
          } catch (Exception $e) {
@@ -70,35 +72,6 @@ class TipoEquipamientoController extends Controller
          }
      }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(TipoEquipamientoRequest $request, $id){
 
         $tipo_equipamiento = TipoEquipamiento::where('id',$id)
@@ -114,7 +87,9 @@ class TipoEquipamientoController extends Controller
           DB::beginTransaction();
           try {
   
+              (new \App\Http\Controllers\AlarmasController)->update($tipo_equipamiento->codigo,$request['codigo'], $request['descripcion']);              
               $this->saveTipoEquipamiento($request,$tipo_equipamiento);
+
               DB::commit();
   
               } catch (Exception $e) {
@@ -135,8 +110,21 @@ class TipoEquipamientoController extends Controller
       }
 
     public function destroy($id)
+    
     {
-        $tipo_equipamiento = TipoEquipamiento::find($id);
-        $tipo_equipamiento->delete();
+        DB::beginTransaction();
+        try {
+            $tipo_equipamiento = TipoEquipamiento::find($id);
+            (new \App\Http\Controllers\AlarmasController)->destroy($tipo_equipamiento->codigo);
+            Log::debug("tipo_equipamiento:". json_encode($tipo_equipamiento));
+            $tipo_equipamiento->delete();
+            DB::commit();
+
+        } catch (Exception $e) {
+    
+            DB::rollback();
+            throw $e;
+
+        }        
     }
 }

@@ -22,13 +22,15 @@ class Documentaciones extends Model
 
     public function usuario(){
 
-         return $this->belongsToMany('App\User','App\UsuarioDocumentaciones','documentacion_id');
+        return $this->belongsToMany('App\User','App\UsuarioDocumentaciones','documentacion_id');
 
     }
 
     public function internoEquipo(){
 
-        return $this->belongsToMany('App\InternoEquipos','App\InternoEquipoDocumentaciones','documentacion_id','interno_equipo_id');
+        return $this->belongsToMany('App\InternoEquipos','App\InternoEquipoDocumentaciones','documentacion_id','interno_equipo_id')->withPivot([
+            'certificado_verificacion_sn',          
+        ]);
 
     }
 
@@ -49,7 +51,12 @@ class Documentaciones extends Model
         return $this->belongsToMany('App\TiposDocumentosUsuarios','App\UsuarioDocumentaciones','documentacion_id','tipo_documentacion_usuario_id');
     }
 
+    public function userInternoEquipo() {
 
+        return $this->belongsToMany('App\User','App\InternoEquipoDocumentaciones','documentacion_id','interno_equipo_user_id');
+
+     }        
+    
     public function scopeVencido($query,$vencido_sn){
 
         if($vencido_sn) {
@@ -73,6 +80,9 @@ class Documentaciones extends Model
                 ->orWhereHas('usuario', function ($q) use($filtro) {
                     $q->WhereRaw("users.name LIKE '%" . $filtro . "%'");
                 })
+                ->orWhereHas('userInternoEquipo', function ($q) use($filtro) {
+                    $q->WhereRaw("users.name LIKE '%" . $filtro . "%'");
+                })                
                 ->orWhereHas('internoEquipo', function ($q) use($filtro) {
                     $q->WhereRaw("interno_equipos.nro_interno LIKE '%" . $filtro . "%'");
                 })
@@ -97,6 +107,9 @@ class Documentaciones extends Model
                         ->orWhereHas('usuario', function ($q) use($filtro) {
                             $q->WhereRaw("users.name LIKE '%" . $filtro . "%'");
                         })
+                        ->orWhereHas('userInternoEquipo', function ($q) use($filtro) {
+                            $q->WhereRaw("users.name LIKE '%" . $filtro . "%'");
+                        })                          
                         ->orWhereHas('internoEquipo', function ($q) use($filtro) {
                             $q->WhereRaw("interno_equipos.nro_interno LIKE '%" . $filtro . "%'");
                         })
