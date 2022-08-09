@@ -57,14 +57,14 @@
                                 </div>
                             </div>
 
-                            <div v-if="(equipo ? (equipo.metodo_ensayos.metodo === 'RI'|| this.equipo.metodo_ensayos.metodo === 'RD' ? true : false) : false) && (!interno_fuente.foco)" class="col-md-12">
+                            <div v-if="(equipo ? ((equipo.metodo_ensayos.metodo === 'RI' || this.equipo.metodo_ensayos.metodo === 'RD') ? true : false) : false) && (!interno_fuente)" class="col-md-12">
                                 <div class="form-group">
                                     <label for="foco">Foco </label>
                                     <input v-model="Registro.foco" type="number" name="foco" class="form-control" value="" step="0.01">
                                 </div>
                             </div>
 
-                            <div v-if="equipo ? (equipo.metodo_ensayos.metodo === 'RI'|| this.equipo.metodo_ensayos.metodo === 'RD' ? true : false) : false" class="col-md-12">
+                            <div v-if="equipo ? ((equipo.metodo_ensayos.metodo === 'RI' || this.equipo.metodo_ensayos.metodo === 'RD') ? true : false) : false" class="col-md-12">
                                 <div class="form-group">
                                     <label for="voltaje">Voltaje</label>
                                     <input v-model="Registro.voltaje" type="number" name="voltaje" class="form-control" max="9999" value="" step="0.1">

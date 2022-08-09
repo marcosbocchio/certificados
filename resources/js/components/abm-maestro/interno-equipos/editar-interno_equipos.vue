@@ -57,14 +57,14 @@
                                 </div>
                             </div>
 
-                            <div v-if="(equipo ? (equipo.metodo_ensayos.metodo === 'RI' || this.equipo.metodo_ensayos.metodo === 'RD' ? true : false) : false) && (!interno_fuente.foco)" class="col-md-12">
+                            <div v-if="(equipo ? ((equipo.metodo_ensayos.metodo === 'RI' || this.equipo.metodo_ensayos.metodo === 'RD') ? true : false) : false) && (!interno_fuente)" class="col-md-12">
                                 <div class="form-group">
                                     <label for="foco">Foco </label>
                                     <input v-model="Registro.foco" type="number" name="foco" class="form-control" value="" step="0.01">
                                 </div>
                             </div>
 
-                            <div v-if="equipo ? (equipo.metodo_ensayos.metodo === 'RI' || this.equipo.metodo_ensayos.metodo === 'RD' ? true : false) : false" class="col-md-12">
+                            <div v-if="equipo ? ((equipo.metodo_ensayos.metodo === 'RI' || this.equipo.metodo_ensayos.metodo === 'RD') ? true : false) : false" class="col-md-12">
                                 <div class="form-group">
                                     <label for="voltaje">Voltaje</label>
                                     <input v-model="Registro.voltaje" type="number" name="voltaje" class="form-control" max="9999" value="" step="0.1">
@@ -156,26 +156,22 @@ export default {
     },
 
     methods: {
-           openModal : function(){
-
-            this.$nextTick(function () {
-
-                this.Registro.nro_serie = this.selectRegistro.nro_serie;
-                this.Registro.nro_interno = this.selectRegistro.nro_interno;
-                this.Registro.foco = this.selectRegistro.foco;
-                this.Registro.voltaje = this.selectRegistro.voltaje;
-                this.Registro.amperaje = this.selectRegistro.amperaje;
-                this.Registro.activo_sn = this.selectRegistro.activo_sn;
-                this.Registro.curie = this.selectRegistro.curie;
-                this.equipo = this.selectRegistro.equipo;
-                this.Registro.probeta = this.selectRegistro.probeta;
-                this.Registro.dureza_calibracion = this.selectRegistro.dureza_calibracion;
-                this.interno_fuente = this.selectRegistro.interno_fuente;
-
-                $('#editar').modal('show');
-
-                this.$forceUpdate();
-            })
+           openModal : function() {
+                this.$nextTick(function () {
+                    this.Registro.nro_serie = this.selectRegistro.nro_serie;
+                    this.Registro.nro_interno = this.selectRegistro.nro_interno;
+                    this.Registro.foco = this.selectRegistro.foco;
+                    this.Registro.voltaje = this.selectRegistro.voltaje;
+                    this.Registro.amperaje = this.selectRegistro.amperaje;
+                    this.Registro.activo_sn = this.selectRegistro.activo_sn;
+                    this.Registro.curie = this.selectRegistro.curie;
+                    this.equipo = this.selectRegistro.equipo;
+                    this.Registro.probeta = this.selectRegistro.probeta;
+                    this.Registro.dureza_calibracion = this.selectRegistro.dureza_calibracion;
+                    this.interno_fuente = this.selectRegistro.interno_fuente;
+                    $('#editar').modal('show');
+                    this.$forceUpdate();
+                })
             },
             resetVariables : function (){
                 this.interno_fuente ='';

@@ -168,6 +168,14 @@
 
                             <div v-if="newRegistro.tipo == 'EQUIPO'">
                                 <div class="form-group">
+                                    <label for="name">Tipo Requerimiento</label>    
+                                    <input v-if="interno_equipo.equipo.tipo_equipamiento" disabled type="text" name="tipo_equipamiento" class="form-control" v-model="interno_equipo.equipo.tipo_equipamiento.codigo">
+                                    <input v-else disabled type="text" name="tipo_equipamiento" class="form-control" value=""/>
+                                </div>
+                            </div>                            
+
+                            <div v-if="newRegistro.tipo == 'EQUIPO'">
+                                <div class="form-group">
                                     <label for="name">Usuario asociado</label>
                                     <v-select v-model="user_dosimetro" label="name" :options="usuarios"></v-select>
                                 </div>
