@@ -70,9 +70,10 @@ class AlarmasController extends Controller
             foreach ($request->alarmas as $item) {
 
                 $alarma = Alarmas::find($item['id']);
-                $alarma->aviso1 = $item['aviso1'] ;
-                $alarma->aviso2 = $item['aviso2'] ;
-                $alarma->activo_sn = $item['activo_sn'] ;
+                $alarma->aviso1 = $item['aviso1'];
+                $alarma->aviso2 = $item['aviso2'];
+                $alarma->activo_sn = $item['activo_sn'];
+                $alarma->descripcion = $item['descripcion'];
                 $alarma->save();
 
             }
@@ -104,8 +105,8 @@ class AlarmasController extends Controller
             $alarma = new Alarmas;
             $alarma->tipo = $tipo;
             $alarma->descripcion = $descripcion;
-            $alarma->aviso1 = 0 ;
-            $alarma->aviso2 = 0 ;
+            $alarma->aviso1 = 30 ;
+            $alarma->aviso2 = 15 ;
             $alarma->activo_sn = 0 ;
             $alarma->save();        
 

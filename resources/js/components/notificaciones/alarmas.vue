@@ -21,7 +21,14 @@
                             <tbody>
                                 <tr v-for="(alarma,k) in alarmas" :key="k" class="pointer">
                                     <td>{{ alarma.tipo }}</td>
-                                    <td>{{ alarma.descripcion }}</td>
+                                    <td @click="selectPosAlarmas(k)">
+                                         <div v-if="indexPosAlarmas == k ">
+                                            <input type="text" v-model="alarmas[k].descripcion" width="100%" max="200">
+                                         </div>
+                                         <div v-else>
+                                            {{ alarma.descripcion }}
+                                         </div>                                    
+                                    </td>
                                     <td style="text-align: center;" @click="selectPosAlarmas(k)">
                                          <div v-if="indexPosAlarmas == k ">
                                             <input type="number" v-model="alarmas[k].aviso1" width="100%" min="0" step="1">
