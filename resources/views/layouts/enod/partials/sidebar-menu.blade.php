@@ -214,7 +214,7 @@
                   <li><a href="{{ route('reporte-estadisticas-soldaduras') }}">Estadísticas soldaduras</a></li>
               @endcan
 
-              @can('R_interno_equipos_ri')
+              @can('R_interno_equipos')
                    <li><a href="{{ route('reporte-interno-equipos-ri') }}">Interno equipos</a></li>
               @endcan              
 
