@@ -36,7 +36,7 @@
                         </li>                                            
                     </ul>
                     <a  @click="Buscar()">
-                        <button class="btn btn-enod  btn-block"><span class="fa fa-plus-circle"></span>
+                        <button class="btn btn-enod btn-block"><span class="fa fa-search"></span>
                             Buscar
                         </button>
                     </a>
@@ -69,8 +69,7 @@
                                 <div class="box box-primary">
                                     <div class="box-header with-border">
                                         <h3 class="box-title">Interno Equipos</h3>
-                                    </div>
-                                    
+                                    </div>     
 
                                     <div class="box-body">
                                         <div class="table-responsive">
@@ -85,7 +84,7 @@
                                                     <th class="col-md-2">Fecha caducidad</th>
                                                     <th style="text-align: center;" class="col-md-1">Doc.</th>
                                                 </tr>
-                                                <tr v-for="(item,k) in TablaInternoEquipos.data" :key="k">
+                                                <tr v-for="(item,k) in TablaInternoEquipos.data" :key="k" :class="[item.vencida_sn ? 'vencidas' : (item.cant_notificaciones ? 'notificadas' : '')]">
                                                     <td>{{ item.nro_interno }} </td>                                 
                                                     <td>{{ item.nro_serie }} </td>
                                                     <td>{{ item.equipo_codigo}} </td>
@@ -98,6 +97,14 @@
                                         </table>
                                     </div>
                                 </div>
+                                <table width="100%" class="bordered">
+                                    <tbody>
+                                        <tr>
+                                            <td style="font-size: 12px;height: 18px;width:75px;height: 30px"><span class="EspecialCaracter" style="margin-left:5px;color:red">█ </span>Vencidas</td>
+                                            <td style="font-size: 12px;height: 18px"><span class="EspecialCaracter" style="margin-left:5px;color:blue">█ </span>Notificado</td>
+                                        </tr>
+                                    </tbody>
+                                </table>                                
                               </div>
                             </div>
                             <div v-else>
@@ -195,3 +202,13 @@ export default {
   }
 
 </script>
+
+<style scoped>
+.vencidas {
+    color:red;
+}
+
+.notificadas {
+    color:blue;
+}
+</style>

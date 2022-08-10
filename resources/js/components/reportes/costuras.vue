@@ -93,7 +93,7 @@
                     </ul>
 
                     <a  @click="Buscar()">
-                        <button class="btn btn-enod  btn-block" :disabled="!ot "><span class="fa fa-plus-circle"></span>
+                        <button class="btn btn-enod  btn-block" :disabled="!ot "><span class="fa fa-search"></span>
                             Buscar
                         </button>
                     </a>
