@@ -38,6 +38,14 @@
                                 </div>
                             </div>
 
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="name">Tipo Requerimiento</label>    
+                                    <input v-if="equipo.tipo_equipamiento" disabled type="text" name="tipo_equipamiento" class="form-control" v-model="equipo.tipo_equipamiento.codigo">
+                                    <input v-else disabled type="text" name="tipo_equipamiento" class="form-control" value=""/>
+                                </div>                            
+                            </div>                                  
+
                             <div v-if="this.equipo ? (this.equipo.metodo_ensayos.metodo === 'RI' || this.equipo.metodo_ensayos.metodo === 'RD' ? true : false) : false" class="col-md-12">
                                 <div class="form-group">
                                     <label>Fuente </label>

@@ -29,6 +29,7 @@ class InternoEquiposController extends Controller
 
         $filtro = $request->search;
         $interno_equipos = InternoEquipos::with('equipo.metodoEnsayos')
+                                          ->with('equipo.tipoEquipamiento')
                                           ->with('internoFuente.fuente')
                                           ->with('frente')
                                           ->selectRaw('interno_equipos.*,CONVERT(nro_interno,UNSIGNED) as nro_interno_numeric' )
