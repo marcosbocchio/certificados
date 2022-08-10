@@ -19,8 +19,8 @@ class TipoEquipamientoRequest extends FormRequest
     public function rules()
     {
         return [
-            'codigo' => 'required|Max:20',
-            'descripcion'  =>'required|Max:100',
+            'codigo' => 'required|Max:25',
+            'descripcion'  =>'Max:100',
         ];
     }
 

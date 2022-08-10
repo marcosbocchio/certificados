@@ -14,7 +14,7 @@
                         <label for="codigo">Código *</label>
                         <input autocomplete="off" v-model="editRegistro.codigo" type="text" name="codigo" class="form-control" value="">
 
-                        <label for="name">Descripción *</label>
+                        <label for="name">Descripción </label>
                         <input autocomplete="off" type="text" name="descripcion" class="form-control" v-model="editRegistro.descripcion" value="">
 
                     </div>
