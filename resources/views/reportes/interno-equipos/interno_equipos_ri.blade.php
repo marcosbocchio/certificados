@@ -164,14 +164,14 @@ footer {
     </footer> 
         
     <main>
-        <table width="100%" class="bordered"h
+        <table width="100%" class="bordered">
             <thead>
                <tr>
                     <th style="font-size: 10px;width: 40px;" ><b>N° Interno</b></th>         
-                    <th style="font-size: 10px;width: 70px;">N° Serie</th>
-                    <th style="font-size: 10px;width: 140px;">Modelo</th>
-                    <th style="font-size: 10px;width: 160px;">Tipo equipamiento</th>               
-                    <th style="font-size: 10px;width: 150px;">Usuario</th>               
+                    <th style="font-size: 10px;width: 60px;">N° Serie</th>
+                    <th style="font-size: 10px;width: 110px;">Modelo</th>
+                    <th style="font-size: 10px;width: 200px;">Tipo equipamiento</th>               
+                    <th style="font-size: 10px;width: 160px;">Usuario</th>               
                     <th style="font-size: 10px;width: 85px;">Fecha vencimiento</th>
                     <th style="font-size: 10px;">Doc.</th>
                 </tr>

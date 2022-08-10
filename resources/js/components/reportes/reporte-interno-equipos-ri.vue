@@ -79,7 +79,7 @@
                                                     <th class="col-md-1">N° interno</th>
                                                     <th class="col-md-1">N° serie</th>
                                                     <th class="col-md-2">Equipo</th>
-                                                    <th class="col-md-2">Tipo equipamiento</th>
+                                                    <th class="col-md-3">Tipo equipamiento</th>
                                                     <th class="col-md-3">Usuario</th>
                                                     <th class="col-md-2">Fecha caducidad</th>
                                                     <th style="text-align: center;" class="col-md-1">Doc.</th>
