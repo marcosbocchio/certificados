@@ -81,8 +81,7 @@ footer {
                 <tr>
                     <td width="49%">
                         <table style="font-size: 12px;" width="100%" class="header-detalle">
-                            <tbody>
-                                
+                            <tbody>                               
                                 <tr>
                                     <th colspan="4" >Documentación Vencida</th>
                                 </tr>
@@ -98,18 +97,17 @@ footer {
                                 </tr>
     
                                <tr>
-                                   <th colspan="4">Tipo equipamiento</th>
+                                   <th colspan="4">Sin Cert. Verif / Doc.</th>
                                 </tr>
                                <tr>
                                    <td colspan="4"> 
-                                        @if ($tipo_equipamiento)
-                                            {{$tipo_equipamiento->codigo}}
+                                        @if ($todos_sn)
+                                            SI
                                         @else
-                                            TODOS
+                                            NO
                                         @endif
                                     </td>
-                               </tr>       
-    
+                               </tr>      
         
                             </tbody>
                         </table>
@@ -131,7 +129,19 @@ footer {
                                           NO  
                                         @endif                                        
                                     </td>
-                                </tr>        
+                                </tr>   
+                                <tr>
+                                   <th colspan="4">Tipo equipamiento</th>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"> 
+                                         @if ($tipo_equipamiento)
+                                             {{$tipo_equipamiento->codigo}}
+                                         @else
+                                             TODOS
+                                         @endif
+                                     </td>
+                                </tr>                                        
                             </tbody>
                         </table>
                     </td>
@@ -182,7 +192,12 @@ footer {
                         <td style="font-size: 10px;"><span class="@if ($item->vencida_sn) vencidas @elseif($item->cant_notificaciones) notificaciones @endif"> {{ $item->name }}</span></td>
                         <td style="font-size: 10px;"><span class="@if ($item->vencida_sn) vencidas @elseif($item->cant_notificaciones) notificaciones @endif"> {{ $item->fecha_cad_formateada }}</span></td>
                         <td style="font-size: 10px;"><span class="@if ($item->vencida_sn) vencidas @elseif($item->cant_notificaciones) notificaciones @endif"> 
-                            <a href="{{ URL::to('/') . '/' . $item->path }}" target="_blank"><img src="{{ public_path('img/fa-file-pdf.png')}}" alt="" style="height: 12px;margin-left:3px;;margin-top:2px;text-align: center;"></a>                                                       
+                            @if ($item->path)
+                                 <a href="{{ URL::to('/') . '/' . $item->path }}" target="_blank"><img src="{{ public_path('img/fa-file-pdf.png')}}" alt="" style="height: 12px;margin-left:3px;;margin-top:2px;text-align: center;"></a>                                                       
+                            @else 
+                                &nbsp;
+                            @endif
+
                         </span></td></tr>
 
                 @endforeach                

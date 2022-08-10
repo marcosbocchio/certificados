@@ -19,15 +19,21 @@
                         <li class="list-group-item pointer">
                             <label>
                                 <input type="checkbox" v-model="vencidas_sn">
-                                <span style="margin-left:20px">Documentación Vencida</span>
+                                <span style="margin-left:20px">Documentación vencida</span>
                             </label>
                         </li>
                         <li class="list-group-item pointer">
                              <label>
                                  <input type="checkbox" v-model="noVencidas_sn">
-                                 <span style="margin-left:20px">Documentación No Vencida</span>
+                                 <span style="margin-left:20px">Documentación No vencida</span>
                             </label>
-                        </li>                        
+                        </li>         
+                        <li class="list-group-item pointer">
+                             <label>
+                                 <input type="checkbox" v-model="todos_sn">
+                                 <span style="margin-left:20px">Sin Cert. Verif / Doc. </span>
+                            </label>
+                        </li>                                            
                     </ul>
                     <a  @click="Buscar()">
                         <button class="btn btn-enod  btn-block"><span class="fa fa-plus-circle"></span>
@@ -36,6 +42,15 @@
                     </a>
                 </div>
             </div>
+            <div class="box">       
+                <div class="box-body box-profile">    
+                    <ul>
+                        <li>
+                            Para el vencimiento se tiene en cuenta el "certificado de verificación" de la documentación.                           
+                        </li>
+                   </ul>       
+                </div>
+            </div> 
         </div>
 
         <div class="col-md-9">
@@ -44,7 +59,7 @@
                     <div  v-if="(TablaInternoEquipos.data && TablaInternoEquipos.data.length)">
                         <div class="row">
                             <div class="col-lg-4">
-                                <a :href="'/pdf/reporte-interno-equipos-ri/tipo_equipamiento/' + (tipo_equipamiento ? tipo_equipamiento.id : 'null') + '/vencidas_sn/' + vencidas_sn + '/noVencidas_sn/' + noVencidas_sn + '?&api_token=' + Laravel.user.api_token" target="_blank">Exportar PDF</a>
+                                <a class="btn btn-default" :href="'/pdf/reporte-interno-equipos-ri/tipo_equipamiento/' + (tipo_equipamiento ? tipo_equipamiento.id : 'null') + '/vencidas_sn/' + vencidas_sn + '/noVencidas_sn/' + noVencidas_sn + /todos_sn/ + this.todos_sn + '?&api_token=' + Laravel.user.api_token" target="_blank">Exportar PDF</a>
                             </div>
                         </div>                           
                     </div>
@@ -68,6 +83,7 @@
                                                     <th class="col-md-2">Tipo equipamiento</th>
                                                     <th class="col-md-3">Usuario</th>
                                                     <th class="col-md-2">Fecha caducidad</th>
+                                                    <th style="text-align: center;" class="col-md-1">Doc.</th>
                                                 </tr>
                                                 <tr v-for="(item,k) in TablaInternoEquipos.data" :key="k">
                                                     <td>{{ item.nro_interno }} </td>                                 
@@ -76,6 +92,7 @@
                                                     <td>{{ item.tipo_equipamiento_codigo }} </td>
                                                     <td>{{ item.name }}</td>
                                                     <td>{{ item.fecha_cad_formateada }}</td>
+                                                    <td align="center" width="10px"> <a :href="'/' + item.path " target="_blank" title="Imagen"><span class="fa fa-file-image-o"></span></a></td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -127,6 +144,7 @@ export default {
       selTipo_equipamiento: false,   
       vencidas_sn : true,
       noVencidas_sn : true,
+      todos_sn: false,
       TablaInternoEquipos: {},
      }
 
@@ -151,7 +169,7 @@ export default {
         this.$store.commit('loading', true);
         this.TablaInternoEquipos = {};
         try {
-          let url = 'reporte-interno-equipos-ri/tipo_equipamiento/' + (this.tipo_equipamiento ? this.tipo_equipamiento.id : 'null') + '/vencidas_sn/' + this.vencidas_sn + '/noVencidas_sn/' + this.noVencidas_sn + '?page='+ page + '&api_token=' + Laravel.user.api_token;
+          let url = 'reporte-interno-equipos-ri/tipo_equipamiento/' + (this.tipo_equipamiento ? this.tipo_equipamiento.id : 'null') + '/vencidas_sn/' + this.vencidas_sn + '/noVencidas_sn/' + this.noVencidas_sn + '/todos_sn/' + this.todos_sn + '?page='+ page + '&api_token=' + Laravel.user.api_token;
           let res = await axios.get(url);
           this.TablaInternoEquipos = res.data;
           console.log(this.TablaInternoEquipos);
