@@ -12,17 +12,15 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="btn-group">
+                                    <label>
+                                        <input type="radio"  name="enod" :value="true"  v-model="isEnod">
+                                            Enod
+                                    </label>
 
-                                        <label>
-                                            <input type="radio"  name="enod" :value="true"  v-model="isEnod">
-                                                Enod
-                                        </label>
-
-                                        <label>&nbsp;&nbsp;
-                                            <input type="radio" name="cliente" :value="false" v-model="isEnod">
-                                            Cliente
-                                        </label>
-
+                                    <label>&nbsp;&nbsp;
+                                        <input type="radio" name="cliente" :value="false" v-model="isEnod">
+                                        Cliente
+                                    </label>
                                 </div>
                             </div>
                             <div class="col-md-6">

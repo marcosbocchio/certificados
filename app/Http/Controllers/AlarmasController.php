@@ -61,9 +61,7 @@ class AlarmasController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-
-        $alarmas = new Alarmas;
+    {      
 
           DB::beginTransaction();
 
@@ -71,11 +69,11 @@ class AlarmasController extends Controller
 
             foreach ($request->alarmas as $item) {
 
-            $alarma = Alarmas::find($item['id']);
-            $alarma->aviso1 = $item['aviso1'] ;
-            $alarma->aviso2 = $item['aviso2'] ;
-            $alarma->activo_sn = $item['activo_sn'] ;
-            $alarma->save();
+                $alarma = Alarmas::find($item['id']);
+                $alarma->aviso1 = $item['aviso1'] ;
+                $alarma->aviso2 = $item['aviso2'] ;
+                $alarma->activo_sn = $item['activo_sn'] ;
+                $alarma->save();
 
             }
 
@@ -96,6 +94,31 @@ class AlarmasController extends Controller
           }
 
     }
+
+    public function storeNuevaAlarma($tipo, $descripcion) { 
+
+        DB::beginTransaction();
+
+        try {
+
+            $alarma = new Alarmas;
+            $alarma->tipo = $tipo;
+            $alarma->descripcion = $descripcion;
+            $alarma->aviso1 = 0 ;
+            $alarma->aviso2 = 0 ;
+            $alarma->activo_sn = 0 ;
+            $alarma->save();        
+
+            DB::commit();
+
+        } catch (Exception $e) {
+
+            DB::rollback();
+            throw $e;
+
+        }
+    }
+
 
     public function BuscarAlarma($alarmas,$tipo){
 
@@ -148,9 +171,28 @@ class AlarmasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update($oldTipo,$tipo,$descripcion)
+    {   
+
+        DB::beginTransaction();
+
+        try {
+
+            $alarma =  Alarmas::where('tipo', $oldTipo)->first();
+            if($alarma) {
+                $alarma->tipo = $tipo;
+                $alarma->descripcion = $descripcion;
+                $alarma->save();    
+            }
+
+            DB::commit();
+
+        } catch (Exception $e) {
+
+            DB::rollback();
+            throw $e;
+
+        }    
     }
 
     /**
@@ -159,8 +201,12 @@ class AlarmasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($tipo)
     {
-        //
+        $alarma = Alarmas::where('tipo', $tipo)->first();
+        if($alarma) {
+            Log::debug("Alarma:". json_encode($alarma));
+            $alarma->delete();
+        }
     }
 }

@@ -214,6 +214,10 @@
                   <li><a href="{{ route('reporte-estadisticas-soldaduras') }}">Estadísticas soldaduras</a></li>
               @endcan
 
+              @can('R_interno_equipos_ri')
+                   <li><a href="{{ route('reporte-interno-equipos-ri') }}">Interno equipos RI</a></li>
+              @endcan              
+
               @can('R_costuras')
                    <li><a href="{{ route('reporte-costuras') }}">Costuras</a></li>
               @endcan
@@ -225,6 +229,7 @@
               @can('R_certificados_partes')
                    <li><a href="{{ route('reporte-certificados') }}">Certificados</a></li>
               @endcan
+
               @can('R_certificados_partes')
                    <li><a href="{{ route('reporte-partes') }}">Partes</a></li>
               @endcan

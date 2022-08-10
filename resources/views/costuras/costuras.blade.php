@@ -5,7 +5,7 @@
     <div id="app">
 
     <costuras
-            :user= "{{ $user }}"
+        :user= "{{ $user }}"
     ></costuras>
 
     </div>

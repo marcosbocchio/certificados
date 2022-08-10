@@ -48,7 +48,7 @@ class NotificacionesController extends Controller
 
     }
 
-    public function store($user_id,$item)
+    public function store($user_id,$item,$tipo_equipamiento = null)
     {
         $notificacion = new notificaciones;
 
@@ -66,11 +66,11 @@ class NotificacionesController extends Controller
                 break;
 
             case 'FUENTE':
-                $descripcion ='Le informamos el vencimiento de la siguiente documentación de la fuente ' .$item->name . ': INT Nº ' . $item->nro_serie . ', código ' . $item->codigo . ' con fecha de vencimiento al día ' . date("d-m-Y", strtotime($item->fecha_caducidad));
+                $descripcion ='Le informamos el vencimiento de la siguiente documentación de la fuente ' . ': INT Nº ' . $item->nro_serie . ', código ' . $item->codigo . ' con fecha de vencimiento al día ' . date("d-m-Y", strtotime($item->fecha_caducidad));
                 break;
 
             case 'EQUIPO':
-                $descripcion ='Le informamos el vencimiento de la siguiente documentación del equipo '. $item->name . ': INT Nº ' . $item->nro_serie . ', código ' . $item->codigo . ' con fecha de vencimiento al día ' . date("d-m-Y", strtotime($item->fecha_caducidad));
+                $descripcion ='Le informamos el vencimiento de la siguiente documentación del equipo '. $tipo_equipamiento . ': INT Nº ' . $item->nro_serie . ', código ' . $item->codigo . ' con fecha de vencimiento al día ' . date("d-m-Y", strtotime($item->fecha_caducidad));
                 break;
 
             case 'PROCEDIMIENTO GENERAL':

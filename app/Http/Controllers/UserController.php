@@ -199,15 +199,14 @@ class UserController extends Controller
 
             if ($request->get('password_nuevo')!='')  {
 
-                if ($request->get('password_nuevo') == $request->get('password_confirmation'))
+              if ($request->get('password_nuevo') == $request->get('password_confirmation'))
                 {
-                    $user->password = bcrypt($request->get('password_nuevo'));
+                  $user->password = bcrypt($request->get('password_nuevo'));
                 }
                 else
                 {
-                    return back()->with('error','Las contraseñas ingresadas no coinciden.');
+                  return back()->with('error','Las contraseñas ingresadas no coinciden.');
                 }
-
             }
 
             $user->name= $request->get('name');
@@ -216,30 +215,26 @@ class UserController extends Controller
             $user->save();
             return back()->with('success','Perfil de usuario actualizado.');
 
-        }else{
-
-            return back()->with('error','La contraseña ingresada no es correcta.');
+        }else {
+          return back()->with('error','La contraseña ingresada no es correcta.');
         }
 
       }
 
-    public function getUsuarioMetodos($user_id){
-
-        return UsuarioMetodosEnsayos::join('metodo_ensayos','metodo_ensayos.id','=','usuario_metodos_ensayos.metodo_ensayo_id')
-                                      ->where('user_id',$user_id)
-                                      ->select('metodo_ensayos.*')
-                                      ->get();
+    public function getUsuarioMetodos($user_id) {
+      return UsuarioMetodosEnsayos::join('metodo_ensayos','metodo_ensayos.id','=','usuario_metodos_ensayos.metodo_ensayo_id')
+                                    ->where('user_id',$user_id)
+                                    ->select('metodo_ensayos.*')
+                                    ->get();
     }
 
-    public function saveUsuarioMetodos($metodos_firmas,$user_id){
+    public function saveUsuarioMetodos($metodos_firmas,$user_id) {
 
-        foreach ($metodos_firmas as $item) {
-
-            UsuarioMetodosEnsayos::create(['metodo_ensayo_id' => $item['id'],'user_id'=> $user_id]);
-
-        }
-
+      foreach ($metodos_firmas as $item) {
+        UsuarioMetodosEnsayos::create(['metodo_ensayo_id' => $item['id'],'user_id'=> $user_id]);
       }
+
+    }
 
     public function getFirma($user_id,$metodo_ensayo_id){
 

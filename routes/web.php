@@ -137,14 +137,16 @@ Route::group(['middleware' => ['auth']], function () {
       Route::get('/pdf/informe/us/indicaciones/referencia/{id}','pdfInformesUsReferenciaController@imprimir')->name('InformeUsDetalleUsPaUsReferencias');
       Route::get('/pdf/informe/us/{informe}/indicaciones_us_pa','pdfInformesUsIndicacionesUsPaController@imprimir')->name('InformeUsIndicacionesUsPa');
       Route::get('/pdf/informe/us/{informe}/indicaciones_me','pdfInformesUsIndicacionesMeController@imprimir')->name('InformeUsIndicacionesMe');
-
+      Route::get('/pdf/reporte-interno-equipos-ri/tipo_equipamiento/{tipo_equipamiento_id}/vencidas_sn/{vencidas_sn}/noVencidas_sn/{noVencidas_sn}/todos_sn/{todos_sn}','PdfInternosEquiposController@imprimir');
 
       /* Reportes */
       Route::get('/area/enod/reportes/estadisticas-soldaduras','EstadisticasSoldadurasController@callView')->name('reporte-estadisticas-soldaduras');
       Route::get('/area/enod/reportes/costuras','CosturasController@callView')->name('reporte-costuras');
+      Route::get('/area/enod/reportes/interno_equipos_ri','InternoEquiposController@callViewReporte')->name('reporte-interno-equipos-ri');
       Route::get('/area/enod/reportes/placas-repetidas-testigos','ReportePlacasController@callView')->name('reporte-placas-repetidas-testigos');
       Route::get('/area/enod/reportes/certificados','ReporteCertificadosPartesController@callView')->name('reporte-certificados');
       Route::get('/area/enod/reportes/partes','ReporteCertificadosPartesController@callViewPartes')->name('reporte-partes');
+
       /*SECCION CATEGORIAS/VIDEOS  */
 
       Route::get('crear-contenido', 'GestionVideoController@callView')->name('crear-contenido');

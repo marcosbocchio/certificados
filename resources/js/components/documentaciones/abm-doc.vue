@@ -115,7 +115,7 @@
                         <div class="modal-body">
                             <div v-if="modelo == 'ot_procedimientos_propios'">
                                 <div class="form-group">
-                                    <label  for="tipo">Tipo Documento *</label>
+                                    <label  for="tipo">Tipo Documento *</label>                                                       
                                     <input type="text" id="tipo" class="form-control" v-model="newRegistro.tipo" disabled>
                                 </div>
                             </div>
@@ -142,6 +142,10 @@
                             <div v-else>
                                 <div class="form-group">
                                     <label for="titulo">Título *</label>
+                                    <template v-if="newRegistro.tipo == 'EQUIPO'">
+                                      <input type="checkbox" id="checkbox" v-model="certificado_verificacion_sn" style="float:right">
+                                      <label for="tipo" style="float:right;margin-right: 5px;">Certificado de verificación</label>                                    
+                                    </template>
                                     <input type="text" name="titulo" class="form-control" v-model="newRegistro.titulo" value="" @change="VerificarDuplicado()" maxlength="25">
                                 </div>
                             </div>
@@ -159,6 +163,21 @@
                                             <span class="downSelect"> {{ option.equipo.codigo }} </span>
                                         </template>
                                     </v-select>
+                                </div>
+                            </div>
+
+                            <div v-if="newRegistro.tipo == 'EQUIPO'">
+                                <div class="form-group">
+                                    <label for="name">Tipo Requerimiento</label>    
+                                    <input v-if="interno_equipo.equipo.tipo_equipamiento" disabled type="text" name="tipo_equipamiento" class="form-control" v-model="interno_equipo.equipo.tipo_equipamiento.codigo">
+                                    <input v-else disabled type="text" name="tipo_equipamiento" class="form-control" value=""/>
+                                </div>
+                            </div>                            
+
+                            <div v-if="newRegistro.tipo == 'EQUIPO'">
+                                <div class="form-group">
+                                    <label for="name">Usuario asociado</label>
+                                    <v-select v-model="user_dosimetro" label="name" :options="usuarios"></v-select>
                                 </div>
                             </div>
 
@@ -301,12 +320,10 @@ export default {
       },
 
       components: {
-
             LightBox,
         },
 
       data() { return {
-
        images:[
                 {
                 src: '',
@@ -314,7 +331,7 @@ export default {
                 caption: 'caption to display. receive <html> <b>tag</b>', // Optional
 
                 }
-            ]   ,
+            ],
 
         editmode: false,
         fillRegistro: {},
@@ -327,7 +344,7 @@ export default {
             path : '',
             fecha_caducidad:'',
          },
-
+         certificado_verificacion_sn: false,
          isLoading: false,
          fullPage: false,
          isLoading_file: false,
@@ -348,19 +365,19 @@ export default {
          ],
          errors:[],
          interno_equipo: {id:null},
-         interno_fuente:{id:null},
-         vehiculo:{id:null},
-         usuario :{id:null},
+         interno_fuente: {id:null},
+         vehiculo: {id:null},
+         usuario: {id:null},
+         user_dosimetro: {id:null},
          tipo_documento_usuario: {id:null},
-         tipos_documentos_usuarios:[],
-         metodo_ensayos:[],
-         metodo_ensayo :{id:'',},
-         usuarios:[],
-         selectedFile : null,
-         HabilitarGuardar : true,
+         tipos_documentos_usuarios: [],
+         metodo_ensayos: [],
+         metodo_ensayo: {id:'',},
+         usuarios: [],
+         selectedFile: null,
+         HabilitarGuardar: true,
 
          options: {
-
             layout: {
                 height: 20,
                 width: 150,
@@ -396,9 +413,9 @@ export default {
 
          }
      },
-      watch : {
+      watch: {
 
-          newRegistro : function(val) {
+          newRegistro: function(val) {
 
             this.images[0].src ='/' + val.path;
             this.images[0].thumb  ='/' + val.path;
@@ -407,18 +424,14 @@ export default {
 
     },
 
-    computed :{
-
-         setTablaComponente : function(){
-
-             return 'table-' + this.modelo ;
+    computed: {
+         setTablaComponente : function() {
+            return 'table-' + this.modelo ;
          },
-
-         ...mapState(['url','CantProcedimientos','CantDocumentacionesTotal','interno_equipos','interno_fuentes','vehiculos'])
-
+        ...mapState(['url','CantProcedimientos','CantDocumentacionesTotal','interno_equipos','interno_fuentes','vehiculos'])
      },
 
-    methods :{
+    methods: {
 
     openGallery(index) {
 
@@ -432,42 +445,42 @@ export default {
 
     },
 
-    openNuevoRegistro : function(){
+    openNuevoRegistro : function() {
+        this.editmode = false;
+        this.uploadPercentage = 0;
+        this.metodo_ensayo ={
+            id:'',
+        };
+        this.interno_equipo = {'id' : null};
+        this.interno_fuente = {'id':null};
+        this.vehiculo = {'id':null};
+        this.usuario = {'id':null};
+        this.tipo_documento_usuario = {'id':null};
+        this.certificado_verificacion_sn = false;
+        this.user_dosimetro = {'id':null};
+        if(this.modelo == 'ot_procedimientos_propios'){
 
-           this.editmode = false;
-           this.uploadPercentage = 0;
-           this.metodo_ensayo ={
-                id:'',
-            };
-         this.interno_equipo = {'id' : null};
-         this.interno_fuente = {'id':null};
-         this.vehiculo = {'id':null};
-         this.usuario = {'id':null};
-         this.tipo_documento_usuario = {'id':null};
-
-           if(this.modelo == 'ot_procedimientos_propios'){
-
-               this.newRegistro = {
-                    tipo :'PROCEDIMIENTO',
-                    titulo: '',
-                    descripcion  : '',
-                    path : '',
-                    fecha_caducidad:'',
-                    };
-           }else{
-               this.newRegistro = {
-                    tipo :'',
-                    titulo: '',
-                    descripcion  : '',
-                    path : '',
-                    fecha_caducidad:'',
-                    };
-           }
-           this.$refs.inputFile1.type = 'text';
-           this.$refs.inputFile1.type = 'file';
-           this.selectedFile =  null
-           $('#nuevo').modal('show');
-           },
+            this.newRegistro = {
+                tipo :'PROCEDIMIENTO',
+                titulo: '',
+                descripcion  : '',
+                path : '',
+                fecha_caducidad:'',
+                };
+        }else{
+            this.newRegistro = {
+                tipo :'',
+                titulo: '',
+                descripcion  : '',
+                path : '',
+                fecha_caducidad:'',
+                };
+        }
+        this.$refs.inputFile1.type = 'text';
+        this.$refs.inputFile1.type = 'file';
+        this.selectedFile =  null
+        $('#nuevo').modal('show');
+    },
 
     getResults : function(page = 1){
 
@@ -499,23 +512,21 @@ export default {
         });
         },
 
-    getTiposDocumentosUsuarios: function(){
+    getTiposDocumentosUsuarios: function() {
+        axios.defaults.baseURL = this.url ;
+        var urlRegistros = 'tipos_documentos_usuarios' + '?api_token=' + Laravel.user.api_token;
+        axios.get(urlRegistros).then(response =>{
+        this.tipos_documentos_usuarios = response.data
+        });
+    },
 
-            axios.defaults.baseURL = this.url ;
-            var urlRegistros = 'tipos_documentos_usuarios' + '?api_token=' + Laravel.user.api_token;
-            axios.get(urlRegistros).then(response =>{
-            this.tipos_documentos_usuarios = response.data
-            });
-        },
-
-    getMetodosEnsayos: function(){
-
-            axios.defaults.baseURL = this.url ;
-            var urlRegistros = 'metodo_ensayos' + '?api_token=' + Laravel.user.api_token;
-            axios.get(urlRegistros).then(response =>{
-            this.metodo_ensayos = response.data
-            });
-        },
+    getMetodosEnsayos: function() {
+        axios.defaults.baseURL = this.url ;
+        var urlRegistros = 'metodo_ensayos' + '?api_token=' + Laravel.user.api_token;
+        axios.get(urlRegistros).then(response =>{
+        this.metodo_ensayos = response.data
+        });
+    },
 
     VerificarDuplicado:  function(){
 
@@ -534,8 +545,7 @@ export default {
             });
       },
 
-    cancelarModal : function(){
-
+    cancelarModal : function() {
         this.newRegistro.titulo = '';
         this.newRegistro.descripcion = '';
         this.usuario.descripcion = '';
@@ -545,58 +555,58 @@ export default {
         this.usuario = {id:null};
         this.tipo_documento_usuario = {id:null};
         this.metodo_ensayo ={id:''};
-         $('#modal-cancelar-continuar').modal('hide');
+        $('#modal-cancelar-continuar').modal('hide');
     },
 
     onFileSelected(event) {
 
-            this.isLoading_file = true;
-            this.HabilitarGuardar = false;
+        this.isLoading_file = true;
+        this.HabilitarGuardar = false;
 
-            this.selectedFile = event.target.files[0];
+        this.selectedFile = event.target.files[0];
 
-            let FileSize = this.selectedFile.size / 1024 / 1024; // in MB
-            let FileType=this.selectedFile.type;
+        let FileSize = this.selectedFile.size / 1024 / 1024; // in MB
+        let FileType=this.selectedFile.type;
 
-            if(this.newRegistro.tipo == 'PROCEDIMIENTO') {
+        if(this.newRegistro.tipo == 'PROCEDIMIENTO') {
 
-                if (FileType != 'application/pdf') {
+            if (FileType != 'application/pdf') {
 
-                    toastr.error('El tipo de archivo no es aceptado ');
-                    this.$refs.inputFile1.type = 'text';
-                    this.$refs.inputFile1.type = 'file';
-                    this.selectedFile = null;
-                    return;
-                }
-
+                toastr.error('El tipo de archivo no es aceptado ');
+                this.$refs.inputFile1.type = 'text';
+                this.$refs.inputFile1.type = 'file';
+                this.selectedFile = null;
+                return;
             }
 
-            if (FileType == 'application/pdf') {
-                this.isPdf = true;
-            }else if(FileType == 'image/jpeg' || FileType == 'image/bmp') {
-                    this.isPdf = false;
-            }else {
-                    toastr.error('El tipo de archivo no es aceptado ');
-                    this.$refs.inputFile1.type = 'text';
-                    this.$refs.inputFile1.type = 'file';
-                    this.selectedFile = null;
-                    return;
-             }
+        }
 
-            if(FileSize > 20 ){
-                 event.preventDefault();
-                 toastr.error('Archivo demasiado grande. (Max 20 MB)');
-                 this.$refs.inputFile1.type = 'text';
-                 this.$refs.inputFile1.type = 'file';
-                 this.selectedFile = null;
-                 this.uploadPercentage = 0;
-                 this.isLoading_file = false;
-            }else{
-
-                this.onUpload();
-
+        if (FileType == 'application/pdf') {
+            this.isPdf = true;
+        }else if(FileType == 'image/jpeg' || FileType == 'image/bmp') {
+                this.isPdf = false;
+        }else {
+                toastr.error('El tipo de archivo no es aceptado ');
+                this.$refs.inputFile1.type = 'text';
+                this.$refs.inputFile1.type = 'file';
+                this.selectedFile = null;
+                return;
             }
-        },
+
+        if(FileSize > 20 ){
+                event.preventDefault();
+                toastr.error('Archivo demasiado grande. (Max 20 MB)');
+                this.$refs.inputFile1.type = 'text';
+                this.$refs.inputFile1.type = 'file';
+                this.selectedFile = null;
+                this.uploadPercentage = 0;
+                this.isLoading_file = false;
+        } else {
+
+            this.onUpload();
+
+        }
+    },
 
         onUpload() {
 
@@ -629,12 +639,12 @@ export default {
 
     getUsuarios: function(){
 
-            axios.defaults.baseURL = this.url ;
-            var urlRegistros = 'users' + '?api_token=' + Laravel.user.api_token;
-            axios.get(urlRegistros).then(response =>{
-            this.usuarios = response.data
-            });
-            },
+        axios.defaults.baseURL = this.url ;
+        var urlRegistros = 'users' + '?api_token=' + Laravel.user.api_token;
+        axios.get(urlRegistros).then(response =>{
+        this.usuarios = response.data
+        });
+},
 
     storeRegistro: function(){
 
@@ -643,19 +653,20 @@ export default {
 
             axios.post(urlRegistros, {
 
-            'tipo'                       : this.newRegistro.tipo,
-            'titulo'                     : this.newRegistro.titulo,
-            'descripcion'                : this.newRegistro.descripcion,
-            'usuario'                    : this.usuario,
-            'tipo_documento_usuario'     : this.tipo_documento_usuario,
-            'interno_equipo'             : this.interno_equipo,
-            'interno_fuente'             : this.interno_fuente,
-            'vehiculo'                   : this.vehiculo,
-            'metodo_ensayo'              : this.metodo_ensayo,
-            'fecha_caducidad'            : this.newRegistro.fecha_caducidad,
-            'path'                       : this.newRegistro.path,
-            'ot'                         : this.otdata,
-
+            'tipo'                         : this.newRegistro.tipo,
+            'titulo'                       : this.newRegistro.titulo,
+            'descripcion'                  : this.newRegistro.descripcion,
+            'usuario'                      : this.usuario,
+            'tipo_documento_usuario'       : this.tipo_documento_usuario,
+            'user_dosimetro'               : this.user_dosimetro,
+            'certificado_verificacion_sn'  : this.certificado_verificacion_sn,
+            'interno_equipo'               : this.interno_equipo,
+            'interno_fuente'               : this.interno_fuente,
+            'vehiculo'                     : this.vehiculo,
+            'metodo_ensayo'                : this.metodo_ensayo,
+            'fecha_caducidad'              : this.newRegistro.fecha_caducidad,
+            'path'                         : this.newRegistro.path,
+            'ot'                           : this.otdata,
 
             }).then(response => {
                 this.errors=[];
@@ -675,10 +686,9 @@ export default {
 
                if((typeof(this.errors)=='undefined') && (error)){
 
-                     toastr.error("Ocurrió un error al procesar la solicitud");
+                    toastr.error("Ocurrió un error al procesar la solicitud");
 
                 }
-
            });
         },
 
@@ -688,18 +698,20 @@ export default {
             var urlRegistros = 'documentaciones/' + this.newRegistro.id;
             axios.put(urlRegistros, {
 
-            'tipo'                    : this.newRegistro.tipo,
-            'titulo'                  : this.newRegistro.titulo,
-            'descripcion'             : this.newRegistro.descripcion,
-            'usuario'                 : this.usuario,
-            'tipo_documento_usuario'  : this.tipo_documento_usuario,
-            'interno_equipo'          : this.interno_equipo,
-            'interno_fuente'          : this.interno_fuente,
-            'vehiculo'                : this.vehiculo,
-            'metodo_ensayo'           : this.metodo_ensayo,
-            'fecha_caducidad'         : this.newRegistro.fecha_caducidad,
-            'path'                    : this.newRegistro.path,
-            'ot'                      : this.otdata,
+            'tipo'                        : this.newRegistro.tipo,
+            'titulo'                      : this.newRegistro.titulo,
+            'descripcion'                 : this.newRegistro.descripcion,
+            'usuario'                     : this.usuario,
+            'tipo_documento_usuario'      : this.tipo_documento_usuario,
+            'user_dosimetro'              : this.user_dosimetro,
+            'certificado_verificacion_sn' : this.certificado_verificacion_sn,
+            'interno_equipo'              : this.interno_equipo,
+            'interno_fuente'              : this.interno_fuente,
+            'vehiculo'                    : this.vehiculo,
+            'metodo_ensayo'               : this.metodo_ensayo,
+            'fecha_caducidad'             : this.newRegistro.fecha_caducidad,
+            'path'                        : this.newRegistro.path,
+            'ot'                          : this.otdata,
 
 
             }).then(response => {
@@ -735,25 +747,26 @@ export default {
           },
 
     editRegistro : function(registro){
-
-                this.editmode = true;
-                this.HabilitarGuardar = true;
-                this.newRegistro = {};
-                this.metodo_ensayo =  registro.metodo_ensayo ? registro.metodo_ensayo : {id :''};
-                this.tipo_documento_usuario =  registro.tipo_documento_usuario ? registro.tipo_documento_usuario[0] : {id :''};
-                this.usuario = registro.usuario ? registro.usuario[0] : {'id' : null};
-                this.interno_equipo = registro.interno_equipo ? registro.interno_equipo[0] : {'id' : null};
-                this.interno_fuente = registro.interno_fuente ? registro.interno_fuente[0] : {'id' : null};
-                this.vehiculo = registro.vehiculo ? registro.vehiculo[0] : {'id' : null};
-                this.newRegistro = registro;
-                let fileName = this.newRegistro.path ;
-                let FileExt = fileName.substring(fileName.length-3,fileName.length);
-                this.isPdf = (FileExt == 'pdf') ? true : false ;
-                this.$refs.inputFile1.type = 'text';
-                this.$refs.inputFile1.type = 'file';
-                this.selectedFile =  null
-                $('#nuevo').modal('show');
-            },
+        this.editmode = true;
+        this.HabilitarGuardar = true;
+        this.newRegistro = {};
+        this.metodo_ensayo =  registro.metodo_ensayo ? registro.metodo_ensayo : {id :''};
+        this.tipo_documento_usuario =  registro.tipo_documento_usuario ? registro.tipo_documento_usuario[0] : {id :''};
+        this.user_dosimetro = registro.user_interno_equipo ? registro.user_interno_equipo[0] : {id :''};
+        this.usuario = registro.usuario ? registro.usuario[0] : {'id' : null};
+        this.interno_equipo = registro.interno_equipo ? registro.interno_equipo[0] : {'id' : null};
+        this.interno_fuente = registro.interno_fuente ? registro.interno_fuente[0] : {'id' : null};
+        this.vehiculo = registro.vehiculo ? registro.vehiculo[0] : {'id' : null};
+        this.certificado_verificacion_sn = registro.interno_equipo.length ? registro.interno_equipo[0].pivot.certificado_verificacion_sn : true;
+        this.newRegistro = registro;
+        let fileName = this.newRegistro.path ;
+        let FileExt = fileName.substring(fileName.length-3,fileName.length);
+        this.isPdf = (FileExt == 'pdf') ? true : false ;
+        this.$refs.inputFile1.type = 'text';
+        this.$refs.inputFile1.type = 'file';
+        this.selectedFile =  null
+        $('#nuevo').modal('show');
+    },
 }
 }
 

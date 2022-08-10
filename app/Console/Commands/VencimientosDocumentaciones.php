@@ -17,6 +17,7 @@ use App\Documentaciones;
 use App\Alarmas;
 use App\AlarmaReceptor;
 use App\TiposDocumentosUsuarios;
+use App\TipoEquipamiento;
 Use App\User;
 
 class VencimientosDocumentaciones extends Command
@@ -55,6 +56,7 @@ class VencimientosDocumentaciones extends Command
         DB::enableQueryLog();
         Log::debug("Se ejecutó la tarea");
         $alarmas = Alarmas::all();
+        log::debug('alarmas = ' . json_encode($alarmas));
 
         /* USUARIOS */
         $tipos_doc_usuarios = TiposDocumentosUsuarios::all();
@@ -62,7 +64,6 @@ class VencimientosDocumentaciones extends Command
         foreach ($tipos_doc_usuarios as $tipo_doc) {
 
             $alarma =  (new \App\Http\Controllers\AlarmasController)->BuscarAlarma($alarmas,$tipo_doc->codigo_alarma);
-
             if($alarma->activo_sn){
 
                 (new \App\Http\Controllers\AlarmasController)->setFechaEjecucion($alarma);
@@ -95,14 +96,18 @@ class VencimientosDocumentaciones extends Command
         }
 
 
-        /* EQUIPOS */
-        $alarma =  (new \App\Http\Controllers\AlarmasController)->BuscarAlarma($alarmas,'EQUIPOS');
-        if($alarma->activo_sn){
+        /* EQUIPOS (TIPO EQUIPAMIENTO)*/
+        $tipo_equipamientos = TipoEquipamiento::all(); 
+        foreach ($tipo_equipamientos as $item) {
 
-            (new \App\Http\Controllers\AlarmasController)->setFechaEjecucion($alarma);
-            $equipos_vencidos = $this->VencimientosEquipos($alarma->aviso1,$alarma->aviso2);
-            $this->EnviarMailVencimientosSoloReceptores($equipos_vencidos,'EQUIPOS');
-            Log::debug("Documentacion equipos: " . $equipos_vencidos);
+            $alarma =  (new \App\Http\Controllers\AlarmasController)->BuscarAlarma($alarmas,$item->codigo);
+            if($alarma->activo_sn){
+
+                (new \App\Http\Controllers\AlarmasController)->setFechaEjecucion($alarma);
+                $equipos_vencidos = $this->VencimientosEquipos($alarma);
+                $this->EnviarMailVencimientosSoloReceptores($equipos_vencidos,$item->codigo,);
+                Log::debug("Documentacion equipos: " . $equipos_vencidos);
+            }
         }
 
         /* PROCEDIMIENTOS */
@@ -192,21 +197,22 @@ class VencimientosDocumentaciones extends Command
                                 ->join('interno_fuentes','interno_fuentes.id','=','interno_fuente_documentaciones.interno_fuente_id')
                                 ->join('fuentes','fuentes.id','=','interno_fuentes.fuente_id')
                                 ->where('interno_fuentes.activo_sn',1)
-                                ->whereRaw('DATEDIFF(documentaciones.fecha_caducidad,DATE(now())) = ? or DATEDIFF(documentaciones.fecha_caducidad,DATE(now())) = ?',[$aviso1,$aviso2])
+                                ->whereRaw('(DATEDIFF(documentaciones.fecha_caducidad,DATE(now())) = ? or DATEDIFF(documentaciones.fecha_caducidad,DATE(now())) = ?)',[$aviso1,$aviso2])
                                 ->select('interno_fuentes.nro_serie','fuentes.codigo','documentaciones.tipo','documentaciones.titulo','documentaciones.fecha_caducidad','documentaciones.id as documentacion_id')
                                 ->get();
 
     }
 
-    public function VencimientosEquipos($aviso1,$aviso2){
+    public function VencimientosEquipos($alarma) {
 
         return Documentaciones::join('interno_equipo_documentaciones','documentaciones.id','=','interno_equipo_documentaciones.documentacion_id')
                                 ->join('interno_equipos','interno_equipos.id','=','interno_equipo_documentaciones.interno_equipo_id')
                                 ->join('equipos','equipos.id','=','interno_equipos.equipo_id')
+                                ->join('tipos_equipamiento','tipos_equipamiento.id','=','equipos.tipo_equipamiento_id')
                                 ->where('interno_equipos.activo_sn',1)
-                                ->whereRaw('DATEDIFF(documentaciones.fecha_caducidad,DATE(now())) = ? or DATEDIFF(documentaciones.fecha_caducidad,DATE(now())) = ?',[$aviso1,$aviso2])
+                                ->whereRaw('tipos_equipamiento.codigo = ? and (DATEDIFF(documentaciones.fecha_caducidad,DATE(now())) = ? or DATEDIFF(documentaciones.fecha_caducidad,DATE(now())) = ?)',[$alarma->tipo,$alarma->aviso1,$alarma->aviso2])
                                 ->select('interno_equipos.nro_serie','interno_equipos.nro_interno','equipos.codigo','documentaciones.tipo','documentaciones.titulo','documentaciones.fecha_caducidad','documentaciones.id as documentacion_id')
-                                ->get();
+                                ->get();                             
 
     }
 
@@ -253,7 +259,7 @@ class VencimientosDocumentaciones extends Command
                         break;
 
                     case 'EQUIPO':
-                        Mail::to($receptor->email)->send(new SendVencimientosEquipoMailable($item));
+                        Mail::to($receptor->email)->send(new SendVencimientosEquipoMailable($item,$tipo));
                         break;
 
                     case 'PROCEDIMIENTO GENERAL':
@@ -261,8 +267,8 @@ class VencimientosDocumentaciones extends Command
                         break;
 
                     case 'VEHICULO':
-                          Mail::to($receptor->email)->send(new SendVencimientosVehiculosMailable($item));
-                           break;
+                        Mail::to($receptor->email)->send(new SendVencimientosVehiculosMailable($item));
+                        break;
 
                     default:
                         # code...
@@ -271,9 +277,8 @@ class VencimientosDocumentaciones extends Command
                 }
 
                 sleep(10);
-
-
-                (new \App\Http\Controllers\NotificacionesController)->store($receptor->id,$item);
+                
+                (new \App\Http\Controllers\NotificacionesController)->store($receptor->id,$item,$tipo);
             }
 
         }

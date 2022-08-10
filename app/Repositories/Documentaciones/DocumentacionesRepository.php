@@ -9,8 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\InternoEquipoDocumentaciones;
 use App\InternoFuenteDocumentaciones;
 use App\VehiculoDocumentaciones;
-
-
+use Illuminate\Support\Facades\Log;
 
 class DocumentacionesRepository extends BaseRepository
 {
@@ -152,9 +151,11 @@ class DocumentacionesRepository extends BaseRepository
   }
 
   public function saveEquipoDocumento($documento,$equipo_documento,$request){
-
+    Log::debug('request: '. json_encode($request->all())); 
     $equipo_documento->documentacion_id = $documento->id;
     $equipo_documento->interno_equipo_id = $request->interno_equipo['id'];
+    $equipo_documento->certificado_verificacion_sn = $request['certificado_verificacion_sn'];
+    $equipo_documento->interno_equipo_user_id = $request->user_dosimetro['id'];
     $equipo_documento->save();
 
   }

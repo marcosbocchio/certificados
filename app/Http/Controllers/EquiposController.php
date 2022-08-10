@@ -23,7 +23,7 @@ class EquiposController extends Controller
      */
     public function index()
     {
-        return Equipos::with('metodoEnsayos')->get();
+        return Equipos::with('metodoEnsayos')->with('tipoEquipamiento')->get();
 
     }
 

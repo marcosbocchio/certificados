@@ -93,7 +93,7 @@
                     </ul>
 
                     <a  @click="Buscar()">
-                        <button class="btn btn-enod  btn-block" :disabled="!ot "><span class="fa fa-plus-circle"></span>
+                        <button class="btn btn-enod  btn-block" :disabled="!ot "><span class="fa fa-search"></span>
                             Buscar
                         </button>
                     </a>
@@ -103,7 +103,6 @@
         </div>
 
         <div class="col-md-9">
-
             <tabs :options="{ useUrlFragment: false }" @clicked="tabClicked" @changed="tabChanged">
                 <tab name="Costuras/Plano Isom">
                     <div class="row">

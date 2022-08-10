@@ -1,3 +1,4 @@
+
 <template>
     <form v-on:submit.prevent="storeRegistro" method="post">
     <div class="modal fade" id="nuevo">

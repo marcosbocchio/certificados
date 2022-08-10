@@ -78,6 +78,12 @@ class User extends Authenticatable
 
     }
 
+    public function internoEquipo(){
+
+        return $this->hasOne('App\InternoEquipos','user_dosimetro_id','id');
+
+     }    
+
     public function notificaciones_resumen() {
         return $this->hasMany('App\NotificacionesResumenView','user_id','id')
                     ->orderBy('tipo','asc');

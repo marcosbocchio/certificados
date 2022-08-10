@@ -20,6 +20,12 @@ class InternoEquipos extends Model
 
     }
 
+    public function UserDosimetro(){
+
+      return $this->belongsTo('App\Users','user_dosimetro_id','id');
+
+  }    
+
 
     public function frente() {
 
