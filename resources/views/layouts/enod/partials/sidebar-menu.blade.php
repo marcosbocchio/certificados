@@ -215,7 +215,7 @@
               @endcan
 
               @can('R_interno_equipos_ri')
-                   <li><a href="{{ route('reporte-interno-equipos-ri') }}">Interno equipos RI</a></li>
+                   <li><a href="{{ route('reporte-interno-equipos-ri') }}">Interno equipos</a></li>
               @endcan              
 
               @can('R_costuras')
