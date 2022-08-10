@@ -76,15 +76,17 @@
                                         <table class="table table-striped table-condensed">
                                             <tbody>
                                                 <tr>
-                                                    <th class="col-md-1">N° interno</th>
+                                                    <th class="col-md-1">Método</th>
+                                                    <th class="col-md-1">N° Int</th>
                                                     <th class="col-md-1">N° serie</th>
                                                     <th class="col-md-2">Equipo</th>
                                                     <th class="col-md-3">Tipo equipamiento</th>
                                                     <th class="col-md-3">Usuario</th>
-                                                    <th class="col-md-2">Fecha caducidad</th>
+                                                    <th class="col-md-1">Fecha cad.</th>
                                                     <th style="text-align: center;" class="col-md-1">Doc.</th>
                                                 </tr>
                                                 <tr v-for="(item,k) in TablaInternoEquipos.data" :key="k" :class="[item.vencida_sn ? 'vencidas' : (item.cant_notificaciones ? 'notificadas' : '')]">
+                                                    <td>{{ item.metodo }}</td>
                                                     <td>{{ item.nro_interno }} </td>                                 
                                                     <td>{{ item.nro_serie }} </td>
                                                     <td>{{ item.equipo_codigo}} </td>

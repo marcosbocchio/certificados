@@ -167,12 +167,13 @@ footer {
         <table width="100%" class="bordered">
             <thead>
                <tr>
-                    <th style="font-size: 10px;width: 40px;" ><b>N° Interno</b></th>         
+                    <th style="font-size: 10px;width: 40px;">Método</th>
+                    <th style="font-size: 10px;width: 40px;"><b>N° Int</b></th>         
                     <th style="font-size: 10px;width: 60px;">N° Serie</th>
-                    <th style="font-size: 10px;width: 110px;">Modelo</th>
-                    <th style="font-size: 10px;width: 200px;">Tipo equipamiento</th>               
-                    <th style="font-size: 10px;width: 160px;">Usuario</th>               
-                    <th style="font-size: 10px;width: 85px;">Fecha vencimiento</th>
+                    <th style="font-size: 10px;width: 100px;">Modelo</th>
+                    <th style="font-size: 10px;width: 190px;">Tipo equipamiento</th>               
+                    <th style="font-size: 10px;width: 150px;">Usuario</th>               
+                    <th style="font-size: 10px;width: 80px;">Fecha vencimiento</th>
                     <th style="font-size: 10px;">Doc.</th>
                 </tr>
             </thead>
@@ -185,6 +186,7 @@ footer {
 
                 @foreach ($data as $item )
                     <tr>
+                        <td style="font-size: 10px;"><span class="@if ($item->vencida_sn) vencidas @elseif($item->cant_notificaciones) notificaciones @endif"> {{ $item->metodo }}</span></td>
                         <td style="font-size: 10px;"><span class="@if ($item->vencida_sn) vencidas @elseif($item->cant_notificaciones) notificaciones @endif"> {{ $item->nro_interno }}</span></td>
                         <td style="font-size: 10px;"><span class="@if ($item->vencida_sn) vencidas @elseif($item->cant_notificaciones) notificaciones @endif"> {{ $item->nro_serie }}</span></td>
                         <td style="font-size: 10px;"><span class="@if ($item->vencida_sn) vencidas @elseif($item->cant_notificaciones) notificaciones @endif"> {{ $item->equipo_codigo }}</span></td>
