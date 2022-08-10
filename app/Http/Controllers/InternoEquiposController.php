@@ -86,7 +86,7 @@ class InternoEquiposController extends Controller
                                               ->where('equipos.instrumento_medicion',$instrumento_medicion)
                                               ->where('equipos.palpador_sn',0)
                                               ->selectRaw('interno_equipos.*,CONVERT(nro_interno,UNSIGNED) as nro_interno_numeric' )
-                                              ->with('equipo')
+                                              ->with('equipo.tipoEquipamiento')
                                               ->with('internoFuente')
                                               ->orderby('nro_interno_numeric','ASC')
                                               ->get();
@@ -99,7 +99,7 @@ class InternoEquiposController extends Controller
                                                 ->where('equipos.palpador_sn',0)
                                                 ->whereNull('equipos.instrumento_medicion')
                                                 ->selectRaw('interno_equipos.*,CONVERT(nro_interno,UNSIGNED) as nro_interno_numeric' )
-                                                ->with('equipo')
+                                                ->with('equipo.tipoEquipamiento')
                                                 ->with('internoFuente')
                                                 ->orderby('nro_interno_numeric','ASC')
                                                 ->get();
@@ -107,14 +107,14 @@ class InternoEquiposController extends Controller
 
       }elseif($activo_sn !='null'){
         $interno_equipos = InternoEquipos::where('interno_equipos.activo_sn',1)
-                                            ->with('equipo')
+                                            ->with('equipo.tipoEquipamiento')
                                             ->with('internoFuente')
                                             ->selectRaw('interno_equipos.*,CONVERT(nro_interno,UNSIGNED) as nro_interno_numeric' )
                                             ->orderby('nro_interno_numeric','ASC')
                                             ->get();
 
       }else{
-          $interno_equipos = InternoEquipos::with('equipo')
+          $interno_equipos = InternoEquipos::with('equipo.tipoEquipamiento')
                                             ->with('internoFuente')
                                             ->selectRaw('interno_equipos.*,CONVERT(nro_interno,UNSIGNED) as nro_interno_numeric' )
                                             ->orderby('nro_interno_numeric','ASC')
@@ -129,7 +129,7 @@ class InternoEquiposController extends Controller
 
         return InternoEquipos::where('interno_equipos.activo_sn',1)
                                 ->where('interno_equipos.frente_id',$frente_origen_id)
-                                ->with('equipo')
+                                ->with('equipo.tipoEquipamiento')
                                 ->with('internoFuente')
                                 ->selectRaw('interno_equipos.*,CONVERT(nro_interno,UNSIGNED) as nro_interno_numeric' )
                                 ->orderby('nro_interno_numeric','ASC')

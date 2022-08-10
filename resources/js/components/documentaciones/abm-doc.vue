@@ -168,7 +168,7 @@
 
                             <div v-if="newRegistro.tipo == 'EQUIPO'">
                                 <div class="form-group">
-                                    <label for="name">Tipo Requerimiento</label>    
+                                    <label for="name">Tipo Equipamiento</label>    
                                     <input v-if="interno_equipo.equipo.tipo_equipamiento" disabled type="text" name="tipo_equipamiento" class="form-control" v-model="interno_equipo.equipo.tipo_equipamiento.codigo">
                                     <input v-else disabled type="text" name="tipo_equipamiento" class="form-control" value=""/>
                                 </div>
@@ -451,7 +451,7 @@ export default {
         this.metodo_ensayo ={
             id:'',
         };
-        this.interno_equipo = {'id' : null};
+        this.interno_equipo = {'id' : null, equipo: { tipo_equipamiento: ''}};
         this.interno_fuente = {'id':null};
         this.vehiculo = {'id':null};
         this.usuario = {'id':null};
@@ -747,6 +747,7 @@ export default {
           },
 
     editRegistro : function(registro){
+       
         this.editmode = true;
         this.HabilitarGuardar = true;
         this.newRegistro = {};
