@@ -209,9 +209,10 @@ class VencimientosDocumentaciones extends Command
                                 ->join('interno_equipos','interno_equipos.id','=','interno_equipo_documentaciones.interno_equipo_id')
                                 ->join('equipos','equipos.id','=','interno_equipos.equipo_id')
                                 ->join('tipos_equipamiento','tipos_equipamiento.id','=','equipos.tipo_equipamiento_id')
+                                ->leftJoin('users','users.id','=','interno_equipo_documentaciones.interno_equipo_user_id')
                                 ->where('interno_equipos.activo_sn',1)
                                 ->whereRaw('tipos_equipamiento.codigo = ? and (DATEDIFF(documentaciones.fecha_caducidad,DATE(now())) = ? or DATEDIFF(documentaciones.fecha_caducidad,DATE(now())) = ?)',[$alarma->tipo,$alarma->aviso1,$alarma->aviso2])
-                                ->select('interno_equipos.nro_serie','interno_equipos.nro_interno','equipos.codigo','documentaciones.tipo','documentaciones.titulo','documentaciones.fecha_caducidad','documentaciones.id as documentacion_id')
+                                ->select('interno_equipos.nro_serie','interno_equipos.nro_interno','equipos.codigo','documentaciones.tipo','documentaciones.titulo','documentaciones.fecha_caducidad','documentaciones.id as documentacion_id','users.name')
                                 ->get();                             
 
     }
