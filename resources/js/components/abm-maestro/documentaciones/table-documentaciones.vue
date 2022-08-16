@@ -26,7 +26,9 @@
             <td v-if="registro.tipo == 'VEHICULO'">VEHICULO</td>   
             <td>{{ registro.titulo}}</td>
             <td>{{ registro.descripcion }}</td>
-            <td>{{ registro.metodo_ensayo['metodo']}}</td>
+            <td v-if="registro.metodo_ensayo.id">{{ registro.metodo_ensayo['metodo']}}</td>
+            <td v-else-if="registro.interno_equipo.length > 0">{{ registro.interno_equipo[0].equipo.metodo_ensayos['metodo']}}</td>
+            <td v-else>&nbsp;</td>
             <td v-if="registro.usuario[0]">{{ registro.usuario[0]['name']}}</td>
             <td v-else-if="registro.tipo == 'EQUIPO' && registro.user_interno_equipo[0]">{{registro.user_interno_equipo[0]['name'] }}</td>
             <td  v-else>&nbsp;</td>

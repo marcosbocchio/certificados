@@ -56,7 +56,6 @@ class VencimientosDocumentaciones extends Command
         DB::enableQueryLog();
         Log::debug("Se ejecutó la tarea");
         $alarmas = Alarmas::all();
-        log::debug('alarmas = ' . json_encode($alarmas));
 
         /* USUARIOS */
         $tipos_doc_usuarios = TiposDocumentosUsuarios::all();
@@ -212,7 +211,7 @@ class VencimientosDocumentaciones extends Command
                                 ->leftJoin('users','users.id','=','interno_equipo_documentaciones.interno_equipo_user_id')
                                 ->where('interno_equipos.activo_sn',1)
                                 ->whereRaw('tipos_equipamiento.codigo = ? and (DATEDIFF(documentaciones.fecha_caducidad,DATE(now())) = ? or DATEDIFF(documentaciones.fecha_caducidad,DATE(now())) = ?)',[$alarma->tipo,$alarma->aviso1,$alarma->aviso2])
-                                ->select('interno_equipos.nro_serie','interno_equipos.nro_interno','equipos.codigo','documentaciones.tipo','documentaciones.titulo','documentaciones.fecha_caducidad','documentaciones.id as documentacion_id','users.name')
+                                ->select('interno_equipos.nro_serie','interno_equipos.nro_interno','equipos.codigo','documentaciones.tipo','documentaciones.titulo','documentaciones.fecha_caducidad','documentaciones.id as documentacion_id','users.id as user_id','users.name')
                                 ->get();                             
 
     }

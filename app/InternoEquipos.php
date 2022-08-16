@@ -46,6 +46,10 @@ class InternoEquipos extends Model
                   $q->WhereRaw("metodo_ensayos.metodo = '" .  $filtro ."'" );
                 })
 
+                ->orWhereHas('equipo.tipoEquipamiento', function ($q) use($filtro) {
+                  $q->WhereRaw("tipos_equipamiento.codigo LIKE '%" . $filtro . "%'");
+                })                
+
                 ->orWhereHas('frente', function ($q) use($filtro) {
                     $q->WhereRaw("frentes.codigo  LIKE '%" . $filtro . "%'");
                   });

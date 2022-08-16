@@ -6,7 +6,8 @@
       <table class="table table-hover table-striped table-condensed">
         <thead>
           <tr>
-            <th>N° INT.</th>
+            <th>N° INT.</th>           
+            <th>Tipo equipamiento</th>          
             <th>Equipo</th>
             <th>Método</th>
             <th>&nbsp;</th>
@@ -19,13 +20,17 @@
         <tbody>
           <tr v-for="registro in registros" :key="registro.id">
             <td>{{ registro.nro_interno }}</td>
+            <td v-if="registro.equipo.tipo_equipamiento">
+                {{ registro.equipo.tipo_equipamiento.codigo }}
+            </td>
+            <td v-else>&nbsp;</td>
             <td>{{ registro.equipo.codigo }}</td>
             <td>{{ registro.equipo.metodo_ensayos.metodo }}</td>
             <th>
                 <button class="btn btn-xs" title="Historial de fuentes" v-on:click.prevent="TrazabilidadFuente(registro)"><span class="fa fa-table"></span></button>
             </th>
             <td v-if="registro.interno_fuente" >{{ registro.interno_fuente.nro_serie }} - {{registro.interno_fuente.fuente.codigo}}</td>
-            <td v-else ></td>
+            <td v-else >&nbsp;</td>
             <td v-if="registro.interno_fuente">{{ registro.interno_fuente.curie_actual }}&nbsp; Ci</td>
             <td v-else></td>
             <td>{{ registro.frente.codigo }}</td>

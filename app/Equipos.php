@@ -24,13 +24,17 @@ class Equipos extends Model
         if (trim($filtro) != '') {
             
                 $query->WhereRaw("equipos.codigo LIKE '%" . $filtro . "%'")    
-                      ->orWhereRaw("equipos.descripcion LIKE '%" . $filtro . "%'")   
+                      ->orWhereRaw("equipos.descripcion LIKE '%" . $filtro . "%'")  
+                      
+                    ->orWhereHas('tipoEquipamiento', function ($q) use($filtro) {
+                    $q->WhereRaw("tipos_equipamiento.codigo LIKE '%" . $filtro . "%'");
+                    })                           
 
-                ->orWhereHas('metodoEnsayos', function ($q) use($filtro) {
-                       $q->WhereRaw("metodo_ensayos.metodo = '" .  $filtro ."'" );
+                    ->orWhereHas('metodoEnsayos', function ($q) use($filtro) {
+                        $q->WhereRaw("metodo_ensayos.metodo = '" .  $filtro ."'" );
 
                     });         
-        
+    
         }
         
     }
