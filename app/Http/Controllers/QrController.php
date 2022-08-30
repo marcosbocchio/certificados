@@ -61,7 +61,7 @@ class QrController extends Controller
       $documentacion = Documentaciones::join('interno_equipo_documentaciones','interno_equipo_documentaciones.documentacion_id','=','documentaciones.id')
                                         ->join('interno_equipos','interno_equipos.id','=','interno_equipo_documentaciones.interno_equipo_id')
                                         ->where('interno_equipo_documentaciones.interno_equipo_id',$interno_equipo_id)
-                                        ->select('documentaciones.*','interno_equipos.nro_interno')
+                                        ->select('documentaciones.*','interno_equipos.nro_interno','interno_equipos.nro_serie')
                                         ->get();
 
       return $documentacion;

@@ -196,17 +196,12 @@ export default {
      },    
 
     paginate(page_number) {
-    console.log('--------------')    
-    let page_size = 10;    
-/*     console.log(page_number);
-    console.log((page_number -1) * page_size)
-    console.log((page_number ) * page_size) */
-
-    let itemsToParse = this.TablaInternoEquipos;
-    this.paginatedItems = itemsToParse.slice(
-        (page_number -1) * page_size,
-        (page_number) * page_size
-    );
+        let page_size = 10;    
+        let itemsToParse = this.TablaInternoEquipos;
+        this.paginatedItems = itemsToParse.slice(
+            (page_number -1) * page_size,
+            (page_number) * page_size
+        );
     },
 
     setCheck (item) {
@@ -223,31 +218,6 @@ export default {
             item.check = !this.checkTodo;
         }.bind(this))        
     },      
-/*     exportarQr2 () {
-        const doc = new jsPDF("p", "mm", "a4"); 
-        doc.setFont("serif");
-        console.log('entro en el exports')
-        doc.autoTable({
-            html: "#tableQr",
-            bodyStyles:{minCellHeight:50},
-            columnStyles: {
-                    0: { halign: 'center', fillColor: [255, 255, 255], lineColor: [0, 0, 0], lineWidth: 0.5, cellWidth: 'auto' },
-                    1: { halign: 'center', fillColor: [255, 255, 255], lineColor: [0, 0, 0], lineWidth: 0.5, cellWidth: 'auto' },
-                    2: { halign: 'center', fillColor: [255, 255, 255], lineColor: [0, 0, 0], lineWidth: 0.5, cellWidth: 'auto' }                    
-                },            
-            didDrawCell:function(data) {
-                if (typeof(data.cell.raw.getElementsByTagName('img')[0]) != 'undefined') {
-                    var td = data.cell.raw;              
-                    var img = td.getElementsByTagName('img')[0];       
-                    var dim = data.cell.height - data.cell.padding('vertical');
-                    var textPos = data.cell.getTextPos();
-                    doc.addImage(img.src, textPos.x,  textPos.y, dim, dim);
-                }
-            }
-        })
-        doc.save("qr.pdf");
-    },     */ 
-    
     exportarQr () {
         this.$store.commit('loading', true);
         window.jsPDF = window.jspdf.jsPDF;

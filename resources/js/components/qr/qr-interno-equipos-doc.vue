@@ -1,7 +1,7 @@
 <template>
     <div class="container-fluid">
             <template v-if="documentaciones.length" class="vcenter">
-                <h4>Int N {{documentaciones[0].nro_interno}}</h4>
+                <h5 style="margin-top:20px"><strong>N° Int {{documentaciones[0].nro_interno}} / N° Serie {{documentaciones[0].nro_serie}} </strong></h5>
                 <ul>
                     <li v-for="item in documentaciones" :key="item.id" style="margin-top:15px; margin">
         
