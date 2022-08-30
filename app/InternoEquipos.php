@@ -54,8 +54,6 @@ class InternoEquipos extends Model
                     $q->WhereRaw("frentes.codigo  LIKE '%" . $filtro . "%'");
                   });
       }
-
-  }
-
+    }
 
 }

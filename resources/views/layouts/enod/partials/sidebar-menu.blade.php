@@ -237,6 +237,23 @@
           </li>
         @endcan
 
+        @can('QR')
+
+        @endcan
+          <li class="treeview">
+            <a href="#">
+              <i class="glyphicon glyphicon-qrcode"></i> <span>QR CODE</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              @can('C_qr_interno_equipos')
+                  <li><a href="{{ route('qr-interno-equipos') }}">Interno equipos</a></li>
+              @endcan
+            </ul>
+          </li>
+
         @can('CURSOS')
           <li class="treeview">
             <a href="#">

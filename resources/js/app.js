@@ -301,6 +301,10 @@ Vue.component('reporte-certificados', require('./components/reportes/reporte-cer
 Vue.component('reporte-partes', require('./components/reportes/reporte-partes.vue').default);
 Vue.component('reporte-interno-equipos-ri', require('./components/reportes/reporte-interno-equipos-ri.vue').default);
 
+/* Qr */
+Vue.component('qr-interno-equipos', require('./components/qr/qr-interno-equipos.vue').default);
+Vue.component('qr-interno-equipos-doc', require('./components/qr/qr-interno-equipos-doc.vue').default);
+
 /* Trazabilidad */
 Vue.component('trazabilidad-fuente', require('./components/trazabilidad/trazabilidad-fuente.vue').default);
 

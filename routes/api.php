@@ -318,7 +318,6 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('partes/informe_tt/{id}','PartesController@getInformeTtParte');
     Route::get('partes/informe_pmi/{id}','PartesController@getInformePmiParte');
 
-
     //certificados
     Route::put('certificados/{id}/firmar', 'CertificadosController@firmar');
     Route::get('certificados/ot/{ot_id}/total','CertificadosController@CertificadosTotal');
@@ -344,16 +343,19 @@ Route::group(['middleware' => 'auth:api'], function()
 
     //Costuras
     Route::get('costuras/ot/{ot_id}/pk/{pk}/plano/{plano}/costura/{costura}/rechazados/{rechazados}/reparaciones/{reparaciones}/soldador/{soldador_id}/obra/{obra}/componente/{componente}','CosturasController@getCosturas');
+
     // Placas
     Route::get('reporte-placas/cliente/{cliente_id}/ot/{ot_id}/obra/{obra}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}/total','ReportePlacasController@getPlacasTotal');
     Route::get('reporte-placas/cliente/{cliente_id}/ot/{ot_id}/obra/{obra}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}/repetidas-testigos','ReportePlacasController@getPlacasRepetidasTestigos');
     Route::get('reporte-placas/cliente/{cliente_id}/ot/{ot_id}/obra/{obra}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}/rechazadas','ReportePlacasController@getPlacasRechazadas');
+
     // Interno Equipos
     Route::get('reporte-interno-equipos-ri/tipo_equipamiento/{tipo_equipamiento_id}/vencidas_sn/{vencidas_sn}/noVencidas_sn/{noVencidas_sn}/todos_sn/{todos_sn}','InternoEquiposController@ReporteInternoEquipos');
 
     Route::get('reporte-servicios/cliente/{cliente_id}/ot/{ot_id}/obra/{obra}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}','ReportePlacasController@getServicios');
     Route::get('reporte-partes/cliente/{cliente_id}/ot/{ot_id}/obra/{obra}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}/filtrado/{filtrado}','ReporteCertificadosPartesController@getPartes');
     Route::get('reporte-certificados/cliente/{cliente_id}/ot/{ot_id}/obra/{obra}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}','ReporteCertificadosPartesController@getCertificados');
+
     //Notificaciones
     Route::get('alarmas/dosimetria','AlarmasController@getAlarmaDosimetria');
     Route::get('alarmas/todas','AlarmasController@getTodas');
@@ -373,12 +375,17 @@ Route::group(['middleware' => 'auth:api'], function()
     Route::get('plantas/cliente/{id}/paginate', 'PlantasController@paginate');
     Route::get('plantas/cliente/{id}','PlantasController@PlantasCliente');
     Route::post('plantas/cliente/{id}','PlantasController@store');
+
     // CAMPANAS
     Route::get('campanas/paginate', 'CampanasController@paginate');
     Route::resource('campanas', 'CampanasController');
-
     Route::get('bombas/paginate', 'BombasController@paginate');
     Route::resource('bombas', 'BombasController');
+
+    // QR
+    Route::get('qr-interno-equipos/tipo_equipamiento/{tipo_equipamiento_id}/search/{search}', 'QrController@getInternoEquipos');
+    Route::get('interno_equipos/{id}/documentaciones','QrController@getDocIntEquipos');
+
 });
 
 Route::get('/fecha_actual',function(){
