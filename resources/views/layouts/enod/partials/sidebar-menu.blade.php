@@ -248,7 +248,7 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              @can('C_qr_interno_equipos')
+              @can('QR_interno_equipos')
                   <li><a href="{{ route('qr-interno-equipos') }}">Interno equipos</a></li>
               @endcan
             </ul>
