@@ -40,7 +40,7 @@
 
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="name">Tipo Requerimiento</label>    
+                                    <label for="name">Tipo Equipamiento</label>    
                                     <input v-if="equipo.tipo_equipamiento" disabled type="text" name="tipo_equipamiento" class="form-control" v-model="equipo.tipo_equipamiento.codigo">
                                     <input v-else disabled type="text" name="tipo_equipamiento" class="form-control" value=""/>
                                 </div>                            
