@@ -21,6 +21,7 @@ Route::group(['middleware' => ['auth']], function () {
   Route::get('/area/enod/perfil','UserController@callviewPerfil')->name('perfil');
   Route::get('/area/enod','DashboardController@index')->name('dashboard');
 
+
   Route::put('users/{id}/update', 'UserController@updatePerfil')->name('users.updatePerfil');
 
   Route::get('institucionales/{id}','DocumentacionesController@institucionales')->name('institucionales');
@@ -144,6 +145,7 @@ Route::group(['middleware' => ['auth']], function () {
       Route::get('/area/enod/reportes/costuras','CosturasController@callView')->name('reporte-costuras');
       Route::get('/area/enod/reportes/interno_equipos_ri','InternoEquiposController@callViewReporte')->name('reporte-interno-equipos-ri');
       Route::get('/area/enod/reportes/placas-repetidas-testigos','ReportePlacasController@callView')->name('reporte-placas-repetidas-testigos');
+      Route::get('/area/enod/reportes/servicios','ReporteServiciosController@callView')->name('reporte-servicios');
       Route::get('/area/enod/reportes/certificados','ReporteCertificadosPartesController@callView')->name('reporte-certificados');
       Route::get('/area/enod/reportes/partes','ReporteCertificadosPartesController@callViewPartes')->name('reporte-partes');
 

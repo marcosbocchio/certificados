@@ -91,7 +91,7 @@
 
                 @can('M_interno_equipos')
                   <li><a href="{{ route('tipo-equipamiento') }}">Tipos Equipamiento</a></li>
-                @endcan                
+                @endcan
 
                 @can('M_interno_equipos')
                   <li><a href="{{ route('Interno-equipos') }}">Interno Equipos</a></li>
@@ -224,6 +224,10 @@
 
               @can('R_placas')
                    <li><a href="{{ route('reporte-placas-repetidas-testigos') }}">Placas</a></li>
+              @endcan
+
+              @can('R_servicios')
+                    <li><a href="{{ route('reporte-servicios') }}">Servicios</a></li>
               @endcan
 
               @can('R_certificados_partes')
