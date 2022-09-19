@@ -257,7 +257,7 @@
                                                     </tr>
                                                     <tr
                                                         v-for="(item,
-                                                        k) in tablaCertificados"
+                                                        k) in tablaCertificados.data"
                                                         :key="k"
                                                     >
                                                         <td>
@@ -271,14 +271,12 @@
                                                         <td
                                                             style="text-align:center"
                                                         >
-                                                            {{ item.ot }}
+                                                            {{ item.nro_ot }}
                                                         </td>
                                                         <td
                                                             style="text-align:center"
                                                         >
-                                                            {{
-                                                                item.certificado
-                                                            }}
+                                                            <a :href="'/pdf/certificado/' + item.certificado + '/final' " target="_blank" title="Informe"><span>{{ item.nro_certificado }}</span></a>
                                                         </td>
                                                         <td
                                                             style="text-align:center"
@@ -517,136 +515,7 @@
                                                                 TT
                                                             </th>
                                                         </tr>
-                                                        <!-- <tr
-                                                            v-for="(item,
-                                                            k) in tablaCertificados"
-                                                            :key="k"
-                                                        >
-                                                            <td>
-                                                                {{ item.fecha }}
-                                                            </td>
-                                                            <td
-                                                                style="text-align:center"
-                                                            >
-                                                                {{
-                                                                    item.cliente
-                                                                }}
-                                                            </td>
-                                                            <td
-                                                                style="text-align:center"
-                                                            >
-                                                                {{ item.ot }}
-                                                            </td>
-                                                            <td
-                                                                style="text-align:center"
-                                                            >
-                                                                {{
-                                                                    item.certificado
-                                                                }}
-                                                            </td>
-                                                            <td
-                                                                style="text-align:center"
-                                                            >
-                                                                {{ item.ri }}
-                                                            </td>
-                                                            <td
-                                                                style="text-align:center"
-                                                            >
-                                                                {{ item.lp }}
-                                                            </td>
-                                                            <td
-                                                                style="text-align:center"
-                                                            >
-                                                                {{ item.pm }}
-                                                            </td>
-                                                            <td
-                                                                style="text-align:center"
-                                                            >
-                                                                {{ item.us }}
-                                                            </td>
-                                                            <td
-                                                                style="text-align:center"
-                                                            >
-                                                                {{ item.pa }}
-                                                            </td>
-                                                            <td
-                                                                style="text-align:center"
-                                                            >
-                                                                {{ item.me }}
-                                                            </td>
-                                                            <td
-                                                                style="text-align:center"
-                                                            >
-                                                                {{ item.ea }}
-                                                            </td>
-                                                            <td
-                                                                style="text-align:center"
-                                                            >
-                                                                {{ item.pmi }}
-                                                            </td>
-                                                            <td
-                                                                style="text-align:center"
-                                                            >
-                                                                {{ item.rg }}
-                                                            </td>
-                                                            <td
-                                                                style="text-align:center"
-                                                            >
-                                                                {{ item.cv }}
-                                                            </td>
-                                                            <td
-                                                                style="text-align:center"
-                                                            >
-                                                                {{ item.dz }}
-                                                            </td>
-                                                            <td
-                                                                style="text-align:center"
-                                                            >
-                                                                {{ item.tt }}
-                                                            </td>
-                                                            <td
-                                                                style="text-align:center"
-                                                            >
-                                                                {{ item.rd }}
-                                                            </td>
-                                                            <td
-                                                                style="text-align:center"
-                                                            >
-                                                                {{ item.ci }}
-                                                            </td>
-                                                            <td
-                                                                style="text-align:center"
-                                                            >
-                                                                {{ item.iv }}
-                                                            </td>
-                                                            <td
-                                                                style="text-align:center"
-                                                            >
-                                                                {{ item.ph }}
-                                                            </td>
-                                                            <td
-                                                                style="text-align:center"
-                                                            >
-                                                                {{ item.gral }}
-                                                            </td>
-                                                            <td
-                                                                style="text-align:center"
-                                                            >
-                                                                {{ item.rm }}
-                                                            </td>
-                                                            <td
-                                                                style="text-align:center"
-                                                            >
-                                                                {{ item.vs }}
-                                                            </td>
-                                                            <td
-                                                                style="text-align:center"
-                                                            >
-                                                                {{ item.og }}
-                                                            </td>
-                                                        </tr> -->
                                                     </div>
-
                                                     <div
                                                         class="contenedor col-lg-5"
                                                     >
@@ -743,134 +612,6 @@
                                                                 IV
                                                             </th>
                                                         </tr>
-                                                        <!-- <tr
-                                                            v-for="(item,
-                                                            k) in tablaCertificados"
-                                                            :key="k"
-                                                        >
-                                                            <td>
-                                                                {{ item.fecha }}
-                                                            </td>
-                                                            <td
-                                                                style="text-align:center"
-                                                            >
-                                                                {{
-                                                                    item.cliente
-                                                                }}
-                                                            </td>
-                                                            <td
-                                                                style="text-align:center"
-                                                            >
-                                                                {{ item.ot }}
-                                                            </td>
-                                                            <td
-                                                                style="text-align:center"
-                                                            >
-                                                                {{
-                                                                    item.certificado
-                                                                }}
-                                                            </td>
-                                                            <td
-                                                                style="text-align:center"
-                                                            >
-                                                                {{ item.ri }}
-                                                            </td>
-                                                            <td
-                                                                style="text-align:center"
-                                                            >
-                                                                {{ item.lp }}
-                                                            </td>
-                                                            <td
-                                                                style="text-align:center"
-                                                            >
-                                                                {{ item.pm }}
-                                                            </td>
-                                                            <td
-                                                                style="text-align:center"
-                                                            >
-                                                                {{ item.us }}
-                                                            </td>
-                                                            <td
-                                                                style="text-align:center"
-                                                            >
-                                                                {{ item.pa }}
-                                                            </td>
-                                                            <td
-                                                                style="text-align:center"
-                                                            >
-                                                                {{ item.me }}
-                                                            </td>
-                                                            <td
-                                                                style="text-align:center"
-                                                            >
-                                                                {{ item.ea }}
-                                                            </td>
-                                                            <td
-                                                                style="text-align:center"
-                                                            >
-                                                                {{ item.pmi }}
-                                                            </td>
-                                                            <td
-                                                                style="text-align:center"
-                                                            >
-                                                                {{ item.rg }}
-                                                            </td>
-                                                            <td
-                                                                style="text-align:center"
-                                                            >
-                                                                {{ item.cv }}
-                                                            </td>
-                                                            <td
-                                                                style="text-align:center"
-                                                            >
-                                                                {{ item.dz }}
-                                                            </td>
-                                                            <td
-                                                                style="text-align:center"
-                                                            >
-                                                                {{ item.tt }}
-                                                            </td>
-                                                            <td
-                                                                style="text-align:center"
-                                                            >
-                                                                {{ item.rd }}
-                                                            </td>
-                                                            <td
-                                                                style="text-align:center"
-                                                            >
-                                                                {{ item.ci }}
-                                                            </td>
-                                                            <td
-                                                                style="text-align:center"
-                                                            >
-                                                                {{ item.iv }}
-                                                            </td>
-                                                            <td
-                                                                style="text-align:center"
-                                                            >
-                                                                {{ item.ph }}
-                                                            </td>
-                                                            <td
-                                                                style="text-align:center"
-                                                            >
-                                                                {{ item.gral }}
-                                                            </td>
-                                                            <td
-                                                                style="text-align:center"
-                                                            >
-                                                                {{ item.rm }}
-                                                            </td>
-                                                            <td
-                                                                style="text-align:center"
-                                                            >
-                                                                {{ item.vs }}
-                                                            </td>
-                                                            <td
-                                                                style="text-align:center"
-                                                            >
-                                                                {{ item.og }}
-                                                            </td>
-                                                        </tr> -->
                                                     </div>
                                                 </tbody>
                                             </table>
@@ -887,10 +628,7 @@
                 </tab>
             </tabs>
             <pagination
-                :data="tablaCertificados"
-                @pagination-change-page="Buscar"
-                ><span slot="prev-nav">&lt; Previous</span>
-                <span slot="next-nav">Next &gt;</span>
+                :data="tablaCertificados" @pagination-change-page="Buscar" :limit="3"><span slot="prev-nav">&lt; Previous</span><span slot="next-nav">Next &gt;</span>
             </pagination>
         </div>
 
@@ -950,34 +688,7 @@ export default {
             tablaPartes: {},
 
             /* Tabla CERTIFICADOS */
-            tablaCertificados: [
-                {
-                    fecha: "1/1/2023",
-                    cliente: "ELECTROMONTAJES BADIA S.R.L",
-                    ot: "2933",
-                    certificado: "142875",
-                    ri: "0",
-                    lp: "12",
-                    pm: "23",
-                    us: "42",
-                    pa: "0",
-                    me: "32",
-                    ea: "0",
-                    pmi: "12",
-                    rg: "90",
-                    cv: "21",
-                    dz: "22",
-                    tt: "21",
-                    rd: "1",
-                    ci: "0",
-                    iv: "23",
-                    ph: "1",
-                    gral: "2",
-                    rm: "0",
-                    vs: "2",
-                    og: "9"
-                }
-            ]
+            tablaCertificados:{},
         };
     },
 
@@ -985,20 +696,14 @@ export default {
         this.$store.dispatch("loadClientesOperador", this.user.id);
     },
 
-    computed: {
-        ...mapState(["isLoading", "clientesOperador", "url"]),
-        partes_filter: function() {
-            return this.filtrado === true
-                ? this.tablaPartes.data.filter(e => !e.certificado)
-                : this.tablaPartes.data;
+    computed :{
+        ...mapState(['isLoading','clientesOperador','url']),
+        partes_filter : function(){
+        return (this.filtrado === true) ? this.tablaPartes.data.filter(e => !e.certificado) : this.tablaPartes.data;
         },
-        mostrar_tabla: function() {
-            return this.tablaCertificados.lenght
-                ? this.tablaCertificados.data.lenght > 0
-                    ? true
-                    : false
-                : false;
-        }
+        mostrar_tabla : function(){
+            return (this.tablaCertificados.lenght) ? (this.tablaCertificados.data.lenght > 0 ? true : false) : false;
+        },
     },
 
     methods: {
@@ -1061,24 +766,10 @@ export default {
             this.tablaCertificados = {};
 
             try {
-                let url3 =
-                    "reporte-certificados" +
-                    "/cliente/" +
-                    (this.cliente ? this.cliente.id : "null") +
-                    "/ot/" +
-                    (this.ot ? this.ot.id : "null") +
-                    "/obra/" +
-                    (this.obra ? this.obra.obra.replace("/", "--") : "null") +
-                    "/fecha_desde/" +
-                    this.fecha_desde +
-                    "/fecha_hasta/" +
-                    this.fecha_hasta +
-                    "?page=" +
-                    page +
-                    "&api_token=" +
-                    Laravel.user.api_token;
+                let url3 = "reporte-servicios" + "/cliente/" + (this.cliente ? this.cliente.id : "null") + "/ot/" + (this.ot ? this.ot.id : "null") + "/fecha_desde/" + this.fecha_desde + "/fecha_hasta/" + this.fecha_hasta + "?page=" + page + "&api_token=" + Laravel.user.api_token;
                 let res3 = await axios.get(url3);
                 this.tablaCertificados = res3.data;
+
             } catch (error) {
             } finally {
                 this.$store.commit("loading", false);

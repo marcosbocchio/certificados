@@ -298,7 +298,6 @@ Vue.component('estadisticas-soldaduras', require('./components/reportes/estadist
 Vue.component('costuras', require('./components/reportes/costuras.vue').default);
 Vue.component('placas', require('./components/reportes/placas.vue').default);
 Vue.component('reporte-certificados', require('./components/reportes/reporte-certificados.vue').default);
-Vue.component('reporte-servicios', require('./components/reportes/reporte-servicios.vue').default);
 Vue.component('reporte-resumen-certificado', require('./components/reportes/reporte-resumen-certificado.vue').default);
 Vue.component('reporte-partes', require('./components/reportes/reporte-partes.vue').default);
 Vue.component('reporte-interno-equipos-ri', require('./components/reportes/reporte-interno-equipos-ri.vue').default);

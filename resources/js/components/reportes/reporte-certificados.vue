@@ -117,7 +117,7 @@
                 </div>
                 </tab>
             </tabs>
-            <pagination :data="tablaCertificados" @pagination-change-page="Buscar"><span slot="prev-nav">&lt; Previous</span>
+            <pagination :data="tablaCertificados" @pagination-change-page="Buscar" :limit="3"><span slot="prev-nav">&lt; Previous</span>
             <span slot="next-nav">Next &gt;</span> </pagination>
         </div>
 
@@ -276,11 +276,11 @@ methods :{
     },
 
     async CambioObra (){
-    
+
         this.obra = this.obra == null ? '' : this.obra;
         this.selObra = !this.selObra;
 
-    },       
+    },
 
 
 }}

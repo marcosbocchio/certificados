@@ -216,7 +216,7 @@
 
               @can('R_interno_equipos')
                    <li><a href="{{ route('reporte-interno-equipos-ri') }}">Interno equipos</a></li>
-              @endcan              
+              @endcan
 
               @can('R_costuras')
                    <li><a href="{{ route('reporte-costuras') }}">Costuras</a></li>
@@ -224,10 +224,6 @@
 
               @can('R_placas')
                    <li><a href="{{ route('reporte-placas-repetidas-testigos') }}">Placas</a></li>
-              @endcan
-
-              @can('R_servicios')
-                    <li><a href="{{ route('reporte-servicios') }}">Servicios</a></li>
               @endcan
 
               @can('R_resumen_certificado')

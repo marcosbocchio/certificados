@@ -48,7 +48,6 @@ class ReporteCertificadosPartesController extends Controller
             $fecha_hasta =  date('2100-01-01');
         }
         $obra = str_replace('--','/',$obra);
-        Log::debug($fecha_hasta);
         $page = Input::get('page', 1);
         $paginate = 10;
 
