@@ -230,6 +230,10 @@
                     <li><a href="{{ route('reporte-servicios') }}">Servicios</a></li>
               @endcan
 
+              @can('R_resumen_certificado')
+                    <li><a href="{{ route('reporte-resumen-certificado') }}">Resumen certificado</a></li>
+              @endcan
+
               @can('R_certificados_partes')
                    <li><a href="{{ route('reporte-certificados') }}">Certificados</a></li>
               @endcan
