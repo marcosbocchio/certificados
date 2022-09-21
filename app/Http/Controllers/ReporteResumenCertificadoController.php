@@ -41,8 +41,8 @@ class ReporteResumenCertificadoController extends Controller
         $page = Input::get('page', 1);
         $paginate = 10;
 
-
-        $data = DB::select('CALL ReporteServicios(?,?,?,?)',array($cliente_id,$ot_id,$fecha_desde,$fecha_hasta));
+        DB::select('CALL armadoReporteServicios(?,?,?,?)',array($cliente_id,$ot_id,$fecha_desde,$fecha_hasta));
+        $data = DB::select('CALL getResumenServicios()');
         $offSet = ($page * $paginate) - $paginate;
         $itemsForCurrentPage = array_slice($data, $offSet, $paginate, true);
         $data = new \Illuminate\Pagination\LengthAwarePaginator(array_values($itemsForCurrentPage), count($data), $paginate, $page);
