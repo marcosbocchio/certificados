@@ -50,4 +50,5 @@ class ReporteResumenCertificadoController extends Controller
         return $data;
     }
 
+
 }

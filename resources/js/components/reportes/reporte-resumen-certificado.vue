@@ -101,14 +101,13 @@
                                                         <th style="text-align:center"  class=" col-md-1">Certificado</th>
                                                         <th style="text-align:center">RI</th>
                                                         <th style="text-align:center">LP</th>
+                                                        <th style="text-align:center">PM</th>
                                                         <th style="text-align:center">US</th>
-                                                        <th style="text-align:center">PA</th>
-                                                        <th style="text-align:center">ME</th>
-                                                        <th style="text-align:center">EA</th>
                                                         <th style="text-align:center">PMI</th>
                                                         <th style="text-align:center">RG</th>
                                                         <th style="text-align:center">CV</th>
                                                         <th style="text-align:center">DZ</th>
+                                                        <th style="text-align:center">TT</th>
                                                         <th style="text-align:center">RD</th>
                                                         <th style="text-align:center">CI</th>
                                                         <th style="text-align:center">IV</th>
@@ -128,7 +127,6 @@
                                                         <td style="text-align:center">{{ item.LP }}</td>
                                                         <td style="text-align:center">{{ item.PM }}</td>
                                                         <td style="text-align:center">{{ item.US }}</td>
-                                                        <td style="text-align:center">{{ item.EA }}</td>
                                                         <td style="text-align:center">{{ item.PMI }}
                                                         </td><td style="text-align:center">{{ item.RG }}</td>
                                                         <td style="text-align:center">{{ item.CV }}</td>
