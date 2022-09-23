@@ -102,7 +102,7 @@
                                                         <th style="text-align:center">RI</th>
                                                         <th style="text-align:center">LP</th>
                                                         <th style="text-align:center">PM</th>
-                                                        <th style="text-align:center">US</th>
+                                                        <th style="text-align:center">US</th>   
                                                         <th style="text-align:center">PMI</th>
                                                         <th style="text-align:center">RG</th>
                                                         <th style="text-align:center">CV</th>
@@ -140,6 +140,26 @@
                                                         <td style="text-align:center">{{ item.RM }}</td>
                                                         <td style="text-align:center">{{ item.VS }}</td>
                                                         <td style="text-align:center">{{ item.OG }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th style="text-align:center" colspan="4">Total</th>
+                                                        <td style="text-align:center" >{{valorMetodoTotal[0]}}</td>
+                                                        <td style="text-align:center" >{{valorMetodoTotal[1]}}</td>
+                                                        <td style="text-align:center" >{{valorMetodoTotal[2]}}</td>
+                                                        <td style="text-align:center" >{{valorMetodoTotal[3]}}</td>
+                                                        <td style="text-align:center" >{{valorMetodoTotal[4]}}</td>
+                                                        <td style="text-align:center" >{{valorMetodoTotal[5]}}</td>
+                                                        <td style="text-align:center" >{{valorMetodoTotal[6]}}</td>
+                                                        <td style="text-align:center" >{{valorMetodoTotal[7]}}</td>
+                                                        <td style="text-align:center" >{{valorMetodoTotal[8]}}</td>
+                                                        <td style="text-align:center" >{{valorMetodoTotal[9]}}</td>
+                                                        <td style="text-align:center" >{{valorMetodoTotal[10]}}</td>
+                                                        <td style="text-align:center" >{{valorMetodoTotal[11]}}</td>
+                                                        <td style="text-align:center" >{{valorMetodoTotal[12]}}</td>
+                                                        <td style="text-align:center" >{{valorMetodoTotal[13]}}</td>
+                                                        <td style="text-align:center" >{{valorMetodoTotal[14]}}</td>
+                                                        <td style="text-align:center" >{{valorMetodoTotal[15]}}</td>
+                                                        <td style="text-align:center" >{{valorMetodoTotal[16]}}</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -372,6 +392,8 @@ export default {
 
             /* Tabla CERTIFICADOS */
             tablaCertificados:{},
+
+            valorMetodoTotal:{},
         };
     },
 
@@ -456,6 +478,8 @@ export default {
                           Laravel.user.api_token;
                 let res = await axios.get(url);
                 this.tablaCertificados = res.data;
+                console.log(this.tablaCertificados.data.RI);
+               await  this.getTotales()
             } catch (error) {
             } finally {
                 this.$store.commit("loading", false);
@@ -469,6 +493,48 @@ export default {
             let certificadoFormateado = certificado.toString().padStart(8,'0');
             return certificadoFormateado
         },
+        async getTotales(){
+            var ri_m = 0;
+            var lp_m = 0;
+            var pm_m = 0;
+            var us_m = 0;
+            var pmi_m = 0;
+            var rg_m = 0;
+            var cv_m = 0;
+            var dz_m = 0;
+            var tt_m = 0;
+            var rd_m = 0;
+            var ci_m = 0;
+            var iv_m = 0;
+            var ph_m = 0;
+            var gral_m = 0;
+            var rm_m = 0;
+            var vs_m = 0;
+            var og_m = 0;
+            this.tablaCertificados.data.forEach((item) =>{
+                ri_m = ri_m + item.RI;
+                lp_m = lp_m + item.LP;
+                pm_m = pm_m + item.PM;
+                us_m = us_m + item.US;
+                pmi_m = pmi_m + item.PMI;
+                rg_m = rg_m + item.RG;
+                cv_m = cv_m + item.CV;
+                dz_m = dz_m + item.DZ;
+                tt_m = tt_m + item.TT;
+                rd_m = rd_m + item.RD;
+                ci_m = ci_m + item.CI;
+                iv_m = iv_m + item.IV;
+                ph_m = ph_m + item.PH;
+                gral_m = gral_m + item.GRAL;
+                rm_m = rm_m + item.RM;
+                vs_m = vs_m + item.VS;
+                og_m = og_m + item.OG;
+            })
+             var valorMTotal = [ri_m, lp_m, pm_m, us_m, pmi_m, rg_m, cv_m, dz_m, tt_m, rd_m, ci_m, iv_m, ph_m, gral_m, rm_m, vs_m, og_m]
+             this.valorMetodoTotal = valorMTotal
+             console.log(this.valorMetodoTotal)
+            
+        },
 
     }
 };
@@ -481,5 +547,11 @@ export default {
         min-width: max-content;
         padding-left: 5px;
         padding-right: 5px;
+    }
+    .total{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
     }
 </style>
