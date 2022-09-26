@@ -102,7 +102,7 @@
                                                         <th style="text-align:center">RI</th>
                                                         <th style="text-align:center">LP</th>
                                                         <th style="text-align:center">PM</th>
-                                                        <th style="text-align:center">US</th>   
+                                                        <th style="text-align:center">US</th>
                                                         <th style="text-align:center">PMI</th>
                                                         <th style="text-align:center">RG</th>
                                                         <th style="text-align:center">CV</th>
@@ -116,7 +116,7 @@
                                                         <th style="text-align:center">RM</th>
                                                         <th style="text-align:center">VS</th>
                                                         <th style="text-align:center">OG</th>
-                                                    </tr>    
+                                                    </tr>
                                                     <tr v-for="(item,k) in tablaCertificados.data" :key="k">
                                                         <td>{{ dateFormat(item.fecha) }}</td>
                                                         <td style="text-align:center">{{ item.cliente }}</td>
@@ -190,90 +190,9 @@
                                                         <th style="text-align:center"  class="col-md-2  medidas_tabla_placas">Cliente</th>
                                                         <th style="text-align:center"  class="col-md-1  medidas_tabla_placas">Ot</th>
                                                         <th style="text-align:center"  class="col-md-1  medidas_tabla_placas">Certificado</th>
-                                                        <th style="text-align:center" class="medidas_tabla_placas">7 x 21</th>
-                                                        <th style="text-align:center" class="medidas_tabla_placas">7 x 29</th>
-                                                        <th style="text-align:center" class="medidas_tabla_placas">7 x 35</th>
-                                                        <th style="text-align:center" class="medidas_tabla_placas">7 x 43</th>
-                                                        <th style="text-align:center" class="medidas_tabla_placas">7 x 53</th>
-                                                        <th style="text-align:center" class="medidas_tabla_placas">7 x 68</th>
-                                                        <th style="text-align:center" class="medidas_tabla_placas">9 x 21</th>
-                                                        <th style="text-align:center" class="medidas_tabla_placas">9 x 29</th>
-                                                        <th style="text-align:center" class="medidas_tabla_placas">9 x 43</th>
-                                                        <th style="text-align:center" class="medidas_tabla_placas">9 x 48</th>
-                                                        <th style="text-align:center" class="medidas_tabla_placas">17 x 43</th>
-                                                        <th style="text-align:center" class="medidas_tabla_placas">35 x 43</th>
-                                                        <th style="text-align:center" class="medidas_tabla_placas">1/2 "</th>
-                                                        <th style="text-align:center" class="medidas_tabla_placas">04"</th>
-                                                        <th style="text-align:center" class="medidas_tabla_placas">06" a 08"</th>
-                                                        <th style="text-align:center" class="medidas_tabla_placas">3/4"</th>
-                                                        <th style="text-align:center" class="medidas_tabla_placas">1"</th>
-                                                        <th style="text-align:center" class="medidas_tabla_placas">2"</th>
-                                                        <th style="text-align:center" class="medidas_tabla_placas">3"</th>
-                                                        <th style="text-align:center" class="medidas_tabla_placas">4"</th>
-                                                        <th style="text-align:center" class="medidas_tabla_placas">6"</th>
-                                                        <th style="text-align:center" class="medidas_tabla_placas">8"</th>
-                                                        <th style="text-align:center" class="medidas_tabla_placas">10"</th>
-                                                        <th style="text-align:center" class="medidas_tabla_placas">12"</th>
-                                                        <th style="text-align:center" class="medidas_tabla_placas">14"</th>
-                                                        <th style="text-align:center" class="medidas_tabla_placas">16"</th>
-                                                        <th style="text-align:center" class="medidas_tabla_placas">10" a 14"</th>
-                                                        <th style="text-align:center" class="medidas_tabla_placas">10" a 16"</th>
-                                                        <th style="text-align:center" class="medidas_tabla_placas">18"</th>
-                                                        <th style="text-align:center" class="medidas_tabla_placas">20"</th>
-                                                        <th style="text-align:center" class="medidas_tabla_placas">16" a 20"</th>
-                                                        <th style="text-align:center" class="medidas_tabla_placas">24"</th>
-                                                        <th style="text-align:center" class="medidas_tabla_placas">21" a 2"4</th>
-                                                        <th style="text-align:center" class="medidas_tabla_placas">28"</th>
-                                                        <th style="text-align:center" class="medidas_tabla_placas">30"</th>
-                                                        <th style="text-align:center" class="medidas_tabla_placas">32"</th>
-                                                        <th style="text-align:center" class="medidas_tabla_placas">36"</th>
-                                                        <th style="text-align:center" class="medidas_tabla_placas">42"</th>
-                                                        <th style="text-align:center" class="medidas_tabla_placas">73"</th>
                                                     </tr>
-                                                    <tr v-for="(item,k) in tablaPlacas" :key="k">
-                                                        <td style="text-aling:center">{{item.fecha}}</td>
-                                                        <td style="text-align:center">{{item.cliente}}</td>
-                                                        <td style="text-align:center">{{item.OT}}</td>
-                                                        <td style="text-align:center">{{item.certificado}}</td>
-                                                        <td style="text-align:center">{{item.cm7x21}}</td>
-                                                        <td style="text-align:center">{{item.cm7x29}}</td>
-                                                        <td style="text-align:center">{{item.cm7x35}}</td>
-                                                        <td style="text-align:center">{{item.cm7x43}}</td>
-                                                        <td style="text-align:center">{{item.cm7x53}}</td>
-                                                        <td style="text-align:center">{{item.cm7x68}}</td>
-                                                        <td style="text-align:center">{{item.cm9x21}}</td>
-                                                        <td style="text-align:center">{{item.cm9x29}}</td>
-                                                        <td style="text-align:center">{{item.cm9x43}}</td>
-                                                        <td style="text-align:center">{{item.cm9x48}}</td>
-                                                        <td style="text-align:center">{{item.cm17x43}}</td>
-                                                        <td style="text-align:center">{{item.cm35x43}}</td>
-                                                        <td style="text-align:center">{{item.pMedio}}</td>
-                                                        <td style="text-align:center">{{item.p04}}</td>
-                                                        <td style="text-align:center">{{item.p0608}}</td>
-                                                        <td style="text-align:center">{{item.pTresCuartos}}</td>
-                                                        <td style="text-align:center">{{item.p1}}</td>
-                                                        <td style="text-align:center">{{item.p2}}</td>
-                                                        <td style="text-align:center">{{item.p3}}</td>
-                                                        <td style="text-align:center">{{item.p4}}</td>
-                                                        <td style="text-align:center">{{item.p6}}</td>
-                                                        <td style="text-align:center">{{item.p8}}</td>
-                                                        <td style="text-align:center">{{item.p10}}</td>
-                                                        <td style="text-align:center">{{item.p12}}</td>
-                                                        <td style="text-align:center">{{item.p14}}</td>
-                                                        <td style="text-align:center">{{item.p16}}</td>
-                                                        <td style="text-align:center">{{item.p1014}}</td>
-                                                        <td style="text-align:center">{{item.p1016}}</td>
-                                                        <td style="text-align:center">{{item.p18}}</td>
-                                                        <td style="text-align:center">{{item.p20}}</td>
-                                                        <td style="text-align:center">{{item.p1620}}</td>
-                                                        <td style="text-align:center">{{item.p24}}</td>
-                                                        <td style="text-align:center">{{item.p2124}}</td>
-                                                        <td style="text-align:center">{{item.p28}}</td>
-                                                        <td style="text-align:center">{{item.p30}}</td>
-                                                        <td style="text-align:center">{{item.p32}}</td>
-                                                        <td style="text-align:center">{{item.p36}}</td>
-                                                        <td style="text-align:center">{{item.p42}}</td>
-                                                        <td style="text-align:center">{{item.p73}}</td>
+                                                    <tr v-for="(item,k) in tablaPlacas.data" :key="k">
+                                                        <th> {{item.fecha}} </th>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -344,51 +263,7 @@ export default {
             fecha_actual: moment(new Date()).format('DD-MM-YYYY'),
 
             /* Tabla placas */
-            tablaPlacas: [{
-                fecha: '15/10/2022',
-                cliente: 'VMC',
-                OT: '2987',
-                certificado: "00000021",
-                cm7x21: '8',
-                cm7x29: '0',
-                cm7x35: '0',
-                cm7x43: '12',
-                cm7x53: '8',
-                cm7x68: '0',
-                cm9x21: '3',
-                cm9x29: '0',
-                cm9x43: '2',
-                cm9x48: '0',
-                cm17x43: '1',
-                cm35x43: '1',
-                pMedio: '0',
-                p04: '0',
-                p0608: '0',
-                pTresCuartos: '0',
-                p1: '0',
-                p2:'0',
-                p3:'0',
-                p4:'0',
-                p6:'0',
-                p8: '7',
-                p10:'0',
-                p12: '9',
-                p14: '0',
-                p16:'0',
-                p1014: '0',
-                p1016:'0' ,
-                p18:'0',
-                p20: '5',
-                p1620: '1',
-                p24: '1',
-                p2124: '3',
-                p28: '0',
-                p30: '0',
-                p32: '0',
-                p36: '0',
-                p42: '0',
-                p73: '2',
-            }],
+            tablaPlacas:{},
 
             /* Tabla CERTIFICADOS */
             tablaCertificados:{},
@@ -400,7 +275,7 @@ export default {
     mounted() {
         this.$store.dispatch("loadClientesOperador", this.user.id);
     },
- 
+
     computed :{
         ...mapState(['isLoading','clientesOperador','url']),
         mostrar_tabla : function(){
@@ -468,7 +343,7 @@ export default {
                  "/cliente/" +
                   (this.cliente ? this.cliente.id : "null") +
                    "/ot/" +
-                    (this.ot ? this.ot.id : "null") + 
+                    (this.ot ? this.ot.id : "null") +
                     "/fecha_desde/" + this.fecha_desde +
                      "/fecha_hasta/" +
                       this.fecha_hasta +
@@ -478,8 +353,8 @@ export default {
                           Laravel.user.api_token;
                 let res = await axios.get(url);
                 this.tablaCertificados = res.data;
-                console.log(this.tablaCertificados.data.RI);
-               await  this.getTotales()
+                await this.getTablaPlacas()
+                await this.getTotales()
             } catch (error) {
             } finally {
                 this.$store.commit("loading", false);
@@ -492,6 +367,18 @@ export default {
         formatearCertificado(certificado){
             let certificadoFormateado = certificado.toString().padStart(8,'0');
             return certificadoFormateado
+        },
+        async getTablaPlacas(page = 1) {
+            this.tablaPlacas = {};
+            try {
+                let url = "reporte-placas-medidas" + "/cliente/" + (this.cliente ? this.cliente.id : "null") + "/ot/" + (this.ot ? this.ot.id : "null") + "/fecha_desde/" + this.fecha_desde + "/fecha_hasta/" + this.fecha_hasta + "?page=" + page + "&api_token=" + Laravel.user.api_token;
+                let res = await axios.get(url);
+                this.tablaPlacas = res.data;
+                console.log(this.tablaPlacas)
+            } catch (error) {
+            } finally {
+                this.$store.commit("loading", false);
+            }
         },
         async getTotales(){
             var ri_m = 0;
@@ -532,8 +419,6 @@ export default {
             })
              var valorMTotal = [ri_m, lp_m, pm_m, us_m, pmi_m, rg_m, cv_m, dz_m, tt_m, rd_m, ci_m, iv_m, ph_m, gral_m, rm_m, vs_m, og_m]
              this.valorMetodoTotal = valorMTotal
-             console.log(this.valorMetodoTotal)
-            
         },
 
     }
