@@ -51,6 +51,12 @@
                                 :options="ots"
                                 @input="CambioOt()"></v-select>
                         </li>
+                        <li class="list-group-item pointer">
+                            <div class="form-group">
+                               <label>Ubicacion</label>
+                               <v-select v-model="provincia" label="provincia" :options="provincias" @input="getLocalidades()"></v-select>
+                            </div>
+                        </li>
                         <li class="list-fecha list-group-item pointer">
                             <div class="row">
                                 <div class="col-sm-12 col-md-12 col-lg-6">
@@ -85,7 +91,7 @@
                 <tab name="Servicios">
                     <div class="row">
                         <div class="col-lg-12">
-                            <div v-if="(tablaCertificados.data && tablaCertificados.data.length)">
+                            <div v-if="(tablaServiciosCertificados && tablaServiciosCertificados.length)">
                                 <div class="box box-primary">
                                     <div class="box-header with-border">
                                         <h3 class="box-title">Detalle</h3>
@@ -97,7 +103,8 @@
                                                     <tr >
                                                         <th style="text-aling:center" class=" col-md-1">Fecha</th>
                                                         <th style="text-align:center"  class=" col-md-2">Cliente</th>
-                                                        <th style="text-align:center"  class="col-md-1">Ot</th>
+                                                        <th style="text-align:center"  class="col-md-1">OT</th>
+                                                        <th style="text-align:center"  class="col-md-1 ">Ubicacion</th>
                                                         <th style="text-align:center"  class=" col-md-1">Certificado</th>
                                                         <th style="text-align:center">RI</th>
                                                         <th style="text-align:center">LP</th>
@@ -117,10 +124,11 @@
                                                         <th style="text-align:center">VS</th>
                                                         <th style="text-align:center">OG</th>
                                                     </tr>
-                                                    <tr v-for="(item,k) in tablaCertificados.data" :key="k">
+                                                    <tr v-for="(item,k) in tablaServiciosCertificados" :key="k">
                                                         <td>{{ dateFormat(item.fecha) }}</td>
                                                         <td style="text-align:center">{{ item.cliente }}</td>
                                                         <td style="text-align:center">{{ item.nro_ot }}</td>
+                                                        <td style="text-align:center">{{ item.ubicacion }}</td>
                                                         <td style="text-align:center">
                                                         <a :href="'/pdf/certificado/' + item.certificado_id + '/final' " target="_blank" title="Informe"><span>{{ formatearCertificado(item.certificado) }}</span></a></td>
                                                         <td style="text-align:center">{{ item.RI }}</td>
@@ -142,7 +150,27 @@
                                                         <td style="text-align:center">{{ item.OG }}</td>
                                                     </tr>
                                                     <tr>
-                                                        <th style="text-align:center" colspan="4">Total</th>
+                                                        <th colspan="5">Total método por ensayo</th>
+                                                        <th style="text-align:center">RI</th>
+                                                        <th style="text-align:center">LP</th>
+                                                        <th style="text-align:center">PM</th>
+                                                        <th style="text-align:center">US</th>
+                                                        <th style="text-align:center">PMI</th>
+                                                        <th style="text-align:center">RG</th>
+                                                        <th style="text-align:center">CV</th>
+                                                        <th style="text-align:center">DZ</th>
+                                                        <th style="text-align:center">TT</th>
+                                                        <th style="text-align:center">RD</th>
+                                                        <th style="text-align:center">CI</th>
+                                                        <th style="text-align:center">IV</th>
+                                                        <th style="text-align:center">PH</th>
+                                                        <th style="text-align:center">GRAL</th>
+                                                        <th style="text-align:center">RM</th>
+                                                        <th style="text-align:center">VS</th>
+                                                        <th style="text-align:center">OG</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th style="text-align:center" colspan="5">&nbsp;</th>
                                                         <td style="text-align:center" >{{valorMetodoTotal[0]}}</td>
                                                         <td style="text-align:center" >{{valorMetodoTotal[1]}}</td>
                                                         <td style="text-align:center" >{{valorMetodoTotal[2]}}</td>
@@ -176,7 +204,7 @@
                 <tab name="Placas">
                     <div class="row">
                         <div class="col-lg-12">
-                            <div v-if="1">
+                            <div v-if="(tablaMedidasFinal && tablaMedidasFinal.length)">
                                 <div class="box box-primary">
                                     <div class="box-header with-border">
                                         <h3 class="box-title">Detalle</h3>
@@ -184,15 +212,31 @@
                                     <div class="box-body">
                                         <div class="table-responsive">
                                             <table class="table table-striped table-condensed tabla">
-                                                <tbody>
+                                                <tbody :key="key">
                                                     <tr>
-                                                        <th style="text-aling:center" class="col-md-1 medidas_tabla_placas">Fecha</th>
-                                                        <th style="text-align:center"  class="col-md-2  medidas_tabla_placas">Cliente</th>
-                                                        <th style="text-align:center"  class="col-md-1  medidas_tabla_placas">Ot</th>
-                                                        <th style="text-align:center"  class="col-md-1  medidas_tabla_placas">Certificado</th>
+                                                        <th style="text-aling:center" class="col-md-1">Fecha</th>
+                                                        <th style="text-align:center"  class="col-md-1 ">Cliente</th>
+                                                        <th style="text-align:center"  class="col-md-1 ">OT</th>
+                                                        <th style="text-align:center"  class="col-md-1 ">Ubicacion</th>
+                                                        <th style="text-align:center"  class="col-md-1 ">Certificado</th>
+                                                        <th v-for="(item,k) in tablaMedidasCertificados" :key="k" >{{item.medida}}</th>
                                                     </tr>
-                                                    <tr v-for="(item,k) in tablaPlacas.data" :key="k">
-                                                        <th> {{item.fecha}} </th>
+                                                    <tr v-for="(item,k) in tablaMedidasFinal" :key="k">
+                                                        <td> {{dateFormat(item.fecha) }} </td>
+                                                        <td style="text-align:center">{{ item.cliente }}</td>
+                                                        <td style="text-align:center">{{ item.nro_ot }}</td>
+                                                        <td style="text-align:center">{{ item.ubicacion}}</td>
+                                                        <td style="text-align:center">
+                                                        <a :href="'/pdf/certificado/' + item.certificado_id + '/final' " target="_blank" title="Informe"><span>{{ formatearCertificado(item.certificado) }}</span></a></td>
+                                                         <td style="text-align:center" v-for="(item2,l) in tablaMedidasCertificados" :key="l">{{item.medidas[`${item2.medida}`]}}</td> 
+                                                    </tr>
+                                                    <tr>
+                                                        <th colspan="5">Total placas por ensayo</th>
+                                                        <th style="text-align:center"  v-for="(item,k) in tablaMedidasCertificados" :key="k" >{{item.medida}}</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="5">&nbsp;</td>
+                                                        <td style="text-align:center" v-for="(item, k) in tablaMedidasCertificados" :key="k" >{{totalesMedidas[`${item.medida}`]}}</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -200,7 +244,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div v-else>
                                 <h4>No hay datos para mostrar</h4>
                             </div>
@@ -208,11 +251,7 @@
                     </div>
                 </tab>
             </tabs>
-            <pagination
-                :data="tablaCertificados" @pagination-change-page="Buscar" :limit="3"><span slot="prev-nav">&lt; Previous</span><span slot="next-nav">Next &gt;</span>
-            </pagination>
         </div>
-
         <loading :active.sync="isLoading" :loader="'bars'" :color="'red'">
         </loading>
     </div>
@@ -243,7 +282,15 @@ export default {
         user: {
             type: Object,
             required: true
-        }
+        },
+        ot_provinciasdata : {
+           type : [ Object, Array ],
+           required : false,
+        },
+        ot_localidaddata : {
+           type : [ Object, Array ],
+           required : false,
+        },
     },
 
     data() {
@@ -261,29 +308,53 @@ export default {
             selObra: false,
             selComponente: false,
             fecha_actual: moment(new Date()).format('DD-MM-YYYY'),
+            provincia: '',
 
-            /* Tabla placas */
-            tablaPlacas:{},
 
             /* Tabla CERTIFICADOS */
-            tablaCertificados:{},
+            tablaServiciosCertificados:[],
 
-            valorMetodoTotal:{},
+            valorMetodoTotal:[],
+
+            tablaMedidasCertificados:[],
+
+            /*Tabla ubicacion */
+            tablaUbicacion:[],
+
+            /* Tabla placas */
+            tablaPlacas:[],
+
+            certificadoIds:[],
+
+            tablaMedidasFinal:[],
+
+            totalesMedidas:{},
+
+            key: 0
         };
+    },
+
+    created() {
+        this.$store.dispatch('loadProvincias');
     },
 
     mounted() {
         this.$store.dispatch("loadClientesOperador", this.user.id);
+        this.medidasDinamicasTitulos()
+        
     },
 
     computed :{
-        ...mapState(['isLoading','clientesOperador','url']),
+        ...mapState(['isLoading','clientesOperador','url','provincias']),
         mostrar_tabla : function(){
-            return (this.tablaCertificados.lenght) ? (this.tablaCertificados.data.lenght > 0 ? true : false) : false;
+            return (this.tablaServiciosCertificados.lenght) ? (this.tablaServiciosCertificados.lenght > 0 ? true : false) : false;
         },
     },
 
     methods: {
+        getLocalidad(){
+            this.$store.dispatch('loadLocalidades',this.provincia.id);
+        },
         async CambioCliente() {
             this.selCliente = !this.selCliente;
             this.ot = "";
@@ -334,9 +405,10 @@ export default {
             }
         },
 
-        async Buscar(page = 1) {
+        async Buscar() {
             this.$store.commit("loading", true);
-            this.tablaCertificados = {};
+            this.tablaServiciosCertificados = {};
+            this.tablaPlacas = {};
 
             try {
                 let url = "reporte-servicios" +
@@ -347,14 +419,15 @@ export default {
                     "/fecha_desde/" + this.fecha_desde +
                      "/fecha_hasta/" +
                       this.fecha_hasta +
-                       "?page=" +
-                        page +
-                         "&api_token=" +
+                         "?api_token=" +
                           Laravel.user.api_token;
                 let res = await axios.get(url);
-                this.tablaCertificados = res.data;
-                await this.getTablaPlacas()
-                await this.getTotales()
+                this.tablaServiciosCertificados = res.data;
+                 await this.getTablaPlacas()
+                await this.getTotalesMetodos()
+                await this.guardandoCertificadoID()
+                await this.mostrarValorPlacasDinamicamente()
+                await this.getTotalValorPlacas()
             } catch (error) {
             } finally {
                 this.$store.commit("loading", false);
@@ -368,19 +441,26 @@ export default {
             let certificadoFormateado = certificado.toString().padStart(8,'0');
             return certificadoFormateado
         },
-        async getTablaPlacas(page = 1) {
-            this.tablaPlacas = {};
-            try {
-                let url = "reporte-placas-medidas" + "/cliente/" + (this.cliente ? this.cliente.id : "null") + "/ot/" + (this.ot ? this.ot.id : "null") + "/fecha_desde/" + this.fecha_desde + "/fecha_hasta/" + this.fecha_hasta + "?page=" + page + "&api_token=" + Laravel.user.api_token;
+         async getTablaPlacas() {
+             this.tablaPlacas = {};
+             try {
+                 let url = "reporte-placas-medidas" + "/cliente/" + (this.cliente ? this.cliente.id : "null") + "/ot/" + (this.ot ? this.ot.id : "null") + "/fecha_desde/" + this.fecha_desde + "/fecha_hasta/" + this.fecha_hasta + "?api_token=" + Laravel.user.api_token;
+                 let res = await axios.get(url);
+                 this.tablaPlacas = res.data;
+             } catch (error) {
+             } finally {
+                 this.$store.commit("loading", false);
+             }
+         },
+        async ubicacionDinamica(){
+            this.tablaUbicacion = {}
+            try{
+                let url = "reporte-ubicacion/cliente/"
                 let res = await axios.get(url);
-                this.tablaPlacas = res.data;
-                console.log(this.tablaPlacas)
-            } catch (error) {
-            } finally {
-                this.$store.commit("loading", false);
-            }
+                this.tablaUbicacion = res.data
+            }catch (error) {}
         },
-        async getTotales(){
+        async getTotalesMetodos(){
             var ri_m = 0;
             var lp_m = 0;
             var pm_m = 0;
@@ -398,7 +478,7 @@ export default {
             var rm_m = 0;
             var vs_m = 0;
             var og_m = 0;
-            this.tablaCertificados.data.forEach((item) =>{
+            this.tablaServiciosCertificados.forEach((item) =>{
                 ri_m = ri_m + item.RI;
                 lp_m = lp_m + item.LP;
                 pm_m = pm_m + item.PM;
@@ -420,6 +500,61 @@ export default {
              var valorMTotal = [ri_m, lp_m, pm_m, us_m, pmi_m, rg_m, cv_m, dz_m, tt_m, rd_m, ci_m, iv_m, ph_m, gral_m, rm_m, vs_m, og_m]
              this.valorMetodoTotal = valorMTotal
         },
+        async medidasDinamicasTitulos(){
+            try {
+                let url = "reporte-medidas/cliente/"
+                let res = await axios.get(url);
+                this.tablaMedidasCertificados = res.data;
+            } catch (error) {
+                console.log(error)
+            }
+        },
+        async guardandoCertificadoID(){
+            this.certificadoIds = [...new Set(this.tablaPlacas.map(item => item.certificado_id))]
+        },
+        async mostrarValorPlacasDinamicamente(){        
+            this.tablaMedidasFinal = [] 
+            for (const item of this.certificadoIds){
+                let index = this.tablaPlacas.findIndex(event => event.certificado_id === item);
+                let obj = {}
+                let obj2 = {}
+                 Object.defineProperty(obj, 'fecha',{value: this.tablaPlacas[index].fecha, enumerable: true, writable: true} )
+                 Object.defineProperty(obj, 'cliente',{value: this.tablaPlacas[index].cliente, enumerable: true, writable: true} )
+                 Object.defineProperty(obj, 'certificado_id',{value: this.tablaPlacas[index].certificado_id, enumerable: true, writable: true} )
+                 Object.defineProperty(obj, 'nro_ot',{value: this.tablaPlacas[index].nro_ot, enumerable: true, writable: true} )
+                 Object.defineProperty(obj, 'certificado',{value: this.tablaPlacas[index].numero, enumerable: true, writable: true} )
+
+                for(const medida of this.tablaMedidasCertificados){
+                    let index2 = -1
+                    if(medida.unidad_medida === 'cm' ){
+                        index2 = this.tablaPlacas.findIndex(e => (e.certificado_id === item && e.cm.replace(/\s/g, '') === medida.medida));                        
+                    } 
+                    if (medida.unidad_medida ==='pulgada'){
+                        index2 = this.tablaPlacas.findIndex(e => (e.certificado_id === item && e.pulgadas === medida.medida));                        
+                    } 
+                    if (index2 !== -1){
+                        Object.defineProperty(obj2, medida.medida,{value: parseInt(this.tablaPlacas[index2].cantidad), enumerable: true, writable: true} )                            
+                    } else {
+                        Object.defineProperty(obj2, medida.medida,{value:0, enumerable: true, writable: true} )                            
+                    }
+                    
+                }
+                Object.defineProperty(obj, 'medidas',{value: obj2, enumerable: true, writable: true} )  
+                this.tablaMedidasFinal.push(obj);
+            }
+            
+        },
+        async getTotalValorPlacas(){
+            let total = 0;
+            for(const medida of this.tablaMedidasCertificados){
+                 total = 0;
+                for(const item of this.tablaMedidasFinal){
+                    total += item.medidas[`${medida.medida}`] 
+              }
+              Object.defineProperty(this.totalesMedidas, medida.medida,{value: total, enumerable: true, writable: true})
+            }
+            this.key += 1;
+        }
 
     }
 };
@@ -428,15 +563,13 @@ export default {
     .tabla{
         min-width: max-content;
     }
-    .medidas_tabla_placas{
-        min-width: max-content;
-        padding-left: 5px;
-        padding-right: 5px;
-    }
     .total{
         display: flex;
         flex-direction: row;
         justify-content: center;
         align-items: center;
     }
+    .table-condensed {
+        padding: 0px;
+}
 </style>

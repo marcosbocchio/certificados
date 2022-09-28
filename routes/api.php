@@ -668,7 +668,16 @@ Route::group(['middleware' => 'auth:api'], function () {
         'ReporteResumenCertificadoController@resumenServiciosPorCertificado'
     );
     Route::get(
-        'reporte-placas-medidas/cliente/{cliente_id}/ot/{ot}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}','ReporteResumenCertificadoController@dataPlacaMedidas'
+        'reporte-placas-medidas/cliente/{cliente_id}/ot/{ot}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}',
+        'ReporteResumenCertificadoController@dataPlacaMedidas'
+    );
+    Route::get(
+        'reporte-medidas/cliente/',
+        'ReporteResumenCertificadoController@tituloMedidasDinamicas'
+    );
+    Route::get(
+        'reporte-ubicacion/cliente/',
+        'ReporteResumenCertificadoController@ubicacionDinamica'
     );
     // Interno Equipos
     Route::get(
