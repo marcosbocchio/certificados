@@ -1921,7 +1921,7 @@ export default {
         SetearBlockCalibraciones(){
 
             if(this.tecnica.codigo=='ME'){
-                this.block_calibraciones = ['Proveta', 'Proveta escalonada'];
+                this.block_calibraciones = ['Probeta', 'Probeta escalonada'];
             }else{
 
                 this.block_calibraciones = ['V1', 'V2'];

@@ -295,7 +295,7 @@ b {
                     <td style="font-size: 10px; width:35.5px;text-align: center;" class="bordered-td">{{strtoupper($calibracion->posicion)}}</td>               
                     <td style="font-size: 10px; width:32.8px;text-align:   center;" class="bordered-td">{{$calibracion->curva_elevacion}}</td>               
                     <td style="font-size: 10px; width:25.5px;text-align: center;" class="bordered-td">
-                        @if ($calibracion->block_calibracion == 'Proveta')
+                        @if ($calibracion->block_calibracion == 'Probeta')
                             Pr
                         @elseif(($calibracion->block_calibracion == 'Escalonado'))
                             Es

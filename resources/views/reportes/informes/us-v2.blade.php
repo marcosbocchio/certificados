@@ -127,7 +127,7 @@ footer {
                             @endif
                         </td>
                         <td style="font-size: 9px; width:28.8px;text-align: center;" class="bordered-td">
-                            @if ($calibracion->block_calibracion == 'Proveta')
+                            @if ($calibracion->block_calibracion == 'Probeta')
                                 Pr
                             @elseif(($calibracion->block_calibracion == 'Escalonado'))
                                 Es
