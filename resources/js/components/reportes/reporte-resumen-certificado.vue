@@ -54,7 +54,7 @@
                         <li class="list-group-item pointer">
                             <div class="form-group">
                                <label>Ubicacion</label>
-                               <v-select v-model="provincia" label="provincia" :options="provincias" @input="getLocalidades()"></v-select>
+                               <v-select v-model="provincia" label="provincia" :options="provincias"></v-select>
                             </div>
                         </li>
                         <li class="list-fecha list-group-item pointer">
@@ -128,7 +128,7 @@
                                                         <td>{{ dateFormat(item.fecha) }}</td>
                                                         <td style="text-align:center">{{ item.cliente }}</td>
                                                         <td style="text-align:center">{{ item.nro_ot }}</td>
-                                                        <td style="text-align:center">{{ item.ubicacion }}</td>
+                                                        <td style="text-align:center">{{ item.provincia }}</td>
                                                         <td style="text-align:center">
                                                         <a :href="'/pdf/certificado/' + item.certificado_id + '/final' " target="_blank" title="Informe"><span>{{ formatearCertificado(item.certificado) }}</span></a></td>
                                                         <td style="text-align:center">{{ item.RI }}</td>
@@ -225,10 +225,10 @@
                                                         <td> {{dateFormat(item.fecha) }} </td>
                                                         <td style="text-align:center">{{ item.cliente }}</td>
                                                         <td style="text-align:center">{{ item.nro_ot }}</td>
-                                                        <td style="text-align:center">{{ item.ubicacion}}</td>
+                                                        <td style="text-align:center">{{ item.provincia}}</td>
                                                         <td style="text-align:center">
                                                         <a :href="'/pdf/certificado/' + item.certificado_id + '/final' " target="_blank" title="Informe"><span>{{ formatearCertificado(item.certificado) }}</span></a></td>
-                                                         <td style="text-align:center" v-for="(item2,l) in tablaMedidasCertificados" :key="l">{{item.medidas[`${item2.medida}`]}}</td> 
+                                                         <td style="text-align:center" v-for="(item2,l) in tablaMedidasCertificados" :key="l">{{item.medidas[`${item2.medida}`]}}</td>
                                                     </tr>
                                                     <tr>
                                                         <th colspan="5">Total placas por ensayo</th>
@@ -341,7 +341,7 @@ export default {
     mounted() {
         this.$store.dispatch("loadClientesOperador", this.user.id);
         this.medidasDinamicasTitulos()
-        
+
     },
 
     computed :{
@@ -352,9 +352,6 @@ export default {
     },
 
     methods: {
-        getLocalidad(){
-            this.$store.dispatch('loadLocalidades',this.provincia.id);
-        },
         async CambioCliente() {
             this.selCliente = !this.selCliente;
             this.ot = "";
@@ -416,6 +413,7 @@ export default {
                   (this.cliente ? this.cliente.id : "null") +
                    "/ot/" +
                     (this.ot ? this.ot.id : "null") +
+                    "/provincia/" + (this.provincia ? this.provincia.id : "null") +
                     "/fecha_desde/" + this.fecha_desde +
                      "/fecha_hasta/" +
                       this.fecha_hasta +
@@ -444,7 +442,7 @@ export default {
          async getTablaPlacas() {
              this.tablaPlacas = {};
              try {
-                 let url = "reporte-placas-medidas" + "/cliente/" + (this.cliente ? this.cliente.id : "null") + "/ot/" + (this.ot ? this.ot.id : "null") + "/fecha_desde/" + this.fecha_desde + "/fecha_hasta/" + this.fecha_hasta + "?api_token=" + Laravel.user.api_token;
+                 let url = "reporte-placas-medidas" + "/cliente/" + (this.cliente ? this.cliente.id : "null") + "/ot/" + (this.ot ? this.ot.id : "null") + "/provincia/" + (this.provincia ? this.provincia.id : "null") + "/fecha_desde/" + this.fecha_desde + "/fecha_hasta/" + this.fecha_hasta + "?api_token=" + Laravel.user.api_token;
                  let res = await axios.get(url);
                  this.tablaPlacas = res.data;
              } catch (error) {
@@ -512,8 +510,8 @@ export default {
         async guardandoCertificadoID(){
             this.certificadoIds = [...new Set(this.tablaPlacas.map(item => item.certificado_id))]
         },
-        async mostrarValorPlacasDinamicamente(){        
-            this.tablaMedidasFinal = [] 
+        async mostrarValorPlacasDinamicamente(){
+            this.tablaMedidasFinal = []
             for (const item of this.certificadoIds){
                 let index = this.tablaPlacas.findIndex(event => event.certificado_id === item);
                 let obj = {}
@@ -522,34 +520,35 @@ export default {
                  Object.defineProperty(obj, 'cliente',{value: this.tablaPlacas[index].cliente, enumerable: true, writable: true} )
                  Object.defineProperty(obj, 'certificado_id',{value: this.tablaPlacas[index].certificado_id, enumerable: true, writable: true} )
                  Object.defineProperty(obj, 'nro_ot',{value: this.tablaPlacas[index].nro_ot, enumerable: true, writable: true} )
+                 Object.defineProperty(obj, 'provincia',{value: this.tablaPlacas[index].provincia, enumerable: true, writable: true} )
                  Object.defineProperty(obj, 'certificado',{value: this.tablaPlacas[index].numero, enumerable: true, writable: true} )
 
                 for(const medida of this.tablaMedidasCertificados){
                     let index2 = -1
                     if(medida.unidad_medida === 'cm' ){
-                        index2 = this.tablaPlacas.findIndex(e => (e.certificado_id === item && e.cm.replace(/\s/g, '') === medida.medida));                        
-                    } 
-                    if (medida.unidad_medida ==='pulgada'){
-                        index2 = this.tablaPlacas.findIndex(e => (e.certificado_id === item && e.pulgadas === medida.medida));                        
-                    } 
-                    if (index2 !== -1){
-                        Object.defineProperty(obj2, medida.medida,{value: parseInt(this.tablaPlacas[index2].cantidad), enumerable: true, writable: true} )                            
-                    } else {
-                        Object.defineProperty(obj2, medida.medida,{value:0, enumerable: true, writable: true} )                            
+                        index2 = this.tablaPlacas.findIndex(e => (e.certificado_id === item && e.cm.replace(/\s/g, '') === medida.medida));
                     }
-                    
+                    if (medida.unidad_medida ==='pulgada'){
+                        index2 = this.tablaPlacas.findIndex(e => (e.certificado_id === item && e.pulgadas === medida.medida));
+                    }
+                    if (index2 !== -1){
+                        Object.defineProperty(obj2, medida.medida,{value: parseInt(this.tablaPlacas[index2].cantidad), enumerable: true, writable: true} )
+                    } else {
+                        Object.defineProperty(obj2, medida.medida,{value:0, enumerable: true, writable: true} )
+                    }
+
                 }
-                Object.defineProperty(obj, 'medidas',{value: obj2, enumerable: true, writable: true} )  
+                Object.defineProperty(obj, 'medidas',{value: obj2, enumerable: true, writable: true} )
                 this.tablaMedidasFinal.push(obj);
             }
-            
+
         },
         async getTotalValorPlacas(){
             let total = 0;
             for(const medida of this.tablaMedidasCertificados){
                  total = 0;
                 for(const item of this.tablaMedidasFinal){
-                    total += item.medidas[`${medida.medida}`] 
+                    total += item.medidas[`${medida.medida}`]
               }
               Object.defineProperty(this.totalesMedidas, medida.medida,{value: total, enumerable: true, writable: true})
             }

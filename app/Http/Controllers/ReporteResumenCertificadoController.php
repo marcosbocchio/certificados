@@ -11,14 +11,6 @@ use App\Localidades;
 
 class ReporteResumenCertificadoController extends Controller
 {
-    protected $ot;
-    public function edit($id)
-    {
-        $ot_localidad = Localidades::find($ot->localidad_id);
-        $ot_provincia = Provincias::find($ot_localidad->provincia_id);
-
-        return view(compact('ot_provincia', 'ot_localidad'));
-    }
 
     public function __construct()
     {
@@ -42,11 +34,13 @@ class ReporteResumenCertificadoController extends Controller
     public function resumenServiciosPorCertificado(
         $cliente_id,
         $ot_id,
+        $provincia,
         $fecha_desde,
         $fecha_hasta
     ) {
         $cliente_id = $cliente_id == 'null' ? 0 : $cliente_id;
         $ot_id = $ot_id == 'null' ? 0 : $ot_id;
+        $provincia = $provincia == 'null' ? 0 : $provincia;
 
         if ($fecha_desde == 'null') {
             $fecha_desde = date('2000-01-01');
@@ -56,9 +50,10 @@ class ReporteResumenCertificadoController extends Controller
             $fecha_hasta = date('2100-01-01');
         }
 
-        DB::select('CALL armadoReporteServicios(?,?,?,?)', [
+        DB::select('CALL armadoReporteServicios(?,?,?,?,?)', [
             $cliente_id,
             $ot_id,
+            $provincia,
             $fecha_desde,
             $fecha_hasta,
         ]);
@@ -70,11 +65,13 @@ class ReporteResumenCertificadoController extends Controller
     public function dataPlacaMedidas(
         $cliente_id,
         $ot_id,
+        $provincia,
         $fecha_desde,
         $fecha_hasta
     ) {
         $cliente_id = $cliente_id == 'null' ? 0 : $cliente_id;
         $ot_id = $ot_id == 'null' ? 0 : $ot_id;
+        $provincia = $provincia == 'null' ? 0 : $provincia;
 
         if ($fecha_desde == 'null') {
             $fecha_desde = date('2000-01-01');
@@ -83,9 +80,10 @@ class ReporteResumenCertificadoController extends Controller
         if ($fecha_hasta == 'null') {
             $fecha_hasta = date('2100-01-01');
         }
-        $data = DB::select('CALL reportePlacasMedidas(?,?,?,?)', [
+        $data = DB::select('CALL reportePlacasMedidas(?,?,?,?,?)', [
             $cliente_id,
             $ot_id,
+            $provincia,
             $fecha_desde,
             $fecha_hasta,
         ]);
@@ -97,10 +95,5 @@ class ReporteResumenCertificadoController extends Controller
         $data = DB::select('CALL medidasParaTituloReporte()');
         return $data;
     }
-    public function ubicacionDinamica()
-    {
-        DB::select('CALL getProvincias()');
-        $data = DB::select('CALL getProvincias()');
-        return $data;
-    }
+
 }
