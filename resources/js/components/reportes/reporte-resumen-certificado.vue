@@ -52,10 +52,13 @@
                                 @input="CambioOt()"></v-select>
                         </li>
                         <li class="list-group-item pointer">
-                            <div class="form-group">
-                               <label>Ubicacion</label>
-                               <v-select v-model="provincia" label="provincia" :options="provincias"></v-select>
+                            <div v-show="!selProvincia">
+                                <span class="titulo-li">Ubicacion</span>
+                                <a @click="selProvincia = !selProvincia" class="pull-right">
+                                        <span class="seleccionar">Seleccionar</span>
+                                </a>
                             </div>
+                            <v-select v-show="selProvincia" v-model="provincia" label="provincia" :options="provincias"></v-select>
                         </li>
                         <li class="list-fecha list-group-item pointer">
                             <div class="row">
@@ -308,6 +311,7 @@ export default {
             selObra: false,
             selComponente: false,
             fecha_actual: moment(new Date()).format('DD-MM-YYYY'),
+            selProvincia: false,
             provincia: '',
 
 
