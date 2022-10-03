@@ -88,12 +88,6 @@ class ReporteResumenCertificadoController extends Controller
         ]);
         return $data;
     }
-    public function tituloMedidasDinamicas()
-    {
-        DB::select('CALL medidasParaTituloReporte()');
-        $data = DB::select('CALL medidasParaTituloReporte()');
-        return $data;
-    }
     public function medidaPulgadaTituloReporte()
     {
         DB::select('CALL medidaPulgadaTituloReporte()');
