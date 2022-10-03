@@ -222,7 +222,11 @@
                                                         <th style="text-align:center"  class="col-md-1 ">OT</th>
                                                         <th style="text-align:center"  class="col-md-1 ">Ubicacion</th>
                                                         <th style="text-align:center"  class="col-md-1 ">Certificado</th>
-                                                        <th v-for="(item,k) in tablaMedidasCertificados" :key="k" >{{item.medida}}</th>
+                                                        <th v-for="(item,k) in tablaMedidasCertificados" :key="k" >{{item.medida}}
+                                                            <template v-if="item.unidad_medida == 'pulgada'">
+                                                              "
+                                                            </template>
+                                                        </th>
                                                     </tr>
                                                     <tr v-for="(item,k) in tablaMedidasFinal" :key="k">
                                                         <td> {{dateFormat(item.fecha) }} </td>
@@ -235,7 +239,11 @@
                                                     </tr>
                                                     <tr>
                                                         <th colspan="5">Total placas por ensayo</th>
-                                                        <th style="text-align:center"  v-for="(item,k) in tablaMedidasCertificados" :key="k" >{{item.medida}}</th>
+                                                        <th style="text-align:center"  v-for="(item,k) in tablaMedidasCertificados" :key="k" >{{item.medida}}
+                                                            <template v-if="item.unidad_medida == 'pulgada'">
+                                                              "
+                                                            </template>
+                                                        </th>
                                                     </tr>
                                                     <tr>
                                                         <td colspan="5">&nbsp;</td>
@@ -322,6 +330,9 @@ export default {
 
             tablaMedidasCertificados:[],
 
+            tablaMedidaCm: [],
+
+            tablaMedidaPulgada:[],
             /*Tabla ubicacion */
             tablaUbicacion:[],
 
@@ -344,7 +355,7 @@ export default {
 
     mounted() {
         this.$store.dispatch("loadClientesOperador", this.user.id);
-        this.medidasDinamicasTitulos()
+         this.medidasTitulosDinamicos()
 
     },
 
@@ -430,6 +441,7 @@ export default {
                 await this.guardandoCertificadoID()
                 await this.mostrarValorPlacasDinamicamente()
                 await this.getTotalValorPlacas()
+                
             } catch (error) {
             } finally {
                 this.$store.commit("loading", false);
@@ -454,14 +466,25 @@ export default {
                  this.$store.commit("loading", false);
              }
          },
-        async ubicacionDinamica(){
-            this.tablaUbicacion = {}
-            try{
-                let url = "reporte-ubicacion/cliente/"
+         async medidaPulgadaTituloReporte(){
+            try {
+                let url = "reporte-medidas-pulgada/cliente/"
                 let res = await axios.get(url);
-                this.tablaUbicacion = res.data
-            }catch (error) {}
+                this.tablaMedidaPulgada = res.data;
+            } catch (error) {
+                console.log(error)
+            }
         },
+        async medidaCmTituloReporte(){
+            try {
+                let url = "reporte-medidas-cm/cliente/"
+                let res = await axios.get(url);
+                this.tablaMedidaCm = res.data;
+            } catch (error) {
+                console.log(error)
+            }
+        },
+
         async getTotalesMetodos(){
             var ri_m = 0;
             var lp_m = 0;
@@ -502,15 +525,11 @@ export default {
              var valorMTotal = [ri_m, lp_m, pm_m, us_m, pmi_m, rg_m, cv_m, dz_m, tt_m, rd_m, ci_m, iv_m, ph_m, gral_m, rm_m, vs_m, og_m]
              this.valorMetodoTotal = valorMTotal
         },
-        async medidasDinamicasTitulos(){
-            try {
-                let url = "reporte-medidas/cliente/"
-                let res = await axios.get(url);
-                this.tablaMedidasCertificados = res.data;
-            } catch (error) {
-                console.log(error)
-            }
-        },
+         async medidasTitulosDinamicos(){
+            await this.medidaCmTituloReporte()
+            await this.medidaPulgadaTituloReporte()
+             this.tablaMedidasCertificados = this.tablaMedidaCm.concat(this.tablaMedidaPulgada)
+         },
         async guardandoCertificadoID(){
             this.certificadoIds = [...new Set(this.tablaPlacas.map(item => item.certificado_id))]
         },

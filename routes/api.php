@@ -675,6 +675,15 @@ Route::group(['middleware' => 'auth:api'], function () {
         'reporte-medidas/cliente/',
         'ReporteResumenCertificadoController@tituloMedidasDinamicas'
     );
+
+    Route::get(
+        'reporte-medidas-pulgada/cliente/',
+        'ReporteResumenCertificadoController@medidaPulgadaTituloReporte'
+    );
+    Route::get(
+        'reporte-medidas-cm/cliente/',
+        'ReporteResumenCertificadoController@medidaCmTituloReporte'
+    );
     // Interno Equipos
     Route::get(
         'reporte-interno-equipos-ri/tipo_equipamiento/{tipo_equipamiento_id}/vencidas_sn/{vencidas_sn}/noVencidas_sn/{noVencidas_sn}/todos_sn/{todos_sn}',

@@ -11,7 +11,6 @@ use App\Localidades;
 
 class ReporteResumenCertificadoController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware(
@@ -95,5 +94,16 @@ class ReporteResumenCertificadoController extends Controller
         $data = DB::select('CALL medidasParaTituloReporte()');
         return $data;
     }
-
+    public function medidaPulgadaTituloReporte()
+    {
+        DB::select('CALL medidaPulgadaTituloReporte()');
+        $data = DB::select('CALL medidaPulgadaTituloReporte()');
+        return $data;
+    }
+    public function medidaCmTituloReporte()
+    {
+        DB::select('CALL medidaCmTituloReporte()');
+        $data = DB::select('CALL medidaCmTituloReporte()');
+        return $data;
+    }
 }
