@@ -24,6 +24,10 @@ class VehiculosController extends Controller
 
     }
 
+    public function getVehiculo($id)
+    {
+        return Vehiculos::where('id',$id)->first();
+    }
     public function index()
     {
         return Vehiculos::orderBy('nro_interno','ASC')->where('habilitado_sn',1)->get();

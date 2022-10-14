@@ -305,7 +305,8 @@ Vue.component('reporte-interno-equipos-ri', require('./components/reportes/repor
 /* Qr */
 Vue.component('qr-interno-equipos', require('./components/qr/qr-interno-equipos.vue').default);
 Vue.component('qr-interno-equipos-doc', require('./components/qr/qr-interno-equipos-doc.vue').default);
-
+Vue.component('qr-vehiculos-doc', require('./components/qr/qr-vehiculos-doc.vue').default);
+Vue.component('qr-vehiculos', require('./components/qr/qr-vehiculos.vue').default);
 /* Trazabilidad */
 Vue.component('trazabilidad-fuente', require('./components/trazabilidad/trazabilidad-fuente.vue').default);
 
