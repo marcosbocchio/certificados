@@ -255,6 +255,9 @@
               @can('QR_interno_equipos')
                   <li><a href="{{ route('qr-interno-equipos') }}">Interno equipos</a></li>
               @endcan
+              @can('QR_interno_equipos')
+                <li><a href="{{ route('qr-vehiculos') }}">Vehiculos</a></li>
+              @endcan
             </ul>
           </li>
 

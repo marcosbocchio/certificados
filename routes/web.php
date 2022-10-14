@@ -154,6 +154,8 @@ Route::group(['middleware' => ['auth']], function () {
       Route::get('/area/enod/qr/interno_equipos','QrController@callViewInternoEquipo')->name('qr-interno-equipos');
       Route::get('/area/enod/int/{id}/doc', 'QrController@IntEquipoDoc')->name('intEquipoDoc');
 
+      Route::get('/area/enod/vehiculo/{id}/doc', 'QrController@VehiculoDoc')->name('vehiculoDoc');
+      Route::get('/area/enod/qr/vehiculos','QrController@callViewVehiculo')->name('qr-vehiculos');
       /*SECCION CATEGORIAS/VIDEOS  */
 
       Route::get('crear-contenido', 'GestionVideoController@callView')->name('crear-contenido');

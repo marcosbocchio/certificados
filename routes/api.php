@@ -323,6 +323,7 @@ Route::group(['middleware' => 'auth:api'], function () {
         'documentaciones/ot/paginate',
         'DocumentacionesController@paginate'
     );
+    Route::get('/vehiculo/id/{id}', 'VehiculosController@getVehiculo')->name('getVehiculo');
 
     Route::get(
         'documentaciones/ot_operarios/{ot_id}/{user_id}',

@@ -25,7 +25,16 @@ class QrController extends Controller
         $user = auth()->user();
         $header_titulo = "QR Interno Equipos";
         $header_descripcion ="";
-        return view('qr.interno-equipos',compact('user','header_titulo','header_descripcion'));        
+        return view('qr.interno-equipos',compact('user','header_titulo','header_descripcion'));
+
+    }
+
+    public function callViewVehiculo() {
+
+        $user = auth()->user();
+        $header_titulo = "QR Vehiculos";
+        $header_descripcion ="";
+        return view('qr.vehiculos',compact('user','header_titulo','header_descripcion'));
 
     }
 
@@ -34,25 +43,34 @@ class QrController extends Controller
       $user = auth()->user();
       $header_titulo = "Interno Equipo Documentación";
       $header_descripcion ="";
-      return view('qr.interno-equipos-documentacion',compact('user','header_titulo','header_descripcion','interno_equipo_id'));   
+      return view('qr.interno-equipos-documentacion',compact('user','header_titulo','header_descripcion','interno_equipo_id'));
 
     }
 
+    public function vehiculoDoc($vehiculo_id) {
+
+        $user = auth()->user();
+        $header_titulo = "Vehiculo Documentación";
+        $header_descripcion ="";
+        return view('qr.vehiculos-documentacion',compact('user','header_titulo','header_descripcion','vehiculo_id'));
+
+      }
+
     public function getInternoEquipos($tipo_equipamiento_id, $search) {
-        
+
       $tipo_equipamiento_id = $tipo_equipamiento_id !== 'null' ? $tipo_equipamiento_id : '0';
       $filtro = $search !== 'null' ? $search : '';
 
       return InternoEquipos::with('equipo.metodoEnsayos')
-                            ->with('equipo.tipoEquipamiento')                                          
+                            ->with('equipo.tipoEquipamiento')
                             ->with('internoFuente.fuente')
                             ->whereRaw('0 = ?',array($tipo_equipamiento_id))
                             ->orWhereHas('equipo.tipoEquipamiento', function ($q) use($tipo_equipamiento_id) {
                               $q->WhereRaw('tipos_equipamiento.id = ?',array($tipo_equipamiento_id));
-                            })                                                       
+                            })
                             ->selectRaw('interno_equipos.*,CONVERT(nro_interno,UNSIGNED) as nro_interno_numeric' )
                             ->orderby('nro_interno_numeric','ASC')
-                            ->Filtro($filtro)                            
+                            ->Filtro($filtro)
                             ->get();
     }
 
