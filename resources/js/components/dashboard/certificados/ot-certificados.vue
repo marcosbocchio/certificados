@@ -170,14 +170,7 @@ export default {
             await axios.get(urlRegistros).then(response =>{
                data = response.data
                console.log(data)
-            });
-            
-            var rowsCertificadoParte = await this.getCertificadosParteData(data)
-            var rowsCertificadoServiciosParte = await this.getCertificadosServiciosData(data)
-            var rowsCertificadoProdutoParte = await this.getCertificadosProductoData(data)
-            var rowsCertificadoServiciosTotaltes = await this.getCertificadosServiciosTotaltesData(data)
-            var rowsCertificadoProductoTotaltes = await this.getCertificadosProductosTotaltesData(data)
-
+            });     
             const cellsMerge = [ { s: {c:0, r:0}, e: {c:8, r:0} },
                                  { s: {c:0, r:1}, e: {c:8, r:1} },
                                  { s: {c:0, r:2}, e: {c:8, r:2} },
@@ -191,18 +184,19 @@ export default {
                                  { s: {c:12, r:6}, e: {c:28, r:6} }
                                 ]
             var ws = XLSX.utils.aoa_to_sheet([ "SheetJS".split("") ]);
-            /* Header de la tabla*/ 
-            var unidad_medida = (data.modalidadCobro == 'COSTURAS') ? '"' : 'Cm'
-            XLSX.utils.sheet_add_aoa(ws, [['Día','Parte','Obra','SERVICIOS']], {origin: "A7"});
-            XLSX.utils.sheet_add_aoa(ws, [[data.modalidadCobro + ' en ' + unidad_medida]], {origin: "M7"});            
-            XLSX.utils.sheet_add_aoa(ws, [data.servicios_abreviaturas], {origin: "D8"});
-            XLSX.utils.sheet_add_aoa(ws, [data.productos_unidades_medidas], {origin: "M8"});
+            var ws2 = XLSX.utils.aoa_to_sheet([ "SheetJS".split("") ]);
 
-            XLSX.utils.sheet_add_json(ws, rowsCertificadoParte, { skipHeader: true, origin: 'A9' })
-            XLSX.utils.sheet_add_json(ws, rowsCertificadoServiciosParte.concat(rowsCertificadoServiciosTotaltes), { skipHeader: true, origin: 'D9' })
-            XLSX.utils.sheet_add_json(ws, rowsCertificadoProdutoParte.concat(rowsCertificadoProductoTotaltes), { skipHeader: true, origin: 'M9' })
-            XLSX.utils.sheet_add_json(ws, data.servicios_footer, { skipHeader: true, origin: -1 })
+            ws = await this.agregarServiciosExcel(ws,data)
+            ws2 = await this.agregarProductosExcel(ws2,data)
+            ws = await this.hearderAndCellMerge(ws,data,cellsMerge)
+            ws2 = await this.hearderAndCellMerge(ws2,data,cellsMerge)
+            const wb = XLSX.utils.book_new()
+            XLSX.utils.book_append_sheet(wb, ws, 'Servicios')
+            XLSX.utils.book_append_sheet(wb, ws2, 'Productos')
+            XLSX.writeFile(wb, 'CERTIFICADO-' + sprintf("%08d",data.certificado.numero) + '.xlsx')            
+        },
 
+        hearderAndCellMerge: function (ws,data,cellsMerge) {
             /* Header de Excel */
             ws.A1 = { v: 'CERTIFICADO Nº: ' + sprintf("%08d",data.certificado.numero) + ' / ' + data.certificado.titulo}
             ws.A2 = { v: 'FECHA: ' + moment(data.certificado.fecha).format('DD-MM-YYYY') }
@@ -215,10 +209,33 @@ export default {
                 if (!ws['!merges']) ws['!merges'] = []
                 ws['!merges'].push(item)
             })  
-            const wb = XLSX.utils.book_new()
-            XLSX.utils.book_append_sheet(wb, ws, 'SheetJS')
-            XLSX.writeFile(wb, 'CERTIFICADO-' + sprintf("%08d",data.certificado.numero) + '.xlsx')            
+            return ws
+
         },
+        agregarServiciosExcel: async function (ws, data) {
+            var rowsCertificadoServiciosParte = await this.getCertificadosServiciosData(data)
+            var rowsCertificadoServiciosTotaltes = await this.getCertificadosServiciosTotaltesData(data)
+            var rowsCertificadoParte = await this.getCertificadosParteData(data)
+            XLSX.utils.sheet_add_aoa(ws, [['Día','Parte','Obra','SERVICIOS']], {origin: "A7"})
+            XLSX.utils.sheet_add_aoa(ws, [data.servicios_abreviaturas], {origin: "D8"})
+            XLSX.utils.sheet_add_json(ws, rowsCertificadoParte, { skipHeader: true, origin: 'A9' })
+            XLSX.utils.sheet_add_json(ws, rowsCertificadoServiciosParte.concat(rowsCertificadoServiciosTotaltes), { skipHeader: true, origin: 'D9' })
+            XLSX.utils.sheet_add_json(ws, data.servicios_footer, { skipHeader: true, origin: -1 })
+
+            return ws
+        },
+
+        agregarProductosExcel: async function (ws, data) {
+            var rowsCertificadoProdutoParte = await this.getCertificadosProductoData(data)
+            var rowsCertificadoProductoTotaltes = await this.getCertificadosProductosTotaltesData(data)
+            var rowsCertificadoParte = await this.getCertificadosParteData(data)
+            XLSX.utils.sheet_add_aoa(ws, [['Día','Parte','Obra','SERVICIOS']], {origin: "A7"})
+            XLSX.utils.sheet_add_aoa(ws, [data.productos_unidades_medidas], {origin: "D8"})
+            XLSX.utils.sheet_add_json(ws, rowsCertificadoParte, { skipHeader: true, origin: 'A9' })
+            XLSX.utils.sheet_add_json(ws, rowsCertificadoProdutoParte.concat(rowsCertificadoProductoTotaltes), { skipHeader: true, origin: 'D9' })
+
+            return ws
+        },        
 
         getCertificadosParteData: async function (data) {
 
