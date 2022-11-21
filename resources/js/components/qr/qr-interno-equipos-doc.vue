@@ -10,7 +10,7 @@
                         
                     </li>   
                 </ul>
-                <template v-if="documentacionesDuentes.length">
+                <template v-if="documentacionesFuentes.length">
                     <h5 style="margin-top:20px"><strong>Fuente: N° Serie {{documentacionesFuentes[0].nro_serie}} </strong></h5>
                     <ul>
                         <li v-for="item in documentacionesFuentes" :key="item.id" style="margin-top:15px; margin">
