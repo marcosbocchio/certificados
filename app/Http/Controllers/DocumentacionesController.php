@@ -46,6 +46,8 @@ class DocumentacionesController extends Controller
         $tipo = $request->tipo == 'null' ? '' : $request->tipo;
         $vencido_sn =  $request->vencido_sn == 'true' ? true : false;
 
+        DB::enableQueryLog();
+
         $documentaciones = Documentaciones::leftJoin('usuario_documentaciones','usuario_documentaciones.documentacion_id','=','documentaciones.id')
                                             ->orWhere('documentaciones.tipo','USUARIO')
                                             ->orWhere('documentaciones.tipo','OT')
@@ -68,6 +70,14 @@ class DocumentacionesController extends Controller
                                             ->orderBy('documentaciones.tipo','ASC')
                                             ->orderBy('documentaciones.id','DESC')
                                             ->paginate(10);
+                                            
+        // $documentacion = Collection::make($documentacion);
+       $queries = DB::getQueryLog();
+       foreach($queries as $i=>$query)
+       {
+           Log::debug("Query $i: " . json_encode($query));
+       }
+
         return $documentaciones;
     }
 

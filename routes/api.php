@@ -743,14 +743,10 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::resource('bombas', 'BombasController');
 
     // QR
-    Route::get(
-        'qr-interno-equipos/tipo_equipamiento/{tipo_equipamiento_id}/search/{search}',
-        'QrController@getInternoEquipos'
-    );
-    Route::get(
-        'interno_equipos/{id}/documentaciones',
-        'QrController@getDocIntEquipos'
-    );
+    Route::get('qr-interno-equipos/tipo_equipamiento/{tipo_equipamiento_id}/search/{search}','QrController@getInternoEquipos');
+    Route::get('interno_equipos/{id}/documentaciones','QrController@getDocIntEquipos');
+    Route::get('interno_fuentes/{id}/documentaciones','QrController@getDocIntEquiposFuente');
+
 });
 
 Route::get('/fecha_actual', function () {

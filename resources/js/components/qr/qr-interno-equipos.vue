@@ -164,11 +164,9 @@ export default {
         try {
           let url = 'qr-interno-equipos/tipo_equipamiento/' + (this.tipo_equipamiento ? this.tipo_equipamiento.id : 'null') + '/search/' + (this.search ? this.search : 'null') + '?api_token=' + Laravel.user.api_token;
           let res = await axios.get(url);
-          this.TablaInternoEquipos = res.data;
+          this.TablaInternoEquipos = res.data.filter(e => e.activo_sn)
           this.paginatedItems = this.TablaInternoEquipos;
           this.totalRows = this.TablaInternoEquipos.length
-          console.log('Total: ',this.totalRows);
-          console.log('Calculo:',(this.totalRows % 10))
           this.pageCount = (this.totalRows % 10) == 0  ? (this.totalRows / 10) : (Math.floor(this.totalRows / 10) + 1);
           console.log(this.pageCount);
           this.page = 1;  

@@ -399,7 +399,7 @@ export default {
 
      mounted :function(){
 
-        this.$store.dispatch('loadInternoEquipos',{ 'metodo' : 'null', 'activo_sn' : 'null','tipo_penetrante' : 'null' });
+        this.$store.dispatch('loadInternoEquipos',{ 'metodo' : 'null', 'activo_sn' : 1,'tipo_penetrante' : 'null' });
         this.$store.dispatch('loadInternoFuentes','');
         this.$store.dispatch('loadVehiculos');
 
@@ -503,11 +503,8 @@ export default {
            this.$store.dispatch('loadContarDocumentacionesTotal');
 
         }
-        axios.get(urlRegistros).then(response =>{
-            console.log('get de ot proce propios');
-            console.log(urlRegistros);
-            console.log(response.data);
-            this.registros = response.data;
+        axios.get(urlRegistros).then(response => {
+            this.registros = response.data
             this.isLoading = false;
         });
         },

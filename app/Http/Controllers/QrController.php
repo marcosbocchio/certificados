@@ -84,4 +84,17 @@ class QrController extends Controller
 
       return $documentacion;
     }
+
+    public function getDocIntEquiposFuente($interno_equipo_id) {
+
+      $documentacion = Documentaciones::join('interno_fuente_documentaciones','interno_fuente_documentaciones.documentacion_id','=','documentaciones.id')
+                                        ->join('interno_fuentes','interno_fuentes.id','=','interno_fuente_documentaciones.interno_fuente_id')
+                                        ->join('interno_equipos','interno_equipos.interno_fuente_id','=','interno_fuentes.id')
+                                        ->where('interno_equipos.id',$interno_equipo_id)
+                                        ->select('documentaciones.*','interno_fuentes.nro_serie')
+                                        ->get();
+
+      return $documentacion;
+    }
+
 }
