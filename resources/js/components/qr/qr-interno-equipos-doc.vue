@@ -10,14 +10,16 @@
                         
                     </li>   
                 </ul>
-                <h5 style="margin-top:20px"><strong>Fuente: N° Serie {{documentacionesFuentes[0].nro_serie}} </strong></h5>
-                <ul>
-                    <li v-for="item in documentacionesFuentes" :key="item.id" style="margin-top:15px; margin">
-        
-                        <a :href="'/' + item.path " target="_blank" title="documentación"> {{ item.titulo }} / {{ item.descripcion }}</a>
-                        
-                    </li>   
-                </ul>                
+                <template v-if="documentacionesDuentes.length">
+                    <h5 style="margin-top:20px"><strong>Fuente: N° Serie {{documentacionesFuentes[0].nro_serie}} </strong></h5>
+                    <ul>
+                        <li v-for="item in documentacionesFuentes" :key="item.id" style="margin-top:15px; margin">
+            
+                            <a :href="'/' + item.path " target="_blank" title="documentación"> {{ item.titulo }} / {{ item.descripcion }}</a>
+                            
+                        </li>   
+                    </ul>    
+                </template>
             </template>
             <template v-else>
                 <h5>No se encontro documentacion para el equipo </h5>               
