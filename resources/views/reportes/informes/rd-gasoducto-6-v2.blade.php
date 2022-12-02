@@ -81,7 +81,12 @@ footer {
                     <td style="font-size: 11px; "  class="bordered-td"><b>RZ: </b>Rechazado</td>
             </tr>
             <tr>
-                <td style="font-size: 11px;" colspan="6" class="bordered-td"><b>Observaciones: </b>{{$informe->observaciones}}</td>
+                <td style="font-size: 11px;" colspan="6" class="bordered-td"><b>Observaciones: </b>
+                    @if($informe->numero_offline)
+                    Referencia : {{ $informe->numero_offline}} /
+                @endif                            
+                {{$informe->observaciones}}
+                </td>
             </tr>
         </tbody>
     </table>
