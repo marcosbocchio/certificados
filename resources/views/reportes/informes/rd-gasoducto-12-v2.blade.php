@@ -86,9 +86,9 @@ footer {
                 <td style="font-size: 11px;" colspan="6" class="bordered-td"><b>Observaciones: </b>
                     <td style="font-size: 11px;" colspan="6" class="bordered-td"><b>Observaciones: </b>
                         @if($informe->numero_offline)
-                        Referencia : {{ $informe->numero_offline}} /
-                    @endif                            
-                    {{$informe->observaciones}}
+                            Referencia : {{ $informe->numero_offline}} /
+                        @endif                            
+                        {{$informe->observaciones}}
                 </td>
             </tr>
         </tbody>
