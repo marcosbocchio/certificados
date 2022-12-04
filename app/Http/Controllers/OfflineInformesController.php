@@ -63,6 +63,18 @@ class OfflineInformesController extends Controller
 
     }
 
+    public function buscarSolEnArray($soldadoresOff,$soldador_id) {
+
+        foreach ($soldadoresOff as $key=> $soldadorOff) {
+                if ($soldador_id == $soldadorOff['soldadores_id']) {
+                    return $key;
+                }
+        }
+
+        return null;       
+
+    }
+
     public function storeSoldadores(Request $request)
     {
         $content = $request->all();
@@ -77,6 +89,7 @@ class OfflineInformesController extends Controller
             
             // compruebo si el soldador que entro esta dado de alta en la base, si no lo esta lo agrego.
             $posEnSoldadoresOff = array_search($otSoldadorOff['soldadores_id'], $soldadoresOff);
+            $posEnSoldadoresOff = $this->buscarSolEnArray($soldadoresOff,$otSoldadorOff['soldadores_id']);
             log::debug('pos en soldadores: '. $posEnSoldadoresOff);
             $codigoOff = $soldadoresOff[$posEnSoldadoresOff]['codigo'];
             $clienteIdOff = $soldadoresOff[$posEnSoldadoresOff]['cliente_id'];
@@ -114,7 +127,7 @@ class OfflineInformesController extends Controller
 
             
         }
-        
+
         return response()->json($result, 200, ['Content-type'=>'application/json;charset=utf-8'], JSON_UNESCAPED_UNICODE);
     } 
     /*             if ($posEnSoldadoresOff) //da falso si no encuentra
