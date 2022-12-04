@@ -96,7 +96,7 @@ class OfflineInformesController extends Controller
            
             // compruebo si el ot_soldador que entro esta dado de alta en la base, si no lo esta lo agrego.
             $otSoldadorWeb = OtSoldadores::where('ot_id', $ot_id)
-                                        ->where('soladadores_id', $soldador_id) 
+                                        ->where('soldadores_id', $soldador_id) 
                                         ->first();
             if(!$otSoldadorWeb) {
                 $newOtSoldador = OtSoldadores::firstOrCreate(
