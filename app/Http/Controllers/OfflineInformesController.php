@@ -67,6 +67,8 @@ class OfflineInformesController extends Controller
 
         foreach ($soldadoresOff as $key=> $soldadorOff) {
                 if ($soldador_id == $soldadorOff['id']) {
+                    log::debug('$soldador_id: ' . $soldadorOff['id']);
+                    log::debug('$key:'. $key);
                     return $key;
                 }
         }
