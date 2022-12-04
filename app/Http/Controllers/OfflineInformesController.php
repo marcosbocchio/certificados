@@ -112,10 +112,10 @@ class OfflineInformesController extends Controller
                     ]);
             }
 
-            return response()->json($result, 200, ['Content-type'=>'application/json;charset=utf-8'], JSON_UNESCAPED_UNICODE);
-
-
+            
         }
+        
+        return response()->json($result, 200, ['Content-type'=>'application/json;charset=utf-8'], JSON_UNESCAPED_UNICODE);
     } 
     /*             if ($posEnSoldadoresOff) //da falso si no encuentra
                 {
