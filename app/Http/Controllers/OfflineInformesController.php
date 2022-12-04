@@ -74,7 +74,7 @@ class OfflineInformesController extends Controller
                 $index++;
         }
 
-        return null;       
+        return -1;       
 
     }
 
@@ -100,7 +100,7 @@ class OfflineInformesController extends Controller
                 log::debug('pos en soldadoresOff: '. $posEnSoldadoresOff);
 
                 // si me mando el soldador , tomo los campos y lo busco en la web, sino lo mando tiene que existir por lo tanto lo busco por soldador_id
-                if ($posEnSoldadoresOff) {
+                if ($posEnSoldadoresOff != -1) {
                     $codigoOff = $soldadoresOff[$posEnSoldadoresOff]['codigo'];
                     $clienteIdOff = $soldadoresOff[$posEnSoldadoresOff]['cliente_id'];
 
