@@ -222,9 +222,9 @@ class InformesController extends Controller
         $informe->diametro_espesor_id = null;
         if(!isset($request->procedimiento['ot_procedimientos_propios_id'])){
 
-        $ot_procedimieto_propio = new OtProcedimientosPropios;
-        (new \App\Http\Controllers\OtProcedimientosPropiosController)->store($request->procedimiento['id'],$ot_procedimieto_propio,$request->ot['id']);
-        $informe->procedimiento_informe_id = $ot_procedimieto_propio->id;
+            $ot_procedimieto_propio = new OtProcedimientosPropios;
+            (new \App\Http\Controllers\OtProcedimientosPropiosController)->store($request->procedimiento['id'],$ot_procedimieto_propio,$request->ot['id']);
+            $informe->procedimiento_informe_id = $ot_procedimieto_propio->id;
 
         }else{
 

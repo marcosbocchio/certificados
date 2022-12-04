@@ -66,44 +66,85 @@ class OfflineInformesController extends Controller
     {
         $content = $request->all();
         $result = collect(); //aca va: [id que viene desde local] = id de la DB servidor
+        $soldadoresOff = $content['soldadores'];
+        $otSoldadoresOff = $content['ot_soldadores'];
+        
+        foreach ($otSoldadoresOff as $otSoldadorOff) {
+            $newSoldador = null;
+            $newOtSoldador = null;
+            $soldador_id = null;
+            
+            // compruebo si el soldador que entro esta dado de alta en la base, si no lo esta lo agrego.
+            $posEnSoldadoresOff = array_search($otSoldadorOff['soldadores_id'], $soldadoresOff);
+            $codigoOff = $soldadoresOff[$posEnSoldadoresOff]['codigo'];
+            $clienteIdOff = $soldadoresOff[$posEnSoldadoresOff]['cliente_id'];
+            $soldadorWeb = Soldadores::where('codigo', $codigoOff)
+                                        ->where('cliente_id', $clienteIdOff) 
+                                        ->first();
 
-        $soldadores = $content['soldadores'];
-        $otSoldadores = $content['ot_soldadores'];
-        $soldador_id = 0;
-
-        foreach ($otSoldadores as $otSoldador) {
-            $posEnSoldadores = array_search($otSoldador['soldadores_id'], $soldadores);
-            if ($posEnSoldadores) //da falso si no encuentra
-            {
-                $codigo = $soldadores[$posEnSoldadores]['codigo'];
-                $clienteId = $soldadores[$posEnSoldadores]['cliente_id'];
-                $nSoldador = Soldadores::firstOrCreate(
-                    ['codigo' => $codigo ,'cliente_id' => $clienteId],
-                    ['codigo' => $codigo ,'cliente_id' => $clienteId,'nombre'  =>'nn']
+            if(!$soldadorWeb) {
+                $newSoldador = Soldadores::firstOrCreate(
+                    ['codigo' => $codigoOff ,'cliente_id' => $clienteIdOff],
+                    ['codigo' => $codigoOff ,'cliente_id' => $clienteIdOff,'nombre'  =>'nn']
                 );
-                $ot_id = $otSoldador['ot_id'];
-                $soldador_id = $nSoldador->id;
             }
-            else
-            {
-                $soldador = Soldadores::find($otSoldador['soldadores_id']);
-                $soldador_id = ($soldador) ? $soldador->id : 0;
-
-            }
-            if ($soldador_id !== 0)
-            {
-                $ot_soldador = OtSoldadores::firstOrCreate(
-                    ['ot_id' => $ot_id,'soldadores_id' => $soldador_id],
-                    ['ot_id' => $ot_id,'soldadores_id' => $soldador_id]
+            
+            $ot_id = $otSoldadorOff['ot_id'];               
+            $soldador_id = $newSoldador ? $newSoldador->id : null;
+           
+            // compruebo si el ot_soldador que entro esta dado de alta en la base, si no lo esta lo agrego.
+            $otSoldadorWeb = OtSoldadores::where('ot_id', $ot_id)
+                                        ->where('soladadores_id', $soldador_id) 
+                                        ->first();
+            if(!$otSoldadorWeb) {
+                $newOtSoldador = OtSoldadores::firstOrCreate(
+                    ['ot_id' => $ot_id ,'soldadores_id' => $soldador_id],
+                    ['ot_id' => $ot_id ,'soldadores_id' => $soldador_id]
                 );
+            }
+
+            if ($newOtSoldador) {                
                 $result->add([
-                            'idViejo' => $otSoldador['id'],
-                            'idNuevo' => $ot_soldador['id']
-                            ]);
+                    'idViejo' => $otSoldadorOff['id'],
+                    'idNuevo' => $newOtSoldador['id']
+                    ]);
             }
+
+            return response()->json($result, 200, ['Content-type'=>'application/json;charset=utf-8'], JSON_UNESCAPED_UNICODE);
+
+
         }
-        return response()->json($result, 200, ['Content-type'=>'application/json;charset=utf-8'], JSON_UNESCAPED_UNICODE);
-    }
+    } 
+    /*             if ($posEnSoldadoresOff) //da falso si no encuentra
+                {
+                    $codigo = $soldadoresOff[$posEnSoldadoresOff]['codigo'];
+                    $clienteId = $soldadoresOff[$posEnSoldadoresOff]['cliente_id'];
+                    $nSoldador = Soldadores::firstOrCreate(
+                        ['codigo' => $codigo ,'cliente_id' => $clienteId],
+                        ['codigo' => $codigo ,'cliente_id' => $clienteId,'nombre'  =>'nn']
+                    );
+                    $ot_id = $otSoldadorOff['ot_id'];
+                    $soldador_id = $nSoldador->id;
+                }
+                else
+                {
+                    $soldador = Soldadores::find($otSoldadorOff['soldadores_id']);
+                    $soldador_id = ($soldador) ? $soldador->id : 0;
+    
+                }
+    
+                if ($soldador_id !== 0)
+                {
+                    $ot_soldador = ::firstOrCreate(
+                        ['ot_id' => $ot_id,'soldadores_id' => $soldador_id],
+                        ['ot_id' => $ot_id,'soldadores_id' => $soldador_id]
+                    );
+                    $result->add([
+                                'idViejo' => $otSoldadorOff['id'],
+                                'idNuevo' => $ot_soldador['id']
+                                ]);
+                } */
+
 
     public function saveReferenciaImg(Request $request)
     {
