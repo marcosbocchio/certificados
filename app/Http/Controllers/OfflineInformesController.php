@@ -113,7 +113,7 @@ class OfflineInformesController extends Controller
                     Log::debug("El soldador no vino en soldadores, pero si vino en ot_soldadoes, id: ". $otSoldadorOff['soldadores_id']);
                     $soldadorWeb = Soldadores::find($otSoldadorOff['soldadores_id']);    
                     if(!$soldadorWeb){
-                        throw new Exception("ERROR: El soldador no vino en soldadoresOff, pero si vino en ot_soldadoesOff, pero no se encontró en la web");
+                        throw new Exception("ERROR: El soldador no vino en soldadoresOff, pero si vino en ot_soldadoesOff, pero no se encontró en la web (id):" . $otSoldadorOff['soldadores_id']);
                     }  
                 }
 
