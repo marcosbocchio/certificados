@@ -8,6 +8,7 @@ use Image;
 use App\OtTipoSoldaduras;
 use App\OtSoldadores;
 use App\Soldadores;
+use Illuminate\Support\Facades\Log;
 
 class OfflineInformesController extends Controller
 {
@@ -76,6 +77,7 @@ class OfflineInformesController extends Controller
             
             // compruebo si el soldador que entro esta dado de alta en la base, si no lo esta lo agrego.
             $posEnSoldadoresOff = array_search($otSoldadorOff['soldadores_id'], $soldadoresOff);
+            log::debug('pos en soldadores: '. $posEnSoldadoresOff);
             $codigoOff = $soldadoresOff[$posEnSoldadoresOff]['codigo'];
             $clienteIdOff = $soldadoresOff[$posEnSoldadoresOff]['cliente_id'];
             $soldadorWeb = Soldadores::where('codigo', $codigoOff)
