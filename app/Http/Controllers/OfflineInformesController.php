@@ -66,7 +66,7 @@ class OfflineInformesController extends Controller
     public function buscarSolEnArray($soldadoresOff,$soldador_id) {
 
         foreach ($soldadoresOff as $key=> $soldadorOff) {
-                if ($soldador_id == $soldadorOff['soldadores_id']) {
+                if ($soldador_id == $soldadorOff['id']) {
                     return $key;
                 }
         }
@@ -88,7 +88,7 @@ class OfflineInformesController extends Controller
             $soldador_id = null;
             
             // compruebo si el soldador que entro esta dado de alta en la base, si no lo esta lo agrego.
-            $posEnSoldadoresOff = array_search($otSoldadorOff['soldadores_id'], $soldadoresOff);
+           // $posEnSoldadoresOff = array_search($otSoldadorOff['soldadores_id'], $soldadoresOff);
             $posEnSoldadoresOff = $this->buscarSolEnArray($soldadoresOff,$otSoldadorOff['soldadores_id']);
             log::debug('pos en soldadores: '. $posEnSoldadoresOff);
             $codigoOff = $soldadoresOff[$posEnSoldadoresOff]['codigo'];
