@@ -107,7 +107,7 @@ class OfflineInformesController extends Controller
             }
             
             $ot_id = $otSoldadorOff['ot_id'];               
-            $soldador_id = $newSoldador ? $newSoldador->id : null;
+            $soldador_id = !$soldadorWeb ? $newSoldador->id : $soldadorWeb->id;
            
             // compruebo si el ot_soldador que entro esta dado de alta en la base, si no lo esta lo agrego.
             $otSoldadorWeb = OtSoldadores::where('ot_id', $ot_id)
