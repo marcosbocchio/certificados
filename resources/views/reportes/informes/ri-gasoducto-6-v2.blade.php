@@ -84,7 +84,7 @@ footer {
                 <td style="font-size: 11px;" colspan="6" class="bordered-td"><b>Observaciones: </b>
                     @if($informe->numero_offline)
                          Referencia : {{ $informe->numero_offline}} /
-                    @endif                            
+                    @endif
                     {{$informe->observaciones}}
                 </td>
             </tr>
@@ -150,9 +150,13 @@ footer {
             @foreach ($juntas_posiciones as $junta_posiciones)
                 <tr>
                     <td style="font-size: 11px;  width:38.5px;text-align: center" class="bordered-td">
-                    @if ($informe->km)
+                    @if ($informe->km && $informe->km !== -1)
 
                        {{ $informe->km}}
+
+                    @elseif ($informe->km == -1)
+
+                        PDJ
 
                     @else
 

@@ -12,8 +12,17 @@
                             <td style="font-size: 11px;width: 200px" ><b style="margin-left: 80px;">&nbsp;</td>
                         </tr>
                         <tr>
-                            <td style="font-size: 11px;" ><b style="margin-left: 80px;">INFORME N°: </b>{{$informe->km}}-{{$ot_tipo_soldadura->TipoSoldadura->codigo}}-{{ $nro }}
-                            </td>
+                            @if ($informe->km === -1)
+                            {
+                               <td style="font-size: 10px;" ><b style="margin-left: 80px;">INFORME N°: </b>PDJ-{{$ot_tipo_soldadura->TipoSoldadura->codigo}}-{{ $nro }}
+                               </td>
+
+                            }
+                            @else{
+                                <td style="font-size: 11px;" ><b style="margin-left: 80px;">INFORME N°: </b>{{$informe->km}}-{{$ot_tipo_soldadura->TipoSoldadura->codigo}}-{{ $nro }}
+                                </td>
+                               }
+                            @endif
 
                         </tr>
                         <tr>

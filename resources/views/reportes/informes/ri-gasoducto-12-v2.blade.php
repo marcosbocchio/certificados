@@ -86,8 +86,8 @@ footer {
                 <td style="font-size: 11px;" colspan="6" class="bordered-td"><b>Observaciones: </b>
                     @if($informe->numero_offline)
                       Referencia : {{ $informe->numero_offline}} /
-                    @endif                            
-                    {{$informe->observaciones}}                
+                    @endif
+                    {{$informe->observaciones}}
                 </td>
             </tr>
         </tbody>
@@ -142,15 +142,20 @@ footer {
             @foreach ($juntas_posiciones as $junta_posiciones)
                 <tr>
                     <td style="font-size:10px; width:30px;text-align: center" class="bordered-td" rowspan="4">
-                        @if ($informe->km)
+                        @if ($informe->km && $informe->km !== -1)
 
                         {{ $informe->km}}
 
-                        @else
+                     @elseif ($informe->km == -1)
 
-                            &nbsp;
+                         PDJ
 
-                        @endif
+                     @else
+
+                         &nbsp;
+
+                     @endif
+
                     </td>
                     <td style="font-size: 10px;width:51px;text-align: center" class="bordered-td" rowspan="4">{{$junta_posiciones->junta}} </td>
                     <td style="font-size: 10px;width:30px;text-align: center" class="bordered-td" rowspan="4">{{$ot_tipo_soldadura->TipoSoldadura->codigo}}</td>

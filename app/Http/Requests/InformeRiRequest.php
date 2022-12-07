@@ -51,7 +51,7 @@ class InformeRiRequest extends FormRequest
 
     }else{
 
-        $condicion_pk = 'required |numeric|min:0';
+        $condicion_pk = 'required |numeric|min:-1';
     }
 
 

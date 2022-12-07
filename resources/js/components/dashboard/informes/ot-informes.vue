@@ -89,7 +89,10 @@
                                     </td>
                                     <td>
                                         <div v-if="ot_informe.metodo == 'RI' && ot_informe.gasoducto_sn">
-                                            <div v-if="ot_informe.km">
+                                            <div v-if="ot_informe.km == -1">
+                                                PDJ-{{ot_informe.tipo_soldadura_codigo}}-{{ot_informe.numero_formateado}}
+                                            </div>
+                                            <div v-else-if="ot_informe.km">
                                                 {{ot_informe.km}}-{{ot_informe.tipo_soldadura_codigo}}-{{ot_informe.numero_formateado}}
                                             </div>
                                             <div v-else>

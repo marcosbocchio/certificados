@@ -30,7 +30,7 @@
                                          <div v-else>
                                              <label for="pk">PK</label>
                                          </div>
-                                       <input type="number" v-model="pk" class="form-control" id="pk" :disabled="((!isGasoducto) || reparacion_sn== true || reparacion_sn == 1)" min="0">
+                                       <input type="number" v-model="pk" class="form-control" id="pk" :disabled="((!isGasoducto) || reparacion_sn== true || reparacion_sn == 1)" min="-1">
                                      </div>
                                  </div>
 
@@ -1579,7 +1579,7 @@ import { eventSetReferencia } from '../event-bus';
                 var match = this.espesor.espesor.match(/[+]?([0-9]+?[xX-]{1})?[0-9]+?$/);
                 if(!match){
                     this.espesor.espesor = 0;
-                }  
+                }
              }
 
             this.ActualizarDistFuentePelicula();
