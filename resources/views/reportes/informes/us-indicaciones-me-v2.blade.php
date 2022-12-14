@@ -19,26 +19,15 @@
             <table>
                 <tbody>
                     <tr>
-                        <td style="font-size: 14px;height:20px;"><span style="margin-left: 22px;">Elemento : {{ strtoupper($informe_us_me->elemento_me)}}</span></td>
+                        <td style="font-size: 14px;height:0px;"><span style="margin-left: 0px;">Elemento : {{ strtoupper($informe_us_me->elemento_me)}}</span></td>
                     </tr>
-                    @if ($informe_us_me->umbral_me)
-                        <tr>
-                             <td style="font-size: 14px;height:20px;"><span style="margin-left: 22px;">Espesor Nominal : {{ strtoupper($informe_us_me->umbral_me)}}</span></td>
-                        </tr>
-                    @endif
-
-                    @if ($informe_us_me->espesor_minimo_me)
-                        <tr>
-                             <td style="font-size: 14px;height:20px;"><span style="margin-left: 22px;">Espesor Mínimo : {{ strtoupper($informe_us_me->espesor_minimo_me)}}</span></td>
-                        </tr>
-                    @endif
                     <tr>
-                        <td style="font-size: 14px;height:20px;"><span style="margin-left: 22px;">Ø : {{ $informe_us_me->diametro_me}}</span></td>
+                        <td style="font-size: 14px;height:0px;"><span style="margin-left: 0px;">Ø : {{ $informe_us_me->diametro_me}}</span></td>
                     </tr>
                 </tbody>
             </table>
             @while($pos_gen <= $informe_us_me->cantidad_generatrices_me)
-                <table  style="text-align: center;margin-left:18px;border-collapse: collapse;margin-bottom: 20px;"  class="bordered">
+                <table  style="text-align: center;border-collapse: collapse"  class="bordered">
                     <thead>
                         <tr>
                             <th style="font-size: 13px; text-align: left;width:28px;text-align: center;background:#D8D8D8"  class="bordered-td">&nbsp;</th>
@@ -66,7 +55,11 @@
                                 </td>
                                 @while ($pos_gen_fila < $pos_gen)
                                     @if ($informe_us_me->mediciones[$pos_gen_fila][$pos_pos_fila])
-                                       @if(($informe_us_me->espesor_minimo_me) && (strval($informe_us_me->mediciones[$pos_gen_fila][$pos_pos_fila]) < strval($informe_us_me->espesor_minimo_me)))
+                                        @if ($informe_us_me->mediciones[$pos_gen_fila][$pos_pos_fila] == -1)
+                                            <td style="font-size: 13px; text-align: left;width:28px;text-align: center" class="bordered-td">
+                                                S/A
+                                            </td>
+                                       @elseif(($informe_us_me->espesor_minimo_me) && (strval($informe_us_me->mediciones[$pos_gen_fila][$pos_pos_fila]) < strval($informe_us_me->espesor_minimo_me)))
                                             <td style="font-size: 13px; text-align: left;width:28px;text-align: center;color:red" class="bordered-td">
                                                 {{ $informe_us_me->mediciones[$pos_gen_fila][$pos_pos_fila] }}
                                             </td>
@@ -77,7 +70,7 @@
                                        @endif
                                     @else
                                     <td style="font-size: 13px; text-align: left;width:28px;text-align: center" class="bordered-td">
-                                      S/A
+                                      -
                                     </td>
                                     @endif
                                 {{ $pos_gen_fila = $pos_gen_fila + 1 }}

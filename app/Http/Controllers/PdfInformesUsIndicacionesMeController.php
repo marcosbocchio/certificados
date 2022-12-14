@@ -25,6 +25,7 @@ use App\InformesUsMe;
 use App\Generatrices;
 use App\User;
 use App\OtTipoSoldaduras;
+use Illuminate\Support\Facades\Log;
 use App\MetodoEnsayos;
 
 class PdfInformesUsIndicacionesMeController extends Controller
@@ -32,6 +33,7 @@ class PdfInformesUsIndicacionesMeController extends Controller
     public function imprimir($id){
 
         /* header */
+        Log::debug("llega aca");
 
          $informe = Informe::findOrFail($id);
          $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);
@@ -62,7 +64,6 @@ class PdfInformesUsIndicacionesMeController extends Controller
          $nro = FormatearNumeroInforme($informe->numero,$tecnica->codigo) .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) ;
          $fecha = date('d-m-Y', strtotime($informe->fecha));
          $tipo_reporte = "INFORME N°";
-
        // dd($informes_us_me);
          $pdf = PDF::loadView('reportes.informes.us-indicaciones-me-v2',compact('ot','titulo','nro','tipo_reporte','fecha','metodo_ensayo',
                                                                 'norma_ensayo',
