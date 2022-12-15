@@ -150,17 +150,13 @@ footer {
             @foreach ($juntas_posiciones as $junta_posiciones)
                 <tr>
                     <td style="font-size: 11px;  width:38.5px;text-align: center" class="bordered-td">
-                    @if ($informe->km && $informe->km !== -1)
-
-                       {{ $informe->km}}
-
-                    @elseif ($informe->km == -1)
+                    @if ($informe->km == -1)
 
                         PDJ
 
                     @else
 
-                        &nbsp;
+                        {{ $informe->km}}
 
                     @endif
 

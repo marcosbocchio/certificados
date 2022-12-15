@@ -92,11 +92,8 @@
                                             <div v-if="ot_informe.km == -1">
                                                 PDJ-{{ot_informe.tipo_soldadura_codigo}}-{{ot_informe.numero_formateado}}
                                             </div>
-                                            <div v-else-if="ot_informe.km">
-                                                {{ot_informe.km}}-{{ot_informe.tipo_soldadura_codigo}}-{{ot_informe.numero_formateado}}
-                                            </div>
                                             <div v-else>
-                                                {{ot_informe.tipo_soldadura_codigo}}-{{ot_informe.numero_formateado}}
+                                                {{ot_informe.km}}-{{ot_informe.tipo_soldadura_codigo}}-{{ot_informe.numero_formateado}}
                                             </div>
                                         </div>
                                         <div v-else>
