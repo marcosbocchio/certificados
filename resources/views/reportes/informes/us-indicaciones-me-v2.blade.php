@@ -17,21 +17,21 @@
                 $genetratrices_fila = $max_cant_genetratices_fila;
             @endphp
             <table>
-                <td style="width:125px">
-                    <table>
+                <td style="width:140px !important">
+                    <table style="width:140px !important;table-layout:fixed">
                         <tbody>
                             <tr>
-                                <td style="font-size: 14px;height:0px;"><span style="margin-left: 0px;">{{ $informe_us_me->elemento_me}}</span></td>
+                                <td style="font-size: 13px"><span>{{ strtolower($informe_us_me->elemento_me)}}</span></td>
                             </tr>
                             <tr>
-                                <td style="font-size: 14px;height:0px;"><span style="margin-left: 0px;">Ø : {{ $informe_us_me->diametro_me}}</span></td>
+                                <td style="font-size: 13px"><span>Ø : {{ $informe_us_me->diametro_me}}</span></td>
                             </tr>
                         </tbody>
                     </table>
                 </td>
                 <td>
                     @while($pos_gen <= $informe_us_me->cantidad_generatrices_me)
-                        <table  style="text-align: center;border-collapse: collapse"  class="bordered">
+                        <table class="bordered">
                             <thead>
                                 <tr>
                                     <th style="font-size: 13px; text-align: left;width:28px;text-align: center;background:#D8D8D8"  class="bordered-td">&nbsp;</th>
