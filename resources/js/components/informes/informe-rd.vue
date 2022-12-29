@@ -1291,8 +1291,16 @@ import { eventSetReferencia } from '../event-bus';
             },
 
             numero_inf_code : function()  {
-                if(this.numero_inf)
+                if(this.numero_inf){
+                    if(this.informedata.numero_repetido){
+                        if(this.informedata.numero_repetido !== 1){
+                            return this.metodo +  sprintf("%04d",this.numero_inf) + '-' + this.informedata.numero_repetido;
+                        } else {
+                            return this.metodo +  sprintf("%04d",this.numero_inf);
+                        }
+                    } else
                    return this.metodo +  sprintf("%04d",this.numero_inf);
+                }
              },
 
              ot_tipo_soldaduras_filter_R :function(){

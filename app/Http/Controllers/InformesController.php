@@ -58,7 +58,20 @@ class InformesController extends Controller
                                         'header_descripcion'));
 
     }
-
+    public function cambiarNumero(Request $request,$id){
+        $informe_view = InformesView::where('informe_id',$id)->first();
+        $informe_ot_view = InformesView::where('ot_id',$informe_view->ot_id)
+                                    ->where('metodo',$informe_view->metodo)
+                                    ->where('numero',$request->nuevoNumero)
+                                    ->orderBy('numero_repetido','DESC')
+                                    ->first();
+        Log::debug($informe_ot_view);
+        $informe_ot = $informe_ot_view ? Informe::where('id',$informe_ot_view->id)->first() : null;
+        $informe = Informe::where('id',$id)->first();
+        $informe->numero = $request->nuevoNumero;
+        $informe->numero_repetido = $informe_ot !== null ? $informe_ot->numero_repetido + 1 : 1;
+        $informe->save();
+    }
     public function paginate(Request $request,$id){
 
         $filtro = $request->search;

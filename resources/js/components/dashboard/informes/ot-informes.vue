@@ -83,21 +83,50 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(ot_informe,k) in ot_informes.data" :key="k">
+                                <tr v-for="(ot_informe,k) in ot_informes.data" @click="selectPosTabla(k)" :key="k" :class="{selected: indexPosTabla === k}">
                                     <td>
                                         {{ot_informe.metodo}}
                                     </td>
                                     <td>
-                                        <div v-if="ot_informe.metodo == 'RI' && ot_informe.gasoducto_sn">
-                                            <div v-if="ot_informe.km == -1">
-                                                PDJ-{{ot_informe.tipo_soldadura_codigo}}-{{ot_informe.numero_formateado}}
+                                        <div v-if="indexPosTabla === k">
+                                            <div v-if="ot_informe.metodo == 'RI'">
+                                                <div v-if="ot_informe.numero_repetido === 1">
+                                                    {{ot_informe.informe_completo}}
+                                                    <button @click="CambioNumero(ot_informe)" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></button>
+                                                </div>
+                                                <div v-else>
+                                                    {{ot_informe.informe_completo}}-{{ot_informe.numero_repetido}}
+                                                    <button @click="CambioNumero(ot_informe)" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></button>
+                                                </div>
                                             </div>
                                             <div v-else>
-                                                {{ot_informe.km}}-{{ot_informe.tipo_soldadura_codigo}}-{{ot_informe.numero_formateado}}
+                                                <div v-if="ot_informe.numero_repetido === 1">
+                                                     {{ot_informe.numero_formateado}}
+                                                    <button @click="CambioNumero(ot_informe)" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></button>
+                                                </div>
+                                                <div v-else>
+                                                    {{ot_informe.numero_formateado}}-{{ot_informe.numero_repetido}}
+                                                    <button @click="CambioNumero(ot_informe)" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></button>
+                                                </div>
                                             </div>
                                         </div>
                                         <div v-else>
-                                             {{ot_informe.numero_formateado}}
+                                            <div v-if="ot_informe.metodo == 'RI'">
+                                                <div v-if="ot_informe.numero_repetido === 1">
+                                                    {{ot_informe.informe_completo}}
+                                                </div>
+                                                <div v-else>
+                                                    {{ot_informe.informe_completo}}-{{ot_informe.numero_repetido}}
+                                                </div>
+                                            </div>
+                                            <div v-else>
+                                                <div v-if="ot_informe.numero_repetido === 1">
+                                                    {{ot_informe.numero_formateado}}
+                                                </div>
+                                                <div v-else>
+                                                    {{ot_informe.numero_formateado}}-{{ot_informe.numero_repetido}}
+                                                </div>
+                                            </div>
                                         </div>
                                     </td>
                                     <td> {{ot_informe.revision}}</td>
@@ -154,6 +183,7 @@
 
         <informes-importables :metodo_ensayo="metodo_ensayo" :otdata="this.ot_data" @store="getResults(ot_informes.current_page)"></informes-importables>
         <informes-revisiones></informes-revisiones>
+        <informes-cambiar-numero @actualizarTabla="getResults(ot_informes.current_page)"></informes-cambiar-numero>
         <confirmar-modal></confirmar-modal>
         <loading :active.sync="isLoading"
             :loader="'bars'"
@@ -169,6 +199,7 @@ import { eventNewRegistro, eventEditRegistro } from '../../event-bus';
 import { eventModal } from '../../event-bus';
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
+import InformesCambiarNumero from './informes-cambiar-numero.vue';
 export default {
     components: {
 
@@ -197,6 +228,7 @@ export default {
     data () { return {
 
       ot_informes :{},
+      indexPosTabla:-1,
       metodo_ensayo:{},
       metodo_selected:false,
       informe_id_select: 0,
@@ -315,11 +347,21 @@ export default {
                 this.EditInforme();
             }
         },
-
         EditInforme : function(informe){
 
             this.$store.commit('loading', true);
             window.location.href =  '/area/enod/ot/' + this.ot_data.id + '/informe/' + this.informe_id_select + '/edit';
+
+        },
+        setNumeroFormateado :function(index){
+
+            console.log(index);
+
+        },
+        selectPosTabla :function(index){
+
+
+            this.indexPosTabla = index ;
 
         },
 
@@ -403,7 +445,12 @@ export default {
             eventModal.$emit('open_revisiones', registro,this.ot_data);
 
         },
+        CambioNumero : function(registro){
 
+            console.log("llega")
+            eventModal.$emit('open_cambio_numero', registro,this.ot_data);
+
+        },
          selectPosInforme : function(index){
 
             this.index_informe = JSON.parse(JSON.stringify(index));

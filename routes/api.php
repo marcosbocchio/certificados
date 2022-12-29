@@ -223,6 +223,7 @@ Route::group(['middleware' => 'auth:api'], function () {
         'InformesController@getPlantaInforme'
     );
     Route::put('informes/{id}/firmar', 'InformesController@firmar');
+    Route::put('informes/{id}/cambiar_numero', 'InformesController@cambiarNumero');
     Route::put('informes/{id}/clonar', 'InformesController@clonar');
     Route::get(
         'informes/ot/{ot_id}/pendientes_parte_diario',

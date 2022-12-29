@@ -253,6 +253,7 @@ Vue.component('table-ot_procedimientos_propios', require('./components/dashboard
 Vue.component('ot-tipoSoldaduras', require('./components/dashboard/procedimientos/ot-tipoSoldaduras').default);
 
 Vue.component('informes-revisiones', require('./components/dashboard/informes/informes-revisiones.vue').default);
+Vue.component('informes-cambiar-numero', require('./components/dashboard/informes/informes-cambiar-numero.vue').default);
 
 Vue.component('table-placas', require('./components/dashboard/placas/table-placas').default);
 

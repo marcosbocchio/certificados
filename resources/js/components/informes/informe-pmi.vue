@@ -505,10 +505,18 @@ data() {return {
     computed :{
 
         ...mapState(['isLoading','url','diametros','materiales','ot_obra_tipo_soldaduras','procedimientos','norma_evaluaciones','norma_ensayos','ejecutor_ensayos','fuentePorInterno','modelos_3d']),
-        numero_inf_code : function()  {
-            if(this.numero_inf)
-                return this.metodo +  sprintf("%04d",this.numero_inf);
-        },
+            numero_inf_code : function()  {
+                if(this.numero_inf){
+                    if(this.informedata.numero_repetido){
+                        if(this.informedata.numero_repetido !== 1){
+                            return this.metodo +  sprintf("%04d",this.numero_inf) + '-' + this.informedata.numero_repetido;
+                        } else {
+                            return this.metodo +  sprintf("%04d",this.numero_inf);
+                        }
+                    } else
+                   return this.metodo +  sprintf("%04d",this.numero_inf);
+                }
+             },
 
      },
 
