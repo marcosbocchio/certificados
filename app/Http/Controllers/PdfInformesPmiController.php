@@ -34,6 +34,7 @@ class PdfInformesPmiController extends Controller
         /* header */
 
         $informe = Informe::findOrFail($id);
+        $numero_repetido = $informe->numero_repetido;
         $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);
          $informe_pmi= InformesPmi::where('informe_id',$informe->id)->firstOrFail();
          $planta= Plantas::where('id',$informe->planta_id)->first();
@@ -58,7 +59,7 @@ class PdfInformesPmiController extends Controller
         $informe_solicitado_por = User::where('id',$informe->solicitado_por)->first();
         Log::debug($informe_pmi->path);
         $titulo = "IDENTIFICACIÓN POSITIVA DE MATERIALES";
-        $nro = FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo) .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) ;
+        $nro = $numero_repetido === 1 ? FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo) .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) : FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo) .'-'.$numero_repetido .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) ;
         $fecha = date('d-m-Y', strtotime($informe->fecha));
         $tipo_reporte = "INFORME N°";
 
@@ -85,6 +86,7 @@ class PdfInformesPmiController extends Controller
                                                                 'material2',
                                                                 'evaluador',
                                                                 'detalles',
+                                                                'numero_repetido',
                                                                 'informe_modelos_3d',
                                                                 'observaciones',
                                                                 'informe_solicitado_por',

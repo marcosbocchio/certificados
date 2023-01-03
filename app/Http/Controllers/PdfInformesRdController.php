@@ -46,6 +46,8 @@ class PdfInformesRdController extends Controller
     public function imprimir($id){
        /* header */
         $informe = Informe::findOrFail($id);
+        $numero_repetido = $informe->numero_repetido;
+
         $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);
         $informe_rd = InformesRd::where('informe_id',$informe->id)->firstOrFail();
         $planta = Plantas::where('id',$informe->planta_id)->first();
@@ -81,7 +83,7 @@ class PdfInformesRdController extends Controller
 
         $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);
         $titulo = "RADIOGRAFIA DIGITAL";
-        $nro = FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo) .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) ;
+        $nro = $numero_repetido === 1 ? FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo) .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) : FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo) .'-'.$numero_repetido .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) ;
         $fecha = date('d-m-Y', strtotime($informe->fecha));
         $tipo_reporte = "INFORME N°";
         /* Fin encabezado */
@@ -120,6 +122,7 @@ class PdfInformesRdController extends Controller
                                                                         'evaluador',
                                                                         'informe_modelos_3d',
                                                                         'firma',
+                                                                        'numero_repetido',
                                                                         'informe_solicitado_por',
                                                                         'observaciones'))->setPaper('a4','portrait')->setWarnings(false);
 
@@ -169,6 +172,7 @@ class PdfInformesRdController extends Controller
                                                                         'evaluador',
                                                                         'informe_modelos_3d',
                                                                         'firma',
+                                                                        'numero_repetido',
                                                                         'informe_solicitado_por',
                                                                         'observaciones'))->setPaper('a4','landscape')->setWarnings(false);
 
@@ -212,6 +216,7 @@ class PdfInformesRdController extends Controller
                                                               'evaluador',
                                                               'informe_modelos_3d',
                                                               'firma',
+                                                              'numero_repetido',
                                                               'informe_solicitado_por',
                                                               'observaciones'))->setPaper('a4','portrait')->setWarnings(false);
 

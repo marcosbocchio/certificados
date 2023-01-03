@@ -19,7 +19,7 @@
 
                             }
                             @else{
-                                <td style="font-size: 11px;" ><b style="margin-left: 80px;">INFORME N°: </b>{{$informe->km}}-{{$ot_tipo_soldadura->TipoSoldadura->codigo}}-{{ $nro }}
+                                <td style="font-size: 10px;" ><b style="margin-left: 80px;">INFORME N°: </b>{{$informe->km}}-{{$ot_tipo_soldadura->TipoSoldadura->codigo}}-{{ $nro }}
                                 </td>
                                }
                             @endif

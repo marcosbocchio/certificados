@@ -201,7 +201,14 @@
                                                 <input type="checkbox" id="informe_sel" v-model="informes[k].informe_sel" @click="selectPosTablaInformesSinParteDiario(k)" @change="getInforme(k)" :disabled="deshabilitarInformes(informe.fecha_formateada,informe.obra,informe.informe_sel) || loading">
                                             </td>
                                             <td> {{ informe.metodo}}</td>
-                                            <td> {{ informe.numero_formateado}}</td>
+                                            <td>
+                                                <div v-if="informe.numero_repetido === 1">
+                                                    {{informe.numero_formateado}}
+                                                </div>
+                                                <div v-else>
+                                                    {{informe.numero_formateado}}-{{informe.numero_repetido}}
+                                                </div>
+                                            </td>
                                             <td> {{ informe.obra}}</td>
                                             <td> {{ informe.planta}}</td>
                                             <td> {{ informe.fecha_formateada}}</td>

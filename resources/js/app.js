@@ -254,7 +254,7 @@ Vue.component('ot-tipoSoldaduras', require('./components/dashboard/procedimiento
 
 Vue.component('informes-revisiones', require('./components/dashboard/informes/informes-revisiones.vue').default);
 Vue.component('informes-cambiar-numero', require('./components/dashboard/informes/informes-cambiar-numero.vue').default);
-
+Vue.component('clonacion-masiva', require('./components/dashboard/informes/clonacion-masiva.vue').default);
 Vue.component('table-placas', require('./components/dashboard/placas/table-placas').default);
 
 Vue.component('partes', require('./components/partes/partes.vue').default);

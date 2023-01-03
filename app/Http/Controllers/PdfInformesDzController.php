@@ -39,6 +39,7 @@ class PdfInformesDzController extends Controller
         /* header */
 
         $informe = Informe::findOrFail($id);
+        $numero_repetido = $informe->numero_repetido;
         $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);
          $informe_dz= InformesDz::where('informe_id',$informe->id)->firstOrFail();
          $planta= Plantas::where('id',$informe->planta_id)->first();
@@ -64,7 +65,7 @@ class PdfInformesDzController extends Controller
          $informe_solicitado_por = User::where('id',$informe->solicitado_por)->first();
          /*  Encabezado */
         $titulo = "MEDICIÓN DE DUREZA";
-        $nro = FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo) .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) ;
+        $nro = $numero_repetido === 1 ? FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo) .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) : FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo) .'-'.$numero_repetido .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) ;
         $fecha = date('d-m-Y', strtotime($informe->fecha));
         $tipo_reporte = "INFORME N°";
 
@@ -95,6 +96,7 @@ class PdfInformesDzController extends Controller
                                                                 'observaciones',
                                                                 'firma',
                                                                 'detalles',
+                                                                'numero_repetido',
                                                                 'informe_interno_equipo',
                                                                 'informe_estado_superficie',
                                                                 'informe_unidad_medicion_dureza',

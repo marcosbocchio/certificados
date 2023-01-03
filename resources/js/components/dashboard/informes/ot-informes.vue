@@ -92,21 +92,21 @@
                                             <div v-if="ot_informe.metodo == 'RI'">
                                                 <div v-if="ot_informe.numero_repetido === 1">
                                                     {{ot_informe.informe_completo}}
-                                                    <button @click="CambioNumero(ot_informe)" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></button>
+                                                    <div @click="CambioNumero(ot_informe)" style="display:inline-block" ><span style="margin-left:5px;cursor:pointer;" class="glyphicon glyphicon-pencil"></span></div>
                                                 </div>
                                                 <div v-else>
                                                     {{ot_informe.informe_completo}}-{{ot_informe.numero_repetido}}
-                                                    <button @click="CambioNumero(ot_informe)" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></button>
+                                                    <div @click="CambioNumero(ot_informe)" style="display:inline-block"><span style="margin-left:5px;cursor:pointer;" class="glyphicon glyphicon-pencil"></span></div>
                                                 </div>
                                             </div>
                                             <div v-else>
                                                 <div v-if="ot_informe.numero_repetido === 1">
                                                      {{ot_informe.numero_formateado}}
-                                                    <button @click="CambioNumero(ot_informe)" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></button>
+                                                    <div @click="CambioNumero(ot_informe)" style="display:inline-block"><span style="margin-left:5px;cursor:pointer;" class="glyphicon glyphicon-pencil" ></span></div>
                                                 </div>
                                                 <div v-else>
                                                     {{ot_informe.numero_formateado}}-{{ot_informe.numero_repetido}}
-                                                    <button @click="CambioNumero(ot_informe)" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-pencil"></span></button>
+                                                    <div @click="CambioNumero(ot_informe)" style="display:inline-block"><span style="margin-left:5px;cursor:pointer;" class="glyphicon glyphicon-pencil"></span></div>
                                                 </div>
                                             </div>
                                         </div>

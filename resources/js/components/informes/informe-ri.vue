@@ -486,6 +486,7 @@
                         <p>&nbsp;</p>
                         <button type="button" @click="AddDetalle()" title="Agregar Junta/Posición"><app-icon img="plus-circle" color="black"></app-icon></button>
                         <button type="button" @click="ClonarPosPlanta()" title="Clonar Posición"><app-icon img="clone" color="black"></app-icon></button>
+                        <button type="button" @click="OpenClonacionMasiva()" title="Clonación multiple"><app-icon img="multiple-clone" color="black"></app-icon></button>
                         <button type="button" @click="resetDetalle()" title="Limpiar Todo"><app-icon img="trash" color="black"></app-icon></button>
                  </div>
 
@@ -950,6 +951,7 @@
 
         </div>
         <create-referencias :index="index_referencias" :tabla="tabla" :inputsData="inputsData" @setReferencia="AddReferencia"></create-referencias>
+        <clonacion-masiva @actualizarTabla="ClonacionMasiva"></clonacion-masiva>
     </div>
 </template>
 
@@ -958,6 +960,8 @@
  import uniq from 'lodash/uniq';
  import DatePicker from 'vue2-datepicker';
  import 'vue2-datepicker/index.css';
+ import ClonacionMasiva from '../dashboard/informes/clonacion-masiva.vue';
+ import { eventModal } from '../../../js/components/event-bus';
 import { eventSetReferencia } from '../event-bus';
  import 'vue2-datepicker/locale/es';import {mapState} from 'vuex';
  import Loading from 'vue-loading-overlay';
@@ -1906,6 +1910,11 @@ import { eventSetReferencia } from '../event-bus';
              this.inputsData = inputsReferencia ;
              eventSetReferencia.$emit('open');
          },
+         getResults($desde,$hasta) {
+             console.log("llega")
+             console.log($desde)
+             console.log($hasta)
+         },
          AddReferencia(Ref){
 
              this.TablaTramos[this.index_referencias].observaciones = Ref.observaciones;
@@ -1933,6 +1942,16 @@ import { eventSetReferencia } from '../event-bus';
          insertarClonacion : function (posicion){
             this.AddDetalle(posicion);
          },
+         ClonacionMasiva ($desde,$hasta) {
+            while($desde <= $hasta){
+                this.junta = $desde
+                this.ClonarPosPlanta()
+                $desde++
+            }
+         },
+         OpenClonacionMasiva : function(){
+            eventModal.$emit('open_clonacion_masiva');
+         },
          ClonarPosPlanta : function(){
              this.clonando = true;
              if(this.TablaDetalle.length > 0){
@@ -1945,6 +1964,7 @@ import { eventSetReferencia } from '../event-bus';
                      x = x - 1;
                  }
                  posicionJunta.forEach(function(pos) {
+                 console.log('pos: ',pos)
                  this.AddDetalle(pos);
                  }.bind(this));
              }
