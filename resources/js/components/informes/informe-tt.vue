@@ -365,18 +365,18 @@ export default {
     computed :{
         ...mapState(['isLoading','url','materiales','ot_obra_tipo_soldaduras','procedimientos','norma_evaluaciones','particulas','norma_ensayos','iluminaciones','ejecutor_ensayos','interno_equipos','instrumentos_mediciones','modelos_3d']),
 
-            numero_inf_code : function()  {
-                if(this.numero_inf){
-                    if(this.informedata.numero_repetido){
-                        if(this.informedata.numero_repetido !== 1){
-                            return this.metodo +  sprintf("%04d",this.numero_inf) + '-' + this.informedata.numero_repetido;
-                        } else {
-                            return this.metodo +  sprintf("%04d",this.numero_inf);
-                        }
-                    } else
-                   return this.metodo +  sprintf("%04d",this.numero_inf);
-                }
-             },
+        numero_inf_code : function()  {
+            if(this.dataForm.numero_inf){
+                if(this.dataForm.numero_repetido){
+                    if(this.dataForm.numero_repetido !== 1){
+                        return this.metodo +  sprintf("%04d",this.dataForm.numero_inf) + '-' + this.dataForm.numero_repetido;
+                    } else {
+                        return this.metodo +  sprintf("%04d",this.dataForm.numero_inf);
+                    }
+                } else
+                return this.metodo +  sprintf("%04d",this.dataForm.numero_inf);
+            }
+        },
 
         existenTemperaturas : function() {
            return (this.dataForm.temperatura_inicial !== '' && this.dataForm.temperatura_subida !== '' && this.dataForm.temperatura_mantenimiento !== '' && this.dataForm.temperatura_enfriado !== '' && this.dataForm.temperatura_final !== '')
@@ -400,6 +400,7 @@ export default {
                     this.dataForm.metodo_ensayo = this.metodo
                     this.dataForm.numero_inf = data.numero
                     this.dataForm.material = data.material
+                    this.dataForm.numero_repetido = data.numero_repetido
                     this.dataForm.material2 = data.material2
                     this.dataForm.material2_tipo = data.material2_tipo
                     if(data.material2_tipo) { this.dataForm.material2_tipo = data.material2_tipo }
