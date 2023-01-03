@@ -39,6 +39,7 @@ class PdfInformesCvController extends Controller
         /* header */
 
         $informe = Informe::findOrFail($id);
+        $numero_repetido = $informe->numero_repetido;
         $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);
          $informe_dz= InformesDz::where('informe_id',$informe->id)->firstOrFail();
          $planta= Plantas::where('id',$informe->planta_id)->first();
@@ -65,7 +66,7 @@ class PdfInformesCvController extends Controller
          /*  Encabezado */
 
         $titulo = "MEDICIÓN DE DUREZA";
-        $nro = FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo) .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) ;
+        $nro = $numero_repetido === 1 ? FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo) .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) : FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo) .'-'.$numero_repetido .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) ;
         $fecha = date('d-m-Y', strtotime($informe->fecha));
         $tipo_reporte = "INFORME N°";
 
@@ -89,6 +90,7 @@ class PdfInformesCvController extends Controller
                                                                 'material2',
                                                                 'evaluador',
                                                                 'detalles',
+                                                                'numero_repetido',
                                                                 'informe_modelos_3d',
                                                                 'observaciones',
                                                                 'firma',

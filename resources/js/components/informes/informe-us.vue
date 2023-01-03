@@ -1229,9 +1229,16 @@ export default {
 
         ...mapState(['isLoading','url','ot_obra_tipo_soldaduras','materiales','diametros','espesores','procedimientos','norma_evaluaciones','norma_ensayos','ejecutor_ensayos','interno_equipos','palpadores','modelos_3d']),
         numero_inf_code : function()  {
-
-            if(this.numero_inf)
+            if(this.numero_inf){
+                if(this.informedata.numero_repetido){
+                    if(this.informedata.numero_repetido !== 1){
+                        return this.tecnica.codigo +  sprintf("%04d",this.numero_inf) + '-' + this.informedata.numero_repetido;
+                    } else {
+                        return this.tecnica.codigo +  sprintf("%04d",this.numero_inf);
+                    }
+                } else
                 return this.tecnica.codigo +  sprintf("%04d",this.numero_inf);
+            }
         },
      },
 

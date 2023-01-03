@@ -36,6 +36,8 @@ class PdfInformesUsController extends Controller
         /* header */
 
          $informe = Informe::findOrFail($id);
+         $numero_repetido = $informe->numero_repetido;
+
          $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);
          $informe_us = InformesUs::where('informe_id',$informe->id)->firstOrFail();
          $planta= Plantas::where('id',$informe->planta_id)->first();
@@ -72,7 +74,7 @@ class PdfInformesUsController extends Controller
         $informe_solicitado_por = User::where('id',$informe->solicitado_por)->first();
 
         $titulo = "INFORME DE ULTRASONIDO"."     " ." (" . mb_strtoupper($tecnica->descripcion,"UTF-8") . ")";
-        $nro = FormatearNumeroInforme($informe->numero,$tecnica->codigo) .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) ;
+        $nro = $numero_repetido === 1 ? FormatearNumeroInforme($informe->numero,$tecnica->codigo) .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) : FormatearNumeroInforme($informe->numero,$tecnica->codigo) .'-'.$numero_repetido .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) ;
         $fecha = date('d-m-Y', strtotime($informe->fecha));
         $tipo_reporte = "INFORME N°";
 
@@ -101,6 +103,7 @@ class PdfInformesUsController extends Controller
                                                                 'generatrices',
                                                                 'informes_us_me',
                                                                 'indicaciones_us_pa',
+                                                                'numero_repetido',
                                                                 'detalles',
                                                                 'informe_solicitado_por',
                                                                 ))->setPaper('a4','portrait')->setWarnings(false);
