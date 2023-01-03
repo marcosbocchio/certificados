@@ -486,7 +486,7 @@
                         <p>&nbsp;</p>
                         <button type="button" @click="AddDetalle()" title="Agregar Junta/Posición"><app-icon img="plus-circle" color="black"></app-icon></button>
                         <button type="button" @click="ClonarPosPlanta()" title="Clonar Posición"><app-icon img="clone" color="black"></app-icon></button>
-                        <button type="button" @click="OpenClonacionMasiva()" title="Clonación multiple"><app-icon img="multiple-clone" color="black"></app-icon></button>
+                        <button type="button" @click="OpenClonacionMasiva()" title="Clonación masiva"><app-icon img="list-ol" color="black"></app-icon></button>
                         <button type="button" @click="resetDetalle()" title="Limpiar Todo"><app-icon img="trash" color="black"></app-icon></button>
                  </div>
 
