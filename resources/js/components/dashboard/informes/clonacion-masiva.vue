@@ -27,7 +27,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" @click="ClonacionMasiva" data-dismiss="modal" >Guardar</button>
+                        <button type="button" class="btn btn-primary" @click="ClonacionMasiva" data-dismiss="modal" >Clonar</button>
                         <button type="button" class="btn btn-default" name="button" data-dismiss="modal" >Cancelar</button>
                     </div>
                 </div>
