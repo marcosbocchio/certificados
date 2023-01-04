@@ -1688,7 +1688,6 @@ import { eventSetReferencia } from '../event-bus';
          AddDetalle (posicion, densidad) {
 
              var match = this.posicion.match(/^([0-9]{1,4}[-][0-9]{1,4})$|^([a-zA-Z]{1})$|^(GAP){3}$/);
-             console.log(match)
               if(!match && this.posicion != 'GAP' && this.clonando == false){
                   toastr.error('Ingrese un rango separado por un guion o una letra','Formato inválido');
                   return;
@@ -1911,11 +1910,6 @@ import { eventSetReferencia } from '../event-bus';
              this.inputsData = inputsReferencia ;
              eventSetReferencia.$emit('open');
          },
-         getResults($desde,$hasta) {
-             console.log("llega")
-             console.log($desde)
-             console.log($hasta)
-         },
          AddReferencia(Ref){
 
              this.TablaTramos[this.index_referencias].observaciones = Ref.observaciones;
@@ -1961,7 +1955,6 @@ import { eventSetReferencia } from '../event-bus';
                      posicionJunta.unshift(TablaDetalleReverse[x]);
                      x = x - 1;
                  }
-                 console.log(posicionJunta)
                  posicionJunta.forEach(function(pos) {
                  this.AddDetalle(pos.posicion,pos.densidad);
                  }.bind(this));

@@ -13,7 +13,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="numero_informe">Desde</label>
-                                    <input autocomplete="off" type="number" name="desde" v-model="desde" class="form-control">
+                                    <input type="number" name="desde" v-model="desde" class="form-control">
                                </div>
                             </div>
                         </div>
@@ -21,7 +21,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="numero_informe">Hasta</label>
-                                    <input autocomplete="off" type="number" name="desde" v-model="hasta" class="form-control">
+                                    <input type="number" name="desde" v-model="hasta" class="form-control">
                                </div>
                             </div>
                         </div>
@@ -76,10 +76,10 @@ export default {
         },
 
         ClonacionMasiva: function () {
-            if(this.hasta < this.desde){
-                this.$showMessages('error',['El número hasta debe ser menor al número inicial.']);
+            if(parseFloat(this.hasta) < parseFloat(this.desde)){
+                this.$showMessages('error',['El número final debe ser menor al número inicial.']);
             } else {
-                this.$emit('actualizarTabla',this.desde,this.hasta)
+                this.$emit('actualizarTabla',parseFloat(this.desde),parseFloat(this.hasta))
             }
         },
         moment: function (date) {
