@@ -1685,10 +1685,11 @@ import { eventSetReferencia } from '../event-bus';
             }.bind(this));
          },
 
-         AddDetalle (posicion) {
+         AddDetalle (posicion, densidad) {
 
              var match = this.posicion.match(/^([0-9]{1,4}[-][0-9]{1,4})$|^([a-zA-Z]{1})$|^(GAP){3}$/);
-              if(!match && this.posicion != 'GAP'){
+             console.log(match)
+              if(!match && this.posicion != 'GAP' && this.clonando == false){
                   toastr.error('Ingrese un rango separado por un guion o una letra','Formato inválido');
                   return;
                 }
@@ -1699,7 +1700,7 @@ import { eventSetReferencia } from '../event-bus';
              }else if(this.posicion == '' && this.clonando == false) {
                 toastr.error('Campo posición es obligatorio');
                 return;
-             }else if (this.densidad == ''){
+             }else if (this.densidad == '' && this.clonando == false){
                 toastr.error('Campo densidad es obligatorio');
                 return;
              }
@@ -1708,7 +1709,7 @@ import { eventSetReferencia } from '../event-bus';
              this.addElementosPasadas(aux_junta);
              this.TablaDetalle.push({
                 junta: aux_junta,
-                densidad : this.densidad,
+                densidad : (typeof(densidad) !== 'undefined') ? densidad : this.densidad,
                 posicion : (typeof(posicion) !== 'undefined') ? posicion : this.posicion,
                 aceptable_sn : 1 ,
                 observacion : '',
@@ -1939,9 +1940,6 @@ import { eventSetReferencia } from '../event-bus';
         RemoveTramos(index) {
              this.TablaTramos.splice(index, 1);
          },
-         insertarClonacion : function (posicion){
-            this.AddDetalle(posicion);
-         },
          ClonacionMasiva ($desde,$hasta) {
             while($desde <= $hasta){
                 this.junta = $desde
@@ -1960,12 +1958,12 @@ import { eventSetReferencia } from '../event-bus';
                  let juntaAux = TablaDetalleReverse[x].junta;
                  let posicionJunta =[];
                  while (  (x >= 0)  && (juntaAux == TablaDetalleReverse[x].junta)) {
-                     posicionJunta.unshift(TablaDetalleReverse[x].posicion);
+                     posicionJunta.unshift(TablaDetalleReverse[x]);
                      x = x - 1;
                  }
+                 console.log(posicionJunta)
                  posicionJunta.forEach(function(pos) {
-                 console.log('pos: ',pos)
-                 this.AddDetalle(pos);
+                 this.AddDetalle(pos.posicion,pos.densidad);
                  }.bind(this));
              }
              this.clonando = false;
