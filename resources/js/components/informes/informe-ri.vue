@@ -1256,8 +1256,8 @@ import { eventSetReferencia } from '../event-bus';
             this.fuente = val;
          },
         fecha : function(val) {
-            if(this.interno_fuente){
-                this.$store.dispatch('loadCurie',{ 'interno_fuente_id' : this.interno_fuente.id, 'fecha_final': this.fecha_mysql }).then(response => {
+            if(this.interno_fuente && this.interno_fuente != '' ){
+                this.$store.dispatch('loadCurie',{ 'interno_fuente_id' : this.interno_fuente.id, 'fecha_final': this.fecha_mysql }).then(() => {
                     this.actividad = this.curie;
                 });
             }
@@ -1331,10 +1331,11 @@ import { eventSetReferencia } from '../event-bus';
                 this.linea = this.informedata.linea;
                 this.plano_isom = this.informedata.plano_isom;
                 this.hoja = this.informedata.hoja;
-                this.diametro = (this.diametro_espesordata['id'] !== 'undefined' && !(this.diametro_espesordata instanceof  Array)) ? this.diametro_espesordata : { 'diametro' : this.informedata.diametro_especifico };
-                this.espesor = this.informedata.espesor_especifico ? {'espesor' : this.informedata.espesor_especifico} : this.diametro_espesordata;
+                this.diametro = (this.diametro_espesordata['id'] !== 'undefined' && !(this.diametro_espesordata instanceof  Array)) ? this.diametro_espesordata : { 'diametro' : this.informedata.diametro_especifico };                
+                this.espesor = this.informedata.espesor_especifico ? {'espesor' : this.informedata.espesor_especifico} : this.diametro_espesordata;                
                 if (!(this.diametrodata instanceof  Array)) {
                     this.getEspesores(this.diametrodata.diametro_code);
+                    Object.defineProperty(this.diametro,'diametro_code',{ value: this.diametrodata.diametro_code})
                 }
                 console.log('Diametro..', this.diametro)
                 this.tecnica = this.tecnicadata;
@@ -1368,8 +1369,7 @@ import { eventSetReferencia } from '../event-bus';
                 if(this.informe_ridata.reparacion_sn){
                      this.getElementosReparacion();
                 }
-
-                if (this.interno_fuentedata.id != undefined){
+                if (typeof(this.interno_fuentedata.id) !== 'undefined'){
                     this.$store.dispatch('loadCurie', { 'interno_fuente_id' : this.interno_fuentedata.id, 'fecha_final': this.informedata.fecha }).then(response => {
                           this.actividad = this.curie;
                     });
@@ -1492,7 +1492,7 @@ import { eventSetReferencia } from '../event-bus';
 
              if(this.interno_equipo.interno_fuente){
                 this.interno_fuente = this.interno_equipo.interno_fuente;
-                this.$store.dispatch('loadFuentePorInterno',this.interno_equipo.interno_fuente.id).then(response => {
+                this.$store.dispatch('loadFuentePorInterno',this.interno_equipo.interno_fuente.id).then( () => {
                     this.fuente = this.fuentePorInterno;
                     this.ActualizarDistFuentePelicula();
                 });
@@ -1558,7 +1558,7 @@ import { eventSetReferencia } from '../event-bus';
               var match = this.espesor.espesor.match(/^[+]?([0-9]+[.])?[0-9]+?$/);
               if(!match){
                   this.espesor.espesor = 0;
-              }
+                }
                  this.ActualizarDistFuentePelicula();
              }
          },
@@ -1598,16 +1598,16 @@ import { eventSetReferencia } from '../event-bus';
                         this.tecnica_distancia = response.data
                         this.distancia_fuente_pelicula=this.tecnica_distancia[0].valor;
 
-                    }).finally(res => { this.$store.commit('loading', false); });
+                    }).finally(() => { this.$store.commit('loading', false); });
                 }
-            }else{
-                if(this.tecnica && this.diametro && this.espesor && foco){
+            }else{         
+                if(this.tecnica && this.diametro && this.espesor){
                     this.$store.commit('loading', true);
                     var urlRegistros = 'tecnica_distancias/tecnica/' + this.tecnica.id + '/diametro/'+ this.diametro.diametro_code + '/espesor/' + this.espesor.espesor + '/foco/' + foco + '?api_token=' + Laravel.user.api_token;
                     axios.get(urlRegistros).then(response =>{
                         this.tecnica_distancia = response.data
                         this.distancia_fuente_pelicula=this.tecnica_distancia[0].valor;
-                    }).finally(res => { this.$store.commit('loading', false); });
+                    }).finally(() => { this.$store.commit('loading', false); });
                 }
             }
          },

@@ -118,18 +118,29 @@
                             </tr>
 
                             <tr>
-                                <th colspan="2">Actividad Fuente</th>
-                                <th colspan="2">Foco</th>
+                                @if ($interno_fuente)
+                                    <th colspan="2">Actividad Fuente</th>
+                                    <th colspan="2">Foco</th>
+                                @else
+                                    <th colspan="2">kv</th>
+                                    <th colspan="2">mA</th>
+                                @endif
                             </tr>
+                            
                             <tr>
-                                <td colspan="2">{{$actividad}}</td>
-                                <td colspan="2">
-                                    @if ($interno_fuente)
-                                        {{$interno_fuente->foco}}
-                                    @else
-                                        {{$interno_equipo->foco}}
-                                    @endif
-                                </td>
+                                @if ($interno_fuente)
+                                    <td colspan="2">{{$actividad}}</td>
+                                    <td colspan="2">
+                                            @if ($interno_fuente)
+                                            {{$interno_fuente->foco}}
+                                            @else
+                                                {{$interno_equipo->foco}}
+                                            @endif
+                                    </td>
+                                @else                                        
+                                    <td colspan="2">{{ $informe_ri->kv }}</td>
+                                    <td colspan="2"> {{ $informe_ri->ma }} </td>
+                                @endif
                             </tr>
 
                             <tr>
