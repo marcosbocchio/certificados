@@ -486,6 +486,7 @@
                         <p>&nbsp;</p>
                         <button type="button" @click="AddDetalle()" title="Agregar Junta/Posición"><app-icon img="plus-circle" color="black"></app-icon></button>
                         <button type="button" @click="ClonarPosPlanta()" title="Clonar Posición"><app-icon img="clone" color="black"></app-icon></button>
+                        <button type="button" @click="OpenClonacionMasiva()" title="Clonación masiva"><app-icon img="list-ol" color="black"></app-icon></button>
                         <button type="button" @click="resetDetalle()" title="Limpiar Todo"><app-icon img="trash" color="black"></app-icon></button>
                  </div>
 
@@ -950,6 +951,7 @@
 
         </div>
         <create-referencias :index="index_referencias" :tabla="tabla" :inputsData="inputsData" @setReferencia="AddReferencia"></create-referencias>
+        <clonacion-masiva @actualizarTabla="ClonacionMasiva"></clonacion-masiva>
     </div>
 </template>
 
@@ -958,6 +960,8 @@
  import uniq from 'lodash/uniq';
  import DatePicker from 'vue2-datepicker';
  import 'vue2-datepicker/index.css';
+ import ClonacionMasiva from '../dashboard/informes/clonacion-masiva.vue';
+ import { eventModal } from '../../../js/components/event-bus';
 import { eventSetReferencia } from '../event-bus';
  import 'vue2-datepicker/locale/es';import {mapState} from 'vuex';
  import Loading from 'vue-loading-overlay';
@@ -1280,8 +1284,16 @@ import { eventSetReferencia } from '../event-bus';
             },
 
             numero_inf_code : function()  {
-                if(this.numero_inf)
+                if(this.numero_inf){
+                    if(this.informedata.numero_repetido){
+                        if(this.informedata.numero_repetido !== 1){
+                            return this.metodo +  sprintf("%04d",this.numero_inf) + '-' + this.informedata.numero_repetido;
+                        } else {
+                            return this.metodo +  sprintf("%04d",this.numero_inf);
+                        }
+                    } else
                    return this.metodo +  sprintf("%04d",this.numero_inf);
+                }
              },
 
              ot_tipo_soldaduras_filter_R :function(){
@@ -1673,10 +1685,10 @@ import { eventSetReferencia } from '../event-bus';
             }.bind(this));
          },
 
-         AddDetalle (posicion) {
+         AddDetalle (posicion, densidad) {
 
              var match = this.posicion.match(/^([0-9]{1,4}[-][0-9]{1,4})$|^([a-zA-Z]{1})$|^(GAP){3}$/);
-              if(!match && this.posicion != 'GAP'){
+              if(!match && this.posicion != 'GAP' && this.clonando == false){
                   toastr.error('Ingrese un rango separado por un guion o una letra','Formato inválido');
                   return;
                 }
@@ -1687,7 +1699,7 @@ import { eventSetReferencia } from '../event-bus';
              }else if(this.posicion == '' && this.clonando == false) {
                 toastr.error('Campo posición es obligatorio');
                 return;
-             }else if (this.densidad == ''){
+             }else if (this.densidad == '' && this.clonando == false){
                 toastr.error('Campo densidad es obligatorio');
                 return;
              }
@@ -1696,7 +1708,7 @@ import { eventSetReferencia } from '../event-bus';
              this.addElementosPasadas(aux_junta);
              this.TablaDetalle.push({
                 junta: aux_junta,
-                densidad : this.densidad,
+                densidad : (typeof(densidad) !== 'undefined') ? densidad : this.densidad,
                 posicion : (typeof(posicion) !== 'undefined') ? posicion : this.posicion,
                 aceptable_sn : 1 ,
                 observacion : '',
@@ -1922,8 +1934,15 @@ import { eventSetReferencia } from '../event-bus';
         RemoveTramos(index) {
              this.TablaTramos.splice(index, 1);
          },
-         insertarClonacion : function (posicion){
-            this.AddDetalle(posicion);
+         ClonacionMasiva ($desde,$hasta) {
+            while($desde <= $hasta){
+                this.junta = $desde
+                this.ClonarPosPlanta()
+                $desde++
+            }
+         },
+         OpenClonacionMasiva : function(){
+            eventModal.$emit('open_clonacion_masiva');
          },
          ClonarPosPlanta : function(){
              this.clonando = true;
@@ -1933,11 +1952,11 @@ import { eventSetReferencia } from '../event-bus';
                  let juntaAux = TablaDetalleReverse[x].junta;
                  let posicionJunta =[];
                  while (  (x >= 0)  && (juntaAux == TablaDetalleReverse[x].junta)) {
-                     posicionJunta.unshift(TablaDetalleReverse[x].posicion);
+                     posicionJunta.unshift(TablaDetalleReverse[x]);
                      x = x - 1;
                  }
                  posicionJunta.forEach(function(pos) {
-                 this.AddDetalle(pos);
+                 this.AddDetalle(pos.posicion,pos.densidad);
                  }.bind(this));
              }
              this.clonando = false;

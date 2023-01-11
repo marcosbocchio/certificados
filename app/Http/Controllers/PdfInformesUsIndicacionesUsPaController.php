@@ -34,6 +34,8 @@ class PdfInformesUsIndicacionesUsPaController extends Controller
         /* header */
 
         $informe = Informe::findOrFail($id);
+        $numero_repetido = $informe->numero_repetido;
+
         $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);
          $informe_us = InformesUs::where('informe_id',$informe->id)->firstOrFail();
          $ot = Ots::findOrFail($informe->ot_id);
@@ -58,7 +60,8 @@ class PdfInformesUsIndicacionesUsPaController extends Controller
          /*  Encabezado */
 
          $titulo = "INFORME DE ULTRASONIDO"." (" . mb_strtoupper($tecnica->descripcion,"UTF-8") . ")";
-         $nro = FormatearNumeroInforme($informe->numero,$tecnica->codigo) .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) ;
+
+         $nro = $numero_repetido === 1 ? FormatearNumeroInforme($informe->numero,$tecnica->codigo) .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) : FormatearNumeroInforme($informe->numero,$tecnica->codigo) .'-'.$numero_repetido .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) ;
          $fecha = date('d-m-Y', strtotime($informe->fecha));
          $tipo_reporte = "INFORME N°";
 
@@ -76,6 +79,7 @@ class PdfInformesUsIndicacionesUsPaController extends Controller
                                                                 'informe',
                                                                 'informe_us',
                                                                 'material',
+                                                                'numero_repetido',
                                                                 'estado_superficie',
                                                                 'indicaciones_us_pa',
                                                                 'evaluador',
