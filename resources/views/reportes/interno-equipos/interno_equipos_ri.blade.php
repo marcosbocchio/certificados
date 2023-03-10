@@ -17,9 +17,9 @@ header {
 }
 
 main th, main td {
-    border: 1px solid;  
+    border: 1px solid;
     text-align: center;
-} 
+}
 
 main {
       margin-top: -5px;
@@ -34,7 +34,7 @@ main {
 }
 
 footer {
-    position: fixed;  
+    position: fixed;
     bottom:-0px;
     padding-top: 0px;
 }
@@ -74,41 +74,41 @@ footer {
                     </td>
                 </tr>
             </tbody>
-        </table>       
-        @include('reportes.partial.linea-amarilla')    
+        </table>
+        @include('reportes.partial.linea-amarilla')
         <table class="header-detalle-principal" style="margin-top: 10px">
             <tbody>
                 <tr>
                     <td width="49%">
                         <table style="font-size: 12px;" width="100%" class="header-detalle">
-                            <tbody>                               
+                            <tbody>
                                 <tr>
                                     <th colspan="4" >Documentación Vencida</th>
                                 </tr>
                                 <tr>
                                     <td colspan="4">
                                         @if ($vencidas_sn)
-                                          SI  
+                                          SI
                                         @else
-                                          NO  
+                                          NO
                                         @endif
-                                        
+
                                     </td>
                                 </tr>
-    
+
                                <tr>
                                    <th colspan="4">Sin Cert. Verif / Doc.</th>
                                 </tr>
                                <tr>
-                                   <td colspan="4"> 
+                                   <td colspan="4">
                                         @if ($todos_sn)
                                             SI
                                         @else
                                             NO
                                         @endif
                                     </td>
-                               </tr>      
-        
+                               </tr>
+
                             </tbody>
                         </table>
                     </td>
@@ -117,38 +117,38 @@ footer {
                     </td>
                     <td width="49%">
                         <table style="font-size: 12px;float:right;" width="100%" class="header-detalle">
-                            <tbody>        
+                            <tbody>
                                 <tr>
                                     <th colspan="4" >Documentación NO Vencida</th>
                                 </tr>
                                 <tr>
                                     <td colspan="4">
                                         @if ($noVencidas_sn)
-                                          SI  
+                                          SI
                                         @else
-                                          NO  
-                                        @endif                                        
+                                          NO
+                                        @endif
                                     </td>
-                                </tr>   
+                                </tr>
                                 <tr>
                                    <th colspan="4">Tipo equipamiento</th>
                                 </tr>
                                 <tr>
-                                    <td colspan="4"> 
+                                    <td colspan="4">
                                          @if ($tipo_equipamiento)
                                              {{$tipo_equipamiento->codigo}}
                                          @else
                                              TODOS
                                          @endif
                                      </td>
-                                </tr>                                        
+                                </tr>
                             </tbody>
                         </table>
                     </td>
                 </tr>
             </tbody>
-        </table>          
-        @include('reportes.partial.linea-amarilla')    
+        </table>
+        @include('reportes.partial.linea-amarilla')
 
     </header>
 
@@ -161,23 +161,23 @@ footer {
                 </tr>
             </tbody>
         </table>
-    </footer> 
-        
+    </footer>
+
     <main>
         <table width="100%" class="bordered">
             <thead>
                <tr>
                     <th style="font-size: 10px;width: 40px;">Método</th>
-                    <th style="font-size: 10px;width: 40px;"><b>N° Int</b></th>         
+                    <th style="font-size: 10px;width: 40px;"><b>N° Int</b></th>
                     <th style="font-size: 10px;width: 60px;">N° Serie</th>
                     <th style="font-size: 10px;width: 100px;">Modelo</th>
-                    <th style="font-size: 10px;width: 190px;">Tipo equipamiento</th>               
-                    <th style="font-size: 10px;width: 150px;">Usuario</th>               
+                    <th style="font-size: 10px;width: 190px;">Tipo equipamiento</th>
+                    <th style="font-size: 10px;width: 150px;">Usuario</th>
                     <th style="font-size: 10px;width: 80px;">Fecha vencimiento</th>
                     <th style="font-size: 10px;">Doc.</th>
                 </tr>
             </thead>
-            
+
             <tbody>
 
                 {{ $cantFilasTotal = count($data) }}
@@ -193,17 +193,17 @@ footer {
                         <td style="font-size: 10px;"><span class="@if ($item->vencida_sn) vencidas @elseif($item->cant_notificaciones) notificaciones @endif"> {{ $item->tipo_equipamiento_codigo }}</span></td>
                         <td style="font-size: 10px;"><span class="@if ($item->vencida_sn) vencidas @elseif($item->cant_notificaciones) notificaciones @endif"> {{ $item->name }}</span></td>
                         <td style="font-size: 10px;"><span class="@if ($item->vencida_sn) vencidas @elseif($item->cant_notificaciones) notificaciones @endif"> {{ $item->fecha_cad_formateada }}</span></td>
-                        <td style="font-size: 10px;"><span class="@if ($item->vencida_sn) vencidas @elseif($item->cant_notificaciones) notificaciones @endif"> 
+                        <td style="font-size: 10px;"><span class="@if ($item->vencida_sn) vencidas @elseif($item->cant_notificaciones) notificaciones @endif">
                             @if ($item->path)
-                                 <a href="{{ URL::to('/') . '/' . $item->path }}" target="_blank"><img src="{{ public_path('img/fa-file-pdf.png')}}" alt="" style="height: 12px;margin-left:3px;;margin-top:2px;text-align: center;"></a>                                                       
-                            @else 
+                                 <a href="{{ URL::to('/') . '/' . $item->path }}" target="_blank"><img src="{{ public_path('img/fa-file-pdf.png')}}" alt="" style="height: 12px;margin-left:3px;;margin-top:2px;text-align: center;"></a>
+                            @else
                                 &nbsp;
                             @endif
 
                         </span></td></tr>
 
-                @endforeach                
-    
+                @endforeach
+
 {{--                 @for ( $x=0 ;  $x < $filasACompletar ; $x++)
                     <tr>
                         <td style="font-size: 10px;"><span>{{$filasACompletar}}-{{$cantFilasTotal}}</span></td>
@@ -215,7 +215,7 @@ footer {
                     </tr>
                 @endfor --}}
             </tbody>
-        </table>    
+        </table>
     </main>
 
 <script type="text/php">

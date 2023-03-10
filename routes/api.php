@@ -225,6 +225,9 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::put('informes/{id}/firmar', 'InformesController@firmar');
     Route::put('informes/{id}/cambiar_numero', 'InformesController@cambiarNumero');
     Route::put('informes/{id}/clonar', 'InformesController@clonar');
+    Route::put('informes/{id}/anular', 'InformesController@anular');
+    Route::put('informes/{id}/desanular', 'InformesController@desanular');
+
     Route::get(
         'informes/ot/{ot_id}/pendientes_parte_diario',
         'InformesController@OtInformesPendienteParteDiario'
@@ -234,7 +237,7 @@ Route::group(['middleware' => 'auth:api'], function () {
         'InformesController@OtInformesPendienteEditableParteDiario'
     );
     Route::get(
-        'informes/ot/{ot_id}/obra/{obra}/componente/{componente}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}',
+        'informes/ot/{ot_id}/obra/{obra}/componente/{componente}/pk/{pk}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}',
         'InformesController@getInformesEstadisticasSoldaduras'
     );
     Route::get(

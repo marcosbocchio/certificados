@@ -6,6 +6,7 @@
 
     <estadisticas-soldaduras
             :user= "{{ $user }}"
+            :ot_prop= "{{ $ot_prop === null ? 'null' : $ot_prop }}"
     ></estadisticas-soldaduras>
 
     </div>

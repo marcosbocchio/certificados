@@ -211,7 +211,7 @@
             <ul class="treeview-menu">
 
               @can('R_estadisticas_soldaduras')
-                  <li><a href="{{ route('reporte-estadisticas-soldaduras') }}">Estadísticas soldaduras</a></li>
+                  <li><a href="{{ route('reporte-estadisticas-soldaduras','0') }}">Estadísticas soldaduras</a></li>
               @endcan
 
               @can('R_interno_equipos')
@@ -219,7 +219,7 @@
               @endcan
 
               @can('R_costuras')
-                   <li><a href="{{ route('reporte-costuras') }}">Costuras</a></li>
+                   <li><a href="{{ route('reporte-costuras','0') }}">Costuras</a></li>
               @endcan
 
               @can('R_placas')

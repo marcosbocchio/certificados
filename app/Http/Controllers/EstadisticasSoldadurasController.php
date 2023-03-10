@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Ots;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -18,12 +19,13 @@ class EstadisticasSoldadurasController extends Controller
 
     }
 
-    public function callView(){
+    public function callView($ot_id){
 
         $user = auth()->user();
+        $ot_prop = Ots::with('cliente')->find($ot_id);
         $header_titulo = "Reporte";
         $header_descripcion ="Análisis de rechazo y defectología";
-        return view('soldadores.estadisticas_soldaduras',compact('user','header_titulo','header_descripcion'));
+        return view('soldadores.estadisticas_soldaduras',compact('user','ot_prop','header_titulo','header_descripcion'));
 
     }
     /* TAB  INDICES DE RECHAZOS*/

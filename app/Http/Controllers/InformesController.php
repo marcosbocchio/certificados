@@ -435,7 +435,20 @@ class InformesController extends Controller
         return $clonar;
 
     }
+    public function anular($id){
 
+        $informe = Informe::find($id);
+        $informe->anulado_sn = 1;
+        $informe->save();
+
+    }
+    public function desanular($id){
+
+        $informe = Informe::find($id);
+        $informe->anulado_sn = 0;
+        $informe->save();
+
+    }
     public function getObraInforme($informe_id,$importado_sn){
 
 
@@ -464,7 +477,7 @@ class InformesController extends Controller
 
      }
 
-    public function getInformesEstadisticasSoldaduras($ot_id,$obra,$componente,$fecha_desde,$fecha_hasta){
+    public function getInformesEstadisticasSoldaduras($ot_id,$obra,$componente,$pk,$fecha_desde,$fecha_hasta){
 
         if($obra == 'null'){
             $obra = '';
@@ -473,7 +486,9 @@ class InformesController extends Controller
         if($componente == 'null'){
             $componente = '';
         }
-
+        if($pk == 'null'){
+            $pk = '';
+        }
         if($fecha_desde == 'null'){
             $fecha_desde =  date('2000-01-01');
         }
@@ -488,6 +503,7 @@ class InformesController extends Controller
                             ->where('ot_id',$ot_id)
                             ->whereRaw("componente LIKE '%" . $componente . "%'")
                             ->Obra($obra)
+                            ->Pk($pk)
                             ->where('importable_sn',0)
                             ->whereBetween('fecha',[$fecha_desde,$fecha_hasta])
                             ->get();

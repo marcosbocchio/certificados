@@ -76,14 +76,16 @@
                                     <th class="col-lg-1">Tipo</th>
                                     <th class="col-lg-2">N°</th>
                                     <th class="col-lg-1">Nº Rev.</th>
-                                    <th class="col-lg-1">Obra</th>
+                                    <th class="col-lg-2
+                                    ">Obra</th>
                                     <th class="col-lg-3">Usuario alta</th>
                                     <th class="col-lg-2">Fecha</th>
+                                    <th class="col-lg-2" style="text-align: center;">Anulado</th>
                                     <th class="col-lg-2" colspan="5">&nbsp;</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(ot_informe,k) in ot_informes.data" @click="selectPosTabla(k)" :key="k" :class="{selected: indexPosTabla === k}">
+                                <tr v-for="(ot_informe,k) in ot_informes.data" @click="selectPosTabla(k)" :key="k"  :class="{selected: indexPosTabla === k}">
                                     <td>
                                         {{ot_informe.metodo}}
                                     </td>
@@ -133,36 +135,43 @@
                                     <td> {{ot_informe.obra}}</td>
                                     <td> {{ot_informe.name}}</td>
                                     <td> {{ot_informe.fecha_formateada}}</td>
+                                    <td style="text-align: center;"><app-icon v-show="ot_informe.anulado_sn === 1" img="check" color="black"></app-icon></td>
                                     <td v-if="!ot_informe.importable_sn" width="10px">
-                                        <button  @click.prevent="VerificarRevision(ot_informe)" class="btn btn-warning btn-sm" title="Editar" :disabled="!$can('T_informes_edita')"><span class="fa fa-edit"></span></button>
+                                        <button  @click.prevent="VerificarRevision(ot_informe)" class="btn btn-warning btn-sm" title="Editar" :disabled="!$can('T_informes_edita')||ot_informe.anulado_sn === 1"><span class="fa fa-edit"></span></button>
                                     </td>
                                     <td v-else width="10px">
-                                        <button @click.prevent="EditInformeImportable(ot_informe.id)" class="btn btn-warning btn-sm" title="Editar" :disabled="!$can('T_informes_edita')"><span class="fa fa-edit"></span></button>
+                                        <button @click.prevent="EditInformeImportable(ot_informe.id)" class="btn btn-warning btn-sm" title="Editar" :disabled="!$can('T_informes_edita')||ot_informe.anulado_sn === 1"><span class="fa fa-edit"></span></button>
                                     </td>
 
                                     <td v-if="!ot_informe.importable_sn" width="10px">
-                                        <button @click="confirmarClanacion(k)" class="btn btn-default btn-sm" title="Clonar" :disabled="!$can('T_informes_edita')"><app-icon img="clone" color="black"></app-icon></button>
+                                        <button @click="confirmarClanacion(k)" class="btn btn-default btn-sm" title="Clonar" :disabled="!$can('T_informes_edita')||ot_informe.anulado_sn === 1"><app-icon img="clone" color="black"></app-icon></button>
                                     </td>
                                     <td v-if="ot_informe.metodo == 'RI'">
-                                        <a :href="'/placas/informe/' + ot_informe.id" class="btn btn-default btn-sm" title="Digitalización"><img width="16px" :src="'/img/carestream.ico'"></a>
+                                        <a :href="'/placas/informe/' + ot_informe.id" class="btn btn-default btn-sm" :disabled="ot_informe.anulado_sn === 1" title="Digitalización"><img width="16px" :src="'/img/carestream.ico'"></a>
                                     </td>
                                     <td v-if="ot_informe.metodo == 'US'">
-                                        <a :href="'/placas/informe/' + ot_informe.id" class="btn btn-default btn-sm" title="Digitalización"><img width="16px" :src="'/img/IconoUS.ico'"></a>
+                                        <a :href="'/placas/informe/' + ot_informe.id" class="btn btn-default btn-sm" :disabled="ot_informe.anulado_sn === 1" title="Digitalización"><img width="16px" :src="'/img/IconoUS.ico'"></a>
                                     </td>
                                     <td v-if="ot_informe.metodo == 'RD'">
-                                        <a :href="'/placas/informe/' + ot_informe.id" class="btn btn-default btn-sm" title="Digitalización"><img width="16px" :src="'/img/carestream.ico'"></a>
+                                        <a :href="'/placas/informe/' + ot_informe.id" class="btn btn-default btn-sm" :disabled="ot_informe.anulado_sn === 1" title="Digitalización"><img width="16px" :src="'/img/carestream.ico'"></a>
                                     </td>
                                     <td v-if="!ot_informe.importable_sn" width="10px"> <a :href="'/pdf/informe/' + ot_informe.id " target="_blank"  class="btn btn-default btn-sm" title="Informe"><span class="fa fa-file-pdf-o"></span></a></td>
                                     <td v-else><a :href="'/' + ot_informe.path " target="_blank" title="Informe" class="btn btn-default btn-sm"><span class="fa fa-file-pdf-o"></span></a></td>
                                     <td v-if="!ot_informe.importable_sn" width="10px">
-                                        <button @click="informesEscaneados(ot_informe.id)" :disabled="!$can('T_informes_edita')" class="btn btn-default btn-sm" title="Informes escaneados"><span class="fa fa-cloud-upload"></span></button>
+                                        <button @click="informesEscaneados(ot_informe.id)" :disabled="!$can('T_informes_edita')||ot_informe.anulado_sn === 1" class="btn btn-default btn-sm" title="Informes escaneados"><span class="fa fa-cloud-upload"></span></button>
                                     </td>
                                     <td v-if="!ot_informe.firma && !ot_informe.importable_sn" width="10px">
-                                        <button @click="confirmarfirma(k)" class="btn btn-default btn-sm" title="Firmar" :disabled="!Permitefirmar(ot_informe.metodo)"><span class="glyphicon glyphicon-pencil"></span></button>
+                                        <button @click="confirmarfirma(k)" class="btn btn-default btn-sm" title="Firmar" :disabled="!Permitefirmar(ot_informe.metodo)||ot_informe.anulado_sn === 1"><span class="glyphicon glyphicon-pencil"></span></button>
                                     </td>
                                     <td v-else-if="!ot_informe.importable_sn"><a class="btn btn-default btn-sm" title="Firmado"><img width="16px" :src="'/img/firma.png'"></a></td>
                                     <td>
-                                        <button class="btn btn-default btn-sm" title="Revisiones" v-on:click.prevent="RevisionesInforme(ot_informe)"><span class="fa fa-table"></span></button>
+                                        <button class="btn btn-default btn-sm" title="Revisiones" :disabled="ot_informe.anulado_sn === 1" v-on:click.prevent="RevisionesInforme(ot_informe)"><span class="fa fa-table"></span></button>
+                                    </td>
+                                    <td v-if="ot_informe.anulado_sn !== 1" width="10px">
+                                        <button @click="confirmarAnulacion(k)" class="btn btn-default btn-sm" title="Anular" :disabled="!$can('T_informes_edita')"><app-icon img="remove" color="black"></app-icon></button>
+                                    </td>
+                                    <td v-else width="10px">
+                                        <button @click="confirmarDesanulacion(k)" class="btn btn-default btn-sm" title="Desanular" :disabled="!$can('T_informes_edita')"><app-icon img="check" color="black"></app-icon></button>
                                     </td>
                                 </tr>
 
@@ -263,6 +272,12 @@ export default {
                     break;
                 case 'firmar':
                     this.firmar();
+                    break;
+                case 'anular':
+                    this.anularInforme();
+                    break;
+                case 'desanular':
+                    this.desanularInforme();
                     break;
                 default:
                     break;
@@ -374,6 +389,64 @@ export default {
         confirmarClanacion : function(k){
             this.index_informe = k;
             eventModal.$emit('abrir_confirmar_accion','Está seguro que quiere clonar el informe N° ' + this.ot_informes.data[this.index_informe].numero_formateado + ' ?','clonar' );
+
+        },
+        confirmarAnulacion : function(k){
+            this.index_informe = k;
+            eventModal.$emit('abrir_confirmar_accion','Está seguro que quiere anular el informe N° ' + this.ot_informes.data[this.index_informe].numero_formateado + ' ?','anular' );
+
+        },
+        confirmarDesanulacion : function(k){
+            this.index_informe = k;
+            eventModal.$emit('abrir_confirmar_accion','Está seguro que quiere desanular el informe N° ' + this.ot_informes.data[this.index_informe].numero_formateado + ' ?','desanular' );
+
+        },
+        async desanularInforme (){
+
+          this.loading_table = true;
+          axios.defaults.baseURL = this.url ;
+          var urlRegistros = 'informes/' + this.ot_informes.data[this.index_informe].id + '/desanular';
+          await axios.put(urlRegistros).then(response => {
+                this.getResults();
+                this.ContarInformes();
+                toastr.success('El Informe N° ' + this.ot_informes.data[this.index_informe].numero_formateado + ' fue anulado con exito');
+            }).catch(error => {
+                this.errors = error.response.data.errors;
+                $.each( this.errors, function( key, value ) {
+                    toastr.error(value);
+                    console.log( key + ": " + value );
+                });
+
+                    if((typeof(this.errors)=='undefined') && (error)){
+
+                    toastr.error("Ocurrió un error al procesar la solicitud");
+
+            }
+            }).finally(()=> { this.loading_table = false;});
+
+        },
+        async anularInforme (){
+
+          this.loading_table = true;
+          axios.defaults.baseURL = this.url ;
+          var urlRegistros = 'informes/' + this.ot_informes.data[this.index_informe].id + '/anular';
+          await axios.put(urlRegistros).then(response => {
+                this.getResults();
+                this.ContarInformes();
+                toastr.success('El Informe N° ' + this.ot_informes.data[this.index_informe].numero_formateado + ' fue anulado con exito');
+            }).catch(error => {
+                this.errors = error.response.data.errors;
+                $.each( this.errors, function( key, value ) {
+                    toastr.error(value);
+                    console.log( key + ": " + value );
+                });
+
+                    if((typeof(this.errors)=='undefined') && (error)){
+
+                    toastr.error("Ocurrió un error al procesar la solicitud");
+
+            }
+            }).finally(()=> { this.loading_table = false;});
 
         },
 

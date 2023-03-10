@@ -23,7 +23,15 @@ class InformesView extends Model
         }
 
     }
+    public function scopePk($query,$pk){
 
+        if($pk) {
+
+           $query->Where('km',$pk);
+
+        }
+
+    }
     public function scopeFiltro($query, $filtro='') {
 
         if (trim($filtro) != '') {

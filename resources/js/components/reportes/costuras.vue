@@ -188,7 +188,9 @@ export default {
         type : Object,
         required : true,
       },
-
+      ot_prop : {
+        type : Object,
+      },
     },
     data() { return {
             cliente:'',
@@ -214,17 +216,22 @@ export default {
         }
     },
 
-   mounted() {
-
-          this.$store.dispatch('loadClientesOperador',this.user.id).then(response => {
-             if(this.clientesOperador.length == 1){
-                 this.cliente = this.clientesOperador[0];
-                 this.CambioCliente();
-                 this.selCliente = !this.selCliente;
-             }
-         });
-
-   },
+   async mounted() {
+       await this.$store.dispatch('loadClientesOperador',this.user.id);
+        if(this.ot_prop){
+            let index = this.clientesOperador.findIndex(e => e.id == this.ot_prop.cliente.id);
+            this.cliente = this.clientesOperador[index]
+            await this.CambioCliente();
+            this.selCliente = !this.selCliente;
+            console.log(this.ots)
+            let indexOt = this.ots.findIndex(e => e.id == this.ot_prop.id);
+            console.log(indexOt)
+            this.ot = this.ots[indexOt]
+            this.CambioOt();
+            this.selOt = !this.selOt;
+        }
+        console.log(this.cliente)
+    },
 
    computed :{
 
@@ -250,9 +257,10 @@ methods : {
 
 
     },
+    clienteProp: async function () {
 
+    },
     async CambioCliente (){
-
         this.selCliente = !this.selCliente;
         this.ot = '';
         this.soldador = '';

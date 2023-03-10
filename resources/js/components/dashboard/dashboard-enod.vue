@@ -175,10 +175,7 @@
                                         <th class="col-lg-1">Fecha</th>
                                         <th class="col-lg-1">Estado</th>
                                         <th class="col-lg-1" colspan="4">
-                                        <small style="margin-left: -2px;">Exp. Doc.</small>
-                                        <small style="margin-left: 4px;">Editar</small>
-                                        <small style="margin-left: 4px;">Informe</small>
-                                        <small style="margin-left: 4px;">Acción</small>
+                                        Acciones
                                         </th>
                                     </tr>
                                 </thead>
@@ -191,6 +188,17 @@
                                         <td> {{ot.fecha_formateada}}</td>
                                         <td> {{ot.estado}}</td>
 
+                                        <div>
+                                          <div class="dropdown">
+                                            <button class="btn btn-default dropdown-toggle btn-sm" type="button" id="reportDropdown" data-toggle="dropdown" aria-haspopup="true" style="margin-top: 5px;" aria-expanded="false">
+                                              <span class="glyphicon glyphicon-stats"></span>
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="reportDropdown">
+                                              <li><a :href="'/area/enod/reportes/estadisticas-soldaduras/ot_id/' + ot.id" target="_blank">Reporte estadísticas soldaduras</a></li>
+                                              <li><a :href="'/area/enod/reportes/costuras/ot_id/' + ot.id" target="_blank">Reporte Costuras</a></li>
+                                            </ul>
+                                          </div>
+                                        </div>
                                         <td width="10px">
                                         <button class="btn btn-default btn-sm" title="Generar link de documentación" @click="ExportarDocumentacionOt(ot.id)" :disabled="!$can('T_exportar_documentacion')">
                                             <span class="fa fa-cloud-upload">
@@ -204,7 +212,6 @@
                                             </span>
                                         </button>
                                         </td>
-
                                         <td width="10px"> <a :href="'/pdf/ot/' + ot.id " target="_blank"  class="btn btn-default btn-sm" title="Informe"><span class="fa fa-file-pdf-o"></span></a></td>
 
                                         <td width="10px">

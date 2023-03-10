@@ -56,6 +56,9 @@
                             </div>
                             <v-select v-show="selComponente" v-model="componente" label="componente" :options="componentes" @input="CambioComponente()"></v-select>
                         </li>
+                        <li class="list-group-item pointer">
+                             <input type="number"  v-model="pk" class="form-control" id="plano" placeholder="PK">
+                        </li>
                         <li class="list-fecha list-group-item pointer">
                             <div class="row">
                                 <div class="col-sm-12 col-md-12 col-lg-6">
@@ -579,6 +582,9 @@ export default {
         type : Object,
         required : true,
       },
+      ot_prop : {
+        type : Object,
+      },
     },
 
     data() { return {
@@ -587,6 +593,7 @@ export default {
         es: es,
         cliente:'',
         ots:[],
+        pk : null,
         ot:'',
         obras:[],
         obra:'',
@@ -733,15 +740,21 @@ export default {
 
     },
 
-    created: function () {
-         this.$store.dispatch('loadClientesOperador',this.user.id).then(response => {
-             if(this.clientesOperador.length == 1){
-                 this.cliente = this.clientesOperador[0];
-                 this.CambioCliente();
-                 this.selCliente = !this.selCliente;
-             }
-         });
-         this.$store.dispatch('loadColores');
+    async mounted() {
+        await this.$store.dispatch('loadClientesOperador',this.user.id);
+        if(this.ot_prop){
+            let index = this.clientesOperador.findIndex(e => e.id == this.ot_prop.cliente.id);
+            this.cliente = this.clientesOperador[index]
+            await this.CambioCliente();
+            this.selCliente = !this.selCliente;
+            console.log(this.ots)
+            let indexOt = this.ots.findIndex(e => e.id == this.ot_prop.id);
+            console.log(indexOt)
+            this.ot = this.ots[indexOt]
+            this.CambioOt();
+            this.selOt = !this.selOt;
+        }
+        this.$store.dispatch('loadColores');
     },
 
    computed :{
@@ -1127,7 +1140,7 @@ methods : {
 
     try {
 
-        let url = 'informes/ot/' + this.ot.id  + '/obra/' + (this.obra !='' ? this.obra.obra.replace('/','--') : 'null') + '/componente/' + (this.componente !='' ? this.componente.componente.replace('/','--') : 'null')  + '/fecha_desde/' + this.fecha_desde + '/fecha_hasta/' + this.fecha_hasta + '?api_token=' + Laravel.user.api_token;
+        let url = 'informes/ot/' + this.ot.id  + '/obra/' + (this.obra !='' ? this.obra.obra.replace('/','--') : 'null') + '/componente/' + (this.componente !='' ? this.componente.componente.replace('/','--') : 'null') + '/pk/' + (this.pk ? this.pk : 'null' ) + '/fecha_desde/' + this.fecha_desde + '/fecha_hasta/' + this.fecha_hasta + '?api_token=' + Laravel.user.api_token;
         let res = await axios.get(url);
         this.informes = res.data;
         this.informes_ids = this.informes.map(item => item.id).toString();
