@@ -9,8 +9,9 @@
 <style>
 
     @page {
-        margin: 217px 15px 150px 15px !important;
+        margin: 217px 15px 50px 15px !important;
         padding: 0px 0px 0px 0px !important;
+        height: 100%;
        }
     header {
     position:fixed;
@@ -182,10 +183,6 @@ footer {
 
             <tbody>
 
-                {{ $cantFilasTotal = count($data) }}
-                {{ $filasPage = 53 }}
-                {{ $filasACompletar = pdfCantFilasACompletar($filasPage,$cantFilasTotal) }}
-
                 @foreach ($data as $item )
                     <tr>
                         <td style="font-size: 10px;"><span class="@if ($item->vencida_sn) vencidas @elseif($item->cant_notificaciones) notificaciones @endif"> {{ $item->metodo }}</span></td>
@@ -205,19 +202,7 @@ footer {
                             @endif
 
                         </span></td></tr>
-
                 @endforeach
-
-{{--                 @for ( $x=0 ;  $x < $filasACompletar ; $x++)
-                    <tr>
-                        <td style="font-size: 10px;"><span>{{$filasACompletar}}-{{$cantFilasTotal}}</span></td>
-                        <td style="font-size: 10px;"><span>&nbsp;</span></td>
-                        <td style="font-size: 10px;"><span>&nbsp;</span></td>
-                        <td style="font-size: 10px;"><span>&nbsp;</span></td>
-                        <td style="font-size: 10px;"><span>&nbsp;</span></td>
-                        <td style="font-size: 10px;"><span>&nbsp;</span></td>
-                    </tr>
-                @endfor --}}
             </tbody>
         </table>
     </main>
