@@ -749,13 +749,15 @@
                      </div>
                      <div class="col-md-2">
 
-                         <label>Cuño Z</label>
-                         <v-select v-model="soldador1" :options="soldadores" label="codigo" :disabled="(!TablaDetalle.length)">
+                         <label>Cuño P</label>
+
+                         <v-select v-model="soldador3" :options="soldadores" label="codigo" :disabled="(!TablaDetalle.length)">
                              <template slot="option" slot-scope="option">
                                  <span class="upSelect">{{ option.nombre }} </span> <br>
                                  <span class="downSelect"> {{ option.codigo }} </span>
                              </template>
                          </v-select>
+
                      </div>
                      <div v-if="isGasoducto">
                          <div class="col-md-2">
@@ -773,15 +775,13 @@
 
                      <div class="col-md-2">
 
-                         <label>Cuño P</label>
-
-                         <v-select v-model="soldador3" :options="soldadores" label="codigo" :disabled="(!TablaDetalle.length)">
+                         <label>Cuño Z</label>
+                         <v-select v-model="soldador1" :options="soldadores" label="codigo" :disabled="(!TablaDetalle.length)">
                              <template slot="option" slot-scope="option">
                                  <span class="upSelect">{{ option.nombre }} </span> <br>
                                  <span class="downSelect"> {{ option.codigo }} </span>
                              </template>
                          </v-select>
-
                      </div>
 
                       <div class="col-md-2">
@@ -806,9 +806,9 @@
                                              <tr>
                                                  <th class="col-md-2">Elemento</th>
                                                  <th class="col-md-1">N° Pasada</th>
-                                                 <th class="col-md-3">Cuño Z</th>
-                                                 <th class="col-md-3">Cuño L</th>
                                                  <th class="col-md-3">Cuño P</th>
+                                                 <th class="col-md-3">Cuño L</th>
+                                                 <th class="col-md-3">Cuño Z</th>
                                                  <th>&nbsp;</th>
                                              </tr>
                                          </thead>
@@ -818,7 +818,7 @@
                                                  <td v-if="Pasada.elemento_pasada == elemento_pasada">{{ Pasada.pasada }}</td>
                                                  <td v-if="Pasada.elemento_pasada == elemento_pasada">
                                                      <div v-if="indexPasada == k">
-                                                         <v-select v-model="TablaPasadas[indexPasada].soldador1" :options="soldadores" label="codigo">
+                                                         <v-select v-model="TablaPasadas[indexPasada].soldador3" :options="soldadores" label="codigo">
                                                              <template slot="option" slot-scope="option">
                                                                  <span class="upSelect">{{ option.nombre }} </span> <br>
                                                                  <span class="downSelect"> {{ option.codigo }} </span>
@@ -826,7 +826,7 @@
                                                          </v-select>
                                                      </div>
                                                      <div v-else>
-                                                         {{ Pasada.soldador1.codigo }}
+                                                         {{ Pasada.soldador3.codigo }}
                                                      </div>
                                                  </td>
                                                  <td v-if="Pasada.elemento_pasada == elemento_pasada">
@@ -844,7 +844,7 @@
                                                  </td>
                                                  <td v-if="Pasada.elemento_pasada == elemento_pasada">
                                                      <div v-if="indexPasada == k ">
-                                                         <v-select v-model="TablaPasadas[indexPasada].soldador3" :options="soldadores" label="codigo">
+                                                         <v-select v-model="TablaPasadas[indexPasada].soldador1" :options="soldadores" label="codigo">
                                                              <template slot="option" slot-scope="option">
                                                                  <span class="upSelect">{{ option.nombre }} </span> <br>
                                                                  <span class="downSelect"> {{ option.codigo }} </span>
@@ -852,7 +852,7 @@
                                                          </v-select>
                                                      </div>
                                                      <div v-else>
-                                                        {{ Pasada.soldador3.codigo }}
+                                                        {{ Pasada.soldador1.codigo }}
                                                      </div>
                                                  </td>
                                                  <td v-if="Pasada.elemento_pasada == elemento_pasada">
@@ -1343,8 +1343,8 @@ import { eventSetReferencia } from '../event-bus';
                 this.linea = this.informedata.linea;
                 this.plano_isom = this.informedata.plano_isom;
                 this.hoja = this.informedata.hoja;
-                this.diametro = (this.diametro_espesordata['id'] !== 'undefined' && !(this.diametro_espesordata instanceof  Array)) ? this.diametro_espesordata : { 'diametro' : this.informedata.diametro_especifico };                
-                this.espesor = this.informedata.espesor_especifico ? {'espesor' : this.informedata.espesor_especifico} : this.diametro_espesordata;                
+                this.diametro = (this.diametro_espesordata['id'] !== 'undefined' && !(this.diametro_espesordata instanceof  Array)) ? this.diametro_espesordata : { 'diametro' : this.informedata.diametro_especifico };
+                this.espesor = this.informedata.espesor_especifico ? {'espesor' : this.informedata.espesor_especifico} : this.diametro_espesordata;
                 if (!(this.diametrodata instanceof  Array)) {
                     this.getEspesores(this.diametrodata.diametro_code);
                     Object.defineProperty(this.diametro,'diametro_code',{ value: this.diametrodata.diametro_code})
@@ -1612,7 +1612,7 @@ import { eventSetReferencia } from '../event-bus';
 
                     }).finally(() => { this.$store.commit('loading', false); });
                 }
-            }else{         
+            }else{
                 if(this.tecnica && this.diametro && this.espesor){
                     this.$store.commit('loading', true);
                     var urlRegistros = 'tecnica_distancias/tecnica/' + this.tecnica.id + '/diametro/'+ this.diametro.diametro_code + '/espesor/' + this.espesor.espesor + '/foco/' + foco + '?api_token=' + Laravel.user.api_token;

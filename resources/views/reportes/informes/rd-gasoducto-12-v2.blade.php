@@ -87,7 +87,7 @@ footer {
                     <td style="font-size: 11px;" colspan="6" class="bordered-td"><b>Observaciones: </b>
                         @if($informe->numero_offline)
                             Referencia : {{ $informe->numero_offline}} /
-                        @endif                            
+                        @endif
                         {{$informe->observaciones}}
                 </td>
             </tr>
@@ -118,9 +118,8 @@ footer {
                 <td style="font-size: 11px; text-align: center;"  class="bordered-td" >Pk</td>
                 <td style="font-size: 11px; text-align: center;"  class="bordered-td" >Elem.</td>
                 <td style="font-size: 11px; text-align: center;"  class="bordered-td" >Tipo</td>
-                <td style="font-size: 11px; width:28px;  text-align: center;" class="bordered-td">Z</td>
+                <td style="font-size: 11px; width:28px;  text-align: center;" class="bordered-td">P</td>
                 <td style="font-size: 11px; width:28px;  text-align: center;" class="bordered-td">L</td>
-                <td style="font-size: 11px; width:28px;  text-align: center;" class="bordered-td">P</td>
                 <td style="font-size: 11px; width:28px;  text-align: center;" class="bordered-td">Z</td>
                 <td style="font-size: 11px; width:28px;  text-align: center;" class="bordered-td">P</td>
                 <td style="font-size: 11px; width:28px;  text-align: center;" class="bordered-td">Z</td>
@@ -131,6 +130,7 @@ footer {
                 <td style="font-size: 11px; width:28px;  text-align: center;" class="bordered-td">P</td>
                 <td style="font-size: 11px; width:28px;  text-align: center;" class="bordered-td">Z</td>
                 <td style="font-size: 11px; width:28px;  text-align: center;" class="bordered-td">P</td>
+                <td style="font-size: 11px; width:28px;  text-align: center;" class="bordered-td">Z</td>
                 <td style="font-size: 11px;  text-align: center;" class="bordered-td" >Posición</td>
                 <td style="font-size: 11px;  text-align: center;" class="bordered-td" ><span class="EspecialCaracter">ρ</span></td>
                 <td style="font-size: 11px;  text-align: center;" class="bordered-td" >Tipo</td>
@@ -259,7 +259,7 @@ footer {
 
                         @if (($pasadas_junta->junta_id == $junta_posiciones->id) && ($pasadas_junta->numero == 1 ))
 
-                            <td style="font-size: 9px;width:39px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorz}} </td>
+                            <td style="font-size: 9px;width:39px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorp}} </td>
                             {{  $x = 1 }}
 
                         @endif
@@ -275,7 +275,7 @@ footer {
                         @if (($pasadas_junta->junta_id == $junta_posiciones->id) && ($pasadas_junta->numero == 1 ))
 
 
-                            <td style="font-size: 9px;width:37px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorp}} </td>
+                            <td style="font-size: 9px;width:37px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorz}} </td>
 
 
                         @endif
@@ -301,7 +301,7 @@ footer {
 
                             {{  $x = 1 }}
 
-                            <td style="font-size: 9px; width:36.8px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorz}} </td>
+                            <td style="font-size: 9px; width:36.8px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorp}} </td>
 
 
                         @endif
@@ -310,7 +310,7 @@ footer {
                         @if (($pasadas_junta->junta_id == $junta_posiciones->id) && ($pasadas_junta->numero == 2 ))
 
 
-                            <td style="font-size: 9px; width:36.8px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorp}} </td>
+                            <td style="font-size: 9px; width:36.8px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorz}} </td>
 
 
                         @endif
@@ -332,7 +332,7 @@ footer {
                         @if (($pasadas_junta->junta_id == $junta_posiciones->id) && ($pasadas_junta->numero == 3 ))
 
                             {{  $x = 1 }}
-                            <td style="font-size: 9px;width:36.7px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorz}} </td>
+                            <td style="font-size: 9px;width:36.7px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorp}} </td>
 
 
                         @endif
@@ -340,7 +340,7 @@ footer {
                         @if (($pasadas_junta->junta_id == $junta_posiciones->id) && ($pasadas_junta->numero == 3 ))
 
 
-                            <td style="font-size: 9px;width:36.7px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorp}} </td>
+                            <td style="font-size: 9px;width:36.7px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorz}} </td>
 
 
                         @endif
@@ -362,7 +362,7 @@ footer {
                         @if (($pasadas_junta->junta_id == $junta_posiciones->id) && ($pasadas_junta->numero == 4 ))
 
                             {{  $x = 1 }}
-                                <td style="font-size: 9px;  width:36.7px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorz}} </td>
+                                <td style="font-size: 9px;  width:36.7px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorp}} </td>
 
 
                         @endif
@@ -371,7 +371,7 @@ footer {
                         @if (($pasadas_junta->junta_id == $junta_posiciones->id) && ($pasadas_junta->numero == 4 ))
 
 
-                            <td style="font-size: 9px;width:36.8px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorp}} </td>
+                            <td style="font-size: 9px;width:36.8px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorz}} </td>
 
 
                         @endif
@@ -393,7 +393,7 @@ footer {
                         @if (($pasadas_junta->junta_id == $junta_posiciones->id) && ($pasadas_junta->numero == 5 ))
 
                             {{  $x = 1 }}
-                            <td style="font-size:9px;width:36.7px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorz}} </td>
+                            <td style="font-size:9px;width:36.7px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorp}} </td>
 
 
                         @endif
@@ -402,7 +402,7 @@ footer {
                         @if (($pasadas_junta->junta_id == $junta_posiciones->id) && ($pasadas_junta->numero == 5 ))
 
 
-                            <td style="font-size:9px;width:36.7px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorp}} </td>
+                            <td style="font-size:9px;width:36.7px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorz}} </td>
 
 
                         @endif
@@ -424,7 +424,7 @@ footer {
                         @if (($pasadas_junta->junta_id == $junta_posiciones->id) && ($pasadas_junta->numero == 6 ))
 
                             {{  $x = 1 }}
-                            <td style="font-size: 9px;  width:37px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorz}} </td>
+                            <td style="font-size: 9px;  width:37px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorp}} </td>
 
 
                         @endif
@@ -433,7 +433,7 @@ footer {
                         @if (($pasadas_junta->junta_id == $junta_posiciones->id) && ($pasadas_junta->numero == 6 ))
 
 
-                            <td style="font-size: 9px;  width:37px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorp}} </td>
+                            <td style="font-size: 9px;  width:37px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorz}} </td>
 
 
                         @endif
@@ -469,7 +469,7 @@ footer {
 
                         @if (($pasadas_junta->junta_id == $junta_posiciones->id) && ($pasadas_junta->numero == 7 ))
 
-                             <td style="font-size: 9px;width:39px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorz}} </td>
+                             <td style="font-size: 9px;width:39px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorp}} </td>
                               {{  $x = 1 }}
 
                         @endif
@@ -482,7 +482,7 @@ footer {
 
                        @if (($pasadas_junta->junta_id == $junta_posiciones->id) && ($pasadas_junta->numero == 7 ))
 
-                             <td style="font-size: 9px;width:37px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorp}} </td>
+                             <td style="font-size: 9px;width:37px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorz}} </td>
 
                         @endif
 
@@ -507,14 +507,14 @@ footer {
 
                            {{  $x = 1 }}
 
-                             <td style="font-size: 9px; width:36.8px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorz}} </td>
+                             <td style="font-size: 9px; width:36.8px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorp}} </td>
 
                         @endif
 
 
                         @if (($pasadas_junta->junta_id == $junta_posiciones->id) && ($pasadas_junta->numero == 8 ))
 
-                             <td style="font-size: 9px; width:36.8px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorp}} </td>
+                             <td style="font-size: 9px; width:36.8px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorz}} </td>
 
                         @endif
 
@@ -535,13 +535,13 @@ footer {
                         @if (($pasadas_junta->junta_id == $junta_posiciones->id) && ($pasadas_junta->numero == 9 ))
 
                             {{  $x = 1 }}
-                            <td style="font-size: 9px;width:36.7px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorz}} </td>
+                            <td style="font-size: 9px;width:36.7px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorp}} </td>
 
                         @endif
 
                         @if (($pasadas_junta->junta_id == $junta_posiciones->id) && ($pasadas_junta->numero == 9 ))
 
-                             <td style="font-size: 9px;width:36.7px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorp}} </td>
+                             <td style="font-size: 9px;width:36.7px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorz}} </td>
 
                         @endif
 
@@ -562,14 +562,14 @@ footer {
                         @if (($pasadas_junta->junta_id == $junta_posiciones->id) && ($pasadas_junta->numero == 10 ))
 
                             {{  $x = 1 }}
-                             <td style="font-size: 9px;  width:36.7px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorz}} </td>
+                             <td style="font-size: 9px;  width:36.7px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorp}} </td>
 
                         @endif
 
 
                         @if (($pasadas_junta->junta_id == $junta_posiciones->id) && ($pasadas_junta->numero == 10 ))
 
-                             <td style="font-size: 9px;width:36.8px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorp}} </td>
+                             <td style="font-size: 9px;width:36.8px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorz}} </td>
 
                         @endif
 
@@ -590,14 +590,14 @@ footer {
                        @if (($pasadas_junta->junta_id == $junta_posiciones->id) && ($pasadas_junta->numero == 11 ))
 
                             {{  $x = 1 }}
-                            <td style="font-size:9px;width:36.7px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorz}} </td>
+                            <td style="font-size:9px;width:36.7px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorp}} </td>
 
                         @endif
 
 
                         @if (($pasadas_junta->junta_id == $junta_posiciones->id) && ($pasadas_junta->numero == 11 ))
 
-                             <td style="font-size:9px;width:36.7px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorp}} </td>
+                             <td style="font-size:9px;width:36.7px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorz}} </td>
 
                         @endif
 
@@ -618,14 +618,14 @@ footer {
                         @if (($pasadas_junta->junta_id == $junta_posiciones->id) && ($pasadas_junta->numero == 12 ))
 
                              {{  $x = 1 }}
-                             <td style="font-size: 9px;  width:37px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorz}} </td>
+                             <td style="font-size: 9px;  width:37px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorp}} </td>
 
                         @endif
 
 
                         @if (($pasadas_junta->junta_id == $junta_posiciones->id) && ($pasadas_junta->numero == 12 ))
 
-                             <td style="font-size: 9px;  width:37px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorp}} </td>
+                             <td style="font-size: 9px;  width:37px; text-align:center;" class="bordered-td">{{$pasadas_junta->soldadorz}} </td>
 
                         @endif
 

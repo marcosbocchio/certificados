@@ -748,13 +748,15 @@
                      </div>
                      <div class="col-md-2">
 
-                         <label>Cuño Z</label>
-                         <v-select v-model="soldador1" :options="soldadores" label="codigo" :disabled="(!TablaDetalle.length)">
+                         <label>Cuño P</label>
+
+                         <v-select v-model="soldador3" :options="soldadores" label="codigo" :disabled="(!TablaDetalle.length)">
                              <template slot="option" slot-scope="option">
                                  <span class="upSelect">{{ option.nombre }} </span> <br>
                                  <span class="downSelect"> {{ option.codigo }} </span>
                              </template>
                          </v-select>
+
                      </div>
                      <div v-if="isGasoducto">
                          <div class="col-md-2">
@@ -769,18 +771,15 @@
                              </v-select>
                          </div>
                      </div>
-
                      <div class="col-md-2">
 
-                         <label>Cuño P</label>
-
-                         <v-select v-model="soldador3" :options="soldadores" label="codigo" :disabled="(!TablaDetalle.length)">
+                         <label>Cuño Z</label>
+                         <v-select v-model="soldador1" :options="soldadores" label="codigo" :disabled="(!TablaDetalle.length)">
                              <template slot="option" slot-scope="option">
                                  <span class="upSelect">{{ option.nombre }} </span> <br>
                                  <span class="downSelect"> {{ option.codigo }} </span>
                              </template>
                          </v-select>
-
                      </div>
 
                       <div class="col-md-2">
@@ -805,9 +804,9 @@
                                              <tr>
                                                  <th class="col-md-2">Elemento</th>
                                                  <th class="col-md-1">N° Pasada</th>
-                                                 <th class="col-md-3">Cuño Z</th>
-                                                 <th class="col-md-3">Cuño L</th>
                                                  <th class="col-md-3">Cuño P</th>
+                                                 <th class="col-md-3">Cuño L</th>
+                                                 <th class="col-md-3">Cuño Z</th>
                                                  <th>&nbsp;</th>
                                              </tr>
                                          </thead>
@@ -817,7 +816,7 @@
                                                  <td v-if="Pasada.elemento_pasada == elemento_pasada">{{ Pasada.pasada }}</td>
                                                  <td v-if="Pasada.elemento_pasada == elemento_pasada">
                                                      <div v-if="indexPasada == k">
-                                                         <v-select v-model="TablaPasadas[indexPasada].soldador1" :options="soldadores" label="codigo">
+                                                         <v-select v-model="TablaPasadas[indexPasada].soldador3" :options="soldadores" label="codigo">
                                                              <template slot="option" slot-scope="option">
                                                                  <span class="upSelect">{{ option.nombre }} </span> <br>
                                                                  <span class="downSelect"> {{ option.codigo }} </span>
@@ -825,7 +824,7 @@
                                                          </v-select>
                                                      </div>
                                                      <div v-else>
-                                                         {{ Pasada.soldador1.codigo }}
+                                                         {{ Pasada.soldador3.codigo }}
                                                      </div>
                                                  </td>
                                                  <td v-if="Pasada.elemento_pasada == elemento_pasada">
@@ -843,7 +842,7 @@
                                                  </td>
                                                  <td v-if="Pasada.elemento_pasada == elemento_pasada">
                                                      <div v-if="indexPasada == k ">
-                                                         <v-select v-model="TablaPasadas[indexPasada].soldador3" :options="soldadores" label="codigo">
+                                                         <v-select v-model="TablaPasadas[indexPasada].soldador1" :options="soldadores" label="codigo">
                                                              <template slot="option" slot-scope="option">
                                                                  <span class="upSelect">{{ option.nombre }} </span> <br>
                                                                  <span class="downSelect"> {{ option.codigo }} </span>
@@ -851,7 +850,7 @@
                                                          </v-select>
                                                      </div>
                                                      <div v-else>
-                                                        {{ Pasada.soldador3.codigo }}
+                                                        {{ Pasada.soldador1.codigo }}
                                                      </div>
                                                  </td>
                                                  <td v-if="Pasada.elemento_pasada == elemento_pasada">
