@@ -2,9 +2,9 @@
     <tbody>
         <tr>
             <td style="font-size: 13px;" colspan="1"  rowspan="2"><b>Firmas </b></td>
-            <td style="font-size: 13px;text-align: center;height: 90px;" colspan="2" width="33.33%">
+            <td style="font-size: 13px;text-align: center;height: 85px;" colspan="2" width="33.33%">
                 @if($firma)
-                    <img src="{{ public_path($firma) }}" alt="" style="width: 180px;height: 90px;">
+                    <img src="{{ public_path($firma) }}" alt="" style="width: 175px;height: 85px;">
                 @endif
             </td>
             <td style="font-size: 13px;" colspan="2"  width="33.33%">&nbsp;</td>
