@@ -58,6 +58,9 @@ class PdfPartesController extends Controller
         $fecha = date('d-m-Y', strtotime($parte->fecha));
         $observaciones = $parte->observaciones;
         $tipo_reporte = 'PARTE Nº:';
+        $fechaFormateada = str_replace('-', '', $fecha);
+
+        $nombreArchivo = $nro . '-' . $fechaFormateada;
 
         $contratista = Contratistas::find($ot->contratista_id);
 
@@ -127,7 +130,7 @@ class PdfPartesController extends Controller
                                                             'estado',
                                                             'evaluador'
                                                                 ))->setPaper('a4','portrait')->setWarnings(false);
-        return $pdf->stream();
+        return $pdf->stream($nombreArchivo);
 
 
     }
