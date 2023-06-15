@@ -25,7 +25,7 @@ class ElementosController extends Controller
         $user = auth()->user();
         $ot_prop = Ots::with('cliente')->find($ot_id);
         $header_titulo = "Reporte";
-        $header_descripcion ="Seguimiento de costuras / Plano-isométrico";
+        $header_descripcion ="Seguimiento de elementos / Plano-isométrico";
         return view('elementos.elementos',compact('user','ot_prop','header_titulo','header_descripcion'));
 
     }

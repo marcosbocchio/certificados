@@ -60,7 +60,7 @@ class PdfPartesController extends Controller
         $tipo_reporte = 'PARTE Nº:';
         $fechaFormateada = str_replace('-', '', $fecha);
 
-        $nombreArchivo = $nro . '-' . $fechaFormateada;
+        $nombreArchivo = $nro . '-' . $fechaFormateada . '.pdf';
 
         $contratista = Contratistas::find($ot->contratista_id);
 
