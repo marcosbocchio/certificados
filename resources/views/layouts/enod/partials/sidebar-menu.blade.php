@@ -221,7 +221,9 @@
               @can('R_costuras')
                    <li><a href="{{ route('reporte-costuras','0') }}">Costuras</a></li>
               @endcan
-
+              @can('R_elementos')
+                   <li><a href="{{ route('reporte-elementos','0') }}">Elementos</a></li>
+              @endcan
               @can('R_placas')
                    <li><a href="{{ route('reporte-placas-repetidas-testigos') }}">Placas</a></li>
               @endcan
