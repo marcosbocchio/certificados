@@ -33,9 +33,8 @@ class ElementosController extends Controller
     public function  getElementos($ot_id,$plano,$elemento,$obra){
 
         $obra = $obra == 'null' ? '' : str_replace('--','/',$obra);
-
-        $plano = $plano == 'null' ? '' : $plano;
-        $elemento = $elemento == 'null' ? '' : $elemento;
+        $plano = $plano == 'null' ? '' : str_replace('--','/',$plano);
+        $elemento = $elemento == 'null' ? '' : str_replace('--','/',$elemento);
 
         $page = Input::get('page', 1);
         Log::debug($page);

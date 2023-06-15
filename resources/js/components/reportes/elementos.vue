@@ -208,7 +208,7 @@ methods : {
      this.TablaElementos = {};
 
     try {
-        let url = 'elementos/ot/' + this.ot.id  + '/plano/' + (this.plano ? this.plano : 'null') + '/elemento/' + (this.elemento ? this.elemento : 'null') + '/obra/' + (this.obra !='' ? this.obra.obra.replace('/','--') : 'null') + '?page='+ page + '&api_token=' + Laravel.user.api_token;
+        let url = 'elementos/ot/' + this.ot.id  + '/plano/' + (this.plano ? this.plano.replace('/','--') : 'null') + '/elemento/' + (this.elemento ? this.elemento.replace('/','--') : 'null') + '/obra/' + (this.obra !='' ? this.obra.obra.replace('/','--') : 'null') + '?page='+ page + '&api_token=' + Laravel.user.api_token;
         let res = await axios.get(url);
         this.TablaElementos = res.data;
 
