@@ -193,9 +193,10 @@
                                             <button class="btn btn-default dropdown-toggle btn-sm" type="button" id="reportDropdown" data-toggle="dropdown" aria-haspopup="true" style="margin-top: 5px;" aria-expanded="false">
                                               <span class="glyphicon glyphicon-stats"></span>
                                             </button>
-                                            <ul class="dropdown-menu" aria-labelledby="reportDropdown">
+                                            <ul class="dropdown-menu custom-dropdown-menu" aria-labelledby="reportDropdown">
                                               <li><a :href="'/area/enod/reportes/estadisticas-soldaduras/ot_id/' + ot.id" target="_blank">Reporte estadísticas soldaduras</a></li>
                                               <li><a :href="'/area/enod/reportes/costuras/ot_id/' + ot.id" target="_blank">Reporte Costuras</a></li>
+                                              <li><a :href="'/area/enod/reportes/elementos/ot_id/' + ot.id" target="_blank">Reporte Elementos</a></li>
                                             </ul>
                                           </div>
                                         </div>
@@ -569,5 +570,7 @@ export default {
         margin-top:10px;
     }
   }
-
+.custom-dropdown-menu {
+  margin-top: -65px; /* Ajusta este valor según sea necesario */
+}
 </style>

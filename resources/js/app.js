@@ -297,6 +297,7 @@ Vue.component('form-documentos-escaneados', require('./components/dashboard/docu
 /* Reportes */
 Vue.component('estadisticas-soldaduras', require('./components/reportes/estadisticas-soldaduras.vue').default);
 Vue.component('costuras', require('./components/reportes/costuras.vue').default);
+Vue.component('elementos', require('./components/reportes/elementos.vue').default);
 Vue.component('placas', require('./components/reportes/placas.vue').default);
 Vue.component('reporte-certificados', require('./components/reportes/reporte-certificados.vue').default);
 Vue.component('reporte-resumen-certificado', require('./components/reportes/reporte-resumen-certificado.vue').default);

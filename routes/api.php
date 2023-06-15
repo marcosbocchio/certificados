@@ -652,7 +652,11 @@ Route::group(['middleware' => 'auth:api'], function () {
         'costuras/ot/{ot_id}/pk/{pk}/plano/{plano}/costura/{costura}/rechazados/{rechazados}/reparaciones/{reparaciones}/soldador/{soldador_id}/obra/{obra}/componente/{componente}',
         'CosturasController@getCosturas'
     );
-
+    // REPORTE ELEMENTOS
+    Route::get(
+        'elementos/ot/{ot_id}/plano/{plano}/elemento/{elemento}/obra/{obra}',
+        'ElementosController@getElementos'
+    );
     // Placas
     Route::get(
         'reporte-placas/cliente/{cliente_id}/ot/{ot_id}/obra/{obra}/fecha_desde/{fecha_desde}/fecha_hasta/{fecha_hasta}/total',
