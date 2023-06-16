@@ -150,7 +150,6 @@ class PartesController extends Controller
         }
 
     }
-
     public function saveResponsables($responsables, $parte){
 
           $parte_id = $parte->id;
@@ -158,20 +157,9 @@ class PartesController extends Controller
                 $ot_operarios = ParteOperadores::where('parte_id',$parte_id)->get();
 
                 foreach ($ot_operarios as $ot_operario) {
-                  $existe = false;
-                    foreach ($responsables as $responsable) {
-
-                        if( ($ot_operario['user_id'] == $responsable['user']['id'])){
-                          $existe = true;
-                        }
-
-                    }
-
-                  if (!$existe){
                     ParteOperadores::where('parte_id',$parte_id)
                                     ->where('user_id',$ot_operario['user_id'])
                                     ->delete();
-                    }
                 }
 
                foreach ( $responsables as $responsable) {
