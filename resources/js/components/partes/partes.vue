@@ -126,23 +126,17 @@
                         </div>
                     </div>
                     <div class="box-body">
-                        <div class="col-md-3">
-                            <div class="form-group" >
-                                <label for="km_final">Operador </label>
-                                <v-select type="text" v-model="operador" id="responsable" label="name" :options="operadores" @input="setResponsabilidad()"></v-select>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group" >
-                                <label for="responsabilidad">Responsabilidad </label>
-                                <input type="text" v-model="responsabilidad" class="form-control" id="responsabilidad">
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for="km_final">Operador</label>
+                                    <v-select multiple v-model="operadoresSelect" multiselect label="name" :options="operadores"></v-select>
                             </div>
                         </div>
                         <div class="col-md-1">
                             <div class="form-group">
                                  <p>&nbsp;</p>
                                 <span>
-                                  <button type="button" @click="addResponsable(operador.id)"><span class="fa fa-plus-circle"></span></button>
+                                  <button type="button" @click="agregarOperadores()"><span class="fa fa-plus-circle"></span></button>
                                 </span>
                             </div>
                         </div>
@@ -160,7 +154,14 @@
                                     <tbody>
                                         <tr v-for="(item,k) in TablaResponsables" :key="k">
                                             <td> {{ item.user.name}}</td>
-                                            <td> {{ item.responsabilidad}}</td>
+                                            <td  @click="selectPosResponsabilidad(k)">
+                                                <div v-if="indexDetalle == k ">
+                                                    <input type="text" v-model="TablaResponsables[k].responsabilidad" maxlength="20">
+                                                </div>
+                                                <div v-else>
+                                                    {{ item.responsabilidad }}
+                                                </div>
+                                            </td>
                                             <td style="text-align:center"> <a  @click="RemoveResponsable(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a></td>
                                         </tr>
                                     </tbody>
@@ -933,10 +934,11 @@ import DatePicker from 'vue2-datepicker';
 import 'vue2-datepicker/index.css';
 import 'vue2-datepicker/locale/es';
 import moment from 'moment';
+import Multiselect from 'vue-multiselect';
 
 export default {
     components: {
-
+        Multiselect,
     },
 
     props :{
@@ -1040,7 +1042,7 @@ export default {
     data (){return{
 
         errors:[],
-
+        indexDetalle:-1,
         obra:'',
         fecha:'',
         permitir_anteriores_sn: false,
@@ -1056,7 +1058,7 @@ export default {
 
         operador:'',
         operadores:[],
-
+        operadoresSelect:[],
         vehiculo:'',
         TablaVehiculos:[],
 
@@ -1140,7 +1142,9 @@ export default {
      },
 
     methods : {
-
+         selectPosResponsabilidad :function(index){
+            this.indexDetalle = index ;
+         },
         deshabilitarInformes : function(fecha_informe,obra_informe,informe_sel){
 
             if(informe_sel){
@@ -1223,13 +1227,9 @@ export default {
 
         },
 
-        setResponsabilidad : function() {
-
-            if(this.operador){
-
-                this.responsabilidad = (this.operador.ayudante_sn == 1) ? 'AYUDANTE' : 'OPERADOR' ;
-
-            }
+        setResponsabilidad : function(operador) {
+            console.log('llega',operador)
+            this.responsabilidad = (operador.ayudante_sn == 1) ? 'AYUDANTE' : 'OPERADOR';
         },
 
         getOperadoresOt: function(){
@@ -1821,33 +1821,28 @@ export default {
            this.TablaVehiculos.splice(index, 1);
            this.RecalcularKms();
         },
-
-        addResponsable(id) {
-
-            if(!this.operador){
+        agregarOperadores() {
+            this.operadoresSelect.forEach((item) => {
+                console.log(item);
+                this.addResponsable(item);
+                });
+        },
+        addResponsable(operador) {
+            console.log('llega addResponsable',operador)
+            if(!operador){
                 toastr.error("El campo operador es obligatorio");
                  return;
             }
 
-            if(!this.responsabilidad){
-                toastr.error("El campo responsabilidad es obligatorio");
-                return;
-            }
+            if(!this.existeResponsable(operador.id)){
+                this.TablaResponsables.push({
+                    user : operador,
+                    responsabilidad  : (operador.ayudante_sn == 1) ? 'AYUDANTE' : 'OPERADOR',
 
-            if(this.existeResponsable(id)){
+                    });
+                this.operador= '' ;
 
-                toastr.error('El responsable existe en el parte');
-                return;
-            }
-
-            this.TablaResponsables.push({
-                user :this.operador,
-                responsabilidad  : this.responsabilidad,
-
-                });
-            this.operador='';
-            this.responsabilidad ='';
-
+                }
             },
 
         RemoveResponsable(index) {
