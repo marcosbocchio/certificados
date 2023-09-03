@@ -237,6 +237,8 @@ class DocumentacionesController extends Controller
                                                     ot_servicios.ot_id = ot_operarios.ot_id )) and
                                                     ot_operarios.ot_id = ? and
                                                     ot_operarios.user_id= ?',array($ot_id,$user_id))
+                                        ->where('visible_sn', 1)
+                                        ->WhereRaw("date(documentaciones.fecha_caducidad) > curdate()")
                                         ->get();
 
        // $documentacion = Collection::make($documentacion);
