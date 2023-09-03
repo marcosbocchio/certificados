@@ -29,8 +29,8 @@ class Documentaciones extends Model
     public function internoEquipo(){
 
         $instance =  $this->belongsToMany('App\InternoEquipos','App\InternoEquipoDocumentaciones','documentacion_id','interno_equipo_id')->withPivot([
-            'certificado_verificacion_sn',          
-        ]);  
+            'certificado_verificacion_sn',
+        ]);
         return $instance;
     }
 
@@ -55,8 +55,8 @@ class Documentaciones extends Model
 
         return $this->belongsToMany('App\User','App\InternoEquipoDocumentaciones','documentacion_id','interno_equipo_user_id');
 
-     }        
-    
+     }
+
     public function scopeVencido($query,$vencido_sn){
 
         if($vencido_sn) {
@@ -73,14 +73,14 @@ class Documentaciones extends Model
         if (trim($filtro)  && !trim($tipo)) {
 
             $query->WhereDoesntHave('internoEquipo', function ($q) {
-                $q->WhereRaw("interno_equipos.activo_sn = 0");                
-            })   
+                $q->WhereRaw("interno_equipos.activo_sn = 0");
+            })
                     ->WhereDoesntHave('vehiculo', function ($q) {
-                        $q->WhereRaw("vehiculos.habilitado_sn = 0");                
-                    })  
+                        $q->WhereRaw("vehiculos.habilitado_sn = 0");
+                    })
 
                     ->WhereRaw("documentaciones.titulo LIKE '%" . $filtro . "%'")
-                    ->orWhereRaw("documentaciones.descripcion LIKE '%" . $filtro . "%'")               
+                    ->orWhereRaw("documentaciones.descripcion LIKE '%" . $filtro . "%'")
 
                     ->orWhereHas('metodoEnsayo', function ($q) use($filtro) {
                         $q->WhereRaw("metodo_ensayos.metodo LIKE '%" . $filtro . "%'");
@@ -89,10 +89,10 @@ class Documentaciones extends Model
                     ->orWhereHas('usuario', function ($q) use($filtro) {
                         $q->WhereRaw("users.name LIKE '%" . $filtro . "%'");
                     })
-                    
+
                     ->orWhereHas('userInternoEquipo', function ($q) use($filtro) {
                         $q->WhereRaw("users.name LIKE '%" . $filtro . "%'");
-                    })   
+                    })
 
                     ->orWhereHas('internoEquipo', function ($q) use($filtro) {
                         $q->WhereRaw("interno_equipos.nro_interno LIKE '%" . $filtro . "%' AND interno_equipos.activo_sn = 1");
@@ -111,10 +111,10 @@ class Documentaciones extends Model
             $query ->where("documentaciones.tipo",$tipo)
                     ->WhereDoesntHave('internoEquipo', function ($q) {
                         $q->WhereRaw("interno_equipos.activo_sn = 0");
-                    })     
+                    })
                     ->WhereDoesntHave('vehiculo', function ($q) {
-                        $q->WhereRaw("vehiculos.habilitado_sn = 0");                
-                    })                                  
+                        $q->WhereRaw("vehiculos.habilitado_sn = 0");
+                    })
                     ->where(function($q) use($filtro) {
 
                         $q->WhereRaw("documentaciones.titulo LIKE '%" . $filtro . "%'")
@@ -128,7 +128,7 @@ class Documentaciones extends Model
                         })
                         ->orWhereHas('userInternoEquipo', function ($q) use($filtro) {
                             $q->WhereRaw("users.name LIKE '%" . $filtro . "%'");
-                        })                          
+                        })
                         ->orWhereHas('internoEquipo', function ($q) use($filtro) {
                             $q->WhereRaw("interno_equipos.nro_interno LIKE '%" . $filtro . "%' AND interno_equipos.activo_sn = 1");
                         })
@@ -142,21 +142,21 @@ class Documentaciones extends Model
         }
         elseif (trim($tipo)) {
 
-            $query->WhereRaw("documentaciones.tipo = '" .  $tipo ."'" )   
+            $query->WhereRaw("documentaciones.tipo = '" .  $tipo ."'" )
                     ->WhereDoesntHave('internoEquipo', function ($q) {
                         $q->WhereRaw("interno_equipos.activo_sn = 0");
                     })->WhereDoesntHave('vehiculo', function ($q) {
                         $q->WhereRaw("vehiculos.habilitado_sn = 0");
-                    });                          
+                    });
         } else {
 
             $query->WhereDoesntHave('internoEquipo', function ($q) {
                     $q->WhereRaw("interno_equipos.activo_sn = 0");
                 })->WhereDoesntHave('vehiculo', function ($q) {
                     $q->WhereRaw("vehiculos.habilitado_sn = 0");
-                });     
+                });
         }
-    
+
         return $query;
 }
 

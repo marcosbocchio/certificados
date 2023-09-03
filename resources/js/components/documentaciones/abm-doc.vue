@@ -112,10 +112,14 @@
                                  <h4 class="modal-title">Crear</h4>
                             </div>
                         </div>
+                        <div class="box-tools">
+                            <label for="checkbox" style="margin-left: 520px;">Visible</label>
+                            <input class="pointer" type="checkbox" id="checkbox" v-model="newRegistro.visible_sn" style="float: right; margin-top: 5px; margin-right: 15px;">
+                        </div>
                         <div class="modal-body">
                             <div v-if="modelo == 'ot_procedimientos_propios'">
                                 <div class="form-group">
-                                    <label  for="tipo">Tipo Documento *</label>                                                       
+                                    <label  for="tipo">Tipo Documento *</label>
                                     <input type="text" id="tipo" class="form-control" v-model="newRegistro.tipo" disabled>
                                 </div>
                             </div>
@@ -144,7 +148,7 @@
                                     <label for="titulo">Título *</label>
                                     <template v-if="newRegistro.tipo == 'EQUIPO'">
                                       <input type="checkbox" id="checkbox" v-model="certificado_verificacion_sn" style="float:right">
-                                      <label for="tipo" style="float:right;margin-right: 5px;">Certificado de verificación</label>                                    
+                                      <label for="tipo" style="float:right;margin-right: 5px;">Certificado de verificación</label>
                                     </template>
                                     <input type="text" name="titulo" class="form-control" v-model="newRegistro.titulo" value="" @change="VerificarDuplicado()" maxlength="25">
                                 </div>
@@ -168,11 +172,11 @@
 
                             <div v-if="newRegistro.tipo == 'EQUIPO'">
                                 <div class="form-group">
-                                    <label for="name">Tipo Equipamiento</label>    
+                                    <label for="name">Tipo Equipamiento</label>
                                     <input v-if="interno_equipo.equipo.tipo_equipamiento" disabled type="text" name="tipo_equipamiento" class="form-control" v-model="interno_equipo.equipo.tipo_equipamiento.codigo">
                                     <input v-else disabled type="text" name="tipo_equipamiento" class="form-control" value=""/>
                                 </div>
-                            </div>                            
+                            </div>
 
                             <div v-if="newRegistro.tipo == 'EQUIPO'">
                                 <div class="form-group">
@@ -343,6 +347,7 @@ export default {
             descripcion  : '',
             path : '',
             fecha_caducidad:'',
+            visible_sn: 1,
          },
          certificado_verificacion_sn: false,
          isLoading: false,
@@ -466,6 +471,7 @@ export default {
                 descripcion  : '',
                 path : '',
                 fecha_caducidad:'',
+                visible_sn: 1,
                 };
         }else{
             this.newRegistro = {
@@ -474,6 +480,7 @@ export default {
                 descripcion  : '',
                 path : '',
                 fecha_caducidad:'',
+                visible_sn: 1,
                 };
         }
         this.$refs.inputFile1.type = 'text';
@@ -493,7 +500,8 @@ export default {
         if(this.newRegistro.tipo == 'PROCEDIMIENTO'){
 
             var urlRegistros = this.modelo + '/ot/' + this.otdata.id + '?page='+ page + '&search=' + this.search ;
-
+            console.log(urlRegistros);
+            console.log('es aca')
             this.$store.dispatch('loadContarProcedimientos',this.otdata.id);
 
         }else{
@@ -652,6 +660,7 @@ export default {
 
             'tipo'                         : this.newRegistro.tipo,
             'titulo'                       : this.newRegistro.titulo,
+            'visible_sn'                   : this.newRegistro.visible_sn,
             'descripcion'                  : this.newRegistro.descripcion,
             'usuario'                      : this.usuario,
             'tipo_documento_usuario'       : this.tipo_documento_usuario,
@@ -697,6 +706,7 @@ export default {
 
             'tipo'                        : this.newRegistro.tipo,
             'titulo'                      : this.newRegistro.titulo,
+            'visible_sn'                  : this.newRegistro.visible_sn,
             'descripcion'                 : this.newRegistro.descripcion,
             'usuario'                     : this.usuario,
             'tipo_documento_usuario'      : this.tipo_documento_usuario,
@@ -744,7 +754,7 @@ export default {
           },
 
     editRegistro : function(registro){
-       
+
         this.editmode = true;
         this.HabilitarGuardar = true;
         this.newRegistro = {};

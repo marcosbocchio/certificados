@@ -3,6 +3,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\DocumentacionesRequest;
 use App\Repositories\Documentaciones\DocumentacionesRepository;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use App\Documentaciones;
 use App\Notificaciones;
 use App\UsuarioDocumentaciones;
@@ -41,14 +43,14 @@ class DocumentacionesController extends Controller
      */
     public function index(Request $request)
     {
-
+        Log::debug("es aqui");
         $filtro = $request->search == 'null' ? '' : $request->search;;
         $tipo = $request->tipo == 'null' ? '' : $request->tipo;
         $vencido_sn =  $request->vencido_sn == 'true' ? true : false;
 
         DB::enableQueryLog();
 
-        $documentaciones = Documentaciones::leftJoin('usuario_documentaciones','usuario_documentaciones.documentacion_id','=','documentaciones.id')
+        $query = Documentaciones::leftJoin('usuario_documentaciones','usuario_documentaciones.documentacion_id','=','documentaciones.id')
                                             ->orWhere('documentaciones.tipo','USUARIO')
                                             ->orWhere('documentaciones.tipo','OT')
                                             ->orWhere('documentaciones.tipo','INSTITUCIONAL')
@@ -68,9 +70,18 @@ class DocumentacionesController extends Controller
                                             ->vencido($vencido_sn)
                                             ->selectRaw('documentaciones.*')
                                             ->orderBy('documentaciones.tipo','ASC')
-                                            ->orderBy('documentaciones.id','DESC')
-                                            ->paginate(10);
-                                            
+                                            ->orderBy('documentaciones.id','DESC');
+         $user = Auth::user();
+         Log::debug(Auth::user()->can('ver_no_visibles'));
+
+         if (!$user->can('ver_no_visible')) {
+            Log::debug("no debería tener el permiso");
+            // Si el usuario no tiene el permiso "ver_no_visibles", filtra por visible_sn igual a 1.
+            $query->where('visible_sn', 1);
+            $query->WhereRaw("date(documentaciones.fecha_caducidad) > curdate()");
+        }
+         $documentaciones = $query->paginate(10);
+
         // $documentacion = Collection::make($documentacion);
        $queries = DB::getQueryLog();
        foreach($queries as $i=>$query)
@@ -147,7 +158,7 @@ class DocumentacionesController extends Controller
      */
     public function store(DocumentacionesRequest $request)
     {
-
+        Log::debug($request);
         return $this->documentaciones->store($request);
 
     }
@@ -352,7 +363,7 @@ class DocumentacionesController extends Controller
      */
     public function update(DocumentacionesRequest $request, $id)
     {
-      
+
        return $this->documentaciones->updateDocumentacion($request,$id);
 
 
