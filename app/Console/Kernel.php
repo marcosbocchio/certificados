@@ -5,6 +5,7 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\ZipController;
 
 class Kernel extends ConsoleKernel
 {
@@ -26,9 +27,12 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
       {
             // $schedule->command('command:task_date')->everyMinute();
+            $schedule->command('command:task_date')
+                     ->monthly()
+                     ->at('02:00');
             $schedule->command('command:VencimientosDocumentaciones')->dailyAt(config('cron.time_cron_documentaciones'));
             $schedule->command('command:DemoraCargaDosimetria')->dailyAt(config('cron.time_cron_dosimetria'));
-
+            
         }
 
     /**

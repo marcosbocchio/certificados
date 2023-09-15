@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Storage;
 use Str;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
+use ZipArchive;
+use Illuminate\Support\Facades\Response;
 
 class ZipController extends Controller
 {
@@ -64,4 +66,57 @@ class ZipController extends Controller
 
     }
 
+    public function generarYDescargarZip()
+    {
+        DB::beginTransaction();
+
+        try {
+            $documentos = DB::select('CALL getDocumentosZip()');
+            $tempFolderName = 'temp_' . time();
+            $zipFileName = 'DocumentosSakatsunA.zip';
+            $zipFilePath = Storage::makeDirectory(public_path('documentos-zip-general/'.$zipFileName));
+    
+            $zip = new ZipArchive;
+
+            if ($zip->open($zipFilePath, ZipArchive::CREATE | ZipArchive::OVERWRITE) === true) {
+                foreach ($documentos as $documento) {
+                    $tipo = $documento->tipo;
+                    $codigo = $documento->codigo;
+                    $nombreArchivo = $documento->nombre_archivo;
+                    $path = public_path($documento->path);
+                    $extension = pathinfo($path, PATHINFO_EXTENSION);
+    
+                    
+                    if (!$zip->addEmptyDir($tipo)) {
+                        
+                    }
+    
+                    // Crear una subcarpeta con el "codigo" bajo el "tipo"
+                    if (!$zip->addEmptyDir($tipo . '/' . $codigo)) {
+                        
+                    }
+    
+                    // Obtener el nombre del archivo con la extensión
+                    $nombreConExtension = $nombreArchivo . '.' . $extension;
+    
+                    // Agregar el archivo a la subcarpeta con el "nombre_archivo" como nombre
+                    $zip->addFile($path, $tipo . '/' . $codigo . '/' . $nombreConExtension);
+                }
+    
+                $zip->close();
+            } else {
+                DB::rollback();
+                return response()->json(['message' => 'No se pudo crear el archivo ZIP'], 500);
+            }
+
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+
+        // Devuelve la URL del archivo ZIP creado
+        // return response()->json(['message' => 'No se pudo crear el archivo ZIP'], 500);
+        return Response::download($zipFilePath, $zipFileName);
+    }
 }

@@ -313,6 +313,7 @@ Route::group(['middleware' => 'auth:api'], function () {
         'DocumentacionesController@DocumentacionesDeOt'
     );
     Route::post('documentacion/generar_link', 'ZipController@generarLink');
+    
 
     Route::get(
         'documentaciones/total',
