@@ -26,10 +26,12 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
       {
-            // $schedule->command('command:task_date')->everyMinute();
-            $schedule->command('command:task_date')
-                     ->monthly()
-                     ->at('02:00');
+            $schedule->command('command:task_date')->everyMinute();
+            //$schedule->command('command:generarZip')
+                     //->monthly()
+                     //->at('02:00');
+            $schedule->command('command:generarZip')
+                     ->everyFiveMinutes();
             $schedule->command('command:VencimientosDocumentaciones')->dailyAt(config('cron.time_cron_documentaciones'));
             $schedule->command('command:DemoraCargaDosimetria')->dailyAt(config('cron.time_cron_dosimetria'));
             
