@@ -190,7 +190,7 @@ Route::group(['middleware' => ['auth']], function () {
       Route::get('/area/enod/plantas', 'PlantasController@index')->name('plantas');
 
       /** testeo sergio ___ */
-      Route::get('/test_zip', 'ZipController@generarYDescargarZip');
+      Route::get('/generar_zip', 'ZipController@generarYDescargarZip');
     });
 
 Route::resource('personas_web', 'PersonaController');
