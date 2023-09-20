@@ -121,7 +121,7 @@ class ZipController extends Controller
     public function descargarZip()
     {
         $zipFileName = 'ZipDocumentacion.zip';
-        $zipFilePath = storage_path('app/public/documentos-zip-general/' . $zipFileName);
+        $zipFilePath = public_path('storage/documentos-zip-general/'.$zipFileName);
 
         if (file_exists($zipFilePath)) {
             return response()->download($zipFilePath, $zipFileName);
