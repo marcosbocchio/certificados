@@ -118,5 +118,16 @@ class ZipController extends Controller
         //return Storage::put('ruta_en_el_servidor/'.$zipFileName, file_get_contents($zipFilePath));    
 
     }
+    public function descargarZip()
+    {
+        $zipFileName = 'ZipDocumentacion.zip';
+        $zipFilePath = Storage::path(public_path('storage/documentos-zip-general/'.$zipFileName));
+
+        if (file_exists($zipFilePath)) {
+            return response()->download($zipFilePath, $zipFileName);
+        } else {
+            return response()->json(['message' => 'El archivo ZIP no existe'], 404);
+        }
+    }
 
 }
