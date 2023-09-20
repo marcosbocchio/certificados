@@ -72,7 +72,7 @@ class ZipController extends Controller
             $documentos = DB::select('CALL getDocumentosZip()');
             $tempFolderName = 'temp_' . time();
             $zipFileName = 'ZipDocumentacion.zip';
-            $zipFilePath = public_path('storage/documentos-zip-general/'.$zipFileName);
+            $zipFilePath = Storage::makeDirectory(public_path('storage/documentos-zip-general/'.$zipFileName));
     
             $zip = new ZipArchive;
 
@@ -113,8 +113,8 @@ class ZipController extends Controller
             throw $e;
         }
         
-        return Log::debug("Esto se ejecuto como tarea automatica, guardo el zip : " . date("F j, Y, g:i a"));;
-        //return Response::download($zipFilePath, $zipFileName);
+        //return Log::debug("Esto se ejecuto como tarea automatica, guardo el zip : " . date("F j, Y, g:i a"));;
+        return Response::download($zipFilePath, $zipFileName);
         //return Storage::put('ruta_en_el_servidor/'.$zipFileName, file_get_contents($zipFilePath));    
 
     }
