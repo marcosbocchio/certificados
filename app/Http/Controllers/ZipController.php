@@ -114,13 +114,13 @@ class ZipController extends Controller
         }
 
         // Copia el archivo ZIP a la ubicación
-        Storage::disk('public')->copy($zipFilePath, 'storage/zips/' . $zipFileName);
+        Storage::disk('public')->put('storage/zips/' . $zipFileName, file_get_contents($zipFilePath));
 
         // Puedes devolver la URL pública del archivo ZIP almacenado
         $url = asset('storage/zips/' . $zipFileName);
 
-        return response()->json(['message' => 'Archivo ZIP creado y almacenado correctamente.', 'url' => $url], 200);
-        //return Log::debug("Esto se ejecuto como tarea automatica, guardo el zip : " . date("F j, Y, g:i a"));;
+        //return response()->json(['message' => 'Archivo ZIP creado y almacenado correctamente.', 'url' => $url], 200);
+        return Log::debug("Esto se ejecuto como tarea automatica, guardo el zip : " . date("F j, Y, g:i a"));;
         //return Response::download($zipFilePath, $zipFileName);
         //return Storage::put('ruta_en_el_servidor/'.$zipFileName, file_get_contents($zipFilePath));    
 
