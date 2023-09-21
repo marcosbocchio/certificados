@@ -67,6 +67,7 @@ class ZipController extends Controller
     }
     public function generarYDescargarZip(){
         DB::beginTransaction();
+        Log::debug("este es el zip entro a la parte superior del generar : " . date("F j, Y, g:i a"));
 
         try {
             $documentos = DB::select('CALL getDocumentosZip()');

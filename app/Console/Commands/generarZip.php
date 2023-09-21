@@ -45,6 +45,7 @@ class generarZip extends Command
      */
     public function handle()
     {
+        Log::debug("este es el zip entro al handle : " . date("F j, Y, g:i a"));
         $zipController = new ZipController();
         $zipController->generarYDescargarZip();
     }
