@@ -73,8 +73,8 @@ class ZipController extends Controller
             $documentos = DB::select('CALL getDocumentosZip()');
             $zipFileName = 'general.zip';
             $zipFilePath = 'storage/zips/'.$zipFileName;
-    
             $zip = new ZipArchive;
+            $zip = $zip->make(public_path($zipFilePath));
 
             if ($zip->open($zipFilePath, ZipArchive::CREATE | ZipArchive::OVERWRITE) === true) {
                 foreach ($documentos as $documento) {
@@ -100,6 +100,7 @@ class ZipController extends Controller
                     // Agregar el archivo a la subcarpeta con el "nombre_archivo" como nombre
                     $zip->addFile($path, $tipo . '/' . $codigo . '/' . $nombreConExtension);
                 }
+                Log::debug("ruta:". $zipFilePath);
                 $zip->close();
             }
 
