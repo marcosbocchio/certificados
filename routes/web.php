@@ -191,7 +191,7 @@ Route::group(['middleware' => ['auth']], function () {
 
       /** testeo sergio ___ */
       Route::get('/generar_zip', 'ZipController@generarYDescargarZip');
-      Route::get('/descargar_zip', 'ZipController@descargarZip')->name('descargar-zip');
+      //Route::get('/descargar_zip', 'ZipController@descargarZip')->name('descargar-zip');
 
     });
 
