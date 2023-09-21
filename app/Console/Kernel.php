@@ -33,7 +33,6 @@ class Kernel extends ConsoleKernel
                      //->at('02:00');
             $schedule->command('command:generarZip')
                      ->everyMinute();
-
             $schedule->command('command:VencimientosDocumentaciones')->dailyAt(config('cron.time_cron_documentaciones'));
             $schedule->command('command:DemoraCargaDosimetria')->dailyAt(config('cron.time_cron_dosimetria'));
             

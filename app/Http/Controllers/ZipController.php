@@ -72,7 +72,7 @@ class ZipController extends Controller
         try {
             $documentos = DB::select('CALL getDocumentosZip()');
             $zipFileName = 'general.zip';
-            $zipFilePath = 'storage/zips/'. $zipFileName;
+            $zipFilePath = 'storage/zips/'.$zipFileName;
     
             $zip = new ZipArchive;
 
@@ -100,16 +100,13 @@ class ZipController extends Controller
                     // Agregar el archivo a la subcarpeta con el "nombre_archivo" como nombre
                     $zip->addFile($path, $tipo . '/' . $codigo . '/' . $nombreConExtension);
                 }
-    
                 $zip->close();
-            } else {
-                DB::rollback();
-                return response()->json(['message' => 'No se pudo crear el archivo ZIP'], 500);
             }
 
             DB::commit();
         } catch (Exception $e) {
             DB::rollback();
+            Log::debug("error: ". $e);
             throw $e;
         }
 
