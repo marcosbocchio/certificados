@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use Str;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
-
+use Chumper\Zipper\Zipper;
 use Illuminate\Support\Facades\Response;
 
 class ZipController extends Controller
@@ -65,24 +65,24 @@ class ZipController extends Controller
         return $url;
 
     }
-    use Chumper\Zipper\Zipper;
 
     public function generarYDescargarZip()
     {
         DB::beginTransaction();
-        Log::debug("Este es el zip, entró a la parte superior del generador: " . date("F j, Y, g:i a"));
+        Log::debug("Inicio de la generación del archivo ZIP: " . date("F j, Y, g:i a"));
 
         try {
             $documentos = DB::select('CALL getDocumentosZip');
             $zipFileName = 'general.zip';
             $zipFilePath = public_path('storage/zips/' . $zipFileName);
-
             $zip = new Zipper;
 
+            // Verificar si el archivo ZIP ya existe y eliminarlo si es necesario
             if ($zip->make($zipFilePath)->exists()) {
                 $zip->remove($zipFileName);
             }
 
+            // Recorrer la lista de documentos y agregarlos al archivo ZIP
             foreach ($documentos as $documento) {
                 $tipo = $documento->tipo;
                 $codigo = $documento->codigo;
@@ -90,16 +90,16 @@ class ZipController extends Controller
                 $path = public_path($documento->path);
                 $extension = pathinfo($path, PATHINFO_EXTENSION);
 
+                // Agregar el archivo al directorio correspondiente en el ZIP
                 $zip->folder($tipo . '/' . $codigo)->add($path, $nombreArchivo . '.' . $extension);
             }
 
             DB::commit();
-            Log::debug("Archivo ZIP creado y almacenado correctamente.");
-
-            return Response::download($zipFilePath, $zipFileName);
+            Log::debug("Archivo ZIP creado correctamente a las: " . date("F j, Y, g:i a"));
         } catch (Exception $e) {
+            // En caso de error, realizar un rollback en la base de datos
             DB::rollback();
-            Log::error("Error: " . $e);
+            Log::error("Error durante la generación del archivo ZIP: " . $e);
             throw $e;
         }
     }
