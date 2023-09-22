@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use Str;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
-use ZipArchive;
+
 use Illuminate\Support\Facades\Response;
 
 class ZipController extends Controller
@@ -65,24 +65,24 @@ class ZipController extends Controller
         return $url;
 
     }
+    use Chumper\Zipper\Zipper;
+
     public function generarYDescargarZip()
     {
-    DB::beginTransaction();
-    Log::debug("Iniciando la generación del ZIP: " . date("F j, Y, g:i a"));
+        DB::beginTransaction();
+        Log::debug("Este es el zip, entró a la parte superior del generador: " . date("F j, Y, g:i a"));
 
-    try {
-        // Obtener los documentos desde la base de datos o la fuente deseada (en tu caso, desde la función 'getDocumentosZip()')
-        $documentos = DB::select('CALL getDocumentosZip');
+        try {
+            $documentos = DB::select('CALL getDocumentosZip');
+            $zipFileName = 'general.zip';
+            $zipFilePath = public_path('storage/zips/' . $zipFileName);
 
-        // Nombre del archivo ZIP
-        $zipFileName = 'general.zip';
-        // Ruta completa del archivo ZIP en el sistema de archivos
-        $zipFilePath = 'storage/zips/' . $zipFileName;
+            $zip = new Zipper;
 
-        // Crear una instancia de ZipArchive
-        $zip = new ZipArchive;
-        // Intentar abrir el archivo ZIP para escritura y sobre escritura (si ya existe)
-        if ($zip->open($zipFilePath, ZipArchive::CREATE | ZipArchive::OVERWRITE) === true) {
+            if ($zip->make($zipFilePath)->exists()) {
+                $zip->remove($zipFileName);
+            }
+
             foreach ($documentos as $documento) {
                 $tipo = $documento->tipo;
                 $codigo = $documento->codigo;
@@ -90,40 +90,18 @@ class ZipController extends Controller
                 $path = public_path($documento->path);
                 $extension = pathinfo($path, PATHINFO_EXTENSION);
 
-                // Agregar directorios al archivo ZIP si no existen
-                if (!$zip->addEmptyDir($tipo)) {
-                    // Puedes agregar manejo de errores aquí si lo necesitas
-                }
-
-                if (!$zip->addEmptyDir($tipo . '/' . $codigo)) {
-                    // Puedes agregar manejo de errores aquí si lo necesitas
-                }
-
-                // Obtener el nombre del archivo con la extensión
-                $nombreConExtension = $nombreArchivo . '.' . $extension;
-
-                // Agregar el archivo al archivo ZIP dentro de la estructura de carpetas
-                $zip->addFile($path, $tipo . '/' . $codigo . '/' . $nombreConExtension);
+                $zip->folder($tipo . '/' . $codigo)->add($path, $nombreArchivo . '.' . $extension);
             }
-            
-            // Cerrar el archivo ZIP
-            $zip->close();
-        } else {
+
+            DB::commit();
+            Log::debug("Archivo ZIP creado y almacenado correctamente.");
+
+            return Response::download($zipFilePath, $zipFileName);
+        } catch (Exception $e) {
             DB::rollback();
-            return response()->json(['message' => 'No se pudo crear el archivo ZIP'], 500);
+            Log::error("Error: " . $e);
+            throw $e;
         }
-
-        DB::commit();
-    } catch (Exception $e) {
-        DB::rollback();
-        Log::error("Error en la generación del ZIP: " . $e->getMessage());
-        throw $e;
     }
 
-    // Devuelve una respuesta o realiza las acciones que necesites aquí
-    // En lugar de generar una descarga directa, este código simplemente registra la finalización de la tarea en el registro
-
-    Log::debug("ZIP generado y almacenado correctamente en: " . $zipFilePath);
-    Log::debug("Finalizando la generación del ZIP: " . date("F j, Y, g:i a"));
-    }
 }
