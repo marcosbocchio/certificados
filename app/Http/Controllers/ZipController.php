@@ -125,5 +125,5 @@ class ZipController extends Controller
             return response()->json(['message' => 'El archivo ZIP no existe'], 404);
         }
     }
-    
+     
 }
