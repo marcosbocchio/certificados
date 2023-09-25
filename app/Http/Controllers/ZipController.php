@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Str;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Chumper\Zipper\Zipper;
 use Illuminate\Support\Facades\Response;
+use ZipArchive; 
+
 
 class ZipController extends Controller
 {
@@ -75,12 +77,10 @@ class ZipController extends Controller
             $documentos = DB::select('CALL getDocumentosZip');
             $zipFileName = 'general.zip';
             $zipFilePath = public_path('storage/zips/' . $zipFileName);
-            $zip = new Zipper;
 
-            // Verificar si el archivo ZIP ya existe y eliminarlo si es necesario
-            if ($zip->make($zipFilePath)->exists()) {
-                $zip->remove($zipFileName);
-            }
+            // Crear un nuevo archivo ZIP
+            $zip = new Zipper;
+            $zip->make($zipFilePath);
 
             // Recorrer la lista de documentos y agregarlos al archivo ZIP
             foreach ($documentos as $documento) {
@@ -90,9 +90,17 @@ class ZipController extends Controller
                 $path = public_path($documento->path);
                 $extension = pathinfo($path, PATHINFO_EXTENSION);
 
-                // Agregar el archivo al directorio correspondiente en el ZIP
-                $zip->folder($tipo . '/' . $codigo)->add($path, $nombreArchivo . '.' . $extension);
+                try {
+                    // Agregar el archivo al directorio correspondiente en el ZIP
+                    $zip->folder($tipo . '/' . $codigo)->add($path, $nombreArchivo . '.' . $extension);
+                } catch (\Exception $ex) {
+                    // En caso de error al agregar el archivo, ignorar y continuar
+                    Log::error("Error al agregar archivo al ZIP: " . $ex->getMessage());
+                }
             }
+
+            // Cerrar el archivo ZIP después de agregar todos los archivos
+            $zip->close();
 
             DB::commit();
             Log::debug("Archivo ZIP creado correctamente a las: " . date("F j, Y, g:i a"));
@@ -102,6 +110,20 @@ class ZipController extends Controller
             Log::error("Error durante la generación del archivo ZIP: " . $e);
             throw $e;
         }
+
+        // Devolver una respuesta adecuada, como la descarga del ZIP
+        return response()->download($zipFilePath, $zipFileName);
     }
 
+    public function descargarZip()
+    {
+        $zipFileName = 'general.zip';
+        $zipFilePath = 'storage/zips/'.$zipFileName;
+        if (file_exists($zipFilePath)) {
+            return response()->download($zipFilePath, $zipFileName);
+        } else {
+            return response()->json(['message' => 'El archivo ZIP no existe'], 404);
+        }
+    }
+    
 }
