@@ -112,7 +112,8 @@ class ZipController extends Controller
         }
 
         // Devolver una respuesta adecuada, como la descarga del ZIP
-        return response()->download($zipFilePath, $zipFileName);
+        //return response()->download($zipFilePath, $zipFileName);
+        Log::debug("termino de la generación del archivo ZIP: " . date("F j, Y, g:i a") . $zipFilePath);
     }
 
     public function descargarZip()
