@@ -127,9 +127,10 @@ class DocumentacionesRepository extends BaseRepository
   }
 
   public function saveDocumento($documento,$request){
-
+    Log::debug($request);
     $fecha_caducidad = $request->fecha_caducidad ? date('Y-m-d',strtotime($request->fecha_caducidad)) : null;
     $documento->tipo = $request->tipo;
+    $documento->visible_sn = $request->visible_sn;
     $documento->titulo = $request->titulo;
     $documento->descripcion = $request->descripcion;
     $documento->metodo_ensayo_id = $request->metodo_ensayo['id'] !=0 ? $request->metodo_ensayo['id'] : null;
@@ -151,7 +152,7 @@ class DocumentacionesRepository extends BaseRepository
   }
 
   public function saveEquipoDocumento($documento,$equipo_documento,$request){
-    Log::debug('request: '. json_encode($request->all())); 
+    Log::debug('request: '. json_encode($request->all()));
     $equipo_documento->documentacion_id = $documento->id;
     $equipo_documento->interno_equipo_id = $request->interno_equipo['id'];
     $equipo_documento->certificado_verificacion_sn = $request['certificado_verificacion_sn'];
