@@ -78,11 +78,9 @@ class ZipController extends Controller
             $zipFileName = 'general.zip';
             $zipFilePath = public_path('storage/zips/' . $zipFileName);
 
-            // Crear un nuevo archivo ZIP
             $zip = new Zipper;
             $zip->make($zipFilePath);
 
-            // Recorrer la lista de documentos y agregarlos al archivo ZIP
             foreach ($documentos as $documento) {
                 $tipo = $documento->tipo;
                 $codigo = $documento->codigo;
@@ -91,40 +89,26 @@ class ZipController extends Controller
                 $extension = pathinfo($path, PATHINFO_EXTENSION);
 
                 try {
-                    // Agregar el archivo al directorio correspondiente en el ZIP
+
                     $zip->folder($tipo . '/' . $codigo)->add($path, $nombreArchivo . '.' . $extension);
                 } catch (\Exception $ex) {
-                    // En caso de error al agregar el archivo, ignorar y continuar
+
                     Log::error("Error al agregar archivo al ZIP: " . $ex->getMessage());
                 }
             }
 
-            // Cerrar el archivo ZIP después de agregar todos los archivos
-            $zip->close();
 
+            $zip->close();
             DB::commit();
-            Log::debug("Archivo ZIP creado correctamente a las: " . date("F j, Y, g:i a"));
+
         } catch (Exception $e) {
-            // En caso de error, realizar un rollback en la base de datos
+
             DB::rollback();
             Log::error("Error durante la generación del archivo ZIP: " . $e);
             throw $e;
         }
 
-        // Devolver una respuesta adecuada, como la descarga del ZIP
-        //return response()->download($zipFilePath, $zipFileName);
         Log::debug("termino de la generación del archivo ZIP: " . date("F j, Y, g:i a") . $zipFilePath);
-    }
-
-    public function descargarZip()
-    {
-        $zipFileName = 'general.zip';
-        $zipFilePath = 'storage/zips/'.$zipFileName;
-        if (file_exists($zipFilePath)) {
-            return response()->download($zipFilePath, $zipFileName);
-        } else {
-            return response()->json(['message' => 'El archivo ZIP no existe'], 404);
-        }
     }
      
 }
