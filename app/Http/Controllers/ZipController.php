@@ -78,6 +78,15 @@ class ZipController extends Controller
             $zipFileName = 'general.zip';
             $zipFilePath = public_path('storage/zips/' . $zipFileName);
 
+            // Verificar si el archivo ZIP ya existe y eliminarlo si es necesario
+            if (file_exists($zipFilePath)) {
+                unlink($zipFilePath);
+            }
+
+            // Agregar un sello de tiempo al nombre del archivo ZIP para que sea único
+            $zipFileName = 'general_' . time() . '.zip';
+            $zipFilePath = public_path('storage/zips/' . $zipFileName);
+
             $zip = new Zipper;
             $zip->make($zipFilePath);
 
@@ -89,26 +98,25 @@ class ZipController extends Controller
                 $extension = pathinfo($path, PATHINFO_EXTENSION);
 
                 try {
-
                     $zip->folder($tipo . '/' . $codigo)->add($path, $nombreArchivo . '.' . $extension);
                 } catch (\Exception $ex) {
-
                     Log::error("Error al agregar archivo al ZIP: " . $ex->getMessage());
                 }
             }
-
 
             $zip->close();
             DB::commit();
 
         } catch (Exception $e) {
-
             DB::rollback();
             Log::error("Error durante la generación del archivo ZIP: " . $e);
             throw $e;
         }
 
-        Log::debug("termino de la generación del archivo ZIP: " . date("F j, Y, g:i a") . $zipFilePath);
+        Log::debug("Termino de la generación del archivo ZIP: " . date("F j, Y, g:i a") . $zipFilePath);
+
+        // Devolver una respuesta adecuada, como la descarga del ZIP
+        return response()->download($zipFilePath, $zipFileName);
     }
      
 }
