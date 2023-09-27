@@ -83,8 +83,6 @@ class ZipController extends Controller
                 unlink($zipFilePath);
             }
 
-            // Agregar un sello de tiempo al nombre del archivo ZIP para que sea único
-            $zipFileName = 'general_' . time() . '.zip';
             $zipFilePath = public_path('storage/zips/' . $zipFileName);
 
             $zip = new Zipper;
