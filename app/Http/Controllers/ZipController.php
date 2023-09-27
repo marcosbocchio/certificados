@@ -94,12 +94,6 @@ class ZipController extends Controller
                 $nombreArchivo = $documento->nombre_archivo;
                 $path = public_path($documento->path);
                 $extension = pathinfo($path, PATHINFO_EXTENSION);
-
-                try {
-                    $zip->folder($tipo . '/' . $codigo)->add($path, $nombreArchivo . '.' . $extension);
-                } catch (\Exception $ex) {
-                    Log::error("Error al agregar archivo al ZIP: " . $ex->getMessage());
-                }
             }
 
             $zip->close();
