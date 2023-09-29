@@ -90,7 +90,7 @@ class ZipController extends Controller
             foreach ($documentos as $documento) {
                 $tipo = $documento->tipo;
                 $codigo = $documento->codigo;
-                $nombreArchivo = $documento->nombre_archivo;
+                $nombreArchivo = $documento->descripcion;
                 $path = public_path($documento->path);
                 $extension = pathinfo($path, PATHINFO_EXTENSION);
 
