@@ -78,11 +78,6 @@ class ZipController extends Controller
             $zipFileName = 'general.zip';
             $zipFilePath = public_path('storage/zips/' . $zipFileName);
 
-            // Verificar si el archivo ZIP ya existe y eliminarlo si es necesario
-            if (file_exists($zipFilePath)) {
-                unlink($zipFilePath);
-            }
-
             // Crear un nuevo archivo ZIP
             $zip = new Zipper;
             $zip->make($zipFilePath);
@@ -99,10 +94,10 @@ class ZipController extends Controller
                     // Agrega el archivo al directorio correspondiente en el ZIP
                     $zip->folder($tipo . '/' . $codigo)->add($path, $nombreArchivo . '.' . $extension);
                 }
-                // Si el archivo no se encuentra, simplemente continúa sin generar errores
+
             }
 
-            // Cerrar el archivo ZIP después de agregar todos los archivos
+
             $zip->close();
             DB::commit();
 
