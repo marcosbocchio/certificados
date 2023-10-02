@@ -73,10 +73,15 @@ class ZipController extends Controller
         DB::beginTransaction();
         Log::debug("Inicio de la generación del archivo ZIP: " . date("F j, Y, g:i a"));
 
+
         try {
             $documentos = DB::select('CALL getDocumentosZip');
             $zipFileName = 'general.zip';
             $zipFilePath = public_path('storage/zips/' . $zipFileName);
+
+            if (file_exists($zipFilePath)) {
+                unlink($zipFilePath);
+            }
 
             // Crear un nuevo archivo ZIP
             $zip = new Zipper;
