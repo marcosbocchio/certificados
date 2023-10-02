@@ -189,10 +189,12 @@ Route::group(['middleware' => ['auth']], function () {
       Route::get('informes/prueba','InformePruebaController@index')->name('pruebaInformes');
       Route::get('/area/enod/plantas', 'PlantasController@index')->name('plantas');
 
-      /** testeo sergio ___ */
-      Route::get('/generar_zip', 'ZipController@generarYDescargarZip');
+
 
     });
+
+/** testeo sergio ___ */
+Route::get('/generar_zip', 'ZipController@generarYDescargarZip');    
 
 Route::resource('personas_web', 'PersonaController');
 
