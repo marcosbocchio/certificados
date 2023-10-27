@@ -210,6 +210,7 @@
                              <div class="form-group" >
                                  <label for="foco">Foco </label>
                                  <input type="text" v-model="interno_fuente.foco" class="form-control" id="foco" disabled>
+                                 
                              </div>
                          </div>
                          <div v-else class="col-md-3">
@@ -336,6 +337,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group" >
@@ -344,6 +346,7 @@
                                     </div>
                                 </div>
                            </div>
+
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group" >
@@ -373,6 +376,14 @@
                                     <div class="form-group" >
                                         <label for="distancia_fuente_pelicula">Dist. Fuente/Film *</label>
                                         <input type="number" step="0.01" v-model="distancia_fuente_pelicula" class="form-control" :disabled="diametro.diametro!='VARIOS' && !dist_fuente_pel_edit_sn" id="distancia_fuente_pelicula">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="proceso">Soldadores según Proceso</label>
+                                        <v-select v-model="proceso_soldadores" :options="['GTAW', 'SMAW','SAW']"></v-select>
                                     </div>
                                 </div>
                             </div>
@@ -1195,6 +1206,7 @@ import { eventSetReferencia } from '../event-bus';
              appendToBody: false,
              inputsData:{},
              dist_fuente_pel_edit_sn: false,
+             proceso_soldadores:'',
          }},
      created : function(){
 
@@ -1327,7 +1339,6 @@ import { eventSetReferencia } from '../event-bus';
      methods : {
          setEdit : function(){
              if(this.editmode) {
-
                 this.formato = this.informe_ridata.gasoducto_sn ? 'DUCTO' : (this.informe_ridata.perfil_sn ? 'PERFILES' : 'PLANTA');
                 this.obra = this.informedata.obra;
                 this.planta = this.informedata.planta;
@@ -1377,24 +1388,29 @@ import { eventSetReferencia } from '../event-bus';
                 this.solicitado_por = this.solicitado_pordata ;
                 this.TablaTramos = this.tablatramos_data;
                 this.resultado_pdf_sn = this.informe_ridata.resultado_pdf_sn;
+                
 
                 if(this.informe_ridata.reparacion_sn){
                      this.getElementosReparacion();
                 }
+
                 if (typeof(this.interno_fuentedata.id) !== 'undefined'){
                     this.$store.dispatch('loadCurie', { 'interno_fuente_id' : this.interno_fuentedata.id, 'fecha_final': this.informedata.fecha }).then(response => {
                           this.actividad = this.curie;
                     });
                 }
 
-                this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.informedata.obra }).then(res => {
+                    if (this.editmode && this.informe_ridata) {
+                    this.proceso_soldadores = this.informe_ridata.proceso_soldadores || '';}
 
-                    this.reparacion_sn = this.informe_ridata.reparacion_sn == 1 ?  true : false;
+                    this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.informedata.obra }).then(res => {
 
-                });
+                        this.reparacion_sn = this.informe_ridata.reparacion_sn == 1 ?  true : false;
 
-                }
-         },
+                    });
+
+                    }
+            },
 
          cambioReparacion_sn : function(){
 
@@ -2289,6 +2305,7 @@ import { eventSetReferencia } from '../event-bus';
                          'solicitado_por'    : this.solicitado_por,
                          'tramos'    : this.TablaTramos,
                          'resultado_pdf_sn' : this.resultado_pdf_sn,
+                         'proceso_soldadores': this.proceso_soldadores
                  }}
 
 
@@ -2334,7 +2351,6 @@ import { eventSetReferencia } from '../event-bus';
                      method: 'put',
                      url : urlRegistros,
                      data : {
-
                          'ot'              : this.otdata,
                          'updated_at'      : this.informedata.updated_at,
                          'obra'            : this.obra,
@@ -2384,6 +2400,8 @@ import { eventSetReferencia } from '../event-bus';
                          'solicitado_por'    : this.solicitado_por,
                          'tramos'    : this.TablaTramos,
                          'resultado_pdf_sn' : this.resultado_pdf_sn,
+                         'proceso_soldadores': this.proceso_soldadores
+
 
                  }}
                  ).then( response => {

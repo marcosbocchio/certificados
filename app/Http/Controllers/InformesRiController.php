@@ -38,6 +38,7 @@ use App\DetallesRiReferencias;
 use App\Posicion;
 use App\DefectosPosicion;
 use Exception as Exception;
+use App\InformeRi;
 
 class InformesRiController extends Controller
 {
@@ -65,7 +66,6 @@ class InformesRiController extends Controller
                                                  'header_titulo',
                                                  'header_descripcion'));
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -74,9 +74,10 @@ class InformesRiController extends Controller
      */
     public function store(InformeRiRequest $request,$EsRevision = false)
     {
+      
         $informe  = new Informe;
         $informeRi  = new InformesRi;
-
+        Log::DEBUG('Contenido de $request: ' . $request);
         DB::beginTransaction();
         try {
 
@@ -283,48 +284,52 @@ class InformesRiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    
     public function update(InformeRiRequest $request, $id)
     {
 
         $EsRevision = (new \App\Http\Controllers\InformesController)->EsRevision($id);
 
-        if($EsRevision){
-
-            return $this->store($request,$EsRevision);
-
+        if ($EsRevision) {
+            // Si es una revisión, redirige a la función 'store' para guardar como nueva entrada
+            return $this->store($request, $EsRevision);
         }
 
-        $informe = Informe::where('id',$id)
-                            ->where('updated_at',$request['updated_at'])
-                            ->first();
+        // Busca el informe existente
+        $informe = Informe::where('id', $id)
+            ->where('updated_at', $request['updated_at'])
+            ->first();
 
-        if(is_null($informe)){
-
-        return response()->json(['errors' => ['error' => ['Otro usuario modificó el registro que intenta actualizar, recargue la página y vuelva a intentarlo']]], 404);
-
-        }else{
-
-            $informeRi =InformesRi::where('informe_id',$informe->id)->first();
+        if (is_null($informe)) {
+            return response()->json([
+                'errors' => [
+                    'error' => [
+                        'Otro usuario modificó el registro que intenta actualizar, recargue la página y vuelva a intentarlo'
+                    ]
+                ]
+            ], 404);
+        } else {
+            $informeRi = InformesRi::where('informe_id', $informe->id)->first();
 
             DB::beginTransaction();
             try {
+                $informeRi->proceso_soldadores = $request->input('proceso_soldadores');
+                $informeRi->save();
 
-                $informe = (new \App\Http\Controllers\InformesController)->saveInforme($request,$informe);
-                $this->saveInformeRi($request,$informe,$informeRi);
-                $this->deleteDetalle($request,$informeRi->id);
-                $this->saveDetalle($request,$informeRi);
-                $this->deleteTramos($request,$informeRi->id);
-                $this->saveTramos($request,$informeRi);
+                $informe = (new \App\Http\Controllers\InformesController)->saveInforme($request, $informe);
+                $this->saveInformeRi($request, $informe, $informeRi);
+                $this->deleteDetalle($request, $informeRi->id);
+                $this->saveDetalle($request, $informeRi);
+                $this->deleteTramos($request, $informeRi->id);
+                $this->saveTramos($request, $informeRi);
 
-            DB::commit();
+                DB::commit();
 
             } catch (Exception $e) {
-
                 DB::rollback();
                 throw $e;
-
-                }
-
+            }
+            Log::debug("||este es el otro informe || ". $informe . " ||");
             return $informe;
         }
     }
@@ -359,6 +364,7 @@ class InformesRiController extends Controller
         $informeRi->tecnicas_grafico_id = $request->tecnica['grafico_id'];
         $informeRi->exposicion = $request->exposicion;
         $informeRi->resultado_pdf_sn = $request->resultado_pdf_sn;
+        $informeRi->proceso_soldadores = $request->proceso_soldadores;
         $informeRi->save();
 
       }

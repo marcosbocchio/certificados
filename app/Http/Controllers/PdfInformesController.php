@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Informe;
+use App\pdfEspecial;
+use App\ots;
+use App\InformesRi;
 use App\MetodoEnsayos;
+use Illuminate\Support\Facades\Log;
 
 class PdfInformesController extends Controller
 {
@@ -11,12 +15,13 @@ class PdfInformesController extends Controller
     public function index($id)    {
 
         $informe = Informe::where('id', '=', $id)->first();
+
         $metodo_ensayo = MetodoEnsayos::where('id', '=', $informe->metodo_ensayo_id)->first();
 
         switch ($metodo_ensayo->metodo) {
             case 'RI':
-                 return redirect()->route('pdfInformeRi',array('id' => $id));
-                 break;
+                return redirect()->route('pdfInformeRi',array('id' => $id));
+                break;
             case 'RD':
                 return redirect()->route('pdfInformeRd',array('id' => $id));
                 break;
@@ -47,5 +52,4 @@ class PdfInformesController extends Controller
             }
 
     }
-
 }

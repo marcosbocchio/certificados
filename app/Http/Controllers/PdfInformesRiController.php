@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-// use App\helpers;
+use App\helpers;
 use App\Informe;
 use App\InformesRi;
 use App\Plantas;
@@ -39,12 +39,13 @@ use App\OtTipoSoldaduras;
 use App\MetodoEnsayos;
 use App\FirmaUsuario;
 use App\InformesRiElementosView;
+use App\DefectosEsp;
 
 class PdfInformesRiController extends Controller
 {
 
-    public function imprimir($id){
-       /* header */
+    public function imprimir($id,$informeEspecial = null){
+        /* header */
         $informe = Informe::findOrFail($id);
         $numero_repetido = $informe->numero_repetido;
         $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);
@@ -78,16 +79,90 @@ class PdfInformesRiController extends Controller
         $informe_modelos_3d = (new \App\Http\Controllers\InformeModelos3dController)->getInformeModelos3d($id);
         $informe_solicitado_por = User::where('id',$informe->solicitado_por)->first();
 
-        /*  Encabezado */
+        $informeEspecial = null;
 
-        $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);
-        $titulo = "RADIOGRAFIA INDUSTRIAL";
-        $nro = $numero_repetido === 1 ? FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo) .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) : FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo) .'-'.$numero_repetido .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) ;
-        $fecha = date('d-m-Y', strtotime($informe->fecha));
-        $tipo_reporte = "INFORME N°";
+        obtenerInformeEspecial($informe, $metodo_ensayo, $informeEspecial);
 
-        /* Fin encabezado */
+/*______________________________________________________________________________________________________________________________________________________________*/
+/*______________________________________________________________________________________________________________________________________________________________*/
+
+        if($informeEspecial !== null){
+        /*______________ Encabezado ______________*/
+
+          $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);
+          $titulo = "RADIOGRAFIA INDUSTRIAL v2";
+          $nro = $numero_repetido === 1 ? FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo) .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) : FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo) .'-'.$numero_repetido .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) ;
+          $fecha = date('d-m-Y', strtotime($informe->fecha));
+          $tipo_reporte = "INFORME N°";
+
+        /*______________ Fin encabezado ______________ */
+
+
+          $estado = null;
+
+          if($informe_ri->perfil_sn){
+            $estado = 'perfil';
+          }else if($informe_ri->gasoducto_sn){
+            $estado = 'gasoducto';
+          }else{
+            
+        /*______________ Detalle ______________*/
+          
+          $juntas_posiciones = DB::select('CALL InformeRiPlantaJuntaPosicion(?)',array($informe_ri->id));
+          $defectos_posiciones = DB::select('CALL InformeRiPlantaDefectosPasadaPosicion(?)',array($informe_ri->id));
+          
+          
+          
+          $pdf = PDF::loadView('reportes.informes.ri-planta-especial',compact('titulo','nro','tipo_reporte','fecha',
+                                                              'ot',
+                                                              'norma_ensayo',
+                                                              'planta',
+                                                              'norma_evaluacion',
+                                                              'procedimiento_inf',
+                                                              'ot_tipo_soldadura',
+                                                              'interno_equipo',
+                                                              'actividad',
+                                                              'interno_fuente',
+                                                              'tipo_pelicula',
+                                                              'diametro_espesor',
+                                                              'ici',
+                                                              'tecnica',
+                                                              'ejecutor_ensayo',
+                                                              'cliente',
+                                                              'contratista',
+                                                              'informe',
+                                                              'informe_ri',
+                                                              'material',
+                                                              'material2',
+                                                              'tecnicas_grafico',
+                                                              'juntas_posiciones',
+                                                              'defectos_posiciones',
+                                                              'evaluador',
+                                                              'informe_modelos_3d',
+                                                              'firma',
+                                                              'numero_repetido',
+                                                              'informe_solicitado_por',
+                                                              'observaciones'))->setPaper('a4','portrait')->setWarnings(false);
+
+
+          return $pdf->stream();
+          }
+        }
+/*______________________________________________________________________________________________________________________________________________________________*/
+/*______________________________________________________________________________________________________________________________________________________________*/
+
+
         if ($informe_ri->perfil_sn){
+          /*  Encabezado */
+
+          $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);
+          $titulo = "RADIOGRAFIA INDUSTRIAL";
+          $nro = $numero_repetido === 1 ? FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo) .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) : FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo) .'-'.$numero_repetido .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) ;
+          $fecha = date('d-m-Y', strtotime($informe->fecha));
+          $tipo_reporte = "INFORME N°";
+
+          /* Fin encabezado */
+
             $tamaño_bola = '25,4 mm';
             $detalles2 = (new \App\Http\Controllers\InformesRiController)->getTramos($informe_ri->id);
             $detalles = Tramos::with('referencia')
@@ -131,6 +206,15 @@ class PdfInformesRiController extends Controller
 
         }
         if ($informe_ri->gasoducto_sn){
+          /*  Encabezado */
+
+          $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);
+          $titulo = "RADIOGRAFIA INDUSTRIAL";
+          $nro = $numero_repetido === 1 ? FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo) .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) : FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo) .'-'.$numero_repetido .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) ;
+          $fecha = date('d-m-Y', strtotime($informe->fecha));
+          $tipo_reporte = "INFORME N°";
+
+          /* Fin encabezado */
 
         /* Recupero la Max cantidad de pasadas del informe , si tiene más de 6 uso una plantilla especial */
         $max_pasadas = InformesRiElementosView::where('informe_id',$id)->max('cantidad_pasadas');
@@ -143,7 +227,7 @@ class PdfInformesRiController extends Controller
 
         //  dd($juntas_posiciones,$pasadas_juntas,$defectos_posiciones);
 
-          $pdf = PDF::loadView('reportes.informes.' . $plantilla,compact('titulo','nro','tipo_reporte','fecha',
+        $pdf = PDF::loadView('reportes.informes.' . $plantilla,compact('titulo','nro','tipo_reporte','fecha',
                                                                         'ot',
                                                                         'planta',
                                                                         'norma_ensayo',
@@ -176,19 +260,24 @@ class PdfInformesRiController extends Controller
                                                                         'observaciones'))->setPaper('a4','landscape')->setWarnings(false);
 
 
-          return $pdf->stream();
+        return $pdf->stream();
 
         }else
 
         {
-          /* Detalle */
+          $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);
+          $titulo = "RADIOGRAFIA INDUSTRIAL normal supongo";
+          $nro = $numero_repetido === 1 ? FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo) .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) : FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo) .'-'.$numero_repetido .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) ;
+          $fecha = date('d-m-Y', strtotime($informe->fecha));
+          $tipo_reporte = "INFORME N°";
+        /* Detalle */
 
-          $juntas_posiciones = DB::select('CALL InformeRiPlantaJuntaPosicion(?)',array($informe_ri->id));
-          $defectos_posiciones = DB::select('CALL InformeRiPlantaDefectosPasadaPosicion(?)',array($informe_ri->id));
+        $juntas_posiciones = DB::select('CALL InformeRiPlantaJuntaPosicion(?)',array($informe_ri->id));
+        $defectos_posiciones = DB::select('CALL InformeRiPlantaDefectosPasadaPosicion(?)',array($informe_ri->id));
 
-        // dd($juntas_posiciones,$defectos_posiciones);
+        //dd($juntas_posiciones,$defectos_posiciones);
 
-          $pdf = PDF::loadView('reportes.informes.ri-planta-v2',compact('titulo','nro','tipo_reporte','fecha',
+        $pdf = PDF::loadView('reportes.informes.ri-planta-v2',compact('titulo','nro','tipo_reporte','fecha',
                                                               'ot',
                                                               'norma_ensayo',
                                                               'planta',
@@ -220,7 +309,7 @@ class PdfInformesRiController extends Controller
                                                               'observaciones'))->setPaper('a4','portrait')->setWarnings(false);
 
 
-          return $pdf->stream();
+        return $pdf->stream();
 
       }
     }

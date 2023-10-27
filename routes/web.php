@@ -126,7 +126,8 @@ Route::group(['middleware' => ['auth']], function () {
 
       Route::get('/pdf/informe/{id}','PdfInformesController@index')->name('pdfInformes');
       Route::get('/pdf/informe/lp/{informe}','PdfInformesLpController@imprimir')->name('pdfInformeLp');
-      Route::get('/pdf/informe/ri/{informe}','PdfInformesRiController@imprimir')->name('pdfInformeRi');
+
+      Route::get('/pdf/informe/ri/{informe}/','PdfInformesRiController@imprimir')->name('pdfInformeRi');
       Route::get('/pdf/informe/rd/{informe}','PdfInformesRdController@imprimir')->name('pdfInformeRd');
       Route::get('/pdf/informe/pm/{informe}','PdfInformesPmController@imprimir')->name('pdfInformePm');
       Route::get('/pdf/informe/us/{informe}','PdfInformesUsController@imprimir')->name('pdfInformeUs');
