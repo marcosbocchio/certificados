@@ -171,7 +171,7 @@ footer {
                         &nbsp;
                     </td>
                     <td>
-                    @if ($informe_ri->proceso_soldadores === 'SMAW')
+                        @if ($informe_ri->proceso_soldadores === 'SMAW')
                         <p>
                             @if ($junta_posicion && $junta_posicion->soldadorz !== null)
                                 {{ $junta_posicion->soldadorz }}
@@ -183,7 +183,7 @@ footer {
                                 {{ $junta_posicion->soldadorp }}
                             @endif
                         </p>
-                    @else if 
+                @else if($informe_ri->proceso_soldadores == null) 
                     <td>
                         <p>
                             &nbsp;
@@ -199,8 +199,7 @@ footer {
                             &nbsp;
                         </p>
                     </td>
-                    @endif
-                    &nbsp;
+                @endif
                 </td>
                 <td>
                     @if ($informe_ri->proceso_soldadores === 'SAW')
@@ -372,8 +371,6 @@ footer {
                     Aceptable<br>
                     <b>Rz:</b>
                     Reparar<br>
-                    <b>Rp:</b>
-                    Repartir
                 </td>
             </tr>
         </tbody>

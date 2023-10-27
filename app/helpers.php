@@ -3,7 +3,7 @@
 use App\ParametrosGenerales;
 use App\InternoFuentes;
 use Illuminate\Support\Facades\Log;
-use App\pdfEspecial;
+use App\PdfEspecial;
 use App\ots;
 use App\InformesRi;
 use App\MetodoEnsayos;
