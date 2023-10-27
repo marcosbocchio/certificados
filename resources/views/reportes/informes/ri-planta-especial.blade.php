@@ -138,7 +138,7 @@ footer {
             @for ($i = 1; $i <= 26; $i++)
             @php
                 $junta_posicion = isset($juntas_posiciones[$i - 1]) ? $juntas_posiciones[$i - 1] : null;
-                $defectoEspecial = !empty($defectos_posiciones) ? $defectos_posiciones[0]->defecto_Esp : null;
+                $defectoEspecial = !empty($defectos_posiciones) && isset($defectos_posiciones[0]->defecto_Esp) ? $defectos_posiciones[0]->defecto_Esp : null;
             @endphp
 
             <tr id="alto_final">
@@ -183,7 +183,7 @@ footer {
                                 {{ $junta_posicion->soldadorp }}
                             @endif
                         </p>
-                @endif
+                @else
                     <td>
                         <p>
                             &nbsp;
@@ -199,6 +199,7 @@ footer {
                             &nbsp;
                         </p>
                     </td>
+                    @endif
                 </td>
                 <td>
                     @if ($informe_ri->proceso_soldadores === 'SAW')
@@ -220,7 +221,7 @@ footer {
                 <!-- Porosidad -->
                     <td>
                         <p>
-                            @if ($defectoEspecial === 'Porosidad')
+                            @if (!empty($defectoEspecial) && $defectoEspecial === 'Porosidad')
                                 x
                             @else
                                 &nbsp;
@@ -231,7 +232,7 @@ footer {
                     <!-- Inclusión de Escoria -->
                     <td>
                         <p>
-                            @if ($defectoEspecial === 'Inclusión de Escoria')
+                            @if (!empty($defectoEspecial) && $defectoEspecial === 'Inclusión de Escoria')
                                 x
                             @else
                                 &nbsp;
@@ -242,7 +243,7 @@ footer {
                     <!-- Inclusión de Tungsteno -->
                     <td>
                         <p>
-                            @if ($defectoEspecial === 'Inclusión de Tungsteno')
+                        @if (!empty($defectoEspecial) && $defectoEspecial === 'Inclusión de Tungsteno')
                                 x
                             @else
                                 &nbsp;
@@ -253,7 +254,7 @@ footer {
                     <!-- Falta de Penetración -->
                     <td>
                         <p>
-                            @if ($defectoEspecial === 'Falta de Penetración')
+                        @if (!empty($defectoEspecial) && $defectoEspecial === 'Falta de Penetración')
                                 x
                             @else
                                 &nbsp;
@@ -264,7 +265,7 @@ footer {
                     <!-- Falta de Fusión -->
                     <td>
                         <p>
-                            @if ($defectoEspecial === 'Falta de Fusión')
+                        @if (!empty($defectoEspecial) && $defectoEspecial === 'Falta de Fusión')
                                 x
                             @else
                                 &nbsp;
@@ -275,7 +276,7 @@ footer {
                     <!-- Socavación -->
                     <td>
                         <p>
-                            @if ($defectoEspecial === 'Socavación')
+                        @if (!empty($defectoEspecial) && $defectoEspecial === 'Socavación')
                                 x
                             @else
                                 &nbsp;
@@ -286,7 +287,7 @@ footer {
                     <!-- Concavidad -->
                     <td>
                         <p>
-                            @if ($defectoEspecial === 'Concavidad')
+                        @if (!empty($defectoEspecial) && $defectoEspecial === 'Concavidad')
                                 x
                             @else
                                 &nbsp;
@@ -297,7 +298,7 @@ footer {
                     <!-- Desalineación -->
                     <td>
                         <p>
-                            @if ($defectoEspecial === 'Desalineación')
+                        @if (!empty($defectoEspecial) && $defectoEspecial === 'Desalineación')
                                 x
                             @else
                                 &nbsp;
@@ -308,7 +309,7 @@ footer {
                     <!-- Fisuras -->
                     <td>
                         <p>
-                            @if ($defectoEspecial === 'Fisuras')
+                        @if (!empty($defectoEspecial) && $defectoEspecial === 'Fisuras')
                                 x
                             @else
                                 &nbsp;
@@ -319,7 +320,7 @@ footer {
                     <!-- Película Defectuosa -->
                     <td>
                         <p>
-                            @if ($defectoEspecial === 'Película Defectuosa')
+                        @if (!empty($defectoEspecial) && $defectoEspecial === 'Película Defectuosa')
                                 x
                             @else
                                 &nbsp;
