@@ -183,7 +183,7 @@ footer {
                                 {{ $junta_posicion->soldadorp }}
                             @endif
                         </p>
-                    @else if 
+                @endif
                     <td>
                         <p>
                             &nbsp;
@@ -199,8 +199,6 @@ footer {
                             &nbsp;
                         </p>
                     </td>
-                    @endif
-                    &nbsp;
                 </td>
                 <td>
                     @if ($informe_ri->proceso_soldadores === 'SAW')
@@ -219,118 +217,115 @@ footer {
                     &nbsp;
                 </td>
                 @endif
-                @php
-                    $defectoEspecial = count($defectos_posiciones) > 0 ? $defectos_posiciones[0]->defecto_Esp : null;
-                @endphp
                 <!-- Porosidad -->
-                <td>
-                    <p>
-                        @if ($defectoEspecial === 'Porosidad')
-                            x
-                        @else
-                            &nbsp;
-                        @endif
-                    </p>
-                </td>
+                    <td>
+                        <p>
+                            @if ($defectoEspecial === 'Porosidad')
+                                x
+                            @else
+                                &nbsp;
+                            @endif
+                        </p>
+                    </td>
 
-                <!-- Inclusión de Escoria -->
-                <td>
-                    <p>
-                        @if ($defectoEspecial === 'Inclusión de Escoria')
-                            x
-                        @else
-                            &nbsp;
-                        @endif
-                    </p>
-                </td>
+                    <!-- Inclusión de Escoria -->
+                    <td>
+                        <p>
+                            @if ($defectoEspecial === 'Inclusión de Escoria')
+                                x
+                            @else
+                                &nbsp;
+                            @endif
+                        </p>
+                    </td>
 
-                <!-- Inclusión de Tungsteno -->
-                <td>
-                    <p>
-                        @if ($defectoEspecial === 'Inclusión de Tungsteno')
-                            x
-                        @else
-                            &nbsp;
-                        @endif
-                    </p>
-                </td>
+                    <!-- Inclusión de Tungsteno -->
+                    <td>
+                        <p>
+                            @if ($defectoEspecial === 'Inclusión de Tungsteno')
+                                x
+                            @else
+                                &nbsp;
+                            @endif
+                        </p>
+                    </td>
 
-                <!-- Falta de Penetración -->
-                <td>
-                    <p>
-                        @if ($defectoEspecial === 'Falta de Penetración')
-                            x
-                        @else
-                            &nbsp;
-                        @endif
-                    </p>
-                </td>
+                    <!-- Falta de Penetración -->
+                    <td>
+                        <p>
+                            @if ($defectoEspecial === 'Falta de Penetración')
+                                x
+                            @else
+                                &nbsp;
+                            @endif
+                        </p>
+                    </td>
 
-                <!-- Falta de Fusión -->
-                <td>
-                    <p>
-                        @if ($defectoEspecial === 'Falta de Fusión')
-                            x
-                        @else
-                            &nbsp;
-                        @endif
-                    </p>
-                </td>
+                    <!-- Falta de Fusión -->
+                    <td>
+                        <p>
+                            @if ($defectoEspecial === 'Falta de Fusión')
+                                x
+                            @else
+                                &nbsp;
+                            @endif
+                        </p>
+                    </td>
 
-                <!-- Socavación -->
-                <td>
-                    <p>
-                        @if ($defectoEspecial === 'Socavación')
-                            x
-                        @else
-                            &nbsp;
-                        @endif
-                    </p>
-                </td>
+                    <!-- Socavación -->
+                    <td>
+                        <p>
+                            @if ($defectoEspecial === 'Socavación')
+                                x
+                            @else
+                                &nbsp;
+                            @endif
+                        </p>
+                    </td>
 
-                <!-- Concavidad -->
-                <td>
-                    <p>
-                        @if ($defectoEspecial === 'Concavidad')
-                            x
-                        @else
-                            &nbsp;
-                        @endif
-                    </p>
-                </td>
+                    <!-- Concavidad -->
+                    <td>
+                        <p>
+                            @if ($defectoEspecial === 'Concavidad')
+                                x
+                            @else
+                                &nbsp;
+                            @endif
+                        </p>
+                    </td>
 
-                <!-- Desalineación -->
-                <td>
-                    <p>
-                        @if ($defectoEspecial === 'Desalineación')
-                            x
-                        @else
-                            &nbsp;
-                        @endif
-                    </p>
-                </td>
+                    <!-- Desalineación -->
+                    <td>
+                        <p>
+                            @if ($defectoEspecial === 'Desalineación')
+                                x
+                            @else
+                                &nbsp;
+                            @endif
+                        </p>
+                    </td>
 
-                <!-- Fisuras -->
-                <td>
-                    <p>
-                        @if ($defectoEspecial === 'Fisuras')
-                            x
-                        @else
-                            &nbsp;
-                        @endif
-                    </p>
-                </td>
+                    <!-- Fisuras -->
+                    <td>
+                        <p>
+                            @if ($defectoEspecial === 'Fisuras')
+                                x
+                            @else
+                                &nbsp;
+                            @endif
+                        </p>
+                    </td>
 
-                <!-- Película Defectuosa -->
-                <td>
-                    <p>
-                        @if ($defectoEspecial === 'Película Defectuosa')
-                            x
-                        @else
-                            &nbsp;
-                        @endif
-                    </p>
-                </td>
+                    <!-- Película Defectuosa -->
+                    <td>
+                        <p>
+                            @if ($defectoEspecial === 'Película Defectuosa')
+                                x
+                            @else
+                                &nbsp;
+                            @endif
+                        </p>
+                    </td>
                     <td>
                         <p>
                         @if ($junta_posicion && $informe_ri->resultado_pdf_sn)
