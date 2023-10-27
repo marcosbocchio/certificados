@@ -183,7 +183,7 @@ footer {
                                 {{ $junta_posicion->soldadorp }}
                             @endif
                         </p>
-                @else if($informe_ri->proceso_soldadores == null) 
+                    @else if 
                     <td>
                         <p>
                             &nbsp;
@@ -199,7 +199,8 @@ footer {
                             &nbsp;
                         </p>
                     </td>
-                @endif
+                    @endif
+                    &nbsp;
                 </td>
                 <td>
                     @if ($informe_ri->proceso_soldadores === 'SAW')
