@@ -183,25 +183,8 @@ footer {
                                 {{ $junta_posicion->soldadorp }}
                             @endif
                         </p>
-                @else
-                    <td>
-                        <p>
-                            &nbsp;
-                        </p>
                     </td>
                     <td>
-                        <p>
-                            &nbsp;
-                        </p>
-                    </td>
-                    <td>
-                        <p>
-                            &nbsp;
-                        </p>
-                    </td>
-                    @endif
-                </td>
-                <td>
                     @if ($informe_ri->proceso_soldadores === 'SAW')
                         <p>
                             @if ($junta_posicion && $junta_posicion->soldadorz !== null)
@@ -216,7 +199,23 @@ footer {
                         </p>
                     @endif
                     &nbsp;
-                </td>
+                    </td>
+                    @else
+                    <td>
+                        <p>
+                            &nbsp;
+                        </p>
+                    </td>
+                    <td>
+                        <p>
+                            &nbsp;
+                        </p>
+                    </td>
+                    <td>
+                        <p>
+                            &nbsp;
+                        </p>
+                    </td>
                 @endif
                 <!-- Porosidad -->
                     <td>
