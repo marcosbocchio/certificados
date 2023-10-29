@@ -1,8 +1,8 @@
 <table class="tablamain">
     <tbody id="fecha_h">
         <tr class="gris">
-            <td width= "43mm" height="4mm" id="left" style="padding-left:1px;">NUMERO DE ENSAYO: </td>
-            <td width= "61mm" height="4mm">&nbsp;</td>
+            <td width= "44mm" height="4mm" id="left" style="padding-left:1px;">NUMERO DE ENSAYO: </td>
+            <td width= "60.7mm" height="4mm">&nbsp;</td>
             <td width= "18mm" height="4mm">&nbsp;</td>
             <td width= "23mm" height="4mm">FECHA:</td>
             <td width= "37mm" height="4mm" id="left">{{ $fecha }}</td>
@@ -116,7 +116,7 @@
 <table class="tablamain">
     <tbody>
         <tr class="gris">
-            <td style="width: 37mm;" >Ubicacion ICI</td>
+            <td style="width: 37.1mm;" >Ubicacion ICI</td>
             <td style="width: 32mm;" >Ubicacion Marcadores</td>
             <td style="width: 50mm;" >Minima Distancia Fuente - Objeto</td>
             <td style="width: 61mm;" >Maxima Distancia Objeto - Pelicula</td>
@@ -143,9 +143,9 @@
         <tr class="gris" style="font-size: 6.20pt;">
             <td style="width: 27mm;" >Hilo/Esencial</td>
             <td style="width: 26mm;" >Cantidad de Radiografia</td>
-            <td style="width: 21mm;" >Películas por Funda</td>
-            <td style="width: 29mm;" >Procedimientos/Rev</td>
-            <td style="width: 31mm;" >Norma de Ensayo</td>
+            <td style="width: 22mm;" >Películas por Funda</td>
+            <td style="width: 30mm;" >Procedimientos/Rev</td>
+            <td style="width: 29.5mm;" >Norma de Ensayo</td>
             <td style="width: 47mm;" >Criterio de Aceptación</td>
         </tr>
         <tr style="font-size: 9px;">

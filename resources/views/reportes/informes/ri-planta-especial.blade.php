@@ -138,208 +138,219 @@ footer {
             @for ($i = 1; $i <= 26; $i++)
             @php
                 $junta_posicion = isset($juntas_posiciones[$i - 1]) ? $juntas_posiciones[$i - 1] : null;
-                $defectoEspecial = !empty($defectos_posiciones) && isset($defectos_posiciones[0]->defecto_Esp) ? $defectos_posiciones[0]->defecto_Esp : null;
+                $defectoEspecial = !empty($defectos_posiciones[$i - 1]) ? $defectos_posiciones[$i - 1]->defecto_Esp : null;
             @endphp
-
-            <tr id="alto_final">
-                <td><p>{{ $junta_posicion ? $junta_posicion->junta : '' }}</p></td>
-                <td><p>{{ $junta_posicion ? $junta_posicion->densidad : '' }}</p></td>
-                <td>
-                    <p>    
-                    @if ($informe_ri->reparacion_sn == 1)
-                        x
-                    @endif
-                    </p>
-                </td>
-                <td><p>{{ $junta_posicion ? $junta_posicion->posicion : '' }}</p></td>
-                
-                @if ($informe_ri->proceso_soldadores !== null)
+                <tr id="alto_final">
                     <td>
-                        @if ($informe_ri->proceso_soldadores === 'GTAW')
+                        <p>{{ $junta_posicion ? $junta_posicion->junta : '' }}</p>
+                    </td>
+                    <td>
+                        <p>{{ $junta_posicion ? $junta_posicion->densidad : '' }}</p>
+                    </td>
+                    <td>
+                        <p>    
+                        @if ($informe_ri->reparacion_sn == 1)
+                            x
+                        @endif
+                        </p>
+                    </td>
+                    <td>
+                        <p>{{ $junta_posicion ? $junta_posicion->posicion : '' }}</p>
+                    </td>
+                    @if ($informe_ri->proceso_soldadores !== null)
+                        <td>
+                            @if ($informe_ri->proceso_soldadores === 'GTAW')
+                                <p>
+                                    @if ($junta_posicion && $junta_posicion->soldadorz !== null)
+                                        {{ $junta_posicion->soldadorz }}
+                                    @endif
+                                    @if ($junta_posicion && $junta_posicion->soldadorl !== null)
+                                        {{ $junta_posicion->soldadorl }}
+                                    @endif
+                                    @if ($junta_posicion && $junta_posicion->soldadorp !== null)
+                                        {{ $junta_posicion->soldadorp }}
+                                    @endif
+                                </p>
+                            @else
+                                &nbsp;
+                            @endif
+                        </td>
+                        <td>
+                            @if ($informe_ri->proceso_soldadores === 'SMAW')
+                                <p>
+                                    @if ($junta_posicion && $junta_posicion->soldadorz !== null)
+                                        {{ $junta_posicion->soldadorz }}
+                                    @endif
+                                    @if ($junta_posicion && $junta_posicion->soldadorl !== null)
+                                        {{ $junta_posicion->soldadorl }}
+                                    @endif
+                                    @if ($junta_posicion && $junta_posicion->soldadorp !== null)
+                                        {{ $junta_posicion->soldadorp }}
+                                    @endif
+                                </p>
+                            @else
+                                &nbsp;
+                            @endif
+                        </td>
+                        <td>
+                            @if ($informe_ri->proceso_soldadores === 'SAW')
+                                <p>
+                                    @if ($junta_posicion && $junta_posicion->soldadorz !== null)
+                                        {{ $junta_posicion->soldadorz }}
+                                    @endif
+                                    @if ($junta_posicion && $junta_posicion->soldadorl !== null)
+                                        {{ $junta_posicion->soldadorl }}
+                                    @endif
+                                    @if ($junta_posicion && $junta_posicion->soldadorp !== null)
+                                        {{ $junta_posicion->soldadorp }}
+                                    @endif
+                                </p>
+                            @else
+                            &nbsp;
+                            @endif
+                        </td>
+                    @else
+                        <td>
                             <p>
-                                @if ($junta_posicion && $junta_posicion->soldadorz !== null)
-                                    {{ $junta_posicion->soldadorz }}
-                                @endif
-                                @if ($junta_posicion && $junta_posicion->soldadorl !== null)
-                                    {{ $junta_posicion->soldadorl }}
-                                @endif
-                                @if ($junta_posicion && $junta_posicion->soldadorp !== null)
-                                    {{ $junta_posicion->soldadorp }}
+                                &nbsp;
+                            </p>
+                        </td>
+                        <td>
+                            <p>
+                                &nbsp;
+                            </p>
+                        </td>
+                        <td>
+                            <p>
+                                &nbsp;
+                            </p>
+                        </td>
+                    @endif
+                    <!-- Porosidad -->
+                        <td>
+                            <p>
+                                @if (!empty($defectoEspecial) && $defectoEspecial === 'Porosidad')
+                                    x
+                                @else
+                                    &nbsp;
                                 @endif
                             </p>
-                        @endif
-                        &nbsp;
-                    </td>
-                    <td>
-                        @if ($informe_ri->proceso_soldadores === 'SMAW')
-                        <p>
-                            @if ($junta_posicion && $junta_posicion->soldadorz !== null)
-                                {{ $junta_posicion->soldadorz }}
-                            @endif
-                            @if ($junta_posicion && $junta_posicion->soldadorl !== null)
-                                {{ $junta_posicion->soldadorl }}
-                            @endif
-                            @if ($junta_posicion && $junta_posicion->soldadorp !== null)
-                                {{ $junta_posicion->soldadorp }}
-                            @endif
-                        </p>
-                    </td>
-                    <td>
-                    @if ($informe_ri->proceso_soldadores === 'SAW')
-                        <p>
-                            @if ($junta_posicion && $junta_posicion->soldadorz !== null)
-                                {{ $junta_posicion->soldadorz }}
-                            @endif
-                            @if ($junta_posicion && $junta_posicion->soldadorl !== null)
-                                {{ $junta_posicion->soldadorl }}
-                            @endif
-                            @if ($junta_posicion && $junta_posicion->soldadorp !== null)
-                                {{ $junta_posicion->soldadorp }}
-                            @endif
-                        </p>
-                    @endif
-                    &nbsp;
-                    </td>
-                    @else
-                    <td>
-                        <p>
-                            &nbsp;
-                        </p>
-                    </td>
-                    <td>
-                        <p>
-                            &nbsp;
-                        </p>
-                    </td>
-                    <td>
-                        <p>
-                            &nbsp;
-                        </p>
-                    </td>
-                @endif
-                <!-- Porosidad -->
-                    <td>
-                        <p>
-                            @if (!empty($defectoEspecial) && $defectoEspecial === 'Porosidad')
-                                x
-                            @else
-                                &nbsp;
-                            @endif
-                        </p>
-                    </td>
+                        </td>
 
-                    <!-- Inclusión de Escoria -->
-                    <td>
-                        <p>
-                            @if (!empty($defectoEspecial) && $defectoEspecial === 'Inclusión de Escoria')
-                                x
-                            @else
-                                &nbsp;
-                            @endif
-                        </p>
-                    </td>
+                        <!-- Inclusión de Escoria -->
+                        <td>
+                            <p>
+                                @if (!empty($defectoEspecial) && $defectoEspecial === 'Inclusión de Escoria')
+                                    x
+                                @else
+                                    &nbsp;
+                                @endif
+                            </p>
+                        </td>
 
-                    <!-- Inclusión de Tungsteno -->
-                    <td>
-                        <p>
-                        @if (!empty($defectoEspecial) && $defectoEspecial === 'Inclusión de Tungsteno')
-                                x
-                            @else
-                                &nbsp;
-                            @endif
-                        </p>
-                    </td>
+                        <!-- Inclusión de Tungsteno -->
+                        <td>
+                            <p>
+                            @if (!empty($defectoEspecial) && $defectoEspecial === 'Inclusión de Tungsteno')
+                                    x
+                                @else
+                                    &nbsp;
+                                @endif
+                            </p>
+                        </td>
 
-                    <!-- Falta de Penetración -->
-                    <td>
-                        <p>
-                        @if (!empty($defectoEspecial) && $defectoEspecial === 'Falta de Penetración')
-                                x
-                            @else
-                                &nbsp;
-                            @endif
-                        </p>
-                    </td>
+                        <!-- Falta de Penetración -->
+                        <td>
+                            <p>
+                            @if (!empty($defectoEspecial) && $defectoEspecial === 'Falta de Penetración')
+                                    x
+                                @else
+                                    &nbsp;
+                                @endif
+                            </p>
+                        </td>
 
-                    <!-- Falta de Fusión -->
-                    <td>
-                        <p>
-                        @if (!empty($defectoEspecial) && $defectoEspecial === 'Falta de Fusión')
-                                x
-                            @else
-                                &nbsp;
-                            @endif
-                        </p>
-                    </td>
+                        <!-- Falta de Fusión -->
+                        <td>
+                            <p>
+                                @if (!empty($defectoEspecial) && $defectoEspecial === 'Falta de Fusión')
+                                    x
+                                @else
+                                    &nbsp;
+                                @endif
+                            </p>
+                        </td>
 
-                    <!-- Socavación -->
-                    <td>
-                        <p>
-                        @if (!empty($defectoEspecial) && $defectoEspecial === 'Socavación')
-                                x
-                            @else
-                                &nbsp;
-                            @endif
-                        </p>
-                    </td>
+                        <!-- Socavación -->
+                        <td>
+                            <p>
+                                @if (!empty($defectoEspecial) && $defectoEspecial === 'Socavación')
+                                    x
+                                @else
+                                    &nbsp;
+                                @endif
+                            </p>
+                        </td>
 
-                    <!-- Concavidad -->
-                    <td>
-                        <p>
-                        @if (!empty($defectoEspecial) && $defectoEspecial === 'Concavidad')
-                                x
-                            @else
-                                &nbsp;
-                            @endif
-                        </p>
-                    </td>
+                        <!-- Concavidad -->
+                        <td>
+                            <p>
+                                @if (!empty($defectoEspecial) && $defectoEspecial === 'Concavidad')
+                                    x
+                                @else
+                                    &nbsp;
+                                @endif
+                            </p>
+                        </td>
 
-                    <!-- Desalineación -->
-                    <td>
-                        <p>
-                        @if (!empty($defectoEspecial) && $defectoEspecial === 'Desalineación')
-                                x
-                            @else
-                                &nbsp;
-                            @endif
-                        </p>
-                    </td>
+                        <!-- Desalineación -->
+                        <td>
+                            <p>
+                                @if (!empty($defectoEspecial) && $defectoEspecial === 'Desalineación')
+                                    x
+                                @else
+                                    &nbsp;
+                                @endif
+                            </p>
+                        </td>
 
-                    <!-- Fisuras -->
-                    <td>
-                        <p>
-                        @if (!empty($defectoEspecial) && $defectoEspecial === 'Fisuras')
-                                x
-                            @else
-                                &nbsp;
-                            @endif
-                        </p>
-                    </td>
+                        <!-- Fisuras -->
+                        <td>
+                            <p>
+                                @if (!empty($defectoEspecial) && $defectoEspecial === 'Fisuras')
+                                    x
+                                @else
+                                    &nbsp;
+                                @endif
+                            </p>
+                        </td>
 
-                    <!-- Película Defectuosa -->
-                    <td>
-                        <p>
-                        @if (!empty($defectoEspecial) && $defectoEspecial === 'Película Defectuosa')
-                                x
-                            @else
-                                &nbsp;
-                            @endif
-                        </p>
-                    </td>
-                    <td>
-                        <p>
-                        @if ($junta_posicion && $informe_ri->resultado_pdf_sn)
-                            @if ($junta_posicion->aceptable_sn)
-                                A
-                            @else
-                                RZ
-                            @endif
-                        @else
-                            &nbsp;
-                        @endif  
-                        </p>
-                    </td>
-                    <td><p>&nbsp;</p></td>
+                        <!-- Película Defectuosa -->
+                        <td>
+                            <p>
+                                @if (!empty($defectoEspecial) && $defectoEspecial === 'Película Defectuosa')
+                                    x
+                                @else
+                                    &nbsp;
+                                @endif
+                            </p>
+                        </td>
+                        <td>
+                            <p>
+                                @if ($junta_posicion && $informe_ri->resultado_pdf_sn)
+                                    @if ($junta_posicion->aceptable_sn)
+                                        A
+                                    @else
+                                        RZ
+                                    @endif
+                                @else
+                                    &nbsp;
+                                @endif  
+                            </p>
+                        </td>
+                        <td>
+                            <p>&nbsp;</p>
+                        </td>
                 </tr>
             @endfor
         </tbody>
@@ -411,7 +422,7 @@ footer {
 
     if ( isset($pdf) ) {
         $x = 520;
-        $y = 812;
+        $y = 810;
         $text = "Pagina {PAGE_NUM} de {PAGE_COUNT}";
         $font = $fontMetrics->get_font("serif");
         $size = 7;

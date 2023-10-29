@@ -1,6 +1,6 @@
 <style>
     .col1 {
-        width: 34mm;
+        width: 34.2mm;
     }
     .col1 b{
         padding-left:1px;
