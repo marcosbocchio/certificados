@@ -138,7 +138,7 @@ footer {
             @for ($i = 1; $i <= 26; $i++)
             @php
                 $junta_posicion = isset($juntas_posiciones[$i - 1]) ? $juntas_posiciones[$i - 1] : null;
-                $defectoEspecial = !empty($defectos_posiciones[$i - 1]) && property_exists($defectos_posiciones[$i - 1], 'defecto_Esp') ? $defectos_posiciones[$i - 1]->defecto_Esp : null;
+                $defectoEspecial = $defectos_posiciones[$i - 1]->defecto_Esp ?? null;
             @endphp
                 <tr id="alto_final">
                     <td>
