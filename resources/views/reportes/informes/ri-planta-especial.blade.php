@@ -139,7 +139,6 @@ footer {
             @php
                 $junta_posicion = isset($juntas_posiciones[$i - 1]) ? $juntas_posiciones[$i - 1] : null;
                 $defectoEspecial = $defectos_posiciones[$i - 1]->defecto_Esp ?? null;
-                dd($defectoEspecial)
             @endphp
                 <tr id="alto_final">
                     <td>
