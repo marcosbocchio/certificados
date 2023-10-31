@@ -229,7 +229,7 @@ footer {
                     <!-- Porosidad -->
                         <td>
                             <p>
-                                @if (!empty($defectoEspecial) && $defectoEspecial === 'Porosidad')
+                                @if ($defectoEspecial === 'Porosidad')
                                     x
                                 @else
                                     &nbsp;
@@ -240,7 +240,7 @@ footer {
                         <!-- Inclusión de Escoria -->
                         <td>
                             <p>
-                                @if (!empty($defectoEspecial) && $defectoEspecial === 'Inclusión de Escoria')
+                                @if ($defectoEspecial === 'Inclusión de Escoria')
                                     x
                                 @else
                                     &nbsp;
@@ -251,7 +251,7 @@ footer {
                         <!-- Inclusión de Tungsteno -->
                         <td>
                             <p>
-                            @if (!empty($defectoEspecial) && $defectoEspecial === 'Inclusión de Tungsteno')
+                            @if ($defectoEspecial === 'Inclusión de Tungsteno')
                                     x
                                 @else
                                     &nbsp;
@@ -262,7 +262,7 @@ footer {
                         <!-- Falta de Penetración -->
                         <td>
                             <p>
-                            @if (!empty($defectoEspecial) && $defectoEspecial === 'Falta de Penetración')
+                            @if ($defectoEspecial === 'Falta de Penetración')
                                     x
                                 @else
                                     &nbsp;
@@ -273,7 +273,7 @@ footer {
                         <!-- Falta de Fusión -->
                         <td>
                             <p>
-                                @if (!empty($defectoEspecial) && $defectoEspecial === 'Falta de Fusión')
+                                @if ($defectoEspecial === 'Falta de Fusión')
                                     x
                                 @else
                                     &nbsp;
@@ -284,7 +284,7 @@ footer {
                         <!-- Socavación -->
                         <td>
                             <p>
-                                @if (!empty($defectoEspecial) && $defectoEspecial === 'Socavación')
+                                @if ($defectoEspecial === 'Socavación')
                                     x
                                 @else
                                     &nbsp;
@@ -295,7 +295,7 @@ footer {
                         <!-- Concavidad -->
                         <td>
                             <p>
-                                @if (!empty($defectoEspecial) && $defectoEspecial === 'Concavidad')
+                                @if ($defectoEspecial === 'Concavidad')
                                     x
                                 @else
                                     &nbsp;
@@ -306,7 +306,7 @@ footer {
                         <!-- Desalineación -->
                         <td>
                             <p>
-                                @if (!empty($defectoEspecial) && $defectoEspecial === 'Desalineación')
+                                @if ($defectoEspecial === 'Desalineación')
                                     x
                                 @else
                                     &nbsp;
@@ -317,7 +317,7 @@ footer {
                         <!-- Fisuras -->
                         <td>
                             <p>
-                                @if (!empty($defectoEspecial) && $defectoEspecial === 'Fisuras')
+                                @if ($defectoEspecial === 'Fisuras')
                                     x
                                 @else
                                     &nbsp;
@@ -328,7 +328,7 @@ footer {
                         <!-- Película Defectuosa -->
                         <td>
                             <p>
-                                @if (!empty($defectoEspecial) && $defectoEspecial === 'Película Defectuosa')
+                                @if ($defectoEspecial === 'Película Defectuosa')
                                     x
                                 @else
                                     &nbsp;
