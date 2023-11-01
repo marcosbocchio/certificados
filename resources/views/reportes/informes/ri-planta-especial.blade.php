@@ -76,14 +76,15 @@ footer {
 }
 #alto td{
     height: 21mm;
-    font-size: 9px;
+    font-size: 8px;
 }
 #alto_final td{
     height: 4.5mm;
-    padding:0px
+    padding: 0px;
 }
 #alto_final p{
     margin: 0px;
+    font-size:6.6pt;
 }
 #firmas td{
     height: 5mm;
@@ -111,7 +112,7 @@ footer {
             <tr class="gris" style="font-size: 9.3px;">
                 <td colspan="4" style="width: 30mm;">Identificación de la/s Soldadura/s</td>
                 <td colspan="3" style="width: 33mm;">Soldadores según Proceso</td>
-                <td colspan="10" style="width: 59mm;">Indicaciones</td>
+                <td colspan="10" style="width: 59.8mm;">Indicaciones</td>
                 <td colspan="2" style="width: 25mm;">Resultados</td>
             </tr>
             <tr id="alto">
@@ -135,11 +136,10 @@ footer {
                 <td><p style="margin: 0 -10mm;" class="vertical-text">Resultado</p></td>
                 <td><p style="width: 35mm;">Ubicación de los defectos a reparar</p></td>
             </tr>
-            @for ($i = 1; $i <= 26; $i++)
-            @php
-                $junta_posicion = isset($juntas_posiciones[$i - 1]) ? $juntas_posiciones[$i - 1] : null;
-                $defectoEspecial = $defectos_posiciones[$i - 1]->defecto_Esp ?? null;
-            @endphp
+
+            @foreach ($juntas_posiciones as $junta_posicion)
+
+
                 <tr id="alto_final">
                     <td>
                         <p>{{ $junta_posicion ? $junta_posicion->junta : '' }}</p>
@@ -226,114 +226,81 @@ footer {
                             </p>
                         </td>
                     @endif
-                    <!-- Porosidad -->
-                        <td>
-                            <p>
-                                @if ($defectoEspecial === 'Porosidad')
-                                    x
-                                @else
-                                    &nbsp;
-                                @endif
-                            </p>
-                        </td>
 
-                        <!-- Inclusión de Escoria -->
-                        <td>
-                            <p>
-                                @if ($defectoEspecial === 'Inclusión de Escoria')
-                                    x
-                                @else
-                                    &nbsp;
-                                @endif
-                            </p>
-                        </td>
+                        @php
+                            $porosidad = null;
+                            $inclusionEscoria = null;
+                            $inclusionTungsteno = null;
+                            $faltaPenetracion = null;
+                            $faltaFusion = null;
+                            $socavacion = null;
+                            $concavidad = null;
+                            $desalineacion = null;
+                            $fisuras = null;
+                            $peliculaDefectuosa = null;
+                            $Ubicacióndefectos = [];
+                        @endphp
 
-                        <!-- Inclusión de Tungsteno -->
-                        <td>
-                            <p>
-                            @if ($defectoEspecial === 'Inclusión de Tungsteno')
-                                    x
-                                @else
-                                    &nbsp;
+                        @foreach ($defectos_posiciones as $defecto)
+                            @if ($defecto->posicion_id === $junta_posicion->posicion_id)
+                                @if ($defecto->defecto_Esp === 'Porosidad')
+                                    @php $porosidad = 'x'; @endphp
+                                @elseif ($defecto->defecto_Esp === 'Inclusión de Escoria')
+                                    @php $inclusionEscoria = 'x'; @endphp
+                                @elseif ($defecto->defecto_Esp === 'Inclusión de Tungsteno')
+                                    @php $inclusionTungsteno = 'x'; @endphp
+                                @elseif ($defecto->defecto_Esp === 'Falta de Penetración')
+                                    @php $faltaPenetracion = 'x'; @endphp
+                                @elseif ($defecto->defecto_Esp === 'Falta de Fusión')
+                                    @php $faltaFusion = 'x'; @endphp
+                                @elseif ($defecto->defecto_Esp === 'Socavación')
+                                    @php $socavacion = 'x'; @endphp
+                                @elseif ($defecto->defecto_Esp === 'Concavidad')
+                                    @php $concavidad = 'x'; @endphp
+                                @elseif ($defecto->defecto_Esp === 'Desalineación')
+                                    @php $desalineacion = 'x'; @endphp
+                                @elseif ($defecto->defecto_Esp === 'Fisuras')
+                                    @php $fisuras = 'x'; @endphp
+                                @elseif ($defecto->defecto_Esp === 'Película Defectuosa')
+                                    @php $peliculaDefectuosa = 'x'; @endphp
                                 @endif
-                            </p>
-                        </td>
+                                @php
+                                    $posicion = $defecto->posicion ?: '-';
+                                    $UbicacionDefecto[] = $posicion;
+                                @endphp
+                            @endif
+                        @endforeach
 
-                        <!-- Falta de Penetración -->
+                        <!-- Fuera del foreach -->
                         <td>
-                            <p>
-                            @if ($defectoEspecial === 'Falta de Penetración')
-                                    x
-                                @else
-                                    &nbsp;
-                                @endif
-                            </p>
+                            <p>{{ $porosidad }}</p>
                         </td>
-
-                        <!-- Falta de Fusión -->
                         <td>
-                            <p>
-                                @if ($defectoEspecial === 'Falta de Fusión')
-                                    x
-                                @else
-                                    &nbsp;
-                                @endif
-                            </p>
+                            <p>{{ $inclusionEscoria }}</p>
                         </td>
-
-                        <!-- Socavación -->
                         <td>
-                            <p>
-                                @if ($defectoEspecial === 'Socavación')
-                                    x
-                                @else
-                                    &nbsp;
-                                @endif
-                            </p>
+                            <p>{{ $inclusionTungsteno }}</p>
                         </td>
-
-                        <!-- Concavidad -->
                         <td>
-                            <p>
-                                @if ($defectoEspecial === 'Concavidad')
-                                    x
-                                @else
-                                    &nbsp;
-                                @endif
-                            </p>
+                            <p>{{ $faltaPenetracion }}</p>
                         </td>
-
-                        <!-- Desalineación -->
                         <td>
-                            <p>
-                                @if ($defectoEspecial === 'Desalineación')
-                                    x
-                                @else
-                                    &nbsp;
-                                @endif
-                            </p>
+                            <p>{{ $faltaFusion }}</p>
                         </td>
-
-                        <!-- Fisuras -->
                         <td>
-                            <p>
-                                @if ($defectoEspecial === 'Fisuras')
-                                    x
-                                @else
-                                    &nbsp;
-                                @endif
-                            </p>
+                            <p>{{ $socavacion }}</p>
                         </td>
-
-                        <!-- Película Defectuosa -->
                         <td>
-                            <p>
-                                @if ($defectoEspecial === 'Película Defectuosa')
-                                    x
-                                @else
-                                    &nbsp;
-                                @endif
-                            </p>
+                            <p>{{ $concavidad }}</p>
+                        </td>
+                        <td>
+                            <p>{{ $desalineacion }}</p>
+                        </td>
+                        <td>
+                            <p>{{ $fisuras }}</p>
+                        </td>
+                        <td>
+                            <p>{{ $peliculaDefectuosa }}</p>
                         </td>
                         <td>
                             <p>
@@ -349,10 +316,50 @@ footer {
                             </p>
                         </td>
                         <td>
-                            <p>&nbsp;</p>
+                            <p>{{ implode(' / ', $UbicacionDefecto) }}</p>
                         </td>
+                        @php
+                            $porosidad = null;
+                            $inclusionEscoria = null;
+                            $inclusionTungsteno = null;
+                            $faltaPenetracion = null;
+                            $faltaFusion = null;
+                            $socavacion = null;
+                            $concavidad = null;
+                            $desalineacion = null;
+                            $fisuras = null;
+                            $peliculaDefectuosa = null;
+                            $UbicacionDefecto = [];                        
+                        @endphp
                 </tr>
-            @endfor
+                @endforeach
+                @php
+                    $total_filas = count($juntas_posiciones);
+                    $filas_restantes = 26 - $total_filas;
+                @endphp
+                @for ($i = 0; $i < $filas_restantes; $i++)
+                    <tr id="alto_final">
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                @endfor
         </tbody>
     </table>
 </main>
