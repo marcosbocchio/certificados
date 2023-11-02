@@ -80,7 +80,7 @@
                 </table>
             </td>
             <td style="width: 20%;">
-                    <img  src="storage/logos-contratistas/ZncK9ijcmxVj4QyndfsWXIgromtnsYaZULjkME5S.png" alt="" style="height:42px;max-width: 120px; margin-top: 5px;">
+                    <img  src="storage/logos-contratistas/ZncK9ijcmxVj4QyndfsWXIgromtnsYaZULjkME5S.png" alt="">
             </td>
         </tr>
     </tbody>
