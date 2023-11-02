@@ -238,7 +238,7 @@ footer {
                             $desalineacion = null;
                             $fisuras = null;
                             $peliculaDefectuosa = null;
-                            $Ubicacióndefectos = [-];
+                            $Ubicacióndefectos = ["-"];
                         @endphp
 
                         @foreach ($defectos_posiciones as $defecto)
