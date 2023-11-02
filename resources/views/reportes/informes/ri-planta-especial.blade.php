@@ -317,9 +317,15 @@ footer {
                                 @endif  
                             </p>
                         </td>
-                        <td>
-                            <p>{{ implode(' / ', $UbicacionDefecto) }}</p>
-                        </td>
+                        @if (isset($UbicacionDefecto) && !empty($UbicacionDefecto))
+                            <td>
+                                <p>{{ implode(' / ', $UbicacionDefecto) }}</p>
+                            </td>
+                        @else
+                            <td>
+                                <p>No se han encontrado ubicaciones de defectos.</p>
+                            </td>
+                        @endif
                         @php
                             $porosidad = null;
                             $inclusionEscoria = null;
