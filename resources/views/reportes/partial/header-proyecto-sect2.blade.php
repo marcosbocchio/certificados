@@ -26,7 +26,7 @@
         <tr>
             <td id="left" class="col1"><b>CONTRATISTA</b></td>
             <td colspan="3">
-                <p>AESA</p>
+                aesa
             </td>
         </tr>
         <tr>

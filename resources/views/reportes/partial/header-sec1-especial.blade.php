@@ -80,7 +80,7 @@
                 </table>
             </td>
             <td style="width: 20%;">
-                    <img  src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Logo_de_YPF.svg/1200px-Logo_de_YPF.svg.png" alt="" style="height:50px;max-width: 120px;">
+                    <img  src="storage/logos-contratistas/ZncK9ijcmxVj4QyndfsWXIgromtnsYaZULjkME5S.png" alt="" style="height:60px;max-width: 120px;">
             </td>
         </tr>
     </tbody>
