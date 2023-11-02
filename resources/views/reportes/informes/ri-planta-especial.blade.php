@@ -239,7 +239,6 @@ footer {
                             $fisuras = null;
                             $peliculaDefectuosa = null;
                             $Ubicacióndefectos = [];
-                            dd($defectos_posiciones);
                         @endphp
 
                         @foreach ($defectos_posiciones as $defecto)
