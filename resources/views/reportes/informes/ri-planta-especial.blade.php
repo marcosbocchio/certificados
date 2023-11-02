@@ -84,7 +84,7 @@ footer {
 }
 #alto_final p{
     margin: 0px;
-    font-size:6.6pt;
+    font-size:6.4pt;
 }
 #firmas td{
     height: 5mm;
@@ -110,19 +110,19 @@ footer {
     <table class="tablamain">
         <tbody>
             <tr class="gris" style="font-size: 9.3px;">
-                <td colspan="4" style="width: 29mm;">Identificación de la/s Soldadura/s</td>
-                <td colspan="3" style="width: 32mm;">Soldadores según Proceso</td>
-                <td colspan="10" style="width: 59mm;">Indicaciones</td>
-                <td colspan="2" style="width: 25mm;">Resultados</td>
+                <td colspan="4" style="width: 25-8mm;">Identificación de la/s Soldadura/s</td>
+                <td colspan="3" style="width: 34mm;">Soldadores según Proceso</td>
+                <td colspan="10" style="width: 59.2mm;">Indicaciones</td>
+                <td colspan="2" style="width: 24.8mm;">Resultados</td>
             </tr>
             <tr id="alto">
                 <td><p style="width: 20mm;">Nº de Soldadura</p></td>
                 <td><p style="margin: 0mm -5mm;" class="vertical-text">Densidad</p></td>
                 <td><p style="margin: 0mm -10mm;"class="vertical-text">Reparación</p></td>
                 <td><p style="margin: 0mm 0mm;"  class="vertical-text">Posición</p></td>
-                <td><p style="margin: 0mm -4mm;" class="vertical-text">GTAW</p></td>
-                <td><p style="margin: 0mm -6mm;" class="vertical-text">SMAW</p></td>
-                <td><p style="margin: 0mm -4mm;" class="vertical-text">SAW</p></td>
+                <td><p style="margin: 0mm -3mm;" class="vertical-text">GTAW</p></td>
+                <td><p style="margin: 0mm -5mm;" class="vertical-text">SMAW</p></td>
+                <td><p style="margin: 0mm -6mm;" class="vertical-text">SAW</p></td>
                 <td><p style="margin: 0mm -2mm;" class="vertical-text">Porosidad</p></td>
                 <td><p style="margin: 0mm -5mm;" class="vertical-text">Inclusión de Escoria</p></td>
                 <td><p style="margin: 0mm -8mm;" class="vertical-text">Inclusión de Tungsteno</p></td>
@@ -323,7 +323,7 @@ footer {
                             </td>
                         @else
                             <td>
-                                <p>No se han encontrado ubicaciones de defectos.</p>
+                                <p>&nbsp;</p>
                             </td>
                         @endif
                         @php
