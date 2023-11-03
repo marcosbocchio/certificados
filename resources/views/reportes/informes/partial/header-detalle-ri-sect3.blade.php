@@ -32,7 +32,7 @@
             </td>
             <td>
                 @if($contratista)
-                    <span>Comitente</span>
+                    <span>{{ $contratista->nombre }}</span>
                 @endif
             </td>
             <td>{{$interno_equipo->equipo->codigo}}</td>
