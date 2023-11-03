@@ -25,8 +25,9 @@
         </tr>
         <tr>
             <td id="left" class="col1"><b>CONTRATISTA</b></td>
+            <td colspan="3">
                 AESA
-            &nbsp;
+            </td>
         </tr>
         <tr>
             <td class="col1" id="left"><b>SISTEMA / SUBSIST.:</b></td>
