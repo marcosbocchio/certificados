@@ -25,9 +25,8 @@
         </tr>
         <tr>
             <td id="left" class="col1"><b>CONTRATISTA</b></td>
-            @if($contratista)
-                    {{ $contratista->nombre }}
-            @endif
+                AESA
+            &nbsp;
         </tr>
         <tr>
             <td class="col1" id="left"><b>SISTEMA / SUBSIST.:</b></td>
