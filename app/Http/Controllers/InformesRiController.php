@@ -287,7 +287,6 @@ class InformesRiController extends Controller
     
     public function update(InformeRiRequest $request, $id)
     {
-
         $EsRevision = (new \App\Http\Controllers\InformesController)->EsRevision($id);
 
         if ($EsRevision) {
@@ -313,7 +312,7 @@ class InformesRiController extends Controller
 
             DB::beginTransaction();
             try {
-                $informeRi->proceso_soldadores = $request->input('proceso_soldadores');
+                $informeRi->N_Reporte_RFI = $request->input('N_Reporte_RFI');
                 $informeRi->save();
 
                 $informe = (new \App\Http\Controllers\InformesController)->saveInforme($request, $informe);
@@ -364,7 +363,7 @@ class InformesRiController extends Controller
         $informeRi->tecnicas_grafico_id = $request->tecnica['grafico_id'];
         $informeRi->exposicion = $request->exposicion;
         $informeRi->resultado_pdf_sn = $request->resultado_pdf_sn;
-        $informeRi->proceso_soldadores = $request->proceso_soldadores;
+        $informeRi->N_Reporte_RFI = $request->N_Reporte_RFI;
         $informeRi->save();
 
       }
@@ -418,9 +417,8 @@ class InformesRiController extends Controller
           foreach ($request->detalles as $detalle){
 
             try {
-
               $junta = $this->saveJunta($detalle,$informeRi);
-              $this->savePasadasJunta($request->TablaPasadas,$junta);
+              $this->savePasadasJunta($request->TablaPasadas, $junta);
 
             }
             catch(Exception $e){
@@ -502,22 +500,18 @@ class InformesRiController extends Controller
         return $posicion;
       }
 
-      public function savePasadasJunta($pasadas,$junta){
-
+      public function savePasadasJunta($pasadas, $junta) {
           foreach ($pasadas as $pasada) {
-
-            if(trim($pasada['elemento_pasada']) == trim($junta['codigo'])){
-
-                $pasadasJunta = new PasadasJunta;
-                $pasadasJunta->numero = $pasada['pasada'];
-                $pasadasJunta->junta_id = $junta['id'];
-                $pasadasJunta->soldadorz_id = $pasada['soldador1']['id'];
-                $pasadasJunta->soldadorl_id = $pasada['soldador2']['id'];
-                $pasadasJunta->soldadorp_id = $pasada['soldador3']['id'];
-                $pasadasJunta->save();
-
-            }
-
+              if (trim($pasada['elemento_pasada']) == trim($junta['codigo'])) {
+                  $pasadasJunta = new PasadasJunta;
+                  $pasadasJunta->numero = $pasada['pasada'];
+                  $pasadasJunta->junta_id = $junta['id'];
+                  $pasadasJunta->soldadorz_id = $pasada['soldador1']['id'];
+                  $pasadasJunta->soldadorl_id = $pasada['soldador2']['id'];
+                  $pasadasJunta->soldadorp_id = $pasada['soldador3']['id'];
+                  $pasadasJunta->proceso_soldadores = $pasada['proceso_soldadores'];
+                  $pasadasJunta->save();
+              }
           }
       }
 

@@ -92,6 +92,7 @@ class PdfInformesRiController extends Controller
           $metodo_ensayo = MetodoEnsayos::find($informe->metodo_ensayo_id);
           $titulo = "RADIOGRAFIA INDUSTRIAL v2";
           $nro = $numero_repetido === 1 ? FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo) .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) : FormatearNumeroInforme($informe->numero,$metodo_ensayo->metodo) .'-'.$numero_repetido .' - Rev.'. FormatearNumeroConCeros($informe->revision,2) ;
+          $nroAESA= FormatearNumeroConCeros($informe->numero,4);
           $fecha = date('d-m-Y', strtotime($informe->fecha));
           $tipo_reporte = "INFORME N°";
 
@@ -142,6 +143,7 @@ class PdfInformesRiController extends Controller
                                                               'firma',
                                                               'numero_repetido',
                                                               'informe_solicitado_por',
+                                                              'nroAESA',
                                                               'observaciones'))->setPaper('a4','portrait')->setWarnings(false);
 
 

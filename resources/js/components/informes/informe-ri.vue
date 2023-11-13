@@ -382,8 +382,8 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="proceso">Soldadores según Proceso</label>
-                                        <v-select v-model="proceso_soldadores" :options="['GTAW', 'SMAW','SAW']"></v-select>
+                                        <label for="N_Reporte_RFI">N Reporte /RFI</label>
+                                        <input type="text" v-model="N_Reporte_RFI" class="form-control" placeholder="N Reporte /RFI" id="N_Reporte_RFI" name="N_Reporte_RFI" maxlength="30">
                                     </div>
                                 </div>
                             </div>
@@ -794,7 +794,12 @@
                              </template>
                          </v-select>
                      </div>
-
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="proceso">Proceso</label>
+                            <v-select v-model="proceso_soldadores" :options="['GMAW', 'GTAW','SAW','SMAW']"></v-select>
+                        </div>
+                    </div>
                       <div class="col-md-2">
                            <p>&nbsp;</p>
                            <span>
@@ -820,6 +825,7 @@
                                                  <th class="col-md-3">Cuño P</th>
                                                  <th class="col-md-3">Cuño L</th>
                                                  <th class="col-md-3">Cuño Z</th>
+                                                 <th class="col.md-3">Proceso</th>
                                                  <th>&nbsp;</th>
                                              </tr>
                                          </thead>
@@ -865,6 +871,14 @@
                                                      <div v-else>
                                                         {{ Pasada.soldador1.codigo }}
                                                      </div>
+                                                 </td>
+                                                 <td v-if="Pasada.elemento_pasada == elemento_pasada">
+                                                    <div v-if="indexPasada == k">
+                                                        <v-select v-model="TablaPasadas[indexPasada].proceso_soldadores" :options="['GMAW','GTAW','SAW','SMAW']"></v-select>
+                                                    </div>
+                                                    <div v-else>
+                                                        {{ Pasada.proceso_soldadores }}
+                                                    </div>
                                                  </td>
                                                  <td v-if="Pasada.elemento_pasada == elemento_pasada">
                                                      <a  @click="RemovePasada(k)"> <app-icon img="minus-circle" color="black"></app-icon> </a>
@@ -1207,6 +1221,7 @@ import { eventSetReferencia } from '../event-bus';
              inputsData:{},
              dist_fuente_pel_edit_sn: false,
              proceso_soldadores:'',
+             N_Reporte_RFI:''
          }},
      created : function(){
 
@@ -1401,7 +1416,7 @@ import { eventSetReferencia } from '../event-bus';
                 }
 
                     if (this.editmode && this.informe_ridata) {
-                    this.proceso_soldadores = this.informe_ridata.proceso_soldadores || '';}
+                    this.N_Reporte_RFI = this.informe_ridata.N_Reporte_RFI || '';}
 
                     this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.informedata.obra }).then(res => {
 
@@ -1662,7 +1677,8 @@ import { eventSetReferencia } from '../event-bus';
             this.soldador2='',
             this.soldador3='',
             this.posicion='',
-            this.posicionPlacaGosaducto=''
+            this.posicionPlacaGosaducto='',
+            this.proceso_soldadores=""
          },
          //detalle
          async getSoldadores(){
@@ -1778,6 +1794,7 @@ import { eventSetReferencia } from '../event-bus';
                      soldador1: this.soldador1,
                      soldador2: this.soldador2,
                      soldador3: this.soldador3,
+                     proceso_soldadores: this.proceso_soldadores,
                  });
 
                  if (this.isGasoducto){
@@ -2030,6 +2047,7 @@ import { eventSetReferencia } from '../event-bus';
                          soldador1 :  item.soldador1,
                          soldador2 :  item.soldador2,
                          soldador3 :  item.soldador3,
+                         proceso_soldadores: item.proceso_soldadores
 
                      });
                  }.bind(this))
@@ -2305,7 +2323,8 @@ import { eventSetReferencia } from '../event-bus';
                          'solicitado_por'    : this.solicitado_por,
                          'tramos'    : this.TablaTramos,
                          'resultado_pdf_sn' : this.resultado_pdf_sn,
-                         'proceso_soldadores': this.proceso_soldadores
+                         'N_Reporte_RFI': this.N_Reporte_RFI
+                         
                  }}
 
 
@@ -2400,7 +2419,7 @@ import { eventSetReferencia } from '../event-bus';
                          'solicitado_por'    : this.solicitado_por,
                          'tramos'    : this.TablaTramos,
                          'resultado_pdf_sn' : this.resultado_pdf_sn,
-                         'proceso_soldadores': this.proceso_soldadores
+                         'N_Reporte_RFI': this.N_Reporte_RFI
 
 
                  }}

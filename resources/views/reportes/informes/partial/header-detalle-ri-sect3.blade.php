@@ -2,7 +2,13 @@
     <tbody id="fecha_h">
         <tr class="gris">
             <td width= "44mm" height="4mm" id="left" style="padding-left:1px;">NUMERO DE ENSAYO: </td>
-            <td width= "60.7mm" height="4mm">&nbsp;</td>
+            <td width="60.7mm" height="4mm">
+                @if($planta !== null)
+                    RT-{{$planta->codigo}}-ENOD-{{$nroAESA}}
+                @else
+                    ENOD-{{$nroAESA}}
+                @endif
+            </td>   
             <td width= "18mm" height="4mm">&nbsp;</td>
             <td width= "23mm" height="4mm">FECHA:</td>
             <td width= "37mm" height="4mm" id="left">{{ $fecha }}</td>
@@ -16,13 +22,13 @@
             <td style="width: 19mm;" >Obra n°</td>
             <td style="width: 50mm;" >Cliente</td>
             <td style="width: 34mm;" >Equipo</td>
-            <td style="width: 16mm;" >Material</td>
+            <td style="width: 20mm;" >Material</td>
             <td style="width: 13mm;" >Diametro</td>
             <td style="width: 13mm;" >Esp. Material</td>
             <td style="width: 13mm;" >Esp. Sold</td>
-            <td style="width: 21mm;" >Esp. Refuerzo</td>
+            <td style="width: 17mm;" >Esp. Refuerzo</td>
         </tr>
-        <tr style="height: 4mm;">
+        <tr style="height: 4mm;" id="font4tobloque">
             <td>
                 @if(isset($informe))
                     <span>{{$informe->obra}}</span>
@@ -37,28 +43,48 @@
             </td>
             <td>{{$interno_equipo->equipo->codigo}}</td>
             <td>
-                {{ substr($material->codigo, 0, 10) }}
+                {{ $material->codigo }}
             </td>
             <td>
                 @if ($informe->diametro_espesor_id)
-                    {{$diametro_espesor->diametro}}
+                    {{$diametro_espesor->diametro}} ''
                 @else
-                    {{$informe->diametro_especifico}}
+                    {{$informe->diametro_especifico}} ''
                 @endif
             </td>
             <td>
                 @if ($informe->espesor_chapa)
-                    {{ $informe->espesor_chapa }}
+                    {{ $informe->espesor_chapa }} mm
                 @elseif($informe->espesor_especifico)
-                    {{ $informe->espesor_especifico }}
+                    {{ $informe->espesor_especifico }} mm
                 @elseif($diametro_espesor->diametro == 'VARIOS')
                     VARIOS
                 @else
-                    {{ $diametro_espesor->espesor }}
+                    {{ $diametro_espesor->espesor }} mm
                 @endif
             </td>
-            <td></td>
-            <td></td>
+            <td>
+                @php
+                    $espesor = 0;
+
+                    if ($informe->espesor_chapa) {
+                        $espesor = $informe->espesor_chapa + 3.2;
+                    } elseif ($informe->espesor_especifico) {
+                        $espesor = $informe->espesor_especifico + 3.2;
+                    } elseif ($diametro_espesor->diametro == 'VARIOS') {
+                        $espesor = 'VARIOS';
+                    } else {
+                        $espesor = $diametro_espesor->espesor + 3.2;
+                    }
+                @endphp
+
+                @if ($espesor == 'VARIOS')
+                    VARIOS
+                @else
+                    {{ $espesor }} mm
+                @endif
+            </td>
+            <td>3.2mm</td>
         </tr>
     </tbody>
 </table>
@@ -70,14 +96,14 @@
             <td style="width: 15mm;" >fuente / Kv</td>
             <td style="width: 17mm;" >Actv. [Ci]/mAm</td>
             <td style="width: 13mm;" >Tamaño Focal</td>
-            <td style="width: 37mm;" >Plantillas de PB</td>
-            <td style="width: 61mm;" >Tecnica Empleada</td>
+            <td style="width: 41mm;" >Plantillas de PB</td>
+            <td style="width: 57mm;" >Tecnica Empleada</td>
         </tr>
         <tr>
             <td>{{$tipo_pelicula->fabricante}} {{$tipo_pelicula->codigo}}</td>
             <td>
                 
-                    @if ($interno_fuente)
+                    @if ($interno_fuente->fuente->codigo)
                         {{$interno_fuente->fuente->codigo}}
                     @endif
                 
@@ -86,9 +112,9 @@
             <td>
                 
                     @if ($interno_fuente)
-                        {{$interno_fuente->foco}}
+                        {{$interno_fuente->foco}} mm
                     @else
-                        {{$interno_equipo->foco}}
+                        {{$interno_equipo->foco}} mm
                     @endif
                 
             </td>
@@ -97,11 +123,11 @@
                     <tbody>
                         <tr>
                             <td style="width: 20mm;" >Delantera:</td>
-                            <td style="width: 16mm;" >{{$informe_ri->pos_ant}}</td>
+                            <td style="width: 16mm;" >{{$informe_ri->pos_ant}} mm</td>
                         </tr>
                         <tr>
                             <td style="width: 19mm;" >Trasera:</td>
-                            <td style="width: 16mm;" >{{$informe_ri->pos_pos}}</td>
+                            <td style="width: 16mm;" >{{$informe_ri->pos_pos}} mm</td>
                         </tr>
                     </tbody>
                 </table>
@@ -118,8 +144,8 @@
         <tr class="gris">
             <td style="width: 37.1mm;" >Ubicacion ICI</td>
             <td style="width: 32mm;" >Ubicacion Marcadores</td>
-            <td style="width: 50mm;" >Minima Distancia Fuente - Objeto</td>
-            <td style="width: 61mm;" >Maxima Distancia Objeto - Pelicula</td>
+            <td style="width: 54mm;" >Minima Distancia Fuente - Objeto</td>
+            <td style="width: 57mm;" >Maxima Distancia Objeto - Pelicula</td>
         </tr>
         <tr>
             <td>
@@ -132,7 +158,7 @@
                 {{$informe_ri->distancia_fuente_pelicula}}
             </td>
             <td>
-                {{$informe_ri->distancia_fuente_pelicula}}
+                8.7 mm
             </td>
         </tr>
     </tbody>

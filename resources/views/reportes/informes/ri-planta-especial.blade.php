@@ -71,6 +71,9 @@ footer {
     text-align:left;
     margin-left:2px;
 }
+#font4tobloque td{
+    font-size:6pt;
+}
 #left p{
     margin-left:5px;
 }
@@ -103,15 +106,19 @@ footer {
 <body>
 
 <main>
-    @include('reportes.partial.header-sec1-especial')    
-    @include('reportes.partial.header-proyecto-sect2')
+    @include('reportes.partial.header-sec1-especial')
+
+    @if ($contratista && $contratista->reporte_especial_en_cliente == 1)
+        @include('reportes.partial.header-proyecto-sect2')
+    @endif      
+   
     @include('reportes.informes.partial.header-detalle-ri-sect3')
     @include('reportes.informes.partial.modelos3d-portrait')
     <table class="tablamain">
         <tbody>
             <tr class="gris" style="font-size: 9.3px;">
                 <td colspan="4" style="width: 25-8mm;">Identificación de la/s Soldadura/s</td>
-                <td colspan="3" style="width: 34mm;">Soldadores según Proceso</td>
+                <td colspan="4" style="width: 34mm;">Soldadores según Proceso</td>
                 <td colspan="10" style="width: 59.2mm;">Indicaciones</td>
                 <td colspan="2" style="width: 24.8mm;">Resultados</td>
             </tr>
@@ -120,9 +127,10 @@ footer {
                 <td><p style="margin: 0mm -5mm;" class="vertical-text">Densidad</p></td>
                 <td><p style="margin: 0mm -10mm;"class="vertical-text">Reparación</p></td>
                 <td><p style="margin: 0mm 0mm;"  class="vertical-text">Posición</p></td>
-                <td><p style="margin: 0mm -3mm;" class="vertical-text">GTAW</p></td>
-                <td><p style="margin: 0mm -5mm;" class="vertical-text">SMAW</p></td>
+                <td><p style="margin: 0mm -3mm;" class="vertical-text">GMAW</p></td>
+                <td><p style="margin: 0mm -5mm;" class="vertical-text">GTAW</p></td>
                 <td><p style="margin: 0mm -6mm;" class="vertical-text">SAW</p></td>
+                <td><p style="margin: 0mm -6mm;" class="vertical-text">SMAW</p></td>
                 <td><p style="margin: 0mm -2mm;" class="vertical-text">Porosidad</p></td>
                 <td><p style="margin: 0mm -5mm;" class="vertical-text">Inclusión de Escoria</p></td>
                 <td><p style="margin: 0mm -8mm;" class="vertical-text">Inclusión de Tungsteno</p></td>
@@ -157,9 +165,9 @@ footer {
                     <td>
                         <p>{{ $junta_posicion ? $junta_posicion->posicion : '' }}</p>
                     </td>
-                    @if ($informe_ri->proceso_soldadores !== null)
+                    @if ($junta_posicion->proceso_soldadores !== null)
                         <td>
-                            @if ($informe_ri->proceso_soldadores === 'GTAW')
+                            @if ($junta_posicion->proceso_soldadores === 'GMAW')
                                 <p>
                                     @if ($junta_posicion && $junta_posicion->soldadorz !== null)
                                         {{ $junta_posicion->soldadorz }}
@@ -176,7 +184,7 @@ footer {
                             @endif
                         </td>
                         <td>
-                            @if ($informe_ri->proceso_soldadores === 'SMAW')
+                            @if ($junta_posicion->proceso_soldadores === 'GTAW')
                                 <p>
                                     @if ($junta_posicion && $junta_posicion->soldadorz !== null)
                                         {{ $junta_posicion->soldadorz }}
@@ -193,7 +201,24 @@ footer {
                             @endif
                         </td>
                         <td>
-                            @if ($informe_ri->proceso_soldadores === 'SAW')
+                            @if ($junta_posicion->proceso_soldadores === 'SAW')
+                                <p>
+                                    @if ($junta_posicion && $junta_posicion->soldadorz !== null)
+                                        {{ $junta_posicion->soldadorz }}
+                                    @endif
+                                    @if ($junta_posicion && $junta_posicion->soldadorl !== null)
+                                        {{ $junta_posicion->soldadorl }}
+                                    @endif
+                                    @if ($junta_posicion && $junta_posicion->soldadorp !== null)
+                                        {{ $junta_posicion->soldadorp }}
+                                    @endif
+                                </p>
+                            @else
+                            &nbsp;
+                            @endif
+                        </td>
+                        <td>
+                            @if ($junta_posicion->proceso_soldadores === 'SMAW')
                                 <p>
                                     @if ($junta_posicion && $junta_posicion->soldadorz !== null)
                                         {{ $junta_posicion->soldadorz }}
@@ -210,6 +235,11 @@ footer {
                             @endif
                         </td>
                     @else
+                        <td>
+                            <p>
+                                &nbsp;
+                            </p>
+                        </td>
                         <td>
                             <p>
                                 &nbsp;
@@ -347,6 +377,7 @@ footer {
                 @endphp
                 @for ($i = 0; $i < $filas_restantes; $i++)
                     <tr id="alto_final">
+                        <td>&nbsp;</td>
                         <td>&nbsp;</td>
                         <td>&nbsp;</td>
                         <td>&nbsp;</td>

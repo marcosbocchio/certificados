@@ -52,7 +52,6 @@
         <div class="bootstrap-timepicker">
               <div class="form-group">
                 <label>Hora *</label>
-
                 <div class="input-group">
                   <div class="input-group-addon">
                     <i class="fa fa-clock-o"></i>
@@ -70,7 +69,7 @@
               <v-select v-model="cliente" label="nombre_fantasia" :options="clientes" @input="getContactos()"></v-select>
           </div>
         </div>
-
+        
         <div class="col-md-6">
           <div class="form-group">
               <label>Comitente</label>
