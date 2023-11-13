@@ -78,7 +78,6 @@
               <v-select v-model="contratista" label="nombre" :options="contratistas"></v-select>
           </div>
         </div>
-
         <div class="col-md-6">
           <div class="form-group">
               <label>Contacto 1 *</label>
@@ -91,6 +90,7 @@
               <v-select v-model="contacto2" name="contacto_2" label="nombre" :options="contactos"></v-select>
           </div>
         </div>
+        <div class="clearfix"></div>
         <div class="col-md-6">
           <div class="form-group">
               <label>Contacto 3</label>
