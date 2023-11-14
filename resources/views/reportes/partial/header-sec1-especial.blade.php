@@ -74,7 +74,7 @@
                         </tr>
                         <tr>
                             <td style="font-size: 8pt;">
-                                <b>{{ $nro }}({{ $fecha }} - AESA Privada)</b>
+                                <b>FGE-CA-031- Rev.0 (04/12/2017 - AESA Privada)</b>
                             </td>
                         </tr>
                     </tbody>

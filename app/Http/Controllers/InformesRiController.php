@@ -237,7 +237,7 @@ class InformesRiController extends Controller
                                 ->join('juntas','juntas.informe_ri_id','=','informes_ri.id')
                                 ->join('pasadas_junta','pasadas_junta.junta_id','=','juntas.id')
                                 ->where('informes_ri.id',$id)
-                                ->selectRaw('numero as pasada,soldadorl_id,soldadorp_id,soldadorz_id,juntas.codigo as elemento_pasada')
+                                ->selectRaw('numero as pasada,soldadorl_id,soldadorp_id,soldadorz_id,juntas.codigo as elemento_pasada,proceso_soldadores')
                                 ->get();
 
         foreach ($pasadas_juntas as $pasadas_junta) {

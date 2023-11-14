@@ -417,7 +417,10 @@ footer {
                     {{$observaciones}}
                 </td>
                 <td style="width: 43mm;">
-                    <p>planta</p>
+                @if($planta->nombre)
+                    <p>planta {{$planta->nombre}}</p>
+                @endif
+                    &nbsp;
                 </td>
                 <td id="left" style="width: 41mm;">
                     <b>A:</b>
