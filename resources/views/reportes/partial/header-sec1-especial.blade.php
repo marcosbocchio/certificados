@@ -59,7 +59,7 @@
                     <tbody style="text-align: center;">
                         <tr>
                             <td style="font-size: 7pt;">
-                                <b>FORMULARIO</b>
+                                FORMULARIO
                             </td>
                         </tr>
                         <tr>
@@ -74,7 +74,7 @@
                         </tr>
                         <tr>
                             <td style="font-size: 8pt;">
-                                <b>FGE-CA-031- Rev.0 (04/12/2017 - AESA Privada)</b>
+                                FGE-CA-031- Rev.0 (04/12/2017 - AESA Privada)
                             </td>
                         </tr>
                     </tbody>

@@ -417,8 +417,8 @@ footer {
                     {{$observaciones}}
                 </td>
                 <td style="width: 43mm;">
-                @if($planta->nombre)
-                    <p>planta {{$planta->nombre}}</p>
+                @if($planta)
+                    planta {{$planta->nombre}}
                 @endif
                     &nbsp;
                 </td>
@@ -471,7 +471,7 @@ footer {
 
     if ( isset($pdf) ) {
         $x = 520;
-        $y = 810;
+        $y = 805;
         $text = "Pagina {PAGE_NUM} de {PAGE_COUNT}";
         $font = $fontMetrics->get_font("serif");
         $size = 7;
