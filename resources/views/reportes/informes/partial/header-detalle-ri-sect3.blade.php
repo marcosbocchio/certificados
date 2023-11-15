@@ -84,7 +84,7 @@
                     {{ $espesor }} mm
                 @endif
             </td>
-            <td>3.2mm</td>
+            <td>3.2 mm</td>
         </tr>
     </tbody>
 </table>
