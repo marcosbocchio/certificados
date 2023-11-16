@@ -190,8 +190,8 @@ footer {
                     </tr>
                 @endif
                     <tr>
-                        <td style="font-size: 12px;width: 50px;"><b>N° Informe</b></td>
-                        <td style="font-size: 12px;width: 70px; text-align: center;"><b>Planta</b></td>
+                        <td style="font-size: 12px;width: 55px;"><b>N° Informe</b></td>
+                        <td style="font-size: 12px;width: 65px; text-align: center;"><b>Planta</b></td>
                         <td style="font-size: 12px;width: 45px; text-align: center;"><b>Costuras</b></td>
                         <td style="font-size: 12px;width: 45px; text-align: center;"><b>Pulgadas</b></td>
                         <td style="font-size: 12px;width: 45px; text-align: center;"><b>Placas</b></td>
@@ -251,8 +251,8 @@ footer {
                     <td style="font-size: 12px;height: 30px;" colspan="5"><b>METODO ENSAYO: PM </b></td>
                 </tr>
                 <tr>
-                    <td style="font-size: 12px;width: 50px;"><b>N° Informe</b></td>
-                    <td style="font-size: 12px;width: 90px; text-align: center;"><b>Planta</b></td>
+                    <td style="font-size: 12px;width: 55px;"><b>N° Informe</b></td>
+                    <td style="font-size: 12px;width: 85px; text-align: center;"><b>Planta</b></td>
                     <td style="font-size: 12px;width: 110px; text-align: center;"><b>Componente</b></td>
                     <td style="font-size: 12px;width: 45px; text-align: center;"><b>Diámetro</b></td>
                     <td style="font-size: 12px;width: 80px; text-align: center;"><b>Solicitante</b></td>
@@ -301,8 +301,8 @@ footer {
                     <td style="font-size: 12px;height: 30px;" colspan="5"><b>METODO ENSAYO: LP </b></td>
                 </tr>
                 <tr>
-                    <td style="font-size: 12px;width: 50px;"><b>N° Informe</b></td>
-                    <td style="font-size: 12px;width: 90px; text-align: center;"><b>Planta</b></td>
+                    <td style="font-size: 12px;width: 55px;"><b>N° Informe</b></td>
+                    <td style="font-size: 12px;width: 85px; text-align: center;"><b>Planta</b></td>
                     <td style="font-size: 12px;width: 110px; text-align: center;"><b>Componente</b></td>
                     <td style="font-size: 12px;width: 45px; text-align: center;"><b>Diámetro</b></td>
                     <td style="font-size: 12px;width: 80px; text-align: center;"><b>Solicitante</b></td>
@@ -349,8 +349,8 @@ footer {
                     <td style="font-size: 12px;height: 30px;" colspan="5"><b>METODO ENSAYO: RD </b></td>
                 </tr>
                 <tr>
-                    <td style="font-size: 12px;width: 50px;"><b>N° Informe</b></td>
-                    <td style="font-size: 12px;width: 90px; text-align: center;"><b>Planta</b></td>
+                    <td style="font-size: 12px;width: 55px;"><b>N° Informe</b></td>
+                    <td style="font-size: 12px;width: 85px; text-align: center;"><b>Planta</b></td>
                     <td style="font-size: 12px;width: 110px; text-align: center;"><b>Componente</b></td>
                     <td style="font-size: 12px;width: 45px; text-align: center;"><b>Diámetro</b></td>
                     <td style="font-size: 12px;width: 80px; text-align: center;"><b>Solicitante</b></td>
@@ -399,8 +399,8 @@ footer {
                         <td style="font-size: 12px;height: 30px;" colspan="5"><b>METODO ENSAYO: US </b></td>
                     </tr>
                     <tr>
-                        <td style="font-size: 12px;width: 50px;"><b>N° Informe</b></td>
-                        <td style="font-size: 12px;width: 90px; text-align: center;"><b>Planta</b></td>
+                        <td style="font-size: 12px;width: 55px;"><b>N° Informe</b></td>
+                        <td style="font-size: 12px;width: 85px; text-align: center;"><b>Planta</b></td>
                         <td style="font-size: 12px;width: 110px; text-align: center;"><b>Componente</b></td>
                         <td style="font-size: 12px;width: 45px; text-align: center;"><b>Diámetro</b></td>
                         <td style="font-size: 12px;width: 80px; text-align: center;"><b>Solicitante</b></td>
@@ -448,8 +448,8 @@ footer {
                     <td style="font-size: 12px;height: 30px;" colspan="5"><b>METODO ENSAYO: CV </b></td>
                 </tr>
                 <tr>
-                    <td style="font-size: 12px;width: 50px;"><b>N° Informe</b></td>
-                    <td style="font-size: 12px;width: 90px; text-align: center;"><b>Planta</b></td>
+                    <td style="font-size: 12px;width: 55px;"><b>N° Informe</b></td>
+                    <td style="font-size: 12px;width: 85px; text-align: center;"><b>Planta</b></td>
                     <td style="font-size: 12px;width: 110px; text-align: center;"><b>Componente</b></td>
                     <td style="font-size: 12px;width: 45px; text-align: center;"><b>Diámetro</b></td>
                     <td style="font-size: 12px;width: 80px; text-align: center;"><b>Solicitante</b></td>
@@ -495,8 +495,8 @@ footer {
                     <td style="font-size: 12px;height: 30px;" colspan="5"><b>METODO ENSAYO: PMI </b></td>
                 </tr>
                 <tr>
-                    <td style="font-size: 12px;width: 50px;"><b>N° Informe</b></td>
-                    <td style="font-size: 12px;width: 90px; text-align: center;"><b>Planta</b></td>
+                    <td style="font-size: 12px;width: 55px;"><b>N° Informe</b></td>
+                    <td style="font-size: 12px;width: 85px; text-align: center;"><b>Planta</b></td>
                     <td style="font-size: 12px;width: 110px; text-align: center;"><b>Componente</b></td>
                     <td style="font-size: 12px;width: 45px; text-align: center;"><b>Diámetro</b></td>
                     <td style="font-size: 12px;width: 80px; text-align: center;"><b>Solicitante</b></td>
@@ -543,8 +543,8 @@ footer {
                     <td style="font-size: 12px;height: 30px;" colspan="5"><b>METODO ENSAYO: RG </b></td>
                 </tr>
                 <tr>
-                    <td style="font-size: 12px;width: 50px;"><b>N° Informe</b></td>
-                    <td style="font-size: 12px;width: 90px; text-align: center;"><b>Planta</b></td>
+                    <td style="font-size: 12px;width: 55px;"><b>N° Informe</b></td>
+                    <td style="font-size: 12px;width: 85px; text-align: center;"><b>Planta</b></td>
                     <td style="font-size: 12px;width: 110px; text-align: center;"><b>Componente</b></td>
                     <td style="font-size: 12px;width: 45px; text-align: center;"><b>Diámetro</b></td>
                     <td style="font-size: 12px;width: 80px; text-align: center;"><b>Solicitante</b></td>
@@ -590,8 +590,8 @@ footer {
                         <td style="font-size: 12px;height: 30px;" colspan="5"><b>METODO ENSAYO: DZ </b></td>
                     </tr>
                     <tr>
-                        <td style="font-size: 12px;width: 50px;"><b>N° Informe</b></td>
-                        <td style="font-size: 12px;width: 90px; text-align: center;"><b>Planta</b></td>
+                        <td style="font-size: 12px;width: 55px;"><b>N° Informe</b></td>
+                        <td style="font-size: 12px;width: 85px; text-align: center;"><b>Planta</b></td>
                         <td style="font-size: 12px;width: 110px; text-align: center;"><b>Componente</b></td>
                         <td style="font-size: 12px;width: 45px; text-align: center;"><b>Diámetro</b></td>
                         <td style="font-size: 12px;width: 80px; text-align: center;"><b>Solicitante</b></td>
@@ -637,8 +637,8 @@ footer {
                         <td style="font-size: 12px;height: 30px;" colspan="5"><b>METODO ENSAYO: TT </b></td>
                     </tr>
                     <tr>
-                        <td style="font-size: 12px;width: 50px;"><b>N° Informe</b></td>
-                        <td style="font-size: 12px;width: 90px; text-align: center;"><b>Planta</b></td>
+                        <td style="font-size: 12px;width: 55px;"><b>N° Informe</b></td>
+                        <td style="font-size: 12px;width: 85px; text-align: center;"><b>Planta</b></td>
                         <td style="font-size: 12px;width: 110px; text-align: center;"><b>Componente</b></td>
                         <td style="font-size: 12px;width: 45px; text-align: center;"><b>Diámetro</b></td>
                         <td style="font-size: 12px;width: 80px; text-align: center;"><b>Solicitante</b></td>

@@ -294,7 +294,7 @@ b {
                             <td style="font-size: 12px;height: 20px;" colspan="5"><b style="margin-left: 8px;">{{$item->numero_formateado}} </b></td>                                         
                         </tr> 
                         <tr>    
-                            <td style="font-size: 12px;width: 100px; "><&nbsp;></b></td>  
+                            <td style="font-size: 12px;width: 100px; "><b>&nbsp;</b></td>  
                             <td style="font-size: 12px;width: 150px;  text-align: center; "><b>Costuras </b></td>                        
                             <td style="font-size: 12px;width: 150px;  text-align: center;"><b>Pulgadas </b></td>                         
                             <td style="font-size: 12px;width: 150px;  text-align: center;"><b>Placas </b></td>    
