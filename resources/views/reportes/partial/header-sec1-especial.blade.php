@@ -81,7 +81,11 @@
                 </table>
             </td>
             <td style="width: 20%;">
-                    <img  src="storage/logos-contratistas/ZncK9ijcmxVj4QyndfsWXIgromtnsYaZULjkME5S.png" alt="" style="height:60px;max-width: 120px;">
+                @if($contratista && $ot->logo_contratista_sn && $contratista->path_logo)
+                    <img  src="{{ public_path($contratista->path_logo)}}" alt="" style="height:42px;max-width: 120px; margin-top: 5px;">
+                @else
+                    <img  src="{{ public_path('img/blank.png')}}" alt=""  style="height: 42px;margin-top: 5px;">
+                @endif
             </td>
         </tr>
     </tbody>
