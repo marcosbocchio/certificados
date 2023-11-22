@@ -51,6 +51,7 @@
                                         <label for="reparacion_sn" v-if="formato=='PLANTA'">Reparación s/n</label>
                                     </div>
                                     <div class="col-md-3">
+                                        <label for="reparacion_sn" v-if="formato=='PLANTA'" style="display:block">&nbsp;</label>
                                         <input type="checkbox" id="ptt_sn" style="float:left;margin-right: 5px;" :checked="ptt_sn" @click="cambioPtt_sn()" :disabled="!obra" v-if="formato === 'PLANTA'">
                                         <label for="ptt_sn" v-if="formato === 'PLANTA'">PTT s/n</label>
                                     </div>
