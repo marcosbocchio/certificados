@@ -313,6 +313,8 @@ class InformesRiController extends Controller
             DB::beginTransaction();
             try {
                 $informeRi->N_Reporte_RFI = $request->input('N_Reporte_RFI');
+                $informeRi->ptt_sn = $request->input('ptt_sn');
+
                 $informeRi->save();
 
                 $informe = (new \App\Http\Controllers\InformesController)->saveInforme($request, $informe);
@@ -364,6 +366,7 @@ class InformesRiController extends Controller
         $informeRi->exposicion = $request->exposicion;
         $informeRi->resultado_pdf_sn = $request->resultado_pdf_sn;
         $informeRi->N_Reporte_RFI = $request->N_Reporte_RFI;
+        $informeRi->ptt_sn = $request->ptt_sn;
         $informeRi->save();
 
       }

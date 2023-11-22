@@ -45,10 +45,14 @@
                                         </div>
                                     </div>
                                     <div v-else>
-                                    <div class="col-md-6">
+                                    <div class="col-md-3">
                                         <label for="reparacion_sn" v-if="formato=='PLANTA'" style="display:block">&nbsp;</label>
                                         <input type="checkbox" id="reparacion_sn" style="float:left;margin-right: 5px;" v-model="reparacion_sn" @change="cambioReparacion_sn()" :disabled="!obra" v-if="formato=='PLANTA'">
                                         <label for="reparacion_sn" v-if="formato=='PLANTA'">Reparación s/n</label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="checkbox" id="ptt_sn" style="float:left;margin-right: 5px;" :checked="ptt_sn" @click="cambioPtt_sn()" :disabled="!obra" v-if="formato === 'PLANTA'">
+                                        <label for="ptt_sn" v-if="formato === 'PLANTA'">PTT s/n</label>
                                     </div>
                                     </div>
 
@@ -1221,7 +1225,9 @@ import { eventSetReferencia } from '../event-bus';
              inputsData:{},
              dist_fuente_pel_edit_sn: false,
              proceso_soldadores:'',
-             N_Reporte_RFI:''
+             N_Reporte_RFI:'',
+             ptt_sn: ''
+
          }},
      created : function(){
 
@@ -1416,7 +1422,9 @@ import { eventSetReferencia } from '../event-bus';
                 }
 
                     if (this.editmode && this.informe_ridata) {
-                    this.N_Reporte_RFI = this.informe_ridata.N_Reporte_RFI || '';}
+                    this.N_Reporte_RFI = this.informe_ridata.N_Reporte_RFI || '';
+                    this.ptt_sn = this.informe_ridata.ptt_sn || false;
+                }
 
                     this.$store.dispatch('loadOtObraTipoSoldaduras',{ 'ot_id' : this.otdata.id, 'obra' : this.informedata.obra }).then(res => {
 
@@ -1437,6 +1445,10 @@ import { eventSetReferencia } from '../event-bus';
             this.junta_reparacion ='';
             this.getElementosReparacion();
          },
+         cambioPtt_sn() {
+                // Cambiar entre false y true directamente en data
+                this.ptt_sn = !this.ptt_sn ? 1 : 0;
+            },
 
          setObra: function(value){
             this.obra = value;
@@ -2323,7 +2335,8 @@ import { eventSetReferencia } from '../event-bus';
                          'solicitado_por'    : this.solicitado_por,
                          'tramos'    : this.TablaTramos,
                          'resultado_pdf_sn' : this.resultado_pdf_sn,
-                         'N_Reporte_RFI': this.N_Reporte_RFI
+                         'N_Reporte_RFI': this.N_Reporte_RFI,
+                         'ptt_sn':this.ptt_sn,
                          
                  }}
 
@@ -2419,7 +2432,8 @@ import { eventSetReferencia } from '../event-bus';
                          'solicitado_por'    : this.solicitado_por,
                          'tramos'    : this.TablaTramos,
                          'resultado_pdf_sn' : this.resultado_pdf_sn,
-                         'N_Reporte_RFI': this.N_Reporte_RFI
+                         'N_Reporte_RFI': this.N_Reporte_RFI,
+                         'ptt_sn': this.ptt_sn,
 
 
                  }}

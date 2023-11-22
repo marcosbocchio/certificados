@@ -9,7 +9,18 @@
                     ENOD-{{$nroAESA}}
                 @endif
             </td>   
-            <td width= "18mm" height="4mm">&nbsp;</td>
+            <td width="18mm" height="4mm">
+                @if($informe_ri->ptt_sn !== null)
+                    @if($informe_ri->ptt_sn == 1)
+                        PTT
+                    @elseif($informe_ri->ptt_sn == 0)
+                        &nbsp;
+                    @endif
+                @else
+                    <!-- Manejar el caso cuando ptt_sn es null, si es necesario -->
+                    &nbsp;
+                @endif
+            </td>
             <td width= "23mm" height="4mm">FECHA:</td>
             <td width= "37mm" height="4mm" id="left">{{ $fecha }}</td>
         </tr>
@@ -21,7 +32,7 @@
         <tr class="gris" style="height: 6mm;">
             <td style="width: 19mm;" >Obra n°</td>
             <td style="width: 50mm;" >Cliente</td>
-            <td style="width: 34mm;" >Equipo</td>
+            <td style="width: 34mm;" >Equipo/Linea</td>
             <td style="width: 20mm;" >Material</td>
             <td style="width: 13mm;" >Diametro</td>
             <td style="width: 13mm;" >Esp. Material</td>
@@ -41,7 +52,7 @@
                     <span>{{ $contratista->nombre }}</span>
                 @endif
             </td>
-            <td>{{$interno_equipo->equipo->codigo}}</td>
+            <td>{{$informe->linea}}</td>
             <td>
                 {{ $material->codigo }}
             </td>
@@ -102,7 +113,6 @@
         <tr>
             <td>{{$tipo_pelicula->fabricante}} {{$tipo_pelicula->codigo}}</td>
             <td>
-                
                     @if ($interno_fuente->fuente->codigo)
                         {{$interno_fuente->fuente->codigo}}
                     @endif
@@ -158,7 +168,7 @@
                 {{$informe_ri->distancia_fuente_pelicula}}
             </td>
             <td>
-                8.7 mm
+                {{$espesor}} mm
             </td>
         </tr>
     </tbody>
