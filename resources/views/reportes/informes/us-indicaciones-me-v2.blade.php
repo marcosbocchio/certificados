@@ -17,19 +17,15 @@
                 $genetratrices_fila = $max_cant_genetratices_fila;
             @endphp
             <table>
-                <td style="width:140px !important">
-                    <table style="width:140px !important;table-layout:fixed">
-                        <tbody>
-                            <tr>
-                                <td style="font-size: 13px"><span>{{ strtolower($informe_us_me->elemento_me)}}</span></td>
-                            </tr>
-                            <tr>
-                                <td style="font-size: 13px"><span>Ø : {{ $informe_us_me->diametro_me}}</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </td>
-                <td>
+                <tbody>
+                    <tr>
+                        <td style="font-size: 14px;height:20px;"><span style="margin-left: 0px;"> <strong>{{ strtoupper($informe_us_me->elemento_me)}}</strong> </span></td>
+                    </tr>
+                    <tr>
+                        <td style="font-size: 14px;height:20px;"><span style="margin-left: 0px;"><strong>Ø : {{ $informe_us_me->diametro_me}}</strong> </span></td>
+                    </tr>
+                </tbody>
+            </table>
                     @while($pos_gen <= $informe_us_me->cantidad_generatrices_me)
                         <table class="bordered">
                             <thead>
@@ -91,10 +87,9 @@
                                     </tr>
 
                                 @endfor
-                            </tbody>
-                        </table>
+                            </tbody>                     
                     @endwhile
-                </td>
+                
     @endforeach
 
     @if( $informe_us->path1_indicacion || $informe_us->path2_indicacion )
