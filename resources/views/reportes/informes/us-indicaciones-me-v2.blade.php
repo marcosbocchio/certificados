@@ -7,7 +7,9 @@
             </tr>
         </tbody>
     </table>
-
+    @php
+    dd($informes_us_me);
+    @endphp
     @foreach ($informes_us_me as $informe_us_me)
 
             @php
