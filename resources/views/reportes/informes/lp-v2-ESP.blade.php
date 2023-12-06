@@ -20,7 +20,7 @@ footer{
     width: 164mm;
 }
 .logo{
-    width: 30%;
+    width: 20%;
 }
 .logo img{
     height: 60px;
@@ -70,7 +70,6 @@ footer{
 .header{
     height: 31.92px;
     width: 100%;
-    padding: 5px 0px 0px 0px; 
 }
 .cont{
     width:100%;
@@ -149,7 +148,7 @@ footer{
             <td class="logo">
                 <img src="{{ public_path('img/aesa.png')}}" alt="x">
             </td>
-            <td style="width: 50%;">
+            <td style="width: 60%;">
                 <table style="border-collapse: collapse;">
                     <tbody style="text-align: center;">
                         <tr>
