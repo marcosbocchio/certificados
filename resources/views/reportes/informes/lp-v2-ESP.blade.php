@@ -177,9 +177,9 @@ footer{
             </td>
             <td style="width: 25%;">
                 @if($contratista && $ot->logo_contratista_sn && $contratista->path_logo)
-                    <img  src="{{ public_path($contratista->path_logo)}}" alt="" style="height:60px; margin-top: 5px;">
+                    <img  src="{{ public_path($contratista->path_logo)}}" alt="" style="height:55px; margin-top: 5px;">
                 @else
-                    <img  src="{{ public_path('img/blank.png')}}" alt=""  style="height: 42px;margin-top: 5px;">
+                    <img  src="{{ public_path('img/blank.png')}}" alt=""  style="height: 55px;margin-top: 5px;">
                 @endif
             </td>
         </tr>
