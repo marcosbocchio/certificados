@@ -159,7 +159,8 @@ footer{
                         </tr>
                         <tr>
                             <td style="font-size: 9.8pt;">
-                                <b>INFORME DE ENSAYO RADIOGRAFICO</b>
+                                <b>INFORME DE ENSAYOS POR LÍQUIDOS PENETRANTES
+                                    / DYE PENETRANT EXAMINATION REPORT</b>
                             </td>
                         </tr>
                         <tr>
@@ -169,7 +170,7 @@ footer{
                         </tr>
                         <tr>
                             <td style="font-size: 8pt;">
-                                FGE-CA-031- Rev.0 (04/12/2017 - AESA Privada)
+                                FGE-CA-034 - Rev.1 (02/01/2020 - AESA Privada)
                             </td>
                         </tr>
                     </tbody>
