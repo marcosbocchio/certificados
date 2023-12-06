@@ -12,6 +12,7 @@ main{
     border: 3px solid black;
     width: 164mm;
     margin-left: 20mm;
+    margin-top:-3mm;
 }
 footer{
     font-family: "Encode Sans",Arial,sans-serif;
@@ -37,12 +38,17 @@ footer{
     margin-left:2px;
 }
 #tabla6{
+    font-size: 6pt;
     text-align:left;
     margin-left:2px;
-    font-size:6pt;
+}
+#font7{
+    font-size: 7.3pt;
+    text-align:left;
+    margin-left:2px;
 }
 .tablamain td {
-        border: 1.2px solid black;
+        border: 1.5px solid black;
         text-align: center;
         padding: 0px 0px 0px 0px;
 }
@@ -131,7 +137,7 @@ footer{
     height: 19mm;
 }
 #titulo{
-    font-size:10pt;
+    font-size:9pt;
 }
 
 </style>
@@ -181,52 +187,54 @@ footer{
     <div class="color3"></div>
     <div class="color4"></div>
 </div>
-<table class="tablamain">
-    <tbody>
-        <tr>
-            <td class="col1" id="left"><b>PROYECTO:</b></td>
-            <td colspan="3"><span class="datosHead">{{$ot->proyecto}}</span></td>
-            <td rowspan="5" id="qr"><b>CODIGO QR</b></td>
-        </tr>
-        <tr>
-            <td id="left" class="col1"><b>CONTRATISTA</b></td>
-            <td colspan="3">
-                AESA
-            </td>
-        </tr>
-        <tr>
-            <td class="col1" id="left"><b>SISTEMA / SUBSIST.:</b></td>
-            <td class="col2">&nbsp;</td>
-            <td class="col3" id="tabla6"><b>PIE / N° ACTIVIDAD:</b></td>
-            <td class="col4"> R0 / RT: 4.4/4.9</td>
-        </tr>
-        <tr >
-            <td class="col1" id="left"><b>ELEMENTO</b></td>
-            <td class="col2">&nbsp;</td>
-            <td class="col3" id="tabla6"><b>TIPO DE INSPECCION:</b></td>
-            <td class="col4">&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="col1" id="left"><b>PAQ. DE PRUEBA:</b></td>
-            <td class="col2">&nbsp;</td>
-            <td class="col3" id="tabla6"><b>N° REPORTE / RFI:</b></td>
-            <td class="col4">--</td>
-        </tr>
-    </tbody>
-</table>
+@if ($contratista && $contratista->reporte_especial_en_cliente == 1)
+    <table class="tablamain">
+        <tbody>
+            <tr>
+                <td class="col1" id="left"><b>PROYECTO:</b></td>
+                <td colspan="3"><span class="datosHead">{{$ot->proyecto}}</span></td>
+                <td rowspan="5" id="qr"><b>CODIGO QR</b></td>
+            </tr>
+            <tr>
+                <td id="left" class="col1"><b>CONTRATISTA</b></td>
+                <td colspan="3">
+                    AESA
+                </td>
+            </tr>
+            <tr>
+                <td class="col1" id="left"><b>SISTEMA / SUBSIST.:</b></td>
+                <td class="col2">&nbsp;</td>
+                <td class="col3" id="tabla6"><b>PIE / N° ACTIVIDAD:</b></td>
+                <td class="col4"> R0 / RT: 4.4/4.9</td>
+            </tr>
+            <tr >
+                <td class="col1" id="left"><b>ELEMENTO</b></td>
+                <td class="col2">&nbsp;</td>
+                <td class="col3" id="tabla6"><b>TIPO DE INSPECCION:</b></td>
+                <td class="col4">&nbsp;</td>
+            </tr>
+            <tr>
+                <td class="col1" id="left"><b>PAQ. DE PRUEBA:</b></td>
+                <td class="col2">&nbsp;</td>
+                <td class="col3" id="tabla6"><b>N° REPORTE / RFI:</b></td>
+                <td class="col4">--</td>
+            </tr>
+        </tbody>
+    </table>
+@endif
 <table class="tablamain">
     <tbody>
         <tr><td colspan="2" style="width: 78mm; height:4mm;" id="titulo"><b>Identificación del Material / Material Identification</b></td></tr>
         <tr>
-            <td style="width: 77mm; height: 4mm;" >Cliente / Customer</td>
-            <td style="width: 86mm; height: 4mm;">Obra / Job</td>
+            <td style="width: 77mm; height: 4mm;" id="font7">Cliente / Customer</td>
+            <td style="width: 86mm; height: 4mm;" id="font7">Obra / Job</td>
         </tr>
         <tr>
-            <td style=" height: 8mm;"> YPF/TR</td>
+            <td style=" height: 8mm;"><b>YPF/TR</b></td>
             @if(isset($informe))
-                <td><span class="datosHead" style=" height: 8mm;">{{$informe->obra}}</span></td>
+                <td><span class="datosHead" style=" height: 8mm;"><b>{{$informe->obra}}</b></span></td>
             @else
-                <td><span class="datosHead" style=" height: 8mm;"></span>{{$ot->obra}}</td>
+                <td><span class="datosHead" style=" height: 8mm;"></span><b>{{$ot->obra}}</b></td>
             @endif
         </tr>
     </tbody>
@@ -234,32 +242,32 @@ footer{
 <table class="tablamain">
     <tbody>
         <tr>
-            <td style="width: 61mm;height: 4mm;">Equipo / Equipment</td>
-            <td style="width: 102mm;height: 4mm;">Componentes a Ensayar / Components to Test</td>
+            <td style="width: 61mm;height: 4mm;" id="font7">Equipo / Equipment</td>
+            <td style="width: 102mm;height: 4mm;" id="font7">Componentes a Ensayar / Components to Test</td>
         </tr>
         <tr>
-            <td style="height: 8mm;">{{$equipo->equipo->codigo}}</td>
-            <td style="height: 8mm;">{{$informe->componente}}</td>
+            <td style="height: 8mm;"><b>{{$equipo->equipo->codigo}}</b></td>
+            <td style="height: 8mm;"><b>{{$informe->componente}}</b></td>
         </tr>
     </tbody>
 </table>
 <table class="tablamain">
     <tbody>
         <tr>
-            <td style="width: 77mm;height: 4mm;">Material / Material</td>
-            <td style="width: 86mm;height: 4mm;">Espesor / Thickness</td>
+            <td style="width: 77mm;height: 4mm;" id="font7">Material / Material</td>
+            <td style="width: 86mm;height: 4mm;" id="font7">Espesor / Thickness</td>
         </tr>
         <tr>
             <td style="height: 8mm;">
-                {{$material->codigo}}
+                <b>{{$material->codigo}}</b>
             </td>
             <td style="height: 8mm;">
                                     @if ($informe->espesor_chapa)
-                                        {{ $informe->espesor_chapa }}
+                                        <b>{{ $informe->espesor_chapa }}</b>
                                     @elseif($informe->espesor_especifico)
-                                        {{ $informe->espesor_especifico }}
+                                        <b>{{ $informe->espesor_especifico }}</b>
                                     @else
-                                        {{ $diametro_espesor->espesor }}
+                                        <b>{{ $diametro_espesor->espesor }}</b>
                                     @endif
             </td>
         </tr>
@@ -269,23 +277,23 @@ footer{
     <tbody>
         <tr><td colspan="3" style="height: 5mm;" id="titulo"><b>Procedimiento / Procedure</b></td></tr>
         <tr>
-            <td style="width: 55mm;height: 4mm;">Procedimiento Nº y rev./ Procedure Nº and rev</td>
-            <td style="width: 52mm;">Norma de Ensayo / Standard Test</td>
-            <td style="width: 55mm;">Norma de Eval. / Evaluation Standard</td>
+            <td style="width: 55mm;height: 4mm;" id="font7">Procedimiento Nº y rev./ Procedure Nº and rev</td>
+            <td style="width: 52mm;" id="font7">Norma de Ensayo / Standard Test</td>
+            <td style="width: 55mm;" id="font7">Norma de Eval. / Evaluation Standard</td>
         </tr>
         <tr>
-            <td style="height: 8mm;">{{$procedimiento_inf->titulo}}</td>
-            <td>{{$norma_ensayo->codigo}}</td>
-            <td>{{$norma_evaluacion->codigo}}</td>
+            <td style="height: 8mm;"><b>{{$procedimiento_inf->titulo}}</b></td>
+            <td><b>{{$norma_ensayo->codigo}}</b></td>
+            <td><b>{{$norma_evaluacion->codigo}}</b></td>
         </tr>
         <tr>
-            <td style="height: 4mm;">Cond. Superficial/ Surface Condition</td>
-            <td>Limpieza Previa / Precleaning</td>
-            <td>Temp. Superficie/ Surface Temperature</td>
+            <td style="height: 4mm;" id="font7">Cond. Superficial/ Surface Condition</td>
+            <td id="font7">Limpieza Previa / Precleaning</td>
+            <td id="font7">Temp. Superficie/ Surface Temperature</td>
         </tr>
         <tr>
             <td style="height: 8mm;">&nbsp;</td>
-            <td>{{$informe_lp->limpieza_previa}}</td>
+            <td><b>{{$informe_lp->limpieza_previa}}</b></td>
             <td>&nbsp;</td>
         </tr>
     </tbody>
@@ -293,86 +301,86 @@ footer{
 <table class="tablamain">
     <tbody>
         <tr>
-            <td style="width: 77mm;height: 4mm;" id="tabla6">Temperatura de Consumibles / Consumables Temperature</td>
-            <td style="width: 86mm;" id="tabla6">Termómetro / Thermometer</td>
+            <td style="width: 77mm;height: 4mm;" id="font7">Temperatura de Consumibles / Consumables Temperature</td>
+            <td style="width: 86mm;" id="font7">Termómetro / Thermometer</td>
         </tr>
         <tr>
             <td style="height: 8mm; ">&nbsp;</td>
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td style="height: 4mm; " id="tabla6">Marca y Designación del Penetrante / Penetrant Brand and Design</td>
-            <td id="tabla6">Modo de Aplicación / Aplicated by</td>
+            <td style="height: 4mm; " id="font7">Marca y Designación del Penetrante / Penetrant Brand and Design</td>
+            <td id="font7">Modo de Aplicación / Aplicated by</td>
         </tr>
         <tr>
             <td style="height: 8mm; ">
-                                    {{$penetrante->tipo}}
+                                    <b>{{$penetrante->tipo}}</b>
 
                                     @if ($penetrante->marca)
-                                    &nbsp;/&nbsp;{{$penetrante->marca}}
+                                    &nbsp;/&nbsp;<b>{{$penetrante->marca}}</b>
                                     @else
                                          &nbsp;
                                     @endif
             </td>
-            <td>{{$penetrante_aplicacion->codigo}}</td>
+            <td><b>{{$penetrante_aplicacion->codigo}}</b></td>
         </tr>
         <tr>
-            <td style="height: 4mm; " id="tabla6">Marca y Designación del Removedor / Remover Brand and Design.</td>
-            <td id="tabla6">Forma de Remoción / Removed by</td>
+            <td style="height: 4mm; " id="font7">Marca y Designación del Removedor / Remover Brand and Design.</td>
+            <td id="font7">Forma de Remoción / Removed by</td>
         </tr>
         <tr>
             <td style="height: 8mm; ">
-                                    {{$removedor->tipo}}
+                                    <b>{{$removedor->tipo}}</b>
                                     @if ($removedor->marca)
 
-                                    &nbsp;/&nbsp;{{$removedor->marca}}
+                                    &nbsp;/&nbsp;<b>{{$removedor->marca}}</b>
 
                                     @endif
             </td>
-            <td>{{$removedor_aplicacion->codigo}}</td>
+            <td><b>{{$removedor_aplicacion->codigo}}</b></td>
         </tr>
         <tr>
-            <td style="height: 4mm; " id="tabla6">Marca y Designación del Revelador / Developer Brand and Design.</td>
-            <td id="tabla6">Modo de Aplicación / Aplicated by</td>
+            <td style="height: 4mm; " id="font7">Marca y Designación del Revelador / Developer Brand and Design.</td>
+            <td id="font7">Modo de Aplicación / Aplicated by</td>
         </tr>
         <tr>
             <td style="height: 8mm; ">
-                                    {{$revelador->tipo}}
+                                    <b>{{$revelador->tipo}}</b>
                                     @if ($revelador->marca)
 
-                                        &nbsp;/&nbsp;{{$revelador->marca}}
+                                        &nbsp;/&nbsp;<b>{{$revelador->marca}}</b>
 
                                     @endif
             </td>
-            <td>{{$revelador_aplicacion->codigo}}</td>
+            <td><b>{{$revelador_aplicacion->codigo}}</b></td>
         </tr>
     </tbody>
 </table>
 <table class="tablamain">
     <tbody>
         <tr>
-            <td style="height:7mm">Técnica Technique</td>
-            <td>Tipo de Penetrante Penetrant Type</td>
-            <td>Limpieza Final Post Examination Cleaning</td>
-            <td>Equipo de Iluminación Lighting Equipment;</td>
+            <td style="height:7mm; width:40mm">Técnica<br>Technique</td>
+            <td style="width:36.7mm">Tipo de Penetrante<br>Penetrant Type</td>
+            <td style="width:41.3mm">Limpieza Final<br>Post Examination Cleaning</td>
+            <td style="width:45mm">Equipo de Iluminación<br>Lighting Equipment;</td>
         </tr>
         <tr>
             <td style="height:9mm">
                                     @if($metodo->tipo =='TIPO I')
-                                        Fluorescente
+                                        <b>Fluorescente</b>
                                     @else
-                                        Visible
+                                        <b>Visible</b>
                                     @endif
             </td>
-            <td>{{$equipo->equipo->instrumento_medicion}}</td>
+            <td><b>{{$equipo->equipo->instrumento_medicion}}</b></td>
             <td>
                 @if ($informe_lp->limpieza_final)
-                                         {{$informe_lp->limpieza_final}}
+                                         <b>{{$informe_lp->limpieza_final}}</b>
                                     @else
                                           &nbsp;
                                     @endif
             </td>
-            <td>{{$iluminacion->codigo}}</td>
+            <td><b>{{$iluminacion->codigo}}</b></td>
         </tr>
     </tbody>
 </table>
@@ -384,14 +392,14 @@ footer{
             </tr>
             <tr>
                 <td style="height:32mm;">
-                    <img src="{{ asset($detalleReferencia->path1) }}" alt="Imagen"  style="max-height: 32mm; margin: 4mm;">
+                    <img src="{{ asset($detalleReferencia->path1) }}" alt="Imagen"  style="max-height: 30mm; margin: 1mm;">
                 </td>
             </tr>
             <tr>
                 <td style="height:5mm" id="titulo"><b>Informe / Report:</b></td>
             </tr>
             <tr>
-                <td style="height:5mm">{{$detalleReferencia->descripcion}}</td>
+                <td style="height:13mm">{{$detalleReferencia->descripcion}}</td>
             </tr>
         </tbody>
     </table>
@@ -427,7 +435,7 @@ footer{
                     </tbody>
                 </table>
             </td>
-            <td style="height:9mm">
+            <td>
                 <table>
                     <tbody>
                         <tr>
@@ -437,7 +445,7 @@ footer{
                     </tbody>
                 </table>
             </td>
-            <td style="height:9mm">
+            <td>
                 <table>
                     <tbody>
                         <tr>
@@ -453,17 +461,17 @@ footer{
 <table class="tablamain">
     <tbody>
         <tr>
-            <td>
+            <td style="height:10mm;">
                 <table>
                     <tbody>
                         <tr>
-                            <td style="width: 30mm;"   id="bordernone">Evaluador / Evaluated by </td>
+                            <td style="text-align:left;width: 30mm;"   id="bordernone">Evaluador / Evaluated by </td>
                         </tr>
                         <tr>
-                            <td  id="bordernone">Firma:</td>
+                            <td  id="bordernone" style="text-align:left">Firma:</td>
                         </tr>
                         <tr>
-                            <td id="bordernone">
+                            <td id="bordernone" style="text-align:left">
                                 <table>
                                     <tbody>
                                         <tr>
@@ -481,13 +489,13 @@ footer{
                 <table>
                     <tbody>
                         <tr>
-                            <td style="width: 40mm;"   id="bordernone">Inspector AESA / Manufacture </td>
+                            <td style="width: 40mm;text-align:left"   id="bordernone">Inspector AESA / Manufacture </td>
                         </tr>
                         <tr>
-                            <td  id="bordernone">Firma:</td>
+                            <td  id="bordernone" style="text-align:left">Firma:</td>
                         </tr>
                         <tr>
-                            <td id="bordernone">
+                            <td id="bordernone" style="text-align:left">
                                 <table>
                                     <tbody>
                                         <tr>
@@ -505,13 +513,13 @@ footer{
                 <table>
                     <tbody>
                         <tr>
-                            <td style="width: 40mm;"   id="bordernone">Inspector Cliente / Coustomer </td>
+                            <td style="width: 40mm;text-align:left"   id="bordernone">Inspector Cliente / Coustomer </td>
                         </tr>
                         <tr>
-                            <td  id="bordernone">Firma:</td>
+                            <td  id="bordernone" style="text-align:left">Firma:</td>
                         </tr>
                         <tr>
-                            <td id="bordernone">
+                            <td id="bordernone" style="text-align:left">
                                 <table>
                                     <tbody>
                                         <tr>
@@ -529,13 +537,13 @@ footer{
                 <table>
                     <tbody>
                         <tr>
-                            <td style="width: 40mm;"   id="bordernone">Insp. Autorizado / AI </td>
+                            <td style="width: 40mm;text-align:left"   id="bordernone">Insp. Autorizado / AI </td>
                         </tr>
                         <tr>
-                            <td  id="bordernone">Firma:</td>
+                            <td  id="bordernone" style="text-align:left">Firma:</td>
                         </tr>
                         <tr>
-                            <td id="bordernone">
+                            <td id="bordernone" style="text-align:left">
                                 <table>
                                     <tbody>
                                         <tr>
